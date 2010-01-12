@@ -153,7 +153,6 @@
     <Compile Include="Registration\Conventions\RouteDefinitionResolver.cs" />
     <Compile Include="Registration\Conventions\RouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPolicy.cs" />
-    <Compile Include="Registration\DSL\ChainFilterExpression.cs" />
     <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
     <Compile Include="Registration\IBehaviorVisitor.cs" />
     <Compile Include="Registration\IRouteVisitor.cs" />
@@ -217,8 +216,6 @@
     <Compile Include="Runtime\ConvertProblem.cs" />
     <Compile Include="Runtime\MimeType.cs" />
     <Compile Include="Runtime\FubuRouteHandler.cs" />
-    <Compile Include="RSS\Old\IFeedConverterFor.cs" />
-    <Compile Include="RSS\RenderRssOrAtomResult.cs" />
     <Compile Include="Runtime\UrlContext.cs" />
     <Compile Include="LocalizationManager.cs" />
     <Compile Include="Runtime\IOutputWriter.cs" />
