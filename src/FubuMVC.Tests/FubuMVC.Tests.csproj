@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Tests</RootNamespace>
+    <AssemblyName>FubuMVC.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.4.6.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.5.0.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking, Version=2.5.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="BasicExtensionsTester.cs" />
+    <Compile Include="Behaviors\ActionInvokersTester.cs" />
+    <Compile Include="Behaviors\DownloadFileBehaviorTester.cs" />
+    <Compile Include="Behaviors\LoadCurrentPrincipalTester.cs" />
+    <Compile Include="Behaviors\RenderHtmlBehaviorTester.cs" />
+    <Compile Include="Behaviors\RenderJsonBehaviorTester.cs" />
+    <Compile Include="Behaviors\BehaviorTestContext.cs" />
+    <Compile Include="Behaviors\RenderTextBehaviorTester.cs" />
+    <Compile Include="Continuations\ContinuationHandlerTester.cs" />
+    <Compile Include="Continuations\ContinuationTester.cs" />
+    <Compile Include="Debugging.cs" />
+    <Compile Include="Diagnostics\ActionColumnTester.cs" />
+    <Compile Include="Diagnostics\BehaviorGraphWriterTester.cs" />
+    <Compile Include="Diagnostics\BehaviorTracerTester.cs" />
+    <Compile Include="Diagnostics\DebugDetectorTester.cs" />
+    <Compile Include="Diagnostics\DebuggingOutputWriterTester.cs" />
+    <Compile Include="Diagnostics\DebugReportTester.cs" />
+    <Compile Include="Diagnostics\DiagnosticsPackageTester.cs" />
+    <Compile Include="Diagnostics\DiagnosticsRegistryTester.cs" />
+    <Compile Include="Diagnostics\InputModelColumnTester.cs" />
+    <Compile Include="Diagnostics\OutputColumnTester.cs" />
+    <Compile Include="Diagnostics\RecordingFubuRequestTester.cs" />
+    <Compile Include="Diagnostics\RecordingObjectResolverTester.cs" />
+    <Compile Include="Diagnostics\RecordingOutputWriterTester.cs" />
+    <Compile Include="Diagnostics\RouteColumnTester.cs" />
+    <Compile Include="Diagnostics\TimedReportTester.cs" />
+    <Compile Include="FubuBootstrapperIntegrationTester.cs" />
+    <Compile Include="FubuRegistryTester.cs" />
+    <Compile Include="HtmlGenerationTestExtensions.cs" />
+    <Compile Include="InteractionContext.cs" />
+    <Compile Include="Models\BooleanFamilyTester.cs" />
+    <Compile Include="Models\ConverterFamilyTester.cs" />
+    <Compile Include="Models\ExpandEnvironmentVariablesFamilyTester.cs" />
+    <Compile Include="Models\MapFromWebPathFamilyTester.cs" />
+    <Compile Include="Models\ResolveConnectionStringFamilyTester.cs" />
+    <Compile Include="Models\StandardModelBinderTester.cs" />
+    <Compile Include="Models\ValueConverterRegistryTester.cs" />
+    <Compile Include="Registration\BehaviorGraphTester.cs" />
+    <Compile Include="Registration\BehaviorVisitorTester.cs" />
+    <Compile Include="Registration\Conventions\BehaviorMatcherTester.cs" />
+    <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
+    <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
+    <Compile Include="Registration\Conventions\DownloadFileConventionIntegratedTester.cs" />
+    <Compile Include="Registration\Conventions\HtmlTagAndDocumentHandlerConventionTester.cs" />
+    <Compile Include="Registration\Conventions\IInputTypeRouteInputsModelTester.cs" />
+    <Compile Include="Registration\Conventions\OutputIntegratedAttachmentTester.cs" />
+    <Compile Include="Registration\Conventions\RouteDefinitionResolverTester.cs" />
+    <Compile Include="Registration\Conventions\TypeScanningIntegratedTester.cs" />
+    <Compile Include="Registration\default_fubu_registry_service_registrations.cs" />
+    <Compile Include="Registration\Expressions\ActionCallFilterExpressionTester.cs" />
+    <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
+    <Compile Include="Registration\Expressions\WrapBehaviorChainsWithTester.cs" />
+    <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
+    <Compile Include="Registration\Nodes\WebFormRenderTester.cs" />
+    <Compile Include="Registration\RouteVisitorTester.cs" />
+    <Compile Include="Registration\ServiceRegistryTester.cs" />
+    <Compile Include="Registration\Utilities\ActionCallSpec.cs" />
+    <Compile Include="Registration\Utilities\BehaviorSpec.cs" />
+    <Compile Include="Registration\Expressions\ExplicitRouteExpressionTester.cs" />
+    <Compile Include="Registration\FuncBuilderTester.cs" />
+    <Compile Include="Registration\ActionCallTester.cs" />
+    <Compile Include="Registration\RouteBuilderTester.cs" />
+    <Compile Include="Registration\Utilities\BehaviorSpecCheck.cs" />
+    <Compile Include="Registration\Utilities\JsonOutputSpec.cs" />
+    <Compile Include="Registration\WrapperTester.cs" />
+    <Compile Include="Registration\ObjectDefTester.cs" />
+    <Compile Include="Registration\RouteDefinitionTester.cs" />
+    <Compile Include="Runtime\RequestDataTester.cs" />
+    <Compile Include="Runtime\FubuHttpHandlerTester.cs" />
+    <Compile Include="Runtime\FubuRequestTester.cs" />
+    <Compile Include="Runtime\FubuRouteHandlerTester.cs" />
+    <Compile Include="Runtime\PartialFactoryTester.cs" />
+    <Compile Include="SessionState\FlashProviderTester.cs" />
+    <Compile Include="SessionState\RequestDataProviderTester.cs" />
+    <Compile Include="StructureMapIoC\ObjectDefInstanceTester.cs" />
+    <Compile Include="StructureMapIoC\StructureMapContainerFacilityTester.cs" />
+    <Compile Include="StructureMapIoC\StructureMapServiceLocatorTester.cs" />
+    <Compile Include="TestController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Routing\AggregateDictionaryTester.cs" />
+    <Compile Include="SpecificationExtensions.cs" />
+    <Compile Include="TypeExtensionsTester.cs" />
+    <Compile Include="UI\Address.cs" />
+    <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
+    <Compile Include="UI\DefaultHtmlConventionsTester.cs" />
+    <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
+    <Compile Include="UI\LambdaElementModifierTester.cs" />
+    <Compile Include="UI\StringifierIntegrationTester.cs" />
+    <Compile Include="UI\StringifierTester.cs" />
+    <Compile Include="UI\TagFactoryTester.cs" />
+    <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
+    <Compile Include="Urls\ForwardUrlTester.cs" />
+    <Compile Include="Urls\UrlRegistryBuilderTester.cs" />
+    <Compile Include="Urls\UrlRegistryTester.cs" />
+    <Compile Include="Util\CompositePredicateTester.cs" />
+    <Compile Include="UI\LambdaElementSourceTester.cs" />
+    <Compile Include="Util\ReflectionHelperTester.cs" />
+    <Compile Include="View\FakeViews\A.aspx.cs">
+      <DependentUpon>A.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FakeViews\Folder1\A.aspx.cs">
+      <DependentUpon>A.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FakeViews\Folder1\ViewModel3.aspx.cs">
+      <DependentUpon>ViewModel3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FakeViews\ModelsAndControllers.cs" />
+    <Compile Include="View\FubuPageTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\RenderFubuViewBehaviorTester.cs" />
+    <Compile Include="View\View4.aspx.cs">
+      <DependentUpon>View4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewAttachmentStrategiesTester.cs" />
+    <Compile Include="View\WebForms\WebFormViewFacilityTester.cs" />
+    <Compile Include="View\WebForms\WebFormViewTokenTester.cs" />
+    <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.FakeControllers\FubuMVC.FakeControllers.csproj">
+      <Project>{E8128BAA-BAF7-4164-9786-B9B23E555B96}</Project>
+      <Name>FubuMVC.FakeControllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
+      <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
+      <Name>FubuMVC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="View\FakeViews\A.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="View\FakeViews\Folder1\A.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="View\FakeViews\Folder1\ViewModel3.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="View\View4.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Results\" />
+    <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

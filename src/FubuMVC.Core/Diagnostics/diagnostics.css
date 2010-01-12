@@ -1,0 +1,50 @@
+﻿body
+{
+}
+
+.behavior
+{
+	border: solid thin black;
+	margin: 20px;
+	padding: 10px;
+}
+
+.content
+{
+	overflow:scroll;
+	background-color: #dddddd;
+}
+
+TABLE.details
+{
+    border: solid thin black;
+    margin-bottom: 25px;
+}
+
+TABLE.details TR
+{
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+
+TABLE.details > THEAD > TR
+{
+	border-bottom: solid thin black;
+}
+
+TABLE.details TD
+{
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+TABLE.details TH
+{
+    BACKGROUND-COLOR: Silver;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0px;
+}

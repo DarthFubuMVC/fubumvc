@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E18FD922-0E7A-49CD-B89F-473826077B9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Core</RootNamespace>
+    <AssemblyName>FubuMVC.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Behaviors\DownloadFileBehavior.cs" />
+    <Compile Include="Continuations\ContinuationHandler.cs" />
+    <Compile Include="Continuations\FubuContinuation.cs" />
+    <Compile Include="Continuations\ContinuationType.cs" />
+    <Compile Include="Continuations\IContinuationDirector.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\DebugReportTagWriter.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\DebugWriter.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\DetailsTagWriter.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\ActionColumn.cs" />
+    <Compile Include="Diagnostics\BehaviorGraphWriter.cs" />
+    <Compile Include="Diagnostics\BehaviorReport.cs" />
+    <Compile Include="Diagnostics\BehaviorTracer.cs" />
+    <Compile Include="Diagnostics\DebugDetector.cs" />
+    <Compile Include="Diagnostics\DebuggingOutputWriter.cs" />
+    <Compile Include="Diagnostics\DebugReport.cs" />
+    <Compile Include="Diagnostics\DiagnosticBehavior.cs" />
+    <Compile Include="Diagnostics\DiagnosticBehaviorPrepender.cs" />
+    <Compile Include="Diagnostics\DiagnosticsPackage.cs" />
+    <Compile Include="Diagnostics\DiagnosticsRegistry.cs" />
+    <Compile Include="Diagnostics\DiagnosticUrlPolicy.cs" />
+    <Compile Include="Diagnostics\ExceptionReport.cs" />
+    <Compile Include="Diagnostics\FileOutputReport.cs" />
+    <Compile Include="Diagnostics\IBehaviorDetails.cs" />
+    <Compile Include="Diagnostics\IBehaviorDetailsVisitor.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\IColumn.cs" />
+    <Compile Include="Diagnostics\IDebugDetector.cs" />
+    <Compile Include="Diagnostics\IDebugReport.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\InputModelColumn.cs" />
+    <Compile Include="Diagnostics\ModelBindingKey.cs" />
+    <Compile Include="Diagnostics\ModelBindingReport.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\OutputColumn.cs" />
+    <Compile Include="Diagnostics\OutputReport.cs" />
+    <Compile Include="Diagnostics\RecordingFubuRequest.cs" />
+    <Compile Include="Diagnostics\RecordingObjectResolver.cs" />
+    <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
+    <Compile Include="Diagnostics\RecordingRequestData.cs" />
+    <Compile Include="Diagnostics\RedirectReport.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\RouteColumn.cs" />
+    <Compile Include="Diagnostics\SetValueReport.cs" />
+    <Compile Include="Diagnostics\TextWriting\CharacterWidth.cs" />
+    <Compile Include="Diagnostics\TextWriting\DividerLine.cs" />
+    <Compile Include="Diagnostics\TextWriting\Line.cs" />
+    <Compile Include="Diagnostics\TextWriting\PlainLine.cs" />
+    <Compile Include="Diagnostics\TextWriting\TextLine.cs" />
+    <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
+    <Compile Include="Diagnostics\TimedReport.cs" />
+    <Compile Include="Models\BooleanFamily.cs" />
+    <Compile Include="Models\ExpandEnvironmentVariablesFamily.cs" />
+    <Compile Include="Models\MapFromWebPathFamily.cs" />
+    <Compile Include="Models\ModelBindingAttributes.cs" />
+    <Compile Include="Models\ResolveConnectionStringFamily.cs" />
+    <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
+    <Compile Include="Registration\DSL\ModelsExpression.cs" />
+    <Compile Include="Registration\DSL\PoliciesExpression.cs" />
+    <Compile Include="Registration\Conventions\ActionCallModification.cs" />
+    <Compile Include="Registration\Conventions\DownloadFileConvention.cs" />
+    <Compile Include="Registration\Conventions\UrlPatternAttributePolicy.cs" />
+    <Compile Include="Registration\DSL\ActionCallCandidateExpression.cs" />
+    <Compile Include="Registration\DSL\ActionCallFilterExpression.cs" />
+    <Compile Include="Registration\DSL\AppliesToExpression.cs" />
+    <Compile Include="Attributes.cs" />
+    <Compile Include="BasicExtensions.cs" />
+    <Compile Include="Behaviors\BasicBehavior.cs" />
+    <Compile Include="DoNext.cs" />
+    <Compile Include="Behaviors\IActionBehavior.cs" />
+    <Compile Include="Behaviors\load_the_current_principal.cs" />
+    <Compile Include="Behaviors\NulloBehavior.cs" />
+    <Compile Include="Behaviors\OneInOneOutActionInvoker.cs" />
+    <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
+    <Compile Include="Behaviors\RenderJsonBehavior.cs" />
+    <Compile Include="Behaviors\RenderTextBehavior.cs" />
+    <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
+    <Compile Include="Bootstrapping\BootstrappingClasses.cs" />
+    <Compile Include="FubuBootstrapper.cs" />
+    <Compile Include="FubuException.cs" />
+    <Compile Include="FubuRegistry.Expressions.cs" />
+    <Compile Include="Models\BindResult.cs" />
+    <Compile Include="Models\ConverterFamily.cs" />
+    <Compile Include="Models\IConverterFamily.cs" />
+    <Compile Include="Models\IModelBinder.cs" />
+    <Compile Include="Models\IValueConverterRegistry.cs" />
+    <Compile Include="Models\StandardModelBinder.cs" />
+    <Compile Include="Models\ValueConverter.cs" />
+    <Compile Include="Models\ValueConverterRegistry.cs" />
+    <Compile Include="Registration\BehaviorVisitor.cs" />
+    <Compile Include="Registration\Conventions\BehaviorMatcher.cs" />
+    <Compile Include="Registration\Conventions\IChainConvention.cs" />
+    <Compile Include="Registration\Conventions\IRouteInputPolicy.cs" />
+    <Compile Include="Registration\Conventions\IUrlPolicy.cs" />
+    <Compile Include="Registration\Conventions\RouteDefinitionResolver.cs" />
+    <Compile Include="Registration\Conventions\RouteInputPolicy.cs" />
+    <Compile Include="Registration\Conventions\UrlPolicy.cs" />
+    <Compile Include="Registration\DSL\ChainFilterExpression.cs" />
+    <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
+    <Compile Include="Registration\IBehaviorVisitor.cs" />
+    <Compile Include="Registration\IRouteVisitor.cs" />
+    <Compile Include="Registration\IServiceRegistry.cs" />
+    <Compile Include="Registration\IUrlCategoryConvention.cs" />
+    <Compile Include="Registration\Nodes\ContinuationNode.cs" />
+    <Compile Include="Registration\Nodes\OutputNode.cs" />
+    <Compile Include="Registration\Nodes\RenderTextNode.cs" />
+    <Compile Include="Registration\Nodes\WebFormView.cs" />
+    <Compile Include="Registration\RouteVisitor.cs" />
+    <Compile Include="Registration\ServiceRegistry.cs" />
+    <Compile Include="Registration\TypePool.cs" />
+    <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
+    <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
+    <Compile Include="Runtime\InMemoryOutputWriter.cs" />
+    <Compile Include="Runtime\IObjectResolver.cs" />
+    <Compile Include="Runtime\IPartialFactory.cs" />
+    <Compile Include="Runtime\IRequestData.cs" />
+    <Compile Include="Runtime\ObjectResolver.cs" />
+    <Compile Include="Runtime\RequestData.cs" />
+    <Compile Include="Runtime\ServiceArguments.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="Registration\DSL\UrlCategoriesExpression.cs" />
+    <Compile Include="Urls\ActionUrl.cs" />
+    <Compile Include="Urls\IModelUrl.cs" />
+    <Compile Include="Urls\IUrlRegistration.cs" />
+    <Compile Include="Urls\UrlRegistry.cs" />
+    <Compile Include="Urls\UrlRegistryBuilder.cs" />
+    <Compile Include="Util\BuildersAndAlterations.cs" />
+    <Compile Include="Util\CompositeAction.cs" />
+    <Compile Include="Util\CompositeFilter.cs" />
+    <Compile Include="Util\CompositePredicate.cs" />
+    <Compile Include="Registration\Nodes\BehaviorChain.cs" />
+    <Compile Include="Registration\Nodes\BehaviorExtensions.cs" />
+    <Compile Include="Registration\BehaviorGraph.cs" />
+    <Compile Include="Registration\DSL\ChainedBehaviorExpression.cs" />
+    <Compile Include="Registration\Nodes\BehaviorNode.cs" />
+    <Compile Include="Urls\Categories.cs" />
+    <Compile Include="Registration\ObjectGraph\ConfiguredDependency.cs" />
+    <Compile Include="Registration\DSL\ExplicitRouteConfiguration.cs" />
+    <Compile Include="FubuRegistry.cs" />
+    <Compile Include="Registration\Routes\FuncBuilder.cs" />
+    <Compile Include="Registration\Nodes\ActionCall.cs" />
+    <Compile Include="Registration\IConfigurationAction.cs" />
+    <Compile Include="Registration\ObjectGraph\IDependency.cs" />
+    <Compile Include="Registration\ObjectGraph\IDependencyVisitor.cs" />
+    <Compile Include="Registration\LambdaConfigurationAction.cs" />
+    <Compile Include="Registration\ObjectGraph\ObjectDef.cs" />
+    <Compile Include="Registration\Routes\RouteBuilder.cs" />
+    <Compile Include="Registration\ObjectGraph\ValueDependency.cs" />
+    <Compile Include="Registration\Nodes\Wrapper.cs" />
+    <Compile Include="Registration\Routes\IRouteDefinition.cs" />
+    <Compile Include="Registration\Nodes\RenderJsonNode.cs" />
+    <Compile Include="Registration\Routes\RouteDefinition.cs" />
+    <Compile Include="Registration\Routes\RouteInput.cs" />
+    <Compile Include="Runtime\FubuRequest.cs" />
+    <Compile Include="Runtime\HttpResponseOutputWriter.cs" />
+    <Compile Include="Runtime\IBehaviorFactory.cs" />
+    <Compile Include="Runtime\IFubuRequest.cs" />
+    <Compile Include="Runtime\InMemoryRequestData.cs" />
+    <Compile Include="Runtime\ConvertProblem.cs" />
+    <Compile Include="Runtime\MimeType.cs" />
+    <Compile Include="Runtime\FubuRouteHandler.cs" />
+    <Compile Include="RSS\Old\IFeedConverterFor.cs" />
+    <Compile Include="RSS\RenderRssOrAtomResult.cs" />
+    <Compile Include="Runtime\UrlContext.cs" />
+    <Compile Include="LocalizationManager.cs" />
+    <Compile Include="Runtime\IOutputWriter.cs" />
+    <Compile Include="Security\IPrincipalFactory.cs" />
+    <Compile Include="SessionState\IFlash.cs" />
+    <Compile Include="SessionState\IRequestDataProvider.cs" />
+    <Compile Include="Urls\IUrlRegistry.cs" />
+    <Compile Include="Util\ExpressionsExtensions.cs" />
+    <Compile Include="Util\Indexer.cs" />
+    <Compile Include="Registration\DSL\ViewAttachmentStrategyExpression.cs" />
+    <Compile Include="Registration\DSL\ViewExpression.cs" />
+    <Compile Include="View\FubuMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FubuPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\IFubuPage.cs" />
+    <Compile Include="View\IFubuView.cs" />
+    <Compile Include="View\IViewAttachmentStrategy.cs" />
+    <Compile Include="View\IViewEngine.cs" />
+    <Compile Include="View\IViewFacility.cs" />
+    <Compile Include="View\IViewToken.cs" />
+    <Compile Include="View\PageHarness.cs" />
+    <Compile Include="View\RenderFubuViewBehavior.cs" />
+    <Compile Include="View\TypeAndNamespace.cs" />
+    <Compile Include="View\TypeAndNamespaceAndName.cs" />
+    <Compile Include="View\ViewAttacher.cs" />
+    <Compile Include="View\ViewBag.cs" />
+    <Compile Include="View\ViewPath.cs" />
+    <Compile Include="View\WebForms\IWebFormRenderer.cs" />
+    <Compile Include="Behaviors\RenderFubuWebFormView.cs" />
+    <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
+    <Compile Include="Runtime\AggregateDictionary.cs" />
+    <Compile Include="Models\TypeDescriptorRegistry.cs" />
+    <Compile Include="Util\Accessor.cs" />
+    <Compile Include="Util\PropertyChain.cs" />
+    <Compile Include="Util\ReflectionHelper.cs" />
+    <Compile Include="Util\SingleProperty.cs" />
+    <Compile Include="Util\Cache.cs" />
+    <Compile Include="Util\JsonUtil.cs" />
+    <Compile Include="Util\XmlExtensions.cs" />
+    <Compile Include="Security\IAuthenticationContext.cs" />
+    <Compile Include="Security\ISecurityContext.cs" />
+    <Compile Include="View\WebForms\WebFormExtensions.cs" />
+    <Compile Include="View\WebForms\WebFormRenderer.cs" />
+    <Compile Include="View\WebForms\WebFormsEndpointPolicy.cs" />
+    <Compile Include="View\WebForms\WebFormViewEngine.cs" />
+    <Compile Include="View\WebForms\WebFormViewToken.cs" />
+    <Compile Include="View\WebForms\WebFormViewFacility.cs" />
+    <Compile Include="Web\Security\WebAuthenticationContext.cs" />
+    <Compile Include="Web\Security\WebSecurityContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Diagnostics\diagnostics.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

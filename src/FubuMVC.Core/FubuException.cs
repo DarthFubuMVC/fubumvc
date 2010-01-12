@@ -1,0 +1,45 @@
+using System;
+using System.Runtime.Serialization;
+
+namespace FubuMVC.Core
+{
+    [Serializable]
+    public class FubuException : ApplicationException
+    {
+        private readonly int _errorCode;
+        private readonly string _message;
+
+        public FubuException(int errorCode, string message)
+            : base(message)
+        {
+            _errorCode = errorCode;
+            _message = message;
+        }
+
+        private FubuException(int errorCode, string message, Exception innerException)
+            : base(message, innerException)
+        {
+            _errorCode = errorCode;
+            _message = message;
+        }
+
+        protected FubuException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+        public FubuException(int errorCode, Exception inner, string template, params string[] substitutions)
+            : this(errorCode, template.ToFormat(substitutions), inner)
+        {
+        }
+
+        public FubuException(int errorCode, string template, params string[] substitutions)
+            : this(errorCode, template.ToFormat(substitutions))
+        {
+        }
+
+        public override string Message { get { return "FubuMVC Error {0}:  \n{1}".ToFormat(_errorCode, _message); } }
+
+        public int ErrorCode { get { return _errorCode; } }
+    }
+}
