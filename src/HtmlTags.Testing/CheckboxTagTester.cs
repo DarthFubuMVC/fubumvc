@@ -5,15 +5,6 @@ namespace HtmlTags.Testing
     [TestFixture]
     public class CheckboxTagTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
         [Test]
         public void basic_construction()
         {

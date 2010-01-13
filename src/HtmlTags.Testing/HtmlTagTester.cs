@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using NUnit.Framework;
 
@@ -6,15 +7,6 @@ namespace HtmlTags.Testing
     [TestFixture]
     public class HtmlTagTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
         [Test]
         public void I_just_want_to_generate_a_div_with_text_and_a_class()
         {
@@ -100,12 +92,12 @@ namespace HtmlTags.Testing
             tag.MetaData("a", 1);
             tag.MetaData("b", "b-value");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"{'a':1,'b':'b-value'}\">text</div>");
+            tag.ToCompacted().ShouldEqual("<div class=\"{&quot;a&quot;:1,&quot;b&quot;:&quot;b-value&quot;}\">text</div>");
 
             // now with another class
             tag.AddClass("class1");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"class1 {'a':1,'b':'b-value'}\">text</div>");
+            tag.ToCompacted().ShouldEqual("<div class=\"class1 {&quot;a&quot;:1,&quot;b&quot;:&quot;b-value&quot;}\">text</div>");
         }
 
         [Test]
@@ -127,6 +119,25 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void render_multiple_classes_with_a_single_method_call()
+        {
+            HtmlTag tag = new HtmlTag("div").Text("text");
+            tag.AddClasses("a", "b", "c");
+
+            tag.ToCompacted().ShouldEqual("<div class=\"a b c\">text</div>");
+        }
+
+        [Test]
+        public void do_not_allow_spaces_in_class_names()
+        {
+            HtmlTag tag = new HtmlTag("div").Text("text");
+            typeof(ArgumentException).ShouldBeThrownBy(() =>
+            {
+                tag.AddClass("a b c");
+            });
+        }
+
+        [Test]
         public void render_multiple_levels_of_nesting()
         {
             var tag = new HtmlTag("table");
@@ -139,7 +150,7 @@ namespace HtmlTags.Testing
         [Test]
         public void render_multiple_levels_of_nesting_2()
         {
-            HtmlTag tag = new HtmlTag("html").With(x =>
+            HtmlTag tag = new HtmlTag("html").Modify(x =>
             {
                 x.Add("head", head =>
                 {
@@ -210,7 +221,7 @@ namespace HtmlTags.Testing
             {
                 Display = "a",
                 Value = "1"
-            }).ToCompacted().ShouldEqual("<div class=\"{'listValue':{'Display':'a','Value':'1'}}\"></div>");
+            }).ToCompacted().ShouldEqual("<div class=\"{&quot;listValue&quot;:{&quot;Display&quot;:&quot;a&quot;,&quot;Value&quot;:&quot;1&quot;}}\"></div>");
         }
 
         public class ListValue

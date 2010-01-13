@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         public void WriteOutput(OutputReport report)
         {
             addDetail().Text("Wrote Output ({0}):".ToFormat(report.ContentType));
-            _holderTag.Add("pre", "content").Text(report.Contents);
+            _holderTag.Add("pre").AddClass("content").Text(report.Contents);
 
         }
 
@@ -66,7 +66,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         private HtmlTag addDetail()
         {
-            return _holderTag.Add("div", "details");
+            return _holderTag.Add("div").AddClass("details");
         }
 
         public void Write(IBehaviorDetails details)

@@ -1,5 +1,6 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Util;
+using HtmlTags;
 
 namespace FubuMVC.Core.Behaviors
 {

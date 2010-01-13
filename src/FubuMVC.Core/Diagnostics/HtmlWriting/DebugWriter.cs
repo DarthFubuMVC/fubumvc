@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             tag.Add("h4").Text("Form Data");
 
 
-            var table = tag.Add("div", "formData").Child<TableTag>();
+            var table = tag.Add("div").AddClass("formData").Child<TableTag>();
 
             table.AddHeaderRow(row =>
             {

@@ -5,16 +5,12 @@ namespace HtmlTags.Testing
     [TestFixture]
     public class HtmlDocumentTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
             document = new HtmlDocument();
             document.Title = "the title";
         }
-
-        #endregion
 
         private HtmlDocument document;
 

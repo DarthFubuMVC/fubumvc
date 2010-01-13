@@ -257,7 +257,6 @@
     <Compile Include="Util\ReflectionHelper.cs" />
     <Compile Include="Util\SingleProperty.cs" />
     <Compile Include="Util\Cache.cs" />
-    <Compile Include="Util\JsonUtil.cs" />
     <Compile Include="Util\XmlExtensions.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
