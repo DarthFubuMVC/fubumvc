@@ -9,8 +9,6 @@ namespace FubuMVC.Tests.View.WebForms
     [TestFixture]
     public class WebFormViewTokenTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -18,21 +16,19 @@ namespace FubuMVC.Tests.View.WebForms
             token = new WebFormViewToken(type);
         }
 
-        #endregion
-
         private Type type;
         private WebFormViewToken token;
 
         [Test]
         public void Name()
         {
-            token.Name.ShouldEqual("View4");
+            token.ViewType.Name.ShouldEqual("View4");
         }
 
         [Test]
         public void Namespace()
         {
-            token.Namespace.ShouldEqual(type.Namespace);
+            token.ViewType.Namespace.ShouldEqual(type.Namespace);
         }
 
         [Test]

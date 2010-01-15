@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -6,11 +5,15 @@ namespace FubuMVC.Core.View
 {
     public class TypeAndNamespaceAndName : IViewAttachmentStrategy
     {
-        public IEnumerable<IViewToken> Find(ActionCall call, ViewBag views)
+        public IViewToken Find(ActionCall call, ViewBag views)
         {
             return
-                views.ViewsFor(call.OutputType()).Where(
-                    view => { return view.Name == call.Method.Name && view.Namespace == call.HandlerType.Namespace; });
+                views
+                    .ViewsFor(call.OutputType())
+                    .Where(view => view.ViewType.Name == call.Method.Name 
+                                   && view.ViewType.Namespace == call.HandlerType.Namespace)
+                    .Select(view => view.ToViewToken())
+                    .FirstOrDefault();
         }
     }
 }

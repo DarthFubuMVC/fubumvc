@@ -21,10 +21,10 @@ namespace FubuMVC.Core.View
 
         public void Configure(BehaviorGraph graph)
         {
-            IEnumerable<IViewToken> views = _facilities.SelectMany(x => x.FindViews(_types));
-            var bag = new ViewBag(views);
+            var discoveredViewTokens = _facilities.SelectMany(x => x.FindViews(_types));
+            var bag = new ViewBag(discoveredViewTokens);
 
-            graph.Actions().Each(a => { attachView(bag, a); });
+            graph.Actions().Each(a => attachView(bag, a));
         }
 
         public void AddFacility(IViewFacility facility)
@@ -37,18 +37,14 @@ namespace FubuMVC.Core.View
             _strategies.Add(strategy);
         }
 
-
         private void attachView(ViewBag bag, ActionCall call)
         {
-            foreach (IViewAttachmentStrategy strategy in _strategies)
+            foreach (var strategy in _strategies)
             {
-                IEnumerable<IViewToken> tokens = strategy.Find(call, bag);
-                if (tokens.Count() == 1)
-                {
-                    IViewToken token = tokens.First();
-                    call.Append(token.ToBehavioralNode());
-                    break;
-                }
+                var token = strategy.Find(call, bag);
+                if (token == null) continue;
+                call.Append(token.ToBehavioralNode());
+                break;
             }
         }
     }

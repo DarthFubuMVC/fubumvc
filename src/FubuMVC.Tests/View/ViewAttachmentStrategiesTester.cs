@@ -12,18 +12,15 @@ namespace FubuMVC.Tests.View
     [TestFixture]
     public class TypeAndNamespaceAndNameTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
             token = new FakeViewToken
             {
-                Name = "A",
-                Namespace = GetType().Namespace,
+                ViewType = typeof(AAction),
                 ViewModelType = typeof (ViewModel1)
             };
-            var views = new List<IViewToken>
+            var views = new List<IDiscoveredViewToken>
             {
                 token
             };
@@ -33,8 +30,6 @@ namespace FubuMVC.Tests.View
             strategy = new TypeAndNamespaceAndName();
         }
 
-        #endregion
-
         private FakeViewToken token;
         private ViewBag bag;
         private TypeAndNamespaceAndName strategy;
@@ -42,53 +37,50 @@ namespace FubuMVC.Tests.View
         [Test]
         public void everything_matches()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
-            strategy.Find(action, bag).First().ShouldBeTheSameAs(token);
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            strategy.Find(action, bag).ShouldBeTheSameAs(token);
         }
 
         [Test]
         public void only_name_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
             token.ViewModelType = typeof (ViewModel2);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            strategy.Find(action, bag).ShouldBeNull();
         }
 
         [Test]
         public void only_type_and_name_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
-            token.Namespace = Guid.NewGuid().ToString();
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            token.ViewType = typeof(SubNamespace.AAction);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            strategy.Find(action, bag).ShouldBeNull();
         }
 
         [Test]
         public void only_type_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
-            token.Name = "something different";
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            token.ViewType = typeof(SomeOtherView);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            strategy.Find(action, bag).ShouldBeNull();
         }
     }
 
     [TestFixture]
     public class TypeAndNamespaceTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
             token = new FakeViewToken
             {
-                Name = "A",
-                Namespace = GetType().Namespace,
+                ViewType = typeof(FakeViewToken),
                 ViewModelType = typeof (ViewModel1)
             };
-            var views = new List<IViewToken>
+            var views = new List<IDiscoveredViewToken>
             {
                 token
             };
@@ -98,8 +90,6 @@ namespace FubuMVC.Tests.View
             strategy = new TypeAndNamespace();
         }
 
-        #endregion
-
         private FakeViewToken token;
         private ViewBag bag;
         private TypeAndNamespace strategy;
@@ -107,48 +97,51 @@ namespace FubuMVC.Tests.View
         [Test]
         public void everything_matches()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
-            strategy.Find(action, bag).First().ShouldBeTheSameAs(token);
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            strategy.Find(action, bag).ShouldBeTheSameAs(token);
         }
 
         [Test]
         public void only_name_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
             token.ViewModelType = typeof (ViewModel2);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            strategy.Find(action, bag).ShouldBeNull();
         }
 
         [Test]
         public void only_type_and_name_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
-            token.Namespace = Guid.NewGuid().ToString();
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            token.ViewType = typeof (SubNamespace.AAction);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            strategy.Find(action, bag).ShouldBeNull();
         }
 
         [Test]
         public void only_type_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.A());
-            token.Name = "something different";
+            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            token.ViewType = typeof (SomeOtherView);
 
-            strategy.Find(action, bag).First().ShouldBeTheSameAs(token);
+            strategy.Find(action, bag).ShouldBeTheSameAs(token);
         }
     }
 
 
-    public class FakeViewToken : BehaviorNode, IViewToken
+    public class FakeViewToken : BehaviorNode, IDiscoveredViewToken, IViewToken
     {
         public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
 
         public Type ViewModelType { get; set; }
 
-        public string Namespace { get; set; }
+        public Type ViewType { get; set; }
 
-        public string Name { get; set; }
+        public IViewToken ToViewToken()
+        {
+            return this;
+        }
 
         public BehaviorNode ToBehavioralNode()
         {
@@ -161,9 +154,27 @@ namespace FubuMVC.Tests.View
         }
     }
 
+    public class AAction
+    {
+        
+    }
+
+    public class SomeOtherView
+    {
+
+    }
+
+    namespace SubNamespace
+    {
+        public class AAction
+        {
+            
+        }
+    }
+
     public class ViewAttachmentStrategiesTesterController
     {
-        public ViewModel1 A()
+        public ViewModel1 AAction()
         {
             return null;
         }

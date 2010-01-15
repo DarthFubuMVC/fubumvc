@@ -5,6 +5,6 @@ namespace FubuMVC.Core.View
 {
     public interface IViewFacility
     {
-        IEnumerable<IViewToken> FindViews(TypePool types);
+        IEnumerable<IDiscoveredViewToken> FindViews(TypePool types);
     }
 }

@@ -14,8 +14,6 @@ namespace FubuMVC.Tests.View.WebForms
     [TestFixture]
     public class WebFormViewFacilityTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -25,9 +23,7 @@ namespace FubuMVC.Tests.View.WebForms
             views = new WebFormViewFacility().FindViews(pool);
         }
 
-        #endregion
-
-        private IEnumerable<IViewToken> views;
+        private IEnumerable<IDiscoveredViewToken> views;
 
         [Test]
         public void IsWebFormView_for_fubu_page()

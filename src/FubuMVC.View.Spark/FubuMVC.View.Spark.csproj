@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,11 +45,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="FilePathAttachmentStrategy.cs" />
+    <Compile Include="SparkFilePathAttachmentStrategy.cs" />
     <Compile Include="FubuSparkView.cs" />
     <Compile Include="RenderSparkFubuViewBehavior.cs" />
     <Compile Include="SparkViewEngine.cs" />
-    <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewNode.cs" />
     <Compile Include="SparkViewToken.cs" />
   </ItemGroup>

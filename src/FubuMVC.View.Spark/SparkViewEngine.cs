@@ -18,10 +18,9 @@ namespace FubuMVC.View.Spark
 
         public void RenderView(ViewPath viewPath, Action<T> configureView)
         {
-
             var engine = new SparkViewEngine { DefaultPageBaseType = typeof(FubuSparkView).FullName };
 
-            var descriptor = new SparkViewDescriptor().AddTemplate(viewPath.ViewName + ".spark");
+            var descriptor = new SparkViewDescriptor().AddTemplate(viewPath.ViewName);
 
             var view = (IFubuSparkView)engine.CreateInstance(descriptor);
             var configurableView = view as T;

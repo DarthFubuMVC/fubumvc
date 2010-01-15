@@ -6,18 +6,18 @@ namespace FubuMVC.View.Spark
 {
     public class SparkViewNode : OutputNode
     {
-        private readonly string _name;
+        private readonly string _viewPath;
 
-        public SparkViewNode(string name) : base(typeof(RenderSparkFubuViewBehavior))
+        public SparkViewNode(string viewPath) : base(typeof(RenderSparkFubuViewBehavior))
         {
-            _name = name;
+            _viewPath = viewPath;
         }
 
         public override string Description
         {
             get
             {
-                return "Render Spark View: " + _name;
+                return "Render Spark View: " + _viewPath;
             }
         }
 
@@ -25,7 +25,7 @@ namespace FubuMVC.View.Spark
         {
             def.Child(new ViewPath
             {
-                ViewName = _name
+                ViewName = _viewPath
             });
         }
 
