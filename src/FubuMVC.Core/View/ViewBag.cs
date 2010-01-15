@@ -22,5 +22,7 @@ namespace FubuMVC.Core.View
         {
             return _viewsByType[viewModelType];
         }
+
+        public IEnumerable<IViewToken> Views { get { return _views; } }
     }
 }
