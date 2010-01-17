@@ -64,6 +64,13 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+
+        public RouteConventionExpression ConstrainToHttpMethod(Func<ActionCall, bool> filter, string method)
+        {
+            _resolver.ConstraintPolicy.AddHttpMethodFilter(filter, method);
+            return this;
+        }
+
         public RouteConventionExpression ForInputTypesOf<T>(Action<IInputTypeRouteInputsModel<T>> configure)
         {
             var inputs = new InputTypeRouteInputsModel<T>();

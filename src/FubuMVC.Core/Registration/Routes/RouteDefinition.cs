@@ -13,6 +13,7 @@ namespace FubuMVC.Core.Registration.Routes
     public class RouteDefinition : IRouteDefinition
     {
         private string _pattern;
+        private readonly RouteValueDictionary _constraints = new RouteValueDictionary();
 
         public RouteDefinition(string pattern)
         {
@@ -26,7 +27,12 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual Route ToRoute()
         {
-            return new Route(_pattern, null);
+            return new Route(_pattern, null, getConstraints(), null);;
+        }
+
+        protected RouteValueDictionary getConstraints()
+        {
+            return _constraints.Count > 0 ? _constraints : null;
         }
 
         public void Append(string patternPart)
@@ -45,6 +51,11 @@ namespace FubuMVC.Core.Registration.Routes
         }
 
         public string Category { get; set; }
+
+        public void AddRouteConstraint(string inputName, IRouteConstraint constraint)
+        {
+            _constraints[inputName] = constraint;
+        }
 
         public void Prepend(string prefix)
         {
@@ -109,9 +120,9 @@ namespace FubuMVC.Core.Registration.Routes
             var defaults = new RouteValueDictionary();
 
             _routeInputs.Where(r => r.DefaultValue != null).Each(
-                input => { defaults.Add(input.Name, input.DefaultValue); });
+                input => defaults.Add(input.Name, input.DefaultValue));
 
-            return new Route(Pattern, defaults, null);
+            return new Route(Pattern, defaults, getConstraints(), null);
         }
 
         private string fillQueryInputs(string url, object input)

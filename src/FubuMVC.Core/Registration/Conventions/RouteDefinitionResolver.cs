@@ -12,6 +12,7 @@ namespace FubuMVC.Core.Registration.Conventions
         private readonly UrlPolicy _defaultUrlPolicy;
         private readonly RouteInputPolicy _inputPolicy = new RouteInputPolicy();
         private readonly List<IUrlPolicy> _policies = new List<IUrlPolicy>();
+        private readonly RouteConstraintPolicy _constraintPolicy = new RouteConstraintPolicy();
 
         public RouteDefinitionResolver()
         {
@@ -30,6 +31,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public RouteInputPolicy InputPolicy { get { return _inputPolicy; } }
         public UrlPolicy DefaultUrlPolicy { get { return _defaultUrlPolicy; } }
+        public RouteConstraintPolicy ConstraintPolicy { get { return _constraintPolicy; } }
 
         public void Apply(BehaviorGraph graph, BehaviorChain chain)
         {
@@ -38,7 +40,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
             IUrlPolicy policy = _policies.FirstOrDefault(x => x.Matches(call)) ?? _defaultUrlPolicy;
             IRouteDefinition route = policy.Build(call);
-
+            _constraintPolicy.Apply(call, route);
             graph.RegisterRoute(chain, route);
         }
 

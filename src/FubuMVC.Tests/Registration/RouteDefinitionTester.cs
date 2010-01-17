@@ -5,21 +5,18 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Util;
 using NUnit.Framework;
+using FubuMVC.Tests;
 
 namespace FubuMVC.Tests.Registration
 {
     [TestFixture]
     public class RouteDefinitionTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
             UrlContext.Reset();
         }
-
-        #endregion
 
         public class SampleViewModel
         {
@@ -286,5 +283,37 @@ namespace FubuMVC.Tests.Registration
 
             route.Defaults.Count().ShouldEqual(1);
         }
+
+        [Test]
+        public void should_not_have_constraints_by_default()
+        {
+            var url = new RouteDefinition("my/sample");
+            Route route = url.ToRoute();
+
+            route.Constraints.ShouldBeNull();
+        }
+
+        [Test]
+        public void add_constraint_to_route()
+        {
+            var url = new RouteDefinition("my/sample");
+            var constraintToAdd = new HttpMethodConstraint("POST");
+            url.AddRouteConstraint("httpMethod", constraintToAdd);
+            Route route = url.ToRoute();
+
+            route.Constraints["httpMethod"].ShouldEqual(constraintToAdd);
+        }
+
+        [Test]
+        public void add_constraint_to_route_with_model()
+        {
+            var url = new RouteDefinition<SampleViewModel>("my/sample");
+            var constraintToAdd = new HttpMethodConstraint("POST");
+            url.AddRouteConstraint("httpMethod", constraintToAdd);
+            Route route = url.ToRoute();
+
+            route.Constraints["httpMethod"].ShouldEqual(constraintToAdd);
+        }
+
     }
 }

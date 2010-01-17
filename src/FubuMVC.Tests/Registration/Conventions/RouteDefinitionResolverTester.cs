@@ -15,8 +15,6 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class RouteDefinitionResolverTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -25,8 +23,6 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             resolver = new RouteDefinitionResolver();
         }
-
-        #endregion
 
         private BehaviorGraph graph;
         private BehaviorChain chain;

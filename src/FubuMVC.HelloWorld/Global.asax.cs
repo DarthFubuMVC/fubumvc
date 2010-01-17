@@ -24,7 +24,9 @@ namespace FubuMVC.HelloWorld
                 .IncludeTypesNamed(x => x.EndsWith("Controller"));
 
             Routes
-                .IgnoreControllerNamespaceEntirely();
+                .IgnoreControllerNamespaceEntirely()
+                .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Command"), "POST")
+                .ConstrainToHttpMethod(action => action.Method.Name.StartsWith("Query"), "GET");
 
             Views
                 .TryToAttach(x=>

@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Registration.Routes
         void AddRouteInput(RouteInput input, bool b);
         void RemoveLastPatternPart();
         void AddQueryInput(PropertyInfo property);
-
+        void AddRouteConstraint(string inputName, IRouteConstraint constraint);
         void Prepend(string prefix);
     }
 }
