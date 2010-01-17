@@ -52,6 +52,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public string Category { get; set; }
 
+        public IEnumerable<KeyValuePair<string, object>> Constraints { get { return _constraints; } }
+
         public void AddRouteConstraint(string inputName, IRouteConstraint constraint)
         {
             _constraints[inputName] = constraint;
