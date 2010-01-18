@@ -27,5 +27,10 @@ namespace FubuMVC.UI
         {
             return page.Tags().DisplayFor(expression);
         }
+
+        public static HtmlTag For<T>(Expression<Func<T, object>> expression) where T : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }
