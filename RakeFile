@@ -2,11 +2,7 @@ COMPILE_TARGET = "debug"
 require "build_support/BuildUtils.rb"
 
 include FileTest
-
-require 'rubygems'
-
-require 'zip/zip'
-require 'zip/zipfilesystem'
+require 'albacore'
 
 RESULTS_DIR = "results"
 BUILD_NUMBER = "0.1.0."
@@ -77,4 +73,11 @@ task :unit_test => :compile do
 end
 
 desc "Target used for the CI server"
-task :ci => [:unit_test]
+task :ci => [:unit_test,:zip]
+
+desc "ZIPs up the build results"
+ziptask do |zip|
+	zip.directories_to_zip = ["build"]
+	zip.output_file = 'fubumvc.zip'
+	zip.output_path = 'build'
+end
