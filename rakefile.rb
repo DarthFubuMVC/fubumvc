@@ -24,7 +24,7 @@ task :default => [:compile, :unit_test]
 desc "Update the version information for the build"
 assemblyinfotask :version do |asm|
   asm.version = BUILD_NUMBER
-  asm.custom_attributes :InformationalVersion => BUILD_NUMBER
+  asm.custom_attributes :AssemblyInformationalVersion => BUILD_NUMBER
   asm.product_name = PRODUCT
   asm.copyright = COPYRIGHT
   asm.output_file = COMMON_ASSEMBLY_INFO
@@ -34,7 +34,7 @@ assemblyinfotask :version do |asm|
   rescue
     commit = "git unavailable"
   end
-  asm.description = "Commit: " + commit
+  asm.trademark = "Commit: " + commit
 end
 
 desc "Prepares the working directory for a new build"
