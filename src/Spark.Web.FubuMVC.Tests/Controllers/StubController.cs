@@ -1,4 +1,4 @@
-namespace Spark.Web.FubuMVC.Tests
+namespace Spark.Web.FubuMVC.Tests.Controllers
 {
     public class StubController
     {

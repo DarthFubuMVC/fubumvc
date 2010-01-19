@@ -63,7 +63,7 @@
     <Compile Include="SparkBatchCompilationTester.cs" />
     <Compile Include="SparkDescriptorBuildingTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
-    <Compile Include="StubController.cs" />
+    <Compile Include="Controllers\StubController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Spark\gh\src\Spark\Spark.csproj">
@@ -81,6 +81,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Licence_Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FubuMVC.Tests.Views\Shared\elementLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Shared\layout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\_Row.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\Index.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\List.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

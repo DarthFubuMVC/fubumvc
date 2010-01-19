@@ -6,21 +6,7 @@ using System.Text;
 
 namespace Spark.Web.FubuMVC
 {
-    public class SparkView : ISparkView
+    public abstract class SparkView : SparkViewBase
     {
-        public void RenderView(TextWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Guid GeneratedViewId
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool TryGetViewData(string name, out object value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
