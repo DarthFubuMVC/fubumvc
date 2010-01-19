@@ -30,7 +30,7 @@ assemblyinfotask :version do |asm|
   asm.output_file = COMMON_ASSEMBLY_INFO
 
   begin
-    commit = `git log -1 --pretty=format:%H`
+    commit = (ENV["BUILD_VCS_NUMBER"].nil? ? `git log -1 --pretty=format:%H` : ENV["BUILD_VCS_NUMBER"])
   rescue
     commit = "git unavailable"
   end
