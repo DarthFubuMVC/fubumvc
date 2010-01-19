@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Web.FubuMVC", "Spark.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Web.FubuMVC.Tests", "Spark.Web.FubuMVC.Tests\Spark.Web.FubuMVC.Tests.csproj", "{363851FE-E3D1-495D-9171-C022116C89D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.HelloSpark", "FubuMVC.HelloSpark\FubuMVC.HelloSpark.csproj", "{636577E9-7FEB-4CA8-9C05-59357C05FCE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,12 @@ Global
 		{363851FE-E3D1-495D-9171-C022116C89D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{363851FE-E3D1-495D-9171-C022116C89D4}.Retail|Any CPU.ActiveCfg = Release|Any CPU
 		{363851FE-E3D1-495D-9171-C022116C89D4}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{636577E9-7FEB-4CA8-9C05-59357C05FCE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{636577E9-7FEB-4CA8-9C05-59357C05FCE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{636577E9-7FEB-4CA8-9C05-59357C05FCE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{636577E9-7FEB-4CA8-9C05-59357C05FCE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{636577E9-7FEB-4CA8-9C05-59357C05FCE1}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{636577E9-7FEB-4CA8-9C05-59357C05FCE1}.Retail|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
