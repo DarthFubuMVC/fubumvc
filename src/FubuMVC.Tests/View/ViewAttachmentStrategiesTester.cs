@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.View
                 ViewType = typeof(AAction),
                 ViewModelType = typeof (ViewModel1)
             };
-            var views = new List<IDiscoveredViewToken>
+            var views = new List<IViewToken>
             {
                 token
             };
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.View
                 ViewType = typeof(FakeViewToken),
                 ViewModelType = typeof (ViewModel1)
             };
-            var views = new List<IDiscoveredViewToken>
+            var views = new List<IViewToken>
             {
                 token
             };
@@ -130,11 +130,18 @@ namespace FubuMVC.Tests.View
     }
 
 
-    public class FakeViewToken : BehaviorNode, IDiscoveredViewToken, IViewToken
+    public class FakeViewToken : BehaviorNode, IViewToken
     {
         public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
 
         public Type ViewModelType { get; set; }
+        public string Name
+        {
+            get { throw new NotImplementedException(); } }
+
+        public string Folder
+        {
+            get { throw new NotImplementedException(); } }
 
         public Type ViewType { get; set; }
 

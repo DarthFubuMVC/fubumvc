@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.View.WebForms
             views = new WebFormViewFacility().FindViews(pool);
         }
 
-        private IEnumerable<IDiscoveredViewToken> views;
+        private IEnumerable<IViewToken> views;
 
         [Test]
         public void IsWebFormView_for_fubu_page()

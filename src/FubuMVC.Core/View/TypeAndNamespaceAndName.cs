@@ -12,7 +12,6 @@ namespace FubuMVC.Core.View
                     .ViewsFor(call.OutputType())
                     .Where(view => view.ViewType.Name == call.Method.Name 
                                    && view.ViewType.Namespace == call.HandlerType.Namespace)
-                    .Select(view => view.ToViewToken())
                     .FirstOrDefault();
         }
     }

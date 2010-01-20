@@ -3,7 +3,7 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.View.WebForms
 {
-    public class WebFormViewToken : IDiscoveredViewToken, IViewToken
+    public class WebFormViewToken : IViewToken
     {
         private readonly Type _modelType;
         private readonly Type _viewType;
@@ -28,6 +28,16 @@ namespace FubuMVC.Core.View.WebForms
         public BehaviorNode ToBehavioralNode()
         {
             return new WebFormView(_viewType.ToVirtualPath());
+        }
+
+        public string Name
+        {
+            get { return ViewType.Name; }
+        }
+
+        public string Folder
+        {
+            get { return ViewType.Namespace; } 
         }
     }
 }

@@ -11,7 +11,6 @@ namespace FubuMVC.Core.View
                 views
                     .ViewsFor(call.OutputType())
                     .Where(view => view.ViewType.Namespace == call.HandlerType.Namespace)
-                    .Select(view => view.ToViewToken())
                     .FirstOrDefault();
         }
     }
@@ -22,7 +21,6 @@ namespace FubuMVC.Core.View
         {
             return views
                 .ViewsFor(call.OutputType())
-                .Select(view => view.ToViewToken())
                 .FirstOrDefault();
         }
     }

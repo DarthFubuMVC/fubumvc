@@ -48,6 +48,11 @@ namespace FubuMVC.UI.Tags
             Modify((r, tag) => tag.AddClass(className));
         }
 
+        public void Attr(string attName, object value)
+        {
+            Modify((r, tag) => tag.Attr(attName, value));
+        }
+
 
         public static HtmlTag BuildTextbox(ElementRequest request)
         {

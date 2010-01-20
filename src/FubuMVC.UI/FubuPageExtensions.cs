@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using FubuMVC.Core.View;
+using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 
@@ -28,9 +29,14 @@ namespace FubuMVC.UI
             return page.Tags().DisplayFor(expression);
         }
 
-        public static HtmlTag For<T>(Expression<Func<T, object>> expression) where T : class
+        public static FormLineExpression<T> LabeledDisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
         {
-            throw new NotImplementedException();
+            return new FormLineExpression<T>(page.Tags(), page.Get<ILabelAndFieldLayout>(), expression);
+        }
+
+        public static FormLineExpression<T> LabeledInputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        {
+            return new FormLineExpression<T>(page.Tags(), page.Get<ILabelAndFieldLayout>(), expression).EditableIf(true);
         }
     }
 }

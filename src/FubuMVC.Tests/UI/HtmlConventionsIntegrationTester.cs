@@ -5,6 +5,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.UI;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
@@ -123,6 +124,13 @@ namespace FubuMVC.Tests.UI
         {
             container.GetInstance<IElementNamingConvention>()
                 .ShouldBeOfType<DefaultElementNamingConvention>();
+        }
+
+        [Test]
+        public void by_default_the_html_conventions_should_use_the_definition_label_and_field_layout()
+        {
+            container.GetInstance<ILabelAndFieldLayout>()
+                .ShouldBeOfType<DefinitionListLabelAndField>();
         }
 
         [Test]

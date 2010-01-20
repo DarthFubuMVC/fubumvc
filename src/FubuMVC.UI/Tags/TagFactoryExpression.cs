@@ -41,6 +41,10 @@ namespace FubuMVC.UI.Tags
             return new TagActionExpression(_factory, matches);
         }
 
+        public TagActionExpression IfPropertyTypeIs(Func<Type, bool> matches)
+        {
+            return If(def => matches(def.Accessor.PropertyType));
+        }
 
         public TagActionExpression IfPropertyIs<T>()
         {
@@ -58,6 +62,11 @@ namespace FubuMVC.UI.Tags
                                    request.Accessor.ForAttribute<T>(att => modification(tag, att));
 
             If(def => true).Modify(modifier);
+        }
+
+        public void ModifyForAttribute<T>(Action<HtmlTag> modification) where T : Attribute
+        {
+            ModifyForAttribute<T>((tag, att) => modification(tag));
         }
     }
 }

@@ -13,6 +13,20 @@ namespace FubuMVC.UI.Configuration
         TagBuilder CreateInitial(AccessorDef accessorDef);
     }
 
+    public abstract class ElementBuilder : IElementBuilder
+    {
+        public TagBuilder CreateInitial(AccessorDef accessorDef)
+        {
+            if (matches(accessorDef)) return Build;
+
+            return null;
+        }
+
+        protected abstract bool matches(AccessorDef def);
+
+        public abstract HtmlTag Build(ElementRequest request);
+    }
+
     public interface IElementModifier
     {
         TagModifier CreateModifier(AccessorDef accessorDef);

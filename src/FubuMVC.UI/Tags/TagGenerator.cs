@@ -8,7 +8,15 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.UI.Tags
 {
-    public class TagGenerator<T> where T : class
+    public interface ITagGenerator<T> where T : class
+    {
+        void SetProfile(string profileName);
+        HtmlTag LabelFor(Expression<Func<T, object>> expression);
+        HtmlTag InputFor(Expression<Func<T, object>> expression);
+        HtmlTag DisplayFor(Expression<Func<T, object>> expression);
+    }
+
+    public class TagGenerator<T> : ITagGenerator<T> where T : class
     {
         private readonly TagProfileLibrary _library;
         private readonly T _model;

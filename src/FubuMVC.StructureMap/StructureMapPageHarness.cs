@@ -16,6 +16,8 @@ namespace FubuMVC.StructureMap
             Request.Set(Model);
 
             container.BuildUp(Page);
+
+            Page.SetModel(Request);
         }
 
         public IFubuRequest Request { get; private set; }

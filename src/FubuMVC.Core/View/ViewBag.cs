@@ -7,22 +7,22 @@ namespace FubuMVC.Core.View
 {
     public class ViewBag
     {
-        private readonly IEnumerable<IDiscoveredViewToken> _views;
+        private readonly IEnumerable<IViewToken> _views;
 
-        private readonly Cache<Type, IEnumerable<IDiscoveredViewToken>> _viewsByType
-            = new Cache<Type, IEnumerable<IDiscoveredViewToken>>();
+        private readonly Cache<Type, IEnumerable<IViewToken>> _viewsByType
+            = new Cache<Type, IEnumerable<IViewToken>>();
 
-        public ViewBag(IEnumerable<IDiscoveredViewToken> views)
+        public ViewBag(IEnumerable<IViewToken> views)
         {
             _views = views;
             _viewsByType.OnMissing = type => _views.Where(x => x.ViewModelType == type);
         }
 
-        public IEnumerable<IDiscoveredViewToken> ViewsFor(Type viewModelType)
+        public IEnumerable<IViewToken> ViewsFor(Type viewModelType)
         {
             return _viewsByType[viewModelType];
         }
 
-        public IEnumerable<IDiscoveredViewToken> Views { get { return _views; } }
+        public IEnumerable<IViewToken> Views { get { return _views; } }
     }
 }
