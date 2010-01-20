@@ -83,6 +83,9 @@
     <Content Include="Licence_Readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FubuMVC.Tests.Views\Layouts\anotherLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="FubuMVC.Tests.Views\Shared\elementLayout.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
