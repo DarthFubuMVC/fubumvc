@@ -114,4 +114,43 @@ namespace FubuMVC.Tests.Registration
         public int Age { get; set; }
         public int Age2 { get; set; }
     }
+
+    public class InputModelWithEquals
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public bool Equals(InputModelWithEquals other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Name, Name) && other.Age == Age;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (InputModelWithEquals)) return false;
+            return Equals((InputModelWithEquals) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Name != null ? Name.GetHashCode() : 0)*397) ^ Age;
+            }
+        }
+
+        public static bool operator ==(InputModelWithEquals left, InputModelWithEquals right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(InputModelWithEquals left, InputModelWithEquals right)
+        {
+            return !Equals(left, right);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Registration;
@@ -24,14 +25,7 @@ namespace FubuMVC.Tests.Continuations
 
         private void shouldFail(Action action)
         {
-            try
-            {
-                action();
-                Assert.Fail("Did not throw an exception");
-            }
-            catch (ApplicationException)
-            {
-            }
+            Exception<FubuAssertionException>.ShouldBeThrownBy(action);
         }
 
 
@@ -65,12 +59,13 @@ namespace FubuMVC.Tests.Continuations
         [Test]
         public void assert_redirect_to_a_target()
         {
-            var input = new InputModel();
+            var input = new InputModelWithEquals{Name = "Luke"};
             FubuContinuation continuation = FubuContinuation.RedirectTo(input);
 
-            continuation.AssertWasRedirectedTo(input);
+            continuation.AssertWasRedirectedTo(new InputModelWithEquals {Name = "Luke"});
 
-            shouldFail(() => continuation.AssertWasRedirectedTo(new InputModel()));
+            shouldFail(() => continuation.AssertWasRedirectedTo(new InputModelWithEquals()));
+            shouldFail(() => continuation.AssertWasTransferedTo(input));
             shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
 
             shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
@@ -95,13 +90,13 @@ namespace FubuMVC.Tests.Continuations
         [Test]
         public void assert_transfer_to_a_target()
         {
-            var input = new InputModel();
+            var input = new InputModelWithEquals{Name="Luke"};
             FubuContinuation continuation = FubuContinuation.TransferTo(input);
 
-            continuation.AssertWasTransferedTo(input);
+            continuation.AssertWasTransferedTo(new InputModelWithEquals { Name = "Luke" });
 
-            shouldFail(() => continuation.AssertWasRedirectedTo(new InputModel()));
-            shouldFail(() => continuation.AssertWasTransferedTo(new InputModel()));
+            shouldFail(() => continuation.AssertWasTransferedTo(new InputModelWithEquals()));
+            shouldFail(() => continuation.AssertWasRedirectedTo(input));
             shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
 
             shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
