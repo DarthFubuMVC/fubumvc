@@ -66,6 +66,7 @@
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\ChainColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DebugReportTagWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DebugWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DetailsTagWriter.cs" />

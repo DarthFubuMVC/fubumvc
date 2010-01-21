@@ -122,7 +122,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override string ToString()
         {
-            return string.Format("Call {0}.{1}()", HandlerType.FullName, Method.Name);
+            return string.Format("Call {0}", Description);
         }
 
         public bool Equals(ActionCall other)

@@ -170,6 +170,12 @@ namespace FubuMVC.Core
             return maxCount;
         }
 
+        public static ATTRIBUTE GetCustomAttribute<ATTRIBUTE>(this MemberInfo member)
+            where ATTRIBUTE : Attribute
+        {
+            return member.GetCustomAttributes(typeof(ATTRIBUTE), false).FirstOrDefault() as ATTRIBUTE;
+        }
+
         public static bool HasCustomAttribute<ATTRIBUTE>(this MemberInfo member)
             where ATTRIBUTE : Attribute
         {

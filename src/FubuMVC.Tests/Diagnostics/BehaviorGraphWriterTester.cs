@@ -4,6 +4,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using HtmlTags;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuMVC.Tests.Diagnostics
 {
@@ -28,13 +29,13 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void smoke_test_actions()
         {
-            Debug.WriteLine(writer.Actions());
+            Debug.WriteLine(writer.PrintActions());
         }
 
         [Test]
         public void smoke_test_actions_table()
         {
-            writer.ActionsTable();
+            writer.Actions();
         }
 
         [Test]
@@ -47,19 +48,25 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void smoke_test_input_models_table()
         {
-            writer.InputsTable();
+            writer.Inputs();
         }
 
         [Test]
         public void smoke_test_routes()
         {
-            Debug.WriteLine(writer.Routes());
+            Debug.WriteLine(writer.PrintRoutes());
         }
 
         [Test]
         public void smoke_test_routes_table()
         {
-            HtmlDocument routes = writer.RoutesTable();
+            HtmlDocument routes = writer.Routes();
+        }
+
+        [Test]
+        public void smoke_test_chain()
+        {
+            Debug.WriteLine(writer.Chain(new ChainRequest {Id = graph.Behaviors.First().UniqueId}));
         }
     }
 }

@@ -48,3 +48,10 @@ TABLE.details TH
     padding-right: 5px;
     margin: 0px;
 }
+
+.chainId
+{
+	 /* must be monospace */
+	font-family: Consolas, Courier New, Courier;
+	font-size: smaller;
+}

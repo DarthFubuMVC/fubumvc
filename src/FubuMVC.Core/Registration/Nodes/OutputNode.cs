@@ -36,6 +36,11 @@ namespace FubuMVC.Core.Registration.Nodes
         protected virtual void configureObject(ObjectDef def)
         {
         }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 
     public abstract class OutputNode<T> : OutputNode where T : IActionBehavior
