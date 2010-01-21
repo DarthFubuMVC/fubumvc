@@ -6,6 +6,7 @@ namespace FubuMVC.Core.View
     {
         IServiceLocator ServiceLocator { get; set; }
         T Get<T>();
+        T GetNew<T>();
     }
 
     public interface IFubuPage<TViewModel> : IFubuPage, IFubuView<TViewModel> where TViewModel : class

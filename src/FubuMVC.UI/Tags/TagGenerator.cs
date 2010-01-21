@@ -14,6 +14,10 @@ namespace FubuMVC.UI.Tags
         HtmlTag LabelFor(Expression<Func<T, object>> expression);
         HtmlTag InputFor(Expression<Func<T, object>> expression);
         HtmlTag DisplayFor(Expression<Func<T, object>> expression);
+        ElementRequest GetRequest(Expression<Func<T, object>> expression);
+        HtmlTag LabelFor(ElementRequest request);
+        HtmlTag InputFor(ElementRequest request);
+        HtmlTag DisplayFor(ElementRequest request);
     }
 
     public class TagGenerator<T> : ITagGenerator<T> where T : class
@@ -44,10 +48,31 @@ namespace FubuMVC.UI.Tags
 
         private HtmlTag buildTag(Expression<Func<T, object>> expression, TagFactory factory)
         {
-            var request = new ElementRequest(_model, expression.ToAccessor(), _services, _stringifier);
-            request.ElementId = _namingConvention.GetName(typeof (T), request.Accessor);
+            ElementRequest request = GetRequest(expression);
 
             return factory.Build(request);
+        }
+
+        public ElementRequest GetRequest(Expression<Func<T, object>> expression)
+        {
+            var request = new ElementRequest(_model, expression.ToAccessor(), _services, _stringifier);
+            request.ElementId = _namingConvention.GetName(typeof (T), request.Accessor);
+            return request;
+        }
+
+        public HtmlTag LabelFor(ElementRequest request)
+        {
+            return _profile.Label.Build(request);
+        }
+
+        public HtmlTag InputFor(ElementRequest request)
+        {
+            return _profile.Editor.Build(request);
+        }
+
+        public HtmlTag DisplayFor(ElementRequest request)
+        {
+            return _profile.Display.Build(request);
         }
 
         public HtmlTag LabelFor(Expression<Func<T, object>> expression)

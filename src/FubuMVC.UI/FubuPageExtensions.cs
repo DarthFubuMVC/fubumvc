@@ -31,12 +31,12 @@ namespace FubuMVC.UI
 
         public static FormLineExpression<T> LabeledDisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
         {
-            return new FormLineExpression<T>(page.Tags(), page.Get<ILabelAndFieldLayout>(), expression);
+            return new FormLineExpression<T>(page.Tags(), page.GetNew<ILabelAndFieldLayout>(), expression);
         }
 
         public static FormLineExpression<T> LabeledInputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
         {
-            return new FormLineExpression<T>(page.Tags(), page.Get<ILabelAndFieldLayout>(), expression).EditableIf(true);
+            return new FormLineExpression<T>(page.Tags(), page.GetNew<ILabelAndFieldLayout>(), expression).Editable(true);
         }
     }
 }

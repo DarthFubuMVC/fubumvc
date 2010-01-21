@@ -56,7 +56,7 @@
     <Compile Include="Configuration\AccessorDef.cs" />
     <Compile Include="Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
-    <Compile Include="Forms\FormClasses.cs" />
+    <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />
     <Compile Include="FubuPageExtensions.cs" />
     <Compile Include="FubuRegistryUIExtensions.cs" />

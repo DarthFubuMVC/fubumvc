@@ -8,13 +8,14 @@ namespace FubuMVC.UI.Configuration
         private readonly Stringifier _stringifier;
         private bool _hasFetched;
         private object _rawValue;
+        private IServiceLocator _services;
 
         public ElementRequest(object model, Accessor accessor, IServiceLocator services, Stringifier stringifier)
         {
             _stringifier = stringifier;
             Model = model;
             Accessor = accessor;
-            Services = services;
+            _services = services;
         }
 
         public string ElementId { get; set; }
@@ -36,7 +37,6 @@ namespace FubuMVC.UI.Configuration
 
         public object Model { get; private set; }
         public Accessor Accessor { get; private set; }
-        public IServiceLocator Services { get; private set; }
 
         public AccessorDef ToAccessorDef()
         {
@@ -49,7 +49,7 @@ namespace FubuMVC.UI.Configuration
 
         public T Get<T>()
         {
-            return Services.GetInstance<T>();
+            return _services.GetInstance<T>();
         }
 
         public T Value<T>()
@@ -60,6 +60,11 @@ namespace FubuMVC.UI.Configuration
         public string StringValue()
         {
             return _stringifier.GetString(Accessor.PropertyType, RawValue);
+        }
+
+        public bool ValueIsEmpty()
+        {
+            return RawValue == null || string.Empty.Equals(RawValue);
         }
     }
 }
