@@ -14,8 +14,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public MimeType MimeType { get; set; }
 
-        public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
-
         public override string Description { get { return "Text as " + MimeType; } }
 
         protected override void configureObject(ObjectDef def)

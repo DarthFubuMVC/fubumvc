@@ -2,14 +2,10 @@ COMPILE_TARGET = "debug"
 require "build_support/BuildUtils.rb"
 
 include FileTest
-
-require 'rubygems'
-
-require 'zip/zip'
-require 'zip/zipfilesystem'
+require 'albacore'
 
 RESULTS_DIR = "results"
-BUILD_NUMBER = "0.1.0."
+BUILD_NUMBER = "0.1.0."  + (ENV["BUILD_NUMBER"].nil? ? '0' : ENV["BUILD_NUMBER"].to_s)
 PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
@@ -25,28 +21,20 @@ task :all => [:default]
 desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
-desc "Displays a list of tasks"
-task :help do
-  taskHash = Hash[*(`rake.cmd -T`.split(/\n/).collect { |l| l.match(/rake (\S+)\s+\#\s(.+)/).to_a }.collect { |l| [l[1], l[2]] }).flatten] 
- 
-  indent = "                          "
-  
-  puts "rake #{indent}#Runs the 'default' task"
-  
-  taskHash.each_pair do |key, value|
-    if key.nil?  
-      next
-    end
-    puts "rake #{key}#{indent.slice(0, indent.length - key.length)}##{value}"
-  end
-end
-
 desc "Update the version information for the build"
-task :version do
-  builder = AsmInfoBuilder.new(BUILD_NUMBER, {'Product' => PRODUCT, 'Copyright' => COPYRIGHT})
-  buildNumber = builder.buildnumber
-  puts "The build number is #{buildNumber}"
-  builder.write COMMON_ASSEMBLY_INFO  
+assemblyinfotask :version do |asm|
+  asm.version = BUILD_NUMBER
+  asm.custom_attributes :AssemblyInformationalVersion => BUILD_NUMBER
+  asm.product_name = PRODUCT
+  asm.copyright = COPYRIGHT
+  asm.output_file = COMMON_ASSEMBLY_INFO
+
+  begin
+    commit = (ENV["BUILD_VCS_NUMBER"].nil? ? `git log -1 --pretty=format:%H` : ENV["BUILD_VCS_NUMBER"])
+  rescue
+    commit = "git unavailable"
+  end
+  asm.trademark = "Commit: " + commit
 end
 
 desc "Prepares the working directory for a new build"
@@ -77,4 +65,11 @@ task :unit_test => :compile do
 end
 
 desc "Target used for the CI server"
-task :ci => [:unit_test]
+task :ci => [:unit_test,:zip]
+
+desc "ZIPs up the build results"
+ziptask do |zip|
+	zip.directories_to_zip = ["build"]
+	zip.output_file = 'fubumvc.zip'
+	zip.output_path = 'build'
+end

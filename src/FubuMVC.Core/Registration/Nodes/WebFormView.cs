@@ -16,8 +16,6 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public string ViewName { get { return _viewName; } }
 
-        public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
-
         public override string Description { get { return "WebForm View '{0}'".ToFormat(_viewName); } }
 
         protected override void configureObject(ObjectDef def)
@@ -26,11 +24,6 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 ViewName = _viewName
             });
-        }
-
-        public override string ToString()
-        {
-            return Description;
         }
     }
 }

@@ -104,6 +104,7 @@
     <Compile Include="Diagnostics\RouteColumnTester.cs" />
     <Compile Include="Diagnostics\TimedReportTester.cs" />
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
+    <Compile Include="FubuExceptionTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
     <Compile Include="InteractionContext.cs" />

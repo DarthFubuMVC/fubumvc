@@ -32,7 +32,7 @@ namespace FubuMVC.Tests
                 exception = e.ShouldBeOfType<T>();
             }
 
-            exception.ShouldNotBeNull("An exception was expected, but not thrown by the given action.");
+            if (exception == null) Assert.Fail("An exception was expected, but not thrown by the given action.");
 
             return exception;
         }

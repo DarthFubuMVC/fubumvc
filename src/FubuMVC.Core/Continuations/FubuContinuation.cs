@@ -42,6 +42,7 @@ namespace FubuMVC.Core.Continuations
 
         public static FubuContinuation RedirectTo(object destination)
         {
+            if (destination == null) throw new ArgumentNullException("destination");
             return new FubuContinuation(ContinuationType.Redirect, d => d.RedirectTo(destination))
             {
                 _destination = destination
@@ -50,6 +51,7 @@ namespace FubuMVC.Core.Continuations
 
         public static FubuContinuation TransferTo(object destination)
         {
+            if (destination == null) throw new ArgumentNullException("destination");
             return new FubuContinuation(ContinuationType.Transfer, d => d.TransferTo(destination))
             {
                 _destination = destination
@@ -78,12 +80,12 @@ namespace FubuMVC.Core.Continuations
 
         public void AssertWasTransferedTo(object destination)
         {
-            assertMatches(_type == ContinuationType.Transfer && _destination == destination);
+            assertMatches(_type == ContinuationType.Transfer && _destination != null && _destination.Equals(destination));
         }
 
         public void AssertWasRedirectedTo(object destination)
         {
-            assertMatches(_type == ContinuationType.Redirect && _destination == destination);
+            assertMatches(_type == ContinuationType.Redirect && _destination != null && _destination.Equals(destination));
         }
 
         public void AssertWasRedirectedTo<T>(Expression<Action<T>> expression)
@@ -110,15 +112,15 @@ namespace FubuMVC.Core.Continuations
             string message = "Assertion Failed!\nContinuation Type:  " + _type;
             if (_destination != null)
             {
-                message += "\n  to " + _destination;
+                message += "\n  destination model: " + _destination;
             }
 
             if (_call != null)
             {
-                message += "\n to " + _call.Description;
+                message += "\n destination call: " + _call.Description;
             }
 
-            throw new ApplicationException(message);
+            throw new FubuAssertionException(message);
         }
 
         public void Process(IContinuationDirector director)

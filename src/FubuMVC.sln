@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Build_Utilities", "__Buil
 		..\Build.bat = ..\Build.bat
 		..\build_support\BuildUtils.rb = ..\build_support\BuildUtils.rb
 		..\InstallGems.bat = ..\InstallGems.bat
-		..\RakeFile = ..\RakeFile
+		..\rakefile.rb = ..\rakefile.rb
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.StructureMap", "FubuMVC.StructureMap\FubuMVC.StructureMap.csproj", "{ABFEA520-820C-4B77-9015-6A09E24252FA}"

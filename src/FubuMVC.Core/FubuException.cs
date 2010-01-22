@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace FubuMVC.Core
 {
     [Serializable]
-    public class FubuException : ApplicationException
+    public class FubuException : Exception
     {
         private readonly int _errorCode;
         private readonly string _message;
@@ -26,6 +26,15 @@ namespace FubuMVC.Core
         protected FubuException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            _errorCode = info.GetInt32("errorCode");
+            _message = info.GetString("message");
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("errorCode", _errorCode);
+            info.AddValue("message", _message);
         }
 
         public FubuException(int errorCode, Exception inner, string template, params string[] substitutions)
@@ -39,7 +48,15 @@ namespace FubuMVC.Core
         }
 
         public override string Message { get { return "FubuMVC Error {0}:  \n{1}".ToFormat(_errorCode, _message); } }
-
+        
         public int ErrorCode { get { return _errorCode; } }
+    }
+
+
+    [Serializable]
+    public class FubuAssertionException : Exception
+    {
+        public FubuAssertionException(string message) : base(message) { }
+        protected FubuAssertionException(SerializationInfo info, StreamingContext context) : base(info, context) {}
     }
 }

@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void smoke_test()
         {
-            Debug.WriteLine(new BehaviorGraphWriter(graph).Routes());
+            Debug.WriteLine(new BehaviorGraphWriter(graph).PrintRoutes());
         }
     }
 
@@ -132,11 +132,11 @@ namespace FubuMVC.Tests.Diagnostics
         }
 
         [Test]
-        public void should_include_links_for_the_public_instance_methods()
+        public void should_include_links_for_the_public_instance_methods_with_description_attributes()
         {
             HtmlTag child = _output.Current.Children[0];
-            child.ToString().IndexOf("RoutesTable").ShouldNotEqual(-1);
-            child.ToString().IndexOf("ActionsTable").ShouldNotEqual(-1);
+            child.ToString().IndexOf("Routes").ShouldNotEqual(-1);
+            child.ToString().IndexOf("Actions").ShouldNotEqual(-1);
         }
     }
 }

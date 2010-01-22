@@ -1,11 +1,8 @@
 @ECHO *** Installing Rake
-@call gem install rake --include-dependencies
-
-@ECHO *** Installing ActiveRecord
-@call gem install activerecord --include-dependencies
+@call gem install rake --no-rdoc --no-ri
 
 @ECHO *** Installing RubyZip
-@call gem install rubyzip --include-dependencies
+@call gem install rubyzip --no-rdoc --no-ri
 
-@ECHO *** Installing Rails
-@call gem install rails --include-dependencies
+@ECHO *** Installing Albacore (build support tools)
+@call gem install albacore --no-rdoc --no-ri
