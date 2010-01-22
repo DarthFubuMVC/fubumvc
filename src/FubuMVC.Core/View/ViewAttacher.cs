@@ -24,7 +24,7 @@ namespace FubuMVC.Core.View
             var views = _facilities.SelectMany(x => x.FindViews(_types));
             var bag = new ViewBag(views);
 
-            graph.Actions().Each(a => attachView(bag, a));
+            graph.Actions().Each(a => AttemptToAttachViewToAction(bag, a));
         }
 
         public void AddFacility(IViewFacility facility)
@@ -38,7 +38,7 @@ namespace FubuMVC.Core.View
         }
 
 
-        private void attachView(ViewBag bag, ActionCall call)
+        public void AttemptToAttachViewToAction(ViewBag bag, ActionCall call)
         {
             foreach (var strategy in _strategies)
             {

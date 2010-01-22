@@ -128,9 +128,10 @@ namespace FubuMVC.Tests
             Assert.IsNull(anObject);
         }
 
-        public static void ShouldNotBeNull(this object anObject)
+        public static T ShouldNotBeNull<T>(this T anObject)
         {
             Assert.IsNotNull(anObject);
+            return anObject;
         }
 
         public static void ShouldNotBeNull(this object anObject, string message)

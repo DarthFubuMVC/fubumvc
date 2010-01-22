@@ -154,7 +154,7 @@ namespace FubuMVC.Tests.View
 
         public BehaviorNode ToBehavioralNode()
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public Type ViewType { get; set;}

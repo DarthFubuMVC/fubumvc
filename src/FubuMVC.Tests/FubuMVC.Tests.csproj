@@ -200,6 +200,7 @@
       <DependentUpon>View4.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="View\ViewAttacherTester.cs" />
     <Compile Include="View\ViewAttachmentStrategiesTester.cs" />
     <Compile Include="View\WebForms\WebFormViewFacilityTester.cs" />
     <Compile Include="View\WebForms\WebFormViewTokenTester.cs" />
