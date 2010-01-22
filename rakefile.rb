@@ -22,7 +22,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
 desc "Update the version information for the build"
-assemblyinfotask :version do |asm|
+assemblyinfo :version do |asm|
   asm.version = BUILD_NUMBER
   asm.custom_attributes :AssemblyInformationalVersion => BUILD_NUMBER
   asm.product_name = PRODUCT
@@ -68,7 +68,7 @@ desc "Target used for the CI server"
 task :ci => [:unit_test,:zip]
 
 desc "ZIPs up the build results"
-ziptask do |zip|
+zip do |zip|
 	zip.directories_to_zip = ["build"]
 	zip.output_file = 'fubumvc.zip'
 	zip.output_path = 'build'
