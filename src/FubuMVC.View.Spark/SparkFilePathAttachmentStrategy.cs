@@ -21,7 +21,7 @@ namespace FubuMVC.View.Spark
         public abstract string GetSparkViewPath(ActionCall call);
         public abstract string GetSparkViewFile(ActionCall call);
 
-        public IViewToken Find(ActionCall call, ViewBag views)
+        public IEnumerable<IViewToken> Find(ActionCall call, ViewBag views)
         {
             var proposedFolder = GetSparkViewPath(call);
             var proposedFile = GetSparkViewFile(call);
@@ -29,8 +29,8 @@ namespace FubuMVC.View.Spark
             var sparkFolder = new VirtualPathProviderViewFolder(proposedFolder);
 
             return ( sparkFolder.HasView(proposedFile))
-                 ? new SparkViewToken(proposedFolder + "/" + proposedFile)
-                 : null;
+                 ? new IViewToken[]{new SparkViewToken(proposedFolder + "/" + proposedFile)}
+                 : new IViewToken[0];
         }
     }
 

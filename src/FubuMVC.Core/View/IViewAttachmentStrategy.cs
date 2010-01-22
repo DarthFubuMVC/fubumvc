@@ -5,6 +5,6 @@ namespace FubuMVC.Core.View
 {
     public interface IViewAttachmentStrategy
     {
-        IViewToken Find(ActionCall call, ViewBag views);
+        IEnumerable<IViewToken> Find(ActionCall call, ViewBag views);
     }
 }
