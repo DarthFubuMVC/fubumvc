@@ -9,7 +9,7 @@ namespace FubuMVC.Core.View
     public class ViewAttacher : IConfigurationAction
     {
         private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
-        private readonly List<IViewAttachmentStrategy> _strategies = new List<IViewAttachmentStrategy>();
+        private readonly List<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
         private readonly TypePool _types;
 
         public ViewAttacher(TypePool types)
@@ -32,22 +32,21 @@ namespace FubuMVC.Core.View
             _facilities.Add(facility);
         }
 
-        public void AddAttachmentStrategy(IViewAttachmentStrategy strategy)
+        public void AddViewsForActionFilter(IViewsForActionFilter filter)
         {
-            _strategies.Add(strategy);
+            _filters.Add(filter);
         }
 
 
         public void AttemptToAttachViewToAction(ViewBag bag, ActionCall call)
         {
-            foreach (var strategy in _strategies)
+            foreach (var filter in _filters)
             {
-                var tokens = strategy.Find(call, bag);
-                // if the strategy returned more than one, consider it "failed", ignore it, and move on to the next
-                if (tokens.Count() == 1)
+                var viewTokens = filter.Apply(call, bag);
+                // if the filter returned more than one, consider it "failed", ignore it, and move on to the next
+                if (viewTokens.Count() == 1)
                 {
-                    IViewToken token = tokens.First();
-                    call.Append(token.ToBehavioralNode());
+                    call.Append(viewTokens.First().ToBehavioralNode());
                     break;
                 }
             }

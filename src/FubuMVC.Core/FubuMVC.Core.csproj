@@ -227,8 +227,9 @@
     <Compile Include="Urls\IUrlRegistry.cs" />
     <Compile Include="Util\ExpressionsExtensions.cs" />
     <Compile Include="Util\Indexer.cs" />
-    <Compile Include="Registration\DSL\ViewAttachmentStrategyExpression.cs" />
+    <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
+    <Compile Include="View\ActionReturnsViewModelType.cs" />
     <Compile Include="View\FubuMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -237,14 +238,14 @@
     </Compile>
     <Compile Include="View\IFubuPage.cs" />
     <Compile Include="View\IFubuView.cs" />
-    <Compile Include="View\IViewAttachmentStrategy.cs" />
+    <Compile Include="View\IViewsForActionFilter.cs" />
     <Compile Include="View\IViewEngine.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
     <Compile Include="View\PageHarness.cs" />
     <Compile Include="View\RenderFubuViewBehavior.cs" />
-    <Compile Include="View\TypeAndNamespace.cs" />
-    <Compile Include="View\TypeAndNamespaceAndName.cs" />
+    <Compile Include="View\ActionInSameFolderAsViewReturnsViewModelType.cs" />
+    <Compile Include="View\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\ViewAttacher.cs" />
     <Compile Include="View\ViewBag.cs" />
     <Compile Include="View\ViewPath.cs" />

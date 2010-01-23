@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using FubuMVC.Core;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
@@ -10,18 +8,18 @@ namespace FubuMVC.View.Spark
 {
     public static class FubuSparkRegistryConfigurationExtensions
     {
-        public static void to_spark_view_by_action_namespace_and_name(this ViewAttachmentStrategyExpression expression, string baseNamespace)
+        public static void to_spark_view_by_action_namespace_and_name(this ViewsForActionFilterExpression expression, string baseNamespace)
         {
-            expression.by(new SparkViewInferredPathFromActionNamespaceAndNameStrategy(baseNamespace));
+            expression.by(new SparkViewPathInferredFromActionNamespaceAndName(baseNamespace));
         }
     }
 
-    public abstract class SparkFilePathAttachmentStrategy : IViewAttachmentStrategy
+    public abstract class SparkFilePathExistsFilter : IViewsForActionFilter
     {
         public abstract string GetSparkViewPath(ActionCall call);
         public abstract string GetSparkViewFile(ActionCall call);
 
-        public IEnumerable<IViewToken> Find(ActionCall call, ViewBag views)
+        public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
             var proposedFolder = GetSparkViewPath(call);
             var proposedFile = GetSparkViewFile(call);
@@ -34,11 +32,11 @@ namespace FubuMVC.View.Spark
         }
     }
 
-    public class SparkViewInferredPathFromActionNamespaceAndNameStrategy : SparkFilePathAttachmentStrategy
+    public class SparkViewPathInferredFromActionNamespaceAndName : SparkFilePathExistsFilter
     {
         private readonly string _baseNamespace;
 
-        public SparkViewInferredPathFromActionNamespaceAndNameStrategy(string baseNamespace)
+        public SparkViewPathInferredFromActionNamespaceAndName(string baseNamespace)
         {
             _baseNamespace = baseNamespace.ToLowerInvariant();
         }

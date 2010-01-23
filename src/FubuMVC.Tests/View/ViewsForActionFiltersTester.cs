@@ -10,10 +10,8 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.View
 {
     [TestFixture]
-    public class TypeAndNamespaceAndNameTester
+    public class when_filtering_views_by_viewmodel_type_and_namespace_and_name
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -31,55 +29,51 @@ namespace FubuMVC.Tests.View
 
             bag = new ViewBag(views);
 
-            strategy = new TypeAndNamespaceAndName();
+            filter = new ActionWithSameNameAndFolderAsViewReturnsViewModelType();
         }
-
-        #endregion
 
         private FakeViewToken token;
         private ViewBag bag;
-        private TypeAndNamespaceAndName strategy;
+        private ActionWithSameNameAndFolderAsViewReturnsViewModelType filter;
 
         [Test]
         public void everything_matches()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
-            strategy.Find(action, bag).First().ShouldBeTheSameAs(token);
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
         }
 
         [Test]
         public void only_name_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewModelType = typeof (ViewModel2);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldEqual(0);
         }
 
         [Test]
         public void only_type_and_name_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Folder = Guid.NewGuid().ToString();
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldEqual(0);
         }
 
         [Test]
         public void only_type_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Name = "something different";
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldEqual(0);
         }
     }
 
     [TestFixture]
-    public class TypeAndNamespaceTester
+    public class when_filtering_views_by_viewmodel_type_and_namespace
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -97,47 +91,45 @@ namespace FubuMVC.Tests.View
 
             bag = new ViewBag(views);
 
-            strategy = new TypeAndNamespace();
+            filter = new ActionInSameFolderAsViewReturnsViewModelType();
         }
-
-        #endregion
 
         private FakeViewToken token;
         private ViewBag bag;
-        private TypeAndNamespace strategy;
+        private ActionInSameFolderAsViewReturnsViewModelType filter;
 
         [Test]
         public void everything_matches()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
-            strategy.Find(action, bag).First().ShouldBeTheSameAs(token);
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
+            filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
         }
 
         [Test]
         public void only_name_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.ViewModelType = typeof (ViewModel2);
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldEqual(0);
         }
 
         [Test]
         public void only_type_and_name_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Folder = Guid.NewGuid().ToString();
 
-            strategy.Find(action, bag).Count().ShouldEqual(0);
+            filter.Apply(action, bag).Count().ShouldEqual(0);
         }
 
         [Test]
         public void only_type_and_namespace_match()
         {
-            ActionCall action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            ActionCall action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             token.Name = "something different";
 
-            strategy.Find(action, bag).First().ShouldBeTheSameAs(token);
+            filter.Apply(action, bag).First().ShouldBeTheSameAs(token);
         }
     }
 
@@ -183,7 +175,7 @@ namespace FubuMVC.Tests.View
         }
     }
 
-    public class ViewAttachmentStrategiesTesterController
+    public class ViewsForActionFilterTesterController
     {
         public ViewModel1 AAction()
         {

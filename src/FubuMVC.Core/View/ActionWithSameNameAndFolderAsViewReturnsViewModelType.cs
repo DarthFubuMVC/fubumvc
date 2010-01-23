@@ -4,9 +4,9 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.View
 {
-    public class TypeAndNamespaceAndName : IViewAttachmentStrategy
+    public class ActionWithSameNameAndFolderAsViewReturnsViewModelType : IViewsForActionFilter
     {
-        public IEnumerable<IViewToken> Find(ActionCall call, ViewBag views)
+        public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
             return views.ViewsFor(call.OutputType()).Where(view => view.Name == call.Method.Name && view.Folder == call.HandlerType.Namespace);
         }

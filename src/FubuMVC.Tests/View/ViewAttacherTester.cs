@@ -12,44 +12,44 @@ namespace FubuMVC.Tests.View
     {
         private ViewAttacher _viewAttacher;
         private ActionCall _action;
-        private IViewAttachmentStrategy _firstStrategyThatFindsExactlyOne;
+        private IViewsForActionFilter _firstFilterThatFindsExactlyOne;
         private ViewBag _views;
         private FakeViewToken _fromFindsOne;
-        private IViewAttachmentStrategy _secondStrategyThatFindsExactlyOne;
+        private IViewsForActionFilter _secondFilterThatFindsExactlyOne;
         private FakeViewToken _fromSecondFindsOne;
-        private IViewAttachmentStrategy _strategyThatFindsNone;
-        private IViewAttachmentStrategy _strategyThatFindsMultiple;
+        private IViewsForActionFilter _filterThatFindsNone;
+        private IViewsForActionFilter _filterThatFindsMultiple;
 
         [SetUp]
         public void Setup()
         {
             var types = new TypePool();
-            _action = ActionCall.For<ViewAttachmentStrategiesTesterController>(x => x.AAction());
+            _action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             _fromFindsOne = new FakeViewToken();
             _fromSecondFindsOne = new FakeViewToken();
             _views = new ViewBag(new IViewToken[] { _fromFindsOne, _fromSecondFindsOne });
-            _strategyThatFindsNone = createStrategyThatReturns(new IViewToken[0]);
-            _firstStrategyThatFindsExactlyOne = createStrategyThatReturns(_fromFindsOne);
-            _secondStrategyThatFindsExactlyOne = createStrategyThatReturns(_fromSecondFindsOne);
-            _strategyThatFindsMultiple = createStrategyThatReturns(_fromFindsOne, _fromSecondFindsOne);
+            _filterThatFindsNone = createFilterThatReturns(new IViewToken[0]);
+            _firstFilterThatFindsExactlyOne = createFilterThatReturns(_fromFindsOne);
+            _secondFilterThatFindsExactlyOne = createFilterThatReturns(_fromSecondFindsOne);
+            _filterThatFindsMultiple = createFilterThatReturns(_fromFindsOne, _fromSecondFindsOne);
             _viewAttacher = new ViewAttacher(types);
         }
 
         [Test]
-        public void does_not_attach_a_view_if_no_strategies_find_a_match()
+        public void does_not_attach_a_view_if_no_filters_find_a_match()
         {
-            _viewAttacher.AddAttachmentStrategy(_strategyThatFindsNone);
+            _viewAttacher.AddViewsForActionFilter(_filterThatFindsNone);
             
             _viewAttacher.AttemptToAttachViewToAction(_views, _action);
             _action.OfType<FakeViewToken>().ShouldHaveCount(0);
         }
 
         [Test]
-        public void should_use_first_strategy_that_succeeds()
+        public void should_use_first_filter_that_returns_exactly_one_view()
         {
-            _viewAttacher.AddAttachmentStrategy(_strategyThatFindsNone);
-            _viewAttacher.AddAttachmentStrategy(_firstStrategyThatFindsExactlyOne);
-            _viewAttacher.AddAttachmentStrategy(_secondStrategyThatFindsExactlyOne);
+            _viewAttacher.AddViewsForActionFilter(_filterThatFindsNone);
+            _viewAttacher.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
+            _viewAttacher.AddViewsForActionFilter(_secondFilterThatFindsExactlyOne);
 
             _viewAttacher.AttemptToAttachViewToAction(_views, _action);
             var attachedView = _action.OfType<FakeViewToken>().ShouldHaveCount(1).FirstOrDefault();
@@ -57,20 +57,20 @@ namespace FubuMVC.Tests.View
         }
 
         [Test]
-        public void should_not_attach_a_view_from_a_strategy_that_returns_more_than_one_token()
+        public void should_not_attach_a_view_from_a_filter_that_returns_more_than_one_token()
         {
-            _viewAttacher.AddAttachmentStrategy(_strategyThatFindsMultiple);
+            _viewAttacher.AddViewsForActionFilter(_filterThatFindsMultiple);
 
             _viewAttacher.AttemptToAttachViewToAction(_views, _action);
             _action.OfType<FakeViewToken>().ShouldHaveCount(0);
         }
 
         
-        private static IViewAttachmentStrategy createStrategyThatReturns(params IViewToken[] viewTokens)
+        private static IViewsForActionFilter createFilterThatReturns(params IViewToken[] viewTokens)
         {
-            var strategy = MockRepository.GenerateMock<IViewAttachmentStrategy>();
-            strategy.Stub(x => x.Find(null, null)).IgnoreArguments().Return(viewTokens);
-            return strategy;
+            var filter = MockRepository.GenerateMock<IViewsForActionFilter>();
+            filter.Stub(x => x.Apply(null, null)).IgnoreArguments().Return(viewTokens);
+            return filter;
         }
     }
 }

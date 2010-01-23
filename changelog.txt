@@ -1,0 +1,5 @@
+This file should be used to track breaking changes between revisions.
+(and newer changes to the top)
+
+Jan 23, 2010
+IViewAttachmentStrategy.Find renamed to IViewsForActionFilter.Apply

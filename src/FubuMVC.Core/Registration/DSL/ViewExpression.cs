@@ -18,9 +18,9 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public ViewExpression TryToAttach(Action<ViewAttachmentStrategyExpression> configure)
+        public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
-            var expression = new ViewAttachmentStrategyExpression(_viewAttacher);
+            var expression = new ViewsForActionFilterExpression(_viewAttacher);
             configure(expression);
 
             return this;
