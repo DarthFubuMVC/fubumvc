@@ -9,15 +9,6 @@ namespace FubuMVC.Tests.Diagnostics
     [TestFixture]
     public class RouteColumnTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
         [Test]
         public void write_route_column_when_the_route_does_not_exist()
         {

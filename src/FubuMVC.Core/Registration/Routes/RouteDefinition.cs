@@ -10,7 +10,7 @@ using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteDefinition : IRouteDefinition
+    public class RouteDefinition : IRouteDefinition, IModelUrl
     {
         private string _pattern;
         private readonly RouteValueDictionary _constraints = new RouteValueDictionary();
@@ -18,6 +18,11 @@ namespace FubuMVC.Core.Registration.Routes
         public RouteDefinition(string pattern)
         {
             _pattern = pattern;
+        }
+
+        public virtual Type InputType
+        {
+            get { return null; }
         }
 
         public virtual string CreateUrl(object input)
@@ -82,7 +87,7 @@ namespace FubuMVC.Core.Registration.Routes
         }
     }
 
-    public class RouteDefinition<T> : RouteDefinition, IModelUrl
+    public class RouteDefinition<T> : RouteDefinition
     {
         private readonly List<RouteInput> _queryInputs = new List<RouteInput>();
         private readonly List<RouteInput> _routeInputs = new List<RouteInput>();
@@ -94,7 +99,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public List<RouteInput> RouteInputs { get { return _routeInputs; } }
         public List<RouteInput> QueryInputs { get { return _queryInputs; } }
-        public Type InputType { get { return typeof (T); } }
+        public override Type InputType { get { return typeof (T); } }
 
         public override string CreateUrl(object input)
         {

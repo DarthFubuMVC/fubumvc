@@ -72,7 +72,12 @@ namespace FubuMVC.Core.Diagnostics
                 t.Add("span").AddClass("chainId").Text(behaviorChain.UniqueId.ToString());
             });
             var document = new HtmlTag("div");
-            document.Child(new HtmlTag("div").Text("Route: " + behaviorChain.RoutePattern));
+            var pattern = behaviorChain.RoutePattern;
+            if( pattern == string.Empty )
+            {
+                pattern = "(default)";
+            }
+            document.Child(new HtmlTag("div").Text("Route: " + pattern));
 
             var nodeTable = new TableTag();
             nodeTable.AddHeaderRow(header =>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -119,7 +119,9 @@
     <Compile Include="Registration\BehaviorVisitorTester.cs" />
     <Compile Include="Registration\Conventions\BehaviorMatcherTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
+    <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />
+    <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\DownloadFileConventionIntegratedTester.cs" />
     <Compile Include="Registration\Conventions\HtmlTagAndDocumentHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\IInputTypeRouteInputsModelTester.cs" />

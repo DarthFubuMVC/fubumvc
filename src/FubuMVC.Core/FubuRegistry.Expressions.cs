@@ -1,13 +1,18 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.Util;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
@@ -48,11 +53,6 @@ namespace FubuMVC.Core
             where TConvention : IConfigurationAction
         {
             _conventions.Add(convention);
-        }
-
-        public ChainedBehaviorExpression HomeIs()
-        {
-            return Route(string.Empty);
         }
 
         public ChainedBehaviorExpression Route(string pattern)

@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.StructureMap.Bootstrap;
 using FubuMVC.View.Spark;
 
@@ -37,7 +38,7 @@ namespace FubuMVC.HelloWorld
                     x.by_ViewModel();
                 });
 
-            
+            HomeIs<HomeInputModel>();
         }
     }
 }
