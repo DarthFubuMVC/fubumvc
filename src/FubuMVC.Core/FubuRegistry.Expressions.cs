@@ -5,6 +5,7 @@ using System.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -53,6 +54,17 @@ namespace FubuMVC.Core
             where TConvention : IConfigurationAction
         {
             _conventions.Add(convention);
+        }
+
+        public void HomeIs<TController>(Expression<Action<TController>> controllerAction)
+        {
+            var method = ReflectionHelper.GetMethod(controllerAction);
+            _routeResolver.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(method));
+        }
+
+        public void HomeIs<TModel>()
+        {
+            _routeResolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof(TModel)));
         }
 
         public ChainedBehaviorExpression Route(string pattern)

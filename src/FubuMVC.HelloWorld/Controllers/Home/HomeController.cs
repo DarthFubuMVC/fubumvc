@@ -10,14 +10,6 @@ namespace FubuMVC.HelloWorld.Controllers.Home
             };
         }
 
-        public HomeViewModel Test(HomeInputModel model)
-        {
-            return new HomeViewModel
-            {
-                Text = "Hello, world."
-            };
-        }
-
         public HelloViewModel Hello(HelloInputModel model)
         {
             return new HelloViewModel{Text = "Hello from Hello()"};
