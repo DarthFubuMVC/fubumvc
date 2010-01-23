@@ -159,7 +159,7 @@
     <Compile Include="Registration\IBehaviorVisitor.cs" />
     <Compile Include="Registration\IRouteVisitor.cs" />
     <Compile Include="Registration\IServiceRegistry.cs" />
-    <Compile Include="Registration\IUrlCategoryConvention.cs" />
+    <Compile Include="Registration\IUrlRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
@@ -177,7 +177,7 @@
     <Compile Include="Runtime\RequestData.cs" />
     <Compile Include="Runtime\ServiceArguments.cs" />
     <Compile Include="TypeExtensions.cs" />
-    <Compile Include="Registration\DSL\UrlCategoriesExpression.cs" />
+    <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Urls\IModelUrl.cs" />
     <Compile Include="Urls\IUrlRegistration.cs" />

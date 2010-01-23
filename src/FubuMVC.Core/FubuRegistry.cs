@@ -24,7 +24,7 @@ namespace FubuMVC.Core
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
         private readonly TypePool _types = new TypePool();
-        private readonly List<IUrlCategoryConvention> _urlConventions = new List<IUrlCategoryConvention>();
+        private readonly List<IUrlRegistrationConvention> _urlConventions = new List<IUrlRegistrationConvention>();
 
         private readonly UrlRegistry _urls = new UrlRegistry();
         private readonly ViewAttacher _viewAttacher;

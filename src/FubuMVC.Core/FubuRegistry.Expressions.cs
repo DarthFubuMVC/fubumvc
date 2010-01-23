@@ -39,7 +39,7 @@ namespace FubuMVC.Core
 
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
 
-        public UrlCategoriesExpression Urls { get { return new UrlCategoriesExpression(convention => _urlConventions.Add(convention), _urls); } }
+        public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(convention => _urlConventions.Add(convention), _urls); } }
         public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
 
         public ModelsExpression Models { get { return new ModelsExpression(_explicits); } }
@@ -52,13 +52,13 @@ namespace FubuMVC.Core
             _explicits.Add(action);
         }
 
-        public void Apply<TConvention>()
+        public void ApplyConvention<TConvention>()
             where TConvention : IConfigurationAction, new()
         {
-            Apply(new TConvention());
+            ApplyConvention(new TConvention());
         }
 
-        public void Apply<TConvention>(TConvention convention)
+        public void ApplyConvention<TConvention>(TConvention convention)
             where TConvention : IConfigurationAction, new()
         {
             _conventions.Add(convention);

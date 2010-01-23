@@ -2,7 +2,7 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration
 {
-    public interface IUrlCategoryConvention
+    public interface IUrlRegistrationConvention
     {
         void Configure(BehaviorGraph graph, IUrlRegistration registration);
     }

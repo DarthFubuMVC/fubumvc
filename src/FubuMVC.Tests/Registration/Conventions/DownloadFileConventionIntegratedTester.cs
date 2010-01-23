@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesImplementing<DownloadTestController>();
 
-                x.Apply<DownloadFileConvention>();
+                x.ApplyConvention<DownloadFileConvention>();
             })
                 .BuildGraph();
         }

@@ -3,3 +3,7 @@ This file should be used to track breaking changes between revisions.
 
 Jan 23, 2010
 IViewAttachmentStrategy.Find renamed to IViewsForActionFilter.Apply
+
+FubuRegistry.Apply renamed to FubuRegistry.ApplyConvention
+FubuRegistry.Urls renamed to FubuRegistry.UrlRegistry
+IUrlsCategoryConvention renamed to IUrlRegistrationConvention

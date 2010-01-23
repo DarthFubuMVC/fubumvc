@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
 
-                x.Apply<TestCustomConvention>();
+                x.ApplyConvention<TestCustomConvention>();
             })
                 .BuildGraph();
         }
