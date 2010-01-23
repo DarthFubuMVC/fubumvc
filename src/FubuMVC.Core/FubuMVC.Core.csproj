@@ -113,6 +113,7 @@
     <Compile Include="Models\MapFromWebPathFamily.cs" />
     <Compile Include="Models\ModelBindingAttributes.cs" />
     <Compile Include="Models\ResolveConnectionStringFamily.cs" />
+    <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />

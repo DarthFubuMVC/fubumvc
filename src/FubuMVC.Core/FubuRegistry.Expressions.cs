@@ -3,9 +3,7 @@ using System.Linq;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -24,19 +22,7 @@ namespace FubuMVC.Core
     public partial class FubuRegistry
     {
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
-        public ActionCallFilterExpression JsonOutputIf { get { return output(call => call.OutputToJson()); } }
-
-        public ActionCallFilterExpression HtmlOutputIf
-        {
-            get
-            {
-                return output(call => call.Append(new RenderTextNode<string>
-                {
-                    MimeType = MimeType.Html
-                }));
-            }
-        }
-
+        public OutputDeterminationExpression Output { get{ return new OutputDeterminationExpression(this);}}
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
 
         public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(convention => _urlConventions.Add(convention), _urls); } }
@@ -59,35 +45,10 @@ namespace FubuMVC.Core
         }
 
         public void ApplyConvention<TConvention>(TConvention convention)
-            where TConvention : IConfigurationAction, new()
+            where TConvention : IConfigurationAction
         {
             _conventions.Add(convention);
         }
-
-        private ActionCallFilterExpression output(Action<ActionCall> configure)
-        {
-            var modification = new ActionCallModification(configure);
-            _conventions.Add(modification);
-
-            modification.Filters.Excludes += call => call.HasOutputBehavior();
-
-            return new ActionCallFilterExpression(modification.Filters);
-        }
-
-        public ActionCallFilterExpression OutputIs(Func<ActionCall, OutputNode> func)
-        {
-            return output(action =>
-            {
-                OutputNode node = func(action);
-                action.Append(node);
-            });
-        }
-
-        public ActionCallFilterExpression OutputIs<T>() where T : OutputNode, new()
-        {
-            return output(action => action.Append(new T()));
-        }
-
 
         public ChainedBehaviorExpression HomeIs()
         {
@@ -164,8 +125,6 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IViewActivator, NulloViewActivator>();
         }
 
-        #region Nested type: RegistryImport
-
         public class RegistryImport
         {
             public string Prefix { get; set; }
@@ -176,7 +135,5 @@ namespace FubuMVC.Core
                 graph.Import(Registry.BuildGraph(), Prefix);
             }
         }
-
-        #endregion
     }
 }

@@ -148,12 +148,5 @@ namespace FubuMVC.Core.Registration.Nodes
                        (Method != null ? Method.GetHashCode() : 0);
             }
         }
-
-        public void OutputToJson()
-        {
-            // TODO -- throw exception if this is called and there is no output
-            var json = new RenderJsonNode(OutputType());
-            Append(json);
-        }
     }
 }

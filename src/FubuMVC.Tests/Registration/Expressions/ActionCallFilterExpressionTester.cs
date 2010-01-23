@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void specify_a_filter_by_action_call()
         {
-            expression.CallMatches(call => call == action1);
+            expression.WhenCallMatches(call => call == action1);
             filter.Matches(action1).ShouldBeTrue();
             filter.Matches(action2).ShouldBeFalse();
         }

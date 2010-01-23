@@ -47,11 +47,11 @@ namespace FubuMVC.Core
             Policies.Add<WebFormsEndpointPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
 
-            HtmlOutputIf.CallMatches(x => x.Method.HasCustomAttribute<HtmlEndpointAttribute>());
-            JsonOutputIf.CallMatches(x => x.Method.HasCustomAttribute<JsonEndpointAttribute>());
+            Output.ToHtml.WhenCallMatches(x => x.Method.HasCustomAttribute<HtmlEndpointAttribute>());
+            Output.ToJson.WhenCallMatches(x => x.Method.HasCustomAttribute<JsonEndpointAttribute>());
 
-            OutputIs<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
-            OutputIs<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();
+            Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
+            Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();
 
             _conventions.Add(_viewAttacher);
         }

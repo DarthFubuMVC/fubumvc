@@ -12,8 +12,6 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class OutputIntegratedAttachmentTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -22,14 +20,12 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesImplementing<JsonOutputAttachmentTesterController>();
 
-                x.HtmlOutputIf.CallMatches(
+                x.Output.ToHtml.WhenCallMatches(
                     call => call.OutputType() == typeof (string) && call.Method.Name.ToLower().Contains("html"));
-                x.JsonOutputIf.WhenTheOutputModelIs<CrudReport>().WhenTheOutputModelIs<ContinuationClass>();
+                x.Output.ToJson.WhenTheOutputModelIs<CrudReport>().WhenTheOutputModelIs<ContinuationClass>();
             })
                 .BuildGraph();
         }
-
-        #endregion
 
         private BehaviorGraph graph;
 

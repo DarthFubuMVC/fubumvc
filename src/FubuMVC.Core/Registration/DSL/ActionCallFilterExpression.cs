@@ -15,10 +15,10 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ActionCallFilterExpression WhenTheOutputModelIs<T>()
         {
-            return CallMatches(call => call.OutputType().CanBeCastTo<T>());
+            return WhenCallMatches(call => call.OutputType().CanBeCastTo<T>());
         }
 
-        public ActionCallFilterExpression CallMatches(Func<ActionCall, bool> func)
+        public ActionCallFilterExpression WhenCallMatches(Func<ActionCall, bool> func)
         {
             _filter.Includes += func;
 

@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Registration
         public void append_json()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            action.OutputToJson();
+            action.Append(new RenderJsonNode(action.OutputType()));
 
             action.Next.ShouldBeOfType<RenderJsonNode>().ModelType.ShouldEqual(action.OutputType());
         }
