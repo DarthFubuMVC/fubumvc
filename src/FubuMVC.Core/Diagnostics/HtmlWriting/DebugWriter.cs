@@ -18,10 +18,24 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             HtmlTag header = new HtmlTag("div", x =>
             {
-                x.Child<DLTag>()
-                    .AddDefinition("Url", _report.Url)
-                    .AddDefinition("Execution Time", _report.ExecutionTime + " milliseconds")
-                    .AddDefinition("At", _report.Time.ToLongTimeString());
+                var table = x.Child<TableTag>()
+                    .AddBodyRow(row =>
+                        {
+                            row.Cell("Request Url:");
+                            row.Cell(_report.Url).AddClass("cell-data");
+                        })
+                    .AddBodyRow(row =>
+                        {
+                            row.Cell("Execution Time:");
+                            row.Cell(_report.ExecutionTime + " milliseconds");
+                        })
+                    .AddBodyRow(row =>
+                        {
+                            row.Cell("At:");
+                            row.Cell(_report.Time.ToString("G"));
+                        });
+
+                table.AddClass("summary");
 
                 writeFormData(x);
             });
