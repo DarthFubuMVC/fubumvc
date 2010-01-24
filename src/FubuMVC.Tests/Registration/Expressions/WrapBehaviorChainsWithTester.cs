@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Routing;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.StructureMap;
@@ -70,15 +71,16 @@ namespace FubuMVC.Tests.Registration.Expressions
             BehaviorGraph graph = registry.BuildGraph();
 
             graph.BehaviorChainCount.ShouldEqual(3);
-            graph.VisitBehaviors(x =>
+            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            visitor.Actions += chain =>
             {
-                x.Actions += chain =>
-                {
-                    var wrapper = chain.Top.ShouldBeOfType<Wrapper>();
-                    wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
-                    wrapper.Next.ShouldBeOfType<ActionCall>();
-                };
-            });
+                var wrapper = chain.Top.ShouldBeOfType<Wrapper>();
+                wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
+                wrapper.Next.ShouldBeOfType<ActionCall>();
+            };
+
+            graph.VisitBehaviors(visitor);
+            
         }
 
         [Test]

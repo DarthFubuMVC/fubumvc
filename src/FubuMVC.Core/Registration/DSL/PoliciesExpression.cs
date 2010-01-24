@@ -17,10 +17,11 @@ namespace FubuMVC.Core.Registration.DSL
 
         public PoliciesExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior
         {
-            var visitor = new BehaviorVisitor();
-            visitor.Actions += chain => chain.Prepend(new Wrapper(typeof (T)));
+            var configAction = new VisitBehaviorsAction(v =>
+                v.Actions += chain => chain.Prepend(new Wrapper(typeof (T))),
+                "wrap with the {0} behavior".ToFormat(typeof(T).Name));
 
-            _actions.Fill(visitor);
+            _actions.Fill(configAction);
 
             return this;
         }
