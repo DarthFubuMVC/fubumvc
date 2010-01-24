@@ -1,5 +1,61 @@
-﻿body
-{
+﻿html, body{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#111;
+	line-height:1.4em;
+	background-color: #ccc;
+}
+
+.main{
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color: #fff;
+}
+
+.main > h2 {
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 10px;
+}
+
+.main ul {
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.main ul > li {
+}
+
+.main table > thead > tr > th{
+	padding: 8px;
+	background-color: #eee;
+}
+
+.main table > tbody > tr > td {
+	padding: 8px;
+	border-bottom: 1px dotted #d8d8d8;
+}
+
+.main table > tbody > tr:hover{
+	background-color: #c8c8c8;
+}
+
+.main-content{
+	padding: 4px 10px;
+}
+
+.convention-log li{
+	font-family: Consolas, Courier New, Courier;	
 }
 
 .behavior
@@ -15,24 +71,25 @@
 	background-color: #dddddd;
 }
 
-TABLE.details
+
+table.details
 {
     border: solid thin black;
     margin-bottom: 25px;
 }
 
-TABLE.details TR
+table.details TR
 {
 	padding-bottom: 1px;
 	padding-top: 1px;
 }
 
-TABLE.details > THEAD > TR
+table.details > THEAD > TR
 {
 	border-bottom: solid thin black;
 }
 
-TABLE.details TD
+table.details TD
 {
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -40,7 +97,7 @@ TABLE.details TD
 	padding-right: 10px;
 }
 
-TABLE.details TH
+table.details TH
 {
     BACKGROUND-COLOR: Silver;
     font-weight: bold;

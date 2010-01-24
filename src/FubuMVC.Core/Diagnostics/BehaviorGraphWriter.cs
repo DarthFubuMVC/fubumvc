@@ -8,6 +8,7 @@ using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.TextWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using HtmlTags;
 using System.Linq;
 
@@ -25,7 +26,11 @@ namespace FubuMVC.Core.Diagnostics
         [UrlPattern("_fubu")]
         public HtmlDocument Index()
         {
-            var ul = new HtmlTag("ul");
+            const string title = "FubuMVC: Diagnostics";
+
+            var mainDiv = new HtmlTag("div").AddClass("main");
+            mainDiv.Add("h2").Text(title);
+            var ul = mainDiv.Add("ul");
             availableActions().Each(method =>
             {
                 var url = DiagnosticUrlPolicy.RootUrlFor(method);
@@ -37,7 +42,7 @@ namespace FubuMVC.Core.Diagnostics
                 });
             });
 
-            return BuildDocument("Fubu Diagnostics", ul);
+            return BuildDocument(title, mainDiv);
         }
 
         private IEnumerable<MethodInfo> availableActions()
@@ -62,16 +67,21 @@ namespace FubuMVC.Core.Diagnostics
 
         public HtmlDocument Chain(ChainRequest chainRequest)
         {
+            var title = "FubuMVC: Chain " + chainRequest.Id;
+
             var behaviorChain = _graph.Behaviors.FirstOrDefault(chain => chain.UniqueId == chainRequest.Id);
             if (behaviorChain == null)
             {
                 return BuildDocument("Unknown chain", new HtmlTag("span").Text("No behavior chain registered with ID: " + chainRequest.Id));
             }
-            var heading = new HtmlTag("h1").Modify(t =>
+            var mainDiv = new HtmlTag("div").AddClass("main");
+            mainDiv.Add("h2").Modify(t =>
             {
-                t.Add("span").Text("Chain ");
+                t.Add("span").Text("FubuMVC: Chain ");
                 t.Add("span").AddClass("chainId").Text(behaviorChain.UniqueId.ToString());
             });
+            var content = mainDiv.Add("div").AddClass("main-content");
+
             var document = new HtmlTag("div");
             var pattern = behaviorChain.RoutePattern;
             if( pattern == string.Empty )
@@ -95,7 +105,7 @@ namespace FubuMVC.Core.Diagnostics
             }));
 
 
-            var logDiv = new HtmlTag("div");
+            var logDiv = new HtmlTag("div").AddClass("convention-log");
             var ul = logDiv.Add("ul");
 
             var observer = _graph.Observer;
@@ -103,22 +113,29 @@ namespace FubuMVC.Core.Diagnostics
                 call => observer.GetLog(call).Each(
                             entry => ul.Add("li").Text(entry)));
 
-            return BuildDocument(
-                "Chain " + chainRequest.Id, 
-                heading, 
+            content.AddChildren(new[]{
                 document, 
-                new HtmlTag("h2").Text("Nodes:"), 
+                new HtmlTag("h3").Text("Nodes:"),
                 nodeTable,
-                new HtmlTag("h2").Text("Log:"),
-                logDiv);
+                new HtmlTag("h3").Text("Log:"),
+                logDiv});
+
+            return BuildDocument(title, mainDiv);
+                
         }
 
         [Description("show all behavior chains")]
         public HtmlDocument Chains()
         {
+            const string title = "FubuMVC: Registered Behavior Chains";
+            
+            var mainDiv = new HtmlTag("div").AddClass("main");
+            mainDiv.Add("h2").Text(title);
+
             var table = writeTable(x => x.RoutePattern, chains, routes, actions);
 
-            return BuildDocument("Registered Fubu Behavior Chains", table);
+            mainDiv.AddChildren(table);
+            return BuildDocument(title, mainDiv);
         } 
 
 
@@ -227,6 +244,8 @@ namespace FubuMVC.Core.Diagnostics
         private HtmlTag writeTable(IEnumerable<BehaviorChain> chains, params IColumn[] columns)
         {
             var table = new TableTag();
+            table.Attr("cellspacing", "0");
+            table.Attr("cellpadding", "0");
             table.AddHeaderRow(row =>
             {
                 columns.Each(c => row.Header(c.Header()));
