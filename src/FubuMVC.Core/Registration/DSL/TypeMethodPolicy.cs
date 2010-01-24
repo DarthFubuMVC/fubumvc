@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Registration.DSL
             _filter.Includes += m => m.Name == method.Name;
         }
 
-        public void IncludeMethods(Func<MethodInfo, bool> filter)
+        public void IncludeMethods(Expression<Func<MethodInfo, bool>> filter)
         {
             _filter.Includes += filter;
         }

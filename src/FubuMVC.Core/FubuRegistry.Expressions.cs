@@ -38,6 +38,11 @@ namespace FubuMVC.Core
         public AppliesToExpression Applies { get { return new AppliesToExpression(_types); } }
         public ActionCallCandidateExpression Actions { get { return new ActionCallCandidateExpression(_behaviorMatcher, _types); } }
 
+        public void UsingObserver(IConfigurationObserver observer)
+        {
+            _observer = observer;
+        }
+
         public void Services(Action<IServiceRegistry> configure)
         {
             var action = new LambdaConfigurationAction(g => configure(g.Services));
@@ -110,6 +115,7 @@ namespace FubuMVC.Core
         {
             if (shouldInclude)
             {
+                UsingObserver(new RecordingConfigurationObserver());
                 Import<DiagnosticsRegistry>(string.Empty);
                 Modify<DiagnosticsPackage>();
                 _systemPolicies.Add(new DiagnosticBehaviorPrepender());

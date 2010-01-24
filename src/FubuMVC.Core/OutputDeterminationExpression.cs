@@ -15,7 +15,14 @@ namespace FubuMVC.Core
             _registry = registry;
         }
 
-        public ActionCallFilterExpression ToJson { get { return output(call => call.Append(new RenderJsonNode(call.OutputType()))); } }
+        public ActionCallFilterExpression ToJson
+        {
+            get
+            {
+                return output(call => call.Append(new RenderJsonNode(call.OutputType())),
+                    "Adding json output node to render json");
+            }
+        }
 
         public ActionCallFilterExpression ToHtml
         {
@@ -24,7 +31,7 @@ namespace FubuMVC.Core
                 return output(call => call.Append(new RenderTextNode<string>
                     {
                         MimeType = MimeType.Html
-                    }));
+                    }), "Adding output node to render raw HTML text");
             }
         }
 
@@ -34,17 +41,17 @@ namespace FubuMVC.Core
             {
                 OutputNode node = func(action);
                 action.Append(node);
-            });
+            }, "Adding output nodes from per-call function");
         }
 
         public ActionCallFilterExpression To<T>() where T : OutputNode, new()
         {
-            return output(action => action.Append(new T()));
+            return output(action => action.Append(new T()), "Adding output node '{0}'".ToFormat(typeof (T).Name));
         }
 
-        private ActionCallFilterExpression output(Action<ActionCall> configure)
+        private ActionCallFilterExpression output(Action<ActionCall> configure, string reason)
         {
-            var modification = new ActionCallModification(configure);
+            var modification = new ActionCallModification(configure, reason);
             _registry.ApplyConvention(modification);
 
             modification.Filters.Excludes += call => call.HasOutputBehavior();

@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Runtime
 
         protected override void beforeEach()
         {
-            graph = new BehaviorGraph();
+            graph = new BehaviorGraph(null);
             Services.Inject(graph);
             args = new ServiceArguments();
             Services.Inject(args);

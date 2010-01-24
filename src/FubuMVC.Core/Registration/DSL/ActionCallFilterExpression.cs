@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Util;
 
@@ -18,7 +19,7 @@ namespace FubuMVC.Core.Registration.DSL
             return WhenCallMatches(call => call.OutputType().CanBeCastTo<T>());
         }
 
-        public ActionCallFilterExpression WhenCallMatches(Func<ActionCall, bool> func)
+        public ActionCallFilterExpression WhenCallMatches(Expression<Func<ActionCall, bool>> func)
         {
             _filter.Includes += func;
 

@@ -87,6 +87,7 @@
     <Compile Include="Diagnostics\IBehaviorDetails.cs" />
     <Compile Include="Diagnostics\IBehaviorDetailsVisitor.cs" />
     <Compile Include="Diagnostics\HtmlWriting\IColumn.cs" />
+    <Compile Include="Diagnostics\IConfigurationObserver.cs" />
     <Compile Include="Diagnostics\IDebugDetector.cs" />
     <Compile Include="Diagnostics\IDebugReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\InputModelColumn.cs" />

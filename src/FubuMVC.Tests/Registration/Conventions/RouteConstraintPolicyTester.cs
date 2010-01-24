@@ -1,4 +1,5 @@
 using System.Web.Routing;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -13,12 +14,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         private RouteConstraintPolicy _policy;
         private IRouteDefinition _routeDefinition;
         private SpecificationExtensions.CapturingConstraint _argsToAddConstraint;
+        private IConfigurationObserver _observer;
 
         [SetUp]
         public void Setup()
         {
             _policy = new RouteConstraintPolicy();
             _routeDefinition = MockRepository.GenerateMock<IRouteDefinition>();
+            _observer = MockRepository.GenerateMock<IConfigurationObserver>();
             _policy.AddHttpMethodFilter(x => x.Method.Name.StartsWith("Query"), "GET");
             _policy.AddHttpMethodFilter(x => x.Method.Name.EndsWith("Command"), "POST");
 
@@ -29,7 +32,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_add_an_HttpMethodConstraint_to_the_route_definition_for_the_method_that_applies()
         {
-            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryParts()), _routeDefinition);
+            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryParts()), _routeDefinition, _observer);
 
             _argsToAddConstraint.First<string>().ShouldEqual(RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT);
             _argsToAddConstraint.Second<IRouteConstraint>().ShouldBeOfType<HttpMethodConstraint>()
@@ -39,11 +42,19 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_add_an_HttpMethodConstraint_to_the_route_definition_for_multiple_methods_that_appli()
         {
-            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand()), _routeDefinition);
+            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand()), _routeDefinition, _observer);
 
             _argsToAddConstraint.First<string>().ShouldEqual(RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT);
             _argsToAddConstraint.Second<IRouteConstraint>().ShouldBeOfType<HttpMethodConstraint>()
                 .AllowedMethods.ShouldHaveTheSameElementsAs("GET", "POST");
+        }
+
+        [Test]
+        public void should_log_when_adding_constraints()
+        {
+            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryParts()), _routeDefinition, _observer);
+
+            _observer.AssertWasCalled(o => o.RecordCallModification(null, null), o=>o.IgnoreArguments());
         }
 
     }

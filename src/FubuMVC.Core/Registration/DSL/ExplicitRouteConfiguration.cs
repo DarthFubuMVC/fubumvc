@@ -22,6 +22,7 @@ namespace FubuMVC.Core.Registration.DSL
         void IConfigurationAction.Configure(BehaviorGraph graph)
         {
             graph.BehaviorFor(_route).Append(_topBehavior);
+            //graph.Observer.RecordStatus("Adding explicit route {0}".ToFormat(_route));
         }
 
 

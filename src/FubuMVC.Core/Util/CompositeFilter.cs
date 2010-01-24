@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace FubuMVC.Core.Util
 {
     public class CompositeFilter<T>
@@ -10,7 +12,12 @@ namespace FubuMVC.Core.Util
 
         public bool Matches(T target)
         {
-            return Includes.MatchesAny(target) && Excludes.DoesNotMatcheAny(target);
+            return Includes.MatchesAny(target) && Excludes.DoesNotMatchAny(target);
+        }
+
+        public string GetDescriptionOfFirstMatchingInclude(T target)
+        {
+            return Includes.GetDescriptionOfMatches(target).FirstOrDefault();
         }
     }
 }

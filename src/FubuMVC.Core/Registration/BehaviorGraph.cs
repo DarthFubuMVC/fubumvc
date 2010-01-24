@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -12,8 +13,15 @@ namespace FubuMVC.Core.Registration
 {
     public class BehaviorGraph
     {
+        public BehaviorGraph(IConfigurationObserver observer)
+        {
+            Observer = observer;
+        }
+
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly IServiceRegistry _services = new ServiceRegistry();
+
+        public IConfigurationObserver Observer { get; private set; }
 
         public IServiceRegistry Services { get { return _services; } }
 

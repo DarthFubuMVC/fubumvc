@@ -1,26 +1,39 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace FubuMVC.Core.Util
 {
     public class CompositePredicate<T>
     {
-        private readonly List<Func<T, bool>> _list = new List<Func<T, bool>>();
+        private class LoggablePredicate
+        {
+            public LoggablePredicate(Expression<Func<T,bool>> expression)
+            {
+                Description = expression.Body.ToString();
+                Matches = expression.Compile();    
+            }
+
+            public string Description { get; private set; }
+            public Func<T, bool> Matches { get; private set; }
+        }
+
+        private readonly List<LoggablePredicate> _list = new List<LoggablePredicate>();
         private Func<T, bool> _matchesAll = x => true;
         private Func<T, bool> _matchesAny = x => true;
         private Func<T, bool> _matchesNone = x => false;
 
-        public void Add(Func<T, bool> filter)
+        public void Add(Expression<Func<T, bool>> filter)
         {
-            _matchesAll = x => _list.All(predicate => predicate(x));
-            _matchesAny = x => _list.Any(predicate => predicate(x));
+            _matchesAll = x => _list.All(predicate => predicate.Matches(x));
+            _matchesAny = x => _list.Any(predicate => predicate.Matches(x));
             _matchesNone = x => !MatchesAny(x);
 
-            _list.Add(filter);
+            _list.Add(new LoggablePredicate(filter));
         }
 
-        public static CompositePredicate<T> operator +(CompositePredicate<T> invokes, Func<T, bool> filter)
+        public static CompositePredicate<T> operator +(CompositePredicate<T> invokes, Expression<Func<T, bool>> filter)
         {
             invokes.Add(filter);
             return invokes;
@@ -41,7 +54,12 @@ namespace FubuMVC.Core.Util
             return _matchesNone(target);
         }
 
-        public bool DoesNotMatcheAny(T target)
+        public IEnumerable<string> GetDescriptionOfMatches(T target)
+        {
+            return _list.Where(p => p.Matches(target)).Select(p => p.Description);
+        }
+
+        public bool DoesNotMatchAny(T target)
         {
             return _list.Count == 0 ? true : !MatchesAny(target);
         }

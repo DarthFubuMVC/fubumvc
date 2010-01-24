@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.TextWriting;
 using FubuMVC.Core.Registration;
@@ -92,7 +93,24 @@ namespace FubuMVC.Core.Diagnostics
                 row.Cell().Text(node.ToString());
                 row.Cell().Text(node.GetType().FullName);
             }));
-            return BuildDocument("Chain " + chainRequest.Id, heading, document, new HtmlTag("h2").Text("Nodes:"), nodeTable);
+
+
+            var logDiv = new HtmlTag("div");
+            var ul = logDiv.Add("ul");
+
+            var observer = _graph.Observer;
+            behaviorChain.Calls.Each(
+                call => observer.GetLog(call).Each(
+                            entry => ul.Add("li").Text(entry)));
+
+            return BuildDocument(
+                "Chain " + chainRequest.Id, 
+                heading, 
+                document, 
+                new HtmlTag("h2").Text("Nodes:"), 
+                nodeTable,
+                new HtmlTag("h2").Text("Log:"),
+                logDiv);
         }
 
         [Description("show all behavior chains")]
@@ -159,7 +177,7 @@ namespace FubuMVC.Core.Diagnostics
                 return new ActionColumn();
             }
         }
-
+        
         private IColumn outputs
         {
             get

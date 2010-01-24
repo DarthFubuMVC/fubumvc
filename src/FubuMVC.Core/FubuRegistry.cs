@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -28,9 +29,12 @@ namespace FubuMVC.Core
 
         private readonly UrlRegistry _urls = new UrlRegistry();
         private readonly ViewAttacher _viewAttacher;
+        private IConfigurationObserver _observer;
 
         public FubuRegistry()
         {
+            _observer = new NulloConfigurationObserver();
+
             _viewAttacher = new ViewAttacher(_types);
 
             // Default method filters
@@ -70,7 +74,7 @@ namespace FubuMVC.Core
 
         public BehaviorGraph BuildGraph()
         {
-            var graph = new BehaviorGraph();
+            var graph = new BehaviorGraph(_observer);
             setupServices(graph);
 
             _conventions.Configure(graph);

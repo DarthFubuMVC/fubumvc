@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -19,18 +20,23 @@ namespace FubuMVC.Core.Registration.DSL
 
         // more to come...
 
-        public ActionCallCandidateExpression ExcludeTypes(Func<Type, bool> filter)
+        public ActionCallCandidateExpression ExcludeTypes(Expression<Func<Type, bool>> filter)
         {
             _matcher.TypeFilters.Excludes += filter;
             return this;
         }
 
-        public ActionCallCandidateExpression IncludeTypesNamed(Func<string, bool> filter)
+        public ActionCallCandidateExpression IncludeTypesNamed(Expression<Func<string, bool>> filter)
         {
-            return IncludeTypes(type => filter(type.Name));
+            var typeParam = Expression.Parameter(typeof (Type), "type"); // type =>
+            var nameProp = Expression.Property(typeParam, "Name");  // type.Name
+            var invokeFilter = Expression.Invoke(filter, nameProp); // filter(type.Name)
+            var lambda = Expression.Lambda<Func<Type, bool>>(invokeFilter, typeParam); // type => filter(type.Name)
+            
+            return IncludeTypes(lambda);
         }
 
-        public ActionCallCandidateExpression IncludeTypes(Func<Type, bool> filter)
+        public ActionCallCandidateExpression IncludeTypes(Expression<Func<Type, bool>> filter)
         {
             _matcher.TypeFilters.Includes += filter;
             return this;
@@ -41,13 +47,13 @@ namespace FubuMVC.Core.Registration.DSL
             return IncludeTypes(type => !type.IsOpenGeneric() && type.IsConcreteTypeOf<T>());
         }
 
-        public ActionCallCandidateExpression IncludeMethods(Func<ActionCall, bool> filter)
+        public ActionCallCandidateExpression IncludeMethods(Expression<Func<ActionCall, bool>> filter)
         {
             _matcher.MethodFilters.Includes += filter;
             return this;
         }
 
-        public ActionCallCandidateExpression ExcludeMethods(Func<ActionCall, bool> filter)
+        public ActionCallCandidateExpression ExcludeMethods(Expression<Func<ActionCall, bool>> filter)
         {
             _matcher.MethodFilters.Excludes += filter;
             return this;

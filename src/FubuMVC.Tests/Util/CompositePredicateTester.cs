@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Util
         public void match_with_no_includes_an_no_excludes()
         {
             var filter = new CompositeFilter<string>();
-            filter.Excludes.DoesNotMatcheAny("a").ShouldBeTrue();
+            filter.Excludes.DoesNotMatchAny("a").ShouldBeTrue();
             filter.Matches("a").ShouldBeTrue();
         }
     }

@@ -65,7 +65,7 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
 
-        public RouteConventionExpression ConstrainToHttpMethod(Func<ActionCall, bool> filter, string method)
+        public RouteConventionExpression ConstrainToHttpMethod(Expression<Func<ActionCall, bool>> filter, string method)
         {
             _resolver.ConstraintPolicy.AddHttpMethodFilter(filter, method);
             return this;

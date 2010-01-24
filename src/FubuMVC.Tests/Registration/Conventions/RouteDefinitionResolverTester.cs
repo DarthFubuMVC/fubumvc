@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new BehaviorGraph();
+            graph = new BehaviorGraph(null);
             chain = new BehaviorChain();
 
             resolver = new RouteDefinitionResolver();

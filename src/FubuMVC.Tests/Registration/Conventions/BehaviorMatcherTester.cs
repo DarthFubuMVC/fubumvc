@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new BehaviorGraph();
+            graph = new BehaviorGraph(null);
             matcher = new BehaviorMatcher();
 
             pool = new TypePool();
