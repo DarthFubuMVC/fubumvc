@@ -2,9 +2,11 @@ using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Urls;
 using HtmlTags;
 using NUnit.Framework;
 using System.Linq;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Diagnostics
 {
@@ -17,14 +19,16 @@ namespace FubuMVC.Tests.Diagnostics
         public void SetUp()
         {
             graph = new FubuRegistry(x => { x.Applies.ToThisAssembly(); }).BuildGraph();
-
-            writer = new BehaviorGraphWriter(graph);
+            urls = MockRepository.GenerateMock<IUrlRegistry>();
+            
+            writer = new BehaviorGraphWriter(graph, urls);
         }
 
         #endregion
 
         private BehaviorGraph graph;
         private BehaviorGraphWriter writer;
+        private IUrlRegistry urls;
 
         [Test]
         public void smoke_test_actions()

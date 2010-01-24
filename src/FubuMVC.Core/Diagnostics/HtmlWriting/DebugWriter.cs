@@ -1,3 +1,4 @@
+using FubuMVC.Core.Urls;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
@@ -5,10 +6,12 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
     public class DebugWriter
     {
         private readonly IDebugReport _report;
+        private readonly IUrlRegistry _urls;
 
-        public DebugWriter(IDebugReport report)
+        public DebugWriter(IDebugReport report, IUrlRegistry urls)
         {
             _report = report;
+            _urls = urls;
         }
 
         public HtmlDocument Write()
@@ -27,7 +30,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             _report.Steps.Each(reportWriter.WriteStep);
 
             string title = "Debug Run of " + _report.Url;
-            return BehaviorGraphWriter.BuildDocument(title, header, reportWriter.Tag);
+            return BehaviorGraphWriter.BuildDocument(_urls, title, header, reportWriter.Tag);
         }
 
         private void writeFormData(HtmlTag tag)

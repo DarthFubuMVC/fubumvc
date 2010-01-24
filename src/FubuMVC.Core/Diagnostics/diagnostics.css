@@ -24,6 +24,16 @@
 	padding: 10px;
 }
 
+.main .homelink {
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 2px;
+	padding-left: 10px;
+}
+
 .main ul {
 	border-color:#FAFAFA #DDDDDD #D2D2D2;
 	border-style:solid;

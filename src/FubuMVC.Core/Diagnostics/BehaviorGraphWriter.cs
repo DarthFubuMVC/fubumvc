@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics.TextWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
 
@@ -17,20 +18,18 @@ namespace FubuMVC.Core.Diagnostics
     public class BehaviorGraphWriter
     {
         private readonly BehaviorGraph _graph;
+        private readonly IUrlRegistry _urls;
 
-        public BehaviorGraphWriter(BehaviorGraph graph)
+        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls)
         {
             _graph = graph;
+            _urls = urls;
         }
 
         [UrlPattern("_fubu")]
         public HtmlDocument Index()
         {
-            const string title = "FubuMVC: Diagnostics";
-
-            var mainDiv = new HtmlTag("div").AddClass("main");
-            mainDiv.Add("h2").Text(title);
-            var ul = mainDiv.Add("ul");
+            var ul = new HtmlTag("ul");
             availableActions().Each(method =>
             {
                 var url = DiagnosticUrlPolicy.RootUrlFor(method);
@@ -42,7 +41,7 @@ namespace FubuMVC.Core.Diagnostics
                 });
             });
 
-            return BuildDocument(title, mainDiv);
+            return BuildDocument("Home", ul);
         }
 
         private IEnumerable<MethodInfo> availableActions()
@@ -50,15 +49,30 @@ namespace FubuMVC.Core.Diagnostics
             return GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(x => x.HasCustomAttribute<DescriptionAttribute>());
         }
 
-        public static HtmlDocument BuildDocument(string title, params HtmlTag[] tags)
+        private HtmlDocument BuildDocument(string title, params HtmlTag[] tags)
+        {
+            return BuildDocument(_urls, title, tags);
+        }
+
+        public static HtmlDocument BuildDocument(IUrlRegistry urls, string title, params HtmlTag[] tags)
         {
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(BehaviorGraphWriter), "diagnostics.css");
             var reader = new StreamReader(stream);
             var css = reader.ReadToEnd();
 
+            var realTitle = "FubuMVC: " + title;
+
             var document = new HtmlDocument();
-            document.Title = title;
-            tags.Each(x => document.Add(x));
+            document.Title = realTitle;
+
+            var mainDiv = new HtmlTag("div").AddClass("main");
+            mainDiv.Add("h2").Text("FubuMVC Diagnostics");
+            var navBar = mainDiv.Add("div").AddClass("homelink");
+            navBar.AddChildren(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
+            navBar.Add("span").Text(" > " + title);
+            document.Add(mainDiv);
+
+            mainDiv.AddChildren(tags);
 
             document.AddStyle(css);
 
@@ -67,20 +81,15 @@ namespace FubuMVC.Core.Diagnostics
 
         public HtmlDocument Chain(ChainRequest chainRequest)
         {
-            var title = "FubuMVC: Chain " + chainRequest.Id;
+            var title = "Chain " + chainRequest.Id;
 
             var behaviorChain = _graph.Behaviors.FirstOrDefault(chain => chain.UniqueId == chainRequest.Id);
             if (behaviorChain == null)
             {
                 return BuildDocument("Unknown chain", new HtmlTag("span").Text("No behavior chain registered with ID: " + chainRequest.Id));
             }
-            var mainDiv = new HtmlTag("div").AddClass("main");
-            mainDiv.Add("h2").Modify(t =>
-            {
-                t.Add("span").Text("FubuMVC: Chain ");
-                t.Add("span").AddClass("chainId").Text(behaviorChain.UniqueId.ToString());
-            });
-            var content = mainDiv.Add("div").AddClass("main-content");
+           
+            var content = new HtmlTag("div").AddClass("main-content");
 
             var document = new HtmlTag("div");
             var pattern = behaviorChain.RoutePattern;
@@ -120,22 +129,15 @@ namespace FubuMVC.Core.Diagnostics
                 new HtmlTag("h3").Text("Log:"),
                 logDiv});
 
-            return BuildDocument(title, mainDiv);
-                
+            return BuildDocument(title, content);
         }
 
         [Description("show all behavior chains")]
         public HtmlDocument Chains()
         {
-            const string title = "FubuMVC: Registered Behavior Chains";
-            
-            var mainDiv = new HtmlTag("div").AddClass("main");
-            mainDiv.Add("h2").Text(title);
-
             var table = writeTable(x => x.RoutePattern, chains, routes, actions);
 
-            mainDiv.AddChildren(table);
-            return BuildDocument(title, mainDiv);
+            return BuildDocument("Registered Behavior Chains", table);
         } 
 
 
@@ -144,7 +146,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             var table = writeTable(x => x.Route != null, x => x.RoutePattern, routes, actions, outputs, chains);
 
-            return BuildDocument("Registered Fubu Routes", table);
+            return BuildDocument("Registered Routes", table);
         } 
 
         public string PrintRoutes()
@@ -156,7 +158,8 @@ namespace FubuMVC.Core.Diagnostics
         public HtmlDocument Actions()
         {
             var table = writeTable(x => x.Calls.Any(), x => x.FirstCallDescription, actions, routes, outputs);
-            return BuildDocument("Registered Fubu Actions", table);
+
+            return BuildDocument("Registered Actions", table);
         }
 
         public string PrintActions()
@@ -168,7 +171,8 @@ namespace FubuMVC.Core.Diagnostics
         public HtmlDocument Inputs()
         {
             var table = writeTable(x => x.HasInput(), x => x.InputTypeName, inputModels, actions);
-            return BuildDocument("Registered Fubu Input Types", table);
+
+            return BuildDocument("Registered Input Types", table);
         }
 
         private IColumn routes

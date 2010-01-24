@@ -6,25 +6,25 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using HtmlTags;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Diagnostics
 {
     [TestFixture]
     public class DiagnosticsRegistryTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
             graph = new DiagnosticsRegistry().BuildGraph();
+            urls = MockRepository.GenerateMock<IUrlRegistry>();
         }
 
-        #endregion
-
         private BehaviorGraph graph;
+        private IUrlRegistry urls;
 
         [Test]
         public void actions_url()
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void smoke_test()
         {
-            Debug.WriteLine(new BehaviorGraphWriter(graph).PrintRoutes());
+            Debug.WriteLine(new BehaviorGraphWriter(graph, urls).PrintRoutes());
         }
     }
 

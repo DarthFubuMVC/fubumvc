@@ -2,6 +2,7 @@ using System.Reflection;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Diagnostics
@@ -32,7 +33,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public static string RootUrlFor(MethodInfo method)
         {
-            return "_fubu/" + method.Name.ToLower();
+            return UrlContext.GetFullUrl("~/_fubu/" + UrlFor(method));
         }
 
     }
