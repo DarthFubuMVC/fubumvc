@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
@@ -19,11 +20,13 @@ namespace FubuMVC.Tests.View
         private FakeViewToken _fromSecondFindsOne;
         private IViewsForActionFilter _filterThatFindsNone;
         private IViewsForActionFilter _filterThatFindsMultiple;
+        private RecordingConfigurationObserver _observer;
 
         [SetUp]
         public void Setup()
         {
             var types = new TypePool();
+            _observer = new RecordingConfigurationObserver();
             _action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             _fromFindsOne = new FakeViewToken();
             _fromSecondFindsOne = new FakeViewToken();
@@ -40,7 +43,7 @@ namespace FubuMVC.Tests.View
         {
             _viewAttacher.AddViewsForActionFilter(_filterThatFindsNone);
             
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action);
+            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
             _action.OfType<FakeViewToken>().ShouldHaveCount(0);
         }
 
@@ -51,7 +54,7 @@ namespace FubuMVC.Tests.View
             _viewAttacher.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
             _viewAttacher.AddViewsForActionFilter(_secondFilterThatFindsExactlyOne);
 
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action);
+            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
             var attachedView = _action.OfType<FakeViewToken>().ShouldHaveCount(1).FirstOrDefault();
             attachedView.ShouldBeTheSameAs(_fromFindsOne);
         }
@@ -61,10 +64,20 @@ namespace FubuMVC.Tests.View
         {
             _viewAttacher.AddViewsForActionFilter(_filterThatFindsMultiple);
 
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action);
+            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
             _action.OfType<FakeViewToken>().ShouldHaveCount(0);
         }
 
+        [Test]
+        public void should_log_when_a_view_is_attached()
+        {
+            _fromFindsOne.Name = "TestToken";
+
+            _viewAttacher.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
+            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
+
+            _observer.LastLogEntry.ShouldContain(_fromFindsOne.Name);
+        }
         
         private static IViewsForActionFilter createFilterThatReturns(params IViewToken[] viewTokens)
         {

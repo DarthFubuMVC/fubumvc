@@ -155,6 +155,11 @@ namespace FubuMVC.Tests.View
         {
             throw new NotImplementedException();
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class AAction

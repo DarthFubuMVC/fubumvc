@@ -10,14 +10,16 @@ namespace FubuMVC.Core.View.WebForms
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Actions().Where(x => !x.HasOutputBehavior()).Each(x =>
-            {
-                x.Method.ForAttribute<WebFormsEndpointAttribute>(att =>
+            graph.Actions()
+                .Where(x => !x.HasOutputBehavior())
+                .Each(x => x.Method.ForAttribute<WebFormsEndpointAttribute>(att =>
                 {
                     var token = new WebFormViewToken(att.ViewType);
                     x.Append(token.ToBehavioralNode());
-                });
-            });
-        }
+                    graph.Observer.RecordCallStatus(x, 
+                      "Action '{0}' has {1} declared, using WebForms view '{2}'".ToFormat(
+                        x.Description, typeof(WebFormsEndpointAttribute).Name, token));
+                }));
+            }
     }
 }

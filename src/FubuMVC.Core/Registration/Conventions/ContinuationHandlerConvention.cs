@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Registration.Conventions
             graph.Actions().Where(x => x.OutputType().CanBeCastTo<FubuContinuation>()).Each(call =>
             {
                 call.InsertDirectlyAfter(new ContinuationNode());
-                graph.Observer.RecordCallModification(call, "Adding ContinuationNode directly after action call");
+                graph.Observer.RecordCallStatus(call, "Adding ContinuationNode directly after action call");
             });
         }
     }

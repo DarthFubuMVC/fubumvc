@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
                     var log = "{0} [matched on filter '{1}']".ToFormat(_reasonForModification, matchingFilter);
 
-                    graph.Observer.RecordCallModification(call, log);
+                    graph.Observer.RecordCallStatus(call, log);
                     _modification(call);
                     
                 });

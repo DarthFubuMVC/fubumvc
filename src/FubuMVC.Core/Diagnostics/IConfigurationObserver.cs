@@ -7,14 +7,14 @@ namespace FubuMVC.Core.Diagnostics
 {
     public interface IConfigurationObserver
     {
-        void RecordCallModification(ActionCall call, string status);
+        void RecordCallStatus(ActionCall call, string status);
         //void RecordStatus(string status);
         IEnumerable<string> GetLog(ActionCall call);
     }
 
     public class NulloConfigurationObserver : IConfigurationObserver
     {
-        public void RecordCallModification(ActionCall call, string status)
+        public void RecordCallStatus(ActionCall call, string status)
         {
             // no-op
         }
@@ -35,15 +35,17 @@ namespace FubuMVC.Core.Diagnostics
     {
         private readonly Cache<ActionCall, IList<string>> _log = new Cache<ActionCall, IList<string>>(c=>new List<string>());
 
-        public void RecordCallModification(ActionCall call, string description)
+        public void RecordCallStatus(ActionCall call, string description)
         {
             _log[call].Add(description);
+            LastLogEntry = description;
         }
-
-
+        
         public IEnumerable<string> GetLog(ActionCall call)
         {
             return _log[call];
         }
+
+        public string LastLogEntry { get; private set; }
     }
 }

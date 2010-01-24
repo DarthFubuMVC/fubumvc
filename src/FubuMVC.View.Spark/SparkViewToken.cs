@@ -38,5 +38,10 @@ namespace FubuMVC.View.Spark
         {
             get { return null; }
         }
+
+        public override string ToString()
+        {
+            return _viewPath;
+        }
     }
 }

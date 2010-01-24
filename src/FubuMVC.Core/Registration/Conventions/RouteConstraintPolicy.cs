@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Registration.Conventions
             if (httpMethods.Length > 0)
             {
                 routeDefinition.AddRouteConstraint(HTTP_METHOD_CONSTRAINT, new HttpMethodConstraint(httpMethods));
-                matchingFilters.Each(filter => observer.RecordCallModification(call,
+                matchingFilters.Each(filter => observer.RecordCallStatus(call,
                     "Adding route constraint {0} based on filter [{1}]".ToFormat(filter.Method, filter.Description)));
                 
             }

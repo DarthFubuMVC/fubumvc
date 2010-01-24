@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -18,8 +19,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new BehaviorGraph(null);
+            observer = new RecordingConfigurationObserver();
+            graph = new BehaviorGraph(observer);
             chain = new BehaviorChain();
+            lastCall = null;
 
             resolver = new RouteDefinitionResolver();
         }
@@ -27,6 +30,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         private BehaviorGraph graph;
         private BehaviorChain chain;
         private RouteDefinitionResolver resolver;
+        private RecordingConfigurationObserver observer;
+        private ActionCall lastCall;
 
         private IRouteDefinition buildRoute(Expression<Action<RouteResolverController>> expression)
         {
@@ -36,9 +41,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         private IRouteDefinition buildRoute<T>(Expression<Action<T>> expression)
         {
             MethodInfo method = ReflectionHelper.GetMethod(expression);
-            var call = new ActionCall(typeof (T), method);
+            lastCall = new ActionCall(typeof(T), method);
 
-            chain.Append(call);
+            chain.Append(lastCall);
             resolver.Apply(graph, chain);
 
             return chain.Route;
@@ -206,6 +211,26 @@ namespace FubuMVC.Tests.Registration.Conventions
             var route = buildRoute(x => x.OverrideWithNoArgs()).ShouldBeOfType<IRouteDefinition>();
 
             route.Pattern.ShouldEqual("override/noargs");
+        }
+
+        [Test]
+        public void should_log_the_first_url_policy_that_matches()
+        {
+            buildRoute(x => x.SomeMethod(null));
+
+            var log = observer.GetLog(lastCall);
+
+            log.Where(s => s.Contains(": UrlPolicy")).Any().ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_log_the_defined_route_pattern()
+        {
+            buildRoute(x => x.SomeMethod(null));
+
+            var log = observer.GetLog(lastCall);
+
+            log.Where(s => s.Contains("ubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}")).Any().ShouldBeTrue();
         }
     }
 }

@@ -41,10 +41,10 @@ namespace FubuMVC.Core.Registration.Conventions
             if (call == null) return;
 
             IUrlPolicy policy = _policies.FirstOrDefault(x => x.Matches(call)) ?? _defaultUrlPolicy;
-            log.RecordCallModification(call, "First matching UrlPolicy (or default): {0}".ToFormat(policy.GetType().Name));
+            log.RecordCallStatus(call, "First matching UrlPolicy (or default): {0}".ToFormat(policy.GetType().Name));
             IRouteDefinition route = policy.Build(call);
             _constraintPolicy.Apply(call, route, log);
-            log.RecordCallModification(call, "Route definition determined by url policy: [{0}]".ToFormat(route.ToRoute().Url));
+            log.RecordCallStatus(call, "Route definition determined by url policy: [{0}]".ToFormat(route.ToRoute().Url));
             graph.RegisterRoute(chain, route);
         }
 

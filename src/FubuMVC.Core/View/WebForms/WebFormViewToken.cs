@@ -39,5 +39,10 @@ namespace FubuMVC.Core.View.WebForms
         {
             get { return ViewType.Namespace; } 
         }
+
+        public override string ToString()
+        {
+            return ViewType.ToVirtualPath();
+        }
     }
 }

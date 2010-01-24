@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Web.Routing;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
@@ -14,14 +15,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         private RouteConstraintPolicy _policy;
         private IRouteDefinition _routeDefinition;
         private SpecificationExtensions.CapturingConstraint _argsToAddConstraint;
-        private IConfigurationObserver _observer;
+        private RecordingConfigurationObserver _observer;
 
         [SetUp]
         public void Setup()
         {
             _policy = new RouteConstraintPolicy();
             _routeDefinition = MockRepository.GenerateMock<IRouteDefinition>();
-            _observer = MockRepository.GenerateMock<IConfigurationObserver>();
+            _observer = new RecordingConfigurationObserver();
             _policy.AddHttpMethodFilter(x => x.Method.Name.StartsWith("Query"), "GET");
             _policy.AddHttpMethodFilter(x => x.Method.Name.EndsWith("Command"), "POST");
 
@@ -40,7 +41,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void should_add_an_HttpMethodConstraint_to_the_route_definition_for_multiple_methods_that_appli()
+        public void should_add_an_HttpMethodConstraint_to_the_route_definition_for_multiple_methods_that_apply()
         {
             _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand()), _routeDefinition, _observer);
 
@@ -50,11 +51,15 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void should_log_when_adding_constraints()
+        public void should_log_for_each_method_that_applies()
         {
-            _policy.Apply(ActionCall.For<SampleForConstraintPolicy>(c => c.QueryParts()), _routeDefinition, _observer);
+            var call = ActionCall.For<SampleForConstraintPolicy>(c => c.QueryPartsAndAddCommand());
+            _policy.Apply(call, _routeDefinition, _observer);
 
-            _observer.AssertWasCalled(o => o.RecordCallModification(null, null), o=>o.IgnoreArguments());
+            var log = _observer.GetLog(call);
+
+            log.First().ShouldContain("GET");
+            log.Skip(1).First().ShouldContain("POST");
         }
 
     }

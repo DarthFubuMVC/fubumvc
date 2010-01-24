@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View.WebForms;
@@ -24,7 +25,7 @@ namespace FubuMVC.Core.View
             var views = _facilities.SelectMany(x => x.FindViews(_types));
             var bag = new ViewBag(views);
 
-            graph.Actions().Each(a => AttemptToAttachViewToAction(bag, a));
+            graph.Actions().Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
         }
 
         public void AddFacility(IViewFacility facility)
@@ -38,15 +39,28 @@ namespace FubuMVC.Core.View
         }
 
 
-        public void AttemptToAttachViewToAction(ViewBag bag, ActionCall call)
+        public void AttemptToAttachViewToAction(ViewBag bag, ActionCall call, IConfigurationObserver observer)
         {
             foreach (var filter in _filters)
             {
                 var viewTokens = filter.Apply(call, bag);
-                // if the filter returned more than one, consider it "failed", ignore it, and move on to the next
-                if (viewTokens.Count() == 1)
+                var count = viewTokens.Count();
+
+                observer.RecordCallStatus(call, "View filter '{0}' found {1} view token{2}".ToFormat(
+                    filter.GetType().Name, count, (count != 1) ? "s" : "" ));
+
+                if( count > 0 )
                 {
-                    call.Append(viewTokens.First().ToBehavioralNode());
+                    viewTokens.Each(t =>
+                        observer.RecordCallStatus(call, "Found view token: {0}".ToFormat(t)));
+                }
+
+                // if the filter returned more than one, consider it "failed", ignore it, and move on to the next
+                if (count == 1)
+                {
+                    var token = viewTokens.First();
+                    observer.RecordCallStatus(call, "Selected view token: {0}".ToFormat(token));
+                    call.Append(token.ToBehavioralNode());
                     break;
                 }
             }
