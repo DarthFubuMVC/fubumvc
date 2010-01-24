@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Web.Routing;
 using Spark.Compiler;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.ViewLocation;
@@ -15,6 +16,9 @@ namespace Spark.Web.FubuMVC
     {
         private IDescriptorBuilder _descriptorBuilder;
         private ISparkViewEngine _engine;
+        private ICacheServiceProvider _cacheServiceProvider;
+        private readonly Dictionary<BuildDescriptorParams, ISparkViewEntry> _cache = new Dictionary<BuildDescriptorParams, ISparkViewEntry>();
+        private ViewEngineResult _cacheMissResult;
 
         public SparkViewFactory() : this(null) { }
         public SparkViewFactory(ISparkSettings settings)
@@ -190,6 +194,28 @@ namespace Spark.Web.FubuMVC
             return descriptor;
         }
 
+        private ViewEngineResult BuildResult(RequestContext requestContext, ISparkViewEntry entry)
+        {
+            var view = entry.CreateInstance();
+            if (view is SparkView)
+            {
+                var sparkView = (SparkView)view;
+                sparkView.ResourcePathManager = Engine.ResourcePathManager;
+                sparkView.CacheService = CacheServiceProvider.GetCacheService(requestContext);
+            }
+            return new ViewEngineResult(view, this);
+        }
+
+        public ICacheServiceProvider CacheServiceProvider
+        {
+            get
+            {
+                return _cacheServiceProvider ??
+                       Interlocked.CompareExchange(ref _cacheServiceProvider, new DefaultCacheServiceProvider(), null) ??
+                       _cacheServiceProvider;
+            }
+            set { _cacheServiceProvider = value; }
+        }
 
         private static string RemoveSuffix(string value, string suffix)
         {
@@ -215,5 +241,73 @@ namespace Spark.Web.FubuMVC
             return potentialMatch.StartsWith(pattern.Substring(0, pattern.Length - 1),StringComparison.InvariantCultureIgnoreCase);
         }
 
+        public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName)
+        {
+            return FindViewInternal(controllerContext, viewName, masterName, true, false);
+        }
+
+        private ViewEngineResult FindViewInternal(ControllerContext controllerContext, string viewName, string masterName, bool findDefaultMaster, bool useCache)
+        {
+            var searchedLocations = new List<string>();
+            var targetNamespace = controllerContext.Controller.GetType().Namespace;
+
+            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
+
+            var descriptorParams = new BuildDescriptorParams(
+                targetNamespace,
+                controllerName,
+                viewName,
+                masterName,
+                findDefaultMaster,
+                DescriptorBuilder.GetExtraParameters(controllerContext));
+
+            ISparkViewEntry entry;
+            if (useCache)
+            {
+                if (TryGetCacheValue(descriptorParams, out entry) && entry.IsCurrent())
+                {
+                    return BuildResult(controllerContext.RequestContext, entry);
+                }
+                return _cacheMissResult;
+            }
+
+            var descriptor = DescriptorBuilder.BuildDescriptor(
+                descriptorParams,
+                searchedLocations);
+
+            if (descriptor == null)
+                return new ViewEngineResult(searchedLocations);
+
+            entry = Engine.CreateEntry(descriptor);
+            SetCacheValue(descriptorParams, entry);
+            return BuildResult(controllerContext.RequestContext, entry);
+        }
+        private bool TryGetCacheValue(BuildDescriptorParams descriptorParams, out ISparkViewEntry entry)
+        {
+            lock (_cache) return _cache.TryGetValue(descriptorParams, out entry);
+        }
+
+        private void SetCacheValue(BuildDescriptorParams descriptorParams, ISparkViewEntry entry)
+        {
+            lock (_cache) _cache[descriptorParams] = entry;
+        }
+
+    }
+
+    public class ViewEngineResult
+    {
+        public ViewEngineResult(ISparkView view, SparkViewFactory factory)
+        {
+            View = view;
+            Factory = factory;
+        }
+
+        public ViewEngineResult(List<string> searchedLocations)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ISparkView View { get; set; }
+        public SparkViewFactory Factory { get; set; }
     }
 }

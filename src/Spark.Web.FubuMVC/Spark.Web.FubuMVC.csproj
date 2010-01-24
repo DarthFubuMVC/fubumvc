@@ -36,6 +36,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -56,6 +57,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ControllerContext.cs" />
+    <Compile Include="ICacheServiceProvider.cs" />
     <Compile Include="SparkView.cs" />
     <Compile Include="ViewLocation\AreaDescriptorFilter.cs" />
     <Compile Include="ViewLocation\BuildDescriptorParams.cs" />
