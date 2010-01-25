@@ -330,8 +330,7 @@ namespace Spark.Web.FubuMVC.Tests
         public void should_be_able_to_use_a_partial_file_implicitly()
         {
             FindViewAndRender("ViewThatUsesPartialImplicitly");
-
-            Console.WriteLine(_output.ToString());
+            
             _output.ToString().ShouldContainInOrder(
                 "<li class=\"odd\">lion</li>",
                 "<li class=\"even\">hippo</li>");
