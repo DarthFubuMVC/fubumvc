@@ -1,1 +1,1 @@
-﻿<div>row</div>
+﻿<li class="${css}">${rowText}</li>

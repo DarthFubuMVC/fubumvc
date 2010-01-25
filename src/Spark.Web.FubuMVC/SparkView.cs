@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Web;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 
@@ -21,5 +21,20 @@ namespace Spark.Web.FubuMVC
         }
 
         #endregion
+
+        public string H(object value)
+        {
+            return HttpUtility.HtmlEncode(value.ToString());
+        }
+
+        public object Eval(string expression)
+        {
+            return "Only need to implement for anonymous type support";
+        }
+        public string Eval(string expression, string format)
+        {
+            return "Only need to implement for anonymous type support";
+        }
+
     }
 }

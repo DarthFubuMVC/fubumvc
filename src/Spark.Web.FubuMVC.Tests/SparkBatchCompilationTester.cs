@@ -27,8 +27,8 @@ namespace Spark.Web.FubuMVC.Tests
         {
             var batch = new SparkBatchDescriptor();
             batch
-                .For<StubController>().Layout("layout").Include("Index").Include("List.spark")
-                .For<StubController>().Layout("elementLayout").Include("_Row");
+                .For<BatchController>().Layout("Layout").Include("Index").Include("List.spark")
+                .For<BatchController>().Layout("ElementLayout").Include("_row");
 
             var assembly = _factory.Precompile(batch);
 
@@ -42,15 +42,15 @@ namespace Spark.Web.FubuMVC.Tests
         {
             var batch = new SparkBatchDescriptor();
 
-            batch.For<StubController>();
+            batch.For<BatchController>();
 
             var descriptors = _factory.CreateDescriptors(batch);
 
             descriptors.ShouldHaveCount(2);
             descriptors[0].Templates.ShouldHaveCount(1);
             descriptors[1].Templates.ShouldHaveCount(1);
-            descriptors.Any(descriptor => descriptor.Templates.Contains("Stub\\Index.spark")).ShouldBeTrue();
-            descriptors.Any(descriptor => descriptor.Templates.Contains("Stub\\List.spark")).ShouldBeTrue();
+            descriptors.Any(descriptor => descriptor.Templates.Contains("Batch\\Index.spark")).ShouldBeTrue();
+            descriptors.Any(descriptor => descriptor.Templates.Contains("Batch\\List.spark")).ShouldBeTrue();
         }
 
         [Test]
@@ -58,15 +58,15 @@ namespace Spark.Web.FubuMVC.Tests
         {
             var batch = new SparkBatchDescriptor();
 
-            batch.For<StubController>().Include("*").Include("_*").Exclude("In*");
+            batch.For<BatchController>().Include("*").Include("_*").Exclude("In*");
 
             var descriptors = _factory.CreateDescriptors(batch);
 
             descriptors.ShouldHaveCount(2);
             descriptors[0].Templates.ShouldHaveCount(1);
             descriptors[1].Templates.ShouldHaveCount(1);
-            descriptors.Any(descriptor => descriptor.Templates.Contains("Stub\\_Row.spark")).ShouldBeTrue();
-            descriptors.Any(descriptor => descriptor.Templates.Contains("Stub\\List.spark")).ShouldBeTrue();
+            descriptors.Any(descriptor => descriptor.Templates.Contains("Batch\\_row.spark")).ShouldBeTrue();
+            descriptors.Any(descriptor => descriptor.Templates.Contains("Batch\\List.spark")).ShouldBeTrue();
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Spark.Web.FubuMVC.Tests
         {
             var batch = new SparkBatchDescriptor();
 
-            batch.For<StubController>().Layout("layout").Layout("anotherLayout").Include("Index").Include("List.spark");
+            batch.For<BatchController>().Layout("Layout").Layout("AnotherLayout").Include("Index").Include("List.spark");
             
             var assembly = _factory.Precompile(batch);
             assembly.ShouldNotBeNull();
@@ -87,14 +87,14 @@ namespace Spark.Web.FubuMVC.Tests
             var batch = new SparkBatchDescriptor();
 
             batch
-                .For<StubController>().Layout("layout").Include("*")
-                .For<StubController>().Layout("elementLayout").Include("_*");
+                .For<BatchController>().Layout("Layout").Include("*")
+                .For<BatchController>().Layout("ElementLayout").Include("_*");
 
             var descriptors = _factory.CreateDescriptors(batch);
             descriptors.ShouldHaveCount(3);
-            descriptors.Any(d => d.Templates.Contains("Stub\\Index.spark") && d.Templates.Contains("Shared\\layout.spark")).ShouldBeTrue();
-            descriptors.Any(d => d.Templates.Contains("Stub\\List.spark") && d.Templates.Contains("Shared\\layout.spark")).ShouldBeTrue();
-            descriptors.Any(d => d.Templates.Contains("Stub\\_Row.spark") && d.Templates.Contains("Shared\\elementLayout.spark")).ShouldBeTrue();
+            descriptors.Any(d => d.Templates.Contains("Batch\\Index.spark") && d.Templates.Contains("Shared\\Layout.spark")).ShouldBeTrue();
+            descriptors.Any(d => d.Templates.Contains("Batch\\List.spark") && d.Templates.Contains("Shared\\Layout.spark")).ShouldBeTrue();
+            descriptors.Any(d => d.Templates.Contains("Batch\\_row.spark") && d.Templates.Contains("Shared\\ElementLayout.spark")).ShouldBeTrue();
 
             var assembly = _factory.Precompile(batch);
             assembly.ShouldNotBeNull();
@@ -106,18 +106,18 @@ namespace Spark.Web.FubuMVC.Tests
         {
             _factory.ViewFolder = new InMemoryViewFolder
                                       {
-                                          {"Stub\\Index.spark", "<p>index</p>"},
-                                          {"Stub\\Foo.cs", "// some c# code"},
-                                          {"Layouts\\Stub.spark", "<p>layout</p><use:view/>"},
+                                          {"Batch\\Index.spark", "<p>index</p>"},
+                                          {"Batch\\Foo.cs", "// some c# code"},
+                                          {"Layouts\\Batch.spark", "<p>layout</p><use:view/>"},
                                       };
             var batch = new SparkBatchDescriptor();
-            batch.For<StubController>();
+            batch.For<BatchController>();
             var descriptors = _factory.CreateDescriptors(batch);
 
             descriptors.ShouldHaveCount(1);
             descriptors[0].Templates.ShouldHaveCount(2);
-            descriptors[0].Templates[0].ShouldEqual("Stub\\Index.spark");
-            descriptors[0].Templates[1].ShouldEqual("Layouts\\Stub.spark");
+            descriptors[0].Templates[0].ShouldEqual("Batch\\Index.spark");
+            descriptors[0].Templates[1].ShouldEqual("Layouts\\Batch.spark");
         }
     }
 }

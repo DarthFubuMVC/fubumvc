@@ -342,6 +342,16 @@ namespace Spark.Web.FubuMVC.Tests
             return exception;
         }
 
+        public static void ShouldContainInOrder(this string actual, params string[] values)
+        {
+            int index = 0;
+            foreach (string value in values)
+            {
+                int nextIndex = actual.IndexOf(value, index);
+                Assert.GreaterOrEqual(nextIndex, 0, string.Format("Looking for {0}", value));
+                index = nextIndex + value.Length;
+            }
+        }
 
         public static void ShouldEqualSqlDate(this DateTime actual, DateTime expected)
         {

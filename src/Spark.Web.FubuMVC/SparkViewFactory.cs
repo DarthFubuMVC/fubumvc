@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Web.Routing;
+using FubuMVC.Core;
 using Spark.Compiler;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.ViewLocation;
@@ -246,6 +247,11 @@ namespace Spark.Web.FubuMVC
             return FindViewInternal(controllerContext, viewName, masterName, true, false);
         }
 
+        public virtual ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName)
+        {
+            return FindViewInternal(controllerContext, partialViewName, null /*masterName*/, false, false);
+        }
+
         private ViewEngineResult FindViewInternal(ControllerContext controllerContext, string viewName, string masterName, bool findDefaultMaster, bool useCache)
         {
             var searchedLocations = new List<string>();
@@ -291,7 +297,6 @@ namespace Spark.Web.FubuMVC
         {
             lock (_cache) _cache[descriptorParams] = entry;
         }
-
     }
 
     public class ViewEngineResult
@@ -304,7 +309,9 @@ namespace Spark.Web.FubuMVC
 
         public ViewEngineResult(List<string> searchedLocations)
         {
-            throw new NotImplementedException();
+            string locations = string.Empty;
+            searchedLocations.ForEach(loc => locations += string.Format("{0} ", loc));
+            throw new ConfigurationErrorsException(string.Format("The view could not be in any of the following locations: {0}", locations));
         }
 
         public ISparkView View { get; set; }

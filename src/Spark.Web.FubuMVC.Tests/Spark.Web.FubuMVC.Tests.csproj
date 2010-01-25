@@ -60,7 +60,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Helpers\MockHttpContextBase.cs" />
+    <Compile Include="Models\FakeViewModel.cs" />
     <Compile Include="SparkBatchCompilationTester.cs" />
     <Compile Include="SparkDescriptorBuildingTester.cs" />
     <Compile Include="SparkViewFactoryTester.cs" />
@@ -77,6 +79,10 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
       <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
       <Name>Spark.Web.FubuMVC</Name>
@@ -86,16 +92,77 @@
     <Content Include="Licence_Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FubuMVC.Tests.Views\Layouts\anotherLayout.spark">
+    <None Include="App.config" />
+    <None Include="FubuMVC.Tests.Views\Batch\Index.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FubuMVC.Tests.Views\Shared\elementLayout.spark">
+    <None Include="FubuMVC.Tests.Views\Batch\List.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FubuMVC.Tests.Views\Shared\layout.spark">
+    <None Include="FubuMVC.Tests.Views\Batch\_row.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FubuMVC.Tests.Views\Stub\_Row.spark">
+    <None Include="FubuMVC.Tests.Views\Layouts\AnotherLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Shared\Partial.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Shared\ElementLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Shared\Layout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\SomeFooArea\Layouts\FooAreaLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\SomeFooArea\Stub\Index.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ChildViewThatExpectsALayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ChildViewThatUsesAllNamedContentAreas.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesForeach.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\PartialTarget.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatRendersPartialsThatShareState.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesANullViewModel.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesHtmlEncoding.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatChangesGlobalSettings.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesFormatting.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesViewModel.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesNamespaces.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesPartial.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\ViewThatUsesPartialImplicitly.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\HtmlTags.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\_row.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="FubuMVC.Tests.Views\Stub\Index.spark">
