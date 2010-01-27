@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             modelBinding.StoredObject.ShouldBeTheSameAs(target);
             modelBinding.First().ShouldBeTheSameAs(bindingKey);
-            modelBinding.ExecutionTime.ShouldBeGreaterThan(98);
+            modelBinding.ExecutionTime.ShouldBeGreaterThan(0);
         }
 
         [Test]

@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             report.MarkFinished();
 
-            report.ExecutionTime.ShouldBeGreaterThan(99);
+            report.ExecutionTime.ShouldBeGreaterThan(1);
         }
     }
 }
