@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
+using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap
 {
@@ -29,10 +32,26 @@ namespace FubuMVC.StructureMap.Bootstrap
             return new BasicFubuStructureMapRegistry(HttpContext.Current.IsDebuggingEnabled, ControllerAssembly);
         }
 
+        protected virtual void InitializeStructureMap(IInitializationExpression ex)
+        {
+            // no op, please override
+        }
+
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteCollection routeCollection = RouteTable.Routes;
-            FubuStructureMapBootstrapper.Bootstrap(routeCollection, GetMyRegistry());
+            var routeCollection = RouteTable.Routes;
+            BootstrapStructureMap(routeCollection, GetMyRegistry(), InitializeStructureMap);
+        }
+
+        private static void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry, Action<IInitializationExpression> initializeExpression)
+        {
+            UrlContext.Reset();
+
+            ObjectFactory.Initialize(initializeExpression);
+
+            var fubuBootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
+
+            fubuBootstrapper.Bootstrap(routes);
         }
     }
 }
