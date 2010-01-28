@@ -182,11 +182,6 @@ namespace FubuMVC.Core
             return member.GetCustomAttributes(typeof (ATTRIBUTE), false).Any();
         }
 
-        public static bool IsNullable(this Type theType)
-        {
-            return (!theType.IsValueType) || theType.IsNullableOfT();
-        }
-
         public static bool IsNullableOfT(this Type theType)
         {
             return theType.IsGenericType && theType.GetGenericTypeDefinition().Equals(typeof (Nullable<>));

@@ -6,11 +6,9 @@ using FubuMVC.Core.Util;
 
 namespace FubuMVC.UI
 {
-    // TODO -- needs to do the Nullable trick
     public class Stringifier
     {
-        private readonly Cache<Type, Func<object, string>> _converters
-            = new Cache<Type, Func<object, string>>();
+        private readonly Cache<Type, Func<object, string>> _converters = new Cache<Type, Func<object, string>>();
 
         private readonly List<StringifierStrategy> _strategies = new List<StringifierStrategy>();
 
@@ -18,7 +16,14 @@ namespace FubuMVC.UI
         {
             _converters.OnMissing = type =>
             {
-                StringifierStrategy strategy = _strategies.FirstOrDefault(x => x.Matches(type));
+                if (type.IsNullable())
+                {
+                    return instance =>
+                    {
+                        return instance == null ? string.Empty : _converters[type.GetInnerTypeFromNullable()](instance);
+                    };
+                }
+                var strategy = _strategies.FirstOrDefault(x => x.Matches(type));
                 return strategy == null ? toString : strategy.StringFunction;
             };
         }
@@ -60,14 +65,10 @@ namespace FubuMVC.UI
             });
         }
 
-        #region Nested type: StringifierStrategy
-
         public class StringifierStrategy
         {
             public Func<Type, bool> Matches;
             public Func<object, string> StringFunction;
         }
-
-        #endregion
     }
 }

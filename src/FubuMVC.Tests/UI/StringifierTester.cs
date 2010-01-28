@@ -86,5 +86,22 @@ namespace FubuMVC.Tests.UI
             DateTime date = DateTime.Today;
             stringifier.GetString(typeof (DateTime), date).ShouldEqual(date.ToShortDateString());
         }
+
+        [Test]
+        public void string_conversion_functions_work_for_nullable_types()
+        {
+            stringifier.ForStruct<DateTime>(d => d.ToShortDateString());
+
+            DateTime date = DateTime.Today;
+            stringifier.GetString(typeof(DateTime?), date).ShouldEqual(date.ToShortDateString());
+        }
+
+        [Test]
+        public void string_conversion_functions_work_for_nullable_types_that_are_null()
+        {
+            stringifier.ForStruct<DateTime>(d => d.ToShortDateString());
+
+            stringifier.GetString(typeof(DateTime?), null).ShouldEqual("");
+        }
     }
 }
