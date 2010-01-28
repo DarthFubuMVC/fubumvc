@@ -1,9 +1,11 @@
 using System;
 using System.Linq.Expressions;
 using FubuMVC.Core.View;
+using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
+using FubuMVC.Core.Util;
 
 namespace FubuMVC.UI
 {
@@ -32,6 +34,11 @@ namespace FubuMVC.UI
         }
 
         
+        public static string ElementNameFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        {
+            return page.Get<IElementNamingConvention>().GetName(typeof (T), expression.ToAccessor());
+        }
+
 
     }
 }
