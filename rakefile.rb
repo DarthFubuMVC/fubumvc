@@ -47,12 +47,16 @@ desc "Compiles the app"
 task :compile => [:clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_VERSION
   AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
-    
-  outDir = "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}"
-    
-  Dir.glob(File.join(outDir, "*.{dll,pdb}")){|file| 		
-	copy(file, props[:archive]) if File.file?(file)
-  }
+  
+  copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:archive]
+  copyOutputFiles "src/FubuMVC.View.Spark/bin/#{COMPILE_TARGET}", "*Spark.{dll.pdb}", props[:archive]
+  copyOutputFiles "src/FubuMVC.UI/bin/#{COMPILE_TARGET}", "FubuMVC.UI.{dll,pdb}", props[:archive]
+end
+
+def copyOutputFiles(fromDir, filePattern, outDir)
+  Dir.glob(File.join(fromDir, filePattern)){|file| 		
+	copy(file, outDir) if File.file?(file)
+  } 
 end
 
 desc "Runs unit tests"
@@ -69,7 +73,7 @@ task :ci => [:unit_test,:zip]
 
 desc "ZIPs up the build results"
 zip do |zip|
-	zip.directories_to_zip = ["build"]
+	zip.directories_to_zip = [props[:archive]]
 	zip.output_file = 'fubumvc.zip'
 	zip.output_path = 'build'
 end

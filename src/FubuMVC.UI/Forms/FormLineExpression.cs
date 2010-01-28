@@ -102,7 +102,7 @@ namespace FubuMVC.UI.Forms
 
         IEnumerable<HtmlTag> ITagSource.AllTags()
         {
-            return _layout.AllTags();
+            return !_isVisible ? new HtmlTag[0] : _layout.AllTags();
         }
 
         private void ensureBodyTag()
