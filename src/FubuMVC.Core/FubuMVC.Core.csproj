@@ -240,7 +240,6 @@
     <Compile Include="View\FubuPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="View\IFubuPage.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\IViewsForActionFilter.cs" />
     <Compile Include="View\IViewEngine.cs" />

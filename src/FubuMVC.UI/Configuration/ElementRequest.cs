@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.Util;
 using Microsoft.Practices.ServiceLocation;
 
@@ -65,6 +66,13 @@ namespace FubuMVC.UI.Configuration
         public bool ValueIsEmpty()
         {
             return RawValue == null || string.Empty.Equals(RawValue);
+        }
+
+        public void ForValue<T>(Action<T> action)
+        {
+            if (ValueIsEmpty()) return;
+
+            action((T) RawValue);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
@@ -30,9 +31,11 @@ namespace FubuMVC.Core.View
         {
             _model = request.Find<TMasterPageViewModel>().FirstOrDefault();
         }
+
     }
 
     public class FubuMasterPage : MasterPage, IFubuView
     {
+
     }
 }

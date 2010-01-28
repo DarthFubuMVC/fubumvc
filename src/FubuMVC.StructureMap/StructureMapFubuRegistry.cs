@@ -31,7 +31,13 @@ namespace FubuMVC.StructureMap
             For<IServiceLocator>().Use<StructureMapServiceLocator>();
             For<IWebFormsControlBuilder>().Use<StructureMapWebFormsControlBuilder>();
 
-            SetAllProperties(x => x.Matching(p => p.DeclaringType == typeof (FubuPage)));
+            SetAllProperties(x =>
+            {
+                x.Matching(p => p.DeclaringType == typeof (FubuPage));
+                x.OfType<IServiceLocator>();
+            });
+
+            
         }
 
         public HttpContext BuildContextWrapper()

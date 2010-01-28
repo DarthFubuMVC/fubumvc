@@ -153,6 +153,16 @@ namespace FubuMVC.Core.Urls
             return _news[entityType].GetUrl(null);
         }
 
+        public bool HasNewUrl<T>()
+        {
+            return HasNewUrl(typeof (T));
+        }
+
+        public bool HasNewUrl(Type type)
+        {
+            return _news.Has(type);
+        }
+
         public string UrlForPropertyUpdate(object model)
         {
             return UrlFor(model, Categories.PROPERTY_EDIT);

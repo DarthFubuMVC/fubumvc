@@ -16,6 +16,24 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void do_not_write_closing_tag()
+        {
+            var tag = new HtmlTag("span").Id("id");
+            tag.NoClosingTag();
+
+            tag.ToCompacted().ShouldEqual("<span id=\"id\">");
+        }
+
+        [Test]
+        public void write_next_if_it_exists()
+        {
+            var tag = new HtmlTag("span").Text("something");
+            tag.Next = new HtmlTag("span").Text("next");
+
+            tag.ToCompacted().ShouldEqual("<span>something</span><span>next</span>");
+        }
+
+        [Test]
         public void insert_before()
         {
             var tag = new HtmlTag("div");

@@ -16,6 +16,8 @@ namespace FubuMVC.UI.Configuration
 
             library.ImportRegistry(new DefaultHtmlConventions());
 
+            library.Seal();
+
             graph.Services.ClearAll<HtmlConventionRegistry>();
 
             graph.Services.ReplaceService(library);

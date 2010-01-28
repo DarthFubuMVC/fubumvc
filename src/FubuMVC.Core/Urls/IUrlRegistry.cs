@@ -16,6 +16,9 @@ namespace FubuMVC.Core.Urls
 
         string UrlForNew<T>();
         string UrlForNew(Type entityType);
+        bool HasNewUrl<T>();
+        bool HasNewUrl(Type type);
+
 
         // Not sure these two methods won't get axed
         string UrlForPropertyUpdate(object model);

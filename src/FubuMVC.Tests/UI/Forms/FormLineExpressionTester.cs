@@ -119,14 +119,29 @@ namespace FubuMVC.Tests.UI.Forms
             return new HtmlTag("span").AddClass("label").Text(expression.ToAccessor().Name);
         }
 
+        public HtmlTag LabelFor(Expression<Func<T, object>> expression, string profile)
+        {
+            throw new NotImplementedException();
+        }
+
         public HtmlTag InputFor(Expression<Func<T, object>> expression)
         {
             return new HtmlTag("span").AddClass("input").Text(expression.ToAccessor().Name);
         }
 
+        public HtmlTag InputFor(Expression<Func<T, object>> expression, string profile)
+        {
+            throw new NotImplementedException();
+        }
+
         public HtmlTag DisplayFor(Expression<Func<T, object>> expression)
         {
             return new HtmlTag("span").AddClass("display").Text(expression.ToAccessor().Name);
+        }
+
+        public HtmlTag DisplayFor(Expression<Func<T, object>> expression, string profile)
+        {
+            throw new NotImplementedException();
         }
 
         public ElementRequest GetRequest(Expression<Func<T, object>> expression)
@@ -148,5 +163,13 @@ namespace FubuMVC.Tests.UI.Forms
         {
             throw new NotImplementedException();
         }
+
+        public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ElementPrefix { get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); } }
     }
 }

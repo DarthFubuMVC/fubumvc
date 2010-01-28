@@ -102,6 +102,25 @@ namespace FubuMVC.Tests.Urls
         }
 
         [Test]
+        public void has_new_positive_case()
+        {
+            ActionCall call = ActionCall.For<UrlRegistryTesterController>(x => x.New());
+            var route = new RouteDefinition("somepattern");
+
+            var url = new ActionUrl(route, call);
+
+            registry.RegisterNew(url, typeof(SiteEntity));
+
+            registry.HasNewUrl<SiteEntity>().ShouldBeTrue();
+        }
+
+        [Test]
+        public void has_new_negative_case()
+        {
+            registry.HasNewUrl<SiteEntity>().ShouldBeFalse();
+        }
+
+        [Test]
         public void find_default_if_there_is_only_one()
         {
             var url = new StubModelUrl<UrlModel>(m => "/name/" + m.Name);

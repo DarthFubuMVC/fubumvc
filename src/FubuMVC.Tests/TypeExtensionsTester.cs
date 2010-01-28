@@ -29,6 +29,12 @@ namespace FubuMVC.Tests
         }
 
         [Test]
+        public void closes_applies_to_concrete_types()
+        {
+            typeof(Service2<string>).Closes(typeof(Service2<>)).ShouldBeTrue();
+        }
+
+        [Test]
         public void find_interface_that_closes_open_interface()
         {
             typeof (Service1).FindInterfaceThatCloses(typeof (IService<>))

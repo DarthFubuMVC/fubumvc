@@ -26,6 +26,11 @@ namespace FubuMVC.Tests.UI
             Labels.Always.AddClass("label");
 
             Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));
+
+            Profile("edit", x =>
+            {
+                x.Editors.IfPropertyTypeIs(o => o.CanBeCastTo<TagProfile>()).AddClass("class1");
+            });
         }
     }
 
@@ -52,6 +57,7 @@ namespace FubuMVC.Tests.UI
             request.Get<Address>().ShouldBeTheSameAs(address);
 
             generator = container.GetInstance<TagGenerator<Address>>();
+            generator.Model = address;
         }
 
         #endregion
@@ -59,6 +65,14 @@ namespace FubuMVC.Tests.UI
         private Address address;
         private TagGenerator<Address> generator;
         private Container container;
+
+
+        [Test]
+        public void builders_are_back_filled_from_the_defaults_into_profiles()
+        {
+            generator.SetProfile("edit");
+            generator.LabelFor(x => x.Address1).Text().ShouldEqual("Address1");
+        }
 
         [Test]
         public void add_class_for_presence_of_an_attribute_negative_case()

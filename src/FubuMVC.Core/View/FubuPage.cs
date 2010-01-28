@@ -13,11 +13,18 @@ namespace FubuMVC.Core.View
             Model = request.Get<TViewModel>();
         }
 
+        public void SetModel(TViewModel model)
+        {
+            Model = model;
+        }
+
         public TViewModel Model { get; private set; }
     }
 
     public class FubuControl<TViewModel> : UserControl, IFubuPage<TViewModel> where TViewModel : class
     {
+        private readonly Cache<Type, object> _services;
+
         public void SetModel(IFubuRequest request)
         {
             Model = request.Get<TViewModel>();
@@ -30,11 +37,12 @@ namespace FubuMVC.Core.View
 
         public TViewModel Model { get; private set; }
 
-        private readonly Cache<Type, object> _services = new Cache<Type, object>();
-
         public FubuControl()
         {
-            _services.OnMissing = type => { return ServiceLocator.GetInstance(type); };
+            _services = new Cache<Type, object>
+            {
+                OnMissing = type => ServiceLocator.GetInstance(type)
+            };
         }
 
         public IServiceLocator ServiceLocator { get; set; }
@@ -48,6 +56,7 @@ namespace FubuMVC.Core.View
         {
             return ServiceLocator.GetInstance<T>();
         }
+
     }
 
     public class FubuPage : Page, IFubuPage
@@ -70,5 +79,6 @@ namespace FubuMVC.Core.View
         {
             return ServiceLocator.GetInstance<T>();
         }
+
     }
 }

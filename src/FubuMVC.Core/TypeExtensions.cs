@@ -77,6 +77,8 @@ namespace FubuMVC.Core
 
         public static bool Closes(this Type type, Type openType)
         {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == openType) return true;
+
             Type baseType = type.BaseType;
             if (baseType == null) return false;
 

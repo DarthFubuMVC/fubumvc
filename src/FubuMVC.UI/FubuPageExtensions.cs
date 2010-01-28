@@ -11,7 +11,9 @@ namespace FubuMVC.UI
     {
         public static TagGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
         {
-            return page.Get<TagGenerator<T>>();
+            var generator = page.Get<TagGenerator<T>>();
+            generator.Model = page.Model;
+            return generator;
         }
 
         public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
@@ -29,14 +31,7 @@ namespace FubuMVC.UI
             return page.Tags().DisplayFor(expression);
         }
 
-        public static FormLineExpression<T> LabeledDisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
-        {
-            return new FormLineExpression<T>(page.Tags(), page.GetNew<ILabelAndFieldLayout>(), expression);
-        }
+        
 
-        public static FormLineExpression<T> LabeledInputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
-        {
-            return new FormLineExpression<T>(page.Tags(), page.GetNew<ILabelAndFieldLayout>(), expression).Editable(true);
-        }
     }
 }

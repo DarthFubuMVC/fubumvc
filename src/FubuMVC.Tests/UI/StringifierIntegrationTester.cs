@@ -38,6 +38,7 @@ namespace FubuMVC.Tests.UI
 
 
             generator = container.GetInstance<TagGenerator<Address>>();
+            generator.Model = address;
         }
 
         #endregion

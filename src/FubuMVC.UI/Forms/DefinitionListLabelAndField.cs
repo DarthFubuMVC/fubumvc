@@ -7,13 +7,16 @@ namespace FubuMVC.UI.Forms
     public class DefinitionListLabelAndField : ILabelAndFieldLayout
     {
         private readonly HtmlTag _dt = new HtmlTag("dt");
-        private readonly HtmlTag _dl = new HtmlTag("dl");
+        private readonly HtmlTag _dd = new HtmlTag("dd");
         private HtmlTag _bodyHolder;
 
         public DefinitionListLabelAndField()
         {
-            _bodyHolder = _dl;
+            _bodyHolder = _dd;
         }
+
+        public HtmlTag DtTag { get { return _dt; } }
+        public HtmlTag DdTag { get { return _dd; } }
 
         public HtmlTag LabelTag 
         { 

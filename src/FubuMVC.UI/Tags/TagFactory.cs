@@ -34,6 +34,11 @@ namespace FubuMVC.UI.Tags
         private Func<ElementRequest, HtmlTag> resolveCreator(AccessorDef accessorDef)
         {
             TagBuilder initialCreator = _sources.FirstValue(x => x.CreateInitial(accessorDef));
+            if (initialCreator == null)
+            {
+                throw new FubuException(3000, "Html Conventions have no tag builder for {0}.{1}", accessorDef.ModelType.FullName, accessorDef.Accessor.Name);
+            }
+
             TagModifier[] modifiers =
                 _modifiers.Select(x => x.CreateModifier(accessorDef)).Where(x => x != null).ToArray();
 
