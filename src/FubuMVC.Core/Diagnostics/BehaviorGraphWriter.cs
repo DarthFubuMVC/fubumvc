@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.TextWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
+using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Diagnostics
 {
     public class BehaviorGraphWriter
     {
+        private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";
+        private const string sourceControlUrlFormat = sourceControlUrlBase + "commit/{0}";
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
 
@@ -66,7 +67,7 @@ namespace FubuMVC.Core.Diagnostics
             document.Title = realTitle;
 
             var mainDiv = new HtmlTag("div").AddClass("main");
-            mainDiv.Add("h2").Text("FubuMVC Diagnostics");
+            mainDiv.Add("h2").Text("FubuMVC Diagnostics").Child(buildVersionTag());
             var navBar = mainDiv.Add("div").AddClass("homelink");
             navBar.AddChildren(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
             navBar.Add("span").Text(" > " + title);
@@ -77,6 +78,16 @@ namespace FubuMVC.Core.Diagnostics
             document.AddStyle(css);
 
             return document;
+        }
+
+        private static HtmlTag buildVersionTag()
+        {
+            var fubuAssembly = typeof(BehaviorGraphWriter).Assembly;
+            var version = fubuAssembly.GetName().Version.ToString();
+            var commitAttribute = fubuAssembly.GetAttribute<AssemblyTrademarkAttribute>();
+            var commit = commitAttribute == null ? null : commitAttribute.Trademark;
+            var versionUrl = commit.IsNotEmpty() ? sourceControlUrlFormat.ToFormat(commit) : sourceControlUrlBase;
+            return new HtmlTag("span").Id("version-display").Text("version: ").Child(new LinkTag(version, versionUrl).Attr("title", commit));
         }
 
         public HtmlDocument Chain(ChainRequest chainRequest)

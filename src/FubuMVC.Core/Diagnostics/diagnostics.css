@@ -5,6 +5,10 @@
 	background-color: #ccc;
 }
 
+a, a:visited{
+	color: #111;
+}
+
 .main{
 	-moz-background-clip:border;
 	-moz-border-radius-topleft:6px;
@@ -126,4 +130,10 @@ table.details TH
 
 .summary {
 	margin: 5px 10px;
+}
+
+#version-display{
+	float:right;
+	font-size:small;
+	font-weight:normal;
 }

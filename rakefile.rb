@@ -34,7 +34,7 @@ assemblyinfo :version do |asm|
   rescue
     commit = "git unavailable"
   end
-  asm.trademark = "Commit: " + commit
+  asm.trademark = commit
 end
 
 desc "Prepares the working directory for a new build"
