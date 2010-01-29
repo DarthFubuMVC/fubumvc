@@ -21,7 +21,7 @@ namespace HtmlTags.Testing
             var tag = new HtmlTag("span").Id("id");
             tag.NoClosingTag();
 
-            tag.ToCompacted().ShouldEqual("<span id=\"id\">");
+            tag.ToString().ShouldEqual("<span id=\"id\">");
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace HtmlTags.Testing
             var tag = new HtmlTag("span").Text("something");
             tag.Next = new HtmlTag("span").Text("next");
 
-            tag.ToCompacted().ShouldEqual("<span>something</span><span>next</span>");
+            tag.ToString().ShouldEqual("<span>something</span><span>next</span>");
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace HtmlTags.Testing
             tag.Add("span");
             tag.InsertFirst(new HtmlTag("p"));
 
-            tag.ToCompacted().ShouldEqual("<div><p></p><span></span></div>");
+            tag.ToString().ShouldEqual("<div><p></p><span></span></div>");
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace HtmlTags.Testing
         [Test]
         public void is_visible_set_to_false()
         {
-            new HtmlTag("div").Visible(false).ToCompacted().ShouldEqual("");
+            new HtmlTag("div").Visible(false).ToString().ShouldEqual("");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace HtmlTags.Testing
             var tag = new HtmlTag("div");
 
             tag.Visible().ShouldBeTrue();
-            tag.ToCompacted().ShouldEqual("<div></div>");
+            tag.ToString().ShouldEqual("<div></div>");
         }
 
         [Test]
@@ -73,14 +73,14 @@ namespace HtmlTags.Testing
         {
             HtmlTag tag = new HtmlTag("div").Text("something");
             tag.Prepend("more in front ");
-            tag.ToCompacted().ShouldEqual("<div>more in front something</div>");
+            tag.ToString().ShouldEqual("<div>more in front something</div>");
         }
 
         [Test]
         public void render_a_single_attribute()
         {
             HtmlTag tag = new HtmlTag("table").Attr("cellPadding", 2);
-            tag.ToCompacted().ShouldEqual("<table cellPadding=\"2\"></table>");
+            tag.ToString().ShouldEqual("<table cellPadding=\"2\"></table>");
         }
 
         [Test]
@@ -89,18 +89,18 @@ namespace HtmlTags.Testing
             HtmlTag tag = new HtmlTag("div").Text("text");
             tag.AddClass("a");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"a\">text</div>");
+            tag.ToString().ShouldEqual("<div class=\"a\">text</div>");
 
             tag.AddClass("a");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"a\">text</div>");
+            tag.ToString().ShouldEqual("<div class=\"a\">text</div>");
         }
 
         [Test]
         public void render_id()
         {
             HtmlTag tag = new HtmlTag("div").Id("theDiv");
-            tag.ToCompacted().ShouldEqual("<div id=\"theDiv\"></div>");
+            tag.ToString().ShouldEqual("<div id=\"theDiv\"></div>");
         }
 
         [Test]
@@ -110,19 +110,19 @@ namespace HtmlTags.Testing
             tag.MetaData("a", 1);
             tag.MetaData("b", "b-value");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"{&quot;a&quot;:1,&quot;b&quot;:&quot;b-value&quot;}\">text</div>");
+            tag.ToString().ShouldEqual("<div class=\"{&quot;a&quot;:1,&quot;b&quot;:&quot;b-value&quot;}\">text</div>");
 
             // now with another class
             tag.AddClass("class1");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"class1 {&quot;a&quot;:1,&quot;b&quot;:&quot;b-value&quot;}\">text</div>");
+            tag.ToString().ShouldEqual("<div class=\"class1 {&quot;a&quot;:1,&quot;b&quot;:&quot;b-value&quot;}\">text</div>");
         }
 
         [Test]
         public void render_multiple_attributes()
         {
             HtmlTag tag = new HtmlTag("table").Attr("cellPadding", "2").Attr("cellSpacing", "3");
-            tag.ToCompacted().ShouldEqual("<table cellPadding=\"2\" cellSpacing=\"3\"></table>");
+            tag.ToString().ShouldEqual("<table cellPadding=\"2\" cellSpacing=\"3\"></table>");
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace HtmlTags.Testing
             tag.AddClass("b");
             tag.AddClass("c");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"a b c\">text</div>");
+            tag.ToString().ShouldEqual("<div class=\"a b c\">text</div>");
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace HtmlTags.Testing
             HtmlTag tag = new HtmlTag("div").Text("text");
             tag.AddClasses("a", "b", "c");
 
-            tag.ToCompacted().ShouldEqual("<div class=\"a b c\">text</div>");
+            tag.ToString().ShouldEqual("<div class=\"a b c\">text</div>");
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace HtmlTags.Testing
             var tag = new HtmlTag("table");
             tag.Add("tbody/tr/td").Text("some text");
 
-            tag.ToCompacted()
+            tag.ToString()
                 .ShouldEqual("<table><tbody><tr><td>some text</td></tr></tbody></table>");
         }
 
@@ -179,7 +179,7 @@ namespace HtmlTags.Testing
                 x.Add("body/div").Text("inner text of div");
             });
 
-            tag.ToCompacted().ShouldEqual(
+            tag.ToString().ShouldEqual(
                 "<html><head><title>The title</title><style>the style</style></head><body><div>inner text of div</div></body></html>");
         }
 
@@ -201,7 +201,7 @@ namespace HtmlTags.Testing
         public void render_tag_with_one_child()
         {
             HtmlTag tag = new HtmlTag("div").Child(new HtmlTag("span").Text("something"));
-            tag.ToCompacted().ShouldEqual("<div><span>something</span></div>");
+            tag.ToString().ShouldEqual("<div><span>something</span></div>");
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace HtmlTags.Testing
             HtmlTag tag = new HtmlTag("table")
                 .Attr("cellPadding", 2)
                 .Attr("cellPadding", 5);
-            tag.ToCompacted().ShouldEqual("<table cellPadding=\"5\"></table>");
+            tag.ToString().ShouldEqual("<table cellPadding=\"5\"></table>");
         }
 
         [Test]
@@ -219,7 +219,7 @@ namespace HtmlTags.Testing
             var tag = new HtmlTag("div");
             tag.Text("<b>Hi</b>");
 
-            tag.ToCompacted().ShouldEqual("<div>&lt;b&gt;Hi&lt;/b&gt;</div>");
+            tag.ToString().ShouldEqual("<div>&lt;b&gt;Hi&lt;/b&gt;</div>");
         }
 
         [Test]
@@ -228,7 +228,7 @@ namespace HtmlTags.Testing
             new HtmlTag("div")
                 .Style("padding-left", "20px")
                 .Style("padding-right", "30px")
-                .ToCompacted()
+                .ToString()
                 .ShouldEqual("<div style=\"padding-left:20px;padding-right:30px\"></div>");
         }
 
@@ -239,7 +239,7 @@ namespace HtmlTags.Testing
             {
                 Display = "a",
                 Value = "1"
-            }).ToCompacted().ShouldEqual("<div class=\"{&quot;listValue&quot;:{&quot;Display&quot;:&quot;a&quot;,&quot;Value&quot;:&quot;1&quot;}}\"></div>");
+            }).ToString().ShouldEqual("<div class=\"{&quot;listValue&quot;:{&quot;Display&quot;:&quot;a&quot;,&quot;Value&quot;:&quot;1&quot;}}\"></div>");
         }
 
         public class ListValue
