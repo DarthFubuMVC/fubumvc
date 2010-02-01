@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Spark.Web.FubuMVC.ViewLocation
 {
     public class AreaDescriptorFilter : DescriptorFilterBase
     {
-        public override void ExtraParameters(ControllerContext context, IDictionary<string, object> extra)
+        public override void ExtraParameters(ActionContext context, IDictionary<string, object> extra)
         {
             object value;
             if (context.RouteData.Values.TryGetValue("area", out value))

@@ -8,9 +8,9 @@ namespace Spark.Web.FubuMVC.ViewLocation
         /// Implemented by custom descriptor builder to quickly extract additional parameters needed
         /// to locate templates, like the theme or language in effect for the request
         /// </summary>
-        /// <param name="controllerContext">Context information for the current request</param>
+        /// <param name="actionContext">Context information for the current request</param>
         /// <returns>An in-order array of values which are meaningful to BuildDescriptor on the same implementation class</returns>
-        IDictionary<string, object> GetExtraParameters(ControllerContext controllerContext);
+        IDictionary<string, object> GetExtraParameters(ActionContext actionContext);
 
         /// <summary>
         /// Given a set of MVC-specific parameters, a descriptor for the target view is created. This can

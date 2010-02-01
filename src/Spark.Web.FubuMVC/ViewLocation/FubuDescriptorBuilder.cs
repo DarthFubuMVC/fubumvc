@@ -30,11 +30,11 @@ namespace Spark.Web.FubuMVC.ViewLocation
 
         #region IDescriptorBuilder Members
 
-        public virtual IDictionary<string, object> GetExtraParameters(ControllerContext controllerContext)
+        public virtual IDictionary<string, object> GetExtraParameters(ActionContext actionContext)
         {
             var extra = new Dictionary<string, object>();
             foreach (IDescriptorFilter filter in Filters)
-                filter.ExtraParameters(controllerContext, extra);
+                filter.ExtraParameters(actionContext, extra);
             return extra;
         }
 
@@ -42,11 +42,11 @@ namespace Spark.Web.FubuMVC.ViewLocation
         {
             var descriptor = new SparkViewDescriptor
                                  {
-                                     TargetNamespace = buildDescriptorParams.TargetNamespace
+                                     TargetNamespace = buildDescriptorParams.ActionNamespace
                                  };
 
             if (!LocatePotentialTemplate(
-                     PotentialViewLocations(buildDescriptorParams.ControllerName,
+                     PotentialViewLocations(buildDescriptorParams.AcionName,
                                             buildDescriptorParams.ViewName,
                                             buildDescriptorParams.Extra),
                      descriptor.Templates,
@@ -69,7 +69,7 @@ namespace Spark.Web.FubuMVC.ViewLocation
             else if (buildDescriptorParams.FindDefaultMaster && string.IsNullOrEmpty(TrailingUseMasterName(descriptor)))
             {
                 LocatePotentialTemplate(
-                    PotentialDefaultMasterLocations(buildDescriptorParams.ControllerName,
+                    PotentialDefaultMasterLocations(buildDescriptorParams.AcionName,
                                                     buildDescriptorParams.Extra),
                     descriptor.Templates,
                     null);
@@ -128,11 +128,11 @@ namespace Spark.Web.FubuMVC.ViewLocation
                 (aggregate, filter) => filter.PotentialLocations(aggregate, extra));
         }
 
-        protected virtual IEnumerable<string> PotentialViewLocations(string controllerName, string viewName, IDictionary<string, object> extra)
+        protected virtual IEnumerable<string> PotentialViewLocations(string actionName, string viewName, IDictionary<string, object> extra)
         {
             return ApplyFilters(new[]
                                     {
-                                        controllerName + "\\" + viewName + ".spark",
+                                        actionName + "\\" + viewName + ".spark",
                                         "Shared\\" + viewName + ".spark"
                                     }, extra);
         }
@@ -146,12 +146,12 @@ namespace Spark.Web.FubuMVC.ViewLocation
                                     }, extra);
         }
 
-        protected virtual IEnumerable<string> PotentialDefaultMasterLocations(string controllerName, IDictionary<string, object> extra)
+        protected virtual IEnumerable<string> PotentialDefaultMasterLocations(string actionName, IDictionary<string, object> extra)
         {
             return ApplyFilters(new[]
                                     {
-                                        "Layouts\\" + controllerName + ".spark",
-                                        "Shared\\" + controllerName + ".spark",
+                                        "Layouts\\" + actionName + ".spark",
+                                        "Shared\\" + actionName + ".spark",
                                         "Layouts\\Application.spark",
                                         "Shared\\Application.spark"
                                     }, extra);

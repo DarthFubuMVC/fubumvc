@@ -11,6 +11,7 @@ using Spark.FileSystem;
 using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.Tests.Helpers;
 using Spark.Web.FubuMVC.Tests.Models;
+using Spark.Web.FubuMVC.ViewCreation;
 
 namespace Spark.Web.FubuMVC.Tests
 {
@@ -34,13 +35,13 @@ namespace Spark.Web.FubuMVC.Tests
             _routeData = new RouteData();
             _routeData.Values.Add("controller", "Stub");
             _routeData.Values.Add("action", "Index");
-            _controllerContext = new ControllerContext(_httpContext, _routeData, new StubController());
+            _actionContext = new ActionContext(_httpContext, _routeData, new StubController().GetType().Namespace);
         }
 
         #endregion
 
         private SparkViewFactory _factory;
-        private ControllerContext _controllerContext;
+        private ActionContext _actionContext;
         private RouteData _routeData;
         private HttpContextBase _httpContext;
         private HttpResponseBase _response;
@@ -48,7 +49,7 @@ namespace Spark.Web.FubuMVC.Tests
 
         private void FindPartialViewAndRender(string partialViewName)
         {
-            ViewEngineResult viewEngineResult = _factory.FindPartialView(_controllerContext, partialViewName);
+            ViewEngineResult viewEngineResult = _factory.FindPartialView(_actionContext, partialViewName);
             viewEngineResult.View.RenderView(_output);
         }
 
@@ -59,7 +60,7 @@ namespace Spark.Web.FubuMVC.Tests
 
         private void FindViewAndRender<T>(string viewName, T viewModel) where T : class
         {
-            ViewEngineResult viewEngineResult = _factory.FindView(_controllerContext, viewName, null);
+            ViewEngineResult viewEngineResult = _factory.FindView(_actionContext, viewName, null);
             var sparkView = viewEngineResult.View as SparkView<T>;
             if (sparkView != null)
             {
@@ -72,7 +73,7 @@ namespace Spark.Web.FubuMVC.Tests
 
         private void FindViewAndRender(string viewName, string masterName)
         {
-            ViewEngineResult viewEngineResult = _factory.FindView(_controllerContext, viewName, masterName);
+            ViewEngineResult viewEngineResult = _factory.FindView(_actionContext, viewName, masterName);
             viewEngineResult.View.RenderView(_output);
         }
 
@@ -119,7 +120,7 @@ namespace Spark.Web.FubuMVC.Tests
             _routeData.Values["controller"] = "Foo";
             _routeData.Values["action"] = "Notbaz";
 
-            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_controllerContext, "baz", null, true, null);
+            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "baz", null, true, null);
 
             descriptor.Templates.ShouldHaveCount(2);
             descriptor.Templates[0].ShouldEqual("Foo\\baz.spark");
@@ -138,7 +139,7 @@ namespace Spark.Web.FubuMVC.Tests
             _routeData.Values["controller"] = "Foo";
             _routeData.Values["action"] = "Notbaz";
 
-            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_controllerContext, "baz", null, true, null);
+            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "baz", null, true, null);
 
             descriptor.Templates.ShouldHaveCount(2);
             descriptor.Templates[0].ShouldEqual("Foo\\baz.spark");
@@ -168,7 +169,7 @@ namespace Spark.Web.FubuMVC.Tests
                                           {"Layouts\\Home.spark", ""}
                                       };
 
-            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_controllerContext, "Foo", null, true, null);
+            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "Foo", null, true, null);
 
             Assert.AreEqual("Spark.Web.FubuMVC.Tests.Controllers", descriptor.TargetNamespace);
         }
@@ -185,7 +186,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_partial_view_in_an_area()
         {
-            _controllerContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
             FindPartialViewAndRender("index");
 
             _output.ToString().ShouldEqual("<div>default view some foo area</div>");
@@ -194,7 +195,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_view_in_an_area()
         {
-            _controllerContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
             FindViewAndRender("index");
             _output.ToString().ShouldEqual("<div>default view some foo area</div>");
         }
@@ -202,7 +203,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_view_in_an_area_with_a_layout()
         {
-            _controllerContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
             FindViewAndRender("index", "layout");
 
             _output.ToString().ShouldContainInOrder("<body>", "<div>default view some foo area</div>", "</body>");
@@ -211,7 +212,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_view_in_an_area_with_a_layout_in_the_same_area()
         {
-            _controllerContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
             FindViewAndRender("index", "fooAreaLayout");
 
             ContainsInOrder(_output.ToString(),
@@ -245,7 +246,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_render_a_plain_view()
         {
-            ViewEngineResult viewEngineResult = _factory.FindView(_controllerContext, "index", null);
+            ViewEngineResult viewEngineResult = _factory.FindView(_actionContext, "index", null);
             viewEngineResult.View.RenderView(_output);
 
             _output.ToString().ShouldEqual("<div>index</div>");
@@ -392,7 +393,7 @@ namespace Spark.Web.FubuMVC.Tests
             _routeData.Values["controller"] = "Foo";
             _routeData.Values["action"] = "Notbaz";
 
-            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_controllerContext, "baz", null, true, null);
+            SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "baz", null, true, null);
 
             descriptor.Templates.ShouldHaveCount(1);
             descriptor.Templates[0].ShouldEqual("Foo\\baz.spark");

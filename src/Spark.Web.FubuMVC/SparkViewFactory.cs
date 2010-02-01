@@ -5,31 +5,31 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Web;
 using System.Web.Routing;
-using FubuMVC.Core;
 using Spark.Compiler;
 using Spark.FileSystem;
+using Spark.Web.FubuMVC.Extensions;
+using Spark.Web.FubuMVC.ViewCreation;
 using Spark.Web.FubuMVC.ViewLocation;
 
 namespace Spark.Web.FubuMVC
 {
     public class SparkViewFactory
     {
-        private IDescriptorBuilder _descriptorBuilder;
-        private ISparkViewEngine _engine;
-        private ICacheServiceProvider _cacheServiceProvider;
         private readonly Dictionary<BuildDescriptorParams, ISparkViewEntry> _cache = new Dictionary<BuildDescriptorParams, ISparkViewEntry>();
         private ViewEngineResult _cacheMissResult;
+        private ICacheServiceProvider _cacheServiceProvider;
+        private IDescriptorBuilder _descriptorBuilder;
+        private ISparkViewEngine _engine;
 
-        public SparkViewFactory() : this(null) { }
-        public SparkViewFactory(ISparkSettings settings)
+        public SparkViewFactory() : this(null)
         {
-            Settings = settings ?? (ISparkSettings)ConfigurationManager.GetSection("spark") ?? new SparkSettings();
         }
 
-        public string ViewFileExtension
+        public SparkViewFactory(ISparkSettings settings)
         {
-            get { throw new NotImplementedException(); }
+            Settings = settings ?? (ISparkSettings) ConfigurationManager.GetSection("spark") ?? new SparkSettings();
         }
 
         public IViewFolder ViewFolder
@@ -63,30 +63,41 @@ namespace Spark.Web.FubuMVC
             set { SetEngine(value); }
         }
 
+        public ICacheServiceProvider CacheServiceProvider
+        {
+            get
+            {
+                return _cacheServiceProvider ??
+                       Interlocked.CompareExchange(ref _cacheServiceProvider, new DefaultCacheServiceProvider(), null) ??
+                       _cacheServiceProvider;
+            }
+            set { _cacheServiceProvider = value; }
+        }
+
         public void SetEngine(ISparkViewEngine engine)
         {
             _descriptorBuilder = null;
             _engine = engine;
             if (_engine != null)
             {
-                _engine.DefaultPageBaseType = typeof(SparkView).FullName;
+                _engine.DefaultPageBaseType = typeof (SparkView).FullName;
             }
         }
 
-        public SparkViewDescriptor CreateDescriptor(ControllerContext controllerContext, string viewName, string masterName, bool findDefaultMaster, ICollection<string> searchedLocations)
+        public SparkViewDescriptor CreateDescriptor(ActionContext actionContext, string viewName, string masterName, bool findDefaultMaster, ICollection<string> searchedLocations)
         {
-            string targetNamespace = controllerContext.Controller.GetType().Namespace;
+            string targetNamespace = actionContext.ActionNamespace;
 
-            string controllerName = controllerContext.RouteData.GetRequiredString("controller");
+            string actionName = actionContext.RouteData.GetRequiredString("controller");
 
             return DescriptorBuilder.BuildDescriptor(
                 new BuildDescriptorParams(
                     targetNamespace,
-                    controllerName,
+                    actionName,
                     viewName,
                     masterName,
                     findDefaultMaster,
-                    DescriptorBuilder.GetExtraParameters(controllerContext)),
+                    DescriptorBuilder.GetExtraParameters(actionContext)),
                 searchedLocations);
         }
 
@@ -98,7 +109,7 @@ namespace Spark.Web.FubuMVC
         public List<SparkViewDescriptor> CreateDescriptors(SparkBatchDescriptor batch)
         {
             var descriptors = new List<SparkViewDescriptor>();
-            foreach (var entry in batch.Entries)
+            foreach (SparkBatchEntry entry in batch.Entries)
                 descriptors.AddRange(CreateDescriptors(entry));
             return descriptors;
         }
@@ -107,30 +118,30 @@ namespace Spark.Web.FubuMVC
         {
             var descriptors = new List<SparkViewDescriptor>();
 
-            var controllerName = RemoveSuffix(entry.ControllerType.Name, "Controller");
+            string controllerName = entry.ControllerType.Name.RemoveSuffix("Controller");
 
             var viewNames = new List<string>();
-            var includeViews = entry.IncludeViews;
+            IList<string> includeViews = entry.IncludeViews;
             if (includeViews.Count == 0)
-                includeViews = new[] { "*" };
+                includeViews = new[] {"*"};
 
-            foreach (var include in includeViews)
+            foreach (string include in includeViews)
             {
                 if (include.EndsWith("*"))
                 {
-                    foreach (var fileName in ViewFolder.ListViews(controllerName))
+                    foreach (string fileName in ViewFolder.ListViews(controllerName))
                     {
                         if (!string.Equals(Path.GetExtension(fileName), ".spark", StringComparison.InvariantCultureIgnoreCase))
                             continue;
 
-                        var potentialMatch = Path.GetFileNameWithoutExtension(fileName);
-                        if (!TestMatch(potentialMatch, include))
+                        string potentialMatch = Path.GetFileNameWithoutExtension(fileName);
+                        if (!potentialMatch.Matches(include))
                             continue;
 
-                        var isExcluded = false;
-                        foreach (var exclude in entry.ExcludeViews)
+                        bool isExcluded = false;
+                        foreach (string exclude in entry.ExcludeViews)
                         {
-                            if (!TestMatch(potentialMatch, RemoveSuffix(exclude, ".spark")))
+                            if (!potentialMatch.Matches(exclude.RemoveSuffix(".spark")))
                                 continue;
 
                             isExcluded = true;
@@ -143,11 +154,11 @@ namespace Spark.Web.FubuMVC
                 else
                 {
                     // explicitly included views don't test for exclusion
-                    viewNames.Add(RemoveSuffix(include, ".spark"));
+                    viewNames.Add(include.RemoveSuffix(".spark"));
                 }
             }
 
-            foreach (var viewName in viewNames)
+            foreach (string viewName in viewNames)
             {
                 if (entry.LayoutNames.Count == 0)
                 {
@@ -178,7 +189,7 @@ namespace Spark.Web.FubuMVC
         public SparkViewDescriptor CreateDescriptor(string targetNamespace, string controllerName, string viewName, string masterName, bool findDefaultMaster)
         {
             var searchedLocations = new List<string>();
-            var descriptor = DescriptorBuilder.BuildDescriptor(
+            SparkViewDescriptor descriptor = DescriptorBuilder.BuildDescriptor(
                 new BuildDescriptorParams(
                     targetNamespace /*areaName*/,
                     controllerName,
@@ -195,69 +206,44 @@ namespace Spark.Web.FubuMVC
             return descriptor;
         }
 
-        private ViewEngineResult BuildResult(RequestContext requestContext, ISparkViewEntry entry)
+        private ViewEngineResult BuildResult(HttpContextBase httpContext, ISparkViewEntry entry)
         {
-            var view = entry.CreateInstance();
+            ISparkView view = entry.CreateInstance();
             if (view is SparkView)
             {
-                var sparkView = (SparkView)view;
+                var sparkView = (SparkView) view;
                 sparkView.ResourcePathManager = Engine.ResourcePathManager;
-                sparkView.CacheService = CacheServiceProvider.GetCacheService(requestContext);
+                sparkView.CacheService = CacheServiceProvider.GetCacheService(httpContext);
             }
             return new ViewEngineResult(view, this);
         }
 
-        public ICacheServiceProvider CacheServiceProvider
+        public ViewEngineResult FindView(ActionContext actionContext, string viewName, string masterName)
         {
-            get
-            {
-                return _cacheServiceProvider ??
-                       Interlocked.CompareExchange(ref _cacheServiceProvider, new DefaultCacheServiceProvider(), null) ??
-                       _cacheServiceProvider;
-            }
-            set { _cacheServiceProvider = value; }
+            return FindViewInternal(actionContext, viewName, masterName, true, false);
         }
 
-        private static string RemoveSuffix(string value, string suffix)
+        public ISparkView FindView(HttpContextBase httpContext, string actionNamespace, string actionName, string viewName, string masterName)
         {
-            if (value.EndsWith(suffix, StringComparison.InvariantCultureIgnoreCase))
-                return value.Substring(0, value.Length - suffix.Length);
-            return value;
+            var routeData = new RouteData();
+            routeData.Values.Add("controller", actionName.RemoveSuffix("Controller"));
+            var actionContext = new ActionContext(httpContext, routeData, actionNamespace);
+
+            ViewEngineResult viewResult = FindView(actionContext, viewName, masterName);
+            return viewResult.View;
         }
 
-        private static bool TestMatch(string potentialMatch, string pattern)
+        public virtual ViewEngineResult FindPartialView(ActionContext actionContext, string partialViewName)
         {
-            if (!pattern.EndsWith("*"))
-            {
-                return string.Equals(potentialMatch, pattern, StringComparison.InvariantCultureIgnoreCase);
-            }
-
-            // raw wildcard matches anything that's not a partial
-            if (pattern == "*")
-            {
-                return !potentialMatch.StartsWith("_");
-            }
-
-            // otherwise the only thing that's supported is "starts with"
-            return potentialMatch.StartsWith(pattern.Substring(0, pattern.Length - 1),StringComparison.InvariantCultureIgnoreCase);
+            return FindViewInternal(actionContext, partialViewName, null /*masterName*/, false, false);
         }
 
-        public ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName)
-        {
-            return FindViewInternal(controllerContext, viewName, masterName, true, false);
-        }
-
-        public virtual ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName)
-        {
-            return FindViewInternal(controllerContext, partialViewName, null /*masterName*/, false, false);
-        }
-
-        private ViewEngineResult FindViewInternal(ControllerContext controllerContext, string viewName, string masterName, bool findDefaultMaster, bool useCache)
+        private ViewEngineResult FindViewInternal(ActionContext actionContext, string viewName, string masterName, bool findDefaultMaster, bool useCache)
         {
             var searchedLocations = new List<string>();
-            var targetNamespace = controllerContext.Controller.GetType().Namespace;
+            string targetNamespace = actionContext.ActionNamespace;
 
-            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
+            string controllerName = actionContext.RouteData.GetRequiredString("controller");
 
             var descriptorParams = new BuildDescriptorParams(
                 targetNamespace,
@@ -265,19 +251,19 @@ namespace Spark.Web.FubuMVC
                 viewName,
                 masterName,
                 findDefaultMaster,
-                DescriptorBuilder.GetExtraParameters(controllerContext));
+                DescriptorBuilder.GetExtraParameters(actionContext));
 
             ISparkViewEntry entry;
             if (useCache)
             {
                 if (TryGetCacheValue(descriptorParams, out entry) && entry.IsCurrent())
                 {
-                    return BuildResult(controllerContext.RequestContext, entry);
+                    return BuildResult(actionContext.HttpContext, entry);
                 }
                 return _cacheMissResult;
             }
 
-            var descriptor = DescriptorBuilder.BuildDescriptor(
+            SparkViewDescriptor descriptor = DescriptorBuilder.BuildDescriptor(
                 descriptorParams,
                 searchedLocations);
 
@@ -286,8 +272,9 @@ namespace Spark.Web.FubuMVC
 
             entry = Engine.CreateEntry(descriptor);
             SetCacheValue(descriptorParams, entry);
-            return BuildResult(controllerContext.RequestContext, entry);
+            return BuildResult(actionContext.HttpContext, entry);
         }
+
         private bool TryGetCacheValue(BuildDescriptorParams descriptorParams, out ISparkViewEntry entry)
         {
             lock (_cache) return _cache.TryGetValue(descriptorParams, out entry);

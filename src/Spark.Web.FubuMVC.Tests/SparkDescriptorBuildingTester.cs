@@ -30,7 +30,7 @@ namespace Spark.Web.FubuMVC.Tests
             var httpContext = MockRepository.GenerateStub<HttpContextBase>();
             _routeData = new RouteData();
             var controller = new StubController();
-            _controllerContext = new ControllerContext(httpContext, _routeData, controller);
+            _actionContext = new ActionContext(httpContext, _routeData, controller.GetType().Namespace);
         }
 
         #endregion
@@ -38,7 +38,7 @@ namespace Spark.Web.FubuMVC.Tests
         private SparkViewFactory _factory;
         private InMemoryViewFolder _viewFolder;
         private RouteData _routeData;
-        private ControllerContext _controllerContext;
+        private ActionContext _actionContext;
 
         private static void AssertDescriptorTemplates(SparkViewDescriptor descriptor, IEnumerable<string> searchedLocations, params string[] templates)
         {
@@ -116,7 +116,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Application.it.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.en-gb.spark", @"Layouts\Application.en.spark");
         }
 
@@ -131,7 +131,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"Layouts\Bar.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", "Elephant", true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", "Elephant", true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark", @"Layouts\Elephant.spark", @"Layouts\Whale.spark");
         }
 
@@ -143,7 +143,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"Layouts\Bar.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark", @"Layouts\Bar.spark");
         }
 
@@ -154,7 +154,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark", @"Layouts\Application.spark");
         }
 
@@ -167,7 +167,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Home.spark", "");
             _viewFolder.Add(@"Layouts\Site.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", "Site", true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", "Site", true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark", @"Layouts\Site.spark");
         }
 
@@ -177,7 +177,7 @@ namespace Spark.Web.FubuMVC.Tests
             _routeData.Values.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark");
         }
 
@@ -194,7 +194,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"SomeFooArea\Layouts\Bar.spark", "");
             _viewFolder.Add(@"SomeFooArea\Layouts\Site.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, false, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, false, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"SomeFooArea\Bar\Index.spark");
         }
 
@@ -208,7 +208,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Shared\Application.spark", "");
             _viewFolder.Add(@"Shared\Home.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, false, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, false, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark");
         }
 
@@ -224,7 +224,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Bar.spark", "");
 
             var searchedLocations = new List<string>();
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, false, searchedLocations);
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, false, searchedLocations);
             AssertDescriptorTemplates(result, searchedLocations, @"Bar\Index.spark");
         }
 
@@ -236,7 +236,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark", @"Layouts\Application.spark");
         }
 
@@ -269,7 +269,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"SomeFooArea\Bar\Index.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"SomeFooArea\Bar\Index.spark", @"Layouts\Application.spark");
         }
 
@@ -283,7 +283,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"SomeFooArea\Bar\Index.spark", "");
             _viewFolder.Add(@"SomeFooArea\Layouts\Application.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"SomeFooArea\Bar\Index.spark", @"SomeFooArea\Layouts\Application.spark");
         }
 
@@ -298,7 +298,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"SomeFooArea\Layouts\Application.spark", "");
             _viewFolder.Add(@"SomeFooArea\Layouts\Site.spark", "");
 
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", "Site", true, new List<string>());
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", "Site", true, new List<string>());
             AssertDescriptorTemplates(result, new List<string>(), @"SomeFooArea\Bar\Index.spark", @"SomeFooArea\Layouts\Site.spark");
         }
 
@@ -314,7 +314,7 @@ namespace Spark.Web.FubuMVC.Tests
             _viewFolder.Add(@"Layouts\Bar.spark", "");
 
             var searchedLocations = new List<string>();
-            SparkViewDescriptor result = _factory.CreateDescriptor(_controllerContext, "Index", null, true, searchedLocations);
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, searchedLocations);
             AssertDescriptorTemplates(result, searchedLocations, @"Bar\Index.spark", @"Layouts\Lion.spark", @"Layouts\Elephant.spark", @"Layouts\Whale.spark");
         }
     }
@@ -326,17 +326,17 @@ namespace Spark.Web.FubuMVC.Tests
         {
         }
 
-        public override IDictionary<string, object> GetExtraParameters(ControllerContext controllerContext)
+        public override IDictionary<string, object> GetExtraParameters(ActionContext actionContext)
         {
             return new Dictionary<string, object>
                        {
-                           {"language", Convert.ToString(controllerContext.RouteData.Values["language"])}
+                           {"language", Convert.ToString(actionContext.RouteData.Values["language"])}
                        };
         }
 
-        protected override IEnumerable<string> PotentialViewLocations(string controllerName, string viewName, IDictionary<string, object> extra)
+        protected override IEnumerable<string> PotentialViewLocations(string actionName, string viewName, IDictionary<string, object> extra)
         {
-            return Merge(base.PotentialViewLocations(controllerName, viewName, extra), extra["language"].ToString());
+            return Merge(base.PotentialViewLocations(actionName, viewName, extra), extra["language"].ToString());
         }
 
         protected override IEnumerable<string> PotentialMasterLocations(string masterName, IDictionary<string, object> extra)
@@ -344,9 +344,9 @@ namespace Spark.Web.FubuMVC.Tests
             return Merge(base.PotentialMasterLocations(masterName, extra), extra["language"].ToString());
         }
 
-        protected override IEnumerable<string> PotentialDefaultMasterLocations(string controllerName, IDictionary<string, object> extra)
+        protected override IEnumerable<string> PotentialDefaultMasterLocations(string actionName, IDictionary<string, object> extra)
         {
-            return Merge(base.PotentialDefaultMasterLocations(controllerName, extra), extra["language"].ToString());
+            return Merge(base.PotentialDefaultMasterLocations(actionName, extra), extra["language"].ToString());
         }
 
         private static IEnumerable<string> Merge(IEnumerable<string> locations, string region)

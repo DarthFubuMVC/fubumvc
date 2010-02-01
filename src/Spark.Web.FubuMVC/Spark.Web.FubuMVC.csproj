@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\spark\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -56,9 +64,20 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ControllerContext.cs" />
+    <Compile Include="Bootstrap\ActionAndViewMatchedBySparkViewDescriptors.cs" />
+    <Compile Include="Bootstrap\SparkDefaultStructureMapRegistry.cs" />
+    <Compile Include="Extensions\RegistryConfigurationExtensions.cs" />
+    <Compile Include="ActionContext.cs" />
+    <Compile Include="Bootstrap\SparkStructureMapApplication.cs" />
+    <Compile Include="Bootstrap\SparkStructureMapBootstrapper.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICacheServiceProvider.cs" />
-    <Compile Include="SparkView.cs" />
+    <Compile Include="ViewCreation\SparkView.cs" />
+    <Compile Include="ViewLocation\SparkViewFacility.cs" />
+    <Compile Include="ViewCreation\SparkViewNode.cs" />
+    <Compile Include="ViewCreation\SparkViewToken.cs" />
+    <Compile Include="ViewCreation\SparkViewRenderer.cs" />
+    <Compile Include="ViewCreation\SparkRenderViewBehavior.cs" />
     <Compile Include="ViewLocation\AreaDescriptorFilter.cs" />
     <Compile Include="ViewLocation\BuildDescriptorParams.cs" />
     <Compile Include="ViewLocation\DescriptorFilterBase.cs" />
@@ -69,13 +88,13 @@
     <Compile Include="ViewLocation\IDescriptorFilter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Spark\gh\src\Spark\Spark.csproj">
-      <Project>{31929D34-1A68-4A6B-9D8A-B93037163A5A}</Project>
-      <Name>Spark</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
+      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>

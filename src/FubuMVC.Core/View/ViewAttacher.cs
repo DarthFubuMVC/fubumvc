@@ -22,7 +22,19 @@ namespace FubuMVC.Core.View
 
         public void Configure(BehaviorGraph graph)
         {
-            var views = _facilities.SelectMany(x => x.FindViews(_types));
+            var views = new List<IViewToken>();
+
+            foreach (var facility in _facilities)
+            {
+                views.AddRange(facility.FindViews(_types));
+            }
+
+            //= _facilities.SelectMany(x => x.FindViews(_types));
+
+
+
+
+
             var bag = new ViewBag(views);
 
             graph.Actions().Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));

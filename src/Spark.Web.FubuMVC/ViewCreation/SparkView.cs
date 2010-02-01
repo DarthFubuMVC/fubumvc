@@ -2,7 +2,7 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 
-namespace Spark.Web.FubuMVC
+namespace Spark.Web.FubuMVC.ViewCreation
 {
     public abstract class SparkView : SparkView<object>
     {
@@ -31,10 +31,10 @@ namespace Spark.Web.FubuMVC
         {
             return "Only need to implement for anonymous type support";
         }
+
         public string Eval(string expression, string format)
         {
             return "Only need to implement for anonymous type support";
         }
-
     }
 }

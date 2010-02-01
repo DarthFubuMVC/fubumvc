@@ -6,18 +6,18 @@ namespace Spark.Web.FubuMVC.ViewLocation
     public class BuildDescriptorParams
     {
         private static readonly IDictionary<string, object> _extraEmpty = new Dictionary<string, object>();
-        private readonly string _controllerName;
+        private readonly string _acionName;
         private readonly IDictionary<string, object> _extra;
         private readonly bool _findDefaultMaster;
         private readonly int _hashCode;
         private readonly string _masterName;
-        private readonly string _targetNamespace;
+        private readonly string _actionNamespace;
         private readonly string _viewName;
 
-        public BuildDescriptorParams(string targetNamespace, string controllerName, string viewName, string masterName, bool findDefaultMaster, IDictionary<string, object> extra)
+        public BuildDescriptorParams(string actionNamespace, string acionName, string viewName, string masterName, bool findDefaultMaster, IDictionary<string, object> extra)
         {
-            _targetNamespace = targetNamespace;
-            _controllerName = controllerName;
+            _actionNamespace = actionNamespace;
+            _acionName = acionName;
             _viewName = viewName;
             _masterName = masterName;
             _findDefaultMaster = findDefaultMaster;
@@ -28,14 +28,14 @@ namespace Spark.Web.FubuMVC.ViewLocation
             _hashCode = CalculateHashCode();
         }
 
-        public string TargetNamespace
+        public string ActionNamespace
         {
-            get { return _targetNamespace; }
+            get { return _actionNamespace; }
         }
 
-        public string ControllerName
+        public string AcionName
         {
-            get { return _controllerName; }
+            get { return _acionName; }
         }
 
         public string ViewName
@@ -71,8 +71,8 @@ namespace Spark.Web.FubuMVC.ViewLocation
         private int CalculateHashCode()
         {
             return Hash(_viewName) ^
-                   Hash(_controllerName) ^
-                   Hash(_targetNamespace) ^
+                   Hash(_acionName) ^
+                   Hash(_actionNamespace) ^
                    Hash(_masterName) ^
                    _findDefaultMaster.GetHashCode() ^
                    _extra.Aggregate(0, (hash, kv) => hash ^ Hash(kv.Key) ^ Hash(kv.Value));
@@ -85,8 +85,8 @@ namespace Spark.Web.FubuMVC.ViewLocation
                 return false;
 
             if (!string.Equals(_viewName, that._viewName) ||
-                !string.Equals(_controllerName, that._controllerName) ||
-                !string.Equals(_targetNamespace, that._targetNamespace) ||
+                !string.Equals(_acionName, that._acionName) ||
+                !string.Equals(_actionNamespace, that._actionNamespace) ||
                 !string.Equals(_masterName, that._masterName) ||
                 _findDefaultMaster != that._findDefaultMaster ||
                 _extra.Count != that._extra.Count)

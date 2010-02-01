@@ -1,0 +1,8 @@
+﻿<viewdata model="FubuMVC.HelloSpark.Controllers.WaterViewModel" />
+
+<content:title>What the heck?!</content:title>
+<content:header>What are you gonna do?</content:header>
+
+<h1>${Model.Do}</h1>
+
+<content:footer>Little early to put out the flames don't you think?!</content:footer>

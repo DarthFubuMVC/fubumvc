@@ -7,7 +7,7 @@ namespace Spark.Web.FubuMVC.ViewLocation
     {
         #region IDescriptorFilter Members
 
-        public abstract void ExtraParameters(ControllerContext context, IDictionary<string, object> extra);
+        public abstract void ExtraParameters(ActionContext context, IDictionary<string, object> extra);
 
         public abstract IEnumerable<string> PotentialLocations(IEnumerable<string> locations,
                                                                IDictionary<string, object> extra);
