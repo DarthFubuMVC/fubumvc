@@ -57,6 +57,11 @@ namespace FubuMVC.Core.Registration.Routes
 
         public string Category { get; set; }
 
+        public virtual int Rank
+        {
+            get { return 0; }
+        }
+
         public IEnumerable<KeyValuePair<string, object>> Constraints { get { return _constraints; } }
 
         public void AddRouteConstraint(string inputName, IRouteConstraint constraint)
@@ -199,6 +204,14 @@ namespace FubuMVC.Core.Registration.Routes
         public RouteInput QueryInputFor(string querystringKey)
         {
             return _queryInputs.Single(x => x.Name == querystringKey);
+        }
+
+        public override int Rank
+        {
+            get
+            {
+                return _routeInputs.Count;
+            }
         }
 
         public override string ToString()

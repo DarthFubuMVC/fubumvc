@@ -8,6 +8,7 @@ namespace FubuMVC.Core.Registration.Routes
     {
         string Pattern { get; }
         string Category { get; set; }
+        int Rank { get; }
         IEnumerable<KeyValuePair<string, object>> Constraints { get; }
         string CreateUrl(object input);
         Route ToRoute();

@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Registration
     {
         public BehaviorGraph(IConfigurationObserver observer)
         {
+            RouteIterator = new SortByRouteRankIterator(); // can override in a registry
             Observer = observer;
         }
 
@@ -31,6 +32,8 @@ namespace FubuMVC.Core.Registration
         public int BehaviorChainCount { get { return _behaviors.Count; } }
 
         public IEnumerable<BehaviorChain> Behaviors { get { return _behaviors; } }
+
+        public IRouteIterator RouteIterator { get; set; }
 
 
         public void RegisterRoute(BehaviorChain chain, IRouteDefinition route)
@@ -103,7 +106,7 @@ namespace FubuMVC.Core.Registration
 
         public void VisitRoutes(IRouteVisitor visitor)
         {
-            _behaviors.Each(x => visitor.VisitRoute(x.Route, x));
+            RouteIterator.Over(_behaviors).Each(x => visitor.VisitRoute(x.Route, x));
         }
 
         public void Describe()
@@ -166,5 +169,18 @@ namespace FubuMVC.Core.Registration
 
             return chain.UniqueId;
         }
+    }
+
+    public class SortByRouteRankIterator : IRouteIterator
+    {
+        public IEnumerable<BehaviorChain> Over(IEnumerable<BehaviorChain> behaviors)
+        {
+            return behaviors.OrderBy(b => b.Route.Rank);
+        }
+    }
+
+    public interface IRouteIterator
+    {
+        IEnumerable<BehaviorChain> Over(IEnumerable<BehaviorChain> behaviors);
     }
 }
