@@ -35,10 +35,12 @@ namespace FubuMVC.UI
 
         public string GetString(Type type, object rawValue)
         {
+            if( rawValue == null || (rawValue as String) == string.Empty ) return string.Empty;
+
             return _converters[type](rawValue);
         }
 
-        public void ForStruct<T>(Func<T, string> display) where T : struct
+        public void ForValueType<T>(Func<T, string> display) where T : struct
         {
             _strategies.Add(new StringifierStrategy
             {

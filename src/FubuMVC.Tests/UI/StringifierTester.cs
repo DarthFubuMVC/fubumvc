@@ -81,7 +81,7 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void register_a_string_conversion_function_by_a_struct_type()
         {
-            stringifier.ForStruct<DateTime>(d => d.ToShortDateString());
+            stringifier.ForValueType<DateTime>(d => d.ToShortDateString());
 
             DateTime date = DateTime.Today;
             stringifier.GetString(typeof (DateTime), date).ShouldEqual(date.ToShortDateString());
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void string_conversion_functions_work_for_nullable_types()
         {
-            stringifier.ForStruct<DateTime>(d => d.ToShortDateString());
+            stringifier.ForValueType<DateTime>(d => d.ToShortDateString());
 
             DateTime date = DateTime.Today;
             stringifier.GetString(typeof(DateTime?), date).ShouldEqual(date.ToShortDateString());
@@ -99,9 +99,22 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void string_conversion_functions_work_for_nullable_types_that_are_null()
         {
-            stringifier.ForStruct<DateTime>(d => d.ToShortDateString());
+            stringifier.ForValueType<DateTime>(d => d.ToShortDateString());
 
-            stringifier.GetString(typeof(DateTime?), null).ShouldEqual("");
+            stringifier.GetString(typeof(DateTime?), DateTime.Parse("17-JAN-2007")).ShouldEqual(DateTime.Parse("17-JAN-2007").ToShortDateString());
+        }
+
+        [Test]
+        public void should_return_empty_when_no_converter_is_defined_for_type()
+        {
+            stringifier.GetString(typeof(DateTime), null).ShouldEqual("");
+        }
+
+        [Test]
+        public void should_return_empty_when_value_is_null()
+        {
+            stringifier.ForValueType<DateTime>(d => d.ToShortDateString());
+            stringifier.GetString(typeof(DateTime), null).ShouldEqual("");
         }
     }
 }

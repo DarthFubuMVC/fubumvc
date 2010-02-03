@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.UI
         {
             var registry =
                 new FubuRegistry(
-                    x => { x.StringConversions(s => { s.ForStruct<DateTime>(d => d.ToShortDateString()); }); });
+                    x => { x.StringConversions(s => { s.ForValueType<DateTime>(d => d.ToShortDateString()); }); });
 
             container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
