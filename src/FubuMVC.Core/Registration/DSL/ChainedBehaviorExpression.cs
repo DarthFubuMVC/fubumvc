@@ -48,7 +48,7 @@ namespace FubuMVC.Core.Registration.DSL
         private ChainedBehaviorExpression returnChain(BehaviorNode node)
         {
             _registration(node);
-            return new ChainedBehaviorExpression(n => node.Next = n)
+            return new ChainedBehaviorExpression(node.InsertDirectlyAfter)
             {
                 _outputType = _outputType
             };

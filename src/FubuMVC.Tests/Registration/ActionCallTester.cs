@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Registration
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
             var wrapper = new Wrapper(typeof (FakeBehavior));
-            action.Next = wrapper;
+            action.InsertDirectlyAfter(wrapper);
 
             var next = new RenderJsonNode(typeof (Model2));
 

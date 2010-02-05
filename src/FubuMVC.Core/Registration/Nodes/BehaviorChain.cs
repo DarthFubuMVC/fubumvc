@@ -52,14 +52,13 @@ namespace FubuMVC.Core.Registration.Nodes
             if (Top == null)
             {
                 Top = node;
-                node.Previous = this;
                 return;
             }
 
             BehaviorNode last = this.OfType<BehaviorNode>().LastOrDefault();
             if (last != null)
             {
-                last.Next = node;
+                last.InsertDirectlyAfter(node);
             }
         }
 
@@ -80,8 +79,15 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void Prepend(BehaviorNode node)
         {
-            node.Next = Top;
-            Top = node;
+            if (Top == null)
+            {
+                Top = node;
+            }
+            else
+            {
+                Top.InsertDirectlyBefore(node);
+                Top = node;
+            }
         }
 
         protected override ObjectDef buildObjectDef()

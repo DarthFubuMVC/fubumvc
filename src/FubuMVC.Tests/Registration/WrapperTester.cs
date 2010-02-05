@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void put_a_dependency_into_the_object_def_for_the_inner_behavior()
         {
-            _wrapper.Next = new RenderJsonNode(typeof (Output));
+            _wrapper.InsertDirectlyAfter(new RenderJsonNode(typeof (Output)));
             ObjectDef def = _wrapper.ToObjectDef();
 
             def.Dependencies.Count.ShouldEqual(1);

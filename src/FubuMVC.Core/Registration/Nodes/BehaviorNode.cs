@@ -26,14 +26,14 @@ namespace FubuMVC.Core.Registration.Nodes
         public BehaviorNode Next
         {
             get { return _next; }
-            set
+            protected set
             {
                 _next = value;
                 if (value != null) value.Previous = this;
             }
         }
 
-        public BehaviorNode Previous { get; internal set; }
+        public BehaviorNode Previous { get; protected set; }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -100,7 +100,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void InsertDirectlyBefore(BehaviorNode newNode)
         {
-            Previous.Next = newNode;
+            if (Previous != null) Previous.Next = newNode;
             newNode.Next = this;
         }
     }
