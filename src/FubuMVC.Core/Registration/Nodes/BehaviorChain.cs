@@ -13,8 +13,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public override BehaviorCategory Category { get { return BehaviorCategory.Chain; } }
 
-        public IEnumerable<ActionCall> Calls { get { return this.SelectTo<ActionCall>(); } }
-        public IEnumerable<OutputNode> Outputs { get { return this.SelectTo<OutputNode>(); } }
+        public IEnumerable<ActionCall> Calls { get { return this.OfType<ActionCall>(); } }
+        public IEnumerable<OutputNode> Outputs { get { return this.OfType<OutputNode>(); } }
 
         public IRouteDefinition Route { get; set; }
 
@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Registration.Nodes
                 return;
             }
 
-            BehaviorNode last = this.SelectTo<BehaviorNode>().LastOrDefault();
+            BehaviorNode last = this.OfType<BehaviorNode>().LastOrDefault();
             if (last != null)
             {
                 last.Next = node;

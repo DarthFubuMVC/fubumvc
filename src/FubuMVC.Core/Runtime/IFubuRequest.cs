@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Runtime
@@ -35,7 +36,7 @@ namespace FubuMVC.Core.Runtime
 
         public IEnumerable<T> Find<T>() where T : class
         {
-            return _cache.GetAll().WhereMatching<T>(x => true);
+            return _cache.GetAll().OfType<T>();
         }
 
         public void SetObject(object input)

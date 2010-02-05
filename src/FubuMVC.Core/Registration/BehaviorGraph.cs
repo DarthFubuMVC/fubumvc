@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Registration
 
         public IEnumerable<RouteDefinition<T>> RoutesFor<T>()
         {
-            return _behaviors.Select(x => x.Route).Where(x => x != null).WhereMatching<RouteDefinition<T>>(x => true);
+            return _behaviors.Select(x => x.Route).Where(x => x != null).OfType<RouteDefinition<T>>();
         }
 
         public void EachService(Action<Type, ObjectDef> action)

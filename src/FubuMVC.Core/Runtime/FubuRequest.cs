@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Runtime
 
         public IEnumerable<T> Find<T>() where T : class
         {
-            return _values.GetAll().Select(x => x.Value).WhereMatching<T>(x => true);
+            return _values.GetAll().Select(x => x.Value).OfType<T>();
         }
 
         public virtual void SetObject(object input)

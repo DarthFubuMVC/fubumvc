@@ -230,27 +230,5 @@ namespace FubuMVC.Core
             //properly encoding URI: http://blogs.msdn.com/yangxind/default.aspx
             return target != null ? Uri.EscapeDataString(target.ToString()) : string.Empty;
         }
-
-
-        [DebuggerStepThrough]
-        public static IEnumerable<U> WhereMatching<U>(this IEnumerable enumerable, Func<U, bool> predicate)
-            where U : class
-        {
-            return enumerable.OfType<object>()
-                .Where(x => x is U)
-                .Select(x => x as U)
-                .Where(predicate);
-        }
-
-        public static IEnumerable<T> SelectTo<T>(this IEnumerable enumerable)
-        {
-            foreach (object o in enumerable)
-            {
-                if (o is T)
-                {
-                    yield return (T) o;
-                }
-            }
-        }
     }
 }
