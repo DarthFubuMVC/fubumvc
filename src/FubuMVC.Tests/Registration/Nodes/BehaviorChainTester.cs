@@ -167,6 +167,52 @@ namespace FubuMVC.Tests.Registration.Nodes
             node2.Previous.ShouldBeNull();
         }
 
+        [Test]
+        public void replacing_a_node_should_disconnect_the_node_being_replaced()
+        {
+            var node1 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node3 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var newNode = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node1.AddToEnd(node2);
+            node1.AddToEnd(node3);
+            node2.ReplaceWith(newNode);
+
+            node2.Next.ShouldBeNull();
+            node2.Previous.ShouldBeNull();
+        }
+
+
+        [Test]
+        public void replacing_a_node_should_set_the_new_nodes_predecessor_and_successor()
+        {
+            var node1 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node3 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var newNode = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node1.AddToEnd(node2);
+            node1.AddToEnd(node3);
+            node2.ReplaceWith(newNode);
+
+            newNode.Previous.ShouldBeTheSameAs(node1);
+            newNode.Next.ShouldBeTheSameAs(node3);
+            node1.Next.ShouldBeTheSameAs(newNode);
+            node3.Previous.ShouldBeTheSameAs(newNode);
+        }
+
+        [Test]
+        public void replacing_a_node_without_a_predecessor_should_set_the_new_node_to_the_front()
+        {
+            var node1 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var newNode = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node1.AddToEnd(node2);
+            node1.ReplaceWith(newNode);
+
+            newNode.Previous.ShouldBeNull();
+            newNode.Next.ShouldBeTheSameAs(node2);
+        }
+
 
         [Test]
         public void the_unique_id_of_the_behavior_chain_matches_the_object_def_name()

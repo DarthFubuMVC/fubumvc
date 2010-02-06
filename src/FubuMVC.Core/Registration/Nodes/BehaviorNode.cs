@@ -117,5 +117,16 @@ namespace FubuMVC.Core.Registration.Nodes
             Previous = null;
             Next = null;
         }
+
+        public virtual void ReplaceWith(BehaviorNode newNode)
+        {
+            if (Previous != null)
+            {
+                Previous.Next = newNode;
+            }
+            newNode.Next = Next;
+            Previous = null;
+            Next = null;
+        }
     }
 }
