@@ -103,5 +103,19 @@ namespace FubuMVC.Core.Registration.Nodes
             BehaviorNode last = this.LastOrDefault() ?? this;
             last.Next = node;
         }
+
+        public virtual void Remove()
+        {
+            if (Previous == null)
+            {
+                Next.Previous = null;
+            }
+            else
+            {
+                Previous.Next = Next;
+            }
+            Previous = null;
+            Next = null;
+        }
     }
 }

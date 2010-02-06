@@ -138,6 +138,37 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
+        public void removing_a_node_maintains_the_link_between_its_predecessor_and_successor()
+        {
+            var node1 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node3 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node1.AddToEnd(node2);
+            node1.AddToEnd(node3);
+            node2.Remove();
+
+            node2.Previous.ShouldBeNull();
+            node2.Next.ShouldBeNull();
+            node1.Next.ShouldBeTheSameAs(node3);
+            node3.Previous.ShouldBeTheSameAs(node1);
+        }
+
+        [Test]
+        public void removing_a_node_without_a_predecessor_sets_its_successor_to_the_front()
+        {
+            var node1 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            var node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node1.AddToEnd(node2);
+
+            node1.Remove();
+
+            node1.Previous.ShouldBeNull();
+            node1.Next.ShouldBeNull();
+            node2.Previous.ShouldBeNull();
+        }
+
+
+        [Test]
         public void the_unique_id_of_the_behavior_chain_matches_the_object_def_name()
         {
             var chain = new BehaviorChain();
