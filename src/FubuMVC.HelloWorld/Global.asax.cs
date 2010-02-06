@@ -1,7 +1,9 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.HelloWorld.Controllers.Home;
+using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap.Bootstrap;
 using FubuMVC.View.Spark;
+using StructureMap;
 
 namespace FubuMVC.HelloWorld
 {
@@ -10,6 +12,11 @@ namespace FubuMVC.HelloWorld
         public override FubuRegistry GetMyRegistry()
         {
             return new HelloWorldFubuRegistry();
+        }
+
+        protected override void InitializeStructureMap(IInitializationExpression ex)
+        {
+            ex.For<IHttpSession>().Use<CurrentHttpContextSession>();
         }
     }
 

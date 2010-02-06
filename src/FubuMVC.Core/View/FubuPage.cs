@@ -1,6 +1,7 @@
 using System;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using FubuMVC.Core.Util;
 using Microsoft.Practices.ServiceLocation;
 
@@ -57,6 +58,10 @@ namespace FubuMVC.Core.View
             return ServiceLocator.GetInstance<T>();
         }
 
+        public IUrlRegistry Urls
+        {
+            get { return Get<IUrlRegistry>(); }
+        }
     }
 
     public class FubuPage : Page, IFubuPage
@@ -80,5 +85,9 @@ namespace FubuMVC.Core.View
             return ServiceLocator.GetInstance<T>();
         }
 
+        public IUrlRegistry Urls
+        {
+            get { return Get<IUrlRegistry>(); }
+        }
     }
 }

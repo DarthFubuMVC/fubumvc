@@ -1,4 +1,5 @@
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
@@ -24,6 +25,7 @@ namespace FubuMVC.Core.View
         IServiceLocator ServiceLocator { get; set; }
         T Get<T>();
         T GetNew<T>();
+        IUrlRegistry Urls { get; }
     }
 
     public interface IFubuPage<TViewModel> : IFubuPage, IFubuView<TViewModel> where TViewModel : class
