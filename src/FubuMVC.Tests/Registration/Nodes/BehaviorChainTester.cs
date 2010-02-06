@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            chain.Append(wrapper);
+            chain.AddToEnd(wrapper);
 
             chain.Top.ShouldBeTheSameAs(wrapper);
         }
@@ -34,8 +34,8 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             ActionCall call = ActionCall.For<TestController>(x => x.AnotherAction(null));
             ActionCall call2 = ActionCall.For<TestController>(x => x.AnotherAction(null));
-            chain.Append(call);
-            chain.Append(call2);
+            chain.AddToEnd(call);
+            chain.AddToEnd(call2);
 
             chain.Calls.Count().ShouldEqual(2);
             chain.Calls.Contains(call).ShouldBeTrue();
@@ -48,11 +48,11 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             chain.HasInput().ShouldBeFalse();
 
-            chain.Append(ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut()));
+            chain.AddToEnd(ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut()));
             chain.HasInput().ShouldBeFalse();
 
             chain = new BehaviorChain();
-            chain.Append(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)));
+            chain.AddToEnd(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)));
             chain.HasInput().ShouldBeTrue();
         }
 
@@ -62,11 +62,11 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            chain.Append(wrapper);
+            chain.AddToEnd(wrapper);
 
             var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            wrapper.InsertDirectlyBefore(wrapper2);
+            wrapper.AddBefore(wrapper2);
 
             chain.Top.ShouldBeTheSameAs(wrapper2);
             wrapper2.Next.ShouldBeTheSameAs(wrapper);
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             var chain = new BehaviorChain();
             ActionCall call = ActionCall.For<TestController>(x => x.AnotherAction(null));
-            chain.Append(call);
+            chain.AddToEnd(call);
 
             var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
             chain.Prepend(wrapper);
@@ -101,18 +101,18 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
-        public void setting_next_on_a_node_also_sets_the_previous()
+        public void appending_a_node_also_sets_the_previous()
         {
             var chain = new BehaviorChain();
             var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            chain.Append(wrapper);
+            chain.AddToEnd(wrapper);
 
             wrapper.Previous.ShouldBeTheSameAs(chain);
 
             var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            wrapper.Append(wrapper2);
+            wrapper.AddToEnd(wrapper2);
 
             wrapper2.Previous.ShouldBeTheSameAs(wrapper);
             wrapper.Previous.ShouldBeTheSameAs(chain);
@@ -120,18 +120,18 @@ namespace FubuMVC.Tests.Registration.Nodes
 
 
         [Test]
-        public void setting_next_on_a_node_also_sets_the_previous_2()
+        public void appending_a_node_also_sets_the_previous_2()
         {
             var chain = new BehaviorChain();
             var wrapper = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            chain.Append(wrapper);
+            chain.AddToEnd(wrapper);
 
             wrapper.Previous.ShouldBeTheSameAs(chain);
 
             var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
-            chain.Append(wrapper2);
+            chain.AddToEnd(wrapper2);
 
             wrapper2.Previous.ShouldBeTheSameAs(wrapper);
             wrapper.Previous.ShouldBeTheSameAs(chain);
@@ -142,7 +142,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         {
             var chain = new BehaviorChain();
             ActionCall call = ActionCall.For<TestController>(x => x.AnotherAction(null));
-            chain.Append(call);
+            chain.AddToEnd(call);
 
             chain.UniqueId.ToString().ShouldEqual(chain.ToObjectDef().Name);
         }

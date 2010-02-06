@@ -23,10 +23,10 @@ namespace FubuMVC.Tests.Diagnostics
         {
             var chain = new BehaviorChain();
             ActionCall call1 = ActionCall.For<TargetController>(x => x.Go());
-            chain.Append(call1);
+            chain.AddToEnd(call1);
 
             ActionCall call2 = ActionCall.For<TargetController>(x => x.GoWithInput(null));
-            chain.Append(call2);
+            chain.AddToEnd(call2);
 
             var column = new ActionColumn();
 
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Diagnostics
         {
             var chain = new BehaviorChain();
             ActionCall call = ActionCall.For<TargetController>(x => x.Go());
-            chain.Append(call);
+            chain.AddToEnd(call);
 
             var column = new ActionColumn();
 

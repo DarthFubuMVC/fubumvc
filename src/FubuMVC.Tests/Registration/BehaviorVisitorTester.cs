@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration
             chain = new BehaviorChain();
             call = ActionCall.For<TestController>(c => c.SomeAction(null));
 
-            chain.Append(call);
+            chain.AddToEnd(call);
 
             processor = MockRepository.GenerateMock<BehaviorProcessor>();
 

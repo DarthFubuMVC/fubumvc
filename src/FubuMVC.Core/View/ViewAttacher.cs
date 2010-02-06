@@ -60,7 +60,7 @@ namespace FubuMVC.Core.View
                 {
                     var token = viewTokens.First();
                     observer.RecordCallStatus(call, "Selected view token: {0}".ToFormat(token));
-                    call.Append(token.ToBehavioralNode());
+                    call.AddToEnd(token.ToBehavioralNode());
                     break;
                 }
             }

@@ -14,7 +14,7 @@ namespace FubuMVC.Tests.Diagnostics
         {
             var chain = new BehaviorChain();
             var node = new RenderJsonNode(typeof (RouteInput));
-            chain.Append(node);
+            chain.AddToEnd(node);
 
             var tag = new HtmlTag("td");
 
@@ -29,10 +29,10 @@ namespace FubuMVC.Tests.Diagnostics
         {
             var chain = new BehaviorChain();
             var json = new RenderJsonNode(typeof (RouteInput));
-            chain.Append(json);
+            chain.AddToEnd(json);
 
             var text = new RenderTextNode<RouteInput>();
-            chain.Append(text);
+            chain.AddToEnd(text);
 
             var tag = new HtmlTag("td");
 

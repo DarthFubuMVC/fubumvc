@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Urls
             route = new RouteDefinition("some/pattern");
             action = ActionCall.For<TargetController>(x => x.Go());
             chain = new BehaviorChain();
-            chain.Append(action);
+            chain.AddToEnd(action);
 
             ClassUnderTest.VisitRoute(route, chain);
         }
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Urls
             route = new RouteDefinition<RouteInput>("some/pattern");
             action = ActionCall.For<TargetController>(x => x.GoWithInput(null));
             chain = new BehaviorChain();
-            chain.Append(action);
+            chain.AddToEnd(action);
 
             ClassUnderTest.VisitRoute(route, chain);
         }

@@ -19,7 +19,7 @@ namespace FubuMVC.Core
         {
             get
             {
-                return output(call => call.Append(new RenderJsonNode(call.OutputType())),
+                return output(call => call.AddToEnd(new RenderJsonNode(call.OutputType())),
                     "Adding json output node to render json");
             }
         }
@@ -28,7 +28,7 @@ namespace FubuMVC.Core
         {
             get
             {
-                return output(call => call.Append(new RenderTextNode<string>
+                return output(call => call.AddToEnd(new RenderTextNode<string>
                     {
                         MimeType = MimeType.Html
                     }), "Adding output node to render raw HTML text");
@@ -40,13 +40,13 @@ namespace FubuMVC.Core
             return output(action =>
             {
                 OutputNode node = func(action);
-                action.Append(node);
+                action.AddToEnd(node);
             }, "Adding output nodes from per-call function");
         }
 
         public ActionCallFilterExpression To<T>() where T : OutputNode, new()
         {
-            return output(action => action.Append(new T()), "Adding output node '{0}'".ToFormat(typeof (T).Name));
+            return output(action => action.AddToEnd(new T()), "Adding output node '{0}'".ToFormat(typeof (T).Name));
         }
 
         private ActionCallFilterExpression output(Action<ActionCall> configure, string reason)

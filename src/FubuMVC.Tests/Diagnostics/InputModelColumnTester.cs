@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void write_body_for_chain_with_input_type()
         {
             var chain = new BehaviorChain();
-            chain.Append(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)));
+            chain.AddToEnd(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)));
             var tag = new HtmlTag("td");
 
             new InputModelColumn().WriteBody(chain, tag);

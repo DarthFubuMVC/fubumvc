@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        public override void Append(BehaviorNode node)
+        public override void AddToEnd(BehaviorNode node)
         {
             if (Top == null)
             {
@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Registration.Nodes
             BehaviorNode last = this.OfType<BehaviorNode>().LastOrDefault();
             if (last != null)
             {
-                last.InsertDirectlyAfter(node);
+                last.AddAfter(node);
             }
         }
 
@@ -85,7 +85,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
             else
             {
-                Top.InsertDirectlyBefore(node);
+                Top.AddBefore(node);
                 Top = node;
             }
         }
@@ -135,7 +135,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             ActionCall call = ActionCall.For(expression);
             var chain = new BehaviorChain();
-            chain.Append(call);
+            chain.AddToEnd(call);
 
             return chain;
         }

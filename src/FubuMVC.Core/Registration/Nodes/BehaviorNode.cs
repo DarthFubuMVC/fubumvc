@@ -80,28 +80,28 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected abstract ObjectDef buildObjectDef();
 
-        public virtual void Append(BehaviorNode node)
-        {
-            BehaviorNode last = this.LastOrDefault() ?? this;
-            last.Next = node;
-        }
-
         public bool HasOutputBehavior()
         {
             return this.Any(x => x.Category == BehaviorCategory.Output);
         }
 
-        public void InsertDirectlyAfter(BehaviorNode node)
+        public void AddAfter(BehaviorNode node)
         {
             BehaviorNode next = Next;
             Next = node;
             node.Next = next;
         }
 
-        public void InsertDirectlyBefore(BehaviorNode newNode)
+        public void AddBefore(BehaviorNode newNode)
         {
             if (Previous != null) Previous.Next = newNode;
             newNode.Next = this;
+        }
+
+        public virtual void AddToEnd(BehaviorNode node)
+        {
+            BehaviorNode last = this.LastOrDefault() ?? this;
+            last.Next = node;
         }
     }
 }

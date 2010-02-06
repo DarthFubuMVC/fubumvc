@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Actions().Each(call => call.Append(new RenderJsonNode(typeof (object))));
+            graph.Actions().Each(call => call.AddToEnd(new RenderJsonNode(typeof (object))));
         }
     }
 }

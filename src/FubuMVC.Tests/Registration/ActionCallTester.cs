@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Registration
         public void append_json()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            action.Append(new RenderJsonNode(action.OutputType()));
+            action.AddToEnd(new RenderJsonNode(action.OutputType()));
 
             action.Next.ShouldBeOfType<RenderJsonNode>().ModelType.ShouldEqual(action.OutputType());
         }
@@ -39,11 +39,11 @@ namespace FubuMVC.Tests.Registration
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
             var wrapper = new Wrapper(typeof (FakeBehavior));
-            action.InsertDirectlyAfter(wrapper);
+            action.AddAfter(wrapper);
 
             var next = new RenderJsonNode(typeof (Model2));
 
-            action.Append(next);
+            action.AddToEnd(next);
 
             action.Next.ShouldBeTheSameAs(wrapper);
             wrapper.Next.ShouldBeTheSameAs(next);
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
             var next = new RenderJsonNode(typeof (Model2));
 
-            action.Append(next);
+            action.AddToEnd(next);
 
             action.Next.ShouldBeTheSameAs(next);
         }
@@ -69,11 +69,11 @@ namespace FubuMVC.Tests.Registration
             var next = new RenderJsonNode(typeof (Model2));
 
 
-            action.Append(next);
+            action.AddToEnd(next);
 
 
             var enricher = new Wrapper(typeof (string));
-            action.InsertDirectlyAfter(enricher);
+            action.AddAfter(enricher);
 
             action.Next.ShouldBeTheSameAs(enricher);
             enricher.Next.ShouldBeTheSameAs(next);

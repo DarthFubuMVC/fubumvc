@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             var policy =
                 new LambdaConfigurationAction(
-                    graph => { graph.Actions().Where(filter).Each(call => { call.InsertDirectlyAfter(Wrapper.For<T>()); }); });
+                    graph => { graph.Actions().Where(filter).Each(call => { call.AddAfter(Wrapper.For<T>()); }); });
 
 
             _actions.Fill(policy);

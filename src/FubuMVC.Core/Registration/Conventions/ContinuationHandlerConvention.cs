@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             graph.Actions().Where(x => x.OutputType().CanBeCastTo<FubuContinuation>()).Each(call =>
             {
-                call.InsertDirectlyAfter(new ContinuationNode());
+                call.AddAfter(new ContinuationNode());
                 graph.Observer.RecordCallStatus(call, "Adding ContinuationNode directly after action call");
             });
         }

@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             MethodInfo method = ReflectionHelper.GetMethod(expression);
             lastCall = new ActionCall(typeof(T), method);
 
-            chain.Append(lastCall);
+            chain.AddToEnd(lastCall);
             resolver.Apply(graph, chain);
 
             return chain.Route;

@@ -45,7 +45,7 @@ namespace FubuMVC.Core.Registration.Conventions
         private void registerBehavior(ActionCall call)
         {
             var chain = new BehaviorChain();
-            chain.Append(call);
+            chain.AddToEnd(call);
             _graph.AddChain(chain);
         }
     }
