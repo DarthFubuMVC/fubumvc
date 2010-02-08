@@ -1,5 +1,6 @@
 using System.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Util;
@@ -12,19 +13,31 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private MethodInfo _method;
         private DefaultRouteInputTypeBasedUrlPolicy _policy;
+        private RecordingConfigurationObserver _log;
 
         [SetUp]
         public void SetUp()
         {
             _method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             _policy = new DefaultRouteInputTypeBasedUrlPolicy(typeof(TestInputModel));
+            _log = new RecordingConfigurationObserver();
         }
 
         [Test]
         public void should_match_the_action_call_input_type()
         {
             var call = new ActionCall(typeof(TestController), _method);
-            _policy.Matches(call).ShouldBeTrue();
+            _policy.Matches(call, _log).ShouldBeTrue();
+        }
+
+
+        [Test]
+        public void should_log_when_default_route_found()
+        {
+            var call = new ActionCall(typeof(TestController), _method);
+            _policy.Matches(call, _log);
+
+            _log.GetLog(call).ShouldNotBeEmpty();
         }
 
         [Test]
@@ -32,7 +45,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var otherMethod = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(0));
             var call = new ActionCall(typeof(TestController), otherMethod);
-            _policy.Matches(call).ShouldBeFalse();
+            _policy.Matches(call, _log).ShouldBeFalse();
         }
 
         [Test]
@@ -45,9 +58,9 @@ namespace FubuMVC.Tests.Registration.Conventions
             var firstCall = new ActionCall(typeof (TestController), firstMethod);
             var otherCall = new ActionCall(typeof(TestController), otherMethod);
 
-            policy.Matches(firstCall);
+            policy.Matches(firstCall, _log);
 
-            typeof (FubuException).ShouldBeThrownBy(() => policy.Matches(otherCall));
+            typeof(FubuException).ShouldBeThrownBy(() => policy.Matches(otherCall, _log));
         }
 
         [Test]

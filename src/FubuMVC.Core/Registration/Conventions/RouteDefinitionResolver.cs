@@ -26,6 +26,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _inputPolicy.PropertyAlterations.Register(prop => prop.HasCustomAttribute<QueryStringAttribute>(),
                                                       (route, prop) => route.AddQueryInput(prop));
 
+            _policies.Add(new FubuPartialRequestUrlPolicy());
             _policies.Add(new UrlPatternAttributePolicy());
         }
 
@@ -40,10 +41,12 @@ namespace FubuMVC.Core.Registration.Conventions
             ActionCall call = chain.Calls.FirstOrDefault();
             if (call == null) return;
 
-            IUrlPolicy policy = _policies.FirstOrDefault(x => x.Matches(call)) ?? _defaultUrlPolicy;
+            IUrlPolicy policy = _policies.FirstOrDefault(x => x.Matches(call, log)) ?? _defaultUrlPolicy;
             log.RecordCallStatus(call, "First matching UrlPolicy (or default): {0}".ToFormat(policy.GetType().Name));
+            
             IRouteDefinition route = policy.Build(call);
             _constraintPolicy.Apply(call, route, log);
+            
             log.RecordCallStatus(call, "Route definition determined by url policy: [{0}]".ToFormat(route.ToRoute().Url));
             graph.RegisterRoute(chain, route);
         }

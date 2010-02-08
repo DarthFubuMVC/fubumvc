@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Util;
@@ -30,7 +31,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public bool IgnoreControllerFolderName { get; set; }
         public bool IgnoreControllerNamespaceEntirely { get; set; }
 
-        public bool Matches(ActionCall call)
+        public bool Matches(ActionCall call, IConfigurationObserver log)
         {
             return _filter(call);
         }

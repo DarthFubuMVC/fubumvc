@@ -1,4 +1,5 @@
 using System.Reflection;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Util;
@@ -11,12 +12,14 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private MethodInfo _method;
         private DefaultRouteMethodBasedUrlPolicy _policy;
+        private NulloConfigurationObserver _log;
 
         [SetUp]
         public void SetUp()
         {
             _method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             _policy = new DefaultRouteMethodBasedUrlPolicy(_method);
+            _log = new NulloConfigurationObserver();
         }
 
         [Test]
@@ -24,7 +27,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var method = ReflectionHelper.GetMethod<TestController>(c => c.SomeAction(null));
             var call = new ActionCall(typeof(TestController), method);
-            _policy.Matches(call).ShouldBeTrue();
+            _policy.Matches(call, _log).ShouldBeTrue();
         }
 
         [Test]
@@ -32,7 +35,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var anotherMethod = ReflectionHelper.GetMethod<TestController>(c => c.AnotherAction(null));
             var call = new ActionCall(typeof(TestController), anotherMethod);
-            _policy.Matches(call).ShouldBeFalse();
+            _policy.Matches(call, _log).ShouldBeFalse();
         }
 
         [Test]
