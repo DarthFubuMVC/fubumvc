@@ -26,6 +26,7 @@ namespace FubuMVC.UI.Tags
         ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression);
         string ElementPrefix { get; set; }
         string CurrentProfile { get; }
+        T Model { get; set; }
         ElementRequest GetRequest(Accessor accessor);
     }
 
