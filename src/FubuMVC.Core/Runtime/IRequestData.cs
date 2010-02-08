@@ -4,6 +4,7 @@ namespace FubuMVC.Core.Runtime
 {
     public interface IRequestData
     {
-        void Value(string key, Action<object> callback);
+        object Value(string key);
+        bool Value(string key, Action<object> callback);
     }
 }

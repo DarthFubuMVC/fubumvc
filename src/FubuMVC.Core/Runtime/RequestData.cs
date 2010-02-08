@@ -12,13 +12,27 @@ namespace FubuMVC.Core.Runtime
             _dictionary = dictionary;
         }
 
-        public void Value(string key, Action<object> callback)
+        public object Value(string key)
         {
+            object output = null;
+
+            Value(key, val => output = val);
+
+            return output;
+        }
+
+        public bool Value(string key, Action<object> callback)
+        {
+            var found = false;
+
             _dictionary.Value(key, (s, o) =>
             {
+                found = true;
                 record(key, s, o);
                 callback(o);
             });
+
+            return found;
         }
 
         public static RequestData ForDictionary(IDictionary<string, object> dictionary)

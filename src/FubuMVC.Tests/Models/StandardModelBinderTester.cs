@@ -54,6 +54,7 @@ namespace FubuMVC.Tests.Models
             public bool Alive { get; set; }
             public DateTime BirthDate { get; set; }
             public Guid Id { get; set; }
+            public bool X_Requested_With { get; set;}
         }
 
         [Test]
@@ -89,6 +90,14 @@ namespace FubuMVC.Tests.Models
             theResultingObject.Age.ShouldEqual(12);
             theResultingObject.Alive.ShouldBeTrue();
             theResultingObject.BirthDate.ShouldEqual(new DateTime(2008, 06, 01));
+        }
+
+        [Test]
+        public void should_use_alternate_underscore_naming_if_primary_fails()
+        {
+            data["X-Requested-With"] = "True";
+
+            theResultingObject.X_Requested_With.ShouldBeTrue();
         }
 
         [Test, Ignore("Removed requirement for case-insensitivity. May add back later")]

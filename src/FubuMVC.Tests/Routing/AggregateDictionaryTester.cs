@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Web;
+using System.Web.Routing;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -87,6 +90,29 @@ namespace FubuMVC.Tests.Routing
             forKey("abc");
 
             callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Route, null), x => x.IgnoreArguments());
+        }
+
+        [Test]
+        public void find_value_from_request_property()
+        {
+            const string expectedValue = "STUBBED USERAGENT";
+            var requestCtx = Do_the_Stupid_ASPNET_Mock_HokeyPokey();
+            requestCtx.HttpContext.Request.Stub(r => r.UserAgent).Return(expectedValue);
+            aggregate = new AggregateDictionary(requestCtx);
+
+            forKey("UserAgent");
+
+            assertFound(RequestDataSource.RequestProperty, expectedValue);
+        }
+
+        private RequestContext Do_the_Stupid_ASPNET_Mock_HokeyPokey()
+        {
+            var context = MockRepository.GenerateStub<HttpContextBase>();
+            var request = MockRepository.GenerateStub<HttpRequestBase>();
+            context.Stub(c => c.Request).Return(request);
+            request.Stub(r => r.Files).Return(MockRepository.GenerateStub<HttpFileCollectionBase>());
+            request.Stub(r => r.Headers).Return(new NameValueCollection());
+            return new RequestContext(context, new RouteData());
         }
     }
 

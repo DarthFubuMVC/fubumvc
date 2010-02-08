@@ -9,9 +9,14 @@ namespace FubuMVC.Core.Runtime
 
         public object this[string key] { get { return _values[key]; } set { _values[key] = value; } }
 
-        public void Value(string key, Action<object> callback)
+        public object Value(string key)
         {
-            _values.WithValue(key, callback);
+            return _values.Has(key) ? _values[key] : null;
+        }
+
+        public bool Value(string key, Action<object> callback)
+        {
+            return _values.WithValue(key, callback);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace FubuMVC.HelloWorld.Controllers.Login
             return new LoggedInStatusViewModel
                 {
                     IsLoggedIn = status != null,
-                    UserName = status == null ? "" : status.UserName
+                    UserName = request.User_Agent + "--" + (status == null ? "" : status.UserName)
                 };
             
         }
@@ -35,6 +35,11 @@ namespace FubuMVC.HelloWorld.Controllers.Login
 
     public class LoggedInStatusRequest
     {
+        // Will come in from request headers (i.e. "User-Agent")
+        public string User_Agent { get; set; }
+
+        // Will come in from request property (i.e. HttpContext.Current.Request.IsLocal)
+        public bool IsLocal { get; set; }
     }
 
     public class LoggedInStatusViewModel

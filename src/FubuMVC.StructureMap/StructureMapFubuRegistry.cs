@@ -12,8 +12,14 @@ namespace FubuMVC.StructureMap
     // a stand in during testing and container validation
     public class StandInRequestData : IRequestData
     {
-        public void Value(string key, Action<object> callback)
+        public object Value(string key)
         {
+            return null;
+        }
+
+        public bool Value(string key, Action<object> callback)
+        {
+            return false;
         }
     }
 
