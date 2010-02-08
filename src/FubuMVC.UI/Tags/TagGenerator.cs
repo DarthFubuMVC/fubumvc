@@ -25,6 +25,8 @@ namespace FubuMVC.UI.Tags
         HtmlTag DisplayFor(ElementRequest request);
         ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression);
         string ElementPrefix { get; set; }
+        string CurrentProfile { get; }
+        ElementRequest GetRequest(Accessor accessor);
     }
 
     public class TagGenerator<T> : ITagGenerator<T> where T : class
@@ -56,6 +58,14 @@ namespace FubuMVC.UI.Tags
             _profile = _library[profileName];
         }
 
+        public string CurrentProfile
+        {
+            get
+            {
+                return _profile.Name;
+            }
+        }
+
         private HtmlTag buildTag(Expression<Func<T, object>> expression, TagFactory factory)
         {
             ElementRequest request = GetRequest(expression);
@@ -72,14 +82,21 @@ namespace FubuMVC.UI.Tags
 
         public ElementRequest GetRequest(Expression<Func<T, object>> expression)
         {
-            var request = new ElementRequest(_model, expression.ToAccessor(), _services, _stringifier);
+            Accessor accessor = expression.ToAccessor();
+            return GetRequest(accessor);
+        }
+
+        public ElementRequest GetRequest(Accessor accessor)
+        {
+            var request = new ElementRequest(_model, accessor, _services, _stringifier);
             determineElementName(request);
             return request;
         }
 
         public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)
         {
-            var request = new ElementRequest(_model, ReflectionHelper.GetAccessor(expression), _services, _stringifier);
+            Accessor accessor = ReflectionHelper.GetAccessor(expression);
+            var request = new ElementRequest(_model, accessor, _services, _stringifier);
             determineElementName(request);
             return request;
         }
