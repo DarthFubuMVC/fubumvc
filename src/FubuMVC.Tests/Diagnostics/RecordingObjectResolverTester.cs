@@ -1,17 +1,43 @@
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
+using FubuMVC.StructureMap;
 using FubuMVC.Tests.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap;
 
 namespace FubuMVC.Tests.Diagnostics
 {
+
+
+    public class InMemoryBindingContext : BindingContext
+    {
+        private InMemoryRequestData _data;
+        private IContainer _container;
+
+        public InMemoryBindingContext() : this(new InMemoryRequestData(), new Container())
+        {
+        }
+
+        private InMemoryBindingContext(InMemoryRequestData data, IContainer container)
+            : base(data, new StructureMapServiceLocator(container))
+        {
+            _data = data;
+            _container = container;
+        }
+
+        public InMemoryRequestData Data { get { return _data; } }
+        public IContainer Container { get { return _container; } }
+
+        public object this[string key] { get { return _data[key]; } set { _data[key] = value; } }
+    }
+
     [TestFixture]
     public class when_resolving_successfully : InteractionContext<RecordingObjectResolver>
     {
         private BindResult result;
-        private InMemoryRequestData data;
+        private InMemoryBindingContext context;
 
         protected override void beforeEach()
         {
@@ -19,10 +45,10 @@ namespace FubuMVC.Tests.Diagnostics
             {
                 Value = new object()
             };
-            data = new InMemoryRequestData();
-            MockFor<ObjectResolver>().Expect(x => x.BindModel(typeof (BinderTarget), data)).Return(result);
+            context = new InMemoryBindingContext();
+            MockFor<ObjectResolver>().Expect(x => x.BindModel(typeof (BinderTarget), context)).Return(result);
 
-            ClassUnderTest.BindModel(typeof (BinderTarget), data).ShouldBeTheSameAs(result);
+            ClassUnderTest.BindModel(typeof (BinderTarget), context).ShouldBeTheSameAs(result);
         }
 
         [Test]

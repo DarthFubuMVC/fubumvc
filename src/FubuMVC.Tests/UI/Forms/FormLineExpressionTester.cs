@@ -171,5 +171,17 @@ namespace FubuMVC.Tests.UI.Forms
 
         public string ElementPrefix { get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); } }
+
+        public string CurrentProfile
+        {
+            get { throw new NotImplementedException(); } }
+
+        public T Model { get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); } }
+
+        public ElementRequest GetRequest(Accessor accessor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

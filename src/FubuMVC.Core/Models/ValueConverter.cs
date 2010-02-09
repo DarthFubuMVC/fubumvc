@@ -6,6 +6,8 @@ namespace FubuMVC.Core.Models
     {
         public PropertyInfo Property;
         public object Value;
+
+        public IBindingContext Context;
     }
 
     public delegate object ValueConverter(RawValue value);

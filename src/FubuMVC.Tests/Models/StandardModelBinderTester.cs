@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.Diagnostics;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -17,7 +18,7 @@ namespace FubuMVC.Tests.Models
         public void SetUp()
         {
             registry = new ValueConverterRegistry(new IConverterFamily[0]);
-            data = new InMemoryRequestData();
+            data = new InMemoryBindingContext();
             binder = new StandardModelBinder(registry, new TypeDescriptorRegistry());
             locator = MockRepository.GenerateMock<IServiceLocator>();
             result = null;
@@ -26,7 +27,7 @@ namespace FubuMVC.Tests.Models
         #endregion
 
         private ValueConverterRegistry registry;
-        private InMemoryRequestData data;
+        private InMemoryBindingContext data;
         private StandardModelBinder binder;
         private IServiceLocator locator;
         private BindResult result;
