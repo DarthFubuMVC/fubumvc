@@ -59,7 +59,10 @@ namespace FubuMVC.Core.Models
 
         private void Populate(BindResult result, Type type, IRequestData data)
         {
-            _typeRegistry.ForEachProperty(type, prop => TryPopulate(data, prop, result));
+            _typeRegistry.ForEachProperty(type, prop =>
+            {
+                TryPopulate(data, prop, result);
+            });
         }
 
         private void TryPopulate(IRequestData data, PropertyInfo prop, BindResult result)

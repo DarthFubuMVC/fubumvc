@@ -148,6 +148,8 @@
     <Compile Include="Registration\WrapperTester.cs" />
     <Compile Include="Registration\ObjectDefTester.cs" />
     <Compile Include="Registration\RouteDefinitionTester.cs" />
+    <Compile Include="Runtime\BindingContextTester.cs" />
+    <Compile Include="Runtime\PrefixedRequestDataTester.cs" />
     <Compile Include="Runtime\RequestDataTester.cs" />
     <Compile Include="Runtime\FubuHttpHandlerTester.cs" />
     <Compile Include="Runtime\FubuRequestTester.cs" />

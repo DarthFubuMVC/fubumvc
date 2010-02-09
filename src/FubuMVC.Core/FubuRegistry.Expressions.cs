@@ -141,6 +141,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IObjectResolver, ObjectResolver>();
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
             graph.Services.SetServiceIfNone<IViewActivator, NulloViewActivator>();
+            graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
         }
 
         public class RegistryImport

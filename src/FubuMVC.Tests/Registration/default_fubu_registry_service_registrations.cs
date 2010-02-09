@@ -90,5 +90,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IViewActivator, NulloViewActivator>();
         }
+
+        [Test]
+        public void BindingContext_is_registered()
+        {
+            registeredTypeIs<IBindingContext, BindingContext>();
+        }
     }
 }
