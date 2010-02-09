@@ -1,3 +1,4 @@
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Util;
@@ -6,9 +7,18 @@ namespace FubuMVC.Core.Registration.Conventions
 {
     public class UrlPatternAttributePolicy : IUrlPolicy
     {
-        public bool Matches(ActionCall call)
+        public bool Matches(ActionCall call, IConfigurationObserver log)
         {
-            return call.Method.HasCustomAttribute<UrlPatternAttribute>();
+            var result = call.Method.HasCustomAttribute<UrlPatternAttribute>();
+
+            if( result && log.IsRecording )
+            {
+                log.RecordCallStatus(call, 
+                    "Action '{0}' has the [{1}] defined. Using explicitly defined URL pattern."
+                    .ToFormat(call.Method.Name, typeof(UrlPatternAttribute).Name));
+            }
+
+            return result;
         }
 
         public IRouteDefinition Build(ActionCall call)

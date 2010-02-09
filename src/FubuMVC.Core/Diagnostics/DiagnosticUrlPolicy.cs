@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class DiagnosticUrlPolicy : IUrlPolicy
     {
-        public bool Matches(ActionCall call)
+        public bool Matches(ActionCall call, IConfigurationObserver log)
         {
             return call.HandlerType == typeof (BehaviorGraphWriter);
         }

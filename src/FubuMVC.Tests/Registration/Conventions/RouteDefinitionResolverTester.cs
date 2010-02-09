@@ -66,6 +66,11 @@ namespace FubuMVC.Tests.Registration.Conventions
             {
             }
 
+            [FubuPartial]
+            public void PartialAction(RouteInputModel model)
+            {
+            }
+
             public void Querystring(ModelWithQueryStrings query)
             {
             }
@@ -124,6 +129,12 @@ namespace FubuMVC.Tests.Registration.Conventions
         public class Entity
         {
             public long Id { get; set; }
+        }
+
+        [Test]
+        public void build_route_for_partial_action()
+        {
+            buildRoute(x => x.PartialAction(null)).ShouldBeOfType<NulloRouteDefinition>();
         }
 
         [Test]
@@ -231,6 +242,13 @@ namespace FubuMVC.Tests.Registration.Conventions
             var log = observer.GetLog(lastCall);
 
             log.Where(s => s.Contains("ubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}")).Any().ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_log_policy_decision_if_url_policy_is_loggable()
+        {
+            buildRoute(x => x.SomeMethod(null));
+            var log = observer.GetLog(lastCall);
         }
     }
 }

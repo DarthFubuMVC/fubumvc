@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Models
         private readonly ITypeDescriptorRegistry _typeRegistry;
 
         public static readonly Func<PropertyInfo, string> DefaultNamingStrategy = p => p.Name;
+        public static readonly Func<PropertyInfo, string> DefaultAlternateNamingStrategy = p => p.Name.Replace("_", "-");
 
 
         public StandardModelBinder(IValueConverterRegistry converters, ITypeDescriptorRegistry typeRegistry)
@@ -18,9 +19,11 @@ namespace FubuMVC.Core.Models
             _converters = converters;
             _typeRegistry = typeRegistry;
             NamingStrategy = DefaultNamingStrategy;
+            AlternateNamingStrategy = DefaultAlternateNamingStrategy;
         }
 
         public Func<PropertyInfo, string> NamingStrategy { get; set; }
+        public Func<PropertyInfo, string> AlternateNamingStrategy { get; set; }
 
         public bool Matches(Type type)
         {
@@ -56,8 +59,17 @@ namespace FubuMVC.Core.Models
 
         private void Populate(BindResult result, Type type, IRequestData data)
         {
-            _typeRegistry.ForEachProperty(type, prop =>
-                data.Value(NamingStrategy(prop), raw => setPropertyValue(prop, raw, result)));
+            _typeRegistry.ForEachProperty(type, prop => TryPopulate(data, prop, result));
+        }
+
+        private void TryPopulate(IRequestData data, PropertyInfo prop, BindResult result)
+        {
+            var found = data.Value(NamingStrategy(prop), raw => setPropertyValue(prop, raw, result));
+
+            if (!found)
+            {
+                data.Value(AlternateNamingStrategy(prop), raw => setPropertyValue(prop, raw, result));
+            }
         }
 
         private void setPropertyValue(PropertyInfo property, object rawValue, BindResult result)

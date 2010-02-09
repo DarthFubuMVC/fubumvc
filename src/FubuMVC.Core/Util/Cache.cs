@@ -188,12 +188,15 @@ namespace FubuMVC.Core.Util
             _values.Clear();
         }
 
-        public void WithValue(KEY key, Action<VALUE> callback)
+        public bool WithValue(KEY key, Action<VALUE> callback)
         {
             if (Has(key))
             {
                 callback(this[key]);
+                return true;
             }
+
+            return false;
         }
     }
 }

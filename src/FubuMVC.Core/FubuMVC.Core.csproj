@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E18FD922-0E7A-49CD-B89F-473826077B9D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -118,6 +118,8 @@
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
+    <Compile Include="Registration\Conventions\FubuPartialRequestUrlPolicy.cs" />
+    <Compile Include="Registration\Conventions\NulloRouteDefinition.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Registration\TypePool.cs" />
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
     <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
+    <Compile Include="Runtime\IgnoredRoute.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IObjectResolver.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
