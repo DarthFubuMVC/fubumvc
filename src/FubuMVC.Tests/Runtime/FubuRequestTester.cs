@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -10,7 +11,7 @@ namespace FubuMVC.Tests.Runtime
     public abstract class ObjectResolverContext
     {
         protected List<IModelBinder> binders;
-        protected InMemoryRequestData data;
+        protected InMemoryBindingContext data;
         protected ObjectResolver resolver;
 
 
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.Runtime
         public void SetUp()
         {
             binders = new List<IModelBinder>();
-            data = new InMemoryRequestData();
+            data = new InMemoryBindingContext();
 
             setupContext();
 
@@ -78,7 +79,7 @@ namespace FubuMVC.Tests.Runtime
         {
             target = new BinderTarget();
 
-            MockFor<IObjectResolver>().Stub(x => x.BindModel(typeof (BinderTarget), MockFor<IRequestData>()))
+            MockFor<IObjectResolver>().Stub(x => x.BindModel(typeof (BinderTarget), MockFor<IBindingContext>()))
                 .Return(new BindResult
                 {
                     Value = target,

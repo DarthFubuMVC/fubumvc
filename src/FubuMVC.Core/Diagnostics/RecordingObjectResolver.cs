@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Diagnostics
             _resolver = resolver;
         }
 
-        public BindResult BindModel(Type type, IRequestData data)
+        public BindResult BindModel(Type type, IBindingContext data)
         {
             try
             {

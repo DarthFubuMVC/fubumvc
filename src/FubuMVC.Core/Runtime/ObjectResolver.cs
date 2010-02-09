@@ -14,15 +14,14 @@ namespace FubuMVC.Core.Runtime
         {
         }
 
-        public ObjectResolver(IModelBinder[] binders, IValueConverterRegistry converters,
-                              ITypeDescriptorRegistry registry)
+        public ObjectResolver(IModelBinder[] binders, IValueConverterRegistry converters, ITypeDescriptorRegistry registry)
         {
             _binders.AddRange(binders);
             var defaultBinder = new StandardModelBinder(converters, registry);
             _binders.Add(defaultBinder);
         }
 
-        public virtual BindResult BindModel(Type type, IRequestData data)
+        public virtual BindResult BindModel(Type type, IBindingContext data)
         {
             // TODO:  Throw descriptive error if no binder can be foundow
             // TODO:  Throw descriptive error on a type that cannot be resolved or has errors

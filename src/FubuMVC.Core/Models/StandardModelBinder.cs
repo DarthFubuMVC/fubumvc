@@ -30,79 +30,68 @@ namespace FubuMVC.Core.Models
             return type.GetConstructors().Count(x => x.GetParameters().Length == 0) == 1;
         }
 
-        public BindResult Bind(Type type, IRequestData data)
+        public BindResult Bind(Type type, IBindingContext context)
         {
-            return Bind(type, Activator.CreateInstance(type), data);
+            return Bind(type, Activator.CreateInstance(type), context);
         }
 
-        public BindResult Bind(Type type, object instance, IRequestData data)
+        public BindResult Bind(Type type, object instance, IBindingContext context)
         {
             var result = new BindResult
             {
                 Value = instance
             };
 
-            Populate(result, type, data);
+            Populate(result, type, context);
 
             return result;
         }
 
 
         // Only exists for easier testing
-        public void Populate(object target, IRequestData data)
+        public void Populate(object target, IBindingContext context)
         {
             Populate(new BindResult
             {
                 Value = target
-            }, target.GetType(), data);
+            }, target.GetType(), context);
         }
 
-        private void Populate(BindResult result, Type type, IRequestData data)
+        private void Populate(BindResult result, Type type, IBindingContext context)
         {
             _typeRegistry.ForEachProperty(type, prop =>
             {
-                TryPopulate(data, prop, result);
-            });
-        }
-
-        private void TryPopulate(IRequestData data, PropertyInfo prop, BindResult result)
-        {
-            var found = data.Value(NamingStrategy(prop), raw => setPropertyValue(prop, raw, result));
-
-            if (!found)
-            {
-                data.Value(AlternateNamingStrategy(prop), raw => setPropertyValue(prop, raw, result));
-            }
-        }
-
-        private void setPropertyValue(PropertyInfo property, object rawValue, BindResult result)
-        {
-            try
-            {
-                var value = ConvertValue(property, rawValue);
-                property.SetValue(result.Value, value, null);
-            }
-            catch (Exception e)
-            {
-                var problem = new ConvertProblem
+// ReSharper disable ConvertToLambdaExpression
+                context.Value(prop, o =>
                 {
-                    Exception = e,
-                    Item = result.Value,
-                    Property = property,
-                    Value = rawValue
-                };
+                    try
+                    {
+                        var converter = _converters.FindConverter(prop);
+                        var value = converter(new RawValue()
+                        {
+                            Context = context,
+                            Property = prop,
+                            Value = o
+                        });
 
-                result.Problems.Add(problem);
-            }
-        }
+                        prop.SetValue(result.Value, value, null);
+                    }
+                    catch (Exception e)
+                    {
+                        var problem = new ConvertProblem
+                        {
+                            Exception = e,
+                            Item = result.Value,
+                            Property = prop,
+                            Value = o
+                        };
 
-        public object ConvertValue(PropertyInfo property, object rawValue)
-        {
-            return _converters.FindConverter(property)(new RawValue
-            {
-                Property = property,
-                Value = rawValue
+                        result.Problems.Add(problem);
+                    }
+                });
+// ReSharper restore ConvertToLambdaExpression
             });
         }
+
     }
 }
