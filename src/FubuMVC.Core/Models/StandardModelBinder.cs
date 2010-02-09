@@ -10,20 +10,11 @@ namespace FubuMVC.Core.Models
         private readonly IValueConverterRegistry _converters;
         private readonly ITypeDescriptorRegistry _typeRegistry;
 
-        public static readonly Func<PropertyInfo, string> DefaultNamingStrategy = p => p.Name;
-        public static readonly Func<PropertyInfo, string> DefaultAlternateNamingStrategy = p => p.Name.Replace("_", "-");
-
-
         public StandardModelBinder(IValueConverterRegistry converters, ITypeDescriptorRegistry typeRegistry)
         {
             _converters = converters;
             _typeRegistry = typeRegistry;
-            NamingStrategy = DefaultNamingStrategy;
-            AlternateNamingStrategy = DefaultAlternateNamingStrategy;
         }
-
-        public Func<PropertyInfo, string> NamingStrategy { get; set; }
-        public Func<PropertyInfo, string> AlternateNamingStrategy { get; set; }
 
         public bool Matches(Type type)
         {
