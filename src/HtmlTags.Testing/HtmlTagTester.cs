@@ -126,6 +126,18 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void remove_attribute()
+        {
+            var tag = new HtmlTag("div");
+            tag.Attr("foo", "bar");
+            tag.HasAttr("foo").ShouldBeTrue();
+            
+            tag.RemoveAttr("foo");
+            tag.HasAttr("foo").ShouldBeFalse();
+
+        }
+
+        [Test]
         public void render_multiple_classes()
         {
             HtmlTag tag = new HtmlTag("div").Text("text");

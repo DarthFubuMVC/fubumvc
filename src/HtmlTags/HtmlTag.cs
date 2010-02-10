@@ -256,6 +256,12 @@ namespace HtmlTags
             return _htmlAttributes[attribute];
         }
 
+        public HtmlTag RemoveAttr(string attribute)
+        {
+            _htmlAttributes.Remove(attribute);
+            return this;
+        }
+
         public HtmlTag Visible(bool isVisible)
         {
             _isVisible = isVisible;
