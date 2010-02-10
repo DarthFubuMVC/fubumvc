@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace FubuMVC.Core.Runtime
@@ -9,6 +10,8 @@ namespace FubuMVC.Core.Runtime
         public PropertyInfo Property { get; set; }
         public object Value { get; set; }
         public Exception Exception { get; set; }
+
+        public List<PropertyInfo> ParentProperties = new List<PropertyInfo>();
 
         public override string ToString()
         {

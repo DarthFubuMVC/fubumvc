@@ -67,6 +67,14 @@ namespace FubuMVC.Core.Models
 
                         prop.SetValue(result.Value, value, null);
                     }
+                    catch (BindResultAssertionException e)
+                    {
+                        e.Problems.Each(p =>
+                        {
+                            p.ParentProperties.Add(prop);
+                            result.Problems.Add(p);
+                        });
+                    }
                     catch (Exception e)
                     {
                         var problem = new ConvertProblem
