@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Web.Routing;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -17,6 +20,16 @@ namespace FubuMVC.StructureMap
 
         public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder =
             (container, args, behaviorId) => { return new NestedStructureMapContainerBehavior(container, args, behaviorId); };
+
+
+        public static IContainer GetBasicFubuContainer()
+        {
+            var container = new Container();
+            var facility = new StructureMapContainerFacility(container);
+            new FubuBootstrapper(facility, new FubuRegistry()).Bootstrap(new List<RouteBase>());
+
+            return container;
+        }
 
         public StructureMapContainerFacility(IContainer container)
         {

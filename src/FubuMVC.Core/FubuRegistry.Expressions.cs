@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
@@ -142,6 +143,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
             graph.Services.SetServiceIfNone<IViewActivator, NulloViewActivator>();
             graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
+            graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
         }
 
         public class RegistryImport

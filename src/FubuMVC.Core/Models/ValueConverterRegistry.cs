@@ -25,6 +25,10 @@ namespace FubuMVC.Core.Models
 
         private void addPolicies()
         {
+            Add<ExpandEnvironmentVariablesFamily>();
+            Add<MapFromWebPathFamily>();
+            Add<ResolveConnectionStringFamily>();
+
             Add<BooleanFamily>();
             If(p => true).Use((r, prop) => x => BasicConvert(prop.PropertyType, x.Value));
         }

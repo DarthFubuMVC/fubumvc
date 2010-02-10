@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -95,6 +96,12 @@ namespace FubuMVC.Tests.Registration
         public void BindingContext_is_registered()
         {
             registeredTypeIs<IBindingContext, BindingContext>();
+        }
+
+        [Test]
+        public void AppSettingsProvider_is_registered()
+        {
+            registeredTypeIs<ISettingsProvider, AppSettingsProvider>();
         }
     }
 }

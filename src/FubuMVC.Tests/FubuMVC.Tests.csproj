@@ -85,6 +85,8 @@
     <Compile Include="Behaviors\RenderJsonBehaviorTester.cs" />
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
     <Compile Include="Behaviors\RenderTextBehaviorTester.cs" />
+    <Compile Include="Configuration\AppSettingsRequestDataTester.cs" />
+    <Compile Include="Configuration\FakeSettings.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\ContinuationTester.cs" />
     <Compile Include="Debugging.cs" />
@@ -246,6 +248,11 @@
     <Content Include="View\View4.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FubuMVC.Tests.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Results\" />
