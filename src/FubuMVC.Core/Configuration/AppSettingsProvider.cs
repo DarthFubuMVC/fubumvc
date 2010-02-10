@@ -20,17 +20,26 @@ namespace FubuMVC.Core.Configuration
 
         public T SettingsFor<T>() where T : class, new()
         {
-            var context = new BindingContext(new AppSettingsRequestData(), _locator)
-                .PrefixWith(typeof(T).Name + ".");
-            
-            BindResult result = _resolver.BindModel(typeof (T), context);
+            Type settingsType = typeof(T);
 
-            assertNoProblems<T>(result);
+            object value = SettingsFor(settingsType);
 
-            return (T) result.Value;
+            return (T) value;
         }
 
-        private void assertNoProblems<T>(BindResult item)
+        public object SettingsFor(Type settingsType)
+        {
+            var context = new BindingContext(new AppSettingsRequestData(), _locator)
+                .PrefixWith(settingsType.Name + ".");
+            
+            BindResult result = _resolver.BindModel(settingsType, context);
+
+            assertNoProblems(settingsType, result);
+
+            return result.Value;
+        }
+
+        private void assertNoProblems(Type settingsType, BindResult item)
         {
             if (item.Problems.Count() == 0) return;
             var bldr = new StringBuilder();
@@ -40,7 +49,7 @@ namespace FubuMVC.Core.Configuration
 
             throw new InvalidOperationException(
                 "Could not load settings object '{0}' from appSetttings:{1}"
-                    .ToFormat(typeof(T).Name, bldr.ToString()));
+                    .ToFormat(settingsType.Name, bldr.ToString()));
         }
     }
 }
