@@ -38,12 +38,12 @@ namespace FubuMVC.View.Spark
 
         public SparkViewPathInferredFromActionNamespaceAndName(string baseNamespace)
         {
-            _baseNamespace = baseNamespace.ToLowerInvariant();
+            _baseNamespace = baseNamespace;
         }
 
         public override string GetSparkViewPath(ActionCall call)
         {
-            var root = call.HandlerType.Namespace.ToLowerInvariant().Replace(_baseNamespace, "").Replace(".", "/");
+            var root = call.HandlerType.Namespace.Replace(_baseNamespace, "").Replace(".", "/");
 
             return "~" + root;
         }
