@@ -8,14 +8,15 @@ namespace Spark.Web.FubuMVC.ViewCreation
     public class SparkViewToken : IViewToken
     {
         private readonly ActionCall _actionCall;
+        private readonly SparkViewDescriptor _matchedDescriptor;
         private readonly string _actionName;
         private readonly IList<SparkViewDescriptor> _descriptors;
 
-        public SparkViewToken(ActionCall actionCall, IList<SparkViewDescriptor> descriptors, string actionName)
+        public SparkViewToken(ActionCall actionCall, SparkViewDescriptor matchedDescriptor, string actionName)
         {
             _actionCall = actionCall;
+            _matchedDescriptor = matchedDescriptor;
             _actionName = actionName;
-            _descriptors = descriptors;
         }
 
         public SparkViewToken(IList<SparkViewDescriptor> descriptors)

@@ -23,19 +23,22 @@ namespace Spark.Web.FubuMVC.Bootstrap
         {
             string viewName = call.Method.Name;
             string actionName = _actionNameFromActionCallConvention(call.HandlerType.Name);
+            IEnumerable<SparkViewToken> allViewTokens =
+                views.Views.Cast<SparkViewToken>();
 
-            SparkViewToken matchedView = views.Views.Cast<SparkViewToken>().ToList().Find(
-                m =>
+            SparkViewDescriptor matchedDescriptor = null;
+            allViewTokens.ToList().ForEach(
+                token =>
                     {
-                        foreach (SparkViewDescriptor descriptor in m.Descriptors)
-                            return (descriptor.Templates.Exists(
-                                template => template.Contains(actionName) && template.Contains(viewName)));
-                        return false;
+                        matchedDescriptor = token.Descriptors
+                            .Where(e => e.Templates
+                                            .Exists(template => template.Contains(actionName) && template.Contains(viewName)))
+                            .SingleOrDefault();
                     });
 
             IEnumerable<IViewToken> viewsBoundToActions =
-                matchedView != null
-                    ? new IViewToken[] {new SparkViewToken(call, matchedView.Descriptors, actionName)}
+                matchedDescriptor != null
+                    ? new IViewToken[] {new SparkViewToken(call, matchedDescriptor, actionName)}
                     : new IViewToken[0];
 
             return viewsBoundToActions;
