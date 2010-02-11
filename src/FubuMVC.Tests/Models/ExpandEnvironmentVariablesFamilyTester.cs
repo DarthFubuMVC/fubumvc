@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Util;
+using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models
@@ -37,12 +38,19 @@ namespace FubuMVC.Tests.Models
         public void expand_environment_variables_for_settings_marked_for_expansion()
         {
             string expandedVariable = Environment.GetEnvironmentVariable("SystemRoot");
-            object result = _family.Build(null, expandProp)(new RawValue
+            var context = new InMemoryBindingContext();
+            context[expandProp.Name] = "%SystemRoot%\\foo";
+
+            bool wasCalled = false;
+            ValueConverter converter = _family.Build(null, expandProp);
+            context.ForProperty(expandProp, () =>
             {
-                Property = expandProp,
-                Value = "%SystemRoot%\\foo"
+                wasCalled = true;
+
+                converter(context).ShouldEqual(expandedVariable + @"\foo");
             });
-            result.ShouldEqual(expandedVariable + @"\foo");
+
+            wasCalled.ShouldBeTrue();
         }
 
         [Test]

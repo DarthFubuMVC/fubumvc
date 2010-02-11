@@ -10,8 +10,9 @@ namespace FubuMVC.Core.Models
     public class BindingContext : IBindingContext
     {
         private static readonly List<Func<PropertyInfo, string>> _namingStrategies;
-        protected readonly IServiceLocator _locator;
-        protected readonly IRequestData _requestData;
+        private readonly IServiceLocator _locator;
+        private readonly IRequestData _requestData;
+        private readonly IList<ConvertProblem> _problems = new List<ConvertProblem>();
 
         static BindingContext()
         {
@@ -28,24 +29,92 @@ namespace FubuMVC.Core.Models
             _locator = locator;
         }
 
+        public IList<ConvertProblem> Problems
+        {
+            get { return _problems; } }
+
         public T Service<T>()
         {
             return _locator.GetInstance<T>();
         }
 
-        public void Value(PropertyInfo property, Action<object> callback)
+        public object PropertyValue { get; protected set; }
+        
+        private readonly Stack<PropertyInfo> _propertyStack = new Stack<PropertyInfo>();
+        public PropertyInfo Property
+        {
+            get { return _propertyStack.Peek(); }
+        }
+
+        private readonly Stack<object> _objectStack = new Stack<object>();
+        public void ForProperty(PropertyInfo property, Action action)
+        {
+            _propertyStack.Push(property);
+
+            try
+            {
+                findPropertyValueInRequestData(action);
+            }
+            catch (Exception ex)
+            {
+                LogProblem(ex);
+            }
+            finally
+            {
+                _propertyStack.Pop();
+            }
+        }
+
+        private void findPropertyValueInRequestData(Action action)
         {
             _namingStrategies.Any(naming =>
             {
-                string name = naming(property);
-                return _requestData.Value(name, callback);
+                string name = naming(Property);
+                return _requestData.Value(name, o =>
+                {
+                    PropertyValue = o;
+                    action();
+                });
             });
         }
+
+        public object Object
+        {
+            get { return _objectStack.Any() ? _objectStack.Peek() : null; } }
+
+        public void StartObject(object @object)
+        {
+            _objectStack.Push(@object);
+        }
+
+        public void FinishObject()
+        {
+            _objectStack.Pop();
+        }
+
 
         public IBindingContext PrefixWith(string prefix)
         {
             var prefixed = new PrefixedRequestData(_requestData, prefix);
             return new BindingContext(prefixed, _locator);
+        }
+
+        public void LogProblem(Exception ex)
+        {
+            LogProblem(ex.ToString());
+        }
+
+        public void LogProblem(string exceptionText)
+        {
+            var problem = new ConvertProblem()
+            {
+                ExceptionText = exceptionText,
+                Item = Object,
+                Properties = _propertyStack.ToArray().Reverse(),
+                Value = PropertyValue
+            };
+
+            _problems.Add(problem);
         }
     }
 }

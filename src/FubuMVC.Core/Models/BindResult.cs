@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Models
 {
     public class BindResult
     {
-        public List<ConvertProblem> Problems = new List<ConvertProblem>();
+        public IList<ConvertProblem> Problems = new List<ConvertProblem>();
         public object Value;
 
         public override string ToString()
@@ -28,9 +28,9 @@ namespace FubuMVC.Core.Models
     public class BindResultAssertionException : ApplicationException
     {
         private readonly Type _type;
-        private readonly List<ConvertProblem> _problems;
+        private readonly IList<ConvertProblem> _problems;
 
-        public BindResultAssertionException(Type type, List<ConvertProblem> problems)
+        public BindResultAssertionException(Type type, IList<ConvertProblem> problems)
         {
             _type = type;
             _problems = problems;
@@ -46,14 +46,14 @@ namespace FubuMVC.Core.Models
                 _problems.Each(p =>
                 {
                     builder.AppendFormat("Property: {0}, Value: '{1}', Exception:{2}{3}{2}",
-                        p.Property.Name, p.Value, Environment.NewLine, p.Exception);
+                        p.PropertyName(), p.Value, Environment.NewLine, p.ExceptionText);
                 });
 
                 return builder.ToString();
             } 
         }
 
-        public List<ConvertProblem> Problems { get { return _problems; } }
+        public IList<ConvertProblem> Problems { get { return _problems; } }
         public Type Type { get { return _type; } }
     }
 }

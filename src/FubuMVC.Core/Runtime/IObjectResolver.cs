@@ -5,6 +5,7 @@ namespace FubuMVC.Core.Runtime
 {
     public interface IObjectResolver
     {
-        BindResult BindModel(Type type, IBindingContext data);
+        BindResult BindModel(Type type, IRequestData data);
+        BindResult BindModel(Type type, IBindingContext context);
     }
 }

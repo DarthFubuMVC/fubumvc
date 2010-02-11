@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace FubuMVC.Core.Runtime
 {
     public class ConvertProblem
     {
         public object Item { get; set; }
-        public PropertyInfo Property { get; set; }
         public object Value { get; set; }
-        public Exception Exception { get; set; }
-
-        public List<PropertyInfo> ParentProperties = new List<PropertyInfo>();
+        public string ExceptionText { get; set; }
+        public IEnumerable<PropertyInfo> Properties { get; set; }
 
         public override string ToString()
         {
@@ -25,10 +24,15 @@ Exception:
 "
                     .ToFormat(
                     ((Item != null) ? Item.GetType().FullName : "(null)"),
-                    Property.Name,
-                    Property.PropertyType,
+                    PropertyName(),
+                    Properties.Last().PropertyType,
                     Value,
-                    Exception);
+                    ExceptionText);
+        }
+
+        public string PropertyName()
+        {
+            return Properties.Select(x => x.Name).Join(".");
         }
     }
 }

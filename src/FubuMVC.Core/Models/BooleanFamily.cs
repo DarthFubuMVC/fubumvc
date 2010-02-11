@@ -12,8 +12,8 @@ namespace FubuMVC.Core.Models
         public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
         {
             return x => 
-                   x.Value.ToString().Contains(x.Property.Name) 
-                   || (bool) ValueConverterRegistry.BasicConvert(typeof (bool), x.Value);
+                   x.PropertyValue.ToString().Contains(x.Property.Name) 
+                   || (bool) ValueConverterRegistry.BasicConvert(typeof (bool), x.PropertyValue);
         }
     }
 }

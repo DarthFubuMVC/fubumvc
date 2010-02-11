@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
+using FubuMVC.StructureMap;
 using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -13,6 +15,7 @@ namespace FubuMVC.Tests.Runtime
         protected List<IModelBinder> binders;
         protected InMemoryBindingContext data;
         protected ObjectResolver resolver;
+        private StructureMapServiceLocator services;
 
 
         [SetUp]
@@ -20,13 +23,14 @@ namespace FubuMVC.Tests.Runtime
         {
             binders = new List<IModelBinder>();
             data = new InMemoryBindingContext();
+            services = new StructureMapServiceLocator(new Container());
 
             setupContext();
 
             resolver = new ObjectResolver(
                 binders.ToArray(),
                 new ValueConverterRegistry(new IConverterFamily[0]),
-                new TypeDescriptorRegistry());
+                new TypeDescriptorRegistry(), services);
         }
 
         protected abstract void setupContext();
@@ -57,10 +61,7 @@ namespace FubuMVC.Tests.Runtime
             binders.Add(binder2);
             binders.Add(matchingBinder);
 
-            matchingBinder.Stub(x => x.Bind(typeof (BinderTarget), data)).Return(new BindResult
-            {
-                Value = expectedResult
-            });
+            matchingBinder.Stub(x => x.Bind(typeof (BinderTarget), data)).Return(expectedResult);
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace FubuMVC.Tests.Runtime
         {
             target = new BinderTarget();
 
-            MockFor<IObjectResolver>().Stub(x => x.BindModel(typeof (BinderTarget), MockFor<IBindingContext>()))
+            MockFor<IObjectResolver>().Stub(x => x.BindModel(typeof (BinderTarget), MockFor<IRequestData>()))
                 .Return(new BindResult
                 {
                     Value = target,

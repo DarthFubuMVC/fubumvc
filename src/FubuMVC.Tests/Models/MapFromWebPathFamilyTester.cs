@@ -2,6 +2,7 @@ using System.Reflection;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Util;
+using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models
@@ -40,11 +41,9 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void resolve_to_full_paths_for_settings_marked_for_local_path_resolution()
         {
-            object result = family.Build(null, expandProp)(new RawValue
-            {
-                Property = expandProp,
-                Value = "file.txt"
-            });
+            var value = new InMemoryBindingContext().WithPropertyValue("file.txt");
+
+            object result = family.Build(null, expandProp)(value);
             result.ShouldEqual(webAppFolder + @"/file.txt");
         }
 

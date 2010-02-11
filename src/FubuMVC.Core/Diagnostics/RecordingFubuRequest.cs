@@ -1,5 +1,4 @@
 using System;
-using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
@@ -8,8 +7,8 @@ namespace FubuMVC.Core.Diagnostics
     {
         private readonly IDebugReport _report;
 
-        public RecordingFubuRequest(IDebugReport report, IBindingContext context, IObjectResolver resolver)
-            : base(context, resolver)
+        public RecordingFubuRequest(IDebugReport report, IRequestData data, IObjectResolver resolver)
+            : base(data, resolver)
         {
             _report = report;
         }

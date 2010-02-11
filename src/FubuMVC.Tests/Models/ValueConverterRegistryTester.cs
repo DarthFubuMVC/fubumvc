@@ -1,6 +1,7 @@
 using System.Reflection;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Util;
+using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models
@@ -33,11 +34,7 @@ namespace FubuMVC.Tests.Models
         {
             PropertyInfo nullIntProp = ReflectionHelper.GetProperty<Target>(x => x.NullInt);
             var reg = new ValueConverterRegistry(new IConverterFamily[0]);
-            var value = new RawValue
-            {
-                Property = nullIntProp,
-                Value = "99"
-            };
+            var value = new InMemoryBindingContext().WithPropertyValue("99");
             reg.FindConverter(nullIntProp)(value).ShouldEqual(99);
         }
 
@@ -46,11 +43,8 @@ namespace FubuMVC.Tests.Models
         {
             PropertyInfo nullIntProp = ReflectionHelper.GetProperty<Target>(x => x.NullInt);
             var reg = new ValueConverterRegistry(new IConverterFamily[0]);
-            var value = new RawValue
-            {
-                Property = nullIntProp,
-                Value = null
-            };
+
+            var value = new InMemoryBindingContext().WithPropertyValue(null);
             reg.FindConverter(nullIntProp)(value).ShouldEqual(null);
         }
     }

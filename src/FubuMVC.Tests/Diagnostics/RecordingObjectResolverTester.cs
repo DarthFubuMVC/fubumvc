@@ -27,6 +27,18 @@ namespace FubuMVC.Tests.Diagnostics
             _container = container;
         }
 
+        public InMemoryBindingContext WithData(string key, object value)
+        {
+            this[key] = value;
+            return this;
+        }
+
+        public InMemoryBindingContext WithPropertyValue(object value)
+        {
+            PropertyValue = value;
+            return this;
+        }
+
         public InMemoryRequestData Data { get { return _data; } }
         public IContainer Container { get { return _container; } }
 
@@ -46,7 +58,7 @@ namespace FubuMVC.Tests.Diagnostics
                 Value = new object()
             };
             context = new InMemoryBindingContext();
-            MockFor<ObjectResolver>().Expect(x => x.BindModel(typeof (BinderTarget), context)).Return(result);
+            MockFor<IObjectResolver>().Expect(x => x.BindModel(typeof (BinderTarget), context)).Return(result);
 
             ClassUnderTest.BindModel(typeof (BinderTarget), context).ShouldBeTheSameAs(result);
         }

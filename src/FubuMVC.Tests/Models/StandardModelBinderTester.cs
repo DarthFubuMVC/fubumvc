@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Models
         public void SetUp()
         {
             registry = new ValueConverterRegistry(new IConverterFamily[0]);
-            data = new InMemoryBindingContext();
+            context = new InMemoryBindingContext();
             binder = new StandardModelBinder(registry, new TypeDescriptorRegistry());
             locator = MockRepository.GenerateMock<IServiceLocator>();
             result = null;
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Models
         #endregion
 
         private ValueConverterRegistry registry;
-        private InMemoryBindingContext data;
+        private InMemoryBindingContext context;
         private StandardModelBinder binder;
         private IServiceLocator locator;
         private BindResult result;
@@ -38,7 +38,11 @@ namespace FubuMVC.Tests.Models
             {
                 if (result == null)
                 {
-                    result = binder.Bind(typeof (Turkey), data);
+                    result = new BindResult()
+                    {
+                        Value = binder.Bind(typeof(Turkey), context),
+                        Problems = context.Problems
+                    };
                 }
 
                 return result;
@@ -63,12 +67,12 @@ namespace FubuMVC.Tests.Models
             Checkbox_handling__if_the_property_type_is_boolean_and_the_value_does_not_equal_the_name_and_isnt_a_recognizeable_boolean_a_problem_should_be_attached
             ()
         {
-            data["Alive"] = "BOGUS";
+            context["Alive"] = "BOGUS";
             theResult.Problems.Count.ShouldEqual(1);
 
             ConvertProblem problem = theResult.Problems.First();
 
-            problem.Property.Name.ShouldEqual("Alive");
+            problem.PropertyName().ShouldEqual("Alive");
         }
 
         [Test]
@@ -76,7 +80,7 @@ namespace FubuMVC.Tests.Models
             Checkbox_handling__if_the_property_type_is_boolean_and_the_value_equals_the_name_then_set_the_property_to_true
             ()
         {
-            data["Alive"] = "Alive";
+            context["Alive"] = "Alive";
 
             theResultingObject.Alive.ShouldBeTrue();
         }
@@ -84,9 +88,9 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void create_and_populate_should_convert_between_types()
         {
-            data["Age"] = "12";
-            data["Alive"] = "True";
-            data["BirthDate"] = "01-JUN-2008";
+            context["Age"] = "12";
+            context["Alive"] = "True";
+            context["BirthDate"] = "01-JUN-2008";
 
             theResultingObject.Age.ShouldEqual(12);
             theResultingObject.Alive.ShouldBeTrue();
@@ -96,7 +100,7 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void should_use_alternate_underscore_naming_if_primary_fails()
         {
-            data["X-Requested-With"] = "True";
+            context["X-Requested-With"] = "True";
 
             theResultingObject.X_Requested_With.ShouldBeTrue();
         }
@@ -117,14 +121,14 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void create_and_populate_should_not_throw_exception_during_type_conversion_and_return_a_meaningful_error()
         {
-            data["Age"] = "abc";
+            context["Age"] = "abc";
             theResultingObject.Age.ShouldEqual(default(int));
             theResult.Problems.Count.ShouldEqual(1);
 
             ConvertProblem problem = theResult.Problems.First();
-            problem.Exception.InnerException.ShouldBeOfType<FormatException>();
+            problem.ExceptionText.ShouldContain("FormatException");
             problem.Item.ShouldBeTheSameAs(theResultingObject);
-            problem.Property.Name.ShouldEqual("Age");
+            problem.PropertyName().ShouldEqual("Age");
             problem.Value.ShouldEqual("abc");
         }
 
@@ -143,8 +147,8 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void no_errors_on_clean_transfer_of_valid_properties_to_object()
         {
-            data["Name"] = "Boris";
-            data["Age"] = "2";
+            context["Name"] = "Boris";
+            context["Age"] = "2";
 
             theResult.Problems.Count.ShouldEqual(0);
         }
@@ -152,7 +156,7 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void populate_extra_values_in_dictionary_are_ignored()
         {
-            data["xyzzy"] = "foo";
+            context["xyzzy"] = "foo";
 
             theResult.Problems.Count.ShouldEqual(0);
 
@@ -167,9 +171,9 @@ namespace FubuMVC.Tests.Models
             {
                 Name = "Smith"
             };
-            data["Age"] = 9;
+            context["Age"] = 9;
 
-            binder.Populate(item, data);
+            binder.Populate(item, context);
 
             item.Name.ShouldEqual("Smith");
             item.Age.ShouldEqual(9);
@@ -178,8 +182,8 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void populate_should_set_all_property_values_present_in_dictionary()
         {
-            data["Name"] = "Boris";
-            data["Age"] = "2";
+            context["Name"] = "Boris";
+            context["Age"] = "2";
 
             theResultingObject.Name.ShouldEqual("Boris");
             theResultingObject.Age.ShouldEqual(2);
@@ -202,7 +206,7 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void Read_a_boolean_type_that_is_false()
         {
-            data["Alive"] = "";
+            context["Alive"] = "";
 
             theResultingObject.Alive.ShouldBeFalse();
         }
@@ -210,21 +214,21 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void Read_a_boolean_type_that_is_true()
         {
-            data["Alive"] = "true";
+            context["Alive"] = "true";
             theResultingObject.Alive.ShouldBeTrue();
         }
 
         [Test]
         public void Read_a_Nullable_value_type()
         {
-            data["NullableInt"] = "8";
+            context["NullableInt"] = "8";
             theResultingObject.NullableInt.ShouldEqual(8);
         }
 
         [Test]
         public void Read_a_Nullable_value_type_empty_string_as_null()
         {
-            data["NullableInt"] = string.Empty;
+            context["NullableInt"] = string.Empty;
             theResultingObject.NullableInt.ShouldBeNull();
 
             theResult.Problems.Count.ShouldEqual(0);
@@ -234,7 +238,7 @@ namespace FubuMVC.Tests.Models
         public void should_convert_from_string_to_guid()
         {
             Guid guid = Guid.NewGuid();
-            data["Id"] = guid.ToString();
+            context["Id"] = guid.ToString();
 
             theResultingObject.Id.ShouldEqual(guid);
         }

@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Models
         {
             return rawValue =>
             {
-                var strVal = rawValue.Value as String;
+                var strVal = rawValue.PropertyValue as String;
 
                 return strVal.IsNotEmpty()
                            ? strVal.MapPath()

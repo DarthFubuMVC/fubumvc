@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Models
             Add<ResolveConnectionStringFamily>();
 
             Add<BooleanFamily>();
-            If(p => true).Use((r, prop) => x => BasicConvert(prop.PropertyType, x.Value));
+            If(p => true).Use((r, prop) => x => BasicConvert(prop.PropertyType, x.PropertyValue));
         }
 
         public ConverterExpression If(Predicate<PropertyInfo> matches)

@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Reflection;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Util;
+using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models
@@ -49,22 +50,18 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void return_the_original_value_if_the_connection_string_doesnt_exist()
         {
-            object result = family.Build(null, expandProp)(new RawValue
-            {
-                Property = expandProp,
-                Value = "foo"
-            });
+            var value = new InMemoryBindingContext().WithPropertyValue("foo");
+
+            object result = family.Build(null, expandProp)(value);
             result.ShouldEqual("foo");
         }
 
         [Test]
         public void return_the_value_from_the_connectionStrings_section()
         {
-            object result = family.Build(null, expandProp)(new RawValue
-            {
-                Property = expandProp,
-                Value = connectionStringKey
-            });
+            var context = new InMemoryBindingContext().WithPropertyValue(connectionStringKey);
+
+            object result = family.Build(null, expandProp)(context);
             result.ShouldEqual(actualConnectionString);
         }
 

@@ -5,6 +5,7 @@ using FubuMVC.Tests.UI;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Linq;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -30,10 +31,15 @@ namespace FubuMVC.Tests.Runtime
             request["Address1"] = "2035 Ozark";
             var property = ReflectionHelper.GetProperty<Address>(x => x.Address1);
 
-            string address1 = string.Empty;
-            context.Value(property, o => address1 = (string) o);
+            bool wasCalled = false;
+            context.ForProperty(property, () =>
+            {
+                context.PropertyValue.ShouldEqual(request["Address1"]);
 
-            address1.ShouldEqual(request["Address1"]);
+                wasCalled = true;
+            });
+
+            wasCalled.ShouldBeTrue();
         }
 
         [Test]
@@ -42,10 +48,15 @@ namespace FubuMVC.Tests.Runtime
             request["User-Agent"] = "hank";
             var property = ReflectionHelper.GetProperty<State>(x => x.User_Agent);
 
-            string agent = null;
-            context.Value(property, o => agent = (string) o);
+            bool wasCalled = false;
 
-            agent.ShouldEqual("hank");
+            context.ForProperty(property, () =>
+            {
+                context.PropertyValue.ShouldEqual("hank");
+                wasCalled = true;
+            });
+
+            wasCalled.ShouldBeTrue();
         }
 
         [Test]
@@ -54,10 +65,21 @@ namespace FubuMVC.Tests.Runtime
             request["AddressAddress1"] = "479 SW 85th St";
             var property = ReflectionHelper.GetProperty<Address>(x => x.Address1);
 
-            string address1 = string.Empty;
-            context.PrefixWith("Address").Value(property, o => address1 = (string)o);
+            bool wasCalled = false;
+            
+            context.StartObject(new Address());
+            IBindingContext prefixed = context.PrefixWith("Address");
+            prefixed.ForProperty(property, () =>
+            {
+                prefixed.PropertyValue.ShouldEqual(request["AddressAddress1"]);
 
-            address1.ShouldEqual(request["AddressAddress1"]);
+
+                wasCalled = true;
+            });
+
+            context.Problems.Any().ShouldBeFalse();
+
+            wasCalled.ShouldBeTrue();                
         }
 
         public class State
