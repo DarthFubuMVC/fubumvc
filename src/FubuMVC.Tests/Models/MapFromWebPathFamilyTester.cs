@@ -2,7 +2,7 @@ using System.Reflection;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Util;
-using FubuMVC.Tests.Diagnostics;
+using FubuMVC.StructureMap;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models

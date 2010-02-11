@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettingProviderRegistry.cs" />
+    <Compile Include="InMemoryBindingContext.cs" />
     <Compile Include="NestedStructureMapContainerBehavior.cs" />
     <Compile Include="ObjectDefInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

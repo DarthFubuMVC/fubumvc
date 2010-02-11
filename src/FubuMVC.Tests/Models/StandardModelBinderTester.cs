@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Tests.Diagnostics;
+using FubuMVC.StructureMap;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;

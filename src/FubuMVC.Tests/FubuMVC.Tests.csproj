@@ -111,6 +111,7 @@
     <Compile Include="HtmlGenerationTestExtensions.cs" />
     <Compile Include="InteractionContext.cs" />
     <Compile Include="Models\BooleanFamilyTester.cs" />
+    <Compile Include="Models\ConversionPropertyBinderTester.cs" />
     <Compile Include="Models\ConverterFamilyTester.cs" />
     <Compile Include="Models\ExpandEnvironmentVariablesFamilyTester.cs" />
     <Compile Include="Models\MapFromWebPathFamilyTester.cs" />

@@ -40,5 +40,13 @@ namespace FubuMVC.Tests.UI
 
 
         public DateTime DateEntered { get; set; }
+
+        public ColorEnum Color { get; set; }
+        public Guid Guid { get; set; }
+    }
+
+    public enum ColorEnum
+    {
+        red, blue, green
     }
 }

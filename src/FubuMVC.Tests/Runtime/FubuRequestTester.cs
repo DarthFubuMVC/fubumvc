@@ -3,7 +3,6 @@ using System.Linq;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;

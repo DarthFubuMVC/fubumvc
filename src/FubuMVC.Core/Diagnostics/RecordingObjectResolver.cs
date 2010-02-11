@@ -7,9 +7,9 @@ namespace FubuMVC.Core.Diagnostics
     public class RecordingObjectResolver : IObjectResolver
     {
         private readonly IDebugReport _report;
-        private readonly IObjectResolver _resolver;
+        private readonly ObjectResolver _resolver;
 
-        public RecordingObjectResolver(IDebugReport report, IObjectResolver resolver)
+        public RecordingObjectResolver(IDebugReport report, ObjectResolver resolver)
         {
             _report = report;
             _resolver = resolver;

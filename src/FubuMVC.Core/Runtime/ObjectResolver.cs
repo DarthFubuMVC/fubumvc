@@ -30,7 +30,8 @@ namespace FubuMVC.Core.Runtime
             return BindModel(type, context);
         }
 
-        public BindResult BindModel(Type type, IBindingContext context)
+        // Leave this virtual
+        public virtual BindResult BindModel(Type type, IBindingContext context)
         {
             // TODO:  Throw descriptive error if no binder can be foundow
             // TODO:  Throw descriptive error on a type that cannot be resolved or has errors

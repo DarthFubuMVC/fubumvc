@@ -1,10 +1,53 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Models
 {
+    public interface IPropertyBinder
+    {
+        bool Matches(PropertyInfo property);
+        void Bind(PropertyInfo property, IBindingContext context);
+    }
+
+    public class ConversionPropertyBinder : IPropertyBinder
+    {
+        private readonly IValueConverterRegistry _converters;
+
+        public ConversionPropertyBinder(IValueConverterRegistry converters)
+        {
+            _converters = converters;
+        }
+
+        public bool Matches(PropertyInfo property)
+        {
+            // TODO -- make this filter on whether or not it can find a converter
+            return true;
+        }
+
+        public void Bind(PropertyInfo property, IBindingContext context)
+        {
+            context.ForProperty(property, () =>
+            {
+                ValueConverter converter = _converters.FindConverter(property);
+                object value = converter(context);
+                property.SetValue(context.Object, value, null);
+            });
+        }
+    }
+
+    public class PropertyBinderRegistry
+    {
+        private readonly IList<IPropertyBinder> _binders = new List<IPropertyBinder>();
+
+        public PropertyBinderRegistry(IEnumerable<IPropertyBinder> binders)
+        {
+            _binders.AddRange(binders);
+        }
+    }
+
+
     public class StandardModelBinder : IModelBinder
     {
         private readonly IValueConverterRegistry _converters;
@@ -25,7 +68,7 @@ namespace FubuMVC.Core.Models
         {
             object instance = Activator.CreateInstance(type);
             Bind(type, instance, context);
-            
+
             return instance;
         }
 
@@ -51,12 +94,11 @@ namespace FubuMVC.Core.Models
             {
                 context.ForProperty(prop, () =>
                 {
-                    var converter = _converters.FindConverter(prop);
+                    ValueConverter converter = _converters.FindConverter(prop);
                     object value = converter(context);
                     prop.SetValue(context.Object, value, null);
                 });
             });
         }
-
     }
 }

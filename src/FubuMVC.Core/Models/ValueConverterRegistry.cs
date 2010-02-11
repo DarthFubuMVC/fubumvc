@@ -5,6 +5,8 @@ using System.Reflection;
 
 namespace FubuMVC.Core.Models
 {
+    // TODO -- I think this needs to be a singleton to take advantage of caching
+    // just use a cache object here
     public class ValueConverterRegistry : IValueConverterRegistry
     {
         private readonly List<IConverterFamily> _families = new List<IConverterFamily>();
@@ -18,6 +20,8 @@ namespace FubuMVC.Core.Models
 
         public IEnumerable<IConverterFamily> Families { get { return _families; } }
 
+        // TODO -- harden against not being able to find a Converter
+        // TODO -- make this cached for a bit of speed
         public ValueConverter FindConverter(PropertyInfo property)
         {
             return _families.Find(x => x.Matches(property)).Build(this, property);
