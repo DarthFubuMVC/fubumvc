@@ -6,6 +6,7 @@ using FubuMVC.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
+using FubuMVC.Core;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -14,7 +15,6 @@ namespace FubuMVC.Tests.Runtime
         protected List<IModelBinder> binders;
         protected InMemoryBindingContext data;
         protected ObjectResolver resolver;
-        private StructureMapServiceLocator services;
 
 
         [SetUp]
@@ -22,14 +22,16 @@ namespace FubuMVC.Tests.Runtime
         {
             binders = new List<IModelBinder>();
             data = new InMemoryBindingContext();
-            services = new StructureMapServiceLocator(new Container());
 
             setupContext();
 
-            resolver = new ObjectResolver(
-                binders.ToArray(),
-                new ValueConverterRegistry(new IConverterFamily[0]),
-                new TypeDescriptorRegistry(), services);
+            var container = StructureMapContainerFacility.GetBasicFubuContainer();
+            container.Configure(x =>
+            {
+                binders.Each(b => x.For<IModelBinder>().Add(b));
+            });
+
+            resolver = container.GetInstance<ObjectResolver>();
         }
 
         protected abstract void setupContext();

@@ -5,7 +5,7 @@ using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Models
 {
-    public interface ITypeDescriptorRegistry
+    public interface ITypeDescriptorCache
     {
         IDictionary<string, PropertyInfo> GetPropertiesFor<TYPE>();
         IDictionary<string, PropertyInfo> GetPropertiesFor(Type itemType);
@@ -13,11 +13,11 @@ namespace FubuMVC.Core.Models
         void ClearAll();
     }
 
-    public class TypeDescriptorRegistry : ITypeDescriptorRegistry
+    public class TypeDescriptorCache : ITypeDescriptorCache
     {
         private readonly Cache<Type, IDictionary<string, PropertyInfo>> _cache;
 
-        public TypeDescriptorRegistry()
+        public TypeDescriptorCache()
         {
             _cache = new Cache<Type, IDictionary<string, PropertyInfo>>(type =>
             {

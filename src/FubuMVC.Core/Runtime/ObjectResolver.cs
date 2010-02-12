@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using FubuMVC.Core.Models;
 using Microsoft.Practices.ServiceLocation;
 
@@ -9,19 +7,17 @@ namespace FubuMVC.Core.Runtime
     public class ObjectResolver : IObjectResolver
     {
         private readonly IServiceLocator _services;
-        private readonly List<IModelBinder> _binders = new List<IModelBinder>();
+        private readonly IModelBinderCache _binders;
 
         // Leave this here
         public ObjectResolver()
         {
         }
 
-        public ObjectResolver(IModelBinder[] binders, IValueConverterRegistry converters, ITypeDescriptorRegistry registry, IServiceLocator services)
+        public ObjectResolver(IServiceLocator services, IModelBinderCache binders)
         {
             _services = services;
-            _binders.AddRange(binders);
-            var defaultBinder = new StandardModelBinder(converters, registry);
-            _binders.Add(defaultBinder);
+            _binders = binders;
         }
 
         public virtual BindResult BindModel(Type type, IRequestData data)
@@ -36,7 +32,7 @@ namespace FubuMVC.Core.Runtime
             // TODO:  Throw descriptive error if no binder can be foundow
             // TODO:  Throw descriptive error on a type that cannot be resolved or has errors
 
-            IModelBinder binder = _binders.First(x => x.Matches(type));
+            IModelBinder binder = _binders.BinderFor(type);
             return new BindResult()
             {
                 Value = binder.Bind(type, context),

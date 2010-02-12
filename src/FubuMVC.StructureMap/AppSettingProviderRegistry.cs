@@ -15,7 +15,7 @@ namespace FubuMVC.StructureMap
             For<IObjectResolver>().Use<ObjectResolver>();
             For<IServiceLocator>().Use<StructureMapServiceLocator>();
             For<IValueConverterRegistry>().Use<ValueConverterRegistry>();
-            For<ITypeDescriptorRegistry>().Use<TypeDescriptorRegistry>();
+            For<ITypeDescriptorCache>().Use<TypeDescriptorCache>();
 
         }
     }

@@ -17,19 +17,20 @@ namespace FubuMVC.Tests.Models
         [SetUp]
         public void SetUp()
         {
-            registry = new ValueConverterRegistry(new IConverterFamily[0]);
+            // Lots of stuff to put together, so I'm just using a minimalistic
+            // container to do it for me because I'm lazy -- JDM 2/12/2010
+            var container = StructureMapContainerFacility.GetBasicFubuContainer();
+            binder = container.GetInstance<StandardModelBinder>();
+            
             context = new InMemoryBindingContext();
-            binder = new StandardModelBinder(registry, new TypeDescriptorRegistry());
-            locator = MockRepository.GenerateMock<IServiceLocator>();
+
             result = null;
         }
 
         #endregion
 
-        private ValueConverterRegistry registry;
         private InMemoryBindingContext context;
         private StandardModelBinder binder;
-        private IServiceLocator locator;
         private BindResult result;
 
         private BindResult theResult
@@ -63,9 +64,7 @@ namespace FubuMVC.Tests.Models
         }
 
         [Test]
-        public void
-            Checkbox_handling__if_the_property_type_is_boolean_and_the_value_does_not_equal_the_name_and_isnt_a_recognizeable_boolean_a_problem_should_be_attached
-            ()
+        public void Checkbox_handling__if_the_property_type_is_boolean_and_the_value_does_not_equal_the_name_and_isnt_a_recognizeable_boolean_a_problem_should_be_attached()
         {
             context["Alive"] = "BOGUS";
             theResult.Problems.Count.ShouldEqual(1);
@@ -150,6 +149,7 @@ namespace FubuMVC.Tests.Models
             context["Name"] = "Boris";
             context["Age"] = "2";
 
+            theResult.AssertProblems(typeof(Turkey));
             theResult.Problems.Count.ShouldEqual(0);
         }
 

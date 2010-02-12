@@ -127,7 +127,7 @@ namespace FubuMVC.Core
         {
             graph.Services.AddService<IUrlRegistry>(_urls);
             graph.Services.AddService<IUrlRegistration>(_urls);
-            graph.Services.AddService<ITypeDescriptorRegistry>(new TypeDescriptorRegistry());
+            graph.Services.AddService<ITypeDescriptorCache>(new TypeDescriptorCache());
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
             graph.Services.SetServiceIfNone<ISecurityContext, WebSecurityContext>();
@@ -144,6 +144,8 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IViewActivator, NulloViewActivator>();
             graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
             graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
+            graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
+            graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
         }
 
         public class RegistryImport

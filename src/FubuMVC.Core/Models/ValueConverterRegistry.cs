@@ -5,8 +5,6 @@ using System.Reflection;
 
 namespace FubuMVC.Core.Models
 {
-    // TODO -- I think this needs to be a singleton to take advantage of caching
-    // just use a cache object here
     public class ValueConverterRegistry : IValueConverterRegistry
     {
         private readonly List<IConverterFamily> _families = new List<IConverterFamily>();
