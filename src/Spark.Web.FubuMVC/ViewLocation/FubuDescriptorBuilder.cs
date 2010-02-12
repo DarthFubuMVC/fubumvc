@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Spark.Parser;
 using Spark.Parser.Syntax;
 
@@ -132,8 +133,8 @@ namespace Spark.Web.FubuMVC.ViewLocation
         {
             return ApplyFilters(new[]
                                     {
-                                        actionName + "\\" + viewName + ".spark",
-                                        "Shared\\" + viewName + ".spark"
+                                        Path.Combine(actionName, viewName + ".spark"),
+                                        Path.Combine("Shared", viewName + ".spark")
                                     }, extra);
         }
 
@@ -141,8 +142,8 @@ namespace Spark.Web.FubuMVC.ViewLocation
         {
             return ApplyFilters(new[]
                                     {
-                                        "Layouts\\" + masterName + ".spark",
-                                        "Shared\\" + masterName + ".spark"
+                                        Path.Combine("Layouts", masterName + ".spark"),
+                                        Path.Combine("Shared", masterName + ".spark")
                                     }, extra);
         }
 
@@ -150,10 +151,10 @@ namespace Spark.Web.FubuMVC.ViewLocation
         {
             return ApplyFilters(new[]
                                     {
-                                        "Layouts\\" + actionName + ".spark",
-                                        "Shared\\" + actionName + ".spark",
-                                        "Layouts\\Application.spark",
-                                        "Shared\\Application.spark"
+                                        Path.Combine("Layouts", actionName + ".spark"),
+                                        Path.Combine("Shared", actionName + ".spark"),
+                                        Path.Combine("Layouts", "Application.spark"),
+                                        Path.Combine("Shared", "Application.spark")
                                     }, extra);
         }
 
