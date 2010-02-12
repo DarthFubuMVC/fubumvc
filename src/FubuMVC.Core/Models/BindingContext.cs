@@ -95,8 +95,15 @@ namespace FubuMVC.Core.Models
 
         public IBindingContext PrefixWith(string prefix)
         {
-            var prefixed = new PrefixedRequestData(_requestData, prefix);
-            return new BindingContext(prefixed, _locator);
+            return prefixWith(prefix, _propertyStack.Reverse());
+        }
+
+        private BindingContext prefixWith(string prefix, IEnumerable<PropertyInfo> properties)
+        {
+            var prefixedData = new PrefixedRequestData(_requestData, prefix);
+            var child = new BindingContext(prefixedData, _locator);
+            properties.Each(p => child._propertyStack.Push(p));
+            return child;
         }
 
         public void LogProblem(Exception ex)
@@ -115,6 +122,34 @@ namespace FubuMVC.Core.Models
             };
 
             _problems.Add(problem);
+        }
+
+        public void BindChild(PropertyInfo property, Type childType, string prefix)
+        {
+            var target = Object;
+            _propertyStack.Push(property);
+
+            var resolver = Service<IObjectResolver>();
+            var context = prefixWith(prefix, _propertyStack.Reverse());
+
+            try
+            {
+                var result = resolver.BindModel(childType, context);
+                property.SetValue(target, result.Value, null);
+            }
+            catch (Exception e)
+            {
+                LogProblem(e);
+            }
+
+            _problems.AddRange(context._problems);
+
+            _propertyStack.Pop();
+        }
+
+        public void BindChild(PropertyInfo property)
+        {
+            BindChild(property, property.PropertyType, property.Name);
         }
     }
 }

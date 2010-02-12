@@ -20,5 +20,6 @@ namespace FubuMVC.Core.Models
 
         void StartObject(object @object);
         void FinishObject();
+        
     }
 }
