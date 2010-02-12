@@ -60,7 +60,7 @@ namespace FubuMVC.UI.Configuration
 
         public string StringValue()
         {
-            return _stringifier.GetString(Accessor.PropertyType, RawValue);
+            return _stringifier.GetString(Accessor.InnerProperty, RawValue);
         }
 
         public bool ValueIsEmpty()
