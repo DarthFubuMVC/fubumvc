@@ -149,7 +149,7 @@ namespace FubuMVC.Tests.Models
             context["Name"] = "Boris";
             context["Age"] = "2";
 
-            theResult.AssertProblems(typeof(Turkey));
+            theResult.AssertNoProblems(typeof(Turkey));
             theResult.Problems.Count.ShouldEqual(0);
         }
 

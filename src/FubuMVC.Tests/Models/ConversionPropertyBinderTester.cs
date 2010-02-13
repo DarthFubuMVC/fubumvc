@@ -49,6 +49,12 @@ namespace FubuMVC.Tests.Models
         }
 
         [Test]
+        public void converter_should_not_match_non_primitive_properties_out_of_the_box()
+        {
+            shouldNotMatch(x => x.Address);
+        }
+
+        [Test]
         public void set_a_property_correctly_against_a_binding_context()
         {
             var address = new Address();

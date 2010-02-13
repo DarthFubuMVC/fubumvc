@@ -14,14 +14,13 @@ namespace FubuMVC.Core.Models
         {
             _binders.AddRange(binders);
             _binders.Add(new ConversionPropertyBinder(converters));
-            // TODO -- add the hierarchical / child binding
+            _binders.Add(new NestedObjectPropertyBinder());
 
             _cache.OnMissing = prop => _binders.FirstOrDefault(x => x.Matches(prop));
         }
 
         public IPropertyBinder BinderFor(PropertyInfo property)
         {
-            // TODO -- throw exception if there is no PropertyFinder for this PropertyInfo
             return _cache[property];
         }
     }

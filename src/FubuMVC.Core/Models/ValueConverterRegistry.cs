@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Models
 {
@@ -19,10 +20,10 @@ namespace FubuMVC.Core.Models
 
         public IEnumerable<IConverterFamily> Families { get { return _families; } }
 
-        // TODO -- harden against not being able to find a Converter
         public ValueConverter FindConverter(PropertyInfo property)
         {
-            return _families.Find(x => x.Matches(property)).Build(this, property);
+            IConverterFamily family = _families.FirstOrDefault(x => x.Matches(property));
+            return family == null ? null : family.Build(this, property);
         }
 
         private void addPolicies()

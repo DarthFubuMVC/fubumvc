@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Configuration
 
             BindResult result = _resolver.BindModel(settingsType, context);
 
-            result.AssertProblems(settingsType);
+            result.AssertNoProblems(settingsType);
 
             return result.Value;
         }

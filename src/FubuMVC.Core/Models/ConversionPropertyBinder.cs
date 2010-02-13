@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 
 namespace FubuMVC.Core.Models
@@ -13,8 +14,7 @@ namespace FubuMVC.Core.Models
 
         public bool Matches(PropertyInfo property)
         {
-            // TODO -- make this filter on whether or not it can find a converter
-            return true;
+            return _converters.FindConverter(property) != null;
         }
 
         public void Bind(PropertyInfo property, IBindingContext context)
@@ -35,6 +35,19 @@ namespace FubuMVC.Core.Models
                     
                 property.SetValue(context.Object, value, null);
             });
+        }
+    }
+
+    public class NestedObjectPropertyBinder : IPropertyBinder
+    {
+        public bool Matches(PropertyInfo property)
+        {
+            return true;
+        }
+
+        public void Bind(PropertyInfo property, IBindingContext context)
+        {
+            context.BindChild(property);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Models
             return string.Format("BindResult: {0}, Problems:  {1}", Value, Problems.Count);
         }
 
-        public void AssertProblems(Type type)
+        public void AssertNoProblems(Type type)
         {
             if (Problems.Any())
             {
