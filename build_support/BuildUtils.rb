@@ -17,7 +17,7 @@ class NUnitRunner
 		
 		assemblies.each do |assem|
 			file = File.expand_path("#{@sourceDir}/#{assem}/bin/#{@compileTarget}/#{assem}.dll")
-			sh "#{@nunitExe} #{file}"
+			sh "#{@nunitExe} \"#{file}\""
 		end
 	end
 end

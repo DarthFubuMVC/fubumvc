@@ -27,18 +27,19 @@ namespace Spark.Web.FubuMVC.Bootstrap
                 views.Views.Cast<SparkViewToken>();
 
             SparkViewDescriptor matchedDescriptor = null;
-            allViewTokens.ToList().ForEach(
+            allViewTokens.FirstOrDefault(
                 token =>
-                    {
-                        matchedDescriptor = token.Descriptors
-                            .Where(e => e.Templates
-                                            .Exists(template => template.Contains(actionName) && template.Contains(viewName)))
-                            .SingleOrDefault();
-                    });
+                {
+                    matchedDescriptor = token.Descriptors
+                        .Where(e => e.Templates
+                                        .Exists(template => template.Contains(actionName) && template.Contains(viewName)))
+                        .SingleOrDefault();
+                    return matchedDescriptor != null;
+                });
 
             IEnumerable<IViewToken> viewsBoundToActions =
                 matchedDescriptor != null
-                    ? new IViewToken[] {new SparkViewToken(call, matchedDescriptor, actionName)}
+                    ? new IViewToken[] { new SparkViewToken(call, matchedDescriptor, actionName) }
                     : new IViewToken[0];
 
             return viewsBoundToActions;
