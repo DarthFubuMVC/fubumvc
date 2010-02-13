@@ -72,6 +72,12 @@ namespace FubuMVC.Core
             _conventions.Add(convention);
         }
 
+        private void addExplicit(Action<BehaviorGraph> action)
+        {
+            var convention = new LambdaConfigurationAction(action);
+            _explicits.Add(convention);
+        }
+
         public BehaviorGraph BuildGraph()
         {
             var graph = new BehaviorGraph(_observer);

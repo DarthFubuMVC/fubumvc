@@ -22,7 +22,17 @@ namespace FubuMVC.Core.Models
             context.ForProperty(property, () =>
             {
                 ValueConverter converter = _converters.FindConverter(property);
-                object value = converter(context);
+
+                object value = null;
+                if (context.PropertyValue != null && property.PropertyType.IsAssignableFrom(context.PropertyValue.GetType()))
+                {
+                    value = context.PropertyValue;
+                }
+                else
+                {
+                    value = converter(context);
+                }
+                    
                 property.SetValue(context.Object, value, null);
             });
         }

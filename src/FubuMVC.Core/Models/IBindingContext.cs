@@ -20,6 +20,8 @@ namespace FubuMVC.Core.Models
 
         void StartObject(object @object);
         void FinishObject();
-        
+
+        void BindChild(PropertyInfo property, Type childType, string prefix);
+        void BindChild(PropertyInfo property);
     }
 }

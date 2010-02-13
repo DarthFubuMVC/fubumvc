@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Reflection;
 
 namespace FubuMVC.Core.Models
@@ -11,9 +12,11 @@ namespace FubuMVC.Core.Models
 
         public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
         {
+            var converter = TypeDescriptor.GetConverter(typeof(bool));
+
             return x => 
                    x.PropertyValue.ToString().Contains(x.Property.Name) 
-                   || (bool) ValueConverterRegistry.BasicConvert(typeof (bool), x.PropertyValue);
+                   || (bool) converter.ConvertFrom(x.PropertyValue);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Models
 {
@@ -19,7 +20,6 @@ namespace FubuMVC.Core.Models
         public IEnumerable<IConverterFamily> Families { get { return _families; } }
 
         // TODO -- harden against not being able to find a Converter
-        // TODO -- make this cached for a bit of speed
         public ValueConverter FindConverter(PropertyInfo property)
         {
             return _families.Find(x => x.Matches(property)).Build(this, property);
@@ -32,12 +32,7 @@ namespace FubuMVC.Core.Models
             Add<ResolveConnectionStringFamily>();
 
             Add<BooleanFamily>();
-            If(p => true).Use((r, prop) => x => BasicConvert(prop.PropertyType, x.PropertyValue));
-        }
-
-        public ConverterExpression If(Predicate<PropertyInfo> matches)
-        {
-            return new ConverterExpression(matches, f => _families.Add(f));
+            Add<BasicTypeConverter>();
         }
 
         public void Add<T>() where T : IConverterFamily, new()
@@ -45,13 +40,33 @@ namespace FubuMVC.Core.Models
             _families.Add(new T());
         }
 
-        public static object BasicConvert(Type type, object original)
-        {
-            if (original == null) return null;
+    }
 
-            return type.IsAssignableFrom(original.GetType())
-                       ? original
-                       : TypeDescriptor.GetConverter(type).ConvertFrom(original);
+    public class BasicTypeConverter : IConverterFamily
+    {
+        public bool Matches(PropertyInfo property)
+        {
+            try
+            {
+                return TypeDescriptor.GetConverter(property.PropertyType).CanConvertFrom(typeof (string));
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
+        {
+            var propertyType = property.PropertyType;
+
+            return GetValueConverter(propertyType);
+        }
+
+        public static ValueConverter GetValueConverter(Type propertyType)
+        {
+            var converter = TypeDescriptor.GetConverter(propertyType);
+            return context => converter.ConvertFrom(context.PropertyValue);
         }
     }
 }

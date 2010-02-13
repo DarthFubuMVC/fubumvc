@@ -19,5 +19,6 @@ namespace FubuMVC.Core.Registration
         IEnumerable<T> FindAllValues<T>();
 
         void ClearAll<T>();
+        IEnumerable<ObjectDef> ServicesFor<TService>();
     }
 }

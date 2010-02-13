@@ -58,6 +58,11 @@ namespace FubuMVC.Core.Registration
             return _services[typeof (TService)].FirstOrDefault();
         }
 
+        public IEnumerable<ObjectDef> ServicesFor<TService>()
+        {
+            return _services[typeof (TService)];
+        }
+
         public void Each(Action<Type, ObjectDef> action)
         {
             _services.Each((t, list) => list.Each(def => action(t, def)));

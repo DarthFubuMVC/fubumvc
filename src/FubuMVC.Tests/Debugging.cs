@@ -1,7 +1,10 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Net.Sockets;
 using System.Reflection;
+using FubuMVC.Tests.UI;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests
@@ -44,6 +47,16 @@ namespace FubuMVC.Tests
             {
                 Name = "Jeremy"
             }).ShouldEqual("Jeremy");
+        }
+
+        [Test]
+        public void get_type_converter_for_something_that_does_not_exist()
+        {
+            var converter = TypeDescriptor.GetConverter(typeof(Address));
+            Debug.WriteLine(converter);
+
+            TypeDescriptor.GetConverter(typeof (bool)).CanConvertFrom(typeof (string));
+            TypeDescriptor.GetConverter(typeof (Address)).CanConvertFrom(typeof (string));
         }
 
         [Test]

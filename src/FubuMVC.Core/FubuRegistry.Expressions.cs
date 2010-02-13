@@ -35,7 +35,7 @@ namespace FubuMVC.Core
         public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(convention => _urlConventions.Add(convention), _urls); } }
         public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
 
-        public ModelsExpression Models { get { return new ModelsExpression(_explicits); } }
+        public ModelsExpression Models { get { return new ModelsExpression(addExplicit); } }
         public AppliesToExpression Applies { get { return new AppliesToExpression(_types); } }
         public ActionCallCandidateExpression Actions { get { return new ActionCallCandidateExpression(_behaviorMatcher, _types); } }
 

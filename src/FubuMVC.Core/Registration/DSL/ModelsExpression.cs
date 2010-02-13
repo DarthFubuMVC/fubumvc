@@ -1,22 +1,36 @@
-using System.Collections.Generic;
+using System;
 using FubuMVC.Core.Models;
 
 namespace FubuMVC.Core.Registration.DSL
 {
     public class ModelsExpression
     {
-        private readonly IList<IConfigurationAction> _configurationActions;
+        private readonly Action<Action<BehaviorGraph>> _callback;
 
-        public ModelsExpression(IList<IConfigurationAction> configurationActions)
+        public ModelsExpression(Action<Action<BehaviorGraph>> callback)
         {
-            _configurationActions = configurationActions;
+            _callback = callback;
+        }
+
+        private ModelsExpression add(Action<BehaviorGraph> configuration)
+        {
+            _callback(configuration);
+            return this;
         }
 
         public ModelsExpression ConvertUsing<T>() where T : IConverterFamily
         {
-            _configurationActions.Add(
-                new LambdaConfigurationAction(graph => graph.Services.AddService<IConverterFamily, T>()));
-            return this;
+            return add(graph => graph.Services.AddService<IConverterFamily, T>());
+        }
+
+        public ModelsExpression BindPropertiesWith<T>() where T : IPropertyBinder
+        {
+            return add(graph => graph.Services.AddService<IPropertyBinder, T>());
+        }
+
+        public ModelsExpression BindModelsWith<T>() where T : IModelBinder
+        {
+            return add(graph => graph.Services.AddService<IModelBinder, T>());
         }
     }
 }
