@@ -1,5 +1,7 @@
 using System.Linq;
+using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 using FubuMVC.UI;
 using NUnit.Framework;
 
@@ -79,6 +81,13 @@ namespace FubuMVC.Tests.Registration
 
             services.FindAllValues<HtmlConventionRegistry>()
                 .ShouldHaveTheSameElementsAs(registry1, registry2, registry3, registry4);
+        }
+
+        [Test]
+        public void should_be_singleton_is_true_for_any_type_ending_in_Cache()
+        {
+            ServiceRegistry.ShouldBeSingleton(typeof (IPropertyBinderCache)).ShouldBeTrue();
+            ServiceRegistry.ShouldBeSingleton(typeof (IModelBinderCache)).ShouldBeTrue();
         }
     }
 }

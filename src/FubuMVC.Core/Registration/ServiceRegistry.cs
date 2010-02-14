@@ -91,5 +91,10 @@ namespace FubuMVC.Core.Registration
 
             list.Add(def);
         }
+
+        public static bool ShouldBeSingleton(Type type)
+        {
+            return type.Name.EndsWith("Cache");
+        }
     }
 }

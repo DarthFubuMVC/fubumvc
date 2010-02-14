@@ -91,6 +91,12 @@ namespace FubuMVC.Tests.StructureMapIoC
         }
 
         [Test]
+        public void PropertyBinderCache_should_be_a_singleton()
+        {
+            container.Model.For<IPropertyBinderCache>().Lifecycle.ShouldEqual("Singleton");
+        }
+
+        [Test]
         public void factory_itself_is_registered_in_the_container()
         {
             container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
