@@ -68,6 +68,12 @@ namespace FubuMVC.UI
             return new FormTag();
         }
 
+        public static FormTag FormFor(this IFubuPage page, string url)
+        {
+            url = UrlContext.GetFullUrl(url);
+            return new FormTag(url);
+        }
+
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
         {
             string url = page.Get<IUrlRegistry>().UrlFor(new TInputModel());
