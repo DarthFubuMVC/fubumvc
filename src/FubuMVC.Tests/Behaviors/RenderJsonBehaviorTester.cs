@@ -2,7 +2,6 @@ using System;
 using System.Net.Mime;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Util;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -10,7 +9,32 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Behaviors
 {
     [TestFixture]
-    public class when_rendering_json_from_a_model_object : InteractionContext<RenderJsonBehavior<JsonOutput>>
+    public class when_requesting_json_outside_of_an_ajax_request : InteractionContext<JsonWriter>
+    {
+        private JsonOutput output;
+
+        protected override void beforeEach()
+        {
+            output = new JsonOutput
+            {
+                Name = "Max",
+                Age = 6
+            };
+
+            ClassUnderTest.Write(output);
+        }
+
+        [Test]
+        public void should_write_json_serialized_string_to_the_output_writer()
+        {
+            string json = JsonUtil.ToJson(output);
+            json = "<html><body><textarea rows=\"10\" cols=\"80\">" + json + "</textarea></body></html>";
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.Write(MediaTypeNames.Text.Html, json));
+        }
+    }
+
+    [TestFixture]
+    public class when_rendering_json_from_a_model_object : InteractionContext<JsonWriter>
     {
         private JsonOutput output;
         private InMemoryRequestData requestData;
@@ -25,7 +49,6 @@ namespace FubuMVC.Tests.Behaviors
                 Age = 6
             };
 
-            MockFor<IFubuRequest>().Expect(x => x.Get<JsonOutput>()).Return(output);
             requestData = new InMemoryRequestData();
             Services.Inject<IRequestData>(requestData);
 
@@ -41,7 +64,7 @@ namespace FubuMVC.Tests.Behaviors
 
             requestData["X-Requested-With"] = "XMLHttpRequest";
 
-            ClassUnderTest.Invoke();
+            ClassUnderTest.Write(output);
         }
 
         [Test]
@@ -50,17 +73,11 @@ namespace FubuMVC.Tests.Behaviors
             requestData["X-Requested-With"] = "xmlHtTpReQuest";
             mimeType = null;
 
-            ClassUnderTest.Invoke();
+            ClassUnderTest.Write(output);
 
             mimeType.ShouldEqual(MimeType.Json.ToString());
         }
-
-        [Test]
-        public void should_retrieve_the_output_object_from_the_fubu_request()
-        {
-            VerifyCallsFor<IFubuRequest>();
-        }
-
+        
         [Test]
         public void should_write_json_serialized_string_to_the_output_writer()
         {
@@ -74,8 +91,7 @@ namespace FubuMVC.Tests.Behaviors
     public class when_rendering_html_friendly_json_from_a_model_object :
         InteractionContext<RenderJsonBehavior<JsonOutput>>
     {
-        private JsonOutput output;
-
+        private JsonOutput output;        
         protected override void beforeEach()
         {
             output = new JsonOutput
@@ -85,7 +101,8 @@ namespace FubuMVC.Tests.Behaviors
             };
 
             MockFor<IFubuRequest>().Expect(x => x.Get<JsonOutput>()).Return(output);
-
+            MockFor<IJsonWriter>().Expect(x => x.Write(output));
+            ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
         }
 
@@ -96,12 +113,17 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
-        public void should_write_json_serialized_string_to_the_output_writer()
+        public void should_render_output_via_the_json_writer()
         {
-            string json = JsonUtil.ToJson(output);
-            json = "<html><body><textarea rows=\"10\" cols=\"80\">" + json + "</textarea></body></html>";
-            MockFor<IOutputWriter>().AssertWasCalled(x => x.Write(MediaTypeNames.Text.Html, json));
+            VerifyCallsFor<IJsonWriter>();
         }
+
+        [Test]
+        public void should_return_donext_continue()
+        {
+            ClassUnderTest.InsideBehavior.AssertWasCalled(x=> x.Invoke());
+        }
+
     }
 
     public class JsonOutput

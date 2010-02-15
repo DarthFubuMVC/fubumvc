@@ -194,6 +194,7 @@
     <Compile Include="Runtime\IRequestData.cs" />
     <Compile Include="Runtime\ModelBinderCache.cs" />
     <Compile Include="Runtime\ObjectResolver.cs" />
+    <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\RequestData.cs" />
     <Compile Include="Runtime\ServiceArguments.cs" />
     <Compile Include="TypeExtensions.cs" />
