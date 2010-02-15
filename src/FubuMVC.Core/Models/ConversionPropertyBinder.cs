@@ -1,53 +1,34 @@
 using System;
 using System.Reflection;
+using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Models
 {
     public class ConversionPropertyBinder : IPropertyBinder
     {
-        private readonly IValueConverterRegistry _converters;
+        private readonly Cache<PropertyInfo, ValueConverter> _cache = new Cache<PropertyInfo, ValueConverter>();
 
         public ConversionPropertyBinder(IValueConverterRegistry converters)
         {
-            _converters = converters;
+            _cache.OnMissing = prop => converters.FindConverter(prop);
         }
 
         public bool Matches(PropertyInfo property)
         {
-            return _converters.FindConverter(property) != null;
+            return _cache[property] != null;
         }
 
+        // TODO -- need an integrated test with Connection String providers
         public void Bind(PropertyInfo property, IBindingContext context)
         {
             context.ForProperty(property, () =>
             {
-                ValueConverter converter = _converters.FindConverter(property);
+                ValueConverter converter = _cache[property];
 
-                object value = null;
-                if (context.PropertyValue != null && property.PropertyType.IsAssignableFrom(context.PropertyValue.GetType()))
-                {
-                    value = context.PropertyValue;
-                }
-                else
-                {
-                    value = converter(context);
-                }
+                var value = converter(context);
                     
                 property.SetValue(context.Object, value, null);
             });
-        }
-    }
-
-    public class NestedObjectPropertyBinder : IPropertyBinder
-    {
-        public bool Matches(PropertyInfo property)
-        {
-            return true;
-        }
-
-        public void Bind(PropertyInfo property, IBindingContext context)
-        {
-            context.BindChild(property);
         }
     }
 }

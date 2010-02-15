@@ -162,6 +162,7 @@
     <Compile Include="Runtime\PartialFactoryTester.cs" />
     <Compile Include="SessionState\FlashProviderTester.cs" />
     <Compile Include="SessionState\RequestDataProviderTester.cs" />
+    <Compile Include="StructureMapIoC\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="StructureMapIoC\ObjectDefInstanceTester.cs" />
     <Compile Include="StructureMapIoC\StructureMapContainerFacilityTester.cs" />
     <Compile Include="StructureMapIoC\StructureMapServiceLocatorTester.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
     <Compile Include="UI\DefaultHtmlConventionsTester.cs" />
     <Compile Include="UI\Forms\DefinitionListLabelAndFieldTester.cs" />
+    <Compile Include="UI\Forms\FormForExpressionTester.cs" />
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
     <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementModifierTester.cs" />

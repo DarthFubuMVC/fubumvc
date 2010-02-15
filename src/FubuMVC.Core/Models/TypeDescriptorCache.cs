@@ -25,6 +25,8 @@ namespace FubuMVC.Core.Models
 
                 foreach (PropertyInfo propertyInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 {
+                    if (!propertyInfo.CanWrite) continue;
+
                     dict.Add(propertyInfo.Name, propertyInfo);
                 }
 

@@ -122,6 +122,7 @@
     <Compile Include="Models\IPropertyBinderCache.cs" />
     <Compile Include="Models\MapFromWebPathFamily.cs" />
     <Compile Include="Models\ModelBindingAttributes.cs" />
+    <Compile Include="Models\NestedObjectPropertyBinder.cs" />
     <Compile Include="Models\PropertyBinderCache.cs" />
     <Compile Include="Models\ResolveConnectionStringFamily.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
