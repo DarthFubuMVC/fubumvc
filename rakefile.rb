@@ -32,9 +32,9 @@ assemblyinfo :version do |asm|
     commit = "git unavailable"
     gitnumber = "0"
   end
+  build_number = "#{BUILD_NUMBER_BASE}.#{gitnumber}"
   tc_build_number = ENV["BUILD_NUMBER"]
   puts "##teamcity[buildNumber '#{build_number}-#{tc_build_number}']" unless tc_build_number.nil?
-  build_number = "#{BUILD_NUMBER_BASE}.#{gitnumber}"
   asm.trademark = commit
   asm.product_name = "#{PRODUCT} #{gittag}"
   asm.description = build_number
