@@ -5,13 +5,11 @@ include FileTest
 require 'albacore'
 
 RESULTS_DIR = "results"
-BUILD_NUMBER = "0.1.0."  + (ENV["BUILD_NUMBER"].nil? ? '0' : ENV["BUILD_NUMBER"].to_s)
+BUILD_NUMBER_BASE = "0.1.0"
 PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_VERSION = "v3.5"
-
-versionNumber = ENV["BUILD_NUMBER"].nil? ? 0 : ENV["BUILD_NUMBER"]
 
 props = { :archive => "build" }
 
@@ -23,18 +21,26 @@ task :default => [:compile, :unit_test]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
-  asm.version = BUILD_NUMBER
-  asm.custom_attributes :AssemblyInformationalVersion => BUILD_NUMBER
-  asm.product_name = PRODUCT
-  asm.copyright = COPYRIGHT
-  asm.output_file = COMMON_ASSEMBLY_INFO
-
+  asm_version = BUILD_NUMBER_BASE + ".0"
+  
   begin
+	gittag = `git describe --long`.chomp 	# looks something like v0.1.0-63-g92228f4
+    gitnumberpart = /-(\d+)-/.match(gittag)
+    gitnumber = gitnumberpart.nil? ? '0' : gitnumberpart[1]
     commit = (ENV["BUILD_VCS_NUMBER"].nil? ? `git log -1 --pretty=format:%H` : ENV["BUILD_VCS_NUMBER"])
   rescue
     commit = "git unavailable"
+    gitnumber = "0"
   end
+  build_number = "#{BUILD_NUMBER_BASE}.#{gitnumber}"
   asm.trademark = commit
+  asm.product_name = "#{PRODUCT} #{gittag}"
+  asm.description = build_number
+  asm.version = asm_version
+  asm.file_version = build_number
+  asm.custom_attributes :AssemblyInformationalVersion => asm_version
+  asm.copyright = COPYRIGHT
+  asm.output_file = COMMON_ASSEMBLY_INFO
 end
 
 desc "Prepares the working directory for a new build"

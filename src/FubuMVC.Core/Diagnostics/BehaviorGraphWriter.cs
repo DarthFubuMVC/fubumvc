@@ -83,7 +83,7 @@ namespace FubuMVC.Core.Diagnostics
         private static HtmlTag buildVersionTag()
         {
             var fubuAssembly = typeof(BehaviorGraphWriter).Assembly;
-            var version = fubuAssembly.GetName().Version.ToString();
+            var version = fubuAssembly.GetAttribute<AssemblyDescriptionAttribute>().Description;
             var commitAttribute = fubuAssembly.GetAttribute<AssemblyTrademarkAttribute>();
             var commit = commitAttribute == null ? null : commitAttribute.Trademark;
             var versionUrl = commit.IsNotEmpty() ? sourceControlUrlFormat.ToFormat(commit) : sourceControlUrlBase;

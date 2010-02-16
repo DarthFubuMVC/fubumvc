@@ -58,7 +58,6 @@
     <Compile Include="HtmlDocumentTester.cs" />
     <Compile Include="HtmlTagTester.cs" />
     <Compile Include="JsonUtilTester.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectTagTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
   </ItemGroup>
@@ -67,6 +66,9 @@
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
