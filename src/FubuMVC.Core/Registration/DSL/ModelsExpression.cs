@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using FubuMVC.Core.Models;
 
 namespace FubuMVC.Core.Registration.DSL
@@ -31,6 +32,12 @@ namespace FubuMVC.Core.Registration.DSL
         public ModelsExpression BindModelsWith<T>() where T : IModelBinder
         {
             return add(graph => graph.Services.AddService<IModelBinder, T>());
+        }
+
+        public ModelsExpression IgnoreProperties(Func<PropertyInfo, bool> filter)
+        {
+            var binder = new IgnorePropertyBinder(filter);
+            return add(graph => graph.Services.AddService<IPropertyBinder>(binder));
         }
     }
 }
