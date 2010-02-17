@@ -112,6 +112,7 @@
     <Compile Include="Diagnostics\TextWriting\TextLine.cs" />
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
+    <Compile Include="Models\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Models\BindingContext.cs" />
     <Compile Include="Models\BindResultAssertionException.cs" />
     <Compile Include="Models\BooleanFamily.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Models\MapFromWebPathFamily.cs" />
     <Compile Include="Models\ModelBindingAttributes.cs" />
     <Compile Include="Models\NestedObjectPropertyBinder.cs" />
+    <Compile Include="Models\PassthroughConverter.cs" />
     <Compile Include="Models\PropertyBinderCache.cs" />
     <Compile Include="Models\ResolveConnectionStringFamily.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />

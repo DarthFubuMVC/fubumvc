@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core.Util;
@@ -23,6 +24,8 @@ namespace FubuMVC.Core.Runtime
     {
         private readonly IList<Locator> _locators = new List<Locator>();
         private static readonly Cache<string, Func<HttpRequestBase, object>> _requestProperties = new Cache<string, Func<HttpRequestBase, object>>();
+        private static readonly IList<PropertyInfo> _systemProperties = new List<PropertyInfo>();
+
 
         static AggregateDictionary()
         {
@@ -64,6 +67,13 @@ namespace FubuMVC.Core.Runtime
             AddRequestProperty(r => r.UserLanguages);
         }
 
+        public static bool IsSystemProperty(PropertyInfo property)
+        {
+            return
+                _systemProperties.Any(
+                    x => property.PropertyType.IsAssignableFrom(x.PropertyType) && x.Name == property.Name);
+        }
+
         public AggregateDictionary()
         {
         }
@@ -85,6 +95,7 @@ namespace FubuMVC.Core.Runtime
         public static void AddRequestProperty(Expression<Func<HttpRequestBase, object>> expression)
         {
             var property = ReflectionHelper.GetProperty(expression);
+            _systemProperties.Add(property);
 
             _requestProperties.Store(property.Name, expression.Compile());
         }

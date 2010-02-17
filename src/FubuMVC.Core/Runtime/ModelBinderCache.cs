@@ -22,7 +22,6 @@ namespace FubuMVC.Core.Runtime
 
         public IModelBinder BinderFor(Type modelType)
         {
-            Debug.WriteLine("Getting binder for " + modelType.FullName);
             IModelBinder binder = _cache[modelType];
             if (binder == null)
             {

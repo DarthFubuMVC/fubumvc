@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Util;
+using FubuMVC.Tests.Models;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -114,6 +118,36 @@ namespace FubuMVC.Tests.Routing
             request.Stub(r => r.Headers).Return(new NameValueCollection());
             return new RequestContext(context, new RouteData());
         }
+
+        private bool isSystemProperty<T>(Expression<Func<T, object>> expression)
+        {
+            var property = ReflectionHelper.GetProperty(expression);
+            return AggregateDictionary.IsSystemProperty(property);
+        }
+
+        [Test]
+        public void when_both_property_type_and_name_match()
+        {
+            isSystemProperty<SystemTarget>(x => x.AcceptTypes).ShouldBeTrue();
+        }
+
+        [Test]
+        public void when_only_the_property_name_matches()
+        {
+            isSystemProperty<NonSystemTarget>(x => x.AcceptTypes).ShouldBeFalse();
+        }
+    }
+
+    public class SystemTarget
+    {
+        public string[] AcceptTypes { get; set; }
+        
+
+    }
+
+    public class NonSystemTarget
+    {
+        public bool AcceptTypes { get; set; }
     }
 
     public interface IDictionaryCallback

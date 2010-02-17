@@ -117,6 +117,7 @@
     <Compile Include="Models\MapFromWebPathFamilyTester.cs" />
     <Compile Include="Models\ModelBinderCacheTester.cs" />
     <Compile Include="Models\NestedObjectConversionIntegrationTester.cs" />
+    <Compile Include="Models\PassthroughBinderTester.cs" />
     <Compile Include="Models\ResolveConnectionStringFamilyTester.cs" />
     <Compile Include="Models\StandardModelBinderTester.cs" />
     <Compile Include="Models\ValueConverterRegistryTester.cs" />

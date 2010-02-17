@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Web;
 using FubuMVC.Core.Runtime;
 using System.Linq;
 
@@ -28,6 +29,9 @@ namespace FubuMVC.Core.Models
 
         private void addPolicies()
         {
+            Add<PassthroughConverter<HttpPostedFileBase>>();
+            Add<PassthroughConverter<HttpCookie>>();
+
             Add<ExpandEnvironmentVariablesFamily>();
             Add<MapFromWebPathFamily>();
             Add<ResolveConnectionStringFamily>();
