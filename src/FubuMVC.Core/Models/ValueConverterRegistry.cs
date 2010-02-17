@@ -31,6 +31,7 @@ namespace FubuMVC.Core.Models
         {
             Add<PassthroughConverter<HttpPostedFileBase>>();
             Add<PassthroughConverter<HttpCookie>>();
+            Add<ASPNetObjectConversionFamily>();
 
             Add<ExpandEnvironmentVariablesFamily>();
             Add<MapFromWebPathFamily>();
