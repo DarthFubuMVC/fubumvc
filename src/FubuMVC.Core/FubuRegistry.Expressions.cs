@@ -130,6 +130,7 @@ namespace FubuMVC.Core
             graph.Services.AddService<ITypeDescriptorCache>(new TypeDescriptorCache());
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
+            graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();
             graph.Services.SetServiceIfNone<ISecurityContext, WebSecurityContext>();
             graph.Services.SetServiceIfNone<IAuthenticationContext, WebAuthenticationContext>();
             graph.Services.SetServiceIfNone<IFlash, FlashProvider>();
