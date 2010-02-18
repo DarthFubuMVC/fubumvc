@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -93,25 +94,48 @@ namespace FubuMVC.Tests.Registration
     public class ActionCallValidationTester
     {
         [Test]
-        public void should_throw_if_return_type_is_value_type()
+        public void should_not_throw_if_call_is_ZMIOMO()
         {
-            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
-            
+            var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
             action.Validate();
-
-            Assert.Fail("Need to implement this test");
         }
 
         [Test]
-        public void should_throw_if_input_type_is_value_type()
+        public void should_not_throw_if_call_is_OMIOMO()
         {
-            Assert.Fail("Need to implement this test");
+            var action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
+            action.Validate();
+        }
+
+        [Test]
+        public void should_not_throw_if_call_is_OMIZMO()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null));
+            action.Validate();
+        }
+
+        [Test]
+        public void should_throw_if_return_type_is_value_type()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
+            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1004);
         }
 
         [Test]
         public void should_throw_if_more_than_one_input_parameter()
         {
-            Assert.Fail("Need to implement this test");
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+            var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1005);
+        }
+
+        [Test]
+        public void should_throw_if_input_type_is_value_type()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
+            var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1006);
         }
     }
 

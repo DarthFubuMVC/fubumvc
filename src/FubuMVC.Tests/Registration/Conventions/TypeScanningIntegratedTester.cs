@@ -34,11 +34,10 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.ExcludeNonConcreteTypes().ForTypesOf<IRouter>(o => { o.Include(c => c.Go()); });
             }).BuildGraph();
 
-            IEnumerable<string> calls = graph.Behaviors.Select(x => x.Calls.First().Description);
-            calls.Each(x => Debug.WriteLine(x));
+            IEnumerable<string> calls = graph.Behaviors.Select(x => x.Calls.First().Method).Select(m =>
+                "{0} - {1}".ToFormat(m.DeclaringType.Name, m.Name));
 
-
-            calls.ShouldHaveTheSameElementsAs("Router1.Go()", "Router2.Go()", "Router3.Go()");
+            calls.ShouldHaveTheSameElementsAs("Router1 - Go", "Router2 - Go", "Router3 - Go");
         }
 
         [Test]

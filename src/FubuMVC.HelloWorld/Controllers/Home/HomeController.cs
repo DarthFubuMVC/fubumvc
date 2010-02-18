@@ -14,11 +14,6 @@ namespace FubuMVC.HelloWorld.Controllers.Home
         {
             return new HelloViewModel{Text = "Hello from Hello()"};
         }
-
-        public HelloViewModel Bogus(int foo, bool bar)
-        {
-            return new HelloViewModel();
-        }
     }
 
     public class HomeViewModel
