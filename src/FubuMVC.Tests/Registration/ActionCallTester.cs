@@ -89,6 +89,32 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
+    [TestFixture]
+    public class ActionCallValidationTester
+    {
+        [Test]
+        public void should_throw_if_return_type_is_value_type()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
+            
+            action.Validate();
+
+            Assert.Fail("Need to implement this test");
+        }
+
+        [Test]
+        public void should_throw_if_input_type_is_value_type()
+        {
+            Assert.Fail("Need to implement this test");
+        }
+
+        [Test]
+        public void should_throw_if_more_than_one_input_parameter()
+        {
+            Assert.Fail("Need to implement this test");
+        }
+    }
+
     public class FakeBehavior : IActionBehavior
     {
         public void Invoke()
@@ -272,5 +298,11 @@ namespace FubuMVC.Tests.Registration
         {
             LastNameEntered = input.Name;
         }
+
+        public bool BogusReturn(){ return false; }
+
+        public void BogusOneInput(int bogus){}
+
+        public void BogusMultiInput(Model1 input1, Model2 input2){}
     }
 }

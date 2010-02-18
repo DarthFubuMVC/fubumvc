@@ -41,6 +41,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected override ObjectDef buildObjectDef()
         {
+            Validate();
+
             return new ObjectDef
             {
                 Dependencies = new List<IDependency>
@@ -51,35 +53,44 @@ namespace FubuMVC.Core.Registration.Nodes
             };
         }
 
+        public void Validate()
+        {
+            //throw new FubuException(1004, ex, "There was an error mapping action '{0}' to an invoker. This is usually caused by your action having an invalid input type (for example a value type like Int32, Int64, bool, etc). The input type must be a reference type (class) not a struct.", Description);
+
+            //DUPE: throw new FubuException(1005,
+            //    "The action '{0}' is invalid. Only methods that support the '1 in 1 out', '1 in 0 out', and '0 in 1 out' patterns are valid here", Description);
+
+        }
+
         private Type determineHandlerType()
         {
-            if (hasReturn && HasInput)
-            {
-                return typeof (OneInOneOutActionInvoker<,,>)
-                    .MakeGenericType(
-                    HandlerType,
-                    Method.GetParameters().First().ParameterType,
-                    Method.ReturnType);
-            }
+                if (hasReturn && HasInput)
+                {
+                    return typeof(OneInOneOutActionInvoker<,,>)
+                        .MakeGenericType(
+                        HandlerType,
+                        Method.GetParameters().First().ParameterType,
+                        Method.ReturnType);
+                }
 
-            if (hasReturn && !HasInput)
-            {
-                return typeof (ZeroInOneOutActionInvoker<,>)
-                    .MakeGenericType(
-                    HandlerType,
-                    Method.ReturnType);
-            }
+                if (hasReturn && !HasInput)
+                {
+                    return typeof(ZeroInOneOutActionInvoker<,>)
+                        .MakeGenericType(
+                        HandlerType,
+                        Method.ReturnType);
+                }
 
-            if (!hasReturn && HasInput)
-            {
-                return typeof (OneInZeroOutActionInvoker<,>)
-                    .MakeGenericType(
-                    HandlerType,
-                    Method.GetParameters().First().ParameterType);
-            }
+                if (!hasReturn && HasInput)
+                {
+                    return typeof(OneInZeroOutActionInvoker<,>)
+                        .MakeGenericType(
+                        HandlerType,
+                        Method.GetParameters().First().ParameterType);
+                }
 
-            throw new ArgumentOutOfRangeException("method", Method,
-                                                  "Only methods that support the '1 in 1 out', '1 in 0 out', and '0 in 1 out' patterns are valid here");
+            throw new FubuException(1005,
+                "The action '{0}' is invalid. Only methods that support the '1 in 1 out', '1 in 0 out', and '0 in 1 out' patterns are valid here", Description);
         }
 
         private ValueDependency createLambda()
