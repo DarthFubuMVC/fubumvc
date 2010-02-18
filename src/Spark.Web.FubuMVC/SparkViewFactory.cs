@@ -18,7 +18,6 @@ namespace Spark.Web.FubuMVC
     public class SparkViewFactory
     {
         private readonly Dictionary<BuildDescriptorParams, ISparkViewEntry> _cache = new Dictionary<BuildDescriptorParams, ISparkViewEntry>();
-        private readonly ViewEngineResult _cacheMissResult = new ViewEngineResult(new List<string> {"Cache"});
         private ICacheServiceProvider _cacheServiceProvider;
         private IDescriptorBuilder _descriptorBuilder;
         private ISparkViewEngine _engine;
@@ -260,7 +259,7 @@ namespace Spark.Web.FubuMVC
                 {
                     return BuildResult(actionContext.HttpContext, entry);
                 }
-                return _cacheMissResult;
+                return new ViewEngineResult(new List<string> { "Cache" });
             }
 
             SparkViewDescriptor descriptor = DescriptorBuilder.BuildDescriptor(
