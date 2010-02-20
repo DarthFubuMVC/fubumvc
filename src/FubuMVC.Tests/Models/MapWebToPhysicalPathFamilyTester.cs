@@ -8,27 +8,27 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.Models
 {
     [TestFixture]
-    public class MapFromWebPathFamilyTester
+    public class MapWebToPhysicalPathFamilyTester
     {
         [SetUp]
         public void SetUp()
         {
-            family = new MapFromWebPathFamily();
-            webAppFolder = "MapFromWebPathFamilyTester";
+            family = new MapWebToPhysicalPathFamily();
+            webAppFolder = "DRIVE:\\MapWebToPhysicalPathFamilyTester";
             UrlContext.Stub(webAppFolder);
 
             expandProp = ReflectionHelper.GetProperty<TestSettings>(t => t.DefaultPath);
             noExpandProp = ReflectionHelper.GetProperty<TestSettings>(t => t.DoNotExpand);
         }
 
-        private MapFromWebPathFamily family;
+        private MapWebToPhysicalPathFamily family;
         private PropertyInfo noExpandProp;
         private PropertyInfo expandProp;
         private string webAppFolder;
 
         public class TestSettings
         {
-            [MapFromWebPath]
+            [MapWebToPhysicalPath]
             public string DefaultPath { get; set; }
 
             public string DoNotExpand { get; set; }
@@ -37,10 +37,10 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void resolve_to_full_paths_for_settings_marked_for_local_path_resolution()
         {
-            var value = new InMemoryBindingContext().WithPropertyValue("~/file.txt");
+            var value = new InMemoryBindingContext().WithPropertyValue("~/App_Data/file.txt");
 
             object result = family.Build(null, expandProp)(value);
-            result.ShouldEqual(webAppFolder + @"/file.txt");
+            result.ShouldEqual(webAppFolder + "\\App_Data\\file.txt");
         }
 
         [Test]

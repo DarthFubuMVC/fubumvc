@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Runtime
             Combine = (basePath, subPath) => "{0}/{1}".ToFormat(basePath.TrimEnd('/'), subPath.TrimStart('/'));
             ToAbsolute = path => Combine(usingFakeUrl, path.Replace("~", ""));
             ToFull = path => Combine(usingFakeUrl, path.Replace("~", ""));
-            ToPhysicalPath = virtPath => virtPath.Replace("~", "").Replace("/", "\\");
+            ToPhysicalPath = virtPath => Combine(usingFakeUrl, virtPath).Replace("~", "").Replace("//", "/").Replace("/", "\\");
         }
 
         public static void Live()
@@ -74,6 +74,11 @@ namespace FubuMVC.Core.Runtime
         public static string MapPath(this string webRelativePath)
         {
             return ToAbsolute(webRelativePath);
+        }
+
+        public static string PhysicalPath(this string webRelativePath)
+        {
+            return ToPhysicalPath(webRelativePath);
         }
     }
 }

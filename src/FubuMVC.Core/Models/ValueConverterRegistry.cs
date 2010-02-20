@@ -35,6 +35,7 @@ namespace FubuMVC.Core.Models
 
             Add<ExpandEnvironmentVariablesFamily>();
             Add<MapFromWebPathFamily>();
+            Add<MapWebToPhysicalPathFamily>();
             Add<ResolveConnectionStringFamily>();
 
             Add<BooleanFamily>();

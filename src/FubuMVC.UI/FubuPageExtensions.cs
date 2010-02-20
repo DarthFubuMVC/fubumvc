@@ -25,6 +25,12 @@ namespace FubuMVC.UI
             page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
         }
 
+        public static void Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
+        {
+            page.Get<IFubuRequest>().Set(model);
+            page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
+        }
+
         public static HtmlTag LinkTo<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
             return page.LinkTo(new TInputModel());

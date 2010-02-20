@@ -117,6 +117,7 @@
     <Compile Include="Models\BindResultAssertionException.cs" />
     <Compile Include="Models\BooleanFamily.cs" />
     <Compile Include="Models\ConversionPropertyBinder.cs" />
+    <Compile Include="Models\MapWebToPhysicalPathFamily.cs" />
     <Compile Include="Models\ExpandEnvironmentVariablesFamily.cs" />
     <Compile Include="Models\IBindingContext.cs" />
     <Compile Include="Models\IPropertyBinder.cs" />

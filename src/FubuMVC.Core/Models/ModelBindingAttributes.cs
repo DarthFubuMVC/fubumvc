@@ -9,6 +9,9 @@ namespace FubuMVC.Core.Models
     public class MapFromWebPathAttribute : Attribute { }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class MapWebToPhysicalPathAttribute : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ConnectionStringAttribute : Attribute { }
 
 }

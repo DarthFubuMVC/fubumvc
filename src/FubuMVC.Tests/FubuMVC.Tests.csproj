@@ -113,6 +113,7 @@
     <Compile Include="Models\BooleanFamilyTester.cs" />
     <Compile Include="Models\ConversionPropertyBinderTester.cs" />
     <Compile Include="Models\ConverterFamilyTester.cs" />
+    <Compile Include="Models\MapWebToPhysicalPathFamilyTester.cs" />
     <Compile Include="Models\ExpandEnvironmentVariablesFamilyTester.cs" />
     <Compile Include="Models\MapFromWebPathFamilyTester.cs" />
     <Compile Include="Models\ModelBinderCacheTester.cs" />

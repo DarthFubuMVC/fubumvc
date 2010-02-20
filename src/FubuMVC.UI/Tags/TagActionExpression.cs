@@ -58,5 +58,10 @@ namespace FubuMVC.UI.Tags
         {
             return new TextboxTag().Attr("value", request.StringValue());
         }
+
+        public static HtmlTag BuildCheckbox(ElementRequest request)
+        {
+            return new CheckboxTag((bool) request.RawValue);
+        }
     }
 }
