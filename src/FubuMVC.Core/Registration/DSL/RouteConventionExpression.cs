@@ -37,6 +37,18 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        public RouteConventionExpression IgnoreClassSuffix(string suffix)
+        {
+            _resolver.DefaultUrlPolicy.IgnoreClassSuffix(suffix);
+            return this;
+        }
+
+        public RouteConventionExpression IgnoreClassNameForType<T>()
+        {
+            _resolver.DefaultUrlPolicy.IgnoreClassName(typeof(T));
+            return this;
+        }
+
         public RouteConventionExpression IgnoreSpecificInputForInputTypeAndMethod<T>(
             Func<ActionCall, bool> methodFilter, Expression<Func<T, object>> propertyFilter)
         {
@@ -93,7 +105,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public RouteConventionExpression IgnoreMethodSuffix(string suffix)
         {
-            _resolver.DefaultUrlPolicy.IgnoreClassSuffix(suffix);
+            _resolver.DefaultUrlPolicy.IgnoreMethodSuffix(suffix);
             return this;
         }
 

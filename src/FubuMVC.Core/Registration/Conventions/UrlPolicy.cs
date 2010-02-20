@@ -120,6 +120,11 @@ namespace FubuMVC.Core.Registration.Conventions
             _ignoredMethodNames.Add(name.ToLower());
         }
 
+        public void IgnoreMethodSuffix(string suffix)
+        {
+            RegisterMethodNameStrategy(m => m.Name.EndsWith(suffix), m => m.Name.Replace(suffix, ""));
+        }
+
         public void IgnoreClassSuffix(string suffix)
         {
             _ignoredClassSuffixes.Add(suffix.ToLower());

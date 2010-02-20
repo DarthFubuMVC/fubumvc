@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Util;
@@ -16,13 +17,18 @@ namespace FubuMVC.Core.Runtime
             _binders.AddRange(binders);
             _binders.Add(new StandardModelBinder(propertyBinders, types));
 
-            // TODO -- specific message if model binder cannot be found
-            _cache.OnMissing = type => _binders.First(x => x.Matches(type));
+            _cache.OnMissing = type => _binders.FirstOrDefault(x => x.Matches(type));
         }
 
         public IModelBinder BinderFor(Type modelType)
         {
-            return _cache[modelType];
+            IModelBinder binder = _cache[modelType];
+            if (binder == null)
+            {
+                throw new FubuException(2200, "Could not determine an IModelBinder for input type {0}", modelType.AssemblyQualifiedName);
+            }
+
+            return binder;
         }
     }
 }

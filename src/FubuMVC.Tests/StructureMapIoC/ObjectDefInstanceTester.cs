@@ -23,15 +23,15 @@ namespace FubuMVC.Tests.StructureMapIoC
 
         public class FakeJsonBehavior : RenderJsonBehavior<Output>
         {
-            public FakeJsonBehavior(IOutputWriter writer, IFubuRequest request, IRequestData data)
-                : base(writer, request, data)
+            public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data)
+                : base(writer, request)
             {
                 Writer = writer;
                 Request = request;
                 Data = data;
             }
 
-            public IOutputWriter Writer { get; set; }
+            public IJsonWriter Writer { get; set; }
             public IFubuRequest Request { get; set; }
             public IRequestData Data { get; set; }
         }
@@ -44,14 +44,16 @@ namespace FubuMVC.Tests.StructureMapIoC
 
             var def = new ObjectDef(typeof (FakeJsonBehavior));
             def.Child(typeof (IFubuRequest), request);
-            def.Child(typeof (IOutputWriter), typeof (HttpResponseOutputWriter));
+            var jsonWriter = def.Child(typeof (IJsonWriter), typeof (JsonWriter));
+            jsonWriter.Child(typeof (IOutputWriter), typeof (HttpResponseOutputWriter));
+            jsonWriter.Child(typeof(IRequestData), typeof(InMemoryRequestData));
             def.Child(typeof (IRequestData), typeof (InMemoryRequestData));
 
             var container =
                 new Container(x => { x.For<IActionBehavior>().Use(new ObjectDefInstance(def)); });
 
             var jsonBehavior = container.GetInstance<IActionBehavior>().ShouldBeOfType<FakeJsonBehavior>();
-            jsonBehavior.Writer.ShouldBeOfType<HttpResponseOutputWriter>();
+            jsonBehavior.Writer.ShouldBeOfType<JsonWriter>();
             jsonBehavior.Request.ShouldBeTheSameAs(request);
         }
 

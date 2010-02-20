@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
+using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
 {
-    public class FubuMasterPage<TMasterPageViewModel> : MasterPage, IFubuView<TMasterPageViewModel>
+    public class FubuMasterPage<TMasterPageViewModel> : FubuMasterPage, IFubuView<TMasterPageViewModel>
         where TMasterPageViewModel : class
     {
         private TMasterPageViewModel _model;
@@ -34,8 +36,29 @@ namespace FubuMVC.Core.View
 
     }
 
-    public class FubuMasterPage : MasterPage, IFubuView
+    public class FubuMasterPage : MasterPage, IFubuPage
     {
+        public IFubuPage FubuPage { get { return (IFubuPage) Page; } }
 
+        public IServiceLocator ServiceLocator
+        {
+            get { return FubuPage.ServiceLocator; }
+            set { /* no-op */ }
+        }
+
+        public T Get<T>()
+        {
+            return FubuPage.Get<T>();
+        }
+
+        public T GetNew<T>()
+        {
+            return FubuPage.GetNew<T>();
+        }
+
+        public IUrlRegistry Urls
+        {
+            get { return FubuPage.Urls; }
+        }
     }
 }

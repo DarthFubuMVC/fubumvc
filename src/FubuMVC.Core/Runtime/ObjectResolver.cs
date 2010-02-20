@@ -29,15 +29,19 @@ namespace FubuMVC.Core.Runtime
         // Leave this virtual
         public virtual BindResult BindModel(Type type, IBindingContext context)
         {
-            // TODO:  Throw descriptive error if no binder can be foundow
-            // TODO:  Throw descriptive error on a type that cannot be resolved or has errors
-
             IModelBinder binder = _binders.BinderFor(type);
-            return new BindResult()
+            try
             {
-                Value = binder.Bind(type, context),
-                Problems = context.Problems
-            };
+                return new BindResult()
+                {
+                    Value = binder.Bind(type, context),
+                    Problems = context.Problems
+                };
+            }
+            catch (Exception e)
+            {
+                throw new FubuException(2201, e, "Fatal error while binding model of type {0}.  See inner exception", type.AssemblyQualifiedName);
+            }
         }
     }
 }

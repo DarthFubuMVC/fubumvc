@@ -113,9 +113,12 @@
     <Compile Include="Models\BooleanFamilyTester.cs" />
     <Compile Include="Models\ConversionPropertyBinderTester.cs" />
     <Compile Include="Models\ConverterFamilyTester.cs" />
+    <Compile Include="Models\MapWebToPhysicalPathFamilyTester.cs" />
     <Compile Include="Models\ExpandEnvironmentVariablesFamilyTester.cs" />
     <Compile Include="Models\MapFromWebPathFamilyTester.cs" />
+    <Compile Include="Models\ModelBinderCacheTester.cs" />
     <Compile Include="Models\NestedObjectConversionIntegrationTester.cs" />
+    <Compile Include="Models\PassthroughBinderTester.cs" />
     <Compile Include="Models\ResolveConnectionStringFamilyTester.cs" />
     <Compile Include="Models\StandardModelBinderTester.cs" />
     <Compile Include="Models\ValueConverterRegistryTester.cs" />
@@ -161,6 +164,7 @@
     <Compile Include="Runtime\PartialFactoryTester.cs" />
     <Compile Include="SessionState\FlashProviderTester.cs" />
     <Compile Include="SessionState\RequestDataProviderTester.cs" />
+    <Compile Include="StructureMapIoC\AppSettingProviderRegistrySmokeTester.cs" />
     <Compile Include="StructureMapIoC\ObjectDefInstanceTester.cs" />
     <Compile Include="StructureMapIoC\StructureMapContainerFacilityTester.cs" />
     <Compile Include="StructureMapIoC\StructureMapServiceLocatorTester.cs" />
@@ -174,6 +178,7 @@
     <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
     <Compile Include="UI\DefaultHtmlConventionsTester.cs" />
     <Compile Include="UI\Forms\DefinitionListLabelAndFieldTester.cs" />
+    <Compile Include="UI\Forms\FormForExpressionTester.cs" />
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
     <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementModifierTester.cs" />

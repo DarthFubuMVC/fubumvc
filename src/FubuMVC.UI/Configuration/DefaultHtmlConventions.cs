@@ -7,6 +7,8 @@ namespace FubuMVC.UI.Configuration
     {
         public DefaultHtmlConventions()
         {
+            Editors.IfPropertyIs<bool>().BuildBy(TagActionExpression.BuildCheckbox);
+
             // Relax, this is just the default fall through action
             Editors.Always.BuildBy(TagActionExpression.BuildTextbox);
 

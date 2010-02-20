@@ -25,6 +25,12 @@ namespace FubuMVC.UI
             page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
         }
 
+        public static void Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
+        {
+            page.Get<IFubuRequest>().Set(model);
+            page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
+        }
+
         public static HtmlTag LinkTo<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
             return page.LinkTo(new TInputModel());
@@ -76,15 +82,28 @@ namespace FubuMVC.UI
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
         {
-            string url = page.Get<IUrlRegistry>().UrlFor(new TInputModel());
-            url = UrlContext.GetFullUrl(url);
+            string url = page.Urls.UrlFor(new TInputModel());
             return new FormTag(url);
         }
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page, TInputModel model)
         {
-            string url = page.Get<IUrlRegistry>().UrlFor(model);
-            url = UrlContext.GetFullUrl(url);
+            string url = page.Urls.UrlFor(model);
+            return new FormTag(url);
+        }
+
+
+        public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
+        {
+            var url = view.Urls.UrlFor(expression);
+            return new FormTag(url);
+        }
+
+
+        public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
+        {
+            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
+
             return new FormTag(url);
         }
 

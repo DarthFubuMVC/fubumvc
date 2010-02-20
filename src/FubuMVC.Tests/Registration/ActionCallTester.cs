@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -86,6 +87,55 @@ namespace FubuMVC.Tests.Registration
 
             ObjectDef objectDef = action.ToObjectDef();
             objectDef.Dependencies.Select(x => x as ConfiguredDependency).Count().ShouldEqual(1);
+        }
+    }
+
+    [TestFixture]
+    public class ActionCallValidationTester
+    {
+        [Test]
+        public void should_not_throw_if_call_is_ZMIOMO()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
+            action.Validate();
+        }
+
+        [Test]
+        public void should_not_throw_if_call_is_OMIOMO()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
+            action.Validate();
+        }
+
+        [Test]
+        public void should_not_throw_if_call_is_OMIZMO()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.OneInZeroOut(null));
+            action.Validate();
+        }
+
+        [Test]
+        public void should_throw_if_return_type_is_value_type()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusReturn());
+            var ex = typeof (FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1004);
+        }
+
+        [Test]
+        public void should_throw_if_more_than_one_input_parameter()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+            var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1005);
+        }
+
+        [Test]
+        public void should_throw_if_input_type_is_value_type()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
+            var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
+            ex.ErrorCode.ShouldEqual(1006);
         }
     }
 
@@ -272,5 +322,11 @@ namespace FubuMVC.Tests.Registration
         {
             LastNameEntered = input.Name;
         }
+
+        public bool BogusReturn(){ return false; }
+
+        public void BogusOneInput(int bogus){}
+
+        public void BogusMultiInput(Model1 input1, Model2 input2){}
     }
 }

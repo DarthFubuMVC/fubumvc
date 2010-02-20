@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Web;
 using FubuMVC.Core.Runtime;
 using System.Linq;
 
@@ -28,8 +29,13 @@ namespace FubuMVC.Core.Models
 
         private void addPolicies()
         {
+            Add<PassthroughConverter<HttpPostedFileBase>>();
+            Add<PassthroughConverter<HttpCookie>>();
+            Add<ASPNetObjectConversionFamily>();
+
             Add<ExpandEnvironmentVariablesFamily>();
             Add<MapFromWebPathFamily>();
+            Add<MapWebToPhysicalPathFamily>();
             Add<ResolveConnectionStringFamily>();
 
             Add<BooleanFamily>();
@@ -67,7 +73,20 @@ namespace FubuMVC.Core.Models
         public static ValueConverter GetValueConverter(Type propertyType)
         {
             var converter = TypeDescriptor.GetConverter(propertyType);
-            return context => converter.ConvertFrom(context.PropertyValue);
+
+
+            return context =>
+            {
+                if (context.PropertyValue != null)
+                {
+                    if (context.PropertyValue.GetType() == propertyType)
+                    {
+                        return context.PropertyValue;
+                    }
+                }
+
+                return converter.ConvertFrom(context.PropertyValue);
+            };
         }
     }
 }

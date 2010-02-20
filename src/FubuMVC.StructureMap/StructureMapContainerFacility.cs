@@ -4,6 +4,7 @@ using System.Web.Routing;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using StructureMap;
@@ -59,6 +60,11 @@ namespace FubuMVC.StructureMap
             else
             {
                 _registry.For(serviceType).Add(new ObjectInstance(def.Value));
+            }
+
+            if (ServiceRegistry.ShouldBeSingleton(serviceType))
+            {
+                _registry.For(serviceType).Singleton();
             }
         }
     }

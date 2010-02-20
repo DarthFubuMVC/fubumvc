@@ -26,7 +26,14 @@ namespace FubuMVC.Core.Registration.Nodes
 
         private bool hasReturn { get { return Method.ReturnType != typeof (void); } }
         public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
-        public string Description { get { return "{0}.{1}()".ToFormat(HandlerType.Name, Method.Name); } }
+        public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), hasReturn ? Method.ReturnType.Name : "void"); } }
+
+        private string getInputParameters()
+        {
+            if( ! HasInput ) return "";
+
+            return Method.GetParameters().Select(p => "{0} {1}".ToFormat(p.ParameterType.Name, p.Name)).Join(", ");
+        }
 
         public static ActionCall For<T>(Expression<Action<T>> expression)
         {
@@ -41,6 +48,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected override ObjectDef buildObjectDef()
         {
+            Validate();
+
             return new ObjectDef
             {
                 Dependencies = new List<IDependency>
@@ -51,35 +60,60 @@ namespace FubuMVC.Core.Registration.Nodes
             };
         }
 
+        public void Validate()
+        {
+            if (hasReturn && Method.ReturnType.IsValueType)
+            {
+                throw new FubuException(1004,
+                                        "The return type of action '{0}' is a value type (struct). It must be void (no return type) or a reference type (class).",
+                                        Description);
+            }
+
+            var parameters = Method.GetParameters();
+            if (parameters != null && parameters.Length > 1)
+            {
+                throw new FubuException(1005,
+                                        "Action '{0}' has more than one input parameter. An action must either have no input parameters, or it must have one that is a reference type (class).",
+                                        Description);
+            }
+
+            if( HasInput && InputType().IsValueType )
+            {
+                throw new FubuException(1006,
+                                        "The type of the input parameter of action '{0}' is a value type (struct). An action must either have no input parameters, or it must have one that is a reference type (class).",
+                                        Description);
+            }
+        }
+
         private Type determineHandlerType()
         {
-            if (hasReturn && HasInput)
-            {
-                return typeof (OneInOneOutActionInvoker<,,>)
-                    .MakeGenericType(
-                    HandlerType,
-                    Method.GetParameters().First().ParameterType,
-                    Method.ReturnType);
-            }
+                if (hasReturn && HasInput)
+                {
+                    return typeof(OneInOneOutActionInvoker<,,>)
+                        .MakeGenericType(
+                        HandlerType,
+                        Method.GetParameters().First().ParameterType,
+                        Method.ReturnType);
+                }
 
-            if (hasReturn && !HasInput)
-            {
-                return typeof (ZeroInOneOutActionInvoker<,>)
-                    .MakeGenericType(
-                    HandlerType,
-                    Method.ReturnType);
-            }
+                if (hasReturn && !HasInput)
+                {
+                    return typeof(ZeroInOneOutActionInvoker<,>)
+                        .MakeGenericType(
+                        HandlerType,
+                        Method.ReturnType);
+                }
 
-            if (!hasReturn && HasInput)
-            {
-                return typeof (OneInZeroOutActionInvoker<,>)
-                    .MakeGenericType(
-                    HandlerType,
-                    Method.GetParameters().First().ParameterType);
-            }
+                if (!hasReturn && HasInput)
+                {
+                    return typeof(OneInZeroOutActionInvoker<,>)
+                        .MakeGenericType(
+                        HandlerType,
+                        Method.GetParameters().First().ParameterType);
+                }
 
-            throw new ArgumentOutOfRangeException("method", Method,
-                                                  "Only methods that support the '1 in 1 out', '1 in 0 out', and '0 in 1 out' patterns are valid here");
+            throw new FubuException(1005,
+                "The action '{0}' is invalid. Only methods that support the '1 in 1 out', '1 in 0 out', and '0 in 1 out' patterns are valid here", Description);
         }
 
         private ValueDependency createLambda()
