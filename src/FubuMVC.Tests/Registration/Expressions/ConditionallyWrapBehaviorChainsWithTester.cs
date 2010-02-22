@@ -13,10 +13,8 @@ using StructureMap;
 namespace FubuMVC.Tests.Registration.Expressions
 {
     [TestFixture]
-    public class WrapBehaviorChainsWithTester
+    public class ConditionallyWrapBehaviorChainsWithTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -25,62 +23,59 @@ namespace FubuMVC.Tests.Registration.Expressions
                 // Tell FubuMVC to wrap the behavior chain for each
                 // RouteHandler with the "FakeUnitOfWorkBehavior"
                 // Kind of like a global [ActionFilter] in MVC
-                x.Policies.WrapBehaviorChainsWith<FakeUnitOfWorkBehavior>();
+                x.Policies.ConditionallyWrapBehaviorChainsWith<FakeUnitOfWorkBehavior>(
+                    call => call.Method.Name == "SomeAction");
 
                 // Explicit junk you would only do for exception cases to
                 // override the conventions
                 x.Route<InputModel>("area/sub/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.SomeAction(null)).OutputToJson();
 
                 x.Route<InputModel>("area/sub2/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
                 x.Route<InputModel>("area/sub3/{Name}/{Age}")
-                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+                    .Calls<TestController>(c => c.ThirdAction(null)).OutputToJson();
             });
+
+            _graph = registry.BuildGraph();
         }
 
-        #endregion
-
         private FubuRegistry registry;
+        private BehaviorGraph _graph;
 
         public class FakeUnitOfWorkBehavior : IActionBehavior
         {
             private readonly IActionBehavior _inner;
-
-            public FakeUnitOfWorkBehavior(IActionBehavior inner)
-            {
-                _inner = inner;
-            }
-
+            public FakeUnitOfWorkBehavior(IActionBehavior inner){ _inner = inner;} 
             public IActionBehavior Inner { get { return _inner; } }
-
-            public void Invoke()
-            {
-            }
-
-            public void InvokePartial()
-            {
-                throw new NotImplementedException();
-            }
+            public void Invoke(){}
+            public void InvokePartial(){}
         }
 
         [Test]
-        public void all_behaviors_chains_should_start_with_the_declared_behavior()
+        public void someaction_call_should_be_wrapped()
         {
-            BehaviorGraph graph = registry.BuildGraph();
-
-            graph.BehaviorChainCount.ShouldEqual(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            visitor.Filters += chain => chain.ContainsCall(call => call.Method.Name == "SomeAction");
             visitor.Actions += chain =>
             {
                 var wrapper = chain.Top.ShouldBeOfType<Wrapper>();
-                wrapper.BehaviorType.ShouldEqual(typeof(FakeUnitOfWorkBehavior));
+                wrapper.BehaviorType.ShouldEqual(typeof (FakeUnitOfWorkBehavior));
                 wrapper.Next.ShouldBeOfType<ActionCall>();
             };
 
-            graph.VisitBehaviors(visitor);
+            _graph.VisitBehaviors(visitor);
+        }
 
+        [Test]
+        public void other_actions_should_not_be_wrapped()
+        {
+            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            visitor.Filters += chain => chain.ContainsCall(call => call.Method.Name != "SomeAction");
+            visitor.Actions += chain => chain.Top.ShouldBeOfType<ActionCall>();
+
+            _graph.VisitBehaviors(visitor);
         }
 
         [Test]
@@ -92,8 +87,10 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
 
-            container.GetAllInstances<IActionBehavior>().Each(
-                x => { x.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull(); });
+            var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
+            behaviors[0].ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull();
+            behaviors[1].ShouldNotBeOfType<FakeUnitOfWorkBehavior>();
+            behaviors[2].ShouldNotBeOfType<FakeUnitOfWorkBehavior>();
         }
     }
 }
