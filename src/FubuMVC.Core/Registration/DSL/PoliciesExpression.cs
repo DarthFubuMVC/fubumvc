@@ -29,13 +29,12 @@ namespace FubuMVC.Core.Registration.DSL
 
         public PoliciesExpression ConditionallyWrapBehaviorChainsWith<T>(Expression<Func<ActionCall, bool>> filter) where T : IActionBehavior
         {
-            var wrapper = new Wrapper(typeof(T));
             var reason = "wrap with the {0} behavior if [{1}]".ToFormat(typeof(T).Name, filter.Body.ToString());
             var chainFilter = filter.Compile();
             var configAction = new VisitBehaviorsAction(v => 
                 {
                     v.Filters += chain => chain.ContainsCall(chainFilter);
-                    v.Actions += chain =>chain.Prepend(wrapper);
+                    v.Actions += chain => chain.Prepend(new Wrapper(typeof(T)));
                 }, reason);
 
             _actions.Fill(configAction);
