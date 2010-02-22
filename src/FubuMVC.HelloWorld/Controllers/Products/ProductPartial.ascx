@@ -2,11 +2,9 @@
         <li>
             <h3><u>Product</u></h3>
             <p>
-                Code: <br />
-                <%= this.InputFor(m => m.Code) %>
+                <b>Code:</b> <%= this.DisplayFor(m => m.Code) %>
             </p>
             <p> 
-                Name: <br />
-                <%= this.InputFor(m => m.Name)%>
+                <b>Name:</b> <%= this.DisplayFor(m => m.Name) %>
             </p>
         </li>
