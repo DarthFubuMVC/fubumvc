@@ -40,6 +40,8 @@ namespace FubuMVC.Core.View
     {
         public IFubuPage FubuPage { get { return (IFubuPage) Page; } }
 
+        string IFubuPage.ElementPrefix{ get; set;}
+
         public IServiceLocator ServiceLocator
         {
             get { return FubuPage.ServiceLocator; }

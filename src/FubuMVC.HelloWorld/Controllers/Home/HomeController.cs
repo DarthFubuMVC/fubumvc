@@ -1,3 +1,5 @@
+using FubuMVC.Core.View;
+
 namespace FubuMVC.HelloWorld.Controllers.Home
 {
     public class HomeController
@@ -33,5 +35,9 @@ namespace FubuMVC.HelloWorld.Controllers.Home
     public class HelloInputModel
     {
         
+    }
+    
+    public class Home : FubuPage<HomeViewModel>
+    {
     }
 }

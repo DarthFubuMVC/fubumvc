@@ -254,6 +254,9 @@
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
     <Compile Include="View\ActionReturnsViewModelType.cs" />
+    <Compile Include="View\FubuControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="View\FubuMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -272,6 +275,8 @@
     <Compile Include="View\ViewAttacher.cs" />
     <Compile Include="View\ViewBag.cs" />
     <Compile Include="View\ViewPath.cs" />
+    <Compile Include="View\WebForms\INeedToKnowAboutParentPage.cs" />
+    <Compile Include="View\WebForms\IPartialRenderer.cs" />
     <Compile Include="View\WebForms\IWebFormRenderer.cs" />
     <Compile Include="Behaviors\RenderFubuWebFormView.cs" />
     <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
@@ -285,6 +290,7 @@
     <Compile Include="Util\XmlExtensions.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
+    <Compile Include="View\WebForms\RenderPartialExpression.cs" />
     <Compile Include="View\WebForms\WebFormExtensions.cs" />
     <Compile Include="View\WebForms\WebFormRenderer.cs" />
     <Compile Include="View\WebForms\WebFormsEndpointPolicy.cs" />

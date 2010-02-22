@@ -216,6 +216,10 @@
     </Compile>
     <Compile Include="View\ViewAttacherTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
+    <Compile Include="View\WebForms\PartialRendererTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\WebForms\RenderPartialExpressionTester.cs" />
     <Compile Include="View\WebForms\WebFormViewFacilityTester.cs" />
     <Compile Include="View\WebForms\WebFormViewTokenTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />

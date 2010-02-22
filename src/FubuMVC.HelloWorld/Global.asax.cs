@@ -2,6 +2,7 @@
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap.Bootstrap;
+using FubuMVC.UI;
 using FubuMVC.View.Spark;
 using StructureMap;
 
@@ -33,6 +34,8 @@ namespace FubuMVC.HelloWorld
 
             Routes
                 .IgnoreControllerNamespaceEntirely()
+                .IgnoreMethodSuffix("Command")
+                .IgnoreMethodSuffix("Query")
                 .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Command"), "POST")
                 .ConstrainToHttpMethod(action => action.Method.Name.StartsWith("Query"), "GET");
 
@@ -44,6 +47,8 @@ namespace FubuMVC.HelloWorld
                     x.by_ViewModel_and_Namespace();
                     x.by_ViewModel();
                 });
+
+            this.UseDefaultHtmlConventions();
 
             HomeIs<HomeInputModel>();
         }

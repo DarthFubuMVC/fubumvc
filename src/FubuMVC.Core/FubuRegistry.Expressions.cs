@@ -140,6 +140,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IFubuRequest, FubuRequest>();
             graph.Services.SetServiceIfNone<IValueConverterRegistry, ValueConverterRegistry>();
             graph.Services.SetServiceIfNone<IPartialFactory, PartialFactory>();
+            graph.Services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
             graph.Services.SetServiceIfNone<IObjectResolver, ObjectResolver>();
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
             graph.Services.SetServiceIfNone<IViewActivator, NulloViewActivator>();
