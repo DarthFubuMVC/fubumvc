@@ -176,6 +176,11 @@ namespace FubuMVC.Tests
             Assert.IsNotInstanceOfType(expected, actual);
         }
 
+        public static void ShouldNotBeOfType<T>(this object actual)
+        {
+            Assert.IsNotInstanceOfType(typeof(T), actual);
+        }
+
         public static void ShouldContain(this IList actual, object expected)
         {
             Assert.Contains(expected, actual);

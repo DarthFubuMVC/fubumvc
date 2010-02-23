@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using HtmlTags;
@@ -17,17 +19,32 @@ namespace FubuMVC.UI
         {
             var generator = page.Get<TagGenerator<T>>();
             generator.Model = page.Model;
+            generator.ElementPrefix = page.ElementPrefix;
             return generator;
         }
 
         public static void Partial<TInputModel>(this IFubuPage page) where TInputModel : class
         {
-            page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
+            InvokePartial<TInputModel>(page, null);
         }
 
         public static void Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
         {
             page.Get<IFubuRequest>().Set(model);
+            InvokePartial<TInputModel>(page, null);
+        }
+
+        public static RenderPartialExpression<TInputModel> PartialForEach<TInputModel, TPartialModel>(
+            this IFubuPage<TInputModel> page, Expression<Func<TInputModel, IEnumerable<TPartialModel>>> listExpression) 
+            where TInputModel : class
+            where TPartialModel : class
+        {
+            return new RenderPartialExpression<TInputModel>(page, page.Get<IPartialRenderer>(), page.Get<IFubuRequest>())
+                .ForEachOf(listExpression);
+        }
+
+        private static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
+        {
             page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
         }
 

@@ -22,6 +22,7 @@ namespace FubuMVC.Core.View
 
     public interface IFubuPage : IFubuView
     {
+        string ElementPrefix { get; set; }
         IServiceLocator ServiceLocator { get; set; }
         T Get<T>();
         T GetNew<T>();

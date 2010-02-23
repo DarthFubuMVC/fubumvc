@@ -3,12 +3,15 @@ using System.Web.UI;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.Util;
+using FubuMVC.Core.View.WebForms;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
 {
-    public class FubuPage<TViewModel> : FubuPage, IFubuPage<TViewModel> where TViewModel : class
+    public class FubuControl<TViewModel> : UserControl, IFubuPage<TViewModel>, INeedToKnowAboutParentPage where TViewModel : class
     {
+        private readonly Cache<Type, object> _services;
+
         public void SetModel(IFubuRequest request)
         {
             Model = request.Get<TViewModel>();
@@ -20,15 +23,13 @@ namespace FubuMVC.Core.View
         }
 
         public TViewModel Model { get; private set; }
-    }
 
-    public class FubuPage : Page, IFubuPage
-    {
-        private readonly Cache<Type, object> _services = new Cache<Type, object>();
-
-        public FubuPage()
+        public FubuControl()
         {
-            _services.OnMissing = type => { return ServiceLocator.GetInstance(type); };
+            _services = new Cache<Type, object>
+                            {
+                                OnMissing = type => ServiceLocator.GetInstance(type)
+                            };
         }
 
         public IServiceLocator ServiceLocator { get; set; }
@@ -49,5 +50,7 @@ namespace FubuMVC.Core.View
         }
 
         string IFubuPage.ElementPrefix { get; set; }
+
+        Page INeedToKnowAboutParentPage.ParentPage { get; set; }
     }
 }
