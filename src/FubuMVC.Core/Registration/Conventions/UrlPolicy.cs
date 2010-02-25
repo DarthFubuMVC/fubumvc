@@ -30,6 +30,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public bool IgnoreControllerFolderName { get; set; }
         public bool IgnoreControllerNamespaceEntirely { get; set; }
+        public bool IgnoreControllerNamesEntirely { get; set; }
 
         public bool Matches(ActionCall call, IConfigurationObserver log)
         {
@@ -45,7 +46,8 @@ namespace FubuMVC.Core.Registration.Conventions
                 addNamespace(route, call);
             }
 
-            addClassName(route, call);
+            if(! IgnoreControllerNamesEntirely)
+                addClassName(route, call);
 
             addMethodName(route, call);
 
