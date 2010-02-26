@@ -146,6 +146,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
+        public void build_route_when_ignoring_controller_names_entirely()
+        {
+            resolver.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true;
+            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteDefinition<RouteInputModel>>();
+            route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/somemethod/{Name}/{Age}");
+        }
+
+        [Test]
         public void build_route_when_ignoring_the_controller_namespace_entirely()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
