@@ -70,6 +70,12 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        public RouteConventionExpression IgnoreControllerNamesEntirely()
+        {
+            _resolver.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true;
+            return this;
+        }
+
         public RouteConventionExpression IgnoreControllerNamespaceEntirely()
         {
             _resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
