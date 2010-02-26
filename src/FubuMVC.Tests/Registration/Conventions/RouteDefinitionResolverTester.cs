@@ -94,6 +94,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
         }
 
+
+
         public class ModelWithQueryStrings
         {
             [QueryString]

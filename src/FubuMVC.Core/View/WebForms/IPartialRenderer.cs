@@ -22,12 +22,10 @@ namespace FubuMVC.Core.View.WebForms
     public class PartialRenderer : IPartialRenderer
     {
         private readonly IWebFormsControlBuilder _builder;
-        private readonly IFubuRequest _modelRequest;
 
-        public PartialRenderer(IWebFormsControlBuilder builder, IFubuRequest modelRequest)
+        public PartialRenderer(IWebFormsControlBuilder builder)
         {
             _builder = builder;
-            _modelRequest = modelRequest;
         }
 
         public IFubuPage CreateControl<VIEW>() where VIEW : IFubuPage
@@ -67,8 +65,7 @@ namespace FubuMVC.Core.View.WebForms
             var fubuView = view as IFubuViewWithModel;
             if (fubuView != null)
             {
-                _modelRequest.Set(viewModel);
-                fubuView.SetModel(_modelRequest);
+                fubuView.SetModel(viewModel);
             }
 
             setParentPageIfNotAlreadySet(view, page);

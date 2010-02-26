@@ -25,14 +25,14 @@ namespace FubuMVC.Tests.View.WebForms
         public void should_throw_if_type_is_not_a_control()
         {
             typeof(InvalidOperationException).ShouldBeThrownBy(
-                () => new PartialRenderer(_builder, _request).CreateControl(typeof(string)));
+                () => new PartialRenderer(_builder).CreateControl(typeof(string)));
         }
 
         [Test]
         public void should_throw_if_type_is_not_a_IFubuPage()
         {
             typeof(InvalidOperationException).ShouldBeThrownBy(
-                () => new PartialRenderer(_builder, _request).CreateControl(typeof(Page)));
+                () => new PartialRenderer(_builder).CreateControl(typeof(Page)));
         }
 
 
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.View.WebForms
             _builder.Expect(b => b.LoadControlFromVirtualPath("~/View/WebForms/TestControl.ascx", typeof(TestControl))).Return(
                 new TestControl());
 
-            new PartialRenderer(_builder, _request).CreateControl(typeof(TestControl));
+            new PartialRenderer(_builder).CreateControl(typeof(TestControl));
 
             _builder.VerifyAllExpectations();
         }
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.View.WebForms
             var model = new TestControlViewModel(); // LogViewModel<NotesLog> { Log = new NotesLog { Notes = "model" } };
             const string prefix = "prefix";
 
-            new PartialRenderer(_builder, _request).Render(new TestView(), typeof(TestControl), model, prefix);
+            new PartialRenderer(_builder).Render(new TestView(), typeof(TestControl), model, prefix);
 
             userControl.Model.ShouldBeTheSameAs(model);
             ((IFubuPage) userControl).ElementPrefix.ShouldEqual(prefix);
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.View.WebForms
 
             _request.Set(new TestViewModel());
 
-            new PartialRenderer(_builder, _request)
+            new PartialRenderer(_builder)
                 .Render(new TestView(), typeof(TestControl), new TestControlViewModel(), "");
 
             _builder.VerifyAllExpectations();
@@ -105,7 +105,7 @@ namespace FubuMVC.Tests.View.WebForms
             _executeCatcher = _builder.CaptureArgumentsFor(b => b.ExecuteControl(null, null));
 
             _parentView = new TestView();
-            _renderer = new PartialRenderer(_builder, _request);
+            _renderer = new PartialRenderer(_builder);
         }
 
         [Test]

@@ -13,6 +13,11 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
+        public void SetModel(object model)
+        {
+            throw new NotImplementedException();
+        }
+
         public ViewModel4 Model { get { throw new NotImplementedException(); } }
     }
 }

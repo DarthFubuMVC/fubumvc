@@ -66,10 +66,6 @@
       <DependentUpon>GreetingCommand.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controllers\Home\Home.aspx.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Controllers\Home\HomeController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -79,6 +75,9 @@
     </Compile>
     <Compile Include="Controllers\Login\LoggedInStatusController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\Products\ProductsController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -106,6 +105,8 @@
     <None Include="Controllers\Home\hello.spark" />
     <None Include="Controllers\Home\_foo.spark" />
     <Content Include="Controllers\Login\LoggedInStatus.aspx" />
+    <Content Include="Controllers\Products\ProductPartial.ascx" />
+    <Content Include="Controllers\Products\ProductsView.aspx" />
     <Content Include="Shared\Site.Master" />
   </ItemGroup>
   <ItemGroup>

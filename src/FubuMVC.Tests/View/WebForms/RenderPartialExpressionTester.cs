@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void a_call_to_For_should_result_in_only_one_render()
         {
-            _renderer.Expect(r => r.Render<object>(null, (IFubuPage) null, null, "")).IgnoreArguments().Return("");
+            _renderer.Expect(r => r.Render<PartialTestModel>(null, (IFubuPage)null, null, "")).IgnoreArguments().Return("");
             _expression.For(m => m.PartialModel).ToString();
             _renderer.VerifyAllExpectations();
         }
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void a_call_to_For_should_pass_the_correct_model_to_render()
         {
-            var args = _renderer.CaptureArgumentsFor(r => r.Render<object>(null, (IFubuPage)null, null, ""), o => o.Return(""));
+            var args = _renderer.CaptureArgumentsFor(r => r.Render<PartialTestModel>(null, (IFubuPage)null, null, ""), o => o.Return(""));
             _expression.For(m => m.PartialModel).ToString();
             args.ArgumentAt<PartialTestModel>(2).ShouldBeTheSameAs(_partialModel);
         }
@@ -65,19 +65,12 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void a_call_to_For_should_pass_the_correct_prefix_to_render()
         {
-            var args = _renderer.CaptureArgumentsFor(r => r.Render<object>(null, (IFubuPage)null, null, ""), o => o.Return(""));
+            var args = _renderer.CaptureArgumentsFor(r => r.Render<PartialTestModel>(null, (IFubuPage)null, null, ""), o => o.Return(""));
             _expression.For(m => m.PartialModel).ToString();
             args.ArgumentAt<string>(3).ShouldEqual("PartialModel");
         }
 
-        [Test]
-        public void a_call_to_For_without_prefix_should_not_render_a_prefix()
-        {
-            var args = _renderer.CaptureArgumentsFor(r => r.Render<object>(null, (IFubuPage)null, _model, ""), oncall => oncall.Return(""));
-            _expression.For(m => m.PartialModel).WithoutPrefix().ToString();
-            args.ArgumentAt<string>(3).ShouldEqual("");
-        }
-        
+
         [Test]
         public void a_call_to_ForEachOf_should_result_in_multiple_renders()
         {

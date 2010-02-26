@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 
@@ -18,6 +19,11 @@ namespace Spark.Web.FubuMVC.ViewCreation
         public void SetModel(IFubuRequest request)
         {
             Model = request.Get<TModel>();
+        }
+
+        public void SetModel(object model)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

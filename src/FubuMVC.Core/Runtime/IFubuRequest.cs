@@ -9,6 +9,8 @@ namespace FubuMVC.Core.Runtime
     {
         T Get<T>() where T : class;
         void Set<T>(T target) where T : class;
+        void Set(Type type, object target);
+        
         IEnumerable<ConvertProblem> ProblemsFor<T>();
         IEnumerable<T> Find<T>() where T : class;
         void SetObject(object input);
@@ -27,6 +29,11 @@ namespace FubuMVC.Core.Runtime
         public void Set<T>(T target) where T : class
         {
             _cache[typeof (T)] = target;
+        }
+
+        public void Set(Type type, object target)
+        {
+            _cache[type] = target;
         }
 
         public IEnumerable<ConvertProblem> ProblemsFor<T>()

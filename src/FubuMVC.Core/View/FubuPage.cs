@@ -14,6 +14,11 @@ namespace FubuMVC.Core.View
             Model = request.Get<TViewModel>();
         }
 
+        public void SetModel(object model)
+        {
+            SetModel(model as TViewModel);
+        }
+
         public void SetModel(TViewModel model)
         {
             Model = model;

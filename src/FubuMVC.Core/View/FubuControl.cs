@@ -17,6 +17,11 @@ namespace FubuMVC.Core.View
             Model = request.Get<TViewModel>();
         }
 
+        public void SetModel(object model)
+        {
+            SetModel(model as TViewModel);
+        }
+
         public void SetModel(TViewModel model)
         {
             Model = model;
@@ -51,6 +56,6 @@ namespace FubuMVC.Core.View
 
         string IFubuPage.ElementPrefix { get; set; }
 
-        Page INeedToKnowAboutParentPage.ParentPage { get; set; }
+        public Page ParentPage { get; set; }
     }
 }

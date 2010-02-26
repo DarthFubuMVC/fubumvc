@@ -134,6 +134,7 @@
     <Compile Include="Registration\Conventions\IInputTypeRouteInputsModelTester.cs" />
     <Compile Include="Registration\Conventions\OutputIntegratedAttachmentTester.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicyTester.cs" />
+    <Compile Include="Registration\Conventions\RouteConventionExpressionTester.cs" />
     <Compile Include="Registration\Conventions\RouteDefinitionResolverTester.cs" />
     <Compile Include="Registration\Conventions\TypeScanningIntegratedTester.cs" />
     <Compile Include="Registration\default_fubu_registry_service_registrations.cs" />
