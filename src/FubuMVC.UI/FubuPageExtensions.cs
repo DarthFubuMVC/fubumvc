@@ -10,6 +10,7 @@ using FubuMVC.UI.Tags;
 using HtmlTags;
 using FubuMVC.Core.Util;
 using FubuMVC.Core;
+using System.Linq;
 
 namespace FubuMVC.UI
 {
@@ -39,8 +40,22 @@ namespace FubuMVC.UI
             where TInputModel : class
             where TPartialModel : class
         {
-            return new RenderPartialExpression<TInputModel>(page, page.Get<IPartialRenderer>(), page.Get<IFubuRequest>())
+            var expression = new RenderPartialExpression<TInputModel>(page, page.Get<IPartialRenderer>(), page.Get<IFubuRequest>())
                 .ForEachOf(listExpression);
+
+            SearchPartialView<TInputModel, TPartialModel>(page, expression);
+            return expression;
+        }
+
+        private static void SearchPartialView<TInputModel, TPartialModel>(IFubuPage<TInputModel> page, RenderPartialExpression<TInputModel> expression) where TInputModel : class
+        {
+            var renderers = page.ServiceLocator.GetAllInstances<IPartialViewTypeRenderer>();
+            if (renderers != null && renderers.Count() > 0)
+            {
+                var renderer = renderers.First();
+                if (renderer.HasPartialViewTypeFor<TPartialModel>())
+                    expression.Using(renderer.GetPartialViewTypeFor<TPartialModel>());
+            }
         }
 
         private static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class

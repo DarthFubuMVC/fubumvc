@@ -39,6 +39,13 @@ namespace FubuMVC.Core.View.WebForms
             return Using<PARTIALVIEW>(null);
         }
 
+        public RenderPartialExpression<VIEWMODEL> Using(Type partialViewType)
+        {
+            if (partialViewType.IsConcreteTypeOf<IFubuPage>())
+                _partialView = _renderer.CreateControl(partialViewType);
+            return this;
+        }
+
         public RenderPartialExpression<VIEWMODEL> Using<PARTIALVIEW>(Action<PARTIALVIEW> optionAction)
             where PARTIALVIEW : IFubuPage
         {

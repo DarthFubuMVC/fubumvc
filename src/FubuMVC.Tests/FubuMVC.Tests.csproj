@@ -183,6 +183,9 @@
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
     <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementModifierTester.cs" />
+    <Compile Include="UI\PartialViewTypeRegistrationTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\StringifierIntegrationTester.cs" />
     <Compile Include="UI\StringifierTester.cs" />
     <Compile Include="UI\TagFactoryTester.cs" />
