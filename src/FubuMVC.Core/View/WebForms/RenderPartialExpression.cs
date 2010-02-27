@@ -7,18 +7,19 @@ using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.View.WebForms
 {
-    public class RenderPartialExpression<VIEWMODEL>
-        where VIEWMODEL : class
+    public class RenderPartialExpression<TViewModel>
+        where TViewModel : class
     {
         private readonly IFubuPage _parentPage;
-        private bool _multiMode;
-        private object _partialModel;
         private Action<StringBuilder> _multiModeAction;
         private string _prefix;
         private readonly IPartialRenderer _renderer;
         private readonly IFubuRequest _request;
         private IFubuPage _partialView;
         private bool _shouldDisplay = true;
+        private Func<string> _renderAction;
+
+
 
         public RenderPartialExpression(IFubuPage parentPage, IPartialRenderer renderer, IFubuRequest request)
         {
@@ -27,91 +28,94 @@ namespace FubuMVC.Core.View.WebForms
             _parentPage = parentPage;
         }
 
-        public RenderPartialExpression<VIEWMODEL> If(bool display)
+        public RenderPartialExpression<TViewModel> If(bool display)
         {
             _shouldDisplay = display;
             return this;
         }
 
-        public RenderPartialExpression<VIEWMODEL> Using<PARTIALVIEW>()
-            where PARTIALVIEW : IFubuPage
+        public RenderPartialExpression<TViewModel> Using<TPartialView>()
+            where TPartialView : IFubuPage
         {
-            return Using<PARTIALVIEW>(null);
+            return Using<TPartialView>(null);
         }
 
-        public RenderPartialExpression<VIEWMODEL> Using(Type partialViewType)
+        public RenderPartialExpression<TViewModel> Using(Type partialViewType)
         {
             if (partialViewType.IsConcreteTypeOf<IFubuPage>())
                 _partialView = _renderer.CreateControl(partialViewType);
             return this;
         }
 
-        public RenderPartialExpression<VIEWMODEL> Using<PARTIALVIEW>(Action<PARTIALVIEW> optionAction)
-            where PARTIALVIEW : IFubuPage
+	  public RenderPartialExpression<TViewModel> Using<TPartialView>(Action<TPartialView> optionAction)
+            where TPartialView : IFubuPage
         {
-            _partialView = _renderer.CreateControl(typeof(PARTIALVIEW));
+            _partialView = _renderer.CreateControl(typeof(TPartialView));
 
             if (optionAction != null)
             {
-                optionAction((PARTIALVIEW)_partialView);
+                optionAction((TPartialView)_partialView);
             }
 
             return this;
         }
 
-        public RenderPartialExpression<VIEWMODEL> For<PARTIALVIEWMODEL>(Expression<Func<VIEWMODEL, PARTIALVIEWMODEL>> expression)
-            where PARTIALVIEWMODEL : class
-        {
-            SetupModelFromAccessor(ReflectionHelper.GetAccessor(expression), _request.Get<VIEWMODEL>());
 
-            return this;
-        }
 
-        public RenderPartialExpression<VIEWMODEL> WithoutPrefix()
+        public RenderPartialExpression<TViewModel> WithoutPrefix()
         {
             _prefix = string.Empty;
             return this;
         }
 
 
-        public RenderPartialExpression<VIEWMODEL> For(object model)
+        public RenderPartialExpression<TViewModel> For<T>(T model) where T : class
         {
-            _partialModel = model;
+            _renderAction = () => _renderer.Render<T>(_parentPage, _partialView, model, _prefix);
             _prefix = string.Empty;
 
             return this;
         }
 
-        public RenderPartialExpression<VIEWMODEL> ForEachOf<PARTIALVIEWMODEL>(Expression<Func<VIEWMODEL, IEnumerable<PARTIALVIEWMODEL>>> expression)
-            where PARTIALVIEWMODEL : class
+        public RenderPartialExpression<TViewModel> For<T>(Expression<Func<TViewModel, T>> expression)
+            where T : class
         {
-            SetupModelFromAccessor(ReflectionHelper.GetAccessor(expression), _request.Get<VIEWMODEL>());
-
-            _multiModeAction = b => RenderMultiplePartials(b, (IEnumerable<PARTIALVIEWMODEL>) _partialModel);
-
-            _multiMode = true;
-
-            return this;
-        }
-
-        public RenderPartialExpression<VIEWMODEL> ForEachOf<PARTIALMODEL>(IEnumerable<PARTIALMODEL> modelList)
-        {
-            _partialModel = modelList;
-
-            _multiMode = true;
-
-            return this;
-        }
-
-        private void SetupModelFromAccessor(Accessor accessor, VIEWMODEL viewmodel)
-        {
+            Accessor accessor = ReflectionHelper.GetAccessor(expression);
+            var viewmodel = _request.Get<TViewModel>();
             if (viewmodel != null)
             {
-                _partialModel = accessor.GetValue(viewmodel);
+                var model = accessor.GetValue(viewmodel) as T;
+                _renderAction = () => _renderer.Render<T>(_parentPage, _partialView, model, _prefix);
             }
 
             _prefix = accessor.Name;
+
+            return this;
         }
+
+        public RenderPartialExpression<TViewModel> ForEachOf<TPartialViewModel>(Expression<Func<TViewModel, IEnumerable<TPartialViewModel>>> expression)
+            where TPartialViewModel : class
+        {
+            var viewmodel = _request.Get<TViewModel>();
+            var accessor = ReflectionHelper.GetAccessor(expression);
+            IEnumerable<TPartialViewModel> models = new TPartialViewModel[0];
+            if (viewmodel != null)
+            {
+                models = accessor.GetValue(viewmodel) as IEnumerable<TPartialViewModel> ?? new TPartialViewModel[0];
+            }
+
+            _prefix = accessor.Name;
+
+            return ForEachOf(models);
+        }
+
+        public RenderPartialExpression<TViewModel> ForEachOf<TPartialModel>(IEnumerable<TPartialModel> modelList) where TPartialModel : class
+        {
+            _multiModeAction = b => renderMultiplePartials(b, modelList);
+
+            return this;
+        }
+
 
         public string RenderMultiplePartials()
         {
@@ -122,21 +126,23 @@ namespace FubuMVC.Core.View.WebForms
             return builder.ToString();
         }
 
-        public void RenderMultiplePartials<PARTIALVIEWMODEL>(StringBuilder builder, IEnumerable<PARTIALVIEWMODEL> list) 
-            where PARTIALVIEWMODEL : class
+        private void renderMultiplePartials<TPartialViewModel>(StringBuilder builder, IEnumerable<TPartialViewModel> list) 
+            where TPartialViewModel : class
         {
             list.Each(m =>
-                      {
-                          var output = _renderer.Render<PARTIALVIEWMODEL>(_partialView, m, _prefix);
-                          builder.Append(output);
-                      });
+            {
+                var output = _renderer.Render(_partialView, m, _prefix);
+                builder.Append(output);
+            });
         }
 
         public override string ToString()
         {
             if (!_shouldDisplay) return "";
 
-            return !_multiMode ? _renderer.Render(_parentPage, _partialView, _partialModel, _prefix) : RenderMultiplePartials();
+            return _multiModeAction != null 
+                ? RenderMultiplePartials()
+                : _renderAction();
         }
     }
 }

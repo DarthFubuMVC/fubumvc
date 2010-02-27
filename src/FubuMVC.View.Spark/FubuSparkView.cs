@@ -17,6 +17,11 @@ namespace FubuMVC.View.Spark
         {
             Model = request.Get<T>();
         }
+
+        public void SetModel(object model)
+        {
+            Model = model as T;
+        }
     }
 
 }

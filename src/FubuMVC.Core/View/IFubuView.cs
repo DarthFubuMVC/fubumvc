@@ -12,6 +12,7 @@ namespace FubuMVC.Core.View
     public interface IFubuViewWithModel : IFubuView
     {
         void SetModel(IFubuRequest request);
+        void SetModel(object model);
     }
 
     public interface IFubuView<VIEWMODEL> : IFubuViewWithModel

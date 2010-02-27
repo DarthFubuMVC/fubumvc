@@ -86,12 +86,22 @@ namespace FubuMVC.Tests
             throw new NotImplementedException();
         }
 
+        public void SetModel(object model)
+        {
+            throw new NotImplementedException();
+        }
+
         public TestOutputModel Model { get { throw new NotImplementedException(); } }
     }
 
     public class TestUserControl : UserControl, IFubuView<TestPartialModel>
     {
         public void SetModel(IFubuRequest model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetModel(object model)
         {
             throw new NotImplementedException();
         }

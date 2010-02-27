@@ -12,6 +12,11 @@ namespace FubuMVC.Tests.View.FakeViews.Folder1
             throw new NotImplementedException();
         }
 
+        public void SetModel(object model)
+        {
+            throw new NotImplementedException();
+        }
+
         public ViewModel1 Model { get { throw new NotImplementedException(); } }
     }
 }

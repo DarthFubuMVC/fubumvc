@@ -34,6 +34,10 @@ namespace FubuMVC.Core.View
             _model = request.Find<TMasterPageViewModel>().FirstOrDefault();
         }
 
+        public void SetModel(object model)
+        {
+            _model = model as TMasterPageViewModel;
+        }
     }
 
     public class FubuMasterPage : MasterPage, IFubuPage

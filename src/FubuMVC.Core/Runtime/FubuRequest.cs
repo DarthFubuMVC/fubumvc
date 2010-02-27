@@ -29,6 +29,15 @@ namespace FubuMVC.Core.Runtime
             };
         }
 
+        public void Set(Type type, object target)
+        {
+            _values[type] = new BindResult()
+            {
+                Value = target,
+                Problems = new List<ConvertProblem>()
+            };
+        }
+
         public IEnumerable<ConvertProblem> ProblemsFor<T>()
         {
             return _values[typeof (T)].Problems;
