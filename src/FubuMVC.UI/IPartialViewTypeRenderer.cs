@@ -6,17 +6,18 @@ namespace FubuMVC.UI
 {
     public interface IPartialViewTypeRenderer
     {
-        PartialViewTypeExpression For<TPartialModel>();
+        IPartialViewTypeBindingExpression For<TPartialModel>();
         Type GetPartialViewTypeFor<TPartialModel>();
         bool HasPartialViewTypeFor<TPartialModel>();
+        void Register(Type modelType, IPartialViewTypeExpression expression);
     }
 
     public class PartialViewTypeRenderer : IPartialViewTypeRenderer
     {
-        private readonly IDictionary<Type, PartialViewTypeExpression> _viewModelTypes = new Dictionary<Type, PartialViewTypeExpression>();
-        public PartialViewTypeExpression For<TPartialModel>()
+        private readonly IDictionary<Type, IPartialViewTypeExpression> _viewModelTypes = new Dictionary<Type, IPartialViewTypeExpression>();
+        public IPartialViewTypeBindingExpression For<TPartialModel>()
         {
-            return new PartialViewTypeExpression(this, typeof(TPartialModel));
+            return new PartialViewTypeBindingExpression(this, typeof(TPartialModel));
         }
 
         public Type GetPartialViewTypeFor<TPartialModel>()
@@ -29,30 +30,48 @@ namespace FubuMVC.UI
             return _viewModelTypes.ContainsKey(typeof(TPartialModel));
         }
 
-        public void Register(Type modelType, PartialViewTypeExpression expression)
+        public void Register(Type modelType, IPartialViewTypeExpression expression)
         {
             _viewModelTypes.Add(modelType, expression);
         }
     }
 
-    public class PartialViewTypeExpression
+    public class PartialViewTypeBindingExpression : IPartialViewTypeBindingExpression
     {
-        private readonly PartialViewTypeRenderer _typeRenderer;
+        private readonly IPartialViewTypeRenderer _typeRenderer;
         private readonly Type _modelType;
-        private Type _partialView;
 
-        public PartialViewTypeExpression(PartialViewTypeRenderer typeRenderer, Type modelType)
+        public PartialViewTypeBindingExpression(IPartialViewTypeRenderer typeRenderer, Type modelType)
         {
             _typeRenderer = typeRenderer;
             _modelType = modelType;
         }
 
-        public PartialViewTypeExpression Use<TPartialView>()
+        public void Use<TPartialView>()
             where TPartialView : IFubuPage
         {
-            _partialView = typeof(TPartialView);
-            _typeRenderer.Register(_modelType, this);
-            return this;
+            _typeRenderer.Register(_modelType, new PartialViewTypeExpression(typeof(TPartialView)));
+        }
+    }
+
+    public interface IPartialViewTypeBindingExpression
+    {
+        void Use<TPartialView>()
+            where TPartialView : IFubuPage;
+    }
+
+    public interface IPartialViewTypeExpression
+    {
+        Type RenderType();
+    }
+
+    public class PartialViewTypeExpression : IPartialViewTypeExpression
+    {
+        private readonly Type _partialView;
+
+        public PartialViewTypeExpression(Type partialView)
+        {
+            _partialView = partialView;
         }
 
         public Type RenderType()
