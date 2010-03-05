@@ -249,7 +249,6 @@
     <Compile Include="SessionState\IFlash.cs" />
     <Compile Include="SessionState\IRequestDataProvider.cs" />
     <Compile Include="Urls\IUrlRegistry.cs" />
-    <Compile Include="Util\ExpressionsExtensions.cs" />
     <Compile Include="Util\Indexer.cs" />
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />

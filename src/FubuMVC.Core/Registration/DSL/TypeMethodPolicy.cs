@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore.Reflection;
 using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Registration.DSL

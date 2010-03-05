@@ -1,7 +1,7 @@
 using System;
+using FubuCore.Reflection;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Util;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
 using Microsoft.Practices.ServiceLocation;

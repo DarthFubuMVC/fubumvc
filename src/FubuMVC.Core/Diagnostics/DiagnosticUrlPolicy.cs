@@ -1,10 +1,10 @@
 using System.Reflection;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Diagnostics
 {

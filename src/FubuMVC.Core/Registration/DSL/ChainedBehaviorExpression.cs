@@ -1,8 +1,8 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Util;
 using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core.Registration.DSL

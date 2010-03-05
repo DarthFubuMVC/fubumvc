@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Util;
 

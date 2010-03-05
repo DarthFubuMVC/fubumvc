@@ -2,8 +2,8 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
+using FubuCore.Reflection;
 using FubuMVC.Core.Models;
-using FubuMVC.Core.Util;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models

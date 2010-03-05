@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 
@@ -21,10 +22,10 @@ namespace FubuMVC.Core.Registration.Conventions
             _defaultUrlPolicy.IgnoreClassSuffix("controller");
 
             _inputPolicy.PropertyFilters.Includes +=
-                prop => prop.InputProperty.HasCustomAttribute<RouteInputAttribute>();
+                prop => prop.InputProperty.HasAttribute<RouteInputAttribute>();
             _inputPolicy.PropertyFilters.Includes +=
-                prop => prop.InputProperty.HasCustomAttribute<QueryStringAttribute>();
-            _inputPolicy.PropertyAlterations.Register(prop => prop.HasCustomAttribute<QueryStringAttribute>(),
+                prop => prop.InputProperty.HasAttribute<QueryStringAttribute>();
+            _inputPolicy.PropertyAlterations.Register(prop => prop.HasAttribute<QueryStringAttribute>(),
                                                       (route, prop) => route.AddQueryInput(prop));
 
             _policies.Add(new FubuPartialRequestUrlPolicy());

@@ -2,9 +2,9 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Tests.Registration.Utilities
 {

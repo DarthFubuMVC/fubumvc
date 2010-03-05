@@ -56,9 +56,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BooleanExtensionsTester.cs" />
+    <Compile Include="DictionaryExtensionsTester.cs" />
+    <Compile Include="GenericEnumerableExtensionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Reflection\ReflectionHelperTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
+    <Compile Include="StringExtensionsTester.cs" />
+    <Compile Include="TestObject.cs" />
     <Compile Include="TypeExtensionsTester.cs" />
   </ItemGroup>
   <ItemGroup>

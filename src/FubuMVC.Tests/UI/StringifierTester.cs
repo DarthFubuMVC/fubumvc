@@ -1,7 +1,7 @@
 using System;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Core.Util;
 using FubuMVC.UI;
 using NUnit.Framework;
 

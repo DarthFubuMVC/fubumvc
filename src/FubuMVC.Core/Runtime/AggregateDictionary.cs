@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
+using FubuCore.Reflection;
 using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Runtime

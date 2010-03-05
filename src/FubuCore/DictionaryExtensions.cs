@@ -4,12 +4,12 @@ namespace FubuCore
 {
     public static class DictionaryExtensions
     {
-        public static VALUE Get<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, KEY key)
+        public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            return dictionary.Get(key, default(VALUE));
+            return dictionary.Get(key, default(TValue));
         }
 
-        public static VALUE Get<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, KEY key, VALUE defaultValue)
+        public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
         {
             if (dictionary.ContainsKey(key)) return dictionary[key];
             return defaultValue;

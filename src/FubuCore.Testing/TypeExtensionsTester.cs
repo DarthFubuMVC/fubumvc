@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace FubuCore.Testing
@@ -91,5 +92,100 @@ namespace FubuCore.Testing
             Assert.IsTrue(typeof (string).IsString());
             Assert.IsFalse(typeof (int).IsString());
         }
+
+        [Test]
+        public void is_nullable_of_T()
+        {
+            typeof(string).IsNullableOfT().ShouldBeFalse();
+            typeof(Nullable<int>).IsNullableOfT().ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_nullable_of_a_given_type()
+        {
+            typeof(string).IsNullableOf(typeof(int)).ShouldBeFalse();
+            typeof(Nullable<DateTime>).IsNullableOf(typeof(int)).ShouldBeFalse();
+            typeof(Nullable<int>).IsNullableOf(typeof(int)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_type_or_nullable_of_T()
+        {
+            typeof(bool).IsTypeOrNullableOf<bool>().ShouldBeTrue();
+            typeof(Nullable<bool>).IsTypeOrNullableOf<bool>().ShouldBeTrue();
+            typeof(Nullable<DateTime>).IsTypeOrNullableOf<bool>().ShouldBeFalse();
+            typeof(string).IsTypeOrNullableOf<bool>().ShouldBeFalse();
+        
+        }
+
+        [Test]
+        public void can_be_cast_to()
+        {
+            typeof(Message1).CanBeCastTo<IMessage>().ShouldBeTrue();
+            typeof(Message2).CanBeCastTo<IMessage>().ShouldBeTrue();
+            typeof(Message2).CanBeCastTo<Message1>().ShouldBeTrue();
+
+            typeof(Message1).CanBeCastTo<Message1>().ShouldBeTrue();
+            typeof(Message1).CanBeCastTo<Message2>().ShouldBeFalse();
+        }
+
+        [Test]
+        public void is_in_namespace()
+        {
+            this.GetType().IsInNamespace("wrong").ShouldBeFalse();
+            this.GetType().IsInNamespace(this.GetType().Namespace + ".something").ShouldBeFalse();
+            this.GetType().IsInNamespace(this.GetType().Namespace).ShouldBeTrue();
+            this.GetType().IsInNamespace(this.GetType().Assembly.GetName().Name).ShouldBeTrue();
+            
+        }
+
+        [Test]
+        public void is_open_generic()
+        {
+            typeof(int).IsOpenGeneric().ShouldBeFalse();
+            typeof(Nullable<>).IsOpenGeneric().ShouldBeTrue();
+            typeof(Nullable<int>).IsOpenGeneric().ShouldBeFalse();
+        }
+
+        [Test]
+        public void is_concrete_type_of_T()
+        {
+            typeof(IMessage).IsConcreteTypeOf<IMessage>().ShouldBeFalse();
+            typeof(AbstractMessage).IsConcreteTypeOf<IMessage>().ShouldBeFalse();
+            typeof(Message1).IsConcreteTypeOf<IMessage>().ShouldBeTrue();
+            typeof(Message2).IsConcreteTypeOf<IMessage>().ShouldBeTrue();
+            typeof(Message3).IsConcreteTypeOf<IMessage>().ShouldBeTrue();
+            this.GetType().IsConcreteTypeOf<IMessage>().ShouldBeFalse();
+        }
+
+        [Test]
+        public void is_nullable()
+        {
+            typeof(string).IsNullable().ShouldBeFalse();
+            typeof(Nullable<int>).IsNullable().ShouldBeTrue();
+        }
+
+        [Test]
+        public void get_inner_type_from_nullable()
+        {
+            typeof (Nullable<int>).GetInnerTypeFromNullable().ShouldEqual(typeof (int));
+        }
+
+        [Test]
+        public void is_concrete()
+        {
+            typeof(IMessage).IsConcrete().ShouldBeFalse();
+            typeof(AbstractMessage).IsConcrete().ShouldBeFalse();
+            typeof(Message2).IsConcrete().ShouldBeTrue();
+        }
+
+        public interface IMessage{}
+        public abstract class AbstractMessage : IMessage{}
+        public class Message3 : AbstractMessage{}
+        public class Message1 : IMessage{}
+        public class Message2 : Message1{}
+    
     }
+
+    
 }

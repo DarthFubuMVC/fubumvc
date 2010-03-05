@@ -4,8 +4,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuMVC.Core.Util;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Reflection
 {
     public static class ReflectionHelper
     {
@@ -130,54 +131,6 @@ namespace FubuMVC.Core.Util
             return new FindMethodVisitor(expression).Method;
         }
 
-
-        public static T GetAttribute<T>(this ICustomAttributeProvider provider) where T : Attribute
-        {
-            object[] atts = provider.GetCustomAttributes(typeof (T), true);
-            return atts.Length > 0 ? atts[0] as T : null;
-        }
-
-        public static bool HasAttribute<T>(this ICustomAttributeProvider provider) where T : Attribute
-        {
-            object[] atts = provider.GetCustomAttributes(typeof (T), true);
-            return atts.Length > 0;
-        }
-
-        public static bool IsInteger(this Accessor accessor)
-        {
-            return accessor.PropertyType == typeof (int) || accessor.PropertyType == typeof (long);
-        }
-
-        public static void IfPropertyTypeIs<T>(this Accessor accessor, Action action)
-        {
-            if (accessor.PropertyType == typeof(T)) action();
-        }
-
-        public static void ForAttribute<T>(this ICustomAttributeProvider provider, Action<T> action) where T : Attribute
-        {
-            foreach (T attribute in provider.GetCustomAttributes(typeof (T), true))
-            {
-                action(attribute);
-            }
-        }
-
-        public static void ForAttribute<T>(this Accessor accessor, Action<T> action) where T : Attribute
-        {
-            foreach (T attribute in accessor.InnerProperty.GetCustomAttributes(typeof (T), true))
-            {
-                action(attribute);
-            }
-        }
-
-        public static T GetAttribute<T>(this Accessor provider) where T : Attribute
-        {
-            return provider.InnerProperty.GetAttribute<T>();
-        }
-
-        public static bool HasAttribute<T>(this Accessor provider) where T : Attribute
-        {
-            return provider.InnerProperty.HasAttribute<T>();
-        }
     }
 
     public class FindMethodVisitor : ExpressionVisitorBase

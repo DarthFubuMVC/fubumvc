@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -10,7 +11,7 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public bool Matches(ActionCall call, IConfigurationObserver log)
         {
-            if (!call.Method.HasCustomAttribute<FubuPartialAttribute>()) return false;
+            if (!call.Method.HasAttribute<FubuPartialAttribute>()) return false;
 
             if (log.IsRecording)
             {

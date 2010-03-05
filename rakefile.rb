@@ -75,7 +75,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'HtmlTags.Testing', 'Spark.Web.FubuMVC.Tests']
+  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'HtmlTags.Testing', 'Spark.Web.FubuMVC.Tests']
 end
 
 desc "Target used for the CI server"

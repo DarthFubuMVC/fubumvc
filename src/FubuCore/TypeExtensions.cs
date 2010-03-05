@@ -36,19 +36,9 @@ namespace FubuCore
             return type.Namespace.StartsWith(nameSpace);
         }
 
-        public static bool IsInNamespaceContaining<T>(this Type type)
-        {
-            return type.IsInNamespace(typeof (T).Namespace);
-        }
-
         public static bool IsOpenGeneric(this Type type)
         {
             return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
-        }
-
-        public static bool IsConcreteTypeOf(this Type pluggedType, Type pluginType)
-        {
-            return pluggedType.IsConcrete() && pluginType.IsAssignableFrom(pluggedType);
         }
 
         public static bool IsConcreteTypeOf<T>(this Type pluggedType)
