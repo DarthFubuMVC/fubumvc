@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class ConvertProblem
     {

@@ -1,8 +1,9 @@
 using System;
-using FubuMVC.Core.Models;
+using FubuCore.Binding;
+using FubuMVC.Core;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class ObjectResolver : IObjectResolver
     {

@@ -2,15 +2,13 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -29,7 +27,7 @@ namespace FubuMVC.Core
     public partial class FubuRegistry
     {
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
-        public OutputDeterminationExpression Output { get{ return new OutputDeterminationExpression(this);}}
+        public OutputDeterminationExpression Output { get { return new OutputDeterminationExpression(this); } }
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
 
         public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(convention => _urlConventions.Add(convention), _urls); } }
@@ -64,13 +62,13 @@ namespace FubuMVC.Core
 
         public void HomeIs<TController>(Expression<Action<TController>> controllerAction)
         {
-            var method = ReflectionHelper.GetMethod(controllerAction);
+            MethodInfo method = ReflectionHelper.GetMethod(controllerAction);
             _routeResolver.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(method));
         }
 
         public void HomeIs<TModel>()
         {
-            _routeResolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof(TModel)));
+            _routeResolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TModel)));
         }
 
         public ChainedBehaviorExpression Route(string pattern)
@@ -127,7 +125,7 @@ namespace FubuMVC.Core
         {
             graph.Services.AddService<IUrlRegistry>(_urls);
             graph.Services.AddService<IUrlRegistration>(_urls);
-            graph.Services.AddService<ITypeDescriptorCache>(new TypeDescriptorCache());
+            graph.Services.AddService(new TypeDescriptorCache());
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
             graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();
@@ -148,7 +146,11 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
+            graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
+            
         }
+
+        #region Nested type: RegistryImport
 
         public class RegistryImport
         {
@@ -160,5 +162,7 @@ namespace FubuMVC.Core
                 graph.Import(Registry.BuildGraph(), Prefix);
             }
         }
+
+        #endregion
     }
 }

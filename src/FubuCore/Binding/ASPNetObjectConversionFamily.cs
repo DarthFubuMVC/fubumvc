@@ -1,7 +1,7 @@
 using System.Reflection;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class ASPNetObjectConversionFamily : IConverterFamily
     {

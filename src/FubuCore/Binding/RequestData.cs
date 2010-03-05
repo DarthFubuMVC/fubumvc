@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class RequestData : IRequestData
     {

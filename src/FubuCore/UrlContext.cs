@@ -1,8 +1,7 @@
 using System;
 using System.Web;
-using FubuCore;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore
 {
     public static class UrlContext
     {
@@ -37,7 +36,8 @@ namespace FubuMVC.Core.Runtime
             Combine = (basePath, subPath) => "{0}/{1}".ToFormat(basePath.TrimEnd('/'), subPath.TrimStart('/'));
             ToAbsolute = path => Combine(usingFakeUrl, path.Replace("~", ""));
             ToFull = path => Combine(usingFakeUrl, path.Replace("~", ""));
-            ToPhysicalPath = virtPath => Combine(usingFakeUrl, virtPath).Replace("~", "").Replace("//", "/").Replace("/", "\\");
+            ToPhysicalPath =
+                virtPath => Combine(usingFakeUrl, virtPath).Replace("~", "").Replace("//", "/").Replace("/", "\\");
         }
 
         public static void Live()

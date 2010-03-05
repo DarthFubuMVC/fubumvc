@@ -2,6 +2,7 @@ using System;
 using System.Web;
 using System.Web.Routing;
 using System.Web.SessionState;
+using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Core.Runtime

@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Reflection;
 using FubuCore;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class BooleanFamily : IConverterFamily
     {

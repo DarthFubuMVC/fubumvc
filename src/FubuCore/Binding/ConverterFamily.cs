@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class ConverterExpression
     {

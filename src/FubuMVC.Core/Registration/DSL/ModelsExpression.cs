@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using FubuMVC.Core.Models;
+using FubuCore.Binding;
 
 namespace FubuMVC.Core.Registration.DSL
 {

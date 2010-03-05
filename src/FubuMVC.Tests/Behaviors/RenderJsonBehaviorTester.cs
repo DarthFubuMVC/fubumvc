@@ -1,10 +1,12 @@
 using System;
 using System.Net.Mime;
+using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
+using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.Behaviors
 {

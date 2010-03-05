@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Routing;
+using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Models;

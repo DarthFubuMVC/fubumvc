@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Web;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using System.Linq;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class ValueConverterRegistry : IValueConverterRegistry
     {

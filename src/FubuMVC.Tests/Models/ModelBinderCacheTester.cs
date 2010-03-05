@@ -1,3 +1,4 @@
+using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;

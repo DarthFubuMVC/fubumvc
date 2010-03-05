@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
+using FubuCore.Binding;
 using FubuCore.Reflection;
-using FubuMVC.Core.Models;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 

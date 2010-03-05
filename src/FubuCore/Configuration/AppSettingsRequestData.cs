@@ -1,9 +1,9 @@
 using System;
 using System.Configuration;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using System.Linq;
 
-namespace FubuMVC.Core.Configuration
+namespace FubuCore.Configuration
 {
     public class AppSettingsRequestData : IRequestData
     {

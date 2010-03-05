@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore.Binding;
 using FubuCore.Util;
 
 namespace FubuMVC.Core.Runtime

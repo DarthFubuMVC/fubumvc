@@ -1,7 +1,7 @@
 using System;
-using FubuMVC.Core.Models;
+using FubuCore.Binding;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public interface IObjectResolver
     {

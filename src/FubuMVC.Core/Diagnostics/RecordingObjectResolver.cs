@@ -1,6 +1,5 @@
 using System;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 
 namespace FubuMVC.Core.Diagnostics
 {

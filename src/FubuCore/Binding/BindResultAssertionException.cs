@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class BindResultAssertionException : ApplicationException
     {

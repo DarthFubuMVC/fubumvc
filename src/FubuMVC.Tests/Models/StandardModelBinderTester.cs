@@ -1,11 +1,9 @@
 using System;
 using System.Linq;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using FubuMVC.StructureMap;
-using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
-using Rhino.Mocks;
+using StructureMap;
 
 namespace FubuMVC.Tests.Models
 {
@@ -19,9 +17,9 @@ namespace FubuMVC.Tests.Models
         {
             // Lots of stuff to put together, so I'm just using a minimalistic
             // container to do it for me because I'm lazy -- JDM 2/12/2010
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
+            IContainer container = StructureMapContainerFacility.GetBasicFubuContainer();
             binder = container.GetInstance<StandardModelBinder>();
-            
+
             context = new InMemoryBindingContext();
 
             result = null;
@@ -39,9 +37,9 @@ namespace FubuMVC.Tests.Models
             {
                 if (result == null)
                 {
-                    result = new BindResult()
+                    result = new BindResult
                     {
-                        Value = binder.Bind(typeof(Turkey), context),
+                        Value = binder.Bind(typeof (Turkey), context),
                         Problems = context.Problems
                     };
                 }
@@ -60,11 +58,13 @@ namespace FubuMVC.Tests.Models
             public bool Alive { get; set; }
             public DateTime BirthDate { get; set; }
             public Guid Id { get; set; }
-            public bool X_Requested_With { get; set;}
+            public bool X_Requested_With { get; set; }
         }
 
         [Test]
-        public void Checkbox_handling__if_the_property_type_is_boolean_and_the_value_does_not_equal_the_name_and_isnt_a_recognizeable_boolean_a_problem_should_be_attached()
+        public void
+            Checkbox_handling__if_the_property_type_is_boolean_and_the_value_does_not_equal_the_name_and_isnt_a_recognizeable_boolean_a_problem_should_be_attached
+            ()
         {
             context["Alive"] = "BOGUS";
             theResult.Problems.Count.ShouldEqual(1);
@@ -94,14 +94,6 @@ namespace FubuMVC.Tests.Models
             theResultingObject.Age.ShouldEqual(12);
             theResultingObject.Alive.ShouldBeTrue();
             theResultingObject.BirthDate.ShouldEqual(new DateTime(2008, 06, 01));
-        }
-
-        [Test]
-        public void should_use_alternate_underscore_naming_if_primary_fails()
-        {
-            context["X-Requested-With"] = "True";
-
-            theResultingObject.X_Requested_With.ShouldBeTrue();
         }
 
         [Test, Ignore("Removed requirement for case-insensitivity. May add back later")]
@@ -149,7 +141,7 @@ namespace FubuMVC.Tests.Models
             context["Name"] = "Boris";
             context["Age"] = "2";
 
-            theResult.AssertNoProblems(typeof(Turkey));
+            theResult.AssertNoProblems(typeof (Turkey));
             theResult.Problems.Count.ShouldEqual(0);
         }
 
@@ -241,6 +233,14 @@ namespace FubuMVC.Tests.Models
             context["Id"] = guid.ToString();
 
             theResultingObject.Id.ShouldEqual(guid);
+        }
+
+        [Test]
+        public void should_use_alternate_underscore_naming_if_primary_fails()
+        {
+            context["X-Requested-With"] = "True";
+
+            theResultingObject.X_Requested_With.ShouldBeTrue();
         }
     }
 

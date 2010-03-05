@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class BindingContext : IBindingContext
     {

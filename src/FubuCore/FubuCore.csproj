@@ -75,6 +75,7 @@
     <Compile Include="Binding\IConverterFamily.cs" />
     <Compile Include="Binding\IModelBinder.cs" />
     <Compile Include="Binding\IModelBinderCache.cs" />
+    <Compile Include="Binding\InMemoryRequestData.cs" />
     <Compile Include="Binding\IObjectResolver.cs" />
     <Compile Include="Binding\IPropertyBinder.cs" />
     <Compile Include="Binding\IPropertyBinderCache.cs" />

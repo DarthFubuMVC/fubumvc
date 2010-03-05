@@ -1,9 +1,10 @@
 using System;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
 using NUnit.Framework;
 using System.Linq;
+using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.Models
 {

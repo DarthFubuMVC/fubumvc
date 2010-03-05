@@ -1,8 +1,7 @@
 using System;
-using FubuCore.Binding;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class InMemoryRequestData : IRequestData
     {

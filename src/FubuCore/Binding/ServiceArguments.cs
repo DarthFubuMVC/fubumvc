@@ -1,7 +1,7 @@
 using System;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class ServiceArguments
     {

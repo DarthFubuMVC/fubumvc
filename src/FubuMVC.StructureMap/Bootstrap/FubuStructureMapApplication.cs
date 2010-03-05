@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
+using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Runtime;
 using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap

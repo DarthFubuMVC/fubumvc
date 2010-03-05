@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class StandardModelBinder : IModelBinder
     {

@@ -8,7 +8,7 @@ using System.Web.Routing;
 using FubuCore.Reflection;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public enum RequestDataSource
     {

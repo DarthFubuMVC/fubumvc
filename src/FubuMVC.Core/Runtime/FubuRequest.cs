@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore.Binding;
 using FubuCore.Util;
-using FubuMVC.Core.Models;
 
 namespace FubuMVC.Core.Runtime
 {

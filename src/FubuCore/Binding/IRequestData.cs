@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public interface IRequestData
     {

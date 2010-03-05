@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ExpandEnvironmentVariablesAttribute : Attribute { }

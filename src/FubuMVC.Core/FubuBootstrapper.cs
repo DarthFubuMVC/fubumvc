@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
+using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;

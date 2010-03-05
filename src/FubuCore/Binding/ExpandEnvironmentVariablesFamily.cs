@@ -4,7 +4,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Util;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class ExpandEnvironmentVariablesFamily : IConverterFamily
     {

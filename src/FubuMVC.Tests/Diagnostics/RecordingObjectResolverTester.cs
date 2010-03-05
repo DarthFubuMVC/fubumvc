@@ -1,6 +1,5 @@
+using FubuCore.Binding;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Runtime;
 using NUnit.Framework;

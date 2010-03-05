@@ -1,13 +1,13 @@
 using System;
+using FubuCore.Binding;
 using FubuCore.Reflection;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;
+using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.Runtime
 {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class PropertyBinderCache : IPropertyBinderCache
     {

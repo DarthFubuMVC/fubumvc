@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public interface ITypeDescriptorCache
     {
-        IDictionary<string, PropertyInfo> GetPropertiesFor<TYPE>();
+        IDictionary<string, PropertyInfo> GetPropertiesFor<T>();
         IDictionary<string, PropertyInfo> GetPropertiesFor(Type itemType);
         void ForEachProperty(Type itemType, Action<PropertyInfo> action);
         void ClearAll();

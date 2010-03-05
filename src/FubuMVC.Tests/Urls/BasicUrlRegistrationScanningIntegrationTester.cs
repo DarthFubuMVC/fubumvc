@@ -1,7 +1,7 @@
 using System;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 

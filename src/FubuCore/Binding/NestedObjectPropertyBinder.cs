@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public class NestedObjectPropertyBinder : IPropertyBinder
     {

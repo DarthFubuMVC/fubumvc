@@ -1,3 +1,4 @@
+using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics

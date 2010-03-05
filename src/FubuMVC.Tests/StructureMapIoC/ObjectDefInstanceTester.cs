@@ -1,4 +1,5 @@
 using System;
+using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -6,6 +7,7 @@ using FubuMVC.StructureMap;
 using FubuMVC.Tests.Behaviors;
 using NUnit.Framework;
 using StructureMap;
+using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.StructureMapIoC
 {

@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace FubuMVC.Core.Models
+namespace FubuCore.Binding
 {
     public interface IPropertyBinderCache
     {

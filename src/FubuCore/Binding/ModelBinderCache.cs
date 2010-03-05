@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore.Util;
-using FubuMVC.Core.Models;
+using FubuCore.Binding;
+using FubuMVC.Core;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class ModelBinderCache : IModelBinderCache
     {

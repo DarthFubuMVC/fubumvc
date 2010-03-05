@@ -1,7 +1,5 @@
-using System;
+using FubuCore.Binding;
 using FubuMVC.Core.Configuration;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Runtime;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap.Configuration.DSL;
 
