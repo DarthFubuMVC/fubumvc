@@ -1,7 +1,7 @@
-using FubuMVC.Core.Util;
+using FubuCore.Util;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Util
+namespace FubuCore.Testing.Util
 {
     [TestFixture]
     public class CompositeFilterTester

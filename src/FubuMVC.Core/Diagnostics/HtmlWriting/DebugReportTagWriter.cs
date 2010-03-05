@@ -1,5 +1,5 @@
+using FubuCore.Util;
 using HtmlTags;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {

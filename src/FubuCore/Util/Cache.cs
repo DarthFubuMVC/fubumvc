@@ -3,49 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Util
 {
-    public class Cache<KEY, VALUE> : IEnumerable<VALUE> where VALUE : class
+    public class Cache<TKey, TValue> : IEnumerable<TValue> where TValue : class
     {
         private readonly object _locker = new object();
-        private readonly IDictionary<KEY, VALUE> _values;
+        private readonly IDictionary<TKey, TValue> _values;
 
-        private Func<VALUE, KEY> _getKey = delegate { throw new NotImplementedException(); };
+        private Func<TValue, TKey> _getKey = delegate { throw new NotImplementedException(); };
 
-        private Func<KEY, VALUE> _onMissing = delegate(KEY key)
+        private Func<TKey, TValue> _onMissing = delegate(TKey key)
         {
             string message = string.Format("Key '{0}' could not be found", key);
             throw new KeyNotFoundException(message);
         };
 
         public Cache()
-            : this(new Dictionary<KEY, VALUE>())
+            : this(new Dictionary<TKey, TValue>())
         {
         }
 
-        public Cache(Func<KEY, VALUE> onMissing)
-            : this(new Dictionary<KEY, VALUE>(), onMissing)
+        public Cache(Func<TKey, TValue> onMissing)
+            : this(new Dictionary<TKey, TValue>(), onMissing)
         {
         }
 
-        public Cache(IDictionary<KEY, VALUE> dictionary, Func<KEY, VALUE> onMissing)
+        public Cache(IDictionary<TKey, TValue> dictionary, Func<TKey, TValue> onMissing)
             : this(dictionary)
         {
             _onMissing = onMissing;
         }
 
-        public Cache(IDictionary<KEY, VALUE> dictionary)
+        public Cache(IDictionary<TKey, TValue> dictionary)
         {
             _values = dictionary;
         }
 
-        public Func<KEY, VALUE> OnMissing { set { _onMissing = value; } }
+        public Func<TKey, TValue> OnMissing { set { _onMissing = value; } }
 
-        public Func<VALUE, KEY> GetKey { get { return _getKey; } set { _getKey = value; } }
+        public Func<TValue, TKey> GetKey { get { return _getKey; } set { _getKey = value; } }
 
         public int Count { get { return _values.Count; } }
 
-        public VALUE First
+        public TValue First
         {
             get
             {
@@ -58,19 +58,19 @@ namespace FubuMVC.Core.Util
             }
         }
 
-        public VALUE this[KEY key] { get { return Retrieve(key); } set { Store(key, value); } }
+        public TValue this[TKey key] { get { return Retrieve(key); } set { Store(key, value); } }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<VALUE>) this).GetEnumerator();
+            return ((IEnumerable<TValue>) this).GetEnumerator();
         }
 
-        public IEnumerator<VALUE> GetEnumerator()
+        public IEnumerator<TValue> GetEnumerator()
         {
             return _values.Values.GetEnumerator();
         }
 
-        public void Store(KEY key, VALUE value)
+        public void Store(TKey key, TValue value)
         {
             if (_values.ContainsKey(key))
             {
@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Util
             }
         }
 
-        public void Fill(KEY key, VALUE value)
+        public void Fill(TKey key, TValue value)
         {
             if (_values.ContainsKey(key))
             {
@@ -92,7 +92,7 @@ namespace FubuMVC.Core.Util
             _values.Add(key, value);
         }
 
-        public VALUE Retrieve(KEY key)
+        public TValue Retrieve(TKey key)
         {
             if (!_values.ContainsKey(key))
             {
@@ -100,7 +100,7 @@ namespace FubuMVC.Core.Util
                 {
                     if (!_values.ContainsKey(key))
                     {
-                        VALUE value = _onMissing(key);
+                        TValue value = _onMissing(key);
                         _values.Add(key, value);
                     }
                 }
@@ -109,9 +109,9 @@ namespace FubuMVC.Core.Util
             return _values[key];
         }
 
-        public bool TryRetrieve(KEY key, out VALUE value)
+        public bool TryRetrieve(TKey key, out TValue value)
         {
-            value = default(VALUE);
+            value = default(TValue);
 
             if (_values.ContainsKey(key))
             {
@@ -122,7 +122,7 @@ namespace FubuMVC.Core.Util
             return false;
         }
 
-        public void Each(Action<VALUE> action)
+        public void Each(Action<TValue> action)
         {
             foreach (var pair in _values)
             {
@@ -130,7 +130,7 @@ namespace FubuMVC.Core.Util
             }
         }
 
-        public void Each(Action<KEY, VALUE> action)
+        public void Each(Action<TKey, TValue> action)
         {
             foreach (var pair in _values)
             {
@@ -138,21 +138,21 @@ namespace FubuMVC.Core.Util
             }
         }
 
-        public bool Has(KEY key)
+        public bool Has(TKey key)
         {
             return _values.ContainsKey(key);
         }
 
-        public bool Exists(Predicate<VALUE> predicate)
+        public bool Exists(Predicate<TValue> predicate)
         {
             bool returnValue = false;
 
-            Each(delegate(VALUE value) { returnValue |= predicate(value); });
+            Each(delegate(TValue value) { returnValue |= predicate(value); });
 
             return returnValue;
         }
 
-        public VALUE Find(Predicate<VALUE> predicate)
+        public TValue Find(Predicate<TValue> predicate)
         {
             foreach (var pair in _values)
             {
@@ -165,17 +165,17 @@ namespace FubuMVC.Core.Util
             return null;
         }
 
-        public KEY[] GetAllKeys()
+        public TKey[] GetAllKeys()
         {
             return _values.Keys.ToArray();
         }
 
-        public VALUE[] GetAll()
+        public TValue[] GetAll()
         {
             return _values.Values.ToArray();
         }
 
-        public void Remove(KEY key)
+        public void Remove(TKey key)
         {
             if (_values.ContainsKey(key))
             {
@@ -188,7 +188,7 @@ namespace FubuMVC.Core.Util
             _values.Clear();
         }
 
-        public bool WithValue(KEY key, Action<VALUE> callback)
+        public bool WithValue(TKey key, Action<TValue> callback)
         {
             if (Has(key))
             {

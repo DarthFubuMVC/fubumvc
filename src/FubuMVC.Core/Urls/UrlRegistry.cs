@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
-using FubuMVC.Core.Util;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Urls
 {

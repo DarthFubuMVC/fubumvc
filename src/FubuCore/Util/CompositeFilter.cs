@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Util
 {
     public class CompositeFilter<T>
     {

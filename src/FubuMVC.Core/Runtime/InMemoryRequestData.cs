@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.Core.Util;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Runtime
 {

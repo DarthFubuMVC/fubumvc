@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using FubuMVC.Core.Util;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Models
 {

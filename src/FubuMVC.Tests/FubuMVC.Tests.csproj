@@ -190,7 +190,6 @@
     <Compile Include="Urls\ForwardUrlTester.cs" />
     <Compile Include="Urls\UrlRegistryBuilderTester.cs" />
     <Compile Include="Urls\UrlRegistryTester.cs" />
-    <Compile Include="Util\CompositePredicateTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="View\FakeViews\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>

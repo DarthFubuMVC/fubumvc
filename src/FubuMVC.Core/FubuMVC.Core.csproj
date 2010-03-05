@@ -207,10 +207,6 @@
     <Compile Include="Urls\IUrlRegistration.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
     <Compile Include="Urls\UrlRegistryBuilder.cs" />
-    <Compile Include="Util\BuildersAndAlterations.cs" />
-    <Compile Include="Util\CompositeAction.cs" />
-    <Compile Include="Util\CompositeFilter.cs" />
-    <Compile Include="Util\CompositePredicate.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain.cs" />
     <Compile Include="Registration\Nodes\BehaviorExtensions.cs" />
     <Compile Include="Registration\BehaviorGraph.cs" />
@@ -249,7 +245,6 @@
     <Compile Include="SessionState\IFlash.cs" />
     <Compile Include="SessionState\IRequestDataProvider.cs" />
     <Compile Include="Urls\IUrlRegistry.cs" />
-    <Compile Include="Util\Indexer.cs" />
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
     <Compile Include="View\ActionReturnsViewModelType.cs" />
@@ -281,7 +276,6 @@
     <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
     <Compile Include="Runtime\AggregateDictionary.cs" />
     <Compile Include="Models\TypeDescriptorCache.cs" />
-    <Compile Include="Util\Cache.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
     <Compile Include="View\WebForms\RenderPartialExpression.cs" />

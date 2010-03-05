@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Util
 {
     public class Builder<TInput, TOutput>
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Util
 {
     public class Indexer<TKey, TValue>
     {

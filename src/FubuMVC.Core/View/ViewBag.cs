@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Util;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.View
 {

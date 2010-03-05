@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Util
 {
     public class CompositePredicate<T>
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Util
 {
     public class CompositeAction<T, U>
     {
