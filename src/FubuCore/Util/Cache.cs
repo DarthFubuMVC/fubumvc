@@ -5,7 +5,8 @@ using System.Linq;
 
 namespace FubuCore.Util
 {
-    public class Cache<TKey, TValue> : IEnumerable<TValue> where TValue : class
+    // TODO - go find whereever the original unit tests are and put them in here.
+    public class Cache<TKey, TValue> : IEnumerable<TValue> 
     {
         private readonly object _locker = new object();
         private readonly IDictionary<TKey, TValue> _values;
@@ -54,46 +55,11 @@ namespace FubuCore.Util
                     return pair.Value;
                 }
 
-                return null;
+                return default(TValue);
             }
         }
 
-        public TValue this[TKey key] { get { return Retrieve(key); } set { Store(key, value); } }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<TValue>) this).GetEnumerator();
-        }
-
-        public IEnumerator<TValue> GetEnumerator()
-        {
-            return _values.Values.GetEnumerator();
-        }
-
-        public void Store(TKey key, TValue value)
-        {
-            if (_values.ContainsKey(key))
-            {
-                _values[key] = value;
-            }
-            else
-            {
-                _values.Add(key, value);
-            }
-        }
-
-        public void Fill(TKey key, TValue value)
-        {
-            if (_values.ContainsKey(key))
-            {
-                return;
-            }
-
-            _values.Add(key, value);
-        }
-
-        public TValue Retrieve(TKey key)
-        {
+        public TValue this[TKey key] { get {
             if (!_values.ContainsKey(key))
             {
                 lock (_locker)
@@ -107,19 +73,37 @@ namespace FubuCore.Util
             }
 
             return _values[key];
-        }
-
-        public bool TryRetrieve(TKey key, out TValue value)
+        } set
         {
-            value = default(TValue);
-
             if (_values.ContainsKey(key))
             {
-                value = _values[key];
-                return true;
+                _values[key] = value;
+            }
+            else
+            {
+                _values.Add(key, value);
+            }
+        }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<TValue>) this).GetEnumerator();
+        }
+
+        public IEnumerator<TValue> GetEnumerator()
+        {
+            return _values.Values.GetEnumerator();
+        }
+
+        public void Fill(TKey key, TValue value)
+        {
+            if (_values.ContainsKey(key))
+            {
+                return;
             }
 
-            return false;
+            _values.Add(key, value);
         }
 
         public void Each(Action<TValue> action)
@@ -162,7 +146,7 @@ namespace FubuCore.Util
                 }
             }
 
-            return null;
+            return default(TValue);
         }
 
         public TKey[] GetAllKeys()

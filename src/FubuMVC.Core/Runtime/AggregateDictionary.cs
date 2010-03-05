@@ -98,7 +98,7 @@ namespace FubuMVC.Core.Runtime
             var property = ReflectionHelper.GetProperty(expression);
             _systemProperties.Add(property);
 
-            _requestProperties.Store(property.Name, expression.Compile());
+            _requestProperties[property.Name] = expression.Compile();
         }
 
         public static AggregateDictionary ForHttpContext(HttpContextWrapper context)

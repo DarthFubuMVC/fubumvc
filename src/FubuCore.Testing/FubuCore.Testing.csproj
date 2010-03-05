@@ -66,6 +66,7 @@
     <Compile Include="StringExtensionsTester.cs" />
     <Compile Include="TestObject.cs" />
     <Compile Include="TypeExtensionsTester.cs" />
+    <Compile Include="Util\CacheTester.cs" />
     <Compile Include="Util\CompositePredicateTester.cs" />
   </ItemGroup>
   <ItemGroup>
