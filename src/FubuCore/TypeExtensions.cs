@@ -1,9 +1,27 @@
 using System;
 
-namespace FubuMVC.Core
+namespace FubuCore
 {
     public static class TypeExtensions
     {
+
+        public static bool IsNullableOfT(this Type theType)
+        {
+            return theType.IsGenericType && theType.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+        }
+
+        public static bool IsNullableOf(this Type theType, Type otherType)
+        {
+            return theType.IsNullableOfT() && theType.GetGenericArguments()[0].Equals(otherType);
+        }
+
+        public static bool IsTypeOrNullableOf<T>(this Type theType)
+        {
+            Type otherType = typeof(T);
+            return theType == otherType ||
+                   (theType.IsNullableOfT() && theType.GetGenericArguments()[0].Equals(otherType));
+        }
+
         public static bool CanBeCastTo<T>(this Type type)
         {
             if (type == null) return false;

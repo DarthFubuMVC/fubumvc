@@ -1,9 +1,6 @@
-using FubuMVC.Core;
-using FubuMVC.Core.Registration;
-using FubuMVC.Tests.Registration.Expressions;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests
+namespace FubuCore.Testing
 {
     public interface IService<T>
     {
@@ -64,9 +61,18 @@ namespace FubuMVC.Tests
             Assert.IsTrue(typeof (bool).IsPrimitive());
             Assert.IsTrue(typeof (double).IsPrimitive());
             Assert.IsFalse(typeof (string).IsPrimitive());
-            Assert.IsFalse(typeof (when_explicitly_registering_a_route.OutputModel).IsPrimitive());
+            Assert.IsFalse(typeof (OutputModel).IsPrimitive());
             Assert.IsFalse(typeof (IRouteVisitor).IsPrimitive());
         }
+
+        public class OutputModel
+        {
+            
+        }
+
+        public interface IRouteVisitor{}
+
+        public enum DoNext{}
 
         [Test]
         public void IsSimple()

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Util;

@@ -174,7 +174,6 @@
     </Compile>
     <Compile Include="Routing\AggregateDictionaryTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
-    <Compile Include="TypeExtensionsTester.cs" />
     <Compile Include="UI\Address.cs" />
     <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
     <Compile Include="UI\DefaultHtmlConventionsTester.cs" />
@@ -193,7 +192,6 @@
     <Compile Include="Urls\UrlRegistryTester.cs" />
     <Compile Include="Util\CompositePredicateTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
-    <Compile Include="Util\ReflectionHelperTester.cs" />
     <Compile Include="View\FakeViews\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -226,6 +224,10 @@
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>

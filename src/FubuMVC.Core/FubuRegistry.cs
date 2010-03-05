@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;

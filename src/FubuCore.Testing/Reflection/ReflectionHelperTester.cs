@@ -3,7 +3,7 @@ using System.Reflection;
 using FubuMVC.Core.Util;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Util
+namespace FubuCore.Testing.Reflection
 {
     [TestFixture]
     public class ReflectionHelperTester

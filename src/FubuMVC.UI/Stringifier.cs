@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FubuMVC.Core;
+using FubuCore;
 using FubuMVC.Core.Util;
 
 namespace FubuMVC.UI

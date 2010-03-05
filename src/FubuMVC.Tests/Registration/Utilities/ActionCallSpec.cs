@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Util;

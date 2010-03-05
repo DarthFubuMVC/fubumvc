@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core;
 using NUnit.Framework;
 

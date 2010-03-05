@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore
 {
     public static class XmlExtensions
     {

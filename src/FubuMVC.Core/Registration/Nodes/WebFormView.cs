@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;

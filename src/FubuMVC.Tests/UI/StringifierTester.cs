@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Util;
 using FubuMVC.UI;

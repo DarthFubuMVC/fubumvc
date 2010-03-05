@@ -1,4 +1,5 @@
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;

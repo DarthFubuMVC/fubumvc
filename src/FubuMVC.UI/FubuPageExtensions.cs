@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
@@ -9,7 +10,6 @@ using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using FubuMVC.Core.Util;
-using FubuMVC.Core;
 
 namespace FubuMVC.UI
 {

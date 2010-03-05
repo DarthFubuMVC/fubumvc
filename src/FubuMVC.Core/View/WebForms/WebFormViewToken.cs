@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.View.WebForms

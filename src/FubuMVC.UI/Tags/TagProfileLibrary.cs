@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Util;
 
