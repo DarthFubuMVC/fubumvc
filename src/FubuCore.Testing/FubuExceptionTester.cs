@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using FubuMVC.Core;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests
+namespace FubuCore.Testing
 {
     [TestFixture]
     public class FubuExceptionTester

@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="BooleanExtensionsTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
+    <Compile Include="FubuExceptionTester.cs" />
     <Compile Include="GenericEnumerableExtensionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
