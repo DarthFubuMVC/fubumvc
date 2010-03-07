@@ -1,5 +1,4 @@
 using System.Web;
-using FubuMVC.Core.Util;
 using HtmlTags;
 
 namespace FubuMVC.Core.SessionState

@@ -12,7 +12,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Diagnostics
 {

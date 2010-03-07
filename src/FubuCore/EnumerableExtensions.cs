@@ -17,6 +17,24 @@ namespace System.Collections.Generic
             return string.Join(separator, array);
         }
 
+        /// <summary>
+        /// Performs an action with a counter for each item in a sequence and provides
+        /// </summary>
+        /// <typeparam name="T">The type of the items in the sequence</typeparam>
+        /// <param name="values">The sequence to iterate</param>
+        /// <param name="eachAction">The action to performa on each item</param>
+        /// <returns></returns>
+        public static IEnumerable<T> Each<T>(this IEnumerable<T> values, Action<T, int> eachAction)
+        {
+            int index = 0;
+            foreach (T item in values)
+            {
+                eachAction(item, index++);
+            }
+
+            return values;
+        }
+
         [DebuggerStepThrough]
         public static IEnumerable<T> Each<T>(this IEnumerable<T> values, Action<T> eachAction)
         {

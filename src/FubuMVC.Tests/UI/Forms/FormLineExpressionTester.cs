@@ -6,7 +6,6 @@ using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Tests.UI.Forms
 {

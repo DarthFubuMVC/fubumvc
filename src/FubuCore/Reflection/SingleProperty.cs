@@ -1,9 +1,8 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Reflection
 {
     public class SingleProperty : Accessor
     {
@@ -28,6 +27,11 @@ namespace FubuMVC.Core.Util
         {
             PropertyInfo property = ReflectionHelper.GetProperty(expression);
             return new PropertyChain(new[] {_property, property});
+        }
+
+        public string[] PropertyNames
+        {
+            get { return new[] { _property.Name }; }
         }
 
         public string Name { get { return _property.Name; } }

@@ -3,7 +3,6 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.View.WebForms
 {

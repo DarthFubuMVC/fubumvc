@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuMVC.Core.Util;
 
 namespace FubuCore.Reflection
 {
@@ -43,19 +42,25 @@ namespace FubuCore.Reflection
             return true;
         }
 
-        public static PropertyInfo GetProperty<MODEL>(Expression<Func<MODEL, object>> expression)
+        public static PropertyInfo GetProperty<TModel>(Expression<Func<TModel, object>> expression)
         {
             MemberExpression memberExpression = getMemberExpression(expression);
             return (PropertyInfo) memberExpression.Member;
         }
 
-        public static PropertyInfo GetProperty<MODEL, T>(Expression<Func<MODEL, T>> expression)
+        public static PropertyInfo GetProperty<TModel, T>(Expression<Func<TModel, T>> expression)
         {
             MemberExpression memberExpression = getMemberExpression(expression);
             return (PropertyInfo) memberExpression.Member;
         }
 
-        private static MemberExpression getMemberExpression<MODEL, T>(Expression<Func<MODEL, T>> expression)
+        public static PropertyInfo GetProperty(LambdaExpression expression)
+        {
+            MemberExpression memberExpression = GetMemberExpression(expression, true);
+            return (PropertyInfo)memberExpression.Member;
+        }
+
+        private static MemberExpression getMemberExpression<TModel, T>(Expression<Func<TModel, T>> expression)
         {
             MemberExpression memberExpression = null;
             if (expression.Body.NodeType == ExpressionType.Convert)
@@ -71,6 +76,41 @@ namespace FubuCore.Reflection
 
             if (memberExpression == null) throw new ArgumentException("Not a member access", "member");
             return memberExpression;
+        }
+
+        public static Accessor GetAccessor(LambdaExpression expression)
+        {
+            MemberExpression memberExpression = GetMemberExpression(expression, true);
+
+            return GetAccessor(memberExpression);
+        }
+
+        public static MemberExpression GetMemberExpression(this LambdaExpression expression, bool enforceMemberExpression)
+        {
+            MemberExpression memberExpression = null;
+            if (expression.Body.NodeType == ExpressionType.Convert)
+            {
+                var body = (UnaryExpression)expression.Body;
+                memberExpression = body.Operand as MemberExpression;
+            }
+            else if (expression.Body.NodeType == ExpressionType.MemberAccess)
+            {
+                memberExpression = expression.Body as MemberExpression;
+            }
+
+
+            if (enforceMemberExpression && memberExpression == null) throw new ArgumentException("Not a member access", "member");
+            return memberExpression;
+        }
+
+        public static bool IsMemberExpression<T>(Expression<Func<T, object>> expression)
+        {
+            return IsMemberExpression<T, object>(expression);
+        }
+
+        public static bool IsMemberExpression<T, U>(Expression<Func<T, U>> expression)
+        {
+            return GetMemberExpression(expression, false) != null;
         }
 
         public static Accessor GetAccessor<MODEL>(Expression<Func<MODEL, object>> expression)
@@ -107,6 +147,16 @@ namespace FubuCore.Reflection
         }
 
         public static MethodInfo GetMethod<T>(Expression<Func<T, object>> expression)
+        {
+            return new FindMethodVisitor(expression).Method;
+        }
+
+        public static MethodInfo GetMethod(Expression<Func<object>> expression)
+        {
+            return GetMethod<Func<object>>(expression);
+        }
+
+        public static MethodInfo GetMethod(Expression expression)
         {
             return new FindMethodVisitor(expression).Method;
         }

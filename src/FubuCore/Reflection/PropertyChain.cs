@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Reflection
 {
     public class PropertyChain : Accessor
     {
         private readonly PropertyInfo[] _chain;
         private readonly SingleProperty _innerProperty;
+        private PropertyInfo[] _properties;
 
 
         public PropertyChain(PropertyInfo[] properties)
@@ -22,6 +22,7 @@ namespace FubuMVC.Core.Util
             }
 
             _innerProperty = new SingleProperty(properties[properties.Length - 1]);
+            _properties = properties;
         }
 
 
@@ -66,6 +67,11 @@ namespace FubuMVC.Core.Util
             list.Add(property);
 
             return new PropertyChain(list.ToArray());
+        }
+
+        public string[] PropertyNames
+        {
+            get { return Array.ConvertAll(_properties, p => p.Name); }
         }
 
         public string Name

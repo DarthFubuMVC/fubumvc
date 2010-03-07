@@ -10,7 +10,6 @@ using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using HtmlTags;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.UI
 {

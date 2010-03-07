@@ -1,6 +1,5 @@
 using System;
 using FubuCore.Reflection;
-using FubuMVC.Core.Util;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
 

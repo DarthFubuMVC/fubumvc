@@ -1,7 +1,8 @@
+
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuMVC.Core.Util;
+using FubuCore;
 
 namespace FubuCore.Reflection
 {
@@ -68,6 +69,21 @@ namespace FubuCore.Reflection
         public static string GetName<T>(this Expression<Func<T, object>> expression)
         {
             return ReflectionHelper.GetAccessor(expression).Name;
+        }
+
+
+
+        public static void IfPropertyTypeIs<T>(this Accessor accessor, Action action)
+        {
+            if (accessor.PropertyType == typeof(T))
+            {
+                action();
+            }
+        }
+
+        public static bool IsInteger(this Accessor accessor)
+        {
+            return accessor.PropertyType.IsTypeOrNullableOf<int>();
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace FubuMVC.Core.Util
+namespace FubuCore.Reflection
 {
     public interface Accessor
     {
@@ -17,5 +17,7 @@ namespace FubuMVC.Core.Util
         object GetValue(object target);
 
         Accessor GetChildAccessor<T>(Expression<Func<T, object>> expression);
+
+        string[] PropertyNames { get; }
     }
 }

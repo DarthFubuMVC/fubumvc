@@ -6,6 +6,7 @@ using System.Linq;
 namespace FubuCore.Util
 {
     // TODO - go find whereever the original unit tests are and put them in here.
+    [Serializable]
     public class Cache<TKey, TValue> : IEnumerable<TValue> 
     {
         private readonly object _locker = new object();
@@ -13,6 +14,7 @@ namespace FubuCore.Util
 
         private Func<TValue, TKey> _getKey = delegate { throw new NotImplementedException(); };
 
+        private Action<TValue> _onAddition = x => { };
         private Func<TKey, TValue> _onMissing = delegate(TKey key)
         {
             string message = string.Format("Key '{0}' could not be found", key);
@@ -40,6 +42,7 @@ namespace FubuCore.Util
             _values = dictionary;
         }
 
+        public Action<TValue> OnAddition { set { _onAddition = value; } }
         public Func<TKey, TValue> OnMissing { set { _onMissing = value; } }
 
         public Func<TValue, TKey> GetKey { get { return _getKey; } set { _getKey = value; } }
@@ -75,6 +78,7 @@ namespace FubuCore.Util
             return _values[key];
         } set
         {
+            _onAddition(value);
             if (_values.ContainsKey(key))
             {
                 _values[key] = value;

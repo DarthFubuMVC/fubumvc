@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.UI.Configuration
 {

@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Web.Routing;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Util;
 using NUnit.Framework;
 using FubuMVC.Tests;
 
