@@ -62,5 +62,19 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             _graph.VisitBehaviors(visitor);
         }
+
+        [Test]
+        public void other_actions_should_not_be_enriched()
+        {
+            var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
+            visitor.Filters += chain => chain.ContainsCall(call => call.Method.Name != "SomeAction");
+            visitor.Actions += chain =>
+                                   {
+                                       chain.Top.ShouldBeOfType<ActionCall>();
+                                       chain.Top.Next.ShouldBeOfType<RenderJsonNode>();
+                                   };
+
+            _graph.VisitBehaviors(visitor);
+        }
     }
 }
