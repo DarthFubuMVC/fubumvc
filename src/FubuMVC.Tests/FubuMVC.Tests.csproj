@@ -140,6 +140,7 @@
     <Compile Include="Registration\Expressions\ActionCallFilterExpressionTester.cs" />
     <Compile Include="Registration\Expressions\ConditionallyWrapBehaviorChainsWithTester.cs" />
     <Compile Include="Registration\Expressions\EnrichCallsWithTester.cs" />
+    <Compile Include="Registration\Expressions\ExplicitRouteConfigurationTester.cs" />
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
     <Compile Include="Registration\Expressions\WrapBehaviorChainsWithTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
