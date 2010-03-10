@@ -69,13 +69,12 @@ namespace FubuMVC.Core.View
                 }
 
                 // if the filter returned more than one, consider it "failed", ignore it, and move on to the next
-                if (count == 1)
-                {
-                    var token = viewTokens.First();
-                    observer.RecordCallStatus(call, "Selected view token: {0}".ToFormat(token));
-                    call.AddToEnd(token.ToBehavioralNode());
-                    break;
-                }
+                if (count != 1) continue;
+
+                var token = viewTokens.First();
+                observer.RecordCallStatus(call, "Selected view token: {0}".ToFormat(token));
+                call.AddToEnd(token.ToBehavioralNode());
+                break;
             }
         }
     }

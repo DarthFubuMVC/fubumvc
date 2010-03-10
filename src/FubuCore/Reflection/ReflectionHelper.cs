@@ -113,7 +113,7 @@ namespace FubuCore.Reflection
             return GetMemberExpression(expression, false) != null;
         }
 
-        public static Accessor GetAccessor<MODEL>(Expression<Func<MODEL, object>> expression)
+        public static Accessor GetAccessor<TModel>(Expression<Func<TModel, object>> expression)
         {
             MemberExpression memberExpression = getMemberExpression(expression);
 
@@ -139,7 +139,7 @@ namespace FubuCore.Reflection
             return new PropertyChain(list.ToArray());
         }
 
-        public static Accessor GetAccessor<MODEL, T>(Expression<Func<MODEL, T>> expression)
+        public static Accessor GetAccessor<TModel, T>(Expression<Func<TModel, T>> expression)
         {
             MemberExpression memberExpression = getMemberExpression(expression);
 
@@ -161,7 +161,7 @@ namespace FubuCore.Reflection
             return new FindMethodVisitor(expression).Method;
         }
 
-        public static MethodInfo GetMethod<DELEGATE>(Expression<DELEGATE> expression)
+        public static MethodInfo GetMethod<TDelegate>(Expression<TDelegate> expression)
         {
             return new FindMethodVisitor(expression).Method;
         }
