@@ -73,6 +73,18 @@ namespace FubuMVC.UI
             return new LinkTag("", page.Urls.UrlFor(inputModel));
         }
 
+        // TODO -- unit test
+        public static string LinkVariable(this IFubuPage page, string variable, object input)
+        {
+            string url = page.Urls.UrlFor(input);
+            return "var {0} = '{1}';".ToFormat(variable, url);
+        }
+
+        public static string LinkVariable<TInput>(this IFubuPage page, string variable) where TInput : new()
+        {
+            return page.LinkVariable(variable, new TInput());
+        }
+
         public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
         {
             return page.Tags().InputFor(expression);
