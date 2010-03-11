@@ -49,7 +49,7 @@ namespace FubuMVC.UI
 
         private static void SearchPartialView<TInputModel, TPartialModel>(IFubuPage<TInputModel> page, RenderPartialExpression<TInputModel> expression) where TInputModel : class
         {
-            var renderers = page.ServiceLocator.GetAllInstances<IPartialViewTypeRenderer>();
+            var renderers = page.ServiceLocator.GetAllInstances<IPartialViewTypeRegistry>();
             if (renderers != null && renderers.Count() > 0)
             {
                 var renderer = renderers.First();

@@ -13,24 +13,24 @@ namespace FubuMVC.Tests.UI
         [SetUp]
         public void SetUp()
         {
-            _renderer = new PartialViewTypeRenderer();
-            _renderer.For<FakePartialModel>().Use<FakePartialView>();
+            _registry = new PartialViewTypeRegistry();
+            _registry.For<FakePartialModel>().Use<FakePartialView>();
         }
 
         #endregion
 
-        private PartialViewTypeRenderer _renderer;
+        private PartialViewTypeRegistry _registry;
 
         [Test]
         public void should_contain_registered_partial_view_type()
         {
-            Assert.That(_renderer.HasPartialViewTypeFor<FakePartialModel>());
+            Assert.That(_registry.HasPartialViewTypeFor<FakePartialModel>());
         }
 
         [Test]
         public void should_render_registered_partial_view_type()
         {
-            Assert.That(_renderer.GetPartialViewTypeFor<FakePartialModel>(), Is.EqualTo(typeof (FakePartialView)));
+            Assert.That(_registry.GetPartialViewTypeFor<FakePartialModel>(), Is.EqualTo(typeof (FakePartialView)));
         }
     }
 

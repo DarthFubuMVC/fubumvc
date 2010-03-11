@@ -4,7 +4,7 @@ using FubuMVC.Core.View;
 
 namespace FubuMVC.UI
 {
-    public interface IPartialViewTypeRenderer
+    public interface IPartialViewTypeRegistry
     {
         IPartialViewTypeBindingExpression For<TPartialModel>();
         Type GetPartialViewTypeFor<TPartialModel>();
@@ -12,7 +12,7 @@ namespace FubuMVC.UI
         void Register(Type modelType, IPartialViewTypeExpression expression);
     }
 
-    public class PartialViewTypeRenderer : IPartialViewTypeRenderer
+    public class PartialViewTypeRegistry : IPartialViewTypeRegistry
     {
         private readonly IDictionary<Type, IPartialViewTypeExpression> _viewModelTypes = new Dictionary<Type, IPartialViewTypeExpression>();
         public IPartialViewTypeBindingExpression For<TPartialModel>()
@@ -38,19 +38,19 @@ namespace FubuMVC.UI
 
     public class PartialViewTypeBindingExpression : IPartialViewTypeBindingExpression
     {
-        private readonly IPartialViewTypeRenderer _typeRenderer;
+        private readonly IPartialViewTypeRegistry _typeRegistry;
         private readonly Type _modelType;
 
-        public PartialViewTypeBindingExpression(IPartialViewTypeRenderer typeRenderer, Type modelType)
+        public PartialViewTypeBindingExpression(IPartialViewTypeRegistry typeRegistry, Type modelType)
         {
-            _typeRenderer = typeRenderer;
+            _typeRegistry = typeRegistry;
             _modelType = modelType;
         }
 
         public void Use<TPartialView>()
             where TPartialView : IFubuPage
         {
-            _typeRenderer.Register(_modelType, new PartialViewTypeExpression(typeof(TPartialView)));
+            _typeRegistry.Register(_modelType, new PartialViewTypeExpression(typeof(TPartialView)));
         }
     }
 

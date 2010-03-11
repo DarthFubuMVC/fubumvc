@@ -38,12 +38,12 @@ namespace FubuMVC.UI
             registry.Policies.Add<HtmlConventionCompiler>();
         }
 
-        public static void RegisterPartials(this FubuRegistry registry, Action<IPartialViewTypeRenderer> registration)
+        public static void RegisterPartials(this FubuRegistry registry, Action<IPartialViewTypeRegistry> registration)
         {
-            IPartialViewTypeRenderer renderer = new PartialViewTypeRenderer();
-            registration(renderer);
+            IPartialViewTypeRegistry partialViewTypeRegistry = new PartialViewTypeRegistry();
+            registration(partialViewTypeRegistry);
 
-            registry.Services(x => x.AddService(renderer));
+            registry.Services(x => x.AddService(partialViewTypeRegistry));
         }
     }
 
