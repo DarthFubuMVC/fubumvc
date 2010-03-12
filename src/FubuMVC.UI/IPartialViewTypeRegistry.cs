@@ -22,7 +22,9 @@ namespace FubuMVC.UI
 
         public Type GetPartialViewTypeFor<TPartialModel>()
         {
-            return _viewModelTypes[typeof(TPartialModel)].RenderType();
+            if (HasPartialViewTypeFor<TPartialModel>())
+                return _viewModelTypes[typeof(TPartialModel)].RenderType();
+            return null;
         }
 
         public bool HasPartialViewTypeFor<TPartialModel>()
