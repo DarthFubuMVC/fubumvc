@@ -6,7 +6,7 @@ using NUnit.Framework.SyntaxHelpers;
 namespace FubuMVC.Tests.UI
 {
     [TestFixture]
-    public class PartialViewTypeRegistrationTester
+    public class when_registered_partial_view_type
     {
         #region Setup/Teardown
 
@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.UI
 
         #endregion
 
-        private PartialViewTypeRegistry _registry;
+        private IPartialViewTypeRegistry _registry;
 
         [Test]
         public void should_contain_registered_partial_view_type()
