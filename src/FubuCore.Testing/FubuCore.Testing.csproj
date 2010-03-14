@@ -65,6 +65,7 @@
     <Compile Include="Reflection\ReflectionHelperTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="StringExtensionsTester.cs" />
+    <Compile Include="StringifierTester.cs" />
     <Compile Include="TestObject.cs" />
     <Compile Include="TypeExtensionsTester.cs" />
     <Compile Include="Util\CacheTester.cs" />

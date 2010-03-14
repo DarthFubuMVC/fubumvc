@@ -1,4 +1,4 @@
-using FubuMVC.UI;
+using FubuCore;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using NUnit.Framework;

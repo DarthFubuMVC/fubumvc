@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.UI;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using HtmlTags;

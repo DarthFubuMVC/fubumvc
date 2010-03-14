@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
 using FubuMVC.UI.Configuration;
