@@ -24,11 +24,17 @@ namespace FubuCore
 
         public static bool CanBeCastTo<T>(this Type type)
         {
+            Type destinationType = typeof(T);
+
+            return CanBeCastTo(type, destinationType);
+        }
+
+        public static bool CanBeCastTo(this Type type, Type destinationType)
+        {
             if (type == null) return false;
+            if (type == destinationType) return true;
 
-            if (type == typeof (T)) return true;
-
-            return typeof (T).IsAssignableFrom(type);
+            return destinationType.IsAssignableFrom(type);
         }
 
         public static bool IsInNamespace(this Type type, string nameSpace)

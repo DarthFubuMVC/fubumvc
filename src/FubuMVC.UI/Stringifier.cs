@@ -24,6 +24,7 @@ namespace FubuMVC.UI
                         return instance == null ? string.Empty : _converters[type.GetInnerTypeFromNullable()](instance);
                     };
                 }
+
                 var strategy = _strategies.FirstOrDefault(x => x.Matches(type));
                 return strategy == null ? toString : strategy.StringFunction;
             };
