@@ -3,7 +3,6 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.DSL
 {
-    // TODO: Needs test
     public class ExplicitRouteConfiguration : IConfigurationAction
     {
         private readonly IRouteDefinition _route;

@@ -175,6 +175,17 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
+        public void build_route_with_an_appended_class_suffix()
+        {
+            resolver.DefaultUrlPolicy.AppendClassesWith(x=>true,".aspx");
+            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteDefinition<RouteInputModel>>();
+            route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver.aspx/somemethod/{Name}/{Age}");
+
+            route.RouteInputs.Count.ShouldEqual(2);
+            route.RouteInputs.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+        }
+
+        [Test]
         public void build_route_with_all_simple_inputs_and_default_conventions()
         {
             var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteDefinition<RouteInputModel>>();

@@ -43,7 +43,6 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        // TODO -- need a test for this turkey
         public PoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
         {
             var policy =

@@ -55,6 +55,12 @@ namespace Spark.Web.FubuMVC.Bootstrap
         {
             RouteCollection routeCollection = RouteTable.Routes;
             SparkStructureMapBootstrapper.Bootstrap(routeCollection, GetMyRegistry());
+            OnApplicationStarted();
+        }
+
+        protected virtual void OnApplicationStarted()
+        {
+            
         }
     }
 }

@@ -83,6 +83,18 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        public RouteConventionExpression AppendClassesWith(Func<ActionCall, bool> filter, string pattern)
+        {
+            _resolver.DefaultUrlPolicy.AppendClassesWith(filter, pattern);
+            return this;
+        }
+
+        public RouteConventionExpression AppendAllClassesWith(string pattern)
+        {
+            _resolver.DefaultUrlPolicy.AppendClassesWith(x=>true,pattern);
+            return this;
+        }
+
 
         public RouteConventionExpression ConstrainToHttpMethod(Expression<Func<ActionCall, bool>> filter, string method)
         {

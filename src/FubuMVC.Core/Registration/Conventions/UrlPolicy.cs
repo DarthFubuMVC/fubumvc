@@ -23,6 +23,7 @@ namespace FubuMVC.Core.Registration.Conventions
             = new Builder<MethodInfo, string>(method => method.Name);
 
         private readonly IRouteInputPolicy _routeInputPolicy;
+        private readonly Builder<ActionCall, string> _appendClassBuilder = new Builder<ActionCall, string>(call => "");
 
         public UrlPolicy(Func<ActionCall, bool> filter, IRouteInputPolicy routeInputPolicy)
         {
@@ -82,8 +83,10 @@ namespace FubuMVC.Core.Registration.Conventions
             string lastName = route.Pattern.Split('/').LastOrDefault();
             if (className != lastName)
             {
+                className += _appendClassBuilder.Build(call);
                 route.Append(className);
             }
+        
         }
 
         private string getClassName(ActionCall call)
@@ -137,6 +140,11 @@ namespace FubuMVC.Core.Registration.Conventions
         public void IgnoreClassName(Type type)
         {
             _ignoreClassNames.Add(type);
+        }
+
+        public void AppendClassesWith(Func<ActionCall, bool> filter, string pattern)
+        {
+            _appendClassBuilder.Register(filter, call => pattern);
         }
 
         public void RegisterMethodNameStrategy(Func<MethodInfo, bool> filter, Func<MethodInfo, string> builder)
