@@ -49,13 +49,9 @@ namespace FubuMVC.UI
 
         private static void SearchPartialView<TInputModel, TPartialModel>(IFubuPage<TInputModel> page, RenderPartialExpression<TInputModel> expression) where TInputModel : class
         {
-            var renderers = page.ServiceLocator.GetAllInstances<IPartialViewTypeRegistry>();
-            if (renderers != null && renderers.Count() > 0)
-            {
-                var renderer = renderers.First();
-                if (renderer.HasPartialViewTypeFor<TPartialModel>())
-                    expression.Using(renderer.GetPartialViewTypeFor<TPartialModel>());
-            }
+            var renderer = page.ServiceLocator.GetInstance<IPartialViewTypeRegistry>();
+            if (renderer.HasPartialViewTypeFor<TPartialModel>())
+                expression.Using(renderer.GetPartialViewTypeFor<TPartialModel>());
         }
 
         private static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class

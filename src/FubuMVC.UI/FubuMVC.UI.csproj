@@ -62,7 +62,6 @@
     <Compile Include="FubuRegistryUIExtensions.cs" />
     <Compile Include="Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="Configuration\Interfaces.cs" />
-    <Compile Include="IPartialViewTypeRegistry.cs" />
     <Compile Include="Stringifier.cs" />
     <Compile Include="Tags\TagActionExpression.cs" />
     <Compile Include="Tags\TagFactory.cs" />

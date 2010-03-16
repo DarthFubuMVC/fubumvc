@@ -28,6 +28,7 @@ namespace FubuMVC.Core
 
     public partial class FubuRegistry
     {
+        private readonly IPartialViewTypeRegistry _partialViewTypes = new PartialViewTypeRegistry();
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
         public OutputDeterminationExpression Output { get{ return new OutputDeterminationExpression(this);}}
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
@@ -123,6 +124,12 @@ namespace FubuMVC.Core
             }
         }
 
+        //TODO: test this turkey
+        public void RegisterPartials(Action<IPartialViewTypeRegistry> registration)
+        {
+            registration(_partialViewTypes);
+        }
+
         private void setupServices(BehaviorGraph graph)
         {
             graph.Services.AddService<IUrlRegistry>(_urls);
@@ -148,6 +155,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
+            graph.Services.SetServiceIfNone(_partialViewTypes);
         }
 
         public class RegistryImport

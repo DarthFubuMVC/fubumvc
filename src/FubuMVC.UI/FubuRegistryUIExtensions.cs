@@ -37,14 +37,6 @@ namespace FubuMVC.UI
             registry.Policies.Add(new StringifierConfiguration(configure));
             registry.Policies.Add<HtmlConventionCompiler>();
         }
-
-        public static void RegisterPartials(this FubuRegistry registry, Action<IPartialViewTypeRegistry> registration)
-        {
-            IPartialViewTypeRegistry partialViewTypeRegistry = new PartialViewTypeRegistry();
-            registration(partialViewTypeRegistry);
-
-            registry.Services(x => x.AddService(partialViewTypeRegistry));
-        }
     }
 
     public class StringifierConfiguration : IConfigurationAction

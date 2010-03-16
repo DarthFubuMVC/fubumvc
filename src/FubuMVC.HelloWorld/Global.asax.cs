@@ -51,7 +51,7 @@ namespace FubuMVC.HelloWorld
 
             this.UseDefaultHtmlConventions();
 
-            this.RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
+            RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
 
             HomeIs<HomeInputModel>();
         }

@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.View;
 
-namespace FubuMVC.UI
+namespace FubuMVC.Core.View.WebForms
 {
     public interface IPartialViewTypeRegistry
     {
