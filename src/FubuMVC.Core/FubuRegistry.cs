@@ -28,6 +28,7 @@ namespace FubuMVC.Core
         private readonly List<IUrlRegistrationConvention> _urlConventions = new List<IUrlRegistrationConvention>();
 
         private readonly UrlRegistry _urls = new UrlRegistry();
+        private readonly IPartialViewTypeRegistry _partialViewTypes = new PartialViewTypeRegistry();
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
 

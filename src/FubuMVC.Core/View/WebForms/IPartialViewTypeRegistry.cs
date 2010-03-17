@@ -5,7 +5,6 @@ namespace FubuMVC.Core.View.WebForms
 {
     public interface IPartialViewTypeRegistry
     {
-        IPartialViewTypeBindingExpression For<TPartialModel>();
         Type GetPartialViewTypeFor<TPartialModel>();
         bool HasPartialViewTypeFor<TPartialModel>();
         void Register(Type modelType, IPartialViewTypeExpression expression);
@@ -14,11 +13,7 @@ namespace FubuMVC.Core.View.WebForms
     public class PartialViewTypeRegistry : IPartialViewTypeRegistry
     {
         private readonly IDictionary<Type, IPartialViewTypeExpression> _viewModelTypes = new Dictionary<Type, IPartialViewTypeExpression>();
-        public IPartialViewTypeBindingExpression For<TPartialModel>()
-        {
-            return new PartialViewTypeBindingExpression(this, typeof(TPartialModel));
-        }
-
+        
         public Type GetPartialViewTypeFor<TPartialModel>()
         {
             if (HasPartialViewTypeFor<TPartialModel>())
@@ -78,6 +73,26 @@ namespace FubuMVC.Core.View.WebForms
         public Type RenderType()
         {
             return _partialView;
+        }
+    }
+
+    public interface IPartialViewTypeRegistrationExpression
+    {
+        IPartialViewTypeBindingExpression For<TPartialModel>();
+    }
+
+    public class PartialViewTypeRegistrationExpression : IPartialViewTypeRegistrationExpression
+    {
+        private readonly IPartialViewTypeRegistry _registry;
+
+        public PartialViewTypeRegistrationExpression(IPartialViewTypeRegistry registry)
+        {
+            _registry = registry;
+        }
+
+        public IPartialViewTypeBindingExpression For<TPartialModel>()
+        {
+            return new PartialViewTypeBindingExpression(_registry, typeof(TPartialModel));
         }
     }
 }

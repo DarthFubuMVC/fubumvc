@@ -13,7 +13,8 @@ namespace FubuMVC.Tests.UI
         public void SetUp()
         {
             _registry = new PartialViewTypeRegistry();
-            _registry.For<FakePartialModel>().Use<FakePartialView>();
+            var expression = new PartialViewTypeRegistrationExpression(_registry);
+            expression.For<FakePartialModel>().Use<FakePartialView>();
         }
 
         #endregion

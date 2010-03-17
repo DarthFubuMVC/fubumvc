@@ -28,7 +28,6 @@ namespace FubuMVC.Core
 
     public partial class FubuRegistry
     {
-        private readonly IPartialViewTypeRegistry _partialViewTypes = new PartialViewTypeRegistry();
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
         public OutputDeterminationExpression Output { get{ return new OutputDeterminationExpression(this);}}
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
@@ -124,10 +123,10 @@ namespace FubuMVC.Core
             }
         }
 
-        //TODO: test this turkey
-        public void RegisterPartials(Action<IPartialViewTypeRegistry> registration)
+        public void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration)
         {
-            registration(_partialViewTypes);
+            var expression = new PartialViewTypeRegistrationExpression(_partialViewTypes);
+            registration(expression);
         }
 
         private void setupServices(BehaviorGraph graph)
