@@ -18,7 +18,6 @@ namespace FubuMVC.Tests.View.WebForms
         private bool _wasCalled = false;
         private TestModel _model;
         private PartialTestModel _partialModel;
-        private InMemoryFubuRequest _request;
 
         [SetUp]
         public void SetUp()
@@ -26,7 +25,6 @@ namespace FubuMVC.Tests.View.WebForms
             _mocks = new MockRepository();
             _view = MockRepository.GenerateStub<IFubuPage>();
             _partialView = MockRepository.GenerateStub<IFubuPage>();
-            _request = new InMemoryFubuRequest();
             _renderer = MockRepository.GenerateMock<IPartialRenderer>();
 
             _model = new TestModel();
@@ -34,9 +32,7 @@ namespace FubuMVC.Tests.View.WebForms
 
             _model.PartialModel = _partialModel;
 
-            _request.Set(_model);
-
-            _expression = new RenderPartialExpression<TestModel>(_view, _renderer, _request);
+            _expression = new RenderPartialExpression<TestModel>(_model, _view, _renderer);
             _expression.Using<IFubuPage>(v => { _wasCalled = true; });
         }
 
