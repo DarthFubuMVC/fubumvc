@@ -4,12 +4,12 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using HtmlTags;
+
 
 namespace FubuMVC.UI
 {
@@ -39,8 +39,18 @@ namespace FubuMVC.UI
             where TInputModel : class
             where TPartialModel : class
         {
-            return new RenderPartialExpression<TInputModel>(page, page.Get<IPartialRenderer>(), page.Get<IFubuRequest>())
+            var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>())
                 .ForEachOf(listExpression);
+
+            SearchPartialView<TInputModel, TPartialModel>(page, expression);
+            return expression;
+        }
+
+        private static void SearchPartialView<TInputModel, TPartialModel>(IFubuPage<TInputModel> page, RenderPartialExpression<TInputModel> expression) where TInputModel : class
+        {
+            var renderer = page.ServiceLocator.GetInstance<IPartialViewTypeRegistry>();
+            if (renderer.HasPartialViewTypeFor<TPartialModel>())
+                expression.Using(renderer.GetPartialViewTypeFor<TPartialModel>());
         }
 
         private static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
@@ -101,6 +111,12 @@ namespace FubuMVC.UI
         public static FormTag FormFor(this IFubuPage page)
         {
             return new FormTag();
+        }
+
+        public static FormTag FormFor(this IFubuPage page, string url)
+        {
+            url = UrlContext.GetFullUrl(url);
+            return new FormTag(url);
         }
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()

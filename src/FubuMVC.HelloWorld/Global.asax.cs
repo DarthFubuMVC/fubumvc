@@ -1,5 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.HelloWorld.Controllers.Home;
+using FubuMVC.HelloWorld.Controllers.Products;
 using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap.Bootstrap;
 using FubuMVC.UI;
@@ -49,6 +50,8 @@ namespace FubuMVC.HelloWorld
                 });
 
             this.UseDefaultHtmlConventions();
+
+            RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
 
             HomeIs<HomeInputModel>();
         }

@@ -3,6 +3,6 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <h2>Products</h2>
     <ul>
-        <%= this.PartialForEach(m => m.Products).Using<ProductPartial>() %>
+        <%= this.PartialForEach(m => m.Products) %>
     </ul>
 </asp:Content>

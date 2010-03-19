@@ -121,7 +121,8 @@
     <Compile Include="Models\ResolveConnectionStringFamilyTester.cs" />
     <Compile Include="Models\StandardModelBinderTester.cs" />
     <Compile Include="Models\ValueConverterRegistryTester.cs" />
-    <Compile Include="Registration\BehaviorGraphTester.cs" />
+    <Compile Include="Registration\BehaviorGraphTester.cs">
+    </Compile>
     <Compile Include="Registration\BehaviorVisitorTester.cs" />
     <Compile Include="Registration\Conventions\BehaviorMatcherTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
@@ -183,6 +184,9 @@
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
     <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementModifierTester.cs" />
+    <Compile Include="UI\PartialViewTypeRegistrationTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\StringifierIntegrationTester.cs" />
     <Compile Include="UI\TagFactoryTester.cs" />
     <Compile Include="UI\TagGeneratorTester.cs" />

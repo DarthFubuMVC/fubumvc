@@ -234,6 +234,7 @@
     <Compile Include="View\ViewPath.cs" />
     <Compile Include="View\WebForms\INeedToKnowAboutParentPage.cs" />
     <Compile Include="View\WebForms\IPartialRenderer.cs" />
+    <Compile Include="View\WebForms\IPartialViewTypeRegistry.cs" />
     <Compile Include="View\WebForms\IWebFormRenderer.cs" />
     <Compile Include="Behaviors\RenderFubuWebFormView.cs" />
     <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />

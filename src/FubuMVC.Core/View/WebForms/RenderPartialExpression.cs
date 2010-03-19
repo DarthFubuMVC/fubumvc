@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Runtime;
+
 
 namespace FubuMVC.Core.View.WebForms
 {
@@ -13,18 +14,18 @@ namespace FubuMVC.Core.View.WebForms
         private readonly IFubuPage _parentPage;
         private Action<StringBuilder> _multiModeAction;
         private string _prefix;
+        private readonly TViewModel _model;
         private readonly IPartialRenderer _renderer;
-        private readonly IFubuRequest _request;
         private IFubuPage _partialView;
         private bool _shouldDisplay = true;
         private Func<string> _renderAction;
 
 
 
-        public RenderPartialExpression(IFubuPage parentPage, IPartialRenderer renderer, IFubuRequest request)
+        public RenderPartialExpression(TViewModel model, IFubuPage parentPage, IPartialRenderer renderer)
         {
+            _model = model;
             _renderer = renderer;
-            _request = request;
             _parentPage = parentPage;
         }
 
@@ -40,7 +41,14 @@ namespace FubuMVC.Core.View.WebForms
             return Using<TPartialView>(null);
         }
 
-        public RenderPartialExpression<TViewModel> Using<TPartialView>(Action<TPartialView> optionAction)
+        public RenderPartialExpression<TViewModel> Using(Type partialViewType)
+        {
+            if (partialViewType.IsConcreteTypeOf<IFubuPage>())
+                _partialView = _renderer.CreateControl(partialViewType);
+            return this;
+        }
+
+	  public RenderPartialExpression<TViewModel> Using<TPartialView>(Action<TPartialView> optionAction)
             where TPartialView : IFubuPage
         {
             _partialView = _renderer.CreateControl(typeof(TPartialView));
@@ -74,11 +82,10 @@ namespace FubuMVC.Core.View.WebForms
             where T : class
         {
             Accessor accessor = ReflectionHelper.GetAccessor(expression);
-            var viewmodel = _request.Get<TViewModel>();
-            if (viewmodel != null)
+            if (_model != null)
             {
-                var model = accessor.GetValue(viewmodel) as T;
-                _renderAction = () => _renderer.Render<T>(_parentPage, _partialView, model, _prefix);
+                var model = accessor.GetValue(_model) as T;
+                _renderAction = () => _renderer.Render(_parentPage, _partialView, model, _prefix);
             }
 
             _prefix = accessor.Name;
@@ -89,12 +96,11 @@ namespace FubuMVC.Core.View.WebForms
         public RenderPartialExpression<TViewModel> ForEachOf<TPartialViewModel>(Expression<Func<TViewModel, IEnumerable<TPartialViewModel>>> expression)
             where TPartialViewModel : class
         {
-            var viewmodel = _request.Get<TViewModel>();
             var accessor = ReflectionHelper.GetAccessor(expression);
             IEnumerable<TPartialViewModel> models = new TPartialViewModel[0];
-            if (viewmodel != null)
+            if (_model != null)
             {
-                models = accessor.GetValue(viewmodel) as IEnumerable<TPartialViewModel> ?? new TPartialViewModel[0];
+                models = accessor.GetValue(_model) as IEnumerable<TPartialViewModel> ?? new TPartialViewModel[0];
             }
 
             _prefix = accessor.Name;

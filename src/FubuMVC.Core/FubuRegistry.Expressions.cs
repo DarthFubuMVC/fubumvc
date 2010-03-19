@@ -121,6 +121,12 @@ namespace FubuMVC.Core
             }
         }
 
+        public void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration)
+        {
+            var expression = new PartialViewTypeRegistrationExpression(_partialViewTypes);
+            registration(expression);
+        }
+
         private void setupServices(BehaviorGraph graph)
         {
             graph.Services.AddService<IUrlRegistry>(_urls);
@@ -146,8 +152,9 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
+
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
-            
+            graph.Services.SetServiceIfNone(_partialViewTypes);
         }
 
         #region Nested type: RegistryImport

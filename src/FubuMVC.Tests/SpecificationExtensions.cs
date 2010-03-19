@@ -48,6 +48,11 @@ namespace FubuMVC.Tests
             values.FirstOrDefault(func).ShouldNotBeNull();
         }
 
+        public static void ShouldNotHave<T>(this IEnumerable<T> values, Func<T, bool> func)
+        {
+            values.FirstOrDefault(func).ShouldBeNull();
+        }
+
         public static void ShouldBeFalse(this bool condition)
         {
             Assert.IsFalse(condition);
