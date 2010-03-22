@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Models;
@@ -157,6 +158,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone(_partialViewTypes);
 
             graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
+            graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
         }
 
         public class RegistryImport

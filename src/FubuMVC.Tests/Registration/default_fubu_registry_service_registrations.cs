@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
@@ -120,6 +121,12 @@ namespace FubuMVC.Tests.Registration
         public void streaming_data_is_registered()
         {
             registeredTypeIs<IStreamingData, StreamingData>();
+        }
+
+        [Test]
+        public void default_json_reader_is_JavascriptDeserializer_flavor()
+        {
+            registeredTypeIs<IJsonReader, JavaScriptJsonReader>();
         }
     }
 }
