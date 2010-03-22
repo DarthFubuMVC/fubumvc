@@ -54,11 +54,13 @@ namespace FubuMVC.Core
 
             Output.ToHtml.WhenCallMatches(x => x.Method.HasCustomAttribute<HtmlEndpointAttribute>());
             Output.ToJson.WhenCallMatches(x => x.Method.HasCustomAttribute<JsonEndpointAttribute>());
+            Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
 
             Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
             Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();
 
             _conventions.Add(_viewAttacher);
+            Policies.Add<JsonMessageInputConvention>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure)

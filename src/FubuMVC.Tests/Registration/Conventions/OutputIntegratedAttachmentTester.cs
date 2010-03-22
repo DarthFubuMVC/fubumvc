@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -51,9 +53,9 @@ namespace FubuMVC.Tests.Registration.Conventions
             only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
             ()
         {
-            graph.BehaviorChainCount.ShouldEqual(7);
+            graph.BehaviorChainCount.ShouldEqual(19);
             graph.Behaviors.Where(chain => chain.Any(x => x is RenderJsonNode)).Select(x => x.Calls.First().Method.Name)
-                .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated");
+                .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
         }
 
         [Test]
@@ -63,6 +65,51 @@ namespace FubuMVC.Tests.Registration.Conventions
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
 
             behavior.ShouldBeOfType<RenderTextNode<string>>().MimeType.ShouldEqual(MimeType.Html);
+        }
+
+        private BehaviorChain chainFor(Expression<Action<JsonOutputAttachmentTesterController>> expression)
+        {
+            return graph.BehaviorFor(expression);
+        }
+
+        private BehaviorChain chainFor(Expression<Func<JsonOutputAttachmentTesterController, object>> expression)
+        {
+            return graph.BehaviorFor(expression);
+        }
+
+        [Test]
+        public void methods_that_take_in_a_json_message_class_should_have_the_json_deserialization_behavior_in_front_of_the_action_call()
+        {
+            chainFor(x => x.JsonInput1(null)).FirstCall().Previous.ShouldEqual(new DeserializeJsonNode(typeof (Json1)));
+            chainFor(x => x.JsonInput2(null)).FirstCall().Previous.ShouldEqual(new DeserializeJsonNode(typeof(Json2)));
+            chainFor(x => x.JsonInput3(null)).FirstCall().Previous.ShouldEqual(new DeserializeJsonNode(typeof(Json3)));
+        
+            
+        }
+
+        [Test]
+        public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
+        {
+            chainFor(x => x.NotJson1(null)).Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+            chainFor(x => x.NotJson2(null)).Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+            chainFor(x => x.NotJson3(null)).Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+        }
+
+        [Test]
+        public void methods_that_return_a_json_message_should_output_json()
+        {
+            BehaviorChain chain = chainFor(x => x.OutputJson1());
+            chain.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+            chainFor(x => x.OutputJson2()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+            chainFor(x => x.OutputJson3()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void methods_that_do_not_return_a_json_message_should_not_output_json()
+        {
+            chainFor(x => x.NotOutputJson1()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson2()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson3()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
         }
     }
 
@@ -115,5 +162,29 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             return null;
         }
+
+        public void JsonInput1(Json1 json){}
+        public void JsonInput2(Json2 json){}
+        public void JsonInput3(Json3 json){}
+
+        public void NotJson1(NotJson1 message){}
+        public void NotJson2(NotJson2 message){}
+        public void NotJson3(NotJson3 message){}
+
+        public Json1 OutputJson1(){return new Json1();}
+        public Json2 OutputJson2(){return new Json2();}
+        public Json3 OutputJson3(){return new Json3();}
+    
+        public NotJson1 NotOutputJson1(){return new NotJson1();}
+        public NotJson2 NotOutputJson2(){return new NotJson2();}
+        public NotJson3 NotOutputJson3(){return new NotJson3();}
     }
+
+    public class Json1 : JsonMessage{}
+    public class Json2 : JsonMessage{}
+    public class Json3 : JsonMessage{}
+
+    public class NotJson1{}
+    public class NotJson2{}
+    public class NotJson3{}
 }

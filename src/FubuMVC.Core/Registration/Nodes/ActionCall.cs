@@ -41,6 +41,12 @@ namespace FubuMVC.Core.Registration.Nodes
             return new ActionCall(typeof (T), method);
         }
 
+        public static ActionCall For<T>(Expression<Func<T, object>> expression)
+        {
+            MethodInfo method = ReflectionHelper.GetMethod(expression);
+            return new ActionCall(typeof(T), method);
+        }
+
         public bool Returns<T>()
         {
             return OutputType().CanBeCastTo<T>();

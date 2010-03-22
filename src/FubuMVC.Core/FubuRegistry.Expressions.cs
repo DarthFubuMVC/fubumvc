@@ -155,6 +155,8 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
             graph.Services.SetServiceIfNone(_partialViewTypes);
+
+            graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
         }
 
         public class RegistryImport

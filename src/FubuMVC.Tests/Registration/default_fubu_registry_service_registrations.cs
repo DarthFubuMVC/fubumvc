@@ -115,5 +115,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IModelBinderCache, ModelBinderCache>();
         }
+
+        [Test]
+        public void streaming_data_is_registered()
+        {
+            registeredTypeIs<IStreamingData, StreamingData>();
+        }
     }
 }

@@ -42,6 +42,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -61,6 +64,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Configuration\AppSettingsProvider.cs" />
     <Compile Include="Configuration\AppSettingsRequestData.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\FubuPartialRequestUrlPolicy.cs" />
+    <Compile Include="Registration\Conventions\JsonMessageInputConvention.cs" />
     <Compile Include="Registration\Conventions\NulloRouteDefinition.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
@@ -181,6 +186,7 @@
     <Compile Include="Registration\IServiceRegistry.cs" />
     <Compile Include="Registration\IUrlRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
+    <Compile Include="Registration\Nodes\DeserializeJsonNode.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
     <Compile Include="Registration\Nodes\WebFormView.cs" />
@@ -195,6 +201,7 @@
     <Compile Include="Runtime\IObjectResolver.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\IRequestData.cs" />
+    <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\ModelBinderCache.cs" />
     <Compile Include="Runtime\ObjectResolver.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
