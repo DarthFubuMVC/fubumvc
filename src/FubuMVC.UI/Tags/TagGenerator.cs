@@ -29,6 +29,10 @@ namespace FubuMVC.UI.Tags
         string CurrentProfile { get; }
         T Model { get; set; }
         ElementRequest GetRequest(Accessor accessor);
+        HtmlTag BeforePartial(ElementRequest request);
+        HtmlTag AfterPartial(ElementRequest request);
+        HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
+        HtmlTag BeforeEachofPartial(ElementRequest request, int current, int count);
     }
 
     public class TagGenerator<T> : ITagGenerator<T> where T : class
@@ -93,6 +97,26 @@ namespace FubuMVC.UI.Tags
             var request = new ElementRequest(_model, accessor, _services, _stringifier);
             determineElementName(request);
             return request;
+        }
+
+        public HtmlTag BeforePartial(ElementRequest request)
+        {
+            return _profile.BeforePartial.Build(request);
+        }
+
+        public HtmlTag AfterPartial(ElementRequest request)
+        {
+            return _profile.AfterPartial.Build(request);
+        }
+
+        public HtmlTag AfterEachofPartial(ElementRequest request, int current, int count)
+        {
+            return _profile.AfterEachOfPartial.Build(request, current, count);
+        }
+
+        public HtmlTag BeforeEachofPartial(ElementRequest request, int current, int count)
+        {
+            return _profile.BeforeEachOfPartial.Build(request, current, count);
         }
 
         public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)

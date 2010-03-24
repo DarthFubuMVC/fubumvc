@@ -55,13 +55,19 @@
     </Compile>
     <Compile Include="Configuration\AccessorDef.cs" />
     <Compile Include="Configuration\DefaultHtmlConventions.cs" />
+    <Compile Include="Configuration\PartialLambdaElementBuilder.cs" />
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />
+    <Compile Include="Forms\RenderPartialExpression.cs" />
     <Compile Include="FubuPageExtensions.cs" />
     <Compile Include="FubuRegistryUIExtensions.cs" />
     <Compile Include="Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="Configuration\Interfaces.cs" />
+    <Compile Include="Tags\PartialLambdaElementModifier.cs" />
+    <Compile Include="Tags\PartialTagActionExpression.cs" />
+    <Compile Include="Tags\PartialTagFactory.cs" />
+    <Compile Include="Tags\PartialTagFactoryExpression.cs" />
     <Compile Include="Tags\TagActionExpression.cs" />
     <Compile Include="Tags\TagFactory.cs" />
     <Compile Include="Configuration\ElementRequest.cs" />

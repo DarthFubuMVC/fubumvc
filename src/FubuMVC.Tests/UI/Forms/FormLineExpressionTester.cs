@@ -183,5 +183,25 @@ namespace FubuMVC.Tests.UI.Forms
         {
             throw new NotImplementedException();
         }
+
+        public HtmlTag BeforePartial(ElementRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag AfterPartial(ElementRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag AfterEachofPartial(ElementRequest request, int current, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag BeforeEachofPartial(ElementRequest request, int current, int count)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

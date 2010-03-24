@@ -15,6 +15,11 @@ namespace FubuMVC.UI.Configuration
             Editors.Always.Modify(AddElementName);
             Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));
             Labels.Always.BuildBy(req => new HtmlTag("span").Text(req.Accessor.Name));
+
+            BeforePartial.Always.BuildBy(req => new NoTag());
+            AfterPartial.Always.BuildBy(req => new NoTag());
+            BeforeEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
+            AfterEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
         }
 
         public static void AddElementName(ElementRequest request, HtmlTag tag)

@@ -240,7 +240,6 @@
     <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
-    <Compile Include="View\WebForms\RenderPartialExpression.cs" />
     <Compile Include="View\WebForms\WebFormExtensions.cs" />
     <Compile Include="View\WebForms\WebFormRenderer.cs" />
     <Compile Include="View\WebForms\WebFormsEndpointPolicy.cs" />
