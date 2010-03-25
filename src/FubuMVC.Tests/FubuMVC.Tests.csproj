@@ -184,6 +184,10 @@
     <Compile Include="UI\Forms\DefinitionListLabelAndFieldTester.cs" />
     <Compile Include="UI\Forms\FormForExpressionTester.cs" />
     <Compile Include="UI\Forms\FormLineExpressionTester.cs" />
+    <Compile Include="UI\Forms\FubuPageExtensionsTagsTester.cs" />
+    <Compile Include="UI\Forms\FubuPageExtensionsTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\HtmlConventionsIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementModifierTester.cs" />
     <Compile Include="UI\PartialViewTypeRegistrationTester.cs">
