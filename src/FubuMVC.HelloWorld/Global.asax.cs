@@ -49,7 +49,9 @@ namespace FubuMVC.HelloWorld
                     x.by_ViewModel();
                 });
 
-            this.UseDefaultHtmlConventions();
+            
+            this.HtmlConvention<SampleHtmlConventions>();
+            
 
             RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
 
