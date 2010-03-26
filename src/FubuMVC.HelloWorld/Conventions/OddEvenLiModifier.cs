@@ -1,4 +1,3 @@
-using System;
 using FubuMVC.HelloWorld.Controllers.Products;
 using FubuMVC.UI.Configuration;
 
@@ -6,9 +5,6 @@ namespace FubuMVC.HelloWorld.Conventions
 {
     public class OddEvenLiModifier : IPartialElementModifier
     {
-        private readonly Func<AccessorDef, bool> _matches;
-        private readonly Func<AccessorDef, EachPartialTagModifier> _modifierBuilder;
-
         private bool matches(AccessorDef accessorDef)
         {
             return accessorDef.ModelType == typeof(ProductsViewModel);
