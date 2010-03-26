@@ -1,5 +1,6 @@
 using System;
-using FubuMVC.Core.Util;
+using FubuCore;
+using FubuCore.Reflection;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.UI.Configuration

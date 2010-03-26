@@ -1,4 +1,5 @@
-﻿using HtmlTags;
+﻿using FubuCore.Binding;
+using HtmlTags;
 
 namespace FubuMVC.Core.Runtime
 {

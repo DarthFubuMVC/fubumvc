@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using FubuMVC.Core.Util;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes
 {

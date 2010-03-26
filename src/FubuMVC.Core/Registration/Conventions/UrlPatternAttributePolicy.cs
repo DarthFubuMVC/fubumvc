@@ -1,7 +1,8 @@
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
@@ -9,7 +10,7 @@ namespace FubuMVC.Core.Registration.Conventions
     {
         public bool Matches(ActionCall call, IConfigurationObserver log)
         {
-            var result = call.Method.HasCustomAttribute<UrlPatternAttribute>();
+            var result = call.Method.HasAttribute<UrlPatternAttribute>();
 
             if( result && log.IsRecording )
             {

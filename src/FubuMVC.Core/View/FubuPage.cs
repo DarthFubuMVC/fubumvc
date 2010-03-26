@@ -1,8 +1,8 @@
 using System;
 using System.Web.UI;
+using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Core.Util;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View

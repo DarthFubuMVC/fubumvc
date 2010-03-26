@@ -1,5 +1,5 @@
 using System.Linq;
-using FubuMVC.Core.Models;
+using FubuCore.Binding;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.UI;

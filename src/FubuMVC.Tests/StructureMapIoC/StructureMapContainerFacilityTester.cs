@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
+using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Models;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;

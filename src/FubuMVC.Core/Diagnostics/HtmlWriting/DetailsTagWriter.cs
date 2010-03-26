@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using FubuCore;
 using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting

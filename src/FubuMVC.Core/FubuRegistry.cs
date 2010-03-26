@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -52,8 +53,8 @@ namespace FubuMVC.Core
             Policies.Add<WebFormsEndpointPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
 
-            Output.ToHtml.WhenCallMatches(x => x.Method.HasCustomAttribute<HtmlEndpointAttribute>());
-            Output.ToJson.WhenCallMatches(x => x.Method.HasCustomAttribute<JsonEndpointAttribute>());
+            Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
+            Output.ToJson.WhenCallMatches(x => x.Method.HasAttribute<JsonEndpointAttribute>());
 
             Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
             Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();

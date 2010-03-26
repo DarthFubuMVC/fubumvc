@@ -1,11 +1,11 @@
 using System;
 using System.Linq.Expressions;
+using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Tests.UI.Forms
 {
@@ -180,6 +180,26 @@ namespace FubuMVC.Tests.UI.Forms
             set { throw new NotImplementedException(); } }
 
         public ElementRequest GetRequest(Accessor accessor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag BeforePartial(ElementRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag AfterPartial(ElementRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag AfterEachofPartial(ElementRequest request, int current, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HtmlTag BeforeEachofPartial(ElementRequest request, int current, int count)
         {
             throw new NotImplementedException();
         }

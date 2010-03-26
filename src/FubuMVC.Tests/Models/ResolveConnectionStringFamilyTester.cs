@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Util;
+using FubuCore.Binding;
+using FubuCore.Reflection;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 

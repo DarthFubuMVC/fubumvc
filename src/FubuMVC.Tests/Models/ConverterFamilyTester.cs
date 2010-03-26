@@ -1,6 +1,6 @@
 using System.Reflection;
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Util;
+using FubuCore.Binding;
+using FubuCore.Reflection;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models

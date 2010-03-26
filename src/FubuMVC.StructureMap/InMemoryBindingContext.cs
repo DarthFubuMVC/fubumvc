@@ -1,7 +1,7 @@
 
-using FubuMVC.Core.Models;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using StructureMap;
+using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.StructureMap
 {

@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
-using FubuMVC.Core.Util;
-using FubuMVC.Core;
-using System.Linq;
+
 
 namespace FubuMVC.UI
 {
@@ -40,7 +40,7 @@ namespace FubuMVC.UI
             where TInputModel : class
             where TPartialModel : class
         {
-            var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>())
+            var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>(), Tags<TInputModel>(page))
                 .ForEachOf(listExpression);
 
             SearchPartialView<TInputModel, TPartialModel>(page, expression);

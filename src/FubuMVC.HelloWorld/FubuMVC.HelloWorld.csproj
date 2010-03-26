@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,9 +79,13 @@
     <Compile Include="Controllers\Products\ProductsController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
+    <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
+    <Compile Include="Conventions\OddEvenLiModifier.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="SampleHtmlConventions.cs" />
     <Compile Include="Services\IHttpSession.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +104,10 @@
     <ProjectReference Include="..\FubuMVC.View.Spark\FubuMVC.View.Spark.csproj">
       <Project>{EBB59413-A83E-4F8C-B235-F675578DCC36}</Project>
       <Name>FubuMVC.View.Spark</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

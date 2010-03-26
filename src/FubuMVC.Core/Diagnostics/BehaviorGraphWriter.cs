@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.TextWriting;
 using FubuMVC.Core.Registration;
@@ -10,7 +12,6 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -37,7 +38,7 @@ namespace FubuMVC.Core.Diagnostics
                 ul.Add("li").Modify(x =>
                 {
                     x.Child(new LinkTag(method.Name, url));
-                    var description = method.GetCustomAttribute<DescriptionAttribute>().Description;
+                    var description = method.GetAttribute<DescriptionAttribute>().Description;
                     x.Child(new HtmlTag("span").Text(" - " + description));
                 });
             });
@@ -47,7 +48,7 @@ namespace FubuMVC.Core.Diagnostics
 
         private IEnumerable<MethodInfo> availableActions()
         {
-            return GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(x => x.HasCustomAttribute<DescriptionAttribute>());
+            return GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(x => x.HasAttribute<DescriptionAttribute>());
         }
 
         private HtmlDocument BuildDocument(string title, params HtmlTag[] tags)

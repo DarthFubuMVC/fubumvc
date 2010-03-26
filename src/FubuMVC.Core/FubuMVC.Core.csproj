@@ -61,10 +61,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AjaxExtensions.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
-    <Compile Include="Configuration\AppSettingsProvider.cs" />
-    <Compile Include="Configuration\AppSettingsRequestData.cs" />
-    <Compile Include="Configuration\ISettingsProvider.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
@@ -112,22 +110,6 @@
     <Compile Include="Diagnostics\TextWriting\TextLine.cs" />
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
-    <Compile Include="Models\ASPNetObjectConversionFamily.cs" />
-    <Compile Include="Models\BindingContext.cs" />
-    <Compile Include="Models\BindResultAssertionException.cs" />
-    <Compile Include="Models\BooleanFamily.cs" />
-    <Compile Include="Models\ConversionPropertyBinder.cs" />
-    <Compile Include="Models\MapWebToPhysicalPathFamily.cs" />
-    <Compile Include="Models\ExpandEnvironmentVariablesFamily.cs" />
-    <Compile Include="Models\IBindingContext.cs" />
-    <Compile Include="Models\IPropertyBinder.cs" />
-    <Compile Include="Models\IPropertyBinderCache.cs" />
-    <Compile Include="Models\MapFromWebPathFamily.cs" />
-    <Compile Include="Models\ModelBindingAttributes.cs" />
-    <Compile Include="Models\NestedObjectPropertyBinder.cs" />
-    <Compile Include="Models\PassthroughConverter.cs" />
-    <Compile Include="Models\PropertyBinderCache.cs" />
-    <Compile Include="Models\ResolveConnectionStringFamily.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
@@ -144,7 +126,7 @@
     <Compile Include="Registration\DSL\ActionCallFilterExpression.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Attributes.cs" />
-    <Compile Include="BasicExtensions.cs" />
+    <Compile Include="UrlExtensions.cs" />
     <Compile Include="Behaviors\BasicBehavior.cs" />
     <Compile Include="DoNext.cs" />
     <Compile Include="Behaviors\IActionBehavior.cs" />
@@ -157,16 +139,7 @@
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\BootstrappingClasses.cs" />
     <Compile Include="FubuBootstrapper.cs" />
-    <Compile Include="FubuException.cs" />
     <Compile Include="FubuRegistry.Expressions.cs" />
-    <Compile Include="Models\BindResult.cs" />
-    <Compile Include="Models\ConverterFamily.cs" />
-    <Compile Include="Models\IConverterFamily.cs" />
-    <Compile Include="Models\IModelBinder.cs" />
-    <Compile Include="Models\IValueConverterRegistry.cs" />
-    <Compile Include="Models\StandardModelBinder.cs" />
-    <Compile Include="Models\ValueConverter.cs" />
-    <Compile Include="Models\ValueConverterRegistry.cs" />
     <Compile Include="Registration\BehaviorVisitor.cs" />
     <Compile Include="Registration\Conventions\BehaviorMatcher.cs" />
     <Compile Include="Registration\Conventions\IChainConvention.cs" />
@@ -190,27 +163,15 @@
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
     <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
     <Compile Include="Runtime\IgnoredRoute.cs" />
-    <Compile Include="Runtime\IModelBinderCache.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
-    <Compile Include="Runtime\IObjectResolver.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
-    <Compile Include="Runtime\IRequestData.cs" />
-    <Compile Include="Runtime\ModelBinderCache.cs" />
-    <Compile Include="Runtime\ObjectResolver.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
-    <Compile Include="Runtime\RequestData.cs" />
-    <Compile Include="Runtime\ServiceArguments.cs" />
-    <Compile Include="TypeExtensions.cs" />
     <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Urls\IModelUrl.cs" />
     <Compile Include="Urls\IUrlRegistration.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
     <Compile Include="Urls\UrlRegistryBuilder.cs" />
-    <Compile Include="Util\BuildersAndAlterations.cs" />
-    <Compile Include="Util\CompositeAction.cs" />
-    <Compile Include="Util\CompositeFilter.cs" />
-    <Compile Include="Util\CompositePredicate.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain.cs" />
     <Compile Include="Registration\Nodes\BehaviorExtensions.cs" />
     <Compile Include="Registration\BehaviorGraph.cs" />
@@ -239,18 +200,14 @@
     <Compile Include="Runtime\IBehaviorFactory.cs" />
     <Compile Include="Runtime\IFubuRequest.cs" />
     <Compile Include="Runtime\InMemoryRequestData.cs" />
-    <Compile Include="Runtime\ConvertProblem.cs" />
     <Compile Include="Runtime\MimeType.cs" />
     <Compile Include="Runtime\FubuRouteHandler.cs" />
-    <Compile Include="Runtime\UrlContext.cs" />
     <Compile Include="LocalizationManager.cs" />
     <Compile Include="Runtime\IOutputWriter.cs" />
     <Compile Include="Security\IPrincipalFactory.cs" />
     <Compile Include="SessionState\IFlash.cs" />
     <Compile Include="SessionState\IRequestDataProvider.cs" />
     <Compile Include="Urls\IUrlRegistry.cs" />
-    <Compile Include="Util\ExpressionsExtensions.cs" />
-    <Compile Include="Util\Indexer.cs" />
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
     <Compile Include="View\ActionReturnsViewModelType.cs" />
@@ -281,17 +238,8 @@
     <Compile Include="View\WebForms\IWebFormRenderer.cs" />
     <Compile Include="Behaviors\RenderFubuWebFormView.cs" />
     <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
-    <Compile Include="Runtime\AggregateDictionary.cs" />
-    <Compile Include="Models\TypeDescriptorCache.cs" />
-    <Compile Include="Util\Accessor.cs" />
-    <Compile Include="Util\PropertyChain.cs" />
-    <Compile Include="Util\ReflectionHelper.cs" />
-    <Compile Include="Util\SingleProperty.cs" />
-    <Compile Include="Util\Cache.cs" />
-    <Compile Include="Util\XmlExtensions.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
-    <Compile Include="View\WebForms\RenderPartialExpression.cs" />
     <Compile Include="View\WebForms\WebFormExtensions.cs" />
     <Compile Include="View\WebForms\WebFormRenderer.cs" />
     <Compile Include="View\WebForms\WebFormsEndpointPolicy.cs" />
@@ -302,6 +250,10 @@
     <Compile Include="Web\Security\WebSecurityContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>

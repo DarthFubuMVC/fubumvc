@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 

@@ -1,4 +1,5 @@
 using System;
+using FubuCore.Configuration;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;

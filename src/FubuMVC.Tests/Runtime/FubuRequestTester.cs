@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Models;
+using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using NUnit.Framework;

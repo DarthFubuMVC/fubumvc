@@ -1,5 +1,6 @@
+using System.Collections.Generic;
+using FubuCore.Util;
 using FubuMVC.Core;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.UI.Tags
 {

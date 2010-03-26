@@ -1,6 +1,6 @@
+using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Configuration;
-using FubuMVC.Core.Models;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;

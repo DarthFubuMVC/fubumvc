@@ -1,6 +1,6 @@
 using System;
 using System.Web;
-using FubuMVC.Core.Runtime;
+using FubuCore.Binding;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using Microsoft.Practices.ServiceLocation;
@@ -42,8 +42,6 @@ namespace FubuMVC.StructureMap
                 x.Matching(p => p.DeclaringType == typeof (FubuPage));
                 x.OfType<IServiceLocator>();
             });
-
-            
         }
 
         public HttpContext BuildContextWrapper()

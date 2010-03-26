@@ -32,7 +32,7 @@ namespace Spark.Web.FubuMVC.Bootstrap
                 {
                     matchedDescriptor = token.Descriptors
                         .Where(e => e.Templates
-                                        .Exists(template => template.Contains(actionName) && template.Contains(viewName)))
+                                        .Any(template => template.Contains(actionName) && template.Contains(viewName)))
                         .SingleOrDefault();
                     return matchedDescriptor != null;
                 });

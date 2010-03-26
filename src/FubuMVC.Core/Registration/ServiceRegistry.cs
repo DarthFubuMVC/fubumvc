@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore.Util;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Registration
 {

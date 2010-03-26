@@ -1,7 +1,7 @@
 using System;
+using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Util;
 
 namespace FubuMVC.Core.Registration
 {
