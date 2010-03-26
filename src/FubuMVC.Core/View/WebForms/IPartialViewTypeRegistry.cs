@@ -7,17 +7,17 @@ namespace FubuMVC.Core.View.WebForms
     {
         Type GetPartialViewTypeFor<TPartialModel>();
         bool HasPartialViewTypeFor<TPartialModel>();
-        void Register(Type modelType, IPartialViewTypeExpression expression);
+        void Register(Type modelType, Type expression);
     }
 
     public class PartialViewTypeRegistry : IPartialViewTypeRegistry
     {
-        private readonly IDictionary<Type, IPartialViewTypeExpression> _viewModelTypes = new Dictionary<Type, IPartialViewTypeExpression>();
+        private readonly IDictionary<Type, Type> _viewModelTypes = new Dictionary<Type, Type>();
         
         public Type GetPartialViewTypeFor<TPartialModel>()
         {
             if (HasPartialViewTypeFor<TPartialModel>())
-                return _viewModelTypes[typeof(TPartialModel)].RenderType();
+                return _viewModelTypes[typeof(TPartialModel)];
             return null;
         }
 
@@ -26,9 +26,9 @@ namespace FubuMVC.Core.View.WebForms
             return _viewModelTypes.ContainsKey(typeof(TPartialModel));
         }
 
-        public void Register(Type modelType, IPartialViewTypeExpression expression)
+        public void Register(Type modelType, Type viewType)
         {
-            _viewModelTypes.Add(modelType, expression);
+            _viewModelTypes.Add(modelType, viewType);
         }
     }
 
@@ -46,7 +46,7 @@ namespace FubuMVC.Core.View.WebForms
         public void Use<TPartialView>()
             where TPartialView : IFubuPage
         {
-            _typeRegistry.Register(_modelType, new PartialViewTypeExpression(typeof(TPartialView)));
+            _typeRegistry.Register(_modelType, typeof(TPartialView));
         }
     }
 
@@ -54,26 +54,6 @@ namespace FubuMVC.Core.View.WebForms
     {
         void Use<TPartialView>()
             where TPartialView : IFubuPage;
-    }
-
-    public interface IPartialViewTypeExpression
-    {
-        Type RenderType();
-    }
-
-    public class PartialViewTypeExpression : IPartialViewTypeExpression
-    {
-        private readonly Type _partialView;
-
-        public PartialViewTypeExpression(Type partialView)
-        {
-            _partialView = partialView;
-        }
-
-        public Type RenderType()
-        {
-            return _partialView;
-        }
     }
 
     public interface IPartialViewTypeRegistrationExpression
