@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Web;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests
 {
@@ -171,5 +175,94 @@ namespace FubuMVC.Tests
 
             test.ValueOrDefault(t => t.Child.Child).ShouldNotBeNull();
         }
+
+        [Test]
+        public void AddMany_should_add_range()
+        {
+            var list = new List<string>();
+            list.AddMany("test").ShouldHave(item=>item == "test");
+        }
+
+        [Test]
+        public void Exists_should_return_if_evaluator_correspond()
+        {
+            var values = new[] {"test"};
+            Func<string, bool> evaluator = x => x.StartsWith("te");
+            values.Exists(evaluator).ShouldBeTrue();
+        }
+
+        [Test]
+        public void Get_should_return_dictionary_value()
+        {
+            var dictionary = new Dictionary<string, string> {{"key", "value"}};
+            dictionary.Get("key", "fake").ShouldEqual("value");
+        }
+
+        [Test]
+        public void Get_should_return_default_value()
+        {
+            var dictionary = new Dictionary<string, string> { { "key", "value" } };
+            dictionary.Get("non existant key", "default value").ShouldEqual("default value");
+        }
+
+        [Test]
+        public void Get_should_return_value()
+        {
+            var dictionary = new Dictionary<string, string> { { "key", "value" } };
+            dictionary.Get("key").ShouldEqual("value");
+        }
+
+        [Test]
+        public void should_return_is_http_context_ajax_request()
+        {
+            var context = new HttpContext(new HttpRequest("foo.txt", "http://test", ""),
+                                          new HttpResponse(Console.Out));
+            context.IsAjaxRequest().ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_return_dictionary_ajax_request()
+        {
+            object value = null;
+            IDictionary<string, object> requestInput = new Dictionary<string, object>{{"key", value}};
+            requestInput.IsAjaxRequest().ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_return_is_nullable_of()
+        {
+            Type nullableOfInt = typeof (int?);
+            nullableOfInt.IsNullableOf(typeof (int)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void ItererateFromZero_should_run_action_x_times()
+        {
+            Iterated iterated = MockRepository.GenerateStub<Iterated>();
+            iterated.Stub(i => i.Action(Arg<int>.Is.LessThan(6))).Repeat.Times(6);
+            6.IterateFromZero(iterated.Action);
+            iterated.AssertWasCalled(i => i.Action(Arg<int>.Is.LessThan(6)), c => c.Repeat.Times(6));
+        }
+
+        [Test]
+        public void ToBool_should_return_boolean_value()
+        {
+            "True".ToBool().ShouldBeTrue();
+        }
+
+        [Test]
+        public void ToBool_should_return_false_for_empty_string()
+        {
+            "".ToBool().ShouldBeFalse();
+        }
+
+        [Test]
+        public void ToFullUrl_should_return_full_url()
+        {
+            UrlContext.Stub("MyFakeDomain");
+            "SomeUrl".ToFullUrl().ShouldEqual("MyFakeDomain/SomeUrl");
+        }
+
+        public class Iterated { public virtual void Action(int idx){}}
     }
 }
