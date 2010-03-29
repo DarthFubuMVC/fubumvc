@@ -26,6 +26,14 @@ namespace FubuCore
         {
             return String.Format(stringFormat, args);
         }
+
+        /// <summary>
+        /// Performs a case-insensitive comparison of strings
+        /// </summary>
+        public static bool EqualsIgnoreCase(this string thisString, string otherString)
+        {
+            return thisString.Equals(otherString, StringComparison.InvariantCultureIgnoreCase);
+        }
         
     }
 }
