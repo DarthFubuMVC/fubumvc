@@ -89,6 +89,8 @@ namespace FubuCore.Testing
             const string expectedOverrideFormatting = "Joplin-2050 Ozark";
             stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Billing), address).ShouldEqual(expectedDefaultFormatting);
             stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address).ShouldEqual(expectedOverrideFormatting);
+            stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), null).
+                ShouldEqual(string.Empty);
         }
 
 

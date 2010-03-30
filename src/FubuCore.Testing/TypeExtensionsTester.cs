@@ -1,5 +1,7 @@
 using System;
 using NUnit.Framework;
+using FubuCore.Testing;
+using Rhino.Mocks;
 
 namespace FubuCore.Testing
 {
@@ -22,6 +24,14 @@ namespace FubuCore.Testing
         {
         }
 
+        public class Service3 : Service3<string>
+        {   
+        }
+
+        public class Service3<T>
+        {
+        }
+
         public interface ServiceInterface : IService<string>
         {
         }
@@ -33,6 +43,19 @@ namespace FubuCore.Testing
         }
 
         [Test]
+        public void closes_applies_to_concrete_non_generic_types()
+        {
+            typeof(Service2).Closes(typeof(Service2<>)).ShouldBeFalse();
+        }
+
+        [Test]
+        public void closes_applies_to_concrete_non_generic_types_with_generic_parent()
+        {
+            typeof(Service3).Closes(typeof(Service3<>)).ShouldBeTrue();
+            typeof(Service3).Closes(typeof(Service2<>)).ShouldBeFalse();
+        }
+
+        [Test]
         public void find_interface_that_closes_open_interface()
         {
             typeof (Service1).FindInterfaceThatCloses(typeof (IService<>))
@@ -40,6 +63,8 @@ namespace FubuCore.Testing
 
             typeof (Service2).FindInterfaceThatCloses(typeof (IService<>))
                 .ShouldBeNull();
+
+            typeof(IService<>).FindInterfaceThatCloses(Arg<Type>.Is.Anything).ShouldBeNull();
         }
 
         [Test]
@@ -127,6 +152,7 @@ namespace FubuCore.Testing
 
             typeof(Message1).CanBeCastTo<Message1>().ShouldBeTrue();
             typeof(Message1).CanBeCastTo<Message2>().ShouldBeFalse();
+            ((Type)null).CanBeCastTo<Message1>().ShouldBeFalse();
         }
 
         [Test]
@@ -172,11 +198,35 @@ namespace FubuCore.Testing
         }
 
         [Test]
+        public void get_name_from_generic()
+        {
+            typeof(Service2<int>).GetName().ShouldEqual("Service2`1<Int32>");
+        }
+
+        [Test]
+        public void get_full_name_from_generic()
+        {
+            typeof(Service2<int>).GetFullName().ShouldEqual("Service2`1<Int32>");
+        }
+
+        [Test]
+        public void get_full_name()
+        {
+            typeof (string).GetFullName().ShouldEqual("System.String");
+        }
+
+        [Test]
         public void is_concrete()
         {
             typeof(IMessage).IsConcrete().ShouldBeFalse();
             typeof(AbstractMessage).IsConcrete().ShouldBeFalse();
             typeof(Message2).IsConcrete().ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_not_concrete()
+        {
+            typeof(Message2).IsNotConcrete().ShouldBeFalse();
         }
 
         public interface IMessage{}
