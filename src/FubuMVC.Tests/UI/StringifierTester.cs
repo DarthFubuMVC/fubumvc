@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Util;
 using FubuMVC.UI;
@@ -90,6 +91,28 @@ namespace FubuMVC.Tests.UI
             const string expectedOverrideFormatting = "Joplin-2050 Ozark";
             stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Billing), address).ShouldEqual(expectedDefaultFormatting);
             stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address).ShouldEqual(expectedOverrideFormatting);
+        }
+
+        [Test]
+        public void register_a_property_override_for_a_string_conversion_passing_property_info()
+        {
+            PropertyInfo passedProperty = null;
+
+            //default formatting for Address objects
+            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+            
+            //specific override formatting for Address objects named Shipping
+            stringifier.IfPropertyMatches<Address>(
+                prop => prop.Name == "Shipping", 
+                (p, a) =>
+                {
+                    passedProperty = p;
+                    return "{1}-{0}".ToFormat(a.Address1, a.City);
+                });
+
+            stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), new Address());
+
+            passedProperty.Name.ShouldEqual("Shipping");
         }
 
 

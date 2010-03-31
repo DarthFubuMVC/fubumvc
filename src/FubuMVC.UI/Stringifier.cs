@@ -39,7 +39,7 @@ namespace FubuMVC.UI
             if (rawValue == null || (rawValue as String) == string.Empty) return string.Empty;
             var propertyOverride = _overrides.FirstOrDefault(o => o.Matches(property));
             return propertyOverride != null 
-                ? propertyOverride.StringFunction(rawValue) 
+                ? propertyOverride.StringFunction(property, rawValue) 
                 : GetString(rawValue);
         }
 
@@ -78,7 +78,7 @@ namespace FubuMVC.UI
         public class PropertyOverrideStrategy
         {
             public Func<PropertyInfo, bool> Matches;
-            public Func<object, string> StringFunction;
+            public Func<PropertyInfo, object, string> StringFunction;
         }
 
         public void IfPropertyMatches(Func<PropertyInfo, bool> matches, Func<object, string> display)
@@ -86,6 +86,15 @@ namespace FubuMVC.UI
             _overrides.Add(new PropertyOverrideStrategy
             {
                 Matches = matches, 
+                StringFunction = (p, o) => display(o)
+            });
+        }
+
+        public void IfPropertyMatches(Func<PropertyInfo, bool> matches, Func<PropertyInfo, object, string> display)
+        {
+            _overrides.Add(new PropertyOverrideStrategy
+            {
+                Matches = matches,
                 StringFunction = display
             });
         }
@@ -93,6 +102,11 @@ namespace FubuMVC.UI
         public void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<T, string> display)
         {
             IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), o => display((T)o));
+        }
+
+        public void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<PropertyInfo, T, string> display)
+        {
+            IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), (p, o) => display(p, (T)o));
         }
     }
 }
