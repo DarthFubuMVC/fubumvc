@@ -34,12 +34,14 @@ namespace FubuMVC.UI
             return value == null ? string.Empty : value.ToString();
         }
 
-        public string GetString(PropertyInfo property, object rawValue)
+        public string GetStringRequest(GetStringRequest request)
         {
+            var rawValue = request.RawValue;
+
             if (rawValue == null || (rawValue as String) == string.Empty) return string.Empty;
-            var propertyOverride = _overrides.FirstOrDefault(o => o.Matches(property));
-            return propertyOverride != null 
-                ? propertyOverride.StringFunction(property, rawValue) 
+            var propertyOverride = _overrides.FirstOrDefault(o => o.Matches(request.Property));
+            return propertyOverride != null
+                ? propertyOverride.StringFunction(request) 
                 : GetString(rawValue);
         }
 
@@ -78,7 +80,7 @@ namespace FubuMVC.UI
         public class PropertyOverrideStrategy
         {
             public Func<PropertyInfo, bool> Matches;
-            public Func<PropertyInfo, object, string> StringFunction;
+            public Func<GetStringRequest, string> StringFunction;
         }
 
         public void IfPropertyMatches(Func<PropertyInfo, bool> matches, Func<object, string> display)
@@ -86,11 +88,11 @@ namespace FubuMVC.UI
             _overrides.Add(new PropertyOverrideStrategy
             {
                 Matches = matches, 
-                StringFunction = (p, o) => display(o)
+                StringFunction = (r) => display(r.RawValue)
             });
         }
 
-        public void IfPropertyMatches(Func<PropertyInfo, bool> matches, Func<PropertyInfo, object, string> display)
+        public void IfPropertyMatches(Func<PropertyInfo, bool> matches, Func<GetStringRequest, string> display)
         {
             _overrides.Add(new PropertyOverrideStrategy
             {
@@ -101,12 +103,28 @@ namespace FubuMVC.UI
 
         public void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<T, string> display)
         {
-            IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), o => display((T)o));
+            IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), r => display((T)r.RawValue));
         }
 
-        public void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<PropertyInfo, T, string> display)
+        public void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<GetStringRequest, T, string> display)
         {
-            IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), (p, o) => display(p, (T)o));
+            IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), r => display(r, (T)r.RawValue));
         }
+    }
+
+    public class GetStringRequest
+    {
+        public GetStringRequest(){}
+
+        public GetStringRequest(object model, PropertyInfo property, object rawValue)
+        {
+            Model = model;
+            Property = property;
+            RawValue = rawValue;
+        }
+
+        public object Model { get; set; }
+        public PropertyInfo Property { get; set; }
+        public object RawValue { get; set; }
     }
 }

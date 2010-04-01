@@ -87,10 +87,14 @@ namespace FubuMVC.Tests.UI
                 City = "Joplin"
             };
 
+            var site = new FakeSite {Billing = address, Shipping = address};
+
             const string expectedDefaultFormatting = "2050 Ozark, Joplin";
             const string expectedOverrideFormatting = "Joplin-2050 Ozark";
-            stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Billing), address).ShouldEqual(expectedDefaultFormatting);
-            stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address).ShouldEqual(expectedOverrideFormatting);
+            var billingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Billing), address);
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+            stringifier.GetStringRequest(billingRequest).ShouldEqual(expectedDefaultFormatting);
+            stringifier.GetStringRequest(shippingRequest).ShouldEqual(expectedOverrideFormatting);
         }
 
         [Test]
@@ -104,15 +108,74 @@ namespace FubuMVC.Tests.UI
             //specific override formatting for Address objects named Shipping
             stringifier.IfPropertyMatches<Address>(
                 prop => prop.Name == "Shipping", 
-                (p, a) =>
+                (req, value) =>
                 {
-                    passedProperty = p;
-                    return "{1}-{0}".ToFormat(a.Address1, a.City);
+                    passedProperty = req.Property;
+                    return "{1}-{0}".ToFormat(value.Address1, value.City);
                 });
 
-            stringifier.GetString(ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), new Address());
+            var address = new Address();
+            var site = new FakeSite { Billing = address, Shipping = address };
+
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+
+            stringifier.GetStringRequest(shippingRequest);
 
             passedProperty.Name.ShouldEqual("Shipping");
+        }
+
+        [Test]
+        public void register_a_property_override_for_a_string_conversion_passing_original_model()
+        {
+            object passedModel = null;
+
+            //default formatting for Address objects
+            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+
+            //specific override formatting for Address objects named Shipping
+            stringifier.IfPropertyMatches<Address>(
+                prop => prop.Name == "Shipping",
+                (req, value) =>
+                {
+                    passedModel = req.Model;
+                    return "{1}-{0}".ToFormat(value.Address1, value.City);
+                });
+
+            var address = new Address();
+            var site = new FakeSite { Billing = address, Shipping = address };
+
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+
+            stringifier.GetStringRequest(shippingRequest);
+
+            passedModel.ShouldBeTheSameAs(site);
+        }
+
+        [Test]
+        public void register_a_property_override_for_a_string_conversion_passing_raw_value()
+        {
+            object passedRawValue = null;
+
+            //default formatting for Address objects
+            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+
+            //specific override formatting for Address objects named Shipping
+            stringifier.IfPropertyMatches<Address>(
+                prop => prop.Name == "Shipping",
+                (req, value) =>
+                {
+                    passedRawValue = req.RawValue;
+                    return "{1}-{0}".ToFormat(value.Address1, value.City);
+                });
+
+            var address = new Address();
+            var site = new FakeSite { Billing = address, Shipping = address };
+
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+
+            stringifier.GetStringRequest(shippingRequest);
+
+            passedRawValue.ShouldBeTheSameAs(address);
         }
 
 
