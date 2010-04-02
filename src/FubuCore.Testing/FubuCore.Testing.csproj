@@ -61,6 +61,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Binding\ASPNetObjectConversionFamilyTester.cs" />
+    <Compile Include="Binding\BasicTypeConverterTester.cs" />
+    <Compile Include="Binding\BindingResultTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
     <Compile Include="FubuExceptionTester.cs" />
@@ -83,9 +86,6 @@
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Binding\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

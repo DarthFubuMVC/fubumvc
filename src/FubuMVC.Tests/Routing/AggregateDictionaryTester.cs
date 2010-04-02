@@ -110,6 +110,20 @@ namespace FubuMVC.Tests.Routing
             assertFound(RequestDataSource.RequestProperty, expectedValue);
         }
 
+        [Test]
+        public void find_value_from_request_property_of_added_aggregate()
+        {
+            const string expectedValue = "STUBBED USERAGENT";
+            aggregate = new AggregateDictionary();
+
+            aggregate.AddDictionary(new Dictionary<string, object> { { "UserAgent", expectedValue } });
+            forKey("UserAgent1");
+            callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Other, null), o => o.IgnoreArguments());
+            
+            forKey("UserAgent");
+            assertFound(RequestDataSource.Other, expectedValue);
+        }
+
         private RequestContext Do_the_Stupid_ASPNET_Mock_HokeyPokey()
         {
             var context = MockRepository.GenerateStub<HttpContextBase>();
