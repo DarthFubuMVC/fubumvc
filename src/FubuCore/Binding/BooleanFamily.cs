@@ -1,11 +1,12 @@
 using System.ComponentModel;
 using System.Reflection;
-using FubuCore;
 
 namespace FubuCore.Binding
 {
     public class BooleanFamily : IConverterFamily
     {
+        public const string Checkbox_On = "on";
+
         public bool Matches(PropertyInfo property)
         {
             return property.PropertyType.IsTypeOrNullableOf<bool>();
@@ -17,6 +18,7 @@ namespace FubuCore.Binding
 
             return x => 
                    x.PropertyValue.ToString().Contains(x.Property.Name) 
+                   || x.PropertyValue.ToString().EqualsIgnoreCase(Checkbox_On)
                    || (bool) converter.ConvertFrom(x.PropertyValue);
         }
     }
