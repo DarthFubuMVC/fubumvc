@@ -64,6 +64,12 @@
     <Compile Include="Binding\ASPNetObjectConversionFamilyTester.cs" />
     <Compile Include="Binding\BasicTypeConverterTester.cs" />
     <Compile Include="Binding\BindingResultTester.cs" />
+    <Compile Include="Binding\ConverterExpressionTester.cs" />
+    <Compile Include="Binding\ConvertProblemTester.cs" />
+    <Compile Include="Binding\InMemoryRequestDataTester.cs" />
+    <Compile Include="Binding\RequestDataTester.cs" />
+    <Compile Include="Binding\ServiceArgumentsTester.cs" />
+    <Compile Include="Binding\TypeDescriptorCacheTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
     <Compile Include="FubuExceptionTester.cs" />

@@ -6,8 +6,6 @@ using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuCore.Reflection;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Tests.Models;
 using NUnit.Framework;
 using Rhino.Mocks;
 

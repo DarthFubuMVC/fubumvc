@@ -1,10 +1,12 @@
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Models
 {
@@ -66,6 +68,37 @@ namespace FubuMVC.Tests.Models
             converter.Bind(property, context);
 
             address.Address1.ShouldEqual("2035 Ozark");
+        }
+    }
+
+    [TestFixture]
+    public class IgnorePropertyBinderTester
+    {
+        private IgnorePropertyBinder _binder;
+        private IBindingContext _context;
+        private PropertyInfo _property;
+
+        private class SomeObject{public object SomeProperty { get; set; }}
+
+        [SetUp]
+        public void SetUp()
+        {
+            _binder = new IgnorePropertyBinder(info => info.Name == "SomeProperty");
+            _context = MockRepository.GenerateMock<IBindingContext>();
+        }
+
+        [Test]
+        public void should_match()
+        {
+            _property = ReflectionHelper.GetProperty<SomeObject>(o=>o.SomeProperty);
+            _binder.Matches(_property).ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_ignore_binding()
+        {
+            //NOTE: Nothing to test, Bind method is empty
+            _binder.Bind(_property, _context);
         }
     }
 }

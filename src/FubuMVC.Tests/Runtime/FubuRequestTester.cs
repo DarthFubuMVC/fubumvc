@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
@@ -7,6 +8,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
 using FubuMVC.Core;
+using FubuCore;
 
 namespace FubuMVC.Tests.Runtime
 {
@@ -35,6 +37,31 @@ namespace FubuMVC.Tests.Runtime
         }
 
         protected abstract void setupContext();
+    }
+
+    [TestFixture]
+    public class when_binding_model_throws_exception : ObjectResolverContext
+    {
+        private IModelBinder matchingBinder;
+        private Type _type = typeof(BinderTarget);
+
+        protected override void setupContext()
+        {
+            matchingBinder = MockRepository.GenerateStub<IModelBinder>();
+            matchingBinder.Stub(x => x.Matches(_type)).Return(true);
+            matchingBinder.Stub(x => x.Bind(_type, data)).Throw(new Exception("fake message"));
+            binders.Add(matchingBinder);
+        }
+
+        [Test]
+        public void should_throw_fubu_exception_2201()
+        {
+            FubuException fubuException = typeof(FubuException).ShouldBeThrownBy(() =>
+                resolver.BindModel(_type, data)) as FubuException;
+            fubuException.ShouldNotBeNull().Message.ShouldEqual(
+                "FubuMVC Error 2201:  \nFatal error while binding model of type {0}.  See inner exception"
+                .ToFormat(_type.AssemblyQualifiedName));
+        }
     }
 
 
