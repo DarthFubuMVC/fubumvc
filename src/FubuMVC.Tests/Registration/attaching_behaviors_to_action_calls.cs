@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Registration
 
             graph.Actions().Each(x =>
             {
-                x.Previous.ShouldBeOfType<Wrapper>();
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
             });
         }
 
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration
 
             graph.Actions().Each(x =>
             {
-                x.Previous.ShouldBeOfType<Wrapper>();
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
             });
         }
 
@@ -54,7 +54,27 @@ namespace FubuMVC.Tests.Registration
 
             graph.Actions().Each(x =>
             {
-                x.Previous.ShouldBeOfType<Wrapper>();
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
+            });
+        }
+
+        [Test]
+        public void can_prepend_behaviors_in_front_of_an_action_4()
+        {
+            graph = new FubuRegistry(x =>
+            {
+                x.Applies.ToThisAssembly();
+                x.Actions.IncludeTypesNamed(o => o.EndsWith("Controller"));
+
+                x.Policies.AlterActions(a => a.WrapWith<MyWrapper>());
+
+            }).BuildGraph();
+
+            graph.Actions().Each(x => x.WrapWith(typeof(MyWrapper)));
+
+            graph.Actions().Each(x =>
+            {
+                x.Previous.ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(MyWrapper));
             });
         }
     }
