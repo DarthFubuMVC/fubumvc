@@ -83,6 +83,11 @@ namespace FubuMVC.Core.Registration
 
         public IEnumerable<ActionCall> Actions()
         {
+            return allActions().ToList();
+        }
+
+        private IEnumerable<ActionCall> allActions()
+        {
             foreach (BehaviorChain chain in _behaviors)
             {
                 foreach (ActionCall call in chain.Calls)

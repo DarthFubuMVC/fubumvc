@@ -98,6 +98,19 @@ namespace FubuMVC.Core.Registration.Nodes
             newNode.Next = this;
         }
 
+        public Wrapper WrapWith<T>() where T : IActionBehavior
+        {
+            return WrapWith(typeof (T));
+        }
+
+        public Wrapper WrapWith(Type behaviorType)
+        {
+            var wrapper = new Wrapper(behaviorType);
+            AddBefore(wrapper);
+
+            return wrapper;
+        }
+
         public virtual void AddToEnd(BehaviorNode node)
         {
             BehaviorNode last = this.LastOrDefault() ?? this;

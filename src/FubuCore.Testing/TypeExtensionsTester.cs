@@ -33,6 +33,12 @@ namespace FubuCore.Testing
         }
 
         [Test]
+        public void closes_applies_to_implementing_an_open_interface()
+        {
+            typeof(ConcreteListener).Closes(typeof(IListener<>)).ShouldBeTrue();
+        }
+
+        [Test]
         public void find_interface_that_closes_open_interface()
         {
             typeof (Service1).FindInterfaceThatCloses(typeof (IService<>))
@@ -41,6 +47,16 @@ namespace FubuCore.Testing
             typeof (Service2).FindInterfaceThatCloses(typeof (IService<>))
                 .ShouldBeNull();
         }
+
+        [Test]
+        public void find_interface_that_closes_open_interface_from_another_interface()
+        {
+            typeof (TestHandler).FindInterfaceThatCloses(typeof (IMessageHandler<>)).ShouldEqual(
+                typeof (IMessageHandler<string>));
+        }
+
+        public interface IMessageHandler<T>{}
+        public interface TestHandler : IMessageHandler<string>{}
 
         [Test]
         public void implements_interface_template()
@@ -184,6 +200,9 @@ namespace FubuCore.Testing
         public class Message3 : AbstractMessage{}
         public class Message1 : IMessage{}
         public class Message2 : Message1{}
+
+        public interface IListener<T>{}
+        public class ConcreteListener : IListener<string>{}
     
     }
 
