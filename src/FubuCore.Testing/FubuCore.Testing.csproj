@@ -44,6 +44,10 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -57,10 +61,20 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Binding\ASPNetObjectConversionFamilyTester.cs" />
+    <Compile Include="Binding\BasicTypeConverterTester.cs" />
+    <Compile Include="Binding\BindingResultTester.cs" />
+    <Compile Include="Binding\ConverterExpressionTester.cs" />
+    <Compile Include="Binding\ConvertProblemTester.cs" />
+    <Compile Include="Binding\InMemoryRequestDataTester.cs" />
+    <Compile Include="Binding\RequestDataTester.cs" />
+    <Compile Include="Binding\ServiceArgumentsTester.cs" />
+    <Compile Include="Binding\TypeDescriptorCacheTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
     <Compile Include="FubuExceptionTester.cs" />
     <Compile Include="GenericEnumerableExtensionsTester.cs" />
+    <Compile Include="NumberExtensionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Reflection\ReflectionHelperTester.cs" />
@@ -69,6 +83,7 @@
     <Compile Include="StringifierTester.cs" />
     <Compile Include="TestObject.cs" />
     <Compile Include="TypeExtensionsTester.cs" />
+    <Compile Include="UrlContextTester.cs" />
     <Compile Include="Util\CacheTester.cs" />
     <Compile Include="Util\CompositePredicateTester.cs" />
   </ItemGroup>
@@ -77,9 +92,6 @@
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Binding\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
