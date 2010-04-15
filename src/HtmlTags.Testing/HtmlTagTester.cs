@@ -230,8 +230,15 @@ namespace HtmlTags.Testing
         {
             var tag = new HtmlTag("div");
             tag.Text("<b>Hi</b>");
-
             tag.ToString().ShouldEqual("<div>&lt;b&gt;Hi&lt;/b&gt;</div>");
+        }
+
+        [Test]
+        public void should_respect_subclass_encode_preference()
+        {
+            var tag = new NonEncodedTag("div");
+            tag.Text("<b>Hi</b>");
+            tag.ToString().ShouldEqual("<div><b>Hi</b></div>");
         }
 
         [Test]
@@ -258,6 +265,19 @@ namespace HtmlTags.Testing
         {
             public string Display { get; set; }
             public string Value { get; set; }
+        }
+
+        public class NonEncodedTag : HtmlTag
+        {
+            public NonEncodedTag(string tag) : base(tag)
+            {
+                EncodeInnerText = false;
+            }
+
+            public NonEncodedTag(string tag, Action<HtmlTag> configure) : base(tag, configure)
+            {
+                EncodeInnerText = false;
+            }
         }
     }
 }

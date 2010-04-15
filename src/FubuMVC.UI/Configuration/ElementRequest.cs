@@ -61,7 +61,8 @@ namespace FubuMVC.UI.Configuration
 
         public string StringValue()
         {
-            return _stringifier.GetString(Accessor.InnerProperty, RawValue);
+            return
+                _stringifier.GetStringRequest(new GetStringRequest(Model, Accessor.InnerProperty, RawValue));
         }
 
         public bool ValueIsEmpty()

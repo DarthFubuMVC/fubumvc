@@ -1,5 +1,6 @@
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -114,6 +115,18 @@ namespace FubuMVC.Tests.Registration
         public void model_binder_cache_is_registered()
         {
             registeredTypeIs<IModelBinderCache, ModelBinderCache>();
+        }
+
+        [Test]
+        public void streaming_data_is_registered()
+        {
+            registeredTypeIs<IStreamingData, StreamingData>();
+        }
+
+        [Test]
+        public void default_json_reader_is_JavascriptDeserializer_flavor()
+        {
+            registeredTypeIs<IJsonReader, JavaScriptJsonReader>();
         }
     }
 }
