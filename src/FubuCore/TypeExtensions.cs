@@ -67,21 +67,25 @@ namespace FubuCore
             return false;
         }
 
-        public static Type FindInterfaceThatCloses(this Type pluggedType, Type templateType)
+        public static Type FindInterfaceThatCloses(this Type type, Type openType)
         {
-            if (!pluggedType.IsConcrete()) return null;
+            if (type.IsInterface && type.IsGenericType && type.GetGenericTypeDefinition() == openType) return type;
 
-            foreach (Type interfaceType in pluggedType.GetInterfaces())
+            
+            foreach (Type interfaceType in type.GetInterfaces())
             {
-                if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == templateType)
+                if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == openType)
                 {
                     return interfaceType;
                 }
             }
 
-            return pluggedType.BaseType == typeof (object)
+            if (!type.IsConcrete()) return null;
+
+
+            return type.BaseType == typeof (object)
                        ? null
-                       : pluggedType.BaseType.FindInterfaceThatCloses(templateType);
+                       : type.BaseType.FindInterfaceThatCloses(openType);
         }
 
         public static bool IsNullable(this Type type)
@@ -91,7 +95,14 @@ namespace FubuCore
 
         public static bool Closes(this Type type, Type openType)
         {
+            if (type == null) return false;
+
             if (type.IsGenericType && type.GetGenericTypeDefinition() == openType) return true;
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                if (@interface.Closes(openType)) return true;
+            }
 
             Type baseType = type.BaseType;
             if (baseType == null) return false;

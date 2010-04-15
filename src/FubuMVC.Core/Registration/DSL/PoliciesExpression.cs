@@ -43,14 +43,28 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        private void addPolicy(Action<BehaviorGraph> action)
+        {
+            var policy = new LambdaConfigurationAction(action);
+            _actions.Add(policy);
+        }
+
         public PoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
         {
-            var policy =
-                new LambdaConfigurationAction(
-                    graph => { graph.Actions().Where(filter).Each(call => { call.AddAfter(Wrapper.For<T>()); }); });
+            addPolicy(graph =>
+            {
+                graph.Actions().Where(filter).Each(call =>
+                {
+                    call.AddAfter(Wrapper.For<T>());
+                });
+            });
 
+            return this;
+        }
 
-            _actions.Fill(policy);
+        public PoliciesExpression AlterActions(Action<ActionCall> configure)
+        {
+            addPolicy(graph => graph.Actions().Each(configure));
 
             return this;
         }

@@ -16,6 +16,8 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class BehaviorGraphTester
     {
+
+
         [Test]
         public void RegisterService_can_be_called_multiple_times_to_store_multiple_implementations()
         {
