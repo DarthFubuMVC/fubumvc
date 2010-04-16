@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace FubuCore
 {
@@ -167,6 +168,83 @@ namespace FubuCore
         public static bool IsNotConcrete(this Type type)
         {
             return !type.IsConcrete();
+        }
+
+        /// <summary>
+        /// Returns true if the type is a DateTime or nullable DateTime
+        /// </summary>
+        /// <param name="typeToCheck"></param>
+        /// <returns></returns>
+        public static bool IsDateTime(this Type typeToCheck)
+        {
+            return typeToCheck == typeof(DateTime) || typeToCheck == typeof(DateTime?);
+        }
+
+        /// <summary>
+        /// Displays type names using CSharp syntax style. Supports funky generic types.
+        /// </summary>
+        /// <param name="type">Type to be pretty printed</param>
+        /// <returns></returns>
+        public static string PrettyPrint(this Type type)
+        {
+            return type.PrettyPrint(t => t.Name);
+        }
+
+        /// <summary>
+        /// Displays type names using CSharp syntax style. Supports funky generic types.
+        /// </summary>
+        /// <param name="type">Type to be pretty printed</param>
+        /// <param name="selector">Function determining the name of the type to be displayed. Useful if you want a fully qualified name.</param>
+        /// <returns></returns>
+        public static string PrettyPrint(this Type type, Func<Type, string> selector)
+        {
+            string typeName = selector(type) ?? string.Empty;
+            if (!type.IsGenericType)
+            {
+                return typeName;
+            }
+
+            Func<Type, string> genericParamSelector = type.IsGenericTypeDefinition ? t => t.Name : selector;
+            string genericTypeList = String.Join(",", type.GetGenericArguments().Select(genericParamSelector).ToArray());
+            int tickLocation = typeName.IndexOf('`');
+            if (tickLocation >= 0)
+            {
+                typeName = typeName.Substring(0, tickLocation);
+            }
+            return string.Format("{0}<{1}>", typeName, genericTypeList);
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating whether or not the type is:
+        /// int, long, decimal, short, float, or double
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Bool indicating whether the type is numeric</returns>
+        public static bool IsNumeric(this Type type)
+        {
+            return type.IsFloatingPoint() || type.IsIntegerBased();
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating whether or not the type is:
+        /// int, long or short
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Bool indicating whether the type is integer based</returns>
+        public static bool IsIntegerBased(this Type type)
+        {
+            return type == typeof(int) || type == typeof(long) || type == typeof(short);
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating whether or not the type is:
+        /// decimal, float or double
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Bool indicating whether the type is floating point</returns>
+        public static bool IsFloatingPoint(this Type type)
+        {
+            return type == typeof(decimal) || type == typeof(float) || type == typeof(double);
         }
     }
 }

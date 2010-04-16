@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes

@@ -83,7 +83,7 @@ namespace FubuCore.Reflection
 
         public static bool IsInteger(this Accessor accessor)
         {
-            return accessor.PropertyType.IsTypeOrNullableOf<int>();
+            return accessor.PropertyType.IsTypeOrNullableOf<int>() || accessor.PropertyType.IsTypeOrNullableOf<long>();
         }
     }
 }

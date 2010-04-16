@@ -34,6 +34,17 @@ namespace FubuCore.Testing
             "something".IsNotEmpty().ShouldBeTrue();
         }
 
+
+        [Test]
+        public void converting_plain_text_line_returns_to_line_breaks()
+        {
+            const string plainText = "before\nmiddle\r\nafter";
+
+            var textWithBreaks = plainText.ConvertCRLFToBreaks();
+
+            textWithBreaks.ShouldEqual(@"before<br/>middle<br/>after");
+        }
+
         [Test]
         public void to_bool()
         {
