@@ -5,6 +5,7 @@ using System.Reflection;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -155,6 +156,9 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
             graph.Services.SetServiceIfNone(_partialViewTypes);
+
+            graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
+            graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
         }
 
         #region Nested type: RegistryImport

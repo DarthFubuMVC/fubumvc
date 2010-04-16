@@ -109,6 +109,12 @@ namespace FubuMVC.Core.Registration
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
+        public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
+        {
+            ActionCall call = ActionCall.For(expression);
+            return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
+        }
+
         public void VisitRoutes(IRouteVisitor visitor)
         {
             RouteIterator.Over(_behaviors).Each(x => visitor.VisitRoute(x.Route, x));

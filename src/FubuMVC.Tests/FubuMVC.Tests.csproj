@@ -57,6 +57,12 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -80,6 +86,7 @@
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
+    <Compile Include="Behaviors\DeserializeJsonBehaviorTester.cs" />
     <Compile Include="Behaviors\DownloadFileBehaviorTester.cs" />
     <Compile Include="Behaviors\LoadCurrentPrincipalTester.cs" />
     <Compile Include="Behaviors\RenderHtmlBehaviorTester.cs" />
@@ -145,6 +152,7 @@
     <Compile Include="Registration\Expressions\ModelExpressionTester.cs" />
     <Compile Include="Registration\Expressions\WrapBehaviorChainsWithTester.cs" />
     <Compile Include="Registration\Nodes\BehaviorChainTester.cs" />
+    <Compile Include="Registration\Nodes\DeserializeJsonNodeTester.cs" />
     <Compile Include="Registration\Nodes\WebFormRenderTester.cs" />
     <Compile Include="Registration\RouteVisitorTester.cs" />
     <Compile Include="Registration\ServiceRegistryTester.cs" />
@@ -160,6 +168,7 @@
     <Compile Include="Registration\ObjectDefTester.cs" />
     <Compile Include="Registration\RouteDefinitionTester.cs" />
     <Compile Include="Runtime\BindingContextTester.cs" />
+    <Compile Include="Runtime\InMemoryStreamingData.cs" />
     <Compile Include="Runtime\PrefixedRequestDataTester.cs" />
     <Compile Include="Runtime\RequestDataTester.cs" />
     <Compile Include="Runtime\FubuHttpHandlerTester.cs" />
