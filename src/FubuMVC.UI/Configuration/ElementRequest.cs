@@ -10,7 +10,7 @@ namespace FubuMVC.UI.Configuration
         private readonly Stringifier _stringifier;
         private bool _hasFetched;
         private object _rawValue;
-        private IServiceLocator _services;
+        private readonly IServiceLocator _services;
 
         public ElementRequest(object model, Accessor accessor, IServiceLocator services, Stringifier stringifier)
         {

@@ -60,11 +60,12 @@
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />
-    <Compile Include="Forms\RenderPartialExpression.cs" />
+    <Compile Include="Partials\RenderPartialExpression.cs" />
     <Compile Include="FubuPageExtensions.cs" />
     <Compile Include="FubuRegistryUIExtensions.cs" />
     <Compile Include="Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="Configuration\Interfaces.cs" />
+    <Compile Include="PartialExpressionExtensions.cs" />
     <Compile Include="Tags\PartialLambdaElementModifier.cs" />
     <Compile Include="Tags\PartialTagActionExpression.cs" />
     <Compile Include="Tags\PartialTagFactory.cs" />

@@ -1,7 +1,7 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
-using FubuMVC.UI.Forms;
+using FubuMVC.UI.Partials;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;

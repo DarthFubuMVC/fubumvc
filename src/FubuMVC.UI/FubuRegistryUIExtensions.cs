@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Tags;
 
 namespace FubuMVC.UI
 {
@@ -22,6 +23,7 @@ namespace FubuMVC.UI
         public static void HtmlConvention(this FubuRegistry registry, HtmlConventionRegistry conventions)
         {
             registry.Services(x => x.AddService(conventions));
+            
             registry.Policies.Add<HtmlConventionCompiler>();
         }
 
