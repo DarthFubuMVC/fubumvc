@@ -201,7 +201,6 @@
     <Compile Include="UI\PartialViewTypeRegistrationTester.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UI\StringifierIntegrationTester.cs" />
     <Compile Include="UI\TagFactoryTester.cs" />
     <Compile Include="UI\TagGeneratorTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />

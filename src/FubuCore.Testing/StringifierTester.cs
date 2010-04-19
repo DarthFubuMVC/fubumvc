@@ -63,10 +63,18 @@ namespace FubuCore.Testing
             stringifier.GetString("a").ShouldEqual("a");
         }
 
+        private void configure(Action<StringConversionRegistry> configure)
+        {
+            var registry = new StringConversionRegistry();
+            configure(registry);
+
+            registry.Configure(stringifier);
+        }
+
         [Test]
         public void register_a_string_conversion_for_a_class()
         {
-            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+            configure(x => x.IfIsType<Address>().ConvertBy(a => "{0}, {1}".ToFormat(a.Address1, a.City)));
 
             var address = new Address
             {
@@ -80,10 +88,14 @@ namespace FubuCore.Testing
         [Test]
         public void register_a_property_override_for_a_string_conversion()
         {
-            //default formatting for Address objects
-            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
-            //specific override formatting for Address objects named Shipping
-            stringifier.IfPropertyMatches<Address>(prop => prop.Name == "Shipping", a => "{1}-{0}".ToFormat(a.Address1, a.City));
+            configure(x =>
+            {
+                //specific override formatting for Address objects named Shipping
+                x.IfPropertyMatches<Address>(prop => prop.Name == "Shipping").ConvertBy(a => "{1}-{0}".ToFormat(a.Address1, a.City));
+
+                //default formatting for Address objects
+                x.IfIsType<Address>().ConvertBy(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+            });
 
             var address = new Address
             {
@@ -106,17 +118,21 @@ namespace FubuCore.Testing
         {
             PropertyInfo passedProperty = null;
 
-            //default formatting for Address objects
-            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
-            
-            //specific override formatting for Address objects named Shipping
-            stringifier.IfPropertyMatches<Address>(
-                prop => prop.Name == "Shipping", 
-                (req, value) =>
-                {
-                    passedProperty = req.Property;
-                    return "{1}-{0}".ToFormat(value.Address1, value.City);
-                });
+            configure(x =>
+            {
+                //specific override formatting for Address objects named Shipping
+                x.IfPropertyMatches<Address>(prop => prop.Name == "Shipping")
+                    .ConvertBy((req, value) =>
+                    {
+                        passedProperty = req.Property;
+                        return "{1}-{0}".ToFormat(value.Address1, value.City);
+                    });
+                
+                //default formatting for Address objects
+                x.IfIsType<Address>().ConvertBy(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+
+
+            });
 
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
@@ -133,17 +149,21 @@ namespace FubuCore.Testing
         {
             object passedModel = null;
 
-            //default formatting for Address objects
-            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+            configure(x =>
+            {
+                //specific override formatting for Address objects named Shipping
+                x.IfPropertyMatches<Address>(prop => prop.Name == "Shipping")
+                    .ConvertBy((req, value) =>
+                    {
+                        passedModel = req.Model;
+                        return "{1}-{0}".ToFormat(value.Address1, value.City);
+                    });
 
-            //specific override formatting for Address objects named Shipping
-            stringifier.IfPropertyMatches<Address>(
-                prop => prop.Name == "Shipping",
-                (req, value) =>
-                {
-                    passedModel = req.Model;
-                    return "{1}-{0}".ToFormat(value.Address1, value.City);
-                });
+                //default formatting for Address objects
+                x.IfIsType<Address>().ConvertBy(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+
+
+            });
 
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
@@ -160,17 +180,20 @@ namespace FubuCore.Testing
         {
             object passedRawValue = null;
 
-            //default formatting for Address objects
-            stringifier.IfIsType<Address>(a => "{0}, {1}".ToFormat(a.Address1, a.City));
-
-            //specific override formatting for Address objects named Shipping
-            stringifier.IfPropertyMatches<Address>(
-                prop => prop.Name == "Shipping",
-                (req, value) =>
+            configure(x =>
+            {
+                //specific override formatting for Address objects named Shipping
+                x.IfPropertyMatches<Address>(prop => prop.Name == "Shipping").ConvertBy((req, value) =>
                 {
                     passedRawValue = req.RawValue;
                     return "{1}-{0}".ToFormat(value.Address1, value.City);
                 });
+                
+                //default formatting for Address objects
+                x.IfIsType<Address>().ConvertBy(a => "{0}, {1}".ToFormat(a.Address1, a.City));
+
+
+            });
 
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
@@ -186,7 +209,7 @@ namespace FubuCore.Testing
         [Test]
         public void register_a_string_conversion_for_a_series_of_types()
         {
-            stringifier.IfCanBeCastToType<Something>(s => s.Description);
+            configure(x => x.IfCanBeCastToType<Something>().ConvertBy(s => s.Description));
 
             stringifier.GetString(new RedSomething()).ShouldEqual("Red");
             stringifier.GetString(new BlueSomething()).ShouldEqual("Blue");
@@ -195,8 +218,9 @@ namespace FubuCore.Testing
         [Test]
         public void register_a_string_conversion_function_by_a_struct_type()
         {
-            stringifier.IfIsType<DateTime>(d => d.ToShortDateString());
+            configure(x => x.IfIsType<DateTime>().ConvertBy(d => d.ToShortDateString()));
 
+       
             DateTime date = DateTime.Today;
             stringifier.GetString(date).ShouldEqual(date.ToShortDateString());
         }
@@ -204,7 +228,7 @@ namespace FubuCore.Testing
         [Test]
         public void string_conversion_functions_work_for_nullable_types()
         {
-            stringifier.IfIsType<DateTime>(d => d.ToShortDateString());
+            configure(x => x.IfIsType<DateTime>().ConvertBy(d => d.ToShortDateString()));
 
             DateTime date = DateTime.Today;
             stringifier.GetString(date).ShouldEqual(date.ToShortDateString());
@@ -213,7 +237,7 @@ namespace FubuCore.Testing
         [Test]
         public void string_conversion_functions_work_for_nullable_types_that_are_null()
         {
-            stringifier.IfIsType<DateTime>(d => d.ToShortDateString());
+            configure(x => x.IfIsType<DateTime>().ConvertBy(d => d.ToShortDateString()));
 
             stringifier.GetString(DateTime.Parse("17-JAN-2007")).ShouldEqual(DateTime.Parse("17-JAN-2007").ToShortDateString());
         }
@@ -227,7 +251,7 @@ namespace FubuCore.Testing
         [Test]
         public void should_return_empty_when_value_is_null()
         {
-            stringifier.IfIsType<DateTime>(d => d.ToShortDateString());
+            configure(x => x.IfIsType<DateTime>().ConvertBy(d => d.ToShortDateString()));
             stringifier.GetString(null).ShouldEqual("");
         }
 
@@ -236,7 +260,10 @@ namespace FubuCore.Testing
         {
             container.Configure(x => x.For<IWidgetDisplayer>().Use<WidgetDisplayer>());
 
-            stringifier.IfCanBeCastToType<Widget>((r, w) => r.Get<IWidgetDisplayer>().ToDisplay(w));
+            configure(x =>
+            {
+                x.IfCanBeCastToType<Widget>().ConvertBy((r, w) => r.Get<IWidgetDisplayer>().ToDisplay(w));
+            });
 
             var widget = new Widget
             {
