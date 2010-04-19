@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web;
 
 namespace FubuCore
@@ -80,6 +81,24 @@ namespace FubuCore
         public static string PhysicalPath(this string webRelativePath)
         {
             return ToPhysicalPath(webRelativePath);
+        }
+
+        public static string WithQueryStringValues(this string querystring, params object[] values)
+        {
+            return querystring.ToFormat(values.Select(value => value.ToString().UrlEncoded()).ToArray());
+        }
+
+        public static string ToFullUrl(this string relativeUrl, params object[] args)
+        {
+            string formattedUrl = (args == null) ? relativeUrl : relativeUrl.ToFormat(args);
+
+            return UrlContext.GetFullUrl(formattedUrl);
+        }
+
+        public static string UrlEncoded(this object target)
+        {
+            //properly encoding URI: http://blogs.msdn.com/yangxind/default.aspx
+            return target != null ? Uri.EscapeDataString(target.ToString()) : string.Empty;
         }
     }
 }

@@ -1,4 +1,7 @@
 using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace FubuCore
 {
@@ -34,6 +37,62 @@ namespace FubuCore
         {
             return thisString.Equals(otherString, StringComparison.InvariantCultureIgnoreCase);
         }
-        
+
+        /// <summary>
+        /// Converts the string to Title Case
+        /// </summary>
+        public static string Capitalize(this string stringValue)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(stringValue);
+        }
+
+        public static string HtmlAttributeEncode(this string unEncoded)
+        {
+            return HttpUtility.HtmlAttributeEncode(unEncoded);
+        }
+
+        public static string HtmlEncode(this string unEncoded)
+        {
+            return HttpUtility.HtmlEncode(unEncoded);
+        }
+
+        public static string HtmlDecode(this string encoded)
+        {
+            return HttpUtility.HtmlDecode(encoded);
+        }
+
+        public static string UrlEncode(this string unEncoded)
+        {
+            return HttpUtility.UrlEncode(unEncoded);
+        }
+
+        public static string UrlDecode(this string encoded)
+        {
+            return HttpUtility.UrlDecode(encoded);
+        }
+
+        /// <summary>
+        /// Formats a multi-line string for display on the web
+        /// </summary>
+        /// <param name="plainText"></param>
+        public static string ConvertCRLFToBreaks(this string plainText)
+        {
+            return new Regex("(\r\n|\n)").Replace(plainText, "<br/>");
+        }
+
+        /// <summary>
+        /// Returns a DateTime value parsed from the <paramref name="dateTimeValue"/> parameter.
+        /// </summary>
+        /// <param name="dateTimeValue">A valid, parseable DateTime value</param>
+        /// <returns>The parsed DateTime value</returns>
+        public static DateTime ToDateTime(this string dateTimeValue)
+        {
+            return DateTime.Parse(dateTimeValue);
+        }
+
+        public static string ToGmtFormattedDate(this DateTime date)
+        {
+            return date.ToString("yyyy'-'MM'-'dd hh':'mm':'ss tt 'GMT'");
+        }
     }
 }

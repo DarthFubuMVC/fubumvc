@@ -67,6 +67,11 @@ namespace FubuMVC.Tests.UI
         private TagGenerator<Address> generator;
         private Container container;
 
+        [Test]
+        public void tags_generator_is_registered()
+        {
+            container.GetInstance<ITagGenerator<Address>>().ShouldBeOfType<TagGenerator<Address>>();
+        }
 
         [Test]
         public void builders_are_back_filled_from_the_defaults_into_profiles()

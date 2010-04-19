@@ -29,6 +29,7 @@ namespace FubuMVC.UI.Tags
         string CurrentProfile { get; }
         T Model { get; set; }
         ElementRequest GetRequest(Accessor accessor);
+
         HtmlTag BeforePartial(ElementRequest request);
         HtmlTag AfterPartial(ElementRequest request);
         HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
@@ -129,6 +130,9 @@ namespace FubuMVC.UI.Tags
 
         private void determineElementName(ElementRequest request)
         {
+            // TODO -- this is a klooge because of the tag wrapping around partials
+            if (request.Accessor == null) return;
+
             var prefix = ElementPrefix ?? string.Empty;
             request.ElementId = prefix + _namingConvention.GetName(typeof(T), request.Accessor);
         }

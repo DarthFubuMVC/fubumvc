@@ -24,6 +24,11 @@ namespace FubuMVC.Core.Registration
             });
         }
 
+        public void SetServiceIfNone(Type interfaceType, Type concreteType)
+        {
+            fill(interfaceType, new ObjectDef(concreteType));
+        }
+
         public ObjectDef AddService<TService, TImplementation>() where TImplementation : TService
         {
             var objectDef = new ObjectDef(typeof (TImplementation));

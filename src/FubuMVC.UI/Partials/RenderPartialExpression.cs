@@ -7,10 +7,11 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
+using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 
 
-namespace FubuMVC.UI.Forms
+namespace FubuMVC.UI.Partials
 {
     public class RenderPartialExpression<TViewModel>
         where TViewModel : class
@@ -32,6 +33,8 @@ namespace FubuMVC.UI.Forms
 
         public RenderPartialExpression(TViewModel model, IFubuPage parentPage, IPartialRenderer renderer, ITagGenerator<TViewModel> tagGenerator)
         {
+            if (tagGenerator == null) throw new ArgumentNullException("tagGenerator");
+
             _model = model;
             _renderer = renderer;
             _tagGenerator = tagGenerator;
@@ -78,6 +81,7 @@ namespace FubuMVC.UI.Forms
             return this;
         }
 
+        
         public RenderPartialExpression<TViewModel> WithoutListWrapper()
         {
             _renderListWrapper = false;
@@ -145,40 +149,56 @@ namespace FubuMVC.UI.Forms
             return builder.ToString();
         }
 
+        private bool shouldRenderListWrapper()
+        {
+            return _accessor != null && _renderListWrapper;
+        }
+
+        private bool shouldRenderItemWrapper()
+        {
+            return _accessor != null && _renderItemWrapper;
+        }
+
+        private ElementRequest elementRequest()
+        {
+            return _tagGenerator.GetRequest(_accessor);
+        }
+
         private void renderMultiplePartials<TPartialViewModel>(StringBuilder builder, IEnumerable<TPartialViewModel> list) 
             where TPartialViewModel : class
         {
-            if (_renderListWrapper)
+            if (shouldRenderListWrapper())
             {
-                var before = _tagGenerator.BeforePartial(_tagGenerator.GetRequest(_accessor));
+                var before = _tagGenerator.BeforePartial(elementRequest());
                 builder.Append(before);
             }
+
 
             var render_multiple_count = list.Count();
             var current = 0;
 
             list.Each(m =>
             {
-                if (_renderItemWrapper)
+                if (shouldRenderItemWrapper())
                 {
-                    var beforeEach = _tagGenerator.BeforeEachofPartial(_tagGenerator.GetRequest(_accessor), current, render_multiple_count);
+                    var beforeEach = _tagGenerator.BeforeEachofPartial(elementRequest(), current, render_multiple_count);
                     builder.Append(beforeEach);
                 }
 
                 var output = _renderer.Render<TPartialViewModel>(_partialView, m, _prefix);
                 builder.Append(output);
 
-                if (_renderItemWrapper)
+                if (shouldRenderItemWrapper())
                 {
-                    var afterEach = _tagGenerator.AfterEachofPartial(_tagGenerator.GetRequest(_accessor), current, render_multiple_count);
+                    var afterEach = _tagGenerator.AfterEachofPartial(elementRequest(), current, render_multiple_count);
                     builder.Append(afterEach);
                 }
                 current++;
             });
 
-            if (_renderListWrapper)
+            if (shouldRenderListWrapper())
             {
-                var after = _tagGenerator.AfterPartial(_tagGenerator.GetRequest(_accessor));
+                var after = _tagGenerator.AfterPartial(elementRequest());
                 builder.Append(after);
             }
         }

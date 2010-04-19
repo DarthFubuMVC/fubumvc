@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace FubuCore.Util
 {
-    // TODO - go find whereever the original unit tests are and put them in here.
     [Serializable]
     public class Cache<TKey, TValue> : IEnumerable<TValue> 
     {
@@ -63,17 +62,7 @@ namespace FubuCore.Util
         }
 
         public TValue this[TKey key] { get {
-            if (!_values.ContainsKey(key))
-            {
-                lock (_locker)
-                {
-                    if (!_values.ContainsKey(key))
-                    {
-                        TValue value = _onMissing(key);
-                        _values.Add(key, value);
-                    }
-                }
-            }
+            FillDefault(key);
 
             return _values[key];
         } set
@@ -88,6 +77,26 @@ namespace FubuCore.Util
                 _values.Add(key, value);
             }
         }
+        }
+
+        /// <summary>
+        /// Guarantees that the Cache has the default value for a given key.
+        /// If it does not already exist, it's created.
+        /// </summary>
+        /// <param name="key"></param>
+        public void FillDefault(TKey key)
+        {
+            if (!_values.ContainsKey(key))
+            {
+                lock (_locker)
+                {
+                    if (!_values.ContainsKey(key))
+                    {
+                        TValue value = _onMissing(key);
+                        _values.Add(key, value);
+                    }
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

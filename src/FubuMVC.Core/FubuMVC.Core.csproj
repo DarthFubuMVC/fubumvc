@@ -131,7 +131,6 @@
     <Compile Include="Registration\DSL\ActionCallFilterExpression.cs" />
     <Compile Include="Registration\DSL\AppliesToExpression.cs" />
     <Compile Include="Attributes.cs" />
-    <Compile Include="UrlExtensions.cs" />
     <Compile Include="Behaviors\BasicBehavior.cs" />
     <Compile Include="DoNext.cs" />
     <Compile Include="Behaviors\IActionBehavior.cs" />

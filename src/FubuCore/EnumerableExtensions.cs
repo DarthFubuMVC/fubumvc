@@ -11,10 +11,40 @@ namespace System.Collections.Generic
             list.Add(value);
         }
 
-        public static string Join(this IEnumerable<string> strings, string separator)
+        /// <summary>
+        /// Removes all of the items that match the provided condition
+        /// </summary>
+        /// <typeparam name="T">The type of the items in the list</typeparam>
+        /// <param name="list">The list to modify</param>
+        /// <param name="whereEvaluator">The test to determine if an item should be removed</param>
+        public static void RemoveAll<T>(this IList<T> list, Func<T, bool> whereEvaluator)
         {
-            string[] array = strings.ToArray();
-            return string.Join(separator, array);
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                if (whereEvaluator(list[i])) list.RemoveAt(i);
+            }
+        }
+
+        /// <summary>
+        /// Concatenates a string between each item in a list of strings
+        /// </summary>
+        /// <param name="values">The array of strings to join</param>
+        /// <param name="separator">The value to concatenate between items</param>
+        /// <returns></returns>
+        public static string Join(this string[] values, string separator)
+        {
+            return String.Join(separator, values);
+        }
+
+        /// <summary>
+        /// Concatenates a string between each item in a sequence of strings
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static string Join(this IEnumerable<string> values, string separator)
+        {
+            return Join(values.ToArray(), separator);
         }
 
         /// <summary>
@@ -74,9 +104,16 @@ namespace System.Collections.Generic
             return list.AddRange(items);
         }
 
+        /// <summary>
+        /// Appends a sequence of items to an existing list
+        /// </summary>
+        /// <typeparam name="T">The type of the items in the list</typeparam>
+        /// <param name="list">The list to modify</param>
+        /// <param name="items">The sequence of items to add to the list</param>
+        /// <returns></returns>
         public static IList<T> AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
-            items.Each(t => list.Add(t));
+            items.Each(list.Add);
             return list;
         }
     }

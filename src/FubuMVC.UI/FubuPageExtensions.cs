@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Forms;
 using FubuMVC.UI.Tags;
 using HtmlTags;
-
 
 namespace FubuMVC.UI
 {
@@ -24,40 +19,6 @@ namespace FubuMVC.UI
             return generator;
         }
 
-        public static void Partial<TInputModel>(this IFubuPage page) where TInputModel : class
-        {
-            InvokePartial<TInputModel>(page, null);
-        }
-
-        public static void Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
-        {
-            page.Get<IFubuRequest>().Set(model);
-            InvokePartial<TInputModel>(page, null);
-        }
-
-        public static RenderPartialExpression<TInputModel> PartialForEach<TInputModel, TPartialModel>(
-            this IFubuPage<TInputModel> page, Expression<Func<TInputModel, IEnumerable<TPartialModel>>> listExpression) 
-            where TInputModel : class
-            where TPartialModel : class
-        {
-            var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>(), Tags<TInputModel>(page))
-                .ForEachOf(listExpression);
-
-            SearchPartialView<TInputModel, TPartialModel>(page, expression);
-            return expression;
-        }
-
-        private static void SearchPartialView<TInputModel, TPartialModel>(IFubuPage<TInputModel> page, RenderPartialExpression<TInputModel> expression) where TInputModel : class
-        {
-            var renderer = page.ServiceLocator.GetInstance<IPartialViewTypeRegistry>();
-            if (renderer.HasPartialViewTypeFor<TPartialModel>())
-                expression.Using(renderer.GetPartialViewTypeFor<TPartialModel>());
-        }
-
-        private static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
-        {
-            page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
-        }
 
         public static HtmlTag LinkTo<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
@@ -80,28 +41,33 @@ namespace FubuMVC.UI
             return page.LinkVariable(variable, new TInput());
         }
 
-        public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
+            where T : class
         {
             return page.Tags().InputFor(expression);
         }
 
-        public static HtmlTag LabelFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        public static HtmlTag LabelFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
+            where T : class
         {
             return page.Tags().LabelFor(expression);
         }
 
-        public static HtmlTag DisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        public static HtmlTag DisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
+            where T : class
         {
             return page.Tags().DisplayFor(expression);
         }
 
-        
-        public static string ElementNameFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+
+        public static string ElementNameFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
+            where T : class
         {
             return page.Get<IElementNamingConvention>().GetName(typeof (T), expression.ToAccessor());
         }
 
-        public static TextboxTag TextBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        public static TextboxTag TextBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
+            where T : class
         {
             string name = ElementNameFor(page, expression);
             string value = page.Model.ValueOrDefault(expression).ToString();
@@ -134,14 +100,14 @@ namespace FubuMVC.UI
 
         public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
         {
-            var url = view.Urls.UrlFor(expression);
+            string url = view.Urls.UrlFor(expression);
             return new FormTag(url);
         }
 
 
         public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
         {
-            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
+            string url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
 
             return new FormTag(url);
         }
