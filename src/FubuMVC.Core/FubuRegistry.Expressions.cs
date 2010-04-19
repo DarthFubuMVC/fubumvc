@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Configuration;
@@ -153,6 +154,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
+            graph.Services.SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
             graph.Services.SetServiceIfNone(_partialViewTypes);

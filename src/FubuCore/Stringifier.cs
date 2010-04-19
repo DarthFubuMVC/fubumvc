@@ -8,6 +8,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuCore
 {
+    // TODO -- eliminate this stuff.  Go to strictly using the StringConventionRegistry
     public interface IStringifierConfiguration
     {
         void IfIsType<T>(Func<T, string> display);
@@ -18,6 +19,7 @@ namespace FubuCore
         void IfPropertyMatches(Func<PropertyInfo, bool> matches, Func<GetStringRequest, string> display);
         void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<T, string> display);
         void IfPropertyMatches<T>(Func<PropertyInfo, bool> matches, Func<GetStringRequest, T, string> display);
+        void AddStrategy(StringifierStrategy strategy);
     }
     
     public class Stringifier : IStringifierConfiguration
@@ -103,12 +105,6 @@ namespace FubuCore
             });
         }
 
-        public class StringifierStrategy
-        {
-            public Func<GetStringRequest, bool> Matches;
-            public Func<GetStringRequest, string> StringFunction;
-        }
-
         public class PropertyOverrideStrategy
         {
             public Func<PropertyInfo, bool> Matches;
@@ -142,6 +138,17 @@ namespace FubuCore
         {
             IfPropertyMatches(p => p.PropertyType.CanBeCastTo<T>() && matches(p), r => display(r, (T)r.RawValue));
         }
+
+        public void AddStrategy(StringifierStrategy strategy)
+        {
+            _strategies.Add(strategy);
+        }
+    }
+
+    public class StringifierStrategy
+    {
+        public Func<GetStringRequest, bool> Matches;
+        public Func<GetStringRequest, string> StringFunction;
     }
 
     public class GetStringRequest
@@ -179,6 +186,15 @@ namespace FubuCore
             }
         }
 
+        public string WithFormat(string format)
+        {
+            return string.Format(format, RawValue);
+        }
+
+        // Yes, I made this internal.  Don't necessarily want it in the public interface,
+        // but needs to be "settable"
+        internal IServiceLocator Locator { get { return _locator; } set { _locator = value; } }
+
         public GetStringRequest GetRequestForNullableType()
         {
             return new GetStringRequest()
@@ -197,17 +213,26 @@ namespace FubuCore
             return _locator.GetInstance<T>();
         }
 
-        public Type ModelType { get
-        {
-            return Model.GetType();
-        } }
-
         public Type OwnerType { get; set; }
-        public Type PropertyType { get; set; }
+        private Type _propertyType;
+        public Type PropertyType
+        {
+            get
+            {
+                if (_propertyType == null && Property != null)
+                {
+                    return Property.PropertyType;
+                }
+                
+                return _propertyType;
+            } 
+            set { _propertyType = value; }
+        }
 
         public object Model { get; set; }
         public PropertyInfo Property { get; set; }
         public object RawValue { get; set; }
+        public string Format { get; set; }
     }
 
 

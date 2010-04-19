@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -127,6 +128,12 @@ namespace FubuMVC.Tests.Registration
         public void default_json_reader_is_JavascriptDeserializer_flavor()
         {
             registeredTypeIs<IJsonReader, JavaScriptJsonReader>();
+        }
+
+        [Test]
+        public void display_formatter_is_registered()
+        {
+            registeredTypeIs<IDisplayFormatter, DisplayFormatter>();
         }
     }
 }

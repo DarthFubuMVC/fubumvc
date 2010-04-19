@@ -102,6 +102,7 @@
     <Compile Include="Configuration\AppSettingsRequestData.cs" />
     <Compile Include="Configuration\ISettingsProvider.cs" />
     <Compile Include="DictionaryExtensions.cs" />
+    <Compile Include="DisplayFormatter.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="FubuException.cs" />
     <Compile Include="NumberExtensions.cs" />
