@@ -4,7 +4,6 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 
 namespace FubuMVC.UI
 {
@@ -23,7 +22,7 @@ namespace FubuMVC.UI
         public static void HtmlConvention(this FubuRegistry registry, HtmlConventionRegistry conventions)
         {
             registry.Services(x => x.AddService(conventions));
-            
+
             registry.Policies.Add<HtmlConventionCompiler>();
         }
 
@@ -35,7 +34,7 @@ namespace FubuMVC.UI
             registry.HtmlConvention(conventions);
         }
 
-        public static void StringConversions(this FubuRegistry registry, Action<Stringifier> configure)
+        public static void StringConversions(this FubuRegistry registry, Action<IStringifierConfiguration> configure)
         {
             registry.Policies.Add(new StringifierConfiguration(configure));
             registry.Policies.Add<HtmlConventionCompiler>();
@@ -44,9 +43,9 @@ namespace FubuMVC.UI
 
     public class StringifierConfiguration : IConfigurationAction
     {
-        private readonly Action<Stringifier> _configure;
+        private readonly Action<IStringifierConfiguration> _configure;
 
-        public StringifierConfiguration(Action<Stringifier> configure)
+        public StringifierConfiguration(Action<IStringifierConfiguration> configure)
         {
             _configure = configure;
         }

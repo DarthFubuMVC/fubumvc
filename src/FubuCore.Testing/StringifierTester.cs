@@ -1,7 +1,9 @@
 using System;
 using FubuCore.Reflection;
 using System.Reflection;
+using FubuMVC.StructureMap;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuCore.Testing
 {
@@ -12,9 +14,13 @@ namespace FubuCore.Testing
         public void SetUp()
         {
             stringifier = new Stringifier();
+            container = new Container();
+            locator = new StructureMapServiceLocator(container);
         }
 
         private Stringifier stringifier;
+        private StructureMapServiceLocator locator;
+        private Container container;
 
         public interface Something
         {
@@ -89,10 +95,10 @@ namespace FubuCore.Testing
 
             const string expectedDefaultFormatting = "2050 Ozark, Joplin";
             const string expectedOverrideFormatting = "Joplin-2050 Ozark";
-            var billingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Billing), address);
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
-            stringifier.GetStringRequest(billingRequest).ShouldEqual(expectedDefaultFormatting);
-            stringifier.GetStringRequest(shippingRequest).ShouldEqual(expectedOverrideFormatting);
+            var billingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Billing), address, locator);
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
+            stringifier.GetString(billingRequest).ShouldEqual(expectedDefaultFormatting);
+            stringifier.GetString(shippingRequest).ShouldEqual(expectedOverrideFormatting);
         }
 
         [Test]
@@ -115,9 +121,9 @@ namespace FubuCore.Testing
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
 
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 
-            stringifier.GetStringRequest(shippingRequest);
+            stringifier.GetString(shippingRequest);
 
             passedProperty.Name.ShouldEqual("Shipping");
         }
@@ -142,9 +148,9 @@ namespace FubuCore.Testing
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
 
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 
-            stringifier.GetStringRequest(shippingRequest);
+            stringifier.GetString(shippingRequest);
 
             passedModel.ShouldBeTheSameAs(site);
         }
@@ -169,9 +175,9 @@ namespace FubuCore.Testing
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
 
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetProperty<FakeSite>(s => s.Shipping), address);
+            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 
-            stringifier.GetStringRequest(shippingRequest);
+            stringifier.GetString(shippingRequest);
 
             passedRawValue.ShouldBeTheSameAs(address);
         }
@@ -223,6 +229,41 @@ namespace FubuCore.Testing
         {
             stringifier.IfIsType<DateTime>(d => d.ToShortDateString());
             stringifier.GetString(null).ShouldEqual("");
+        }
+
+        [Test]
+        public void stringifier_can_use_a_service_to_get_at_a_display()
+        {
+            container.Configure(x => x.For<IWidgetDisplayer>().Use<WidgetDisplayer>());
+
+            stringifier.IfCanBeCastToType<Widget>((r, w) => r.Get<IWidgetDisplayer>().ToDisplay(w));
+
+            var widget = new Widget
+            {
+                Color = "Red"
+            };
+
+            var request = new GetStringRequest(null, null, widget, locator);
+
+            stringifier.GetString(request).ShouldEqual("A Red widget");
+        }
+    }
+
+    public class Widget
+    {
+        public string Color { get; set; }
+    }
+
+    public interface IWidgetDisplayer
+    {
+        string ToDisplay(Widget widget);
+    }
+
+    public class WidgetDisplayer : IWidgetDisplayer
+    {
+        public string ToDisplay(Widget widget)
+        {
+            return "A {0} widget".ToFormat(widget.Color);
         }
     }
 
