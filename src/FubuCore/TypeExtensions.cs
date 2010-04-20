@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FubuCore
@@ -46,6 +47,12 @@ namespace FubuCore
         public static bool IsOpenGeneric(this Type type)
         {
             return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
+        }
+
+        public static bool IsGenericEnumerable(this Type type)
+        {
+            var genericArgs = type.GetGenericArguments();
+            return genericArgs.Length == 1 && typeof(IEnumerable<>).MakeGenericType(genericArgs).IsAssignableFrom(type);
         }
 
         public static bool IsConcreteTypeOf<T>(this Type pluggedType)

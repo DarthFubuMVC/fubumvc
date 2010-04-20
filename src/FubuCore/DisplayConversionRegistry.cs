@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-
 
 namespace FubuCore
 {
-    public class StringConversionRegistry
+    public class DisplayConversionRegistry
     {
         private readonly IList<StringifierStrategy> _strategies = new List<StringifierStrategy>();
-
 
 
         public Stringifier BuildStringifier()
@@ -29,7 +26,7 @@ namespace FubuCore
         {
             return new MakeDisplayExpression(func =>
             {
-                _strategies.Add(new StringifierStrategy()
+                _strategies.Add(new StringifierStrategy
                 {
                     Matches = filter,
                     StringFunction = func
@@ -41,7 +38,7 @@ namespace FubuCore
         {
             return new MakeDisplayExpression<T>(func =>
             {
-                _strategies.Add(new StringifierStrategy()
+                _strategies.Add(new StringifierStrategy
                 {
                     Matches = filter,
                     StringFunction = func
@@ -66,28 +63,18 @@ namespace FubuCore
 
         public MakeDisplayExpression IfPropertyMatches(Func<PropertyInfo, bool> matches)
         {
-            return makeDisplay(request => matches(request.Property));
+            return makeDisplay(request => request.Property != null && matches(request.Property));
         }
 
         public MakeDisplayExpression<T> IfPropertyMatches<T>(Func<PropertyInfo, bool> matches)
         {
-            return makeDisplay<T>(request => request.PropertyType == typeof(T) && matches(request.Property));
+            return
+                makeDisplay<T>(
+                    request =>
+                    request.Property != null && request.PropertyType == typeof (T) && matches(request.Property));
         }
 
-        public abstract class MakeDisplayExpressionBase
-        {
-            protected Action<Func<GetStringRequest, string>> _callback;
-
-            public MakeDisplayExpressionBase(Action<Func<GetStringRequest, string>> callback)
-            {
-                _callback = callback;
-            }
-
-            protected void apply(Func<GetStringRequest, string> func)
-            {
-                _callback(func);
-            }
-        }
+        #region Nested type: MakeDisplayExpression
 
         public class MakeDisplayExpression : MakeDisplayExpressionBase
         {
@@ -121,13 +108,34 @@ namespace FubuCore
 
             public void ConvertBy(Func<GetStringRequest, T, string> display)
             {
-                apply(o => display(o, (T)o.RawValue));
+                apply(o => display(o, (T) o.RawValue));
             }
 
             public void ConvertWith<TService>(Func<TService, T, string> display)
             {
-                apply(o => display(o.Get<TService>(), (T)o.RawValue));
+                apply(o => display(o.Get<TService>(), (T) o.RawValue));
             }
         }
+
+        #endregion
+
+        #region Nested type: MakeDisplayExpressionBase
+
+        public abstract class MakeDisplayExpressionBase
+        {
+            protected Action<Func<GetStringRequest, string>> _callback;
+
+            public MakeDisplayExpressionBase(Action<Func<GetStringRequest, string>> callback)
+            {
+                _callback = callback;
+            }
+
+            protected void apply(Func<GetStringRequest, string> func)
+            {
+                _callback(func);
+            }
+        }
+
+        #endregion
     }
 }

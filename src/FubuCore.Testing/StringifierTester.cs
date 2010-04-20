@@ -63,9 +63,9 @@ namespace FubuCore.Testing
             stringifier.GetString("a").ShouldEqual("a");
         }
 
-        private void configure(Action<StringConversionRegistry> configure)
+        private void configure(Action<DisplayConversionRegistry> configure)
         {
-            var registry = new StringConversionRegistry();
+            var registry = new DisplayConversionRegistry();
             configure(registry);
 
             registry.Configure(stringifier);

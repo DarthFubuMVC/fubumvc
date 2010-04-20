@@ -83,6 +83,7 @@
     <Compile Include="FubuExceptionTester.cs" />
     <Compile Include="GenericEnumerableExtensionsTester.cs" />
     <Compile Include="NumberExtensionsTester.cs" />
+    <Compile Include="ObjectConverterTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
     <Compile Include="Reflection\ReflectionHelperTester.cs" />

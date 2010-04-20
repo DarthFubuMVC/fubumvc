@@ -94,5 +94,21 @@ namespace FubuCore
         {
             return date.ToString("yyyy'-'MM'-'dd hh':'mm':'ss tt 'GMT'");
         }
+
+        public static string[] ToDelimitedArray(this string content)
+        {
+            return content.ToDelimitedArray(',');
+        }
+
+        public static string[] ToDelimitedArray(this string content, char delimiter)
+        {
+            string[] array = content.Split(delimiter);
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = array[i].Trim();
+            }
+
+            return array;
+        }
     }
 }

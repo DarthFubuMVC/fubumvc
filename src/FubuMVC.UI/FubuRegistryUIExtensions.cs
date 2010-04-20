@@ -35,14 +35,14 @@ namespace FubuMVC.UI
         }
 
 
-        public static void StringConversions<T>(this FubuRegistry registry) where T : StringConversionRegistry, new()
+        public static void StringConversions<T>(this FubuRegistry registry) where T : DisplayConversionRegistry, new()
         {
             var conversions = new T();
 
             addStringConversions(conversions, registry);
         }
 
-        private static void addStringConversions(StringConversionRegistry conversions, FubuRegistry registry)
+        private static void addStringConversions(DisplayConversionRegistry conversions, FubuRegistry registry)
         {
             var policy = new LambdaConfigurationAction(graph =>
             {
@@ -55,9 +55,9 @@ namespace FubuMVC.UI
             registry.Policies.Add(policy);
         }
 
-        public static void StringConversions(this FubuRegistry registry, Action<StringConversionRegistry> configure)
+        public static void StringConversions(this FubuRegistry registry, Action<DisplayConversionRegistry> configure)
         {
-            var conversions = new StringConversionRegistry();
+            var conversions = new DisplayConversionRegistry();
             configure(conversions);
 
             addStringConversions(conversions, registry);
