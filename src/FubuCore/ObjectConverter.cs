@@ -5,7 +5,14 @@ using FubuCore.Util;
 
 namespace FubuCore
 {
-    public class ObjectConverter
+    public interface IObjectConverter
+    {
+        object FromString(string stringValue, Type type);
+        T FromString<T>(string stringValue);
+        bool CanBeParsed(Type type);
+    }
+
+    public class ObjectConverter : IObjectConverter
     {
         public const string EMPTY = "EMPTY";
         public const string NULL = "NULL";
@@ -119,7 +126,7 @@ namespace FubuCore
             return false;
         }
 
-        public void RegisterFinder<T>(Func<string, T> finder)
+        public void RegisterConverter<T>(Func<string, T> finder)
         {
             _froms[typeof(T)] = x => finder(x);
         }

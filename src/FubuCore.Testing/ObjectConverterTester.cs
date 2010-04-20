@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.StructureMap;
 using NUnit.Framework;
+using StructureMap;
 
 namespace FubuCore.Testing
 {
@@ -60,7 +62,7 @@ namespace FubuCore.Testing
         [Test]
         public void array_of_non_simple_type_that_has_a_finder_can_be_parsed()
         {
-            finder.RegisterFinder(x => new Service(x));
+            finder.RegisterConverter(x => new Service(x));
             finder.CanBeParsed(typeof(Service[])).ShouldBeTrue();
         }
 
@@ -73,14 +75,14 @@ namespace FubuCore.Testing
         [Test]
         public void enumerable_of_non_simple_type_that_has_a_finder_can_be_parsed()
         {
-            finder.RegisterFinder(x => new Service(x));
+            finder.RegisterConverter(x => new Service(x));
             finder.CanBeParsed(typeof(IEnumerable<Service>)).ShouldBeTrue();
         }
 
         [Test]
         public void enumerable_of_non_simple_type_that_has_a_finder_can_be_resolved()
         {
-            finder.RegisterFinder(x => new Service(x));
+            finder.RegisterConverter(x => new Service(x));
             finder.FromString<IEnumerable<Service>>("Josh, Chad, Jeremy, Brandon").ShouldHaveTheSameElementsAs(new[]
             {
                 new Service("Josh"), 
@@ -190,7 +192,7 @@ namespace FubuCore.Testing
         [Test]
         public void non_simple_type_that_has_a_finder_can_be_parsed()
         {
-            finder.RegisterFinder(x => new Service(x));
+            finder.RegisterConverter(x => new Service(x));
             finder.CanBeParsed(typeof(Service)).ShouldBeTrue();
         }
 
@@ -230,7 +232,7 @@ namespace FubuCore.Testing
         [Test]
         public void parsing_a_nullable_should_use_the_finder_for_the_inner_type()
         {
-            finder.RegisterFinder<int>(text => 99);
+            finder.RegisterConverter<int>(text => 99);
 
             finder.FromString<int>("45").ShouldEqual(99);
             finder.FromString<int?>("32").ShouldEqual(99);
@@ -340,14 +342,14 @@ namespace FubuCore.Testing
         [Test]
         public void register_and_retrieve_from_a_custom_finder_method()
         {
-            finder.RegisterFinder(x => new Service(x));
+            finder.RegisterConverter(x => new Service(x));
             finder.FromString<Service>("Josh").Name.ShouldEqual("Josh");
         }
 
         [Test]
         public void register_and_retrieve_from_a_custom_finder_method_as_array()
         {
-            finder.RegisterFinder(x => new Service(x));
+            finder.RegisterConverter(x => new Service(x));
             finder.FromString<Service[]>("Josh, Chad, Jeremy, Brandon")
                 .ShouldEqual(new[]
                 {
@@ -362,6 +364,37 @@ namespace FubuCore.Testing
         public void a_service_can_not_be_parsed()
         {
             finder.CanBeParsed(typeof(ObjectConverter)).ShouldBeFalse();
+        }
+    }
+
+    [TestFixture]
+    public class ServiceEnabledObjectConverterTester
+    {
+        private ServiceEnabledObjectConverter finder;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var container = new Container();
+            var locator = new StructureMapServiceLocator(container);
+
+            finder = new ServiceEnabledObjectConverter(locator);
+        }
+
+        [Test]
+        public void can_register_and_use_a_service_for_the_conversion()
+        {
+            finder.RegisterConverter<Widget, WidgetFinderService>((service, text) => service.Build(text));
+
+            finder.FromString<Widget>("red").ShouldBeOfType<Widget>().Color.ShouldEqual("red");
+        }
+    }
+
+    public class WidgetFinderService
+    {
+        public Widget Build(string text)
+        {
+            return new Widget(){Color = text};
         }
     }
 }
