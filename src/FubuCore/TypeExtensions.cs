@@ -6,6 +6,16 @@ namespace FubuCore
 {
     public static class TypeExtensions
     {
+        /// <summary>
+        /// Does a hard cast of the object to T.  *Will* throw InvalidCastException
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static T As<T>(this object target)
+        {
+            return (T) target;
+        }
 
         public static bool IsNullableOfT(this Type theType)
         {

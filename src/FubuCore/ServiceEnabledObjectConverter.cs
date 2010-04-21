@@ -16,5 +16,11 @@ namespace FubuCore
         {
             RegisterConverter<T>(text => converter(_locator.GetInstance<TService>(), text));
         }
+
+        public void RegisterConverterFamily<T>() where T : IObjectConverterFamily
+        {
+            var family = _locator.GetInstance<T>();
+            RegisterConverterFamily(family);
+        }
     }
 }

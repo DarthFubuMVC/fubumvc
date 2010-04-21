@@ -73,6 +73,12 @@ namespace FubuCore.Testing
         }
 
         [Test]
+        public void time_zone_info()
+        {
+            finder.FromString<TimeZoneInfo>("Eastern Standard Time").Id.ShouldEqual("Eastern Standard Time");
+        }
+
+        [Test]
         public void enumerable_of_non_simple_type_that_has_a_finder_can_be_parsed()
         {
             finder.RegisterConverter(x => new Service(x));

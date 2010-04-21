@@ -107,8 +107,8 @@ namespace FubuCore.Testing
 
             const string expectedDefaultFormatting = "2050 Ozark, Joplin";
             const string expectedOverrideFormatting = "Joplin-2050 Ozark";
-            var billingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Billing), address, locator);
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
+            var billingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Billing), address, locator);
+            var shippingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
             stringifier.GetString(billingRequest).ShouldEqual(expectedDefaultFormatting);
             stringifier.GetString(shippingRequest).ShouldEqual(expectedOverrideFormatting);
         }
@@ -137,43 +137,13 @@ namespace FubuCore.Testing
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
 
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
+            var shippingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 
             stringifier.GetString(shippingRequest);
 
             passedProperty.Name.ShouldEqual("Shipping");
         }
 
-        [Test]
-        public void register_a_property_override_for_a_string_conversion_passing_original_model()
-        {
-            object passedModel = null;
-
-            configure(x =>
-            {
-                //specific override formatting for Address objects named Shipping
-                x.IfPropertyMatches<Address>(prop => prop.Name == "Shipping")
-                    .ConvertBy((req, value) =>
-                    {
-                        passedModel = req.Model;
-                        return "{1}-{0}".ToFormat(value.Address1, value.City);
-                    });
-
-                //default formatting for Address objects
-                x.IfIsType<Address>().ConvertBy(a => "{0}, {1}".ToFormat(a.Address1, a.City));
-
-
-            });
-
-            var address = new Address();
-            var site = new FakeSite { Billing = address, Shipping = address };
-
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
-
-            stringifier.GetString(shippingRequest);
-
-            passedModel.ShouldBeTheSameAs(site);
-        }
 
         [Test]
         public void register_a_property_override_for_a_string_conversion_passing_raw_value()
@@ -198,7 +168,7 @@ namespace FubuCore.Testing
             var address = new Address();
             var site = new FakeSite { Billing = address, Shipping = address };
 
-            var shippingRequest = new GetStringRequest(site, ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
+            var shippingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 
             stringifier.GetString(shippingRequest);
 
@@ -270,7 +240,7 @@ namespace FubuCore.Testing
                 Color = "Red"
             };
 
-            var request = new GetStringRequest(null, null, widget, locator);
+            var request = new GetStringRequest(null, widget, locator);
 
             stringifier.GetString(request).ShouldEqual("A Red widget");
         }
