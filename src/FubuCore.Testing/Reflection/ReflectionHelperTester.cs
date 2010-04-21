@@ -52,6 +52,31 @@ namespace FubuCore.Testing.Reflection
             {
                 return null;
             }
+
+            public object DoSomething(int i, int j)
+            {
+                return null;
+            }
+        }
+
+        public class ClassConstraintHolder<T> where T : class {}
+        public class StructConstraintHolder<T> where T : struct {}
+        public class NewConstraintHolder<T> where T : new() {}
+        public class NoConstraintHolder<T> {}
+        public class NoEmptyCtorHolder { public NoEmptyCtorHolder(bool ctorArg) {} }
+
+        [Test]
+        public void tell_if_type_meets_generic_constraints()
+        {
+            Type[] arguments = typeof (ClassConstraintHolder<>).GetGenericArguments();
+            ReflectionHelper.MeetsSpecialGenericConstraints(arguments[0], typeof(int)).ShouldBeFalse();
+            ReflectionHelper.MeetsSpecialGenericConstraints(arguments[0], typeof(object)).ShouldBeTrue();
+            arguments = typeof (StructConstraintHolder<>).GetGenericArguments();
+            ReflectionHelper.MeetsSpecialGenericConstraints(arguments[0], typeof(object)).ShouldBeFalse();
+            arguments = typeof(NewConstraintHolder<>).GetGenericArguments();
+            ReflectionHelper.MeetsSpecialGenericConstraints(arguments[0], typeof(NoEmptyCtorHolder)).ShouldBeFalse();
+            arguments = typeof(NoConstraintHolder<>).GetGenericArguments();
+            ReflectionHelper.MeetsSpecialGenericConstraints(arguments[0], typeof(object)).ShouldBeTrue();
         }
 
         [Test]
@@ -83,11 +108,22 @@ namespace FubuCore.Testing.Reflection
         [Test]
         public void can_get_member_expression_from_lambda()
         {
-            MemberExpression expected = Expression.Property(Expression.Parameter(typeof(Target), "t"), "Child");
             MemberExpression memberExpression = ((LambdaExpression) _expression).GetMemberExpression(false);
-            memberExpression.Expression.Type.ShouldEqual(expected.Expression.Type);
-            memberExpression.Type.ShouldEqual(expected.Type);
             memberExpression.ToString().ShouldEqual("t.Child");
+        }
+
+        [Test]
+        public void can_get_member_expression_from_convert()
+        {
+            Expression<Func<Target, object>> convertExpression = t => (object)t.Child;
+            convertExpression.GetMemberExpression(false).ToString().ShouldEqual("t.Child");
+        }
+
+        [Test]
+        public void getMemberExpression_should_throw_when_not_a_member_access()
+        {
+            Expression<Func<Target, object>> typeAsExpression = t => t.Child as object;
+            typeof(ArgumentException).ShouldBeThrownBy(() => typeAsExpression.GetMemberExpression(true)).Message.ShouldContain("Not a member access");
         }
 
         [Test]
@@ -96,6 +132,8 @@ namespace FubuCore.Testing.Reflection
             Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Child.GrandChild.BirthDay);
             accessor.ShouldBeOfType<PropertyChain>().DeclaringType.ShouldEqual(typeof (Target));
         }
+
+        #region single property
 
         [Test]
         public void DeclaringType_of_a_single_property_is_type_of_the_object_containing_the_property()
@@ -113,6 +151,36 @@ namespace FubuCore.Testing.Reflection
 
             prop1.ShouldEqual(prop2);
             prop1.ShouldNotEqual(prop3);
+            prop1.Equals(null).ShouldBeFalse();
+            prop1.Equals(prop1).ShouldBeTrue();
+            prop1.ShouldEqual(prop1);
+            prop1.Equals((object)null).ShouldBeFalse();
+            prop1.Equals(42).ShouldBeFalse();
+        }
+
+        [Test]
+        public void singleProperty_can_get_child_accessor()
+        {
+            Accessor expected = ReflectionHelper.GetAccessor<ChildTarget>(c => c.GrandChild.Name);
+            SingleProperty.Build<Target>(t => t.Child.GrandChild).
+                GetChildAccessor<GrandChildTarget>(t => t.Name).ShouldEqual(expected);
+        }
+
+        [Test]
+        public void singleProperty_property_names_contains_single_value()
+        {
+            SingleProperty.Build<Target>(t => t.Child.GrandChild.Name).PropertyNames.
+                ShouldHaveCount(1).ShouldContain("Name");
+        }
+
+        [Test]
+        public void build_single_property()
+        {
+            SingleProperty prop1 = SingleProperty.Build<Target>("Child");
+            SingleProperty prop2 = SingleProperty.Build<Target>(x => x.Child);
+            prop1.ShouldEqual(prop2);
+            prop1.Name.ShouldEqual("Child");
+            prop1.OwnerType.ShouldEqual(typeof (Target));
         }
 
         [Test]
@@ -139,6 +207,23 @@ namespace FubuCore.Testing.Reflection
             SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
             property.GetValue(target).ShouldEqual("Jeremy");
         }
+
+        [Test]
+        public void SetValueFromSingleProperty()
+        {
+            var target = new Target
+            {
+                Name = "Jeremy"
+            };
+            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
+            property.SetValue(target, "Justin");
+
+            target.Name.ShouldEqual("Justin");
+        }
+
+        #endregion
+
+        #region PropertyChain
 
         [Test]
         public void property_chain_equals()
@@ -228,8 +313,7 @@ namespace FubuCore.Testing.Reflection
             };
             _chain.GetValue(target).ShouldEqual(DateTime.Today);
         }
-
-
+        
         [Test]
         public void PropertyChainCanSetPRopertyHappyPath()
         {
@@ -270,24 +354,62 @@ namespace FubuCore.Testing.Reflection
             _chain.PropertyType.ShouldEqual(typeof (DateTime));
         }
 
-        [Test]
-        public void SetValueFromSingleProperty()
-        {
-            var target = new Target
-            {
-                Name = "Jeremy"
-            };
-            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
-            property.SetValue(target, "Justin");
-
-            target.Name.ShouldEqual("Justin");
-        }
+#endregion
 
         [Test]
         public void Try_to_fetch_a_method()
         {
             MethodInfo method = ReflectionHelper.GetMethod<SomeClass>(s => s.DoSomething());
-            method.Name.ShouldEqual("DoSomething");
+            const string expected = "DoSomething";
+            method.Name.ShouldEqual(expected);
+
+            Expression<Func<object>> doSomething = () => new SomeClass().DoSomething();
+            ReflectionHelper.GetMethod(doSomething).Name.ShouldEqual(expected);
+
+            Expression doSomethingExpression = Expression.Call(Expression.Parameter(typeof (SomeClass), "s"), method);
+            ReflectionHelper.GetMethod(doSomethingExpression).Name.ShouldEqual(expected);
+
+            Expression<Func<object>> dlgt = () => new SomeClass().DoSomething();
+            ReflectionHelper.GetMethod<Func<object>>(dlgt).Name.ShouldEqual(expected);
+
+            Expression<Func<int,int,object>> twoTypeParamDlgt = (n1,n2) => new SomeClass().DoSomething(n1,n2);
+            ReflectionHelper.GetMethod(twoTypeParamDlgt).Name.ShouldEqual(expected);
+        }
+
+        [Test]
+        public void can_get_property()
+        {
+            Expression<Func<Target, ChildTarget>> expression = t => t.Child;
+            const string expected = "Child";
+            ReflectionHelper.GetProperty(expression).Name.ShouldEqual(expected);
+
+            LambdaExpression lambdaExpression = expression;
+            ReflectionHelper.GetProperty(lambdaExpression).Name.ShouldEqual(expected);
+        }
+
+        [Test]
+        public void GetProperty_should_throw_if_not_property_expression()
+        {
+            Expression<Func<SomeClass, object>> expression = c => c.DoSomething();
+            typeof (ArgumentException).ShouldBeThrownBy(() => ReflectionHelper.GetProperty(expression)).
+                Message.ShouldContain("Not a member access");
+        }
+
+        [Test]
+        public void should_tell_if_is_member_expression()
+        {
+            Expression<Func<Target, ChildTarget>> expression = t => t.Child;
+            Expression<Func<Target, object>> memberExpression = t => t.Child;
+            ReflectionHelper.IsMemberExpression(expression).ShouldBeTrue();
+            ReflectionHelper.IsMemberExpression(memberExpression).ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_tell_if_meets_special_generic_constraints()
+        {
+            //TODO
+            //ReflectionHelper.MeetsSpecialGenericConstraints(typeof(ClassConstraintHolder<>), typeof(int)).ShouldBeFalse();
+            //ReflectionHelper.MeetsSpecialGenericConstraints(typeof(StructConstraintHolder<>), typeof(int)).ShouldBeTrue();
         }
 
         [Test]

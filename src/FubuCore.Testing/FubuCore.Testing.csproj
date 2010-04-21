@@ -87,6 +87,7 @@
     <Compile Include="UrlContextTester.cs" />
     <Compile Include="Util\CacheTester.cs" />
     <Compile Include="Util\CompositePredicateTester.cs" />
+    <Compile Include="Util\IndexerTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
