@@ -16,6 +16,16 @@ namespace FubuCore.Testing
         #endregion
 
         [Test]
+        public void invoke_action_on_each_enumerable_value()
+        {
+            IList<int> list = new List<int>{42,42};
+            var result = new int[2];
+            list.Each((item, index) => result[index] = item * index);
+            result[0].ShouldEqual(0);
+            result[1].ShouldEqual(42);
+        }
+
+        [Test]
         public void Fill_a_value_into_a_list()
         {
             var list = new List<string>();
