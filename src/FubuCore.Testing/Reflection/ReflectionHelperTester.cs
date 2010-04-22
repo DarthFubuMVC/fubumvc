@@ -133,229 +133,6 @@ namespace FubuCore.Testing.Reflection
             accessor.ShouldBeOfType<PropertyChain>().DeclaringType.ShouldEqual(typeof (Target));
         }
 
-        #region single property
-
-        [Test]
-        public void DeclaringType_of_a_single_property_is_type_of_the_object_containing_the_property()
-        {
-            Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Child);
-            accessor.ShouldBeOfType<SingleProperty>().DeclaringType.ShouldEqual(typeof (Target));
-        }
-
-        [Test]
-        public void equals_for_a_single_property()
-        {
-            SingleProperty prop1 = SingleProperty.Build<Target>(x => x.Name);
-            SingleProperty prop2 = SingleProperty.Build<Target>(x => x.Name);
-            SingleProperty prop3 = SingleProperty.Build<Target>(x => x.Child);
-
-            prop1.ShouldEqual(prop2);
-            prop1.ShouldNotEqual(prop3);
-            prop1.Equals(null).ShouldBeFalse();
-            prop1.Equals(prop1).ShouldBeTrue();
-            prop1.ShouldEqual(prop1);
-            prop1.Equals((object)null).ShouldBeFalse();
-            prop1.Equals(42).ShouldBeFalse();
-        }
-
-        [Test]
-        public void singleProperty_can_get_child_accessor()
-        {
-            Accessor expected = ReflectionHelper.GetAccessor<ChildTarget>(c => c.GrandChild.Name);
-            SingleProperty.Build<Target>(t => t.Child.GrandChild).
-                GetChildAccessor<GrandChildTarget>(t => t.Name).ShouldEqual(expected);
-        }
-
-        [Test]
-        public void singleProperty_property_names_contains_single_value()
-        {
-            SingleProperty.Build<Target>(t => t.Child.GrandChild.Name).PropertyNames.
-                ShouldHaveCount(1).ShouldContain("Name");
-        }
-
-        [Test]
-        public void build_single_property()
-        {
-            SingleProperty prop1 = SingleProperty.Build<Target>("Child");
-            SingleProperty prop2 = SingleProperty.Build<Target>(x => x.Child);
-            prop1.ShouldEqual(prop2);
-            prop1.Name.ShouldEqual("Child");
-            prop1.OwnerType.ShouldEqual(typeof (Target));
-        }
-
-        [Test]
-        public void GetFieldNameFromSingleProperty()
-        {
-            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
-            ((object) property.FieldName).ShouldEqual("Name");
-        }
-
-        [Test]
-        public void GetNameFromSingleProperty()
-        {
-            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
-            property.Name.ShouldEqual("Name");
-        }
-
-        [Test]
-        public void GetValueFromSingleProperty()
-        {
-            var target = new Target
-            {
-                Name = "Jeremy"
-            };
-            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
-            property.GetValue(target).ShouldEqual("Jeremy");
-        }
-
-        [Test]
-        public void SetValueFromSingleProperty()
-        {
-            var target = new Target
-            {
-                Name = "Jeremy"
-            };
-            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
-            property.SetValue(target, "Justin");
-
-            target.Name.ShouldEqual("Justin");
-        }
-
-        #endregion
-
-        #region PropertyChain
-
-        [Test]
-        public void property_chain_equals()
-        {
-            Accessor chain1 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.BirthDay);
-            Accessor chain2 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.BirthDay);
-            Accessor chain3 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild);
-            Accessor chain4 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.Name);
-            Accessor chain5 = ReflectionHelper.GetAccessor<Target>(t => t.Child.SecondGrandChild.BirthDay);
-            //PropertyChain nullChain = null;
-
-            chain1.ShouldEqual(chain2);
-            chain1.ShouldNotEqual(chain3);
-            chain1.ShouldNotEqual(chain4);
-            chain1.ShouldNotEqual(chain5);
-            chain1.Equals(null).ShouldBeFalse();
-            ((PropertyChain)chain1).Equals((PropertyChain)null).ShouldBeFalse();
-            ((PropertyChain)chain1).Equals((PropertyChain)chain1).ShouldBeTrue();
-            ((PropertyChain)chain1).Equals(1).ShouldBeFalse();
-            chain1.ShouldEqual(chain1);
-
-        }
-
-        [Test]
-        public void propertyChain_hashcode()
-        {
-            var chain = (PropertyChain)ReflectionHelper.GetAccessor<Target>(t => t.Child.Age);
-            chain.GetHashCode().ShouldBeGreaterThan(0);
-        }
-
-        [Test]
-        public void propertyChain_can_get_inner_property()
-        {
-            var chain = (PropertyChain)ReflectionHelper.GetAccessor<Target>(t => t.Child.Age);
-            chain.InnerProperty.ShouldBeTheSameAs(typeof (ChildTarget).GetProperty("Age"));
-        }
-
-        [Test]
-        public void propertyChain_can_get_child_accessor()
-        {
-            Accessor expected = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.Name);
-            ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild).
-                GetChildAccessor<GrandChildTarget>(t => t.Name).ShouldEqual(expected);
-        }
-
-        [Test]
-        public void propertyChain_can_get_the_name()
-        {
-            ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.BirthDay).Name.ShouldEqual(
-                "ChildGrandChildBirthDay");
-        }
-
-        [Test]
-        public void propertyChain_can_get_owner_type()
-        {
-            ReflectionHelper.GetAccessor<Target>(t => t.Child.Age).OwnerType.ShouldEqual(typeof (ChildTarget));
-        }
-
-        [Test]
-        public void propertyChain_can_get_properties_names()
-        {
-            string[] names = ReflectionHelper.GetAccessor<Target>(t => t.Child.Age).PropertyNames;
-            names.ShouldHaveCount(2);
-            names.ShouldHave(n => n == "Child");
-            names.ShouldHave(n => n == "Age");
-        }
-
-        [Test]
-        public void propertyChain_toString_returns_graph()
-        {
-            ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.Name.Length).
-                ToString().ShouldEqual("FubuCore.Testing.Reflection.ReflectionHelperTester+TargetChild.GrandChild.Name");
-        }
-
-        [Test]
-        public void PropertyChainCanGetPropertyHappyPath()
-        {
-            var target = new Target
-            {
-                Child = new ChildTarget
-                {
-                    GrandChild = new GrandChildTarget
-                    {
-                        BirthDay = DateTime.Today
-                    }
-                }
-            };
-            _chain.GetValue(target).ShouldEqual(DateTime.Today);
-        }
-        
-        [Test]
-        public void PropertyChainCanSetPRopertyHappyPath()
-        {
-            var target = new Target
-            {
-                Child = new ChildTarget
-                {
-                    GrandChild = new GrandChildTarget
-                    {
-                        BirthDay = DateTime.Today
-                    }
-                }
-            };
-            _chain.SetValue(target, DateTime.Today.AddDays(1));
-
-            target.Child.GrandChild.BirthDay.ShouldEqual(DateTime.Today.AddDays(1));
-        }
-
-        [Test]
-        public void PropertyChainGetPropertyReturnsNullForSadPath()
-        {
-            var target = new Target
-            {
-                Child = new ChildTarget()
-            };
-            _chain.GetValue(target).ShouldBeNull();
-        }
-
-        [Test]
-        public void PropertyChainReturnsInnerMostFieldName()
-        {
-            _chain.FieldName.ShouldEqual("BirthDay");
-        }
-
-        [Test]
-        public void PropertyChainReturnsInnerMostPropertyType()
-        {
-            _chain.PropertyType.ShouldEqual(typeof (DateTime));
-        }
-
-#endregion
-
         [Test]
         public void Try_to_fetch_a_method()
         {
@@ -405,14 +182,6 @@ namespace FubuCore.Testing.Reflection
         }
 
         [Test]
-        public void should_tell_if_meets_special_generic_constraints()
-        {
-            //TODO
-            //ReflectionHelper.MeetsSpecialGenericConstraints(typeof(ClassConstraintHolder<>), typeof(int)).ShouldBeFalse();
-            //ReflectionHelper.MeetsSpecialGenericConstraints(typeof(StructConstraintHolder<>), typeof(int)).ShouldBeTrue();
-        }
-
-        [Test]
         public void TryingToCallSetDoesNotBlowUpIfTheIntermediateChildrenAreNotThere()
         {
             var target = new Target
@@ -420,6 +189,278 @@ namespace FubuCore.Testing.Reflection
                 Child = new ChildTarget()
             };
             _chain.SetValue(target, DateTime.Today.AddDays(4));
+        }
+    }
+
+    [TestFixture]
+    public class SinglePropertyTester
+    {
+        public class Target
+        {
+            public string Name { get; set; }
+            public ChildTarget Child { get; set; }
+        }
+
+        public class ChildTarget
+        {
+            public int Age { get; set; }
+            public GrandChildTarget GrandChild { get; set; }
+            public GrandChildTarget SecondGrandChild { get; set; }
+        }
+
+        public class GrandChildTarget
+        {
+            public DateTime BirthDay { get; set; }
+            public string Name { get; set; }
+        }
+
+        [Test]
+        public void DeclaringType_of_a_single_property_is_type_of_the_object_containing_the_property()
+        {
+            Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Child);
+            accessor.ShouldBeOfType<SingleProperty>().DeclaringType.ShouldEqual(typeof(Target));
+        }
+
+        [Test]
+        public void equals_for_a_single_property()
+        {
+            SingleProperty prop1 = SingleProperty.Build<Target>(x => x.Name);
+            SingleProperty prop2 = SingleProperty.Build<Target>(x => x.Name);
+            SingleProperty prop3 = SingleProperty.Build<Target>(x => x.Child);
+
+            prop1.ShouldEqual(prop2);
+            prop1.ShouldNotEqual(prop3);
+            prop1.Equals(null).ShouldBeFalse();
+            prop1.Equals(prop1).ShouldBeTrue();
+            prop1.ShouldEqual(prop1);
+            prop1.Equals((object)null).ShouldBeFalse();
+            prop1.Equals(42).ShouldBeFalse();
+        }
+
+        [Test]
+        public void singleProperty_can_get_child_accessor()
+        {
+            Accessor expected = ReflectionHelper.GetAccessor<ChildTarget>(c => c.GrandChild.Name);
+            SingleProperty.Build<Target>(t => t.Child.GrandChild).
+                GetChildAccessor<GrandChildTarget>(t => t.Name).ShouldEqual(expected);
+        }
+
+        [Test]
+        public void singleProperty_property_names_contains_single_value()
+        {
+            SingleProperty.Build<Target>(t => t.Child.GrandChild.Name).PropertyNames.
+                ShouldHaveCount(1).ShouldContain("Name");
+        }
+
+        [Test]
+        public void build_single_property()
+        {
+            SingleProperty prop1 = SingleProperty.Build<Target>("Child");
+            SingleProperty prop2 = SingleProperty.Build<Target>(x => x.Child);
+            prop1.ShouldEqual(prop2);
+            prop1.Name.ShouldEqual("Child");
+            prop1.OwnerType.ShouldEqual(typeof(Target));
+        }
+
+        [Test]
+        public void GetFieldNameFromSingleProperty()
+        {
+            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
+            ((object)property.FieldName).ShouldEqual("Name");
+        }
+
+        [Test]
+        public void GetNameFromSingleProperty()
+        {
+            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
+            property.Name.ShouldEqual("Name");
+        }
+
+        [Test]
+        public void GetValueFromSingleProperty()
+        {
+            var target = new Target
+            {
+                Name = "Jeremy"
+            };
+            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
+            property.GetValue(target).ShouldEqual("Jeremy");
+        }
+
+        [Test]
+        public void SetValueFromSingleProperty()
+        {
+            var target = new Target
+            {
+                Name = "Jeremy"
+            };
+            SingleProperty property = SingleProperty.Build<Target>(x => x.Name);
+            property.SetValue(target, "Justin");
+
+            target.Name.ShouldEqual("Justin");
+        }
+    }
+
+    [TestFixture]
+    public class PropertyChainTester
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            PropertyInfo top = ReflectionHelper.GetProperty<Target>(x => x.Child);
+            PropertyInfo second = ReflectionHelper.GetProperty<ChildTarget>(x => x.GrandChild);
+            PropertyInfo birthday = ReflectionHelper.GetProperty<GrandChildTarget>(x => x.BirthDay);
+
+            _chain = new PropertyChain(new[] { top, second, birthday });
+        }
+
+        private PropertyChain _chain;
+
+        public class Target
+        {
+            public string Name { get; set; }
+            public ChildTarget Child { get; set; }
+        }
+
+        public class ChildTarget
+        {
+            public int Age { get; set; }
+            public GrandChildTarget GrandChild { get; set; }
+            public GrandChildTarget SecondGrandChild { get; set; }
+        }
+
+        public class GrandChildTarget
+        {
+            public DateTime BirthDay { get; set; }
+            public string Name { get; set; }
+        }
+
+        [Test]
+        public void property_chain_equals()
+        {
+            Accessor chain1 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.BirthDay);
+            Accessor chain2 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.BirthDay);
+            Accessor chain3 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild);
+            Accessor chain4 = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.Name);
+            Accessor chain5 = ReflectionHelper.GetAccessor<Target>(t => t.Child.SecondGrandChild.BirthDay);
+            
+            chain1.ShouldEqual(chain2);
+            chain1.ShouldNotEqual(chain3);
+            chain1.ShouldNotEqual(chain4);
+            chain1.ShouldNotEqual(chain5);
+            chain1.Equals(null).ShouldBeFalse();
+            ((PropertyChain)chain1).Equals((PropertyChain)null).ShouldBeFalse();
+            ((PropertyChain)chain1).Equals((PropertyChain)chain1).ShouldBeTrue();
+            ((PropertyChain)chain1).Equals(1).ShouldBeFalse();
+            chain1.ShouldEqual(chain1);
+
+        }
+
+        [Test]
+        public void propertyChain_hashcode()
+        {
+            var chain = (PropertyChain)ReflectionHelper.GetAccessor<Target>(t => t.Child.Age);
+            chain.GetHashCode().ShouldBeGreaterThan(0);
+        }
+
+        [Test]
+        public void propertyChain_can_get_inner_property()
+        {
+            var chain = (PropertyChain)ReflectionHelper.GetAccessor<Target>(t => t.Child.Age);
+            chain.InnerProperty.ShouldBeTheSameAs(typeof(ChildTarget).GetProperty("Age"));
+        }
+
+        [Test]
+        public void propertyChain_can_get_child_accessor()
+        {
+            Accessor expected = ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.Name);
+            ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild).
+                GetChildAccessor<GrandChildTarget>(t => t.Name).ShouldEqual(expected);
+        }
+
+        [Test]
+        public void propertyChain_can_get_the_name()
+        {
+            ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.BirthDay).Name.ShouldEqual(
+                "ChildGrandChildBirthDay");
+        }
+
+        [Test]
+        public void propertyChain_can_get_owner_type()
+        {
+            ReflectionHelper.GetAccessor<Target>(t => t.Child.Age).OwnerType.ShouldEqual(typeof(ChildTarget));
+        }
+
+        [Test]
+        public void propertyChain_can_get_properties_names()
+        {
+            string[] names = ReflectionHelper.GetAccessor<Target>(t => t.Child.Age).PropertyNames;
+            names.ShouldHaveCount(2);
+            names.ShouldHave(n => n == "Child");
+            names.ShouldHave(n => n == "Age");
+        }
+
+        [Test]
+        public void propertyChain_toString_returns_graph()
+        {
+            ReflectionHelper.GetAccessor<Target>(t => t.Child.GrandChild.Name.Length).
+                ToString().ShouldEqual("FubuCore.Testing.Reflection.PropertyChainTester+TargetChild.GrandChild.Name");
+        }
+
+        [Test]
+        public void PropertyChainCanGetPropertyHappyPath()
+        {
+            var target = new Target
+            {
+                Child = new ChildTarget
+                {
+                    GrandChild = new GrandChildTarget
+                    {
+                        BirthDay = DateTime.Today
+                    }
+                }
+            };
+            _chain.GetValue(target).ShouldEqual(DateTime.Today);
+        }
+
+        [Test]
+        public void PropertyChainCanSetPRopertyHappyPath()
+        {
+            var target = new Target
+            {
+                Child = new ChildTarget
+                {
+                    GrandChild = new GrandChildTarget
+                    {
+                        BirthDay = DateTime.Today
+                    }
+                }
+            };
+            _chain.SetValue(target, DateTime.Today.AddDays(1));
+
+            target.Child.GrandChild.BirthDay.ShouldEqual(DateTime.Today.AddDays(1));
+        }
+
+        [Test]
+        public void PropertyChainGetPropertyReturnsNullForSadPath()
+        {
+            var target = new Target
+            {
+                Child = new ChildTarget()
+            };
+            _chain.GetValue(target).ShouldBeNull();
+        }
+
+        [Test]
+        public void PropertyChainReturnsInnerMostFieldName()
+        {
+            _chain.FieldName.ShouldEqual("BirthDay");
+        }
+
+        [Test]
+        public void PropertyChainReturnsInnerMostPropertyType()
+        {
+            _chain.PropertyType.ShouldEqual(typeof(DateTime));
         }
     }
 }
