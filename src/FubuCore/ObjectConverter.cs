@@ -153,17 +153,7 @@ namespace FubuCore
 
         public virtual object FromString(string stringValue, Type type)
         {
-            if (stringValue == NULL)
-            {
-                return null;
-            }
-
-            //if (string.IsNullOrEmpty(stringValue))
-            //{
-            //    throw new ArgumentNullException("stringValue", "Trying to resolve type " + type.FullName);
-            //}
-
-            return _froms[type](stringValue);
+            return stringValue == NULL ? null : _froms[type](stringValue);
         }
 
         public virtual T FromString<T>(string stringValue)
