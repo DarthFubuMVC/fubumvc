@@ -51,26 +51,6 @@ namespace FubuCore
                 return family.CreateConverter(type, _froms);
             }
 
-            //if (type.IsEnum)
-            //{
-            //    return createEnumFinder(type);
-            //}
-
-            //if (type.IsNullable())
-            //{
-            //    return createNullableFinder(type);
-            //}
-
-            //if (type.IsArray)
-            //{
-            //    return createArrayFinder(type);
-            //}
-
-            //if (type.IsGenericEnumerable())
-            //{
-            //    return createGenericEnumerableFinder(type);
-            //}
-
             // TODO -- change to using the TypeDescriptor stuff
             return stringValue => Convert.ChangeType(stringValue, type);
         }
@@ -178,10 +158,10 @@ namespace FubuCore
                 return null;
             }
 
-            if (string.IsNullOrEmpty(stringValue))
-            {
-                throw new ArgumentNullException("stringValue", "Trying to resolve type " + type.FullName);
-            }
+            //if (string.IsNullOrEmpty(stringValue))
+            //{
+            //    throw new ArgumentNullException("stringValue", "Trying to resolve type " + type.FullName);
+            //}
 
             return _froms[type](stringValue);
         }
@@ -320,7 +300,7 @@ namespace FubuCore
 
             return stringValue =>
             {
-                if (stringValue == ObjectConverter.NULL) return null;
+                if (stringValue == ObjectConverter.NULL || stringValue == null) return null;
                 return inner(stringValue);
             };
         }
