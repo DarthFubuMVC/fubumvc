@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore.Binding;
+using FubuMVC.Core;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuCore.Binding
@@ -127,6 +128,11 @@ namespace FubuCore.Binding
         public void BindChild(PropertyInfo property, Type childType, string prefix)
         {
             var target = Object;
+            if (_propertyStack.Any(p => p.PropertyType == childType))
+            {
+                _propertyStack.Push(property);
+                throw new FubuException(2202, "Infinite recursion detected while binding child properties: {0} would try to resolve {1} again.", string.Join("=>", _propertyStack.Reverse().Select(p => "{1}.{0}".ToFormat(p.Name, p.ReflectedType.Name)).ToArray()), childType.Name);
+            }
             _propertyStack.Push(property);
 
             var resolver = Service<IObjectResolver>();
