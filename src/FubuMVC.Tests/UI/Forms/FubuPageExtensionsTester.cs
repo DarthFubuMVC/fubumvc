@@ -18,37 +18,93 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.UI.Forms
 {
     [TestFixture]
-    public class when_calling_tags
+    public class when_requesting_a_tag_generator_for_a_strongly_typed_view
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
-            _page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
-            var namingConvention = MockRepository.GenerateStub<IElementNamingConvention>();
-            var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
-            _tags = new TagGenerator<ViewModel>(new TagProfileLibrary(), namingConvention, 
-                serviceLocator, new Stringifier());
+            var page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
+            page.Stub(x => x.Model).Return(_pageViewModel);
+            page.Stub(x => x.ElementPrefix).Return("prefix");
+            page.Stub(x => x.Get<TagGenerator<ViewModel>>()).Return(new TagGenerator<ViewModel>(new TagProfileLibrary(), null, null, null));
 
-            _page.Stub(x => x.Model).Return(_model);
-            _page.Stub(x => x.ElementPrefix).Return("prefix");
+            _generator = page.Tags();
         }
 
-        #endregion
-
-        private IFubuPage<ViewModel> _page;
-        private TagGenerator<ViewModel> _tags;
-        private readonly ViewModel _model = new ViewModel();
+        private readonly ViewModel _pageViewModel = new ViewModel();
+        private ITagGenerator<ViewModel> _generator;
 
         [Test]
-        public void should_return_tag_generator()
+        public void the_generator_should_use_the_view_model_of_the_page()
         {
-            _page.Stub(x => x.Get<TagGenerator<ViewModel>>()).Return(_tags);
+            _generator.Model.ShouldEqual(_pageViewModel);
+        }
 
-            ITagGenerator<ViewModel> generator = _page.Tags();
-            generator.Model.ShouldEqual(_model);
-            generator.ElementPrefix.ShouldEqual("prefix");
+        [Test]
+        public void the_generator_should_use_the_prefix_of_the_page()
+        {
+            _generator.ElementPrefix.ShouldEqual("prefix");
+        }
+    }
+
+    [TestFixture]
+    public class when_requesting_a_tag_generator_for_an_arbitrary_type
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            var page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
+            var fubuRequest = MockRepository.GenerateMock<IFubuRequest>();
+            fubuRequest.Stub(x => x.Get<InputModel>()).Return(_modelFromFubuRequest);
+            page.Stub(x => x.Get<IFubuRequest>()).Return(fubuRequest);
+            page.Stub(x => x.ElementPrefix).Return("prefix");
+            page.Stub(x => x.Get<TagGenerator<InputModel>>()).Return(new TagGenerator<InputModel>(new TagProfileLibrary(), null, null, null));
+
+            _generator = page.Tags<InputModel>();
+        }
+
+        private readonly InputModel _modelFromFubuRequest = new InputModel();
+        private ITagGenerator<InputModel> _generator;
+
+        [Test]
+        public void the_generator_should_use_a_model_from_fubu_request()
+        {
+            _generator.Model.ShouldEqual(_modelFromFubuRequest);
+        }
+
+        [Test]
+        public void the_generator_should_use_the_prefix_of_the_page()
+        {
+            _generator.ElementPrefix.ShouldEqual("prefix");
+        }
+    }
+
+    [TestFixture]
+    public class when_requesting_a_tag_generator_for_a_given_instance
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            var page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
+            page.Stub(x => x.ElementPrefix).Return("prefix");
+            page.Stub(x => x.Get<TagGenerator<InputModel>>()).Return(new TagGenerator<InputModel>(new TagProfileLibrary(), null, null, null));
+
+            _generator = page.Tags(_givenInstance);
+        }
+
+        private readonly InputModel _givenInstance = new InputModel();
+        private ITagGenerator<InputModel> _generator;
+
+        [Test]
+        public void the_generator_should_use_the_given_instance_as_its_model()
+        {
+            _generator.Model.ShouldEqual(_givenInstance);
+        }
+
+        [Test]
+        public void the_generator_should_use_the_prefix_of_the_page()
+        {
+            _generator.ElementPrefix.ShouldEqual("prefix");
         }
     }
 
