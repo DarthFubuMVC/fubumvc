@@ -36,7 +36,7 @@ namespace FubuCore.Reflection
 
         public string Name { get { return _property.Name; } }
 
-        public void SetValue(object target, object propertyValue)
+        public virtual void SetValue(object target, object propertyValue)
         {
             if (_property.CanWrite)
             {

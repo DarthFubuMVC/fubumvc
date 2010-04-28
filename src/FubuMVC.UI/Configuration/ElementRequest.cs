@@ -59,9 +59,10 @@ namespace FubuMVC.UI.Configuration
             return (T) RawValue;
         }
 
+        // TODO -- unit tests around this method
         public string StringValue()
         {
-            var request = new GetStringRequest(Model, Accessor, RawValue, _services);
+            var request = new GetStringRequest(Accessor, RawValue, _services);
             return _stringifier.GetString(request);
         }
 

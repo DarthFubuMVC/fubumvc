@@ -10,7 +10,7 @@ namespace FubuCore.Reflection
     {
         private readonly PropertyInfo[] _chain;
         private readonly SingleProperty _innerProperty;
-        private PropertyInfo[] _properties;
+        private readonly PropertyInfo[] _properties;
 
 
         public PropertyChain(PropertyInfo[] properties)
@@ -34,6 +34,11 @@ namespace FubuCore.Reflection
                 return;
             }
 
+            setValueOnInnerObject(target, propertyValue);
+        }
+
+        protected virtual void setValueOnInnerObject(object target, object propertyValue)
+        {
             _innerProperty.SetValue(target, propertyValue);
         }
 
@@ -74,6 +79,12 @@ namespace FubuCore.Reflection
             get { return Array.ConvertAll(_properties, p => p.Name); }
         }
 
+        public PropertyInfo[] Properties { get { return _properties; } }
+
+        /// <summary>
+        /// Concatenated names of all the properties in the chain.
+        /// Case.Site.Name == "CaseSiteName"
+        /// </summary>
         public string Name
         {
             get
@@ -91,7 +102,7 @@ namespace FubuCore.Reflection
         }
 
 
-        private object findInnerMostTarget(object target)
+        protected object findInnerMostTarget(object target)
         {
             foreach (PropertyInfo info in _chain)
             {

@@ -54,7 +54,7 @@ namespace FubuCore
         {
             if (rawValue == null || (rawValue as String) == string.Empty) return string.Empty;
 
-            return GetString(new GetStringRequest(null, null, rawValue, null));
+            return GetString(new GetStringRequest(null, rawValue, null));
         }
 
 
@@ -89,13 +89,32 @@ namespace FubuCore
         {
         }
 
-        public GetStringRequest(object model, Accessor accessor, object rawValue, IServiceLocator locator)
+        // TODO -- get some unit tests around this very constructor
+        public GetStringRequest(Accessor accessor, object rawValue, IServiceLocator locator)
         {
             _locator = locator;
-            Model = model;
             if (accessor != null) Property = accessor.InnerProperty;
             RawValue = rawValue;
 
+            setPropertyType();
+
+            setOwnerType(accessor);
+        }
+
+        private void setOwnerType(Accessor accessor)
+        {
+            if (accessor != null)
+            {
+                OwnerType = accessor.OwnerType;
+            }
+            else if (Property != null)
+            {
+                OwnerType = Property.DeclaringType;
+            }
+        }
+
+        private void setPropertyType()
+        {
             if (Property != null)
             {
                 PropertyType = Property.PropertyType;
@@ -103,19 +122,6 @@ namespace FubuCore
             else if (RawValue != null)
             {
                 PropertyType = RawValue.GetType();
-            }
-
-            if (model != null)
-            {
-                OwnerType = model.GetType();
-            }
-            else if (accessor != null)
-            {
-                OwnerType = accessor.OwnerType;
-            }
-            else if (Property != null)
-            {
-                OwnerType = Property.DeclaringType;
             }
         }
 
@@ -139,7 +145,6 @@ namespace FubuCore
             set { _propertyType = value; }
         }
 
-        public object Model { get; set; }
         public PropertyInfo Property { get; set; }
         public object RawValue { get; set; }
         public string Format { get; set; }
@@ -154,7 +159,6 @@ namespace FubuCore
             return new GetStringRequest
             {
                 _locator = _locator,
-                Model = Model,
                 Property = Property,
                 PropertyType = PropertyType.GetInnerTypeFromNullable(),
                 RawValue = RawValue,
