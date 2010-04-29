@@ -121,4 +121,101 @@ namespace FubuMVC.Tests.UI.Forms
 
         public class ViewModel { public string Name { get; set; } }
     }
+
+    [TestFixture]
+    public class when_calling_tag_generating_method_for_arbitrary_type
+    {
+        private IFubuPage _page;
+        private ArbitraryModel _modelFromFubuRequest;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var container = new Container(x => x.For<IFubuRequest>().Singleton());
+            var facility = new StructureMapContainerFacility(container);
+            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+            
+            var generator = container.GetInstance<TagGenerator<ArbitraryModel>>();
+            _page = MockRepository.GenerateMock<IFubuPage>();
+            _page.Stub(p => p.Get<TagGenerator<ArbitraryModel>>()).Return(generator);
+            var fubuRequest = MockRepository.GenerateMock<IFubuRequest>();
+            _modelFromFubuRequest = new ArbitraryModel{City="Austin"};
+            fubuRequest.Stub(x => x.Get<ArbitraryModel>()).Return(_modelFromFubuRequest);
+            _page.Stub(p => p.Get<IFubuRequest>()).Return(fubuRequest);
+        }
+
+        [Test]
+        public void should_populate_the_input_using_a_model_from_fuburequest()
+        {
+            var tag = _page.InputFor<ArbitraryModel>(x => x.City);
+            tag.TagName().ShouldEqual("input");
+            tag.Attr("value").ShouldEqual(_modelFromFubuRequest.City);
+        }
+
+        [Test]
+        public void should_display_the_name_of_the_property_on_the_type()
+        {
+            var tag = _page.LabelFor<ArbitraryModel>(x => x.City);
+            tag.TagName().ShouldEqual("span");
+            tag.Text().ShouldEqual("City");
+        }
+
+        [Test]
+        public void should_display_the_value_of_the_property_from_fuburequest()
+        {
+            var tag = _page.DisplayFor<ArbitraryModel>(x => x.City);
+            tag.TagName().ShouldEqual("span");
+            tag.Text().ShouldEqual(_modelFromFubuRequest.City);
+        }
+
+        public class ArbitraryModel { public string City { get; set; } }
+    }
+
+    [TestFixture]
+    public class when_calling_tag_generating_method_for_given_model
+    {
+        private IFubuPage _page;
+        private ArbitraryModel _givenModel;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var container = new Container(x => x.For<IFubuRequest>().Singleton());
+            var facility = new StructureMapContainerFacility(container);
+            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+
+            var generator = container.GetInstance<TagGenerator<ArbitraryModel>>();
+            _page = MockRepository.GenerateMock<IFubuPage>();
+            _page.Stub(p => p.Get<TagGenerator<ArbitraryModel>>()).Return(generator);
+            _givenModel = new ArbitraryModel { City = "Austin" };
+        }
+
+        [Test]
+        public void should_populate_the_input_using_the_given_model()
+        {
+            var tag = _page.InputFor(_givenModel, x => x.City);
+            tag.TagName().ShouldEqual("input");
+            tag.Attr("value").ShouldEqual(_givenModel.City);
+        }
+
+        [Test]
+        public void should_display_the_name_of_the_property_on_the_type()
+        {
+            var tag = _page.LabelFor(_givenModel, x => x.City);
+            tag.TagName().ShouldEqual("span");
+            tag.Text().ShouldEqual("City");
+        }
+
+        [Test]
+        public void should_display_the_value_of_the_property_from_the_given_model()
+        {
+            var tag = _page.DisplayFor(_givenModel, x => x.City);
+            tag.TagName().ShouldEqual("span");
+            tag.Text().ShouldEqual(_givenModel.City);
+        }
+
+        public class ArbitraryModel { public string City { get; set; } }
+    }
 }
