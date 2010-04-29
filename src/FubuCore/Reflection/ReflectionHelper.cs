@@ -25,7 +25,7 @@ namespace FubuCore.Reflection
                 return false;
             }
 
-            // "struct" constraint and this is a value type
+            // "struct" constraint and this is not a value type
             if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0
                 && ! proposedSpecificType.IsValueType)
             {

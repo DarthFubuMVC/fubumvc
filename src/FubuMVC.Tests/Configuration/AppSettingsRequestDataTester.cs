@@ -40,6 +40,15 @@ namespace FubuMVC.Tests.Configuration
             // It's hard coded in the FubuMVC.Tests.dll.config file
             data.Value("FakeSettings.Name").ShouldEqual("Max");
         }
+
+        [Test]
+        public void call_to_non_existing_key_does_nothing()
+        {
+            var callback = MockRepository.GenerateMock<Action<object>>();
+            data.Value("FakeSettings.Name_NonExisting", callback).ShouldBeFalse();
+
+            callback.AssertWasNotCalled(x => x.Invoke("Max"));
+        }
     }
 
     [TestFixture]
