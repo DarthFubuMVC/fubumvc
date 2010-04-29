@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using NUnit.Framework;
 
 namespace HtmlTags.Testing
@@ -94,6 +95,22 @@ namespace HtmlTags.Testing
             tag.AddClass("a");
 
             tag.ToString().ShouldEqual("<div class=\"a\">text</div>");
+        }
+
+        [Test]
+        public void can_get_classes_from_tag()
+        {
+            HtmlTag tag = new HtmlTag("div");
+
+            var classes = new[] {"class1", "class2"};
+
+            tag.AddClasses(classes);
+
+            var tagClasses = tag.GetClasses();
+
+            tagClasses.ShouldHaveCount(2);
+            tagClasses.Except(classes).ShouldHaveCount(0);
+
         }
 
         [Test]
@@ -231,6 +248,16 @@ namespace HtmlTags.Testing
             var tag = new HtmlTag("div");
             tag.Text("<b>Hi</b>");
             tag.ToString().ShouldEqual("<div>&lt;b&gt;Hi&lt;/b&gt;</div>");
+        }
+
+        [Test]
+        public void the_inner_text_is_html_unencoded()
+        {
+            var tag = new HtmlTag("div");
+            tag.Text("<b>Hi</b>");
+            tag.UnEncoded();
+
+            tag.ToString().ShouldEqual("<div><b>Hi</b></div>");
         }
 
         [Test]

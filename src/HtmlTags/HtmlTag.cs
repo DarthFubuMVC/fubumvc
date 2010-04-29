@@ -317,6 +317,11 @@ namespace HtmlTags
             return this;
         }
 
+        public IEnumerable<string> GetClasses()
+        {
+            return _cssClasses;
+        }
+
         public bool HasClass(string className)
         {
             return _cssClasses.Contains(className);
@@ -356,6 +361,12 @@ namespace HtmlTags
         public HtmlTag NoClosingTag()
         {
             _ignoreClosingTag = true;
+            return this;
+        }
+
+        public HtmlTag UnEncoded()
+        {
+            EncodeInnerText = false;
             return this;
         }
     }
