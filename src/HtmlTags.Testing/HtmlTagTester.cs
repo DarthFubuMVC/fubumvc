@@ -261,6 +261,28 @@ namespace HtmlTags.Testing
             }).ToString().ShouldEqual("<div class=\"{&quot;listValue&quot;:{&quot;Display&quot;:&quot;a&quot;,&quot;Value&quot;:&quot;1&quot;}}\"></div>");
         }
 
+        [Test]
+        public void wrap_with_returns_a_new_tag_with_the_original_as_the_first_child()
+        {
+            var tag = new HtmlTag("a");
+            var wrapped = tag.WrapWith("span");
+
+            wrapped.ShouldNotBeTheSameAs(tag);
+            wrapped.TagName().ShouldEqual("span");
+            wrapped.FirstChild().ShouldBeTheSameAs(tag);
+        }
+
+        [Test]
+        public void wrap_with_another_tag_returns_the_second_tag_with_the_first_as_the_child()
+        {
+            var tag = new HtmlTag("a");
+            var wrapper = new HtmlTag("span");
+
+            tag.WrapWith(wrapper).ShouldBeTheSameAs(wrapper);
+            wrapper.FirstChild().ShouldBeTheSameAs(tag);
+        }
+
+
         public class ListValue
         {
             public string Display { get; set; }
