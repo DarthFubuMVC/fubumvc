@@ -43,6 +43,18 @@ namespace FubuCore.Reflection
             }
         }
 
+        public static void ForAttribute<T>(this ICustomAttributeProvider provider, Action<T> action, Action elseDo) where T : Attribute
+        {
+            bool found = false;
+            foreach (T attribute in provider.GetCustomAttributes(typeof(T), true))
+            {
+                action(attribute);
+                found = true;
+            }
+
+            if (!found) elseDo();
+        }
+
         public static void ForAttribute<T>(this Accessor accessor, Action<T> action) where T : Attribute
         {
             foreach (T attribute in accessor.InnerProperty.GetCustomAttributes(typeof (T), true))

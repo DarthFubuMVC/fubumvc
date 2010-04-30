@@ -223,5 +223,44 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.UniqueId.ToString().ShouldEqual(chain.ToObjectDef().Name);
         }
+
+        [Test]
+        public void finding_the_chain_from_a_chain_returns_itself()
+        {
+            var chain = new BehaviorChain();
+            chain.ParentChain().ShouldBeTheSameAs(chain);
+        }
+
+        [Test]
+        public void find_the_chain_when_the_parent_is_null_should_be_null()
+        {
+            var node = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
+            node.ParentChain().ShouldBeNull();
+        }
+
+        [Test]
+        public void find_the_parent_chain_when_the_chain_is_the_immediate_parent()
+        {
+            var chain = new BehaviorChain();
+            var node = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            chain.AddToEnd(node);
+            node.ParentChain().ShouldBeTheSameAs(chain);
+        }
+
+        [Test]
+        public void find_the_parent_from_deep_in_behavior_chain()
+        {
+            var chain = new BehaviorChain();
+            var node = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            chain.AddToEnd(node);
+
+            var node2 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node.AddToEnd(node2);
+
+            var node3 = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+            node2.AddToEnd(node3);
+
+            node3.ParentChain().ShouldBeTheSameAs(chain);
+        }
     }
 }
