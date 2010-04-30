@@ -1,5 +1,7 @@
 using System;
 using System.Linq.Expressions;
+using System.Security.Principal;
+using System.Threading;
 using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Forms;
@@ -73,6 +75,24 @@ namespace FubuMVC.Tests.UI.Forms
             string html = expression.Editable(true).ToString();
             html.ShouldContain("input");
             html.ShouldNotContain("display");
+        }
+
+        [Test]
+        public void edit_if_the_user_has_roles_positive()
+        {
+            Thread.CurrentPrincipal = new System.Security.Principal.GenericPrincipal(new GenericIdentity("somebody"),
+                                                                           new string[] {"admin"});
+
+            expression.EditableForRole("admin").ToString().ShouldContain("input");
+        }
+
+        [Test]
+        public void edit_if_the_user_does_not_have_a_role()
+        {
+            Thread.CurrentPrincipal = new System.Security.Principal.GenericPrincipal(new GenericIdentity("somebody"),
+                                                                           new string[0]);
+
+            expression.EditableForRole("admin").ToString().ShouldNotContain("input");
         }
 
         [Test]

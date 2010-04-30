@@ -7,6 +7,7 @@ using HtmlTags;
 
 namespace FubuMVC.UI.Forms
 {
+    // TODO:  Revisit this, and wrap some serious tests around it
     public class FormLineExpression<T> : ITagSource where T : class
     {
         private readonly ITagGenerator<T> _tags;
@@ -70,6 +71,11 @@ namespace FubuMVC.UI.Forms
             }
 
             return this;
+        }
+
+        public FormLineExpression<T> EditableForRole(params string[] roles)
+        {
+            return Editable(PrincipalRoles.IsInRole(roles));
         }
 
         public FormLineExpression<T> Visible(bool condition)
