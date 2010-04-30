@@ -8,7 +8,7 @@ src/CommonAssemblyInfo.cs
 _ReSharper.*
 *.csproj.user
 *.resharper.user
-*.resharper
+*.ReSharper.user
 *.suo
 *.cache
 ~$*
