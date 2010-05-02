@@ -47,7 +47,14 @@ namespace FubuMVC.StructureMap
         public IBehaviorFactory BuildFactory()
         {
             _registry.For<IBehaviorFactory>().Use<PartialBehaviorFactory>();
-            _container.Configure(x => x.AddRegistry(_registry));
+            _container.Configure(x =>
+            {
+                x.AddRegistry(_registry);
+
+
+                // TEMPORARY, I THINK
+                x.For<ISession>().LifecycleIs(new HttpSessionLifecycle()).Use<BasicSession>();
+            });
 
             return this;
         }
