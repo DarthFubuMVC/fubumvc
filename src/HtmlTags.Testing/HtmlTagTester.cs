@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using NUnit.Framework;
 
 namespace HtmlTags.Testing
@@ -94,6 +95,22 @@ namespace HtmlTags.Testing
             tag.AddClass("a");
 
             tag.ToString().ShouldEqual("<div class=\"a\">text</div>");
+        }
+
+        [Test]
+        public void can_get_classes_from_tag()
+        {
+            HtmlTag tag = new HtmlTag("div");
+
+            var classes = new[] {"class1", "class2"};
+
+            tag.AddClasses(classes);
+
+            var tagClasses = tag.GetClasses();
+
+            tagClasses.ShouldHaveCount(2);
+            tagClasses.Except(classes).ShouldHaveCount(0);
+
         }
 
         [Test]
@@ -234,6 +251,16 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void the_inner_text_is_html_unencoded()
+        {
+            var tag = new HtmlTag("div");
+            tag.Text("<b>Hi</b>");
+            tag.UnEncoded();
+
+            tag.ToString().ShouldEqual("<div><b>Hi</b></div>");
+        }
+
+        [Test]
         public void should_respect_subclass_encode_preference()
         {
             var tag = new NonEncodedTag("div");
@@ -260,6 +287,28 @@ namespace HtmlTags.Testing
                 Value = "1"
             }).ToString().ShouldEqual("<div class=\"{&quot;listValue&quot;:{&quot;Display&quot;:&quot;a&quot;,&quot;Value&quot;:&quot;1&quot;}}\"></div>");
         }
+
+        [Test]
+        public void wrap_with_returns_a_new_tag_with_the_original_as_the_first_child()
+        {
+            var tag = new HtmlTag("a");
+            var wrapped = tag.WrapWith("span");
+
+            wrapped.ShouldNotBeTheSameAs(tag);
+            wrapped.TagName().ShouldEqual("span");
+            wrapped.FirstChild().ShouldBeTheSameAs(tag);
+        }
+
+        [Test]
+        public void wrap_with_another_tag_returns_the_second_tag_with_the_first_as_the_child()
+        {
+            var tag = new HtmlTag("a");
+            var wrapper = new HtmlTag("span");
+
+            tag.WrapWith(wrapper).ShouldBeTheSameAs(wrapper);
+            wrapper.FirstChild().ShouldBeTheSameAs(tag);
+        }
+
 
         public class ListValue
         {

@@ -195,7 +195,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void should_populate_the_input_using_the_given_model()
         {
-            var tag = _page.InputFor(x => x.City, _givenModel);
+            var tag = _page.InputFor(_givenModel, x => x.City);
             tag.TagName().ShouldEqual("input");
             tag.Attr("value").ShouldEqual(_givenModel.City);
         }
@@ -203,7 +203,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void should_display_the_name_of_the_property_on_the_type()
         {
-            var tag = _page.LabelFor(x => x.City, _givenModel);
+            var tag = _page.LabelFor(_givenModel, x => x.City);
             tag.TagName().ShouldEqual("span");
             tag.Text().ShouldEqual("City");
         }
@@ -211,7 +211,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void should_display_the_value_of_the_property_from_the_given_model()
         {
-            var tag = _page.DisplayFor(x => x.City, _givenModel);
+            var tag = _page.DisplayFor(_givenModel, x => x.City);
             tag.TagName().ShouldEqual("span");
             tag.Text().ShouldEqual(_givenModel.City);
         }

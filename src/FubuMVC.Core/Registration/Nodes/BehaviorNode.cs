@@ -53,6 +53,17 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        public BehaviorChain ParentChain()
+        {
+            if (this is BehaviorChain) return (BehaviorChain) this;
+
+            if (Previous == null) return null;
+
+            if (Previous is BehaviorChain) return (BehaviorChain) Previous;
+
+            return Previous.ParentChain();
+        }
+
         public virtual ObjectDef ToObjectDef()
         {
             ObjectDef objectDef = toObjectDef();

@@ -1,3 +1,4 @@
+push.bat
 TestResult.xml
 build
 obj
@@ -8,7 +9,7 @@ src/CommonAssemblyInfo.cs
 _ReSharper.*
 *.csproj.user
 *.resharper.user
-*.resharper
+*.ReSharper.user
 *.suo
 *.cache
 ~$*

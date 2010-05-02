@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading;
+using System.Web;
 using System.Web.UI;
 
 namespace HtmlTags
@@ -317,6 +320,11 @@ namespace HtmlTags
             return this;
         }
 
+        public IEnumerable<string> GetClasses()
+        {
+            return _cssClasses;
+        }
+
         public bool HasClass(string className)
         {
             return _cssClasses.Contains(className);
@@ -356,6 +364,44 @@ namespace HtmlTags
         public HtmlTag NoClosingTag()
         {
             _ignoreClosingTag = true;
+            return this;
+        }
+
+
+        public HtmlTag WrapWith(string tag)
+        {
+            var wrapper = new HtmlTag(tag);
+            wrapper.Child(this);
+
+            return wrapper;
+        }
+
+        public HtmlTag WrapWith(HtmlTag wrapper)
+        {
+            wrapper.InsertFirst(this);
+            return wrapper;
+        }
+
+        public HtmlTag VisibleForRoles(params string[] roles)
+        {
+            var principal = findPrincipal();
+            return Visible(roles.Any(r => principal.IsInRole(r)));
+        }
+
+        private IPrincipal findPrincipal()
+        {
+            if (HttpContext.Current != null)
+            {
+                return HttpContext.Current.User;
+            }
+
+            // Rather throw up on nulls than put a fake in
+            return Thread.CurrentPrincipal;
+        }
+
+        public HtmlTag UnEncoded()
+        {
+            EncodeInnerText = false;
             return this;
         }
     }

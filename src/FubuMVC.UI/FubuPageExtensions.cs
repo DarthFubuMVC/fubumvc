@@ -88,10 +88,10 @@ namespace FubuMVC.UI
         /// </summary>
         /// <typeparam name="T">The type of the given model</typeparam>
         /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the provided model</param>
         /// <param name="model">The model used to provide values for the tag</param>
+        /// <param name="expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
-        public static HtmlTag InputFor<T>(this IFubuPage page, Expression<Func<T, object>> expression, T model) where T : class
+        public static HtmlTag InputFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression) where T : class
         {
             return page.Tags(model).InputFor(expression);
         }
@@ -127,10 +127,10 @@ namespace FubuMVC.UI
         /// </summary>
         /// <typeparam name="T">The type of the given model</typeparam>
         /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the provided model</param>
         /// <param name="model">The model used to provide values for the tag</param>
+        /// <param name="expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
-        public static HtmlTag LabelFor<T>(this IFubuPage page, Expression<Func<T, object>> expression, T model) where T : class
+        public static HtmlTag LabelFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression) where T : class
         {
             return page.Tags(model).LabelFor(expression);
         }
@@ -166,10 +166,10 @@ namespace FubuMVC.UI
         /// </summary>
         /// <typeparam name="T">The type of the given model</typeparam>
         /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the provided model</param>
         /// <param name="model">The model used to provide values for the tag</param>
+        /// <param name="expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
-        public static HtmlTag DisplayFor<T>(this IFubuPage page, Expression<Func<T, object>> expression, T model)
+        public static HtmlTag DisplayFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
             where T : class
         {
             return page.Tags(model).DisplayFor(expression);

@@ -61,6 +61,7 @@
     <Compile Include="SelectTagTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="TableTagTester.cs" />
+    <Compile Include="VisibleForRoleTesting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">

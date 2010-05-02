@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuCore;
 
 namespace FubuMVC.Core.Urls
 {
@@ -74,7 +75,7 @@ namespace FubuMVC.Core.Urls
             if (model == null) return null;
 
             Type modelType = model.GetType();
-            List<IModelUrl> models = _byType[modelType];
+            var models = _byType[modelType];
 
             switch (models.Count)
             {
@@ -86,10 +87,23 @@ namespace FubuMVC.Core.Urls
 
                 default:
                     IModelUrl defaultModel = models.FirstOrDefault(x => x.Category == Categories.DEFAULT);
+                    if (defaultModel == null)
+                    {
+                        if (models.Count(x => x.Category.IsEmpty()) == 1)
+                        {
+                            defaultModel = models.First(x => x.Category.IsEmpty());
+                        }
+                    }
+                    
+                    
                     if (defaultModel != null)
                     {
                         return defaultModel.CreateUrl(model);
                     }
+                    
+
+
+
                     throw new FubuException(2103,
                                             "More than one url is registered for {0} and none is marked as the default.\n{1}",
                                             modelType.FullName, listAllModels(models));

@@ -80,4 +80,23 @@ namespace FubuMVC.Core
     public class FubuPartialAttribute : Attribute
     {
     }
+
+    /// <summary>
+    /// Just declares 
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
+    public class UrlRegistryCategoryAttribute : Attribute
+    {
+        private readonly string _category;
+
+        public UrlRegistryCategoryAttribute(string category)
+        {
+            _category = category;
+        }
+
+        public string Category
+        {
+            get { return _category; }
+        }
+    }
 }

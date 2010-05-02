@@ -66,6 +66,7 @@
     <Compile Include="Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="Configuration\Interfaces.cs" />
     <Compile Include="PartialExpressionExtensions.cs" />
+    <Compile Include="PrincipalRoles.cs" />
     <Compile Include="Tags\PartialLambdaElementModifier.cs" />
     <Compile Include="Tags\PartialTagActionExpression.cs" />
     <Compile Include="Tags\PartialTagFactory.cs" />

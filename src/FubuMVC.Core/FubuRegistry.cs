@@ -62,6 +62,7 @@ namespace FubuMVC.Core
 
             _conventions.Add(_viewAttacher);
             Policies.Add<JsonMessageInputConvention>();
+            Policies.Add<UrlRegistryCategoryConvention>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure)
