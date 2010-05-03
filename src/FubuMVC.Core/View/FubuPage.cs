@@ -3,6 +3,7 @@ using System.Web.UI;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
@@ -54,5 +55,10 @@ namespace FubuMVC.Core.View
         }
 
         string IFubuPage.ElementPrefix { get; set; }
+
+        public HtmlTag Tag(string tagName)
+        {
+            return new HtmlTag(tagName);
+        }
     }
 }

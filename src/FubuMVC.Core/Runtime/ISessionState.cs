@@ -3,13 +3,13 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Runtime
 {
-    public interface ISession
+    public interface ISessionState
     {
         T Get<T>();
         void Set<T>(T value);
     }
 
-    public class BasicSession : ISession
+    public class BasicSessionState : ISessionState
     {
         private readonly Cache<Type, object> _objects = new Cache<Type,object>();
 

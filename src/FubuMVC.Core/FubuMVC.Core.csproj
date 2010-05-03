@@ -171,7 +171,7 @@
     <Compile Include="Runtime\IgnoredRoute.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
-    <Compile Include="Runtime\ISession.cs" />
+    <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />

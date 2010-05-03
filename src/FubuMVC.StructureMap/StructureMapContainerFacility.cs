@@ -53,7 +53,7 @@ namespace FubuMVC.StructureMap
 
 
                 // TEMPORARY, I THINK
-                x.For<ISession>().LifecycleIs(new HttpSessionLifecycle()).Use<BasicSession>();
+                x.For<ISessionState>().LifecycleIs(new HttpSessionLifecycle()).Use<BasicSessionState>();
             });
 
             return this;

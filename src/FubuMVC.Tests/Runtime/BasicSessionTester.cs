@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Runtime
             var address = new Address();
             var model = new AddressViewModel();
 
-            var session = new BasicSession();
+            var session = new BasicSessionState();
             session.Set(address);
             session.Set(model);
 
