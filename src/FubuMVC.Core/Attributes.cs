@@ -14,6 +14,14 @@ namespace FubuMVC.Core
             DefaultValue = defaultValue;
         }
 
+        public object DefaultObject
+        {
+            set
+            {
+                DefaultValue = value.ToString();
+            }
+        }
+
         public string DefaultValue { get; set; }
     }
 
