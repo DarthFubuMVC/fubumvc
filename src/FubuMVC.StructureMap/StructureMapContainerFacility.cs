@@ -50,10 +50,6 @@ namespace FubuMVC.StructureMap
             _container.Configure(x =>
             {
                 x.AddRegistry(_registry);
-
-
-                // TEMPORARY, I THINK
-                x.For<ISessionState>().LifecycleIs(new HttpSessionLifecycle()).Use<BasicSessionState>();
             });
 
             return this;

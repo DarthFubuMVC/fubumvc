@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using FubuCore.Binding;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using Microsoft.Practices.ServiceLocation;
@@ -36,6 +37,8 @@ namespace FubuMVC.StructureMap
                 x => x.ConstructedBy(BuildContextWrapper));
             For<IServiceLocator>().Use<StructureMapServiceLocator>();
             For<IWebFormsControlBuilder>().Use<StructureMapWebFormsControlBuilder>();
+
+            For<ISessionState>().Use<SimpleSessionState>();
 
             SetAllProperties(x =>
             {
