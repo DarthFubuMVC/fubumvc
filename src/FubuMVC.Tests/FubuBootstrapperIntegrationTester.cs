@@ -37,6 +37,9 @@ namespace FubuMVC.Tests
 
                 x.Route<InputModel>("area/sub3/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+
+                x.Route("area/sub4/some_pattern")
+                    .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             });
 
             container = new Container();
@@ -71,14 +74,14 @@ namespace FubuMVC.Tests
         [Test]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()
         {
-            routes.Count.ShouldEqual(5);
+            routes.Count.ShouldEqual(6);
             routes.Each(x => x.ShouldBeOfType<Route>().RouteHandler.ShouldBeOfType<FubuRouteHandler>());
         }
 
         [Test]
         public void should_have_registered_behaviors_in_the_container()
         {
-            container.GetAllInstances<IActionBehavior>().Count.ShouldEqual(5);
+            container.GetAllInstances<IActionBehavior>().Count.ShouldEqual(6);
         }
 
         [Test]
@@ -86,6 +89,7 @@ namespace FubuMVC.Tests
         {
             routes.OfType<Route>().Select(r => r.Url).ShouldHaveTheSameElementsAs(
                 "area/sub2/prop",
+                "area/sub4/some_pattern",
                 "area/sub2/{Name}",
                 "area/sub/{Name}/{Age}",
                 "area/sub2/{Name}/{Age}",

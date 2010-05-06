@@ -25,6 +25,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Output.ToHtml.WhenCallMatches(
                     call => call.OutputType() == typeof (string) && call.Method.Name.ToLower().Contains("html"));
                 x.Output.ToJson.WhenTheOutputModelIs<CrudReport>().WhenTheOutputModelIs<ContinuationClass>();
+                x.Output.To(c => new RenderHtmlTagNode()).WhenTheOutputModelIs<HtmlTagOutput>();
             })
                 .BuildGraph();
         }
@@ -53,7 +54,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
             ()
         {
-            graph.BehaviorChainCount.ShouldEqual(19);
+            graph.BehaviorChainCount.ShouldEqual(20);
             graph.Behaviors.Where(chain => chain.Any(x => x is RenderJsonNode)).Select(x => x.Calls.First().Method.Name)
                 .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
         }
@@ -111,6 +112,13 @@ namespace FubuMVC.Tests.Registration.Conventions
             chainFor(x => x.NotOutputJson2()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
             chainFor(x => x.NotOutputJson3()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
         }
+
+        [Test]
+        public void methods_that_return_html_tag_should_output_html_tag()
+        {
+            var chain = chainFor(x=>x.GetFake());
+            chain.Any(x => x.GetType() == typeof(RenderHtmlTagNode)).ShouldBeTrue();
+        }
     }
 
     public class CrudReport
@@ -157,6 +165,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             return null;
         }
 
+        public HtmlTagOutput GetFake(){return null;}
+
         [JsonEndpoint]
         public ViewModel1 Decorated()
         {
@@ -187,4 +197,6 @@ namespace FubuMVC.Tests.Registration.Conventions
     public class NotJson1{}
     public class NotJson2{}
     public class NotJson3{}
+
+    public class HtmlTagOutput{}
 }

@@ -2,8 +2,10 @@ using System;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -21,13 +23,13 @@ namespace FubuMVC.Tests.Registration.Conventions
             {
                 x.Applies.ToThisAssembly();
 
-                //x.Actions.IncludeTypesNamed(o => o.StartsWith("Special"));
+                x.Actions.IncludeTypesNamed(o => o.StartsWith("Special"));
 
-                //x.Routes
-                //    .IgnoreNamespaceForUrlFrom<SpecialMessage>()
-                //    .ForInputTypesOf<SpecialMessage>(o => o.RouteInputFor(y => y.Id))
-                //    .IgnoreSpecificInputForInputTypeAndMethod<SpecialRouteInputTestingMessage>(
-                //    c => c.Method.Name == "NoId", o => o.Id);
+                x.Routes
+                    .IgnoreNamespaceForUrlFrom<SpecialMessage>()
+                    .ForInputTypesOf<SpecialMessage>(o => o.RouteInputFor(y => y.Id))
+                    .IgnoreSpecificInputForInputTypeAndMethod<SpecialRouteInputTestingMessage>(
+                    c => c.Method.Name == "NoId", o => o.Id);
             }).BuildGraph();
         }
 

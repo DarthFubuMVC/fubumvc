@@ -288,6 +288,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DSL\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
   </ItemGroup>
