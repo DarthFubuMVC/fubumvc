@@ -162,7 +162,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
             graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
 
-            graph.Services.SetServiceIfNone<ISessionState, BasicSessionState>();
+            graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();
         }
 
         #region Nested type: RegistryImport
