@@ -160,21 +160,38 @@ namespace FubuMVC.Tests.UI
     }
 
     [TestFixture]
-    public class when_generating_a_label_for_a_property_with_a_number : using_the_default_html_conventions
+    public class BreakUpCamelCaseTester
     {
-        protected override HtmlTag createTag()
+        [Test]
+        public void should_consider_case_changes_as_word_boundaries()
         {
-            return Generator.LabelFor(x => x.Address1);
+            DefaultHtmlConventions.BreakUpCamelCase("DateEntered").ShouldEqual("Date Entered");
         }
 
         [Test]
-        public void should_display_the_name_of_the_property_with_numbers_spaced()
+        public void should_consider_numbers_as_word_boundaries()
         {
-            Tag.Text().ShouldEqual("Address 1");
+            DefaultHtmlConventions.BreakUpCamelCase("The1Day2").ShouldEqual("The 1 Day 2");
+        }
+
+        [Test]
+        public void should_not_consider_consecutive_numbers_as_word_boundaries()
+        {
+            DefaultHtmlConventions.BreakUpCamelCase("Address22").ShouldEqual("Address 22");
+        }
+
+        [Test]
+        public void should_not_consider_consecutive_numbers_between_words_as_word_boundaries_()
+        {
+            DefaultHtmlConventions.BreakUpCamelCase("Address223City").ShouldEqual("Address 223 City");
+        }
+
+        [Test]
+        public void should_consider_underscores_as_word_boundaries()
+        {
+            DefaultHtmlConventions.BreakUpCamelCase("Date_Entered").ShouldEqual("Date Entered");
         }
     }
-
-
 
     public class using_the_default_html_conventions
     {

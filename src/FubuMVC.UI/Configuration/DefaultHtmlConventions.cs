@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.RegularExpressions;
 using FubuMVC.UI.Tags;
 using HtmlTags;
@@ -15,7 +16,7 @@ namespace FubuMVC.UI.Configuration
 
             Editors.Always.Modify(AddElementName);
             Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));
-            Labels.Always.BuildBy(req => new HtmlTag("label").Text(breakUpCamelCase(req.Accessor.FieldName)));
+            Labels.Always.BuildBy(req => new HtmlTag("label").Text(BreakUpCamelCase(req.Accessor.FieldName)));
 
             BeforePartial.Always.BuildBy(req => new NoTag());
             AfterPartial.Always.BuildBy(req => new NoTag());
@@ -23,9 +24,17 @@ namespace FubuMVC.UI.Configuration
             AfterEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
         }
 
-        private static string breakUpCamelCase(string fieldName)
+        public static string BreakUpCamelCase(string fieldName)
         {
-            return Regex.Replace(fieldName, "([a-z])([A-Z0-9])", "$1 $2").Replace('_', ' ');
+            var patterns = new[]
+                {
+                    "([a-z])([A-Z])",
+                    "([0-9])([a-zA-Z])",
+                    "([a-zA-Z])([0-9])"
+                };
+            var output = patterns.Aggregate(fieldName, 
+                (current, pattern) => Regex.Replace(current, pattern, "$1 $2", RegexOptions.IgnorePatternWhitespace));
+            return output.Replace('_', ' ');
         }
 
         public static void AddElementName(ElementRequest request, HtmlTag tag)
