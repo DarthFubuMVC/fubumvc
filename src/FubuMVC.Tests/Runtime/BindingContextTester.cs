@@ -271,7 +271,8 @@ namespace FubuMVC.Tests.Runtime
         {
             var problem = context.Problems.Single();
             problem.PropertyName().ShouldEqual("HeldClass.Age");
-            problem.ExceptionText.ShouldContain("NOT A NUMBER is not a valid value for Int32");
+            //taken out ' is not a valid value for Int32' to support non english culture tests
+            problem.ExceptionText.ShouldContain("NOT A NUMBER");
         }
     }
 

@@ -6,7 +6,6 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.View.WebForms
 {
-    // TODO:  Test for this turkey
     // Find any action w/o an output, look for the WebFormEndpoint att
     public class WebFormsEndpointPolicy : IConfigurationAction
     {
