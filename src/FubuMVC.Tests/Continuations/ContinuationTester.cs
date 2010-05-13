@@ -1,7 +1,10 @@
 using System;
 using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using FubuMVC.Tests.Registration;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -26,6 +29,16 @@ namespace FubuMVC.Tests.Continuations
         private void shouldFail(Action action)
         {
             Exception<FubuAssertionException>.ShouldBeThrownBy(action);
+        }
+
+        [Test]
+        public void Continue_just_continues()
+        {
+            FubuContinuation continuation = FubuContinuation.NextBehavior();
+            continuation.Type.ShouldEqual(ContinuationType.NextBehavior);
+
+            continuation.Process(director);
+            director.AssertWasCalled(x => x.InvokeNextBehavior());
         }
 
 
@@ -59,7 +72,7 @@ namespace FubuMVC.Tests.Continuations
         [Test]
         public void assert_redirect_to_a_target()
         {
-            var input = new InputModelWithEquals{Name = "Luke"};
+            var input = new InputModelWithEquals {Name = "Luke"};
             FubuContinuation continuation = FubuContinuation.RedirectTo(input);
 
             continuation.AssertWasRedirectedTo(new InputModelWithEquals {Name = "Luke"});
@@ -70,6 +83,20 @@ namespace FubuMVC.Tests.Continuations
 
             shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
+        }
+
+        [Test]
+        public void when_destination_null_redirect_to_throws()
+        {
+            var argNullEx = typeof (ArgumentNullException).ShouldBeThrownBy(() => FubuContinuation.RedirectTo(null));
+            argNullEx.Message.ShouldContain("destination");
+        }
+
+        [Test]
+        public void when_destination_null_transfer_to_throws()
+        {
+            var argNullEx = typeof (ArgumentNullException).ShouldBeThrownBy(() => FubuContinuation.TransferTo(null));
+            argNullEx.Message.ShouldContain("destination");
         }
 
         [Test]
@@ -90,10 +117,10 @@ namespace FubuMVC.Tests.Continuations
         [Test]
         public void assert_transfer_to_a_target()
         {
-            var input = new InputModelWithEquals{Name="Luke"};
+            var input = new InputModelWithEquals {Name = "Luke"};
             FubuContinuation continuation = FubuContinuation.TransferTo(input);
 
-            continuation.AssertWasTransferedTo(new InputModelWithEquals { Name = "Luke" });
+            continuation.AssertWasTransferedTo(new InputModelWithEquals {Name = "Luke"});
 
             shouldFail(() => continuation.AssertWasTransferedTo(new InputModelWithEquals()));
             shouldFail(() => continuation.AssertWasRedirectedTo(input));
@@ -101,16 +128,6 @@ namespace FubuMVC.Tests.Continuations
 
             shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
             shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
-        }
-
-        [Test]
-        public void Continue_just_continues()
-        {
-            FubuContinuation continuation = FubuContinuation.NextBehavior();
-            continuation.Type.ShouldEqual(ContinuationType.NextBehavior);
-
-            continuation.Process(director);
-            director.AssertWasCalled(x => x.InvokeNextBehavior());
         }
 
         [Test]
@@ -166,6 +183,55 @@ namespace FubuMVC.Tests.Continuations
             continuation.Process(director);
 
             director.AssertWasCalled(x => x.TransferTo(input));
+        }
+
+        [Test]
+        public void transfer_to_null_throws()
+        {
+            var urlRegistry = MockRepository.GenerateStub<IUrlRegistry>();
+            var outputWriter = MockRepository.GenerateStub<IOutputWriter>();
+            var fubuRequest = MockRepository.GenerateStub<IFubuRequest>();
+            var partialFactory = MockRepository.GenerateStub<IPartialFactory>();
+            var handler = new ContinuationHandler(urlRegistry, outputWriter, fubuRequest, partialFactory);
+
+            var exception =
+                typeof (ArgumentNullException).ShouldBeThrownBy(() => handler.TransferTo(null)) as ArgumentNullException;
+            exception.ShouldNotBeNull();
+            exception.ParamName.ShouldEqual("input");
+        }
+
+        [Test]
+        public void perform_invoke_processes_handler()
+        {
+            //Arrange
+            var urlRegistry = MockRepository.GenerateStub<IUrlRegistry>();
+            var outputWriter = MockRepository.GenerateStub<IOutputWriter>();
+            var fubuRequest = MockRepository.GenerateStub<IFubuRequest>();
+            var continuation = FubuContinuation.TransferTo(new object());
+            fubuRequest.Stub(r => r.Get<FubuContinuation>()).Return(continuation);
+            var partialFactory = MockRepository.GenerateStub<IPartialFactory>();
+            var partialBehavior = MockRepository.GenerateStub<IActionBehavior>();
+            partialFactory.Stub(f => f.BuildPartial(typeof(object))).Return(partialBehavior);
+            var handler = new ContinuationHandler(urlRegistry, outputWriter, fubuRequest, partialFactory);
+            var insideBehavior = MockRepository.GenerateStub<IActionBehavior>();
+            handler.InsideBehavior = insideBehavior;
+            
+            //Act
+            handler.Invoke();
+
+            //Assert TransferTo was called by _request.Get<FubuContinuation>().Process(this);
+            partialFactory.AssertWasCalled(f=>f.BuildPartial(typeof(object)));
+            partialBehavior.AssertWasCalled(p=>p.InvokePartial());
+            //Assert performInvoke() returned Stop
+            insideBehavior.AssertWasNotCalled(b=>b.Invoke());
+        }
+
+        [Test]
+        public void destination_returns_destination_object()
+        {
+            var destination = new object();
+            var continuation = FubuContinuation.TransferTo(destination);
+            continuation.Destination<object>().ShouldEqual(destination);
         }
     }
 }
