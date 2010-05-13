@@ -7,15 +7,6 @@ namespace FubuMVC.Tests
     [TestFixture]
     public class FubuRegistryTester
     {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        #endregion
-
         [Test]
         public void policies_are_only_registered_once()
         {

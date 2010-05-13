@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Urls
         private readonly Cache<Type, List<IModelUrl>> _byType = new Cache<Type, List<IModelUrl>>();
         private readonly List<IModelUrl> _modelUrls = new List<IModelUrl>();
         private readonly Cache<Type, ActionUrl> _news = new Cache<Type, ActionUrl>();
+        private Func<object, Type> _modelTypeMapper = o => o == null ? null : o.GetType();
 
         public UrlRegistry()
         {
@@ -58,6 +59,11 @@ namespace FubuMVC.Core.Urls
             _modelUrls.Add(model);
         }
 
+        public void MapModelTypes(Func<object, Type> typeMap)
+        {
+            _modelTypeMapper = typeMap;
+        }
+
         public void Forward<TInput>(Type type, string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
         {
             Func<object, string> func = o => forward.Compile()((TInput) o, this);
@@ -74,7 +80,8 @@ namespace FubuMVC.Core.Urls
         {
             if (model == null) return null;
 
-            Type modelType = model.GetType();
+            var modelType = _modelTypeMapper(model);
+            
             var models = _byType[modelType];
 
             switch (models.Count)
@@ -86,7 +93,7 @@ namespace FubuMVC.Core.Urls
                     return models[0].CreateUrl(model);
 
                 default:
-                    IModelUrl defaultModel = models.FirstOrDefault(x => x.Category == Categories.DEFAULT);
+                    var defaultModel = models.FirstOrDefault(x => x.Category == Categories.DEFAULT);
                     if (defaultModel == null)
                     {
                         if (models.Count(x => x.Category.IsEmpty()) == 1)
@@ -95,14 +102,10 @@ namespace FubuMVC.Core.Urls
                         }
                     }
                     
-                    
                     if (defaultModel != null)
                     {
                         return defaultModel.CreateUrl(model);
                     }
-                    
-
-
 
                     throw new FubuException(2103,
                                             "More than one url is registered for {0} and none is marked as the default.\n{1}",
@@ -117,7 +120,7 @@ namespace FubuMVC.Core.Urls
                 throw new ArgumentNullException("model");
             }
 
-            Type modelType = model.GetType();
+            var modelType = _modelTypeMapper(model);
             IEnumerable<IModelUrl> models = _byType[modelType].Where(x => x.Category == category);
 
             if (!models.Any())

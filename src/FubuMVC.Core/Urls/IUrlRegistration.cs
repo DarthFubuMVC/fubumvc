@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Urls
         void RegisterNew(ActionUrl action, Type type);
         void AddAction(ActionUrl action);
         void AddModel(IModelUrl model);
-
+        void MapModelTypes(Func<object, Type> typeMap);
         void Forward<TInput>(Type type, string category, Expression<Func<TInput, IUrlRegistry, string>> forward);
         void Forward<TInput>(string category, Expression<Func<TInput, IUrlRegistry, string>> forward);
         void Forward<TInput>(Expression<Func<TInput, IUrlRegistry, string>> forward);
