@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace FubuCore
 {
@@ -11,10 +12,10 @@ namespace FubuCore
             Reset();
         }
 
-        public static Func<string, string, string> Combine { get; private set; }
-        public static Func<string, string> ToAbsolute { get; private set; }
-        public static Func<string, string> ToFull { get; private set; }
-        public static Func<string, string> ToPhysicalPath { get; private set; }
+        private static Func<string, string, string> _combine { get; set; }
+        private static Func<string, string> _toAbsolute { get; set; }
+        private static Func<string, bool> _isAbsolute { get; set; }
+        private static Func<string, string> _mapPath { get; set; }
 
         public static void Reset()
         {
@@ -34,65 +35,47 @@ namespace FubuCore
 
         public static void Stub(string usingFakeUrl)
         {
-            Combine = (basePath, subPath) => "{0}/{1}".ToFormat(basePath.TrimEnd('/'), subPath.TrimStart('/'));
-            ToAbsolute = path => Combine(usingFakeUrl, path.Replace("~", ""));
-            ToFull = path => Combine(usingFakeUrl, path.Replace("~", ""));
-            ToPhysicalPath =
-                virtPath => Combine(usingFakeUrl, virtPath).Replace("~", "").Replace("//", "/").Replace("/", "\\");
+            _combine = (basePath, subPath) => "{0}/{1}".ToFormat(basePath.TrimEnd('/'), subPath.TrimStart('/'));
+            _isAbsolute = path => path.StartsWith("/");
+            _toAbsolute = path => _isAbsolute(path) ? path : _combine(usingFakeUrl, path.Replace("~", ""));
+            _mapPath = virtPath => _toAbsolute(virtPath).Replace("~", "").Replace("//", "/").Replace("/", "\\");
         }
 
         public static void Live()
         {
-            Combine = VirtualPathUtility.Combine;
-            ToAbsolute = path =>
-            {
-                string result = path.Replace("~", VirtualPathUtility.ToAbsolute("~"));
-                return result.StartsWith("//") ? result.Substring(1) : result;
-            };
-            ToFull = path =>
-            {
-                var baseUri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
-                return new Uri(baseUri, ToAbsolute(path)).ToString();
-            };
-            ToPhysicalPath = HttpContext.Current.Server.MapPath;
+            _combine = VirtualPathUtility.Combine;
+            _toAbsolute = VirtualPathUtility.ToAbsolute;
+            _isAbsolute = VirtualPathUtility.IsAbsolute;
+            _mapPath = HostingEnvironment.MapPath;
         }
 
-        public static string GetUrl(string url)
+        public static string ToAbsoluteUrl(this string url)
         {
-            if (!url.StartsWith("~/") || !url.StartsWith("/"))
+            if (!_isAbsolute(url))
             {
-                url = ("~/" + url).Replace("~//", "~/");
+                url = _combine("~", url);
             }
-
-
-            return ToAbsolute(url);
+            return _toAbsolute(url);
         }
 
-        public static string GetFullUrl(string path)
+        public static string ToServerQualifiedUrl(this string relativeUrl, string serverBasedUrl)
         {
-            return ToFull(path);
+            var baseUri = new Uri(serverBasedUrl);
+            return new Uri(baseUri, ToAbsoluteUrl(relativeUrl)).ToString();
         }
 
-        public static string MapPath(this string webRelativePath)
+        public static string ToPhysicalPath(this string webRelativePath)
         {
-            return ToAbsolute(webRelativePath);
-        }
-
-        public static string PhysicalPath(this string webRelativePath)
-        {
-            return ToPhysicalPath(webRelativePath);
+            if (!_isAbsolute(webRelativePath))
+            {
+                webRelativePath = _combine("~", webRelativePath);
+            }
+            return _mapPath(webRelativePath);
         }
 
         public static string WithQueryStringValues(this string querystring, params object[] values)
         {
             return querystring.ToFormat(values.Select(value => value.ToString().UrlEncoded()).ToArray());
-        }
-
-        public static string ToFullUrl(this string relativeUrl, params object[] args)
-        {
-            string formattedUrl = (args == null) ? relativeUrl : relativeUrl.ToFormat(args);
-
-            return UrlContext.GetFullUrl(formattedUrl);
         }
 
         public static string UrlEncoded(this object target)

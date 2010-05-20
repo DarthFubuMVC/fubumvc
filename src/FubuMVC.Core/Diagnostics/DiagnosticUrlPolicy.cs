@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public static string RootUrlFor(MethodInfo method)
         {
-            return UrlContext.GetFullUrl("~/_fubu/" + UrlFor(method));
+            return ("~/_fubu/" + UrlFor(method)).ToAbsoluteUrl();
         }
 
     }

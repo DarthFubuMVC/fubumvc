@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual string CreateUrl(object input)
         {
-            return UrlContext.GetUrl(_pattern);
+            return _pattern.ToAbsoluteUrl();
         }
 
         public virtual Route ToRoute()
@@ -123,7 +123,7 @@ namespace FubuMVC.Core.Registration.Routes
             url = fillRouteValues(url, input);
             url = fillQueryInputs(url, input);
 
-            return UrlContext.GetUrl(url);
+            return url.ToAbsoluteUrl();
         }
 
 

@@ -19,7 +19,7 @@ namespace FubuCore.Binding
                 var strVal = rawValue.PropertyValue as String;
 
                 return strVal.IsNotEmpty()
-                           ? strVal.PhysicalPath()
+                           ? strVal.ToPhysicalPath()
                            : strVal;
             };
         }

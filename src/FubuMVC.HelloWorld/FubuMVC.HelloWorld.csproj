@@ -58,6 +58,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\IntegrationTests\IntegrationTestsController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controllers\LimitMethods\LimitMethodsController.cs" />
     <Compile Include="Controllers\LimitMethods\QueryGreeting.aspx.cs">
       <DependentUpon>QueryGreeting.aspx</DependentUpon>
@@ -117,11 +120,14 @@
   <ItemGroup>
     <None Include="Controllers\Home\hello.spark" />
     <None Include="Controllers\Home\_foo.spark" />
+    <Content Include="Controllers\IntegrationTests\RunView.aspx" />
     <Content Include="Controllers\Login\LoggedInStatus.aspx" />
     <Content Include="Controllers\Products\PartPartial.ascx" />
     <Content Include="Controllers\Products\ProductPartial.ascx" />
     <Content Include="Controllers\Products\ProductsView.aspx" />
+    <Content Include="Shared\jquery-1.4.2.js" />
     <Content Include="Shared\Site.Master" />
+    <Content Include="Shared\testrunner.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -140,9 +146,9 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52174</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>52010</DevelopmentServerPort>
+          <DevelopmentServerVPath>/helloworld</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

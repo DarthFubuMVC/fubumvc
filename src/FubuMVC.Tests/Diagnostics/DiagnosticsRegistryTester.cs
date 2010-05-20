@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
@@ -129,6 +130,7 @@ namespace FubuMVC.Tests.Diagnostics
 
         protected override void beforeEach()
         {
+            UrlContext.Reset();
             _output = ClassUnderTest.Index();
         }
 
