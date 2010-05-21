@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Diagnostics
             var tag = new HtmlTag("td");
 
             var column = new OutputColumn();
-            column.WriteBody(chain, tag);
+            column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(node.Description);
         }
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Diagnostics
             var tag = new HtmlTag("td");
 
             var column = new OutputColumn();
-            column.WriteBody(chain, tag);
+            column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(json.Description + ", " + text.Description);
         }
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Diagnostics
             var tag = new HtmlTag("td");
 
             var column = new OutputColumn();
-            column.WriteBody(chain, tag);
+            column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(" -");
         }

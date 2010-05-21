@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             var tag = new HtmlTag("td");
 
-            column.WriteBody(chain, tag);
+            column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(call1.Description + ", " + call2.Description);
         }
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             var tag = new HtmlTag("td");
 
-            column.WriteBody(chain, tag);
+            column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(" -");
         }
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             var tag = new HtmlTag("td");
 
-            column.WriteBody(chain, tag);
+            column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(call.Description);
         }

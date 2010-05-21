@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             return "Chain";
         }
 
-        public void WriteBody(BehaviorChain chain, HtmlTag cell)
+        public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             cell.Child(new LinkTag(Text(chain), "chain/" + chain.UniqueId).AddClass("chainId"));
         }

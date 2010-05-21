@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             return "Action(s)";
         }
 
-        public void WriteBody(BehaviorChain chain, HtmlTag cell)
+        public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             string text = Text(chain);
 

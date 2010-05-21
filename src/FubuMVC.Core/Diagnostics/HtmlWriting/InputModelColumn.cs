@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             return "Input Model";
         }
 
-        public void WriteBody(BehaviorChain chain, HtmlTag cell)
+        public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             Type inputType = chain.ActionInputType();
             

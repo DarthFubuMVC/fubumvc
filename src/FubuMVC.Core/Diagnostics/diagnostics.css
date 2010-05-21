@@ -137,3 +137,13 @@ table.details TH
 	font-size:small;
 	font-weight:normal;
 }
+
+.fubu-internal{
+    color:#999999;
+    font-size:0.8em;
+    line-height:0.6em;
+}
+
+.main table > tbody > tr.fubu-internal:hover{
+	color: #111;
+}

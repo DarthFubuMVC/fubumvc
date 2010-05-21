@@ -1,3 +1,4 @@
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -16,7 +17,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             var tag = new HtmlTag("td");
 
-            new RouteColumn().WriteBody(chain, tag);
+            new RouteColumn().WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(" -");
         }
@@ -27,11 +28,28 @@ namespace FubuMVC.Tests.Diagnostics
             var chain = new BehaviorChain();
             chain.Route = new RouteDefinition("some/thing/else");
 
-            var tag = new HtmlTag("td");
+            var row = new TableRowTag();
+            var tag = row.Cell();
 
-            new RouteColumn().WriteBody(chain, tag);
+            new RouteColumn().WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(chain.Route.Pattern);
+            row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeFalse();
         }
+
+        [Test]
+        public void write_route_column_for_internal_diagnostics_route()
+        {
+            var chain = new BehaviorChain();
+            chain.Route = new RouteDefinition(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT + "/chains");
+
+            var row = new TableRowTag();
+            var tag = row.Cell();
+
+            new RouteColumn().WriteBody(chain, row, tag);
+
+            row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeTrue();
+        }
+
     }
 }
