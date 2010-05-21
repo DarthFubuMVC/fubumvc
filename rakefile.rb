@@ -27,7 +27,7 @@ assemblyinfo :version do |asm|
 	gittag = `git describe --long`.chomp 	# looks something like v0.1.0-63-g92228f4
     gitnumberpart = /-(\d+)-/.match(gittag)
     gitnumber = gitnumberpart.nil? ? '0' : gitnumberpart[1]
-    commit = (ENV["BUILD_VCS_NUMBER"].nil? ? `git log -1 --pretty=format:%H` : ENV["BUILD_VCS_NUMBER"])
+    commit = `git log -1 --pretty=format:%H`
   rescue
     commit = "git unavailable"
     gitnumber = "0"
