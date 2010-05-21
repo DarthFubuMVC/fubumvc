@@ -51,6 +51,7 @@ namespace FubuCore
 
         public static string ToAbsoluteUrl(this string url)
         {
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
             if (!_isAbsolute(url))
             {
                 url = _combine("~", url);

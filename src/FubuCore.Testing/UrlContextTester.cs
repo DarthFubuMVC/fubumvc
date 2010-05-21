@@ -42,6 +42,12 @@ namespace FubuCore.Testing
             "~/someUrl".ToAbsoluteUrl().ShouldEqual("/app/someUrl");
         }
 
+        [Test]
+        public void get_absolute_for_fully_qualified_url()
+        {
+            "http://somewhere.com/someUrl".ToAbsoluteUrl().ShouldEqual("http://somewhere.com/someUrl");
+        }
+
 
         [Test]
         public void get_server_Url_for_unrooted_url()
@@ -59,6 +65,12 @@ namespace FubuCore.Testing
         public void get_server_Url_for_app_relative_url()
         {
             "~/someUrl".ToServerQualifiedUrl(SERVER_BASE).ShouldEqual("http://www.someserver/app/someUrl");
+        }
+
+        [Test]
+        public void get_server_Url_for_fully_qualified_url()
+        {
+            "http://somewhere.com/someUrl".ToServerQualifiedUrl(SERVER_BASE).ShouldEqual("http://somewhere.com/someUrl");
         }
 
 
