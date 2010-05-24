@@ -196,7 +196,7 @@ namespace FubuMVC.UI
 
         public static FormTag FormFor(this IFubuPage page, string url)
         {
-            url = UrlContext.GetFullUrl(url);
+            url = url.ToAbsoluteUrl();
             return new FormTag(url);
         }
 

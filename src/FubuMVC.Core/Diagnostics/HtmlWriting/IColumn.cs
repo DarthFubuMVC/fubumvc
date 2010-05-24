@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
     public interface IColumn
     {
         string Header();
-        void WriteBody(BehaviorChain chain, HtmlTag cell);
+        void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell);
         string Text(BehaviorChain chain);
     }
 }

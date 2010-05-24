@@ -19,7 +19,7 @@ namespace FubuCore.Binding
                 var strVal = rawValue.PropertyValue as String;
 
                 return strVal.IsNotEmpty()
-                           ? strVal.MapPath()
+                           ? strVal.ToAbsoluteUrl()
                            : strVal;
             };
         }

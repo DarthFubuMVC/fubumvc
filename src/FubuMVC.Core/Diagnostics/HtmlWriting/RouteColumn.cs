@@ -14,10 +14,14 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             return "Route";
         }
 
-        public void WriteBody(BehaviorChain chain, HtmlTag cell)
+        public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             string text = Text(chain);
             cell.Text(text);
+            if (text.StartsWith(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT))
+            {
+                row.AddClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS);
+            }
         }
 
         public string Text(BehaviorChain chain)

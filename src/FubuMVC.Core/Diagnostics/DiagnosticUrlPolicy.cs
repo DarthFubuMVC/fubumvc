@@ -9,6 +9,8 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class DiagnosticUrlPolicy : IUrlPolicy
     {
+        public const string DIAGNOSTICS_URL_ROOT = "_fubu";
+
         public bool Matches(ActionCall call, IConfigurationObserver log)
         {
             return call.HandlerType == typeof (BehaviorGraphWriter);
@@ -18,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             MethodInfo method = call.Method;
             var definition = call.ToRouteDefinition();
-            definition.Append("_fubu/" + UrlFor(method));
+            definition.Append(DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method));
             if (call.InputType().CanBeCastTo<ChainRequest>())
             {
                 definition.AddRouteInput(new RouteInput(ReflectionHelper.GetAccessor<ChainRequest>(x => x.Id)), true);
@@ -33,7 +35,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public static string RootUrlFor(MethodInfo method)
         {
-            return UrlContext.GetFullUrl("~/_fubu/" + UrlFor(method));
+            return ("~/" + DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method)).ToAbsoluteUrl();
         }
 
     }

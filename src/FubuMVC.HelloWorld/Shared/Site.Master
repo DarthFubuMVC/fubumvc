@@ -11,4 +11,5 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     </div>
 </body>
+    <asp:ContentPlaceHolder ID="Scripts" runat="server" />
 </html>

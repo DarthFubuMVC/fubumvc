@@ -19,16 +19,19 @@ namespace FubuMVC.Core.Diagnostics
     {
         private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";
         private const string sourceControlUrlFormat = sourceControlUrlBase + "commit/{0}";
+        public const string FUBU_INTERNAL_CLASS = "fubu-internal";
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
+        private readonly string _diagnosticsNamespace;
 
         public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls)
         {
             _graph = graph;
             _urls = urls;
+            _diagnosticsNamespace = GetType().Namespace;
         }
 
-        [UrlPattern("_fubu")]
+        [UrlPattern(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)]
         public HtmlDocument Index()
         {
             var ul = new HtmlTag("ul");
@@ -119,12 +122,21 @@ namespace FubuMVC.Core.Diagnostics
                 header.Header("Description");
                 header.Header("Type");
             });
-            behaviorChain.Each(node => nodeTable.AddBodyRow(row =>
+            foreach (var node in behaviorChain)
             {
-                row.Cell().Text(node.Category.ToString());
-                row.Cell().Text(node.ToString());
-                row.Cell().Text(node.GetType().FullName);
-            }));
+
+                var description = node.ToString();
+                nodeTable.AddBodyRow(row =>
+                {
+                    row.Cell().Text(node.Category.ToString());
+                    row.Cell().Text(description);
+                    row.Cell().Text(node.GetType().FullName);
+                    if (description.Contains(_diagnosticsNamespace))
+                    {
+                        row.AddClass(FUBU_INTERNAL_CLASS);
+                    }
+               });
+            }
 
 
             var logDiv = new HtmlTag("div").AddClass("convention-log");
@@ -274,7 +286,7 @@ namespace FubuMVC.Core.Diagnostics
                 {
                     columns.Each(col =>
                     {
-                        col.WriteBody(chain, row.Cell());
+                        col.WriteBody(chain, row, row.Cell());
                     });
                 });
             });

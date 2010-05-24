@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Diagnostics
             chain.AddToEnd(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)));
             var tag = new HtmlTag("td");
 
-            new InputModelColumn().WriteBody(chain, tag);
+            new InputModelColumn().WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(typeof (Model1).Name);
             tag.Title().ShouldEqual(typeof (Model1).AssemblyQualifiedName);
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Diagnostics
             var chain = new BehaviorChain();
             var tag = new HtmlTag("td");
 
-            new InputModelColumn().WriteBody(chain, tag);
+            new InputModelColumn().WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(" -");
         }

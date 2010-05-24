@@ -12,8 +12,6 @@ namespace FubuMVC.Tests.Urls
     [TestFixture]
     public class UrlRegistryTester
     {
-        #region Setup/Teardown
-
         [SetUp]
         public void SetUp()
         {
@@ -21,34 +19,7 @@ namespace FubuMVC.Tests.Urls
             registry = new UrlRegistry();
         }
 
-        #endregion
-
         private UrlRegistry registry;
-
-        public class UrlModel
-        {
-            public string Name { get; set; }
-            public int Age { get; set; }
-        }
-
-        public class StubModelUrl<T> : IModelUrl
-        {
-            private readonly Func<T, string> _toUrl;
-
-            public StubModelUrl(Func<T, string> toUrl)
-            {
-                _toUrl = toUrl;
-            }
-
-            public string CreateUrl(object input)
-            {
-                return _toUrl((T) input);
-            }
-
-            public string Category { get; set; }
-
-            public Type InputType { get { return typeof (T); } }
-        }
 
         public class UrlRegistryTesterController
         {
@@ -236,6 +207,106 @@ namespace FubuMVC.Tests.Urls
                     Age = 35
                 }, Categories.EDIT);
             }).ErrorCode.ShouldEqual(2105);
+        }
+    }
+
+    public class StubModelUrl<T> : IModelUrl
+    {
+        private readonly Func<T, string> _toUrl;
+
+        public StubModelUrl(Func<T, string> toUrl)
+        {
+            _toUrl = toUrl;
+        }
+
+        public string CreateUrl(object input)
+        {
+            return _toUrl((T) input);
+        }
+
+        public string Category { get; set; }
+
+        public Type InputType { get { return typeof (T); } }
+    }
+
+    public class UrlModel
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+
+    public class SubclassUrlModel : UrlModel
+    {
+    }
+
+    [TestFixture]
+    public class using_model_type_mapper
+    {
+        private UrlRegistry registry;
+
+        [SetUp]
+        public void SetUp()
+        {
+            UrlContext.Reset();
+            registry = new UrlRegistry();
+
+            registry.AddModel(new StubModelUrl<UrlModel>(m => "/name/" + m.Name)
+            {
+                Category = Categories.EDIT
+            });
+            registry.AddModel(new StubModelUrl<UrlModel>(m => "/age/" + m.Age)
+            {
+                Category = Categories.DEFAULT
+            });
+
+            registry.MapModelTypes(o =>
+            {
+                var type = o.GetType();
+
+                return type == typeof(SubclassUrlModel)
+                    ? type.BaseType
+                    : type;
+            });
+        }
+
+        [Test]
+        public void regular_find_url_should_work_with_the_model_type_mapper_defined()
+        {
+            registry.UrlFor(new UrlModel
+            {
+                Name = "Jeremy",
+                Age = 35
+            }).ShouldEqual("/age/35");
+        }
+
+        [Test]
+        public void find_url_using_model_type_mapper()
+        {
+            registry.UrlFor(new SubclassUrlModel
+            {
+                Name = "Jeremy",
+                Age = 35
+            }).ShouldEqual("/age/35");
+        }
+
+        [Test]
+        public void regular_find_url_by_category_should_work_with_the_model_type_mapper_defined()
+        {
+            registry.UrlFor(new UrlModel()
+            {
+                Name = "Jeremy",
+                Age = 35
+            }, Categories.EDIT).ShouldEqual("/name/Jeremy");
+        }
+
+        [Test]
+        public void find_url_by_category_using_model_type_mapper()
+        {
+            registry.UrlFor(new SubclassUrlModel()
+            {
+                Name = "Jeremy",
+                Age = 35
+            }, Categories.EDIT).ShouldEqual("/name/Jeremy");
         }
     }
 }

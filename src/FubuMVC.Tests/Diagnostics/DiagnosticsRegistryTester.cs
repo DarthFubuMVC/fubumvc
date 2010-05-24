@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
@@ -30,13 +31,13 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void actions_url()
         {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual("_fubu/actions");
+            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT + "/actions");
         }
 
         [Test]
         public void index_action_url()
         {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual("_fubu");
+            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT);
         }
 
         [Test]
@@ -91,7 +92,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void actions_url()
         {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual("_fubu/actions");
+            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT + "/actions");
         }
 
         [Test]
@@ -111,7 +112,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void index_action_url()
         {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual("_fubu");
+            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT);
         }
 
         [Test]
@@ -129,6 +130,7 @@ namespace FubuMVC.Tests.Diagnostics
 
         protected override void beforeEach()
         {
+            UrlContext.Reset();
             _output = ClassUnderTest.Index();
         }
 
