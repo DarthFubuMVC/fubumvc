@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrl(new SampleViewModel
             {
                 InPath = "some text"
-            }).ShouldEqual("/test/edit/some%20text");
+            }).ShouldEqual("test/edit/some%20text");
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Registration
             url.CreateUrl(new SampleViewModel
             {
                 InPath = "5"
-            }).ShouldEqual("/test/edit/5");
+            }).ShouldEqual("test/edit/5");
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.Registration
                 {
                     OptionalInput = "a"
                 })
-                .ShouldEndWith("/test/edit/a");
+                .ShouldEndWith("test/edit/a");
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace FubuMVC.Tests.Registration
                 {
                     RequiredInput = "a"
                 })
-                .ShouldEndWith("/test/edit/a");
+                .ShouldEndWith("test/edit/a");
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Registration
 
             url
                 .CreateUrl(new SampleViewModelWithInputs())
-                .ShouldEndWith("/test/edit/default");
+                .ShouldEndWith("test/edit/default");
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace FubuMVC.Tests.Registration
             {
                 InPath = "5",
                 AlsoInPath = "some text"
-            }).ShouldEqual("/test/edit/5/some%20text");
+            }).ShouldEqual("test/edit/5/some%20text");
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace FubuMVC.Tests.Registration
 
             url
                 .CreateUrl(null)
-                .ShouldEndWith("/test/edit/default");
+                .ShouldEndWith("test/edit/default");
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace FubuMVC.Tests.Registration
             {
                 InPath = "5",
                 InQueryString = "query"
-            }).ShouldEqual("/test/edit/5?InQueryString=query");
+            }).ShouldEqual("test/edit/5?InQueryString=query");
         }
 
         [Test]

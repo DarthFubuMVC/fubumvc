@@ -18,6 +18,13 @@ namespace FubuCore.Testing
          *   FubuMVC.HelloWorld\Controllers\IntegrationTests\RunView.aspx
          **************************************************************************/
 
+        [Test]
+        public void get_absolute_for_unrooted_url_with_empty_stubbed_root()
+        {
+            UrlContext.Stub("");
+            "someUrl".ToAbsoluteUrl().ShouldEqual("someUrl");
+        }
+
         [SetUp]
         public void SetUp()
         {

@@ -35,7 +35,12 @@ namespace FubuCore
 
         public static void Stub(string usingFakeUrl)
         {
-            _combine = (basePath, subPath) => "{0}/{1}".ToFormat(basePath.TrimEnd('/'), subPath.TrimStart('/'));
+            _combine = (basePath, subPath) =>
+            {
+                var root = basePath.TrimEnd('/');
+                if (root.Length > 0) root += '/';
+                return root + subPath.TrimStart('/');
+            };
             _isAbsolute = path => path.StartsWith("/");
             _toAbsolute = path => _isAbsolute(path) ? path : _combine(usingFakeUrl, path.Replace("~", ""));
             _mapPath = virtPath => _toAbsolute(virtPath).Replace("~", "").Replace("//", "/").Replace("/", "\\");

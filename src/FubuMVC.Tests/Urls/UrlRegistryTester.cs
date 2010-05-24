@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Urls
 
             registry.AddAction(url);
 
-            registry.UrlFor<UrlRegistryTesterController>(x => x.New()).ShouldEqual("/somepattern");
+            registry.UrlFor<UrlRegistryTesterController>(x => x.New()).ShouldEqual("somepattern");
         }
 
         [Test]

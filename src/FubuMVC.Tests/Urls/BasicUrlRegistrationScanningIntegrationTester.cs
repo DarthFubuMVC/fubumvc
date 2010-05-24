@@ -109,15 +109,15 @@ namespace FubuMVC.Tests.Urls
             {
                 Name = "Jeremy",
                 Age = 35
-            }).ShouldEqual("/special/Jeremy/is/35");
+            }).ShouldEqual("special/Jeremy/is/35");
         }
 
         [Test]
         public void has_action_calls_for_actions_with_no_input_args()
         {
             registry.UrlFor<SpecialController>(x => x.NoArgMethod()).ShouldEqual(
-                "/fubumvc/tests/urls/special/noargmethod");
-            registry.UrlFor<SpecialController>(x => x.Index()).ShouldEqual("/fubumvc/tests/urls/special/index");
+                "fubumvc/tests/urls/special/noargmethod");
+            registry.UrlFor<SpecialController>(x => x.Index()).ShouldEqual("fubumvc/tests/urls/special/index");
         }
     }
 }
