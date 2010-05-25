@@ -83,6 +83,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AjaxExtensionsTester.cs" />
+    <Compile Include="Behaviors\BasicBehaviorTester.cs" />
+    <Compile Include="LocalizationManagerTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
@@ -237,6 +240,8 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\WebForms\RenderPartialExpressionTester.cs" />
+    <Compile Include="View\WebForms\WebFormsEndpointPolicyTester.cs">
+    </Compile>
     <Compile Include="View\WebForms\WebFormViewFacilityTester.cs" />
     <Compile Include="View\WebForms\WebFormViewTokenTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
@@ -287,6 +292,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DSL\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />
   </ItemGroup>

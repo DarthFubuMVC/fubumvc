@@ -35,6 +35,34 @@ namespace FubuMVC.Tests.Behaviors
             writer.AssertWasCalled(x => x.Write(MimeType.Html.ToString(), "some text"));
         }
     }
+    [TestFixture]
+    public class RenderHtmlBehaviorTester
+    {
+        #region Setup/Teardown
+
+        [SetUp]
+        public void SetUp()
+        {
+            request = new InMemoryFubuRequest();
+            writer = MockRepository.GenerateMock<IOutputWriter>();
+            
+            request.Set("some html");
+
+            var behavior = new RenderHtmlBehavior(writer, request);
+            behavior.Invoke();
+        }
+
+        #endregion
+
+        private InMemoryFubuRequest request;
+        private IOutputWriter writer;
+
+        [Test]
+        public void should_write_the_to_string_render_of_the_type_to_the_output_writer()
+        {
+            writer.AssertWasCalled(x => x.Write(MimeType.Html.ToString(), "some html"));
+        }
+    }
 
     [TestFixture]
     public class IntegratedTestOfRenderTextBehavior

@@ -2,8 +2,12 @@ using System;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -135,6 +139,73 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph.RouteFor<SpecialController>(x => x.NoId(null)).As<RouteDefinition<SpecialRouteInputTestingMessage>>().
                 Pattern.ShouldEqual("special/noid/{ExtraParam}");
+        }
+    }
+
+    [TestFixture]
+    public class when_registering_home
+    {
+        private BehaviorGraph graphWithHome;
+        private BehaviorGraph graphWithMethodHome;
+        private BehaviorGraph graphWithoutHome;
+
+        public class OneController
+        {
+            public void Home()
+            {
+            }
+
+            public void HomeWithOutput(SimpleOutputModel model) {}
+        }
+        public class SimpleOutputModel {}
+
+        [SetUp]
+        public void SetUp()
+        {
+            graphWithHome = new FubuRegistry(x =>
+                {
+                    x.Applies.ToThisAssembly();
+                    x.HomeIs<OneController>(c => c.Home());
+                }).BuildGraph();
+            graphWithMethodHome = new FubuRegistry(x =>
+                {
+                    x.Applies.ToThisAssembly();
+                    x.HomeIs<SimpleOutputModel>();
+                }).BuildGraph();
+            graphWithoutHome = new FubuRegistry(x =>
+                        x.Applies.ToThisAssembly()
+                    ).BuildGraph();
+        }
+
+        [Test]
+        public void home_route_definition_pattern_should_be_empty()
+        {
+            var homeDefinition1 = graphWithHome.RouteFor<OneController>(c => c.Home());
+            var homeDefinition2 = graphWithMethodHome.RouteFor<OneController>(c=>c.HomeWithOutput(new SimpleOutputModel()));
+            var notHomeDefinition = graphWithoutHome.RouteFor<OneController>(c => c.Home());
+            homeDefinition1.Pattern.ShouldEqual("");
+            homeDefinition2.Pattern.ShouldEqual("");
+            notHomeDefinition.Pattern.ShouldNotBeEmpty();
+        }
+    }
+
+    [TestFixture]
+    public class when_using_url_registry
+    {
+        private BehaviorGraph graph;
+        private IUrlRegistrationConvention convention;
+
+        [SetUp]
+        public void SetUp()
+        {
+            convention = MockRepository.GenerateStub<IUrlRegistrationConvention>();
+            graph = new FubuRegistry(x => x.UrlRegistry.AddConvention(convention)).BuildGraph();
+        }
+
+        [Test]
+        public void convention_was_configured()
+        {
+            convention.AssertWasCalled(c=>c.Configure(Arg<BehaviorGraph>.Is.Equal(graph), Arg<IUrlRegistration>.Is.NotNull));
         }
     }
 }
