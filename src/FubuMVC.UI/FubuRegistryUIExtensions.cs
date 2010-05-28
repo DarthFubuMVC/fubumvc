@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Diagnostics;
 
 namespace FubuMVC.UI
 {
@@ -34,6 +35,11 @@ namespace FubuMVC.UI
             registry.HtmlConvention(conventions);
         }
 
+        public static void EnableHtmlDiagnostics(this FubuRegistry registry)
+        {
+            registry.Actions.IncludeType<ExampleController>();
+            registry.Output.ToHtml.WhenCallMatches(call => call.Method.DeclaringType == typeof (ExampleController));
+        }
 
         public static void StringConversions<T>(this FubuRegistry registry) where T : DisplayConversionRegistry, new()
         {

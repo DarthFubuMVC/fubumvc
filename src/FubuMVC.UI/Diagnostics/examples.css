@@ -1,0 +1,21 @@
+﻿.example{
+    border: medium double black;
+    margin: 8px;
+    padding: 10px;
+}
+
+.property {
+    color: Blue;
+}
+
+.source {
+}
+
+.tag {
+    border: thin solid #ccc;
+    margin: 10px;
+    padding: 10px;
+}
+
+.rendered{
+}

@@ -11,7 +11,7 @@ namespace FubuMVC.HelloWorld
             BeforeEachOfPartial.Modifier<OddEvenLiModifier>();
             //BeforeEachOfPartial.If(x => x.Is<ProjectListModel>()).Modify();
             AfterEachOfPartial.Builder<AfterEachOfPartialBuilder>();
-
+            Editors.IfPropertyIs<int>().Modify(tag => tag.AddClass("number"));
         }
     }
 }

@@ -52,6 +52,7 @@ namespace FubuMVC.HelloWorld
             
             this.HtmlConvention<SampleHtmlConventions>();
             
+            this.EnableHtmlDiagnostics();
 
             RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
 
