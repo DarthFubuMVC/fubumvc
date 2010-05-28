@@ -44,7 +44,7 @@ namespace FubuMVC.View.Spark
         public override string GetSparkViewPath(ActionCall call)
         {
             var root = call.HandlerType.Namespace.Replace(_baseNamespace, "").Replace(".", "/");
-
+            if (!root.StartsWith("/")) root = "/" + root;
             return "~" + root;
         }
 
