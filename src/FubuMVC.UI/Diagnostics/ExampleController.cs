@@ -35,6 +35,7 @@ namespace FubuMVC.UI.Diagnostics
                 };
 
             var doc = DiagnosticHtml.BuildDocument(_urlRegistry, "FubuMVC.UI Examples",
+                                                        showIntro(),
                                                         showProperty(x => x.Person.Name),
                                                         showProperty(x => x.Person.Age),
                                                         showProperty(x => x.Person.Birthday),
@@ -79,6 +80,29 @@ namespace FubuMVC.UI.Diagnostics
             example.AddChildren(new HtmlTag("code").AddClass("source").Text(htmlTag.ToString()));
             example.AddChildren(new HtmlTag("div").AddClass("rendered").AddChildren(htmlTag));
             return example;
+        }
+
+        private static HtmlTag showIntro()
+        {
+            var container = new HtmlTag("div").AddClass("intro");
+            container.Child(
+            new HtmlTag("p").Text(@"
+This page demonstrates the output that is rendered when using the FubuMVC.UI conventional HTML generators (InputFor/DisplayFor/LabelFor).
+To alter how the tags are generated, create your own class that derives from HtmlConventionRegistry, and declare it in your FubuRegistry using:"
+));
+            container.Child(new HtmlTag("pre").Text("this.HtmlConvention<MyHtmlConventionRegistry>();"));
+            container.Child(
+            new HtmlTag("p").Text(@"
+To alter how a property value is converted to a string value, use the StringConversions() extension method in your FubuRegistry. For example:"
+));
+
+            container.Child(new HtmlTag("pre").Text(@"
+this.StringConversions(x =>
+{
+   x.IfIsType<DateTime>().ConvertBy(date => date.ToShortDateString());
+});
+"));
+            return container;
         }
     }
 

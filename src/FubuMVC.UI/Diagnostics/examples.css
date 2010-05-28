@@ -1,4 +1,10 @@
-﻿.example{
+﻿.intro {
+	margin-top: 10px;
+	margin-left: 3em;
+	margin-right: 10em;
+}
+
+.example{
     border: medium double black;
     margin: 8px;
     padding: 10px;
