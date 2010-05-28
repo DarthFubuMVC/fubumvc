@@ -47,6 +47,12 @@ namespace FubuMVC.UI
             return new LinkTag("", page.Urls.UrlFor(inputModel));
         }
 
+        public static HtmlTag LinkTo<TController>(this IFubuPage page, Expression<Action<TController>> actionExpression)
+        {
+            return new LinkTag("", page.Urls.UrlFor(actionExpression));
+        }
+
+
         public static string LinkVariable(this IFubuPage page, string variable, object input)
         {
             string url = page.Urls.UrlFor(input);

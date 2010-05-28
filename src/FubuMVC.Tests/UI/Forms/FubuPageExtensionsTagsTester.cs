@@ -29,27 +29,30 @@ namespace FubuMVC.Tests.UI.Forms
         public void SetUp()
         {
             _page = MockRepository.GenerateMock<IFubuPage>();
-            _urls = MockRepository.GenerateStub<IUrlRegistry>();
+            _urls = new StubUrlRegistry();
             _model = new InputModel();
-            _urls.Stub(u => u.UrlFor(Arg<InputModel>.Is.NotNull)).Return("some url");
-            _page.Expect(p => p.Urls).Return(_urls);
+            _page.Stub(p => p.Urls).Return(_urls);
         }
 
         [Test]
-        public void should_return_html_tag()
+        public void for_an_action_by_specifying_an_input_model_instance()
         {
             HtmlTag tag = _page.LinkTo(_model);
-            tag.Attr("href").ShouldEqual("some url");
-            _urls.AssertWasCalled(u => u.UrlFor(_model));
+            tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.UI.Forms.InputModel");
         }
 
         [Test]
-        public void should_return_html_tag_of_new_model()
+        public void for_an_action_by_specifying_an_input_model_type()
         {
             HtmlTag tag = _page.LinkTo<InputModel>();
-            tag.Attr("href").ShouldEqual("some url");
-            _urls.AssertWasNotCalled(u => u.UrlFor(_model));
-            _urls.AssertWasCalled(u => u.UrlFor(Arg<InputModel>.Is.NotNull));
+            tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.UI.Forms.InputModel");
+        }
+
+        [Test]
+        public void for_an_action_by_specifying_the_action_via_an_expression()
+        {
+            HtmlTag tag = _page.LinkTo<TestController>(x => x.Index());
+            tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.TestController.Index()");
         }
     }
 
