@@ -37,8 +37,8 @@ namespace FubuMVC.UI
 
         public static void EnableHtmlDiagnostics(this FubuRegistry registry)
         {
-            registry.Actions.IncludeType<ExampleController>();
-            registry.Output.ToHtml.WhenCallMatches(call => call.Method.DeclaringType == typeof (ExampleController));
+            registry.Actions.IncludeType<ExampleHtmlWriter>();
+            registry.Output.ToHtml.WhenCallMatches(call => call.Method.DeclaringType == typeof (ExampleHtmlWriter));
         }
 
         public static void StringConversions<T>(this FubuRegistry registry) where T : DisplayConversionRegistry, new()

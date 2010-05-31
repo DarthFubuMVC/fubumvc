@@ -4,6 +4,10 @@
 	margin-right: 10em;
 }
 
+h3.viewmodel {
+    padding-left: 10px;
+}
+
 .example{
     border: medium double black;
     margin: 8px;
@@ -24,4 +28,24 @@
 }
 
 .rendered{
+}
+
+.subproperties{
+    list-style-type: none;
+    list-style-position: outside;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-left: 1em;
+}
+
+.subproperties li, .subproperties a, .subproperties a:visited {
+    color: Blue;
+}
+
+.subproperties li a {
+    text-decoration: none;
+}
+
+.subproperties li a:hover {
+    text-decoration: underline;
 }

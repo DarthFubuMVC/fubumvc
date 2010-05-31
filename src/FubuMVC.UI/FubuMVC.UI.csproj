@@ -57,7 +57,7 @@
     <Compile Include="Configuration\AccessorDef.cs" />
     <Compile Include="Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="Configuration\PartialLambdaElementBuilder.cs" />
-    <Compile Include="Diagnostics\ExampleController.cs" />
+    <Compile Include="Diagnostics\ExampleHtmlWriter.cs" />
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />

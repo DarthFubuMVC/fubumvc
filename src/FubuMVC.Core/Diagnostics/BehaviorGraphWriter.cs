@@ -222,9 +222,9 @@ namespace FubuMVC.Core.Diagnostics
 
         private HtmlTag writeTable(Func<BehaviorChain, bool> filter, Func<BehaviorChain, string> ordering, params IColumn[] columns)
         {
-            IEnumerable<BehaviorChain> chains = _graph.Behaviors.Where(filter).OrderBy(ordering);
+            IEnumerable<BehaviorChain> filteredChains = _graph.Behaviors.Where(filter).OrderBy(ordering);
 
-            return writeTable(chains, columns);
+            return WriteBehaviorChainTable(filteredChains, columns);
         }
 
         private HtmlTag writeTable(Func<BehaviorChain, string> ordering, params IColumn[] columns)
@@ -232,7 +232,7 @@ namespace FubuMVC.Core.Diagnostics
             return writeTable(x => true, ordering, columns);
         }
 
-        private HtmlTag writeTable(IEnumerable<BehaviorChain> chains, params IColumn[] columns)
+        public static HtmlTag WriteBehaviorChainTable(IEnumerable<BehaviorChain> chains, params IColumn[] columns)
         {
             var table = new TableTag();
             table.Attr("cellspacing", "0");
