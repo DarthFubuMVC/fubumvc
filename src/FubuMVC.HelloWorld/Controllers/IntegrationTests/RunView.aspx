@@ -66,6 +66,10 @@
             equals(url, "http://somewhere.com/shared/testrunner.js", "the url should not be modified");
         });
 
+        test("with an empty path (for app root)", function() {
+            <%= ScriptVar("url", UrlContext.ToAbsoluteUrl("")) %>
+            equals(url, "/helloworld/", "the generated url");
+        });
 
         module("ToServerQualifiedUrl");
 
@@ -90,6 +94,11 @@
         test("with an full server qualified path (http://somewhere.com/shared/testrunner.js)", function() {
             <%= ScriptVar("url", UrlContext.ToServerQualifiedUrl("http://somewhere.com/shared/testrunner.js", SERVER_BASE)) %>
             equals(url, "http://somewhere.com/shared/testrunner.js", "the url should not be modified");
+        });
+
+        test("with an empty path (for app root)", function() {
+            <%= ScriptVar("url", UrlContext.ToServerQualifiedUrl("", SERVER_BASE)) %>
+            equals(url, serverBase + "/", "the generated url");
         });
 
 
