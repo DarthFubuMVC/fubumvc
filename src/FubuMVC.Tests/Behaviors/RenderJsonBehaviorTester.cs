@@ -11,7 +11,52 @@ using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 namespace FubuMVC.Tests.Behaviors
 {
     [TestFixture]
-    public class when_requesting_json_outside_of_an_ajax_request : InteractionContext<JsonWriter>
+    public class when_rendering_json_from_a_model_object_using_default_json_writer : InteractionContext<JsonWriter>
+    {
+        private JsonOutput output;
+        private InMemoryRequestData requestData;
+        private string mimeType;
+        private string rawOutput;
+
+        protected override void beforeEach()
+        {
+            output = new JsonOutput
+            {
+                Name = "Max",
+                Age = 6
+            };
+
+            requestData = new InMemoryRequestData();
+            Services.Inject<IRequestData>(requestData);
+
+            mimeType = null;
+            rawOutput = null;
+
+            MockFor<IOutputWriter>().Stub(x => x.Write(null, null)).IgnoreArguments().Do(
+                new Action<string, string>((t, o) =>
+                {
+                    mimeType = t;
+                    rawOutput = o;
+                }));
+
+            requestData["X-Requested-With"] = "XMLHttpRequest";
+
+            ClassUnderTest.Write(output);
+        }
+
+        [Test]
+        public void should_write_json_serialized_string_to_the_output_writer_regardless_of_request_headers()
+        {
+            string json = JsonUtil.ToJson(output);
+            mimeType.ShouldEqual(MimeType.Json.ToString());
+            rawOutput.ShouldEqual(json);
+        }
+    }
+
+
+
+    [TestFixture]
+    public class when_requesting_json_outside_of_an_ajax_request_using_ajax_aware_writer : InteractionContext<AjaxAwareJsonWriter>
     {
         private JsonOutput output;
 
@@ -27,7 +72,7 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
-        public void should_write_json_serialized_string_to_the_output_writer()
+        public void should_write_json_serialized_string_within_an_html_textarea_to_the_output_writer()
         {
             string json = JsonUtil.ToJson(output);
             json = "<html><body><textarea rows=\"10\" cols=\"80\">" + json + "</textarea></body></html>";
@@ -36,7 +81,7 @@ namespace FubuMVC.Tests.Behaviors
     }
 
     [TestFixture]
-    public class when_rendering_json_from_a_model_object : InteractionContext<JsonWriter>
+    public class when_rendering_json_from_a_model_object_using_ajax_aware_writer : InteractionContext<AjaxAwareJsonWriter>
     {
         private JsonOutput output;
         private InMemoryRequestData requestData;
@@ -90,7 +135,7 @@ namespace FubuMVC.Tests.Behaviors
     }
 
     [TestFixture]
-    public class when_rendering_html_friendly_json_from_a_model_object :
+    public class when_rendering_a_json_response :
         InteractionContext<RenderJsonBehavior<JsonOutput>>
     {
         private JsonOutput output;        

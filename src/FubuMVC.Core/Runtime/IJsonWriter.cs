@@ -8,11 +8,28 @@ namespace FubuMVC.Core.Runtime
         void Write(object output);
     }
 
-    public class JsonWriter : IJsonWriter {
+    public class JsonWriter : IJsonWriter
+    {
+        private readonly IOutputWriter _outputWriter;
+
+        public JsonWriter(IOutputWriter outputWriter)
+        {
+            _outputWriter = outputWriter;
+        }
+
+        public void Write(object output)
+        {
+            _outputWriter.Write(MimeType.Json.ToString(), JsonUtil.ToJson(output));
+        }
+    }
+
+
+    public class AjaxAwareJsonWriter : IJsonWriter
+    {
         private readonly IOutputWriter _outputWriter;
         private readonly IRequestData _requestData;
 
-        public JsonWriter(IOutputWriter outputWriter, IRequestData requestData)
+        public AjaxAwareJsonWriter(IOutputWriter outputWriter, IRequestData requestData)
         {
             _outputWriter = outputWriter;
             _requestData = requestData;

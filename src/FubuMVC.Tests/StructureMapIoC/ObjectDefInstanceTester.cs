@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.StructureMapIoC
 
             var def = new ObjectDef(typeof (FakeJsonBehavior));
             def.Child(typeof (IFubuRequest), request);
-            var jsonWriter = def.Child(typeof (IJsonWriter), typeof (JsonWriter));
+            var jsonWriter = def.Child(typeof (IJsonWriter), typeof (AjaxAwareJsonWriter));
             jsonWriter.Child(typeof (IOutputWriter), typeof (HttpResponseOutputWriter));
             jsonWriter.Child(typeof(IRequestData), typeof(InMemoryRequestData));
             def.Child(typeof (IRequestData), typeof (InMemoryRequestData));
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 new Container(x => { x.For<IActionBehavior>().Use(new ObjectDefInstance(def)); });
 
             var jsonBehavior = container.GetInstance<IActionBehavior>().ShouldBeOfType<FakeJsonBehavior>();
-            jsonBehavior.Writer.ShouldBeOfType<JsonWriter>();
+            jsonBehavior.Writer.ShouldBeOfType<AjaxAwareJsonWriter>();
             jsonBehavior.Request.ShouldBeTheSameAs(request);
         }
 
