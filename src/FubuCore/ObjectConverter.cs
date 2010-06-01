@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FubuCore.Binding;
 using FubuCore.Util;
 
 namespace FubuCore
@@ -15,7 +17,7 @@ namespace FubuCore
 
     public interface IObjectConverterFamily
     {
-        bool Matches(Type type);
+        bool Matches(Type type, IObjectConverter converter);
         Func<string, object> CreateConverter(Type type, Cache<Type, Func<string, object>> converters);
     }
 
@@ -45,7 +47,7 @@ namespace FubuCore
 
         private Func<string, object> createFinder(Type type)
         {
-            var family = _families.FirstOrDefault(x => x.Matches(type));
+            var family = _families.FirstOrDefault(x => x.Matches(type, this));
             if (family != null)
             {
                 return family.CreateConverter(type, _froms);
@@ -55,76 +57,21 @@ namespace FubuCore
             return stringValue => Convert.ChangeType(stringValue, type);
         }
 
-        //[Obsolete]
-        //private Func<string, object> createGenericEnumerableFinder(Type type)
-        //{
-        //    return createEnumerableFinder(type.GetGenericArguments()[0]);
-        //}
-
-        //[Obsolete]
-        //private static Func<string, object> createEnumFinder(Type type)
-        //{
-        //    return stringValue => Enum.Parse(type, stringValue);
-        //}
-
-        //[Obsolete]
-        //private Func<string, object> createArrayFinder(Type type)
-        //{
-        //    var innerType = type.GetElementType();
-
-        //    return createEnumerableFinder(innerType);
-        //}
-
-        //[Obsolete]
-        //private Func<string, object> createEnumerableFinder(Type innerType)
-        //{
-        //    var singleObjectFinder = _froms[innerType];
-
-        //    return stringValue =>
-        //    {
-        //        if (stringValue.ToUpper() == EMPTY)
-        //        {
-        //            return Array.CreateInstance(innerType, 0);
-        //        }
-
-        //        var strings = stringValue.ToDelimitedArray();
-        //        var array = Array.CreateInstance(innerType, strings.Length);
-
-        //        for (var i = 0; i < strings.Length; i++)
-        //        {
-        //            var value = singleObjectFinder(strings[i]);
-        //            array.SetValue(value, i);
-        //        }
-
-        //        return array;
-        //    };
-        //}
-
-        //[Obsolete]
-        //private Func<string, object> createNullableFinder(Type type)
-        //{
-        //    Func<string, object> inner = _froms[type.GetInnerTypeFromNullable()];
-
-        //    return stringValue =>
-        //    {
-        //        if (stringValue == NULL) return null;
-        //        return inner(stringValue);
-        //    };
-        //}
-
         public bool CanBeParsed(Type type)
         {
+            return _froms.Has(type) || _families.Any(x => x.Matches(type, this));
+
             // TODO -- need to change this stuff
 
-            if (type.IsArray) return CanBeParsed(type.GetElementType());
-            if (type.IsGenericEnumerable()) return CanBeParsed(type.GetGenericArguments()[0]);
+            //if (type.IsArray) return CanBeParsed(type.GetElementType());
+            //if (type.IsGenericEnumerable()) return CanBeParsed(type.GetGenericArguments()[0]);
 
-            if (_froms.Has(type)) return true;
-            if (type.IsNullable()) return true;
-            if (type == typeof(DateTime)) return true;
-            if (type.IsSimple()) return true;
+            //if (_froms.Has(type)) return true;
+            //if (type.IsNullable()) return true;
+            //if (type == typeof(DateTime)) return true;
+            //if (type.IsSimple()) return true;
 
-            return false;
+            //return false;
         }
 
         public void RegisterConverter<T>(Func<string, T> finder)
@@ -149,6 +96,7 @@ namespace FubuCore
             _families.Add(new EnumConverterFamily());
             _families.Add(new ArrayConverterFamily());
             _families.Add(new NullableConverterFamily());
+            _families.Add(new TypeDescriptorFamily());
         }
 
         public virtual object FromString(string stringValue, Type type)
@@ -266,7 +214,7 @@ namespace FubuCore
 
     public class EnumConverterFamily : IObjectConverterFamily
     {
-        public bool Matches(Type type)
+        public bool Matches(Type type, IObjectConverter converter)
         {
             return type.IsEnum;
         }
@@ -279,7 +227,7 @@ namespace FubuCore
 
     public class NullableConverterFamily : IObjectConverterFamily
     {
-        public bool Matches(Type type)
+        public bool Matches(Type type, IObjectConverter converter)
         {
             return type.IsNullable();
         }
@@ -296,11 +244,30 @@ namespace FubuCore
         }
     }
 
+    public class TypeDescriptorFamily : IObjectConverterFamily
+    {
+        public bool Matches(Type type, IObjectConverter converter)
+        {
+            return TypeDescriptor.GetConverter(type).CanConvertFrom(typeof (string));
+        }
+
+        public Func<string, object> CreateConverter(Type type, Cache<Type, Func<string, object>> converters)
+        {
+            var converter = TypeDescriptor.GetConverter(type);
+            return s => converter.ConvertFromString(s);
+        }
+    }
+
     public class ArrayConverterFamily : IObjectConverterFamily
     {
-        public bool Matches(Type type)
+        public bool Matches(Type type, IObjectConverter converter)
         {
-            return type.IsArray || type.IsGenericEnumerable();
+            if (type.IsArray && converter.CanBeParsed(type.GetElementType())) return true;
+
+
+
+
+            return (type.IsGenericEnumerable() && converter.CanBeParsed(type.GetGenericArguments()[0]));
         }
 
         public Func<string, object> CreateConverter(Type type, Cache<Type, Func<string, object>> converters)

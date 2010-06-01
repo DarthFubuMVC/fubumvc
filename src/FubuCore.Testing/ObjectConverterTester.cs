@@ -285,7 +285,7 @@ namespace FubuCore.Testing
         public void empty_string_not_allowed_for_nullable_value_types()
         {
             //NOTE: We may want to change this in the future to have empty string = null, or default(T)
-            typeof (FormatException)
+            typeof (Exception)
                 .ShouldBeThrownBy(() => finder.FromString("", typeof (int?)));
         }
 
