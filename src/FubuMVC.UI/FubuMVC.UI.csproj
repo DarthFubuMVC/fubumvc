@@ -57,6 +57,7 @@
     <Compile Include="Configuration\AccessorDef.cs" />
     <Compile Include="Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="Configuration\PartialLambdaElementBuilder.cs" />
+    <Compile Include="Diagnostics\ExampleHtmlWriter.cs" />
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />
@@ -97,6 +98,9 @@
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Diagnostics\examples.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

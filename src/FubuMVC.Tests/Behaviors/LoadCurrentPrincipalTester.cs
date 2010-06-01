@@ -58,5 +58,20 @@ namespace FubuMVC.Tests.Behaviors
 
             _context.AssertWasNotCalled(x => x.IsAuthenticated());
         }
+
+        [Test]
+        public void invoke_should_attach_principal_and_continue()
+        {
+            IActionBehavior insideBehavior = MockRepository.GenerateStub<IActionBehavior>();
+            _behavior.InsideBehavior = insideBehavior;
+            var expectedUser = MockRepository.GenerateStub<IPrincipal>();
+            _context.Stub(c => c.IsAuthenticated()).Return(true);
+            _factory.Stub(f => f.CreatePrincipal(_identity)).Return(expectedUser);
+            
+            _behavior.Invoke();
+
+            _context.CurrentUser.ShouldBeTheSameAs(expectedUser);
+            insideBehavior.AssertWasCalled(b=>b.Invoke());
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace FubuMVC.Core.Runtime
     public interface IFubuRequest
     {
         T Get<T>() where T : class;
+    	object Get(Type type);
         void Set<T>(T target) where T : class;
         void Set(Type type, object target);
         
@@ -27,7 +28,12 @@ namespace FubuMVC.Core.Runtime
             return _cache[typeof (T)] as T;
         }
 
-        public void Set<T>(T target) where T : class
+    	public object Get(Type type)
+    	{
+    		return _cache[type];
+    	}
+
+    	public void Set<T>(T target) where T : class
         {
             _cache[typeof (T)] = target;
         }

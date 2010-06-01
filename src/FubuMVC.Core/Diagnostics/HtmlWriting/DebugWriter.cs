@@ -45,7 +45,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             _report.Steps.Each(reportWriter.WriteStep);
 
             string title = "Debug Run of " + _report.Url;
-            return BehaviorGraphWriter.BuildDocument(_urls, title, header, reportWriter.Tag);
+            return DiagnosticHtml.BuildDocument(_urls, title, header, reportWriter.Tag);
         }
 
         private void writeFormData(HtmlTag tag)

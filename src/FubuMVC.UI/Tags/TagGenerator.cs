@@ -2,16 +2,30 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Runtime;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.UI.Tags
 {
-    public interface ITagGenerator<T> where T : class
+    public interface ITagGenerator
     {
+        void SetModel(object model);
         void SetProfile(string profileName);
+        HtmlTag LabelFor(ElementRequest request);
+        HtmlTag InputFor(ElementRequest request);
+        HtmlTag DisplayFor(ElementRequest request);
+        string ElementPrefix { get; set; }
+        string CurrentProfile { get; }
+        ElementRequest GetRequest(Accessor accessor);
+        HtmlTag BeforePartial(ElementRequest request);
+        HtmlTag AfterPartial(ElementRequest request);
+        HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
+        HtmlTag BeforeEachofPartial(ElementRequest request, int current, int count);
+    }
+
+    public interface ITagGenerator<T> : ITagGenerator where T : class
+    {
         HtmlTag LabelFor(Expression<Func<T, object>> expression);
         HtmlTag LabelFor(Expression<Func<T, object>> expression, string profile);
         HtmlTag InputFor(Expression<Func<T, object>> expression);
@@ -21,19 +35,8 @@ namespace FubuMVC.UI.Tags
         HtmlTag DisplayFor(Expression<Func<T, object>> expression);
         HtmlTag DisplayFor(Expression<Func<T, object>> expression, string profile);
         ElementRequest GetRequest(Expression<Func<T, object>> expression);
-        HtmlTag LabelFor(ElementRequest request);
-        HtmlTag InputFor(ElementRequest request);
-        HtmlTag DisplayFor(ElementRequest request);
         ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression);
-        string ElementPrefix { get; set; }
-        string CurrentProfile { get; }
         T Model { get; set; }
-        ElementRequest GetRequest(Accessor accessor);
-
-        HtmlTag BeforePartial(ElementRequest request);
-        HtmlTag AfterPartial(ElementRequest request);
-        HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
-        HtmlTag BeforeEachofPartial(ElementRequest request, int current, int count);
     }
 
     public class TagGenerator<T> : ITagGenerator<T> where T : class
@@ -59,6 +62,11 @@ namespace FubuMVC.UI.Tags
         }
 
         public T Model { get { return _model; } set { _model = value; } }
+
+        public void SetModel(object model)
+        {
+            Model = (T) model;
+        }
 
         public void SetProfile(string profileName)
         {

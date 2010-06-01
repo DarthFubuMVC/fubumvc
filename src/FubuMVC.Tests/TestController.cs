@@ -15,6 +15,8 @@ namespace FubuMVC.Tests
 
     public class TestController
     {
+        public TestOutputModel Index(){ return new TestOutputModel(); }
+
         public TestOutputModel SomeAction(TestInputModel value)
         {
             return new TestOutputModel

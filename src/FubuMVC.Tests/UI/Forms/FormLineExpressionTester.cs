@@ -129,6 +129,8 @@ namespace FubuMVC.Tests.UI.Forms
 
     public class StubTagGenerator<T> : ITagGenerator<T> where T : class
     {
+        public void SetModel(object model) {}
+
         public void SetProfile(string profileName)
         {
             throw new NotImplementedException();

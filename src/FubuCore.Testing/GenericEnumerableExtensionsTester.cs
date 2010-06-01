@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -71,6 +72,16 @@ namespace FubuCore.Testing
             list.AddMany("a", "b", "c");
 
             list.ShouldHaveTheSameElementsAs("a", "b", "c");
+        }
+
+        [Test]
+        public void remove_all()
+        {
+            var list = new List<string> { "a", "c", "b" };
+            list.ShouldHaveCount(3);
+            Func<string, bool> whereEvaluator = item => item.CompareTo("c") < 0;
+            list.RemoveAll(whereEvaluator);
+            list.ShouldHaveCount(1).ShouldContain("c");
         }
     }
 }

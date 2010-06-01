@@ -20,7 +20,12 @@ namespace FubuMVC.Core.Runtime
             return _values[typeof (T)].Value as T;
         }
 
-        public virtual void Set<T>(T target) where T : class
+    	public object Get(Type type)
+    	{
+    		return _values[type].Value;
+    	}
+
+    	public virtual void Set<T>(T target) where T : class
         {
             _values[typeof (T)] = new BindResult
             {
