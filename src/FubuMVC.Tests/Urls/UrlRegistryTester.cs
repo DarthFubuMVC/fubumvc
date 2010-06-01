@@ -224,6 +224,11 @@ namespace FubuMVC.Tests.Urls
             return _toUrl((T) input);
         }
 
+        public void RootUrlAt(string baseUrl)
+        {
+            
+        }
+
         public string Category { get; set; }
 
         public Type InputType { get { return typeof (T); } }

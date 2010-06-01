@@ -15,6 +15,12 @@ namespace FubuCore.Util
             return Includes.MatchesAny(target) && Excludes.DoesNotMatchAny(target);
         }
 
+        // TODO -- unit test for this
+        public bool MatchesAll(T target)
+        {
+            return Includes.MatchesAll(target) && !Excludes.MatchesAny(target);
+        }
+
         public string GetDescriptionOfFirstMatchingInclude(T target)
         {
             return Includes.GetDescriptionOfMatches(target).FirstOrDefault();

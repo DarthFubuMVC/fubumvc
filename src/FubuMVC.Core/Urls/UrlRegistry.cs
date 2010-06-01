@@ -33,6 +33,17 @@ namespace FubuMVC.Core.Urls
         public IEnumerable<ActionUrl> Actions { get { return _actions; } }
         public IEnumerable<IModelUrl> ModelUrls { get { return _modelUrls; } }
 
+        /// <summary>
+        /// This is only for automated testing scenarios.  Do NOT use in real
+        /// scenarios
+        /// </summary>
+        /// <param name="baseUrl"></param>
+        public void RootAt(string baseUrl)
+        {
+            Actions.Each<ActionUrl>(x => x.RootUrlAt(baseUrl));
+            ModelUrls.Each<IModelUrl>(x => x.RootUrlAt(baseUrl));
+        }
+
         public void Add(IEnumerable<ActionUrl> actions)
         {
             _actions.AddRange(actions);

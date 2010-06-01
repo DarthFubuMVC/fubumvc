@@ -7,5 +7,6 @@ namespace FubuMVC.Core.Urls
         string Category { get; }
         Type InputType { get; }
         string CreateUrl(object input);
+        void RootUrlAt(string baseUrl);
     }
 }

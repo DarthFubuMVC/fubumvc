@@ -30,6 +30,11 @@ namespace FubuMVC.Core.Registration.Routes
             return _pattern.ToAbsoluteUrl();
         }
 
+        public void RootUrlAt(string baseUrl)
+        {
+            Prepend(baseUrl);
+        }
+
         public virtual Route ToRoute()
         {
             return new Route(_pattern, null, getConstraints(), null);;
@@ -72,6 +77,9 @@ namespace FubuMVC.Core.Registration.Routes
         public void Prepend(string prefix)
         {
             if (prefix.IsEmpty()) return;
+
+            // Apparently this is necessary
+            if (_pattern.StartsWith(prefix)) return;
 
             _pattern = prefix.TrimEnd('/') + "/" + _pattern;
         }

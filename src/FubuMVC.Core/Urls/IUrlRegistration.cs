@@ -25,6 +25,11 @@ namespace FubuMVC.Core.Urls
             return _forward(input);
         }
 
+        public void RootUrlAt(string baseUrl)
+        {
+            // no op
+        }
+
         public string Category { get { return _category; } }
 
         public Type InputType { get { return _inputType; } }

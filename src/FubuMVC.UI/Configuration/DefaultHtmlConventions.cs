@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
+using FubuCore.Localization;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 
@@ -16,6 +17,7 @@ namespace FubuMVC.UI.Configuration
 
             Editors.Always.Modify(AddElementName);
             Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));
+
             Labels.Always.BuildBy(req => new HtmlTag("label").Text(BreakUpCamelCase(req.Accessor.FieldName)));
 
             BeforePartial.Always.BuildBy(req => new NoTag());

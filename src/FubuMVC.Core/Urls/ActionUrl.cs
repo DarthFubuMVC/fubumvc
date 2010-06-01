@@ -55,5 +55,10 @@ namespace FubuMVC.Core.Urls
         {
             return string.Format("{0} --> {1}.{2}()", _route, HandlerType, Method);
         }
+
+        public void RootUrlAt(string baseUrl)
+        {
+            _route.Prepend(baseUrl);
+        }
     }
 }

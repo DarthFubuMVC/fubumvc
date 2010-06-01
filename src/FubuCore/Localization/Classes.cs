@@ -6,6 +6,9 @@ namespace FubuCore.Localization
 {
     public class StringToken
     {
+        // Notice that there's no public ctor
+        // We use StringToken as a Java style
+        // strongly typed enumeration
         protected StringToken(string defaultText)
         {
             DefaultText = defaultText;
@@ -13,6 +16,9 @@ namespace FubuCore.Localization
 
         public string DefaultText { get; set; }
 
+        // I'm thinking about a way that the Key
+        // gets automatically assigned to the field name  
+        // of the holding class 
         public string Key { get; protected set; }
 
         public static StringToken FromKeyString(string key)
@@ -23,11 +29,19 @@ namespace FubuCore.Localization
             };
         }
 
+        // ToString() on StringToken delegates to a 
+        // static Localizer class to look up the 
+        // localized text for this StringToken.
+        // Putting the lookup in ToString() made
+        // our code shring quite a bit.
         public override string ToString()
         {
             return Localizer.TextFor(this);
         }
     }
+
+
+   
 
 
 
@@ -113,10 +127,16 @@ namespace FubuCore.Localization
     }
 
 
+    // This is the main "shim" interface for looking up
+    // localized string values and header information
     public interface ILocalizationProvider
     {
         string TextFor(StringToken token);
         LocalizedHeader HeaderFor(PropertyInfo property);
+
+        // This is effectively the same method as above,
+        // but PropertyToken is just a class that stands in
+        // for a PropertyInfo
         LocalizedHeader HeaderFor(PropertyToken property);
     }
 
@@ -126,6 +146,9 @@ namespace FubuCore.Localization
 
         public string Heading { get; set; }
 
+        // I'm thinking to leave this bit of flexibility in here for later.
+        // Properties might be things like the "caption" or "title," or a help
+        // topic.  
         public string this[string name]
         {
             get
@@ -139,10 +162,15 @@ namespace FubuCore.Localization
         }
     }
 
+    // Static Facade over the localization subsystem for convenience.
+    // Yes, I know, I have a kneejerk reaction to the word "static"
+    // too.  More about that later
     public static class Localizer
     {
-        private static Func<ILocalizationProvider> _providerSource;
+        private static Func<ILocalizationProvider> _providerSource = 
+            () => new NulloLocalizationProvider();
 
+        // Localizer just uses an ILocalizationProvider under the covers
         public static Func<ILocalizationProvider> ProviderSource
         {
             set
@@ -182,6 +210,18 @@ namespace FubuCore.Localization
         public static LocalizedHeader HeaderFor(PropertyToken property)
         {
             return _providerSource().HeaderFor(property);
+        }
+    }
+
+    public class WidgetKeys : StringToken
+    {
+        public static readonly StringToken WEBSITE = new WidgetKeys( "Website");
+        public static readonly StringToken REPORT = new WidgetKeys("Report");
+        public static readonly StringToken RSS = new WidgetKeys("RSS Feed");
+
+        protected WidgetKeys(string defaultValue)
+            : base(defaultValue)
+        {
         }
     }
 }

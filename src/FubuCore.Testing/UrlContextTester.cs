@@ -36,6 +36,13 @@ namespace FubuCore.Testing
             "/folder/someUrl".ToAbsoluteUrl().ShouldEqual("/folder/someUrl");
         }
 
+
+        [Test]
+        public void get_absolute_for_rooted_url_with_route_info()
+        {
+            "/folder/someUrl/{something}".ToAbsoluteUrl().ShouldEqual("/folder/someUrl/{something}");
+        }
+
         [Test]
         public void get_absolute_for_app_relative_url()
         {

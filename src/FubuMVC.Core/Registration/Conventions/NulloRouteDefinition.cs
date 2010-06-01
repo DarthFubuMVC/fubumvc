@@ -45,6 +45,11 @@ namespace FubuMVC.Core.Registration.Conventions
             return Pattern;
         }
 
+        public void RootUrlAt(string baseUrl)
+        {
+            
+        }
+
         public Route ToRoute()
         {
             return new IgnoredRoute(Pattern);
