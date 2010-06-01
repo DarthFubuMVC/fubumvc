@@ -62,6 +62,12 @@ namespace FubuCore.Testing
             "http://somewhere.com/someUrl".ToAbsoluteUrl().ShouldEqual("http://somewhere.com/someUrl");
         }
 
+        [Test]
+        public void get_absolute_for_empty_url()
+        {
+            "".ToAbsoluteUrl().ShouldEqual("/app/");
+        }
+
 
         [Test]
         public void get_server_Url_for_unrooted_url()
