@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.WebForms;
+using FubuMVC.Tests.Diagnostics;
 using NUnit.Framework;
+using Rhino.Mocks;
 using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.Registration
@@ -59,6 +63,41 @@ namespace FubuMVC.Tests.Registration
             graph.Services.AddService<IRequestData, RequestData>();
             graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
         }
+
+        [Test]
+        public void description_writes_each_behavior_first_call_and_route_pattern()
+        {
+            var graph = new FubuRegistry(x=>
+            {
+                x.Applies.ToAssemblyContainingType<FakeControllers.OneController>();
+                x.Policies.WrapBehaviorChainsWith<BasicBehavior>();
+                x.Policies.WrapBehaviorChainsWith<WrappingBehavior>();
+            }).BuildGraph();
+            
+            TraceListener listener = MockRepository.GenerateStub<TraceListener>();
+            Debug.Listeners.Add(listener);
+            graph.Describe();
+            graph.Behaviors.Each(
+                b => listener.AssertWasCalled(
+                l => l.WriteLine(b.FirstCall().Description.PadRight(70) + b.Route.Pattern)));
+        }
+
+        [Test]
+        public void routes_for_should_get_all_route_definitions_for_declared_type()
+        {
+            var graph = new FubuRegistry(x => x.Applies.ToAssemblyContainingType<FakeInputModel>()).BuildGraph();
+
+            const string expectedPattern = "fubumvc/tests/registration/fake/query";
+            graph.RoutesFor<FakeInputModel>().ShouldHaveCount(1)
+                .ShouldContain(routeDef => routeDef.Pattern == expectedPattern);
+        }
+
+        public class FakeController
+        {
+            public void Query(FakeInputModel model){}
+        }
+
+        public class FakeInputModel{}
     }
 
 

@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Reflection;
@@ -35,6 +38,37 @@ namespace FubuMVC.Tests.Registration
             public string OptionalInput { get; set; }
         }
 
+        [Test]
+        public void by_default_input_type_returns_null()
+        {
+            var routeDefinition = new FakeRouteDefinition("");
+            routeDefinition.InputType.ShouldBeNull();
+        }
+
+        [Test]
+        public void to_string_by_default_gets_pattern()
+        {
+            const string pattern = "some/pattern";
+            var routeDefinition = new FakeRouteDefinition(pattern);
+            routeDefinition.ToString().ShouldEqual(pattern);
+        }
+
+        [Test]
+        public void shouldd_not_add_duplicate_input()
+        {
+            var url = new RouteDefinition<SampleViewModel>("my/sample");
+            url.AddRouteInput(x => x.InPath);
+            url.AddRouteInput(x => x.InPath);
+            url.AddRouteInput(new RouteInput(ReflectionHelper.GetAccessor<SampleViewModel>(x=>x.InPath)), false);
+            url.RouteInputs.ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void to_string_gets_pattern_and_type_full_name()
+        {
+            var url = new RouteDefinition<SampleViewModel>("my/sample");
+            url.ToString().ShouldEqual("{0} --> {1}".ToFormat(url.Pattern, typeof(SampleViewModel).FullName));
+        }
 
         [Test]
         public void create_default_value_for_a_route()
@@ -161,8 +195,13 @@ namespace FubuMVC.Tests.Registration
         public void create_url_with_multiple_variables_in_querystring()
         {
             var url = new RouteDefinition<SampleViewModel>("/my/sample/path");
-            url.AddQueryInput(x => x.InQueryString);
-            url.AddQueryInput(x => x.AlsoInQueryString);
+            var props = new List<Expression<Func<SampleViewModel, object>>>
+                              {
+                                  x => x.InQueryString,
+                                  x => x.AlsoInQueryString
+                              };
+            var inputs = props.Select(x => new RouteInput(ReflectionHelper.GetAccessor(x)));
+            url.AddQueryInputs(inputs);
 
             url.CreateUrl(new SampleViewModel
             {
@@ -315,5 +354,11 @@ namespace FubuMVC.Tests.Registration
             route.Constraints["httpMethod"].ShouldEqual(constraintToAdd);
         }
 
+    }
+
+    public class FakeRouteDefinition : RouteDefinition{
+        public FakeRouteDefinition(string pattern) : base(pattern)
+        {
+        }
     }
 }

@@ -1,7 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.StructureMapIoC;
+using FubuMVC.Tests.View;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
@@ -261,6 +265,77 @@ namespace FubuMVC.Tests.Registration.Nodes
             node2.AddToEnd(node3);
 
             node3.ParentChain().ShouldBeTheSameAs(chain);
+        }
+
+        [Test]
+        public void category_returns_chain()
+        {
+            var chain = new BehaviorChain();
+            chain.Category.ShouldEqual(BehaviorCategory.Chain);
+        }
+
+        [Test]
+        public void returns_input_type_name_if_first_call_is_not_null()
+        {
+            var chain = new BehaviorChain();
+            Type type = typeof(ControllerTarget);
+            chain.AddToEnd(new ActionCall(type, type.GetMethod("OneInOneOut")));
+            chain.InputTypeName.ShouldEqual("Model1");
+        }
+
+        [Test]
+        public void input_type_name_return_empty_if_first_call_is_null()
+        {
+            var chain = new BehaviorChain();
+            chain.InputTypeName.ShouldEqual("");
+        }
+
+        [Test]
+        public void return_description_if_first_call_is_not_null()
+        {
+            var chain = new BehaviorChain();
+            Type type = typeof(ControllerTarget);
+            chain.AddToEnd(new ActionCall(type, type.GetMethod("OneInZeroOut")));
+            chain.FirstCallDescription.ShouldEqual("ControllerTarget.OneInZeroOut(Model1 input) : void");
+        }
+
+        [Test]
+        public void first_call_description_return_empty_if_first_call_is_null()
+        {
+            var chain = new BehaviorChain();
+            chain.FirstCallDescription.ShouldEqual("");
+        }
+
+        [Test]
+        public void get_enum_should_yield_top()
+        {
+            var firstNode = new BehaviorChain();
+            var secondNode = new BehaviorChain();
+            var thirdNode = new BehaviorChain();
+            firstNode.AddToEnd(secondNode);
+            secondNode.AddToEnd(thirdNode);
+            var enumerator = firstNode.GetEnumerator();
+            enumerator.MoveNext();
+            enumerator.Current.ShouldEqual(secondNode);
+            enumerator.MoveNext();
+            enumerator.Current.ShouldEqual(thirdNode);
+            enumerator.MoveNext().ShouldBeFalse();
+        }
+
+        [Test]
+        public void behavior_node_get_enum_should_yield_next()
+        {
+            BehaviorNode node = new FakeViewToken();
+            var secondNode = new BehaviorChain();
+            var thirdNode = new BehaviorChain();
+            node.AddAfter(secondNode);
+            secondNode.AddAfter(thirdNode);
+            var enumerator = node.GetEnumerator();
+            enumerator.MoveNext();
+            enumerator.Current.ShouldEqual(secondNode);
+            enumerator.MoveNext();
+            enumerator.Current.ShouldEqual(thirdNode);
+            enumerator.MoveNext().ShouldBeFalse();
         }
     }
 }

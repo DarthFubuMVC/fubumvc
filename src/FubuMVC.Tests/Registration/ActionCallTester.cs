@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -87,6 +88,38 @@ namespace FubuMVC.Tests.Registration
 
             ObjectDef objectDef = action.ToObjectDef();
             objectDef.Dependencies.Select(x => x as ConfiguredDependency).Count().ShouldEqual(1);
+        }
+
+        [Test]
+        public void to_object_def_throws_when_has_no_return_and_no_input()
+        {
+            action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
+            Exception<FubuException>.ShouldBeThrownBy(() => action.ToObjectDef())
+                .ErrorCode.ShouldEqual(1005);
+        }
+
+        [Test]
+        public void returns_T_should_tell_if_action_has_output_of_type()
+        {
+            action = ActionCall.For<ControllerTarget>(c => c.OneInOneOut(null));
+            action.Returns<Model2>().ShouldBeTrue();
+            action.Returns<object>().ShouldBeTrue();
+            action.Returns<Model1>().ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_return_if_equal()
+        {
+            action.Equals(action).ShouldBeTrue();
+            action.Equals(null).ShouldBeFalse();
+            action.Equals((object)null).ShouldBeFalse();
+            action.Equals("").ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_return_is_internal_fubu_action()
+        {
+            action.IsInternalFubuAction().ShouldBeFalse();
         }
     }
 
@@ -302,6 +335,8 @@ namespace FubuMVC.Tests.Registration
     {
         public string LastNameEntered;
 
+        public void ZeroInZeroOut(){}
+
         public Model1 ZeroInOneOut()
         {
             return new Model1
@@ -328,5 +363,9 @@ namespace FubuMVC.Tests.Registration
         public void BogusOneInput(int bogus){}
 
         public void BogusMultiInput(Model1 input1, Model2 input2){}
+
+        public void GenericMethod<T>(List<T> list)
+        {
+        }
     }
 }

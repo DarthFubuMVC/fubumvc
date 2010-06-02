@@ -3,6 +3,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Tests.View.FakeViews;
 using NUnit.Framework;
+using FubuCore;
 
 namespace FubuMVC.Tests.View.WebForms
 {
@@ -42,6 +43,14 @@ namespace FubuMVC.Tests.View.WebForms
         {
             token.ToBehavioralNode().ShouldBeOfType<WebFormView>()
                 .ViewName.ShouldEqual("~/View/View4.aspx");
+        }
+
+        [Test]
+        public void description_should_contain_view_name()
+        {
+            WebFormView view = token.ToBehavioralNode() as WebFormView;
+            view.ShouldNotBeNull();
+            view.Description.ShouldEqual("WebForm View '{0}'".ToFormat("~/View/View4.aspx"));
         }
     }
 }

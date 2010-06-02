@@ -88,6 +88,8 @@
     <Compile Include="LocalizationManagerTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
+    <Compile Include="Registration\Nodes\NodesTester.cs" />
+    <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />

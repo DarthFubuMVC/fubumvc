@@ -1,3 +1,5 @@
+using System;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -82,6 +84,14 @@ namespace FubuMVC.Tests.Registration
 
             visitor.VisitRoute(route, chain);
             processor.AssertWasNotCalled(x => x.Got(route, chain));
+        }
+
+        [Test]
+        public void configure_not_implemented()
+        {
+            IConfigurationAction configActionVisitor = new RouteVisitor();
+            typeof (NotImplementedException).ShouldBeThrownBy(
+                () => configActionVisitor.Configure(new FubuRegistry().BuildGraph()));
         }
     }
 
