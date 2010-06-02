@@ -71,6 +71,12 @@
             equals(url, "/helloworld/", "the generated url");
         });
 
+        test("with a querystring (shared/testrunner.js?query=foo)", function() {
+            <%= ScriptVar("url", UrlContext.ToAbsoluteUrl("shared/testrunner.js?query=foo")) %>
+            equals(url, "/helloworld/shared/testrunner.js?query=foo", "the generated url");
+        });
+
+
         module("ToServerQualifiedUrl");
 
         config.beforeEach = function() {

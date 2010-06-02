@@ -58,11 +58,17 @@ namespace FubuCore
         {
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
             if (url.IsEmpty()) url = "~/";
-            if (!_isAbsolute(url))
+            // When running on WebDev.WebServer (and possibly IIS 6) VirtualPathUtility chokes when the url contains a querystring
+            var urlParts = url.Split(new[] {'?'}, 2);
+            var baseUrl = urlParts[0];
+            if (!_isAbsolute(baseUrl))
             {
-                url = _combine("~", url);
+                baseUrl = _combine("~", baseUrl);
             }
-            return _toAbsolute(url);
+
+            var absoluteUrl = _toAbsolute(baseUrl);
+            if (urlParts.Length > 1) absoluteUrl += ("?" + urlParts[1]);
+            return absoluteUrl;
         }
 
         public static string ToServerQualifiedUrl(this string relativeUrl, string serverBasedUrl)
