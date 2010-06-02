@@ -27,11 +27,7 @@ namespace FubuMVC.Tests.Runtime
 
             setupContext();
 
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            container.Configure(x =>
-            {
-                binders.Each(b => x.For<IModelBinder>().Add(b));
-            });
+            var container = StructureMapContainerFacility.GetBasicFubuContainer(x => binders.Each(b => x.For<IModelBinder>().Add(b)));
 
             resolver = container.GetInstance<ObjectResolver>();
         }

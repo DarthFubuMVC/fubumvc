@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core;
@@ -11,6 +12,8 @@ using FubuMVC.Core.Runtime;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
+using System.Linq;
+using StructureMap.Query;
 
 namespace FubuMVC.StructureMap
 {
@@ -26,7 +29,12 @@ namespace FubuMVC.StructureMap
 
         public static IContainer GetBasicFubuContainer()
         {
-            var container = new Container();
+            return GetBasicFubuContainer(x => { });
+        }
+
+        public static IContainer GetBasicFubuContainer(Action<ConfigurationExpression> containerConfiguration)
+        {
+            var container = new Container(containerConfiguration);
             var facility = new StructureMapContainerFacility(container);
             new FubuBootstrapper(facility, new FubuRegistry()).Bootstrap(new List<RouteBase>());
 
@@ -52,7 +60,22 @@ namespace FubuMVC.StructureMap
                 x.AddRegistry(_registry);
             });
 
+            initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3();
+
             return this;
+        }
+
+        private void initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3()
+        {
+            // Remove this method when the issue is closed 
+            // http://github.com/structuremap/structuremap/issues#issue/3
+            var allSingletons = _container.Model.PluginTypes.Where(x => x.Lifecycle == InstanceScope.Singleton.ToString());
+            Debug.WriteLine("Found singletons: " + allSingletons.Count());
+            foreach (var pluginType in allSingletons)
+            {
+                var instance = _container.GetInstance(pluginType.PluginType);
+                Debug.WriteLine("Initialized singleton in primary container: " + instance);
+            }
         }
 
         public void Register(Type serviceType, ObjectDef def)
