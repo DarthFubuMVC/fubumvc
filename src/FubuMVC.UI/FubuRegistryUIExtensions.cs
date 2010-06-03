@@ -13,11 +13,13 @@ namespace FubuMVC.UI
         public static void UseDefaultHtmlConventions(this FubuRegistry registry)
         {
             registry.Policies.Add<HtmlConventionCompiler>();
+            includeHtmlDiagnostics(registry);
         }
 
         public static void HtmlConvention<T>(this FubuRegistry registry) where T : HtmlConventionRegistry, new()
         {
             registry.HtmlConvention(new T());
+            includeHtmlDiagnostics(registry);
         }
 
         public static void HtmlConvention(this FubuRegistry registry, HtmlConventionRegistry conventions)
@@ -25,6 +27,7 @@ namespace FubuMVC.UI
             registry.Services(x => x.AddService(conventions));
 
             registry.Policies.Add<HtmlConventionCompiler>();
+            includeHtmlDiagnostics(registry);
         }
 
         public static void HtmlConvention(this FubuRegistry registry, Action<HtmlConventionRegistry> configure)
@@ -33,12 +36,12 @@ namespace FubuMVC.UI
             configure(conventions);
 
             registry.HtmlConvention(conventions);
+            includeHtmlDiagnostics(registry);
         }
 
-        public static void EnableHtmlDiagnostics(this FubuRegistry registry)
+        private static void includeHtmlDiagnostics(FubuRegistry registry)
         {
-            registry.Actions.IncludeType<ExampleHtmlWriter>();
-            registry.Output.ToHtml.WhenCallMatches(call => call.Method.DeclaringType == typeof (ExampleHtmlWriter));
+            registry.Import<HtmlDiagnosticsRegistry>(string.Empty);
         }
 
         public static void StringConversions<T>(this FubuRegistry registry) where T : DisplayConversionRegistry, new()
@@ -46,6 +49,7 @@ namespace FubuMVC.UI
             var conversions = new T();
 
             addStringConversions(conversions, registry);
+            includeHtmlDiagnostics(registry);
         }
 
         private static void addStringConversions(DisplayConversionRegistry conversions, FubuRegistry registry)
@@ -67,6 +71,7 @@ namespace FubuMVC.UI
             configure(conversions);
 
             addStringConversions(conversions, registry);
+            includeHtmlDiagnostics(registry);
         }
     }
 
