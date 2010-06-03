@@ -47,6 +47,20 @@ namespace FubuMVC.StructureMap
             _registry = new StructureMapFubuRegistry();
         }
 
+        private bool _initializeSingletonsToWorkAroundSMBug = true;
+        
+        /// <summary>
+        /// Disable FubuMVC's protection for a known StructureMap nested container issue. 
+        /// You will need to manually initialize any Singletons in Application_Start if they depend on instances scoped to a nested container.
+        /// See <see cref="http://github.com/structuremap/structuremap/issues#issue/3"/>
+        /// </summary>
+        /// <returns></returns>
+        public StructureMapContainerFacility DoNotInitializeSingletons()
+        {
+            _initializeSingletonsToWorkAroundSMBug = false;
+            return this;
+        }
+
         public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
             return Builder(_container, arguments, behaviorId);
@@ -60,7 +74,10 @@ namespace FubuMVC.StructureMap
                 x.AddRegistry(_registry);
             });
 
-            initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3();
+            if (_initializeSingletonsToWorkAroundSMBug)
+            {
+                initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3();
+            }
 
             return this;
         }
