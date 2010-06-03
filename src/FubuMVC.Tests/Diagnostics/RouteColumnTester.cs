@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             new RouteColumn().WriteBody(chain, null, tag);
 
-            tag.Text().ShouldEqual(chain.Route.Pattern);
+            tag.FirstChild().Text().ShouldEqual(chain.Route.Pattern);
             row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeFalse();
         }
 

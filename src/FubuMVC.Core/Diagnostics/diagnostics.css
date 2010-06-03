@@ -144,6 +144,18 @@ table.details TH
     line-height:0.6em;
 }
 
+.fubu-internal a, .fub-internal a:visited{
+    color:#999999;
+}
+
 .main table > tbody > tr.fubu-internal:hover{
 	color: #111;
+}
+
+.route-link {
+	text-decoration: none;
+}
+
+.route-link:hover {
+	text-decoration: underline;
 }

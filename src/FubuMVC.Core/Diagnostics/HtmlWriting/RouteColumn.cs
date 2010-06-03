@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Web.Routing;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using HtmlTags;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
@@ -16,12 +19,28 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
-            string text = Text(chain);
-            cell.Text(text);
+            var text = Text(chain);
+            if (shouldBeClickable(chain.Route))
+            {
+                cell.Child(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
+            }
+            else
+            {
+                cell.Text(text);
+            }
             if (text.StartsWith(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT))
             {
                 row.AddClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS);
             }
+        }
+
+        private bool shouldBeClickable(IRouteDefinition routeDefinition)
+        {
+            if (routeDefinition == null || routeDefinition.Rank > 0) return false;
+            if (routeDefinition is NulloRouteDefinition) return false;
+            var httpConstraint = routeDefinition.Constraints.Select(c => c.Value).OfType<HttpMethodConstraint>().FirstOrDefault();
+            if (httpConstraint != null && !httpConstraint.AllowedMethods.Any(m => m.Equals("GET", StringComparison.OrdinalIgnoreCase))) return false;
+            return true;
         }
 
         public string Text(BehaviorChain chain)
