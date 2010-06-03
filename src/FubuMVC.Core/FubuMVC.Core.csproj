@@ -72,6 +72,7 @@
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="Diagnostics\DiagnosticHtml.cs" />
+    <Compile Include="Diagnostics\DiagnosticsActionAttribute.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ChainColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DebugReportTagWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DebugWriter.cs" />

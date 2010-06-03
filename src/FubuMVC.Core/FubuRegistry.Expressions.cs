@@ -121,6 +121,12 @@ namespace FubuMVC.Core
                 Modify<DiagnosticsPackage>();
                 _systemPolicies.Add(new DiagnosticBehaviorPrepender());
             }
+            else
+            {
+                Actions
+                    .ExcludeTypes(t => t.HasAttribute<DiagnosticsActionAttribute>())
+                    .ExcludeMethods(call => call.Method.HasAttribute<DiagnosticsActionAttribute>());
+            }
         }
 
         public void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration)
