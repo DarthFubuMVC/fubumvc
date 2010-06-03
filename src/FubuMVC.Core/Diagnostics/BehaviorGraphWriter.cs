@@ -32,19 +32,44 @@ namespace FubuMVC.Core.Diagnostics
         [UrlPattern(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)]
         public HtmlDocument Index()
         {
+            var tags = new List<HtmlTag>();
             var ul = new HtmlTag("ul");
+            tags.Add(ul);
             availableActions().Each(method =>
             {
                 var url = DiagnosticUrlPolicy.RootUrlFor(method);
-                ul.Add("li").Modify(x =>
-                {
-                    x.Child(new LinkTag(method.Name, url));
-                    var description = method.GetAttribute<DescriptionAttribute>().Description;
-                    x.Child(new HtmlTag("span").Text(" - " + description));
-                });
+                ul.Child(getDiagnosticActionLink(method, url));
             });
 
-            return BuildDocument("Home", ul);
+            var diagnosticAssemblies = _graph.Behaviors
+                .Where(isDiagnosticChain)
+                .GroupBy(chain => chain.FirstCall().HandlerType.Assembly.GetName().Name)
+                .OrderBy(group => group.Key);
+            foreach (var assembly in diagnosticAssemblies)
+            {
+                tags.Add(new HtmlTag("h3").Text(assembly.Key));
+                var moreUl = new HtmlTag("ul");
+                tags.Add(moreUl);
+                foreach (var additionalRoute in assembly)
+                {
+                    moreUl.Child(getDiagnosticActionLink(additionalRoute.FirstCall().Method, additionalRoute.RoutePattern.ToAbsoluteUrl()));
+                }
+            }
+
+            return BuildDocument("Home", tags.ToArray());
+        }
+
+        private HtmlTag getDiagnosticActionLink(MethodInfo method, string url) {
+            var li = new HtmlTag("li");
+            li.Child(new LinkTag(method.Name, url));
+            var description = method.GetAttribute<DescriptionAttribute>().Description;
+            li.Child(new HtmlTag("span").Text(" - " + description));
+            return li;
+        }
+
+        private static bool isDiagnosticChain(BehaviorChain chain)
+        {
+            return chain.Calls.Any(call => (call.HandlerType.HasAttribute<DiagnosticsActionAttribute>() || call.Method.HasAttribute<DiagnosticsActionAttribute>()) && call.Method.HasAttribute<DescriptionAttribute>());   
         }
 
         private IEnumerable<MethodInfo> availableActions()

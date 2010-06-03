@@ -18,6 +18,7 @@ using System.Linq;
 
 namespace FubuMVC.UI.Diagnostics
 {
+    [DiagnosticsAction]
     internal class ExampleHtmlWriter
     {
         private readonly IServiceLocator _serviceLocator;
@@ -33,8 +34,8 @@ namespace FubuMVC.UI.Diagnostics
             _examplePageUrl = "_fubu/html/example".ToAbsoluteUrl();
         }
 
-        [UrlPattern("_fubu/html")]
-        public string Index()
+        [UrlPattern("_fubu/html"), Description("Demonstrates effects of current HTML conventions")]
+        public HtmlDocument Html()
         {
             var tags = new List<HtmlTag> { showIntro() };
 
@@ -54,11 +55,11 @@ namespace FubuMVC.UI.Diagnostics
             tags.Add(table);
             var doc = DiagnosticHtml.BuildDocument(_urlRegistry, "FubuMVC.UI Examples", tags.ToArray());
             doc.AddStyle(DiagnosticHtml.GetResourceText(GetType(), "examples.css"));
-            return doc.ToString();
+            return doc;
         }
 
         [UrlPattern("_fubu/html/example")]
-        public string Example(ExampleHtmlRequest exampleHtmlRequest)
+        public HtmlDocument Example(ExampleHtmlRequest exampleHtmlRequest)
         {
             var modelPath = exampleHtmlRequest.Model ?? typeof(ExampleViewModel).FullName + "-Person";
             var tags = new List<HtmlTag>();
@@ -126,7 +127,7 @@ namespace FubuMVC.UI.Diagnostics
 
             var doc = DiagnosticHtml.BuildDocument(_urlRegistry, "FubuMVC.UI Examples", tags.ToArray());
             doc.AddStyle(DiagnosticHtml.GetResourceText(GetType(), "examples.css"));
-            return doc.ToString();
+            return doc;
         }
 
         private Type getTypeFromName(string typeName)
