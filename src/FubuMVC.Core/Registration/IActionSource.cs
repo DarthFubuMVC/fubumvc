@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration
@@ -26,15 +27,10 @@ namespace FubuMVC.Core.Registration
 
         private IEnumerable<ActionCall> buildActions(TypePool types)
         {
-            foreach (var actionSource in _actionSources)
-            {
-                foreach (var action in actionSource.FindActions(types))
-                {
-                    yield return action;
-                }
-            }
+            return _actionSources.SelectMany(actionSource => actionSource.FindActions(types));
         }
 
+        //TODO -- Really similar to BehaviorMatcher. Can we reuse?
         private void registerBehavior(ActionCall call)
         {
             var chain = new BehaviorChain();
