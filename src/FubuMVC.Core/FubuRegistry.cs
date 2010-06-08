@@ -32,6 +32,7 @@ namespace FubuMVC.Core
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
+        private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
         private readonly TypePool _types = new TypePool();
@@ -58,7 +59,7 @@ namespace FubuMVC.Core
 
             // Add Behaviors First
             addConvention(graph => _behaviorMatcher.BuildBehaviors(_types, graph));
-            // TODO -- get more behavior matcher stuff here first
+            addConvention(graph => _actionSourceMatcher.BuildBehaviors(_types, graph));
             addConvention(graph => _routeResolver.ApplyToAll(graph));
 
 

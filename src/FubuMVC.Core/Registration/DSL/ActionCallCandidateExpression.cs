@@ -12,10 +12,11 @@ namespace FubuMVC.Core.Registration.DSL
     {
         private readonly BehaviorMatcher _matcher;
         private readonly TypePool _types;
-
-        public ActionCallCandidateExpression(BehaviorMatcher matcher, TypePool types)
+        private readonly ActionSourceMatcher _actionSourceMatcher;
+        public ActionCallCandidateExpression(BehaviorMatcher matcher, TypePool types, ActionSourceMatcher actionSourceMatcher)
         {
             _matcher = matcher;
+            _actionSourceMatcher = actionSourceMatcher;
             _types = types;
         }
 
@@ -93,6 +94,17 @@ namespace FubuMVC.Core.Registration.DSL
         {
             _types.AddType(typeof (T));
             _matcher.TypeFilters.Includes += type => type == typeof (T);
+            return this;
+        }
+
+        public ActionCallCandidateExpression FindWith<T>() where T : IActionSource, new()
+        {
+            return FindWith(new T());
+        }
+
+        public ActionCallCandidateExpression FindWith(IActionSource actionSource)
+        {
+            _actionSourceMatcher.AddSource(actionSource);
             return this;
         }
     }

@@ -158,6 +158,7 @@
     <Compile Include="Registration\Conventions\RouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlPolicy.cs" />
     <Compile Include="Registration\DSL\TypeMethodPolicy.cs" />
+    <Compile Include="Registration\IActionSource.cs" />
     <Compile Include="Registration\IBehaviorVisitor.cs" />
     <Compile Include="Registration\IRouteVisitor.cs" />
     <Compile Include="Registration\IServiceRegistry.cs" />

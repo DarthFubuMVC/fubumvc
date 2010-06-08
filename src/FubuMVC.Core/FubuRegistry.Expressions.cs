@@ -37,7 +37,7 @@ namespace FubuMVC.Core
 
         public ModelsExpression Models { get { return new ModelsExpression(addExplicit); } }
         public AppliesToExpression Applies { get { return new AppliesToExpression(_types); } }
-        public ActionCallCandidateExpression Actions { get { return new ActionCallCandidateExpression(_behaviorMatcher, _types); } }
+        public ActionCallCandidateExpression Actions { get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSourceMatcher); } }
 
         public void UsingObserver(IConfigurationObserver observer)
         {
