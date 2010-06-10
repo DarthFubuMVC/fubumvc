@@ -6,4 +6,17 @@ namespace FubuMVC.Core.Runtime
         void Write(string contentType, string renderedOutput);
         void RedirectToUrl(string url);
     }
+
+    public static class OutputWriterExtensions
+    {
+        public static void WriteHtml(this IOutputWriter writer, string content)
+        {
+            writer.Write(MimeType.Html.ToString(), content);
+        }
+
+        public static void WriteHtml(this IOutputWriter writer, object content)
+        {
+            writer.Write(MimeType.Html.ToString(), content == null ? string.Empty : content.ToString());
+        }
+    }
 }

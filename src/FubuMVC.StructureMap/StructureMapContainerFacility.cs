@@ -41,6 +41,14 @@ namespace FubuMVC.StructureMap
             return container;
         }
 
+        public IContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+        }
+
         public StructureMapContainerFacility(IContainer container)
         {
             _container = container;

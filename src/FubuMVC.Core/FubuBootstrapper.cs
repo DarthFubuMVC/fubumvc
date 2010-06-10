@@ -20,6 +20,11 @@ namespace FubuMVC.Core
             _topRegistry = topRegistry;
         }
 
+        protected virtual IEnumerable<IFubuRegistryExtension> findExtensions()
+        {
+            return new IFubuRegistryExtension[0];
+        }
+
         public void Bootstrap(ICollection<RouteBase> routes)
         {
             if (HttpContext.Current != null)
@@ -27,6 +32,7 @@ namespace FubuMVC.Core
                 UrlContext.Live();
             }
 
+            findExtensions().Each(x => x.Configure(_topRegistry));
 
             BehaviorGraph graph = _topRegistry.BuildGraph();
             graph.EachService(_facility.Register);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -20,6 +21,11 @@ namespace FubuMVC.StructureMap
             : base(facility, registry)
         {
             _smFacility = facility;
+        }
+
+        protected override IEnumerable<IFubuRegistryExtension> findExtensions()
+        {
+            return _smFacility.Container.GetAllInstances<IFubuRegistryExtension>();
         }
 
         public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder { get { return _smFacility.Builder; } set { _smFacility.Builder = value; } }

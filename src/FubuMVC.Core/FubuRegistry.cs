@@ -12,6 +12,15 @@ using HtmlTags;
 
 namespace FubuMVC.Core
 {
+
+    // Register more and different types of actions
+    public interface IActionSource
+    {
+        IEnumerable<ActionCall> FindActions(TypePool types);
+    }
+
+
+
     // TODO:  blow up with a nice error if Route's have empty BehaviorChains
 
 
@@ -33,6 +42,9 @@ namespace FubuMVC.Core
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
 
+
+
+
         public FubuRegistry()
         {
             _observer = new NulloConfigurationObserver();
@@ -46,6 +58,7 @@ namespace FubuMVC.Core
 
             // Add Behaviors First
             addConvention(graph => _behaviorMatcher.BuildBehaviors(_types, graph));
+            // TODO -- get more behavior matcher stuff here first
             addConvention(graph => _routeResolver.ApplyToAll(graph));
 
 
@@ -108,5 +121,10 @@ namespace FubuMVC.Core
             var builder = new UrlRegistryBuilder(_urls);
             graph.VisitRoutes(builder);
         }
+    }
+
+    public interface IFubuRegistryExtension
+    {
+        void Configure(FubuRegistry registry);
     }
 }

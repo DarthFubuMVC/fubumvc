@@ -21,6 +21,8 @@ namespace FubuMVC.Core.Registration.DSL
 
         // more to come...
 
+        // TODO -- something in here that can close on types?
+
         public ActionCallCandidateExpression ExcludeTypes(Expression<Func<Type, bool>> filter)
         {
             _matcher.TypeFilters.Excludes += filter;
