@@ -16,6 +16,7 @@ namespace FubuMVC.StructureMap
             For<ITypeDescriptorCache>().Use<TypeDescriptorCache>();
             ForSingletonOf<IPropertyBinderCache>().Use<PropertyBinderCache>();
             ForSingletonOf<IModelBinderCache>().Use<ModelBinderCache>();
+            For<IModelBinder>().Use<StandardModelBinder>();
         }
     }
 }

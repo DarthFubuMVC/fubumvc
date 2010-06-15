@@ -71,6 +71,7 @@
     <Compile Include="Binding\ConversionPropertyBinder.cs" />
     <Compile Include="Binding\ConverterFamily.cs" />
     <Compile Include="Binding\ConvertProblem.cs" />
+    <Compile Include="Binding\DataReaderRequestData.cs" />
     <Compile Include="Binding\ExpandEnvironmentVariablesFamily.cs" />
     <Compile Include="Binding\IBindingContext.cs" />
     <Compile Include="Binding\IConverterFamily.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Binding\ObjectResolver.cs" />
     <Compile Include="Binding\PassthroughConverter.cs" />
     <Compile Include="Binding\PropertyBinderCache.cs" />
+    <Compile Include="Binding\ReaderBinder.cs" />
     <Compile Include="Binding\RequestData.cs" />
     <Compile Include="Binding\ResolveConnectionStringFamily.cs" />
     <Compile Include="Binding\ServiceArguments.cs" />
