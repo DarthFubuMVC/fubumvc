@@ -20,14 +20,14 @@ namespace FubuCore.Binding
         public DataReaderRequestData(IDataReader reader)
         {
             _reader = reader;
-
-
             _columns = new Dictionary<string, string>();
-            for (var i = 0; i < reader.FieldCount; i++)
+            for (int i = 0; i < reader.FieldCount; i++)
             {
                 _columns.Add(reader.GetName(i), null);
             }
         }
+
+        #region IRequestData Members
 
         public object Value(string key)
         {
@@ -36,25 +36,19 @@ namespace FubuCore.Binding
 
         public bool Value(string key, Action<object> callback)
         {
-            string column = _aliases[key];
+            var column = _aliases[key];
             if (_columns.ContainsKey(column))
             {
-                object rawValue = _reader[column];
-                if (rawValue == DBNull.Value)
-                {
-                    callback(null);
-                }
-                else
-                {
-                    callback(rawValue.ToString());
-                }
-
+                var rawValue = _reader[column];
+                callback(rawValue == DBNull.Value ? null : rawValue.ToString());
 
                 return true;
             }
 
             return false;
         }
+
+        #endregion
 
         public void SetAlias(string name, string alias)
         {

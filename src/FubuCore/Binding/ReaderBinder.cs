@@ -6,11 +6,23 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuCore.Binding
 {
+    public class RowProcessingRequest<T>
+    {
+        public RowProcessingRequest()
+        {
+            Callback = x => { };
+        }
+
+        public Func<IDataReader, T> Finder { get; set; }
+        public Action<T> Callback { get; set; }
+        public IDataReader Reader { get; set; }
+    }
+
     public class ReaderBinder
     {
+        private readonly Cache<string, string> _aliases = new Cache<string, string>(key => key);
         private readonly IModelBinder _binder;
         private readonly IServiceLocator _services;
-        private readonly Cache<string, string> _aliases = new Cache<string, string>(key => key);
 
         public ReaderBinder(IModelBinder binder, IServiceLocator services)
         {
@@ -20,20 +32,38 @@ namespace FubuCore.Binding
 
         public IEnumerable<T> Build<T>(Func<IDataReader> getReader) where T : new()
         {
-            using (var reader = getReader())
+            using (IDataReader reader = getReader())
             {
                 return Build<T>(reader);
-            }    
+            }
         }
 
-        public IEnumerable<T> Build<T>(IDataReader reader)
+        public IEnumerable<T> Build<T>(IDataReader reader) where T : new()
         {
+            var list = new List<T>();
+
+            Build(new RowProcessingRequest<T>
+            {
+                Callback = list.Add,
+                Finder = r => new T(),
+                Reader = reader
+            });
+
+            return list;
+        }
+
+        public void Build<T>(RowProcessingRequest<T> input)
+        {
+            IDataReader reader = input.Reader;
             var request = new DataReaderRequestData(reader, _aliases);
             var context = new BindingContext(request, _services);
-                
+
             while (reader.Read())
             {
-                yield return (T) _binder.Bind(typeof (T), context);
+                T target = input.Finder(reader);
+                _binder.Bind(typeof (T), target, context);
+
+                input.Callback(target);
             }
         }
 
