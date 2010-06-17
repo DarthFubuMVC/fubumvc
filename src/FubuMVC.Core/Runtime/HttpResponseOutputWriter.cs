@@ -1,3 +1,4 @@
+using System.IO;
 using System.Web;
 
 namespace FubuMVC.Core.Runtime
@@ -9,10 +10,13 @@ namespace FubuMVC.Core.Runtime
             HttpResponse response = HttpContext.Current.Response;
             response.ContentType = contentType;
 
-            if (displayName != null)
-            {
-                response.AppendHeader("content-disposition", "attachment; filename=" + displayName);
-            }
+			if (displayName != null)
+			{
+				response.AppendHeader("Content-Disposition", "attachment; filename=" + displayName);
+			}
+
+			var fileInfo = new FileInfo(localFilePath);
+			response.AppendHeader("Content-Length", fileInfo.Length.ToString());
 
             response.WriteFile(localFilePath);
         }
