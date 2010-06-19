@@ -42,6 +42,7 @@ namespace FubuCore.Binding
                 var rawValue = _reader[column];
                 callback(rawValue == DBNull.Value ? null : rawValue.ToString());
 
+
                 return true;
             }
 
