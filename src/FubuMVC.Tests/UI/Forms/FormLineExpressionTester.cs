@@ -24,6 +24,17 @@ namespace FubuMVC.Tests.UI.Forms
             expression = new FormLineExpression<ViewModel>(new StubTagGenerator<ViewModel>(), layout, x => x.Name);
         }
 
+
+        [Test]
+        public void can_change_label_attributes_after_setting_label_text()
+        {
+            var tag = expression
+                .AlterLayout(x => x.SetLabelText("bar"))
+                .AlterLabel(label => label.AddClass("foo"));
+            
+            tag.AlterLayout(x => x.LabelTag.ShouldHaveClass("foo"));
+        }
+
         [Test]
         public void has_label_by_default()
         {

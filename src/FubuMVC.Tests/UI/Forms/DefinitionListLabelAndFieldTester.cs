@@ -60,21 +60,5 @@ namespace FubuMVC.Tests.UI.Forms
 
             layout.LabelTag.ShouldBeTheSameAs(display);
         }
-
-        [Test]
-        public void wrap_body()
-        {
-            var layout = new DefinitionListLabelAndField();
-            var display = new TextboxTag().Attr("value", "something");
-            layout.BodyTag = display;
-
-            var wrapper = new HtmlTag("strong");
-            layout.WrapBody(wrapper);
-
-            layout.BodyTag.ShouldBeTheSameAs(display);
-            wrapper.Children.ShouldHaveTheSameElementsAs(display);
-
-            layout.ToString().ShouldContain(wrapper.ToString());
-        }
     }
 }

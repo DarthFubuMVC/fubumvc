@@ -20,7 +20,7 @@ namespace FubuMVC.UI.Forms
 
         public HtmlTag LabelTag 
         { 
-            get { return _dt.FirstChild(); }
+            get { return _dt.FirstChild() ?? _dt; }
             set { _dt.ReplaceChildren(value); } 
         }
 
@@ -28,22 +28,6 @@ namespace FubuMVC.UI.Forms
         { 
             get { return _bodyHolder.FirstChild(); }
             set { _bodyHolder.ReplaceChildren(value); } 
-        }
-
-        public void WrapBody(HtmlTag tag)
-        {
-            tag.ReplaceChildren(BodyTag);
-            _bodyHolder.ReplaceChildren(tag);
-            _bodyHolder = tag;
-        }
-
-        public HtmlTag WrapBody(string tagName)
-        {
-            var tag = new HtmlTag(tagName);
-
-            WrapBody(tag);
-
-            return tag;
         }
 
         public void SetLabelText(string text)
