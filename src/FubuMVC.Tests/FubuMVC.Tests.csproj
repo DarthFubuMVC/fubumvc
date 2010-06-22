@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
+    <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="LocalizationManagerTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />

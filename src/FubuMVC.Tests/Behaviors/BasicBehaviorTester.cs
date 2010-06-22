@@ -8,7 +8,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors
 {
-    [TestFixture]
+	[TestFixture]
     public class BasicBehaviorTester
     {
         public static IPartialInvokingHandler PartialInvokingHandler;
