@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -14,6 +15,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
+            UrlContext.Stub("");
+
             graph = new FubuRegistry(x =>
             {
                 x.Applies.ToThisAssembly();
@@ -48,17 +51,37 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph.BehaviorFor<UrlCategoryController2>(x => x.DecoratedMethod()).Route.Category.ShouldEqual("public");
         }
+        
+        [Test]
+        public void finds_and_registers_url_for_new_methods()
+        {
+            var registry = graph.Services.DefaultServiceFor<IUrlRegistry>().Value as UrlRegistry;
+            registry.HasNewUrl(typeof(UrlNewTarget)).ShouldBeTrue();
+            registry.UrlForNew(typeof(UrlNewTarget)).ShouldEqual("fubumvc/tests/registration/conventions/urlcategory1/createnewtarget");
+            
+        }
 
         #endregion
 
         private BehaviorGraph graph;
     }
 
+    public class UrlNewTarget
+    {
+        
+    }
 
+    
 
     [UrlRegistryCategory("admin")]
     public class UrlCategoryController1
     {
+        [UrlForNew(typeof(UrlNewTarget))]
+        public void CreateNewTarget()
+        {
+            
+        }
+
         public void Go()
         {
         }

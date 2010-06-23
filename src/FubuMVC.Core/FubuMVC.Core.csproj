@@ -124,6 +124,7 @@
     <Compile Include="Registration\Conventions\JsonMessageInputConvention.cs" />
     <Compile Include="Registration\Conventions\NulloRouteDefinition.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
+    <Compile Include="Registration\Conventions\UrlForNewConvention.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConvention.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />

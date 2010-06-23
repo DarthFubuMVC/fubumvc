@@ -107,4 +107,20 @@ namespace FubuMVC.Core
             get { return _category; }
         }
     }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    public class UrlForNewAttribute : Attribute
+    {
+        private readonly Type _type;
+
+        public UrlForNewAttribute(Type type)
+        {
+            _type = type;
+        }
+
+        public Type Type
+        {
+            get { return _type; }
+        }
+    }
 }

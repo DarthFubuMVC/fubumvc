@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Urls
 {
@@ -47,6 +48,8 @@ namespace FubuMVC.Core.Urls
         void Add(IEnumerable<ActionUrl> actions);
         void Add(IEnumerable<IModelUrl> models);
         void RegisterNew(ActionUrl action, Type type);
+        void RegisterNew(ActionCall call, Type type);
+
         void AddAction(ActionUrl action);
         void AddModel(IModelUrl model);
         void MapModelTypes(Func<object, Type> typeMap);

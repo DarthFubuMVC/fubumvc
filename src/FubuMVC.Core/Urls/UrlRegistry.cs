@@ -6,6 +6,7 @@ using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuCore;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Urls
 {
@@ -58,6 +59,11 @@ namespace FubuMVC.Core.Urls
         public void RegisterNew(ActionUrl action, Type type)
         {
             _news[type] = action;
+        }
+
+        public void RegisterNew(ActionCall call, Type type)
+        {
+            RegisterNew(new ActionUrl(call.ParentChain().Route, call), type);
         }
 
         public void AddAction(ActionUrl action)

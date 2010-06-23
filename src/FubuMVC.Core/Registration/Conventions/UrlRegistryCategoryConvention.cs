@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore.Reflection;
+using System.Linq;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
