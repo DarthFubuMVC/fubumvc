@@ -45,6 +45,8 @@ namespace FubuMVC.StructureMap
                 x.Matching(p => p.DeclaringType == typeof (FubuPage));
                 x.OfType<IServiceLocator>();
             });
+
+            For<CurrentRequest>().Use(c => c.GetInstance<IFubuRequest>().Get<CurrentRequest>());
         }
 
         public HttpContext BuildContextWrapper()

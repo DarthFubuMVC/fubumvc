@@ -165,5 +165,11 @@ namespace FubuMVC.Tests.StructureMapIoC
 
             fubuPage.ServiceLocator.ShouldEqual(serviceLocator);
         }
+
+        [Test]
+        public void smoke_test_get_the_current_request()
+        {
+            container.GetInstance<CurrentRequest>().ShouldNotBeNull();
+        }
     }
 }

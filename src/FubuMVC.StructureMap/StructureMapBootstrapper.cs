@@ -25,6 +25,8 @@ namespace FubuMVC.StructureMap
 
         protected override IEnumerable<IFubuRegistryExtension> findExtensions()
         {
+            // Just find all the IFubuRegistryExtension's from 
+            // the StructureMap container
             return _smFacility.Container.GetAllInstances<IFubuRegistryExtension>();
         }
 
