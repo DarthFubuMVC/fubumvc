@@ -74,6 +74,7 @@
     <Compile Include="Binding\BindingResultTester.cs" />
     <Compile Include="Binding\ConverterExpressionTester.cs" />
     <Compile Include="Binding\ConvertProblemTester.cs" />
+    <Compile Include="Binding\FlatFileRequestDataTester.cs" />
     <Compile Include="Binding\InMemoryRequestDataTester.cs" />
     <Compile Include="Binding\ReaderBinderTester.cs" />
     <Compile Include="Binding\RequestDataTester.cs" />

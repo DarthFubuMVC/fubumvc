@@ -73,6 +73,9 @@
     <Compile Include="Binding\ConvertProblem.cs" />
     <Compile Include="Binding\DataReaderRequestData.cs" />
     <Compile Include="Binding\ExpandEnvironmentVariablesFamily.cs" />
+    <Compile Include="Binding\FlatFileReader.cs" />
+    <Compile Include="Binding\FlatFileRequest.cs" />
+    <Compile Include="Binding\FlatFileRequestData.cs" />
     <Compile Include="Binding\IBindingContext.cs" />
     <Compile Include="Binding\IConverterFamily.cs" />
     <Compile Include="Binding\IModelBinder.cs" />
