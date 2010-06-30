@@ -14,6 +14,8 @@ namespace FubuMVC.UI.Extensibility
         IEnumerable<object> GetExtensions(IFubuPage<T> page);
     }
 
+   
+
     public class LambdaExtension<T> : IContentExtension<T> where T : class
     {
         private readonly Func<IFubuPage<T>, object> _func;
@@ -52,6 +54,8 @@ namespace FubuMVC.UI.Extensibility
             shelfFor<T>().Add(string.Empty, extension);
         }
 
+        // Deep in the bowells of FubuMVC, this is the actual code that writes extensions
+        // into a FubuPage
         private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page) where T : class
         {
             var writer = page.ServiceLocator.GetInstance<IOutputWriter>();

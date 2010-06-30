@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using FubuCore.Util;
 using Microsoft.Practices.ServiceLocation;
 
@@ -19,7 +20,7 @@ namespace FubuCore.Binding
         {
             using (var stream = new FileStream(request.Filename, FileMode.Open, FileAccess.Read))
             {
-                var reader = new StreamReader(stream);
+                var reader = new StreamReader(stream, request.Encoding);
                 var headers = reader.ReadLine();
                 if (headers.IsEmpty()) return;
 
