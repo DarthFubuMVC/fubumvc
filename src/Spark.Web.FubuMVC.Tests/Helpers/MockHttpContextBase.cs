@@ -35,7 +35,7 @@ namespace Spark.Web.FubuMVC.Tests.Helpers
             contextBase.Stub(x => x.Session).Return(sessionStateBase);
             contextBase.Stub(x => x.Server).Return(serverUtilityBase);
 
-            responseBase.Stub(x => x.Output).Return(output);
+            responseBase.Output = output;
             responseBase.Stub(x => x.OutputStream).Return(outputStream);
 
 
