@@ -5,7 +5,7 @@ include FileTest
 require 'albacore'
 
 RESULTS_DIR = "results"
-BUILD_NUMBER_BASE = "0.1.0"
+BUILD_NUMBER_BASE = "0.4.0"
 PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';

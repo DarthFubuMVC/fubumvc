@@ -41,7 +41,7 @@ class AspNetCompilerRunner
 		webPhysDir = attributes.fetch(:webPhysDir, '')
 		webVirDir = attributes.fetch(:webVirDir, 'This_Value_Is_Not_Used')
 		
-		frameworkDir = File.join(ENV['windir'].dup, 'Microsoft.NET', 'Framework', 'v2.0.50727')
+		frameworkDir = File.join(ENV['windir'].dup, 'Microsoft.NET', 'Framework', 'v4.0.30319')
 		aspNetCompiler = File.join(frameworkDir, 'aspnet_compiler.exe')
 
 		sh "#{aspNetCompiler} -nologo -errorstack -c -p #{webPhysDir} -v #{webVirDir}"
