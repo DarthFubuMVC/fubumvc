@@ -9,7 +9,7 @@ BUILD_NUMBER_BASE = "0.1.0"
 PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
-CLR_VERSION = "v3.5"
+CLR_TOOLS_VERSION = "v4.0.30319"
 
 props = { :archive => "build" }
 
@@ -53,7 +53,7 @@ end
 
 desc "Compiles the app"
 task :compile => [:clean, :version] do
-  MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_VERSION
+  MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
   AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
   AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloSpark", :webVirDir => "localhost/xyzzyplugh"
   
