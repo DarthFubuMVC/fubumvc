@@ -22,7 +22,7 @@ namespace Spark.Web.FubuMVC.Tests
         [SetUp]
         public void Init()
         {
-            CompiledViewHolder.Current = null;
+            //CompiledViewHolder.Current = null;
 
             _factory = new SparkViewFactory();
             _viewFolder = new InMemoryViewFolder();

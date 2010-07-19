@@ -33,6 +33,11 @@ namespace Spark.Web.FubuMVC.ViewCreation
             return HttpUtility.HtmlEncode(value.ToString());
         }
 
+        public object HTML(object value)
+        {
+            return value;
+        }
+
         public object Eval(string expression)
         {
             return "Only need to implement for anonymous type support";
