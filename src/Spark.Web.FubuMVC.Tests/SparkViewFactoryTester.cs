@@ -23,7 +23,7 @@ namespace Spark.Web.FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
-            CompiledViewHolder.Current = null; //clear the view cache
+            //CompiledViewHolder.Current = null; //clear the view cache
 
             var settings = new SparkSettings();
             _factory = new SparkViewFactory(settings) {ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views")};
