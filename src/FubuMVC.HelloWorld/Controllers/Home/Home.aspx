@@ -6,4 +6,6 @@
     </div>
 
     <%=Model.Text%>
+    <br />
+    The current URL is: <%= Model.CurrentUrl %>
 </asp:Content>
