@@ -191,8 +191,8 @@ namespace FubuMVC.UI
             where T : class
         {
             string name = ElementNameFor(page, expression);
-            string value = page.Model.ValueOrDefault(expression).ToString();
-            return new TextboxTag(name, value);
+			object value = page.Model.ValueOrDefault(expression);
+			return new TextboxTag(name, (value == null) ? "" : value.ToString());
         }
 
         public static FormTag FormFor(this IFubuPage page)
