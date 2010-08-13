@@ -110,7 +110,12 @@
     <Compile Include="DisplayFormatter.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="FubuException.cs" />
-    <Compile Include="Localization\Classes.cs" />
+    <Compile Include="Localization\StringToken.cs" />
+    <Compile Include="Localization\ILocalizationProvider.cs" />
+    <Compile Include="Localization\LocalizedHeader.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Localization\NulloLocalizationProvider.cs" />
+    <Compile Include="Localization\PropertyToken.cs" />
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ObjectConverter.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />

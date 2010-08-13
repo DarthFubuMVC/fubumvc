@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using StructureMap;
+using System.Linq;
 
 namespace FubuCore.Testing
 {
@@ -397,7 +398,57 @@ namespace FubuCore.Testing
         {
             finder.CanBeParsed(typeof(ObjectConverter)).ShouldBeFalse();
         }
+
+        [Test]
+        public void register_and_retrieve_a_new_type_of_complex_object()
+        {
+            var finder = new ObjectConverter();
+            finder.RegisterConverter<Contact>(text =>
+            {
+                var parts = text.Split(' ');
+                return new Contact(){
+                    FirstName = parts[0],
+                    LastName = parts[1]
+                };
+            });
+
+            var c = finder.FromString<Contact>("Jeremy Miller");
+
+            c.FirstName.ShouldEqual("Jeremy");
+            c.LastName.ShouldEqual("Miller");
+        }
+
+        [Test]
+        public void how_about_getting_an_array_of_those_complex_objects()
+        {
+            // Same converter as before
+            var finder = new ObjectConverter();
+            finder.RegisterConverter<Contact>(text =>
+            {
+                var parts = text.Split(' ');
+                return new Contact()
+                {
+                    FirstName = parts[0],
+                    LastName = parts[1]
+                };
+            });
+
+            // Now, let's pull an array of Contact's
+            var contacts = 
+                finder.FromString<Contact[]>("Jeremy Miller, Rod Paddock, Chad Myers");
+        
+            contacts.Select(x => x.LastName)
+                .ShouldHaveTheSameElementsAs("Miller", "Paddock", "Myers");
+        }
     }
+
+    public class Contact
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+
 
     [TestFixture]
     public class ServiceEnabledObjectConverterTester

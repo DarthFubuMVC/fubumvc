@@ -24,7 +24,7 @@ namespace FubuMVC.StructureMap
         private readonly Registry _registry;
 
         public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder =
-            (container, args, behaviorId) => { return new NestedStructureMapContainerBehavior(container, args, behaviorId); };
+            (container, args, behaviorId) => new NestedStructureMapContainerBehavior(container, args, behaviorId);
 
 
         public static IContainer GetBasicFubuContainer()
