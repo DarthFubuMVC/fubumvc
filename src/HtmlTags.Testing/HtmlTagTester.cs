@@ -313,6 +313,22 @@ namespace HtmlTags.Testing
         }
 
 
+        [Test]
+        public void is_authorized_by_default()
+        {
+            new HtmlTag("div").Authorized().ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_authorized_value_false_makes_tag_hidden_regardless_of_visibility()
+        {
+            var tag = new HtmlTag("div").Authorized(false);
+            tag.ToString().ShouldBeEmpty();
+
+            tag.Visible(true).ToString().ShouldBeEmpty();
+            tag.Visible(false).ToString().ShouldBeEmpty();
+        }
+
         public class ListValue
         {
             public string Display { get; set; }
