@@ -11,7 +11,6 @@ namespace FubuMVC.UI.Forms
     {
         HtmlTag LabelTag { get; set; }
         HtmlTag BodyTag { get; set; }
-        void SetLabelText(string text);
     }
 
     // TODO -- Jeremy to unit test

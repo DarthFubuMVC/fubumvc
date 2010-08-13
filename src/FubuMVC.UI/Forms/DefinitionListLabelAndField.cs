@@ -30,12 +30,6 @@ namespace FubuMVC.UI.Forms
             set { _bodyHolder.ReplaceChildren(value); } 
         }
 
-        public void SetLabelText(string text)
-        {
-            _dt.Children.Clear();
-            _dt.Text(text);
-        }
-
         public IEnumerable<HtmlTag> AllTags()
         {
             yield return _dt;

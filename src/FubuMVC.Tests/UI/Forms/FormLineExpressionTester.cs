@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.UI.Forms
         public void can_change_label_attributes_after_setting_label_text()
         {
             var tag = expression
-                .AlterLayout(x => x.SetLabelText("bar"))
+                .AlterLayout(x => x.LabelTag.Text("bar"))
                 .AlterLabel(label => label.AddClass("foo"));
             
             tag.AlterLayout(x => x.LabelTag.ShouldHaveClass("foo"));
