@@ -8,7 +8,7 @@ namespace FubuMVC.UI.Forms
     {
         private readonly HtmlTag _dt = new HtmlTag("dt");
         private readonly HtmlTag _dd = new HtmlTag("dd");
-        private HtmlTag _bodyHolder;
+        private readonly HtmlTag _bodyHolder;
 
         public DefinitionListLabelAndField()
         {

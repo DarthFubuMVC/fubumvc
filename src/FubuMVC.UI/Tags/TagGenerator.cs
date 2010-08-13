@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Forms;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 
@@ -143,6 +144,11 @@ namespace FubuMVC.UI.Tags
 
             var prefix = ElementPrefix ?? string.Empty;
             request.ElementId = prefix + _namingConvention.GetName(typeof(T), request.Accessor);
+        }
+
+        public ILabelAndFieldLayout NewFieldLayout()
+        {
+            return _profile.NewLabelAndFieldLayout();
         }
 
         public HtmlTag LabelFor(ElementRequest request)

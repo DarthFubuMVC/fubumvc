@@ -93,6 +93,7 @@
     <Compile Include="Registration\Nodes\NodesTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
+    <Compile Include="UI\TagProfileTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
     <Compile Include="Behaviors\DeserializeJsonBehaviorTester.cs" />
