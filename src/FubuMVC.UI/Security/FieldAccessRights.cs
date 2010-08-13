@@ -1,19 +1,9 @@
-using System;
-using System.Collections.Generic;
-using FubuCore.Reflection;
-using FubuCore.Util;
-using FubuMVC.UI.Configuration;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.UI.Configuration;
 
 namespace FubuMVC.UI.Security
 {
-    public interface IFieldAccessRule
-    {
-        AccessRight RightsFor(ElementRequest request);
-        bool Matches(Accessor accessor);
-    }
-
-
     public class FieldAccessRights
     {
         private readonly IEnumerable<IFieldAccessRule> _securityRules;
@@ -46,26 +36,5 @@ namespace FubuMVC.UI.Security
 
             return _securityRules.Select(x => x.RightsFor(request)).Most();
         }
-    }
-
-    public static class AccessRightExtensions
-    {
-        public static AccessRight Most(this IEnumerable<AccessRight> rights)
-        {
-            return AccessRight.Most(rights.ToArray());
-        }
-
-        public static AccessRight Least(this IEnumerable<AccessRight> rights)
-        {
-            return AccessRight.Least(rights.ToArray());
-        }
-    }
-
-    public class FieldAccessRegistry
-    {
-        private readonly List<IFieldAccessRule> _securityRules = new List<IFieldAccessRule>();
-        private readonly List<IFieldAccessRule> _logicRules = new List<IFieldAccessRule>();
-        
-
     }
 }

@@ -94,6 +94,7 @@
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="UI\Security\AccessRightTester.cs" />
+    <Compile Include="UI\Security\FieldAccessRegistryIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
     <Compile Include="UI\TagProfileTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
