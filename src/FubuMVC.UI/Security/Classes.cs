@@ -1,42 +1,71 @@
 using System;
+using System.Collections.Generic;
+using FubuCore.Reflection;
+using FubuCore.Util;
+using FubuMVC.UI.Configuration;
+using System.Linq;
 
 namespace FubuMVC.UI.Security
 {
-    public class AccessRight
+    public interface IFieldAccessRule
     {
-        private readonly bool _read;
-        private readonly bool _write;
-        private readonly int _precedence;
+        AccessRight RightsFor(ElementRequest request);
+        bool Matches(Accessor accessor);
+    }
 
-        private AccessRight(bool read, bool write, int precedence)
+
+    public class FieldAccessRights
+    {
+        private readonly IEnumerable<IFieldAccessRule> _securityRules;
+        private readonly IEnumerable<IFieldAccessRule> _logicRules;
+
+        public FieldAccessRights(IEnumerable<IFieldAccessRule> securityRules, IEnumerable<IFieldAccessRule> logicRules)
         {
-            _read = read;
-            _write = write;
-            _precedence = precedence;
+            _securityRules = securityRules;
+            _logicRules = logicRules;
         }
 
-        public int Precedence
+        public AccessRight RightsFor(ElementRequest request)
         {
-            get { return _precedence; }
+            var securityRights = getSecurityRights(request);
+            var logicRights = getLogicRights(request);
+
+            return AccessRight.Least(logicRights, securityRights);
         }
 
-        public bool Read
+        private AccessRight getLogicRights(ElementRequest request)
         {
-            get { return _read; }
+            if (!_logicRules.Any()) return AccessRight.All;
+
+            return _logicRules.Select(x => x.RightsFor(request)).Least();
         }
 
-        public bool Write
+        private AccessRight getSecurityRights(ElementRequest request)
         {
-            get { return _write; }
+            if (!_securityRules.Any()) return AccessRight.All;
+
+            return _securityRules.Select(x => x.RightsFor(request)).Most();
+        }
+    }
+
+    public static class AccessRightExtensions
+    {
+        public static AccessRight Most(this IEnumerable<AccessRight> rights)
+        {
+            return AccessRight.Most(rights.ToArray());
         }
 
-        public static readonly AccessRight All = new AccessRight(true, true, 1);
-        public static readonly AccessRight ReadOnly = new AccessRight(true, false, 2);
-        public static readonly AccessRight None = new AccessRight(false, false, 3);
-
-        public static AccessRight operator +(AccessRight first, AccessRight second)
+        public static AccessRight Least(this IEnumerable<AccessRight> rights)
         {
-            return first.Precedence <= second.Precedence ? first : second;
+            return AccessRight.Least(rights.ToArray());
         }
+    }
+
+    public class FieldAccessRegistry
+    {
+        private readonly List<IFieldAccessRule> _securityRules = new List<IFieldAccessRule>();
+        private readonly List<IFieldAccessRule> _logicRules = new List<IFieldAccessRule>();
+        
+
     }
 }

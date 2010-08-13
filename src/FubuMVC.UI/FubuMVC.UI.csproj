@@ -70,6 +70,7 @@
     <Compile Include="Configuration\Interfaces.cs" />
     <Compile Include="PartialExpressionExtensions.cs" />
     <Compile Include="PrincipalRoles.cs" />
+    <Compile Include="Security\AccessRight.cs" />
     <Compile Include="Security\Classes.cs" />
     <Compile Include="Tags\PartialLambdaElementModifier.cs" />
     <Compile Include="Tags\PartialTagActionExpression.cs" />

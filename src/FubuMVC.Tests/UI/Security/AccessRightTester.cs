@@ -44,5 +44,23 @@ namespace FubuMVC.Tests.UI.Security
         }
 
 
+        [Test]
+        public void the_most()
+        {
+            AccessRight.Most(AccessRight.None, AccessRight.All, AccessRight.ReadOnly).ShouldEqual(AccessRight.All);
+            AccessRight.Most(AccessRight.None, AccessRight.None, AccessRight.ReadOnly).ShouldEqual(AccessRight.ReadOnly);
+            AccessRight.Most(AccessRight.None, AccessRight.None).ShouldEqual(AccessRight.None);
+        }
+
+        [Test]
+        public void the_least()
+        {
+            AccessRight.Least(AccessRight.None, AccessRight.All, AccessRight.ReadOnly).ShouldEqual(AccessRight.None);
+            AccessRight.Least(AccessRight.All, AccessRight.All, AccessRight.ReadOnly).ShouldEqual(AccessRight.ReadOnly);
+            AccessRight.Least(AccessRight.All, AccessRight.All).ShouldEqual(AccessRight.All);
+        }
+
     }
+
+
 }
