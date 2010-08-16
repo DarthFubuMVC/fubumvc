@@ -7,6 +7,14 @@ namespace FubuMVC.Tests.UI.Security
     public class AccessRightTester
     {
         [Test]
+        public void for_name()
+        {
+            AccessRight.For("None").ShouldEqual(AccessRight.None);
+            AccessRight.For("ReadOnly").ShouldEqual(AccessRight.ReadOnly);
+            AccessRight.For("All").ShouldEqual(AccessRight.All);
+        }
+
+        [Test]
         public void all_should_have_both_read_and_write()
         {
             AccessRight.All.Read.ShouldBeTrue();
