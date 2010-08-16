@@ -13,6 +13,8 @@ namespace FubuMVC.UI.Forms
         private readonly ITagGenerator<T> _tags;
         private readonly ILabelAndFieldLayout _layout;
         private readonly Expression<Func<T, object>> _expression;
+        private readonly HashSet<string> _groupByCssClasses = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+        public HashSet<string> GroupByCssClasses { get { return _groupByCssClasses; } }
         private bool _isVisible = true;
 
         public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout, Expression<Func<T, object>> expression)
@@ -27,6 +29,12 @@ namespace FubuMVC.UI.Forms
         public FormLineExpression<T> AlterLabel(Action<HtmlTag> alter)
         {
             alter(_layout.LabelTag);
+            return this;
+        }
+
+        public FormLineExpression<T> GroupByClass(string cssClass)
+        {
+            GroupByCssClasses.Add(cssClass);            
             return this;
         }
 
@@ -102,7 +110,11 @@ namespace FubuMVC.UI.Forms
             if (!_isVisible) return string.Empty;
 
             ensureBodyTag();
-
+            AlterLayout(x => GroupByCssClasses.Each(c=>
+                                                        {
+                                                            x.LabelTag.AddClass(c);
+                                                            x.BodyTag.AddClass(c);
+                                                        }));
             return _layout.ToString();
         }
 

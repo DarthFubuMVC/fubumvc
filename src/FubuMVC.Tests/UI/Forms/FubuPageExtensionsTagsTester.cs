@@ -56,15 +56,13 @@ namespace FubuMVC.Tests.UI.Forms
         }
     }
 
-    [TestFixture]
-    public class when_calling_text_box_for
+    public abstract class when_calling_text_box_for
     {
-        private IFubuPage<ViewModel> _page;
-        private IElementNamingConvention _convention;
-        private Expression<Func<ViewModel,object>> _expression;
+    	protected IFubuPage<ViewModel> _page;
+		protected IElementNamingConvention _convention;
+		protected Expression<Func<ViewModel, object>> _expression;
 
-        [SetUp]
-        public void SetUp()
+        public void BaseSetUp()
         {
             _page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
             _convention = MockRepository.GenerateStub<IElementNamingConvention>();
@@ -72,18 +70,46 @@ namespace FubuMVC.Tests.UI.Forms
             Accessor accessor = _expression.ToAccessor();
             _convention.Stub(c => c.GetName(Arg<Type>.Is.Equal(typeof(ViewModel)), Arg<Accessor>.Is.Equal(accessor))).Return("name");
             _page.Expect(p => p.Get<IElementNamingConvention>()).Return(_convention);
-            _page.Expect(p => p.Model).Return(new ViewModel {Property = "some value"});
-        }
-
-        [Test]
-        public void should_return_text_box_tag()
-        {
-            _page.TextBoxFor(_expression).ToString().ShouldEqual("<input type=\"text\" name=\"name\" value=\"some value\" />");
-            _page.VerifyAllExpectations();
         }
 
         public class ViewModel { public string Property { get; set; } }
-    }
+	}
+
+	[TestFixture]
+	public class when_calling_text_box_for_and_model_has_non_null_property : when_calling_text_box_for
+	{
+		[SetUp]
+		public void SetUp()
+		{
+			BaseSetUp();
+			_page.Expect(p => p.Model).Return(new ViewModel { Property = "some value" });
+		}
+
+		[Test]
+		public void should_return_text_box_tag_with_value()
+		{
+			_page.TextBoxFor(_expression).ToString().ShouldEqual("<input type=\"text\" name=\"name\" value=\"some value\" />");
+			_page.VerifyAllExpectations();
+		}
+	}
+
+	[TestFixture]
+	public class when_calling_text_box_for_and_model_has_null_property : when_calling_text_box_for
+	{
+		[SetUp]
+		public void SetUp()
+		{
+			BaseSetUp();
+			_page.Expect(p => p.Model).Return(new ViewModel());
+		}
+
+		[Test]
+		public void should_return_text_box_tag_with_blank_value()
+		{
+			_page.TextBoxFor(_expression).ToString().ShouldEqual("<input type=\"text\" name=\"name\" value=\"\" />");
+			_page.VerifyAllExpectations();
+		}
+	}
 
     [TestFixture]
     public class when_calling_input_tag_generating_methods

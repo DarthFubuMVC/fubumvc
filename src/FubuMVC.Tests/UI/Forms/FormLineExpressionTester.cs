@@ -36,6 +36,15 @@ namespace FubuMVC.Tests.UI.Forms
         }
 
         [Test]
+        public void puts_css_class_on_the_label_and_body()
+        {
+            expression.GroupByClass("groupByClass");
+            expression.ToString();
+            layout.BodyTag.GetClasses().ShouldContain("groupByClass");
+            layout.LabelTag.GetClasses().ShouldContain("groupByClass");
+        }
+
+        [Test]
         public void has_label_by_default()
         {
             expression.AlterLabel(l =>

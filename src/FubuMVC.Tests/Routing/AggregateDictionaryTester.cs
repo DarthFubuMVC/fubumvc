@@ -109,6 +109,18 @@ namespace FubuMVC.Tests.Routing
         }
 
         [Test]
+        public void find_uri_value_from_request_property()
+        {
+            var expectedValue = new Uri("http://localhost/foo");
+            var requestCtx = Do_the_Stupid_ASPNET_Mock_HokeyPokey();
+            aggregate = new AggregateDictionary(requestCtx);
+
+            forKey("Url");
+
+            assertFound(RequestDataSource.RequestProperty, expectedValue);
+        }
+
+        [Test]
         public void find_value_from_request_property_of_added_aggregate()
         {
             const string expectedValue = "STUBBED USERAGENT";
@@ -129,6 +141,8 @@ namespace FubuMVC.Tests.Routing
             context.Stub(c => c.Request).Return(request);
             request.Stub(r => r.Files).Return(MockRepository.GenerateStub<HttpFileCollectionBase>());
             request.Stub(r => r.Headers).Return(new NameValueCollection());
+            request.Stub(r => r.Url).Return(new Uri("http://localhost/foo"));
+            request.Stub(r => r.UrlReferrer).Return(new Uri("http://localhost/login"));
             return new RequestContext(context, new RouteData());
         }
 
