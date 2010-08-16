@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Behaviors;
 using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap
@@ -29,7 +30,7 @@ namespace FubuMVC.StructureMap.Bootstrap
 
         public virtual FubuRegistry GetMyRegistry()
         {
-            return new BasicFubuStructureMapRegistry(HttpContext.Current.IsDebuggingEnabled, ControllerAssembly);
+                return new BasicFubuStructureMapRegistry(HttpContext.Current.IsDebuggingEnabled, ControllerAssembly);
         }
 
         protected virtual void InitializeStructureMap(IInitializationExpression ex)
@@ -43,7 +44,7 @@ namespace FubuMVC.StructureMap.Bootstrap
             BootstrapStructureMap(routeCollection, GetMyRegistry(), InitializeStructureMap);
         }
 
-        private static void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry, Action<IInitializationExpression> initializeExpression)
+        private void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry, Action<IInitializationExpression> initializeExpression)
         {
             UrlContext.Reset();
 
@@ -52,6 +53,14 @@ namespace FubuMVC.StructureMap.Bootstrap
             var fubuBootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
 
             fubuBootstrapper.Bootstrap(routes);
+            
+            fubuBootstrapper.Builder = ((container, args, id) =>
+                GetBuilder(container, args, id) ?? fubuBootstrapper.Builder(container, args, id));
+        }
+
+        protected virtual IActionBehavior GetBuilder(IContainer container, FubuCore.Binding.ServiceArguments args, Guid beehaviorId)
+        {
+            return null;
         }
     }
 }
