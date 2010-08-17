@@ -1,3 +1,5 @@
+using System;
+using System.Net;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
@@ -24,6 +26,11 @@ namespace FubuMVC.Core.Diagnostics
         public void RedirectToUrl(string url)
         {
             _inner.RedirectToUrl(url);
+        }
+
+        public void WriteResponseCode(HttpStatusCode status)
+        {
+            _inner.WriteResponseCode(status);
         }
 
         public IOutputWriter Inner { get { return _inner; } }

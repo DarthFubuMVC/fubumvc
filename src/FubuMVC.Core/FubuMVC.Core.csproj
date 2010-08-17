@@ -180,6 +180,7 @@
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />
+    <Compile Include="Security\Classes.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Urls\IModelUrl.cs" />
     <Compile Include="Urls\IUrlRegistration.cs" />

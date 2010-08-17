@@ -169,6 +169,8 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
 
             graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();
+
+            graph.Services.SetServiceIfNone<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
         }
 
         #region Nested type: RegistryImport

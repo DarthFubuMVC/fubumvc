@@ -93,6 +93,8 @@
     <Compile Include="Registration\Nodes\NodesTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
+    <Compile Include="Security\AuthorizationRightTester.cs" />
+    <Compile Include="Security\DefaultAuthorizationFailureHandlerTester.cs" />
     <Compile Include="UI\Security\AccessRightTester.cs" />
     <Compile Include="UI\Security\FieldAccessRegistryIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />

@@ -135,5 +135,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IDisplayFormatter, DisplayFormatter>();
         }
+
+        [Test]
+        public void default_authorization_failure_handler_is_registered()
+        {
+            registeredTypeIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+        }
     }
 }

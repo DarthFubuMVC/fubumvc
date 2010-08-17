@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Net;
 using System.Text;
 
 namespace FubuMVC.Core.Runtime
@@ -24,6 +26,11 @@ namespace FubuMVC.Core.Runtime
 
         public void RedirectToUrl(string url)
         {
+        }
+
+        public void WriteResponseCode(HttpStatusCode status)
+        {
+
         }
 
         public override string ToString()
