@@ -180,7 +180,15 @@
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />
-    <Compile Include="Security\Classes.cs" />
+    <Compile Include="Security\AllowRole.cs" />
+    <Compile Include="Security\AuthorizationBehavior.cs" />
+    <Compile Include="Security\AuthorizationPolicy.cs" />
+    <Compile Include="Security\AuthorizationRight.cs" />
+    <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
+    <Compile Include="Security\IAuthorizationFailureHandler.cs" />
+    <Compile Include="Security\IAuthorizationPolicy.cs" />
+    <Compile Include="Security\IAuthorizationRule.cs" />
+    <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Urls\IModelUrl.cs" />
     <Compile Include="Urls\IUrlRegistration.cs" />
