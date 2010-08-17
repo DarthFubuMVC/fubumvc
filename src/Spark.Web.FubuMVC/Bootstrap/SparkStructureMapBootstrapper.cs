@@ -1,9 +1,8 @@
-using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
-using Spark.Web.FubuMVC.ViewCreation;
 using StructureMap;
+using System.Web.Routing;
 
 namespace Spark.Web.FubuMVC.Bootstrap
 {
@@ -24,13 +23,6 @@ namespace Spark.Web.FubuMVC.Bootstrap
         private void BootstrapStructureMap(FubuRegistry fubuRegistry)
         {
             UrlContext.Reset();
-
-            ObjectFactory.Initialize(x =>
-                                         {
-                                             x.For<ISparkSettings>().Use<SparkSettings>();
-                                             x.For(typeof(ISparkViewRenderer<>)).Use(typeof(SparkViewRenderer<>));
-                                         });
-
             var bootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
             bootstrapper.Bootstrap(_routes);
         }

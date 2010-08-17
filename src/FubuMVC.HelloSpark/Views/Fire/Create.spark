@@ -6,3 +6,5 @@
 <h1>${Model.Text}</h1>
 
 <content:footer>That's right baby!</content:footer>
+
+!{this.LinkTo<WaterInputModel>().Text("Cool her down!")}

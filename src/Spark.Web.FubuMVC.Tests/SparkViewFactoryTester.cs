@@ -12,6 +12,8 @@ using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.Tests.Helpers;
 using Spark.Web.FubuMVC.Tests.Models;
 using Spark.Web.FubuMVC.ViewCreation;
+using Microsoft.Practices.ServiceLocation;
+using HtmlTags;
 
 namespace Spark.Web.FubuMVC.Tests
 {
@@ -26,7 +28,9 @@ namespace Spark.Web.FubuMVC.Tests
             //CompiledViewHolder.Current = null; //clear the view cache
 
             var settings = new SparkSettings();
-            _factory = new SparkViewFactory(settings) {ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views")};
+            var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
+
+            _factory = new SparkViewFactory(settings, serviceLocator) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
 
             _httpContext = MockHttpContextBase.Generate("/", new StringWriter());
             _response = _httpContext.Response;
@@ -362,7 +366,9 @@ namespace Spark.Web.FubuMVC.Tests
         [Test, Ignore("Need to figure out why it can't see the reference to HtmlTags.dll")]
         public void should_be_able_to_use_the_html_tags_assembly()
         {
-            ((SparkSettings) _factory.Settings).AddNamespace("HtmlTags");
+            ((SparkSettings) _factory.Settings)
+                .AddAssembly(typeof(HtmlTag).Assembly)
+                .AddNamespace("HtmlTags");
             FindViewAndRender("HtmlTags", null);
 
             string content = _output.ToString();
