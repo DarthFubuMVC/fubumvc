@@ -18,4 +18,6 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             return string.Format("DependencyType: {0}, Definition: {1}", DependencyType, Definition);
         }
     }
+    
+    // TODO -- put some defensive programming checks here?
 }

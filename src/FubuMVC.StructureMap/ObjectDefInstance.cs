@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 
@@ -21,6 +22,11 @@ namespace FubuMVC.StructureMap
         {
             var child = new ObjectDefInstance(dependency.Definition);
             Child(dependency.DependencyType).Is(child);
+        }
+
+        public void List(ListDependency dependency)
+        {
+            throw new NotImplementedException();
         }
     }
 }

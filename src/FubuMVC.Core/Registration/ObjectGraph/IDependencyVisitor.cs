@@ -4,5 +4,6 @@ namespace FubuMVC.Core.Registration.ObjectGraph
     {
         void Value(ValueDependency dependency);
         void Configured(ConfiguredDependency dependency);
+        void List(ListDependency dependency);
     }
 }
