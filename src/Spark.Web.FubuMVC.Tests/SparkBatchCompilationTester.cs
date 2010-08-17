@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.Tests.Controllers;
+using Microsoft.Practices.ServiceLocation;
+using Rhino.Mocks;
 
 namespace Spark.Web.FubuMVC.Tests
 {
@@ -16,8 +18,9 @@ namespace Spark.Web.FubuMVC.Tests
         public void SetUp()
         {
             var settings = new SparkSettings();
+            var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
 
-            _factory = new SparkViewFactory(settings) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
+            _factory = new SparkViewFactory(settings, serviceLocator) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
         }
 
         #endregion

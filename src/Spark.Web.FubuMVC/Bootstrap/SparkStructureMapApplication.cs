@@ -1,9 +1,17 @@
+using FubuMVC.Core;
+using FubuMVC.StructureMap;
+using Microsoft.Practices.ServiceLocation;
+using Spark.Web.FubuMVC.ViewCreation;
+using StructureMap;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
-using FubuMVC.Core;
+using FubuCore;
+using FubuMVC.UI;
+using System.Collections;
+using FubuMVC.UI.Tags;
 
 namespace Spark.Web.FubuMVC.Bootstrap
 {
@@ -11,31 +19,10 @@ namespace Spark.Web.FubuMVC.Bootstrap
     {
         private string _controllerAssembly;
         private bool? _enableDiagnostics;
-        private SparkViewFactory _viewFactory;
 
-        public bool EnableDiagnostics
-        {
-            get { return _enableDiagnostics ?? HttpContext.Current.IsDebuggingEnabled; }
-            set { _enableDiagnostics = value; }
-        }
+        public bool EnableDiagnostics { get { return _enableDiagnostics ?? HttpContext.Current.IsDebuggingEnabled; } set { _enableDiagnostics = value; } }
 
-        public string ControllerAssembly
-        {
-            get { return _controllerAssembly ?? FindClientCodeAssembly(GetType().Assembly); }
-            set { _controllerAssembly = value; }
-        }
-
-        public SparkViewFactory ViewFactory
-        {
-            get { return _viewFactory ?? CreateViewFactory(); }
-            set { _viewFactory = value; }
-        }
-
-        private static SparkViewFactory CreateViewFactory()
-        {
-            //This is the default, but don't forget, you can customize a ton of Spark settings here.
-            return new SparkViewFactory(new SparkSettings());
-        }
+        public string ControllerAssembly { get { return _controllerAssembly ?? FindClientCodeAssembly(GetType().Assembly); } set { _controllerAssembly = value; } }
 
         private static string FindClientCodeAssembly(Assembly globalAssembly)
         {
@@ -45,15 +32,34 @@ namespace Spark.Web.FubuMVC.Bootstrap
                 .Name;
         }
 
+        protected virtual SparkSettings GetSparkSettings()
+        {
+            return new SparkSettings()
+                .AddAssembly(typeof(PartialTagFactory).Assembly)
+                .AddNamespace("Spark.Web.FubuMVC")
+                .AddNamespace("FubuMVC.UI")
+                .AddNamespace("HtmlTags");
+        }
+
+        protected virtual void InitializeStructureMap(IInitializationExpression ex)
+        {
+            ex.ForSingletonOf<SparkViewFactory>();
+            ex.For<IServiceLocator>().Use<StructureMapServiceLocator>();
+            ex.For<ISparkSettings>().Use(GetSparkSettings);
+            ex.For(typeof(ISparkViewRenderer<>)).Use(typeof(SparkViewRenderer<>));
+        }
+
         public virtual FubuRegistry GetMyRegistry()
         {
-            return new SparkDefaultStructureMapRegistry(EnableDiagnostics, ControllerAssembly, ViewFactory);
+            var sparkViewFactory = ObjectFactory.Container.GetInstance<SparkViewFactory>();
+            return new SparkDefaultStructureMapRegistry(EnableDiagnostics, ControllerAssembly, sparkViewFactory);
         }
 
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteCollection routeCollection = RouteTable.Routes;
+            var routeCollection = RouteTable.Routes;
+            ObjectFactory.Initialize(InitializeStructureMap);
             SparkStructureMapBootstrapper.Bootstrap(routeCollection, GetMyRegistry());
             OnApplicationStarted();
         }
