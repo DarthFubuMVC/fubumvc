@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
+using System.Threading;
+using System.Web;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -117,6 +120,38 @@ namespace FubuMVC.Core.Security
             _failureHandler.Handle();
 
             return DoNext.Stop;
+        }
+    }
+
+    public class AllowRole : IAuthorizationPolicy
+    {
+        private readonly string _role;
+
+        public AllowRole(string role)
+        {
+            _role = role;
+        }
+
+        public AuthorizationRight RightsFor(IFubuRequest request)
+        {
+            return PrincipalRoles.IsInRole(_role) ? AuthorizationRight.Allow : AuthorizationRight.None;
+        }
+    }
+
+    public static class PrincipalRoles
+    {
+        public static IPrincipal Current
+        {
+            get
+            {
+                return HttpContext.Current == null ? Thread.CurrentPrincipal : HttpContext.Current.User;
+            }
+        }
+
+        public static bool IsInRole(params string[] roles)
+        {
+            var principal = Current;
+            return roles.Any(r => principal.IsInRole(r));
         }
     }
 }
