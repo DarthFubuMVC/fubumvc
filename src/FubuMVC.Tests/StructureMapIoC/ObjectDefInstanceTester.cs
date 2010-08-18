@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -83,6 +84,47 @@ namespace FubuMVC.Tests.StructureMapIoC
             instance.Name.ShouldEqual(def.Name);
         }
 
+        [Test]
+        public void build_an_object_with_a_list_dependency()
+        {
+            var def = new ObjectDef(typeof (ClassWithSomethings));
+            var listDependency = new ListDependency(typeof(IList<ISomething>));
+            listDependency.AddType(typeof (SomethingA));
+            listDependency.AddType(typeof (SomethingB));
+            listDependency.AddValue(new SomethingC());
+
+            def.Dependencies.Add(listDependency);
+
+            var instance = new ObjectDefInstance(def);
+
+            var container = new Container();
+            var @object = container.GetInstance<ClassWithSomethings>(instance);
+
+            @object.Somethings[0].ShouldBeOfType<SomethingA>();
+            @object.Somethings[1].ShouldBeOfType<SomethingB>();
+            @object.Somethings[2].ShouldBeOfType<SomethingC>();
+        }
+
         // IOutputWriter writer, IFubuRequest request
+    }
+
+    public interface ISomething{}
+    public class SomethingA : ISomething{}
+    public class SomethingB : ISomething{}
+    public class SomethingC : ISomething{}
+
+    public class ClassWithSomethings
+    {
+        private readonly IList<ISomething> _somethings;
+
+        public ClassWithSomethings(IList<ISomething> somethings)
+        {
+            _somethings = somethings;
+        }
+
+        public IList<ISomething> Somethings
+        {
+            get { return _somethings; }
+        }
     }
 }

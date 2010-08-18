@@ -1,6 +1,7 @@
 using System;
 using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
+using System.Linq;
 
 namespace FubuMVC.StructureMap
 {
@@ -24,9 +25,19 @@ namespace FubuMVC.StructureMap
             Child(dependency.DependencyType).Is(child);
         }
 
-        public void List(ListDependency dependency)
+        void IDependencyVisitor.List(ListDependency dependency)
         {
-            throw new NotImplementedException();
+            var elementType = dependency.ElementType;
+            var elements = dependency.Items.Select(instanceFor).ToArray();
+
+            ChildArray(dependency.DependencyType).Contains(elements);
+        }
+
+        private Instance instanceFor(ObjectDef def)
+        {
+            return def.Value != null 
+                ? (Instance) new ObjectInstance(def.Value) 
+                : new ObjectDefInstance(def);
         }
     }
 }
