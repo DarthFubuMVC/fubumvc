@@ -5,6 +5,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
@@ -66,6 +67,8 @@ namespace FubuMVC.Core
             Policies.Add<StringOutputPolicy>();
             Policies.Add<WebFormsEndpointPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
+
+            _systemPolicies.Add(new AttachAuthorizationPolicy());
 
             Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
             Output.ToJson.WhenCallMatches(x => x.Method.HasAttribute<JsonEndpointAttribute>());

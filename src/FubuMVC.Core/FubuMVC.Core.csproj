@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -182,6 +182,7 @@
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />
     <Compile Include="Security\AllowRole.cs" />
+    <Compile Include="Security\AttachAuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationBehavior.cs" />
     <Compile Include="Security\AuthorizationNode.cs" />
     <Compile Include="Security\AuthorizationPolicy.cs" />

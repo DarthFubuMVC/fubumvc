@@ -93,13 +93,14 @@
     <Compile Include="Registration\ListDependencyTester.cs" />
     <Compile Include="Registration\Nodes\NodesTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
+    <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
     <Compile Include="Security\AuthorizationBehaviorTester.cs" />
     <Compile Include="Security\AuthorizationNodeTester.cs" />
     <Compile Include="Security\AuthorizationRightTester.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandlerTester.cs" />
-    <Compile Include="Security\GenericAuthorizationPolicyTester.cs" />
+    <Compile Include="Continuations\GenericAuthorizationPolicyTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="UI\Security\AccessRightTester.cs" />
     <Compile Include="UI\Security\FieldAccessRegistryIntegratedTester.cs" />

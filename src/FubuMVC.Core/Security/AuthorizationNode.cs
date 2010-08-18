@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using System.Linq;
 
 namespace FubuMVC.Core.Security
 {
@@ -30,6 +31,13 @@ namespace FubuMVC.Core.Security
 
 
             return allow;
+        }
+
+        // To any followers here, there definitely needs to be more stuff here, but roles are
+        // all Dovetail needs at this moment, so...
+        public bool HasRules()
+        {
+            return _policies.Items.Any();
         }
     }
 }

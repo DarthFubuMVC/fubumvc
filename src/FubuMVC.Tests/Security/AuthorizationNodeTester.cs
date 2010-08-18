@@ -15,6 +15,21 @@ namespace FubuMVC.Tests.Security
             new AuthorizationNode().Category.ShouldEqual(BehaviorCategory.Authorization);
         }
 
+        [Test]
+        public void no_rules()
+        {
+            new AuthorizationNode().HasRules().ShouldBeFalse();
+        }
+
+        [Test]
+        public void with_rules()
+        {
+            var node = new AuthorizationNode();
+            node.AddRole("Role A");
+
+            node.HasRules().ShouldBeTrue();
+        }
+
         private AuthorizationBehavior toBehavior(AuthorizationNode node)
         {
             var container = StructureMapContainerFacility.GetBasicFubuContainer();

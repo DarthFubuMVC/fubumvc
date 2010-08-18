@@ -21,6 +21,7 @@ using FubuMVC.Core.Web.Security;
 
 namespace FubuMVC.Core
 {
+    [Obsolete("Should probably dump this in favor of the IFubuRegistryExtension")]
     public interface IRegistryModification
     {
         void Modify(FubuRegistry registry);
@@ -133,6 +134,17 @@ namespace FubuMVC.Core
         {
             var expression = new PartialViewTypeRegistrationExpression(_partialViewTypes);
             registration(expression);
+        }
+
+
+        /// <summary>
+        /// This allows you to drop down to direct manipulation of the BehaviorGraph
+        /// produced by this FubuRegistry
+        /// </summary>
+        /// <param name="alteration"></param>
+        public void Configure(Action<BehaviorGraph> alteration)
+        {
+            addExplicit(alteration);
         }
 
         private void setupServices(BehaviorGraph graph)
