@@ -95,6 +95,11 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        public RouteConventionExpression ModifyRouteDefinitions(Func<ActionCall, bool> filter, Action<IRouteDefinition> modification)
+        {
+            _resolver.DefaultUrlPolicy.RegisterRouteModification(filter, modification);
+            return this;
+        }
 
         public RouteConventionExpression ConstrainToHttpMethod(Expression<Func<ActionCall, bool>> filter, string method)
         {

@@ -164,6 +164,15 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
+        public void build_route_with_a_registered_modification()
+        {
+            resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
+            resolver.DefaultUrlPolicy.RegisterRouteModification(x => true, r => r.Prepend("prepend-something"));
+            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteDefinition<RouteInputModel>>();
+            route.Pattern.ShouldEqual("prepend-something/fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
+        }
+
+        [Test]
         public void build_route_with_a_namespace_ignore()
         {
             resolver.DefaultUrlPolicy.IgnoreNamespace(GetType().Namespace);
