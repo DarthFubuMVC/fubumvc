@@ -12,7 +12,8 @@ namespace FubuMVC.Core.Registration.Nodes
         Call,
         Output,
         Wrapper,
-        Chain
+        Chain,
+        Authorization
     }
 
     public abstract class BehaviorNode : IEnumerable<BehaviorNode>

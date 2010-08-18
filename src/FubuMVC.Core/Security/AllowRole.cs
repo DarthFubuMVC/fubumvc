@@ -15,5 +15,10 @@ namespace FubuMVC.Core.Security
         {
             return PrincipalRoles.IsInRole(_role) ? AuthorizationRight.Allow : AuthorizationRight.None;
         }
+
+        public string Role
+        {
+            get { return _role; }
+        }
     }
 }

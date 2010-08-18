@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security
 {
+
     public class AuthorizationBehavior : BasicBehavior
     {
         private readonly IAuthorizationFailureHandler _failureHandler;
@@ -33,5 +35,15 @@ namespace FubuMVC.Core.Security
 
             return DoNext.Stop;
         }
+
+        public ReadOnlyCollection<IAuthorizationPolicy> Policies
+        {
+            get
+            {
+                return new ReadOnlyCollection<IAuthorizationPolicy>(_policies.ToList());
+            }
+        }
     }
+
+    
 }

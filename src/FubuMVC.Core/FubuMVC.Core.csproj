@@ -183,6 +183,7 @@
     <Compile Include="Registration\DSL\UrlRegistryExpression.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AuthorizationBehavior.cs" />
+    <Compile Include="Security\AuthorizationNode.cs" />
     <Compile Include="Security\AuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationRight.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
