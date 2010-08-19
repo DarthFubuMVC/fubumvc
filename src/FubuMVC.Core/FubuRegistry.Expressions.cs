@@ -11,6 +11,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -180,6 +181,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
             graph.Services.SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
+            graph.Services.SetServiceIfNone<IChainResolver, ChainResolver>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
             graph.Services.SetServiceIfNone(_partialViewTypes);

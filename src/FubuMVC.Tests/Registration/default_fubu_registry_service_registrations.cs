@@ -3,6 +3,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -140,6 +141,12 @@ namespace FubuMVC.Tests.Registration
         public void default_authorization_failure_handler_is_registered()
         {
             registeredTypeIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+        }
+
+        [Test]
+        public void default_chain_resolver_is_registered()
+        {
+            registeredTypeIs<IChainResolver, ChainResolver>();
         }
 
     }
