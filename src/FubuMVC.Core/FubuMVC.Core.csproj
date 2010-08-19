@@ -170,6 +170,7 @@
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
     <Compile Include="Registration\Nodes\WebFormView.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
+    <Compile Include="Registration\Querying\Classes.cs" />
     <Compile Include="Registration\RouteVisitor.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />

@@ -92,6 +92,7 @@
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />
     <Compile Include="Registration\Nodes\NodesTester.cs" />
+    <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />

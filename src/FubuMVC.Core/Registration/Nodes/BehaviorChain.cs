@@ -8,12 +8,26 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
+    public class UrlCategory
+    {
+        public UrlCategory()
+        {
+            Creates = new List<Type>();
+        }
+
+        public string Category { get; set; }
+        public IList<Type> Creates { get; private set; }
+    }
+
     public class BehaviorChain : BehaviorNode
     {
         public BehaviorChain()
         {
             Authorization = new AuthorizationNode();
+            UrlCategory = new UrlCategory();
         }
+
+        public UrlCategory UrlCategory { get; private set; }
 
         public BehaviorNode Top { get { return Next; } private set { Next = value; } }
 

@@ -7,6 +7,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration
@@ -19,8 +20,14 @@ namespace FubuMVC.Core.Registration
             Observer = observer;
         }
 
+        private readonly List<ChainForwarder> _forwarders = new List<ChainForwarder>();
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly IServiceRegistry _services = new ServiceRegistry();
+
+        public IEnumerable<ChainForwarder> Forwarders
+        {
+            get { return _forwarders; }
+        }
 
         public IConfigurationObserver Observer { get; private set; }
 

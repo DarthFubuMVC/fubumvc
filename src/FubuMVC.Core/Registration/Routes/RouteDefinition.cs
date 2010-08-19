@@ -60,6 +60,7 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = newParts.Join("/");
         }
 
+        [Obsolete("Moving to BehaviorChain")]
         public string Category { get; set; }
 
         public virtual int Rank
