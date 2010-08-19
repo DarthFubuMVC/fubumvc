@@ -1,13 +1,16 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Querying
 {
+    public delegate IEnumerable<BehaviorChain> Forwardable(object model, IChainResolver resolver);
+
     public class ChainForwarder
     {
-        private readonly Func<object, IChainResolver, BehaviorChain> _forwarding;
+        private readonly Forwardable _forwarding;
 
-        public ChainForwarder(Type inputType, Func<object, IChainResolver, BehaviorChain> forwarding)
+        public ChainForwarder(Type inputType, Forwardable forwarding)
         {
             _forwarding = forwarding;
             InputType = inputType;
@@ -16,9 +19,9 @@ namespace FubuMVC.Core.Registration.Querying
         public Type InputType { get; private set; }
         public string Category { get; set; }
 
-        public BehaviorChain FindChain(IChainResolver resolver, object model)
+        public IEnumerable<BehaviorChain> Find(IChainResolver resolver, object model)
         {
-            throw new NotImplementedException();
+            return _forwarding(model, resolver);
         }
     }
 }
