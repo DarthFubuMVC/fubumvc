@@ -3,6 +3,7 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.DSL
 {
+    [Obsolete("Needs to go")]
     public class UrlRegistryExpression
     {
         private readonly Action<IUrlRegistrationConvention> _register;

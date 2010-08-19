@@ -45,17 +45,6 @@ namespace FubuMVC.Core.Urls
             ModelUrls.Each<IModelUrl>(x => x.RootUrlAt(baseUrl));
         }
 
-        public void Add(IEnumerable<ActionUrl> actions)
-        {
-            _actions.AddRange(actions);
-        }
-
-
-        public void Add(IEnumerable<IModelUrl> models)
-        {
-            _modelUrls.AddRange(models);
-        }
-
         public void RegisterNew(ActionUrl action, Type type)
         {
             _news[type] = action;

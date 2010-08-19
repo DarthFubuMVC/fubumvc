@@ -45,8 +45,6 @@ namespace FubuMVC.Core.Urls
     {
         IEnumerable<ActionUrl> Actions { get; }
         IEnumerable<IModelUrl> ModelUrls { get; }
-        void Add(IEnumerable<ActionUrl> actions);
-        void Add(IEnumerable<IModelUrl> models);
         void RegisterNew(ActionUrl action, Type type);
         void RegisterNew(ActionCall call, Type type);
 
