@@ -141,5 +141,6 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
         }
+
     }
 }

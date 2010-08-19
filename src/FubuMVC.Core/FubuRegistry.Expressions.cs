@@ -29,6 +29,7 @@ namespace FubuMVC.Core
 
     public partial class FubuRegistry
     {
+        private TypeResolver _typeResolver = new TypeResolver();
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
         public OutputDeterminationExpression Output { get { return new OutputDeterminationExpression(this); } }
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
@@ -43,6 +44,11 @@ namespace FubuMVC.Core
         public void UsingObserver(IConfigurationObserver observer)
         {
             _observer = observer;
+        }
+
+        public TypeResolver TypeResolver
+        {
+            get { return _typeResolver; }
         }
 
         public void Services(Action<IServiceRegistry> configure)
@@ -150,6 +156,7 @@ namespace FubuMVC.Core
         private void setupServices(BehaviorGraph graph)
         {
             graph.Services.AddService<IUrlRegistry>(_urls);
+            graph.Services.AddService<ITypeResolver>(_typeResolver);
             graph.Services.AddService<IUrlRegistration>(_urls);
             graph.Services.AddService(new TypeDescriptorCache());
 
