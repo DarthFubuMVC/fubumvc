@@ -1,42 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using System.Linq;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.Querying
 {
-    public class ChainForwarder
-    {
-        private readonly Func<object, IChainResolver, BehaviorChain> _forwarding;
-
-        public ChainForwarder(Type inputType, Func<object, IChainResolver, BehaviorChain> forwarding)
-        {
-            _forwarding = forwarding;
-            InputType = inputType;
-        }
-
-        public Type InputType { get; private set; }
-        public string Category { get; set; }
-
-        public BehaviorChain FindChain(IChainResolver resolver, object model)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public interface IChainResolver
-    {
-        BehaviorChain Find<T>(Expression<Action<T>> expression);
-
-        IEnumerable<BehaviorChain> Find(object model);
-        BehaviorChain FindUnique(object model);
-        BehaviorChain FindUnique(object model, string category);
-    }
-
     public class ChainResolver : IChainResolver
     {
         private readonly ITypeResolver _typeResolver;
