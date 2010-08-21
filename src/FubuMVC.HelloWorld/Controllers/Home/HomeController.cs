@@ -12,11 +12,6 @@ namespace FubuMVC.HelloWorld.Controllers.Home
                 CurrentUrl = model.Url
             };
         }
-
-        public HelloViewModel Hello(HelloInputModel model)
-        {
-            return new HelloViewModel{Text = "Hello from Hello()"};
-        }
     }
 
     public class HomeViewModel
@@ -28,16 +23,6 @@ namespace FubuMVC.HelloWorld.Controllers.Home
     public class HomeInputModel
     {
         public string Url { get; set; }
-    }
-
-    public class HelloViewModel
-    {
-        public string Text{ get; set;}
-    }
-
-    public class HelloInputModel
-    {
-        
     }
     
     public class Home : FubuPage<HomeViewModel>

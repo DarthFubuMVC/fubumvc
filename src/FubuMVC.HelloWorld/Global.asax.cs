@@ -4,7 +4,6 @@ using FubuMVC.HelloWorld.Controllers.Products;
 using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap.Bootstrap;
 using FubuMVC.UI;
-using FubuMVC.View.Spark;
 using StructureMap;
 
 namespace FubuMVC.HelloWorld
@@ -43,7 +42,6 @@ namespace FubuMVC.HelloWorld
             Views
                 .TryToAttach(x=>
                 {
-                    x.to_spark_view_by_action_namespace_and_name(GetType().Namespace);
                     x.by_ViewModel_and_Namespace_and_MethodName();
                     x.by_ViewModel_and_Namespace();
                     x.by_ViewModel();

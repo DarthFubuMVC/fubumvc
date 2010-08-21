@@ -19,7 +19,7 @@
     </div>
 
     <div>
-        <form action="greetingcommand" method="post">
+        <form action="greeting" method="post">
         Attempt to POST to the greeting command page.
         <input type="submit" value="POST" name="OtherPostButton" />
         </form>
