@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace FubuMVC.UI.Security
 {
-    public class AccessRight
+    public class AccessRight : IComparable<AccessRight>
     {
         private readonly bool _read;
         private readonly bool _write;
@@ -50,12 +50,19 @@ namespace FubuMVC.UI.Security
 
         public static AccessRight Least(params AccessRight[] rights)
         {
-            return rights.OrderByDescending(x => x.Permissiveness).FirstOrDefault();
+            if (!rights.Any()) return None;
+            return rights.Min();
         }
 
         public static AccessRight Most(params AccessRight[] rights)
         {
-            return rights.OrderBy(x => x.Permissiveness).FirstOrDefault();
+            if (!rights.Any()) return None;
+            return rights.Max();
+        }
+
+        public int CompareTo(AccessRight other)
+        {
+            return Permissiveness.CompareTo(other.Permissiveness) * -1;
         }
 
         public override string ToString()
@@ -65,20 +72,11 @@ namespace FubuMVC.UI.Security
 
         public static AccessRight For(string name)
         {
-            switch (name.ToUpper())
-            {
-                case "ALL":
-                    return AccessRight.All;
-
-                case "READONLY":
-                    return AccessRight.ReadOnly;
-
-                case "NONE":
-                    return AccessRight.None;
-
-                default:
-                    throw new ArgumentOutOfRangeException("name", name, "All, ReadOnly, and None are the valid options");
-            }
+            if (name == null) throw new ArgumentNullException("name");
+            if (name.Equals(All.Name, StringComparison.InvariantCultureIgnoreCase)) return All;
+            if (name.Equals(ReadOnly.Name, StringComparison.InvariantCultureIgnoreCase)) return ReadOnly;
+            if (name.Equals(None.Name, StringComparison.InvariantCultureIgnoreCase)) return None;
+            throw new ArgumentOutOfRangeException("name", name, "All, ReadOnly, and None are the only valid options");
         }
     }
 }

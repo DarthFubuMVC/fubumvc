@@ -1,5 +1,7 @@
+using System;
 using FubuMVC.UI.Security;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuMVC.Tests.UI.Security
 {
@@ -10,8 +12,10 @@ namespace FubuMVC.Tests.UI.Security
         public void for_name()
         {
             AccessRight.For("None").ShouldEqual(AccessRight.None);
-            AccessRight.For("ReadOnly").ShouldEqual(AccessRight.ReadOnly);
+            AccessRight.For("READONLY").ShouldEqual(AccessRight.ReadOnly);
             AccessRight.For("All").ShouldEqual(AccessRight.All);
+            typeof (ArgumentOutOfRangeException).ShouldBeThrownBy(() => AccessRight.For("Other"));
+            typeof(ArgumentNullException).ShouldBeThrownBy(() => AccessRight.For(null));
         }
 
         [Test]
@@ -58,6 +62,21 @@ namespace FubuMVC.Tests.UI.Security
             AccessRight.Most(AccessRight.None, AccessRight.All, AccessRight.ReadOnly).ShouldEqual(AccessRight.All);
             AccessRight.Most(AccessRight.None, AccessRight.None, AccessRight.ReadOnly).ShouldEqual(AccessRight.ReadOnly);
             AccessRight.Most(AccessRight.None, AccessRight.None).ShouldEqual(AccessRight.None);
+            AccessRight.Most().ShouldEqual(AccessRight.None);
+        }
+
+        [Test]
+        public void comparable_max()
+        {
+            new[] {AccessRight.All, AccessRight.ReadOnly, AccessRight.None}.Max().ShouldEqual(AccessRight.All);
+            new[] {AccessRight.ReadOnly, AccessRight.None }.Max().ShouldEqual(AccessRight.ReadOnly);
+        }
+
+        [Test]
+        public void comparable_min()
+        {
+            new[] { AccessRight.All, AccessRight.ReadOnly, AccessRight.None }.Min().ShouldEqual(AccessRight.None);
+            new[] { AccessRight.All, AccessRight.ReadOnly }.Min().ShouldEqual(AccessRight.ReadOnly);
         }
 
         [Test]
@@ -66,6 +85,7 @@ namespace FubuMVC.Tests.UI.Security
             AccessRight.Least(AccessRight.None, AccessRight.All, AccessRight.ReadOnly).ShouldEqual(AccessRight.None);
             AccessRight.Least(AccessRight.All, AccessRight.All, AccessRight.ReadOnly).ShouldEqual(AccessRight.ReadOnly);
             AccessRight.Least(AccessRight.All, AccessRight.All).ShouldEqual(AccessRight.All);
+            AccessRight.Least().ShouldEqual(AccessRight.None);
         }
 
     }
