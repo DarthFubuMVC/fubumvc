@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Urls;
@@ -65,6 +66,19 @@ namespace FubuMVC.Tests.Diagnostics
             column.WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(call.Description);
+        }
+    }
+
+    public class TargetController
+    {
+        public void Go()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GoWithInput(object o)
+        {
+            throw new NotImplementedException();
         }
     }
 }

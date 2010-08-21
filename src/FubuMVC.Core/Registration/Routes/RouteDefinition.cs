@@ -10,7 +10,7 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteDefinition : IRouteDefinition, IModelUrl
+    public class RouteDefinition : IRouteDefinition
     {
         private string _pattern;
         private readonly RouteValueDictionary _constraints = new RouteValueDictionary();
@@ -59,9 +59,6 @@ namespace FubuMVC.Core.Registration.Routes
             string[] newParts = parts.Take(parts.Length - 1).ToArray();
             _pattern = newParts.Join("/");
         }
-
-        [Obsolete("Moving to BehaviorChain")]
-        public string Category { get; set; }
 
         public virtual int Rank
         {

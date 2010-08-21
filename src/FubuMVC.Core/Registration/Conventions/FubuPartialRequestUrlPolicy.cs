@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public IRouteDefinition Build(ActionCall call)
         {
-            return new NulloRouteDefinition("(non-routed, partial only)");
+            return new NulloRouteDefinition();
         }
 
         public void LogPolicyDecision(ActionCall call)

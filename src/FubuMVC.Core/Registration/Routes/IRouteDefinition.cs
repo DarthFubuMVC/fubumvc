@@ -7,7 +7,6 @@ namespace FubuMVC.Core.Registration.Routes
     public interface IRouteDefinition
     {
         string Pattern { get; }
-        string Category { get; set; }
         int Rank { get; }
         IEnumerable<KeyValuePair<string, object>> Constraints { get; }
         string CreateUrl(object input);
@@ -18,5 +17,7 @@ namespace FubuMVC.Core.Registration.Routes
         void AddQueryInput(PropertyInfo property);
         void AddRouteConstraint(string inputName, IRouteConstraint constraint);
         void Prepend(string prefix);
+
+        void RootUrlAt(string baseUrl);
     }
 }

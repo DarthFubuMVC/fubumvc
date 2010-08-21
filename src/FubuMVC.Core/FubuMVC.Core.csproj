@@ -124,7 +124,6 @@
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\FubuPartialRequestUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConvention.cs" />
-    <Compile Include="Registration\Conventions\NulloRouteDefinition.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlForNewConvention.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConvention.cs" />
@@ -163,7 +162,6 @@
     <Compile Include="Registration\IBehaviorVisitor.cs" />
     <Compile Include="Registration\IRouteVisitor.cs" />
     <Compile Include="Registration\IServiceRegistry.cs" />
-    <Compile Include="Registration\IUrlRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\DeserializeJsonNode.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
@@ -173,6 +171,7 @@
     <Compile Include="Registration\Querying\ChainResolver.cs" />
     <Compile Include="Registration\Querying\ChainForwarder.cs" />
     <Compile Include="Registration\Querying\IChainResolver.cs" />
+    <Compile Include="Registration\Routes\NulloRouteDefinition.cs" />
     <Compile Include="Registration\RouteVisitor.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />
@@ -197,10 +196,7 @@
     <Compile Include="Security\IAuthorizationRule.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
-    <Compile Include="Urls\IModelUrl.cs" />
-    <Compile Include="Urls\IUrlRegistration.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
-    <Compile Include="Urls\UrlRegistryBuilder.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain.cs" />
     <Compile Include="Registration\Nodes\BehaviorExtensions.cs" />
     <Compile Include="Registration\BehaviorGraph.cs" />

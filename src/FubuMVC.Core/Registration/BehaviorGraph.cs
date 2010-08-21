@@ -20,13 +20,25 @@ namespace FubuMVC.Core.Registration
             Observer = observer;
         }
 
-        private readonly List<ChainForwarder> _forwarders = new List<ChainForwarder>();
+        private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly IServiceRegistry _services = new ServiceRegistry();
 
-        public IEnumerable<ChainForwarder> Forwarders
+        public IEnumerable<IChainForwarder> Forwarders
         {
             get { return _forwarders; }
+        }
+
+        public void Forward<T>(Func<T, object> converter)
+        {
+            var forwarder = new ChainForwarder<T>(converter);
+            _forwarders.Add(forwarder);
+        }
+
+        public void Forward<T>(Func<T, object> converter, string category)
+        {
+            var forwarder = new ChainForwarder<T>(converter, category);
+            _forwarders.Add(forwarder);
         }
 
         public IConfigurationObserver Observer { get; private set; }

@@ -35,7 +35,7 @@ namespace FubuMVC.Core
         public OutputDeterminationExpression Output { get { return new OutputDeterminationExpression(this); } }
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
 
-        public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(convention => _urlConventions.Add(convention), _urls); } }
+        public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(this); } }
         public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
 
         public ModelsExpression Models { get { return new ModelsExpression(addExplicit); } }
@@ -156,12 +156,12 @@ namespace FubuMVC.Core
 
         private void setupServices(BehaviorGraph graph)
         {
-            graph.Services.AddService<IUrlRegistry>(_urls);
+
             graph.Services.AddService<ITypeResolver>(_typeResolver);
-            graph.Services.AddService<IUrlRegistration>(_urls);
             graph.Services.AddService(new TypeDescriptorCache());
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
+            graph.Services.SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();
             graph.Services.SetServiceIfNone<ISecurityContext, WebSecurityContext>();
             graph.Services.SetServiceIfNone<IAuthenticationContext, WebAuthenticationContext>();

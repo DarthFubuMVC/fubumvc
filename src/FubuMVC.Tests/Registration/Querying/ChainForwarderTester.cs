@@ -14,17 +14,21 @@ namespace FubuMVC.Tests.Registration.Querying
             var model2 = new Model2();
 
             
-            var forwarder = new ChainForwarder(typeof (Model1), (o, r) =>
-            {
-                return r.Find(model2);
-            });
+            var forwarder = new ChainForwarder<Model1>(m1 => model2);
 
             var resolver = MockRepository.GenerateMock<IChainResolver>();
-            var chains = new BehaviorChain[0];
+            var chain = new BehaviorChain();
             
-            resolver.Expect(x => x.Find(model2)).Return(chains);
+            
+            resolver.Expect(x => x.FindUnique(model2)).Return(chain);
 
-            forwarder.Find(resolver, new Model1()).ShouldBeTheSameAs(chains);
+            forwarder.FindChain(resolver, new Model1()).ShouldBeTheSameAs(chain);
+        }
+
+        [Test]
+        public void input_model_flows_from_the_generic_parameter()
+        {
+            new ChainForwarder<Model1>(m1 => null).InputType.ShouldEqual(typeof (Model1));
         }
     }
 

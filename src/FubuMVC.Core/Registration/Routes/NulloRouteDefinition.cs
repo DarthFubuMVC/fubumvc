@@ -1,19 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Routing;
-using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Registration.Conventions
+namespace FubuMVC.Core.Registration.Routes
 {
-    public class NulloRouteDefinition : IRouteDefinition, IModelUrl
+    public class NulloRouteDefinition : IRouteDefinition
     {
         public NulloRouteDefinition()
             : this("(unroutable)")
         {
-            
+
         }
 
         public NulloRouteDefinition(string pattern)
@@ -21,9 +19,9 @@ namespace FubuMVC.Core.Registration.Conventions
             Pattern = pattern;
         }
 
-        public string Pattern{ get; private set; }
+        public string Pattern { get; private set; }
 
-        public string Category{ get; set; }
+        public string Category { get; set; }
 
         public Type InputType
         {
@@ -47,7 +45,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void RootUrlAt(string baseUrl)
         {
-            
+
         }
 
         public Route ToRoute()
@@ -57,22 +55,22 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void Append(string patternPart)
         {
-            
+
         }
 
         public void AddRouteInput(RouteInput input, bool b)
         {
-            
+
         }
 
         public void RemoveLastPatternPart()
         {
-            
+
         }
 
         public void AddQueryInput(PropertyInfo property)
         {
-            
+
         }
 
         public void AddRouteConstraint(string inputName, IRouteConstraint constraint)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
@@ -20,6 +21,8 @@ namespace FubuMVC.Core.Registration.Querying
             _behaviorGraph = behaviorGraph;
         }
 
+        // TODO -- This really needs to change to returning an IEnumerable and
+        // we possibly need an alternative that finds by category
         public BehaviorChain Find<T>(Expression<Action<T>> expression)
         {
             var chain = _behaviorGraph.BehaviorFor(expression);
@@ -45,7 +48,14 @@ namespace FubuMVC.Core.Registration.Querying
 
         public BehaviorChain FindUnique(object model)
         {
+            var forwarder = FindForwarder(model);
+            if (forwarder != null)
+            {
+                return forwarder.FindChain(this, model);
+            }
+            
             var modelType = _typeResolver.ResolveType(model);
+            
 
             var chains = findChainsByType(modelType);
             switch (chains.Count())
@@ -98,6 +108,36 @@ namespace FubuMVC.Core.Registration.Querying
             }
 
             return chains.Single();
+        }
+
+        public BehaviorChain Find(Type handlerType, MethodInfo method)
+        {
+            return _behaviorGraph.Behaviors.Where(x => x.FirstCall() != null).SingleOrDefault(x =>
+            {
+                var call = x.FirstCall();
+                return call.HandlerType == handlerType && call.Method == method;
+            });
+        }
+
+        public BehaviorChain FindCreatorOf(Type type)
+        {
+            return _behaviorGraph.Behaviors.SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
+        }
+
+        public void RootAt(string baseUrl)
+        {
+            _behaviorGraph.Behaviors.Where(x => x.Route != null).Each(x => x.Route.RootUrlAt(baseUrl));
+        }
+
+        public IChainForwarder FindForwarder(object model, string category)
+        {
+            var modelType = _typeResolver.ResolveType(model);
+            return _behaviorGraph.Forwarders.SingleOrDefault(f => f.Category == category && f.InputType == modelType);
+        }
+
+        public IChainForwarder FindForwarder(object model)
+        {
+            return FindForwarder(model, Categories.DEFAULT) ?? FindForwarder(model, null);   
         }
     }
 }

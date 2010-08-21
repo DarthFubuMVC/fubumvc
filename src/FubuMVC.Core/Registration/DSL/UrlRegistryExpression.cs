@@ -1,35 +1,31 @@
 using System;
+using System.Linq.Expressions;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.DSL
 {
-    [Obsolete("Needs to go")]
     public class UrlRegistryExpression
     {
-        private readonly Action<IUrlRegistrationConvention> _register;
-        private readonly IUrlRegistration _registration;
+        private readonly FubuRegistry _registry;
 
-        public UrlRegistryExpression(Action<IUrlRegistrationConvention> register, IUrlRegistration registration)
+        public UrlRegistryExpression(FubuRegistry registry)
         {
-            _register = register;
-            _registration = registration;
+            _registry = registry;
         }
 
-        public UrlRegistryExpression AddConvention<T>() where T : IUrlRegistrationConvention, new()
+        public void Forward<TInput>(Type type, string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
         {
-            return AddConvention(new T());
+            throw new NotImplementedException();    
+        }
+        
+        public void Forward<TInput>(string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
+        {
+            throw new NotImplementedException();    
         }
 
-        public UrlRegistryExpression AddConvention(IUrlRegistrationConvention convention)
+        public void Forward<TInput>(Expression<Func<TInput, IUrlRegistry, string>> forward)
         {
-            _register(convention);
-            return this;
-        }
-
-        public UrlRegistryExpression Register(Action<IUrlRegistration> configure)
-        {
-            configure(_registration);
-            return this;
+            throw new NotImplementedException();    
         }
     }
 }

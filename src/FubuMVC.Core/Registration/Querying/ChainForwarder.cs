@@ -4,24 +4,59 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Querying
 {
-    public delegate IEnumerable<BehaviorChain> Forwardable(object model, IChainResolver resolver);
 
-    public class ChainForwarder
+    public interface IChainForwarder
+    { 
+        string Category { get; }
+        Type InputType { get; }
+        BehaviorChain FindChain(IChainResolver resolver, object model);
+        string FindUrl(IChainResolver resolver, object model);
+    }
+
+
+
+    public class ChainForwarder<T> : IChainForwarder
     {
-        private readonly Forwardable _forwarding;
+        private readonly Func<T, object> _converter;
+        private string _category;
 
-        public ChainForwarder(Type inputType, Forwardable forwarding)
+        public ChainForwarder(Func<T, object> converter)
         {
-            _forwarding = forwarding;
-            InputType = inputType;
+            _converter = converter;
         }
 
-        public Type InputType { get; private set; }
-        public string Category { get; set; }
-
-        public IEnumerable<BehaviorChain> Find(IChainResolver resolver, object model)
+        public ChainForwarder(Func<T, object> converter, string category)
         {
-            return _forwarding(model, resolver);
+            _converter = converter;
+            _category = category;
+        }
+
+        public string Category
+        {
+            get { return _category; }
+        }
+
+        public Type InputType
+        {
+            get { return typeof(T); }
+        }
+
+        public BehaviorChain FindChain(IChainResolver resolver, object model)
+        {
+            var input = (T)model;
+            var realInput = _converter(input);
+
+            // Limitation.  Not respecting the category for now.
+            return resolver.FindUnique(realInput);
+        }
+
+        public string FindUrl(IChainResolver resolver, object model)
+        {
+            var input = (T)model;
+            var realInput = _converter(input);
+            var chain = resolver.FindUnique(realInput);
+
+            return chain.Route.CreateUrl(realInput);
         }
     }
 }

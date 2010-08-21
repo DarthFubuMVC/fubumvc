@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -28,6 +29,30 @@ namespace FubuMVC.Tests.Registration.Querying
             typeResolver.AddStrategy<ProxyDetector>();
 
             resolver = new ChainResolver(typeResolver, graph);
+        }
+
+        [Test]
+        public void has_new_negative()
+        {
+            resolver.FindCreatorOf(typeof (Entity1)).ShouldBeNull();
+        }
+
+        [Test]
+        public void find_creator_positive()
+        {
+            var chain = graph.BehaviorFor<ChainResolverController>(x => x.M6(null));
+            chain.UrlCategory.Creates.Add(typeof(Entity1));
+            chain.UrlCategory.Creates.Add(typeof(Entity2));
+
+            resolver.FindCreatorOf(typeof (Entity1)).FirstCall().Method.Name.ShouldEqual("M6");
+            resolver.FindCreatorOf(typeof (Entity2)).FirstCall().Method.Name.ShouldEqual("M6");
+            resolver.FindCreatorOf(typeof (Entity3)).ShouldBeNull();
+        }
+
+        [Test]
+        public void find_creator_negative()
+        {
+            resolver.FindCreatorOf(typeof(Entity1)).ShouldBeNull();
         }
 
         [Test]
@@ -156,6 +181,44 @@ namespace FubuMVC.Tests.Registration.Querying
             resolver.FindUnique(new Proxy<ChainResolverInput1>(), Categories.NEW)
                 .FirstCall().Method.Name.ShouldEqual("M2");
         }
+
+        [Test]
+        public void find_by_handler_type_and_method_positive_case()
+        {
+            var method = ReflectionHelper.GetMethod<ChainResolverController>(x => x.M7(null));
+            resolver.Find(typeof(ChainResolverController), method).FirstCall().Method.ShouldEqual(method);
+        }
+
+        [Test]
+        public void find_forwarder_if_there_is_only_one()
+        {
+            graph.Forward<ForwardedModel>(m => new UniqueInput());
+
+            var forwarder = resolver.FindForwarder(new ForwardedModel());
+            forwarder.ShouldNotBeNull();
+
+            forwarder.FindChain(resolver, new ForwardedModel()).FirstCall().Method.Name.ShouldEqual("M9");
+        }
+
+        [Test]
+        public void find_forwarder_is_null_with_no_forwarders_registered()
+        {
+            resolver.FindForwarder(new ForwardedModel()).ShouldBeNull();
+        }
+
+        [Test]
+        public void find_forwarder_with_DEFAULT_category_if_there_is_more_than_one()
+        {
+            graph.Forward<ForwardedModel>(m => new UniqueInput(), Categories.DEFAULT);
+            graph.Forward<ForwardedModel>(m => new ChainResolverInput1(), Categories.NEW);
+            graph.Forward<ForwardedModel>(m => new ChainResolverInput1(), Categories.EDIT);
+
+            var forwarder = resolver.FindForwarder(new ForwardedModel());
+            forwarder.ShouldNotBeNull();
+
+            forwarder.FindChain(resolver, new ForwardedModel()).FirstCall().Method.Name.ShouldEqual("M9");
+        }
+
     }
 
     public class InputModelThatDoesNotMatchAnyExistingBehaviors{}
@@ -185,6 +248,7 @@ namespace FubuMVC.Tests.Registration.Querying
     public class ChainResolverInput2{}
     public class ChainResolverInput3{}
     public class UniqueInput{}
+    public class ForwardedModel{}
 
     public class ProxyDetector : ITypeResolverStrategy
     {
@@ -200,4 +264,9 @@ namespace FubuMVC.Tests.Registration.Querying
     }
 
     public class Proxy<T> { }
+
+
+    public class Entity1{}
+    public class Entity2{}
+    public class Entity3{}
 }

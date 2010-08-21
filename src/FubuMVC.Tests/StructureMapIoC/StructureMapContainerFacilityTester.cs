@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -115,16 +116,16 @@ namespace FubuMVC.Tests.StructureMapIoC
             var myContainer = new Container();
             var myFacility = new StructureMapContainerFacility(myContainer);
 
-            var registry = new UrlRegistry();
+            var registry = new TypeResolver();
 
-            myFacility.Register(typeof (IUrlRegistry), new ObjectDef
+            myFacility.Register(typeof(ITypeResolver), new ObjectDef
             {
                 Value = registry
             });
 
             myFacility.BuildFactory();
 
-            myContainer.GetInstance<IUrlRegistry>().ShouldBeTheSameAs(registry);
+            myContainer.GetInstance<ITypeResolver>().ShouldBeTheSameAs(registry);
         }
 
         [Test]

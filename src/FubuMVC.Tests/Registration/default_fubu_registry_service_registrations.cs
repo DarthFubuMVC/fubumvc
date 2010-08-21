@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
+using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
@@ -21,6 +22,12 @@ namespace FubuMVC.Tests.Registration
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void url_registry_is_registered()
+        {
+            registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
 
         [Test]

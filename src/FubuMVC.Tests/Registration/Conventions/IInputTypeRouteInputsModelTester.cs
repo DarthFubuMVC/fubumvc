@@ -189,23 +189,4 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
     }
 
-    [TestFixture]
-    public class when_using_url_registry
-    {
-        private BehaviorGraph graph;
-        private IUrlRegistrationConvention convention;
-
-        [SetUp]
-        public void SetUp()
-        {
-            convention = MockRepository.GenerateStub<IUrlRegistrationConvention>();
-            graph = new FubuRegistry(x => x.UrlRegistry.AddConvention(convention)).BuildGraph();
-        }
-
-        [Test]
-        public void convention_was_configured()
-        {
-            convention.AssertWasCalled(c=>c.Configure(Arg<BehaviorGraph>.Is.Equal(graph), Arg<IUrlRegistration>.Is.NotNull));
-        }
-    }
 }

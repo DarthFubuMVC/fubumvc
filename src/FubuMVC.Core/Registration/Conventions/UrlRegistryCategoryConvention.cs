@@ -14,8 +14,8 @@ namespace FubuMVC.Core.Registration.Conventions
                 // Sukant, it's just little bitty stuff like this.  If the Type in HandlerType is
                 // decorated with the UrlRegistryCategoryAttribute, call through to the continuation
                 // passed into the function
-                a.HandlerType.ForAttribute<UrlRegistryCategoryAttribute>(att => a.ParentChain().Route.Category = att.Category);
-                a.Method.ForAttribute<UrlRegistryCategoryAttribute>(att => a.ParentChain().Route.Category = att.Category);
+                a.HandlerType.ForAttribute<UrlRegistryCategoryAttribute>(att => a.ParentChain().UrlCategory.Category = att.Category);
+                a.Method.ForAttribute<UrlRegistryCategoryAttribute>(att => a.ParentChain().UrlCategory.Category = att.Category);
             });
         }
     }
