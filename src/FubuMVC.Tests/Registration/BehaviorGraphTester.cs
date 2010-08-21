@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Registration
             }).BuildGraph();
             
             TraceListener listener = MockRepository.GenerateStub<TraceListener>();
-            Debug.Listeners.Add(listener);
+            Trace.Listeners.Add(listener);
             graph.Describe();
             graph.Behaviors.Each(
                 b => listener.AssertWasCalled(

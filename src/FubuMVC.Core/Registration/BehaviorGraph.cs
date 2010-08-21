@@ -122,7 +122,7 @@ namespace FubuMVC.Core.Registration
 
         public void Describe()
         {
-            _behaviors.Each(x => { Debug.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
+            _behaviors.Each(x => { Trace.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
         }
 
         public void VisitRoutes(Action<RouteVisitor> configure)

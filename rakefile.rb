@@ -1,4 +1,4 @@
-COMPILE_TARGET = "debug"
+COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
 require "build_support/BuildUtils.rb"
 
 include FileTest
