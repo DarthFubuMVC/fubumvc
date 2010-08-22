@@ -69,7 +69,8 @@ task :compile35 do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.Fx35.sln', :clrversion => CLR_TOOLS_VERSION,
    :properties=>[
      "TargetFrameworkVersion=v3.5",
-     "OutDir=#{output}"
+     "OutDir=#{output}",
+     "DefineConstants=\"LEGACY;TRACE\""
      ]
 
   Dir.mkdir props[:stage35] unless exists?(props[:stage35])
