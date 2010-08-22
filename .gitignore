@@ -1,6 +1,8 @@
 push.bat
 TestResult.xml
 build
+build35
+artifacts
 obj
 bin
 deploy
