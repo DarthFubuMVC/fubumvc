@@ -41,6 +41,11 @@ namespace FubuMVC.Core.Registration
             _forwarders.Add(forwarder);
         }
 
+        public void AddForwarder(IChainForwarder forwarder)
+        {
+            _forwarders.Add(forwarder);
+        }
+
         public IConfigurationObserver Observer { get; private set; }
 
         public IServiceRegistry Services { get { return _services; } }

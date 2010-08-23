@@ -35,7 +35,6 @@ namespace FubuMVC.Core
         public OutputDeterminationExpression Output { get { return new OutputDeterminationExpression(this); } }
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
 
-        public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(this); } }
         public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
 
         public ModelsExpression Models { get { return new ModelsExpression(addExplicit); } }

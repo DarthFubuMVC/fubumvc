@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Registration.Querying
     public class ChainForwarder<T> : IChainForwarder
     {
         private readonly Func<T, object> _converter;
-        private string _category;
+        private readonly string _category;
 
         public ChainForwarder(Func<T, object> converter)
         {
@@ -54,6 +54,12 @@ namespace FubuMVC.Core.Registration.Querying
         {
             var input = (T)model;
             var realInput = _converter(input);
+
+            if (realInput == null)
+            {
+                throw new FubuException(2111, "Chain Forwarder for {0} did not return any value for {1}", typeof(T).FullName, model.ToString());
+            }
+
             var chain = resolver.FindUnique(realInput);
 
             return chain.Route.CreateUrl(realInput);
