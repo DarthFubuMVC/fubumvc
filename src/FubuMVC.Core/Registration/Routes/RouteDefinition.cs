@@ -115,7 +115,7 @@ namespace FubuMVC.Core.Registration.Routes
         public override string CreateUrl(object input)
         {
             string url = Pattern;
-
+            
             if (_routeInputs.Any(x => !x.CanSubstitue(input)))
             {
                 throw new FubuException(
