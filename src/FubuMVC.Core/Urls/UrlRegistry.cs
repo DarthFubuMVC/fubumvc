@@ -6,81 +6,35 @@ using FubuMVC.Core.Registration.Querying;
 
 namespace FubuMVC.Core.Urls
 {
-    public class UrlRegistry : IUrlRegistry
+    public class UrlRegistry : ChainInterrogator<string>, IUrlRegistry
     {
-        private readonly IChainResolver _resolver;
-
-        public UrlRegistry(IChainResolver resolver)
+        public UrlRegistry(IChainResolver resolver) : base(resolver)
         {
-            _resolver = resolver;
-        }
-
-        [Obsolete]
-        public void Forward<TInput>(Expression<Func<TInput, IUrlRegistry, string>> forward)
-        {
-            Forward(Categories.DEFAULT, forward);
-        }
-
-        [Obsolete]
-        public void Forward<TInput>(Type type, string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
-        {
-            //Func<object, string> func = o => forward.Compile()((TInput) o, this);
-            //var url = new ForwardUrl(type, func, category, forward.ToString());
-            //AddModel(url);
-        }
-
-        [Obsolete]
-        public void Forward<TInput>(string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
-        {
-            Forward(typeof (TInput), category, forward);
         }
 
         public string UrlFor(object model)
         {
-            if (model == null) return null;
+            return For(model);
+        }
 
-            var forwarder = _resolver.FindForwarder(model);
-            if (forwarder != null)
-            {
-                return forwarder.FindUrl(_resolver, model);
-            }
-
-            return returnUrl(model, r => r.FindUnique(model));
+        protected override string applyForwarder(object model, IChainForwarder forwarder)
+        {
+            return forwarder.FindUrl(resolver, model);
         }
 
         public string UrlFor(object model, string category)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException("model");
-            }
-
-            var forwarder = _resolver.FindForwarder(model, category);
-            if (forwarder != null)
-            {
-                return forwarder.FindUrl(_resolver, model);
-            }
-
-            return returnUrl(model, r => r.FindUnique(model, category));
+            return For(model, category);
         }
 
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
-            return returnUrl(null, r => r.Find(expression));
+            return findAnswerFromResolver(null, r => r.Find(expression));
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
         {
-            return returnUrl(null, r =>
-            {
-                var chain = r.Find(handlerType, method);
-                if (chain == null)
-                {
-                    throw new FubuException(2108, "No behavior chain registered for {0}.{1}()", handlerType.FullName, method.Name);
-                }
-
-                return chain;
-            });
+            return For(handlerType, method);
         }
 
         public string UrlForNew<T>()
@@ -90,17 +44,7 @@ namespace FubuMVC.Core.Urls
 
         public string UrlForNew(Type entityType)
         {
-            return returnUrl(null, r =>
-            {
-                var chain = r.FindCreatorOf(entityType);
-
-                if (chain == null)
-                {
-                    throw new FubuException(2109, "No 'new' route exists for type {0}", entityType.FullName);
-                }
-
-                return chain;
-            });
+            return ForNew(entityType);
         }
 
         public bool HasNewUrl<T>()
@@ -110,7 +54,7 @@ namespace FubuMVC.Core.Urls
 
         public bool HasNewUrl(Type type)
         {
-            return _resolver.FindCreatorOf(type) != null;
+            return resolver.FindCreatorOf(type) != null;
         }
 
         public string UrlForPropertyUpdate(object model)
@@ -132,12 +76,12 @@ namespace FubuMVC.Core.Urls
         /// <param name="baseUrl"></param>
         public void RootAt(string baseUrl)
         {
-            _resolver.RootAt(baseUrl);
+            resolver.RootAt(baseUrl);
         }
 
-        private string returnUrl(object model, Func<IChainResolver, BehaviorChain> finder)
+        protected override string findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
         {
-            BehaviorChain chain = finder(_resolver);
+            BehaviorChain chain = finder(resolver);
             return chain.Route.CreateUrl(model);
         }
     }
