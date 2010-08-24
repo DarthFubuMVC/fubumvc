@@ -1,8 +1,11 @@
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using System.Linq;
+using System.Collections.Generic;
+using StructureMap;
 
 namespace FubuMVC.Tests.Security
 {
@@ -61,6 +64,64 @@ namespace FubuMVC.Tests.Security
             authorizationBehavior.Policies[0].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleA");
             authorizationBehavior.Policies[1].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleB");
             authorizationBehavior.Policies[2].ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleC");
+        }
+
+    }
+
+    [TestFixture]
+    public class when_creating_an_object_def_for_an_endpoint_authorizor
+    {
+        private ObjectDef endpointObjectDef;
+        private BehaviorChain chain;
+
+        [SetUp]
+        public void SetUp()
+        {
+            chain = new BehaviorChain();
+
+            var node = new AuthorizationNode();
+            node.AddRole("RoleA");
+            node.AddRole("RoleB");
+            node.AddRole("RoleC");
+
+            chain.AddToEnd(node);
+
+            endpointObjectDef = node.ToEndpointAuthorizorObjectDef();
+        }
+
+        [Test]
+        public void the_type_should_be_endpoint_authorizor()
+        {
+            endpointObjectDef.Type.ShouldEqual(typeof (EndPointAuthorizor));
+        }
+
+        [Test]
+        public void the_name_should_be_the_behavior_id_from_the_parent_chain()
+        {
+            endpointObjectDef.Name.ShouldEqual(chain.ToObjectDef().Name);
+        }
+
+        [Test]
+        public void should_have_a_list_dependency_for_the_authorization_policies()
+        {
+            var dependency = endpointObjectDef.Dependencies.Single().ShouldBeOfType<ListDependency>();
+            dependency.Items.Select(x => x.Value.ShouldBeOfType<AllowRole>().Role)
+                .ShouldHaveTheSameElementsAs("RoleA", "RoleB", "RoleC");
+
+
+        
+        }
+
+        [Test]
+        public void make_sure_we_can_actually_build_it()
+        {
+            var instance = new ObjectDefInstance(endpointObjectDef);
+            var container = new Container();
+
+            container.GetInstance<IEndPointAuthorizor>(instance)
+                .ShouldBeOfType<EndPointAuthorizor>()
+                .Policies.Cast<AllowRole>().Select(x => x.Role)
+                .ShouldHaveTheSameElementsAs("RoleA", "RoleB", "RoleC");
         }
     }
 }

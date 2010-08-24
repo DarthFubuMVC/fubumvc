@@ -45,5 +45,16 @@ namespace FubuMVC.Core.Security
         {
             return _policies.Items.Any();
         }
+
+        public ObjectDef ToEndpointAuthorizorObjectDef()
+        {
+            var objectDef = new ObjectDef(typeof(EndPointAuthorizor)){
+                Name = ParentChain().UniqueId.ToString()
+            };
+
+            objectDef.Dependencies.Add(_policies);
+
+            return objectDef;
+        }
     }
 }

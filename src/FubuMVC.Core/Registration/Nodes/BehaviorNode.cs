@@ -23,7 +23,6 @@ namespace FubuMVC.Core.Registration.Nodes
         public virtual Guid UniqueId { get { return _uniqueId; } }
         public abstract BehaviorCategory Category { get; }
 
-
         public BehaviorNode Next
         {
             get { return _next; }

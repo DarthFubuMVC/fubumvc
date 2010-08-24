@@ -97,7 +97,7 @@ namespace FubuMVC.Core.Registration
 
             _services.Each(action);
 
-            _behaviors.Each(chain => { action(typeof (IActionBehavior), chain.ToObjectDef()); });
+            _behaviors.Each(chain => chain.Register(action));
 
             action(typeof (BehaviorGraph), new ObjectDef
             {

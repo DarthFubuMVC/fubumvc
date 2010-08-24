@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Security;
@@ -96,6 +97,11 @@ namespace FubuMVC.Core.Registration.Nodes
             ObjectDef def = Top.ToObjectDef();
             def.Name = UniqueId.ToString();
             return def;
+        }
+
+        public void Register(Action<Type, ObjectDef> callback)
+        {
+            callback(typeof (IActionBehavior), ToObjectDef());
         }
 
         public void Prepend(BehaviorNode node)

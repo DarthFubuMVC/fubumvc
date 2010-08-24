@@ -107,6 +107,11 @@ namespace FubuMVC.Core.Security
         {
             return AuthorizationRight.Combine(_policies.Select(x => x.RightsFor(request)));
         }
+
+        public IEnumerable<IAuthorizationPolicy> Policies
+        {
+            get { return _policies; }
+        }
     }
 
     public interface IEndPointAuthorizorFactory
