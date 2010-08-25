@@ -195,9 +195,10 @@
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
     <Compile Include="Security\EndPointAuthorizor.cs" />
     <Compile Include="Security\EndPointAuthorizorFactory.cs" />
-    <Compile Include="Security\IAuthorizationChecker.cs" />
+    <Compile Include="Security\AuthorizationPreviewService.cs" />
     <Compile Include="Security\IAuthorizationFailureHandler.cs" />
     <Compile Include="Security\IAuthorizationPolicy.cs" />
+    <Compile Include="Security\IAuthorizationPreviewService.cs" />
     <Compile Include="Security\IAuthorizationRule.cs" />
     <Compile Include="Security\IEndPointAuthorizor.cs" />
     <Compile Include="Security\IEndPointAuthorizorFactory.cs" />

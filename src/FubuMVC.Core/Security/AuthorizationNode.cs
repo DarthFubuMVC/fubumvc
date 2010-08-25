@@ -34,6 +34,24 @@ namespace FubuMVC.Core.Security
             return allow;
         }
 
+        public ObjectDef AddPolicy<TModel, TRule>() where TRule : IAuthorizationRule<TModel> where TModel : class
+        {
+            var topDef = _policies.AddType(typeof (AuthorizationPolicy<TModel>));
+
+            var ruleObjectDef = new ObjectDef(typeof (TRule));
+            topDef.Dependencies.Add(new ConfiguredDependency(){
+                DependencyType = typeof (IAuthorizationRule<TModel>),
+                Definition = ruleObjectDef
+            });
+
+            return ruleObjectDef;
+        }
+
+        public void AddPolicy(IAuthorizationPolicy policy)
+        {
+            _policies.AddValue(policy);
+        }
+
         public IEnumerable<string> AllowedRoles()
         {
             return _policies.Items.Where(x => x.Value is AllowRole).Select(x => x.Value.As<AllowRole>().Role);

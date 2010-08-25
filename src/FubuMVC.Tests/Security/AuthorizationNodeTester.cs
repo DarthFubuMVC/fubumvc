@@ -5,6 +5,7 @@ using FubuMVC.StructureMap;
 using NUnit.Framework;
 using System.Linq;
 using System.Collections.Generic;
+using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.Tests.Security
@@ -48,6 +49,28 @@ namespace FubuMVC.Tests.Security
             var authorizationBehavior = toBehavior(node);
             authorizationBehavior.Policies.Count.ShouldEqual(1);
             authorizationBehavior.Policies.First().ShouldBeOfType<AllowRole>().Role.ShouldEqual("RoleA");
+        }
+
+        [Test]
+        public void adding_a_policy()
+        {
+            var node = new AuthorizationNode();
+            var policy = MockRepository.GenerateMock<IAuthorizationPolicy>();
+
+            node.AddPolicy(policy);
+
+            var authorizationBehavior = toBehavior(node);
+            authorizationBehavior.Policies.Single().ShouldBeTheSameAs(policy);
+        }
+
+        [Test]
+        public void adding_a_model_rule_policy()
+        {
+            var node = new AuthorizationNode();
+            node.AddPolicy<UrlModel, UrlModelShouldStartWithJ>();
+
+            toBehavior(node).Policies.Single().ShouldBeOfType<AuthorizationPolicy<UrlModel>>()
+                .InnerRule.ShouldBeOfType<UrlModelShouldStartWithJ>();
         }
 
         [Test]

@@ -162,5 +162,10 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
         }
 
+        [Test]
+        public void authorization_preview_service_is_registered()
+        {
+            registeredTypeIs<IAuthorizationPreviewService, AuthorizationPreviewService>();
+        }
     }
 }

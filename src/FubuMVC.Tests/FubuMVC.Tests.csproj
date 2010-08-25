@@ -105,6 +105,7 @@
     <Compile Include="Security\AuthorizationBehaviorTester.cs" />
     <Compile Include="Security\AuthorizationNodeTester.cs" />
     <Compile Include="Security\AuthorizationRightTester.cs" />
+    <Compile Include="Security\AuthorizationPreviewServiceIntegratedTester.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandlerTester.cs" />
     <Compile Include="Continuations\GenericAuthorizationPolicyTester.cs" />
     <Compile Include="Security\EndPointAuthorizorTester.cs" />

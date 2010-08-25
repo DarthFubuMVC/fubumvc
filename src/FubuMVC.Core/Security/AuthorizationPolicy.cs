@@ -15,5 +15,10 @@ namespace FubuMVC.Core.Security
         {
             return _innerRule.RightsFor(request.Get<TModel>());
         }
+
+        public IAuthorizationRule<TModel> InnerRule
+        {
+            get { return _innerRule; }
+        }
     }
 }
