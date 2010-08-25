@@ -168,6 +168,7 @@
     <Compile Include="Registration\Nodes\DeserializeJsonNode.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
+    <Compile Include="Registration\Nodes\UrlCategory.cs" />
     <Compile Include="Registration\Nodes\WebFormView.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
     <Compile Include="Registration\Querying\ChainResolver.cs" />

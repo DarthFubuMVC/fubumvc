@@ -9,17 +9,6 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public class UrlCategory
-    {
-        public UrlCategory()
-        {
-            Creates = new List<Type>();
-        }
-
-        public string Category { get; set; }
-        public IList<Type> Creates { get; private set; }
-    }
-
     public class BehaviorChain : BehaviorNode
     {
         public BehaviorChain()
@@ -102,6 +91,11 @@ namespace FubuMVC.Core.Registration.Nodes
         public void Register(Action<Type, ObjectDef> callback)
         {
             callback(typeof (IActionBehavior), ToObjectDef());
+
+            if (Authorization.HasRules())
+            {
+                callback(typeof (IEndPointAuthorizor), Authorization.ToEndpointAuthorizorObjectDef());
+            }
         }
 
         public void Prepend(BehaviorNode node)

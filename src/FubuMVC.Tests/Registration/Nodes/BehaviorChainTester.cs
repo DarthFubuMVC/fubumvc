@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Security;
+using FubuMVC.FakeControllers;
+using FubuMVC.StructureMap;
 using FubuMVC.Tests.StructureMapIoC;
 using FubuMVC.Tests.View;
 using NUnit.Framework;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
+using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
@@ -336,6 +343,42 @@ namespace FubuMVC.Tests.Registration.Nodes
             enumerator.MoveNext();
             enumerator.Current.ShouldEqual(thirdNode);
             enumerator.MoveNext().ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_register_an_endpoint_authorizor_if_there_are_any_authorization_rules()
+        {
+            
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+            chain.Authorization.AddRole("Role 1");
+            chain.Prepend(chain.Authorization);
+
+            var container = new Container();
+            var facility = new StructureMapContainerFacility(container);
+
+            chain.Register(facility.Register);
+
+            facility.BuildFactory();
+
+            container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
+                .ShouldNotBeNull();
+        }
+
+        [Test]
+        public void should_not_register_an_endpoint_authorizor_if_there_are_no_authorization_roles()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(ActionCall.For<OneController>(x => x.Query(null)));
+            //chain.Authorization.AddRole("Role 1");
+
+            var container = new Container();
+            var facility = new StructureMapContainerFacility(container);
+
+            chain.Register(facility.Register);
+
+            container.TryGetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
+                .ShouldBeNull();
         }
     }
 }
