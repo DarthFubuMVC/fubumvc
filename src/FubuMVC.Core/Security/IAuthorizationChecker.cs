@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.Runtime;
-using System.Linq;
 
 namespace FubuMVC.Core.Security
 {
@@ -79,50 +76,6 @@ namespace FubuMVC.Core.Security
         }
 
         public bool IsAuthorizedFor(Type handlerType, MethodInfo method)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public interface IEndPointAuthorizor
-    {
-        AuthorizationRight IsAuthorized(IFubuRequest request);
-    }
-
-    public class EndPointAuthorizor : IEndPointAuthorizor
-    {
-        private readonly IEnumerable<IAuthorizationPolicy> _policies;
-
-        public EndPointAuthorizor(IEnumerable<IAuthorizationPolicy> policies)
-        {
-            if (!policies.Any())
-            {
-                throw new ArgumentOutOfRangeException("policies", "At least one authorization policy is required");    
-            }
-
-            _policies = policies;
-        }
-
-        public AuthorizationRight IsAuthorized(IFubuRequest request)
-        {
-            return AuthorizationRight.Combine(_policies.Select(x => x.RightsFor(request)));
-        }
-
-        public IEnumerable<IAuthorizationPolicy> Policies
-        {
-            get { return _policies; }
-        }
-    }
-
-    public interface IEndPointAuthorizorFactory
-    {
-        IEndPointAuthorizor AuthorizorFor(Guid behaviorId);
-    }
-
-    // TODO -- need to register this one
-    public class EndPointAuthorizorFactory : IEndPointAuthorizorFactory
-    {
-        public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
         {
             throw new NotImplementedException();
         }

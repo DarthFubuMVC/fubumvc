@@ -181,6 +181,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
             graph.Services.SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
             graph.Services.SetServiceIfNone<IChainResolver, ChainResolver>();
+            graph.Services.SetServiceIfNone<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
             graph.Services.SetServiceIfNone(_partialViewTypes);

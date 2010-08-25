@@ -91,11 +91,7 @@ namespace FubuMVC.Core.Registration.Nodes
         public void Register(Action<Type, ObjectDef> callback)
         {
             callback(typeof (IActionBehavior), ToObjectDef());
-
-            if (Authorization.HasRules())
-            {
-                callback(typeof (IEndPointAuthorizor), Authorization.ToEndpointAuthorizorObjectDef());
-            }
+            Authorization.Register(UniqueId, callback);
         }
 
         public void Prepend(BehaviorNode node)

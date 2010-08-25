@@ -111,7 +111,9 @@ namespace FubuMVC.StructureMap
             }
             else
             {
-                _registry.For(serviceType).Add(new ObjectInstance(def.Value));
+                _registry.For(serviceType).Add(new ObjectInstance(def.Value){
+                    Name = def.Name
+                });
             }
 
             if (ServiceRegistry.ShouldBeSingleton(serviceType))

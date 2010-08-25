@@ -56,5 +56,19 @@ namespace FubuMVC.Core.Security
 
             return objectDef;
         }
+
+        public void Register(Guid uniqueId, Action<Type, ObjectDef> callback)
+        {
+            var objectDef = HasRules() 
+                ? ToEndpointAuthorizorObjectDef()
+                : new ObjectDef(){
+                    Value = NulloEndPointAuthorizor.Flyweight
+                };
+
+            objectDef.Name = uniqueId.ToString();
+
+            callback(typeof (IEndPointAuthorizor), objectDef);
+
+        }
     }
 }

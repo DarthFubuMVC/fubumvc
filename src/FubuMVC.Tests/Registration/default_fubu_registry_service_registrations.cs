@@ -156,5 +156,11 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IChainResolver, ChainResolver>();
         }
 
+        [Test]
+        public void default_endpoint_factory_is_registered()
+        {
+            registeredTypeIs<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
+        }
+
     }
 }

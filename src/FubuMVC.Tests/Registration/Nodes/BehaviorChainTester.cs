@@ -362,7 +362,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             facility.BuildFactory();
 
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
-                .ShouldNotBeNull();
+                .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
         }
 
         [Test]
@@ -377,8 +377,13 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.Register(facility.Register);
 
-            container.TryGetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
-                .ShouldBeNull();
+            facility.BuildFactory();
+
+            Debug.WriteLine(chain.UniqueId);
+            Debug.WriteLine(container.WhatDoIHave());
+
+            container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
+                .ShouldBeOfType<NulloEndPointAuthorizor>();
         }
     }
 }

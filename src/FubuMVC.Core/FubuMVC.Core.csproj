@@ -193,10 +193,14 @@
     <Compile Include="Security\AuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationRight.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
+    <Compile Include="Security\EndPointAuthorizor.cs" />
+    <Compile Include="Security\EndPointAuthorizorFactory.cs" />
     <Compile Include="Security\IAuthorizationChecker.cs" />
     <Compile Include="Security\IAuthorizationFailureHandler.cs" />
     <Compile Include="Security\IAuthorizationPolicy.cs" />
     <Compile Include="Security\IAuthorizationRule.cs" />
+    <Compile Include="Security\IEndPointAuthorizor.cs" />
+    <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
