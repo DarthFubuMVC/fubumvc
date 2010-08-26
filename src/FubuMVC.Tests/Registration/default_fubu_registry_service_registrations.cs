@@ -167,5 +167,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IAuthorizationPreviewService, AuthorizationPreviewService>();
         }
+
+        [Test]
+        public void endpoint_service_is_registered()
+        {
+            registeredTypeIs<IEndpointService, EndpointService>();
+        }
     }
 }

@@ -44,6 +44,11 @@ namespace FubuMVC.Tests.Urls
             urls = new UrlRegistry(new ChainResolver(registry.TypeResolver, graph));
         }
 
+        [Test]
+        public void retrieve_by_controller_action_even_if_it_has_an_input_model()
+        {
+            urls.UrlFor<OneController>(x => x.M1(null)).ShouldEqual("one/m1");
+        }
 
         [Test]
         public void retrieve_a_url_for_a_model_simple_case()

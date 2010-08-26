@@ -120,6 +120,7 @@
     <Compile Include="Diagnostics\TextWriting\TextLine.cs" />
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
+    <Compile Include="EndpointService.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />

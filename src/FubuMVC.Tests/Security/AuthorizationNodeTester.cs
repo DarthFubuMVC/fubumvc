@@ -63,6 +63,8 @@ namespace FubuMVC.Tests.Security
             authorizationBehavior.Policies.Single().ShouldBeTheSameAs(policy);
         }
 
+
+
         [Test]
         public void adding_a_model_rule_policy()
         {
