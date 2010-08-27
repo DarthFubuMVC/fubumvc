@@ -111,6 +111,8 @@
     <Compile Include="Continuations\GenericAuthorizationPolicyTester.cs" />
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
+    <Compile Include="UI\Navigation\AuthorizedContextualActionTester.cs" />
+    <Compile Include="UI\Navigation\MenuItemStateTester.cs" />
     <Compile Include="UI\Security\AccessRightTester.cs" />
     <Compile Include="UI\Security\FieldAccessRegistryIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
