@@ -1,14 +1,16 @@
+using System;
 using FubuMVC.Core;
 using FubuMVC.UI.Navigation;
 using NUnit.Framework;
 using Rhino.Mocks;
+using FubuCore;
 
 namespace FubuMVC.Tests.UI.Navigation
 {
     [TestFixture]
-    public class AuthorizedContextualActionTester : InteractionContext<AuthorizedContextualAction<ContextualObject>>
+    public class AuthorizedContextualMenuTester : InteractionContext<AuthorizedContextualMenu<ContextualObject>>
     {
-        private IContextActionDefinition<ContextualObject> definition;
+        private IContextualAction<ContextualObject> definition;
         private string theCategory = "the category";
         private string theTextOfTheMenuItem = "menu text";
         private string theUrl = "the url";
@@ -20,7 +22,7 @@ namespace FubuMVC.Tests.UI.Navigation
             _token = null;
             theTarget = new ContextualObject();
 
-            definition = MockFor<IContextActionDefinition<ContextualObject>>();
+            definition = MockFor<IContextualAction<ContextualObject>>();
 
             definition.Stub(x => x.Category).Return(theCategory);
             definition.Stub(x => x.Text()).Return(theTextOfTheMenuItem);
@@ -62,7 +64,7 @@ namespace FubuMVC.Tests.UI.Navigation
             {
                 if (_token == null)
                 {
-                    _token = ClassUnderTest.CreateMenuItem(theTarget);
+                    _token = ClassUnderTest.BuildMenuItem(theTarget, definition);
                 }
 
                 return _token;
@@ -94,13 +96,6 @@ namespace FubuMVC.Tests.UI.Navigation
             AvailabilityAsDeterminedByTheStrategyIs = MenuItemState.Available;
 
             theResultingMenuItemToken.Url.ShouldEqual(theUrl);
-        }
-
-
-        [Test]
-        public void gets_the_category_from_the_inner_definition()
-        {
-            ClassUnderTest.Category.ShouldEqual(theCategory);
         }
 
         [Test]
@@ -156,5 +151,42 @@ namespace FubuMVC.Tests.UI.Navigation
     public class ContextualObject
     {
         public string Name { get; set; }
+    }
+
+    public class StubContextualMenu : IContextualAction<ContextualObject>
+    {
+        public string Key
+        {
+            get; set;
+        }
+
+        public string Category
+        {
+            get;
+            set;
+        }
+
+        public MenuItemState UnauthorizedState
+        {
+            get { return MenuItemState.Hidden; }
+        }
+
+        public string Text()
+        {
+            return "{0}/{1}".ToFormat(Category, Key);
+        }
+
+        public MenuItemState IsAvailable(ContextualObject target)
+        {
+            return MenuItemState.Available;
+        }
+
+        public Endpoint FindEndpoint(IEndpointService endpoints, ContextualObject target)
+        {
+            return new Endpoint(){
+                IsAuthorized = true,
+                Url = Text()
+            };
+        }
     }
 }

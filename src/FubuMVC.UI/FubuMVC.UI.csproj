@@ -66,7 +66,9 @@
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />
-    <Compile Include="Navigation\Classes.cs" />
+    <Compile Include="Navigation\AuthorizedContextualMenu.cs" />
+    <Compile Include="Navigation\IContextualAction.cs" />
+    <Compile Include="Navigation\IContextualMenu.cs" />
     <Compile Include="Navigation\MenuItemState.cs" />
     <Compile Include="Navigation\MenuItemToken.cs" />
     <Compile Include="Partials\RenderPartialExpression.cs" />
