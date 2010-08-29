@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using Spark.Web.FubuMVC.Extensions;
 using FubuMVC.Core.View;
 using Spark.Web.FubuMVC.ViewCreation;
 
@@ -23,8 +24,9 @@ namespace Spark.Web.FubuMVC.Bootstrap
         {
             string viewName = call.Method.Name;
             string actionName = _actionNameFromActionCallConvention(call.HandlerType.Name);
-            IEnumerable<SparkViewToken> allViewTokens =
-                views.Views.Cast<SparkViewToken>();
+            IEnumerable<SparkViewToken> allViewTokens = 
+                views.Views.Where(view => 
+                    view.GetType().CanBeCastTo<SparkViewToken>()).Cast<SparkViewToken>();
 
             SparkViewDescriptor matchedDescriptor = null;
             allViewTokens.FirstOrDefault(
@@ -34,8 +36,10 @@ namespace Spark.Web.FubuMVC.Bootstrap
                         .Where(e => e.Templates
                                         .Any(template => template.Contains(actionName) && template.Contains(viewName)))
                         .SingleOrDefault();
+
                     return matchedDescriptor != null;
                 });
+
 
             IEnumerable<IViewToken> viewsBoundToActions =
                 matchedDescriptor != null

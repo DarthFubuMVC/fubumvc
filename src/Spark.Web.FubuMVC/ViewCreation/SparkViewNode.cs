@@ -5,8 +5,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
 {
     public class SparkViewNode : OutputNode
     {
-        private readonly ActionCall _actionCall;
-        private readonly SparkViewToken _viewToken;
+        protected readonly ActionCall _actionCall;
+        protected readonly SparkViewToken _viewToken;
 
         public SparkViewNode(SparkViewToken viewToken, ActionCall actionCall)
             : base(typeof (SparkRenderViewBehavior))

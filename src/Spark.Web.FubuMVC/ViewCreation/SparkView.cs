@@ -11,7 +11,35 @@ namespace Spark.Web.FubuMVC.ViewCreation
 {
     public abstract class SparkView : SparkView<object>
     {
+        private string _siteRoot;
+
         public IResourcePathManager ResourcePathManager { get; set; }
+
+        public string SiteRoot
+        {
+            get
+            {
+                var context = Get<HttpContextBase>();
+                if (_siteRoot == null)
+                {
+                    var appPath =  context.Request.ApplicationPath;
+                    if (string.IsNullOrEmpty(appPath) || string.Equals(appPath, "/"))
+                    {
+                        _siteRoot = string.Empty;
+                    }
+                    else
+                    {
+                        _siteRoot = "/" + appPath.Trim('/');
+                    }
+                }
+                return _siteRoot;
+            }
+        }
+        public string SiteResource(string path)
+        {
+            return ResourcePathManager.GetResourcePath(SiteRoot, path);
+        }
+
     }
 
     public abstract class SparkView<TModel> : AbstractSparkView, ISparkView, IFubuPage<TModel> where TModel : class

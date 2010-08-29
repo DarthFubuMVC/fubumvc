@@ -8,9 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
-using FubuCore;
-using FubuMVC.UI;
-using System.Collections;
 using FubuMVC.UI.Tags;
 
 namespace Spark.Web.FubuMVC.Bootstrap
@@ -51,8 +48,7 @@ namespace Spark.Web.FubuMVC.Bootstrap
 
         public virtual FubuRegistry GetMyRegistry()
         {
-            var sparkViewFactory = ObjectFactory.Container.GetInstance<SparkViewFactory>();
-            return new SparkDefaultStructureMapRegistry(EnableDiagnostics, ControllerAssembly, sparkViewFactory);
+            return new SparkDefaultStructureMapRegistry(EnableDiagnostics, ControllerAssembly);
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 
 namespace Spark.Web.FubuMVC.ViewCreation
 {
@@ -13,11 +14,13 @@ namespace Spark.Web.FubuMVC.ViewCreation
     {
         private readonly HttpContextBase _httpContext;
         private readonly SparkViewFactory _viewFactory;
+        private readonly IOutputWriter _writer;
 
-        public SparkViewRenderer(SparkViewFactory viewFactory, HttpContextBase httpContext)
+        public SparkViewRenderer(SparkViewFactory viewFactory, HttpContextBase httpContext, IOutputWriter writer)
         {
             _viewFactory = viewFactory;
             _httpContext = httpContext;
+            _writer = writer;
         }
 
         #region ISparkViewRenderer<T> Members
@@ -27,6 +30,13 @@ namespace Spark.Web.FubuMVC.ViewCreation
             string actionNamespace = actionCall.HandlerType.Namespace;
             string actionName = viewToken.ActionName;
             string viewName = viewToken.Name;
+
+            if (viewToken.MatchedDescriptor != null && viewToken.MatchedDescriptor.Language == LanguageType.Javascript)
+            {
+                var entry = _viewFactory.Engine.CreateEntry(viewToken.MatchedDescriptor);
+                _writer.Write("text/javascript", entry.SourceCode);
+                return;
+            }
 
             ISparkView sparkView = _viewFactory.FindView(_httpContext, actionNamespace, actionName, viewName, null);
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FubuMVC.Core.Registration.Nodes;
+using Spark;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -239,6 +241,20 @@ namespace Spark.Web.FubuMVC
         public virtual ViewEngineResult FindPartialView(ActionContext actionContext, string partialViewName)
         {
             return FindViewInternal(actionContext, partialViewName, null /*masterName*/, false, false);
+        }
+
+        public SparkViewToken GetViewToken(ActionCall call, string controllerName, string viewName, LanguageType languageType)
+        {
+            var searchedLocations = new List<string>();
+
+            var descriptorParams = new BuildDescriptorParams("", controllerName, viewName, String.Empty, false, null);
+            var descriptor = DescriptorBuilder.BuildDescriptor(descriptorParams, searchedLocations);
+            if (descriptor == null)
+                throw new CompilerException(String.Format(
+                    "View '{0}' could not be found in any of the following locations: {1}", viewName, string.Join(", ", searchedLocations)));
+            descriptor.Language = languageType;
+
+            return new SparkViewToken(call, descriptor, call.Method.Name);
         }
 
         private ViewEngineResult FindViewInternal(ActionContext actionContext, string viewName, string masterName, bool findDefaultMaster, bool useCache)

@@ -29,6 +29,11 @@ namespace Spark.Web.FubuMVC.ViewCreation
             get { return _descriptors; }
         }
 
+        public SparkViewDescriptor MatchedDescriptor
+        {
+            get { return _matchedDescriptor; }
+        }
+
         public string ActionName
         {
             get { return _actionName; }
@@ -43,7 +48,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
         public Type ViewType
         {
-            get { return typeof (ISparkView); }
+            get { return typeof(ISparkView); }
         }
 
         public Type ViewModelType

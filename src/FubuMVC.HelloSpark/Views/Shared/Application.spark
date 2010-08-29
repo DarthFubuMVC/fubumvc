@@ -1,6 +1,7 @@
 ﻿<html>
   <head>
     <title><use content="title">Default Title</use></title>
+    <use content="head" />
   </head>
   <body>
     <div id="header">

@@ -1,0 +1,3 @@
+﻿<viewdata breatheResult="FubuMVC.HelloSpark.Controllers.AirViewModel" />
+
+<h2>${breatheResult.Text}</h2>
