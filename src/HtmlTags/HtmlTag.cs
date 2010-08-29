@@ -15,6 +15,9 @@ namespace HtmlTags
     }
 
     public class HtmlTag : ITagSource
+#if !LEGACY
+        , IHtmlString
+#endif
     {
         public static HtmlTag Empty()
         {
@@ -34,6 +37,7 @@ namespace HtmlTags
         private bool _isVisible = true;
         private string _tag;
         private bool _ignoreClosingTag;
+        private bool _isAuthorized = true;
 
         private HtmlTag()
         {
@@ -196,10 +200,26 @@ namespace HtmlTags
             return this;
         }
 
+        public HtmlTag Authorized(bool isAuthorized)
+        {
+            _isAuthorized = isAuthorized;
+            return this;
+        }
+
+        public bool Authorized()
+        {
+            return _isAuthorized;
+        }
+
 
         public override string ToString()
         {
             return ToString(new HtmlTextWriter(new StringWriter(), string.Empty){NewLine = string.Empty});
+        }
+
+        public string ToHtmlString()
+        {
+            return ToString();
         }
 
         public string ToPrettyString()
@@ -217,6 +237,7 @@ namespace HtmlTags
         private void writeHtml(HtmlTextWriter html)
         {
             if (!_isVisible) return;
+            if (!_isAuthorized) return;
 
             _htmlAttributes.Each(html.AddAttribute);
 

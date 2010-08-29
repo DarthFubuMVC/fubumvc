@@ -8,7 +8,7 @@ namespace FubuMVC.UI.Forms
     {
         private readonly HtmlTag _dt = new HtmlTag("dt");
         private readonly HtmlTag _dd = new HtmlTag("dd");
-        private HtmlTag _bodyHolder;
+        private readonly HtmlTag _bodyHolder;
 
         public DefinitionListLabelAndField()
         {
@@ -28,12 +28,6 @@ namespace FubuMVC.UI.Forms
         { 
             get { return _bodyHolder.FirstChild(); }
             set { _bodyHolder.ReplaceChildren(value); } 
-        }
-
-        public void SetLabelText(string text)
-        {
-            _dt.Children.Clear();
-            _dt.Text(text);
         }
 
         public IEnumerable<HtmlTag> AllTags()

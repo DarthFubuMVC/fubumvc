@@ -12,7 +12,8 @@ namespace FubuMVC.Core.Registration.Nodes
         Call,
         Output,
         Wrapper,
-        Chain
+        Chain,
+        Authorization
     }
 
     public abstract class BehaviorNode : IEnumerable<BehaviorNode>
@@ -21,7 +22,6 @@ namespace FubuMVC.Core.Registration.Nodes
         private BehaviorNode _next;
         public virtual Guid UniqueId { get { return _uniqueId; } }
         public abstract BehaviorCategory Category { get; }
-
 
         public BehaviorNode Next
         {

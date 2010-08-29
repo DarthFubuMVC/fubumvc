@@ -2,6 +2,7 @@ using System;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 
@@ -19,7 +20,7 @@ namespace FubuMVC.Tests.Urls
 
             graph = new FubuRegistry(x => { x.Applies.ToThisAssembly(); }).BuildGraph();
 
-            registry = graph.Services.DefaultServiceFor<IUrlRegistry>().Value.ShouldBeOfType<IUrlRegistry>();
+            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph));
         }
 
         #endregion

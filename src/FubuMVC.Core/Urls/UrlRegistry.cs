@@ -1,181 +1,40 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuCore.Reflection;
-using FubuCore.Util;
-using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
 
 namespace FubuMVC.Core.Urls
 {
-    public class UrlRegistry : IUrlRegistry, IUrlRegistration
+    public class UrlRegistry : ChainInterrogator<string>, IUrlRegistry
     {
-        private readonly List<ActionUrl> _actions = new List<ActionUrl>();
-        private readonly Cache<Type, List<IModelUrl>> _byType = new Cache<Type, List<IModelUrl>>();
-        private readonly List<IModelUrl> _modelUrls = new List<IModelUrl>();
-        private readonly Cache<Type, ActionUrl> _news = new Cache<Type, ActionUrl>();
-        private Func<object, Type> _modelTypeMapper = o => o == null ? null : o.GetType();
-
-        public UrlRegistry()
+        public UrlRegistry(IChainResolver resolver) : base(resolver)
         {
-            _news.OnMissing =
-                type => { throw new FubuException(2101, "No 'New' url registered for type {0}", type.FullName); };
-
-            _byType.OnMissing = type => { return _modelUrls.Where(x => x.InputType == type).ToList(); };
-        }
-
-        public void Forward<TInput>(Expression<Func<TInput, IUrlRegistry, string>> forward)
-        {
-            Forward(Categories.DEFAULT, forward);
-        }
-
-        public IEnumerable<ActionUrl> Actions { get { return _actions; } }
-        public IEnumerable<IModelUrl> ModelUrls { get { return _modelUrls; } }
-
-        /// <summary>
-        /// This is only for automated testing scenarios.  Do NOT use in real
-        /// scenarios
-        /// </summary>
-        /// <param name="baseUrl"></param>
-        public void RootAt(string baseUrl)
-        {
-            Actions.Each<ActionUrl>(x => x.RootUrlAt(baseUrl));
-            ModelUrls.Each<IModelUrl>(x => x.RootUrlAt(baseUrl));
-        }
-
-        public void Add(IEnumerable<ActionUrl> actions)
-        {
-            _actions.AddRange(actions);
-        }
-
-
-        public void Add(IEnumerable<IModelUrl> models)
-        {
-            _modelUrls.AddRange(models);
-        }
-
-        public void RegisterNew(ActionUrl action, Type type)
-        {
-            _news[type] = action;
-        }
-
-        public void RegisterNew(ActionCall call, Type type)
-        {
-            RegisterNew(new ActionUrl(call.ParentChain().Route, call), type);
-        }
-
-        public void AddAction(ActionUrl action)
-        {
-            _actions.Add(action);
-        }
-
-        public void AddModel(IModelUrl model)
-        {
-            _modelUrls.Add(model);
-        }
-
-        public void MapModelTypes(Func<object, Type> typeMap)
-        {
-            _modelTypeMapper = typeMap;
-        }
-
-        public void Forward<TInput>(Type type, string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
-        {
-            Func<object, string> func = o => forward.Compile()((TInput) o, this);
-            var url = new ForwardUrl(type, func, category, forward.ToString());
-            AddModel(url);
-        }
-
-        public void Forward<TInput>(string category, Expression<Func<TInput, IUrlRegistry, string>> forward)
-        {
-            Forward(typeof (TInput), category, forward);
         }
 
         public string UrlFor(object model)
         {
-            if (model == null) return null;
+            return For(model);
+        }
 
-            var modelType = _modelTypeMapper(model);
-            
-            var models = _byType[modelType];
-
-            switch (models.Count)
-            {
-                case 0:
-                    throw new FubuException(2102, "No urls registered for input type {0}", modelType.FullName);
-
-                case 1:
-                    return models[0].CreateUrl(model);
-
-                default:
-                    var defaultModel = models.FirstOrDefault(x => x.Category == Categories.DEFAULT);
-                    if (defaultModel == null)
-                    {
-                        if (models.Count(x => x.Category.IsEmpty()) == 1)
-                        {
-                            defaultModel = models.First(x => x.Category.IsEmpty());
-                        }
-                    }
-                    
-                    if (defaultModel != null)
-                    {
-                        return defaultModel.CreateUrl(model);
-                    }
-
-                    throw new FubuException(2103,
-                                            "More than one url is registered for {0} and none is marked as the default.\n{1}",
-                                            modelType.FullName, listAllModels(models));
-            }
+        protected override string applyForwarder(object model, IChainForwarder forwarder)
+        {
+            return forwarder.FindUrl(resolver, model);
         }
 
         public string UrlFor(object model, string category)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException("model");
-            }
-
-            var modelType = _modelTypeMapper(model);
-            IEnumerable<IModelUrl> models = _byType[modelType].Where(x => x.Category == category);
-
-            if (!models.Any())
-                throw new FubuException(2104, "No urls are registered for {0}, category {1}", modelType.FullName,
-                                        category);
-            if (models.Count() > 1)
-            {
-                throw new FubuException(2105, "More than one url is registered for {0}, category {1}.{2}",
-                                        modelType.FullName, category, listAllModels(models));
-            }
-
-            return models.Single().CreateUrl(model);
+            return For(model, category);
         }
 
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
-            MethodInfo method = ReflectionHelper.GetMethod(expression);
-
-            if (method == null)
-            {
-                throw new FubuException(2108, "Could not find a method from expression: " + expression);
-            }
-
-
-            Type controllerType = typeof (TController);
-            return UrlFor(controllerType, method);
+            return findAnswerFromResolver(null, r => r.Find(expression));
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
         {
-            ActionUrl actionUrl =
-                _actions.FirstOrDefault(x => x.HandlerType == handlerType && x.Method.Name == method.Name);
-
-            if (actionUrl == null)
-                throw new FubuException(2106, "No url registered for {0}.{1}()", handlerType.FullName, method.Name);
-
-
-            return actionUrl.GetUrl(null);
+            return For(handlerType, method);
         }
 
         public string UrlForNew<T>()
@@ -185,7 +44,7 @@ namespace FubuMVC.Core.Urls
 
         public string UrlForNew(Type entityType)
         {
-            return _news[entityType].GetUrl(null);
+            return ForNew(entityType);
         }
 
         public bool HasNewUrl<T>()
@@ -195,7 +54,7 @@ namespace FubuMVC.Core.Urls
 
         public bool HasNewUrl(Type type)
         {
-            return _news.Has(type);
+            return resolver.FindCreatorOf(type) != null;
         }
 
         public string UrlForPropertyUpdate(object model)
@@ -210,9 +69,20 @@ namespace FubuMVC.Core.Urls
             return UrlForPropertyUpdate(o);
         }
 
-        private static string listAllModels(IEnumerable<IModelUrl> models)
+        /// <summary>
+        /// This is only for automated testing scenarios.  Do NOT use in real
+        /// scenarios
+        /// </summary>
+        /// <param name="baseUrl"></param>
+        public void RootAt(string baseUrl)
         {
-            return String.Join("\n", models.Select(m => m.ToString()).ToArray());
+            resolver.RootAt(baseUrl);
+        }
+
+        protected override string findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
+        {
+            BehaviorChain chain = finder(resolver);
+            return chain.Route.CreateUrl(model);
         }
     }
 }

@@ -24,12 +24,31 @@ namespace FubuMVC.Tests.UI.Forms
             expression = new FormLineExpression<ViewModel>(new StubTagGenerator<ViewModel>(), layout, x => x.Name);
         }
 
+        [Test]
+        public void alter_layout_with_an_element_request()
+        {
+            expression.AlterLayout((l, r) =>
+            {
+                l.LabelTag.Text("Prop:  " + r.Accessor.Name);
+            });
+
+            layout.LabelTag.Text().ShouldEqual("Prop:  Name");
+        }
+
+        [Test]
+        public void alter_the_body()
+        {
+            expression.AlterBody(b => b.Text("the text"));
+
+            layout.BodyTag.Text().ShouldEqual("the text");
+        }
+
 
         [Test]
         public void can_change_label_attributes_after_setting_label_text()
         {
             var tag = expression
-                .AlterLayout(x => x.SetLabelText("bar"))
+                .AlterLayout(x => x.LabelTag.Text("bar"))
                 .AlterLabel(label => label.AddClass("foo"));
             
             tag.AlterLayout(x => x.LabelTag.ShouldHaveClass("foo"));
@@ -43,6 +62,8 @@ namespace FubuMVC.Tests.UI.Forms
             layout.BodyTag.GetClasses().ShouldContain("groupByClass");
             layout.LabelTag.GetClasses().ShouldContain("groupByClass");
         }
+
+
 
         [Test]
         public void has_label_by_default()
@@ -188,7 +209,7 @@ namespace FubuMVC.Tests.UI.Forms
 
         public ElementRequest GetRequest(Expression<Func<T, object>> expression)
         {
-            throw new NotImplementedException();
+            return new ElementRequest(null, expression.ToAccessor(), null, null);
         }
 
         public HtmlTag LabelFor(ElementRequest request)

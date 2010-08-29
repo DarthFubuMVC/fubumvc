@@ -7,6 +7,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration
@@ -19,8 +20,31 @@ namespace FubuMVC.Core.Registration
             Observer = observer;
         }
 
+        private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly IServiceRegistry _services = new ServiceRegistry();
+
+        public IEnumerable<IChainForwarder> Forwarders
+        {
+            get { return _forwarders; }
+        }
+
+        public void Forward<T>(Func<T, object> converter)
+        {
+            var forwarder = new ChainForwarder<T>(converter);
+            _forwarders.Add(forwarder);
+        }
+
+        public void Forward<T>(Func<T, object> converter, string category)
+        {
+            var forwarder = new ChainForwarder<T>(converter, category);
+            _forwarders.Add(forwarder);
+        }
+
+        public void AddForwarder(IChainForwarder forwarder)
+        {
+            _forwarders.Add(forwarder);
+        }
 
         public IConfigurationObserver Observer { get; private set; }
 
@@ -73,7 +97,7 @@ namespace FubuMVC.Core.Registration
 
             _services.Each(action);
 
-            _behaviors.Each(chain => { action(typeof (IActionBehavior), chain.ToObjectDef()); });
+            _behaviors.Each(chain => chain.Register(action));
 
             action(typeof (BehaviorGraph), new ObjectDef
             {
@@ -122,7 +146,7 @@ namespace FubuMVC.Core.Registration
 
         public void Describe()
         {
-            _behaviors.Each(x => { Debug.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
+            _behaviors.Each(x => { Trace.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
         }
 
         public void VisitRoutes(Action<RouteVisitor> configure)

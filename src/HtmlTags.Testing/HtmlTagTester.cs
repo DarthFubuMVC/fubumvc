@@ -11,7 +11,10 @@ namespace HtmlTags.Testing
         [Test]
         public void I_just_want_to_generate_a_div_with_text_and_a_class()
         {
-            HtmlTag tag = new HtmlTag("div").Text("my text").AddClass("collapsible");
+
+            HtmlTag tag = new HtmlTag("div")
+                .Text("my text")
+                .AddClass("collapsible");
             tag.Add("span").Text("inner");
             Debug.WriteLine(tag.ToString());
         }
@@ -309,6 +312,22 @@ namespace HtmlTags.Testing
             wrapper.FirstChild().ShouldBeTheSameAs(tag);
         }
 
+
+        [Test]
+        public void is_authorized_by_default()
+        {
+            new HtmlTag("div").Authorized().ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_authorized_value_false_makes_tag_hidden_regardless_of_visibility()
+        {
+            var tag = new HtmlTag("div").Authorized(false);
+            tag.ToString().ShouldBeEmpty();
+
+            tag.Visible(true).ToString().ShouldBeEmpty();
+            tag.Visible(false).ToString().ShouldBeEmpty();
+        }
 
         public class ListValue
         {

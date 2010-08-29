@@ -5,6 +5,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
@@ -36,9 +37,7 @@ namespace FubuMVC.Core
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
         private readonly TypePool _types = new TypePool();
-        private readonly List<IUrlRegistrationConvention> _urlConventions = new List<IUrlRegistrationConvention>();
 
-        private readonly UrlRegistry _urls = new UrlRegistry();
         private readonly IPartialViewTypeRegistry _partialViewTypes = new PartialViewTypeRegistry();
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
@@ -67,6 +66,8 @@ namespace FubuMVC.Core
             Policies.Add<WebFormsEndpointPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
 
+            _systemPolicies.Add(new AttachAuthorizationPolicy());
+
             Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
             Output.ToJson.WhenCallMatches(x => x.Method.HasAttribute<JsonEndpointAttribute>());
             Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
@@ -77,8 +78,7 @@ namespace FubuMVC.Core
             _conventions.Add(_viewAttacher);
             Policies.Add<JsonMessageInputConvention>();
             Policies.Add<UrlRegistryCategoryConvention>();
-
-            _urlConventions.Add(new UrlForNewConvention());
+            Policies.Add<UrlForNewConvention>();
         }
 
         public FubuRegistry(Action<FubuRegistry> configure)
@@ -112,18 +112,9 @@ namespace FubuMVC.Core
             _policies.Configure(graph);
             _systemPolicies.Configure(graph);
 
-            _urlConventions.Each(x => x.Configure(graph, _urls));
-
-            registerUrls(graph);
-
             return graph;
         }
 
-        private void registerUrls(BehaviorGraph graph)
-        {
-            var builder = new UrlRegistryBuilder(_urls);
-            graph.VisitRoutes(builder);
-        }
     }
 
     public interface IFubuRegistryExtension

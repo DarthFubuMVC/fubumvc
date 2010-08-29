@@ -18,6 +18,7 @@ namespace FubuMVC.Core.Registration.Conventions
         private readonly List<string> _ignoredClassSuffixes = new List<string>();
         private readonly List<string> _ignoredMethodNames = new List<string>();
         private readonly List<string> _ignoredNamespaces = new List<string>();
+        private readonly List<ModifyRouteStrategy> _modifications = new List<ModifyRouteStrategy>();
 
         private readonly Builder<MethodInfo, string> _methodNameBuilder
             = new Builder<MethodInfo, string>(method => method.Name);
@@ -44,12 +45,12 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             IRouteDefinition route = call.ToRouteDefinition();
 
-            if (! IgnoreControllerNamespaceEntirely)
+            if (!IgnoreControllerNamespaceEntirely)
             {
                 addNamespace(route, call);
             }
 
-            if(! IgnoreControllerNamesEntirely)
+            if (!IgnoreControllerNamesEntirely)
                 addClassName(route, call);
 
             addMethodName(route, call);
@@ -59,6 +60,11 @@ namespace FubuMVC.Core.Registration.Conventions
                 _routeInputPolicy.AlterRoute(route, call);
             }
 
+            _modifications.Each(m =>
+                                    {
+                                        if (m.Filter(call))
+                                            m.Modify(route);
+                                    });
 
             return route;
         }
@@ -86,7 +92,7 @@ namespace FubuMVC.Core.Registration.Conventions
                 className += _appendClassBuilder.Build(call);
                 route.Append(className);
             }
-        
+
         }
 
         private string getClassName(ActionCall call)
@@ -151,5 +157,17 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             _methodNameBuilder.Register(filter, builder);
         }
+
+        public void RegisterRouteModification(Func<ActionCall, bool> filter, Action<IRouteDefinition> modification)
+        {
+            _modifications.Add(new ModifyRouteStrategy() { Filter = filter, Modify = modification });
+        }
+
+        public class ModifyRouteStrategy
+        {
+            public Func<ActionCall, bool> Filter { get; set; }
+            public Action<IRouteDefinition> Modify { get; set; }
+        }
+
     }
 }

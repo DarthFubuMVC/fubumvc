@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using Microsoft.Practices.ServiceLocation;
@@ -11,6 +12,11 @@ namespace FubuMVC.UI.Configuration
         private bool _hasFetched;
         private object _rawValue;
         private readonly IServiceLocator _services;
+
+        public static ElementRequest For<T>(T model, Expression<Func<T, object>> expression)
+        {
+            return new ElementRequest(model, expression.ToAccessor(), null, null);
+        }
 
         public ElementRequest(object model, Accessor accessor, IServiceLocator services, Stringifier stringifier)
         {

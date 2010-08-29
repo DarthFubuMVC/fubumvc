@@ -11,6 +11,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -21,6 +22,7 @@ using FubuMVC.Core.Web.Security;
 
 namespace FubuMVC.Core
 {
+    [Obsolete("Should probably dump this in favor of the IFubuRegistryExtension")]
     public interface IRegistryModification
     {
         void Modify(FubuRegistry registry);
@@ -28,11 +30,11 @@ namespace FubuMVC.Core
 
     public partial class FubuRegistry
     {
+        private TypeResolver _typeResolver = new TypeResolver();
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
         public OutputDeterminationExpression Output { get { return new OutputDeterminationExpression(this); } }
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }
 
-        public UrlRegistryExpression UrlRegistry { get { return new UrlRegistryExpression(convention => _urlConventions.Add(convention), _urls); } }
         public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
 
         public ModelsExpression Models { get { return new ModelsExpression(addExplicit); } }
@@ -42,6 +44,11 @@ namespace FubuMVC.Core
         public void UsingObserver(IConfigurationObserver observer)
         {
             _observer = observer;
+        }
+
+        public TypeResolver TypeResolver
+        {
+            get { return _typeResolver; }
         }
 
         public void Services(Action<IServiceRegistry> configure)
@@ -135,13 +142,25 @@ namespace FubuMVC.Core
             registration(expression);
         }
 
+
+        /// <summary>
+        /// This allows you to drop down to direct manipulation of the BehaviorGraph
+        /// produced by this FubuRegistry
+        /// </summary>
+        /// <param name="alteration"></param>
+        public void Configure(Action<BehaviorGraph> alteration)
+        {
+            addExplicit(alteration);
+        }
+
         private void setupServices(BehaviorGraph graph)
         {
-            graph.Services.AddService<IUrlRegistry>(_urls);
-            graph.Services.AddService<IUrlRegistration>(_urls);
+
+            graph.Services.AddService<ITypeResolver>(_typeResolver);
             graph.Services.AddService(new TypeDescriptorCache());
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
+            graph.Services.SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();
             graph.Services.SetServiceIfNone<ISecurityContext, WebSecurityContext>();
             graph.Services.SetServiceIfNone<IAuthenticationContext, WebAuthenticationContext>();
@@ -161,6 +180,9 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
             graph.Services.SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
+            graph.Services.SetServiceIfNone<IChainResolver, ChainResolver>();
+            graph.Services.SetServiceIfNone<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
+            graph.Services.SetServiceIfNone<IAuthorizationPreviewService, AuthorizationPreviewService>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
             graph.Services.SetServiceIfNone(_partialViewTypes);
@@ -169,6 +191,8 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
 
             graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();
+
+            graph.Services.SetServiceIfNone<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
         }
 
         #region Nested type: RegistryImport

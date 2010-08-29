@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Urls;
-using ReflectionExtensions = FubuCore.Reflection.ReflectionExtensions;
+using System.Linq;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    public class UrlForNewConvention : IUrlRegistrationConvention
+    public class UrlForNewConvention : IConfigurationAction
     {
-        public void Configure(BehaviorGraph graph, IUrlRegistration registration)
+        public void Configure(BehaviorGraph graph)
         {
-            graph.Actions().Each(action =>
+            graph.Behaviors.Where(x => x.FirstCall() != null).Each(chain =>
             {
-                ReflectionExtensions.ForAttribute<UrlForNewAttribute>((ICustomAttributeProvider) action.Method, att =>
+                chain.FirstCall().Method.ForAttribute<UrlForNewAttribute>(att =>
                 {
-                    registration.RegisterNew((ActionCall) action, att.Type);
+                    chain.UrlCategory.Creates.Add(att.Type);
                 });
             });
         }

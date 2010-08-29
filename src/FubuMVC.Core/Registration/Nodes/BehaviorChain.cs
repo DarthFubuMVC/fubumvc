@@ -2,13 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
     public class BehaviorChain : BehaviorNode
     {
+        public BehaviorChain()
+        {
+            Authorization = new AuthorizationNode();
+            UrlCategory = new UrlCategory();
+        }
+
+        public UrlCategory UrlCategory { get; private set; }
+
         public BehaviorNode Top { get { return Next; } private set { Next = value; } }
 
         public override BehaviorCategory Category { get { return BehaviorCategory.Chain; } }
@@ -18,6 +28,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public IRouteDefinition Route { get; set; }
 
+        public AuthorizationNode Authorization { get; private set; }
 
         public string FirstCallDescription
         {
@@ -75,6 +86,12 @@ namespace FubuMVC.Core.Registration.Nodes
             ObjectDef def = Top.ToObjectDef();
             def.Name = UniqueId.ToString();
             return def;
+        }
+
+        public void Register(Action<Type, ObjectDef> callback)
+        {
+            callback(typeof (IActionBehavior), ToObjectDef());
+            Authorization.Register(UniqueId, callback);
         }
 
         public void Prepend(BehaviorNode node)

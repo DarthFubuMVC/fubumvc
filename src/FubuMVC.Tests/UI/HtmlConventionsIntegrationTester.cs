@@ -147,13 +147,6 @@ namespace FubuMVC.Tests.UI
         }
 
         [Test]
-        public void by_default_the_html_conventions_should_use_the_definition_label_and_field_layout()
-        {
-            container.GetInstance<ILabelAndFieldLayout>()
-                .ShouldBeOfType<DefinitionListLabelAndField>();
-        }
-
-        [Test]
         public void modify_for_an_attribute_negative_case()
         {
             generator.InputFor(x => x.StateOrProvince).HasAttr("maxlength").ShouldBeFalse();
@@ -170,6 +163,12 @@ namespace FubuMVC.Tests.UI
         {
             generator.InputFor(x => x.City).Attr("name").ShouldEqual("City");
             generator.InputFor(x => x.IsActive).Attr("name").ShouldEqual("IsActive");
+        }
+
+        [Test]
+        public void get_the_field_and_label_layout()
+        {
+            generator.NewFieldLayout().ShouldBeOfType<DefinitionListLabelAndField>();
         }
     }
 }

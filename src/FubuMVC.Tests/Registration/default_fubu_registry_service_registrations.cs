@@ -3,9 +3,11 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
+using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
@@ -20,6 +22,12 @@ namespace FubuMVC.Tests.Registration
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<TService>().Type.ShouldEqual(
                 typeof (TImplementation));
+        }
+
+        [Test]
+        public void url_registry_is_registered()
+        {
+            registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
 
         [Test]
@@ -134,6 +142,30 @@ namespace FubuMVC.Tests.Registration
         public void display_formatter_is_registered()
         {
             registeredTypeIs<IDisplayFormatter, DisplayFormatter>();
+        }
+
+        [Test]
+        public void default_authorization_failure_handler_is_registered()
+        {
+            registeredTypeIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+        }
+
+        [Test]
+        public void default_chain_resolver_is_registered()
+        {
+            registeredTypeIs<IChainResolver, ChainResolver>();
+        }
+
+        [Test]
+        public void default_endpoint_factory_is_registered()
+        {
+            registeredTypeIs<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
+        }
+
+        [Test]
+        public void authorization_preview_service_is_registered()
+        {
+            registeredTypeIs<IAuthorizationPreviewService, AuthorizationPreviewService>();
         }
     }
 }

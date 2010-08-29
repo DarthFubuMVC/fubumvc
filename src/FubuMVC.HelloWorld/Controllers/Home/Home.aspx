@@ -5,7 +5,7 @@
         <% this.Partial<LoggedInStatusRequest>(); %>
     </div>
 
-    <%=Model.Text%>
+    <%:Model.Text%>
     <br />
-    The current URL is: <%= Model.CurrentUrl %>
+    The current URL is: <%: Model.CurrentUrl %>
 </asp:Content>

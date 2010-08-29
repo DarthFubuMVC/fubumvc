@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
@@ -37,6 +38,11 @@ namespace FubuMVC.Core.Diagnostics
             {
                 Url = url
             });
+        }
+
+        public void WriteResponseCode(HttpStatusCode status)
+        {
+            
         }
     }
 }

@@ -1,14 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Web;
+using FubuMVC.Core.Security;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 
 namespace FubuMVC.UI.Forms
 {
-    // TODO:  Revisit this, and wrap some serious tests around it
-    public class FormLineExpression<T> : ITagSource where T : class
+    public class FormLineExpression<T> : ITagSource
+#if !LEGACY
+        , IHtmlString
+#endif
+        where T : class
     {
         private readonly ITagGenerator<T> _tags;
         private readonly ILabelAndFieldLayout _layout;
@@ -116,6 +121,11 @@ namespace FubuMVC.UI.Forms
                                                             x.BodyTag.AddClass(c);
                                                         }));
             return _layout.ToString();
+        }
+
+        public string ToHtmlString()
+        {
+            return ToString();
         }
 
         IEnumerable<HtmlTag> ITagSource.AllTags()
