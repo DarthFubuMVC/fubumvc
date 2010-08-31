@@ -77,6 +77,7 @@
     <Compile Include="Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="Configuration\Interfaces.cs" />
     <Compile Include="PartialExpressionExtensions.cs" />
+    <Compile Include="AuthorizedLinkExpressions.cs" />
     <Compile Include="Security\AccessRight.cs" />
     <Compile Include="Security\AccessRightExtensions.cs" />
     <Compile Include="Security\FieldAccessRegistry.cs" />

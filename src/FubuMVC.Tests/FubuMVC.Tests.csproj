@@ -113,6 +113,7 @@
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="UI\Navigation\AuthorizedContextualMenuTester.cs" />
     <Compile Include="UI\Navigation\MenuItemStateTester.cs" />
+    <Compile Include="UI\AuthorizedLinkExpressionsTester.cs" />
     <Compile Include="UI\Security\AccessRightTester.cs" />
     <Compile Include="UI\Security\FieldAccessRegistryIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
