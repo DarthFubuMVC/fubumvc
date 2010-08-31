@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Web;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.View;
@@ -14,6 +15,9 @@ using FubuMVC.UI.Tags;
 namespace FubuMVC.UI.Partials
 {
     public class RenderPartialExpression<TViewModel>
+#if !LEGACY
+        : IHtmlString
+#endif
         where TViewModel : class
     {
         private readonly IFubuPage _parentPage;
@@ -210,6 +214,11 @@ namespace FubuMVC.UI.Partials
             return _multiModeAction != null 
                        ? RenderMultiplePartials()
                        : _renderAction();
+        }
+
+        public string ToHtmlString()
+        {
+            return ToString();
         }
     }
 }
