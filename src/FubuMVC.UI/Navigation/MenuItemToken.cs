@@ -10,6 +10,11 @@ namespace FubuMVC.UI.Navigation
             Url = string.Empty;
         }
 
+        public bool EnabledAndShown()
+        {
+            return MenuItemState.IsEnabled && MenuItemState.IsShown;
+        }
+
         public string Key { get; set; }
         public string Text { get; set; }
         public string Url { get; set; }
