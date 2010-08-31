@@ -292,6 +292,39 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void wrap_with_copies_the_visibility_from_the_inner_value_positive_case()
+        {
+            var tag = new HtmlTag("a");
+            tag.Visible().ShouldBeTrue();
+            tag.WrapWith("span").Visible().ShouldBeTrue();
+        }
+
+
+        [Test]
+        public void wrap_with_copies_the_visibility_from_the_inner_value_negative_case()
+        {
+            var tag = new HtmlTag("a").Visible(false);
+            tag.WrapWith("span").Visible().ShouldBeFalse();
+        }
+
+
+        [Test]
+        public void wrap_with_copies_the_authorization_from_the_inner_value_positive_case()
+        {
+            var tag = new HtmlTag("a");
+            tag.Authorized().ShouldBeTrue();
+            tag.WrapWith("span").Authorized().ShouldBeTrue();
+        }
+
+
+        [Test]
+        public void wrap_with_copies_the_authorization_from_the_inner_value_negative_case()
+        {
+            var tag = new HtmlTag("a").Authorized(false);
+            tag.WrapWith("span").Authorized().ShouldBeFalse();
+        }
+
+        [Test]
         public void wrap_with_returns_a_new_tag_with_the_original_as_the_first_child()
         {
             var tag = new HtmlTag("a");
