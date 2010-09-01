@@ -37,12 +37,19 @@ namespace FubuMVC.UI.Forms
 
         public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout,
                                   Expression<Func<T, object>> expression)
+            : this(tags, layout, tags.GetRequest(expression))
+        {
+
+        }
+
+        public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout,
+                                  ElementRequest request)
         {
             _tags = tags;
             _layout = layout;
-            _request = tags.GetRequest(expression);
+            _request = request;
 
-            _layout.LabelTag = tags.LabelFor(expression);
+            _layout.LabelTag = tags.LabelFor(request);
 
             AlterLayout(x => GroupByCssClasses.Each(c =>
             {

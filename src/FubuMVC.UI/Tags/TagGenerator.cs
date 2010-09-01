@@ -38,6 +38,7 @@ namespace FubuMVC.UI.Tags
         ElementRequest GetRequest(Expression<Func<T, object>> expression);
         ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression);
         T Model { get; set; }
+        ILabelAndFieldLayout NewFieldLayout();
     }
 
     public class TagGenerator<T> : ITagGenerator<T> where T : class

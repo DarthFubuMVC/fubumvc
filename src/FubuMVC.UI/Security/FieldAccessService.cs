@@ -6,6 +6,7 @@ namespace FubuMVC.UI.Security
 {
     public interface IFieldAccessService
     {
+        AccessRight RightsFor(ElementRequest request);
     }
 
     public class FieldAccessService : IFieldAccessService

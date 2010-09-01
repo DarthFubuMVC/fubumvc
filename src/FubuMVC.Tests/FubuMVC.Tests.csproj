@@ -111,12 +111,15 @@
     <Compile Include="Continuations\GenericAuthorizationPolicyTester.cs" />
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
+    <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
+    <Compile Include="UI\StubTagGenerator.cs" />
     <Compile Include="UI\Navigation\AuthorizedContextualMenuTester.cs" />
     <Compile Include="UI\Navigation\MenuItemStateTester.cs" />
     <Compile Include="UI\AuthorizedLinkExpressionsTester.cs" />
     <Compile Include="UI\Security\AccessRightTester.cs" />
     <Compile Include="UI\Security\FieldAccessServiceIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
+    <Compile Include="UI\ShowEditFieldExpressionsIntegratedTester.cs" />
     <Compile Include="UI\TagProfileTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
