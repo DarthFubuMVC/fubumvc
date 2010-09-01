@@ -7,6 +7,7 @@ using FubuMVC.StructureMap;
 using FubuMVC.UI;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Forms;
+using FubuMVC.UI.Security;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
@@ -144,6 +145,12 @@ namespace FubuMVC.Tests.UI
         {
             container.GetInstance<IElementNamingConvention>()
                 .ShouldBeOfType<DefaultElementNamingConvention>();
+        }
+
+        [Test]
+        public void should_register_the_field_access_service()
+        {
+            container.GetInstance<IFieldAccessService>().ShouldBeOfType<FieldAccessService>();
         }
 
         [Test]

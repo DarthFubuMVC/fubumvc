@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.UI.Forms;
+using FubuMVC.UI.Security;
 using FubuMVC.UI.Tags;
 
 namespace FubuMVC.UI.Configuration
@@ -24,6 +25,7 @@ namespace FubuMVC.UI.Configuration
             graph.Services.ReplaceService(library);
             graph.Services.SetServiceIfNone(typeof(ITagGenerator<>), typeof(TagGenerator<>));
             graph.Services.SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
+            graph.Services.SetServiceIfNone<IFieldAccessService, FieldAccessService>();
         }
     }
 }

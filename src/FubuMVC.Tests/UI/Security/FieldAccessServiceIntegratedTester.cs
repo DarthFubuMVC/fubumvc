@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
@@ -8,22 +9,25 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.UI.Security
 {
     [TestFixture]
-    public class FieldAccessRegistryIntegratedTester
+    public class FieldAccessServiceIntegratedTester
     {
-        private FieldAccessRegistry registry;
+        private FieldAccessService _service;
 
         [SetUp]
         public void SetUp()
         {
-            registry = new FieldAccessRegistry();
-            registry.AddSecurityRule(new JNameRule());
-            registry.AddLogicRule(new LimiterRule<PersonModel>(person => person.Age > 30, AccessRight.ReadOnly));
+            var rules = new List<IFieldAccessRule>(){
+                new JNameRule() {Category = FieldAccessCategory.Authorization},
+                new LimiterRule<PersonModel>(person => person.Age > 30, AccessRight.ReadOnly){Category = FieldAccessCategory.LogicCondition}
+            };
+
+            _service = new FieldAccessService(rules);
         }
 
         private AccessRight RightsFor<T>(T model, Expression<Func<T, object>> expression)
         {
             var request = ElementRequest.For(model, expression);
-            return registry.RightsFor(request);
+            return _service.RightsFor(request);
         }
 
         [Test]
@@ -62,6 +66,11 @@ namespace FubuMVC.Tests.UI.Security
         {
             return accessor.Name == "Name";
         }
+
+        public FieldAccessCategory Category
+        {
+            get; set;
+        }
     }
 
     public class LimiterRule<T> : IFieldAccessRule
@@ -83,6 +92,12 @@ namespace FubuMVC.Tests.UI.Security
         public bool Matches(Accessor accessor)
         {
             return accessor.OwnerType == typeof (T);
+        }
+
+        public FieldAccessCategory Category
+        {
+            get;
+            set;
         }
     }
 
