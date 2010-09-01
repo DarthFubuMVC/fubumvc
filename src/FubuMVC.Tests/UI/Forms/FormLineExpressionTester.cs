@@ -32,6 +32,8 @@ namespace FubuMVC.Tests.UI.Forms
                 l.LabelTag.Text("Prop:  " + r.Accessor.Name);
             });
 
+            expression.Compile();
+
             layout.LabelTag.Text().ShouldEqual("Prop:  Name");
         }
 
@@ -39,8 +41,18 @@ namespace FubuMVC.Tests.UI.Forms
         public void alter_the_body()
         {
             expression.AlterBody(b => b.Text("the text"));
-
+            expression.Compile();
             layout.BodyTag.Text().ShouldEqual("the text");
+        }
+
+        [Test]
+        public void group_by_css_classes()
+        {
+            expression.GroupByClass("class1");
+            expression.Compile();
+
+            layout.BodyTag.HasClass("class1").ShouldBeTrue();
+            layout.LabelTag.HasClass("class1").ShouldBeTrue();
         }
 
 
@@ -86,6 +98,7 @@ namespace FubuMVC.Tests.UI.Forms
         public void body_id()
         {
             expression.BodyId("id2");
+            expression.Compile();
             layout.BodyTag.Id().ShouldEqual("id2");
         }
 
@@ -219,12 +232,12 @@ namespace FubuMVC.Tests.UI.Forms
 
         public HtmlTag InputFor(ElementRequest request)
         {
-            throw new NotImplementedException();
+            return new HtmlTag("span").AddClass("input").Text(request.Accessor.Name);
         }
 
         public HtmlTag DisplayFor(ElementRequest request)
         {
-            throw new NotImplementedException();
+            return new HtmlTag("span").AddClass("display").Text(request.Accessor.Name);
         }
 
         public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)

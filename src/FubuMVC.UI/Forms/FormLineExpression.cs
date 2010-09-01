@@ -11,24 +11,42 @@ namespace FubuMVC.UI.Forms
 {
     public class FormLineExpression<T> : ITagSource
 #if !LEGACY
-        , IHtmlString
+                                         , IHtmlString
 #endif
         where T : class
     {
         private readonly ITagGenerator<T> _tags;
         private readonly ILabelAndFieldLayout _layout;
-        private readonly Expression<Func<T, object>> _expression;
-        private readonly HashSet<string> _groupByCssClasses = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-        public HashSet<string> GroupByCssClasses { get { return _groupByCssClasses; } }
-        private bool _isVisible = true;
 
-        public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout, Expression<Func<T, object>> expression)
+        private readonly HashSet<string> _groupByCssClasses =
+            new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+
+        public HashSet<string> GroupByCssClasses
+        {
+            get { return _groupByCssClasses; }
+        }
+
+        private bool _isVisible = true;
+        private ElementRequest _request;
+        private readonly IList<Action<ILabelAndFieldLayout, ElementRequest>> _alterations 
+            = new List<Action<ILabelAndFieldLayout, ElementRequest>>();
+
+        private bool _editable;
+
+        public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout,
+                                  Expression<Func<T, object>> expression)
         {
             _tags = tags;
             _layout = layout;
-            _expression = expression;
+            _request = tags.GetRequest(expression);
 
             _layout.LabelTag = tags.LabelFor(expression);
+
+            AlterLayout(x => GroupByCssClasses.Each(c =>
+            {
+                x.LabelTag.AddClass(c);
+                x.BodyTag.AddClass(c);
+            }));
         }
 
         public FormLineExpression<T> AlterLabel(Action<HtmlTag> alter)
@@ -39,29 +57,23 @@ namespace FubuMVC.UI.Forms
 
         public FormLineExpression<T> GroupByClass(string cssClass)
         {
-            GroupByCssClasses.Add(cssClass);            
+            GroupByCssClasses.Add(cssClass);
             return this;
         }
 
         public FormLineExpression<T> AlterBody(Action<HtmlTag> alter)
         {
-            ensureBodyTag();
-            alter(_layout.BodyTag);
-            return this;
+            return AlterLayout((l, r) => alter(l.BodyTag));
         }
 
         public FormLineExpression<T> AlterLayout(Action<ILabelAndFieldLayout> alter)
         {
-            ensureBodyTag();
-            alter(_layout);
-            return this;
+            return AlterLayout((l, r) => alter(l));
         }
 
         public FormLineExpression<T> AlterLayout(Action<ILabelAndFieldLayout, ElementRequest> alter)
         {
-            ensureBodyTag();
-            var request = _tags.GetRequest(_expression);
-            alter(_layout, request);
+            _alterations.Add(alter);
 
             return this;
         }
@@ -74,14 +86,7 @@ namespace FubuMVC.UI.Forms
 
         public FormLineExpression<T> Editable(bool condition)
         {
-            if (condition)
-            {
-                _layout.BodyTag = _tags.InputFor(_expression);    
-            }
-            else
-            {
-                _layout.BodyTag = _tags.DisplayFor(_expression);
-            }
+            _editable = condition;
 
             return this;
         }
@@ -105,21 +110,31 @@ namespace FubuMVC.UI.Forms
 
         public FormLineExpression<T> BodyId(string id)
         {
-            ensureBodyTag();
-            _layout.BodyTag.Id(id);
-            return this;
+            return AlterBody(tag => tag.Id(id));
+        }
+
+        public void Compile()
+        {
+            createBodyTag();
+        }
+
+        private void createBodyTag()
+        {
+            _layout.BodyTag = isEditable() ? _tags.InputFor(_request) : _tags.DisplayFor(_request);
+            _alterations.Each(a => a(_layout, _request));
+        }
+
+        private bool isEditable()
+        {
+            return _editable;
         }
 
         public override string ToString()
         {
             if (!_isVisible) return string.Empty;
 
-            ensureBodyTag();
-            AlterLayout(x => GroupByCssClasses.Each(c=>
-                                                        {
-                                                            x.LabelTag.AddClass(c);
-                                                            x.BodyTag.AddClass(c);
-                                                        }));
+            createBodyTag();
+
             return _layout.ToString();
         }
 
@@ -130,15 +145,12 @@ namespace FubuMVC.UI.Forms
 
         IEnumerable<HtmlTag> ITagSource.AllTags()
         {
-            return !_isVisible ? new HtmlTag[0] : _layout.AllTags();
+            if (!_isVisible) return new HtmlTag[0];
+
+            createBodyTag();
+
+            return _layout.AllTags();
         }
 
-        private void ensureBodyTag()
-        {
-            if (_layout.BodyTag == null)
-            {
-                _layout.BodyTag = _tags.DisplayFor(_expression);
-            }
-        }
     }
 }
