@@ -5,6 +5,7 @@ using System.Threading;
 using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Forms;
+using FubuMVC.UI.Security;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
@@ -114,6 +115,17 @@ namespace FubuMVC.Tests.UI.Forms
             });
         }
 
+        [Test]
+        public void editable_is_read_only_by_default()
+        {
+            expression.Editable().ShouldEqual(AccessRight.ReadOnly);
+        }
+
+        [Test]
+        public void access_is_all_by_default()
+        {
+            expression.Access().ShouldEqual(AccessRight.All);
+        }
 
         [Test]
         public void display_by_default_in_the_to_string()
@@ -129,6 +141,24 @@ namespace FubuMVC.Tests.UI.Forms
             string html = expression.Editable(true).ToString();
             html.ShouldContain("input");
             html.ShouldNotContain("display");
+        }
+
+        [Test]
+        public void do_not_edit_if_the_condition_is_true_but_the_access_rights_are_readonly()
+        {
+            var html = expression.Editable(true).Access(AccessRight.ReadOnly).ToString();
+            html.ShouldContain("display");
+            html.ShouldNotContain("input");
+        }
+
+        [Test]
+        public void do_not_display_if_the_editable_condition_is_true_but_the_access_rights_are_none()
+        {
+            expression.Visible(true);
+            expression.Editable(true);
+            expression.Access(AccessRight.None);
+
+            expression.ToString().ShouldBeEmpty();
         }
 
         [Test]
@@ -148,6 +178,14 @@ namespace FubuMVC.Tests.UI.Forms
 
             expression.EditableForRole("admin").ToString().ShouldNotContain("input");
         }
+
+        [Test]
+        public void do_not_display_if_the_access_rights_are_none()
+        {
+            expression.Access(AccessRight.None);
+            expression.ToString().ShouldBeEmpty();
+        }
+
 
         [Test]
         public void display_if_the_condition_is_false()

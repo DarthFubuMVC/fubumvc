@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Web;
 using FubuMVC.Core.Security;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Security;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 
@@ -27,11 +28,12 @@ namespace FubuMVC.UI.Forms
         }
 
         private bool _isVisible = true;
-        private ElementRequest _request;
+        private readonly ElementRequest _request;
         private readonly IList<Action<ILabelAndFieldLayout, ElementRequest>> _alterations 
             = new List<Action<ILabelAndFieldLayout, ElementRequest>>();
 
-        private bool _editable;
+        private AccessRight _editable = AccessRight.ReadOnly;
+        private AccessRight _rights = AccessRight.All;
 
         public FormLineExpression(ITagGenerator<T> tags, ILabelAndFieldLayout layout,
                                   Expression<Func<T, object>> expression)
@@ -86,9 +88,25 @@ namespace FubuMVC.UI.Forms
 
         public FormLineExpression<T> Editable(bool condition)
         {
-            _editable = condition;
+            _editable = condition ? AccessRight.All : AccessRight.ReadOnly;
 
             return this;
+        }
+
+        public AccessRight Access()
+        {
+            return _rights;            
+        }
+
+        public FormLineExpression<T> Access(AccessRight rights)
+        {
+            _rights = rights;
+            return this;
+        }
+
+        public AccessRight Editable()
+        {
+            return _editable;
         }
 
         public FormLineExpression<T> EditableForRole(params string[] roles)
@@ -126,12 +144,12 @@ namespace FubuMVC.UI.Forms
 
         private bool isEditable()
         {
-            return _editable;
+            return _editable.Write && _rights.Write;
         }
 
         public override string ToString()
         {
-            if (!_isVisible) return string.Empty;
+            if (!isVisible()) return string.Empty;
 
             createBodyTag();
 
@@ -143,9 +161,14 @@ namespace FubuMVC.UI.Forms
             return ToString();
         }
 
+        private bool isVisible()
+        {
+            return _isVisible && _rights.Read;
+        }
+
         IEnumerable<HtmlTag> ITagSource.AllTags()
         {
-            if (!_isVisible) return new HtmlTag[0];
+            if (isVisible()) return new HtmlTag[0];
 
             createBodyTag();
 
