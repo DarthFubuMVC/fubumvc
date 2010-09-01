@@ -55,6 +55,11 @@ namespace FubuMVC.UI.Configuration
             };
         }
 
+        public Type ModelType()
+        {
+            return Model == null ? null : Get<ITypeResolver>().ResolveType(Model);
+        }
+
         public T Get<T>()
         {
             return _services.GetInstance<T>();

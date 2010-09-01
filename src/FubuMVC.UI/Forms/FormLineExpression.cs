@@ -175,7 +175,7 @@ namespace FubuMVC.UI.Forms
 
         IEnumerable<HtmlTag> ITagSource.AllTags()
         {
-            if (isVisible()) return new HtmlTag[0];
+            if (!isVisible()) return new HtmlTag[0];
 
             createBodyTag();
 

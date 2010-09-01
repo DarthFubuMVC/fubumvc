@@ -4,6 +4,7 @@ using FubuMVC.UI.Forms;
 using FubuMVC.UI.Security;
 using HtmlTags;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuMVC.Tests.UI.Forms
 {
@@ -154,6 +155,29 @@ namespace FubuMVC.Tests.UI.Forms
             expression.Access(AccessRight.None);
 
             expression.ToString().ShouldBeEmpty();
+        }
+
+
+        [Test]
+        public void do_not_return_any_tags_if_the_editable_condition_is_true_but_the_access_rights_are_none()
+        {
+            expression.Visible(true);
+            expression.Editable(true);
+            expression.Access(AccessRight.None);
+
+            expression.As<ITagSource>().AllTags().Any().ShouldBeFalse();
+        }
+
+
+
+        [Test]
+        public void return_tags_if_the_editable_condition_is_true_and_the_access_rights_is_some()
+        {
+            expression.Visible(true);
+            expression.Editable(true);
+            expression.Access(AccessRight.All);
+
+            expression.As<ITagSource>().AllTags().Any().ShouldBeTrue();
         }
 
         [Test]
