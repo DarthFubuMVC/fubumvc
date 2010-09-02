@@ -25,7 +25,8 @@ namespace FubuMVC.Core.Security
 
         protected override AuthorizationRight applyForwarder(object model, IChainForwarder forwarder)
         {
-            throw new NotImplementedException();
+            var chain = forwarder.FindChain(resolver, model);
+            return rightsFor(chain);
         }
 
         protected override AuthorizationRight findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
@@ -36,6 +37,11 @@ namespace FubuMVC.Core.Security
             }
 
             BehaviorChain chain = finder(resolver);
+            return rightsFor(chain);
+        }
+
+        private AuthorizationRight rightsFor(BehaviorChain chain)
+        {
             var endpoint = _factory.AuthorizorFor(chain.UniqueId);
             return endpoint.IsAuthorized(_request);
         }

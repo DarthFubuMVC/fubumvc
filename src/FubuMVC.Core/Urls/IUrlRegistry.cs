@@ -82,4 +82,5 @@ namespace FubuMVC.Core.Urls
             return "url for {0}.{1}()".ToFormat(handlerType.FullName, method.Name);
         }
     }
+
 }

@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.UI
             {
                 if (_resultingTag == null)
                 {
-                    _resultingTag = page.AuthorizedLink(theFinder);
+                    _resultingTag = page.AuthorizedLinkTo(theFinder);
                 }
 
                 return _resultingTag;

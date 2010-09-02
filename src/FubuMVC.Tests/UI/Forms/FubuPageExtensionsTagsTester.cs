@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web.Routing;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
@@ -32,6 +34,9 @@ namespace FubuMVC.Tests.UI.Forms
             _urls = new StubUrlRegistry();
             _model = new InputModel();
             _page.Stub(p => p.Urls).Return(_urls);
+
+            var endpoints = new EndpointService(new StubAuthorizationPreviewService(), _urls);
+            _page.Stub(p => p.Get<IEndpointService>()).Return(endpoints);
         }
 
         [Test]
@@ -53,6 +58,49 @@ namespace FubuMVC.Tests.UI.Forms
         {
             HtmlTag tag = _page.LinkTo<TestController>(x => x.Index());
             tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.TestController.Index()");
+        }
+    }
+
+    public class StubAuthorizationPreviewService : IAuthorizationPreviewService
+    {
+        public bool IsAuthorized(object model)
+        {
+            return true;
+        }
+
+        public bool IsAuthorized(object model, string category)
+        {
+            return true;
+        }
+
+        public bool IsAuthorized<TController>(Expression<Action<TController>> expression)
+        {
+            return true;
+        }
+
+        public bool IsAuthorizedForNew<T>()
+        {
+            return true;
+        }
+
+        public bool IsAuthorizedForNew(Type entityType)
+        {
+            return true;
+        }
+
+        public bool IsAuthorizedForPropertyUpdate(object model)
+        {
+            return true;
+        }
+
+        public bool IsAuthorizedForPropertyUpdate(Type type)
+        {
+            return true;
+        }
+
+        public bool IsAuthorized(Type handlerType, MethodInfo method)
+        {
+            return true;
         }
     }
 

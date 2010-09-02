@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.UI.Configuration;
@@ -36,6 +37,15 @@ namespace FubuMVC.UI
             return generator;
         }
 
+        public static HtmlTag AuthorizedLinkTo(this IFubuPage page, Func<IEndpointService, Endpoint> finder)
+        {
+            var endpoints = page.Get<IEndpointService>();
+            var endpoint = finder(endpoints);
+
+            return new LinkTag(string.Empty, endpoint.Url)
+                .Authorized(endpoint.IsAuthorized);
+        }
+
 
         public static HtmlTag LinkTo<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
@@ -44,12 +54,12 @@ namespace FubuMVC.UI
 
         public static HtmlTag LinkTo(this IFubuPage page, object inputModel)
         {
-            return new LinkTag("", page.Urls.UrlFor(inputModel));
+            return page.AuthorizedLinkTo(x => x.EndpointFor(inputModel));
         }
 
         public static HtmlTag LinkTo<TController>(this IFubuPage page, Expression<Action<TController>> actionExpression)
         {
-            return new LinkTag("", page.Urls.UrlFor(actionExpression));
+            return page.AuthorizedLinkTo(x => x.EndpointFor(actionExpression));
         }
 
 
