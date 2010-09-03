@@ -175,7 +175,7 @@ namespace FubuMVC.Tests.UI.Forms
             
             _page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
             _page.Expect(p => p.Model).Return(new ViewModel());
-            _page.Expect(p => p.Get<TagGenerator<ViewModel>>()).Return(generator);
+            _page.Expect(p => p.Get<ITagGenerator<ViewModel>>()).Return(generator);
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace FubuMVC.Tests.UI.Forms
             
             var generator = container.GetInstance<TagGenerator<ArbitraryModel>>();
             _page = MockRepository.GenerateMock<IFubuPage>();
-            _page.Stub(p => p.Get<TagGenerator<ArbitraryModel>>()).Return(generator);
+            _page.Stub(p => p.Get<ITagGenerator<ArbitraryModel>>()).Return(generator);
             var fubuRequest = MockRepository.GenerateMock<IFubuRequest>();
             _modelFromFubuRequest = new ArbitraryModel{City="Austin"};
             fubuRequest.Stub(x => x.Get<ArbitraryModel>()).Return(_modelFromFubuRequest);
@@ -265,7 +265,7 @@ namespace FubuMVC.Tests.UI.Forms
 
             var generator = container.GetInstance<TagGenerator<ArbitraryModel>>();
             _page = MockRepository.GenerateMock<IFubuPage>();
-            _page.Stub(p => p.Get<TagGenerator<ArbitraryModel>>()).Return(generator);
+            _page.Stub(p => p.Get<ITagGenerator<ArbitraryModel>>()).Return(generator);
             _givenModel = new ArbitraryModel { City = "Austin" };
         }
 

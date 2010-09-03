@@ -73,14 +73,14 @@ namespace FubuMVC.Tests.UI
         }
 
         public string ElementPrefix { get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); } }
+            set { } }
 
         public string CurrentProfile
         {
             get { throw new NotImplementedException(); } }
 
         public T Model { get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); } }
+            set {  } }
 
         public ILabelAndFieldLayout NewFieldLayout()
         {

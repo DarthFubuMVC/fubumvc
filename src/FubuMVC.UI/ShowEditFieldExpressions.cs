@@ -7,31 +7,17 @@ using FubuMVC.UI.Tags;
 
 namespace FubuMVC.UI
 {
-    public class FormLineExpressionBuilder<T> where T : class
-    {
-        private readonly ITagGenerator<T> _tags;
-        private readonly IFieldAccessService _fieldAccess;
-
-        public FormLineExpressionBuilder(ITagGenerator<T> tags, IFieldAccessService fieldAccess)
-        {
-            _tags = tags;
-            _fieldAccess = fieldAccess;
-        }
-
-        public FormLineExpression<T> Build(Expression<Func<T, object>> expression)
-        {
-            var request = _tags.GetRequest(expression);
-            var accessRight = _fieldAccess.RightsFor(request);
-            return new FormLineExpression<T>(_tags, _tags.NewFieldLayout(), request).Access(accessRight);
-        }
-    }
 
 
     public static class ShowEditFieldExpressions
     {
         public static FormLineExpression<T> Show<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
         {
-            return page.Get<FormLineExpressionBuilder<T>>().Build(expression);
+            var tags = page.Tags();
+            var request = tags.GetRequest(expression);
+            var accessRight = page.Get<IFieldAccessRule>().RightsFor(request);
+
+            return new FormLineExpression<T>(tags, tags.NewFieldLayout(), request).Access(accessRight);
         }
 
         public static FormLineExpression<T> Edit<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class

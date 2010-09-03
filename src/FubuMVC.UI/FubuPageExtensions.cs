@@ -13,25 +13,25 @@ namespace FubuMVC.UI
 {
     public static class FubuPageExtensions
     {
-        public static TagGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
+        public static ITagGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
         {
-            var generator = page.Get<TagGenerator<T>>();
+            var generator = page.Get<ITagGenerator<T>>();
             generator.Model = page.Model;
             generator.ElementPrefix = page.ElementPrefix;
             return generator;
         }
 
-        public static TagGenerator<T> Tags<T>(this IFubuPage page) where T : class
+        public static ITagGenerator<T> Tags<T>(this IFubuPage page) where T : class
         {
-            var generator = page.Get<TagGenerator<T>>();
+            var generator = page.Get<ITagGenerator<T>>();
             generator.Model = page.Get<IFubuRequest>().Get<T>();
             generator.ElementPrefix = page.ElementPrefix;
             return generator;
         }
 
-        public static TagGenerator<T> Tags<T>(this IFubuPage page, T model) where T : class
+        public static ITagGenerator<T> Tags<T>(this IFubuPage page, T model) where T : class
         {
-            var generator = page.Get<TagGenerator<T>>();
+            var generator = page.Get<ITagGenerator<T>>();
             generator.Model = model;
             generator.ElementPrefix = page.ElementPrefix;
             return generator;

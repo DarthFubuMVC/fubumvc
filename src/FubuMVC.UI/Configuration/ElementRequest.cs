@@ -18,6 +18,11 @@ namespace FubuMVC.UI.Configuration
             return new ElementRequest(model, expression.ToAccessor(), null, null);
         }
 
+        public static ElementRequest For<T>(T model, Expression<Func<T, object>> expression, IServiceLocator services)
+        {
+            return new ElementRequest(model, expression.ToAccessor(), services, null);
+        }
+
         public ElementRequest(object model, Accessor accessor, IServiceLocator services, Stringifier stringifier)
         {
             _stringifier = stringifier;
@@ -51,13 +56,21 @@ namespace FubuMVC.UI.Configuration
             return new AccessorDef
             {
                 Accessor = Accessor,
-                ModelType = Model.GetType()
+                ModelType = HolderType()
             };
         }
 
-        public Type ModelType()
+        
+        public Type HolderType()
         {
-            return Model == null ? null : Get<ITypeResolver>().ResolveType(Model);
+            if (Model == null)
+            {
+                return Accessor.DeclaringType;
+            }
+
+            var resolver = _services == null ? new TypeResolver() : Get<ITypeResolver>();
+
+            return Model == null ? null : resolver.ResolveType(Model);
         }
 
         public T Get<T>()

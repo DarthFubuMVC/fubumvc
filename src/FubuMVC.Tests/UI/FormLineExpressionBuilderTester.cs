@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Core.View;
 using FubuMVC.UI;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Forms;
@@ -11,12 +12,20 @@ using Rhino.Mocks.Constraints;
 namespace FubuMVC.Tests.UI
 {
     [TestFixture]
-    public class FormLineExpressionBuilderTester : InteractionContext<FormLineExpressionBuilder<ViewModel>>
+    public class FormLineExpressionBuilderTester
     {
-        protected override void beforeEach()
+        [SetUp]
+        public void SetUp()
         {
-            Services.Inject<ITagGenerator<ViewModel>>(new StubTagGenerator<ViewModel>());
+            tags = new StubTagGenerator<ViewModel>();
             _expression = null;
+
+            page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
+            page.Stub(x => x.Get<ITagGenerator<ViewModel>>()).Return(tags);
+            page.Stub(x => x.Model).Return(new ViewModel());
+
+            fieldAccess = MockRepository.GenerateMock<IFieldAccessRule>();
+            page.Stub(x => x.Get<IFieldAccessRule>()).Return(fieldAccess);
         }
 
         private void theHtmlOutputShouldBeReadOnly()
@@ -35,13 +44,17 @@ namespace FubuMVC.Tests.UI
         }
 
         private FormLineExpression<ViewModel> _expression;
+        private StubTagGenerator<ViewModel> tags;
+        private IFubuPage<ViewModel> page;
+        private IFieldAccessRule fieldAccess;
+
         private FormLineExpression<ViewModel> theResultingExpression
         {
             get
             {
                 if (_expression == null)
                 {
-                    _expression = ClassUnderTest.Build(x => x.Name);
+                    _expression = page.Show(x => x.Name);
                 }
 
                 return _expression;
@@ -52,7 +65,7 @@ namespace FubuMVC.Tests.UI
         {
             set
             {
-                MockFor<IFieldAccessService>().Expect(x => x.RightsFor(null))
+                fieldAccess.Expect(x => x.RightsFor(null))
                     .Constraints(Is.Matching<ElementRequest>(r => r.Accessor.Name == "Name"))
                     .Return(value);
             }
