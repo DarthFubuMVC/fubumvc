@@ -369,6 +369,14 @@ namespace HtmlTags.Testing
             tag.Visible(false).ToString().ShouldBeEmpty();
         }
 
+        [Test]
+        public void remove_a_class()
+        {
+            var tag = new HtmlTag("div").AddClasses("a", "b", "c");
+            tag.RemoveClass("b");
+            tag.ToString().ShouldEqual("<div class=\"a c\"></div>");
+        }
+
         public class ListValue
         {
             public string Display { get; set; }
