@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Runtime
 
 			if (displayName != null)
 			{
-				response.AppendHeader("Content-Disposition", "attachment; filename=" + displayName);
+				response.AppendHeader("Content-Disposition", "attachment; filename=\"" + displayName+"\"");
 			}
 
 			var fileInfo = new FileInfo(localFilePath);
