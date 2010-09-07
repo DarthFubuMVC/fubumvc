@@ -174,6 +174,11 @@ namespace FubuMVC.Tests.UI.Forms
             
             _viewTypeRegistry = MockRepository.GenerateStub<IPartialViewTypeRegistry>();
             serviceLocator.Stub(s => s.GetInstance<IPartialViewTypeRegistry>()).Return(_viewTypeRegistry);
+
+            var inMemoryFubuRequest = new InMemoryFubuRequest();
+            inMemoryFubuRequest.Set(new InputModel());
+
+            _page.Stub(s => s.Get<IFubuRequest>()).Return(inMemoryFubuRequest);
             
             _model = new InputModel{Partials=new List<PartialModel>{new PartialModel()}};
             _page.Expect(p => p.Get<ITagGenerator<InputModel>>()).Return(_tags);

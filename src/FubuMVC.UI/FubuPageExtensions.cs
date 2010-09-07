@@ -16,7 +16,7 @@ namespace FubuMVC.UI
         public static ITagGenerator<T> Tags<T>(this IFubuPage<T> page) where T : class
         {
             var generator = page.Get<ITagGenerator<T>>();
-            generator.Model = page.Model;
+            generator.Model = page.Model ?? page.Get<IFubuRequest>().Get<T>();
             generator.ElementPrefix = page.ElementPrefix;
             return generator;
         }
@@ -203,6 +203,14 @@ namespace FubuMVC.UI
             string name = ElementNameFor(page, expression);
 			object value = page.Model.ValueOrDefault(expression);
 			return new TextboxTag(name, (value == null) ? "" : value.ToString());
+        }
+
+        // TODO -- Jeremy to add tests
+        // IN Dovetail, want to add a label attribute for the localized header of the property
+        public static CheckboxTag CheckBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, bool>> expression) where T : class
+        {
+            // TODO -- run modifications on this?
+            return new CheckboxTag(page.Model.ValueOrDefault(expression));
         }
 
         public static FormTag FormFor(this IFubuPage page)
