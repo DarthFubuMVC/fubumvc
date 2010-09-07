@@ -188,6 +188,13 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void do_allow_a_class_that_is_a_json_blob_with_spaces()
+        {
+            var tag = new HtmlTag("div").AddClass("{a:1, a:2}");
+            tag.ToString().ShouldContain("class=\"{a:1, a:2}\"");
+        }
+
+        [Test]
         public void render_multiple_levels_of_nesting()
         {
             var tag = new HtmlTag("table");
