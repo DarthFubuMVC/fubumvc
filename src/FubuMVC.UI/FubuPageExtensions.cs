@@ -255,5 +255,10 @@ namespace FubuMVC.UI
         {
             return "</form>";
         }
+
+        public static HtmlTag Span(this IFubuPage page, string text)
+        {
+            return new HtmlTag("span").Text(text);
+        }
     }
 }
