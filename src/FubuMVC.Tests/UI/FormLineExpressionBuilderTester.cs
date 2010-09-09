@@ -24,8 +24,8 @@ namespace FubuMVC.Tests.UI
             page.Stub(x => x.Get<ITagGenerator<ViewModel>>()).Return(tags);
             page.Stub(x => x.Model).Return(new ViewModel());
 
-            fieldAccess = MockRepository.GenerateMock<IFieldAccessRule>();
-            page.Stub(x => x.Get<IFieldAccessRule>()).Return(fieldAccess);
+            fieldAccess = MockRepository.GenerateMock<IFieldAccessService>();
+            page.Stub(x => x.Get<IFieldAccessService>()).Return(fieldAccess);
         }
 
         private void theHtmlOutputShouldBeReadOnly()
@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.UI
         private FormLineExpression<ViewModel> _expression;
         private StubTagGenerator<ViewModel> tags;
         private IFubuPage<ViewModel> page;
-        private IFieldAccessRule fieldAccess;
+        private IFieldAccessService fieldAccess;
 
         private FormLineExpression<ViewModel> theResultingExpression
         {

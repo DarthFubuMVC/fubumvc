@@ -15,7 +15,7 @@ namespace FubuMVC.UI
         {
             var tags = page.Tags();
             var request = tags.GetRequest(expression);
-            var accessRight = page.Get<IFieldAccessRule>().RightsFor(request);
+            var accessRight = page.Get<IFieldAccessService>().RightsFor(request);
 
             return new FormLineExpression<T>(tags, tags.NewFieldLayout(), request).Access(accessRight);
         }
