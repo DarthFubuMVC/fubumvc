@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
@@ -28,7 +29,7 @@ namespace FubuMVC.UI
             where TInputModel : class
             where TPartialModel : class
         {
-            var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>(), page.Tags())
+            var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>(), page.Tags(), page.Get<IEndpointService>())
                 .ForEachOf(listExpression);
 
             SearchPartialView<TInputModel, TPartialModel>(page, expression);
@@ -64,7 +65,7 @@ namespace FubuMVC.UI
         {
             var renderer = viewPage.Get<IPartialRenderer>();
             return
-                new RenderPartialExpression<TViewModel>(viewPage.Model, viewPage, renderer, viewPage.Tags()).ForEachOf(
+                new RenderPartialExpression<TViewModel>(viewPage.Model, viewPage, renderer, viewPage.Tags(), viewPage.Get<IEndpointService>()).ForEachOf(
                     expression);
         }
 
@@ -78,7 +79,7 @@ namespace FubuMVC.UI
             this IFubuPage page, IEnumerable<T> items) where T : class
         {
             var renderer = page.Get<IPartialRenderer>();
-            return new RenderPartialExpression<T>(null, page, renderer, page.Get<ITagGenerator<T>>()).ForEachOf(items);
+            return new RenderPartialExpression<T>(null, page, renderer, page.Get<ITagGenerator<T>>(), page.Get<IEndpointService>()).ForEachOf(items);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace FubuMVC.UI
             var partialModel = accessor.GetValue(viewPage.Model) as TPartialViewModel;
 
             return
-                new RenderPartialExpression<TViewModel>(viewPage.Model, viewPage, renderer, viewPage.Tags()).For(
+                new RenderPartialExpression<TViewModel>(viewPage.Model, viewPage, renderer, viewPage.Tags(), viewPage.Get<IEndpointService>()).For(
                     partialModel);
         }
 
@@ -115,7 +116,7 @@ namespace FubuMVC.UI
         {
             var renderer = viewPage.Get<IPartialRenderer>();
             return
-                new RenderPartialExpression<TViewModel>(viewPage.Model, viewPage, renderer, viewPage.Tags()).For(
+                new RenderPartialExpression<TViewModel>(viewPage.Model, viewPage, renderer, viewPage.Tags(), viewPage.Get<IEndpointService>()).For(
                     viewPage.Model);
         }
 
