@@ -26,6 +26,8 @@ namespace FubuMVC.Core.Security
 
         public AllowRole AddRole(string roleName)
         {
+            if (AllowedRoles().Contains(roleName)) return null;
+
             var allow = new AllowRole(roleName);
 
             _policies.AddValue(allow);
