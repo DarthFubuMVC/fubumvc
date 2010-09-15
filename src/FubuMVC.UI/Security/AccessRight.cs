@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.UI.Security
 {
-    public class AccessRight : IComparable<AccessRight>
+    public class AccessRight : IComparable<AccessRight>, IEquatable<AccessRight>
     {
         private readonly bool _read;
         private readonly bool _write;
@@ -47,6 +48,42 @@ namespace FubuMVC.UI.Security
             return first.Permissiveness <= second.Permissiveness ? first : second;
         }
 
+        public static bool operator >(AccessRight first, AccessRight second)
+        {
+            return first.Permissiveness < second.Permissiveness;
+        }
+        
+        public static bool operator >=(AccessRight first, AccessRight second)
+        {
+            return first.Permissiveness <= second.Permissiveness;
+        }
+
+        public static bool operator <(AccessRight first, AccessRight second)
+        {
+            return first.Permissiveness > second.Permissiveness;
+        }
+
+        public static bool operator <=(AccessRight first, AccessRight second)
+        {
+            return first.Permissiveness >= second.Permissiveness;
+        }
+
+        public bool Equals(AccessRight other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            return ReferenceEquals(this, other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return ReferenceEquals(this, obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _permissiveness;
+        }
 
         public static AccessRight Least(params AccessRight[] rights)
         {
@@ -73,9 +110,9 @@ namespace FubuMVC.UI.Security
         public static AccessRight For(string name)
         {
             if (name == null) throw new ArgumentNullException("name");
-            if (name.Equals(All.Name, StringComparison.InvariantCultureIgnoreCase)) return All;
-            if (name.Equals(ReadOnly.Name, StringComparison.InvariantCultureIgnoreCase)) return ReadOnly;
-            if (name.Equals(None.Name, StringComparison.InvariantCultureIgnoreCase)) return None;
+            if (name.EqualsIgnoreCase(All.Name)) return All;
+            if (name.EqualsIgnoreCase(ReadOnly.Name)) return ReadOnly;
+            if (name.EqualsIgnoreCase(None.Name)) return None;
             throw new ArgumentOutOfRangeException("name", name, "All, ReadOnly, and None are the only valid options");
         }
     }

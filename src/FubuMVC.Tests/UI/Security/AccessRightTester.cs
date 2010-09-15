@@ -55,6 +55,37 @@ namespace FubuMVC.Tests.UI.Security
             (AccessRight.None + AccessRight.All).ShouldEqual(AccessRight.All);
         }
 
+        [Test]
+        public void equality_is_always_reference_equality()
+        {
+            (AccessRight.For("None") == AccessRight.None).ShouldBeTrue();
+            (AccessRight.For("All") == AccessRight.For("all")).ShouldBeTrue();
+            ReferenceEquals(AccessRight.For("All"), AccessRight.For("all")).ShouldBeTrue();
+        }
+
+        [Test]
+        public void inequality()
+        {
+            (AccessRight.All != AccessRight.ReadOnly).ShouldBeTrue();
+        }
+
+        [Test]
+        public void greater_than()
+        {
+            (AccessRight.All > AccessRight.ReadOnly).ShouldBeTrue();
+            (AccessRight.ReadOnly > AccessRight.None).ShouldBeTrue();
+            (AccessRight.All >= AccessRight.For("All")).ShouldBeTrue();
+            (AccessRight.All >= AccessRight.ReadOnly).ShouldBeTrue();
+        }
+
+        [Test]
+        public void less_than()
+        {
+            (AccessRight.None < AccessRight.ReadOnly).ShouldBeTrue();
+            (AccessRight.ReadOnly < AccessRight.All).ShouldBeTrue();
+            (AccessRight.ReadOnly <= AccessRight.All).ShouldBeTrue();
+            (AccessRight.ReadOnly <= AccessRight.For("Readonly")).ShouldBeTrue();
+        }
 
         [Test]
         public void the_most()
