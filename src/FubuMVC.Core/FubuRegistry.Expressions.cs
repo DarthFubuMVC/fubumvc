@@ -30,7 +30,7 @@ namespace FubuMVC.Core
 
     public partial class FubuRegistry
     {
-        private TypeResolver _typeResolver = new TypeResolver();
+        private readonly TypeResolver _typeResolver = new TypeResolver();
         public RouteConventionExpression Routes { get { return new RouteConventionExpression(_routeResolver, this); } }
         public OutputDeterminationExpression Output { get { return new OutputDeterminationExpression(this); } }
         public ViewExpression Views { get { return new ViewExpression(_viewAttacher); } }

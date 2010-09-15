@@ -16,13 +16,28 @@ namespace FubuMVC.Core.Registration.Nodes
         Authorization
     }
 
+    public class BehaviorSearch
+    {
+        public BehaviorSearch(Func<BehaviorNode, bool> matching)
+        {
+            Matching = matching;
+
+            OnFound = n => { };
+            OnMissing = () => { };
+        }
+
+        public Func<BehaviorNode, bool> Matching { get; set; }
+        public Action<BehaviorNode> OnFound { get; set; }
+        public Action OnMissing { get; set; }
+    }
+
     public abstract class BehaviorNode : IEnumerable<BehaviorNode>
     {
         private readonly Guid _uniqueId = Guid.NewGuid();
         private BehaviorNode _next;
         public virtual Guid UniqueId { get { return _uniqueId; } }
         public abstract BehaviorCategory Category { get; }
-
+        
         public BehaviorNode Next
         {
             get { return _next; }
@@ -34,6 +49,19 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         public BehaviorNode Previous { get; protected set; }
+
+        public void ForFollowingBehavior(BehaviorSearch search)
+        {
+            var follower = this.FirstOrDefault(search.Matching);
+            if (follower != null)
+            {
+                search.OnFound(follower);
+            }
+            else
+            {
+                search.OnMissing();
+            }
+        }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -105,7 +133,11 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void AddBefore(BehaviorNode newNode)
         {
-            if (Previous != null) Previous.Next = newNode;
+            if (Previous != null)
+            {
+                newNode.Remove();
+                Previous.Next = newNode;
+            }
             newNode.Next = this;
         }
 
@@ -132,7 +164,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             if (Previous == null)
             {
-                Next.Previous = null;
+                if (Next != null) Next.Previous = null;
             }
             else
             {
