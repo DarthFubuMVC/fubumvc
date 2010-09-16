@@ -184,5 +184,7 @@ namespace FubuMVC.Core.Registration.Nodes
             Previous = null;
             Next = null;
         }
+
+
     }
 }

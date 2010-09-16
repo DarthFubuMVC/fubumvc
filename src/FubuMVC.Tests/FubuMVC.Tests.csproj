@@ -94,6 +94,7 @@
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
+    <Compile Include="Registration\Conventions\ReorderBehaviorsPolicyTester.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\integrated_type_resolver_registration.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />

@@ -73,6 +73,13 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        public T AddToEnd<T>() where T : BehaviorNode, new()
+        {
+            var node = new T();
+            AddToEnd(node);
+            return node;
+        }
+
         public Type ActionOutputType()
         {
             ActionCall call = Calls.FirstOrDefault();

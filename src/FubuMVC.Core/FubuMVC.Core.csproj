@@ -127,6 +127,7 @@
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\FubuPartialRequestUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConvention.cs" />
+    <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlForNewConvention.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConvention.cs" />

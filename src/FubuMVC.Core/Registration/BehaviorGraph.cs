@@ -20,6 +20,8 @@ namespace FubuMVC.Core.Registration
             Observer = observer;
         }
 
+        public BehaviorGraph() : this(new NulloConfigurationObserver()){}
+
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly IServiceRegistry _services = new ServiceRegistry();
@@ -164,6 +166,14 @@ namespace FubuMVC.Core.Registration
         public void AddChain(BehaviorChain chain)
         {
             _behaviors.Add(chain);
+        }
+
+        public BehaviorChain AddChain()
+        {
+            var chain = new BehaviorChain();
+            AddChain(chain);
+
+            return chain;
         }
 
         public void Import(BehaviorGraph graph, string prefix)
