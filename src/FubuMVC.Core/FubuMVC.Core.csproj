@@ -121,7 +121,10 @@
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
     <Compile Include="EndpointService.cs" />
+    <Compile Include="FubuRegistry.DefaultConventions.cs" />
+    <Compile Include="FubuRegistry.DefaultServices.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
+    <Compile Include="Registration\Conventions\AllowRuleAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
     <Compile Include="Registration\Conventions\UrlForNewConvention.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConvention.cs" />
+    <Compile Include="Registration\Conventions\WrapWithAttributeConvention.cs" />
     <Compile Include="Registration\DSL\ModelsExpression.cs" />
     <Compile Include="Registration\DSL\PoliciesExpression.cs" />
     <Compile Include="Registration\Conventions\ActionCallModification.cs" />

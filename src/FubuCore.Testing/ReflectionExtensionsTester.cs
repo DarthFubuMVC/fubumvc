@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using FubuCore.Reflection;
 using NUnit.Framework;
+using FubuCore.Testing;
 
 namespace FubuCore.Testing
 {
@@ -72,6 +73,12 @@ namespace FubuCore.Testing
             MethodInfo method = ReflectionHelper.GetMethod<AttributeClass>(x => x.GetName());
             method.HasAttribute<DescriptionAttribute>().ShouldBeTrue();
             method.HasAttribute<SetUpAttribute>().ShouldBeFalse();
+        }
+
+        [Test]
+        public void get_many_attributes()
+        {
+            ReflectionHelper.GetAccessor<AttributeClass>(x => x.Name).GetAllAttributes<Multiple>().ShouldHaveCount(3);
         }
 
         [Test]
@@ -149,8 +156,13 @@ namespace FubuCore.Testing
 
         [Fake("number")]
         public int Number { get; set; }
+
+        [Multiple, Multiple, Multiple]
         public string Name { get; set; }
     }
+
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+    public class Multiple : Attribute{}
 
     public class FakeAttribute : Attribute
     {

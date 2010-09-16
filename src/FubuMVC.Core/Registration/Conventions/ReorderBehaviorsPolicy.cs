@@ -32,19 +32,19 @@ namespace FubuMVC.Core.Registration.Conventions
             WhatMustBeAfter = node => node is T;
         }
 
-        private static Func<BehaviorNode, bool> funcForWrapper(Type wrapperType)
+        public static Func<BehaviorNode, bool> FuncForWrapper(Type wrapperType)
         {
             return node => node is Wrapper && node.As<Wrapper>().BehaviorType == wrapperType;
         }
 
         public void ThisWrapperBeBefore<T>() where T : IActionBehavior
         {
-            WhatMustBeBefore = funcForWrapper(typeof (T));
+            WhatMustBeBefore = FuncForWrapper(typeof (T));
         }
 
         public void ThisWrapperMustBeAfter<T>() where T : IActionBehavior
         {
-            WhatMustBeAfter = funcForWrapper(typeof(T));
+            WhatMustBeAfter = FuncForWrapper(typeof(T));
         }
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Linq;
 
 namespace FubuCore.Reflection
 {
@@ -25,6 +27,16 @@ namespace FubuCore.Reflection
         {
             var atts = provider.GetCustomAttributes(typeof (T), true);
             return atts.Length > 0 ? atts[0] as T : null;
+        }
+
+        public static IEnumerable<T> GetAllAttributes<T>(this ICustomAttributeProvider provider) where T : Attribute
+        {
+            return provider.GetCustomAttributes(typeof (T), true).Cast<T>();
+        }
+
+        public static IEnumerable<T> GetAllAttributes<T>(this Accessor accessor) where T : Attribute
+        {
+            return accessor.InnerProperty.GetAllAttributes<T>();
         }
 
         public static bool HasAttribute<T>(this ICustomAttributeProvider provider) where T : Attribute

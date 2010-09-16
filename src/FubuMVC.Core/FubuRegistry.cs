@@ -48,38 +48,12 @@ namespace FubuMVC.Core
         public FubuRegistry()
         {
             _observer = new NulloConfigurationObserver();
-
             _viewAttacher = new ViewAttacher(_types);
 
-            // Default method filters
-            Actions.IgnoreMethodsDeclaredBy<object>();
-            Actions.IgnoreMethodsDeclaredBy<MarshalByRefObject>();
-            Actions.IgnoreMethodsDeclaredBy<IDisposable>();
-
-            // Add Behaviors First
-            addConvention(graph => _behaviorMatcher.BuildBehaviors(_types, graph));
-            addConvention(graph => _actionSourceMatcher.BuildBehaviors(_types, graph));
-            addConvention(graph => _routeResolver.ApplyToAll(graph));
-
-
-            Policies.Add<StringOutputPolicy>();
-            Policies.Add<WebFormsEndpointPolicy>();
-            Policies.Add<ContinuationHandlerConvention>();
-
-            _systemPolicies.Add(new AttachAuthorizationPolicy());
-
-            Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
-            Output.ToJson.WhenCallMatches(x => x.Method.HasAttribute<JsonEndpointAttribute>());
-            Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
-
-            Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
-            Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();
-
-            _conventions.Add(_viewAttacher);
-            Policies.Add<JsonMessageInputConvention>();
-            Policies.Add<UrlRegistryCategoryConvention>();
-            Policies.Add<UrlForNewConvention>();
+            setupDefaultConventionsAndPolicies();
         }
+
+
 
         public FubuRegistry(Action<FubuRegistry> configure)
             : this()

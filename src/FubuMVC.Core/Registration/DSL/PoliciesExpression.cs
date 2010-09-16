@@ -4,31 +4,60 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.DSL
 {
-    public class PoliciesExpression
+    public interface IPoliciesExpression
+    {
+        IOrderPolicyExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior;
+        IOrderPolicyExpression ConditionallyWrapBehaviorChainsWith<T>(Expression<Func<ActionCall, bool>> filter) where T : IActionBehavior;
+        IPoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior;
+        IPoliciesExpression AlterActions(Action<ActionCall> configure);
+        IPoliciesExpression Add(IConfigurationAction alteration);
+        IPoliciesExpression Add<T>() where T : IConfigurationAction, new();
+    }
+
+    public interface IOrderPolicyExpression : IPoliciesExpression
+    {
+        IPoliciesExpression Ordering(Action<PoliciesExpression.BehaviorOrderPolicyExpression> ordering);
+    }
+
+
+
+    public class PoliciesExpression : IOrderPolicyExpression
     {
         private readonly IList<IConfigurationAction> _actions;
+        private readonly List<IConfigurationAction> _systemPolicies;
+        private Func<BehaviorNode, bool> _lastNodeMatch;
 
-        public PoliciesExpression(IList<IConfigurationAction> actions)
+        public PoliciesExpression(IList<IConfigurationAction> actions, List<IConfigurationAction> systemPolicies)
         {
             _actions = actions;
+            _systemPolicies = systemPolicies;
         }
 
-        public PoliciesExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior
+        public IOrderPolicyExpression WrapBehaviorChainsWith<T>() where T : IActionBehavior
         {
             var configAction = new VisitBehaviorsAction(v =>
                 v.Actions += chain => chain.Prepend(new Wrapper(typeof (T))),
                 "wrap with the {0} behavior".ToFormat(typeof(T).Name));
 
+            return applyWrapper<T>(configAction);
+        }
+
+        private IOrderPolicyExpression applyWrapper<T>(VisitBehaviorsAction configAction)
+        {
             _actions.Fill(configAction);
+
+            _lastNodeMatch = ReorderBehaviorsPolicy.FuncForWrapper(typeof(T));
 
             return this;
         }
 
-        public PoliciesExpression ConditionallyWrapBehaviorChainsWith<T>(Expression<Func<ActionCall, bool>> filter) where T : IActionBehavior
+        public IOrderPolicyExpression ConditionallyWrapBehaviorChainsWith<T>(Expression<Func<ActionCall, bool>> filter) where T : IActionBehavior
         {
             var reason = "wrap with the {0} behavior if [{1}]".ToFormat(typeof(T).Name, filter.Body.ToString());
             var chainFilter = filter.Compile();
@@ -38,9 +67,7 @@ namespace FubuMVC.Core.Registration.DSL
                     v.Actions += chain => chain.Prepend(new Wrapper(typeof(T)));
                 }, reason);
 
-            _actions.Fill(configAction);
-
-            return this;
+            return applyWrapper<T>(configAction);
         }
 
         private void addPolicy(Action<BehaviorGraph> action)
@@ -49,7 +76,7 @@ namespace FubuMVC.Core.Registration.DSL
             _actions.Add(policy);
         }
 
-        public PoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
+        public IPoliciesExpression EnrichCallsWith<T>(Func<ActionCall, bool> filter) where T : IActionBehavior
         {
             addPolicy(graph =>
             {
@@ -62,24 +89,63 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public PoliciesExpression AlterActions(Action<ActionCall> configure)
+        public IPoliciesExpression AlterActions(Action<ActionCall> configure)
         {
             addPolicy(graph => graph.Actions().Each(configure));
 
             return this;
         }
 
-        public PoliciesExpression Add(IConfigurationAction alteration)
+        public IPoliciesExpression Add(IConfigurationAction alteration)
         {
             _actions.Fill(alteration);
             return this;
         }
 
-        public PoliciesExpression Add<T>() where T : IConfigurationAction, new()
+        public IPoliciesExpression Add<T>() where T : IConfigurationAction, new()
         {
             if (_actions.Any(x => x is T)) return this;
 
             return Add(new T());
+        }
+
+        IPoliciesExpression IOrderPolicyExpression.Ordering(Action<BehaviorOrderPolicyExpression> ordering)
+        {
+            ordering(new BehaviorOrderPolicyExpression( _systemPolicies, _lastNodeMatch ));
+            return this;
+        }
+
+        public class BehaviorOrderPolicyExpression
+        {
+            private readonly List<IConfigurationAction> _systemPolicies;
+            private readonly Func<BehaviorNode, bool> _lastNodeMatch;
+
+            public BehaviorOrderPolicyExpression(List<IConfigurationAction> systemPolicies, Func<BehaviorNode, bool> lastNodeMatch)
+            {
+                _systemPolicies = systemPolicies;
+                _lastNodeMatch = lastNodeMatch;
+            }
+
+            // Not unit tested and therefore, not real code yet.
+            //public void MustBeBeforeBehavior<T>() where T : IActionBehavior
+            //{
+            //    var policy = new ReorderBehaviorsPolicy(){
+            //        WhatMustBeBefore = _lastNodeMatch
+            //    };
+
+            //    policy.ThisWrapperMustBeAfter<T>();
+            //    _systemPolicies.Add(policy);
+            //}
+
+            public void MustBeBeforeAuthorization()
+            {
+                var policy = new ReorderBehaviorsPolicy(){
+                    WhatMustBeBefore = _lastNodeMatch
+                };
+
+                policy.ThisNodeMustBeAfter<AuthorizationNode>();
+                _systemPolicies.Add(policy);
+            }
         }
     }
 }

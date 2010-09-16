@@ -220,4 +220,18 @@ namespace FubuMVC.Tests.Registration.Conventions
             throw new NotImplementedException();
         }
     }
+
+
+    public class Wrapper3 : IActionBehavior
+    {
+        public void Invoke()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InvokePartial()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

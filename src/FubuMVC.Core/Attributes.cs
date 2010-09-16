@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Core
 {
@@ -87,6 +88,23 @@ namespace FubuMVC.Core
     [AttributeUsage(AttributeTargets.Method)]
     public class FubuPartialAttribute : Attribute
     {
+    }
+
+    // TODO:  If anyone wants it, make it work on a controller too
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    public class WrapWithAttribute : Attribute
+    {
+        private readonly Type[] _behaviorTypes;
+
+        public WrapWithAttribute(params Type[] behaviorTypes)
+        {
+            _behaviorTypes = behaviorTypes;
+        }
+
+        public Type[] BehaviorTypes
+        {
+            get { return _behaviorTypes; }
+        }
     }
 
     /// <summary>
