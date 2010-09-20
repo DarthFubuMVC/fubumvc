@@ -79,6 +79,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICacheServiceProvider.cs" />
     <Compile Include="ViewCreation\SparkView.cs" />
+    <Compile Include="ViewCreation\ViewContext.cs" />
     <Compile Include="ViewLocation\SparkViewFacility.cs" />
     <Compile Include="ViewCreation\SparkViewNode.cs" />
     <Compile Include="ViewCreation\SparkViewToken.cs" />

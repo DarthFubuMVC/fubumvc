@@ -6,6 +6,7 @@ using Microsoft.Practices.ServiceLocation;
 using FubuMVC.Core.Urls;
 using FubuCore.Util;
 using Spark;
+using System.IO;
 
 namespace Spark.Web.FubuMVC.ViewCreation
 {
@@ -22,6 +23,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
         public IResourcePathManager ResourcePathManager { get; set; }
         string IFubuPage.ElementPrefix { get; set; }
         public IServiceLocator ServiceLocator { get; set; }
+        public ViewContext ViewContext { get; set; }
 
         public string SiteRoot
         {
@@ -66,6 +68,22 @@ namespace Spark.Web.FubuMVC.ViewCreation
         public IUrlRegistry Urls
         {
             get { return Get<IUrlRegistry>(); }
+        }
+        public void Render(ViewContext viewContext, TextWriter writer)
+        {
+            ViewContext = viewContext;
+
+            var outerView = ViewContext.View as SparkView;
+            var isNestedView = outerView != null && ReferenceEquals(this, outerView) == false;
+            if (isNestedView && outerView.Output != null)
+                writer = outerView.Output;
+
+            RenderView(writer);
+
+            if (!isNestedView)
+                // proactively dispose named content. pools spoolwriter pages. avoids finalizers.
+                foreach (var content in Content.Values) content.Close();
+            Content.Clear();
         }
     }
 

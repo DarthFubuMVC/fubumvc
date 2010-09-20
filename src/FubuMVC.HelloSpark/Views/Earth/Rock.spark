@@ -1,0 +1,13 @@
+﻿<viewdata model="FubuMVC.HelloSpark.Controllers.EarthViewModel" />
+
+<content:title>Down to Earth!</content:title>
+<content:header>Where are we now?</content:header>
+
+<h2>Via Spark Partial: <WhereAreWe /></h2>
+<h2>Via Fubu Partial: 
+#this.Partial<LocationViewModel>();
+</h2>
+
+<content:footer>That's right baby!</content:footer>
+
+!{this.LinkTo<WaterInputModel>().Text("Cool her down!")}

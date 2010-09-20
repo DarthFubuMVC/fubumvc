@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Web;
-using System.Web.Routing;
 using Spark.Compiler;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.Extensions;
@@ -226,16 +225,6 @@ namespace Spark.Web.FubuMVC
         public ViewEngineResult FindView(ActionContext actionContext, string viewName, string masterName)
         {
             return FindViewInternal(actionContext, viewName, masterName, true, false);
-        }
-
-        public ISparkView FindView(HttpContextBase httpContext, string actionNamespace, string actionName, string viewName, string masterName)
-        {
-            var routeData = new RouteData();
-            routeData.Values.Add("controller", actionName.RemoveSuffix("Controller"));
-            var actionContext = new ActionContext(httpContext, routeData, actionNamespace);
-
-            ViewEngineResult viewResult = FindView(actionContext, viewName, masterName);
-            return viewResult.View;
         }
 
         public virtual ViewEngineResult FindPartialView(ActionContext actionContext, string partialViewName)

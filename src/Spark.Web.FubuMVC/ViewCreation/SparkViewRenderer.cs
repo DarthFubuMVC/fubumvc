@@ -2,6 +2,8 @@
 using System.Web;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using System.IO;
+using System.Web.Routing;
 
 namespace Spark.Web.FubuMVC.ViewCreation
 {
@@ -12,6 +14,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
     public class SparkViewRenderer<T> : ISparkViewRenderer<T> where T : class
     {
+        private static ViewContext _outerViewContext;
         private readonly HttpContextBase _httpContext;
         private readonly SparkViewFactory _viewFactory;
         private readonly IOutputWriter _writer;
@@ -30,6 +33,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
             string actionNamespace = actionCall.HandlerType.Namespace;
             string actionName = viewToken.ActionName;
             string viewName = viewToken.Name;
+            TextWriter writer = _httpContext.Response.Output;
 
             if (viewToken.MatchedDescriptor != null && viewToken.MatchedDescriptor.Language == LanguageType.Javascript)
             {
@@ -38,15 +42,35 @@ namespace Spark.Web.FubuMVC.ViewCreation
                 return;
             }
 
-            ISparkView sparkView = _viewFactory.FindView(_httpContext, actionNamespace, actionName, viewName, null);
+            ActionContext actionContext;
+            ISparkView view = FindSparkViewByConvention(actionNamespace, actionName, viewName, out actionContext);
+            if (_outerViewContext == null)
+                _outerViewContext = new ViewContext(actionContext, view, writer);
 
-            var configurableView = sparkView as T;
+            var configurableView = view as T;
             if (configurableView != null)
                 configureView(configurableView);
 
-            sparkView.RenderView(_httpContext.Response.Output);
+            var sparkView = view as SparkView;
+            if (sparkView != null) 
+                sparkView.Render(_outerViewContext, writer);
+
+            _outerViewContext = null;
         }
 
         #endregion
+        private ISparkView FindSparkViewByConvention(string actionNamespace, string actionName, string viewName, out ActionContext actionContext)
+        {
+            //TODO: Rob G - This is where we need to feed in convention to find views in same folder as controller
+
+            var routeData = new RouteData();
+            routeData.Values.Add("controller", actionName);
+            actionContext = new ActionContext(_httpContext, routeData, actionNamespace);
+            ViewEngineResult findResult = _outerViewContext == null 
+                ? _viewFactory.FindView(actionContext, viewName, null)
+                : _viewFactory.FindPartialView(actionContext, viewName);
+
+            return findResult.View;
+        }
     }
 }
