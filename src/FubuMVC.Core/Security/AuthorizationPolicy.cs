@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Runtime;
+﻿using System;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security
 {
@@ -19,6 +20,11 @@ namespace FubuMVC.Core.Security
         public IAuthorizationRule<TModel> InnerRule
         {
             get { return _innerRule; }
+        }
+
+        public override string ToString()
+        {
+            return _innerRule.ToString();
         }
     }
 }

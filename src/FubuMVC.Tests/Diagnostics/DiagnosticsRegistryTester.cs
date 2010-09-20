@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void smoke_test()
         {
-            Debug.WriteLine(new BehaviorGraphWriter(graph, urls).PrintRoutes());
+            Debug.WriteLine(new BehaviorGraphWriter(graph, urls, null).PrintRoutes());
         }
     }
 

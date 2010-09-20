@@ -24,6 +24,11 @@ namespace FubuMVC.Core.Security
             return AuthorizationRight.Combine(_policies.Select(x => x.RightsFor(request)));
         }
 
+        public IEnumerable<string> RulesDescriptions()
+        {
+            return _policies.Select(x => x.ToString());
+        }
+
         public IEnumerable<IAuthorizationPolicy> Policies
         {
             get { return _policies; }

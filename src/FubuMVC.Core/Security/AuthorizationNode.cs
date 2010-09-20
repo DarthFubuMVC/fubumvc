@@ -90,5 +90,6 @@ namespace FubuMVC.Core.Security
             callback(typeof (IEndPointAuthorizor), objectDef);
 
         }
+
     }
 }

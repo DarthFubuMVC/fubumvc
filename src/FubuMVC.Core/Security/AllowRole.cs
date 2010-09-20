@@ -37,5 +37,10 @@ namespace FubuMVC.Core.Security
         {
             get { return _role; }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Role: {0}", _role);
+        }
     }
 }

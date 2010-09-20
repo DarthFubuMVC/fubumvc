@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
+using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -20,12 +21,14 @@ namespace FubuMVC.Core.Diagnostics
         public const string FUBU_INTERNAL_CLASS = "fubu-internal";
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
+        private readonly IServiceLocator _services;
         private readonly string _diagnosticsNamespace;
 
-        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls)
+        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IServiceLocator services)
         {
             _graph = graph;
             _urls = urls;
+            _services = services;
             _diagnosticsNamespace = GetType().Namespace;
         }
 
@@ -174,6 +177,13 @@ namespace FubuMVC.Core.Diagnostics
             return BuildDocument("Registered Actions", table);
         }
 
+        [Description("show all behavior chains without any authorization rules")]
+        public HtmlDocument RoutesWithoutAuthorization()
+        {
+            var table = writeTable(x => !x.Authorization.HasRules(), x => x.RoutePattern, routes, actions);
+            return BuildDocument("Routes without any Authorization Rules", table);
+        }
+
         public string PrintActions()
         {
             return writeTextTable(x => x.FirstCallDescription, actions, routes, outputs);
@@ -185,6 +195,42 @@ namespace FubuMVC.Core.Diagnostics
             var table = writeTable(x => x.HasInput(), x => x.InputTypeName, inputModels, actions);
 
             return BuildDocument("Registered Input Types", table);
+        }
+
+        [Description("show all authorization rules by actions")]
+        public HtmlDocument AuthorizationRulesByActions()
+        {
+            var table = writeTable(x => x.FirstCall().Description, actions, authorization);
+            return BuildDocument("Registered Authorization Rules", table);
+        }
+
+        [Description("show all authorization rules by routes")]
+        public HtmlDocument AuthorizationRulesByRoutes()
+        {
+            var table = writeTable(x => x.RoutePattern, routes, authorization);
+            return BuildDocument("Registered Authorization Rules", table);
+        }
+
+        [Description("list of all the actions allowed by each role")]
+        public HtmlDocument ActionsByRole()
+        {
+            var list = AuthorizationWriter.BuildListOfRoles(_graph, (chain, tag) =>
+            {
+                tag.Text(chain.Calls.Select(x => x.Description).Join(", "));
+            });
+
+            return BuildDocument("Actions by Role", list);
+        }
+
+        [Description("list of all the routes allowed by each role")]
+        public HtmlDocument RoutesByRole()
+        {
+            var list = AuthorizationWriter.BuildListOfRoles(_graph, (chain, tag) =>
+            {
+                tag.Text(chain.RoutePattern);
+            });
+
+            return BuildDocument("Routes by Role", list);
         }
 
         private IColumn routes
@@ -224,6 +270,14 @@ namespace FubuMVC.Core.Diagnostics
             get
             {
                 return new InputModelColumn();
+            }
+        }
+
+        private IColumn authorization
+        {
+            get
+            {
+                return new AuthorizationRulesColumn(_services);
             }
         }
 

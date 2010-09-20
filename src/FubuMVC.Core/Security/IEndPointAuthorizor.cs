@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Security
@@ -6,6 +7,7 @@ namespace FubuMVC.Core.Security
     public interface IEndPointAuthorizor
     {
         AuthorizationRight IsAuthorized(IFubuRequest request);
+        IEnumerable<string> RulesDescriptions();
     }
 
     public class NulloEndPointAuthorizor : IEndPointAuthorizor
@@ -15,6 +17,11 @@ namespace FubuMVC.Core.Security
         public AuthorizationRight IsAuthorized(IFubuRequest request)
         {
             return AuthorizationRight.Allow;
+        }
+
+        public IEnumerable<string> RulesDescriptions()
+        {
+            yield return "None";
         }
     }
 }
