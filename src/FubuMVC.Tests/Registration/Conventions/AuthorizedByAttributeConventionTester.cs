@@ -132,7 +132,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
     }
 
-    [AuthorizedBy(typeof(AuthorizationRule2))]
+    [AuthorizedBy<AuthorizationRule2>]
     public class AuthorizedController2
     {
         public void MethodWithNoAttributes() { }

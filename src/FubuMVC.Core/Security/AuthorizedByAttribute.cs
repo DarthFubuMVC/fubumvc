@@ -17,4 +17,5 @@ namespace FubuMVC.Core.Security
             get { return _types; }
         }
     }
+
 }
