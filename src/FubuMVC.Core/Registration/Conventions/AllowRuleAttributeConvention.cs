@@ -18,9 +18,7 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             chain.Calls.Each(call =>
             {
-                call.Method.ForAttribute<AllowRoleAttribute>(att => addRoles(chain, att));
-
-                call.HandlerType.ForAttribute<AllowRoleAttribute>(att => addRoles(chain, att));
+                call.ForAttributes<AllowRoleAttribute>(att => addRoles(chain, att));
             });
         }
 

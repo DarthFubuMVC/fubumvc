@@ -11,11 +11,7 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             graph.Actions().Each(a =>
             {
-                // Sukant, it's just little bitty stuff like this.  If the Type in HandlerType is
-                // decorated with the UrlRegistryCategoryAttribute, call through to the continuation
-                // passed into the function
-                a.HandlerType.ForAttribute<UrlRegistryCategoryAttribute>(att => a.ParentChain().UrlCategory.Category = att.Category);
-                a.Method.ForAttribute<UrlRegistryCategoryAttribute>(att => a.ParentChain().UrlCategory.Category = att.Category);
+                a.ForAttributes<UrlRegistryCategoryAttribute>(att => a.ParentChain().UrlCategory.Category = att.Category);
             });
         }
     }
