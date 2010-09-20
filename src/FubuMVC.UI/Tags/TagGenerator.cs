@@ -19,6 +19,7 @@ namespace FubuMVC.UI.Tags
         string ElementPrefix { get; set; }
         string CurrentProfile { get; }
         ElementRequest GetRequest(Accessor accessor);
+
         HtmlTag BeforePartial(ElementRequest request);
         HtmlTag AfterPartial(ElementRequest request);
         HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
@@ -105,7 +106,7 @@ namespace FubuMVC.UI.Tags
 
         public ElementRequest GetRequest(Accessor accessor)
         {
-            var request = new ElementRequest(_model, accessor, _services, _stringifier);
+            var request = new ElementRequest(_model, accessor, _services);
             determineElementName(request);
             return request;
         }
@@ -133,7 +134,7 @@ namespace FubuMVC.UI.Tags
         public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)
         {
             Accessor accessor = ReflectionHelper.GetAccessor(expression);
-            var request = new ElementRequest(_model, accessor, _services, _stringifier);
+            var request = new ElementRequest(_model, accessor, _services);
             determineElementName(request);
             return request;
         }

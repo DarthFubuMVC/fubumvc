@@ -1,5 +1,6 @@
 using FubuCore;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Security;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -37,6 +38,22 @@ namespace FubuMVC.Tests.UI.Configuration
             resolver.Stub(x => x.ResolveType(theModel)).Return(GetType());
 
             request.HolderType().ShouldEqual(GetType());
+        }
+
+        [Test]
+        public void get_access_rights()
+        {
+            var services = MockRepository.GenerateMock<IServiceLocator>();
+            var rightsService = MockRepository.GenerateMock<IFieldAccessService>();
+
+            services.Stub(x => x.GetInstance<IFieldAccessService>()).Return(rightsService);
+
+            var theModel = new Model1();
+            var request = ElementRequest.For<Model1>(theModel, x => x.Child.Name, services);
+
+            rightsService.Stub(x => x.RightsFor(request)).Return(AccessRight.ReadOnly);
+
+            request.AccessRights().ShouldEqual(AccessRight.ReadOnly);
         }
 
         public class Model1

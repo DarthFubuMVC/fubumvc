@@ -82,6 +82,7 @@
     <Compile Include="Security\FieldAccessService.cs" />
     <Compile Include="Security\FieldAccessRights.cs" />
     <Compile Include="Security\IFieldAccessRule.cs" />
+    <Compile Include="ServiceLocatorExtensions.cs" />
     <Compile Include="ShowEditFieldExpressions.cs" />
     <Compile Include="Tags\PartialLambdaElementModifier.cs" />
     <Compile Include="Tags\PartialTagActionExpression.cs" />

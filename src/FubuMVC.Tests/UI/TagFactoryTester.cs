@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.UI
         private HtmlTag For(Expression<Func<Address, object>> expression)
         {
             Accessor accessor = expression.ToAccessor();
-            var request = new ElementRequest(address, accessor, null, new Stringifier());
+            var request = new ElementRequest(address, accessor, null);
             request.ElementId = accessor.Name;
             return factory.Build(request);
         }

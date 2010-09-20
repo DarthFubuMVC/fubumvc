@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.UI
 
         private ElementRequest For(Expression<Func<AddressViewModel, object>> expression)
         {
-            return new ElementRequest(new AddressViewModel(), expression.ToAccessor(), null, new Stringifier());
+            return new ElementRequest(new AddressViewModel(), expression.ToAccessor(), null);
         }
 
         [Test]

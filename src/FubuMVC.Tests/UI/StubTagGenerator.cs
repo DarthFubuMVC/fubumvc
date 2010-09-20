@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.UI
 
         public ElementRequest GetRequest(Expression<Func<T, object>> expression)
         {
-            return new ElementRequest(null, expression.ToAccessor(), null, null);
+            return new ElementRequest(null, expression.ToAccessor(), null);
         }
 
         public HtmlTag LabelFor(ElementRequest request)

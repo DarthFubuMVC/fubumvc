@@ -9,10 +9,6 @@ namespace FubuCore
 {
     public class Stringifier
     {
-        // TODO -- make these things have a common interface ?
-
-        // TODO -- should this even be in here?
-        // TODO -- not tested at all
         private readonly List<PropertyOverrideStrategy> _overrides = new List<PropertyOverrideStrategy>();
         private readonly List<StringifierStrategy> _strategies = new List<StringifierStrategy>();
 
