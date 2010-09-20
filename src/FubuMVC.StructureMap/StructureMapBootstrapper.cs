@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -31,5 +32,15 @@ namespace FubuMVC.StructureMap
         }
 
         public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder { get { return _smFacility.Builder; } set { _smFacility.Builder = value; } }
+    
+    
+        public static IContainer BuildContainer(FubuRegistry registry)
+        {
+            var container = new Container();
+            var bootstrapper = new StructureMapBootstrapper(container, registry);
+            bootstrapper.Bootstrap(new List<RouteBase>());
+
+            return container;
+        }
     }
 }

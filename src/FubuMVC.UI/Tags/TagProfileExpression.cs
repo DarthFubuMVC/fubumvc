@@ -1,3 +1,5 @@
+using FubuMVC.UI.Security;
+
 namespace FubuMVC.UI.Tags
 {
     public class TagProfileExpression
@@ -15,6 +17,11 @@ namespace FubuMVC.UI.Tags
             AfterPartial = new TagFactoryExpression(profile.AfterPartial);
             BeforeEachOfPartial = new PartialTagFactoryExpression(profile.BeforeEachOfPartial);
             AfterEachOfPartial = new PartialTagFactoryExpression(profile.AfterEachOfPartial);
+        }
+
+        public void DegradeAccessToFields()
+        {
+            _profile.Editor.InsertFirstBuilder(new DegradingAccessElementBuilder());
         }
 
         protected TagProfile profile { get { return _profile; } }

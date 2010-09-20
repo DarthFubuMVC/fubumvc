@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.UI.Configuration;
+using FubuMVC.UI.Security;
 using HtmlTags;
 
 namespace FubuMVC.UI.Tags
@@ -29,6 +30,11 @@ namespace FubuMVC.UI.Tags
         public void AddBuilder(IElementBuilder builder)
         {
             _sources.Add(builder);
+        }
+
+        public void InsertFirstBuilder(IElementBuilder builder)
+        {
+            _sources.Insert(0, builder);
         }
 
         private Func<ElementRequest, HtmlTag> resolveCreator(AccessorDef accessorDef)
@@ -62,4 +68,5 @@ namespace FubuMVC.UI.Tags
             _modifiers.AddRange(factory._modifiers);
         }
     }
+
 }

@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.UI
         public void use_the_prefix_in_determining_element_names()
         {
             var naming = new DefaultElementNamingConvention();
-            var generator = new TagGenerator<AddressViewModel>(new TagProfileLibrary(), naming, null, new Stringifier())
+            var generator = new TagGenerator<AddressViewModel>(new TagProfileLibrary(), naming, null)
             {
                 Model = new AddressViewModel(),
                 ElementPrefix = "Site"

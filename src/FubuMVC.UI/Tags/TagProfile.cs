@@ -27,6 +27,7 @@ namespace FubuMVC.UI.Tags
         public TagFactory Editor { get; private set; }
         public TagFactory BeforePartial { get; private set; }
         public TagFactory AfterPartial { get; private set; }
+
         public PartialTagFactory BeforeEachOfPartial { get; private set; }
         public PartialTagFactory AfterEachOfPartial { get; private set; }
 

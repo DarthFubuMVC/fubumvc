@@ -48,18 +48,16 @@ namespace FubuMVC.UI.Tags
         private T _model;
         private readonly IElementNamingConvention _namingConvention;
         private readonly IServiceLocator _services;
-        private readonly Stringifier _stringifier;
         private TagProfile _profile;
 
 
-        public TagGenerator(TagProfileLibrary library, IElementNamingConvention namingConvention, IServiceLocator services, Stringifier stringifier)
+        public TagGenerator(TagProfileLibrary library, IElementNamingConvention namingConvention, IServiceLocator services)
         {
             ElementPrefix = string.Empty;
             
             _library = library;
             _namingConvention = namingConvention;
             _services = services;
-            _stringifier = stringifier;
 
             _profile = _library.DefaultProfile;
         }
