@@ -200,6 +200,8 @@
     <Compile Include="Security\AuthorizationNode.cs" />
     <Compile Include="Security\AuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationRight.cs" />
+    <Compile Include="Security\AuthorizedByAttribute.cs" />
+    <Compile Include="Security\AuthorizedByAttributeConvention.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
     <Compile Include="Security\EndPointAuthorizor.cs" />
     <Compile Include="Security\EndPointAuthorizorFactory.cs" />

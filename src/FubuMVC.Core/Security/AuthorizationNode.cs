@@ -49,6 +49,11 @@ namespace FubuMVC.Core.Security
             return ruleObjectDef;
         }
 
+        public ObjectDef AddPolicy(Type policyType)
+        {
+            return _policies.AddType(policyType);
+        }
+
         public void AddPolicy(IAuthorizationPolicy policy)
         {
             _policies.AddValue(policy);
@@ -91,5 +96,12 @@ namespace FubuMVC.Core.Security
 
         }
 
+        public IEnumerable<ObjectDef> AllRules
+        {
+            get
+            {
+                return _policies.Items;
+            }
+        }
     }
 }

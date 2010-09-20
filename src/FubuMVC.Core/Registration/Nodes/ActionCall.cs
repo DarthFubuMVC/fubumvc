@@ -29,6 +29,13 @@ namespace FubuMVC.Core.Registration.Nodes
         public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
         public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), hasReturn ? Method.ReturnType.Name : "void"); } }
 
+        public void ForAttributes<T>(Action<T> action) where T : Attribute
+        {
+            HandlerType.ForAttribute(action);
+            Method.ForAttribute(action);
+
+        }
+
         private string getInputParameters()
         {
             if( ! HasInput ) return "";

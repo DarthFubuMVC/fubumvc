@@ -27,4 +27,11 @@ namespace FubuMVC.Core.Security
             return _innerRule.ToString();
         }
     }
+
+    public class AuthorizationPolicy<TModel, TRule> : AuthorizationPolicy<TModel> where TRule : IAuthorizationRule<TModel> where TModel : class
+    {
+        public AuthorizationPolicy(TRule innerRule) : base(innerRule)
+        {
+        }
+    }
 }

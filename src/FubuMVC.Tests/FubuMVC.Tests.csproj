@@ -95,6 +95,7 @@
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />
+    <Compile Include="Registration\Conventions\AuthorizedByAttributeConventionTester.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicyTester.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />
