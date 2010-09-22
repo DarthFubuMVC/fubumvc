@@ -1,4 +1,7 @@
+using System.Security.Principal;
+using System.Threading;
 using FubuMVC.Core;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Partials;
@@ -40,6 +43,25 @@ namespace FubuMVC.Tests.View.WebForms
 
             _expression = new RenderPartialExpression<TestModel>(_model, _view, _renderer,_tagGenerator, _endpointService);
             _expression.Using<IFubuPage>(v => { _wasCalled = true; });
+        }
+
+        [Test]
+        public void when_rendering_a_partial_and_the_user_has_access_to_the_role()
+        {
+            PrincipalRoles.Current = new GenericPrincipal(Thread.CurrentPrincipal.Identity, new[] { "foo" });
+            _expression.RequiresAccessTo("foo");
+            _expression.For(x => new TestModel().PartialModel);
+            _expression.ToString().ShouldNotEqual(string.Empty);
+            PrincipalRoles.Current = null;
+        }
+
+        [Test]
+        public void when_rendering_a_partial_and_the_user_does_not_have_access_to_the_role()
+        {
+            PrincipalRoles.Current = new GenericPrincipal(Thread.CurrentPrincipal.Identity, new[] { "foo" });
+            _expression.RequiresAccessTo("bar");            
+            _expression.ToString().ShouldEqual(string.Empty);
+            PrincipalRoles.Current = null;
         }
 
         [Test]
@@ -252,5 +274,5 @@ namespace FubuMVC.Tests.View.WebForms
         public class PartialTestModel
         {            
         }
-    }
+    }    
 }

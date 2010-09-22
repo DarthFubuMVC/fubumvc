@@ -15,3 +15,5 @@ _ReSharper.*
 *.suo
 *.cache
 ~$*
+
+src/FubuMVC.5.1.ReSharper

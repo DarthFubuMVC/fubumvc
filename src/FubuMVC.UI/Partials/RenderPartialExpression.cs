@@ -7,6 +7,7 @@ using System.Web;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.UI.Configuration;
@@ -55,6 +56,15 @@ namespace FubuMVC.UI.Partials
             return this;
         }
 
+        public RenderPartialExpression<TViewModel> RequiresAccessTo(string roleName)
+        {
+            if (_isAuthorized)
+            {
+                _isAuthorized = PrincipalRoles.IsInRole(roleName);
+            }
+            return this;
+        }
+
         public RenderPartialExpression<TViewModel> RequiresAccessTo<TController>(Expression<Action<TController>> endpoint)
         {
             if (_isAuthorized)
@@ -89,8 +99,6 @@ namespace FubuMVC.UI.Partials
 
             return this;
         }
-
-
 
         public RenderPartialExpression<TViewModel> WithoutPrefix()
         {

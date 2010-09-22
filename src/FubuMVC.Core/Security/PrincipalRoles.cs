@@ -7,12 +7,16 @@ namespace FubuMVC.Core.Security
 {
     public static class PrincipalRoles
     {
+        private static IPrincipal _stubbedPrincipal;
+
         public static IPrincipal Current
         {
             get
             {
-                return HttpContext.Current == null ? Thread.CurrentPrincipal : HttpContext.Current.User;
+                return _stubbedPrincipal ?? (HttpContext.Current == null ? Thread.CurrentPrincipal : HttpContext.Current.User);
             }
+
+            set { _stubbedPrincipal = value; }
         }
 
         public static bool IsInRole(params string[] roles)
