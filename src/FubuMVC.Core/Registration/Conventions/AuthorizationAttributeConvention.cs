@@ -7,7 +7,7 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Conventions
 {
-    public class AllowRuleAttributeConvention : IConfigurationAction
+    public class AuthorizationAttributeConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)
         {
@@ -16,15 +16,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         private static void analyzeChain(BehaviorChain chain)
         {
-            chain.Calls.Each(call =>
-            {
-                call.ForAttributes<AllowRoleAttribute>(att => addRoles(chain, att));
-            });
-        }
-
-        private static void addRoles(BehaviorChain chain, AllowRoleAttribute att)
-        {
-            att.Roles.Each(role => chain.Authorization.AddRole(role));
+            chain.Calls.Each(call => call.ForAttributes<AuthorizationAttribute>(att => att.Alter(call)));
         }
     }
 

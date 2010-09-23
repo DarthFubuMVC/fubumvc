@@ -126,7 +126,7 @@
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
     <Compile Include="FubuRegistry.DefaultServices.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
-    <Compile Include="Registration\Conventions\AllowRuleAttributeConvention.cs" />
+    <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
@@ -201,7 +201,6 @@
     <Compile Include="Security\AuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationRight.cs" />
     <Compile Include="Security\AuthorizedByAttribute.cs" />
-    <Compile Include="Security\AuthorizedByAttributeConvention.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
     <Compile Include="Security\EndPointAuthorizor.cs" />
     <Compile Include="Security\EndPointAuthorizorFactory.cs" />

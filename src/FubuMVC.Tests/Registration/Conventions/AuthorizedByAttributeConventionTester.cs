@@ -32,14 +32,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void get_policy_type_when_it_is_an_authorization_policy()
         {
-            AuthorizedByAttributeConvention.RuleTypeFor(typeof (Input1), typeof (AuthorizationRule1))
+            AuthorizedByAttribute.RuleTypeFor(typeof (Input1), typeof (AuthorizationRule1))
                 .ShouldEqual(typeof (AuthorizationRule1));
         }
 
         [Test]
         public void get_policy_type_when_it_is_an_authorization_rule_for_that_input()
         {
-            AuthorizedByAttributeConvention.RuleTypeFor(typeof (Input1), typeof (Input1Checker))
+            AuthorizedByAttribute.RuleTypeFor(typeof (Input1), typeof (Input1Checker))
                 .ShouldEqual(typeof (AuthorizationPolicy<Input1, Input1Checker>));
         }
 
@@ -124,12 +124,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void rules_in_combination_of_method_and_handler_type()
         {
-            chainFor(x => x.MethodWithOnePolicy()).Authorization.AllRules.Select(x => x.Type)
-                .ShouldHaveTheSameElementsAs(typeof(AuthorizationRule2), typeof(AuthorizationRule1));   
+            var rules = chainFor(x => x.MethodWithOnePolicy()).Authorization.AllRules.Select(x => x.Type).ToList();
+            rules
+                .ShouldHaveTheSameElementsAs(typeof(AuthorizationRule2), typeof(AuthorizationRule1));
         }
-
-
-
     }
 
     [AuthorizedBy(typeof(AuthorizationRule2))]

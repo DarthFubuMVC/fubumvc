@@ -1,10 +1,19 @@
 ﻿using System;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.Security
 {
+
+    public abstract class AuthorizationAttribute : Attribute
+    {
+        public abstract void Alter(ActionCall call);
+    }
+
+
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
-    public class AllowRoleAttribute : Attribute
+    public class AllowRoleAttribute : AuthorizationAttribute
     {
         private readonly string[] _roles;
 
@@ -16,6 +25,12 @@ namespace FubuMVC.Core.Security
         public string[] Roles
         {
             get { return _roles; }
+        }
+
+        public override void Alter(ActionCall call)
+        {
+            var authorizationNode = call.ParentChain().Authorization;
+            _roles.Each(r => authorizationNode.AddRole(r));
         }
     }
 
