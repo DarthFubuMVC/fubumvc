@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Security
 {
-
     public abstract class AuthorizationAttribute : Attribute
     {
         public abstract void Alter(ActionCall call);
