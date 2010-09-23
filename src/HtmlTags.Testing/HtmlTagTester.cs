@@ -139,6 +139,39 @@ namespace HtmlTags.Testing
         }
 
         [Test]
+        public void retrieve_a_previously_set_metadata()
+        {
+            var tag = new HtmlTag("div");
+            tag.MetaData("name", "joe");
+            tag.MetaData("name").ShouldEqual("joe");
+        }
+
+        [Test]
+        public void retrieve_a_non_existing_metadata_should_return_null()
+        {
+            var tag = new HtmlTag("div");
+            tag.MetaData("name").ShouldBeNull();
+        }
+
+        [Test]
+        public void manipulate_a_previously_set_metadata()
+        {
+            var tag = new HtmlTag("div");
+            tag.MetaData("error", new ListValue{Display = "Original"});
+            tag.MetaData<ListValue>("error", val => val.Display = "Changed");
+            tag.MetaData("error").As<ListValue>().Display.ShouldEqual("Changed");
+        }
+
+        [Test]
+        public void attempt_to_manipulate_a_non_existing_metadata_should_be_a_no_op()
+        {
+            var tag = new HtmlTag("div");
+            tag.MetaData<ListValue>("error", val => val.Display = "Changed");
+            tag.MetaData("error").ShouldBeNull();
+        }
+
+
+        [Test]
         public void render_multiple_attributes()
         {
             HtmlTag tag = new HtmlTag("table").Attr("cellPadding", "2").Attr("cellSpacing", "3");
