@@ -32,7 +32,7 @@ namespace Spark.Web.FubuMVC.Tests
             var httpContext = MockRepository.GenerateStub<HttpContextBase>();
             _routeData = new RouteData();
             var controller = new StubController();
-            _actionContext = new ActionContext(httpContext, _routeData, controller.GetType().Namespace);
+            _actionContext = new ActionContext(httpContext, _routeData, controller.GetType().Namespace, "Bar");
         }
 
         #endregion

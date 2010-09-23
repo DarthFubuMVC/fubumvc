@@ -37,9 +37,8 @@ namespace Spark.Web.FubuMVC.Tests
             _output = _response.Output;
 
             _routeData = new RouteData();
-            _routeData.Values.Add("controller", "Stub");
             _routeData.Values.Add("action", "Index");
-            _actionContext = new ActionContext(_httpContext, _routeData, new StubController().GetType().Namespace);
+            _actionContext = new ActionContext(_httpContext, _routeData, new StubController().GetType().Namespace, "Stub");
         }
 
         #endregion
@@ -117,17 +116,16 @@ namespace Spark.Web.FubuMVC.Tests
         {
             _factory.ViewFolder = new InMemoryViewFolder
                                       {
-                                          {"Foo\\baz.spark", ""},
+                                          {"Stub\\baz.spark", ""},
                                           {"Shared\\Application.spark", ""}
                                       };
 
-            _routeData.Values["controller"] = "Foo";
             _routeData.Values["action"] = "Notbaz";
 
             SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "baz", null, true, null);
 
             descriptor.Templates.ShouldHaveCount(2);
-            descriptor.Templates[0].ShouldEqual("Foo\\baz.spark");
+            descriptor.Templates[0].ShouldEqual("Stub\\baz.spark");
             descriptor.Templates[1].ShouldEqual("Shared\\Application.spark");
         }
 
@@ -136,18 +134,17 @@ namespace Spark.Web.FubuMVC.Tests
         {
             _factory.ViewFolder = new InMemoryViewFolder
                                       {
-                                          {"Foo\\baz.spark", ""},
-                                          {"Shared\\Foo.spark", ""}
+                                          {"Stub\\baz.spark", ""},
+                                          {"Shared\\Stub.spark", ""}
                                       };
 
-            _routeData.Values["controller"] = "Foo";
             _routeData.Values["action"] = "Notbaz";
 
             SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "baz", null, true, null);
 
             descriptor.Templates.ShouldHaveCount(2);
-            descriptor.Templates[0].ShouldEqual("Foo\\baz.spark");
-            descriptor.Templates[1].ShouldEqual("Shared\\Foo.spark");
+            descriptor.Templates[0].ShouldEqual("Stub\\baz.spark");
+            descriptor.Templates[1].ShouldEqual("Shared\\Stub.spark");
         }
 
         [Test]
@@ -393,16 +390,15 @@ namespace Spark.Web.FubuMVC.Tests
         {
             _factory.ViewFolder = new InMemoryViewFolder
                                       {
-                                          {"Foo\\baz.spark", ""}
+                                          {"Stub\\baz.spark", ""}
                                       };
 
-            _routeData.Values["controller"] = "Foo";
             _routeData.Values["action"] = "Notbaz";
 
             SparkViewDescriptor descriptor = _factory.CreateDescriptor(_actionContext, "baz", null, true, null);
 
             descriptor.Templates.ShouldHaveCount(1);
-            descriptor.Templates[0].ShouldEqual("Foo\\baz.spark");
+            descriptor.Templates[0].ShouldEqual("Stub\\baz.spark");
         }
     }
 }

@@ -86,14 +86,10 @@ namespace Spark.Web.FubuMVC
 
         public SparkViewDescriptor CreateDescriptor(ActionContext actionContext, string viewName, string masterName, bool findDefaultMaster, ICollection<string> searchedLocations)
         {
-            string targetNamespace = actionContext.ActionNamespace;
-
-            string actionName = actionContext.RouteData.GetRequiredString("controller");
-
             return DescriptorBuilder.BuildDescriptor(
                 new BuildDescriptorParams(
-                    targetNamespace,
-                    actionName,
+                    actionContext.ActionNamespace,
+                    actionContext.ActionName,
                     viewName,
                     masterName,
                     findDefaultMaster,
@@ -101,24 +97,23 @@ namespace Spark.Web.FubuMVC
                 searchedLocations);
         }
 
-        public Assembly Precompile(SparkBatchDescriptor batch)
+        public Assembly Precompile(SparkBatchDescriptor batch, Func<string, string> getActionName)
         {
-            return Engine.BatchCompilation(batch.OutputAssembly, CreateDescriptors(batch));
+            return Engine.BatchCompilation(batch.OutputAssembly, CreateDescriptors(batch, getActionName));
         }
 
-        public List<SparkViewDescriptor> CreateDescriptors(SparkBatchDescriptor batch)
+        public List<SparkViewDescriptor> CreateDescriptors(SparkBatchDescriptor batch, Func<string, string> getActionName)
         {
             var descriptors = new List<SparkViewDescriptor>();
             foreach (SparkBatchEntry entry in batch.Entries)
-                descriptors.AddRange(CreateDescriptors(entry));
+                descriptors.AddRange(CreateDescriptors(entry, getActionName)); 
             return descriptors;
         }
 
-        public IList<SparkViewDescriptor> CreateDescriptors(SparkBatchEntry entry)
+        public IList<SparkViewDescriptor> CreateDescriptors(SparkBatchEntry entry, Func<string, string> getActionName)
         {
+            string actionName = getActionName(entry.ControllerType.Name);
             var descriptors = new List<SparkViewDescriptor>();
-
-            string controllerName = entry.ControllerType.Name.RemoveSuffix("Controller");
 
             var viewNames = new List<string>();
             IList<string> includeViews = entry.IncludeViews;
@@ -129,7 +124,7 @@ namespace Spark.Web.FubuMVC
             {
                 if (include.EndsWith("*"))
                 {
-                    foreach (string fileName in ViewFolder.ListViews(controllerName))
+                    foreach (string fileName in ViewFolder.ListViews(actionName))
                     {
                         if (!string.Equals(Path.GetExtension(fileName), ".spark", StringComparison.InvariantCultureIgnoreCase))
                             continue;
@@ -164,7 +159,7 @@ namespace Spark.Web.FubuMVC
                 {
                     descriptors.Add(CreateDescriptor(
                                         entry.ControllerType.Namespace,
-                                        controllerName,
+                                        actionName,
                                         viewName,
                                         null /*masterName*/,
                                         true));
@@ -175,7 +170,7 @@ namespace Spark.Web.FubuMVC
                     {
                         descriptors.Add(CreateDescriptor(
                                             entry.ControllerType.Namespace,
-                                            controllerName,
+                                            actionName,
                                             viewName,
                                             string.Join(" ", masterName.ToArray()),
                                             false));
@@ -186,13 +181,13 @@ namespace Spark.Web.FubuMVC
             return descriptors;
         }
 
-        public SparkViewDescriptor CreateDescriptor(string targetNamespace, string controllerName, string viewName, string masterName, bool findDefaultMaster)
+        public SparkViewDescriptor CreateDescriptor(string targetNamespace, string actionName, string viewName, string masterName, bool findDefaultMaster)
         {
             var searchedLocations = new List<string>();
             SparkViewDescriptor descriptor = DescriptorBuilder.BuildDescriptor(
                 new BuildDescriptorParams(
                     targetNamespace /*areaName*/,
-                    controllerName,
+                    actionName,
                     viewName,
                     masterName,
                     findDefaultMaster, null),
@@ -232,11 +227,11 @@ namespace Spark.Web.FubuMVC
             return FindViewInternal(actionContext, partialViewName, null /*masterName*/, false, false);
         }
 
-        public SparkViewToken GetViewToken(ActionCall call, string controllerName, string viewName, LanguageType languageType)
+        public SparkViewToken GetViewToken(ActionCall call, string actionName, string viewName, LanguageType languageType)
         {
             var searchedLocations = new List<string>();
 
-            var descriptorParams = new BuildDescriptorParams("", controllerName, viewName, String.Empty, false, null);
+            var descriptorParams = new BuildDescriptorParams("", actionName, viewName, String.Empty, false, null);
             var descriptor = DescriptorBuilder.BuildDescriptor(descriptorParams, searchedLocations);
             if (descriptor == null)
                 throw new CompilerException(String.Format(
@@ -251,11 +246,9 @@ namespace Spark.Web.FubuMVC
             var searchedLocations = new List<string>();
             string targetNamespace = actionContext.ActionNamespace;
 
-            string controllerName = actionContext.RouteData.GetRequiredString("controller");
-
             var descriptorParams = new BuildDescriptorParams(
                 targetNamespace,
-                controllerName,
+                actionContext.ActionName,
                 viewName,
                 masterName,
                 findDefaultMaster,

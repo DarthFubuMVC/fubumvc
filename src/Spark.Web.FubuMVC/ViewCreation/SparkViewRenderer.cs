@@ -65,7 +65,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
             var routeData = new RouteData();
             routeData.Values.Add("controller", actionName);
-            actionContext = new ActionContext(_httpContext, routeData, actionNamespace);
+            actionContext = new ActionContext(_httpContext, routeData, actionNamespace, actionName);
             ViewEngineResult findResult = _outerViewContext == null 
                 ? _viewFactory.FindView(actionContext, viewName, null)
                 : _viewFactory.FindPartialView(actionContext, viewName);

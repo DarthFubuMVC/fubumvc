@@ -19,9 +19,12 @@ namespace Spark.Web.FubuMVC.Bootstrap
             Actions.IncludeTypesNamed(x => x.EndsWith("Controller"));
 
             Routes.IgnoreControllerNamespaceEntirely();
+            
+            Func<Type, bool> actionNameFilter = actionType => actionType.Name.EndsWith("Controller");
+            Func<string, string> actionNameConvention = action => action.RemoveSuffix("Controller");
 
-            Views.Facility(new SparkViewFacility(viewFactory, actionType => actionType.Name.EndsWith("Controller")))
-                .TryToAttach(x => x.BySparkViewDescriptors(action => action.RemoveSuffix("Controller")));
+            Views.Facility(new SparkViewFacility(viewFactory, actionNameFilter, actionNameConvention))
+                .TryToAttach(x => x.BySparkViewDescriptors(actionNameConvention));
         }
     }
 }

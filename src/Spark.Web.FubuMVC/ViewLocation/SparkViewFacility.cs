@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using Spark.Web.FubuMVC.ViewCreation;
@@ -11,11 +10,15 @@ namespace Spark.Web.FubuMVC.ViewLocation
     {
         private readonly Func<Type, bool> _sparkActionEndPointConventionFilter;
         private readonly SparkViewFactory _viewFactory;
+        private Func<string, string> _getActionNameFromCallConvention;
 
-        public SparkViewFacility(SparkViewFactory viewFactory, Func<Type, bool> sparkActionEndPointConventionFilter)
+        public SparkViewFacility(SparkViewFactory viewFactory, 
+            Func<Type, bool> sparkActionEndPointConventionFilter, 
+            Func<string, string> getActionNameFromCallConvention)
         {
             _viewFactory = viewFactory;
             _sparkActionEndPointConventionFilter = sparkActionEndPointConventionFilter;
+            _getActionNameFromCallConvention = getActionNameFromCallConvention;
         }
 
         #region IViewFacility Members
@@ -28,7 +31,7 @@ namespace Spark.Web.FubuMVC.ViewLocation
             actionTypes.Each(actionType =>
                                  {
                                      var sparkBatchEntry = new SparkBatchEntry {ControllerType = actionType};
-                                     IList<SparkViewDescriptor> descriptors = _viewFactory.CreateDescriptors(sparkBatchEntry);
+                                     IList<SparkViewDescriptor> descriptors = _viewFactory.CreateDescriptors(sparkBatchEntry, _getActionNameFromCallConvention);
                                      viewTokens.Add(new SparkViewToken(descriptors));
                                  });
             return viewTokens;

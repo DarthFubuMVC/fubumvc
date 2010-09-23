@@ -6,8 +6,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
 {
     public class ViewContext : ActionContext
     {
-        public ViewContext(ActionContext actionContext, ISparkView view, TextWriter writer) :
-            base(actionContext.HttpContext, actionContext.RouteData, actionContext.ActionNamespace)
+        public ViewContext(ActionContext actionContext, ISparkView view, TextWriter writer) : 
+            base(actionContext.HttpContext, actionContext.RouteData, actionContext.ActionNamespace, actionContext.ActionName)
         {
             Writer = writer;
             View = view;
