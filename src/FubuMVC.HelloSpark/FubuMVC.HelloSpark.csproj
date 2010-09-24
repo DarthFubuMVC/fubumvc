@@ -62,10 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AirController.cs" />
+    <Compile Include="Features\FifthElement\FifthElementController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\EarthController.cs" />
     <Compile Include="Controllers\WaterController.cs" />
     <Compile Include="Controllers\FireController.cs" />
+    <Compile Include="Features\FifthElement\FifthElementViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -94,12 +96,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Features\FifthElement\AnotherDimension.spark" />
     <None Include="Views\Air\_Breathe.spark" />
     <None Include="Views\Air\TakeABreath.spark" />
     <None Include="Views\Earth\Rock.spark" />
     <None Include="Views\Location\WhereAreWe.spark" />
     <None Include="Views\Shared\Application.spark" />
     <None Include="Views\Fire\Create.spark" />
+    <None Include="Views\Shared\_global.spark" />
     <None Include="Views\Shared\_WhereAreWe.spark" />
     <None Include="Views\Water\Spray.spark" />
   </ItemGroup>

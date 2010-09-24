@@ -12,13 +12,20 @@ namespace FubuMVC.HelloSpark
     public class HelloSparkRegistry : SparkDefaultStructureMapRegistry
     {
         private SparkViewFactory _sparkViewFactory;
+
         public HelloSparkRegistry(bool enableDiagnostics, string controllerAssembly, SparkViewFactory sparkViewFactory)
             : base(enableDiagnostics, controllerAssembly)
         {
             _sparkViewFactory = sparkViewFactory;
 
-            Output.ToJson.WhenTheOutputModelIs<JsonResponse>();
+            AddViewFolder("/Features/");
 
+            Actions.IncludeTypesNamed(x => x.EndsWith("Controller"));
+            AttachViewsBy(
+                actionType => actionType.Name.EndsWith("Controller"), 
+                action => action.RemoveSuffix("Controller"));
+                
+            Output.ToJson.WhenTheOutputModelIs<JsonResponse>();
             Output.To(call => new JavaScriptOutputNode(GetJavaScriptViewToken(call), call))
                 .WhenTheOutputModelIs<JavaScriptResponse>();
 
