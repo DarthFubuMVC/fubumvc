@@ -38,12 +38,12 @@ namespace FubuMVC.UI.Navigation
 
         public IEnumerable<MenuItemToken> MenuItemsFor(T target)
         {
-            return _actions.Select(x => BuildMenuItem(target, x)).OrderBy(x => x.Text);
+            return _actions.Select(x => BuildMenuItem(target, x));
         }
 
         public IEnumerable<MenuItemToken> MenuItemsFor(T target, string category)
         {
-            return _actions.Where(x => x.Category == category).Select(x => BuildMenuItem(target, x)).OrderBy(x => x.Text);
+            return _actions.Where(x => x.Category == category).Select(x => BuildMenuItem(target, x));
         }
     }
 
