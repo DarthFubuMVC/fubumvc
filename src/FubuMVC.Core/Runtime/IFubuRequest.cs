@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Runtime
 
     public class InMemoryFubuRequest : IFubuRequest
     {
-        private readonly Cache<Type, object> _cache = new Cache<Type, object>();
+        private readonly Cache<Type, object> _cache = new Cache<Type, object>(onMissing => null);
 
         public T Get<T>() where T : class
         {
