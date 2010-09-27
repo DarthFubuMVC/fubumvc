@@ -62,7 +62,11 @@ namespace FubuMVC.UI
             return page.AuthorizedLinkTo(x => x.EndpointFor(actionExpression));
         }
 
-
+        public static HtmlTag LinkToNew<T> (this IFubuPage page)
+        {
+            return page.AuthorizedLinkTo(x => x.EndpointForNew<T>());
+        }
+        
         public static string LinkVariable(this IFubuPage page, string variable, object input)
         {
             string url = page.Urls.UrlFor(input);

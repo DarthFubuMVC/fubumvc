@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Routing;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
@@ -20,6 +21,31 @@ using StructureMap;
 
 namespace FubuMVC.Tests.UI.Forms
 {
+    [TestFixture]
+    public class when_calling_link_to_new
+    {
+        private IFubuPage _page;
+        private IUrlRegistry _urls;        
+
+        [SetUp]
+        public void SetUp()
+        {
+            _page = MockRepository.GenerateMock<IFubuPage>();
+            _urls = new StubUrlRegistry();            
+            _page.Stub(p => p.Urls).Return(_urls);
+
+            var endpoints = new EndpointService(new StubAuthorizationPreviewService(), _urls);
+            _page.Stub(p => p.Get<IEndpointService>()).Return(endpoints);
+        }
+
+        [Test]
+        public void for_an_entity()
+        {
+            var tag = _page.LinkToNew<InputModel>();
+            tag.Attr("href").ShouldEqual("url for new {0}".ToFormat(typeof (InputModel).FullName));
+        }
+    }
+
     [TestFixture]
     public class when_calling_link_to
     {
