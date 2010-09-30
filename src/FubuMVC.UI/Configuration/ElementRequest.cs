@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.UI.Security;
@@ -14,6 +15,11 @@ namespace FubuMVC.UI.Configuration
         private bool _hasFetched;
         private object _rawValue;
         private readonly IServiceLocator _services;
+
+        public static ElementRequest For(object model, PropertyInfo property)
+        {
+            return new ElementRequest(model, new SingleProperty(property), null);
+        }
 
         public static ElementRequest For<T>(T model, Expression<Func<T, object>> expression)
         {

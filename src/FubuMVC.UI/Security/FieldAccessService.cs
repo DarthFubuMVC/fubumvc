@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
 
@@ -9,6 +10,7 @@ namespace FubuMVC.UI.Security
     public interface IFieldAccessService
     {
         AccessRight RightsFor(ElementRequest request);
+        AccessRight RightsFor(object target, PropertyInfo property);
     }
 
     public class FieldAccessService : IFieldAccessService
@@ -26,6 +28,12 @@ namespace FubuMVC.UI.Security
             var authorizationRules = matchingRules.Where(x => x.Category == FieldAccessCategory.Authorization);
             var logicRules = matchingRules.Where(x => x.Category == FieldAccessCategory.LogicCondition);
             return new FieldAccessRights(authorizationRules, logicRules).RightsFor(request);
+        }
+
+        public AccessRight RightsFor(object target, PropertyInfo property)
+        {
+            var request = ElementRequest.For(target, property);
+            return RightsFor(request);
         }
     }
 
