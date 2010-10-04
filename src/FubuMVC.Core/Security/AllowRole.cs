@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Security
     }
 
 
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false)]
     public class AllowRoleAttribute : AuthorizationAttribute
     {
         private readonly string[] _roles;
