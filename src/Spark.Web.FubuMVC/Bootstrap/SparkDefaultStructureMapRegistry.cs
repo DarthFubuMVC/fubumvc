@@ -5,6 +5,7 @@ using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.ViewLocation;
 using System.Collections.Generic;
 using Spark.FileSystem;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace Spark.Web.FubuMVC.Bootstrap
 {
@@ -22,10 +23,10 @@ namespace Spark.Web.FubuMVC.Bootstrap
             Routes.IgnoreControllerNamespaceEntirely();
         }
 
-        protected void AttachViewsBy(Func<Type, bool> actionNameFilter, Func<string, string> actionNameConvention)
+        protected void AttachViewsBy(Func<Type, bool> actionNameFilter, Func<Type, string> viewLocatorNameConvention, Func<ActionCall, string> viewNameConvention)
         {
-            Views.Facility(new SparkViewFacility(_sparkViewFactory, actionNameFilter, actionNameConvention))
-                            .TryToAttach(x => x.BySparkViewDescriptors(actionNameConvention));
+            Views.Facility(new SparkViewFacility(_sparkViewFactory, actionNameFilter, viewLocatorNameConvention))
+                            .TryToAttach(x => x.BySparkViewDescriptors(viewLocatorNameConvention, viewNameConvention));
         }
 
         protected void AddViewFolder(string virtualFolderRoot)

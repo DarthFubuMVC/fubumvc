@@ -23,7 +23,8 @@ namespace FubuMVC.HelloSpark
             Actions.IncludeTypesNamed(x => x.EndsWith("Controller"));
             AttachViewsBy(
                 actionType => actionType.Name.EndsWith("Controller"), 
-                action => action.RemoveSuffix("Controller"));
+                actionType => actionType.Name.RemoveSuffix("Controller"), 
+                action => action.Method.Name);
                 
             Output.ToJson.WhenTheOutputModelIs<JsonResponse>();
             Output.To(call => new JavaScriptOutputNode(GetJavaScriptViewToken(call), call))

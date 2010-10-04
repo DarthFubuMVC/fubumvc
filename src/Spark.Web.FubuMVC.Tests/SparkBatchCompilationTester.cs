@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.Tests.Controllers;
-using Spark.Web.FubuMVC.Extensions;
 using Microsoft.Practices.ServiceLocation;
 using Rhino.Mocks;
 using System;
@@ -13,7 +12,6 @@ namespace Spark.Web.FubuMVC.Tests
     public class SparkBatchCompilationTester
     {
         private SparkViewFactory _factory;
-        private Func<string, string> _getActionName;
 
         #region Setup/Teardown
 
@@ -24,7 +22,6 @@ namespace Spark.Web.FubuMVC.Tests
             var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
 
             _factory = new SparkViewFactory(settings, serviceLocator) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
-            _getActionName = action => action.RemoveSuffix("Controller");
         }
 
         #endregion
@@ -37,7 +34,7 @@ namespace Spark.Web.FubuMVC.Tests
                 .For<BatchController>().Layout("Layout").Include("Index").Include("List.spark")
                 .For<BatchController>().Layout("ElementLayout").Include("_row");
 
-            var assembly = _factory.Precompile(batch, _getActionName);
+            var assembly = _factory.Precompile(batch, "Batch");
 
             Assert.IsNotNull(assembly);
             Assert.AreEqual(3, assembly.GetTypes().Length);
@@ -51,7 +48,7 @@ namespace Spark.Web.FubuMVC.Tests
 
             batch.For<BatchController>();
 
-            var descriptors = _factory.CreateDescriptors(batch, _getActionName);
+            var descriptors = _factory.CreateDescriptors(batch, "Batch");
 
             descriptors.ShouldHaveCount(2);
             descriptors[0].Templates.ShouldHaveCount(1);
@@ -67,7 +64,7 @@ namespace Spark.Web.FubuMVC.Tests
 
             batch.For<BatchController>().Include("*").Include("_*").Exclude("In*");
 
-            var descriptors = _factory.CreateDescriptors(batch, _getActionName);
+            var descriptors = _factory.CreateDescriptors(batch, "Batch");
 
             descriptors.ShouldHaveCount(2);
             descriptors[0].Templates.ShouldHaveCount(1);
@@ -83,7 +80,7 @@ namespace Spark.Web.FubuMVC.Tests
 
             batch.For<BatchController>().Layout("Layout").Layout("AnotherLayout").Include("Index").Include("List.spark");
 
-            var assembly = _factory.Precompile(batch, _getActionName);
+            var assembly = _factory.Precompile(batch, "Batch");
             assembly.ShouldNotBeNull();
             assembly.GetTypes().ShouldHaveCount(4);
         }
@@ -97,13 +94,13 @@ namespace Spark.Web.FubuMVC.Tests
                 .For<BatchController>().Layout("Layout").Include("*")
                 .For<BatchController>().Layout("ElementLayout").Include("_*");
 
-            var descriptors = _factory.CreateDescriptors(batch, _getActionName);
+            var descriptors = _factory.CreateDescriptors(batch, "Batch");
             descriptors.ShouldHaveCount(3);
             descriptors.Any(d => d.Templates.Contains("Batch\\Index.spark") && d.Templates.Contains("Shared\\Layout.spark")).ShouldBeTrue();
             descriptors.Any(d => d.Templates.Contains("Batch\\List.spark") && d.Templates.Contains("Shared\\Layout.spark")).ShouldBeTrue();
             descriptors.Any(d => d.Templates.Contains("Batch\\_row.spark") && d.Templates.Contains("Shared\\ElementLayout.spark")).ShouldBeTrue();
 
-            var assembly = _factory.Precompile(batch, _getActionName);
+            var assembly = _factory.Precompile(batch, "Batch");
             assembly.ShouldNotBeNull();
             assembly.GetTypes().ShouldHaveCount(3);
         }
@@ -119,7 +116,7 @@ namespace Spark.Web.FubuMVC.Tests
                                       };
             var batch = new SparkBatchDescriptor();
             batch.For<BatchController>();
-            var descriptors = _factory.CreateDescriptors(batch, _getActionName);
+            var descriptors = _factory.CreateDescriptors(batch, "Batch");
 
             descriptors.ShouldHaveCount(1);
             descriptors[0].Templates.ShouldHaveCount(2);

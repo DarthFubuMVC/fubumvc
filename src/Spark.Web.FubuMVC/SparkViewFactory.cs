@@ -97,22 +97,22 @@ namespace Spark.Web.FubuMVC
                 searchedLocations);
         }
 
-        public Assembly Precompile(SparkBatchDescriptor batch, Func<string, string> getActionName)
+        public Assembly Precompile(SparkBatchDescriptor batch, string viewLocatorName)
         {
-            return Engine.BatchCompilation(batch.OutputAssembly, CreateDescriptors(batch, getActionName));
+            return Engine.BatchCompilation(batch.OutputAssembly, CreateDescriptors(batch, viewLocatorName));
         }
 
-        public List<SparkViewDescriptor> CreateDescriptors(SparkBatchDescriptor batch, Func<string, string> getActionName)
+        public List<SparkViewDescriptor> CreateDescriptors(SparkBatchDescriptor batch, string viewLocatorName)
         {
             var descriptors = new List<SparkViewDescriptor>();
             foreach (SparkBatchEntry entry in batch.Entries)
-                descriptors.AddRange(CreateDescriptors(entry, getActionName)); 
+                descriptors.AddRange(CreateDescriptors(entry, viewLocatorName)); 
             return descriptors;
         }
 
-        public IList<SparkViewDescriptor> CreateDescriptors(SparkBatchEntry entry, Func<string, string> getActionName)
+        public IList<SparkViewDescriptor> CreateDescriptors(SparkBatchEntry entry, string viewLocatorName)
         {
-            string actionName = getActionName(entry.ControllerType.Name);
+            string actionName = viewLocatorName;
             var descriptors = new List<SparkViewDescriptor>();
 
             var viewNames = new List<string>();
