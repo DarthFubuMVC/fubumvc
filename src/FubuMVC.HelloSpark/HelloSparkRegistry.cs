@@ -6,6 +6,7 @@ using Spark.Web.FubuMVC.Extensions;
 using FubuMVC.HelloSpark.Controllers;
 using Spark.Web.FubuMVC.ViewCreation;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.UI;
 
 namespace FubuMVC.HelloSpark
 {
@@ -29,6 +30,8 @@ namespace FubuMVC.HelloSpark
             Output.ToJson.WhenTheOutputModelIs<JsonResponse>();
             Output.To(call => new JavaScriptOutputNode(GetJavaScriptViewToken(call), call))
                 .WhenTheOutputModelIs<JavaScriptResponse>();
+
+            this.UseDefaultHtmlConventions();
 
             HomeIs<AirController>(c => c.TakeABreath());
         }
