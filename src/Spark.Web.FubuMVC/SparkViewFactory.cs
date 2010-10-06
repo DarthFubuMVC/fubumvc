@@ -238,7 +238,7 @@ namespace Spark.Web.FubuMVC
                     "View '{0}' could not be found in any of the following locations: {1}", viewName, string.Join(", ", searchedLocations)));
             descriptor.Language = languageType;
 
-            return new SparkViewToken(call, descriptor, call.Method.Name);
+            return new SparkViewToken(call, descriptor, call.Method.Name, viewName);
         }
 
         private ViewEngineResult FindViewInternal(ActionContext actionContext, string viewName, string masterName, bool findDefaultMaster, bool useCache)

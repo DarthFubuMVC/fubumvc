@@ -44,7 +44,7 @@ namespace Spark.Web.FubuMVC.Bootstrap
 
             IEnumerable<IViewToken> viewsBoundToActions =
                 matchedDescriptor != null
-                    ? new IViewToken[] { new SparkViewToken(call, matchedDescriptor, viewLocatorName) }
+                    ? new IViewToken[] { new SparkViewToken(call, matchedDescriptor, viewLocatorName, viewName) }
                     : new IViewToken[0];
 
             return viewsBoundToActions;
