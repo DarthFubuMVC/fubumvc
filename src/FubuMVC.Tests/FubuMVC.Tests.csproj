@@ -119,6 +119,7 @@
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="SelfMockingServiceLocator.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
+    <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />
     <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
     <Compile Include="UI\Security\DegradingAccessElementBuilderTester.cs" />
     <Compile Include="UI\ServiceLocatorExtensionsTester.cs" />
