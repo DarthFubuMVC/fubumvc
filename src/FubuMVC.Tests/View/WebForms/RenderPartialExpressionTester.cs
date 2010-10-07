@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.View.WebForms
         public void when_rendering_a_partial_and_the_user_has_access_to_the_role()
         {
             PrincipalRoles.Current = new GenericPrincipal(Thread.CurrentPrincipal.Identity, new[] { "foo" });
-            _expression.RequiresAccessTo("foo");
+            _expression.RequiresAccessTo("foo", "bar");
             _expression.For(x => new TestModel().PartialModel);
             _expression.ToString().ShouldNotEqual(string.Empty);
             PrincipalRoles.Current = null;

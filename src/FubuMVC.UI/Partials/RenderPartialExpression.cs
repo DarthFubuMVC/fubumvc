@@ -56,11 +56,11 @@ namespace FubuMVC.UI.Partials
             return this;
         }
 
-        public RenderPartialExpression<TViewModel> RequiresAccessTo(string roleName)
+        public RenderPartialExpression<TViewModel> RequiresAccessTo(params string[] roles)
         {
             if (_isAuthorized)
             {
-                _isAuthorized = PrincipalRoles.IsInRole(roleName);
+                _isAuthorized = PrincipalRoles.IsInRole(roles);
             }
             return this;
         }
