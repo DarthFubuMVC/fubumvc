@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
 
@@ -15,10 +17,12 @@ namespace FubuMVC.UI.Security
 
     public class FieldAccessService : IFieldAccessService
     {
+        private readonly ITypeResolver _types;
         private readonly List<IFieldAccessRule> _rules = new List<IFieldAccessRule>();
 
-        public FieldAccessService(IEnumerable<IFieldAccessRule> rules)
+        public FieldAccessService(IEnumerable<IFieldAccessRule> rules, ITypeResolver types)
         {
+            _types = types;
             _rules.AddRange(rules);
         }
 
@@ -32,7 +36,11 @@ namespace FubuMVC.UI.Security
 
         public AccessRight RightsFor(object target, PropertyInfo property)
         {
-            var request = ElementRequest.For(target, property);
+            if (target == null) throw new ArgumentNullException("target");
+
+            var accessor = new SingleProperty(property, _types.ResolveType(target));
+
+            var request = new ElementRequest(target, accessor, null);
             return RightsFor(request);
         }
     }

@@ -7,10 +7,17 @@ namespace FubuCore.Reflection
     public class SingleProperty : Accessor
     {
         private readonly PropertyInfo _property;
+        private readonly Type _ownerType;
 
         public SingleProperty(PropertyInfo property)
         {
             _property = property;
+        }
+
+        public SingleProperty(PropertyInfo property, Type ownerType)
+        {
+            _property = property;
+            _ownerType = ownerType;
         }
 
 
@@ -49,7 +56,7 @@ namespace FubuCore.Reflection
             return _property.GetValue(target, null);
         }
 
-        public Type OwnerType { get { return DeclaringType; } }
+        public Type OwnerType { get { return _ownerType ?? DeclaringType; } }
 
 
         public static SingleProperty Build<T>(Expression<Func<T, object>> expression)

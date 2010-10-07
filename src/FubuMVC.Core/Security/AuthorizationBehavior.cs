@@ -9,6 +9,7 @@ namespace FubuMVC.Core.Security
 
     public class AuthorizationBehavior : BasicBehavior
     {
+        // More on this interface below
         private readonly IAuthorizationFailureHandler _failureHandler;
         private readonly IFubuRequest _request;
         private readonly IEnumerable<IAuthorizationPolicy> _policies;
@@ -22,17 +23,22 @@ namespace FubuMVC.Core.Security
 
         protected override DoNext performInvoke()
         {
+            // Check every authorization policy for this endpoint
             var rights = _policies.Select(x => x.RightsFor(_request));
+
+            // Combine the results
             var access = AuthorizationRight.Combine(rights);
 
+            // If authorized, continue to the next behavior in the 
+            // chain (filters, controller actions, views, etc.)
             if (access == AuthorizationRight.Allow)
             {
                 return DoNext.Continue;
             }
 
-
+            // If authorization fails, hand off to the failure handler
+            // and stop the inner behaviors from executing
             _failureHandler.Handle();
-
             return DoNext.Stop;
         }
 

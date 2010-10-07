@@ -62,7 +62,11 @@
     <Compile Include="Configuration\PartialLambdaElementBuilder.cs" />
     <Compile Include="Diagnostics\ExampleHtmlWriter.cs" />
     <Compile Include="Diagnostics\HtmlDiagnosticsRegistry.cs" />
+    <Compile Include="Extensibility\ContentExtensionGraph.cs" />
+    <Compile Include="Extensibility\ContentExtensions.cs" />
+    <Compile Include="Extensibility\ExtensionsExpression.cs" />
     <Compile Include="Extensibility\IContentExtension.cs" />
+    <Compile Include="Extensibility\LambdaExtension.cs" />
     <Compile Include="Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="Forms\FormLineExpression.cs" />
     <Compile Include="Forms\ILabelAndFieldLayout.cs" />

@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.UI.Security
                 new LimiterRule<PersonModel>(person => person.Age > 30, AccessRight.ReadOnly){Category = FieldAccessCategory.LogicCondition}
             };
 
-            _service = new FieldAccessService(rules);
+            _service = new FieldAccessService(rules, null);
         }
 
         private AccessRight RightsFor<T>(T model, Expression<Func<T, object>> expression)
