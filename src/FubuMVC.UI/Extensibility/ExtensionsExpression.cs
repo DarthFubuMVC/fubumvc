@@ -1,9 +1,13 @@
 ﻿using System;
 using FubuMVC.Core;
+using FubuMVC.Core.Security;
 using FubuMVC.Core.View;
 
 namespace FubuMVC.UI.Extensibility
 {
+
+
+
     public class ExtensionsExpression
     {
         private readonly FubuRegistry _registry;
@@ -43,6 +47,13 @@ namespace FubuMVC.UI.Extensibility
         public ExtensionsExpression For<T>(string tag, Func<IFubuPage<T>, object> func) where T : class
         {
             return For(tag, new LambdaExtension<T>(func));
+        }
+
+        // TODO -- will need something more generic later.  Maybe.
+        public ExtensionsExpression OnlyForRoles(params string[] roles)
+        {
+            Func<bool> filter = () => PrincipalRoles.IsInRole(roles);
+            return register(g => g.FilterLast(filter));
         }
     }
 }

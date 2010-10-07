@@ -7,6 +7,7 @@ using FubuMVC.Core.View;
 
 namespace FubuMVC.UI.Extensibility
 {
+    // TODO -- no unit tests on this at all.  How sad.
     public class ContentExtensionGraph
     {
         private readonly Cache<Type, object> _shelves = new Cache<Type, object>(t =>
@@ -15,6 +16,8 @@ namespace FubuMVC.UI.Extensibility
             return Activator.CreateInstance(type);
         });
 
+        private IExtensionShelf _lastShelf;
+
         private ExtensionShelf<T> shelfFor<T>() where T : class
         {
             return (ExtensionShelf<T>) _shelves[typeof (T)];
@@ -22,7 +25,9 @@ namespace FubuMVC.UI.Extensibility
 
         public void Register<T>(string tag, IContentExtension<T> extension) where T : class
         {
-            shelfFor<T>().Add(tag, extension);            
+            var extensionShelf = shelfFor<T>();
+            extensionShelf.Add(tag, extension);
+            _lastShelf = extensionShelf;
         }
 
         public void Register<T>(IContentExtension<T> extension) where T : class
@@ -30,12 +35,22 @@ namespace FubuMVC.UI.Extensibility
             shelfFor<T>().Add(string.Empty, extension);
         }
 
+        public void FilterLast<T>(Func<IFubuPage<T>, bool> filter) where T : class
+        {
+            shelfFor<T>().FilterLast(filter);
+        }
+
+        public void FilterLast(Func<bool> filter)
+        {
+            _lastShelf.FilterLast(filter);
+        }
+
         private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page) where T : class
         {
             var writer = page.ServiceLocator.GetInstance<IOutputWriter>();
-            GenericEnumerableExtensions.Each<object>(extensions
-                                  .SelectMany(ex => ex.GetExtensions(page))
-                                  .Where(o => o != null), o => OutputWriterExtensions.WriteHtml(writer, (object) o));
+            extensions
+                .SelectMany(ex => ex.GetExtensions(page))
+                .Where(o => o != null).Each(o => OutputWriterExtensions.WriteHtml(writer, (object) o));
         }
 
         public void ApplyExtensions<T>(IFubuPage<T> page) where T : class
@@ -46,26 +61,6 @@ namespace FubuMVC.UI.Extensibility
         public void ApplyExtensions<T>(IFubuPage<T> page, string tag) where T : class
         {
             apply(shelfFor<T>().ExtensionsFor(tag), page);
-        }
-
-        public class ExtensionShelf<T> where T : class
-        {
-            private readonly Cache<string, List<IContentExtension<T>>> _cache = new Cache<string, List<IContentExtension<T>>>(key => new List<IContentExtension<T>>());
-
-            public void Add(string tag, IContentExtension<T> extension)
-            {
-                _cache[tag].Add(extension);
-            }
-
-            public IEnumerable<IContentExtension<T>> ExtensionsFor(string tag)
-            {
-                return _cache[tag];
-            }
-
-            public IEnumerable<IContentExtension<T>> AllExtensions()
-            {
-                return _cache.GetAll().SelectMany(x => x);
-            }
         }
     }
 }

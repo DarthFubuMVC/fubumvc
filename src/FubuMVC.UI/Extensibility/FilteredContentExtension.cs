@@ -19,5 +19,15 @@ namespace FubuMVC.UI.Extensibility
         {
             return _filter(page) ? _inner.GetExtensions(page) : new object[0];
         }
+
+        public Func<IFubuPage<T>, bool> Filter
+        {
+            get { return _filter; }
+        }
+
+        public IContentExtension<T> Inner
+        {
+            get { return _inner; }
+        }
     }
 }

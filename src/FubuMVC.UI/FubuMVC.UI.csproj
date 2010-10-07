@@ -65,6 +65,7 @@
     <Compile Include="Extensibility\ContentExtensionGraph.cs" />
     <Compile Include="Extensibility\ContentExtensions.cs" />
     <Compile Include="Extensibility\ExtensionsExpression.cs" />
+    <Compile Include="Extensibility\ExtensionShelf.cs" />
     <Compile Include="Extensibility\FilteredContentExtension.cs" />
     <Compile Include="Extensibility\IContentExtension.cs" />
     <Compile Include="Extensibility\LambdaExtension.cs" />
