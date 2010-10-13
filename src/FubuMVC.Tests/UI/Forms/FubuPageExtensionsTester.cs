@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.UI.Forms
         }
     }
 
-    [TestFixture]
+    [TestFixture, Ignore("Temporarily ignoring these until UI is merged into FubuMVC.Core")]
     public class when_calling_partial
     {
         private IFubuPage _page;
@@ -125,6 +125,7 @@ namespace FubuMVC.Tests.UI.Forms
             
             _partialFactory.Stub(f => f.BuildPartial(typeof (InputModel))).Return(_behavior);
             _page.Stub(p => p.Get<IPartialFactory>()).Return(_partialFactory);
+            
 
             _request = MockRepository.GenerateStub<IFubuRequest>();
             _page.Stub(p => p.Get<IFubuRequest>()).Return(_request);

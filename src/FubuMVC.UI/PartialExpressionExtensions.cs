@@ -43,9 +43,9 @@ namespace FubuMVC.UI
                 expression.Using(renderer.GetPartialViewTypeFor<TPartialModel>());
         }
 
-        private static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
+        public static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
         {
-            page.Get<IPartialFactory>().BuildPartial(typeof(TInputModel)).InvokePartial();
+            page.Get<PartialInvoker>().Invoke<TInputModel>();
         }
 
 
