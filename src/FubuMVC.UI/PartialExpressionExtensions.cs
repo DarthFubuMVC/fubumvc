@@ -20,8 +20,17 @@ namespace FubuMVC.UI
 
         public static void Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
         {
-            page.Get<IFubuRequest>().Set(model);
-            InvokePartial<TInputModel>(page, null);
+            if (typeof(TInputModel) == typeof(object))
+            {
+                page.Get<PartialInvoker>().InvokeObject(model);
+            }
+            else
+            {
+                page.Get<IFubuRequest>().Set(model);
+                InvokePartial<TInputModel>(page, null);
+            }
+
+
         }
 
         public static RenderPartialExpression<TInputModel> PartialForEach<TInputModel, TPartialModel>(
