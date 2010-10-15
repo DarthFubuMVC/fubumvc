@@ -263,5 +263,12 @@ namespace FubuCore
         {
             return type == typeof(decimal) || type == typeof(float) || type == typeof(double);
         }
+
+
+        public static T CloseAndBuildAs<T>(this Type openType, params Type[] parameterTypes)
+        {
+            var closedType = openType.MakeGenericType(parameterTypes);
+            return (T) Activator.CreateInstance(closedType);
+        }
     }
 }

@@ -244,6 +244,14 @@ namespace FubuCore.Testing
             typeof(Message2).IsNotConcrete().ShouldBeFalse();
         }
 
+        [Test]
+        public void close_and_build_as()
+        {
+            var message = typeof (OpenClass<>).CloseAndBuildAs<IMessage>(typeof (string));
+            message.ShouldBeOfType<OpenClass<string>>();
+            message.ShouldNotBeNull();
+        }
+
         public interface IMessage{}
         public abstract class AbstractMessage : IMessage{}
         public class Message3 : AbstractMessage{}
@@ -253,6 +261,9 @@ namespace FubuCore.Testing
         public interface IListener<T>{}
         public class ConcreteListener : IListener<string>{}
     
+
+
+        public class OpenClass<T> : IMessage{}
     }
 
     
