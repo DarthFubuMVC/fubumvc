@@ -25,10 +25,9 @@ namespace FubuMVC.Core.Registration.Conventions
         public IRouteDefinition Build(ActionCall call)
         {
             var pattern = call.Method.GetAttribute<UrlPatternAttribute>().Pattern;
-            
-            return call.HasInput 
-                       ? RouteBuilder.Build(call.InputType(), pattern) 
-                       : new RouteDefinition(pattern);
+            return call.BuildRouteForPattern(pattern);
+   
+
         }
     }
 }

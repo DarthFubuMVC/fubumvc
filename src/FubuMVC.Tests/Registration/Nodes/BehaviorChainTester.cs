@@ -385,5 +385,9 @@ namespace FubuMVC.Tests.Registration.Nodes
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldBeOfType<NulloEndPointAuthorizor>();
         }
+
+
     }
+
+
 }

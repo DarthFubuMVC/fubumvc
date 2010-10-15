@@ -8,6 +8,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Tests.Diagnostics;
@@ -300,6 +301,62 @@ namespace FubuMVC.Tests.Registration
         {
             _partialViewTypeRegistries.ShouldNotHave(reg=>reg.HasPartialViewTypeFor<UnregisteredPartialModel>());
         }
+    }
+
+    [TestFixture]
+    public class when_adding_chains_by_action
+    {
+        [Test]
+        public void add_a_simple_closed_type()
+        {
+            var graph = new BehaviorGraph();
+            var chain = graph.AddActionFor("go/{Id}", typeof (Action1));
+
+            chain.FirstCall().HandlerType.ShouldEqual(typeof (Action1));
+            chain.FirstCall().Method.Name.ShouldEqual("Go");
+            chain.Route.ShouldBeOfType<RouteDefinition<ArgModel>>().Pattern.ShouldEqual("go/{Id}");
+            chain.Route.CreateUrl(new ArgModel(){
+                Id = 5
+            }).ShouldEqual("go/5");
+
+            graph.BehaviorChainCount.ShouldEqual(1);
+        }
+
+        [Test]
+        public void add_a_simple_open_type()
+        {
+            var graph = new BehaviorGraph();
+            var chain = graph.AddActionFor("go/{Id}", typeof(Action2<>), typeof(string));
+
+            chain.FirstCall().HandlerType.ShouldEqual(typeof(Action2<string>));
+            chain.FirstCall().Method.Name.ShouldEqual("Go");
+            chain.Route.ShouldBeOfType<RouteDefinition<ArgModel>>().Pattern.ShouldEqual("go/{Id}");
+            chain.Route.CreateUrl(new ArgModel()
+            {
+                Id = 5
+            }).ShouldEqual("go/5");
+
+            graph.BehaviorChainCount.ShouldEqual(1);            
+        }
+    }
+
+    public class Action1
+    {
+        public void Go(ArgModel model)
+        {
+        }
+    }
+
+    public class Action2<T>
+    {
+        public void Go(ArgModel model)
+        {
+        }
+    }
+
+    public class ArgModel
+    {
+        public long Id { get; set; }
     }
 
     public class Foo

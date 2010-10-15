@@ -38,6 +38,12 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void Apply(BehaviorGraph graph, BehaviorChain chain)
         {
+            // Don't override the route if it already exists
+            if (chain.Route != null)
+            {
+                return;
+            }
+
             var log = graph.Observer;
 
             ActionCall call = chain.Calls.FirstOrDefault();

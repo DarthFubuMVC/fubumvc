@@ -138,6 +138,7 @@ namespace FubuMVC.Tests.Registration
                 ActionCall.For(typeof (InvalidActionWithMultipleMethods));
             });
         }
+
     }
 
     [TestFixture]

@@ -168,6 +168,24 @@ namespace FubuMVC.Core.Registration
             _behaviors.Add(chain);
         }
 
+        public BehaviorChain AddActionFor(string urlPattern, Type actionType, params Type[] arguments)
+        {
+            if (arguments.Any())
+            {
+                var closedType = actionType.MakeGenericType(arguments);
+                return AddActionFor(urlPattern, closedType);
+            }
+
+            var action = ActionCall.For(actionType);
+            var chain = new BehaviorChain();
+            chain.AddToEnd(action);
+            chain.Route = action.BuildRouteForPattern(urlPattern);
+            AddChain(chain);
+
+            return chain;
+        }
+
+
         public BehaviorChain AddChain()
         {
             var chain = new BehaviorChain();

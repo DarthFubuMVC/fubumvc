@@ -244,5 +244,12 @@ namespace FubuMVC.Core.Registration.Nodes
                        (Method != null ? Method.GetHashCode() : 0);
             }
         }
+
+        public IRouteDefinition BuildRouteForPattern(string pattern)
+        {
+            return HasInput
+               ? RouteBuilder.Build(InputType(), pattern)
+               : new RouteDefinition(pattern);
+        }
     }
 }
