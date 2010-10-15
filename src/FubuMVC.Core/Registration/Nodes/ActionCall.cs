@@ -79,6 +79,12 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        public static ActionCall ForOpenType(Type openType, params Type[] parameterTypes)
+        {
+            var closedType = openType.MakeGenericType(parameterTypes);
+            return For(closedType);
+        }
+
         public bool Returns<T>()
         {
             return OutputType().CanBeCastTo<T>();
