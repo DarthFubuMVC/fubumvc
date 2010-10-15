@@ -121,6 +121,23 @@ namespace FubuMVC.Tests.Registration
         {
             action.IsInternalFubuAction().ShouldBeFalse();
         }
+
+        [Test]
+        public void successfully_build_an_action_from_a_handler_type()
+        {
+            var action = ActionCall.For(typeof (ValidActionWithOneMethod));
+            action.HandlerType.ShouldEqual(typeof (ValidActionWithOneMethod));
+            action.Method.ShouldEqual(typeof (ValidActionWithOneMethod).GetMethod("Go"));
+        }
+
+        [Test]
+        public void fail_to_build_an_action_by_type_for_a_type_with_more_than_one_method()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                ActionCall.For(typeof (InvalidActionWithMultipleMethods));
+            });
+        }
     }
 
     [TestFixture]
@@ -319,6 +336,19 @@ namespace FubuMVC.Tests.Registration
         {
             theObjectDef.Type.ShouldEqual(typeof (ZeroInOneOutActionInvoker<ControllerTarget, Model1>));
         }
+    }
+
+  
+
+    public class ValidActionWithOneMethod
+    {
+        public void Go(){}
+    }
+
+    public class InvalidActionWithMultipleMethods
+    {
+        public void Go() { }
+        public void Go2() { }
     }
 
     public class Model1

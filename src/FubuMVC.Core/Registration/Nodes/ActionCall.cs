@@ -59,6 +59,26 @@ namespace FubuMVC.Core.Registration.Nodes
             return new ActionCall(typeof(T), method);
         }
 
+        /// <summary>
+        /// This method creates an ActionCall for an action type with only
+        /// one public method.  This method will throw an exception for
+        /// any actionType with more than one public method
+        /// </summary>
+        /// <param name="actionType"></param>
+        /// <returns></returns>
+        public static ActionCall For(Type actionType)
+        {
+            try
+            {
+                var method = actionType.GetMethods().Single(x => x.DeclaringType != typeof(object));
+                return new ActionCall(actionType, method);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new ArgumentOutOfRangeException("Only actions with one and only one public method can be used in this method");
+            }
+        }
+
         public bool Returns<T>()
         {
             return OutputType().CanBeCastTo<T>();
