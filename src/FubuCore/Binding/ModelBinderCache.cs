@@ -15,7 +15,8 @@ namespace FubuCore.Binding
 
         public ModelBinderCache(IEnumerable<IModelBinder> binders, IPropertyBinderCache propertyBinders, ITypeDescriptorCache types)
         {
-            _binders.AddRange(binders);
+            // DO NOT put the standard model binder at top
+            _binders.AddRange(binders.Where(x => !(x is StandardModelBinder)));
             _binders.Add(new StandardModelBinder(propertyBinders, types));
 
             _cache.OnMissing = type => _binders.FirstOrDefault(x => x.Matches(type));
