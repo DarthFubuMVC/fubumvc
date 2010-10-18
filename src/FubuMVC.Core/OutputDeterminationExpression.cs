@@ -53,7 +53,8 @@ namespace FubuMVC.Core
         private ActionCallFilterExpression output(Action<ActionCall> configure, string reason)
         {
             var modification = new ActionCallModification(configure, reason);
-            _registry.ApplyConvention(modification);
+            _registry.Policies.Add(modification);
+//            _registry.ApplyConvention(modification);
 
             modification.Filters.Excludes += call => call.HasOutputBehavior();
 

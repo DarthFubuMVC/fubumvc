@@ -23,9 +23,7 @@ namespace FubuMVC.Core
             addConvention(graph => _routeResolver.ApplyToAll(graph));
             _conventions.Add(new WrapWithAttributeConvention());
 
-            Policies.Add<StringOutputPolicy>();
-            Policies.Add<WebFormsEndpointPolicy>();
-            Policies.Add<ContinuationHandlerConvention>();
+
 
             _systemPolicies.Add(new AttachAuthorizationPolicy());
 
@@ -35,6 +33,11 @@ namespace FubuMVC.Core
 
             Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
             Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();
+
+            Policies.Add<WebFormsEndpointPolicy>();
+            Policies.Add<ContinuationHandlerConvention>();
+
+            _systemPolicies.Add(new StringOutputPolicy());
 
             _conventions.Add(_viewAttacher);
             Policies.Add<JsonMessageInputConvention>();
