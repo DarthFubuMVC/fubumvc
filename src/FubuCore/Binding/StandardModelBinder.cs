@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace FubuCore.Binding
@@ -47,8 +48,7 @@ namespace FubuCore.Binding
         {
             _typeCache.ForEachProperty(type, prop =>
             {
-                IPropertyBinder binder = _propertyBinders.BinderFor(prop);
-                binder.Bind(prop, context);
+                _propertyBinders.BinderFor(prop).Bind(prop, context);
             });
         }
     }

@@ -38,7 +38,10 @@ namespace FubuMVC.Core.View
 
             var bag = new ViewBag(views);
 
-            graph.Actions().Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
+            graph.Behaviors
+                .Select(x => x.FirstCall())
+                .Where(x => x != null)
+                .Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
         }
 
         public void AddFacility(IViewFacility facility)
