@@ -129,6 +129,21 @@ namespace FubuMVC.UI
                     viewPage.Model);
         }
 
+        /// <summary>
+        /// Renders a partial view for the view model
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model</typeparam>
+        /// <param name="viewPage"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static RenderPartialExpression<TViewModel> RenderPartialFor<TViewModel>(
+            this IFubuPage viewPage, TViewModel model) where TViewModel : class
+        {
+            var renderer = viewPage.Get<IPartialRenderer>();
+            return
+                new RenderPartialExpression<TViewModel>(model, viewPage, renderer, viewPage.Tags<TViewModel>(), viewPage.Get<IEndpointService>()).For(
+                    model);
+        }
 
 
 

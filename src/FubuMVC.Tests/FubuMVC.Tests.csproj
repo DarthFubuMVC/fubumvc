@@ -107,6 +107,7 @@
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
+    <Compile Include="Routing\RouteDefinitionExtensionsTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
     <Compile Include="Security\AuthorizationBehaviorTester.cs" />

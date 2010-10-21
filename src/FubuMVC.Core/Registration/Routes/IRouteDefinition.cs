@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Routing;
+using FubuMVC.Core.Registration.Conventions;
 
 namespace FubuMVC.Core.Registration.Routes
 {
@@ -19,5 +20,18 @@ namespace FubuMVC.Core.Registration.Routes
         void Prepend(string prefix);
 
         void RootUrlAt(string baseUrl);
+    }
+
+    public static class RouteDefinitionExtensions
+    {
+        public static void ConstrainToHttpMethods(this IRouteDefinition routeDef, params string[] methods)
+        {
+            if(methods.Length == 0)
+            {
+                return;
+            }
+
+            routeDef.AddRouteConstraint(RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT, new HttpMethodConstraint(methods));
+        }
     }
 }
