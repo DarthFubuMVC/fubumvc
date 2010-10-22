@@ -103,5 +103,10 @@ namespace FubuMVC.Core.Security
                 return _policies.Items;
             }
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + Environment.NewLine + AllRules.Select(x => x.Value != null ?  x.Value.ToString() : x.Type.ToString()).Join(Environment.NewLine);
+        }
     }
 }

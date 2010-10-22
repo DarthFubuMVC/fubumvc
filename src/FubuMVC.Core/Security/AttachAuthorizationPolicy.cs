@@ -1,4 +1,3 @@
-using System;
 using FubuMVC.Core.Registration;
 using System.Collections.Generic;
 
@@ -10,10 +9,9 @@ namespace FubuMVC.Core.Security
         {
             graph.Behaviors.Each(x =>
             {
-                if (x.Authorization.HasRules())
-                {
-                    x.Prepend(x.Authorization);
-                }
+                if (!x.Authorization.HasRules()) return;
+                x.Prepend(x.Authorization);
+                x.Calls.Each(call => graph.Observer.RecordCallStatus(call, "Protected by authorization rules"));
             });
         }
     }

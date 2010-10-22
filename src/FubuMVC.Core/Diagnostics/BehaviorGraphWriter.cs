@@ -115,11 +115,11 @@ namespace FubuMVC.Core.Diagnostics
             foreach (var node in behaviorChain)
             {
 
-                var description = node.ToString();
+                var description = node.ToString().HtmlEncode().ConvertCRLFToBreaks();
                 nodeTable.AddBodyRow(row =>
                 {
                     row.Cell().Text(node.Category.ToString());
-                    row.Cell().Text(description);
+                    row.Cell().UnEncoded().Text(description);
                     row.Cell().Text(node.GetType().FullName);
                     if (description.Contains(_diagnosticsNamespace))
                     {
