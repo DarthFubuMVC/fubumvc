@@ -118,6 +118,7 @@
     <Compile Include="Continuations\GenericAuthorizationPolicyTester.cs" />
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
+    <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="SelfMockingServiceLocator.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraphTester.cs" />

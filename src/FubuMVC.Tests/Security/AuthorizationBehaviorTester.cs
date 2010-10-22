@@ -1,9 +1,7 @@
-using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using NUnit.Framework;
-using System.Collections.Generic;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security
@@ -11,29 +9,14 @@ namespace FubuMVC.Tests.Security
     [TestFixture]
     public class when_authorization_returns_allow : InteractionContext<AuthorizationBehavior>
     {
-        private IAuthorizationPolicy[] policies;
-
         protected override void beforeEach()
         {
-            
-
             var request = MockFor<IFubuRequest>();
+            var policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
 
-            policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
-            policies[0].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.Allow);
-            policies[1].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-            policies[2].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-
+            MockFor<IAuthorizationPolicyExecutor>().Stub(x => x.IsAuthorized(request, policies)).Return(AuthorizationRight.Allow);
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
-        }
-
-        [Test]
-        public void should_query_all_authorization_policies()
-        {
-            policies[0].VerifyAllExpectations();
-            policies[1].VerifyAllExpectations();
-            policies[2].VerifyAllExpectations();
         }
 
         [Test]
@@ -52,28 +35,15 @@ namespace FubuMVC.Tests.Security
     [TestFixture]
     public class when_authorization_returns_none : InteractionContext<AuthorizationBehavior>
     {
-        private IAuthorizationPolicy[] policies;
-
         protected override void beforeEach()
         {
             var request = MockFor<IFubuRequest>();
+            var policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
 
-            policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
-            policies[0].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-            policies[1].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-            policies[2].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-
+            MockFor<IAuthorizationPolicyExecutor>().Stub(x => x.IsAuthorized(request, policies)).Return(AuthorizationRight.None);
 
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
-        }
-
-        [Test]
-        public void should_query_all_authorization_policies()
-        {
-            policies[0].VerifyAllExpectations();
-            policies[1].VerifyAllExpectations();
-            policies[2].VerifyAllExpectations();
         }
 
         [Test]
@@ -93,28 +63,15 @@ namespace FubuMVC.Tests.Security
     [TestFixture]
     public class when_authorization_returns_deny : InteractionContext<AuthorizationBehavior>
     {
-        private IAuthorizationPolicy[] policies;
-
         protected override void beforeEach()
         {
             var request = MockFor<IFubuRequest>();
+            var policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
 
-            policies = Services.CreateMockArrayFor<IAuthorizationPolicy>(3);
-            policies[0].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-            policies[1].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.Deny);
-            policies[2].Stub(x => x.RightsFor(request)).Return(AuthorizationRight.None);
-
+            MockFor<IAuthorizationPolicyExecutor>().Stub(x => x.IsAuthorized(request, policies)).Return(AuthorizationRight.Deny);
 
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
             ClassUnderTest.Invoke();
-        }
-
-        [Test]
-        public void should_query_all_authorization_policies()
-        {
-            policies[0].VerifyAllExpectations();
-            policies[1].VerifyAllExpectations();
-            policies[2].VerifyAllExpectations();
         }
 
         [Test]

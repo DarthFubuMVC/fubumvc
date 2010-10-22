@@ -8,5 +8,6 @@ namespace FubuMVC.Core.Diagnostics
         void Redirect(RedirectReport report);
         void Exception(ExceptionReport report);
         void SetValue(SetValueReport report);
+        void Authorization(AuthorizationReport report);
     }
 }

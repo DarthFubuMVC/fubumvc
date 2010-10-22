@@ -1,5 +1,6 @@
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -15,6 +16,7 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IRequestData, RecordingRequestData>();
                 x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
                 x.ReplaceService<IDebugDetector, DebugDetector>();
+                x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
             });
         }
     }

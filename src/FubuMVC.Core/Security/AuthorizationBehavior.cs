@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using FubuMVC.Core.Behaviors;
@@ -10,12 +11,14 @@ namespace FubuMVC.Core.Security
     public class AuthorizationBehavior : BasicBehavior
     {
         // More on this interface below
+        private readonly IAuthorizationPolicyExecutor _policyExecutor;
         private readonly IAuthorizationFailureHandler _failureHandler;
         private readonly IFubuRequest _request;
         private readonly IEnumerable<IAuthorizationPolicy> _policies;
 
-        public AuthorizationBehavior(IAuthorizationFailureHandler failureHandler, IFubuRequest request, IEnumerable<IAuthorizationPolicy> policies) : base(PartialBehavior.Executes)
+        public AuthorizationBehavior(IAuthorizationPolicyExecutor policyExecutor, IAuthorizationFailureHandler failureHandler, IFubuRequest request, IEnumerable<IAuthorizationPolicy> policies) : base(PartialBehavior.Executes)
         {
+            _policyExecutor = policyExecutor;
             _failureHandler = failureHandler;
             _request = request;
             _policies = policies;
@@ -23,11 +26,7 @@ namespace FubuMVC.Core.Security
 
         protected override DoNext performInvoke()
         {
-            // Check every authorization policy for this endpoint
-            var rights = _policies.Select(x => x.RightsFor(_request));
-
-            // Combine the results
-            var access = AuthorizationRight.Combine(rights);
+            var access = _policyExecutor.IsAuthorized(_request, _policies);
 
             // If authorized, continue to the next behavior in the 
             // chain (filters, controller actions, views, etc.)
@@ -50,6 +49,4 @@ namespace FubuMVC.Core.Security
             }
         }
     }
-
-    
 }

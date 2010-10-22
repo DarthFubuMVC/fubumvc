@@ -108,6 +108,7 @@
     <Compile Include="Diagnostics\ModelBindingReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\OutputColumn.cs" />
     <Compile Include="Diagnostics\OutputReport.cs" />
+    <Compile Include="Diagnostics\RecordingAuthorizationPolicyExecutor.cs" />
     <Compile Include="Diagnostics\RecordingFubuRequest.cs" />
     <Compile Include="Diagnostics\RecordingObjectResolver.cs" />
     <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Security\AuthorizationBehavior.cs" />
     <Compile Include="Security\AuthorizationNode.cs" />
     <Compile Include="Security\AuthorizationPolicy.cs" />
+    <Compile Include="Security\AuthorizationPolicyExecutor.cs" />
     <Compile Include="Security\AuthorizationRight.cs" />
     <Compile Include="Security\AuthorizedByAttribute.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />

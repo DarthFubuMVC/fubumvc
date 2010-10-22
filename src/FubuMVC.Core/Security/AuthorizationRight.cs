@@ -20,6 +20,11 @@ namespace FubuMVC.Core.Security
             get { return _precedence; }
         }
 
+        public string Name
+        {
+            get { return _name; }
+        }
+
         public static AuthorizationRight None = new AuthorizationRight(3, "None");
         public static AuthorizationRight Allow = new AuthorizationRight(2, "Allow");
         public static AuthorizationRight Deny = new AuthorizationRight(1, "Deny");

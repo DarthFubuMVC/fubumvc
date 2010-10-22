@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FubuCore;
 using HtmlTags;
@@ -64,6 +63,33 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             var text = "Set value of {0} to {1}".ToFormat(report.Type.FullName, report.Value);
             addDetail().Text(text);
+        }
+
+        public void Authorization(AuthorizationReport report)
+        {
+            var table = addDetail().Text("Authorization").Child<TableTag>();
+
+            table.AddClass("details");
+            table.AddHeaderRow(row =>
+            {
+                row.Header("Policy");
+                row.Header("Vote");
+            });
+
+            report.Details.Each(binding =>
+            {
+                table.AddBodyRow(row =>
+                {
+                    row.Cell(binding.PolicyDescription);
+                    row.Cell(binding.Vote);
+                });
+            });
+            table.AddFooterRow(footer =>
+            {
+                footer.AddClass("authz-decision");
+                footer.Cell("Decision");
+                footer.Cell(report.Decision);
+            });
         }
 
         private HtmlTag addDetail()
