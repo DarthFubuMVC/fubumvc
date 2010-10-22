@@ -86,6 +86,7 @@
     <Compile Include="Controllers\Products\ProductsController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controllers\Security\SecretController.cs" />
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\OddEvenLiModifier.cs" />
