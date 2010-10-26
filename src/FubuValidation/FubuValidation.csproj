@@ -54,10 +54,15 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CoreExtensions.cs" />
+    <Compile Include="IValidationRule.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="MessageBag.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
+    <Compile Include="Rules\GreaterThanZeroValidationRule.cs" />
+    <Compile Include="Rules\GreaterOrEqualToZeroValidationRule.cs" />
+    <Compile Include="Rules\MaximumStringLengthValidationRule.cs" />
+    <Compile Include="Rules\RequiredValidationRule.cs" />
     <Compile Include="TemplateParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
