@@ -62,6 +62,7 @@
     <Compile Include="Configuration\PartialLambdaElementBuilder.cs" />
     <Compile Include="Diagnostics\ExampleHtmlWriter.cs" />
     <Compile Include="Diagnostics\HtmlDiagnosticsRegistry.cs" />
+    <Compile Include="Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
     <Compile Include="Extensibility\ContentExtensionGraph.cs" />
     <Compile Include="Extensibility\ContentExtensions.cs" />
     <Compile Include="Extensibility\ExtensionsExpression.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Security\AccessRight.cs" />
     <Compile Include="Security\AccessRightExtensions.cs" />
     <Compile Include="Security\FieldAccessService.cs" />
-    <Compile Include="Security\FieldAccessRights.cs" />
+    <Compile Include="Security\FieldAccessRightsExecutor.cs" />
     <Compile Include="Security\IFieldAccessRule.cs" />
     <Compile Include="ServiceLocatorExtensions.cs" />
     <Compile Include="ShowEditFieldExpressions.cs" />

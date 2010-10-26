@@ -1,4 +1,5 @@
 using FubuCore.Binding;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 
@@ -18,6 +19,20 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
             });
+        }
+    }
+
+    public static class DiagnosticsExtensions
+    {
+        public static bool IsDiagnosticsEnabled(this BehaviorGraph graph)
+        {
+            //TODO: need a better way to determine if diagnostics are enabled
+            var outputWriter = graph.Services.DefaultServiceFor<IOutputWriter>();
+            if (outputWriter != null && outputWriter.Type == typeof(DebuggingOutputWriter))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

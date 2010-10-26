@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Data;
 using FubuCore;
 using HtmlTags;
+using System.Linq;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
@@ -89,6 +91,25 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
                 footer.AddClass("authz-decision");
                 footer.Cell("Decision");
                 footer.Cell(report.Decision);
+            });
+        }
+
+        public void CustomTable(DataTable report)
+        {
+            var table = addDetail().Child<TableTag>();
+
+            table.AddClass("details");
+            table.AddHeaderRow(row => { row.Header(report.TableName).Attr("colspan", report.Columns.Count); });
+            table.AddHeaderRow(row => { report.Columns.Cast<DataColumn>().Each(head => row.Header(head.ColumnName)); });
+            report.Rows.Cast<DataRow>().Each(row =>
+            {
+                table.AddBodyRow(htmlRow =>
+                {
+                    for (var i = 0; i < report.Columns.Count; i++)
+                    {
+                        htmlRow.Cell(row[i].ToString());
+                    }
+                });
             });
         }
 

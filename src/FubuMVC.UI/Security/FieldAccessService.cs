@@ -17,11 +17,13 @@ namespace FubuMVC.UI.Security
 
     public class FieldAccessService : IFieldAccessService
     {
+        private readonly IFieldAccessRightsExecutor _accessRightsExecutor;
         private readonly ITypeResolver _types;
         private readonly List<IFieldAccessRule> _rules = new List<IFieldAccessRule>();
 
-        public FieldAccessService(IEnumerable<IFieldAccessRule> rules, ITypeResolver types)
+        public FieldAccessService(IFieldAccessRightsExecutor accessRightsExecutor, IEnumerable<IFieldAccessRule> rules, ITypeResolver types)
         {
+            _accessRightsExecutor = accessRightsExecutor;
             _types = types;
             _rules.AddRange(rules);
         }
@@ -31,7 +33,7 @@ namespace FubuMVC.UI.Security
             var matchingRules = _rules.Where(x => x.Matches(request.Accessor));
             var authorizationRules = matchingRules.Where(x => x.Category == FieldAccessCategory.Authorization);
             var logicRules = matchingRules.Where(x => x.Category == FieldAccessCategory.LogicCondition);
-            return new FieldAccessRights(authorizationRules, logicRules).RightsFor(request);
+            return _accessRightsExecutor.RightsFor(request, authorizationRules, logicRules);
         }
 
         public AccessRight RightsFor(object target, PropertyInfo property)

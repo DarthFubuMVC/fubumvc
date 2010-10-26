@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.UI.Security
         {
             get
             {
-                return new FieldAccessRights(_securities, _logics).RightsFor(request);
+                return new FieldAccessRightsExecutor().RightsFor(request, _securities, _logics);
             }
         }
 

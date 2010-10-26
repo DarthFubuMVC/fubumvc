@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace FubuMVC.Core.Diagnostics
 {
     public interface IBehaviorDetailsVisitor
@@ -9,5 +11,6 @@ namespace FubuMVC.Core.Diagnostics
         void Exception(ExceptionReport report);
         void SetValue(SetValueReport report);
         void Authorization(AuthorizationReport report);
+        void CustomTable(DataTable report);
     }
 }
