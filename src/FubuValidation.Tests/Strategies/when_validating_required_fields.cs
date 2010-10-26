@@ -1,12 +1,17 @@
 using System.Linq;
-using FubuValidation.Rules;
+using FubuCore;
+using FubuCore.Reflection;
+using FubuValidation.Strategies;
 using NUnit.Framework;
 
-namespace FubuValidation.Tests.Rules
+namespace FubuValidation.Tests.Strategies
 {
     [TestFixture]
     public class when_validating_required_fields
     {
+        private Accessor _accessor;
+        private FieldRule _rule;
+        private RequiredFieldStrategy _strategy;
         private Notification _notification;
         private AddressModel _model;
 
@@ -15,17 +20,19 @@ namespace FubuValidation.Tests.Rules
         {
             _notification = new Notification();
             _model = new AddressModel();
+            _accessor = AccessorFactory.Create<AddressModel>(m => m.Address1);
+            _strategy = new RequiredFieldStrategy();
+            _rule = new FieldRule(_accessor, new TypeResolver(), _strategy);
         }
 
         [Test]
         public void should_register_message_if_value_is_null()
         {
             _model.Address1 = null;
-            var rule = new RequiredValidationRule(Property.From<AddressModel>(m => m.Address1));
-            rule.Validate(_model, _notification);
+            _rule.Validate(_model, _notification);
 
             _notification
-                .MessagesFor<AddressModel>(m => m.Address1)
+                .MessagesFor(_accessor)
                 .Messages
                 .ShouldHaveCount(1);
         }
@@ -34,11 +41,10 @@ namespace FubuValidation.Tests.Rules
         public void should_register_message_if_string_value_is_empty()
         {
             _model.Address1 = "";
-            var rule = new RequiredValidationRule(Property.From<AddressModel>(m => m.Address1));
-            rule.Validate(_model, _notification);
+            _rule.Validate(_model, _notification);
 
             _notification
-                .MessagesFor<AddressModel>(m => m.Address1)
+                .MessagesFor(_accessor)
                 .Messages
                 .ShouldHaveCount(1);
         }
@@ -47,11 +53,10 @@ namespace FubuValidation.Tests.Rules
         public void should_not_register_a_message_if_property_is_valid()
         {
             _model.Address1 = "1234 Test Lane";
-            var rule = new RequiredValidationRule(Property.From<AddressModel>(m => m.Address1));
-            rule.Validate(_model, _notification);
+            _rule.Validate(_model, _notification);
 
             _notification
-                .MessagesFor<AddressModel>(m => m.Address1)
+                .MessagesFor(_accessor)
                 .Messages
                 .ShouldBeEmpty();
         }
@@ -62,11 +67,11 @@ namespace FubuValidation.Tests.Rules
             should_register_message_if_value_is_null();
 
             _notification
-                .MessagesFor<AddressModel>(m => m.Address1)
+                .MessagesFor(_accessor)
                 .Messages
                 .First()
                 .MessageSubstitutions
-                .ShouldContain(pair => pair.Key == RequiredValidationRule.FIELD);
+                .ShouldContain(pair => pair.Key == RequiredFieldStrategy.FIELD);
         }
     }
 }

@@ -1,24 +1,27 @@
-using System.Reflection;
-using FubuValidation.Rules;
+using FubuCore;
+using FubuCore.Reflection;
+using FubuValidation.Strategies;
 using NUnit.Framework;
 
-namespace FubuValidation.Tests.Rules
+namespace FubuValidation.Tests.Strategies
 {
     [TestFixture]
     public class when_evaluating_greater_than_zero_rule
     {
         private Notification _notification;
         private SimpleModel _model;
-        private PropertyInfo _property;
-        private GreaterThanZeroValidationRule _rule;
+        private GreaterThanZeroFieldStrategy _strategy;
+        private FieldRule _rule;
+        private Accessor _accessor;
 
         [SetUp]
         public void BeforeEach()
         {
             _notification = new Notification();
             _model = new SimpleModel();
-            _property = Property.From<SimpleModel>(m => m.GreaterThanZero);
-            _rule = new GreaterThanZeroValidationRule(_property);
+            _strategy = new GreaterThanZeroFieldStrategy();
+            _accessor = AccessorFactory.Create<SimpleModel>(m => m.GreaterThanZero);
+            _rule = new FieldRule(_accessor, new TypeResolver(), _strategy);
         }
 
         [Test]
@@ -28,7 +31,7 @@ namespace FubuValidation.Tests.Rules
             _rule.Validate(_model, _notification);
 
             _notification
-                .MessagesFor(_property)
+                .MessagesFor(_accessor)
                 .Messages
                 .ShouldHaveCount(1);
         }
@@ -36,11 +39,11 @@ namespace FubuValidation.Tests.Rules
         [Test]
         public void should_register_a_message_if_value_is_zero()
         {
-            _model.GreaterOrEqualToZero = 0;
+            _model.GreaterThanZero = 0;
             _rule.Validate(_model, _notification);
 
             _notification
-                .MessagesFor(_property)
+                .MessagesFor(_accessor)
                 .Messages
                 .ShouldHaveCount(1);
         }
@@ -52,7 +55,7 @@ namespace FubuValidation.Tests.Rules
             _rule.Validate(_model, _notification);
 
             _notification
-                .MessagesFor(_property)
+                .MessagesFor(_accessor)
                 .Messages
                 .ShouldBeEmpty();
         }

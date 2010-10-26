@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using FubuCore.Reflection;
 using FubuLocalization;
 
 namespace FubuValidation
@@ -10,7 +10,7 @@ namespace FubuValidation
     public class NotificationMessage
     {
         private string _message;
-        private readonly List<PropertyInfo> _properties = new List<PropertyInfo>();
+        private readonly List<Accessor> _accessors = new List<Accessor>();
         private readonly Dictionary<string, string> _messageSubstitutions = new Dictionary<string, string>();
 
         public NotificationMessage(StringToken stringToken)
@@ -33,7 +33,7 @@ namespace FubuValidation
         }
 
         public StringToken StringToken { get; private set; }
-        public PropertyInfo[] Properties { get { return _properties.ToArray(); } }
+        public Accessor[] Accessors { get { return _accessors.ToArray(); } }
         public IEnumerable<KeyValuePair<string, string>> MessageSubstitutions
         {
             get
@@ -44,9 +44,9 @@ namespace FubuValidation
             }
         }
 
-        public void AddProperty(PropertyInfo property)
+        public void AddAccessor(Accessor accessor)
         {
-            _properties.Fill(property);
+            _accessors.Fill(accessor);
         }
 
         public void AddSubstitution(string key, string value)
@@ -67,14 +67,14 @@ namespace FubuValidation
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return Equals(other.Message, Message) && Properties.IsEqualTo(other.Properties);
+            return Equals(other.Message, Message) && Accessors.IsEqualTo(other.Accessors);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int result = (Properties != null ? Properties.GetHashCode() : 0);
+                int result = (Accessors != null ? Accessors.GetHashCode() : 0);
                 result = (result*397) ^ (Message != null ? Message.GetHashCode() : 0);
                 return result;
             }

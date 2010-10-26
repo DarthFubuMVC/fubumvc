@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuLocalization;
@@ -12,14 +10,13 @@ namespace FubuValidation
     public class Notification
     {
         private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
-        private readonly Cache<PropertyInfo, MessageBag> _bags;
-        private readonly Dictionary<PropertyInfo, Notification> _children = new Dictionary<PropertyInfo, Notification>();
+        private readonly Cache<Accessor, MessageBag> _bags;
 
         public Notification()
         {
-            _bags = new Cache<PropertyInfo, MessageBag>
+            _bags = new Cache<Accessor, MessageBag>
                         {
-                            OnMissing = (property => new MessageBag(property))
+                            OnMissing = (accessor => new MessageBag(accessor))
                         };
         }
 
@@ -37,69 +34,38 @@ namespace FubuValidation
             _messages.AddRange(notification.AllMessages);
         }
 
-        public NotificationMessage RegisterMessage<TARGET>(Expression<Func<TARGET, object>> property, string messageTemplate)
+        public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
         {
-            return RegisterMessage(ReflectionHelper.GetProperty(property), messageTemplate);
-        }
+            notificationMessage.AddAccessor(accessor);
 
-        public NotificationMessage RegisterMessage(PropertyInfo property, string messageTemplate)
-        {
-            var notificationMessage = new NotificationMessage(StringToken.FromKeyString("key"));
-            notificationMessage.AddProperty(property);
-
-            if(!_messages.Contains(notificationMessage))
+            if (!_messages.Contains(notificationMessage))
             {
                 _messages.Add(notificationMessage);
-                MessagesFor(property)
+                MessagesFor(accessor)
                     .Add(notificationMessage);
             }
+        }
 
+        public NotificationMessage RegisterMessage<TARGET>(Expression<Func<TARGET, object>> expression, StringToken token, string messageTemplate)
+        {
+            return RegisterMessage(expression.ToAccessor(), token, messageTemplate);
+        }
+
+        public NotificationMessage RegisterMessage(Accessor accessor, StringToken token, string messageTemplate)
+        {
+            var notificationMessage = new NotificationMessage(token);
+            RegisterMessage(accessor, notificationMessage);
             return notificationMessage;
         }
 
-        public Notification GetChild(PropertyInfo property)
+        public MessageBag MessagesFor(Accessor accessor)
         {
-            if(_children.ContainsKey(property))
-            {
-                return _children[property];
-            }
-
-            return Valid();
-        }
-
-        public Notification GetChild<TARGET>(Expression<Func<TARGET, object>> property)
-        {
-            return GetChild(ReflectionHelper.GetProperty(property));
-        }
-
-        public Notification Flatten()
-        {
-            var messages = new List<NotificationMessage>();
-            gather(messages);
-
-            var notification = new Notification();
-            notification._messages.AddRange(messages);
-
-            return notification;
-        }
-
-        private void gather(List<NotificationMessage> messages)
-        {
-            messages.AddRange(_messages);
-            foreach (var pair in _children)
-            {
-                pair.Value.gather(messages);
-            }
-        }
-
-        public MessageBag MessagesFor(PropertyInfo property)
-        {
-            return _bags[property];
+            return _bags[accessor];
         }
 
         public MessageBag MessagesFor<TARGET>(Expression<Func<TARGET, object>> property)
         {
-            return MessagesFor(ReflectionHelper.GetProperty(property));
+            return MessagesFor(property.ToAccessor());
         }
 
         public void ForEachProperty(Action<MessageBag> action)
@@ -107,23 +73,8 @@ namespace FubuValidation
             _bags.Each(action);
         }
 
-        public void AddChild(PropertyInfo property, Notification notification)
-        {
-            _children.Fill(property, notification);
-        }
-
-        public void AddChild<TARGET>(Expression<Func<TARGET, object>> property, Notification notification)
-        {
-            AddChild(ReflectionHelper.GetProperty(property), notification);
-        }
-
         public bool IsValid()
         {
-            if(_children.Any(child => !child.Value.IsValid()))
-            {
-                return false;
-            }
-
             return _messages.Count == 0;
         }
 

@@ -54,16 +54,34 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CoreExtensions.cs" />
+    <Compile Include="FieldMarkerAttribute.cs" />
+    <Compile Include="FieldRule.cs" />
+    <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
+    <Compile Include="GreaterThanZeroAttribute.cs" />
+    <Compile Include="IFieldValidationStrategy.cs" />
     <Compile Include="IValidationRule.cs" />
+    <Compile Include="IValidationSource.cs" />
     <Compile Include="IValidator.cs" />
+    <Compile Include="MaximumStringLengthAttribute.cs" />
     <Compile Include="MessageBag.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
-    <Compile Include="Rules\GreaterThanZeroValidationRule.cs" />
-    <Compile Include="Rules\GreaterOrEqualToZeroValidationRule.cs" />
-    <Compile Include="Rules\MaximumStringLengthValidationRule.cs" />
-    <Compile Include="Rules\RequiredValidationRule.cs" />
+    <Compile Include="RequiredAttribute.cs" />
+    <Compile Include="Strategies\GreaterOrEqualToZeroFieldStrategy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategies\GreaterThanZeroFieldStrategy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategies\MaximumStringLengthFieldStrategy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategies\RequiredFieldStrategy.cs" />
+    <Compile Include="Strategies\ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
+    <Compile Include="ValidationAttribute.cs" />
+    <Compile Include="ValidationAttributeSource.cs" />
+    <Compile Include="ValidationStrategyResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

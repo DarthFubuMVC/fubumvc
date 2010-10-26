@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
+using FubuCore.Reflection;
 
 namespace FubuValidation
 {
     public class MessageBag
     {
-        private readonly PropertyInfo _property;
+        private readonly Accessor _accessor;
         private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
 
-        public MessageBag(PropertyInfo property)
+        public MessageBag(Accessor accessor)
         {
-            _property = property;
+            _accessor = accessor;
         }
 
-        public PropertyInfo Property
+        public Accessor Accessor
         {
-            get { return _property; }
+            get { return _accessor; }
         }
 
         public NotificationMessage[] Messages
