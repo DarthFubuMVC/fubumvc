@@ -21,7 +21,7 @@ namespace FubuValidation
             return _rules[type];
         }
 
-        public IEnumerable<IValidationRule> BuildRulesFor(Type type)
+        private IEnumerable<IValidationRule> BuildRulesFor(Type type)
         {
             var rules = new List<IValidationRule>();
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
