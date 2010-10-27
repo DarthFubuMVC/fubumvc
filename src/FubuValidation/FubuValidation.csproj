@@ -31,8 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +53,14 @@
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
+      <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
+      <Name>FubuMVC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -59,6 +72,7 @@
     <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
     <Compile Include="GreaterThanZeroAttribute.cs" />
     <Compile Include="IFieldValidationStrategy.cs" />
+    <Compile Include="IValidationQuery.cs" />
     <Compile Include="IValidationRule.cs" />
     <Compile Include="IValidationSource.cs" />
     <Compile Include="IValidator.cs" />
