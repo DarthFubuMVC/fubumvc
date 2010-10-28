@@ -1,5 +1,4 @@
 using System;
-using FubuCore.Binding;
 using FubuMVC.Core;
 using Microsoft.Practices.ServiceLocation;
 
@@ -7,8 +6,8 @@ namespace FubuCore.Binding
 {
     public class ObjectResolver : IObjectResolver
     {
-        private readonly IServiceLocator _services;
         private readonly IModelBinderCache _binders;
+        private readonly IServiceLocator _services;
 
         // Leave this here
         public ObjectResolver()
@@ -30,18 +29,42 @@ namespace FubuCore.Binding
         // Leave this virtual
         public virtual BindResult BindModel(Type type, IBindingContext context)
         {
-            IModelBinder binder = _binders.BinderFor(type);
+            var binder = _binders.BinderFor(type);
+
+            if (binder == null)
+            {
+                throw new FubuException(2200,
+                    "Could not determine an IModelBinder for input type {0}. No model binders matched on this type. The standard model binder requires a parameterless constructor for the model type. Alternatively, you could implement your own IModelBinder which can process this model type.",
+                    type.AssemblyQualifiedName);
+            }
+
+            return executeModelBinder(type, binder, context);
+        }
+
+        public void TryBindModel(Type type, IBindingContext context, Action<BindResult> continuation)
+        {
+            var binder = _binders.BinderFor(type);
+
+            if (binder != null)
+            {
+                var result = executeModelBinder(type, binder, context);
+                continuation(result);
+            }
+        }
+
+        private static BindResult executeModelBinder(Type type, IModelBinder binder, IBindingContext context)
+        {
             try
             {
-                return new BindResult()
-                {
+                return new BindResult{
                     Value = binder.Bind(type, context),
                     Problems = context.Problems
                 };
             }
             catch (Exception e)
             {
-                throw new FubuException(2201, e, "Fatal error while binding model of type {0}.  See inner exception", type.AssemblyQualifiedName);
+                throw new FubuException(2201, e, "Fatal error while binding model of type {0}.  See inner exception",
+                                        type.AssemblyQualifiedName);
             }
         }
     }

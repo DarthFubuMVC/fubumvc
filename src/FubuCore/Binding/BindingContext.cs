@@ -140,8 +140,11 @@ namespace FubuCore.Binding
 
             try
             {
-                var result = resolver.BindModel(childType, context);
-                property.SetValue(target, result.Value, null);
+                resolver.TryBindModel(childType, context, result =>
+                {
+                    property.SetValue(target, result.Value, null);
+                });
+                
             }
             catch (Exception e)
             {

@@ -14,26 +14,6 @@ namespace FubuMVC.Tests.Models
         {
         }
 
-        [Test]
-        public void throw_fubu_exception_if_there_is_no_suitable_binder()
-        {
-            var cache = StructureMapContainerFacility.GetBasicFubuContainer().GetInstance<ModelBinderCache>();
 
-
-            Exception<FubuException>.ShouldBeThrownBy(() =>
-            {
-                cache.BinderFor(typeof (ClassWithNoCtor));
-            });
-
-            
-
-        }
-
-        public class ClassWithNoCtor
-        {
-            private ClassWithNoCtor()
-            {
-            }
-        }
     }
 }

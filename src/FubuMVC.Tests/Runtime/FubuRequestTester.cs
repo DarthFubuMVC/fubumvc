@@ -36,6 +36,32 @@ namespace FubuMVC.Tests.Runtime
     }
 
     [TestFixture]
+    public class object_resolver_throws_exception_on_bind_model_with_no_matching_model_binder : InteractionContext<ObjectResolver>
+    {
+        [Test]
+        public void throw_fubu_exception_if_there_is_no_suitable_binder()
+        {
+            MockFor<IModelBinderCache>().Stub(x => x.BinderFor(GetType())).Return(null);
+
+
+            Exception<FubuException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.BindModel(typeof (ClassWithNoCtor), MockFor<IBindingContext>());
+            }).ErrorCode.ShouldEqual(2200);
+
+
+
+        }
+
+        public class ClassWithNoCtor
+        {
+            private ClassWithNoCtor()
+            {
+            }
+        }
+    }
+
+    [TestFixture]
     public class when_binding_model_throws_exception : ObjectResolverContext
     {
         private IModelBinder matchingBinder;

@@ -47,5 +47,24 @@ namespace FubuMVC.Core.Diagnostics
                 throw;
             }
         }
+
+        public void TryBindModel(Type type, IBindingContext context, Action<BindResult> continuation)
+        {
+            try
+            {
+                _report.StartModelBinding(type);
+                _resolver.TryBindModel(type, context, result =>
+                {
+                    _report.EndModelBinding(result.Value);
+                    continuation(result);
+                });
+                
+            }
+            catch (Exception)
+            {
+                _report.EndModelBinding(null);
+                throw;
+            }
+        }
     }
 }
