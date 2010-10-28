@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using FubuCore.Localization;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 
