@@ -5,7 +5,7 @@ namespace FubuMVC.UI.Scripts
     public class Script
     {
         private readonly string _name;
-        private readonly string _path;
+        private string _path;
         private readonly IList<Script> _dependencies;
         private readonly IList<Script> _extensions;
 
@@ -25,6 +25,11 @@ namespace FubuMVC.UI.Scripts
         public string Path
         {
             get { return _path; }
+        }
+
+        public void ResetPath(string newPath)
+        {
+            _path = newPath;
         }
 
         public IEnumerable<Script> Dependencies { get { return _dependencies; } }

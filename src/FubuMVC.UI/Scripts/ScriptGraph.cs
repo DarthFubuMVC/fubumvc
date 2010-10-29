@@ -35,27 +35,38 @@ namespace FubuMVC.UI.Scripts
             return scripts;
         }
 
+        public Script RegisterScript(string name, string path)
+        {
+            var script = new Script(name, path);
+            _scripts.Fill(script);
+            return script;
+        }
+
+        public ScriptSet RegisterSet(string name)
+        {
+            var set = GetScriptSet(name) ?? new ScriptSet(name);
+            _sets.Fill(set);
+
+            return set;
+        }
+
+        public void ReplaceScript(string name, Script newScript)
+        {
+            var script = GetScript(name).FirstOrDefault(s => s.Name == name);
+            if(script == null)
+            {
+                return;
+            }
+
+            script.ResetPath(newScript.Path);
+        }
+
         private void gather(Script script, List<Script> scripts)
         {
             script.Extensions.Each(extension => gather(extension, scripts));
             scripts.Add(script);
 
             script.Dependencies.Each(dependency => gather(dependency, scripts));
-        }
-
-        public Script RegisterScript(string name, string path)
-        {
-            var script = new Script(name, path);
-            var defaultSet = GetScriptSet(name) ?? new ScriptSet(name);
-            
-            defaultSet.AddScript(script);
-            _sets.Fill(defaultSet);
-            return script;
-        }
-
-        public void ReplaceScript(Script original, Script newScript)
-        {
-            
         }
     }
 }
