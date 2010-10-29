@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace FubuMVC.UI.Scripts
 {
     public interface IScriptManager
@@ -26,30 +24,6 @@ namespace FubuMVC.UI.Scripts
 
             Script("packages/x/custom-create-case.js")
                 .DependsOn("custom-create-case-dependency.js");
-        }
-    }
-
-    public class Script
-    {
-        private readonly string _key;
-        private readonly IList<Script> _dependencies;
-
-        public Script(string key)
-        {
-            _key = key;
-            _dependencies = new List<Script>();
-        }
-
-        public string Key
-        {
-            get { return _key; }
-        }
-
-        public IEnumerable<Script> Dependencies { get { return _dependencies; } }
-
-        public void AddDependency(Script script)
-        {
-            _dependencies.Add(script);
         }
     }
 }

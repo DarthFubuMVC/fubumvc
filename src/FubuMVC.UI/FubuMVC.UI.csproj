@@ -86,6 +86,9 @@
     <Compile Include="Configuration\Interfaces.cs" />
     <Compile Include="PartialExpressionExtensions.cs" />
     <Compile Include="Scripts\IScriptManager.cs" />
+    <Compile Include="Scripts\Script.cs" />
+    <Compile Include="Scripts\ScriptGraph.cs" />
+    <Compile Include="Scripts\ScriptSet.cs" />
     <Compile Include="Security\AccessRight.cs" />
     <Compile Include="Security\AccessRightExtensions.cs" />
     <Compile Include="Security\FieldAccessService.cs" />
