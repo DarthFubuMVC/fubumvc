@@ -106,7 +106,12 @@
     <Compile Include="Binding\ValueConverter.cs" />
     <Compile Include="Binding\ValueConverterRegistry.cs" />
     <Compile Include="BooleanExtensions.cs" />
+    <Compile Include="CommandLine\Argument.cs" />
+    <Compile Include="CommandLine\BooleanFlag.cs" />
+    <Compile Include="CommandLine\Flag.cs" />
     <Compile Include="CommandLine\InputParser.cs" />
+    <Compile Include="CommandLine\ITokenHandler.cs" />
+    <Compile Include="CommandLine\QueueExtensions.cs" />
     <Compile Include="CommandLine\StringTokenizer.cs" />
     <Compile Include="CommandLine\TokenParser.cs" />
     <Compile Include="Configuration\AppSettingsProvider.cs" />

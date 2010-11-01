@@ -43,7 +43,7 @@ namespace FubuCore.Testing.CommandLine
         [Test]
         public void the_handler_for_an_enumeration_property_marked_as_flag()
         {
-            handlerFor(x => x.ColorFlag).ShouldBeOfType<EnumerationFlag>();
+            handlerFor(x => x.ColorFlag).ShouldBeOfType<Flag>();
         }
 
         [Test]
@@ -100,7 +100,90 @@ namespace FubuCore.Testing.CommandLine
             theInput.TrueFalseFlag.ShouldBeTrue();
         }
 
+        [Test]
+        public void enumeration_argument()
+        {
+            handle(x => x.Color, "red").ShouldBeTrue();
+            theInput.Color.ShouldEqual(Color.red);
+        }
 
+        [Test]
+        public void enumeration_argument_2()
+        {
+            handle(x => x.Color, "green").ShouldBeTrue();
+            theInput.Color.ShouldEqual(Color.green);
+        }
+
+        [Test]
+        public void enumeration_flag_negative()
+        {
+            handle(x => x.ColorFlag, "green").ShouldBeFalse();
+        }
+
+        [Test]
+        public void enumeration_flag_positive()
+        {
+            handle(x => x.ColorFlag, "-color", "blue").ShouldBeTrue();
+            theInput.ColorFlag.ShouldEqual(Color.blue);
+        }
+
+
+        [Test]
+        public void string_argument()
+        {
+            handle(x => x.File, "the file").ShouldBeTrue();
+            theInput.File.ShouldEqual("the file");
+        }
+
+        [Test]
+        public void int_flag_does_not_catch()
+        {
+            handle(x => x.OrderFlag, "not order flag").ShouldBeFalse();
+            theInput.OrderFlag.ShouldEqual(0);
+        }
+
+        [Test]
+        public void int_flag_catches()
+        {
+            handle(x => x.OrderFlag, "-order", "23").ShouldBeTrue();
+            theInput.OrderFlag.ShouldEqual(23);
+        }
+
+        private InputModel build(params string[] tokens)
+        {
+            var queue = new Queue<string>(tokens);
+            return (InputModel) new InputParser().BuildInput(typeof (InputModel), queue);
+        }
+
+        [Test]
+        public void integrated_test_arguments_only()
+        {
+            var input = build("file1", "red");
+            input.File.ShouldEqual("file1");
+            input.Color.ShouldEqual(Color.red);
+
+            // default is not touched
+            input.OrderFlag.ShouldEqual(0);
+        }
+
+        [Test]
+        public void integrated_test_with_mix_of_flags()
+        {
+            var input = build("file1", "-color", "green", "blue", "-order", "12");
+            input.File.ShouldEqual("file1");
+            input.Color.ShouldEqual(Color.blue);
+            input.ColorFlag.ShouldEqual(Color.green);
+            input.OrderFlag.ShouldEqual(12);
+        }
+
+        [Test]
+        public void integrated_test_with_a_boolean_flag()
+        {
+            var input = build("file1", "blue", "-truefalse");
+            input.TrueFalseFlag.ShouldBeTrue();
+
+            build("file1", "blue").TrueFalseFlag.ShouldBeFalse();
+        }
     }
 
 
