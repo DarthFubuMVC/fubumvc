@@ -106,7 +106,9 @@
     <Compile Include="Binding\ValueConverter.cs" />
     <Compile Include="Binding\ValueConverterRegistry.cs" />
     <Compile Include="BooleanExtensions.cs" />
+    <Compile Include="CommandLine\InputParser.cs" />
     <Compile Include="CommandLine\StringTokenizer.cs" />
+    <Compile Include="CommandLine\TokenParser.cs" />
     <Compile Include="Configuration\AppSettingsProvider.cs" />
     <Compile Include="Configuration\AppSettingsRequestData.cs" />
     <Compile Include="Configuration\ISettingsProvider.cs" />
