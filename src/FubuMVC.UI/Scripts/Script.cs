@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FubuCore;
 
 namespace FubuMVC.UI.Scripts
 {
@@ -64,6 +65,11 @@ namespace FubuMVC.UI.Scripts
         public override int GetHashCode()
         {
             return (_name != null ? _name.GetHashCode() : 0);
+        }
+
+        public override string ToString()
+        {
+            return "Name: {0}, Path: {1}".ToFormat(Name, Path);
         }
     }
 }

@@ -66,7 +66,10 @@ namespace FubuMVC.UI.Scripts
             script.Extensions.Each(extension => gather(extension, scripts));
             scripts.Add(script);
 
-            script.Dependencies.Each(dependency => gather(dependency, scripts));
+            var dependencies = script.Dependencies.ToList();
+            dependencies.Reverse();
+
+            dependencies.Each(dependency => gather(dependency, scripts));
         }
     }
 }
