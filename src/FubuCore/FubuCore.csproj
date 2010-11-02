@@ -109,6 +109,7 @@
     <Compile Include="CommandLine\Argument.cs" />
     <Compile Include="CommandLine\BooleanFlag.cs" />
     <Compile Include="CommandLine\Flag.cs" />
+    <Compile Include="CommandLine\IFubuCommand.cs" />
     <Compile Include="CommandLine\InputParser.cs" />
     <Compile Include="CommandLine\ITokenHandler.cs" />
     <Compile Include="CommandLine\QueueExtensions.cs" />
