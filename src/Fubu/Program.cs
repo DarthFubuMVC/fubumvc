@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FubuCore.CommandLine;
 
 namespace Fubu
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(typeof (IFubuCommand).Assembly);
+            factory.RegisterCommands(typeof (Program).Assembly);
+
+            var executor = new CommandExecutor(factory);
+            executor.Execute(args);
         }
     }
 }
