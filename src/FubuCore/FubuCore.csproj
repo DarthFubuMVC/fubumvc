@@ -108,7 +108,13 @@
     <Compile Include="BooleanExtensions.cs" />
     <Compile Include="CommandLine\Argument.cs" />
     <Compile Include="CommandLine\BooleanFlag.cs" />
+    <Compile Include="CommandLine\CommandDescriptionAttribute.cs" />
+    <Compile Include="CommandLine\CommandExecutor.cs" />
+    <Compile Include="CommandLine\CommandFactory.cs" />
+    <Compile Include="CommandLine\CommandRun.cs" />
     <Compile Include="CommandLine\Flag.cs" />
+    <Compile Include="CommandLine\FubuCommand.cs" />
+    <Compile Include="CommandLine\ICommandFactory.cs" />
     <Compile Include="CommandLine\IFubuCommand.cs" />
     <Compile Include="CommandLine\InputParser.cs" />
     <Compile Include="CommandLine\ITokenHandler.cs" />

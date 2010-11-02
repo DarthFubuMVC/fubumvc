@@ -83,6 +83,7 @@
     <Compile Include="Binding\ServiceArgumentsTester.cs" />
     <Compile Include="Binding\TypeDescriptorCacheTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
+    <Compile Include="CommandLine\CommandExecutorTester.cs" />
     <Compile Include="CommandLine\CommandFactoryTester.cs" />
     <Compile Include="CommandLine\InputParserTester.cs" />
     <Compile Include="CommandLine\StringTokenizerTester.cs" />
