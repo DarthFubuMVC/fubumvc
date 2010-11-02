@@ -35,6 +35,21 @@ namespace FubuCore.Testing.CommandLine
             factory.Build("my2").ShouldBeOfType<My2Command>();
             factory.Build("this").ShouldBeOfType<DecoratedCommand>();
         }
+
+        [Test]
+        public void build_command_from_a_string()
+        {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(GetType().Assembly);
+
+            var run = factory.BuildRun("my Jeremy -force");
+
+            run.Command.ShouldBeOfType<MyCommand>();
+            var input = run.Input.ShouldBeOfType<MyCommandInput>();
+
+            input.Name.ShouldEqual("Jeremy");
+            input.ForceFlag.ShouldBeTrue();
+        }
     }
 
     public class MyCommand : FubuCommand<MyCommandInput>
@@ -43,6 +58,8 @@ namespace FubuCore.Testing.CommandLine
         {
             throw new NotImplementedException();
         }
+
+
     }
 
     [CommandDescription("something")]
@@ -66,6 +83,7 @@ namespace FubuCore.Testing.CommandLine
 
     public class MyCommandInput
     {
-        
+        public string Name { get; set; }
+        public bool ForceFlag { get; set; }
     }
 }

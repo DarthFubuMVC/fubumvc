@@ -10,12 +10,49 @@ namespace FubuCore.CommandLine
     public interface IFubuCommand
     {
         void Execute(object input);
+        Type InputType { get; }
     }
 
-    public class CommandFactory
+    public class CommandExecutor
+    {
+        public CommandExecutor(ICommandFactory factory)
+        {
+        }
+    }
+
+    public interface ICommandFactory
+    {
+        CommandRun BuildRun(string commandLine);
+    }
+
+    public class CommandRun
+    {
+        public IFubuCommand Command { get; set; }
+        public object Input { get; set; }
+    }
+
+    public class CommandFactory : ICommandFactory
     { 
+        // TODO -- Make it deal well with missing commands
         private readonly Cache<string, Type> _commandTypes = new Cache<string, Type>();
 
+        // TODO -- deal with the Help thing
+        public CommandRun BuildRun(string commandLine)
+        {
+            var tokens = StringTokenizer.Tokenize(commandLine);
+            var queue = new Queue<string>(tokens);
+            var commandName = queue.Dequeue();
+
+            var command = Build(commandName);
+            
+            var parser = new InputParser();
+            var input = parser.BuildInput(command.InputType, queue);
+
+            return new CommandRun(){
+                Command = command,
+                Input = input
+            };
+        }
 
         public void RegisterCommands(Assembly assembly)
         {
