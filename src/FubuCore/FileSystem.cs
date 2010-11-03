@@ -35,12 +35,6 @@ namespace FubuCore
         //    }
         //}
 
-        //public void DeleteFile(string filename)
-        //{
-        //    if (!File.Exists(filename)) return;
-
-        //    File.Delete(filename);
-        //}
 
         //public string[] GetSubFolders(string folderPath)
         //{
@@ -147,6 +141,13 @@ namespace FubuCore
         //    DeleteFolder(directory);
         //    CreateDirectory(directory);
         //}
-        
+
+        public void DeleteFile(params string[] path)
+        {
+            var filename = Path.Combine(path);
+            if (!File.Exists(filename)) return;
+
+            File.Delete(filename);
+        }
     }
 }

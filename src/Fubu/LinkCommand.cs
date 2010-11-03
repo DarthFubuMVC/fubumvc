@@ -11,6 +11,7 @@ namespace Fubu
         public string PackageFolder { get; set; }
 
         public bool RemoveFlag { get; set; }
+        public bool CleanAllFlag { get; set; }
         public bool NotepadFlag { get; set; }
 
         public string RelativePathOfPackage()
@@ -18,6 +19,8 @@ namespace Fubu
             return PackageFolder.PathRelativeTo(AppFolder);
         }
     }
+
+    
 
 
     [CommandDescription("Links a package folder to an application folder in development mode")]
@@ -33,8 +36,17 @@ namespace Fubu
 
         private void Execute(LinkInput input, FileSystem fileSystem)
         {
+            if (input.CleanAllFlag)
+            {
+                fileSystem.DeleteFile(input.AppFolder, PackageIncludeManifest.FILE);
+
+                Console.WriteLine("Deleted the package include manifest file for " + input.AppFolder);
+                return;
+            }
+            
             var manifest = fileSystem.LoadFromFile<PackageIncludeManifest>(input.AppFolder,
                                                                            PackageIncludeManifest.FILE);
+
             if (input.RemoveFlag)
             {
                 remove(input, manifest);
