@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.UI.Scripts
+namespace FubuMVC.UI.Scripts.Registration
 {
     public class ScriptGraph
     {
@@ -22,7 +22,7 @@ namespace FubuMVC.UI.Scripts
 
         public IEnumerable<Script> GetScript(string name)
         {
-            var scripts = new List<Script>();
+            var scripts = new LinkedList<Script>();
             var script = _scripts.FirstOrDefault(s => s.Name == name);
             if(script == null)
             {
@@ -30,9 +30,7 @@ namespace FubuMVC.UI.Scripts
             }
 
             gather(script, scripts);
-            scripts.Reverse();
-
-            return scripts;
+            return scripts.Reverse();
         }
 
         public Script RegisterScript(string name, string path)
@@ -61,15 +59,42 @@ namespace FubuMVC.UI.Scripts
             script.ResetPath(newScript.Path);
         }
 
-        private void gather(Script script, List<Script> scripts)
+        private void gather(Script script, LinkedList<Script> scripts)
         {
             script.Extensions.Each(extension => gather(extension, scripts));
-            scripts.Add(script);
+            scripts.Fill(script);
 
             var dependencies = script.Dependencies.ToList();
             dependencies.Reverse();
 
-            dependencies.Each(dependency => gather(dependency, scripts));
+            dependencies.Each(dependency =>
+                                  {
+                                      if(scripts.Contains(dependency))
+                                      {
+                                          if(scripts.Contains(script))
+                                          {
+                                              scripts.Remove(script);
+                                          }
+
+                                          var node = scripts.Find(dependency);
+                                          scripts.AddBefore(node, script);
+                                      }
+
+                                      gather(dependency, scripts);
+                                  });
+        }
+    }
+
+    public static class EnumerableExtensions
+    {
+        public static void Fill<T>(this LinkedList<T> list, T item)
+        {
+            if(list.Contains(item))
+            {
+                return;
+            }
+
+            list.AddLast(item);
         }
     }
 }

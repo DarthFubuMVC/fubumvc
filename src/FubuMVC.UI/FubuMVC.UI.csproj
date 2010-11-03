@@ -85,9 +85,18 @@
     <Compile Include="Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="Configuration\Interfaces.cs" />
     <Compile Include="PartialExpressionExtensions.cs" />
+    <Compile Include="Scripts\Registration\Conventions\PreprocessorParsingConvention.cs" />
+    <Compile Include="Scripts\Registration\DSL\AppliesToDirectoryExpression.cs" />
+    <Compile Include="Scripts\Registration\FilePool.cs" />
     <Compile Include="Scripts\IScriptManager.cs" />
+    <Compile Include="Scripts\Registration\IScriptConfigurationAction.cs" />
+    <Compile Include="Scripts\Registration\LambdaConfigurationAction.cs" />
     <Compile Include="Scripts\Script.cs" />
-    <Compile Include="Scripts\ScriptGraph.cs" />
+    <Compile Include="Scripts\Registration\ScriptGraph.cs" />
+    <Compile Include="Scripts\Registration\Conventions\DefaultScriptRegistrationConvention.cs" />
+    <Compile Include="Scripts\Registration\ScriptRegistrationExtensions.cs" />
+    <Compile Include="Scripts\Registration\ScriptRegistry.cs" />
+    <Compile Include="Scripts\ScriptManager.cs" />
     <Compile Include="Scripts\ScriptSet.cs" />
     <Compile Include="Security\AccessRight.cs" />
     <Compile Include="Security\AccessRightExtensions.cs" />
@@ -130,6 +139,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Diagnostics\examples.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
