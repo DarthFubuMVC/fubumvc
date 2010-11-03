@@ -1,12 +1,40 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Linq;
 
 namespace FubuCore
 {
     public static class StringExtensions
     {
+        public static string PathRelativeTo(this string path, string root)
+        {
+            var pathParts = path.ToLower().Replace('/', '\\').Split('\\').ToList();
+            var rootParts = root.ToLower().Replace('/', '\\').Split('\\').ToList();
+
+            var length = pathParts.Count > rootParts.Count ? rootParts.Count : pathParts.Count;
+            for (int i = 0; i < length; i++)
+            {
+                if (pathParts.First() == rootParts.First())
+                {
+                    pathParts.RemoveAt(0);
+                    rootParts.RemoveAt(0);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int i = 0; i < rootParts.Count; i++)
+            {
+                pathParts.Insert(0, "..");
+            }
+
+            return Path.Combine(pathParts.ToArray());
+        }
 
         public static bool IsEmpty(this string stringValue)
         {

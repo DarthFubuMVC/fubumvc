@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="AliasCommand.cs" />
     <Compile Include="InitPakCommand.cs" />
+    <Compile Include="LinkCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />

@@ -1,44 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml.Serialization;
-using System.Linq;
 
 namespace FubuMVC.Core.Packaging
 {
-
-    [XmlType("package")]
-    public class PackageManifest
-    {
-        public static readonly string FILE = "fubu-package-manifest.xml";
-
-        private readonly IList<string> _assemblyNames = new List<string>();
-
-        public string Name { get; set; }
-
-        public string Assemblies 
-        {
-            get
-            {
-                return _assemblyNames.Join(";");
-            }
-            set
-            {
-                var names = value.Split(';').Select(x => x.Trim());
-                _assemblyNames.Clear();
-                _assemblyNames.AddRange(names);
-            }
-        }
-
-        public IEnumerable<string> AssemblyNames
-        {
-            get
-            {
-                return _assemblyNames;
-            }
-        }
-    }
-
     public class PackageScanner
     {
         

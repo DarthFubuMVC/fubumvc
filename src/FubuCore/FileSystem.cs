@@ -8,9 +8,9 @@ namespace FubuCore
 {
     public interface IFileSystem
     {
-        bool FileExists(string path);
+        bool FileExists(params string[] path);
         void PersistToFile(object target, params string[] filename);
-        T LoadFromFile<T>(string filename) where T : new();
+        T LoadFromFile<T>(params string[] filename) where T : new();
         void OpenInNotepad(params string[] parts);
     }
 
@@ -81,9 +81,9 @@ namespace FubuCore
         //}
 
 
-        public bool FileExists(string path)
+        public bool FileExists(params string[] path)
         {
-            return File.Exists(path);
+            return File.Exists(Path.Combine(path));
         }
 
         public void WriteStringToFile(string text, string filename)
@@ -113,7 +113,7 @@ namespace FubuCore
         public void PersistToFile(object target, params string[] paths)
         {
             var filename = Path.Combine(paths);
-
+            Console.WriteLine("Saving to " + filename);
             var serializer = new XmlSerializer(target.GetType());
 
             using (var stream = new FileStream(filename, FileMode.Create, FileAccess.Write))
@@ -122,8 +122,10 @@ namespace FubuCore
             }
         }
 
-        public T LoadFromFile<T>(string filename) where T : new()
+        public T LoadFromFile<T>(params string[] paths) where T : new()
         {
+            var filename = Path.Combine(paths);
+
             if (!FileExists(filename)) return new T();
 
             var serializer = new XmlSerializer(typeof(T));
@@ -145,5 +147,6 @@ namespace FubuCore
         //    DeleteFolder(directory);
         //    CreateDirectory(directory);
         //}
+        
     }
 }

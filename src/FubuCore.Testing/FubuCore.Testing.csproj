@@ -88,6 +88,7 @@
     <Compile Include="CommandLine\InputParserTester.cs" />
     <Compile Include="CommandLine\StringTokenizerTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
+    <Compile Include="FileSystemTester.cs" />
     <Compile Include="FubuExceptionTester.cs" />
     <Compile Include="GenericEnumerableExtensionsTester.cs" />
     <Compile Include="NumberExtensionsTester.cs" />
