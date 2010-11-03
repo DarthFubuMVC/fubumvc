@@ -108,6 +108,13 @@
     <Compile Include="Diagnostics\ModelBindingReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\OutputColumn.cs" />
     <Compile Include="Diagnostics\OutputReport.cs" />
+    <Compile Include="Diagnostics\Querying\ActionToken.cs" />
+    <Compile Include="Diagnostics\Querying\AssemblyToken.cs" />
+    <Compile Include="Diagnostics\Querying\EndpointModel.cs" />
+    <Compile Include="Diagnostics\Querying\EndpointToken.cs" />
+    <Compile Include="Diagnostics\Querying\GraphQuery.cs" />
+    <Compile Include="Diagnostics\Querying\RemoteBehaviorGraph.cs" />
+    <Compile Include="Diagnostics\Querying\TypeToken.cs" />
     <Compile Include="Diagnostics\RecordingAuthorizationPolicyExecutor.cs" />
     <Compile Include="Diagnostics\RecordingFubuRequest.cs" />
     <Compile Include="Diagnostics\RecordingObjectResolver.cs" />

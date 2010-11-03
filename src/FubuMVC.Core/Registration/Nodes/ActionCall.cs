@@ -25,9 +25,9 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public bool HasInput { get { return Method.GetParameters().Length > 0; } }
 
-        private bool hasReturn { get { return Method.ReturnType != typeof (void); } }
+        public bool HasOutput { get { return Method.ReturnType != typeof (void); } }
         public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
-        public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), hasReturn ? Method.ReturnType.Name : "void"); } }
+        public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
 
         public void ForAttributes<T>(Action<T> action) where T : Attribute
         {
@@ -106,7 +106,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void Validate()
         {
-            if (hasReturn && Method.ReturnType.IsValueType)
+            if (HasOutput && Method.ReturnType.IsValueType)
             {
                 throw new FubuException(1004,
                                         "The return type of action '{0}' is a value type (struct). It must be void (no return type) or a reference type (class).",
@@ -131,7 +131,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         private Type determineHandlerType()
         {
-                if (hasReturn && HasInput)
+                if (HasOutput && HasInput)
                 {
                     return typeof(OneInOneOutActionInvoker<,,>)
                         .MakeGenericType(
@@ -140,7 +140,7 @@ namespace FubuMVC.Core.Registration.Nodes
                         Method.ReturnType);
                 }
 
-                if (hasReturn && !HasInput)
+                if (HasOutput && !HasInput)
                 {
                     return typeof(ZeroInOneOutActionInvoker<,>)
                         .MakeGenericType(
@@ -148,7 +148,7 @@ namespace FubuMVC.Core.Registration.Nodes
                         Method.ReturnType);
                 }
 
-                if (!hasReturn && HasInput)
+                if (!HasOutput && HasInput)
                 {
                     return typeof(OneInZeroOutActionInvoker<,>)
                         .MakeGenericType(
@@ -162,7 +162,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         private ValueDependency createLambda()
         {
-            object lambda = hasReturn
+            object lambda = HasOutput
                                 ? FuncBuilder.ToFunc(HandlerType, Method)
                                 : FuncBuilder.ToAction(HandlerType, Method);
             return new ValueDependency
