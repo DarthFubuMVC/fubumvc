@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,8 +9,9 @@ namespace FubuCore
     public interface IFileSystem
     {
         bool FileExists(string path);
-        void PersistToFile(object target, string filename);
+        void PersistToFile(object target, params string[] filename);
         T LoadFromFile<T>(string filename) where T : new();
+        void OpenInNotepad(params string[] parts);
     }
 
     public class FileSystem : IFileSystem
@@ -108,8 +110,10 @@ namespace FubuCore
         //    Process.Start(fileName);
         //}
 
-        public void PersistToFile(object target, string filename)
+        public void PersistToFile(object target, params string[] paths)
         {
+            var filename = Path.Combine(paths);
+
             var serializer = new XmlSerializer(target.GetType());
 
             using (var stream = new FileStream(filename, FileMode.Create, FileAccess.Write))
@@ -128,6 +132,12 @@ namespace FubuCore
             {
                 return (T)serializer.Deserialize(stream);
             }
+        }
+
+        public void OpenInNotepad(params string[] parts)
+        {
+            string filename = Path.Combine(parts);
+            Process.Start("notepad", filename);
         }
 
         //public void ClearFolder(string directory)

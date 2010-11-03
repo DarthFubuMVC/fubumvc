@@ -8,26 +8,23 @@ namespace FubuMVC.Core.Packaging
 {
 
     [XmlType("package")]
-    public class PackageLocation
+    public class PackageManifest
     {
+        public static readonly string FILE = "fubu-package-manifest.xml";
+
         private readonly IList<string> _assemblyNames = new List<string>();
 
-        [XmlAttribute("name")]
         public string Name { get; set; }
 
-        [XmlAttribute("folder")]
-        public string Folder { get; set; }
-
-        [XmlAttribute("assemblies")]
         public string Assemblies 
         {
             get
             {
-                return _assemblyNames.Join(",");
+                return _assemblyNames.Join(";");
             }
             set
             {
-                var names = value.Split(',').Select(x => x.Trim());
+                var names = value.Split(';').Select(x => x.Trim());
                 _assemblyNames.Clear();
                 _assemblyNames.AddRange(names);
             }
@@ -44,7 +41,7 @@ namespace FubuMVC.Core.Packaging
 
     public class PackageScanner
     {
-        public static readonly string LINKAGE_FILE = "fubu-package-manifest.xml";
+        
         public static readonly string PACKAGES_FOLDER = "fubu-packages";
         public static readonly string PACKAGE_EXTENSION = "fubupak";
 
@@ -53,7 +50,7 @@ namespace FubuMVC.Core.Packaging
             throw new NotImplementedException();
         }
 
-        public virtual PackageInfo ReadPackage(PackageLocation location)
+        public virtual PackageInfo ReadPackage(PackageManifest manifest)
         {
             throw new NotImplementedException();
         }

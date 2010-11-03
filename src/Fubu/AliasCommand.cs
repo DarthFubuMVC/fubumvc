@@ -43,10 +43,12 @@ namespace Fubu
             if (input.RemoveFlag)
             {
                 registry.RemoveAlias(input.Name);
+                Console.WriteLine("Alias {0} removed", input.Name);
             }
             else
             {
                 registry.CreateAlias(input.Name, input.Folder);
+                Console.WriteLine("Alias {0} created for folder {1}", input.Name, input.Folder);
             }
 
             persist(system, registry);
