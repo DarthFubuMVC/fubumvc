@@ -1,4 +1,3 @@
-using System.IO;
 using System.Net;
 using System.Text;
 using HtmlTags;
@@ -8,7 +7,7 @@ namespace FubuMVC.Core.Diagnostics.Querying
     public class RemoteBehaviorGraph
     {
         private readonly string _applicationUrl;
-        private string _getAllUrl;
+        private readonly string _getAllUrl;
 
         public RemoteBehaviorGraph(string applicationUrl)
         {
@@ -19,8 +18,8 @@ namespace FubuMVC.Core.Diagnostics.Querying
         public EndpointModel All()
         {
             var client = new WebClient();
-            byte[] jsonBytes = client.DownloadData(_getAllUrl);
-            string json = Encoding.Default.GetString(jsonBytes);
+            var jsonBytes = client.DownloadData(_getAllUrl);
+            var json = Encoding.Default.GetString(jsonBytes);
 
             return JsonUtil.Get<EndpointModel>(json);
         }

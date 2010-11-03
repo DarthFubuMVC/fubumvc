@@ -127,6 +127,7 @@
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="DisplayFormatter.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="FileSystem.cs" />
     <Compile Include="FubuException.cs" />
     <Compile Include="Localization\StringToken.cs" />
     <Compile Include="Localization\ILocalizationProvider.cs" />

@@ -19,6 +19,8 @@ namespace FubuCore.CommandLine
         {
             if (_latched) return false;
 
+            if (tokens.Peek().StartsWith("-")) return false;
+
             object value = _converter.FromString(tokens.Dequeue(), _property.PropertyType);
             _property.SetValue(input, value, null);
 

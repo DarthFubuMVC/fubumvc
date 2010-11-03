@@ -48,8 +48,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AliasCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestartCommand.cs" />
     <Compile Include="VdirCommand.cs" />
   </ItemGroup>
   <ItemGroup>

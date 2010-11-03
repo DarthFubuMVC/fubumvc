@@ -89,6 +89,7 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
+    <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="LocalizationManagerTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
@@ -312,6 +313,10 @@
     <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
       <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
       <Name>FubuMVC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fubu\Fubu.csproj">
+      <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
+      <Name>Fubu</Name>
     </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
