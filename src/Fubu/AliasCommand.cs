@@ -16,6 +16,16 @@ namespace Fubu
 
     public class AliasCommand : FubuCommand<AliasInput>
     {
+        public static string AliasFolder(string folder)
+        {
+            var alias = new FileSystem()
+                .LoadFromFile<AliasRegistry>(AliasRegistry.ALIAS_FILE)
+                .AliasFor(folder);
+
+            return alias == null ? folder : alias.Folder;
+        }
+
+
         public override void Execute(AliasInput input)
         {
             Execute(input, new FileSystem());
@@ -44,12 +54,18 @@ namespace Fubu
 
         private void writeAliases(AliasRegistry registry)
         {
+            if (!registry.Aliases.Any())
+            {
+                Console.WriteLine(" No aliases are registered");
+                return;
+            }
+
             var maximumLength = registry.Aliases.Select(x => x.Name.Length).Max();
             var format = "  {0," + maximumLength + "} -> {1}";
 
             Console.WriteLine();
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine("Aliases:");
+            Console.WriteLine(" Aliases:");
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
 
             registry.Aliases.OrderBy(x => x.Name).Each(x =>

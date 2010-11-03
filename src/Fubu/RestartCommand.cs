@@ -14,7 +14,9 @@ namespace Fubu
     {
         public override void Execute(FolderInput input)
         {
-            var configFile = Path.Combine(input.FolderName, "web.config");
+            var folder = AliasCommand.AliasFolder(input.FolderName);
+
+            var configFile = Path.Combine(folder, "web.config");
             File.SetLastWriteTimeUtc(configFile, DateTime.UtcNow);
         }
     }
