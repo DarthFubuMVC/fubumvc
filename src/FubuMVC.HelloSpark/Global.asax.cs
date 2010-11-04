@@ -1,4 +1,4 @@
-﻿using Spark.Web.FubuMVC.Bootstrap;
+﻿using Spark.Web.FubuMVC.Registration;
 using StructureMap;
 using FubuMVC.Core;
 using Spark.Web.FubuMVC;
@@ -9,8 +9,7 @@ namespace FubuMVC.HelloSpark
     {
         public override FubuRegistry GetMyRegistry()
         {
-            var sparkViewFactory = ObjectFactory.Container.GetInstance<SparkViewFactory>();
-            return new HelloSparkRegistry(EnableDiagnostics, ControllerAssembly, sparkViewFactory);
+            return new HelloSparkRegistry(ObjectFactory.Container.GetInstance<SparkViewFactory>);
         }
     }
 }

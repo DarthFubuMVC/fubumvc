@@ -1,43 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
+using Spark.Web.FubuMVC.Registration;
 using Spark.Web.FubuMVC.ViewCreation;
 
 namespace Spark.Web.FubuMVC.ViewLocation
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly Func<Type, bool> _actionEndPointFilter;
-        private readonly SparkViewFactory _viewFactory;
-        private Func<Type, string> _getViewLocatorNameFromActionType;
+        private readonly ISparkViewFactory _viewFactory;
+        private readonly ISparkPolicyResolver _policyResolver;
 
-        public SparkViewFacility(SparkViewFactory viewFactory, 
-            Func<Type, bool> actionEndPointFilter,
-            Func<Type, string> getViewLocatorNameFromActionType)
+        public SparkViewFacility(ISparkViewFactory viewFactory, ISparkPolicyResolver policyResolver)
         {
             _viewFactory = viewFactory;
-            _actionEndPointFilter = actionEndPointFilter;
-            _getViewLocatorNameFromActionType = getViewLocatorNameFromActionType;
+            _policyResolver = policyResolver;
         }
 
-        #region IViewFacility Members
-
-        public IEnumerable<IViewToken> FindViews(TypePool types)
+        public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            IEnumerable<Type> actionTypes = types.TypesMatching(_actionEndPointFilter);
-
             var viewTokens = new List<IViewToken>();
-            actionTypes.Each(actionType =>
-                                 {
-                                     var sparkBatchEntry = new SparkBatchEntry { ControllerType = actionType };
-                                     string viewLocatorName = _getViewLocatorNameFromActionType(actionType);
-                                     IList<SparkViewDescriptor> descriptors = _viewFactory.CreateDescriptors(sparkBatchEntry, viewLocatorName);
-                                     viewTokens.Add(new SparkViewToken(descriptors));
-                                 });
+            graph
+                .Actions()
+                .Each(call =>
+                            {
+                                var sparkBatchEntry = new SparkBatchEntry { ControllerType = call.HandlerType };
+                                string viewLocatorName = _policyResolver.ResolveViewLocator(call);
+                                IList<SparkViewDescriptor> descriptors = _viewFactory.CreateDescriptors(sparkBatchEntry, viewLocatorName);
+                                viewTokens.Add(new SparkViewToken(descriptors));
+                            });
             return viewTokens;
         }
-
-        #endregion
     }
 }

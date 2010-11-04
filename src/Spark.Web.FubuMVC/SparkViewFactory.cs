@@ -1,5 +1,4 @@
 ﻿using FubuMVC.Core.Registration.Nodes;
-using Spark;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,15 +17,15 @@ using FubuMVC.Core.View;
 
 namespace Spark.Web.FubuMVC
 {
-    public class SparkViewFactory
+    public class SparkViewFactory : ISparkViewFactory
     {
         private readonly Dictionary<BuildDescriptorParams, ISparkViewEntry> _cache = new Dictionary<BuildDescriptorParams, ISparkViewEntry>();
         private ICacheServiceProvider _cacheServiceProvider;
         private IDescriptorBuilder _descriptorBuilder;
         private ISparkViewEngine _engine;
-        private IServiceLocator _serviceLocator;
+        private Func<IServiceLocator> _serviceLocator;
 
-        public SparkViewFactory(ISparkSettings settings, IServiceLocator serviceLocator)
+        public SparkViewFactory(ISparkSettings settings, Func<IServiceLocator> serviceLocator)
         {
             Settings = settings ?? (ISparkSettings) ConfigurationManager.GetSection("spark") ?? new SparkSettings();
             _serviceLocator = serviceLocator;
@@ -212,7 +211,7 @@ namespace Spark.Web.FubuMVC
             }
             var page = view as IFubuPage;
             if (page != null)
-                page.ServiceLocator = _serviceLocator;
+                page.ServiceLocator = _serviceLocator();
 
             return new ViewEngineResult(view, this);
         }

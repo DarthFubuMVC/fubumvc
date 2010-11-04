@@ -21,7 +21,7 @@ namespace Spark.Web.FubuMVC.Tests
             var settings = new SparkSettings();
             var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
 
-            _factory = new SparkViewFactory(settings, serviceLocator) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
+            _factory = new SparkViewFactory(settings, () => serviceLocator) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
         }
 
         #endregion

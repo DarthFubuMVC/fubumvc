@@ -13,15 +13,6 @@ using HtmlTags;
 
 namespace FubuMVC.Core
 {
-
-    // Register more and different types of actions
-    public interface IActionSource
-    {
-        IEnumerable<ActionCall> FindActions(TypePool types);
-    }
-
-
-
     // TODO:  blow up with a nice error if Route's have empty BehaviorChains
 
 

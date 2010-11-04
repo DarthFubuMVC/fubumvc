@@ -68,14 +68,20 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Bootstrap\ActionAndViewMatchedBySparkViewDescriptors.cs" />
+    <Compile Include="Registration\ActionAndViewMatchedBySparkViewDescriptors.cs" />
+    <Compile Include="Registration\ISparkPolicy.cs" />
+    <Compile Include="Registration\ISparkPolicyResolver.cs" />
+    <Compile Include="Registration\LambdaSparkPolicy.cs" />
+    <Compile Include="Registration\SparkPolicyResolver.cs" />
+    <Compile Include="SparkFubuException.cs" />
+    <Compile Include="SparkFubuRegistry.cs" />
+    <Compile Include="Registration\DSL\SparkPoliciesExpression.cs" />
+    <Compile Include="ISparkViewFactory.cs" />
     <Compile Include="ViewCreation\JavaScriptOutputNode.cs" />
     <Compile Include="ViewCreation\JavaScriptResponse.cs" />
-    <Compile Include="Bootstrap\SparkDefaultStructureMapRegistry.cs" />
-    <Compile Include="Extensions\RegistryConfigurationExtensions.cs" />
     <Compile Include="ActionContext.cs" />
-    <Compile Include="Bootstrap\SparkStructureMapApplication.cs" />
-    <Compile Include="Bootstrap\SparkStructureMapBootstrapper.cs" />
+    <Compile Include="Registration\SparkStructureMapApplication.cs" />
+    <Compile Include="Registration\SparkStructureMapBootstrapper.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICacheServiceProvider.cs" />
     <Compile Include="ViewCreation\SparkView.cs" />

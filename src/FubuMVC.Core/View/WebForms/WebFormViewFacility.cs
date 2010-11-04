@@ -9,7 +9,7 @@ namespace FubuMVC.Core.View.WebForms
 {
     public class WebFormViewFacility : IViewFacility
     {
-        public IEnumerable<IViewToken> FindViews(TypePool types)
+        public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
             return types.TypesMatching(IsWebFormView).Select(x => new WebFormViewToken(x) as IViewToken);
         }

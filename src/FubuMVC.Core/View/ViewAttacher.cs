@@ -27,7 +27,7 @@ namespace FubuMVC.Core.View
 
             foreach (var facility in _facilities)
             {
-                views.AddRange(facility.FindViews(_types));
+                views.AddRange(facility.FindViews(_types, graph));
             }
 
             //= _facilities.SelectMany(x => x.FindViews(_types));
