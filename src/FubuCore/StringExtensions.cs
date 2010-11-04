@@ -9,6 +9,11 @@ namespace FubuCore
 {
     public static class StringExtensions
     {
+        public static string ToFullPath(this string path)
+        {
+            return Path.GetFullPath(path);
+        }
+
         public static string PathRelativeTo(this string path, string root)
         {
             var pathParts = path.ToLower().Replace('/', '\\').Split('\\').ToList();

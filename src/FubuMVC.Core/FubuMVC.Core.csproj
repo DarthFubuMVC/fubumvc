@@ -139,6 +139,7 @@
     <Compile Include="Packaging\FileSystemVirtualPathProvider.cs" />
     <Compile Include="Packaging\PackageIncludeManifest.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
+    <Compile Include="Packaging\PackageManifestReader.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />

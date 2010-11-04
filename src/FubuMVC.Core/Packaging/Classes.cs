@@ -7,8 +7,9 @@ namespace FubuMVC.Core.Packaging
     public class PackageScanner
     {
         
-        public static readonly string PACKAGES_FOLDER = "fubu-packages";
-        public static readonly string PACKAGE_EXTENSION = "fubupak";
+        
+        //public static readonly string PACKAGES_FOLDER = "fubu-packages";
+        //public static readonly string PACKAGE_EXTENSION = "fubupak";
 
         public IEnumerable<PackageInfo> ScanForPackages()
         {
