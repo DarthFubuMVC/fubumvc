@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Registration.Nodes;
+using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics.Querying
 {
@@ -30,5 +31,13 @@ namespace FubuMVC.Core.Diagnostics.Querying
         public TypeToken OutputType { get; set; }
         public string MethodName { get; set; }
         public TypeToken HandlerType { get; set; }
+    
+        public string Description
+        {
+            get
+            {
+                return "{0}.{1}()".ToFormat(HandlerType.Name, MethodName);
+            }
+        }
     }
 }

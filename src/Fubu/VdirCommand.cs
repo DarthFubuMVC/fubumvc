@@ -12,7 +12,10 @@ namespace Fubu
         public string Folder
         {
             get { return _folder; }
-            set { _folder = value.TrimEnd('/').TrimEnd('\\'); }
+            set
+            {
+                _folder = Path.GetFullPath(value.TrimEnd('/').TrimEnd('\\'));
+            }
         }
 
         public string VirtualDirectory { get; set; }
@@ -29,6 +32,10 @@ namespace Fubu
         public override void Execute(VdirInput input)
         {
             VDirTool.CreateVDirApp(input);
+            new AliasCommand().Execute(new AliasInput(){
+                Folder = input.Folder,
+                Name = input.VirtualDirectory
+            });
         }
     }
 

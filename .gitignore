@@ -17,3 +17,6 @@ _ReSharper.*
 ~$*
 
 src/FubuMVC.5.1.ReSharper
+editor.htm
+testEditor.css
+TestResult.xml

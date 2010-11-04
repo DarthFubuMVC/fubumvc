@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
@@ -16,7 +17,10 @@ namespace Fubu
 
         public string RelativePathOfPackage()
         {
-            return PackageFolder.PathRelativeTo(AppFolder);
+            var pkg = Path.GetFullPath(PackageFolder);
+            var app = Path.GetFullPath(AppFolder);
+
+            return pkg.PathRelativeTo(app);
         }
     }
 
@@ -30,6 +34,8 @@ namespace Fubu
         {
             input.AppFolder = AliasCommand.AliasFolder(input.AppFolder);
             input.PackageFolder = AliasCommand.AliasFolder(input.PackageFolder);
+
+            
 
             Execute(input, new FileSystem());
         }

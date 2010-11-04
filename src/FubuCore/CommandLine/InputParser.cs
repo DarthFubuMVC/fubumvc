@@ -20,7 +20,14 @@ namespace FubuCore.CommandLine
             // TODO -- need to throw a good message here
             while (tokens.Any())
             {
-                handlers.First(h => h.Handle(model, tokens));
+                try
+                {
+                    handlers.First(h => h.Handle(model, tokens));
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new ApplicationException("Trying to process token " + tokens.Peek(), e);
+                }
             }
 
             return model;
@@ -43,7 +50,9 @@ namespace FubuCore.CommandLine
 
         public static string ToFlagName(PropertyInfo property)
         {
-            return FLAG_PREFIX + property.Name.TrimEnd(FLAG_SUFFIX.ToCharArray()).ToLower();
+            var name = property.Name.Substring(0, property.Name.Length - 4);
+
+            return FLAG_PREFIX + name.ToLower();
         }
     }
 }

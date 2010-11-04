@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="StoryTeller">
       <HintPath>..\..\lib\StoryTeller\StoryTeller.dll</HintPath>
     </Reference>
@@ -39,8 +42,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="debugger.cs" />
+    <Compile Include="Fixtures\PackagingFixture.cs" />
     <Compile Include="FubuSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryTellerDebug.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -61,7 +67,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Fixtures\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

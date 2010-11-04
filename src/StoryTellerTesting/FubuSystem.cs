@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using FubuCore;
 using FubuMVC.Core.Diagnostics.Querying;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;
@@ -28,8 +30,8 @@ namespace StoryTellerTesting
         public void SetupEnvironment()
         {
             // TODO -- make this configurable?
-            _runner = new CommandRunner(@"..\..\..\..\");
-            _runner.RunFubu("fubu createvdir src/FubuTestApplication fubu-testing");
+            _runner = new CommandRunner();
+            _runner.RunFubu("createvdir src/FubuTestApplication fubu-testing");
         }
 
         public void TeardownEnvironment()
@@ -54,29 +56,53 @@ namespace StoryTellerTesting
     {
         private readonly string _solutionDirectory;
 
-        public CommandRunner(string solutionDirectory)
+        public CommandRunner()
         {
-            _solutionDirectory = Path.GetFullPath(solutionDirectory);
+            var path = Environment.CurrentDirectory;
+
+            var fileSystem = new FileSystem();
+
+            bool isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
+            while (!isFound)
+            {
+                path = Path.Combine(path, "..");
+                isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
+            }
+
+            _solutionDirectory = Path.GetFullPath(path);
         }
 
         public void RunFubu(string commandLine)
         {
+            Console.WriteLine("Running 'fubu {0}'", commandLine);
+
             var fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\debug\fubu.exe");
             var startup = new ProcessStartInfo(fileName, commandLine){
                 CreateNoWindow = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
-                RedirectStandardOutput = true,
+                RedirectStandardOutput = false,
                 UseShellExecute = false,
                 WorkingDirectory = _solutionDirectory
             };
 
-            var process = Process.Start(startup);
-            process.WaitForExit();
-
-            if (process.ExitCode != 0)
+            try
             {
-                StoryTellerAssert.Fail("Command failed! -- " + commandLine);
+                var process = Process.Start(startup);
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    StoryTellerAssert.Fail("Command failed! -- " + commandLine);
+                }
+            }
+            catch (StorytellerAssertionException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException("Trying to run " + fileName, e);
             }
         }
     }

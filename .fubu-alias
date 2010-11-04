@@ -2,6 +2,7 @@
 <aliases xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Aliases>
     <alias name="test-main" folder="src/FubuTestApplication" />
-    <alias name="pak1" folder="src\TestPackage1" />
+    <alias name="pak1" folder="src/TestPackage1" />
+    <alias name="fubu-testing" folder="C:\git\fubumvc\src\FubuTestApplication" />
   </Aliases>
 </aliases>
