@@ -7,6 +7,7 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Packaging;
 using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap
@@ -41,14 +42,29 @@ namespace FubuMVC.StructureMap.Bootstrap
         protected void Application_Start(object sender, EventArgs e)
         {
             var routeCollection = RouteTable.Routes;
-            BootstrapStructureMap(routeCollection, GetMyRegistry(), InitializeStructureMap);
+
+            PackageRegistry.LoadPackages(() =>
+            {
+                var fubuRegistry = GetMyRegistry();
+                PackageRegistry.ExtensionAssemblies.Each(assem => fubuRegistry.Applies.ToAssembly(assem));
+
+                BootstrapStructureMap(routeCollection, fubuRegistry, InitializeStructureMap);
+                return ObjectFactory.GetAllInstances<IPackageActivator>();
+            });
         }
 
         private void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry, Action<IInitializationExpression> initializeExpression)
         {
             UrlContext.Reset();
 
+            
             ObjectFactory.Initialize(initializeExpression);
+
+            ObjectFactory.Configure(x => x.Scan(o =>
+            {
+                PackageRegistry.ExtensionAssemblies.Each(o.Assembly);
+                o.AddAllTypesOf<IFubuRegistryExtension>();
+            }));
 
             var fubuBootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
 

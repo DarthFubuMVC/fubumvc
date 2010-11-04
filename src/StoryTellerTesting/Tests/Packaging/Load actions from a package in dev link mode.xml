@@ -19,9 +19,9 @@
   <Package1>
     <RoutesShouldBe isStep="True">
       <rows>
-        <row isStep="True" RoutePattern="a" FirstActionDescription="b" />
-        <row isStep="True" RoutePattern="b" FirstActionDescription="c" />
-        <row isStep="True" RoutePattern="c" FirstActionDescription="d" />
+        <row isStep="True" RoutePattern="testpackage1/string/sayhello" FirstActionDescription="StringController.SayHello()" />
+        <row isStep="True" RoutePattern="testpackage1/json/sendmessage" FirstActionDescription="JsonController.SendMessage()" />
+        <row isStep="True" RoutePattern="testpackage1/view/showview/{Name}" FirstActionDescription="ViewController.ShowView()" />
       </rows>
     </RoutesShouldBe>
   </Package1>

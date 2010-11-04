@@ -28,4 +28,13 @@ namespace TestPackage1
         [RouteInput]
         public string Name { get; set; }
     }
+
+    public class ViewController
+    {
+        [UrlPattern("view/{Name}")]
+        public ViewInput ShowView(ViewInput input)
+        {
+            return new ViewInput();
+        }
+    }
 }

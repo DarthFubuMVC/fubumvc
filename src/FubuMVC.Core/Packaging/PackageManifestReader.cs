@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Packaging
 
             return new PackageInfo(){
                 Assemblies = assemblies,
-                Folder = Path.Combine(_applicationFolder, folder).ToFullPath()
+                FilesFolder = Path.Combine(_applicationFolder, folder).ToFullPath()
             };
         }
 

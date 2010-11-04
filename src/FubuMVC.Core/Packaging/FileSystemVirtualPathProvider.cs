@@ -14,14 +14,14 @@ namespace FubuMVC.Core.Packaging
         private readonly IList<string> _directories = new List<string>();
         private readonly Cache<string, string> _files = new Cache<string, string>();
 
-        private readonly string _directory;
-
-        public FileSystemVirtualPathProvider(string directory)
+        public FileSystemVirtualPathProvider()
         {
             _files.OnMissing = findPhysicalPath;
+        }
 
-            _directory = directory;
-            _directories.Add(_directory);
+        public void RegisterContentDirectory(string directory)
+        {
+            _directories.Add(directory);
         }
 
         private string findPhysicalPath(string virtualPath)

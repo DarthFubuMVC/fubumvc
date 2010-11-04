@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Packaging
             var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
             package.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
-            package.Folder.ShouldEqual(packageFolder);
+            package.FilesFolder.ShouldEqual(packageFolder);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Packaging
             var package = reader.ReadAll().Single();
 
             package.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
-            package.Folder.ToLower().ShouldEqual(packageFolder.ToLower());
+            package.FilesFolder.ToLower().ShouldEqual(packageFolder.ToLower());
         }
     }
 }
