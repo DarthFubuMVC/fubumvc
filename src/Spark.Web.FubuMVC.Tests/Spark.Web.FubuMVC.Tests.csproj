@@ -45,6 +45,13 @@
       <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL" />
+    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -68,7 +75,15 @@
     </Compile>
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Helpers\MockHttpContextBase.cs" />
+    <Compile Include="InteractionContext.cs" />
     <Compile Include="Models\FakeViewModel.cs" />
+    <Compile Include="Registration\TestSparkPolicy.cs" />
+    <Compile Include="Registration\DSL\when_adding_a_policy.cs" />
+    <Compile Include="Registration\SampleEndpoint.cs" />
+    <Compile Include="Registration\SampleInput.cs" />
+    <Compile Include="Registration\SampleOutput.cs" />
+    <Compile Include="Registration\when_applying_action_and_view_filter.cs" />
+    <Compile Include="Registration\when_resolving_policies.cs" />
     <Compile Include="SparkBatchCompilationTester.cs" />
     <Compile Include="SparkDescriptorBuildingTester.cs" />
     <Compile Include="SparkViewFactoryTester.cs" />
@@ -181,9 +196,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Registration\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

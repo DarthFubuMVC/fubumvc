@@ -19,6 +19,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
             _matchedDescriptor = matchedDescriptor;
             _actionName = actionName;
             _viewName = viewName;
+
+            _descriptors = new List<SparkViewDescriptor>();
         }
 
         public SparkViewToken(IList<SparkViewDescriptor> descriptors)
