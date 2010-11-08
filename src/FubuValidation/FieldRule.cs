@@ -17,8 +17,6 @@ namespace FubuValidation
             _typeResolver = typeResolver;
         }
 
-        public string Message { get; set; }
-
         public IFieldValidationStrategy Strategy { get { return _strategy; } }
 
         public void Validate(object target, Notification notification)

@@ -2,14 +2,24 @@
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Controllers.Products;
 using FubuMVC.HelloWorld.Services;
+using FubuMVC.StructureMap;
 using FubuMVC.StructureMap.Bootstrap;
 using FubuMVC.UI;
+using FubuValidation;
+using FubuValidation.Registration;
+using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 
 namespace FubuMVC.HelloWorld
 {
     public class Global : FubuStructureMapApplication
     {
+        protected override void InitializeValidation()
+        {
+            Validator.Initialize<HelloWorldValidationRegistry>();
+            ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator(ObjectFactory.Container));
+        }
+
         public override FubuRegistry GetMyRegistry()
         {
             return new HelloWorldFubuRegistry();
@@ -18,6 +28,8 @@ namespace FubuMVC.HelloWorld
         protected override void InitializeStructureMap(IInitializationExpression ex)
         {
             ex.For<IHttpSession>().Use<CurrentHttpContextSession>();
+            ex.For<IValidationProvider>().Use(() => Validator.Provider);
+            ex.For<IValidationQuery>().Use(() => Validator.Model);
         }
     }
 

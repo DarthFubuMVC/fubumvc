@@ -33,6 +33,10 @@ namespace FubuMVC.StructureMap.Bootstrap
                 return new BasicFubuStructureMapRegistry(HttpContext.Current.IsDebuggingEnabled, ControllerAssembly);
         }
 
+        protected virtual void InitializeValidation()
+        {
+        }
+
         protected virtual void InitializeStructureMap(IInitializationExpression ex)
         {
             // no op, please override
@@ -47,7 +51,7 @@ namespace FubuMVC.StructureMap.Bootstrap
         private void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry, Action<IInitializationExpression> initializeExpression)
         {
             UrlContext.Reset();
-
+            InitializeValidation();
             ObjectFactory.Initialize(initializeExpression);
 
             var fubuBootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);

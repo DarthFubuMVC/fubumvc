@@ -35,6 +35,10 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
@@ -93,6 +97,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelloWorldValidationRegistry.cs" />
     <Compile Include="SampleHtmlConventions.cs" />
     <Compile Include="Services\IHttpSession.cs" />
   </ItemGroup>
@@ -112,6 +117,10 @@
     <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
       <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
       <Name>FubuMVC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
+      <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
+      <Name>FubuValidation</Name>
     </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>

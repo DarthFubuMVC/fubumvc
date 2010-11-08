@@ -70,7 +70,7 @@
     <Compile Include="Strategies\when_validating_required_fields.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="TemplateParserTester.cs" />
-    <Compile Include="ValidationAttributeSourceTester.cs" />
+    <Compile Include="ValidationAttributePolicyTester.cs" />
     <Compile Include="when_evaluating_a_field_rule.cs" />
   </ItemGroup>
   <ItemGroup>

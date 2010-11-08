@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FubuValidation
+namespace FubuValidation.Registration
 {
     public interface IValidationSource
     {
