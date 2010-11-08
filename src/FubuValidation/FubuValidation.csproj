@@ -81,6 +81,8 @@
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
     <Compile Include="RequiredAttribute.cs" />
+    <Compile Include="Sources\ConventionalValidationSource.cs" />
+    <Compile Include="Sources\ValidationAttributeSource.cs" />
     <Compile Include="Strategies\GreaterOrEqualToZeroFieldStrategy.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,8 +96,10 @@
     <Compile Include="Strategies\ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
-    <Compile Include="ValidationAttributeSource.cs" />
     <Compile Include="ValidationStrategyResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sources\Conventions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

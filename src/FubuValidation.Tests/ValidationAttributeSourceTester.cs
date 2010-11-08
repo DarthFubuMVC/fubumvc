@@ -1,3 +1,4 @@
+using FubuValidation.Sources;
 using FubuValidation.Strategies;
 using NUnit.Framework;
 

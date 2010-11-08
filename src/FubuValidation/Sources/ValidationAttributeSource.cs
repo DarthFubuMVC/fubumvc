@@ -5,7 +5,7 @@ using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
 
-namespace FubuValidation
+namespace FubuValidation.Sources
 {
     public class ValidationAttributeSource : IValidationSource
     {
@@ -26,14 +26,13 @@ namespace FubuValidation
             var rules = new List<IValidationRule>();
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             properties
-                .Each(property =>
+                .Each<PropertyInfo>(property =>
                           {
                               var accessor = new SingleProperty(property, type);
-                              property
-                                  .GetCustomAttributes(true)
-                                  .Where(attribute => typeof (ValidationAttribute).IsAssignableFrom(attribute.GetType()))
-                                  .Cast<ValidationAttribute>()
-                                  .Each(attribute => rules.Add(attribute.CreateRule(accessor)));
+                              GenericEnumerableExtensions.Each<ValidationAttribute>(property
+                                                                 .GetCustomAttributes(true)
+                                                                 .Where(attribute => typeof (ValidationAttribute).IsAssignableFrom(attribute.GetType()))
+                                                                 .Cast<ValidationAttribute>(), attribute => rules.Add(attribute.CreateRule(accessor)));
                           });
 
             return rules;
