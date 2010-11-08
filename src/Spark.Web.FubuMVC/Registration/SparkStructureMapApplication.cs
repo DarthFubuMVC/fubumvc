@@ -47,7 +47,7 @@ namespace Spark.Web.FubuMVC.Registration
 
         public virtual SparkFubuRegistry GetMyRegistry()
         {
-            return new SparkFubuRegistry(ObjectFactory.GetInstance<SparkViewFactory>);
+            return ObjectFactory.GetInstance<SparkFubuRegistry>();
         }
 
 

@@ -8,7 +8,7 @@ namespace FubuMVC.HelloSpark
     {
         public override SparkFubuRegistry GetMyRegistry()
         {
-            return new HelloSparkRegistry(ObjectFactory.Container.GetInstance<SparkViewFactory>);
+            return ObjectFactory.Container.GetInstance<HelloSparkRegistry>();
         }
     }
 }

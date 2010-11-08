@@ -2,7 +2,6 @@
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
 using Spark;
-using System;
 using Spark.Web.FubuMVC;
 using Spark.Web.FubuMVC.Extensions;
 using FubuMVC.HelloSpark.Controllers;
@@ -14,7 +13,7 @@ namespace FubuMVC.HelloSpark
 {
     public class HelloSparkRegistry : SparkFubuRegistry
     {
-        public HelloSparkRegistry(Func<SparkViewFactory> factory)
+        public HelloSparkRegistry(SparkViewFactory factory)
             : base(factory)
         {
             IncludeDiagnostics(true);
@@ -47,7 +46,7 @@ namespace FubuMVC.HelloSpark
         {
             var response = JavaScriptResponse.GetResponse(call);
             string controllerName = call.HandlerType.Name.RemoveSuffix("Controller");
-            return Factory().GetViewToken(call, controllerName, response.ViewName, LanguageType.Javascript);
+            return Factory.GetViewToken(call, controllerName, response.ViewName, LanguageType.Javascript);
         }
     }
 
