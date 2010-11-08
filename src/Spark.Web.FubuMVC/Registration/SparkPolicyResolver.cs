@@ -14,25 +14,35 @@ namespace Spark.Web.FubuMVC.Registration
             _policies = policies;
         }
 
+        public bool HasMatchFor(ActionCall call)
+        {
+            return getPolicy(call) != null;
+        }
+
         public string ResolveViewName(ActionCall call)
         {
-            return getPolicy(call).BuildViewName(call);
+            return forPolicyMatching(call, policy => policy.BuildViewName(call));
         }
 
         public string ResolveViewLocator(ActionCall call)
         {
-            return getPolicy(call).BuildViewLocator(call);
+            return forPolicyMatching(call, policy => policy.BuildViewLocator(call));
         }
 
         private ISparkPolicy getPolicy(ActionCall call)
         {
-            var policy = _policies.FirstOrDefault(p => p.Matches(call));
-            if (policy == null)
+            return _policies.FirstOrDefault(p => p.Matches(call));
+        }
+
+        private string forPolicyMatching(ActionCall call, Func<ISparkPolicy, string> action)
+        {
+            var policy = getPolicy(call);
+            if(policy != null)
             {
-                throw new SparkFubuException(1001, "No policies found for {0}", call.ToString());
+                return action(policy);
             }
 
-            return policy;
+            return null;
         }
     }
 }

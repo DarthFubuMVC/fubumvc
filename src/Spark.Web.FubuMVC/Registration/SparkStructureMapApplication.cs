@@ -1,4 +1,3 @@
-using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using Microsoft.Practices.ServiceLocation;
 using Spark.Web.FubuMVC.ViewCreation;
@@ -46,7 +45,7 @@ namespace Spark.Web.FubuMVC.Registration
             ex.For(typeof(ISparkViewRenderer<>)).Use(typeof(SparkViewRenderer<>));
         }
 
-        public virtual FubuRegistry GetMyRegistry()
+        public virtual SparkFubuRegistry GetMyRegistry()
         {
             return new SparkFubuRegistry(ObjectFactory.GetInstance<SparkViewFactory>);
         }

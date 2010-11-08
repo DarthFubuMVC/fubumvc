@@ -1,5 +1,4 @@
 using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using StructureMap;
 using System.Web.Routing;
@@ -15,12 +14,12 @@ namespace Spark.Web.FubuMVC.Registration
             _routes = routes;
         }
 
-        public static void Bootstrap(RouteCollection routes, FubuRegistry fubuRegistry)
+        public static void Bootstrap(RouteCollection routes, SparkFubuRegistry fubuRegistry)
         {
             new SparkStructureMapBootstrapper(routes).BootstrapStructureMap(fubuRegistry);
         }
 
-        private void BootstrapStructureMap(FubuRegistry fubuRegistry)
+        private void BootstrapStructureMap(SparkFubuRegistry fubuRegistry)
         {
             UrlContext.Reset();
             var bootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);

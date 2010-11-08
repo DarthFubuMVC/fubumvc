@@ -18,6 +18,11 @@ namespace Spark.Web.FubuMVC.Registration
 
         public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
+            if(!_policyResolver.HasMatchFor(call))
+            {
+                return new IViewToken[0];
+            }
+
             string viewName = _policyResolver.ResolveViewName(call);
             string viewLocatorName = _policyResolver.ResolveViewLocator(call);
             IEnumerable<SparkViewToken> allViewTokens =

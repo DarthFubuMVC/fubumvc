@@ -12,8 +12,6 @@ using Spark.FileSystem;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.ViewCreation;
 using Spark.Web.FubuMVC.ViewLocation;
-using Microsoft.Practices.ServiceLocation;
-using FubuMVC.Core.View;
 
 namespace Spark.Web.FubuMVC
 {
@@ -23,12 +21,10 @@ namespace Spark.Web.FubuMVC
         private ICacheServiceProvider _cacheServiceProvider;
         private IDescriptorBuilder _descriptorBuilder;
         private ISparkViewEngine _engine;
-        private Func<IServiceLocator> _serviceLocator;
 
-        public SparkViewFactory(ISparkSettings settings, Func<IServiceLocator> serviceLocator)
+        public SparkViewFactory(ISparkSettings settings)
         {
             Settings = settings ?? (ISparkSettings) ConfigurationManager.GetSection("spark") ?? new SparkSettings();
-            _serviceLocator = serviceLocator;
         }
 
         public IViewFolder ViewFolder
@@ -209,9 +205,6 @@ namespace Spark.Web.FubuMVC
                 sparkView.ResourcePathManager = Engine.ResourcePathManager;
                 sparkView.CacheService = CacheServiceProvider.GetCacheService(httpContext);
             }
-            var page = view as IFubuPage;
-            if (page != null)
-                page.ServiceLocator = _serviceLocator();
 
             return new ViewEngineResult(view, this);
         }

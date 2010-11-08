@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using Spark.Web.FubuMVC.Registration;
@@ -22,6 +23,7 @@ namespace Spark.Web.FubuMVC.ViewLocation
             var viewTokens = new List<IViewToken>();
             graph
                 .Actions()
+                .Where(call => _policyResolver.HasMatchFor(call))
                 .Each(call =>
                             {
                                 var sparkBatchEntry = new SparkBatchEntry { ControllerType = call.HandlerType };

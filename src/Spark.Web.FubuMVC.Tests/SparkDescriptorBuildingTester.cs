@@ -26,7 +26,7 @@ namespace Spark.Web.FubuMVC.Tests
             //CompiledViewHolder.Current = null;
             var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
 
-            _factory = new SparkViewFactory(null, () => serviceLocator);
+            _factory = new SparkViewFactory(null);
             _viewFolder = new InMemoryViewFolder();
             _factory.ViewFolder = _viewFolder;
             var httpContext = MockRepository.GenerateStub<HttpContextBase>();
