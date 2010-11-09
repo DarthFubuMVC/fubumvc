@@ -94,9 +94,11 @@
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\OddEvenLiModifier.cs" />
+    <Compile Include="FubuStructureMapBootstrapper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelloWorldFubuRegistry.cs" />
     <Compile Include="HelloWorldValidationRegistry.cs" />
     <Compile Include="SampleHtmlConventions.cs" />
     <Compile Include="Services\IHttpSession.cs" />
