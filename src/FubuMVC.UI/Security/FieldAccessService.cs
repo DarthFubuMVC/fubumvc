@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
+using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.UI.Security
 {
@@ -19,12 +20,14 @@ namespace FubuMVC.UI.Security
     {
         private readonly IFieldAccessRightsExecutor _accessRightsExecutor;
         private readonly ITypeResolver _types;
+        private readonly IServiceLocator _services;
         private readonly List<IFieldAccessRule> _rules = new List<IFieldAccessRule>();
 
-        public FieldAccessService(IFieldAccessRightsExecutor accessRightsExecutor, IEnumerable<IFieldAccessRule> rules, ITypeResolver types)
+        public FieldAccessService(IFieldAccessRightsExecutor accessRightsExecutor, IEnumerable<IFieldAccessRule> rules, ITypeResolver types, IServiceLocator services)
         {
             _accessRightsExecutor = accessRightsExecutor;
             _types = types;
+            _services = services;
             _rules.AddRange(rules);
         }
 
@@ -42,7 +45,7 @@ namespace FubuMVC.UI.Security
 
             var accessor = new SingleProperty(property, _types.ResolveType(target));
 
-            var request = new ElementRequest(target, accessor, null);
+            var request = new ElementRequest(target, accessor, _services);
             return RightsFor(request);
         }
     }
