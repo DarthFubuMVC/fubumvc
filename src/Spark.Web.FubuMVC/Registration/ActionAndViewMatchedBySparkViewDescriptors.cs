@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using Spark.Web.FubuMVC.ViewCreation;
@@ -18,7 +19,7 @@ namespace Spark.Web.FubuMVC.Registration
 
         public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
-            if(!_policyResolver.HasMatchFor(call))
+            if(call.OutputType() == typeof(FubuContinuation) || !_policyResolver.HasMatchFor(call))
             {
                 return new IViewToken[0];
             }
