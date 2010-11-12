@@ -31,6 +31,16 @@ namespace Spark.Web.FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void should_return_empty_collection_when_action_call_returns_a_fubu_continuation()
+        {
+            var call = ActionCall.For<SampleEndpoint>(e => e.Post());
+
+            ClassUnderTest
+                .Apply(call, _views)
+                .ShouldHaveCount(0);
+        }
+
+        [Test]
         public void should_return_empty_collection_when_resolver_has_no_matching_policies()
         {
             MockFor<ISparkPolicyResolver>()
