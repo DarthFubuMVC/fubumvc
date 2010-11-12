@@ -135,7 +135,12 @@ namespace FubuMVC.Core.Registration.DSL
 
         public RouteConventionExpression UrlPolicy<T>() where T : IUrlPolicy, new()
         {
-            _resolver.RegisterUrlPolicy(new T());
+            return UrlPolicy(new T());
+        }
+
+        public RouteConventionExpression UrlPolicy(IUrlPolicy policy)
+        {
+            _resolver.RegisterUrlPolicy(policy);
             return this;
         }
 
