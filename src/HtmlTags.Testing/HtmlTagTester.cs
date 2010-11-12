@@ -55,6 +55,7 @@ namespace HtmlTags.Testing
             tag.IsInputElement().ShouldBeFalse();
             tag.TagName("input").IsInputElement().ShouldBeTrue();
             tag.TagName("select").IsInputElement().ShouldBeTrue();
+            tag.TagName("textarea").IsInputElement().ShouldBeTrue();
         }
 
         [Test]
