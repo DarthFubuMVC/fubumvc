@@ -46,7 +46,7 @@ namespace FubuMVC.StructureMap.Bootstrap
             PackageRegistry.LoadPackages(() =>
             {
                 var fubuRegistry = GetMyRegistry();
-                PackageRegistry.ExtensionAssemblies.Each(assem => fubuRegistry.Applies.ToAssembly(assem));
+
 
                 BootstrapStructureMap(routeCollection, fubuRegistry, InitializeStructureMap);
                 return ObjectFactory.GetAllInstances<IPackageActivator>();

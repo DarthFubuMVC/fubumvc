@@ -12,6 +12,11 @@ namespace HtmlTags.Testing
         public void I_just_want_to_generate_a_div_with_text_and_a_class()
         {
 
+            var myTag = new HtmlTag("div")
+                .Add("h4", header => header.Text("The header text"))
+                .Add("div", d =>d.Text("more text"));
+          Debug.WriteLine(myTag.ToPrettyString());
+
             HtmlTag tag = new HtmlTag("div")
                 .Text("my text")
                 .AddClass("collapsible");
