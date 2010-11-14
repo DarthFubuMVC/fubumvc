@@ -7,7 +7,8 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    public static class PackageRegistry
+    // TODO -- maybe this gets renamed later, or moved into an application model / bootstrapper
+    public static class PackageLoader
     {
         private static readonly List<PackageInfo> _packages = new List<PackageInfo>();
         private static readonly IEnumerable<IPackageActivator> _systemPackages = 

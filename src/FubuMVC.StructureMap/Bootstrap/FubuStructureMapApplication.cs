@@ -43,7 +43,7 @@ namespace FubuMVC.StructureMap.Bootstrap
         {
             var routeCollection = RouteTable.Routes;
 
-            PackageRegistry.LoadPackages(() =>
+            PackageLoader.LoadPackages(() =>
             {
                 var fubuRegistry = GetMyRegistry();
 
@@ -62,7 +62,7 @@ namespace FubuMVC.StructureMap.Bootstrap
 
             ObjectFactory.Configure(x => x.Scan(o =>
             {
-                PackageRegistry.ExtensionAssemblies.Each(o.Assembly);
+                PackageLoader.ExtensionAssemblies.Each(o.Assembly);
                 o.AddAllTypesOf<IFubuRegistryExtension>();
             }));
 

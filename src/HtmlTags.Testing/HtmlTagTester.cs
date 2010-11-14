@@ -9,22 +9,6 @@ namespace HtmlTags.Testing
     public class HtmlTagTester
     {
         [Test]
-        public void I_just_want_to_generate_a_div_with_text_and_a_class()
-        {
-
-            var myTag = new HtmlTag("div")
-                .Add("h4", header => header.Text("The header text"))
-                .Add("div", d =>d.Text("more text"));
-          Debug.WriteLine(myTag.ToPrettyString());
-
-            HtmlTag tag = new HtmlTag("div")
-                .Text("my text")
-                .AddClass("collapsible");
-            tag.Add("span").Text("inner");
-            Debug.WriteLine(tag.ToString());
-        }
-
-        [Test]
         public void do_not_write_closing_tag()
         {
             var tag = new HtmlTag("span").Id("id");
