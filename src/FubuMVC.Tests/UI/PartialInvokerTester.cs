@@ -4,7 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuMVC.UI;
+using FubuMVC.Core.UI;
 using NUnit.Framework;
 using Rhino.Mocks;
 

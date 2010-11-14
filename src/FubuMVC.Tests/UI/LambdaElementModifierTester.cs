@@ -1,4 +1,4 @@
-using FubuMVC.UI.Configuration;
+using FubuMVC.Core.UI.Configuration;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI

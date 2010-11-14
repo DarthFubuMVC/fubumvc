@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.UI.Tags;
 using FubuMVC.StructureMap;
 using Microsoft.Practices.ServiceLocation;
 using Spark.Web.FubuMVC.ViewCreation;
@@ -8,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
-using FubuMVC.UI.Tags;
 
 namespace Spark.Web.FubuMVC.Bootstrap
 {

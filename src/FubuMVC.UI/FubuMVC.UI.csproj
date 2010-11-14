@@ -57,58 +57,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\AccessorDef.cs" />
-    <Compile Include="Configuration\DefaultHtmlConventions.cs" />
-    <Compile Include="Configuration\PartialLambdaElementBuilder.cs" />
-    <Compile Include="Diagnostics\ExampleHtmlWriter.cs" />
-    <Compile Include="Diagnostics\HtmlDiagnosticsRegistry.cs" />
-    <Compile Include="Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
-    <Compile Include="Extensibility\ContentExtensionGraph.cs" />
-    <Compile Include="Extensibility\ContentExtensions.cs" />
-    <Compile Include="Extensibility\ExtensionsExpression.cs" />
-    <Compile Include="Extensibility\ExtensionShelf.cs" />
-    <Compile Include="Extensibility\FilteredContentExtension.cs" />
-    <Compile Include="Extensibility\IContentExtension.cs" />
-    <Compile Include="Extensibility\LambdaExtension.cs" />
-    <Compile Include="Forms\DefinitionListLabelAndField.cs" />
-    <Compile Include="Forms\FormLineExpression.cs" />
-    <Compile Include="Forms\ILabelAndFieldLayout.cs" />
-    <Compile Include="IPartialInvoker.cs" />
-    <Compile Include="Navigation\AuthorizedContextualMenu.cs" />
-    <Compile Include="Navigation\IContextualAction.cs" />
-    <Compile Include="Navigation\IContextualMenu.cs" />
-    <Compile Include="Navigation\MenuItemState.cs" />
-    <Compile Include="Navigation\MenuItemToken.cs" />
-    <Compile Include="PartialInvoker.cs" />
-    <Compile Include="Partials\RenderPartialExpression.cs" />
-    <Compile Include="FubuPageExtensions.cs" />
-    <Compile Include="FubuRegistryUIExtensions.cs" />
-    <Compile Include="Configuration\HtmlConventionCompiler.cs" />
-    <Compile Include="Configuration\Interfaces.cs" />
-    <Compile Include="PartialExpressionExtensions.cs" />
-    <Compile Include="Security\AccessRight.cs" />
-    <Compile Include="Security\AccessRightExtensions.cs" />
-    <Compile Include="Security\FieldAccessService.cs" />
-    <Compile Include="Security\FieldAccessRightsExecutor.cs" />
-    <Compile Include="Security\IFieldAccessRule.cs" />
-    <Compile Include="ServiceLocatorExtensions.cs" />
-    <Compile Include="ShowEditFieldExpressions.cs" />
-    <Compile Include="Tags\PartialLambdaElementModifier.cs" />
-    <Compile Include="Tags\PartialTagActionExpression.cs" />
-    <Compile Include="Tags\PartialTagFactory.cs" />
-    <Compile Include="Tags\PartialTagFactoryExpression.cs" />
-    <Compile Include="Tags\TagActionExpression.cs" />
-    <Compile Include="Tags\TagFactory.cs" />
-    <Compile Include="Configuration\ElementRequest.cs" />
-    <Compile Include="HtmlConventionRegistry.cs" />
-    <Compile Include="Configuration\LambdaElementModifier.cs" />
-    <Compile Include="Configuration\LambdaElementBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tags\TagFactoryExpression.cs" />
-    <Compile Include="Tags\TagGenerator.cs" />
-    <Compile Include="Tags\TagProfile.cs" />
-    <Compile Include="Tags\TagProfileExpression.cs" />
-    <Compile Include="Tags\TagProfileLibrary.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -123,9 +72,6 @@
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Diagnostics\examples.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

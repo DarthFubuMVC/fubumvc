@@ -3,14 +3,14 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Security;
+using FubuMVC.Core.UI.Tags;
 using FubuMVC.StructureMap;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Security;
-using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuMVC.UI;
 
 namespace FubuMVC.Tests.UI.Security
 {

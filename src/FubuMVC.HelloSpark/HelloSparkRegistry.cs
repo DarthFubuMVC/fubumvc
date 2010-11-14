@@ -1,4 +1,5 @@
-﻿using Spark;
+﻿using FubuMVC.Core.UI;
+using Spark;
 using System;
 using Spark.Web.FubuMVC;
 using Spark.Web.FubuMVC.Bootstrap;
@@ -6,7 +7,6 @@ using Spark.Web.FubuMVC.Extensions;
 using FubuMVC.HelloSpark.Controllers;
 using Spark.Web.FubuMVC.ViewCreation;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.UI;
 
 namespace FubuMVC.HelloSpark
 {

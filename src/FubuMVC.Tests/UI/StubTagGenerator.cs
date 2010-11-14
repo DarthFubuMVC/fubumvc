@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Forms;
-using FubuMVC.UI.Tags;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Forms;
+using FubuMVC.Core.UI.Tags;
 using HtmlTags;
 
 namespace FubuMVC.Tests.UI

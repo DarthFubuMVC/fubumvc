@@ -1,9 +1,9 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.UI;
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Controllers.Products;
 using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap.Bootstrap;
-using FubuMVC.UI;
 using StructureMap;
 
 namespace FubuMVC.HelloWorld

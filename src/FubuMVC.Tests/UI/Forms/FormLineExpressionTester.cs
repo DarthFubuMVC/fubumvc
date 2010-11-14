@@ -1,7 +1,7 @@
 using System.Security.Principal;
 using System.Threading;
-using FubuMVC.UI.Forms;
-using FubuMVC.UI.Security;
+using FubuMVC.Core.UI.Forms;
+using FubuMVC.Core.UI.Security;
 using HtmlTags;
 using NUnit.Framework;
 using System.Linq;

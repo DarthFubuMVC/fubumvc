@@ -1,5 +1,5 @@
+using FubuMVC.Core.UI.Configuration;
 using FubuMVC.HelloWorld.Controllers.Products;
-using FubuMVC.UI.Configuration;
 using HtmlTags;
 
 namespace FubuMVC.HelloWorld.Conventions

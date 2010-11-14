@@ -1,5 +1,5 @@
+using FubuMVC.Core.UI;
 using FubuMVC.HelloWorld.Conventions;
-using FubuMVC.UI;
 
 namespace FubuMVC.HelloWorld
 {

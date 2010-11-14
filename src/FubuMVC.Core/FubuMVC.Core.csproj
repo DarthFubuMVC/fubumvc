@@ -231,6 +231,57 @@
     <Compile Include="Security\IEndPointAuthorizor.cs" />
     <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
+    <Compile Include="UI\Configuration\AccessorDef.cs" />
+    <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
+    <Compile Include="UI\Configuration\ElementRequest.cs" />
+    <Compile Include="UI\Configuration\HtmlConventionCompiler.cs" />
+    <Compile Include="UI\Configuration\Interfaces.cs" />
+    <Compile Include="UI\Configuration\LambdaElementBuilder.cs" />
+    <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
+    <Compile Include="UI\Configuration\PartialLambdaElementBuilder.cs" />
+    <Compile Include="UI\Diagnostics\ExampleHtmlWriter.cs" />
+    <Compile Include="UI\Diagnostics\HtmlDiagnosticsRegistry.cs" />
+    <Compile Include="UI\Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
+    <Compile Include="UI\Extensibility\ContentExtensionGraph.cs" />
+    <Compile Include="UI\Extensibility\ContentExtensions.cs" />
+    <Compile Include="UI\Extensibility\ExtensionsExpression.cs" />
+    <Compile Include="UI\Extensibility\ExtensionShelf.cs" />
+    <Compile Include="UI\Extensibility\FilteredContentExtension.cs" />
+    <Compile Include="UI\Extensibility\IContentExtension.cs" />
+    <Compile Include="UI\Extensibility\LambdaExtension.cs" />
+    <Compile Include="UI\Forms\DefinitionListLabelAndField.cs" />
+    <Compile Include="UI\Forms\FormLineExpression.cs" />
+    <Compile Include="UI\Forms\ILabelAndFieldLayout.cs" />
+    <Compile Include="UI\FubuPageExtensions.cs" />
+    <Compile Include="UI\FubuRegistryUIExtensions.cs" />
+    <Compile Include="UI\HtmlConventionRegistry.cs" />
+    <Compile Include="UI\IPartialInvoker.cs" />
+    <Compile Include="UI\Navigation\AuthorizedContextualMenu.cs" />
+    <Compile Include="UI\Navigation\IContextualAction.cs" />
+    <Compile Include="UI\Navigation\IContextualMenu.cs" />
+    <Compile Include="UI\Navigation\MenuItemState.cs" />
+    <Compile Include="UI\Navigation\MenuItemToken.cs" />
+    <Compile Include="UI\PartialExpressionExtensions.cs" />
+    <Compile Include="UI\PartialInvoker.cs" />
+    <Compile Include="UI\Partials\RenderPartialExpression.cs" />
+    <Compile Include="UI\Security\AccessRight.cs" />
+    <Compile Include="UI\Security\AccessRightExtensions.cs" />
+    <Compile Include="UI\Security\FieldAccessRightsExecutor.cs" />
+    <Compile Include="UI\Security\FieldAccessService.cs" />
+    <Compile Include="UI\Security\IFieldAccessRule.cs" />
+    <Compile Include="UI\ServiceLocatorExtensions.cs" />
+    <Compile Include="UI\ShowEditFieldExpressions.cs" />
+    <Compile Include="UI\Tags\PartialLambdaElementModifier.cs" />
+    <Compile Include="UI\Tags\PartialTagActionExpression.cs" />
+    <Compile Include="UI\Tags\PartialTagFactory.cs" />
+    <Compile Include="UI\Tags\PartialTagFactoryExpression.cs" />
+    <Compile Include="UI\Tags\TagActionExpression.cs" />
+    <Compile Include="UI\Tags\TagFactory.cs" />
+    <Compile Include="UI\Tags\TagFactoryExpression.cs" />
+    <Compile Include="UI\Tags\TagGenerator.cs" />
+    <Compile Include="UI\Tags\TagProfile.cs" />
+    <Compile Include="UI\Tags\TagProfileExpression.cs" />
+    <Compile Include="UI\Tags\TagProfileLibrary.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
@@ -323,6 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Diagnostics\diagnostics.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\Diagnostics\examples.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

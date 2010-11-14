@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.UI.Security;
+using FubuMVC.Core.UI.Security;
 using NUnit.Framework;
 using System.Linq;
 
