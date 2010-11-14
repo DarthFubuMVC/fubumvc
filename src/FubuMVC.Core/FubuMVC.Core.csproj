@@ -133,6 +133,7 @@
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
     <Compile Include="FubuRegistry.DefaultServices.cs" />
+    <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\AssemblyResolvePackageActivator.cs" />
     <Compile Include="Packaging\PackageInfo.cs" />
@@ -253,7 +254,6 @@
     <Compile Include="UI\Forms\FormLineExpression.cs" />
     <Compile Include="UI\Forms\ILabelAndFieldLayout.cs" />
     <Compile Include="UI\FubuPageExtensions.cs" />
-    <Compile Include="UI\FubuRegistryUIExtensions.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />
     <Compile Include="UI\Navigation\AuthorizedContextualMenu.cs" />
