@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using System.Linq;
 
 namespace FubuMVC.Core
 {
@@ -57,20 +58,40 @@ namespace FubuMVC.Core
             var convention = new LambdaConfigurationAction(action);
             _explicits.Add(convention);
         }
+        
+
+        private IEnumerable<Action<IServiceRegistry>> allServiceRegistrations()
+        {
+            foreach (var import in _imports)
+            {
+                foreach (var action in import.Registry.allServiceRegistrations())
+                {
+                    yield return action;
+                }
+            }
+
+            foreach (var action in _serviceRegistrations)
+            {
+                yield return action;
+            }
+        }
+
+        
 
         public BehaviorGraph BuildGraph()
         {
             var graph = new BehaviorGraph(_observer);
 
+            // Service registrations from imports
+            allServiceRegistrations().Each(x => x(graph.Services));
 
-            // TODO -- will need to get reordered to pull service registrations from imports
-            _serviceRegistrations.Each(x => x(graph.Services));
             setupServices(graph);
 
             _conventions.Configure(graph);
 
-            // imports will need to go above service registrations
+            // Importing behavior chains from imports
             _imports.Each(x => x.ImportInto(graph));
+
             _explicits.Configure(graph);
 
             _policies.Configure(graph);
