@@ -11,12 +11,6 @@ using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core
 {
-    [Obsolete("Should probably dump this in favor of the IFubuRegistryExtension")]
-    public interface IRegistryModification
-    {
-        void Modify(FubuRegistry registry);
-    }
-
     public partial class FubuRegistry
     {
         private readonly TypeResolver _typeResolver = new TypeResolver();
@@ -119,11 +113,6 @@ namespace FubuMVC.Core
             Import(new T(), prefix);
         }
 
-        public void Modify<T>() where T : IRegistryModification, new()
-        {
-            new T().Modify(this);
-        }
-
         public void Import(FubuRegistry registry, string prefix)
         {
             _imports.Add(new RegistryImport{
@@ -137,8 +126,10 @@ namespace FubuMVC.Core
             if (shouldInclude)
             {
                 UsingObserver(new RecordingConfigurationObserver());
+
+                // TODO -- DiagnosticsPackage gets rolled up into DiagnosticsRegistry
                 Import<DiagnosticsRegistry>(string.Empty);
-                Modify<DiagnosticsPackage>();
+                new DiagnosticsPackage().Configure(this);
                 _systemPolicies.Add(new DiagnosticBehaviorPrepender());
             }
             else

@@ -1,3 +1,4 @@
+using System;
 using FubuCore.Binding;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
@@ -5,9 +6,9 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Diagnostics
 {
-    public class DiagnosticsPackage : IRegistryModification
+    public class DiagnosticsPackage : IFubuRegistryExtension
     {
-        public void Modify(FubuRegistry registry)
+        public void Configure(FubuRegistry registry)
         {
             registry.Services(x =>
             {
