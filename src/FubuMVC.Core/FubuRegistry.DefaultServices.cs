@@ -57,7 +57,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IAuthorizationPolicyExecutor, AuthorizationPolicyExecutor>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
-            graph.Services.SetServiceIfNone(_partialViewTypes);
+            graph.Services.SetServiceIfNone<IPartialViewTypeRegistry>(new PartialViewTypeRegistry());
 
             graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
             graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();

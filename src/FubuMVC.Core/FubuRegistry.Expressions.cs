@@ -146,8 +146,16 @@ namespace FubuMVC.Core
 
         public void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration)
         {
-            var expression = new PartialViewTypeRegistrationExpression(_partialViewTypes);
-            registration(expression);
+            Services(x =>
+            {
+                x.SetServiceIfNone<IPartialViewTypeRegistry>(new PartialViewTypeRegistry());
+                var registry = x.FindAllValues<IPartialViewTypeRegistry>().FirstOrDefault();
+
+                var expression = new PartialViewTypeRegistrationExpression(registry);
+                registration(expression);
+            });
+
+
         }
 
 

@@ -5,7 +5,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core
 {
@@ -23,12 +22,11 @@ namespace FubuMVC.Core
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
-        private readonly IPartialViewTypeRegistry _partialViewTypes = new PartialViewTypeRegistry();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
+        private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
         private readonly TypePool _types = new TypePool();
-        private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
 
