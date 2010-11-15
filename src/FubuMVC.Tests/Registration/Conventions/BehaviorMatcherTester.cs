@@ -22,6 +22,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             matcher = new BehaviorMatcher();
 
             pool = new TypePool();
+            pool.IgnoreCallingAssembly();
 
             pool.AddType<DifferentPatternClass>();
             pool.AddType<OneController>();

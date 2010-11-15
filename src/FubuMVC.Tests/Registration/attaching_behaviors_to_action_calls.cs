@@ -18,7 +18,6 @@ namespace FubuMVC.Tests.Registration
         {
             graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesNamed(o => o.EndsWith("Controller"));
             }).BuildGraph();
         }
@@ -63,7 +62,6 @@ namespace FubuMVC.Tests.Registration
         {
             graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesNamed(o => o.EndsWith("Controller"));
 
                 x.Policies.AlterActions(a => a.WrapWith<MyWrapper>());

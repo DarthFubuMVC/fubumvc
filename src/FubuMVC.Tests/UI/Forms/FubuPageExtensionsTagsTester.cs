@@ -234,7 +234,11 @@ namespace FubuMVC.Tests.UI.Forms
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var registry = new FubuRegistry(x =>
+            {
+                
+                x.HtmlConvention<TestHtmlConventions>();
+            });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
             new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());

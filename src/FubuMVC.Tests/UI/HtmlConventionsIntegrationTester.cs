@@ -45,7 +45,11 @@ namespace FubuMVC.Tests.UI
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var registry = new FubuRegistry(x =>
+            {
+                
+                x.HtmlConvention<TestHtmlConventions>();
+            });
             container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
 

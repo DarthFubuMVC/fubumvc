@@ -19,6 +19,8 @@ namespace FubuMVC.Tests.Security
         private AuthorizationPreviewService withAuthorizationRules(Action<BehaviorGraph> configure)
         {
             var registry = new FubuRegistry();
+            
+
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
 

@@ -79,7 +79,6 @@ namespace FubuMVC.Tests.Diagnostics
             graph = new FubuRegistry(x =>
             {
                 x.IncludeDiagnostics(true);
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypes(o => o.Name.Contains("Controller"));
             }).BuildGraph();
         }

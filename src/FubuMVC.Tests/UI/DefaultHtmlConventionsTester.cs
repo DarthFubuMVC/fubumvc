@@ -202,7 +202,11 @@ namespace FubuMVC.Tests.UI
         [SetUp]
         public void Setup()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<DefaultHtmlConventions>());
+            var registry = new FubuRegistry(x =>
+            {
+                
+                x.HtmlConvention<DefaultHtmlConventions>();
+            });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
 

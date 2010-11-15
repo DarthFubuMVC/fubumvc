@@ -21,8 +21,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
-
                 x.Actions.IncludeTypesNamed(o => o.StartsWith("Special"));
 
                 x.Routes
@@ -164,17 +162,17 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graphWithHome = new FubuRegistry(x =>
                 {
-                    x.Applies.ToThisAssembly();
+                    x.Actions.IncludeClassesSuffixedWithController();
                     x.HomeIs<OneController>(c => c.Home());
                 }).BuildGraph();
+
             graphWithMethodHome = new FubuRegistry(x =>
                 {
-                    x.Applies.ToThisAssembly();
+                    x.Actions.IncludeClassesSuffixedWithController();
                     x.HomeIs<SimpleOutputModel>();
                 }).BuildGraph();
-            graphWithoutHome = new FubuRegistry(x =>
-                        x.Applies.ToThisAssembly()
-                    ).BuildGraph();
+
+            graphWithoutHome = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
         }
 
         [Test]

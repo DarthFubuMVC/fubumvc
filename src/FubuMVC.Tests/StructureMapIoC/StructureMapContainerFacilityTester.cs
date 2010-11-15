@@ -37,6 +37,7 @@ namespace FubuMVC.Tests.StructureMapIoC
 
                 x.Route<InputModel>("/area/sub3/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
+
                 x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();
             }).BuildGraph();
 

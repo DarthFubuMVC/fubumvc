@@ -18,17 +18,30 @@ namespace FubuMVC.Core.Registration.Conventions
         public BehaviorMatcher()
         {
             _methodFilters.Excludes += method => method.Method.DeclaringType == typeof (object);
+            _methodFilters.Excludes += method => method.Method.DeclaringType == typeof (MarshalByRefObject);
+            _methodFilters.Excludes += method => method.Method.DeclaringType == typeof (IDisposable);
             _methodFilters.Excludes += method => method.Method.ContainsGenericParameters;
 
             _methodFilters.Excludes += method => method.Method.IsSpecialName;
+
+            _methodFilters.ResetChangeTracking();
+            _typeFilters.ResetChangeTracking();
         }
 
         public CompositeFilter<Type> TypeFilters { get { return _typeFilters; } set { } }
         public CompositeFilter<ActionCall> MethodFilters { get { return _methodFilters; } set { } }
 
+        public bool HasFilters()
+        {
+            return _methodFilters.HasChanged || _typeFilters.HasChanged;
+        }
+
         public void BuildBehaviors(TypePool pool, BehaviorGraph graph)
         {
             _graph = graph;
+
+            // Do not do any assembly scanning if no type or method filters are set
+            pool.ShouldScanAssemblies = HasFilters();
 
             pool.TypesMatching(TypeFilters.Matches).Each(scanMethods);
             _graph = null;

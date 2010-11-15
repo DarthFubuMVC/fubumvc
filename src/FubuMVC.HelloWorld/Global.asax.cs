@@ -27,8 +27,6 @@ namespace FubuMVC.HelloWorld
         {
             IncludeDiagnostics(true);
 
-            Applies.ToThisAssembly();
-
             Actions
                 .IncludeTypesNamed(x => x.EndsWith("Controller"));
 

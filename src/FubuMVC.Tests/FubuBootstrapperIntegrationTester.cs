@@ -23,6 +23,8 @@ namespace FubuMVC.Tests
         {
             registry = new FubuRegistry(x =>
             {
+                
+
                 x.Route<InputModel>("area/sub/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 

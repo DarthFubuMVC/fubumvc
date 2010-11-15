@@ -28,8 +28,13 @@ namespace FubuMVC.Tests.Registration.Expressions
             var config = new ExplicitRouteConfiguration("some/pattern");
             config.Chain();
             _config = config;
-            _graph = new FubuRegistry(registry => registry.Route<InputModel>("some/pattern")
-                    .Calls<InputController>(c => c.DoSomething(null)).OutputToJson())
+            _graph = new FubuRegistry(registry =>
+            {
+                
+
+                registry.Route<InputModel>("some/pattern")
+                    .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
+            })
                     .BuildGraph();
 
             _graph.Behaviors.ShouldHaveCount(1);

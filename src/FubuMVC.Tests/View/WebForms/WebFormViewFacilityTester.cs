@@ -17,7 +17,9 @@ namespace FubuMVC.Tests.View.WebForms
         [SetUp]
         public void SetUp()
         {
-            var pool = new TypePool();
+            var pool = new TypePool(){
+                ShouldScanAssemblies = true
+            };
             pool.AddAssembly(Assembly.GetExecutingAssembly());
 
             views = new WebFormViewFacility().FindViews(pool);
