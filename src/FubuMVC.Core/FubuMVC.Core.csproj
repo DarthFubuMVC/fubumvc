@@ -240,7 +240,6 @@
     <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
     <Compile Include="UI\Configuration\PartialLambdaElementBuilder.cs" />
     <Compile Include="UI\Diagnostics\ExampleHtmlWriter.cs" />
-    <Compile Include="UI\Diagnostics\HtmlDiagnosticsRegistry.cs" />
     <Compile Include="UI\Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraph.cs" />
     <Compile Include="UI\Extensibility\ContentExtensions.cs" />

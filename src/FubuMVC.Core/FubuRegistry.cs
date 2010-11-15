@@ -86,6 +86,16 @@ namespace FubuMVC.Core
         }
     }
 
+    public class FubuPackageRegistry
+    {
+        private readonly FubuRegistry _registry = new FubuRegistry();
+
+        public FubuPackageRegistry()
+        {
+        }
+
+
+    }
 
     public interface IFubuRegistryExtension
     {

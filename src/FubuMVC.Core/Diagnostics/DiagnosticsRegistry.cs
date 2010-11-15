@@ -1,4 +1,5 @@
 using FubuMVC.Core.Diagnostics.Querying;
+using FubuMVC.Core.UI.Diagnostics;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -8,6 +9,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             Actions.IncludeType<BehaviorGraphWriter>();
             Actions.IncludeType<GraphQuery>();
+            Actions.IncludeType<ExampleHtmlWriter>();
             Routes.UrlPolicy<DiagnosticUrlPolicy>();
         }
     }

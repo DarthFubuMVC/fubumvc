@@ -2,7 +2,6 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Diagnostics;
 
 namespace FubuMVC.Core
 {
@@ -11,14 +10,11 @@ namespace FubuMVC.Core
         public void HtmlConvention<T>() where T : HtmlConventionRegistry, new()
         {
             HtmlConvention(new T());
-            includeHtmlDiagnostics();
         }
 
         public void HtmlConvention(HtmlConventionRegistry conventions)
         {
             Services(x => x.AddService(conventions));
-
-            includeHtmlDiagnostics();
         }
 
         public void HtmlConvention(Action<HtmlConventionRegistry> configure)
@@ -27,12 +23,6 @@ namespace FubuMVC.Core
             configure(conventions);
 
             HtmlConvention(conventions);
-            includeHtmlDiagnostics();
-        }
-
-        private void includeHtmlDiagnostics()
-        {
-            Import<HtmlDiagnosticsRegistry>(string.Empty);
         }
 
         public void StringConversions<T>() where T : DisplayConversionRegistry, new()
@@ -40,7 +30,6 @@ namespace FubuMVC.Core
             var conversions = new T();
 
             addStringConversions(conversions);
-            includeHtmlDiagnostics();
         }
 
         private void addStringConversions(DisplayConversionRegistry conversions)
@@ -60,7 +49,6 @@ namespace FubuMVC.Core
             configure(conversions);
 
             addStringConversions(conversions);
-            includeHtmlDiagnostics();
         }
     }
 }
