@@ -43,7 +43,7 @@ namespace FubuMVC.Core
 
         public ModelsExpression Models
         {
-            get { return new ModelsExpression(addExplicit); }
+            get { return new ModelsExpression(Services); }
         }
 
         public AppliesToExpression Applies
@@ -68,8 +68,7 @@ namespace FubuMVC.Core
 
         public void Services(Action<IServiceRegistry> configure)
         {
-            var action = new LambdaConfigurationAction(g => configure(g.Services));
-            _explicits.Add(action);
+            _serviceRegistrations.Add(configure);
         }
 
         public void ApplyConvention<TConvention>()

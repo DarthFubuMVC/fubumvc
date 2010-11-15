@@ -195,15 +195,18 @@ namespace FubuMVC.Tests.UI.Forms
         {
             var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
+
             var facility = new StructureMapContainerFacility(container);
+            
             new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+            
             var generator = container.GetInstance<TagGenerator<ViewModel>>();
             
             _page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
             _page.Expect(p => p.Model).Return(new ViewModel());
             _page.Expect(p => p.Get<ITagGenerator<ViewModel>>()).Return(generator);
         }
-
+        
         [Test]
         public void return_html_tag_on_input_for()
         {

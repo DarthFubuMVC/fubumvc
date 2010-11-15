@@ -31,8 +31,6 @@ namespace FubuMVC.HelloSpark
             Output.To(call => new JavaScriptOutputNode(GetJavaScriptViewToken(call), call))
                 .WhenTheOutputModelIs<JavaScriptResponse>();
 
-            this.UseDefaultHtmlConventions();
-
             HomeIs<AirController>(c => c.TakeABreath());
         }
 

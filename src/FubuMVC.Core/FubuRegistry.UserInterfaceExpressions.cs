@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
-using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Diagnostics;
 
 namespace FubuMVC.Core
 {
     public partial class FubuRegistry
     {
-        public void UseDefaultHtmlConventions()
-        {
-            Policies.Add<HtmlConventionCompiler>();
-            includeHtmlDiagnostics();
-        }
-
         public void HtmlConvention<T>() where T : HtmlConventionRegistry, new()
         {
             HtmlConvention(new T());
@@ -26,7 +18,6 @@ namespace FubuMVC.Core
         {
             Services(x => x.AddService(conventions));
 
-            Policies.Add<HtmlConventionCompiler>();
             includeHtmlDiagnostics();
         }
 
@@ -54,15 +45,13 @@ namespace FubuMVC.Core
 
         private void addStringConversions(DisplayConversionRegistry conversions)
         {
-            var policy = new LambdaConfigurationAction(graph =>
+            Services(x =>
             {
-                graph.Services.SetServiceIfNone(new Stringifier());
-                var stringifier = graph.Services.FindAllValues<Stringifier>().First();
-
+                x.SetServiceIfNone(new Stringifier());
+                var stringifier = x.FindAllValues<Stringifier>().First();
 
                 conversions.Configure(stringifier);
             });
-            Policies.Add(policy);
         }
 
         public void StringConversions(Action<DisplayConversionRegistry> configure)

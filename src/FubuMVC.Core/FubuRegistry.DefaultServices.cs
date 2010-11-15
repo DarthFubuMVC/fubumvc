@@ -1,12 +1,19 @@
+using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Diagnostics;
+using FubuMVC.Core.UI.Security;
+using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
@@ -57,7 +64,46 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();
 
+            
+
+
+
+
+
+            registerHtmlConventions(graph);
+            registerAuthorizationServices(graph);
+        }
+
+        private void registerAuthorizationServices(BehaviorGraph graph)
+        {
             graph.Services.SetServiceIfNone<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+            graph.Services.SetServiceIfNone<IFieldAccessService, FieldAccessService>();
+
+            if (graph.IsDiagnosticsEnabled())
+            {
+                graph.Services.SetServiceIfNone<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
+            }
+            else
+            {
+                graph.Services.SetServiceIfNone<IFieldAccessRightsExecutor, FieldAccessRightsExecutor>();
+            }
+        }
+
+        private void registerHtmlConventions(BehaviorGraph graph)
+        {
+            var library = new TagProfileLibrary();
+
+            graph.Services.FindAllValues<HtmlConventionRegistry>()
+                .Each(library.ImportRegistry);
+
+            library.ImportRegistry(new DefaultHtmlConventions());
+
+            library.Seal();
+
+            graph.Services.ClearAll<HtmlConventionRegistry>();
+            graph.Services.ReplaceService(library);
+            graph.Services.SetServiceIfNone(typeof(ITagGenerator<>), typeof(TagGenerator<>));
+            graph.Services.SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
         }
     }
 }

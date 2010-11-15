@@ -235,7 +235,6 @@
     <Compile Include="UI\Configuration\AccessorDef.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="UI\Configuration\ElementRequest.cs" />
-    <Compile Include="UI\Configuration\HtmlConventionCompiler.cs" />
     <Compile Include="UI\Configuration\Interfaces.cs" />
     <Compile Include="UI\Configuration\LambdaElementBuilder.cs" />
     <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
