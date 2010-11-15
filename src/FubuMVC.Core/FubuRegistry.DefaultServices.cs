@@ -26,7 +26,7 @@ namespace FubuMVC.Core
         private void setupServices(BehaviorGraph graph)
         {
 
-            graph.Services.AddService<ITypeResolver>(_typeResolver);
+            graph.Services.SetServiceIfNone<ITypeResolver, TypeResolver>();
             graph.Services.AddService(new TypeDescriptorCache());
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();

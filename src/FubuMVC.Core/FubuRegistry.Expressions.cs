@@ -13,8 +13,6 @@ namespace FubuMVC.Core
 {
     public partial class FubuRegistry
     {
-        private readonly TypeResolver _typeResolver = new TypeResolver();
-
         public RouteConventionExpression Routes
         {
             get { return new RouteConventionExpression(_routeResolver, this); }
@@ -50,9 +48,15 @@ namespace FubuMVC.Core
             get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSourceMatcher); }
         }
 
-        public TypeResolver TypeResolver
+        public void ResolveTypes(Action<TypeResolver> configure)
         {
-            get { return _typeResolver; }
+            Services(x =>
+            {
+                x.SetServiceIfNone<ITypeResolver>(new TypeResolver());
+                var resolver = x.FindAllValues<ITypeResolver>().FirstOrDefault() as TypeResolver;
+
+                configure(resolver);
+            });
         }
 
         public void UsingObserver(IConfigurationObserver observer)

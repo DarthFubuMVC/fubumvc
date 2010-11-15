@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Security
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
 
-            registry.TypeResolver.AddStrategy<UrlModelForwarder>();
+            registry.ResolveTypes(x => x.AddStrategy<UrlModelForwarder>());
 
             registry.Configure(configure);
 

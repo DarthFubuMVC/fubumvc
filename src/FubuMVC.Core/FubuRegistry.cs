@@ -15,10 +15,6 @@ namespace FubuMVC.Core
         IEnumerable<ActionCall> FindActions(TypePool types);
     }
 
-
-    // TODO:  blow up with a nice error if Route's have empty BehaviorChains
-
-
     public partial class FubuRegistry
     {
         private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
@@ -84,17 +80,6 @@ namespace FubuMVC.Core
 
             return graph;
         }
-    }
-
-    public class FubuPackageRegistry
-    {
-        private readonly FubuRegistry _registry = new FubuRegistry();
-
-        public FubuPackageRegistry()
-        {
-        }
-
-
     }
 
     public interface IFubuRegistryExtension
