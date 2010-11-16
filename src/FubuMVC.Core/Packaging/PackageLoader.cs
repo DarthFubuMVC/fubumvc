@@ -45,8 +45,6 @@ namespace FubuMVC.Core.Packaging
 
         public static void LoadPackages(Func<IEnumerable<IPackageActivator>> activators)
         {
-
-
             _assemblyResolverActivator = new AssemblyResolvePackageActivator();
             findAndResolvePackages();
 

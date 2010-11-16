@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Load actions from a package in dev link mode" lifecycle="Acceptance">
+<Test name="Load actions from a package in dev link mode" lifecycle="Regression">
   <Comment><![CDATA[First, start with the app with no packages]]></Comment>
   <Packaging>
     <SetUp isStep="True">

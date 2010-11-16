@@ -8,6 +8,8 @@ namespace TestPackage1
         public TestPackage1Registry()
         {
             Actions.IncludeClassesSuffixedWithController();
+
+            Views.TryToAttachWithDefaultConventions();
         }
 
     }
@@ -20,14 +22,14 @@ namespace TestPackage1
         }
     }
 
-    public class Message : JsonMessage
+    public class JsonSerializedMessage : JsonMessage
     {
         public string Name { get; set; }
     }
 
     public class JsonController
     {
-        public Message SendMessage(Message input)
+        public JsonSerializedMessage SendMessage(JsonSerializedMessage input)
         {
             return input;
         }
@@ -43,7 +45,7 @@ namespace TestPackage1
     {
         public ViewInput ShowView(ViewInput input)
         {
-            return new ViewInput();
+            return input;
         }
     }
 }

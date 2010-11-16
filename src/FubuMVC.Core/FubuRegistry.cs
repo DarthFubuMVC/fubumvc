@@ -12,29 +12,6 @@ using System.Linq;
 namespace FubuMVC.Core
 {
     // Register more and different types of actions
-    public interface IActionSource
-    {
-        IEnumerable<ActionCall> FindActions(TypePool types);
-    }
-
-    public class FubuPackageRegistry : FubuRegistry, IFubuRegistryExtension
-    {
-        private readonly string _urlPrefix;
-
-        public FubuPackageRegistry() : this(string.Empty)
-        {
-        }
-
-        public FubuPackageRegistry(string urlPrefix)
-        {
-            _urlPrefix = urlPrefix;
-        }
-
-        void IFubuRegistryExtension.Configure(FubuRegistry registry)
-        {
-            registry.Import(this, _urlPrefix);
-        }
-    }
 
     public partial class FubuRegistry
     {
@@ -140,10 +117,5 @@ namespace FubuMVC.Core
 
             return graph;
         }
-    }
-
-    public interface IFubuRegistryExtension
-    {
-        void Configure(FubuRegistry registry);
     }
 }

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
     </Reference>
@@ -40,8 +43,15 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="WatiN.Core">
+      <HintPath>..\..\lib\watin\WatiN.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationDriver.cs" />
+    <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Fixtures\PackagingFixture.cs" />
     <Compile Include="FubuSystem.cs" />
@@ -64,6 +74,10 @@
     <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
       <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
       <Name>FubuMVC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
+      <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
+      <Name>TestPackage1</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

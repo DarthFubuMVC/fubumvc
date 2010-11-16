@@ -25,5 +25,15 @@ namespace FubuMVC.Core.Registration.DSL
 
             return this;
         }
+
+        public ViewExpression TryToAttachWithDefaultConventions()
+        {
+            return TryToAttach(x =>
+            {
+                x.by_ViewModel_and_Namespace_and_MethodName();
+                x.by_ViewModel_and_Namespace();
+                x.by_ViewModel();
+            });
+        }
     }
 }

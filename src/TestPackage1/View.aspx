@@ -7,6 +7,6 @@
     <title><%: Model.Name %></title>
 </head>
 <body>
-    The input was '<%: Model.Name %>'
+    The input was '<span id="name"><%: Model.Name %></span>'
 </body>
 </html>

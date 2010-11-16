@@ -131,9 +131,12 @@
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
     <Compile Include="EndpointService.cs" />
+    <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
     <Compile Include="FubuRegistry.DefaultServices.cs" />
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
+    <Compile Include="IActionSource.cs" />
+    <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\AssemblyResolvePackageActivator.cs" />
     <Compile Include="Packaging\PackageInfo.cs" />
