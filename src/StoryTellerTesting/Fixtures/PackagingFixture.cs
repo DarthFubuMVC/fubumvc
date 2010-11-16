@@ -27,7 +27,11 @@ namespace StoryTellerTesting.Fixtures
             return !_remoteGraph.All().EndpointsForAssembly(assemblyName).Any();
         }
 
-        
+        [FormatAs("Some endpoints are registered for assembly {assemblyName}")]
+        public bool ActionsForAssemblyArePresent(string assemblyName)
+        {
+            return _remoteGraph.All().EndpointsForAssembly(assemblyName).Any();
+        }
     }
 
     public class Package1Fixture : Fixture
