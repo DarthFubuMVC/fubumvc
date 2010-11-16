@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
 using FubuCore;
+using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Packaging;
@@ -18,9 +18,17 @@ namespace FubuMVC.StructureMap.Bootstrap
         private string _controllerAssembly;
         private bool? _enableDiagnostics;
 
-        public bool EnableDiagnostics { get { return _enableDiagnostics ?? HttpContext.Current.IsDebuggingEnabled; } set { _enableDiagnostics = value; } }
+        public bool EnableDiagnostics
+        {
+            get { return _enableDiagnostics ?? HttpContext.Current.IsDebuggingEnabled; }
+            set { _enableDiagnostics = value; }
+        }
 
-        public string ControllerAssembly { get { return _controllerAssembly ?? FindClientCodeAssembly(GetType().Assembly); } set { _controllerAssembly = value; } }
+        public string ControllerAssembly
+        {
+            get { return _controllerAssembly ?? FindClientCodeAssembly(GetType().Assembly); }
+            set { _controllerAssembly = value; }
+        }
 
         private static string FindClientCodeAssembly(Assembly globalAssembly)
         {
@@ -32,7 +40,11 @@ namespace FubuMVC.StructureMap.Bootstrap
 
         public virtual FubuRegistry GetMyRegistry()
         {
-                return new BasicFubuStructureMapRegistry(HttpContext.Current.IsDebuggingEnabled, ControllerAssembly);
+            return new BasicFubuStructureMapRegistry(HttpContext.Current.IsDebuggingEnabled, ControllerAssembly);
+        }
+
+        protected virtual void InitializeValidation()
+        {
         }
 
         protected virtual void InitializeStructureMap(IInitializationExpression ex)
@@ -58,11 +70,13 @@ namespace FubuMVC.StructureMap.Bootstrap
             });
         }
 
-        private void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry, Action<IInitializationExpression> initializeExpression)
+        private void BootstrapStructureMap(ICollection<RouteBase> routes, FubuRegistry fubuRegistry,
+                                           Action<IInitializationExpression> initializeExpression)
         {
             UrlContext.Reset();
 
-            
+            InitializeValidation();
+
             ObjectFactory.Initialize(initializeExpression);
 
             var fubuBootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
@@ -72,10 +86,10 @@ namespace FubuMVC.StructureMap.Bootstrap
             var existingBuilder = fubuBootstrapper.Builder;
 
             fubuBootstrapper.Builder = ((container, args, id) =>
-                GetBuilder(container, args, id) ?? existingBuilder(container, args, id));
+                                        GetBuilder(container, args, id) ?? existingBuilder(container, args, id));
         }
 
-        protected virtual IActionBehavior GetBuilder(IContainer container, FubuCore.Binding.ServiceArguments args, Guid beehaviorId)
+        protected virtual IActionBehavior GetBuilder(IContainer container, ServiceArguments args, Guid beehaviorId)
         {
             return null;
         }

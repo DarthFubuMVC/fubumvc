@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace FubuMVC.Tests.StructureMapIoC
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class StructureMapFubuApplicationWithPackagesIntegratedTester
     {
         private BehaviorGraph graph;

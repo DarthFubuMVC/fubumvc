@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Packaging
             var manifest = _fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
 
 
-            var binPath = Path.Combine(_applicationFolder, folder, "bin");
+            var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
             var assemblies = loadAssembliesFromPath(binPath, manifest.AssemblyNames);
 
             return new PackageInfo(){

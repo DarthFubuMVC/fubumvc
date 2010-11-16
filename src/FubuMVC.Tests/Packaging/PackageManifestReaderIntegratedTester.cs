@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Packaging
         [SetUp]
         public void SetUp()
         {
-            packageFolder = Path.Combine("../../../TestPackage1").ToFullPath();
+            packageFolder = FileSystem.Combine("../../../TestPackage1").ToFullPath();
 
             var fileSystem = new FileSystem();
             var manifest = new PackageManifest(){

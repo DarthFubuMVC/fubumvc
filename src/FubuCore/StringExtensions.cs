@@ -38,7 +38,7 @@ namespace FubuCore
                 pathParts.Insert(0, "..");
             }
 
-            return Path.Combine(pathParts.ToArray());
+            return FileSystem.Combine(pathParts.ToArray());
         }
 
         public static bool IsEmpty(this string stringValue)

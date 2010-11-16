@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using System.Linq;
 
 namespace FubuCore
 {
@@ -75,10 +76,25 @@ namespace FubuCore
         //    return Directory.GetFiles(folderPath, "*." + extensionWithoutPeriod);
         //}
 
+        public static string Combine(params string[] paths)
+        {
+            if (paths.Length == 0) return string.Empty;
+            if (paths.Length == 1) return paths[0];
+
+            var queue = new Queue<string>(paths);
+            var result = queue.Dequeue();
+
+            while (queue.Any())
+            {
+                result = Path.Combine(result, queue.Dequeue());
+            }
+
+            return result;
+        }
 
         public bool FileExists(params string[] path)
         {
-            return File.Exists(Path.Combine(path));
+            return File.Exists(Combine(path));
         }
 
         public void WriteStringToFile(string text, string filename)
@@ -107,7 +123,7 @@ namespace FubuCore
 
         public void PersistToFile(object target, params string[] paths)
         {
-            var filename = Path.Combine(paths);
+            var filename = Combine(paths);
             Console.WriteLine("Saving to " + filename);
             var serializer = new XmlSerializer(target.GetType());
 
@@ -119,7 +135,7 @@ namespace FubuCore
 
         public T LoadFromFile<T>(params string[] paths) where T : new()
         {
-            var filename = Path.Combine(paths);
+            var filename = Combine(paths);
 
             if (!FileExists(filename)) return new T();
 
@@ -133,7 +149,7 @@ namespace FubuCore
 
         public void OpenInNotepad(params string[] parts)
         {
-            string filename = Path.Combine(parts);
+            string filename = Combine(parts);
             Process.Start("notepad", filename);
         }
 
@@ -145,7 +161,7 @@ namespace FubuCore
 
         public void DeleteFile(params string[] path)
         {
-            var filename = Path.Combine(path);
+            var filename = Combine(path);
             if (!File.Exists(filename)) return;
 
             File.Delete(filename);

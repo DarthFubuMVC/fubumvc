@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BEC92347-1382-4D05-BC3E-5F9162A859C4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuValidation.Tests</RootNamespace>
+    <AssemblyName>FubuValidation.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InteractionContext.cs" />
+    <Compile Include="NotificationTester.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AddressModel.cs" />
+    <Compile Include="SimpleModel.cs" />
+    <Compile Include="Strategies\AccessorFactory.cs" />
+    <Compile Include="Strategies\when_evaluating_greater_or_equal_to_zero_rule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategies\when_evaluating_greater_than_zero_rule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategies\when_validating_maximum_length.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategies\when_validating_required_fields.cs" />
+    <Compile Include="SpecificationExtensions.cs" />
+    <Compile Include="TemplateParserTester.cs" />
+    <Compile Include="ValidationAttributePolicyTester.cs" />
+    <Compile Include="when_evaluating_a_field_rule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
+      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
+      <Name>FubuLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
+      <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
+      <Name>FubuValidation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
