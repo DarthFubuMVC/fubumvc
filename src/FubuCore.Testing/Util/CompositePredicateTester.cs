@@ -7,6 +7,25 @@ namespace FubuCore.Testing.Util
     public class CompositeFilterTester
     {
         [Test]
+        public void has_changed()
+        {
+            var filter = new CompositeFilter<string>();
+            filter.HasChanged.ShouldBeFalse();
+            filter.Includes += x => x == "a";
+
+            filter.HasChanged.ShouldBeTrue();
+
+            filter.ResetChangeTracking();
+            filter.HasChanged.ShouldBeFalse();
+
+            filter.Excludes += x => x == "a";
+            filter.HasChanged.ShouldBeTrue();
+
+            filter.ResetChangeTracking();
+            filter.HasChanged.ShouldBeFalse();
+        }
+
+        [Test]
         public void match_with_includes_and_no_excludes()
         {
             var filter = new CompositeFilter<string>();

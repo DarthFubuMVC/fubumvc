@@ -33,7 +33,8 @@ namespace FubuMVC.Tests.Urls
                 .IgnoreNamespaceForUrlFrom<UrlRegistryIntegrationTester>()
                 .IgnoreClassSuffix("Controller");
 
-            registry.TypeResolver.AddStrategy<UrlModelForwarder>();
+
+            registry.ResolveTypes(x => x.AddStrategy<UrlModelForwarder>());
 
             // need to do forwards
 
@@ -41,7 +42,9 @@ namespace FubuMVC.Tests.Urls
 
             graph = registry.BuildGraph();
 
-            urls = new UrlRegistry(new ChainResolver(registry.TypeResolver, graph));
+            var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
+
+            urls = new UrlRegistry(new ChainResolver((ITypeResolver) resolver, graph));
         }
 
         [Test]

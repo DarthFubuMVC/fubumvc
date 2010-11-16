@@ -2,7 +2,7 @@ using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
-using FubuMVC.UI;
+using FubuMVC.Core.UI;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

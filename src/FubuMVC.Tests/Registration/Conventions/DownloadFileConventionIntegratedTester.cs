@@ -18,7 +18,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesImplementing<DownloadTestController>();
 
                 x.ApplyConvention<DownloadFileConvention>();

@@ -6,6 +6,14 @@ namespace FubuCore.Binding
 {
     public class StandardModelBinder : IModelBinder
     {
+        public static IModelBinder Basic()
+        {
+            return
+                new StandardModelBinder(
+                    new PropertyBinderCache(new IPropertyBinder[0], new ValueConverterRegistry(new IConverterFamily[0])),
+                    new TypeDescriptorCache());
+        }
+
         private readonly IPropertyBinderCache _propertyBinders;
         private readonly ITypeDescriptorCache _typeCache;
 

@@ -20,7 +20,6 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesNamed(n => n.StartsWith("UrlCategory"));
             }).BuildGraph();
 

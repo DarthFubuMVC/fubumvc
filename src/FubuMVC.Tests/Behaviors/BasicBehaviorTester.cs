@@ -1,8 +1,8 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
-using FubuMVC.UI;
 using NUnit.Framework;
 using Rhino.Mocks;
 

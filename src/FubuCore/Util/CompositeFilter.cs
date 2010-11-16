@@ -15,6 +15,20 @@ namespace FubuCore.Util
             return Includes.MatchesAny(target) && Excludes.DoesNotMatchAny(target);
         }
 
+        public void ResetChangeTracking()
+        {
+            _excludes.ResetChangeTracking();
+            _includes.ResetChangeTracking();
+        }
+
+        public bool HasChanged
+        {
+            get
+            {
+                return _includes.HasChanged || _excludes.HasChanged;
+            }
+        }
+
         // TODO -- unit test for this
         public bool MatchesAll(T target)
         {

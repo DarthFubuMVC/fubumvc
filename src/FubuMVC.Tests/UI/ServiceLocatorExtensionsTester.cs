@@ -1,9 +1,9 @@
 using FubuCore;
-using FubuMVC.UI.Tags;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Tags;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuMVC.UI;
 
 namespace FubuMVC.Tests.UI
 {

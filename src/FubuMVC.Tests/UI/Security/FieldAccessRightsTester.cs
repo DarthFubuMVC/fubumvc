@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Security;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Security;
 using NUnit.Framework;
 using Rhino.Mocks;
 

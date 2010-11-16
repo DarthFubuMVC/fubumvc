@@ -70,6 +70,7 @@ namespace FubuMVC.Tests.Registration
         {
             var graph = new FubuRegistry(x=>
             {
+                
                 x.Applies.ToAssemblyContainingType<FakeControllers.OneController>();
                 x.Policies.WrapBehaviorChainsWith<BasicBehavior>();
                 x.Policies.WrapBehaviorChainsWith<WrappingBehavior>();
@@ -86,7 +87,11 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void routes_for_should_get_all_route_definitions_for_declared_type()
         {
-            var graph = new FubuRegistry(x => x.Applies.ToAssemblyContainingType<FakeInputModel>()).BuildGraph();
+            var graph = new FubuRegistry(x =>
+            {
+                x.Applies.ToAssemblyContainingType<FakeInputModel>();
+                x.Actions.IncludeClassesSuffixedWithController();
+            }).BuildGraph();
 
             const string expectedPattern = "fubumvc/tests/registration/fake/query";
             graph.RoutesFor<FakeInputModel>().ShouldHaveCount(1)

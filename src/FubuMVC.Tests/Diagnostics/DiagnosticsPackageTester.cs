@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Diagnostics
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => { x.Modify<DiagnosticsPackage>(); }).BuildGraph();
+            graph = new FubuRegistry(x => new DiagnosticsPackage().Configure(x)).BuildGraph();
         }
 
         #endregion

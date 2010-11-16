@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Test name="Invoke a Json endpoint from a package" lifecycle="Regression">
+  <Packaging>
+    <Comment><![CDATA[Link in TestPackage1]]></Comment>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <Run isStep="True" commandLine="init-pak src/TestPackage1 pak1" />
+        <Run isStep="True" commandLine="link fubu-testing pak1" />
+      </PackagingSetup>
+    </SetUp>
+  </Packaging>
+  <Package1>
+    <InvokingJsonService isStep="True" />
+  </Package1>
+</Test>

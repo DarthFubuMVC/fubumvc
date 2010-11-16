@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,7 +12,8 @@
     <AssemblyName>FubuCore.Testing</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-  <TargetFrameworkVersion>v4.0</TargetFrameworkVersion></PropertyGroup>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -22,7 +23,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  <TargetFrameworkVersion>v4.0</TargetFrameworkVersion></PropertyGroup>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -30,7 +32,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  <TargetFrameworkVersion>v4.0</TargetFrameworkVersion></PropertyGroup>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -80,7 +83,12 @@
     <Compile Include="Binding\ServiceArgumentsTester.cs" />
     <Compile Include="Binding\TypeDescriptorCacheTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
+    <Compile Include="CommandLine\CommandExecutorTester.cs" />
+    <Compile Include="CommandLine\CommandFactoryTester.cs" />
+    <Compile Include="CommandLine\InputParserTester.cs" />
+    <Compile Include="CommandLine\StringTokenizerTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
+    <Compile Include="FileSystemTester.cs" />
     <Compile Include="FubuExceptionTester.cs" />
     <Compile Include="GenericEnumerableExtensionsTester.cs" />
     <Compile Include="NumberExtensionsTester.cs" />

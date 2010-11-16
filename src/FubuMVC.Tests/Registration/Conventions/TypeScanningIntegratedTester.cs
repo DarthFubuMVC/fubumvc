@@ -32,7 +32,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorGraph graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.ExcludeNonConcreteTypes().ForTypesOf<IRouter>(o => { o.Include(c => c.Go()); });
             }).BuildGraph();
 
@@ -47,11 +46,13 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorGraph graph = new FubuRegistry(x =>
             {
+                
                 x.Applies.ToAssemblyContainingType<ClassInAnotherAssembly>();
                 x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
             }).BuildGraph();
 
             graph.BehaviorChainCount.ShouldBeGreaterThan(0);
+
             graph.Behaviors.Each(x =>
             {
                 x.Calls.First().HandlerType.Name.EndsWith("Controller");
@@ -67,7 +68,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorGraph graph = new FubuRegistry(x =>
             {
-                x.Applies.ToThisAssembly();
                 x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
             }).BuildGraph();
 

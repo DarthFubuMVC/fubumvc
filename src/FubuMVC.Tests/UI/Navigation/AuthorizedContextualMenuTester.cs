@@ -1,6 +1,6 @@
 using System;
 using FubuMVC.Core;
-using FubuMVC.UI.Navigation;
+using FubuMVC.Core.UI.Navigation;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;

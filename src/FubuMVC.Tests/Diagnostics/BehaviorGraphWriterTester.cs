@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => { x.Applies.ToThisAssembly(); }).BuildGraph();
+            graph = new FubuRegistry().BuildGraph();
             urls = MockRepository.GenerateMock<IUrlRegistry>();
             
             writer = new BehaviorGraphWriter(graph, urls, null);

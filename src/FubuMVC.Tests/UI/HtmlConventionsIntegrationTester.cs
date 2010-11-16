@@ -3,12 +3,12 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Forms;
+using FubuMVC.Core.UI.Security;
+using FubuMVC.Core.UI.Tags;
 using FubuMVC.StructureMap;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Forms;
-using FubuMVC.UI.Security;
-using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
 using StructureMap;
@@ -45,7 +45,11 @@ namespace FubuMVC.Tests.UI
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var registry = new FubuRegistry(x =>
+            {
+                
+                x.HtmlConvention<TestHtmlConventions>();
+            });
             container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
 

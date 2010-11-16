@@ -133,12 +133,30 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void AddBefore(BehaviorNode newNode)
         {
+            if (PreviousNodes.Contains(newNode)) return;
+
             if (Previous != null)
             {
                 newNode.Remove();
                 Previous.Next = newNode;
             }
             newNode.Next = this;
+        }
+
+        public IEnumerable<BehaviorNode> PreviousNodes
+        {
+            get
+            {
+                if (Previous != null && !(Previous is BehaviorChain))
+                {
+                    yield return Previous;
+
+                    foreach (var node in Previous.PreviousNodes)
+                    {
+                        yield return node;
+                    }
+                }
+            }
         }
 
         public Wrapper WrapWith<T>() where T : IActionBehavior
@@ -156,6 +174,9 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public virtual void AddToEnd(BehaviorNode node)
         {
+            // Do not append any duplicates
+            if (this.Contains(node)) return;
+
             BehaviorNode last = this.LastOrDefault() ?? this;
             last.Next = node;
         }

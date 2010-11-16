@@ -1,0 +1,254 @@
+html, body{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#111;
+	line-height:1.4em;
+	/*background-color: #ccc;*/ 
+	margin-left: 30px;
+}
+
+a
+{
+    color:#AAA;
+	font-size:smaller;
+	margin-left: 5px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+a.add-section-activator
+{
+	margin-left: 0px;	
+}
+
+a:hover {
+	color:#000080;
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+.comment-text
+{
+	font-family: Courier New;
+	font-size:75%;
+}
+
+
+.comment-editor-holder > textarea
+{
+	width:600px;
+	height:100px;
+	
+}
+
+.Comment
+{
+	margin-top:20px;
+	margin-bottom:10px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	/*background:#FFFFEF none repeat scroll 0 0;*/
+	background:wheat none repeat scroll 0 0;
+	border:1px solid #EBEBDB;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+.Comment:first-child
+{
+	margin-top: 2px;
+}
+
+div.top-level-holder > div.step-holder > div.section
+{
+	margin-top: 20px;
+}
+
+div.section-title > a.deleteStep
+{
+	float:right;
+}
+
+.section-title{
+
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 5px;
+	font-size: 100%;
+	font-weight: bold;
+	
+	background-color:#D7E3EF;
+	font-size: 90%;
+	color:#E17009;
+	
+	border:1px solid #A6C9E2;
+	
+}
+
+.section-header > .section-title
+{
+	margin-bottom: 5px;
+}
+
+.section-container
+{
+	border:1px solid #A6C9E2;
+	padding: 20px;
+}
+
+img.remover
+{
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+table.grid > tfoot a
+{
+	padding-right: 10px;
+}
+
+.table-add-row
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #eee;
+	border: none;
+}
+
+.table-add-row > a
+{
+	float: right;
+	
+}
+
+table.grid
+{
+	padding-left: 5px;
+}
+
+table.grid > thead > tr > th{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #eee;
+	font-size: 90%;
+}
+
+table.grid > thead > tr
+{
+	background-color: #eee;
+}
+
+table.grid > tbody > tr > td {
+	padding: 2px;
+	background-color: #eee;
+}
+
+table.grid > tbody > tr:hover{
+	background-color: #c8c8c8;
+}
+
+.table-editor > table > tbody > tr > td > .section-container
+{
+	padding: 0px !important;
+	background-color: #eee;
+}
+
+p.column-selector
+{
+	padding-left: 5px;
+}
+
+span.column-selector
+{
+	font-size: small;
+	font-weight: bold;
+}
+
+.grammar-selector{
+	border: 1px solid #79B7E7;
+	padding: 4px 4px 4px 4px;
+
+	background-color: #F5F8F9;
+	margin: 10px 10px 10px 0px;
+
+	min-width: 300px;
+	max-height: 450px;	
+	overflow: scroll;
+}
+
+.grammar-selector .header-container{
+	padding: 4px;
+	background-color: #D7E3EF;
+}
+
+.grammar-selector .header-container a.closer{
+	float: right;
+}
+
+.grammar-selector .header-container span{
+	font-size: 90%;
+	font-weight: bold;
+}
+
+.grammar-selector .add-link{
+	border:1px solid #EEE;
+	cursor:pointer;
+	padding:2px 4px 2px 8px;
+}
+
+.grammar-selector .add-link a span{
+	color: #000;
+}
+
+.grammar-selector .add-link:hover{
+	background-color: #EEE;
+}
+
+.grammar-selector .add-link a span.textbox{
+	font-style: italic;
+	color: #AAA;
+}
+
+
+div.sentence
+{
+	margin: 2px 0px 2px 0px;
+}
+
+div.paragraph + div.sentence, div.embedded + div.sentence, div.table-editor + div.sentence
+{
+	margin-top: 15px;
+}
+
+div.paragraph, div.embedded, div.table-editor
+{
+	margin-top: 10px;
+}
+
+div.paragraph:first-child, div.embedded:first-child, div.table-editor:first-child
+{
+	margin-top: 0px;
+}
+
+
+
+.section > table > tbody > tr > td
+{
+	min-width: 300px;
+}
+
+.in-paragraph > div.sentence > a.deleteStep, .in-paragraph > div.step > table > tbody > tr > td > div.section-title > a.deleteStep, .auto-select-remover
+{
+	visibility: hidden;
+}

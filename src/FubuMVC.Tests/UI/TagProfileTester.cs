@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.UI.Forms;
-using FubuMVC.UI.Tags;
+using FubuMVC.Core.UI.Forms;
+using FubuMVC.Core.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
 

@@ -8,6 +8,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Tests.Registration.Conventions;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration
@@ -187,6 +188,50 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusOneInput(9));
             var ex = typeof(FubuException).ShouldBeThrownBy(action.Validate).ShouldBeOfType<FubuException>();
             ex.ErrorCode.ShouldEqual(1006);
+        }
+
+        [Test]
+        public void do_not_append_a_duplicate_node()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+
+            // first one is ok
+            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.Count().ShouldEqual(1);
+
+            // try it again, the second should be ignored
+            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.Count().ShouldEqual(1);
+        }
+
+
+        [Test]
+        public void do_not_append_a_duplicate_node_2()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+
+            // first one is ok
+            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.Count().ShouldEqual(1);
+
+            action.AddToEnd(new Wrapper(typeof(Wrapper1)));
+
+            // try it again, the second should be ignored
+            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.Count().ShouldEqual(2);
+            action.Count(x => x is DeserializeJsonNode).ShouldEqual(1);
+        }
+
+        [Test]
+        public void add_before_must_be_idempotent()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
+            action.AddBefore(new DeserializeJsonNode(typeof(Model1)));
+
+            action.PreviousNodes.Count().ShouldEqual(1);
+
+            action.AddBefore(new DeserializeJsonNode(typeof(Model1)));
+            action.PreviousNodes.Count().ShouldEqual(1);
         }
     }
 

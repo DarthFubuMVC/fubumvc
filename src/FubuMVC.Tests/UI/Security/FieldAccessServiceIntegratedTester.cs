@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Security;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Security;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI.Security

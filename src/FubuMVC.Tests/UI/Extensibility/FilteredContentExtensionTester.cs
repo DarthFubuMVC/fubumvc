@@ -1,6 +1,6 @@
 using System;
+using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Core.View;
-using FubuMVC.UI.Extensibility;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;

@@ -9,6 +9,16 @@ using StructureMap;
 
 namespace FubuMVC.StructureMap
 {
+
+    public static class ContainerExtensions
+    {
+        public static void InitializeFubuApplication(this IContainer container, FubuRegistry fubuRegistry, ICollection<RouteBase> routes)
+        {
+            var bootstrapper = new StructureMapBootstrapper(container, fubuRegistry);
+            bootstrapper.Bootstrap(routes);
+        }
+    }
+
     public class StructureMapBootstrapper : FubuBootstrapper
     {
         private readonly StructureMapContainerFacility _smFacility;
@@ -22,13 +32,6 @@ namespace FubuMVC.StructureMap
             : base(facility, registry)
         {
             _smFacility = facility;
-        }
-
-        protected override IEnumerable<IFubuRegistryExtension> findExtensions()
-        {
-            // Just find all the IFubuRegistryExtension's from 
-            // the StructureMap container
-            return _smFacility.Container.GetAllInstances<IFubuRegistryExtension>();
         }
 
         public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder { get { return _smFacility.Builder; } set { _smFacility.Builder = value; } }

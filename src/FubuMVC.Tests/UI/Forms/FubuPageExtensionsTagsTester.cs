@@ -8,12 +8,12 @@ using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -195,15 +195,18 @@ namespace FubuMVC.Tests.UI.Forms
         {
             var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
+
             var facility = new StructureMapContainerFacility(container);
+            
             new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+            
             var generator = container.GetInstance<TagGenerator<ViewModel>>();
             
             _page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
             _page.Expect(p => p.Model).Return(new ViewModel());
             _page.Expect(p => p.Get<ITagGenerator<ViewModel>>()).Return(generator);
         }
-
+        
         [Test]
         public void return_html_tag_on_input_for()
         {
@@ -234,7 +237,11 @@ namespace FubuMVC.Tests.UI.Forms
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
+            var registry = new FubuRegistry(x =>
+            {
+                
+                x.HtmlConvention<TestHtmlConventions>();
+            });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
             new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
