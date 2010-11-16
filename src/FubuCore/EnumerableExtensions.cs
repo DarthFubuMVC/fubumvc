@@ -116,5 +116,26 @@ namespace System.Collections.Generic
             items.Each(list.Add);
             return list;
         }
+
+        public static bool IsEqualTo<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
+        {
+            var actualList = actual.ToArray();
+            var expectedList = expected.ToArray();
+
+            if (actualList.Length != expectedList.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < actualList.Length; ++i)
+            {
+                if (!actualList[i].Equals(expectedList[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
