@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -15,6 +17,25 @@ namespace FubuMVC.Core
         IEnumerable<ActionCall> FindActions(TypePool types);
     }
 
+    public class FubuPackageRegistry : FubuRegistry, IFubuRegistryExtension
+    {
+        private readonly string _urlPrefix;
+
+        public FubuPackageRegistry() : this(string.Empty)
+        {
+        }
+
+        public FubuPackageRegistry(string urlPrefix)
+        {
+            _urlPrefix = urlPrefix;
+        }
+
+        void IFubuRegistryExtension.Configure(FubuRegistry registry)
+        {
+            registry.Import(this, _urlPrefix);
+        }
+    }
+
     public partial class FubuRegistry
     {
         private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
@@ -27,10 +48,30 @@ namespace FubuMVC.Core
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
-        private readonly TypePool _types = new TypePool();
+        private readonly TypePool _types = new TypePool(findTheCallingAssembly());
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
 
+        private static Assembly findTheCallingAssembly()
+        {
+            var trace = new StackTrace(false);
+
+            Assembly thisAssembly = Assembly.GetExecutingAssembly();
+            Assembly fubuCore = typeof(FubuCore.ITypeResolver).Assembly;
+
+            Assembly callingAssembly = null;
+            for (int i = 0; i < trace.FrameCount; i++)
+            {
+                StackFrame frame = trace.GetFrame(i);
+                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
+                if (assembly != thisAssembly && assembly != fubuCore)
+                {
+                    callingAssembly = assembly;
+                    break;
+                }
+            }
+            return callingAssembly;
+        }
 
         public FubuRegistry()
         {

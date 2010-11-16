@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -43,12 +44,16 @@ namespace FubuMVC.StructureMap.Bootstrap
         {
             var routeCollection = RouteTable.Routes;
 
+            Bootstrap(routeCollection);
+        }
+
+        public void Bootstrap(ICollection<RouteBase> routes)
+        {
             PackageLoader.LoadPackages(() =>
             {
                 var fubuRegistry = GetMyRegistry();
 
-
-                BootstrapStructureMap(routeCollection, fubuRegistry, InitializeStructureMap);
+                BootstrapStructureMap(routes, fubuRegistry, InitializeStructureMap);
                 return ObjectFactory.GetAllInstances<IPackageActivator>();
             });
         }
@@ -59,12 +64,6 @@ namespace FubuMVC.StructureMap.Bootstrap
 
             
             ObjectFactory.Initialize(initializeExpression);
-
-            ObjectFactory.Configure(x => x.Scan(o =>
-            {
-                PackageLoader.ExtensionAssemblies.Each(o.Assembly);
-                o.AddAllTypesOf<IFubuRegistryExtension>();
-            }));
 
             var fubuBootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
 

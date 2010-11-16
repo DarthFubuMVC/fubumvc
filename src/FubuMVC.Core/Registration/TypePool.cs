@@ -8,14 +8,19 @@ namespace FubuMVC.Core.Registration
 {
     public class TypePool
     {
+        private readonly Assembly _defaultAssembly;
         private readonly List<Assembly> _assemblies = new List<Assembly>();
         private readonly IList<Type> _types = new List<Type>();
         private bool _scanned;
         private bool _ignoreCallingAssembly;
 
+        public TypePool(Assembly defaultAssembly)
+        {
+            _defaultAssembly = defaultAssembly;
+        }
+
         public void IgnoreCallingAssembly()
         {
-            _assemblies.Remove(findTheCallingAssembly());
             _ignoreCallingAssembly = true;
         }
 
@@ -39,26 +44,7 @@ namespace FubuMVC.Core.Registration
 
         public bool ShouldScanAssemblies { get; set; }
 
-        private static Assembly findTheCallingAssembly()
-        {
-            var trace = new StackTrace(false);
 
-            Assembly thisAssembly = Assembly.GetExecutingAssembly();
-            Assembly fubuCore = typeof (FubuCore.ITypeResolver).Assembly;
-
-            Assembly callingAssembly = null;
-            for (int i = 0; i < trace.FrameCount; i++)
-            {
-                StackFrame frame = trace.GetFrame(i);
-                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
-                if (assembly != thisAssembly && assembly != fubuCore)
-                {
-                    callingAssembly = assembly;
-                    break;
-                }
-            }
-            return callingAssembly;
-        }
 
 
         public void AddAssembly(Assembly assembly)
@@ -82,10 +68,13 @@ namespace FubuMVC.Core.Registration
             {
                 if (_assemblies.Any() == false && !_ignoreCallingAssembly)
                 {
-                    return _assemblies.Union(new Assembly[] { findTheCallingAssembly() }).Distinct();
+                    yield return _defaultAssembly;
                 }
-                
-                return _assemblies.Distinct();
+
+                foreach (var assembly in _assemblies.Distinct())
+                {
+                    yield return assembly;
+                }
             }
         }
 
@@ -98,6 +87,11 @@ namespace FubuMVC.Core.Registration
         public bool HasAssembly(Assembly assembly)
         {
             return _assemblies.Contains(assembly);
+        }
+
+        public void AddAssemblies(IEnumerable<Assembly> assemblies)
+        {
+            _assemblies.AddRange(assemblies);
         }
     }
 }

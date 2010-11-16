@@ -124,6 +124,7 @@
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="SelfMockingServiceLocator.cs" />
+    <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraphTester.cs" />
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
@@ -316,6 +317,10 @@
     <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
       <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
       <Name>FubuMVC.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
+      <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
+      <Name>FubuTestApplication</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>

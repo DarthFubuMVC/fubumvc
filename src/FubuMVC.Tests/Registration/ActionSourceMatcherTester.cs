@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration
             graph = new BehaviorGraph(null);
             matcher = new ActionSourceMatcher();
 
-            pool = new TypePool();
+            pool = new TypePool(null);
         }
 
         #endregion

@@ -1,7 +1,17 @@
+using System;
 using FubuMVC.Core;
 
 namespace TestPackage1
 {
+    public class TestPackage1Registry : FubuPackageRegistry
+    {
+        public TestPackage1Registry()
+        {
+            Actions.IncludeClassesSuffixedWithController();
+        }
+
+    }
+
     public class StringController
     {
         public string SayHello()
@@ -31,7 +41,6 @@ namespace TestPackage1
 
     public class ViewController
     {
-        [UrlPattern("view/{Name}")]
         public ViewInput ShowView(ViewInput input)
         {
             return new ViewInput();

@@ -22,8 +22,6 @@ namespace FubuTestApplication
         public FubuTestApplicationRegistry()
         {
             IncludeDiagnostics(true);
-
-            Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
         }
     }
 }

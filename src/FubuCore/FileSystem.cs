@@ -12,19 +12,20 @@ namespace FubuCore
         void PersistToFile(object target, params string[] filename);
         T LoadFromFile<T>(params string[] filename) where T : new();
         void OpenInNotepad(params string[] parts);
+        void CreateDirectory(string directory);
     }
 
     public class FileSystem : IFileSystem
     {
-        //public void CreateDirectory(string path)
-        //{
-        //    if (Directory.Exists(path))
-        //    {
-        //        return;
-        //    }
+        public void CreateDirectory(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                return;
+            }
 
-        //    Directory.CreateDirectory(path);
-        //}
+            Directory.CreateDirectory(path);
+        }
 
 
         //public void DeleteFolder(string folder)

@@ -38,8 +38,7 @@ namespace FubuMVC.Core.Packaging
 
 
             var binPath = Path.Combine(_applicationFolder, folder, "bin");
-            var assemblies = loadAssembliesFromPath(binPath,
-                                                    assem => manifest.AssemblyNames.Contains(assem.GetName().Name));
+            var assemblies = loadAssembliesFromPath(binPath, manifest.AssemblyNames);
 
             return new PackageInfo(){
                 Assemblies = assemblies,
@@ -50,7 +49,7 @@ namespace FubuMVC.Core.Packaging
 
         // This was lifted from StructureMap 2.6.2
         // TODO -- harden this
-        private static IEnumerable<Assembly> loadAssembliesFromPath(string path, Func<Assembly, bool> assemblyFilter)
+        private IEnumerable<Assembly> loadAssembliesFromPath(string path, IEnumerable<string> assemblyNames)
         {
             IEnumerable<string> assemblyPaths = Directory.GetFiles(path)
                 .Where(file =>
@@ -66,20 +65,24 @@ namespace FubuMVC.Core.Packaging
 
             foreach (string assemblyPath in assemblyPaths)
             {
-                Assembly assembly = null;
-                try
+                var assemblyName = Path.GetFileNameWithoutExtension(assemblyPath);
+                if (assemblyNames.Contains(assemblyName))
                 {
-                    assembly = System.Reflection.Assembly.LoadFrom(assemblyPath);
-                    list.Add(assembly);
+                    try
+                    {
+                        Assembly firstAssembly = Assembly.LoadFrom(assemblyPath);
+                        list.Add(firstAssembly);
+                    }
+                    catch
+                    {
+                    } 
                 }
-                catch
-                {
-                }
-                
+
+
             }
 
+            return list;
 
-            return list.Where(assemblyFilter);
         }
     }
 }
