@@ -59,6 +59,19 @@ namespace FubuMVC.Tests.UI
         }
 
         [Test]
+        public void do_not_overwrite_name_on_textbox_that_already_has_a_name()
+        {
+            var tag = new TextboxTag();
+            tag.Attr("name", "ExistingName");
+            var request = For(x => x.Address.City);
+            request.ElementId = "AddressCity";
+
+            DefaultHtmlConventions.AddElementName(request, tag);
+
+            tag.Attr("name").ShouldEqual("ExistingName");
+        }
+
+        [Test]
         public void do_not_add_element_name_to_span()
         {
             var span = new HtmlTag("span");

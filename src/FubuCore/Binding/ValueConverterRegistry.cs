@@ -30,6 +30,7 @@ namespace FubuCore.Binding
         private void addPolicies()
         {
             Add<PassthroughConverter<HttpPostedFileBase>>();
+            Add<PassthroughConverter<HttpFileCollectionWrapper>>();
             Add<PassthroughConverter<HttpCookie>>();
             Add<ASPNetObjectConversionFamily>();
 

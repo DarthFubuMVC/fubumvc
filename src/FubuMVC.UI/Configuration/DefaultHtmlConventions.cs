@@ -41,7 +41,7 @@ namespace FubuMVC.UI.Configuration
 
         public static void AddElementName(ElementRequest request, HtmlTag tag)
         {
-            if (tag.IsInputElement())
+            if (tag.IsInputElement() && !tag.HasAttr("name"))
             {
                 tag.Attr("name", request.ElementId);
             }
