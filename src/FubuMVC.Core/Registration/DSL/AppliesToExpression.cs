@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
+using FubuMVC.Core.Packaging;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -10,6 +12,12 @@ namespace FubuMVC.Core.Registration.DSL
         public AppliesToExpression(TypePool pool)
         {
             _pool = pool;
+        }
+
+        public AppliesToExpression ToAllPackageAssemblies()
+        {
+            PackageLoader.ExtensionAssemblies.Each(a => ToAssembly(a));
+            return this;
         }
 
         public AppliesToExpression ToThisAssembly()
