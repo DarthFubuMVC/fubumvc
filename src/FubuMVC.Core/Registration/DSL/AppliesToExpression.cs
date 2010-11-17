@@ -12,6 +12,11 @@ namespace FubuMVC.Core.Registration.DSL
             _pool = pool;
         }
 
+        public AppliesToExpression ToThisAssembly()
+        {
+            return ToAssembly(FubuRegistry.FindTheCallingAssembly());
+        }
+
         public AppliesToExpression ToAssembly(Assembly assembly)
         {
             _pool.AddAssembly(assembly);

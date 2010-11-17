@@ -1,8 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Fubu
 {
@@ -53,6 +56,42 @@ namespace Fubu
             var manifest = fileSystem.LoadFromFile<PackageIncludeManifest>(input.AppFolder,
                                                                            PackageIncludeManifest.FILE);
 
+            if (input.PackageFolder.IsNotEmpty())
+            {
+                updateManifest(input, fileSystem, manifest);
+            }
+            else
+            {
+                listCurrentLinks(input, manifest);
+            }
+            
+
+            if (input.NotepadFlag)
+            {
+                fileSystem.OpenInNotepad(input.AppFolder, PackageIncludeManifest.FILE);
+            }
+        }
+
+        private void listCurrentLinks(LinkInput input, PackageIncludeManifest manifest)
+        {
+            Console.WriteLine("Links for " + input.AppFolder);
+            if (manifest.Folders.Any())
+            {
+                manifest.Folders.Each(x =>
+                {
+                    Console.WriteLine("  " + x);
+                });
+            }
+            else
+            {
+                Console.WriteLine("No package links for " + input.AppFolder);
+            }
+
+
+        }
+
+        private void updateManifest(LinkInput input, FileSystem fileSystem, PackageIncludeManifest manifest)
+        {
             if (input.RemoveFlag)
             {
                 remove(input, manifest);
@@ -63,11 +102,6 @@ namespace Fubu
             }
 
             fileSystem.PersistToFile(manifest, input.AppFolder, PackageIncludeManifest.FILE);
-
-            if (input.NotepadFlag)
-            {
-                fileSystem.OpenInNotepad(input.AppFolder, PackageIncludeManifest.FILE);
-            }
         }
 
         private void remove(LinkInput input, PackageIncludeManifest manifest)

@@ -23,7 +23,7 @@ namespace FubuMVC.Core
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
-        private readonly TypePool _types = new TypePool(findTheCallingAssembly());
+        private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
 
@@ -42,7 +42,7 @@ namespace FubuMVC.Core
             configure(this);
         }
 
-        private static Assembly findTheCallingAssembly()
+        public static Assembly FindTheCallingAssembly()
         {
             var trace = new StackTrace(false);
 

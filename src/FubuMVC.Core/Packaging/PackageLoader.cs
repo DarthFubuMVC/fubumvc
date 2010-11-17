@@ -45,23 +45,29 @@ namespace FubuMVC.Core.Packaging
 
         public static void LoadPackages(Func<IEnumerable<IPackageActivator>> activators)
         {
-            _assemblyResolverActivator = new AssemblyResolvePackageActivator();
             findAndResolvePackages();
-
-            // Must set up the assembly resolve event before continuing
-            // to build up the application
-            _assemblyResolverActivator.Activate(_packages);
 
             activators().Union(_systemPackageActivators).Each(x => x.Activate(_packages));
         }
 
         private static void findAndResolvePackages()
         {
-            _packages.Clear();
-
             var applicationPath = PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;
+
+            LoadPackages(applicationPath);
+        }
+
+        public static void LoadPackages(string applicationPath)
+        {
+            _assemblyResolverActivator = new AssemblyResolvePackageActivator();
+
+            _packages.Clear();
             var manifestLoader = new PackageManifestReader(applicationPath, new FileSystem());
             _packages.AddRange(manifestLoader.ReadAll());
+
+            // Must set up the assembly resolve event before continuing
+            // to build up the application
+            _assemblyResolverActivator.Activate(_packages);
         }
 
         public static IEnumerable<IFubuRegistryExtension> FindAllExtensions()
@@ -90,9 +96,5 @@ namespace FubuMVC.Core.Packaging
         }
 
 
-        public static void LoadAssemblyFrom(string path)
-        {
-            
-        }
     }
 }
