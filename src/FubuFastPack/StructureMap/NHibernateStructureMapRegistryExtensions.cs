@@ -13,7 +13,7 @@ namespace FubuFastPack.StructureMap
             registry.For<ITransactionProcessor>().Use<TransactionProcessor>();
             registry.For<ISqlRunner>().Use<SqlRunner>();
             registry.For<IRepository>().Use<Repository>();
-            registry.ForSingletonOf<IEntityFinderCache>().Use<StructureMapEntityFinderCache>();
+            registry.For<IEntityFinderCache>().Use<StructureMapEntityFinderCache>();
             registry.For<IEntityFinder>().Use<EntityFinder>();
 
             if (behavior == ConfigurationBehavior.UsePersistedConfigurationIfItExists)
