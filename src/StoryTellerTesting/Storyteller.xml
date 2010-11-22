@@ -38,6 +38,6 @@ $METHODS$
   <TestFolder>Tests</TestFolder>
   <FileName>C:\git\fubumvc\src\StoryTellerTesting\Storyteller.xml</FileName>
   <TimeoutInSeconds>60</TimeoutInSeconds>
-  <SystemTypeName>StoryTellerTesting.FubuSystem, StoryTellerTesting</SystemTypeName>
+  <SystemTypeName>IntegrationTesting.FubuSystem, IntegrationTesting</SystemTypeName>
   <Name>FubuMVC</Name>
 </Project>
