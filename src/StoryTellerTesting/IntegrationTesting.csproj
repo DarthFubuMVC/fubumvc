@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{022C7B24-4417-493F-9F70-E3F4035FBEDA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IntegrationTesting</RootNamespace>
+    <AssemblyName>IntegrationTesting</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\lib\fluent-nhibernate\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\lib\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="StoryTeller">
+      <HintPath>..\..\lib\StoryTeller\StoryTeller.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\lib\sqlite\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="WatiN.Core">
+      <HintPath>..\..\lib\watin\WatiN.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationDriver.cs" />
+    <Compile Include="CommandRunner.cs" />
+    <Compile Include="debugger.cs" />
+    <Compile Include="Domain\Address.cs" />
+    <Compile Include="Fixtures\Package1Fixture.cs" />
+    <Compile Include="Fixtures\PackagingFixture.cs" />
+    <Compile Include="Fixtures\PackagingSetupFixture.cs" />
+    <Compile Include="FubuFastPack\DatabaseDriver.cs" />
+    <Compile Include="FubuFastPack\NHibernate\bootstrapping_a_database.cs" />
+    <Compile Include="FubuSystem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuFastPack\FubuFastPack.csproj">
+      <Project>{F274E0DD-F9B1-41FE-A3F6-89EE74FE3F56}</Project>
+      <Name>FubuFastPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
+      <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
+      <Name>FubuMVC.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
+      <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
+      <Name>TestPackage1</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\lib\sqlite\sqlite3.dll">
+      <Link>sqlite3.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Storyteller.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
