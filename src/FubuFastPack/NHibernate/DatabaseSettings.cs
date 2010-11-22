@@ -71,19 +71,19 @@ namespace FubuFastPack.NHibernate
             }
         }
 
-        // simple solution for now
-        // TODO -- put unit tests around GetProperties()
         public IDictionary<string, string> GetProperties()
         {
+            
+
             if (Provider.IsEmpty()) throw new ApplicationException("DatabaseSettings unavailable. Make sure your application configuration file has appSetting entries for the necessary DatabaseSettings properties.");
             var properties = new Dictionary<string, string>
                              {
                                  {"connection.provider", Provider},
                                  {"connection.driver_class", Driver},
                                  {"dialect", Dialect},
-                                 {"use_outer_join", UseOuterJoin.ToString()},
+                                 {"use_outer_join", UseOuterJoin.ToString().ToLowerInvariant()},
                                  {"connection.connection_string", ConnectionString},
-                                 {"show_sql", ShowSql.ToString()},
+                                 {"show_sql", ShowSql.ToString().ToLowerInvariant()},
                                  {"proxyfactory.factory_class", ProxyFactory}
                              };
 

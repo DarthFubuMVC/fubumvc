@@ -57,6 +57,12 @@ namespace FubuFastPack.NHibernate
 
         public void ExportMappingsTo(string mappingPath)
         {
+            if (Directory.Exists(mappingPath))
+            {
+                Directory.Delete(mappingPath, true);
+            }
+            Directory.CreateDirectory(mappingPath);
+
             _source.Model().WriteMappingsTo(mappingPath);
         }
 

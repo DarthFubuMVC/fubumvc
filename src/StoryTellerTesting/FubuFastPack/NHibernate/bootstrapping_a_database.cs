@@ -1,3 +1,6 @@
+using System.IO;
+using System.Linq;
+using FubuFastPack.NHibernate;
 using IntegrationTesting.Domain;
 using NHibernate;
 using NUnit.Framework;
@@ -22,18 +25,36 @@ namespace IntegrationTesting.FubuFastPack.NHibernate
                 Line2 = "b"
             };
 
-            using (var container = DatabaseDriver.TransactionalContainer())
+            using (var container = DatabaseDriver.ContainerWithDatabase())
             {
-                container.GetInstance<ISession>().Save(address);
-            }
+                var session = container.GetInstance<ISession>();
+                session.FlushMode = FlushMode.Always;
+                
+                session.SaveOrUpdate(address);
+                session.Flush();
 
-            using (var container = DatabaseDriver.TransactionalContainer())
-            {
-                var address2 = container.GetInstance<ISession>().Load<Address>(address.Id);
+
+                session.CreateCriteria(typeof(Address)).List<Address>().Any()
+                    .ShouldBeTrue();
+
+                var address2 = session.Get<Address>(address.Id);
 
                 address.Line1.ShouldEqual(address2.Line1);
                 address.Line2.ShouldEqual(address2.Line2);
             }
+        }
+
+        [Test]
+        public void smoke_test_writing_mappings()
+        {
+            Directory.Delete("mapping", true);
+            using (var container = DatabaseDriver.ContainerWithDatabase())
+            {
+                container.GetInstance<ISchemaWriter>().ExportMappingsTo("mapping");
+            }
+
+            Directory.Exists("mapping").ShouldBeTrue();
+            Directory.GetFiles("mapping", "*.xml").Any().ShouldBeTrue();
         }
     }
 }

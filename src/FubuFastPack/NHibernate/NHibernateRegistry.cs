@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using FluentNHibernate;
 using FluentNHibernate.Conventions;
+using FubuCore;
 using FubuCore.Util;
 using NHibernate.Cfg;
 using NHibernate.Event;
@@ -73,12 +74,15 @@ namespace FubuFastPack.NHibernate
             var trace = new StackTrace(Thread.CurrentThread, false);
 
             var thisAssembly = Assembly.GetExecutingAssembly();
+            var fubuCore = typeof (Stringifier).Assembly;
+            var mscorelib = typeof (string).Assembly;
+
             Assembly callingAssembly = null;
             for (var i = 0; i < trace.FrameCount; i++)
             {
                 var frame = trace.GetFrame(i);
                 var assembly = frame.GetMethod().DeclaringType.Assembly;
-                if (assembly != thisAssembly)
+                if (assembly != thisAssembly && assembly != fubuCore && assembly != mscorelib)
                 {
                     callingAssembly = assembly;
                     break;

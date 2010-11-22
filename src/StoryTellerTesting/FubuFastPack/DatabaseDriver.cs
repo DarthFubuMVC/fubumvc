@@ -27,16 +27,18 @@ namespace IntegrationTesting.FubuFastPack
 
     public class FakeDomainNHIbernateRegistry : NHibernateRegistry
     {
-        public FakeDomainNHIbernateRegistry()
+        public FakeDomainNHIbernateRegistry(DatabaseSettings settings)
         {
+            SetProperties(settings.GetProperties());
             MappingFromThisAssembly();
         }
     }
 
     public static class DatabaseDriver
     {
-        private static readonly string FILE_NAME = "test.db";
         private static IContainer _container;
+        private static readonly string FILE_NAME = "test.db";
+        private static DatabaseSettings _settings;
 
         public static void Bootstrap()
         {
@@ -47,30 +49,44 @@ namespace IntegrationTesting.FubuFastPack
                 File.Delete(FILE_NAME);
             }
 
-            // TODO -- switch this to in-memory
-            var settings = new DatabaseSettings(){
+            _settings = new DatabaseSettings(){
                 ConnectionString = "Data Source={0};Version=3;New=True;".ToFormat(FILE_NAME),
                 DialectType = typeof (SQLiteDialect),
-                ProxyFactoryType = typeof (ProxyFactoryFactory),
+                ProxyFactory = "NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle",
                 ShowSql = true,
                 DriverType = typeof(SQLite20Driver)
             };
 
             _container = new Container(x =>
             {
-                x.For<DatabaseSettings>().Use(settings);
+                x.For<DatabaseSettings>().Use(_settings);
                 x.BootstrapNHibernate<FakeDomainNHIbernateRegistry>(ConfigurationBehavior.AlwaysUseNewConfiguration);
             });
 
-
-
-            var writer = _container.GetInstance<ISchemaWriter>();
-            writer.BuildSchema();
         }
 
-        public static IContainer TransactionalContainer()
+        public static IContainer ContainerWithoutDatabase()
         {
             return _container.GetNestedContainer();
+        }
+
+        public static IContainer ContainerWithDatabase()
+        {
+            var nested = _container.GetNestedContainer();
+
+            var writer = nested.GetInstance<ISchemaWriter>();
+            writer.BuildSchema();
+
+            return nested;
+        }
+
+        public static IContainer ContainerSetToFileCachedConfiguration()
+        {
+            return new Container(x =>
+            {
+                x.For<DatabaseSettings>().Use(_settings);
+                x.BootstrapNHibernate<FakeDomainNHIbernateRegistry>(ConfigurationBehavior.UsePersistedConfigurationIfItExists);
+            });
         }
     }
 }

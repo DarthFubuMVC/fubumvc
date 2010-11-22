@@ -39,7 +39,7 @@ namespace FubuFastPack.NHibernate
 
         public static Type PersistedTypeByName(this Configuration configuration, string typeName)
         {
-            return configuration.ClassMappings.Select(x => x.MappedClass).FirstOrDefault(x => x.Name == typeName);
+            return configuration.ClassMappings.Select(x => x.MappedClass).FirstOrDefault(x => x.Name.ToLowerInvariant() == typeName.ToLowerInvariant() );
         }
 
     }
