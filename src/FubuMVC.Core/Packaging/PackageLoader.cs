@@ -50,6 +50,19 @@ namespace FubuMVC.Core.Packaging
             activators().Union(_systemPackageActivators).Each(x => x.Activate(_packages));
         }
 
+        /// <summary>
+        /// This is used mainly for either testing scenarios or to override the package
+        /// loading process with your own
+        /// </summary>
+        /// <param name="assemblies"></param>
+        public static void ManuallyLoadPackageAssemblies(params Assembly[] assemblies)
+        {
+            _packages.Clear();
+            _packages.Add(new PackageInfo(){
+                Assemblies = assemblies
+            });
+        }
+
         private static void findAndResolvePackages()
         {
             var applicationPath = PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;

@@ -13,11 +13,6 @@ namespace FubuFastPack.StructureMap
         // ObjectFactory.Container
         public TransactionProcessor(IContainer container)
         {
-            if (!container.Model.HasDefaultImplementationFor<ITransactionBoundary>())
-            {
-                throw new ApplicationException("This container has already been disposed");
-            }
-
             _container = container;
         }
 
