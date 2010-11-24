@@ -128,4 +128,5 @@ namespace FubuMVC.Core.Continuations
             _configure(director);
         }
     }
+
 }

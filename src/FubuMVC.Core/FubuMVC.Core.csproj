@@ -75,6 +75,8 @@
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
+    <Compile Include="Continuations\Redirectable.cs" />
+    <Compile Include="Continuations\RedirectableHandler.cs" />
     <Compile Include="Diagnostics\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\DiagnosticHtml.cs" />
     <Compile Include="Diagnostics\DiagnosticsActionAttribute.cs" />

@@ -89,6 +89,7 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
+    <Compile Include="Continuations\RedirectableTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="LocalizationManagerTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />
     <Compile Include="Registration\Conventions\AuthorizedByAttributeConventionTester.cs" />
+    <Compile Include="Registration\Conventions\RedirectableHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicyTester.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />

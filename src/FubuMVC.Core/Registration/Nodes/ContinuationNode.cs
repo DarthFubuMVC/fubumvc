@@ -9,4 +9,11 @@ namespace FubuMVC.Core.Registration.Nodes
         {
         }
     }
+
+    public class RedirectableNode<T> : Wrapper where T: class
+    {
+        public RedirectableNode() : base(typeof(RedirectableHandler<T>))
+        {
+        }
+    }
 }

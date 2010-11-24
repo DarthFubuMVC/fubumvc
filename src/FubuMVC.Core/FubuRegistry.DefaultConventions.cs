@@ -23,8 +23,6 @@ namespace FubuMVC.Core
             addConvention(graph => _routeResolver.ApplyToAll(graph));
             _conventions.Add(new WrapWithAttributeConvention());
 
-
-
             _systemPolicies.Add(new AttachAuthorizationPolicy());
 
             Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
@@ -36,6 +34,7 @@ namespace FubuMVC.Core
 
             Policies.Add<WebFormsEndpointPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
+	    Policies.Add<RedirectableHandlerConvention>();
 
             _systemPolicies.Add(new StringOutputPolicy());
 
