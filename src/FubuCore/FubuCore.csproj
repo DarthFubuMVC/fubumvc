@@ -65,6 +65,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BasicExtensions.cs" />
     <Compile Include="Binding\AggregateDictionary.cs" />
     <Compile Include="Binding\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Binding\BindingContext.cs" />

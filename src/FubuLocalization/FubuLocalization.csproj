@@ -43,7 +43,7 @@
     <Compile Include="CurrentCultureContext.cs" />
     <Compile Include="HeaderTextAttribute.cs" />
     <Compile Include="ICurrentCultureContext.cs" />
-    <Compile Include="ILocalCache.cs" />
+    <Compile Include="ILocaleCache.cs" />
     <Compile Include="ILocaleCacheContext.cs" />
     <Compile Include="ILocalizationDataProvider.cs" />
     <Compile Include="ILocalizationMissingHandler.cs" />

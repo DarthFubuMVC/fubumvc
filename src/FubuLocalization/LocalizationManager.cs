@@ -12,6 +12,11 @@ namespace FubuLocalization
 
         private static Func<ILocalizationDataProvider> LocalizationDataProvider;
 
+        public static ILocalizationDataProvider CurrentProvider()
+        {
+            return LocalizationDataProvider();
+        }
+
         static LocalizationManager()
         {
             Stub();

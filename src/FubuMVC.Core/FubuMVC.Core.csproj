@@ -329,7 +329,6 @@
     <Compile Include="Runtime\InMemoryRequestData.cs" />
     <Compile Include="Runtime\MimeType.cs" />
     <Compile Include="Runtime\FubuRouteHandler.cs" />
-    <Compile Include="LocalizationManager.cs" />
     <Compile Include="Runtime\IOutputWriter.cs" />
     <Compile Include="Security\IPrincipalFactory.cs" />
     <Compile Include="SessionState\IFlash.cs" />
