@@ -63,6 +63,14 @@ namespace FubuMVC.Core.Packaging
             });
         }
 
+        public static void RegisterAssembly(Assembly assembly)
+        {
+            _packages.Add(new PackageInfo()
+            {
+                Assemblies = new Assembly[] { assembly}
+            });
+        }
+
         private static void findAndResolvePackages()
         {
             var applicationPath = PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;

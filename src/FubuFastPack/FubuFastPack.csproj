@@ -61,6 +61,14 @@
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="Domain\DomainExtensions.cs" />
+    <Compile Include="Extensibility\HideOnNewAttribute.cs" />
+    <Compile Include="Extensibility\Extends.cs" />
+    <Compile Include="Extensibility\ExtensionFieldRegistry.cs" />
+    <Compile Include="Extensibility\ExtensionFieldTagAttribute.cs" />
+    <Compile Include="Extensibility\ExtensionProperties.cs" />
+    <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
+    <Compile Include="Extensibility\ExtensionScanner.cs" />
+    <Compile Include="Extensibility\HideOnViewAttribute.cs" />
     <Compile Include="NHibernate\DatabaseSettings.cs" />
     <Compile Include="NHibernate\ConfigurationBehavior.cs" />
     <Compile Include="NHibernate\ConfigurationExtensions.cs" />
@@ -74,6 +82,7 @@
     <Compile Include="Persistence\EntityFinder.cs" />
     <Compile Include="Persistence\IEntityFinder.cs" />
     <Compile Include="Persistence\IEntityFinderCache.cs" />
+    <Compile Include="Persistence\InMemoryRepository.cs" />
     <Compile Include="Persistence\IQueryExpression.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\Repository.cs" />
