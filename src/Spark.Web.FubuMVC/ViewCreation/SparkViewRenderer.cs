@@ -51,7 +51,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
             if (sparkView != null)
                 sparkView.Render(_outerViewContext, writer);
 
-            _outerViewContext = null;
+            if(ReferenceEquals(sparkView, _outerViewContext.View))
+                _outerViewContext = null;
             return writer.ToString();
         }
 
