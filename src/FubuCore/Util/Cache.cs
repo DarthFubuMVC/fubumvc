@@ -195,5 +195,10 @@ namespace FubuCore.Util
 
             return false;
         }
+
+        public IDictionary<TKey, TValue> ToDictionary()
+        {
+            return new Dictionary<TKey, TValue>(_values);
+        }
     }
 }

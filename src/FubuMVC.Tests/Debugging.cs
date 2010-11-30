@@ -6,6 +6,7 @@ using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Tests.UI;
+using HtmlTags;
 using NUnit.Framework;
 using System.Collections.Generic;
 using TestPackage1;
@@ -24,6 +25,19 @@ namespace FubuMVC.Tests
         }
 
         #endregion
+
+        [Test]
+        public void try_dictionary()
+        {
+            var dict = new Dictionary<string, object>();
+            dict.Add("a", 1);
+            dict.Add("b", "2");
+            dict.Add("c", true);
+
+            var s = JsonUtil.ToJson(dict);
+
+            Debug.WriteLine(s);
+        }
 
         [Test]
         public void try_out_the_test_package_1()
