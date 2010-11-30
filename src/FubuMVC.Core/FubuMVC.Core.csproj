@@ -137,7 +137,14 @@
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
-    <Compile Include="Json\Classes.cs" />
+    <Compile Include="Json\ProjectionService.cs" />
+    <Compile Include="Json\IProjection.cs" />
+    <Compile Include="Json\IProjectionFactory.cs" />
+    <Compile Include="Json\IProjectionSource.cs" />
+    <Compile Include="Json\IValueProjection.cs" />
+    <Compile Include="Json\Projection.cs" />
+    <Compile Include="Json\ProjectionFactory.cs" />
+    <Compile Include="Json\ValueProjection.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\AssemblyResolvePackageActivator.cs" />
     <Compile Include="Packaging\PackageInfo.cs" />
