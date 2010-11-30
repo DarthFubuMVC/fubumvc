@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
 using FubuFastPack.NHibernate;
+using FubuFastPack.Querying;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
@@ -16,8 +18,9 @@ namespace FubuFastPack.Persistence
         private readonly ISession _session;
         private readonly IEntityFinder _finder;
         private readonly IConfigurationSource _source;
+        private readonly IEnumerable<IDataRestriction> _dataRestrictions;
 
-        public Repository(ISession session, IEntityFinder finder, IConfigurationSource source)
+        public Repository(ISession session, IEntityFinder finder, IConfigurationSource source, IEnumerable<IDataRestriction> dataRestrictions)
         {
             if (session == null) throw new ArgumentNullException("session");
 
@@ -25,6 +28,7 @@ namespace FubuFastPack.Persistence
 
             _finder = finder;
             _source = source;
+            _dataRestrictions = dataRestrictions;
         }
 
         public DomainEntity FindByPath(string path)
@@ -103,6 +107,17 @@ namespace FubuFastPack.Persistence
         public T FindBy<T>(Expression<Func<T, bool>> where)
         {
             return _session.Linq<T>().FirstOrDefault(where);
+        }
+
+        public IQueryable<T> RestrictedQuery<T>() where T : DomainEntity
+        {
+            var restrictions = _dataRestrictions.OfType<IDataRestriction<T>>();
+            if (!restrictions.Any()) return Query<T>();
+
+            var projection = new Projection<T>(_session);
+            restrictions.Each(r => r.Apply(projection));
+            var filteredCriteria = projection.GetFilteredCriteria();
+            return _session.Linq<T>(filteredCriteria);
         }
     }
 }

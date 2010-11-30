@@ -69,6 +69,7 @@
     <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
     <Compile Include="Extensibility\ExtensionScanner.cs" />
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
+    <Compile Include="NHibernate\CriteriaExtensions.cs" />
     <Compile Include="NHibernate\DatabaseSettings.cs" />
     <Compile Include="NHibernate\ConfigurationBehavior.cs" />
     <Compile Include="NHibernate\ConfigurationExtensions.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="NHibernate\IConfigurationModifier.cs" />
     <Compile Include="NHibernate\IConfigurationSource.cs" />
     <Compile Include="NHibernate\NHibernateRegistry.cs" />
+    <Compile Include="NHibernate\Projections.cs" />
     <Compile Include="NHibernate\SqlRunner.cs" />
     <Compile Include="NHibernate\TransactionBoundary.cs" />
     <Compile Include="Persistence\EntityFinder.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Persistence\IQueryExpression.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\Repository.cs" />
+    <Compile Include="Querying\Interfaces.cs" />
     <Compile Include="StructureMap\ITransactionProcessor.cs" />
     <Compile Include="StructureMap\StructureMapEntityFinderCache.cs" />
     <Compile Include="StructureMap\NHibernateStructureMapRegistryExtensions.cs" />

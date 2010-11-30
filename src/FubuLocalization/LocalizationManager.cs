@@ -32,6 +32,10 @@ namespace FubuLocalization
             return GetHeader(property.InnerProperty);
         }
 
+        public static void RegisterProvider(Func<ILocalizationDataProvider> provider)
+        {
+            LocalizationDataProvider = provider;
+        }
 
         public static void Stub()
         {

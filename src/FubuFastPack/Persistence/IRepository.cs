@@ -39,5 +39,6 @@ namespace FubuFastPack.Persistence
 
         T[] GetAll<T>();
 
+        IQueryable<T> RestrictedQuery<T>() where T : DomainEntity;
     }
 }
