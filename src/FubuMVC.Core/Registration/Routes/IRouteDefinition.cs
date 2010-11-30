@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Registration.Routes
         string CreateUrl(object input);
         Route ToRoute();
         void Append(string patternPart);
-        void AddRouteInput(RouteInput input, bool b);
+        void AddRouteInput(RouteInput input, bool appendToUrl);
         void RemoveLastPatternPart();
         void AddQueryInput(PropertyInfo property);
         void AddRouteConstraint(string inputName, IRouteConstraint constraint);

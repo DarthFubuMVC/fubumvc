@@ -80,6 +80,7 @@
     <Compile Include="Diagnostics\DiagnosticsActionAttribute.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationRulesColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ChainColumn.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\ConstraintColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DebugReportTagWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DebugWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DetailsTagWriter.cs" />

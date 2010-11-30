@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Web.Routing;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using HtmlTags;
@@ -53,9 +51,11 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
                 pattern = "(default)";
             }
             
-            var httpMethodConstraint = chain.Route.Constraints.Where(kv => kv.Key == RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT).Select(kv => kv.Value).FirstOrDefault() as HttpMethodConstraint;
-            var methodList = httpMethodConstraint == null ? string.Empty : "[" + httpMethodConstraint.AllowedMethods.Join(",") + "] ";
-            return methodList + pattern;
+            //var httpMethodConstraint = chain.Route.Constraints.Where(kv => kv.Key == RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT).Select(kv => kv.Value).FirstOrDefault() as HttpMethodConstraint;
+            //var methodList = httpMethodConstraint == null ? string.Empty : "[" + httpMethodConstraint.AllowedMethods.Join(",") + "] ";
+            //return methodList + pattern;
+
+            return pattern;
         }
     }
 }
