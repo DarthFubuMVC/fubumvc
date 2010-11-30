@@ -7,6 +7,10 @@
 <h2>Via Fubu Partial: 
 #this.Partial<LocationViewModel>();
 </h2>
+<h2>I can't hear you!</h2>
+<h1>
+#this.Partial<LocationViewModel>();
+</h1>
 
 <div>Using DisplayFor: !{this.DisplayFor(m => m.RawUrl)}</div>
 

@@ -44,7 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
     </Reference>
-    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL" />
+    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\spark\Spark.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>

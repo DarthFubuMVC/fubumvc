@@ -35,12 +35,10 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Spark">
+    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
+    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core">
@@ -89,6 +87,10 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
+      <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
+      <Name>FubuMVC.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>

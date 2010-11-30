@@ -6,14 +6,12 @@ namespace Spark.Web.FubuMVC.ViewCreation
 {
     public class ViewContext : ActionContext
     {
-        public ViewContext(ActionContext actionContext, ISparkView view, TextWriter writer) : 
+        public ViewContext(ActionContext actionContext, ISparkView view) : 
             base(actionContext.HttpContext, actionContext.RouteData, actionContext.ActionNamespace, actionContext.ActionName)
         {
-            Writer = writer;
             View = view;
         }
 
         public ISparkView View { get; set; }
-        public virtual TextWriter Writer { get; set; }
     }
 }
