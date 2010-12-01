@@ -59,4 +59,41 @@ namespace FubuMVC.Tests.UI
             }
         }
     }
+
+
+
+    [TestFixture]
+    public class TextIfEmptyTester
+    {
+        [Test]
+        public void trying_to_set_the_default_text_on_an_input_element_should_throw_an_exception()
+        {
+            Exception<InvalidOperationException>.ShouldBeThrownBy(() =>
+            {
+                new HtmlTag("input").TextIfEmpty("something");
+            });
+        }
+
+        [Test]
+        public void do_nothing_if_the_tag_already_has_text()
+        {
+            new HtmlTag("div").Text("original").TextIfEmpty("different")
+                .Text().ShouldEqual("original");
+        }
+
+        [Test]
+        public void set_the_text_if_the_tag_text_is_initially_null()
+        {
+            new HtmlTag("div").TextIfEmpty("defaulted")
+                .Text().ShouldEqual("defaulted");
+        }
+
+        [Test]
+        public void set_the_text_by_localized_StringToken()
+        {
+            var token = StringToken.FromKeyString("KEY", "the localized string");
+            new HtmlTag("div").TextIfEmpty(token)
+                .Text().ShouldEqual(token.ToString());
+        }
+    }
 }
