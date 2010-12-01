@@ -130,6 +130,7 @@
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
     <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />
     <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
+    <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="UI\Scripts\when_resolving_a_script.cs" />
     <Compile Include="UI\Security\DegradingAccessElementBuilderTester.cs" />
@@ -302,6 +303,10 @@
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
+      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
+      <Name>FubuLocalization</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

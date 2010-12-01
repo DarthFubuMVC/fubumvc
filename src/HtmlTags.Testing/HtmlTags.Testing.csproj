@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="CheckboxTagTester.cs" />
     <Compile Include="HtmlDocumentTester.cs" />
+    <Compile Include="HtmlTagExtensionsTester.cs" />
     <Compile Include="HtmlTagTester.cs" />
     <Compile Include="JsonUtilTester.cs" />
     <Compile Include="SelectTagTester.cs" />

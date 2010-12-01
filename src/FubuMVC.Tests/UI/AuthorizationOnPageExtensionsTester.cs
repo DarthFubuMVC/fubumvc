@@ -6,12 +6,6 @@ using FubuMVC.Core.UI;
 namespace FubuMVC.Tests.UI
 {
     [TestFixture]
-    public class AuthorizationOnPageExtensionsTester
-    {
-
-    }
-
-    [TestFixture]
     public class ReadOnlyIfNotAuthorizedTester
     {
         [Test]
