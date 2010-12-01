@@ -124,6 +124,7 @@
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="SelfMockingServiceLocator.cs" />
     <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
+    <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraphTester.cs" />
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />

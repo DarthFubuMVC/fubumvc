@@ -24,5 +24,11 @@ namespace FubuMVC.Core.Security
             var principal = Current;
             return roles.Any(r => principal.IsInRole(r));
         }
+
+        public static void SetCurrentRolesForTesting(params string[] roles)
+        {
+            var principal = new GenericPrincipal(new GenericIdentity("somebody"), roles);
+            Thread.CurrentPrincipal = principal;
+        }
     }
 }
