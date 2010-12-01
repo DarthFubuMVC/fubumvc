@@ -10,8 +10,7 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Javascript = new MimeType("text/javascript");
         private readonly string _mimeType;
 
-
-        private MimeType(string mimeType)
+		public MimeType(string mimeType)
         {
             _mimeType = mimeType;
         }
