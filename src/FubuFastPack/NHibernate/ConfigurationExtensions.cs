@@ -37,6 +37,21 @@ namespace FubuFastPack.NHibernate
             }
         }
 
+        public static void AddPreLoadListener(this Configuration configuration, IPreLoadEventListener listener)
+        {
+            var newArray = new[] { listener };
+
+            if (configuration.EventListeners.PreLoadEventListeners == null)
+            {
+                configuration.EventListeners.PreLoadEventListeners = newArray;
+            }
+            else
+            {
+                configuration.EventListeners.PreLoadEventListeners =
+                    configuration.EventListeners.PreLoadEventListeners.Union(newArray).ToArray();
+            }
+        }
+
         public static Type PersistedTypeByName(this Configuration configuration, string typeName)
         {
             return configuration.ClassMappings.Select(x => x.MappedClass).FirstOrDefault(x => x.Name.ToLowerInvariant() == typeName.ToLowerInvariant() );

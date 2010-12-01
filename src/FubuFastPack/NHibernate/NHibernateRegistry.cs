@@ -115,5 +115,15 @@ namespace FubuFastPack.NHibernate
         {
             modifyConfiguration = c => c.AddPreUpdateListener(listener);
         }
+
+        public void PreLoadEventListener<T>() where T : IPreLoadEventListener, new()
+        {
+            PreLoadEventListener(new T());
+        }
+
+        public void PreLoadEventListener(IPreLoadEventListener listener)
+        {
+            modifyConfiguration = c => c.AddPreLoadListener(listener);
+        }
     }
 }
