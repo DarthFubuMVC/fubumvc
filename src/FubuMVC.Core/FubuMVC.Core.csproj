@@ -244,6 +244,7 @@
     <Compile Include="Security\IEndPointAuthorizor.cs" />
     <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
+    <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Configuration\AccessorDef.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="UI\Configuration\ElementRequest.cs" />

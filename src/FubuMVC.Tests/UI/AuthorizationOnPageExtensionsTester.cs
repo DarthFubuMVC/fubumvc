@@ -83,4 +83,28 @@ namespace FubuMVC.Tests.UI
                 .Authorized().ShouldBeFalse();
         }
     }
+
+    [TestFixture]
+    public class ReadOnlyTester
+    {
+        [Test]
+        public void sets_the_disabled_attribute()
+        {
+            new HtmlTag("a").ReadOnly()
+                .Attr("disabled").ShouldEqual("disabled");
+        }
+
+        [Test]
+        public void set_the_disabled_attribute_if_the_condition_is_true()
+        {
+            new HtmlTag("a").ReadOnly(true)
+                .Attr("disabled").ShouldEqual("disabled");
+        }
+
+        [Test]
+        public void do_not_set_the_disabled_attribute_if_the_condition_is_not_true()
+        {
+            new HtmlTag("a").ReadOnly(false).HasAttr("disabled").ShouldBeFalse();
+        }
+    }
 }
