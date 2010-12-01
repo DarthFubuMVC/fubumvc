@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web;
+using FubuLocalization;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Security;
@@ -173,6 +174,36 @@ namespace FubuMVC.Core.UI.Forms
             return _isVisible && _rights.Read;
         }
 
+        public FormLineExpression<T> AddClassToBody(string className)
+        {
+            AlterBody(t => t.AddClass(className));
+            return this;
+        }
+
+        public FormLineExpression<T> DisplayIfEmpty(StringToken token)
+        {
+            return DisplayIfEmpty(token.ToString());
+        }
+
+        public FormLineExpression<T> DisplayIfEmpty(string text)
+        {
+            AlterLayout((layout, request) =>
+            {
+                if (request.ValueIsEmpty())
+                {
+                    layout.BodyTag.Text(text);
+                }
+            });
+
+            return this;
+        }
+
+        public FormLineExpression<T> NoAutoComplete()
+        {
+            AlterBody(tag => tag.NoAutoComplete());
+            return this;
+        }
+
         IEnumerable<HtmlTag> ITagSource.AllTags()
         {
             if (!isVisible()) return new HtmlTag[0];
@@ -181,6 +212,8 @@ namespace FubuMVC.Core.UI.Forms
 
             return _layout.AllTags();
         }
+
+
 
     }
 }
