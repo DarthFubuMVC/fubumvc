@@ -59,7 +59,7 @@ namespace FubuLocalization
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return LocalizationManager.GetHeader(this);
         }
 
         public string FindDefaultHeader(CultureInfo culture)
