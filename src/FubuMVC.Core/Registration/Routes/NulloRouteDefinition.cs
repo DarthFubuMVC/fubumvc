@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         }
 
-        public void AddRouteInput(RouteInput input, bool b)
+        public void AddRouteInput(RouteInput input, bool appendToUrl)
         {
 
         }
