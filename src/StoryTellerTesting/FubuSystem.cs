@@ -1,9 +1,9 @@
 using System;
-using System.Reflection;
 using FubuMVC.Core.Diagnostics.Querying;
 using StoryTeller.Engine;
+using StoryTellerTesting;
 
-namespace StoryTellerTesting
+namespace IntegrationTesting
 {
     public class FubuSystem : ISystem
     {
