@@ -10,8 +10,17 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Packaging
 {
+
+    public static class PackageRegistry
+    {
+        
+    }
+
+
+
+
     // TODO -- maybe this gets renamed later, or moved into an application model / bootstrapper
-    public static class PackageLoader
+    public static class OldPackageRegistry
     {
         
 
@@ -47,7 +56,7 @@ namespace FubuMVC.Core.Packaging
         {
             findAndResolvePackages();
 
-            activators().Union(_systemPackageActivators).Each(x => x.Activate(_packages));
+            activators().Union(_systemPackageActivators).Each(x => x.Activate(_packages, new PackageRegistryLog()));
         }
 
         /// <summary>
@@ -88,7 +97,7 @@ namespace FubuMVC.Core.Packaging
 
             // Must set up the assembly resolve event before continuing
             // to build up the application
-            _assemblyResolverActivator.Activate(_packages);
+            _assemblyResolverActivator.Activate(_packages, new PackageRegistryLog());
         }
 
         public static IEnumerable<IFubuRegistryExtension> FindAllExtensions()

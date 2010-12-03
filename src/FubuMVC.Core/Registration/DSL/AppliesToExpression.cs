@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public AppliesToExpression ToAllPackageAssemblies()
         {
-            PackageLoader.ExtensionAssemblies.Each(a => ToAssembly(a));
+            OldPackageRegistry.ExtensionAssemblies.Each(a => ToAssembly(a));
             return this;
         }
 

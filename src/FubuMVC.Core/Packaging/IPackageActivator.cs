@@ -4,6 +4,6 @@ namespace FubuMVC.Core.Packaging
 {
     public interface IPackageActivator
     {
-        void Activate(IEnumerable<PackageInfo> packages);
+        void Activate(IEnumerable<PackageInfo> packages, IPackageLog log);
     }
 }

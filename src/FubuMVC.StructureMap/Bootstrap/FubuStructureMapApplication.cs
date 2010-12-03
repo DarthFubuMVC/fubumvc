@@ -61,7 +61,7 @@ namespace FubuMVC.StructureMap.Bootstrap
 
         public void Bootstrap(ICollection<RouteBase> routes)
         {
-            PackageLoader.LoadPackages(() =>
+            OldPackageRegistry.LoadPackages(() =>
             {
                 var fubuRegistry = GetMyRegistry();
 

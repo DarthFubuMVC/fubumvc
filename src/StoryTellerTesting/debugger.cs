@@ -1,3 +1,4 @@
+using IntegrationTesting;
 using NUnit.Framework;
 
 namespace StoryTellerTesting

@@ -32,7 +32,7 @@ namespace FubuMVC.Core
             // them to the top level FubuRegistry *BEFORE*
             // registering the Fubu application parts into
             // your IoC container
-            PackageLoader.FindAllExtensions().Each(x => x.Configure(_topRegistry));
+            OldPackageRegistry.FindAllExtensions().Each(x => x.Configure(_topRegistry));
 
             // "Bake" the fubu configuration model into your
             // IoC container for the application

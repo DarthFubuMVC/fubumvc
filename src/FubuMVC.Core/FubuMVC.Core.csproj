@@ -147,7 +147,9 @@
     <Compile Include="Json\ProjectionFactory.cs" />
     <Compile Include="Json\ValueProjection.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
+    <Compile Include="Packaging\AssemblyLoader.cs" />
     <Compile Include="Packaging\AssemblyResolvePackageActivator.cs" />
+    <Compile Include="Packaging\Interfaces.cs" />
     <Compile Include="Packaging\PackageInfo.cs" />
     <Compile Include="Packaging\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProvider.cs" />
@@ -155,7 +157,8 @@
     <Compile Include="Packaging\PackageIncludeManifest.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
     <Compile Include="Packaging\PackageManifestReader.cs" />
-    <Compile Include="Packaging\PackageLoader.cs" />
+    <Compile Include="Packaging\OldPackageRegistry.cs" />
+    <Compile Include="Packaging\PackagingRuntimeGraph.cs" />
     <Compile Include="Packaging\VirtualPathProviderPackageActivator.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
