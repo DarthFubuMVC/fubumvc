@@ -81,4 +81,50 @@ namespace FubuMVC.Tests.Packaging
 
         public Action<IAssemblyLoader> LoadingAssemblies { get; set; }
     }
+
+    public class StubBootstrapper : IBootstrapper
+    {
+        private readonly string _name;
+        private readonly IPackageActivator[] _activators;
+
+        public StubBootstrapper(string name, params IPackageActivator[] activators)
+        {
+            _name = name;
+            _activators = activators;
+        }
+
+        public IEnumerable<IPackageActivator> Bootstrap()
+        {
+            return _activators;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Bootstrapper: {0}", _name);
+        }
+    }
+
+    public class StubPackageActivator : IPackageActivator
+    {
+        private IEnumerable<PackageInfo> _packages;
+        private IPackageLog _log;
+
+        public void Activate(IEnumerable<PackageInfo> packages, IPackageLog log)
+        {
+            _packages = packages;
+            _log = log;
+
+            
+        }
+
+        public IEnumerable<PackageInfo> Packages
+        {
+            get { return _packages; }
+        }
+
+        public IPackageLog Log
+        {
+            get { return _log; }
+        }
+    }
 }

@@ -94,6 +94,8 @@
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
+    <Compile Include="Packaging\PackagingDiagnosticsTester.cs" />
+    <Compile Include="Packaging\PackagingRegistryLogTester.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraphTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
