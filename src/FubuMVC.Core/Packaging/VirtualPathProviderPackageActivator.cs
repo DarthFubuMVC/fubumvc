@@ -5,12 +5,12 @@ namespace FubuMVC.Core.Packaging
 {
     public class VirtualPathProviderPackageActivator : IPackageActivator
     {
-        public void Activate(IEnumerable<PackageInfo> packages, IPackageLog log)
+        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             var provider = new FileSystemVirtualPathProvider();
             HostingEnvironment.RegisterVirtualPathProvider(provider);
 
-            packages.Each(x => provider.RegisterContentDirectory(x.FilesFolder));
+            //packages.Each(x => provider.RegisterContentDirectory(x.FilesFolder));
         }
     }
 }

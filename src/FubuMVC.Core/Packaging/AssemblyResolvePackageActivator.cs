@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Packaging
 {
     public class AssemblyResolvePackageActivator : IPackageActivator
     {
-        public void Activate(IEnumerable<PackageInfo> packages, IPackageLog log)
+        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             AppDomain.CurrentDomain.AssemblyResolve += (s, args) => OldPackageRegistry.ExtensionAssemblies.FirstOrDefault(assembly =>
             {

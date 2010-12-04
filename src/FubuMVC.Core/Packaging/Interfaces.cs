@@ -92,7 +92,7 @@ namespace FubuMVC.Core.Packaging
 
     public interface IBootstrapper
     {
-        IEnumerable<IPackageActivator> Bootstrap();
+        IEnumerable<IPackageActivator> Bootstrap(IPackageLog log);
     }
 
     public class PackageFacility : IPackageLoadingConfiguration

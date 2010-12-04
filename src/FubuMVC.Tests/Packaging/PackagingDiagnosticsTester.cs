@@ -147,7 +147,7 @@ namespace FubuMVC.Tests.Packaging
 
             bootstrapper = new StubBootstrapper("Boot1", activator1, activator2, activator3);
 
-            diagnostics.LogBootstrapperRun(bootstrapper, bootstrapper.Bootstrap());
+            diagnostics.LogBootstrapperRun(bootstrapper, bootstrapper.Bootstrap(null));
         }
 
         [Test]
