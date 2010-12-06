@@ -1,7 +1,6 @@
 using System;
 using FubuMVC.Core.Diagnostics.Querying;
 using StoryTeller.Engine;
-using StoryTellerTesting;
 
 namespace IntegrationTesting
 {

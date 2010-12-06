@@ -2,7 +2,7 @@ using System.Linq;
 using FubuMVC.Core.Diagnostics.Querying;
 using StoryTeller.Engine;
 
-namespace StoryTellerTesting.Fixtures
+namespace IntegrationTesting.Fixtures
 {
     public class PackagingFixture : Fixture
     {

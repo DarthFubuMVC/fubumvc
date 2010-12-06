@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using StoryTeller.Execution;
 
-namespace IntegrationTesting
+namespace StoryTellerTestHarness
 {
     [TestFixture, Explicit]
     public class Template
@@ -15,9 +15,9 @@ namespace IntegrationTesting
         }
 
         [Test]
-        public void Load_actions_from_a_package_in_dev_link_mode()
+        public void Invoke_a_Json_endpoint_from_a_package()
         {
-            runner.RunAndAssertTest("Packaging/Load actions from a package in dev link mode");
+            runner.RunAndAssertTest("Packaging/Invoke a Json endpoint from a package");
         }
 
         [TestFixtureTearDown]

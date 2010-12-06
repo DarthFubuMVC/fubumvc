@@ -79,6 +79,7 @@
     <Compile Include="FubuFastPack\Persistence\RepositorySmokeTester.cs" />
     <Compile Include="FubuSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryTellerDebug.cs" />
     <Compile Include="Template.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -158,14 +158,10 @@ namespace FubuMVC.Tests.Packaging
             ClassUnderTest.AddLoader(loader2);
             ClassUnderTest.AddLoader(loader3);
 
-            ClassUnderTest.DiscoverAndLoadPackages();
+            ClassUnderTest.DiscoverAndLoadPackages(() => { });
         }
 
-        [Test]
-        public void TESTNAME()
-        {
-            Assert.Fail("COME BACK HERE");
-        }
+
     }
 
     //[TestFixture]
@@ -201,7 +197,7 @@ namespace FubuMVC.Tests.Packaging
 
         public StubPackageLoader(params string[] names)
         {
-            _packages = names.Select(x => new StubPackage(x));
+            _packages = names.Select(x => new StubPackage(x) as IPackageInfo);
         }
 
         public IEnumerable<IPackageInfo> Load()
@@ -230,12 +226,17 @@ namespace FubuMVC.Tests.Packaging
             get { return _name; }
         }
 
-        public void LoadAssemblies(IAssemblyLoader loader)
+        public void LoadAssemblies(IAssemblyRegistration loader)
         {
             LoadingAssemblies(loader);
         }
 
-        public Action<IAssemblyLoader> LoadingAssemblies { get; set; }
+        public void ForFolder(string folderName, Action<string> onFound)
+        {
+            // do nothing for now
+        }
+
+        public Action<IAssemblyRegistration> LoadingAssemblies { get; set; }
     }
 
     public class StubBootstrapper : IBootstrapper
@@ -262,7 +263,7 @@ namespace FubuMVC.Tests.Packaging
 
     public class StubPackageActivator : IPackageActivator
     {
-        private IEnumerable<PackageInfo> _packages;
+        private IEnumerable<IPackageInfo> _packages;
         private IPackageLog _log;
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
@@ -273,7 +274,7 @@ namespace FubuMVC.Tests.Packaging
             
         }
 
-        public IEnumerable<PackageInfo> Packages
+        public IEnumerable<IPackageInfo> Packages
         {
             get { return _packages; }
         }

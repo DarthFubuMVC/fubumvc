@@ -4,7 +4,7 @@ using StoryTeller;
 using StoryTeller.Engine;
 using TestPackage1;
 
-namespace StoryTellerTesting.Fixtures
+namespace IntegrationTesting.Fixtures
 {
     public class Package1Fixture : Fixture
     {

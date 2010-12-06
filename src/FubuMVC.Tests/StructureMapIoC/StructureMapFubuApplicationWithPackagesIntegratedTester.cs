@@ -22,8 +22,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         {
             var root = Path.Combine(Path.GetFullPath("."), "../../../FubuTestApplication");
 
-            OldPackageRegistry.PhysicalRootPath = Path.GetFullPath(root);
-            OldPackageRegistry.SystemPackageActivators.Clear();
+            FubuMvcPackageFacility.PhysicalRootPath = Path.GetFullPath(root);
 
             new FakeApplication().Bootstrap(new List<RouteBase>());
 
@@ -37,7 +36,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_find_extensions()
         {
-            var extensions = OldPackageRegistry.FindAllExtensions();
+            var extensions = FubuBootstrapper.FindAllExtensions();
 
             extensions.Each(x => Debug.WriteLine(x.GetType().FullName));
 

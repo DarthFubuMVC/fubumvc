@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    public class PackageManifestReader
+    public class PackageManifestReader : IPackageLoader
     {
         private readonly string _applicationFolder;
         private readonly IFileSystem _fileSystem;
@@ -23,66 +22,45 @@ namespace FubuMVC.Core.Packaging
             _fileSystem = fileSystem;
         }
 
-        public IEnumerable<PackageInfo> ReadAll()
+        public IEnumerable<IPackageInfo> Load()
         {
-            var includes = _fileSystem.LoadFromFile<PackageIncludeManifest>(_applicationFolder,
-                                                                            PackageIncludeManifest.FILE);
+            var includes = _fileSystem.LoadFromFile<PackageIncludeManifest>(_applicationFolder, PackageIncludeManifest.FILE);
 
             return includes.Folders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f)));
         }
 
-        // TODO -- harden this and make it throw the right errors
-        public PackageInfo LoadFromFolder(string folder)
+        public IPackageInfo LoadFromFolder(string folder)
         {
             var manifest = _fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
-
+            var package = new PackageInfo(manifest.Name);
+            package.RegisterFolder(FubuMvcPackages.WebContentFolder, folder);
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
-            var assemblies = loadAssembliesFromPath(binPath, manifest.AssemblyNames);
 
-            return new PackageInfo(){
-                Assemblies = assemblies,
-                FilesFolder = Path.Combine(_applicationFolder, folder).ToFullPath()
-            };
+
+            var assemblyPaths = findCandidateAssemblyFiles(binPath);
+            assemblyPaths.Each(path =>
+            {
+                var assemblyName = Path.GetFileNameWithoutExtension(path);
+                if (manifest.AssemblyNames.Contains(assemblyName))
+                {
+                    package.RegisterAssemblyLocation(assemblyName, path);
+                }
+            });
+
+            return package;
         }
 
-
-        // This was lifted from StructureMap 2.6.2
-        // TODO -- harden this
-        private IEnumerable<Assembly> loadAssembliesFromPath(string path, IEnumerable<string> assemblyNames)
+        private static IEnumerable<string> findCandidateAssemblyFiles(string binPath)
         {
-            IEnumerable<string> assemblyPaths = Directory.GetFiles(path)
-                .Where(file =>
-                       Path.GetExtension(file).Equals(
-                           ".exe",
-                           StringComparison.OrdinalIgnoreCase)
-                       ||
-                       Path.GetExtension(file).Equals(
-                           ".dll",
-                           StringComparison.OrdinalIgnoreCase));
+            return Directory.GetFiles(binPath).Where(isPotentiallyAnAssembly);
+        }
 
-            var list = new List<Assembly>();
-
-            foreach (string assemblyPath in assemblyPaths)
-            {
-                var assemblyName = Path.GetFileNameWithoutExtension(assemblyPath);
-                if (assemblyNames.Contains(assemblyName))
-                {
-                    try
-                    {
-                        Assembly firstAssembly = Assembly.LoadFrom(assemblyPath);
-                        list.Add(firstAssembly);
-                    }
-                    catch
-                    {
-                    } 
-                }
-
-
-            }
-
-            return list;
-
+        private static bool isPotentiallyAnAssembly(string file)
+        {
+            var extension = Path.GetExtension(file);
+            return extension.Equals(".exe", StringComparison.OrdinalIgnoreCase) ||
+                   extension.Equals(".dll", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

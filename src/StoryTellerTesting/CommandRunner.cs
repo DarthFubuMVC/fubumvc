@@ -4,7 +4,7 @@ using System.IO;
 using FubuCore;
 using StoryTeller.Assertions;
 
-namespace StoryTellerTesting
+namespace IntegrationTesting
 {
     public class CommandRunner
     {

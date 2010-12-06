@@ -21,5 +21,6 @@ namespace FubuCore
         {
             return target == null ? null : valueFunc();
         }
+
     }
 }

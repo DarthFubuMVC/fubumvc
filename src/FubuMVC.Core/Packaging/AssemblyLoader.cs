@@ -6,31 +6,22 @@ using System.Reflection;
 
 namespace FubuMVC.Core.Packaging
 {
-    public interface IAssemblyLoader
-    {
-        void LoadFromFile(string fileName, string assemblyName);
-        void Use(Assembly assembly);
-    }
-
-
-
-    public class AssemblyLoader : IAssemblyLoader
+    public class AssemblyLoader : IAssemblyLoader, IAssemblyRegistration
     {
         public static readonly string DIRECTLY_REGISTERED_MESSAGE = "Directly loaded by the Package";
 
-        private readonly IEnumerable<IPackageInfo> _packages;
         private readonly IPackagingDiagnostics _diagnostics;
         private IPackageInfo _currentPackage;
         private readonly IList<Assembly> _assemblies = new List<Assembly>();
 
-        public AssemblyLoader(IEnumerable<IPackageInfo> packages, IPackagingDiagnostics diagnostics)
+        public AssemblyLoader(IPackagingDiagnostics diagnostics)
         {
             AssemblyFileLoader = file =>
             {
-                return Assembly.Load(File.ReadAllBytes(file));
+                //return Assembly.Load(File.ReadAllBytes(file));
+                return Assembly.LoadFrom(file);
             };
 
-            _packages = packages;
             _diagnostics = diagnostics;
         }
 
@@ -43,10 +34,10 @@ namespace FubuMVC.Core.Packaging
             return (_assemblies.Any(x => x.GetName().Name == assemblyName));
         }
 
-        public void LoadAssemblies()
+        public void ReadPackage(IPackageInfo package)
         {
-            _packages.Each(LoadAssembliesFromPackage);
-            _currentPackage = null;
+            _currentPackage = package;
+            package.LoadAssemblies(this);
         }
 
         public IList<Assembly> Assemblies
@@ -55,7 +46,7 @@ namespace FubuMVC.Core.Packaging
         }
 
         // need to try to load the assembly by name first!!!
-        public void LoadFromFile(string fileName, string assemblyName)
+        void IAssemblyRegistration.LoadFromFile(string fileName, string assemblyName)
         {
             if (hasAssemblyByName(assemblyName))
             {
@@ -79,7 +70,7 @@ namespace FubuMVC.Core.Packaging
 
         }
 
-        public void Use(Assembly assembly)
+        void IAssemblyRegistration.Use(Assembly assembly)
         {
             if (hasAssemblyByName(assembly.GetName().Name))
             {

@@ -1,8 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace FubuMVC.Core.Packaging
 {
+    public interface IPackagingRuntimeGraphConfigurer
+    {
+        void Configure(PackagingRuntimeGraph graph);
+    }
+
     public class PackagingRuntimeGraph
     {
         private readonly IList<IPackageActivator> _activators = new List<IPackageActivator>();
@@ -35,13 +42,10 @@ namespace FubuMVC.Core.Packaging
             _provenanceStack.Pop();
         }
 
-
-
-
-        public void DiscoverAndLoadPackages()
+        public void DiscoverAndLoadPackages(Action onAssembliesScanned)
         {
             _packages = findAllPackages();
-            loadAssemblies(_packages);
+            loadAssemblies(_packages, onAssembliesScanned);
             var discoveredActivators = runAllBootstrappers();
             activatePackages(_packages, discoveredActivators);
         }
@@ -64,9 +68,11 @@ namespace FubuMVC.Core.Packaging
             return discoveredActivators;
         }
 
-        private void loadAssemblies(List<IPackageInfo> packages)
+        private void loadAssemblies(IEnumerable<IPackageInfo> packages, Action onAssembliesScanned)
         {
-            _diagnostics.LogExecutionOnEach(packages, p => p.LoadAssemblies(_assemblies));
+            _diagnostics.LogExecutionOnEach(packages, _assemblies.ReadPackage);
+
+            onAssembliesScanned();
         }
 
         private List<IPackageInfo> findAllPackages()

@@ -93,6 +93,7 @@
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />
+    <Compile Include="Packaging\AssemblyPackageInfoTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\PackagingDiagnosticsTester.cs" />
     <Compile Include="Packaging\PackagingRegistryLogTester.cs" />

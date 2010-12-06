@@ -47,7 +47,11 @@ namespace IntegrationTesting.FubuFastPack.NHibernate
         [Test]
         public void smoke_test_writing_mappings()
         {
-            Directory.Delete("mapping", true);
+            if (Directory.Exists("mapping"))
+            {
+                Directory.Delete("mapping", true);
+            }
+            
             using (var container = DatabaseDriver.ContainerWithDatabase())
             {
                 container.GetInstance<ISchemaWriter>().ExportMappingsTo("mapping");

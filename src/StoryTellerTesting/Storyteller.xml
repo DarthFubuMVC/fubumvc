@@ -36,7 +36,7 @@ $METHODS$
   <Workspaces />
   <BinaryFolder>bin\debug</BinaryFolder>
   <TestFolder>Tests</TestFolder>
-  <FileName>C:\git\fubumvc\src\StoryTellerTesting\Storyteller.xml</FileName>
+  <FileName>C:\git\fubumvc\src\IntegrationTesting\Storyteller.xml</FileName>
   <TimeoutInSeconds>60</TimeoutInSeconds>
   <SystemTypeName>IntegrationTesting.FubuSystem, IntegrationTesting</SystemTypeName>
   <Name>FubuMVC</Name>

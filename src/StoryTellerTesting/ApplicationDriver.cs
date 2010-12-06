@@ -3,7 +3,7 @@ using System.Net;
 using System.Web.Script.Serialization;
 using WatiN.Core;
 
-namespace StoryTellerTesting
+namespace IntegrationTesting
 {
     public class ApplicationDriver
     {

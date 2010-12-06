@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Packaging
             var provider = new FileSystemVirtualPathProvider();
             HostingEnvironment.RegisterVirtualPathProvider(provider);
 
-            //packages.Each(x => provider.RegisterContentDirectory(x.FilesFolder));
+            packages.Each(x => x.ForFolder(FubuMvcPackages.WebContentFolder, provider.RegisterContentDirectory));
         }
     }
 }

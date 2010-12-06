@@ -1,6 +1,6 @@
 ﻿using StoryTeller.Engine;
 
-namespace StoryTellerTesting.Fixtures
+namespace IntegrationTesting.Fixtures
 {
     [Hidden]
     public class PackagingSetupFixture : Fixture

@@ -61,12 +61,16 @@ namespace FubuMVC.StructureMap.Bootstrap
 
         public void Bootstrap(ICollection<RouteBase> routes)
         {
-            OldPackageRegistry.LoadPackages(() =>
+            PackageRegistry.LoadPackages(x =>
             {
-                var fubuRegistry = GetMyRegistry();
+                x.Facility(new FubuMvcPackageFacility());
+                x.Bootstrap(log =>
+                {
+                    var fubuRegistry = GetMyRegistry();
 
-                BootstrapStructureMap(routes, fubuRegistry, InitializeStructureMap);
-                return ObjectFactory.GetAllInstances<IPackageActivator>();
+                    BootstrapStructureMap(routes, fubuRegistry, InitializeStructureMap);
+                    return ObjectFactory.GetAllInstances<IPackageActivator>();
+                });
             });
         }
 

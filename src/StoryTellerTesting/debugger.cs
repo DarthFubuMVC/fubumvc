@@ -1,7 +1,6 @@
-using IntegrationTesting;
 using NUnit.Framework;
 
-namespace StoryTellerTesting
+namespace IntegrationTesting
 {
     [TestFixture]
     public class debugger
