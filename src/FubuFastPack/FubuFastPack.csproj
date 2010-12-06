@@ -37,14 +37,11 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\fluent-nhibernate\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>C:\git\blue\tools\fubu\FubuCore.dll</HintPath>
-    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\lib\NHibernate\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Linq">
-      <HintPath>..\..\..\blue\tools\NHibernate\NHibernate.Linq.dll</HintPath>
+      <HintPath>..\..\lib\NHibernate\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
@@ -97,6 +94,10 @@
     <Compile Include="StructureMap\TransactionProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
