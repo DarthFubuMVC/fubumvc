@@ -75,9 +75,9 @@ task :compile => [:clean, :version] do
   AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloSpark", :webVirDir => "localhost/xyzzyplugh"
   
   copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuMVC.UI/bin/#{COMPILE_TARGET}", "FubuMVC.UI.{dll,pdb}", props[:stage]
   copyOutputFiles "src/Spark.Web.FubuMVC/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuLocalization/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
+  copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
+  copyOutputFiles "src/FubuValidation/bin/#{COMPILE_TARGET}", "FubuValidation.{dll,pdb}", props[:stage]
 end
 
 desc "Compiles the app for .NET Framework 3.5"
@@ -93,8 +93,8 @@ task :compile35 do
   Dir.mkdir props[:stage35] unless exists?(props[:stage35])
   output_nix = output.gsub('\\', '/')
   copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/FubuMVC.UI/#{output_nix}", "FubuMVC.UI.{dll,pdb}", props[:stage35]  
   copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
+  copyOutputFiles "src/FubuValidation/#{output_nix}", "FubuValidation.{dll,pdb}", props[:stage35]
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
