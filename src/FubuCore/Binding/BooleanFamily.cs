@@ -16,10 +16,14 @@ namespace FubuCore.Binding
         {
             var converter = TypeDescriptor.GetConverter(typeof(bool));
 
-            return x => 
-                   x.PropertyValue.ToString().Contains(x.Property.Name) 
-                   || x.PropertyValue.ToString().EqualsIgnoreCase(Checkbox_On)
-                   || (bool) converter.ConvertFrom(x.PropertyValue);
+            return x =>
+            {
+                if (x.PropertyValue is bool) return x.PropertyValue;
+
+                return x.PropertyValue.ToString().Contains(x.Property.Name)
+                || x.PropertyValue.ToString().EqualsIgnoreCase(Checkbox_On)
+                || (bool) converter.ConvertFrom(x.PropertyValue);
+            };
         }
     }
 }
