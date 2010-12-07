@@ -233,6 +233,53 @@ namespace FubuMVC.Core.Diagnostics
             return BuildDocument("Routes by Role", list);
         }
 
+        [Description("list of all endpoints in the system categorized by input type")]
+        public HtmlDocument EndpointsByInputType()
+        {
+            var document = BuildDocument("Endpoints by Input Type");
+            var div = document.Add("div");
+            _graph.Behaviors.Where(x => x.HasInput()).GroupBy(x => x.InputType()).OrderBy(x => x.Key.Name)
+                .Each(actionGroup =>
+                {
+                    var ul = div.Add("ul");
+                    ul.Text(actionGroup.Key.Name);
+                    foreach (BehaviorChain chain in actionGroup)
+                    {
+                        var url = _urls.UrlFor(new ChainRequest(){
+                            Id = chain.UniqueId
+                        });
+                        var a = ul.Add("li/a").Attr("href", url);
+                        var text = "";
+                        
+                        if (!chain.IsPartialOnly())
+                        {
+                            text = chain.RoutePattern + " -- ";
+                        }
+
+                        var actionCall = chain.FirstCall();
+                        if (actionCall != null)
+                        {
+                            text += actionCall.Description;
+                        }
+
+                        if (text.IsEmpty())
+                        {
+                            text = chain.Last().ToString();
+                        }
+
+                        if (chain.UrlCategory.Category.IsNotEmpty())
+                        {
+                            text += " -- Category:  " + chain.UrlCategory.Category;
+                        }
+
+                        a.Text(text);
+                    }
+                    
+                });
+
+            return document;
+        }
+
         private IColumn routes
         {
             get
