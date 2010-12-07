@@ -1,6 +1,6 @@
 using FubuCore;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Security;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Security;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;

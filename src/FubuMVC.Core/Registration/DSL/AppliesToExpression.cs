@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
+using FubuMVC.Core.Packaging;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -12,28 +14,15 @@ namespace FubuMVC.Core.Registration.DSL
             _pool = pool;
         }
 
-        public AppliesToExpression ToThisAssembly()
+        public AppliesToExpression ToAllPackageAssemblies()
         {
-            return ToAssembly(findTheCallingAssembly());
+            PackageRegistry.PackageAssemblies.Each(a => ToAssembly(a));
+            return this;
         }
 
-        private static Assembly findTheCallingAssembly()
+        public AppliesToExpression ToThisAssembly()
         {
-            var trace = new StackTrace(false);
-
-            Assembly thisAssembly = Assembly.GetExecutingAssembly();
-            Assembly callingAssembly = null;
-            for (int i = 0; i < trace.FrameCount; i++)
-            {
-                StackFrame frame = trace.GetFrame(i);
-                Assembly assembly = frame.GetMethod().DeclaringType.Assembly;
-                if (assembly != thisAssembly)
-                {
-                    callingAssembly = assembly;
-                    break;
-                }
-            }
-            return callingAssembly;
+            return ToAssembly(FubuRegistry.FindTheCallingAssembly());
         }
 
         public AppliesToExpression ToAssembly(Assembly assembly)

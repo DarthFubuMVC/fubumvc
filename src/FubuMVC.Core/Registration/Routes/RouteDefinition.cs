@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = prefix.TrimEnd('/') + "/" + _pattern;
         }
 
-        public virtual void AddRouteInput(RouteInput input, bool b)
+        public virtual void AddRouteInput(RouteInput input, bool appendToUrl)
         {
             // do nothing
         }

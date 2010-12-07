@@ -1,6 +1,6 @@
 using FubuCore;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Tags;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI

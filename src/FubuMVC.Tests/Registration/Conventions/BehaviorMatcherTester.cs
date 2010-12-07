@@ -21,7 +21,8 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph = new BehaviorGraph(null);
             matcher = new BehaviorMatcher();
 
-            pool = new TypePool();
+            pool = new TypePool(null);
+            pool.IgnoreCallingAssembly();
 
             pool.AddType<DifferentPatternClass>();
             pool.AddType<OneController>();

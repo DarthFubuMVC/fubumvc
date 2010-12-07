@@ -1,10 +1,10 @@
 using System;
 using FubuMVC.Core;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuMVC.UI;
 
 namespace FubuMVC.Tests.UI
 {

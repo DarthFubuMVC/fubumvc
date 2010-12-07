@@ -23,6 +23,8 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             registry = new FubuRegistry(x =>
             {
+                
+
                 // Tell FubuMVC to wrap the behavior chain for each
                 // RouteHandler with the "FakeUnitOfWorkBehavior"
                 // Kind of like a global [ActionFilter] in MVC

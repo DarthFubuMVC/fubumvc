@@ -2,10 +2,15 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using System.Net.Sockets;
 using System.Reflection;
+using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Tests.UI;
+using HtmlTags;
 using NUnit.Framework;
+using System.Collections.Generic;
+using TestPackage1;
+using Container = StructureMap.Container;
 
 namespace FubuMVC.Tests
 {
@@ -20,6 +25,41 @@ namespace FubuMVC.Tests
         }
 
         #endregion
+
+        [Test]
+        public void try_dictionary()
+        {
+            var dict = new Dictionary<string, object>();
+            dict.Add("a", 1);
+            dict.Add("b", "2");
+            dict.Add("c", true);
+
+            var s = JsonUtil.ToJson(dict);
+
+            Debug.WriteLine(s);
+        }
+
+        [Test]
+        public void try_out_the_test_package_1()
+        {
+            var container = new Container(x =>
+            {
+                x.Scan(o =>
+                {
+                    o.AssemblyContainingType<TestPackage1Registry>();
+                    o.AddAllTypesOf<IFubuRegistryExtension>();
+                });
+            });
+
+            Debug.WriteLine(container.WhatDoIHave());
+        }
+
+        [Test]
+        public void try_to_execute_the_remote_behavior_graph()
+        {
+            var remote = new RemoteBehaviorGraph("http://localhost/fubu-testing");
+            remote.All().AllEndpoints.Each(x => Debug.WriteLine(x.RoutePattern));
+        }
 
         [Test]
         public void expression_playing()

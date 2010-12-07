@@ -19,10 +19,12 @@ namespace FubuMVC.Tests.Security
         private AuthorizationPreviewService withAuthorizationRules(Action<BehaviorGraph> configure)
         {
             var registry = new FubuRegistry();
+            
+
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
 
-            registry.TypeResolver.AddStrategy<UrlModelForwarder>();
+            registry.ResolveTypes(x => x.AddStrategy<UrlModelForwarder>());
 
             registry.Configure(configure);
 

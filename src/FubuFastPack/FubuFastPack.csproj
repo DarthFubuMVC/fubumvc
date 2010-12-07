@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F274E0DD-F9B1-41FE-A3F6-89EE74FE3F56}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuFastPack</RootNamespace>
+    <AssemblyName>FubuFastPack</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.DynamicProxy2">
+      <HintPath>..\..\lib\NHibernate\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\lib\fluent-nhibernate\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Linq">
+      <HintPath>..\..\lib\NHibernate\NHibernate.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Domain\Entity.cs" />
+    <Compile Include="Domain\DomainEntity.cs" />
+    <Compile Include="Domain\DomainExtensions.cs" />
+    <Compile Include="Extensibility\HideOnNewAttribute.cs" />
+    <Compile Include="Extensibility\Extends.cs" />
+    <Compile Include="Extensibility\ExtensionFieldRegistry.cs" />
+    <Compile Include="Extensibility\ExtensionFieldTagAttribute.cs" />
+    <Compile Include="Extensibility\ExtensionProperties.cs" />
+    <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
+    <Compile Include="Extensibility\ExtensionScanner.cs" />
+    <Compile Include="Extensibility\HideOnViewAttribute.cs" />
+    <Compile Include="NHibernate\CriteriaExtensions.cs" />
+    <Compile Include="NHibernate\DatabaseSettings.cs" />
+    <Compile Include="NHibernate\ConfigurationBehavior.cs" />
+    <Compile Include="NHibernate\ConfigurationExtensions.cs" />
+    <Compile Include="NHibernate\ConfigurationSource.cs" />
+    <Compile Include="NHibernate\FileCacheConfigurationSource.cs" />
+    <Compile Include="NHibernate\IConfigurationModifier.cs" />
+    <Compile Include="NHibernate\IConfigurationSource.cs" />
+    <Compile Include="NHibernate\NHibernateRegistry.cs" />
+    <Compile Include="NHibernate\Projections.cs" />
+    <Compile Include="NHibernate\SqlRunner.cs" />
+    <Compile Include="NHibernate\TransactionBoundary.cs" />
+    <Compile Include="Persistence\EntityFinder.cs" />
+    <Compile Include="Persistence\IEntityFinder.cs" />
+    <Compile Include="Persistence\IEntityFinderCache.cs" />
+    <Compile Include="Persistence\InMemoryRepository.cs" />
+    <Compile Include="Persistence\IQueryExpression.cs" />
+    <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Persistence\Repository.cs" />
+    <Compile Include="Querying\Interfaces.cs" />
+    <Compile Include="StructureMap\ITransactionProcessor.cs" />
+    <Compile Include="StructureMap\StructureMapEntityFinderCache.cs" />
+    <Compile Include="StructureMap\NHibernateStructureMapRegistryExtensions.cs" />
+    <Compile Include="NHibernate\SchemaWriter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructureMap\TransactionProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
+      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
+      <Name>FubuLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
+      <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
+      <Name>FubuValidation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lists\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

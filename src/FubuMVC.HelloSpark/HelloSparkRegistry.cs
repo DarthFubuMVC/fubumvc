@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Diagnostics;
+
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
 using Spark;
@@ -7,7 +8,6 @@ using Spark.Web.FubuMVC.Extensions;
 using FubuMVC.HelloSpark.Controllers;
 using Spark.Web.FubuMVC.ViewCreation;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.UI;
 
 namespace FubuMVC.HelloSpark
 {
@@ -17,9 +17,6 @@ namespace FubuMVC.HelloSpark
             : base(factory)
         {
             IncludeDiagnostics(true);
-
-            Applies
-                .ToThisAssembly();
 
             AddViewFolder("/Features/");
 
@@ -36,8 +33,6 @@ namespace FubuMVC.HelloSpark
             Output.ToJson.WhenTheOutputModelIs<JsonResponse>();
             Output.To(call => new JavaScriptOutputNode(GetJavaScriptViewToken(call), call))
                 .WhenTheOutputModelIs<JavaScriptResponse>();
-
-            this.UseDefaultHtmlConventions();
 
             HomeIs<AirController>(c => c.TakeABreath());
         }

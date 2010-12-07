@@ -20,5 +20,25 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             def.Child(MimeType);
         }
+
+        public bool Equals(RenderTextNode<T> other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.MimeType, MimeType);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (RenderTextNode<T>)) return false;
+            return Equals((RenderTextNode<T>) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (MimeType != null ? MimeType.GetHashCode() : 0);
+        }
     }
 }

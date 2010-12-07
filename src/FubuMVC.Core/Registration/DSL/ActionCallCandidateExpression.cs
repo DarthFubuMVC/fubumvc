@@ -22,6 +22,13 @@ namespace FubuMVC.Core.Registration.DSL
 
         // more to come...
 
+
+        public ActionCallCandidateExpression IncludeClassesSuffixedWithController()
+        {
+            return IncludeTypes(x => x.Name.EndsWith("Controller"));
+        }
+
+
         // TODO -- something in here that can close on types?
 
         public ActionCallCandidateExpression ExcludeTypes(Expression<Func<Type, bool>> filter)

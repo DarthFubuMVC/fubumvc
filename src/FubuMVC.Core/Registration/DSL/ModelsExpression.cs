@@ -6,14 +6,14 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ModelsExpression
     {
-        private readonly Action<Action<BehaviorGraph>> _callback;
+        private readonly Action<Action<IServiceRegistry>> _callback;
 
-        public ModelsExpression(Action<Action<BehaviorGraph>> callback)
+        public ModelsExpression(Action<Action<IServiceRegistry>> callback)
         {
             _callback = callback;
         }
 
-        private ModelsExpression add(Action<BehaviorGraph> configuration)
+        private ModelsExpression add(Action<IServiceRegistry> configuration)
         {
             _callback(configuration);
             return this;
@@ -21,23 +21,23 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ModelsExpression ConvertUsing<T>() where T : IConverterFamily
         {
-            return add(graph => graph.Services.AddService<IConverterFamily, T>());
+            return add(x => x.AddService<IConverterFamily, T>());
         }
 
         public ModelsExpression BindPropertiesWith<T>() where T : IPropertyBinder
         {
-            return add(graph => graph.Services.AddService<IPropertyBinder, T>());
+            return add(x => x.AddService<IPropertyBinder, T>());
         }
 
         public ModelsExpression BindModelsWith<T>() where T : IModelBinder
         {
-            return add(graph => graph.Services.AddService<IModelBinder, T>());
+            return add(x => x.AddService<IModelBinder, T>());
         }
 
         public ModelsExpression IgnoreProperties(Func<PropertyInfo, bool> filter)
         {
             var binder = new IgnorePropertyBinder(filter);
-            return add(graph => graph.Services.AddService<IPropertyBinder>(binder));
+            return add(x => x.AddService<IPropertyBinder>(binder));
         }
     }
 }

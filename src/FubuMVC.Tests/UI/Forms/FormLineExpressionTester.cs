@@ -1,7 +1,9 @@
 using System.Security.Principal;
 using System.Threading;
-using FubuMVC.UI.Forms;
-using FubuMVC.UI.Security;
+using FubuLocalization;
+using FubuMVC.Core.Security;
+using FubuMVC.Core.UI.Forms;
+using FubuMVC.Core.UI.Security;
 using HtmlTags;
 using NUnit.Framework;
 using System.Linq;
@@ -32,6 +34,41 @@ namespace FubuMVC.Tests.UI.Forms
             expression.Compile();
 
             layout.LabelTag.Text().ShouldEqual("Prop:  Name");
+        }
+
+        [Test]
+        public void add_class_to_body()
+        {
+            expression.AddClassToBody("class1");
+            expression.Compile();
+            layout.BodyTag.HasClass("class1").ShouldBeTrue();
+        }
+
+        [Test]
+        public void display_if_empty_by_text()
+        {
+            expression.DisplayIfEmpty("default text");
+            expression.Compile();
+            layout.BodyTag.Text().ShouldEqual("default text");
+        }
+
+        [Test]
+        public void no_autocomplete()
+        {
+            expression.NoAutoComplete();
+            expression.Compile();
+            layout.BodyTag.ToString().ShouldEqual("<span autocomplete=\"off\" class=\"display\">Name</span>");
+        }
+
+        [Test]
+        public void display_if_empty_by_localized_string_token()
+        {
+            var token = StringToken.FromKeyString("KEY", "localized text");
+            expression.DisplayIfEmpty(token);
+            expression.Compile();
+
+
+            layout.BodyTag.Text().ShouldEqual(token.ToString());
         }
 
         [Test]
@@ -192,8 +229,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void edit_if_the_user_does_not_have_a_role()
         {
-            Thread.CurrentPrincipal = new System.Security.Principal.GenericPrincipal(new GenericIdentity("somebody"),
-                                                                           new string[0]);
+            PrincipalRoles.SetCurrentRolesForTesting();
 
             expression.EditableForRole("admin").ToString().ShouldNotContain("input");
         }

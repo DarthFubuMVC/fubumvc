@@ -211,7 +211,8 @@ namespace FubuCore.Testing
             actual.ShouldNotBeNull();
             expected.ShouldNotBeNull();
 
-            actual.Count.ShouldEqual(expected.Count);
+            Assert.AreEqual(expected.Count, actual.Count, "Was:  " + actual);
+
 
             for (int i = 0; i < actual.Count; i++)
             {

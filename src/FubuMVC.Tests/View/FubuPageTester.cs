@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
-using FubuMVC.UI.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;

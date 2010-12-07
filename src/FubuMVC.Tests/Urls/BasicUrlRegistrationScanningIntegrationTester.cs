@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Urls
         {
             UrlContext.Reset();
 
-            graph = new FubuRegistry(x => { x.Applies.ToThisAssembly(); }).BuildGraph();
+            graph = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
 
             registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph));
         }

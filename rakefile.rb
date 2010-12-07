@@ -61,6 +61,7 @@ task :compile => [:clean, :version] do
   copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuMVC.UI/bin/#{COMPILE_TARGET}", "FubuMVC.UI.{dll,pdb}", props[:stage]
   copyOutputFiles "src/Spark.Web.FubuMVC/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
+  copyOutputFiles "src/FubuLocalization/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
 end
 
 desc "Compiles the app for .NET Framework 3.5"
@@ -76,7 +77,8 @@ task :compile35 do
   Dir.mkdir props[:stage35] unless exists?(props[:stage35])
   output_nix = output.gsub('\\', '/')
   copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/FubuMVC.UI/#{output_nix}", "FubuMVC.UI.{dll,pdb}", props[:stage35]
+  copyOutputFiles "src/FubuMVC.UI/#{output_nix}", "FubuMVC.UI.{dll,pdb}", props[:stage35]  
+  copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
@@ -91,7 +93,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'HtmlTags.Testing', 'Spark.Web.FubuMVC.Tests']
+  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'HtmlTags.Testing', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing']
 end
 
 desc "Target used for the CI server"

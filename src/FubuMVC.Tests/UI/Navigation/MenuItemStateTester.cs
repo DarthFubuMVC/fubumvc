@@ -1,4 +1,4 @@
-using FubuMVC.UI.Navigation;
+using FubuMVC.Core.UI.Navigation;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI.Navigation

@@ -19,13 +19,26 @@ namespace FubuCore.Util
             public Func<T, bool> Matches { get; private set; }
         }
 
+        private bool _hasChanged = false;
         private readonly List<LoggablePredicate> _list = new List<LoggablePredicate>();
         private Func<T, bool> _matchesAll = x => true;
         private Func<T, bool> _matchesAny = x => true;
         private Func<T, bool> _matchesNone = x => false;
 
+        public void ResetChangeTracking()
+        {
+            _hasChanged = false;
+        }
+
+        public bool HasChanged
+        {
+            get { return _hasChanged; }
+        }
+
         public void Add(Expression<Func<T, bool>> filter)
         {
+            _hasChanged = true;
+
             _matchesAll = x => _list.All(predicate => predicate.Matches(x));
             _matchesAny = x => _list.Any(predicate => predicate.Matches(x));
             _matchesNone = x => !MatchesAny(x);

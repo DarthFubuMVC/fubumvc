@@ -11,16 +11,8 @@ using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core
 {
-    [Obsolete("Should probably dump this in favor of the IFubuRegistryExtension")]
-    public interface IRegistryModification
-    {
-        void Modify(FubuRegistry registry);
-    }
-
     public partial class FubuRegistry
     {
-        private readonly TypeResolver _typeResolver = new TypeResolver();
-
         public RouteConventionExpression Routes
         {
             get { return new RouteConventionExpression(_routeResolver, this); }
@@ -43,7 +35,7 @@ namespace FubuMVC.Core
 
         public ModelsExpression Models
         {
-            get { return new ModelsExpression(addExplicit); }
+            get { return new ModelsExpression(Services); }
         }
 
         public AppliesToExpression Applies
@@ -56,9 +48,15 @@ namespace FubuMVC.Core
             get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSourceMatcher); }
         }
 
-        public TypeResolver TypeResolver
+        public void ResolveTypes(Action<TypeResolver> configure)
         {
-            get { return _typeResolver; }
+            Services(x =>
+            {
+                x.SetServiceIfNone<ITypeResolver>(new TypeResolver());
+                var resolver = x.FindAllValues<ITypeResolver>().FirstOrDefault() as TypeResolver;
+
+                configure(resolver);
+            });
         }
 
         public void UsingObserver(IConfigurationObserver observer)
@@ -68,8 +66,7 @@ namespace FubuMVC.Core
 
         public void Services(Action<IServiceRegistry> configure)
         {
-            var action = new LambdaConfigurationAction(g => configure(g.Services));
-            _explicits.Add(action);
+            _serviceRegistrations.Add(configure);
         }
 
         public void ApplyConvention<TConvention>()
@@ -120,11 +117,6 @@ namespace FubuMVC.Core
             Import(new T(), prefix);
         }
 
-        public void Modify<T>() where T : IRegistryModification, new()
-        {
-            new T().Modify(this);
-        }
-
         public void Import(FubuRegistry registry, string prefix)
         {
             _imports.Add(new RegistryImport{
@@ -138,8 +130,10 @@ namespace FubuMVC.Core
             if (shouldInclude)
             {
                 UsingObserver(new RecordingConfigurationObserver());
+
+                // TODO -- DiagnosticsPackage gets rolled up into DiagnosticsRegistry
                 Import<DiagnosticsRegistry>(string.Empty);
-                Modify<DiagnosticsPackage>();
+                new DiagnosticsPackage().Configure(this);
                 _systemPolicies.Add(new DiagnosticBehaviorPrepender());
             }
             else
@@ -152,8 +146,16 @@ namespace FubuMVC.Core
 
         public void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration)
         {
-            var expression = new PartialViewTypeRegistrationExpression(_partialViewTypes);
-            registration(expression);
+            Services(x =>
+            {
+                x.SetServiceIfNone<IPartialViewTypeRegistry>(new PartialViewTypeRegistry());
+                var registry = x.FindAllValues<IPartialViewTypeRegistry>().FirstOrDefault();
+
+                var expression = new PartialViewTypeRegistrationExpression(registry);
+                registration(expression);
+            });
+
+
         }
 
 

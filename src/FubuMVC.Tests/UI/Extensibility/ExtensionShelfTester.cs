@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Core.View;
-using FubuMVC.UI.Extensibility;
 using NUnit.Framework;
 using System.Linq;
 

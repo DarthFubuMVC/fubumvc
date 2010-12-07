@@ -163,5 +163,10 @@ namespace FubuMVC.Core.Registration.Nodes
 
             return chain;
         }
+
+        public bool IsWrappedBy(Type behaviorType)
+        {
+            return this.Where(x => x is Wrapper).Cast<Wrapper>().Any(x => x.BehaviorType == behaviorType);
+        }
     }
 }

@@ -6,6 +6,17 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
+    public class OredevFubuRegistry : FubuRegistry
+    {
+        public OredevFubuRegistry()
+        {
+            Route("route/to/this")
+                .Calls<when_explicitly_registering_a_route.InputController>(x => x.DoSomething(null))
+                .OutputToJson();
+        }
+    }
+
+
     [TestFixture]
     public class when_explicitly_configuring_a_route
     {
@@ -17,8 +28,13 @@ namespace FubuMVC.Tests.Registration.Expressions
             var config = new ExplicitRouteConfiguration("some/pattern");
             config.Chain();
             _config = config;
-            _graph = new FubuRegistry(registry => registry.Route<InputModel>("some/pattern")
-                    .Calls<InputController>(c => c.DoSomething(null)).OutputToJson())
+            _graph = new FubuRegistry(registry =>
+            {
+                
+
+                registry.Route<InputModel>("some/pattern")
+                    .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
+            })
                     .BuildGraph();
 
             _graph.Behaviors.ShouldHaveCount(1);

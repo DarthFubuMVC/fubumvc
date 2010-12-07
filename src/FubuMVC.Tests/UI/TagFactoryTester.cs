@@ -2,8 +2,8 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
 

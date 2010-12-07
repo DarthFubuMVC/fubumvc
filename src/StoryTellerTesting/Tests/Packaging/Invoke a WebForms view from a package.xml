@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Test name="Invoke a WebForms view from a package" lifecycle="Regression">
+  <Packaging>
+    <Comment><![CDATA[Link in TestPackage1]]></Comment>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <Run isStep="True" commandLine="init-pak src/TestPackage1 pak1" />
+        <Run isStep="True" commandLine="link fubu-testing pak1" />
+      </PackagingSetup>
+    </SetUp>
+  </Packaging>
+  <Package1>
+    <OpenPage isStep="True" url="http://localhost/fubu-testing/testpackage1/view/showview/Jeremy" />
+    <TextOfNameElementShouldBe isStep="True" name="Jeremy" />
+    <Comment><![CDATA[Just for fun, let's try it with a different name]]></Comment>
+    <OpenPage isStep="True" url="http://localhost/fubu-testing/testpackage1/view/showview/Josh" />
+    <TextOfNameElementShouldBe isStep="True" name="Josh" />
+  </Package1>
+</Test>

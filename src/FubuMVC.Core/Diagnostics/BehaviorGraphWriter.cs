@@ -150,7 +150,7 @@ namespace FubuMVC.Core.Diagnostics
         [Description("show all behavior chains")]
         public HtmlDocument Chains()
         {
-            var table = writeTable(x => x.RoutePattern, chains, routes, actions);
+            var table = writeTable(x => x.RoutePattern, chains, constraints, routes, actions);
 
             return BuildDocument("Registered Behavior Chains", table);
         } 
@@ -159,7 +159,7 @@ namespace FubuMVC.Core.Diagnostics
         [Description("show all registered routes with their related actions and output")]
         public HtmlDocument Routes()
         {
-            var table = writeTable(x => x.Route != null, x => x.RoutePattern, routes, actions, outputs, chains);
+            var table = writeTable(x => x.Route != null, x => x.RoutePattern, constraints, routes, actions, outputs, chains);
 
             return BuildDocument("Registered Routes", table);
         } 
@@ -270,6 +270,14 @@ namespace FubuMVC.Core.Diagnostics
             get
             {
                 return new InputModelColumn();
+            }
+        }
+
+        private IColumn constraints
+        {
+            get
+            {
+                return new ConstraintColumn();
             }
         }
 

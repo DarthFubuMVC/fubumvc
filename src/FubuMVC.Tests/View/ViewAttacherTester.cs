@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.View
         [SetUp]
         public void Setup()
         {
-            var types = new TypePool();
+            var types = new TypePool(null);
             _observer = new RecordingConfigurationObserver();
             _action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             _fromFindsOne = new FakeViewToken();

@@ -1,40 +1,31 @@
 using System;
 using System.Collections.Generic;
-using FubuCore.Reflection;
+using System.Diagnostics;
+using System.Reflection;
+using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Security;
-using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
-using HtmlTags;
 
 namespace FubuMVC.Core
 {
-    // TODO:  blow up with a nice error if Route's have empty BehaviorChains
-
-
     public partial class FubuRegistry
     {
+        private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
         private readonly BehaviorMatcher _behaviorMatcher = new BehaviorMatcher();
 
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
-        private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
+        private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
-        private readonly TypePool _types = new TypePool();
-
-        private readonly IPartialViewTypeRegistry _partialViewTypes = new PartialViewTypeRegistry();
+        private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
-
-
-
 
         public FubuRegistry()
         {
@@ -45,11 +36,31 @@ namespace FubuMVC.Core
         }
 
 
-
         public FubuRegistry(Action<FubuRegistry> configure)
             : this()
         {
             configure(this);
+        }
+
+        public static Assembly FindTheCallingAssembly()
+        {
+            var trace = new StackTrace(false);
+
+            var thisAssembly = Assembly.GetExecutingAssembly();
+            var fubuCore = typeof (ITypeResolver).Assembly;
+
+            Assembly callingAssembly = null;
+            for (var i = 0; i < trace.FrameCount; i++)
+            {
+                var frame = trace.GetFrame(i);
+                var assembly = frame.GetMethod().DeclaringType.Assembly;
+                if (assembly != thisAssembly && assembly != fubuCore)
+                {
+                    callingAssembly = assembly;
+                    break;
+                }
+            }
+            return callingAssembly;
         }
 
         private void addConvention(Action<BehaviorGraph> action)
@@ -64,14 +75,38 @@ namespace FubuMVC.Core
             _explicits.Add(convention);
         }
 
+
+        private IEnumerable<Action<IServiceRegistry>> allServiceRegistrations()
+        {
+            foreach (var import in _imports)
+            {
+                foreach (var action in import.Registry.allServiceRegistrations())
+                {
+                    yield return action;
+                }
+            }
+
+            foreach (var action in _serviceRegistrations)
+            {
+                yield return action;
+            }
+        }
+
+
         public BehaviorGraph BuildGraph()
         {
             var graph = new BehaviorGraph(_observer);
+
+            // Service registrations from imports
+            allServiceRegistrations().Each(x => x(graph.Services));
+
             setupServices(graph);
 
             _conventions.Configure(graph);
 
+            // Importing behavior chains from imports
             _imports.Each(x => x.ImportInto(graph));
+
             _explicits.Configure(graph);
 
             _policies.Configure(graph);
@@ -79,11 +114,5 @@ namespace FubuMVC.Core
 
             return graph;
         }
-
-    }
-
-    public interface IFubuRegistryExtension
-    {
-        void Configure(FubuRegistry registry);
     }
 }

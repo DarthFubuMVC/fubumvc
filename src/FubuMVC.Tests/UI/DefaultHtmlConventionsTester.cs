@@ -6,10 +6,10 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Tags;
 using FubuMVC.StructureMap;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using HtmlTags;
 using NUnit.Framework;
 using StructureMap;
@@ -215,7 +215,11 @@ namespace FubuMVC.Tests.UI
         [SetUp]
         public void Setup()
         {
-            var registry = new FubuRegistry(x => x.HtmlConvention<DefaultHtmlConventions>());
+            var registry = new FubuRegistry(x =>
+            {
+                
+                x.HtmlConvention<DefaultHtmlConventions>();
+            });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
             var facility = new StructureMapContainerFacility(container);
 
