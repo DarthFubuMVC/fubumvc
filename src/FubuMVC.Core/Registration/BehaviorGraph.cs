@@ -203,12 +203,12 @@ namespace FubuMVC.Core.Registration
             });
         }
 
-        public Guid IdForType(Type inputType)
+        public BehaviorChain BehaviorFor(Type inputType)
         {
-            IEnumerable<BehaviorChain> chains = Behaviors.Where(x => x.ActionInputType() == inputType);
+            IEnumerable<BehaviorChain> chains = Behaviors.Where(x => x.InputType() == inputType);
             if (chains.Count() == 1)
             {
-                return chains.First().UniqueId;
+                return chains.First();
             }
 
             if (chains.Count() == 0)
@@ -219,6 +219,11 @@ namespace FubuMVC.Core.Registration
 
             throw new FubuException(2151, "Found more than one behavior chain for input type {0}",
                                     inputType.AssemblyQualifiedName);
+        }
+
+        public Guid IdForType(Type inputType)
+        {
+            return BehaviorFor(inputType).UniqueId;
         }
 
         public Guid IdForCall(ActionCall call)

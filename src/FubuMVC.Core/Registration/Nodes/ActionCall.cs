@@ -11,7 +11,7 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public class ActionCall : BehaviorNode
+    public class ActionCall : BehaviorNode, IMayHaveInputType
     {
         public ActionCall(Type handlerType, MethodInfo method)
         {
@@ -251,5 +251,6 @@ namespace FubuMVC.Core.Registration.Nodes
                ? RouteBuilder.Build(InputType(), pattern)
                : new RouteDefinition(pattern);
         }
+
     }
 }

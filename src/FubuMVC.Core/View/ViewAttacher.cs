@@ -23,6 +23,7 @@ namespace FubuMVC.Core.View
 
         public void Configure(BehaviorGraph graph)
         {
+            _types.ShouldScanAssemblies = true;
             var views = new List<IViewToken>();
 
             foreach (var facility in _facilities)
@@ -32,16 +33,22 @@ namespace FubuMVC.Core.View
 
             //= _facilities.SelectMany(x => x.FindViews(_types));
 
-
-
-
-
             var bag = new ViewBag(views);
 
             graph.Behaviors
                 .Select(x => x.FirstCall())
                 .Where(x => x != null)
                 .Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
+        }
+
+        public List<IViewFacility> Facilities
+        {
+            get { return _facilities; }
+        }
+
+        public TypePool Types
+        {
+            get { return _types; }
         }
 
         public void AddFacility(IViewFacility facility)

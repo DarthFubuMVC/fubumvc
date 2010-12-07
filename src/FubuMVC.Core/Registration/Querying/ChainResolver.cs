@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         private IEnumerable<BehaviorChain> findChainsByType(Type modelType)
         {
-            return _behaviorGraph.Behaviors.Where(x => x.ActionInputType() == modelType);
+            return _behaviorGraph.Behaviors.Where(x => x.InputType() == modelType);
         }
 
 

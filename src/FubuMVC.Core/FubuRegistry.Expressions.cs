@@ -25,7 +25,7 @@ namespace FubuMVC.Core
 
         public ViewExpression Views
         {
-            get { return new ViewExpression(_viewAttacher); }
+            get { return new ViewExpression(_viewAttacher, this); }
         }
 
         public PoliciesExpression Policies
