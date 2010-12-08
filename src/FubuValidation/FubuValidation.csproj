@@ -87,6 +87,7 @@
     <Compile Include="Registration\DSL\SourcesExpression.cs" />
     <Compile Include="Registration\IValidationQuery.cs" />
     <Compile Include="Registration\ValidationQuery.cs" />
+    <Compile Include="TemplateExtensions.cs" />
     <Compile Include="UniqueAttribute.cs" />
     <Compile Include="ValidationQueryExtensions.cs" />
     <Compile Include="RequiredAttribute.cs" />

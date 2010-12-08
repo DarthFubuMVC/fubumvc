@@ -42,8 +42,8 @@ namespace FubuValidation.Registration
             return null;
         }
 
-        public T GetStrategy<T>(Accessor accessor) 
-            where T : class, IFieldValidationStrategy
+        public T GetStrategy<T>(Accessor accessor)
+			where T : class, IFieldValidationStrategy
         {
             foreach (var source in _sources)
             {
@@ -54,7 +54,7 @@ namespace FubuValidation.Registration
 
                 foreach (var fieldRule in fieldRules)
                 {
-                    if (typeof(IFieldValidationStrategy) == _typeResolver.ResolveType(fieldRule.Strategy))
+					if (typeof(T) == _typeResolver.ResolveType(fieldRule.Strategy))
                     {
                         return fieldRule.Strategy.As<T>();
                     }
@@ -96,22 +96,10 @@ namespace FubuValidation.Registration
             return false;
         }
 
-        public bool HasStrategy<T>(Accessor accessor) where T : IFieldValidationStrategy
+        public bool HasStrategy<T>(Accessor accessor)
+			where T : class, IFieldValidationStrategy
         {
-            foreach (var source in _sources)
-            {
-                var targetRule = source
-                    .RulesFor(accessor.OwnerType)
-                    .FirstOrDefault(rule => typeof(FieldRule) == rule.GetType())
-                    .As<FieldRule>();
-
-                if (targetRule != null && typeof(IFieldValidationStrategy) == _typeResolver.ResolveType(targetRule.Strategy))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+        	return GetStrategy<T>(accessor) != null;
         }
     }
 }
