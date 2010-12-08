@@ -159,7 +159,7 @@ namespace FubuMVC.Core.Registration.DSL
             void IConfigurationAction.Configure(BehaviorGraph graph)
             {
                 graph.Behaviors
-                    .Where(x => x.ActionInputType().CanBeCastTo<T>())
+                    .Where(x => x.InputType().CanBeCastTo<T>())
                     .Where(x => _filter(x.FirstCall()))
                     .Where(x => x.Route != null).Each(x => _modification.Modify(x.Route));
             }

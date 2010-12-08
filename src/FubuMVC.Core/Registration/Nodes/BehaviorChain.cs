@@ -19,14 +19,38 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public UrlCategory UrlCategory { get; private set; }
 
-        public BehaviorNode Top { get { return Next; } private set { Next = value; } }
+        public BehaviorNode Top
+        {
+            get { return Next; }
+            private set { Next = value; }
+        }
 
-        public override BehaviorCategory Category { get { return BehaviorCategory.Chain; } }
+        public override BehaviorCategory Category
+        {
+            get { return BehaviorCategory.Chain; }
+        }
 
-        public IEnumerable<ActionCall> Calls { get { return this.OfType<ActionCall>(); } }
-        public IEnumerable<OutputNode> Outputs { get { return this.OfType<OutputNode>(); } }
+        public IEnumerable<ActionCall> Calls
+        {
+            get { return this.OfType<ActionCall>(); }
+        }
+
+        public IEnumerable<OutputNode> Outputs
+        {
+            get { return this.OfType<OutputNode>(); }
+        }
 
         public IRouteDefinition Route { get; set; }
+
+        public void PartialOnly()
+        {
+            Route = new NulloRouteDefinition();
+        }
+
+        public bool IsPartialOnly()
+        {
+            return Route is NulloRouteDefinition;
+        }
 
         public AuthorizationNode Authorization { get; private set; }
 
@@ -34,21 +58,18 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             get
             {
-                ActionCall call = FirstCall();
+                var call = FirstCall();
                 return call == null ? string.Empty : call.Description;
             }
         }
 
-        public string RoutePattern { get { return Route == null ? string.Empty : Route.Pattern; } }
-
-        public string InputTypeName
+        public string RoutePattern
         {
-            get
-            {
-                ActionCall call = FirstCall();
-                return call == null || call.InputType() == null ? string.Empty : call.InputType().Name;
-            }
+            get { return Route == null ? string.Empty : Route.Pattern; }
         }
+
+
+
 
         public void PrependToUrl(string prefix)
         {
@@ -66,7 +87,7 @@ namespace FubuMVC.Core.Registration.Nodes
                 return;
             }
 
-            BehaviorNode last = this.OfType<BehaviorNode>().LastOrDefault();
+            var last = this.OfType<BehaviorNode>().LastOrDefault();
             if (last != null)
             {
                 last.AddAfter(node);
@@ -82,7 +103,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public Type ActionOutputType()
         {
-            ActionCall call = Calls.FirstOrDefault();
+            var call = Calls.FirstOrDefault();
             return call == null ? null : call.OutputType();
         }
 
@@ -90,7 +111,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             // TODO -- throw if there is no Top.  Invalid state
 
-            ObjectDef def = Top.ToObjectDef();
+            var def = Top.ToObjectDef();
             def.Name = UniqueId.ToString();
             return def;
         }
@@ -142,22 +163,30 @@ namespace FubuMVC.Core.Registration.Nodes
             return Calls.Any(filter);
         }
 
-        public Type ActionInputType()
+        public Type InputType()
         {
-            ActionCall call = FirstCall();
-            return call == null ? null : call.InputType();
+            var inputTypeHolder =  this.OfType<IMayHaveInputType>().FirstOrDefault();
+            return inputTypeHolder == null ? null : inputTypeHolder.InputType();
         }
 
 
         public bool HasInput()
         {
-            ActionCall call = FirstCall();
-            return call == null ? false : call.HasInput;
+            return InputType() != null;
+        }
+
+        public string InputTypeName
+        {
+            get
+            {
+                var type = InputType();
+                return type == null ? string.Empty : type.Name;
+            }
         }
 
         public static BehaviorChain For<T>(Expression<Action<T>> expression)
         {
-            ActionCall call = ActionCall.For(expression);
+            var call = ActionCall.For(expression);
             var chain = new BehaviorChain();
             chain.AddToEnd(call);
 

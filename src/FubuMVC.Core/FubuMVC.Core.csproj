@@ -223,6 +223,7 @@
     <Compile Include="Registration\IServiceRegistry.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
     <Compile Include="Registration\Nodes\DeserializeJsonNode.cs" />
+    <Compile Include="Registration\Nodes\IMayHaveInputType.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />

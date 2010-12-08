@@ -28,7 +28,7 @@ namespace FubuMVC.Core.View.WebForms
 
         public BehaviorNode ToBehavioralNode()
         {
-            return new WebFormView(_viewType.ToVirtualPath());
+            return new WebFormView(_viewType);
         }
 
         public string Name

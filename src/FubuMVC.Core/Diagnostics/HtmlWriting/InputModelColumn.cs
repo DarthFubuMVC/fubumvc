@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
-            Type inputType = chain.ActionInputType();
+            Type inputType = chain.InputType();
             
             if (inputType == null)
             {
@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public string Text(BehaviorChain chain)
         {
-            Type inputType = chain.ActionInputType();
+            Type inputType = chain.InputType();
             return inputType == null ? " -" : "{0} ({1})".ToFormat(inputType.Name, inputType.FullName);
         }
     }

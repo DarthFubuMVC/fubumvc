@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using Spark.Web.FubuMVC.Registration;
 using Spark.Web.FubuMVC.ViewCreation;
@@ -32,6 +34,11 @@ namespace Spark.Web.FubuMVC.ViewLocation
                                 viewTokens.Add(new SparkViewToken(descriptors));
                             });
             return viewTokens;
+        }
+
+        public BehaviorNode CreateViewNode(Type type)
+        {
+            throw new NotSupportedException("This feature has not yet been implemented for Spark");
         }
     }
 }

@@ -36,11 +36,10 @@ namespace FubuMVC.Core.Registration.DSL
         {
             // TODO -- blow up if the web form T is strongly typed to something that 
             // does not match the output type of the output type
+            // Do it in validation rules
+            
 
-            // TODO -- make this strategy of resolving views swappable!
-            string viewName = typeof (TWebform).ToVirtualPath();
-
-            var node = new WebFormView(viewName);
+            var node = new WebFormView(typeof(TWebform));
 
             return returnChain(node);
         }

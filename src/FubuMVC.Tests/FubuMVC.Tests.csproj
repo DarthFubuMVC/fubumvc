@@ -107,9 +107,15 @@
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />
     <Compile Include="Registration\DSL\PoliciesExpressionTester.cs" />
+    <Compile Include="Registration\Expressions\ActionLessViewRegistrationTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Registration\integrated_type_resolver_registration.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />
     <Compile Include="Registration\Nodes\NodesTester.cs" />
+    <Compile Include="Registration\Nodes\WebFormViewTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Registration\Querying\ChainForwarderTester.cs" />
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
@@ -300,7 +306,9 @@
     <Compile Include="View\WebForms\RenderPartialExpressionTester.cs" />
     <Compile Include="View\WebForms\WebFormsEndpointPolicyTester.cs">
     </Compile>
-    <Compile Include="View\WebForms\WebFormViewFacilityTester.cs" />
+    <Compile Include="View\WebForms\WebFormViewFacilityTester.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="View\WebForms\WebFormViewTokenTester.cs" />
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>
