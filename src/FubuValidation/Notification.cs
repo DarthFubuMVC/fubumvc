@@ -21,6 +21,7 @@ namespace FubuValidation
         }
 
         public Notification(Type targetType)
+			: this()
         {
             TargetType = targetType;
         }
