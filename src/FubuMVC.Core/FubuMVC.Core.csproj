@@ -71,6 +71,7 @@
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehavior.cs" />
+    <Compile Include="Content\Classes.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
@@ -430,6 +431,7 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\Diagnostics\examples.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
