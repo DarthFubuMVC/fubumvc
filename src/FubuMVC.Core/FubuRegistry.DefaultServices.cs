@@ -64,6 +64,8 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();
 
+            graph.Services.SetServiceIfNone<IPartialInvoker, PartialInvoker>();
+
             
 
 
