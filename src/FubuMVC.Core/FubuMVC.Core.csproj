@@ -165,7 +165,7 @@
     <Compile Include="Packaging\PackageInfo.cs" />
     <Compile Include="Packaging\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProvider.cs" />
-    <Compile Include="Packaging\IPackageActivator.cs" />
+    <Compile Include="Packaging\IActivator.cs" />
     <Compile Include="Packaging\PackageIncludeManifest.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
@@ -175,7 +175,7 @@
     <Compile Include="Packaging\PackagingDiagnostics.cs" />
     <Compile Include="Packaging\PackagingDiagnosticsExtensions.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraph.cs" />
-    <Compile Include="Packaging\VirtualPathProviderPackageActivator.cs" />
+    <Compile Include="Packaging\VirtualPathProviderActivator.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />

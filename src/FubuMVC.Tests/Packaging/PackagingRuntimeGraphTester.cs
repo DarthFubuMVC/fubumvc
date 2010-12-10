@@ -57,15 +57,15 @@ namespace FubuMVC.Tests.Packaging
     [TestFixture]
     public class when_adding_an_activator : InteractionContext<PackagingRuntimeGraph>
     {
-        private StubPackageActivator activator1;
-        private StubPackageActivator activator2;
-        private StubPackageActivator activator3;
+        private StubActivator activator1;
+        private StubActivator activator2;
+        private StubActivator activator3;
 
         protected override void beforeEach()
         {
-            activator1 = new StubPackageActivator();
-            activator2 = new StubPackageActivator();
-            activator3 = new StubPackageActivator();
+            activator1 = new StubActivator();
+            activator2 = new StubActivator();
+            activator3 = new StubActivator();
 
             ClassUnderTest.PushProvenance("A");
             ClassUnderTest.AddActivator(activator1);
@@ -242,15 +242,15 @@ namespace FubuMVC.Tests.Packaging
     public class StubBootstrapper : IBootstrapper
     {
         private readonly string _name;
-        private readonly IPackageActivator[] _activators;
+        private readonly IActivator[] _activators;
 
-        public StubBootstrapper(string name, params IPackageActivator[] activators)
+        public StubBootstrapper(string name, params IActivator[] activators)
         {
             _name = name;
             _activators = activators;
         }
 
-        public IEnumerable<IPackageActivator> Bootstrap(IPackageLog log)
+        public IEnumerable<IActivator> Bootstrap(IPackageLog log)
         {
             return _activators;
         }
@@ -261,7 +261,7 @@ namespace FubuMVC.Tests.Packaging
         }
     }
 
-    public class StubPackageActivator : IPackageActivator
+    public class StubActivator : IActivator
     {
         private IEnumerable<IPackageInfo> _packages;
         private IPackageLog _log;

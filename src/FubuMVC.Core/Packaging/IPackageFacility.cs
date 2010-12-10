@@ -10,8 +10,8 @@ namespace FubuMVC.Core.Packaging
         void Bootstrapper(IBootstrapper bootstrapper);
         void Loader(IPackageLoader loader);
         void Facility(PackageFacility facility);
-        void Activator(IPackageActivator activator);
+        void Activator(IActivator activator);
 
-        void Bootstrap(Func<IPackageLog, IEnumerable<IPackageActivator>> lambda);
+        void Bootstrap(Func<IPackageLog, IEnumerable<IActivator>> lambda);
     }
 }

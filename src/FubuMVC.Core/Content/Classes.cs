@@ -28,11 +28,11 @@ namespace FubuMVC.Core.Content
 
     // Be easier if this were built into FubuBootstrapper
     // Also be nice if we had the IStartupAction business going
-    public class PackageFolderActivator : IPackageActivator
+    public class FolderActivator : IActivator
     {
         private readonly IPackagedImageUrlResolver _resolver;
 
-        public PackageFolderActivator(IPackagedImageUrlResolver resolver)
+        public FolderActivator(IPackagedImageUrlResolver resolver)
         {
             _resolver = resolver;
         }

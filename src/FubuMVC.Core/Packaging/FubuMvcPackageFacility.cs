@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Packaging
             // TODO -- should be a package loader for the production mode
             // TODO -- need an activator for scripts/images/styles, etc.
 
-            Activator(new VirtualPathProviderPackageActivator());
+            Activator(new VirtualPathProviderActivator());
         }
     }
 

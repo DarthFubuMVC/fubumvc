@@ -131,9 +131,9 @@ namespace FubuMVC.Tests.Packaging
     public class when_logging_a_bootstrapper_run
     {
         private PackagingDiagnostics diagnostics;
-        private StubPackageActivator activator1;
-        private StubPackageActivator activator2;
-        private StubPackageActivator activator3;
+        private StubActivator activator1;
+        private StubActivator activator2;
+        private StubActivator activator3;
         private StubBootstrapper bootstrapper;
 
         [SetUp]
@@ -141,9 +141,9 @@ namespace FubuMVC.Tests.Packaging
         {
             diagnostics = new PackagingDiagnostics();
 
-            activator1 = new StubPackageActivator();
-            activator2 = new StubPackageActivator();
-            activator3 = new StubPackageActivator();
+            activator1 = new StubActivator();
+            activator2 = new StubActivator();
+            activator3 = new StubActivator();
 
             bootstrapper = new StubBootstrapper("Boot1", activator1, activator2, activator3);
 
@@ -161,7 +161,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void log_for_the_bootstrapper_should_have_all_the_activators_as_children()
         {
-            diagnostics.LogFor(bootstrapper).FindChildren<IPackageActivator>()
+            diagnostics.LogFor(bootstrapper).FindChildren<IActivator>()
                 .ShouldHaveTheSameElementsAs(activator1, activator2, activator3);
         }
 

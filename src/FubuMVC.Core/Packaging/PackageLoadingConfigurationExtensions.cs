@@ -12,7 +12,7 @@
             configuration.Loader(new T());
         }
 
-        public static void Activator<T>(this IPackageFacility configuration) where T : IPackageActivator, new()
+        public static void Activator<T>(this IPackageFacility configuration) where T : IActivator, new()
         {
             configuration.Activator(new T());
         }

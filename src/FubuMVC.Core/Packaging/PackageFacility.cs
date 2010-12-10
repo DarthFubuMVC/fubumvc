@@ -42,12 +42,12 @@ namespace FubuMVC.Core.Packaging
             };
         }
 
-        public void Activator(IPackageActivator activator)
+        public void Activator(IActivator activator)
         {
             configure = g => g.AddActivator(activator);
         }
 
-        public void Bootstrap(Func<IPackageLog, IEnumerable<IPackageActivator>> lambda)
+        public void Bootstrap(Func<IPackageLog, IEnumerable<IActivator>> lambda)
         {
             Bootstrapper(new LambdaBootstrapper(lambda));
         }

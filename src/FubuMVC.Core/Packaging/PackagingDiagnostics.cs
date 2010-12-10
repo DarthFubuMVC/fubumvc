@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Packaging
             LogFor(loader).AddChild(package);
         }
 
-        public void LogBootstrapperRun(IBootstrapper bootstrapper, IEnumerable<IPackageActivator> activators)
+        public void LogBootstrapperRun(IBootstrapper bootstrapper, IEnumerable<IActivator> activators)
         {
             var provenance = "Loaded by Bootstrapper:  " + bootstrapper;
             var bootstrapperLog = LogFor(bootstrapper);

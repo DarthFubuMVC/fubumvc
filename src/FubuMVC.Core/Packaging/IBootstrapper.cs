@@ -4,6 +4,6 @@ namespace FubuMVC.Core.Packaging
 {
     public interface IBootstrapper
     {
-        IEnumerable<IPackageActivator> Bootstrap(IPackageLog log);
+        IEnumerable<IActivator> Bootstrap(IPackageLog log);
     }
 }

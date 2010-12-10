@@ -3,7 +3,7 @@ using System.Web.Hosting;
 
 namespace FubuMVC.Core.Packaging
 {
-    public class VirtualPathProviderPackageActivator : IPackageActivator
+    public class VirtualPathProviderActivator : IActivator
     {
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {

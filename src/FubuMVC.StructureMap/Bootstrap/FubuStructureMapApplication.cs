@@ -13,6 +13,7 @@ using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap
 {
+    [Obsolete("Can kill this turkey?")]
     public class FubuStructureMapApplication : HttpApplication
     {
         private string _controllerAssembly;
@@ -69,7 +70,7 @@ namespace FubuMVC.StructureMap.Bootstrap
                     var fubuRegistry = GetMyRegistry();
 
                     BootstrapStructureMap(routes, fubuRegistry, InitializeStructureMap);
-                    return ObjectFactory.GetAllInstances<IPackageActivator>();
+                    return ObjectFactory.GetAllInstances<IActivator>();
                 });
             });
         }
