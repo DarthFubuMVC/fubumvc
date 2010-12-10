@@ -155,6 +155,7 @@
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
     <Compile Include="Packaging\IAssemblyLoader.cs" />
     <Compile Include="Packaging\IBootstrapper.cs" />
+    <Compile Include="Packaging\LambdaActivator.cs" />
     <Compile Include="Packaging\LambdaBootstrapper.cs" />
     <Compile Include="Packaging\PackageFacility.cs" />
     <Compile Include="Packaging\IPackageInfo.cs" />
