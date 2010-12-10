@@ -86,6 +86,7 @@
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\Repository.cs" />
     <Compile Include="Querying\Interfaces.cs" />
+    <Compile Include="StructureMap\ContainerActivatorExtensions.cs" />
     <Compile Include="StructureMap\ITransactionProcessor.cs" />
     <Compile Include="StructureMap\StructureMapEntityFinderCache.cs" />
     <Compile Include="StructureMap\NHibernateStructureMapRegistryExtensions.cs" />
@@ -101,6 +102,10 @@
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
