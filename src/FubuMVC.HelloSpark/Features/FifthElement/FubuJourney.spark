@@ -1,0 +1,11 @@
+﻿<viewdata model="FubuMVC.HelloSpark.Features.FifthElement.FubuJourneyViewModel" />
+<var region="Model.Region" />
+
+<div>${Model.Message}</div>
+
+<test if="region == 'Black Hole Orbit'">
+    <FubuProceedToEventHorizon attempt="Model.Attempt" trajectory="Model.Trajectory" />
+</test>
+<else>
+    <div>Attempt ${Model.Attempt}: ...just drifting now...</div>
+</else>
