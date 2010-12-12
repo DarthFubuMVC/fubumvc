@@ -12,5 +12,12 @@ namespace FubuFastPack.StructureMap
                 .Ctor<string>().Is(description)
                 .Ctor<Action<T>>().Is(activation);
         }
+
+        public static void Activate(this Registry registry, string description, Action activation)
+        {
+            registry.For<IActivator>().Add<LambdaActivator>()
+                .Ctor<string>().Is(description)
+                .Ctor<Action>().Is(activation);
+        }
     }
 }
