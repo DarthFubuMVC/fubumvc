@@ -9,6 +9,7 @@ using StructureMap;
 
 namespace FubuMVC.StructureMap
 {
+    [Obsolete("Please use FubuApplication instead")]
     public static class ContainerExtensions
     {
         public static void InitializeFubuApplication(this IContainer container, FubuRegistry fubuRegistry, ICollection<RouteBase> routes)
@@ -18,6 +19,7 @@ namespace FubuMVC.StructureMap
         }
     }
 
+    [Obsolete("This class is going to be removed in the near future (at least before an official release).  Please use FubuApplication instead")]
     public class StructureMapBootstrapper : FubuBootstrapper
     {
         private readonly StructureMapContainerFacility _smFacility;

@@ -67,6 +67,7 @@
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Fixtures\HelloWorldFixture.cs" />
     <Compile Include="Fixtures\Package1Fixture.cs" />
     <Compile Include="Fixtures\PackagingFixture.cs" />
     <Compile Include="Fixtures\PackagingSetupFixture.cs" />

@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Packaging
             configure = g => g.AddLoader(loader);
         }
 
-        public void Facility(PackageFacility facility)
+        public void Facility(IPackageFacility facility)
         {
             configure = graph =>
             {

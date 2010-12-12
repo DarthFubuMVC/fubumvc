@@ -7,6 +7,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -16,7 +17,6 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap
 {
-    // TODO:  Container start up stuff?  Maybe just do it w/ behaviors
     public class StructureMapContainerFacility : IContainerFacility, IBehaviorFactory
     {
         private readonly IContainer _container;
@@ -74,6 +74,11 @@ namespace FubuMVC.StructureMap
             {
                 _registry.For(serviceType).Singleton();
             }
+        }
+
+        public IEnumerable<IActivator> GetAllActivators()
+        {
+            return _container.GetAllInstances<IActivator>();
         }
 
         public static IContainer GetBasicFubuContainer()

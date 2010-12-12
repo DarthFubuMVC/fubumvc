@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Web.Script.Serialization;
 using WatiN.Core;
@@ -26,11 +27,25 @@ namespace IntegrationTesting
             {
                 try
                 {
+                    _browser.Close();
                     _browser.Dispose();
                 }
                 catch (Exception)
                 {
                 }
+            }
+
+            try
+            {
+                var ieProcessList = Process.GetProcessesByName("iexplore");
+                foreach (var process in ieProcessList)
+                {
+                    process.Kill();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
             }
         }
 

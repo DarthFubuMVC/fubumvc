@@ -13,11 +13,27 @@ CLR_TOOLS_VERSION = "v4.0.30319"
 
 props = { :stage => "build", :stage35 => "build35", :artifacts => "artifacts" }
 
+desc "Displays a list of tasks"
+task :help do
+  taskHash = Hash[*(`rake.bat -T`.split(/\n/).collect { |l| l.match(/rake (\S+)\s+\#\s(.+)/).to_a }.collect { |l| [l[1], l[2]] }).flatten] 
+ 
+  indent = "                          "
+  
+  puts "rake #{indent}#Runs the 'default' task"
+  
+  taskHash.each_pair do |key, value|
+    if key.nil?  
+      next
+    end
+    puts "rake #{key}#{indent.slice(0, indent.length - key.length)}##{value}"
+  end
+end
+
 desc "Compiles, unit tests, generates the database"
 task :all => [:default]
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test, :compile35]
+task :default => [:compile, :unit_test, :compile35, :virtual_dir]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -94,6 +110,18 @@ desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
   runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'HtmlTags.Testing', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing']
+end
+
+
+desc "Runs the StoryTeller suite of end to end tests.  IIS must be running first"
+task :storyteller => [:compile] do
+  sh "lib/storyteller/StoryTellerRunner Storyteller.xml output/st-results.htm"
+end
+
+desc "Set up the virtual directories for the HelloWorld applications"
+task :virtual_dir => [:compile] do
+  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe createvdir src/FubuMVC.HelloWorld helloworld"
+  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe createvdir src/FubuMVC.HelloSpark hellospark"
 end
 
 desc "Target used for the CI server"

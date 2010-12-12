@@ -5,5 +5,7 @@
     <alias name="pak1" folder="src/TestPackage1" />
     <alias name="fubu-testing" folder="C:\git\fubumvc\src\FubuTestApplication" />
     <alias name="pak2" folder="src/TestPackage2" />
+    <alias name="helloworld" folder="C:\git\fubumvc\src\FubuMVC.HelloWorld" />
+    <alias name="hellospark" folder="C:\git\fubumvc\src\FubuMVC.HelloSpark" />
   </Aliases>
 </aliases>

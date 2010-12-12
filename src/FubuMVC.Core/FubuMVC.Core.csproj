@@ -133,6 +133,7 @@
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
     <Compile Include="EndpointService.cs" />
+    <Compile Include="FubuApplication.cs" />
     <Compile Include="FubuMvcPackages.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
@@ -207,7 +208,7 @@
     <Compile Include="Behaviors\RenderJsonBehavior.cs" />
     <Compile Include="Behaviors\RenderTextBehavior.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
-    <Compile Include="Bootstrapping\BootstrappingClasses.cs" />
+    <Compile Include="Bootstrapping\IContainerFacility.cs" />
     <Compile Include="FubuBootstrapper.cs" />
     <Compile Include="FubuRegistry.Expressions.cs" />
     <Compile Include="Registration\BehaviorVisitor.cs" />
