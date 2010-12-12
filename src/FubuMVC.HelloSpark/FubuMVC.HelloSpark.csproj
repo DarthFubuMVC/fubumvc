@@ -58,8 +58,10 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.2.js" />
+    <Content Include="Views\Bindings.xml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -69,7 +71,9 @@
     <Compile Include="Controllers\EarthController.cs" />
     <Compile Include="Controllers\WaterController.cs" />
     <Compile Include="Controllers\FireController.cs" />
-    <Compile Include="Features\FifthElement\FifthElementViewModel.cs" />
+    <Compile Include="Features\FifthElement\FubuEventHorizonInputModel.cs" />
+    <Compile Include="Features\FifthElement\FubuJourneyInputModel.cs" />
+    <Compile Include="Features\FifthElement\FubuJourneyViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -88,10 +92,6 @@
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.UI\FubuMVC.UI.csproj">
-      <Project>{64DFEA5F-18DE-4E7C-AF9C-3BEF1E42D2C2}</Project>
-      <Name>FubuMVC.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>
@@ -103,6 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Features\FifthElement\AnotherDimension.spark" />
+    <None Include="Features\FifthElement\FubuProceedToEventHorizon.spark" />
+    <None Include="Features\FifthElement\FubuJourney.spark" />
+    <None Include="Features\FifthElement\_SparkJourney.spark" />
+    <None Include="Features\FifthElement\_SparkProceedToEventHorizon.spark" />
     <None Include="Views\Air\_Breathe.spark" />
     <None Include="Views\Air\TakeABreath.spark" />
     <None Include="Views\Earth\Rock.spark" />

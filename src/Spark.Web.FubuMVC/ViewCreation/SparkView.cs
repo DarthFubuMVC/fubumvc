@@ -72,17 +72,46 @@ namespace Spark.Web.FubuMVC.ViewCreation
         public void Render(ViewContext viewContext, TextWriter writer)
         {
             ViewContext = viewContext;
-
             var outerView = ViewContext.View as SparkView;
             var isNestedView = outerView != null && ReferenceEquals(this, outerView) == false;
+
             if (isNestedView && outerView.Output != null)
                 writer = outerView.Output;
 
+            var priorContent = Content;
+            var priorOnce = OnceTable;
+            TextWriter priorContentView = null;
+
+            if (isNestedView)
+            {
+                // set aside the "view" content, to avoid modification
+                if (outerView.Content.TryGetValue("view", out priorContentView))
+                    outerView.Content.Remove("view");
+
+                // assume the values of the outer view collections
+                Content = outerView.Content;
+                OnceTable = outerView.OnceTable;
+            }
+
             RenderView(writer);
 
-            if (!isNestedView)
+            if (isNestedView)
+            {
+                Content = priorContent;
+                OnceTable = priorOnce;
+
+                // restore previous state of "view" content
+                if (priorContentView != null)
+                    outerView.Content["view"] = priorContentView;
+                else if (outerView.Content.ContainsKey("view"))
+                    outerView.Content.Remove("view");
+            }
+            else
+            {
                 // proactively dispose named content. pools spoolwriter pages. avoids finalizers.
                 foreach (var content in Content.Values) content.Close();
+            }
+
             Content.Clear();
         }
     }

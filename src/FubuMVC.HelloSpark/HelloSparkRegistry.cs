@@ -16,6 +16,7 @@ namespace FubuMVC.HelloSpark
         public HelloSparkRegistry(SparkViewFactory factory)
             : base(factory)
         {
+            Applies.ToThisAssembly();
             IncludeDiagnostics(true);
 
             AddViewFolder("/Features/");
