@@ -1,0 +1,4 @@
+﻿<bindings>
+  <element name="FubuJourney">#this.Partial(new FubuJourneyInputModel {WhereTo="@region", Attempt=@attempt, Trajectory="@trajectory"} );</element>
+  <element name="FubuProceedToEventHorizon">#this.Partial(new FubuEventHorizonInputModel {Attempt=@attempt, Trajectory=@trajectory} );</element>  
+</bindings>
