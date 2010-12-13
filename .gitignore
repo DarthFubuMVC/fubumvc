@@ -16,6 +16,7 @@ _ReSharper.*
 *.cache
 ~$*
 *.stresult
+.fubu-alias
 
 
 src/FubuMVC.5.1.ReSharper
