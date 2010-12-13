@@ -22,9 +22,6 @@ namespace FubuMVC.StructureMap
         private readonly IContainer _container;
         private readonly Registry _registry;
 
-        public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder =
-            (container, args, behaviorId) => new NestedStructureMapContainerBehavior(container, args, behaviorId);
-
 
         private bool _initializeSingletonsToWorkAroundSMBug = true;
 
@@ -39,9 +36,9 @@ namespace FubuMVC.StructureMap
             get { return _container; }
         }
 
-        public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
+        public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
-            return Builder(_container, arguments, behaviorId);
+            return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
         }
 
         public IBehaviorFactory BuildFactory()

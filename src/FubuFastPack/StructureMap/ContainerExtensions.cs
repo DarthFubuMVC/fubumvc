@@ -1,10 +1,11 @@
 using System;
 using FubuMVC.Core.Packaging;
+using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace FubuFastPack.StructureMap
 {
-    public static class ContainerActivatorExtensions
+    public static class ContainerExtensions
     {
         public static void Activate<T>(this Registry registry, string description, Action<T> activation)
         {
@@ -18,6 +19,11 @@ namespace FubuFastPack.StructureMap
             registry.For<IActivator>().Add<LambdaActivator>()
                 .Ctor<string>().Is(description)
                 .Ctor<Action>().Is(activation);
+        }
+
+        public static void ExecuteInTransaction<T>(this IContainer container, Action<T> action)
+        {
+            container.GetInstance<TransactionProcessor>().Execute(action);
         }
     }
 }

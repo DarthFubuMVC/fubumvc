@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.Hosting;
 using FubuCore;
 
@@ -15,6 +16,7 @@ namespace FubuMVC.Core.Packaging
         public FubuMvcPackageFacility()
         {
             var applicationPath = PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;
+
             Loader(new PackageManifestReader(applicationPath, new FileSystem()));
             
             // TODO -- should be a package loader for the production mode

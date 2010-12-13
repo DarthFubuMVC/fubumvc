@@ -22,22 +22,11 @@ namespace FubuMVC.StructureMap
     [Obsolete("This class is going to be removed in the near future (at least before an official release).  Please use FubuApplication instead")]
     public class StructureMapBootstrapper : FubuBootstrapper
     {
-        private readonly StructureMapContainerFacility _smFacility;
-
         public StructureMapBootstrapper(IContainer container, FubuRegistry topRegistry)
-            : this(new StructureMapContainerFacility(container), topRegistry)
+            : base(new StructureMapContainerFacility(container), topRegistry)
         {
         }
 
-        public StructureMapBootstrapper(StructureMapContainerFacility facility, FubuRegistry registry)
-            : base(facility, registry)
-        {
-            _smFacility = facility;
-        }
-
-        public Func<IContainer, ServiceArguments, Guid, IActionBehavior> Builder { get { return _smFacility.Builder; } set { _smFacility.Builder = value; } }
-    
-    
         public static IContainer BuildContainer(FubuRegistry registry)
         {
             var container = new Container();
