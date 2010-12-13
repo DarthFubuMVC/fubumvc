@@ -71,12 +71,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\images\aaa\ico-close.gif" />
+    <Content Include="content\images\icon-add-alt.png" />
+    <Content Include="content\images\icon-add.png" />
     <Content Include="TestPage.htm" />
     <Content Include="View.aspx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="content\images\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
@@ -262,6 +263,31 @@ namespace FubuMVC.Core.UI
         public static HtmlTag Span(this IFubuPage page, string text)
         {
             return new HtmlTag("span").Text(text);
+        }
+
+
+
+        /// <summary>
+        ///   Renders an HTML img tag to display the specified file from the application's image folder
+        /// </summary>
+        /// <param name = "viewPage"></param>
+        /// <param name = "imageFilename">The name of the image file, relative to the applications' image folder</param>
+        /// <returns></returns>
+        public static ImageTag Image(this IFubuPage viewPage, string imageFilename)
+        {
+            var imageUrl = viewPage.ImageUrl(imageFilename);
+            return new ImageTag(imageUrl);
+        }
+
+        /// <summary>
+        ///   Returns the absolute URL for an image (may be a customer overridden path or a package image path)
+        /// </summary>
+        /// <param name = "viewPage"></param>
+        /// <param name = "imageFilename">The name of the image file, relative to the applications' image folder</param>
+        /// <returns></returns>
+        public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
+        {
+            return viewPage.Get<IContentRegistry>().ImageUrl(imageFilename);
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Hosting;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -33,6 +35,12 @@ namespace FubuMVC.Core.Packaging
         {
             var imageHandler = new ImageRouteHandler(_imageUrlResolver);
             imageHandler.RegisterRoute(routes);
+        }
+
+
+        public void RegisterServices(IServiceRegistry services)
+        {
+            services.AddService<IImageUrlResolver>(_imageUrlResolver);
         }
     }
 }

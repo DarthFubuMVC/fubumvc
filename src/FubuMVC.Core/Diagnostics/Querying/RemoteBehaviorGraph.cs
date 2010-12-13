@@ -1,6 +1,9 @@
+using System;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using HtmlTags;
+using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics.Querying
 {
@@ -23,5 +26,17 @@ namespace FubuMVC.Core.Diagnostics.Querying
 
             return JsonUtil.Get<EndpointModel>(json);
         }
+
+        public string GetImageUrl(string name)
+        {
+            var client = new WebClient();
+            var url = _applicationUrl + "/_fubu/imageurl/" + name.UrlEncode();
+
+            Debug.WriteLine("Querying " + url);
+
+            return client.DownloadString(url);
+        }
+
+
     }
 }

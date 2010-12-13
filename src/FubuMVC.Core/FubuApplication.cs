@@ -58,18 +58,20 @@ namespace FubuMVC.Core
 
             var fubuFacility = new FubuMvcPackageFacility();
 
+            _registry.Services(fubuFacility.RegisterServices);
+
             // TODO -- would be nice if this little monster also logged 
             PackageRegistry.LoadPackages(x =>
             {
                 x.Facility(fubuFacility);
                 _packagingDirectives.Each(d => d(x));
-                x.Bootstrap(log => StartApplication(routes));
+                x.Bootstrap(log => startApplication(routes));
             });
 
             fubuFacility.AddRoutes(routes);
         }
 
-        private IEnumerable<IActivator> StartApplication(ICollection<RouteBase> routes)
+        private IEnumerable<IActivator> startApplication(ICollection<RouteBase> routes)
         {
             FindAllExtensions().Each(x => x.Configure(_registry));
 

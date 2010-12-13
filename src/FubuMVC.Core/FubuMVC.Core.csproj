@@ -295,6 +295,7 @@
     <Compile Include="UI\FubuPageExtensions.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />
+    <Compile Include="UI\ImageTag.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />
     <Compile Include="UI\Navigation\AuthorizedContextualMenu.cs" />
     <Compile Include="UI\Navigation\IContextualAction.cs" />
