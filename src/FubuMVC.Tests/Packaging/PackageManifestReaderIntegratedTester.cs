@@ -46,7 +46,9 @@ namespace FubuMVC.Tests.Packaging
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.LoadAssembliesFromPackage(package);
 
-            assemblyLoader.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
+            var loadedAssemblies = assemblyLoader.Assemblies.ToArray();
+            loadedAssemblies.ShouldHaveCount(1);
+            loadedAssemblies[0].GetName().Name.ShouldEqual("TestPackage1");
         }
 
         [Test]
