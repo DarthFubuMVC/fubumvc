@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Web.Hosting;
+﻿using System.Web.Hosting;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
@@ -10,21 +7,23 @@ namespace FubuMVC.Core.Packaging
     {
         // This is here to redirect the application path in
         // testing scenarios
-        public static string PhysicalRootPath { get; set; }
 
 
         public FubuMvcPackageFacility()
         {
             var applicationPath = PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;
 
-            Loader(new PackageManifestReader(applicationPath, new FileSystem()));
-            
+            if (applicationPath.IsNotEmpty())
+            {
+                Loader(new PackageManifestReader(applicationPath, new FileSystem()));
+            }
+
             // TODO -- should be a package loader for the production mode
             // TODO -- need an activator for scripts/images/styles, etc.
 
             Activator(new VirtualPathProviderActivator());
         }
+
+        public static string PhysicalRootPath { get; set; }
     }
-
-
 }

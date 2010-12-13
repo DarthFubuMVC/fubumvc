@@ -123,6 +123,18 @@ namespace FubuMVC.Core.Registration
             return allActions().ToList();
         }
 
+        public IEnumerable<ActionCall> FirstActions()
+        {
+            foreach (BehaviorChain chain in _behaviors)
+            {
+                var call = chain.FirstCall();
+                if (call != null)
+                {
+                    yield return call;
+                }
+            }
+        }
+
         private IEnumerable<ActionCall> allActions()
         {
             foreach (BehaviorChain chain in _behaviors)
