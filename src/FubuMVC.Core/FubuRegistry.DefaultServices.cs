@@ -3,6 +3,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -66,7 +67,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IPartialInvoker, PartialInvoker>();
 
-            
+            graph.Services.SetServiceIfNone<IContentRegistry, ContentRegistryCache>();
 
 
 

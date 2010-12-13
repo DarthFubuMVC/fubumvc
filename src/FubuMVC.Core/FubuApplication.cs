@@ -20,7 +20,6 @@ namespace FubuMVC.Core
         private FubuApplication(FubuRegistry registry)
         {
             _registry = registry;
-            _packagingDirectives.Add(x => x.Facility<FubuMvcPackageFacility>());
         }
 
 
@@ -57,13 +56,17 @@ namespace FubuMVC.Core
                 UrlContext.Live();
             }
 
+            var fubuFacility = new FubuMvcPackageFacility();
 
             // TODO -- would be nice if this little monster also logged 
             PackageRegistry.LoadPackages(x =>
             {
+                x.Facility(fubuFacility);
                 _packagingDirectives.Each(d => d(x));
                 x.Bootstrap(log => StartApplication(routes));
             });
+
+            fubuFacility.AddRoutes(routes);
         }
 
         private IEnumerable<IActivator> StartApplication(ICollection<RouteBase> routes)
@@ -73,7 +76,7 @@ namespace FubuMVC.Core
             var facility = _facilitySource();
             
             facility.Activate(routes, _registry);
-            
+
             return facility.GetAllActivators();
         }
 

@@ -90,6 +90,9 @@
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Commands\AliasLibraryTester.cs" />
+    <Compile Include="Content\ContentRegistryCacheTester.cs" />
+    <Compile Include="Content\FolderActivatorTester.cs" />
+    <Compile Include="Content\PackagedImageUrlResolverTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />

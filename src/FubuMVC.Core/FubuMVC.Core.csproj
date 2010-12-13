@@ -71,7 +71,13 @@
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehavior.cs" />
-    <Compile Include="Content\Classes.cs" />
+    <Compile Include="Content\ContentRegistryCache.cs" />
+    <Compile Include="Content\IContentRegistry.cs" />
+    <Compile Include="Content\IImageUrlResolver.cs" />
+    <Compile Include="Content\ImageRouteHandler.cs" />
+    <Compile Include="Content\IPackagedImageUrlResolver.cs" />
+    <Compile Include="Content\PackagedImageUrlResolver.cs" />
+    <Compile Include="Content\PackageFolderActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />

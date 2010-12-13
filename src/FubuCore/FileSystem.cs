@@ -14,6 +14,7 @@ namespace FubuCore
         T LoadFromFile<T>(params string[] filename) where T : new();
         void OpenInNotepad(params string[] parts);
         void CreateDirectory(string directory);
+        string Combine(params string[] paths);
     }
 
     public class FileSystem : IFileSystem
@@ -75,6 +76,11 @@ namespace FubuCore
 
         //    return Directory.GetFiles(folderPath, "*." + extensionWithoutPeriod);
         //}
+
+        string IFileSystem.Combine(params string[] paths)
+        {
+            return Combine(paths);
+        }
 
         public static string Combine(params string[] paths)
         {

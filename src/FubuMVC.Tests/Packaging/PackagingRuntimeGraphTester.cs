@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
+using FubuCore.Util;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using System.Linq;
@@ -215,6 +216,7 @@ namespace FubuMVC.Tests.Packaging
     public class StubPackage : IPackageInfo
     {
         private readonly string _name;
+        private readonly Cache<string, string> _folderNames = new Cache<string,string>();
 
         public StubPackage(string name)
         {
@@ -231,9 +233,14 @@ namespace FubuMVC.Tests.Packaging
             LoadingAssemblies(loader);
         }
 
+        public void RegisterFolder(string folderAlias, string folderName)
+        {
+            _folderNames[folderAlias] = folderName;
+        }
+
         public void ForFolder(string folderName, Action<string> onFound)
         {
-            // do nothing for now
+            _folderNames.WithValue(folderName, onFound);
         }
 
         public Action<IAssemblyRegistration> LoadingAssemblies { get; set; }
