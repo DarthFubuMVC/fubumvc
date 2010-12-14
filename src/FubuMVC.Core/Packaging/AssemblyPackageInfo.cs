@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -23,6 +25,11 @@ namespace FubuMVC.Core.Packaging
         }
 
         public void ForFolder(string folderName, Action<string> onFound)
+        {
+            // do nothing
+        }
+
+        public void ForData(string searchPattern, Action<string, Stream> dataCallback)
         {
             // do nothing
         }

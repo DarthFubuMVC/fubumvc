@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.IO;
 using FubuCore.Util;
 
 namespace FubuMVC.Core.Packaging
 {
     public class PackageInfo : IPackageInfo
     {
+        public static readonly string DataFolder = "Data";
+
         private readonly IList<AssemblyTarget> _assemblies = new List<AssemblyTarget>();
         private readonly Cache<string, string> _directories = new Cache<string,string>();
 
@@ -54,6 +56,18 @@ namespace FubuMVC.Core.Packaging
         public void ForFolder(string folderName, Action<string> onFound)
         {
             _directories.WithValue(folderName, onFound);
+        }
+
+        public void ForData(string searchPattern, Action<string, Stream> dataCallback)
+        {
+            Directory.GetFiles(_directories[DataFolder], searchPattern, SearchOption.AllDirectories).Each(fileName =>
+            {
+                var name = Path.GetFileName(fileName);
+                using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                {
+                    dataCallback(name, stream);
+                }
+            });
         }
 
         //public IEnumerable<Assembly> Assemblies { get; set; }

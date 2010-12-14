@@ -34,11 +34,15 @@ namespace FubuMVC.Tests.Packaging
             
         }
 
+
+
         [TearDown]
         public void TearDown()
         {
             new FileSystem().DeleteFile("../../".ToFullPath(), PackageIncludeManifest.FILE);
         }
+
+
 
         [Test]
         public void load_a_package_info_from_a_manifest_file_when_given_the_folder()

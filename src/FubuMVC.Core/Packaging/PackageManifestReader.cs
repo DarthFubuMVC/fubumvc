@@ -39,6 +39,7 @@ namespace FubuMVC.Core.Packaging
             };
 
             package.RegisterFolder(FubuMvcPackages.WebContentFolder, folder);
+            package.RegisterFolder(PackageInfo.DataFolder, Path.Combine(folder, PackageInfo.DataFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
 
