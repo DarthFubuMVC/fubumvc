@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap
@@ -57,6 +58,7 @@ namespace FubuMVC.StructureMap.Bootstrap
             Bootstrap(routeCollection);
         }
 
+        [SkipOverForProvenance]
         public void Bootstrap(ICollection<RouteBase> routes)
         {
             FubuApplication.For(GetMyRegistry())

@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public bool Matches(ActionCall call, IConfigurationObserver log)
         {
-            return call.HandlerType == typeof (BehaviorGraphWriter);
+            return call.HasAttribute<FubuDiagnosticsAttribute>();
         }
 
         public IRouteDefinition Build(ActionCall call)

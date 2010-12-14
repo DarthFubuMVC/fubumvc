@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using FubuMVC.Core.Packaging;
+using FubuCore;
 
 namespace FubuMVC.Core.Content
 {
@@ -22,6 +24,13 @@ namespace FubuMVC.Core.Content
                 log.Trace("Added folder '{0}' to the PackagedImageUrl list", imagesFolder);
                 _resolver.RegisterDirectory(imagesFolder);
             }));
+        }
+
+        public override string ToString()
+        {
+            return
+                "Scan and activate image, CSS, and JavaScript content in package web content folders ({0})".ToFormat(
+                    GetType().Name);
         }
     }
 }

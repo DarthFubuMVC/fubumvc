@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
+using System.Linq;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -13,6 +14,11 @@ namespace FubuMVC.Core.Packaging
             Description = o.ToString()
         });
     
+        public void EachLog(Action<object, PackageRegistryLog> action)
+        {
+            _logs.Each(action);
+        }
+
         public void LogObject(object target, string provenance)
         {
             _logs[target].Provenance = provenance;
@@ -82,6 +88,23 @@ namespace FubuMVC.Core.Packaging
             var log = LogFor(package);
             log.MarkFailure(exception);
             log.Trace("Failed to load assembly at '{0}'".ToFormat(fileName));
+        }
+
+        public bool HasErrors()
+        {
+            return _logs.GetAll().Any(x => !x.Success);
+        }
+
+        public static string GetTypeName(object target)
+        {
+            if (target is IBootstrapper) return typeof(IBootstrapper).Name;
+            if (target is IActivator) return typeof(IActivator).Name;
+            if (target is IPackageLoader) return typeof(IPackageLoader).Name;
+            if (target is IPackageFacility) return typeof(IPackageFacility).Name;
+            if (target is IPackageInfo) return typeof(IPackageInfo).Name;
+            if (target is Assembly) return typeof(Assembly).Name;
+
+            return target.GetType().Name;
         }
 
     }

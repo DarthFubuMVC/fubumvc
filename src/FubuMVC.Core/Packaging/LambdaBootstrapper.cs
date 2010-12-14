@@ -12,9 +12,16 @@ namespace FubuMVC.Core.Packaging
             _bootstrapper = bootstrapper;
         }
 
+        public string Provenance { get; set; }
+
         public IEnumerable<IActivator> Bootstrap(IPackageLog log)
         {
             return _bootstrapper(log);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Lambda expression at: {0}", Provenance);
         }
     }
 }

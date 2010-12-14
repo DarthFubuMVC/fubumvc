@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -28,7 +29,7 @@ namespace FubuMVC.Core.Packaging
 
         private string currentProvenance
         {
-            get { return _provenanceStack.Reverse().Join("/"); }
+            get { return _provenanceStack.Peek(); }
         }
 
 
@@ -103,6 +104,16 @@ namespace FubuMVC.Core.Packaging
         {
             _activators.Add(activator);
             _diagnostics.LogObject(activator, currentProvenance);
+        }
+
+        public void AddFacility(IPackageFacility facility)
+        {
+            _diagnostics.LogObject(facility, currentProvenance);
+
+            PushProvenance(facility.ToString());
+            
+            facility.As<IPackagingRuntimeGraphConfigurer>().Configure(this);
+            PopProvenance();
         }
     }
 }

@@ -49,6 +49,7 @@ namespace FubuMVC.Core
             return For(new T());
         }
         
+        [SkipOverForProvenance]
         public void Bootstrap(ICollection<RouteBase> routes)
         {
             if (HttpContext.Current != null)

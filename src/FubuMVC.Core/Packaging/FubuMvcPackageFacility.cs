@@ -42,5 +42,10 @@ namespace FubuMVC.Core.Packaging
         {
             services.AddService<IImageUrlResolver>(_imageUrlResolver);
         }
+
+        public override string ToString()
+        {
+            return "FubuMVC Packaging Facility";
+        }
     }
 }

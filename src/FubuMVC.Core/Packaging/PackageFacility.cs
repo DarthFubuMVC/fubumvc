@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 using FubuCore;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -36,9 +39,9 @@ namespace FubuMVC.Core.Packaging
         {
             configure = graph =>
             {
-                graph.PushProvenance(facility.ToString());
-                facility.As<IPackagingRuntimeGraphConfigurer>().Configure(graph);
-                graph.PopProvenance();
+                graph.AddFacility(facility);
+                
+
             };
         }
 
@@ -49,7 +52,28 @@ namespace FubuMVC.Core.Packaging
 
         public void Bootstrap(Func<IPackageLog, IEnumerable<IActivator>> lambda)
         {
-            Bootstrapper(new LambdaBootstrapper(lambda));
+            var lambdaBootstrapper = new LambdaBootstrapper(lambda);
+            lambdaBootstrapper.Provenance = findCallToBootstrapper();
+
+            Bootstrapper(lambdaBootstrapper);
+        }
+
+        private static string findCallToBootstrapper()
+        {
+            var packageAssembly = typeof(IPackageInfo).Assembly;
+            var trace = new StackTrace(Thread.CurrentThread, false);
+            for (var i = 0; i < trace.FrameCount; i++)
+            {
+                var frame = trace.GetFrame(i);
+                var assembly = frame.GetMethod().DeclaringType.Assembly;
+                if (assembly != packageAssembly && !frame.GetMethod().HasAttribute<SkipOverForProvenanceAttribute>())
+                {
+                    return frame.ToDescription();
+                }
+            }
+
+
+            return "Unknown";
         }
 
         void IPackagingRuntimeGraphConfigurer.Configure(PackagingRuntimeGraph graph)

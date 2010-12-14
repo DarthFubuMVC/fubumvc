@@ -1,5 +1,6 @@
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.UI.Diagnostics;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -7,9 +8,9 @@ namespace FubuMVC.Core.Diagnostics
     {
         public DiagnosticsRegistry()
         {
-            Actions.IncludeType<BehaviorGraphWriter>();
-            Actions.IncludeType<GraphQuery>();
-            Actions.IncludeType<ExampleHtmlWriter>();
+            Applies.ToAssemblyContainingType<DiagnosticsRegistry>();
+
+            Actions.IncludeMethods(x => x.HasAttribute<FubuDiagnosticsAttribute>());
             Routes.UrlPolicy<DiagnosticUrlPolicy>();
         }
     }

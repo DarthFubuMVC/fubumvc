@@ -84,7 +84,7 @@
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="Diagnostics\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\DiagnosticHtml.cs" />
-    <Compile Include="Diagnostics\DiagnosticsActionAttribute.cs" />
+    <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationRulesColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ChainColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ConstraintColumn.cs" />
@@ -116,6 +116,7 @@
     <Compile Include="Diagnostics\ModelBindingReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\OutputColumn.cs" />
     <Compile Include="Diagnostics\OutputReport.cs" />
+    <Compile Include="Diagnostics\PackageLoadingWriter.cs" />
     <Compile Include="Diagnostics\Querying\ActionToken.cs" />
     <Compile Include="Diagnostics\Querying\AssemblyToken.cs" />
     <Compile Include="Diagnostics\Querying\EndpointModel.cs" />

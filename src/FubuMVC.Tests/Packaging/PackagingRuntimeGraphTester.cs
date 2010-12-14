@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void should_register_the_second_bootstrapper_with_nested_provenance()
         {
-            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(bootstrapper2, "A/B"));
+            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(bootstrapper2, "B"));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void should_register_the_second_activator_with_nested_provenance()
         {
-            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(activator2, "A/B"));
+            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(activator2, "B"));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void should_register_the_second_loader_with_nested_provenance()
         {
-            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(loader2, "A/B"));
+            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(loader2, "B"));
         }
 
         [Test] 

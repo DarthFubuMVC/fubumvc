@@ -23,6 +23,9 @@ namespace FubuMVC.Tests.Diagnostics
         {
             graph = new DiagnosticsRegistry().BuildGraph();
             urls = MockRepository.GenerateMock<IUrlRegistry>();
+
+            graph.Behaviors.Any().ShouldBeTrue();
+            graph.Actions().Each(x => Debug.WriteLine(x.Description));
         }
 
         private BehaviorGraph graph;
@@ -122,23 +125,4 @@ namespace FubuMVC.Tests.Diagnostics
         }
     }
 
-    [TestFixture]
-    public class the_index_action_on_the_behavior_graph_writer : InteractionContext<BehaviorGraphWriter>
-    {
-        private HtmlDocument _output;
-
-        protected override void beforeEach()
-        {
-            UrlContext.Reset();
-            _output = ClassUnderTest.Index();
-        }
-
-        [Test]
-        public void should_include_links_for_the_public_instance_methods_with_description_attributes()
-        {
-            HtmlTag child = _output.Current.Children[0];
-            child.ToString().IndexOf("Routes").ShouldNotEqual(-1);
-            child.ToString().IndexOf("Actions").ShouldNotEqual(-1);
-        }
-    }
 }
