@@ -99,6 +99,7 @@
     <Compile Include="Packaging\AssemblyPackageInfoTester.cs" />
     <Compile Include="Packaging\LambdaActivatorTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
+    <Compile Include="Packaging\PackageRegistryTester.cs" />
     <Compile Include="Packaging\PackagingDiagnosticsTester.cs" />
     <Compile Include="Packaging\PackagingRegistryLogTester.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraphTester.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -74,6 +75,35 @@ namespace FubuMVC.Core.Packaging
 
 
             return "Unknown";
+        }
+
+        public static void AssertNoFailures(Action failure)
+        {
+            if (Diagnostics.HasErrors())
+            {
+                failure();
+            }
+        }
+
+        public static void AssertNoFailures()
+        {
+            AssertNoFailures(() =>
+            {
+                var writer = new StringWriter();
+                writer.WriteLine("Package loading and aplication bootstrapping failed");
+                writer.WriteLine();
+                Diagnostics.EachLog((o, log) =>
+                {
+                    if (!log.Success)
+                    {
+                        writer.WriteLine(o.ToString());
+                        writer.WriteLine(log.FullTraceText());
+                        writer.WriteLine("------------------------------------------------------------------------------------------------");
+                    }
+                });
+
+                throw new ApplicationException(writer.GetStringBuilder().ToString());
+            });
         }
     }
 
