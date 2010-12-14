@@ -36,6 +36,7 @@ namespace FubuMVC.Core.Packaging
         public void MarkFailure(Exception exception)
         {
             ExceptionText += "\n\n" + exception.ToString();
+            Trace(exception.ToString());
             Success = false;
         }
 

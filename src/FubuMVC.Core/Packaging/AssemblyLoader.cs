@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Packaging
         private static Assembly loadPackageAssemblyFromAppBinPath(string file)
         {
             var assemblyName = Path.GetFileNameWithoutExtension(file);
-            var appBinPath = AppDomain.CurrentDomain.BaseDirectory;
+            var appBinPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath ?? AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             if (!Path.GetDirectoryName(file).EqualsIgnoreCase(appBinPath))
             {
                 var destFileName = FileSystem.Combine(appBinPath, Path.GetFileName(file));
