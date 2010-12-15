@@ -19,7 +19,12 @@ namespace FubuValidation
 
         public IFieldValidationStrategy Strategy { get { return _strategy; } }
 
-        public void Validate(object target, Notification notification)
+    	public bool AppliesTo(Accessor accessor)
+    	{
+    		return _accessor.Equals(accessor);
+    	}
+
+    	public void Validate(object target, Notification notification)
         {
             var declaringType = _typeResolver.ResolveType(target);
             var rawValue = _accessor.GetValue(target);
