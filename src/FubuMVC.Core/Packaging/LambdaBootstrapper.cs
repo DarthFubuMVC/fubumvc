@@ -5,16 +5,23 @@ namespace FubuMVC.Core.Packaging
 {
     public class LambdaBootstrapper : IBootstrapper
     {
-        private readonly Func<IPackageLog, IEnumerable<IPackageActivator>> _bootstrapper;
+        private readonly Func<IPackageLog, IEnumerable<IActivator>> _bootstrapper;
 
-        public LambdaBootstrapper(Func<IPackageLog, IEnumerable<IPackageActivator>> bootstrapper)
+        public LambdaBootstrapper(Func<IPackageLog, IEnumerable<IActivator>> bootstrapper)
         {
             _bootstrapper = bootstrapper;
         }
 
-        public IEnumerable<IPackageActivator> Bootstrap(IPackageLog log)
+        public string Provenance { get; set; }
+
+        public IEnumerable<IActivator> Bootstrap(IPackageLog log)
         {
             return _bootstrapper(log);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Lambda expression at: {0}", Provenance);
         }
     }
 }

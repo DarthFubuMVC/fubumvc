@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -16,16 +17,23 @@ namespace FubuMVC.Core.Packaging
 
         public AssemblyLoader(IPackagingDiagnostics diagnostics)
         {
-            AssemblyFileLoader = file =>
-            {
-                //return Assembly.Load(File.ReadAllBytes(file));
-                return Assembly.LoadFrom(file);
-            };
-
+            AssemblyFileLoader = loadPackageAssemblyFromAppBinPath;
             _diagnostics = diagnostics;
         }
 
         public Func<string, Assembly> AssemblyFileLoader { get; set; }
+
+        private static Assembly loadPackageAssemblyFromAppBinPath(string file)
+        {
+            var assemblyName = Path.GetFileNameWithoutExtension(file);
+            var appBinPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath ?? AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            if (!Path.GetDirectoryName(file).EqualsIgnoreCase(appBinPath))
+            {
+                var destFileName = FileSystem.Combine(appBinPath, Path.GetFileName(file));
+                File.Copy(file, destFileName, true);
+            }
+            return Assembly.Load(assemblyName);
+        }
 
         private bool hasAssemblyByName(string assemblyName)
         {

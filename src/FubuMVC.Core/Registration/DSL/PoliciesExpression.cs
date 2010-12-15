@@ -63,7 +63,7 @@ namespace FubuMVC.Core.Registration.DSL
             var chainFilter = filter.Compile();
             var configAction = new VisitBehaviorsAction(v => 
                 {
-                    v.Filters += chain => chain.ContainsCall(chainFilter);
+                    v.Filters += chain => chain.FirstCall() != null && chainFilter(chain.FirstCall());
                     v.Actions += chain => chain.Prepend(new Wrapper(typeof(T)));
                 }, reason);
 

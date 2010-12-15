@@ -31,9 +31,15 @@ namespace FubuMVC.Core.Packaging
 
         public IPackageInfo LoadFromFolder(string folder)
         {
+            folder = Path.GetFullPath(folder);
+
             var manifest = _fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
-            var package = new PackageInfo(manifest.Name);
+            var package = new PackageInfo(manifest.Name){
+                Description = "{0} ({1})".ToFormat(manifest.Name, folder)
+            };
+
             package.RegisterFolder(FubuMvcPackages.WebContentFolder, folder);
+            package.RegisterFolder(PackageInfo.DataFolder, Path.Combine(folder, PackageInfo.DataFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
 
@@ -61,6 +67,11 @@ namespace FubuMVC.Core.Packaging
             var extension = Path.GetExtension(file);
             return extension.Equals(".exe", StringComparison.OrdinalIgnoreCase) ||
                    extension.Equals(".dll", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override string ToString()
+        {
+            return "Package Manifest Reader (Development Mode)";
         }
     }
 }

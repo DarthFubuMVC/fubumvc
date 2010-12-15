@@ -69,6 +69,7 @@
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Fixtures\HelloWorldFixture.cs" />
     <Compile Include="Fixtures\Package1Fixture.cs" />
     <Compile Include="Fixtures\PackagingFixture.cs" />
     <Compile Include="Fixtures\PackagingSetupFixture.cs" />
@@ -118,7 +119,6 @@
       <Link>sqlite3.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Storyteller.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

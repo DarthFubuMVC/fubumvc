@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -14,22 +13,49 @@ namespace FubuMVC.Core.Registration
 {
     public class BehaviorGraph
     {
+        private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
+        private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
+        private readonly IServiceRegistry _services = new ServiceRegistry();
+
         public BehaviorGraph(IConfigurationObserver observer)
         {
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
             Observer = observer;
         }
 
-        public BehaviorGraph() : this(new NulloConfigurationObserver()){}
-
-        private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
-        private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
-        private readonly IServiceRegistry _services = new ServiceRegistry();
+        public BehaviorGraph() : this(new NulloConfigurationObserver())
+        {
+        }
 
         public IEnumerable<IChainForwarder> Forwarders
         {
             get { return _forwarders; }
         }
+
+        public IConfigurationObserver Observer { get; private set; }
+
+        public IServiceRegistry Services
+        {
+            get { return _services; }
+        }
+
+        public IEnumerable<IRouteDefinition> Routes
+        {
+            get { return _behaviors.Select(x => x.Route).Where(x => x != null); }
+        }
+
+
+        public int BehaviorChainCount
+        {
+            get { return _behaviors.Count; }
+        }
+
+        public IEnumerable<BehaviorChain> Behaviors
+        {
+            get { return _behaviors; }
+        }
+
+        public IRouteIterator RouteIterator { get; set; }
 
         public void Forward<T>(Func<T, object> converter)
         {
@@ -48,19 +74,6 @@ namespace FubuMVC.Core.Registration
             _forwarders.Add(forwarder);
         }
 
-        public IConfigurationObserver Observer { get; private set; }
-
-        public IServiceRegistry Services { get { return _services; } }
-
-        public IEnumerable<IRouteDefinition> Routes { get { return _behaviors.Select(x => x.Route).Where(x => x != null); } }
-
-
-        public int BehaviorChainCount { get { return _behaviors.Count; } }
-
-        public IEnumerable<BehaviorChain> Behaviors { get { return _behaviors; } }
-
-        public IRouteIterator RouteIterator { get; set; }
-
 
         public void RegisterRoute(BehaviorChain chain, IRouteDefinition route)
         {
@@ -70,11 +83,10 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorChain BehaviorFor(IRouteDefinition route)
         {
-            BehaviorChain chain = _behaviors.FirstOrDefault(x => x.Route == route);
+            var chain = _behaviors.FirstOrDefault(x => x.Route == route);
             if (chain == null)
             {
-                chain = new BehaviorChain
-                {
+                chain = new BehaviorChain{
                     Route = route
                 };
                 _behaviors.Fill(chain);
@@ -101,8 +113,7 @@ namespace FubuMVC.Core.Registration
 
             _behaviors.Each(chain => chain.Register(action));
 
-            action(typeof (BehaviorGraph), new ObjectDef
-            {
+            action(typeof (BehaviorGraph), new ObjectDef{
                 Value = this
             });
         }
@@ -110,6 +121,18 @@ namespace FubuMVC.Core.Registration
         public IEnumerable<ActionCall> Actions()
         {
             return allActions().ToList();
+        }
+
+        public IEnumerable<ActionCall> FirstActions()
+        {
+            foreach (BehaviorChain chain in _behaviors)
+            {
+                var call = chain.FirstCall();
+                if (call != null)
+                {
+                    yield return call;
+                }
+            }
         }
 
         private IEnumerable<ActionCall> allActions()
@@ -125,19 +148,19 @@ namespace FubuMVC.Core.Registration
 
         public IRouteDefinition RouteFor<T>(Expression<Action<T>> expression)
         {
-            BehaviorChain chain = BehaviorFor(expression);
+            var chain = BehaviorFor(expression);
             return chain == null ? null : chain.Route;
         }
 
         public BehaviorChain BehaviorFor<T>(Expression<Action<T>> expression)
         {
-            ActionCall call = ActionCall.For(expression);
+            var call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
         public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
         {
-            ActionCall call = ActionCall.For(expression);
+            var call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
@@ -162,7 +185,7 @@ namespace FubuMVC.Core.Registration
         {
             _behaviors.Each(visitor.VisitBehavior);
         }
-        
+
         public void AddChain(BehaviorChain chain)
         {
             _behaviors.Add(chain);
@@ -205,7 +228,7 @@ namespace FubuMVC.Core.Registration
 
         public BehaviorChain BehaviorFor(Type inputType)
         {
-            IEnumerable<BehaviorChain> chains = Behaviors.Where(x => x.InputType() == inputType);
+            var chains = Behaviors.Where(x => x.InputType() == inputType);
             if (chains.Count() == 1)
             {
                 return chains.First();
@@ -228,7 +251,7 @@ namespace FubuMVC.Core.Registration
 
         public Guid IdForCall(ActionCall call)
         {
-            BehaviorChain chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
+            var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
 
             if (chain == null)
             {

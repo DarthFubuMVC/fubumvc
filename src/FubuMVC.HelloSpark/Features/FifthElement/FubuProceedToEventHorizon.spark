@@ -1,0 +1,15 @@
+﻿<viewdata model="FubuMVC.HelloSpark.Features.FifthElement.FubuJourneyViewModel" />
+<var trajectory="Model.Trajectory" attempt="Model.Attempt" />
+
+<div>Attempt ${attempt}: Proceeding to Event Horizon. Trajectory: ${trajectory}</div>
+
+<test if="trajectory == 'Optimal'">
+    <content:FubuWormHole>
+        <div class="fubu-journey">Attempt ${attempt}: Fubu, WE'RE THROUGH!! Oh my goodness, you guys should see this! Guys?</div>
+    </content:FubuWormHole>
+</test>
+<else>
+    <content:FubuRippedAsunder>
+        <div>Attempt ${attempt}: Fubu, WE'RE NOT GONNA MAKE IT!! AAAAAAaaaaaaaaahhhhhh</div>
+    </content:FubuRippedAsunder>
+</else>

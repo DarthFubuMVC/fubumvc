@@ -2,7 +2,7 @@
 
 namespace FubuMVC.Core.Packaging
 {
-    public interface IPackageActivator
+    public interface IActivator
     {
         void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log);
     }

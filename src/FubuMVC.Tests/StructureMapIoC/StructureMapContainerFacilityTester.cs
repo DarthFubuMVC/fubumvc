@@ -5,12 +5,14 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
+using FubuMVC.Tests.Packaging;
 using FubuMVC.Tests.Registration;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
@@ -18,6 +20,8 @@ using StructureMap;
 
 namespace FubuMVC.Tests.StructureMapIoC
 {
+    
+
     [TestFixture]
     public class StructureMapContainerFacilityTester
     {
@@ -39,6 +43,12 @@ namespace FubuMVC.Tests.StructureMapIoC
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
                 x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();
+            
+            
+                x.Services(s => s.AddService<IActivator>(new StubActivator()));
+                x.Services(s => s.AddService<IActivator>(new StubActivator()));
+                x.Services(s => s.AddService<IActivator>(new StubActivator()));
+            
             }).BuildGraph();
 
             facility = new StructureMapContainerFacility(container);
@@ -79,6 +89,12 @@ namespace FubuMVC.Tests.StructureMapIoC
         private BehaviorGraph graph;
         private IBehaviorFactory factory;
         private StructureMapContainerFacility facility;
+
+        [Test]
+        public void can_return_all_the_registered_activators_smoke_test()
+        {
+            facility.GetAllActivators().Count().ShouldEqual(3);
+        }
 
         [Test]
         public void each_IActionBehavior_is_wrapped_with_a_nested_container_behavior()

@@ -14,6 +14,7 @@ namespace FubuMVC.Core.Packaging
         public PackageRegistryLog()
         {
             Success = true;
+            Id = Guid.NewGuid();
         }
 
         public long TimeInMilliseconds { get; set; }
@@ -35,6 +36,7 @@ namespace FubuMVC.Core.Packaging
         public void MarkFailure(Exception exception)
         {
             ExceptionText += "\n\n" + exception.ToString();
+            Trace(exception.ToString());
             Success = false;
         }
 
@@ -53,6 +55,11 @@ namespace FubuMVC.Core.Packaging
         public IEnumerable<T> FindChildren<T>()
         {
             return _children.Where(x => x is T).Cast<T>();
+        }
+
+        public Guid Id
+        {
+            get; private set;
         }
     }
 }

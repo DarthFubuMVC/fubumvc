@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void should_register_the_second_bootstrapper_with_nested_provenance()
         {
-            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(bootstrapper2, "A/B"));
+            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(bootstrapper2, "B"));
         }
 
         [Test]
@@ -57,15 +57,15 @@ namespace FubuMVC.Tests.Packaging
     [TestFixture]
     public class when_adding_an_activator : InteractionContext<PackagingRuntimeGraph>
     {
-        private StubPackageActivator activator1;
-        private StubPackageActivator activator2;
-        private StubPackageActivator activator3;
+        private StubActivator activator1;
+        private StubActivator activator2;
+        private StubActivator activator3;
 
         protected override void beforeEach()
         {
-            activator1 = new StubPackageActivator();
-            activator2 = new StubPackageActivator();
-            activator3 = new StubPackageActivator();
+            activator1 = new StubActivator();
+            activator2 = new StubActivator();
+            activator3 = new StubActivator();
 
             ClassUnderTest.PushProvenance("A");
             ClassUnderTest.AddActivator(activator1);
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void should_register_the_second_activator_with_nested_provenance()
         {
-            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(activator2, "A/B"));
+            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(activator2, "B"));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void should_register_the_second_loader_with_nested_provenance()
         {
-            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(loader2, "A/B"));
+            MockFor<IPackagingDiagnostics>().AssertWasCalled(x => x.LogObject(loader2, "B"));
         }
 
         [Test] 
@@ -212,45 +212,18 @@ namespace FubuMVC.Tests.Packaging
         }
     }
 
-    public class StubPackage : IPackageInfo
-    {
-        private readonly string _name;
-
-        public StubPackage(string name)
-        {
-            _name = name;
-        }
-
-        public string Name
-        {
-            get { return _name; }
-        }
-
-        public void LoadAssemblies(IAssemblyRegistration loader)
-        {
-            LoadingAssemblies(loader);
-        }
-
-        public void ForFolder(string folderName, Action<string> onFound)
-        {
-            // do nothing for now
-        }
-
-        public Action<IAssemblyRegistration> LoadingAssemblies { get; set; }
-    }
-
     public class StubBootstrapper : IBootstrapper
     {
         private readonly string _name;
-        private readonly IPackageActivator[] _activators;
+        private readonly IActivator[] _activators;
 
-        public StubBootstrapper(string name, params IPackageActivator[] activators)
+        public StubBootstrapper(string name, params IActivator[] activators)
         {
             _name = name;
             _activators = activators;
         }
 
-        public IEnumerable<IPackageActivator> Bootstrap(IPackageLog log)
+        public IEnumerable<IActivator> Bootstrap(IPackageLog log)
         {
             return _activators;
         }
@@ -261,7 +234,7 @@ namespace FubuMVC.Tests.Packaging
         }
     }
 
-    public class StubPackageActivator : IPackageActivator
+    public class StubActivator : IActivator
     {
         private IEnumerable<IPackageInfo> _packages;
         private IPackageLog _log;

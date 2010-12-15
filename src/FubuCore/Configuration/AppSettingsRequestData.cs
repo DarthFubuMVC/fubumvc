@@ -1,7 +1,9 @@
 using System;
 using System.Configuration;
+using System.Linq.Expressions;
 using FubuCore.Binding;
 using System.Linq;
+using FubuCore.Reflection;
 
 namespace FubuCore.Configuration
 {
@@ -21,6 +23,17 @@ namespace FubuCore.Configuration
             }
 
             return false;
+        }
+
+        public static string KeyFor<T>(Expression<Func<T, object>> property)
+        {
+            return typeof(T).Name + "." + property.ToAccessor().Name;
+        }
+
+        public static string GetValueFor<T>(Expression<Func<T, object>> property)
+        {
+            var key = KeyFor(property);
+            return (ConfigurationManager.AppSettings.AllKeys.Contains(key)) ? ConfigurationManager.AppSettings[key] : string.Empty;
         }
     }
 }

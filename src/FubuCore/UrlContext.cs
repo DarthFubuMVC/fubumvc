@@ -16,7 +16,7 @@ namespace FubuCore
         private static Func<string, string> _toAbsolute { get; set; }
         private static Func<string, bool> _isAbsolute { get; set; }
         private static Func<string, string> _mapPath { get; set; }
-
+        
         public static void Reset()
         {
             if (HttpRuntime.AppDomainAppVirtualPath != null)

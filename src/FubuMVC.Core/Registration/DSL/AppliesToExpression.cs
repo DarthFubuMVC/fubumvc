@@ -1,7 +1,5 @@
-using System.Diagnostics;
 using System.Reflection;
 using FubuMVC.Core.Packaging;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -16,7 +14,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public AppliesToExpression ToAllPackageAssemblies()
         {
-            PackageRegistry.PackageAssemblies.Each(a => ToAssembly(a));
+            _pool.AddSource(() => PackageRegistry.PackageAssemblies);
             return this;
         }
 
@@ -38,7 +36,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public AppliesToExpression ToAssembly(string assemblyName)
         {
-            Assembly assembly = Assembly.Load(assemblyName);
+            var assembly = Assembly.Load(assemblyName);
             return ToAssembly(assembly);
         }
     }

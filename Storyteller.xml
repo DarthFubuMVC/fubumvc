@@ -34,9 +34,9 @@ $METHODS$
     <TargetFile>StoryTellerDebug.cs</TargetFile>
   </Options>
   <Workspaces />
-  <BinaryFolder>bin\debug</BinaryFolder>
-  <TestFolder>Tests</TestFolder>
-  <FileName>C:\git\fubumvc\src\IntegrationTesting\Storyteller.xml</FileName>
+  <BinaryFolder>src\StoryTellerTesting\bin\debug</BinaryFolder>
+  <TestFolder>src\StoryTellerTesting\Tests</TestFolder>
+  <FileName>C:\git\fubumvc\src\StoryTellerTesting\Storyteller.xml</FileName>
   <TimeoutInSeconds>60</TimeoutInSeconds>
   <SystemTypeName>IntegrationTesting.FubuSystem, IntegrationTesting</SystemTypeName>
   <Name>FubuMVC</Name>

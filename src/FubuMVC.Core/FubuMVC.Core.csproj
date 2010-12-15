@@ -71,13 +71,20 @@
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehavior.cs" />
+    <Compile Include="Content\ContentRegistryCache.cs" />
+    <Compile Include="Content\IContentRegistry.cs" />
+    <Compile Include="Content\IImageUrlResolver.cs" />
+    <Compile Include="Content\ImageRouteHandler.cs" />
+    <Compile Include="Content\IPackagedImageUrlResolver.cs" />
+    <Compile Include="Content\PackagedImageUrlResolver.cs" />
+    <Compile Include="Content\PackageFolderActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="Diagnostics\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\DiagnosticHtml.cs" />
-    <Compile Include="Diagnostics\DiagnosticsActionAttribute.cs" />
+    <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationRulesColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ChainColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ConstraintColumn.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="Diagnostics\ModelBindingReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\OutputColumn.cs" />
     <Compile Include="Diagnostics\OutputReport.cs" />
+    <Compile Include="Diagnostics\PackageLoadingWriter.cs" />
     <Compile Include="Diagnostics\Querying\ActionToken.cs" />
     <Compile Include="Diagnostics\Querying\AssemblyToken.cs" />
     <Compile Include="Diagnostics\Querying\EndpointModel.cs" />
@@ -132,6 +140,7 @@
     <Compile Include="Diagnostics\TextWriting\TextReportWriter.cs" />
     <Compile Include="Diagnostics\TimedReport.cs" />
     <Compile Include="EndpointService.cs" />
+    <Compile Include="FubuApplication.cs" />
     <Compile Include="FubuMvcPackages.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
@@ -154,6 +163,7 @@
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
     <Compile Include="Packaging\IAssemblyLoader.cs" />
     <Compile Include="Packaging\IBootstrapper.cs" />
+    <Compile Include="Packaging\LambdaActivator.cs" />
     <Compile Include="Packaging\LambdaBootstrapper.cs" />
     <Compile Include="Packaging\PackageFacility.cs" />
     <Compile Include="Packaging\IPackageInfo.cs" />
@@ -164,7 +174,7 @@
     <Compile Include="Packaging\PackageInfo.cs" />
     <Compile Include="Packaging\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProvider.cs" />
-    <Compile Include="Packaging\IPackageActivator.cs" />
+    <Compile Include="Packaging\IActivator.cs" />
     <Compile Include="Packaging\PackageIncludeManifest.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
@@ -174,7 +184,7 @@
     <Compile Include="Packaging\PackagingDiagnostics.cs" />
     <Compile Include="Packaging\PackagingDiagnosticsExtensions.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraph.cs" />
-    <Compile Include="Packaging\VirtualPathProviderPackageActivator.cs" />
+    <Compile Include="Packaging\VirtualPathProviderActivator.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
@@ -205,7 +215,7 @@
     <Compile Include="Behaviors\RenderJsonBehavior.cs" />
     <Compile Include="Behaviors\RenderTextBehavior.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
-    <Compile Include="Bootstrapping\BootstrappingClasses.cs" />
+    <Compile Include="Bootstrapping\IContainerFacility.cs" />
     <Compile Include="FubuBootstrapper.cs" />
     <Compile Include="FubuRegistry.Expressions.cs" />
     <Compile Include="Registration\BehaviorVisitor.cs" />
@@ -286,6 +296,7 @@
     <Compile Include="UI\FubuPageExtensions.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />
+    <Compile Include="UI\ImageTag.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />
     <Compile Include="UI\Navigation\AuthorizedContextualMenu.cs" />
     <Compile Include="UI\Navigation\IContextualAction.cs" />
@@ -430,6 +441,7 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\Diagnostics\examples.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

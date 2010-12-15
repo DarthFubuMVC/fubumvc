@@ -50,7 +50,7 @@ namespace FubuMVC.Core.UI.Extensibility
             var writer = page.ServiceLocator.GetInstance<IOutputWriter>();
             extensions
                 .SelectMany(ex => ex.GetExtensions(page))
-                .Where(o => o != null).Each(o => OutputWriterExtensions.WriteHtml(writer, (object) o));
+                .Where(o => o != null).Each(o => writer.WriteHtml(o));
         }
 
         public void ApplyExtensions<T>(IFubuPage<T> page) where T : class

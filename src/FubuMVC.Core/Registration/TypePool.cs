@@ -13,6 +13,7 @@ namespace FubuMVC.Core.Registration
         private readonly IList<Type> _types = new List<Type>();
         private bool _scanned;
         private bool _ignoreCallingAssembly;
+        private readonly IList<Func<IEnumerable<Assembly>>> _sources = new List<Func<IEnumerable<Assembly>>>();
 
         public TypePool(Assembly defaultAssembly)
         {
@@ -22,6 +23,11 @@ namespace FubuMVC.Core.Registration
         public void IgnoreCallingAssembly()
         {
             _ignoreCallingAssembly = true;
+        }
+
+        public void AddSource(Func<IEnumerable<Assembly>> source)
+        {
+            _sources.Add(source);
         }
 
         private IList<Type> types
@@ -66,6 +72,8 @@ namespace FubuMVC.Core.Registration
         {
             get
             {
+                _assemblies.AddRange(_sources.SelectMany(x => x()));
+
                 if (_assemblies.Any() == false && !_ignoreCallingAssembly)
                 {
                     yield return _defaultAssembly;

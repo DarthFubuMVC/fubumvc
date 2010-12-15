@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.UI.Diagnostics
 {
-    [DiagnosticsAction]
+    [FubuDiagnostics("Html Conventions")]
     internal class ExampleHtmlWriter
     {
         private readonly IServiceLocator _serviceLocator;

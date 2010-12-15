@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
@@ -29,13 +30,19 @@ namespace FubuMVC.Tests.Packaging
             fileSystem.PersistToFile(manifest, packageFolder, PackageManifest.FILE);
 
             reader = new PackageManifestReader("../../".ToFullPath(), fileSystem);
+
+            
         }
+
+
 
         [TearDown]
         public void TearDown()
         {
             new FileSystem().DeleteFile("../../".ToFullPath(), PackageIncludeManifest.FILE);
         }
+
+
 
         [Test]
         public void load_a_package_info_from_a_manifest_file_when_given_the_folder()
@@ -44,9 +51,12 @@ namespace FubuMVC.Tests.Packaging
             var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
+            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
             assemblyLoader.LoadAssembliesFromPackage(package);
 
-            assemblyLoader.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
+            var loadedAssemblies = assemblyLoader.Assemblies.ToArray();
+            loadedAssemblies.ShouldHaveCount(1);
+            loadedAssemblies[0].GetName().Name.ShouldEqual("TestPackage1");
         }
 
         [Test]
@@ -70,6 +80,8 @@ namespace FubuMVC.Tests.Packaging
             new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageIncludeManifest.FILE);
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
+            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
+
             var package = reader.Load().Single();
             assemblyLoader.LoadAssembliesFromPackage(package);
 

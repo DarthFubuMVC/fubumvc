@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Net;
 using FubuMVC.Core.Diagnostics.Querying;
+using StoryTeller.Assertions;
 using StoryTeller.Engine;
 
 namespace IntegrationTesting.Fixtures
@@ -28,6 +30,24 @@ namespace IntegrationTesting.Fixtures
         public bool ActionsForAssemblyArePresent(string assemblyName)
         {
             return _remoteGraph.All().EndpointsForAssembly(assemblyName).Any();
+        }
+
+        [FormatAs("The url for image '{name}' should be {url}")]
+        public string ImageUrlFor(string name)
+        {
+            return _remoteGraph.GetImageUrl(name);
+        }
+
+        [FormatAs("Downloading image '{name}' is successful with a mime type of {mimeType}")]
+        public string DownloadImage(string name)
+        {
+            var url = _remoteGraph.GetImageUrl(name);
+            var client = new WebClient();
+            var bytes = client.DownloadData("http://localhost/" + url);
+            
+            StoryTellerAssert.Fail(bytes.Length < 500, "Not enough data detected for the image.  Did it really load?");
+
+            return client.ResponseHeaders[HttpResponseHeader.ContentType];
         }
     }
 }

@@ -16,8 +16,8 @@ namespace FubuMVC.HelloWorld
             AfterEachOfPartial.Builder<AfterEachOfPartialBuilder>();
             Editors.IfPropertyIs<int>().Modify(tag => tag.AddClass("number"));
 
-            Editors.ModifyForStrategy<RequiredFieldStrategy>((tag, strategy, accessor) => tag.AddClass("required"));
-            Editors.ModifyForStrategy<MaximumStringLengthFieldStrategy>((tag, strategy, accessor) => tag.Attr("maxlength", strategy.Length));
+            //Editors.ModifyForStrategy<RequiredFieldStrategy>((tag, strategy, accessor) => tag.AddClass("required"));
+            //Editors.ModifyForStrategy<MaximumStringLengthFieldStrategy>((tag, strategy, accessor) => tag.Attr("maxlength", strategy.Length));
         }
     }
 }

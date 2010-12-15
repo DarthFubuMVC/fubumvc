@@ -71,8 +71,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\a.txt" />
+    <Content Include="data\b.txt" />
+    <Content Include="data\c.txt" />
     <Content Include="TestPage.htm" />
     <Content Include="View.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\d.t2" />
+    <None Include="data\e.t2" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

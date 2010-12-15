@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title></title><style>body
+{
+	
+}
+
+.input
+{
+	font-style: italic;
+}
+
+.exception
+{
+	background-color: #FFFFAA;
+}
+
+
+div.pass > span.input, div.pass > span.fact, tr.pass > td, SPAN.pass, td.pass, .results-pass
+{
+    background-color: #AAFFAA;
+}
+
+
+
+div.fail > span.input, div.fail > span.fact, span.fail, tr.fail > td, td.fail, .results-fail
+{
+	background-color: #FFAAAA;
+
+}
+
+div.fail > span.input, div.pass > span.input
+{
+	padding-left: 5px;
+	padding-right: 5px;   
+}
+
+
+SPAN.fail, SPAN.pass, span.fact
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+span.fact
+{
+    padding-top: 1px;    
+    padding-bottom: 0px;    
+}
+
+.results
+{
+	padding: 5px;
+	border: solid 1px black;
+}
+
+.comment-text
+{
+/*
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFFFEF none repeat scroll 0 0;*/
+	border:1px solid #EBEBDB;
+	padding: 3px;
+	font-family: Courier New;
+	font-size:75%;
+}
+
+
+.Comment
+{
+	margin-top:10px;
+	margin-bottom:10px;
+	overflow: visible;
+}
+
+a
+{
+    color:#AAA;
+	font-size:smaller;
+	margin-left: 5px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+a:hover {
+	color:#000080;
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+div, h2, h3, h4
+{
+    width: auto;
+}
+
+.section {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	-moz-border-radius:5px;
+	background:#FCFDFD url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) repeat-x scroll 50% bottom;
+	/*border:1px solid #A6C9E2;*/
+	/* border-bottom:1px solid #A6C9E2; */
+	color:#222222;
+	margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    
+
+}
+
+.section-body
+{
+    border-bottom: 2px solid black;
+    margin-top:0px;
+    margin-left:0px;
+    margin-right:0px;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding:10px;
+}
+
+h3.section-title
+{
+	font: bold 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	/*color: #4f6b72;*/
+	
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight: bold;
+    
+    border:2px solid black;
+    background-color: #EBEAEA;
+}
+
+
+.section-title{
+
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 5px;
+	font-size: 100%;
+	font-weight: bold;
+}
+
+
+
+.TitledAndIndented
+{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+
+html, body{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#111;
+	line-height:1.4em;
+	background-color: #ccc; 
+	height: 100%;
+}
+
+.main{
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color: #fff;
+	padding-bottom: 20px;
+
+	overflow: visible;
+}
+
+
+
+.main > h2 {
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 10px;
+}
+
+.main .homelink {
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 2px;
+	padding-left: 10px;
+}
+
+.main-content{
+	padding: 4px 10px;
+}
+
+.behavior
+{
+	border: solid thin black;
+	margin: 20px;
+	padding: 10px;
+}
+
+.content
+{
+	overflow:scroll;
+	background-color: #dddddd;
+}
+
+
+.chainId
+{
+	 /* must be monospace */
+	font-family: Consolas, Courier New, Courier;
+	font-size: smaller;
+}
+
+
+.summary {
+	margin: 5px 10px;
+}
+
+#version-display{
+	float:right;
+	font-size:small;
+	font-weight:normal;
+}
+
+table.table th {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	/*color: #4f6b72;*/
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+
+	text-align: left;
+	padding: 6px 6px 6px 12px;
+	/*background: #CAE8EA url(images/bg_header.jpg) no-repeat;*/
+	background: #EBEAEA url(images/bg_header.jpg) no-repeat;
+}
+
+table.table td {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	/*background: #fff;*/
+	padding: 3px 3px 3px 6px;
+	color: #4f6b72;
+}
+
+td.fail, td.pass, td.exception
+{
+    color: Black !important;
+}
+
+td.left-cell
+{
+    border-left: 1px solid #C1DAD7;
+}
+
+th.left-cell
+{
+    border-left: 1px solid #C1DAD7;
+}
+
+.table-title
+{
+	font-size: 90%;
+	color:#E17009;
+	font-weight: bold;
+	vertical-align: top;
+}
+
+.table-container
+{
+	margin-left:20px;
+}
+
+td.exception-cell
+{
+    padding: 0px !important;
+    margin: 0px;
+}
+
+table.setverification > tbody > tr > td
+{
+    font-style: italic;
+    padding-right: 10px;
+}
+
+
+
+
+
+div.paragraph
+{
+	margin-bottom: 10px;
+}
+
+
+div.paragraph div
+{
+    margin-left: 20px;
+}
+
+div.paragraph-title, h3.embedded-title
+{
+	font-size: 90%;
+	color:#E17009;
+	font-weight: bold;
+	margin-left: 0px !important;
+}
+
+h3.embedded-title
+{
+    margin-bottom: 2px;
+    padding-bottom: 0px;
+}
+
+div.paragraph
+{
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	background:#FCFDFD url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) repeat-x scroll 50% bottom;
+	/*border:1px solid #A6C9E2;*/
+	color:#222222;
+	padding-top: 0px;
+	margin-top: 10px;
+}
+
+div.paragraph > div.step
+{
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
+div.embedded > div
+{
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
+.section-title{
+
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	/*background-color:#EBEAEA;*/
+	background: #CAE8EA url(images/bg_header.jpg) no-repeat;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 5px;
+	font-size: 100%;
+	font-weight: bold;
+}
+
+
+DIV.exception-zone
+{
+    padding-top: 0px;
+    border-bottom: solid thin black;
+    border-top: solid thin black;
+}
+
+.exception-zone > PRE
+{
+    padding-top: 0px;
+    padding-bottom: 2px;
+    overflow: visible;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+div.sentence
+{
+    padding-left: 0px;
+    margin-left: 0px;
+}</style></head><body><div id="testEditor" class="main test-editor"><h2 class="testName">Invoke a Json endpoint from a package</h2><div class="results results-pass">Succeeded with Rights: 1, Wrongs: 0, Exceptions: 0, SyntaxErrors: 0</div><div class="container section test-editor"><div><div class="step-holder"><div class="section"><h3 title="IntegrationTesting.Fixtures.PackagingFixture" class="section-title">Packaging</h3><div class="section-body"><div class="Comment"><span class="comment-text">Link in TestPackage1</span></div><div class="embedded TitledAndIndented"><h3 title="SetUp (Embeds IntegrationTesting.Fixtures.PackagingSetupFixture)" class="embedded-title">If the packaging setup is</h3><div class="Run sentence"><span>From the command line, run:  </span><span class="input">init-pak src/TestPackage1 pak1</span></div><div class="Run sentence"><span>From the command line, run:  </span><span class="input">link fubu-testing pak1</span></div></div></div></div><div class="section"><h3 title="IntegrationTesting.Fixtures.Package1Fixture" class="section-title">For TestPackage1 (Assembly &#39;TestPackage1&#39;)</h3><div class="section-body"><div class="InvokingJsonService sentence pass"><span class="fact">Can successfully invoke a json endpoint from this package</span></div></div></div></div></div></div></div></body></html>

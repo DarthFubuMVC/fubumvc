@@ -139,8 +139,8 @@ namespace FubuMVC.Core
             else
             {
                 Actions
-                    .ExcludeTypes(t => t.HasAttribute<DiagnosticsActionAttribute>())
-                    .ExcludeMethods(call => call.Method.HasAttribute<DiagnosticsActionAttribute>());
+                    .ExcludeTypes(t => t.HasAttribute<FubuDiagnosticsAttribute>())
+                    .ExcludeMethods(call => call.Method.HasAttribute<FubuDiagnosticsAttribute>());
             }
         }
 

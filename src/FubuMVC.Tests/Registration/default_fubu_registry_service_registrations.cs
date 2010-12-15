@@ -3,10 +3,13 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Content;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
@@ -172,6 +175,24 @@ namespace FubuMVC.Tests.Registration
         public void endpoint_service_is_registered()
         {
             registeredTypeIs<IEndpointService, EndpointService>();
+        }
+
+        [Test]
+        public void partial_invoker_is_registered()
+        {
+            registeredTypeIs<IPartialInvoker, PartialInvoker>();
+        }
+
+        [Test]
+        public void content_registry_is_registered()
+        {
+            registeredTypeIs<IContentRegistry, ContentRegistryCache>();
+        }
+
+        [Test]
+        public void content_registry_cache_would_be_a_singleton()
+        {
+            ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache)).ShouldBeTrue();
         }
     }
 }

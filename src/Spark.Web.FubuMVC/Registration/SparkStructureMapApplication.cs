@@ -34,7 +34,7 @@ namespace Spark.Web.FubuMVC.Registration
             return new SparkSettings()
                 .AddAssembly(typeof(PartialTagFactory).Assembly)
                 .AddNamespace("Spark.Web.FubuMVC")
-                .AddNamespace("FubuMVC.UI")
+                .AddNamespace("FubuMVC.Core.UI")
                 .AddNamespace("HtmlTags");
         }
 
