@@ -16,9 +16,9 @@ namespace FubuFastPack.Persistence
         private readonly IList<object> _items = new List<object>();
         private readonly IList<Action<object>> _onSaveActions = new List<Action<object>>();
 
-        private readonly ArrayList _deletedItems = new ArrayList();
-        private readonly ArrayList _revertedItems = new ArrayList();
-        private readonly ArrayList _savedItems = new ArrayList();
+        private readonly List<object> _deletedItems = new List<object>();
+        private readonly List<object> _revertedItems = new List<object>();
+        private readonly IList<object> _savedItems = new List<object>();
 
         //private readonly EntityFinder _finder;
 
@@ -34,7 +34,7 @@ namespace FubuFastPack.Persistence
             get { return _nextId; }
         }
 
-        public IList SavedItems
+        public IList<object> SavedItems
         {
             get { return _savedItems; }
         }

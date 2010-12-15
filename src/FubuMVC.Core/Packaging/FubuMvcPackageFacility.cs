@@ -12,10 +12,11 @@ namespace FubuMVC.Core.Packaging
     {
         private readonly PackagedImageUrlResolver _imageUrlResolver = new PackagedImageUrlResolver(new FileSystem());
 
+       
 
         public FubuMvcPackageFacility()
         {
-            var applicationPath = PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;
+            string applicationPath = GetApplicationPath();
 
             if (applicationPath.IsNotEmpty())
             {
@@ -27,6 +28,11 @@ namespace FubuMVC.Core.Packaging
 
             Activator(new VirtualPathProviderActivator());
             Activator(new PackageFolderActivator(_imageUrlResolver));
+        }
+
+        public static string GetApplicationPath()
+        {
+            return PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;
         }
 
         public static string PhysicalRootPath { get; set; }

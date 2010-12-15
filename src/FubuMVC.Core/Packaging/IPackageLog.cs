@@ -7,5 +7,6 @@ namespace FubuMVC.Core.Packaging
         void Trace(string text);
         void Trace(string format, params object[] parameters);
         void MarkFailure(Exception exception);
+        void MarkFailure(string text);
     }
 }

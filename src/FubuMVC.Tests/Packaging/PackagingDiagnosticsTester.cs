@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Packaging
             var log = diagnostics.LogFor(loader);
             log.Success.ShouldBeFalse();
             log.TimeInMilliseconds.ShouldBeGreaterThan(0);
-            log.ExceptionText.ShouldContain("not gonna happen");
+            log.FullTraceText().ShouldContain("not gonna happen");
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Packaging
             var log = diagnostics.LogFor(package);
 
             log.Success.ShouldBeFalse();
-            log.ExceptionText.Contains(exception.ToString()).ShouldBeTrue();
+            log.FullTraceText().Contains(exception.ToString()).ShouldBeTrue();
 
             log.FullTraceText().ShouldContain("Failed to load assembly at '{0}'".ToFormat(theFileNameOfTheAssembly));
         }

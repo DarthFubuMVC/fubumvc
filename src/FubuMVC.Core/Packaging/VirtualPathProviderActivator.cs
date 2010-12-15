@@ -9,7 +9,13 @@ namespace FubuMVC.Core.Packaging
     {
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
+            if (!HostingEnvironment.IsHosted)
+            {
+                return;
+            }
+            
             var provider = new FileSystemVirtualPathProvider();
+
             HostingEnvironment.RegisterVirtualPathProvider(provider);
 
             packages.Each(x => x.ForFolder(FubuMvcPackages.WebContentFolder, provider.RegisterContentDirectory));

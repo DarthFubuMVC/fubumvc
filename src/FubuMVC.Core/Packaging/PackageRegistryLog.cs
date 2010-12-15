@@ -35,12 +35,14 @@ namespace FubuMVC.Core.Packaging
 
         public void MarkFailure(Exception exception)
         {
-            ExceptionText += "\n\n" + exception.ToString();
-            Trace(exception.ToString());
-            Success = false;
+            MarkFailure(exception.ToString());
         }
 
-        public string ExceptionText { get; private set; }
+        public void MarkFailure(string text)
+        {
+            Trace(text);
+            Success = false;
+        }
 
         public string FullTraceText()
         {
