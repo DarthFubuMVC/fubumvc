@@ -64,6 +64,8 @@ end
 desc "Prepares the working directory for a new build"
 task :clean do
 	#TODO: do any other tasks required to clean/prepare the working directory
+	FileUtils.rm_rf props[:stage]
+	FileUtils.rm_rf props[:stage35]
 	Dir.mkdir props[:stage] unless exists?(props[:stage])
 	Dir.mkdir props[:artifacts] unless exists?(props[:artifacts])
 end
