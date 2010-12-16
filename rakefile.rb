@@ -33,7 +33,7 @@ desc "Compiles, unit tests, generates the database"
 task :all => [:default]
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test, :compile35, :virtual_dir]
+task :default => [:compile, :unit_test, :compile35]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
