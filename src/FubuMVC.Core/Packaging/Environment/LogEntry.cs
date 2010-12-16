@@ -14,8 +14,9 @@ namespace FubuMVC.Core.Packaging.Environment
             return new LogEntry(){
                 Description = target.ToString(),
                 Success = log.Success,
-                TraceText = log.FullTraceText()
+                TraceText = log.FullTraceText().Trim()
             };
         }
+
     }
 }

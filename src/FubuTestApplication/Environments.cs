@@ -66,14 +66,8 @@ namespace FubuTestApplication
         }
     }
 
-    public class StubEnvironment : IEnvironment
+    public abstract class StubEnvironment : IEnvironment, IInstaller
     {
-        private readonly IInstaller[] _installers;
-
-        public StubEnvironment(params IInstaller[] installers)
-        {
-            _installers = installers;
-        }
 
         public void Dispose()
         {
@@ -82,57 +76,48 @@ namespace FubuTestApplication
 
         public IEnumerable<IInstaller> StartUp(IPackageLog log)
         {
-            return _installers;
+            yield return this;
+        }
+
+        public virtual void Install(IPackageLog log)
+        {
+        }
+
+        public virtual void CheckEnvironment(IPackageLog log)
+        {
         }
     }
 
-    public class InstallerThatMarksFailureInLogDuringInstall : IInstaller
+
+    public class InstallerThatMarksFailureInLogDuringInstall : StubEnvironment
     {
-        public void Install(IPackageLog log)
+        public override void Install(IPackageLog log)
         {
             log.MarkFailure("I detected a problem during Install");
         }
-
-        public void CheckEnvironment(IPackageLog log)
-        {
-        }
     }
 
-    public class InstallerThatMarksFailureInLogDuringCheckEnvironment : IInstaller
+    public class InstallerThatMarksFailureInLogDuringCheckEnvironment : StubEnvironment
     {
-        public void Install(IPackageLog log)
-        {
-            
-        }
-
-        public void CheckEnvironment(IPackageLog log)
+        public override void CheckEnvironment(IPackageLog log)
         {
             log.MarkFailure("I detected a problem during CheckEnvironment");
         }
     }
 
-    public class InstallerThatBlowsUpInCheckEnvironment : IInstaller
+    public class InstallerThatBlowsUpInCheckEnvironment : StubEnvironment
     {
-        public void Install(IPackageLog log)
-        {
-            
-        }
-
-        public void CheckEnvironment(IPackageLog log)
+        public override void CheckEnvironment(IPackageLog log)
         {
             throw new NotImplementedException("The environment is borked!");
         }
     }
 
-    public class InstallerThatBlowsUpInInstall : IInstaller
+    public class InstallerThatBlowsUpInInstall : StubEnvironment
     {
-        public void Install(IPackageLog log)
+        public override void Install(IPackageLog log)
         {
             throw new NotImplementedException("You shall not pass");
-        }
-
-        public void CheckEnvironment(IPackageLog log)
-        {
         }
     }
 

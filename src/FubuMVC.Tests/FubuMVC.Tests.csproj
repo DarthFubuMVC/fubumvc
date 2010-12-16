@@ -97,7 +97,6 @@
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />
     <Compile Include="Packaging\AssemblyPackageInfoTester.cs" />
-    <Compile Include="Packaging\Environment\EnvironmentRunnerTester.cs" />
     <Compile Include="Packaging\Environment\EnvironmentRunTester.cs" />
     <Compile Include="Packaging\Environment\FakeEnvironment.cs" />
     <Compile Include="Packaging\Environment\LogEntryTester.cs" />

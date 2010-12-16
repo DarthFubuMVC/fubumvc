@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Test name="Environment Runner captures errors from the Environment setup" lifecycle="Regression">
+  <EnvironmentRunner>
+    <Comment><![CDATA[Environment that throws an exception in its SetUp() method]]></Comment>
+    <ForEnvironment isStep="True" name="EnvironmentThatBlowsUpInStartUp" />
+    <FailedInstallLogForContains isStep="True" description="FubuTestApplication.EnvironmentThatBlowsUpInStartUp" trace="I blew up!" />
+    <Comment><![CDATA[Environment that reports a problem to the log in its SetUp() method]]></Comment>
+    <ForEnvironment isStep="True" name="EnvironmentThatLogsAProblem" />
+    <FailedInstallLogForContains isStep="True" description="FubuTestApplication.EnvironmentThatLogsAProblem" trace="I found a problem in StartUp" />
+    <Comment><![CDATA[Environment that throws an exception in its own constructor function]]></Comment>
+    <ForEnvironment isStep="True" name="EnvironmentThatBlowsUpInCtor" />
+    <FailedInstallLogForContains isStep="True" description="FubuTestApplication.EnvironmentThatBlowsUpInCtor" trace="I blew up in the ctor" />
+  </EnvironmentRunner>
+</Test>

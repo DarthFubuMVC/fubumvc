@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Test name="Logging installer failures" lifecycle="Regression">
+  <EnvironmentRunner>
+    <ForEnvironment isStep="True" name="InstallerThatMarksFailureInLogDuringInstall" />
+    <FailedInstallLogForContains isStep="True" description="FubuTestApplication.InstallerThatMarksFailureInLogDuringInstall" trace="I detected a problem during Install" />
+    <ForEnvironment isStep="True" name="InstallerThatMarksFailureInLogDuringCheckEnvironment" />
+    <FailedCheckEnvironmentLogForContains isStep="True" description="FubuTestApplication.InstallerThatMarksFailureInLogDuringCheckEnvironment" trace="I detected a problem during CheckEnvironment" />
+    <ForEnvironment isStep="True" name="InstallerThatBlowsUpInInstall" />
+    <FailedInstallLogForContains isStep="True" description="FubuTestApplication.InstallerThatBlowsUpInInstall" trace="You shall not pass" />
+    <ForEnvironment isStep="True" name="InstallerThatBlowsUpInCheckEnvironment" />
+    <FailedCheckEnvironmentLogForContains isStep="True" description="FubuTestApplication.InstallerThatBlowsUpInCheckEnvironment" trace="The environment is borked!" />
+  </EnvironmentRunner>
+</Test>

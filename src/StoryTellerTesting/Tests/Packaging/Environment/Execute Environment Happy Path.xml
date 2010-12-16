@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Test name="Execute Environment Happy Path" lifecycle="Regression">
+  <EnvironmentRunner>
+    <ForEnvironment isStep="True" name="EnvironmentWithAllGoodInstallers" />
+    <InstallLogs isStep="True">
+      <rows>
+        <row isStep="True" Description="FubuTestApplication.GoodInstaller1" TraceText="All Good 1" Success="True" />
+        <row isStep="True" Description="FubuTestApplication.GoodInstaller2" TraceText="All Good 2" Success="True" />
+        <row isStep="True" Description="FubuTestApplication.GoodInstaller3" TraceText="All Good 3" Success="True" />
+        <row isStep="True" Description="FubuTestApplication.EnvironmentWithAllGoodInstallers" Success="True" TraceText="I started up with all good installers" />
+      </rows>
+    </InstallLogs>
+  </EnvironmentRunner>
+</Test>

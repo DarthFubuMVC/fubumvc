@@ -4,7 +4,6 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging.Environment
 {
-    // TODO -- how to test this?  Integration test all the way?
     public class EnvironmentRunner
     {
         private readonly EnvironmentRun _run;
@@ -12,11 +11,6 @@ namespace FubuMVC.Core.Packaging.Environment
         public EnvironmentRunner(EnvironmentRun run)
         {
             _run = run;
-        }
-
-        public IEnvironment FindEnvironment()
-        {
-            return (IEnvironment) Activator.CreateInstance(_run.FindEnvironmentType());
         }
 
         public IEnumerable<LogEntry> ExecuteEnvironment(params Action<IInstaller, IPackageLog>[] actions)
@@ -52,10 +46,10 @@ namespace FubuMVC.Core.Packaging.Environment
             {
                 AddPackagingLogEntries(list);
                 log.MarkFailure(ex.ToString());
-                list.Add(LogEntry.FromPackageLog(environment, log));
             }
             finally
             {
+                list.Add(LogEntry.FromPackageLog(environment, log));
                 environment.SafeDispose();
             }
         }
@@ -83,10 +77,12 @@ namespace FubuMVC.Core.Packaging.Environment
 
         private IEnvironment findEnvironment(List<LogEntry> list)
         {
+            var environmentType = _run.FindEnvironmentType();
+
             IEnvironment environment = null;
             try
             {
-                environment = FindEnvironment();
+                environment = (IEnvironment) Activator.CreateInstance(environmentType);
                 if (environment == null)
                 {
                     throw new EnvironmentRunnerException("Unable to find an IEnvironment object");
@@ -96,7 +92,7 @@ namespace FubuMVC.Core.Packaging.Environment
             {
                 list.Add(new LogEntry
                          {
-                             Description = "Finding the IEnvironment",
+                             Description = environmentType.FullName,
                              Success = false,
                              TraceText = e.ToString()
                          });

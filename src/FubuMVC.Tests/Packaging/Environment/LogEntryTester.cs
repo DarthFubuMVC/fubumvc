@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Packaging.Environment
 
             var log = LogEntry.FromPackageLog(this, packageLog);
             log.Success.ShouldBeTrue();
-            log.TraceText.ShouldEqual(packageLog.FullTraceText());
+            log.TraceText.ShouldEqual(packageLog.FullTraceText().Trim());
             log.Description.ShouldEqual(this.ToString());
         }
 
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Packaging.Environment
 
             var log = LogEntry.FromPackageLog(this, packageLog);
             log.Success.ShouldBeFalse();
-            log.TraceText.ShouldEqual(packageLog.FullTraceText());
+            log.TraceText.ShouldEqual(packageLog.FullTraceText().Trim());
             log.Description.ShouldEqual(this.ToString());
         }
     }
