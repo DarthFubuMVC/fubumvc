@@ -6,6 +6,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
+    [Serializable]
     public class PackageRegistryLog : IPackageLog
     {
         private readonly StringWriter _text = new StringWriter();

@@ -19,6 +19,7 @@ namespace FubuMVC.Core.Packaging
     public static class PackageRegistry
     {
         private static readonly IList<Assembly> _assemblies = new List<Assembly>();
+        private static readonly IList<IPackageInfo> _packages = new List<IPackageInfo>();
 
         static PackageRegistry()
         {
@@ -36,6 +37,11 @@ namespace FubuMVC.Core.Packaging
             }
         }
 
+        public static IEnumerable<IPackageInfo> Packages
+        {
+            get { return _packages; }
+        }
+
         public static void LoadPackages(Action<IPackageFacility> configuration)
         {
             var facility = new PackageFacility();
@@ -50,11 +56,14 @@ namespace FubuMVC.Core.Packaging
 
             graph.PopProvenance();
 
-            graph.DiscoverAndLoadPackages(() =>
+            var packages = graph.DiscoverAndLoadPackages(() =>
             {
                 _assemblies.Clear();
                 _assemblies.AddRange(assemblyLoader.Assemblies);
             });
+
+            _packages.Clear();
+            _packages.AddRange(packages);
         }
 
         public static PackagingDiagnostics Diagnostics { get; private set; }

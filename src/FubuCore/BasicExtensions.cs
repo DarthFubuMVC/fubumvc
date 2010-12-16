@@ -22,5 +22,16 @@ namespace FubuCore
             return target == null ? null : valueFunc();
         }
 
+        public static void SafeDispose(this IDisposable disposable)
+        {
+            try
+            {
+                disposable.Dispose();
+            }
+            catch (Exception)
+            {
+                // That's right, swallow that exception
+            }
+        }
     }
 }

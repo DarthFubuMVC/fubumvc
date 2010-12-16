@@ -43,12 +43,14 @@ namespace FubuMVC.Core.Packaging
             _provenanceStack.Pop();
         }
 
-        public void DiscoverAndLoadPackages(Action onAssembliesScanned)
+        public IEnumerable<IPackageInfo> DiscoverAndLoadPackages(Action onAssembliesScanned)
         {
             _packages = findAllPackages();
             loadAssemblies(_packages, onAssembliesScanned);
             var discoveredActivators = runAllBootstrappers();
             activatePackages(_packages, discoveredActivators);
+
+            return _packages;
         }
 
         private void activatePackages(List<IPackageInfo> packages, List<IActivator> discoveredActivators)
