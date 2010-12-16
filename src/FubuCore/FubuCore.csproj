@@ -114,6 +114,7 @@
     <Compile Include="CommandLine\CommandFactory.cs" />
     <Compile Include="CommandLine\CommandRun.cs" />
     <Compile Include="CommandLine\Flag.cs" />
+    <Compile Include="CommandLine\FlagAliasAttribute.cs" />
     <Compile Include="CommandLine\FubuCommand.cs" />
     <Compile Include="CommandLine\ICommandFactory.cs" />
     <Compile Include="CommandLine\IFubuCommand.cs" />

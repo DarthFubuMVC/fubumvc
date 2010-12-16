@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
@@ -51,6 +52,7 @@ namespace FubuCore.CommandLine
         public static string ToFlagName(PropertyInfo property)
         {
             var name = property.Name.Substring(0, property.Name.Length - 4);
+            property.ForAttribute<FlagAliasAttribute>(att => name = att.Alias);
 
             return FLAG_PREFIX + name.ToLower();
         }

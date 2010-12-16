@@ -35,7 +35,11 @@ namespace FubuMVC.Core
 
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
-            _facilitySource = facilitySource;
+            _facilitySource = () =>
+            {
+                _facility = facilitySource();
+                return _facility;
+            };
             return this;
         }
 
@@ -48,7 +52,9 @@ namespace FubuMVC.Core
         {
             return For(new T());
         }
-        
+
+        private IContainerFacility _facility;
+
         [SkipOverForProvenance]
         public void Bootstrap(ICollection<RouteBase> routes)
         {
@@ -124,7 +130,10 @@ namespace FubuMVC.Core
             return (IFubuRegistryExtension)Activator.CreateInstance(contextType);
         }
 
-
+        public IContainerFacility Facility
+        {
+            get { return _facility; }
+        }
     }
 
     public interface IContainerFacilityExpression

@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Packaging.Environment
             return AppDomain.CurrentDomain
                 .Load(AssemblyName)
                 .GetExportedTypes()
-                .First(x => TypeExtensions.CanBeCastTo<IEnvironment>(x));
+                .First(x => x.IsConcreteTypeOf<IEnvironment>());
         }
 
         public void AssertIsValid()

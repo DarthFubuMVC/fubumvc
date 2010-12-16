@@ -8,6 +8,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -76,6 +77,11 @@ namespace FubuMVC.StructureMap
         public IEnumerable<IActivator> GetAllActivators()
         {
             return _container.GetAllInstances<IActivator>();
+        }
+
+        public IEnumerable<IInstaller> GetAllInstallers()
+        {
+            return _container.GetAllInstances<IInstaller>();
         }
 
         public static IContainer GetBasicFubuContainer()

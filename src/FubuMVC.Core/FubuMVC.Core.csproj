@@ -141,6 +141,7 @@
     <Compile Include="Diagnostics\TimedReport.cs" />
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
+    <Compile Include="FubuEnvironment.cs" />
     <Compile Include="FubuMvcPackages.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />

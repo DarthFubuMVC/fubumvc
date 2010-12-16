@@ -71,6 +71,14 @@ namespace FubuCore.Testing.CommandLine
             InputParser.ToFlagName(property).ShouldEqual("-order");
         }
 
+
+        [Test]
+        public void get_the_flag_name_for_a_property_with_an_alias()
+        {
+            var property = ReflectionHelper.GetProperty<InputModel>(x => x.AliasedFlag);
+            InputParser.ToFlagName(property).ShouldEqual("-a");
+        }
+
         [Test]
         public void boolean_flag_does_not_catch()
         {
@@ -201,5 +209,8 @@ namespace FubuCore.Testing.CommandLine
         public Color Color { get; set; }
         public int OrderFlag { get; set; }
         public bool TrueFalseFlag { get; set; }
+
+        [FlagAlias("a")]
+        public string AliasedFlag { get; set; }
     }
 }
