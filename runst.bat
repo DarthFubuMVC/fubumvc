@@ -1,4 +1,4 @@
-lib\storyteller\StoryTellerUI.exe
+start lib\storyteller\StoryTellerUI.exe
 
 
 
