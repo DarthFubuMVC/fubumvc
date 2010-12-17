@@ -30,7 +30,7 @@ namespace FubuValidation.Registration
             {
                 var targetRule = source
                                     .RulesFor(accessor.OwnerType)
-                                    .FirstOrDefault(rule => typeof (T) == _typeResolver.ResolveType(rule))
+                                    .FirstOrDefault(rule => typeof (T) == _typeResolver.ResolveType(rule) && rule.AppliesTo(accessor))
                                     .As<T>();
 
                 if(targetRule != null)
@@ -42,19 +42,19 @@ namespace FubuValidation.Registration
             return null;
         }
 
-        public T GetStrategy<T>(Accessor accessor) 
-            where T : class, IFieldValidationStrategy
+        public T GetStrategy<T>(Accessor accessor)
+			where T : class, IFieldValidationStrategy
         {
             foreach (var source in _sources)
             {
                 var fieldRules = source
                                     .RulesFor(accessor.OwnerType)
-                                    .Where(rule => typeof(FieldRule) == rule.GetType())
+                                    .Where(rule => typeof(FieldRule) == rule.GetType() && rule.AppliesTo(accessor))
                                     .Cast<FieldRule>();
 
                 foreach (var fieldRule in fieldRules)
                 {
-                    if (typeof(IFieldValidationStrategy) == _typeResolver.ResolveType(fieldRule.Strategy))
+					if (typeof(T) == _typeResolver.ResolveType(fieldRule.Strategy))
                     {
                         return fieldRule.Strategy.As<T>();
                     }
@@ -83,35 +83,16 @@ namespace FubuValidation.Registration
             }
         }
 
-        public bool HasRule<T>(Accessor accessor) where T : IValidationRule
+        public bool HasRule<T>(Accessor accessor) 
+			where T : class, IValidationRule
         {
-            foreach (var source in _sources)
-            {
-                if(source.RulesFor(accessor.OwnerType).Any(rule => typeof (T) == _typeResolver.ResolveType(rule)))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return GetRule<T>(accessor) != null;
         }
 
-        public bool HasStrategy<T>(Accessor accessor) where T : IFieldValidationStrategy
+        public bool HasStrategy<T>(Accessor accessor)
+			where T : class, IFieldValidationStrategy
         {
-            foreach (var source in _sources)
-            {
-                var targetRule = source
-                    .RulesFor(accessor.OwnerType)
-                    .FirstOrDefault(rule => typeof(FieldRule) == rule.GetType())
-                    .As<FieldRule>();
-
-                if (targetRule != null && typeof(IFieldValidationStrategy) == _typeResolver.ResolveType(targetRule.Strategy))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+        	return GetStrategy<T>(accessor) != null;
         }
     }
 }

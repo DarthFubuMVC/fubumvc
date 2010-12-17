@@ -5,6 +5,6 @@ namespace FubuValidation.Registration
 {
     public interface IValidationSource
     {
-        IEnumerable<IValidationRule> RulesFor(Type type);
+		IEnumerable<IValidationRule> RulesFor(Type type);
     }
 }

@@ -30,9 +30,18 @@ namespace FubuMVC.Core.Packaging
             if (!Path.GetDirectoryName(file).EqualsIgnoreCase(appBinPath))
             {
                 var destFileName = FileSystem.Combine(appBinPath, Path.GetFileName(file));
-                File.Copy(file, destFileName, true);
+                if (shouldUpdateFile(file, destFileName))
+                {
+                    File.Copy(file, destFileName, true);
+                }
             }
             return Assembly.Load(assemblyName);
+        }
+
+        private static bool shouldUpdateFile(string source, string destination)
+        {
+            if (!File.Exists(destination)) return true;
+            return File.GetLastWriteTimeUtc(source) != File.GetLastWriteTimeUtc(destination);
         }
 
         private bool hasAssemblyByName(string assemblyName)

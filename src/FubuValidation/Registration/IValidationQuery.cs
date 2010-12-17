@@ -11,7 +11,7 @@ namespace FubuValidation.Registration
         T GetStrategy<T>(Accessor accessor) where T : class, IFieldValidationStrategy;
         void ForRule<T>(Accessor accessor, Action<T, Accessor> action) where T : class, IValidationRule;
         void ForStrategy<T>(Accessor accessor, Action<T, Accessor> action) where T : class, IFieldValidationStrategy;
-        bool HasRule<T>(Accessor accessor) where T : IValidationRule;
-        bool HasStrategy<T>(Accessor accessor) where T : IFieldValidationStrategy;
+        bool HasRule<T>(Accessor accessor) where T : class, IValidationRule;
+		bool HasStrategy<T>(Accessor accessor) where T : class, IFieldValidationStrategy;
     }
 }
