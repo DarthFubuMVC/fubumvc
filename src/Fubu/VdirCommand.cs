@@ -39,7 +39,7 @@ namespace Fubu
         }
     }
 
-    [CommandDescription("Creates virtual directories in IIS")]
+    [CommandDescription("Appends to virtual directories in IIS")]
     public class AppendVdirCommand : FubuCommand<VdirAppendInput>
     {
         public override void Execute(VdirAppendInput input)

@@ -4,10 +4,10 @@ using System.Xml.Serialization;
 
 namespace FubuMVC.Core.Packaging
 {
-    [XmlType("package-includes")]
-    public class PackageIncludeManifest
+    [XmlType("application")]
+    public class ApplicationManifest
     {
-        public static readonly string FILE = ".fubu-includes";
+        public static readonly string FILE = ".fubu-manifest";
         private readonly IList<string> _folders = new List<string>();
 
         [XmlElement("include")]
@@ -23,6 +23,10 @@ namespace FubuMVC.Core.Packaging
                 if (value != null) _folders.AddRange(value.Select(x => x.ToLower()));
             }
         }
+
+        public string EnvironmentClassName { get; set; }
+        public string EnvironmentAssembly { get; set; }
+        public string ConfigurationFile { get; set; }
 
         public bool Include(string folder)
         {

@@ -186,7 +186,7 @@
     <Compile Include="Packaging\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\FileSystemVirtualPathProvider.cs" />
     <Compile Include="Packaging\IActivator.cs" />
-    <Compile Include="Packaging\PackageIncludeManifest.cs" />
+    <Compile Include="Packaging\ApplicationManifest.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
     <Compile Include="Packaging\PackageManifestReader.cs" />

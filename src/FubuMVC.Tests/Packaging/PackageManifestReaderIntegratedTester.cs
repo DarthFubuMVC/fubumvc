@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Packaging
         [TearDown]
         public void TearDown()
         {
-            new FileSystem().DeleteFile("../../".ToFullPath(), PackageIncludeManifest.FILE);
+            new FileSystem().DeleteFile("../../".ToFullPath(), ApplicationManifest.FILE);
         }
 
 
@@ -74,10 +74,10 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void load_all_packages_by_reading_the_include_folder()
         {
-            var includes = new PackageIncludeManifest();
+            var includes = new ApplicationManifest();
             includes.Include("../TestPackage1");
 
-            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageIncludeManifest.FILE);
+            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), ApplicationManifest.FILE);
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));

@@ -69,19 +69,13 @@ namespace FubuCore.CommandLine
 
         public override void Execute(IEnumerable<Type> types)
         {
-            Console.WriteLine();
-            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine("Available commands:");
-            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
-
-            var maximumLength = types.Select(CommandNameFor).Max(x => x.Length);
-            var format = "  {0," + maximumLength + "} -> {1}";
-
+            var report = new TwoColumnReport("Available commands:");
             types.OrderBy(CommandNameFor).Each(type =>
             {
-                Console.WriteLine(format, CommandNameFor(type), DescriptionFor(type));
+                report.Add(CommandNameFor(type), DescriptionFor(type));
             });
-            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
+
+            report.Write();
         }
 
         public virtual CommandRun HelpRun()

@@ -47,14 +47,14 @@ namespace Fubu
         {
             if (input.CleanAllFlag)
             {
-                fileSystem.DeleteFile(input.AppFolder, PackageIncludeManifest.FILE);
+                fileSystem.DeleteFile(input.AppFolder, ApplicationManifest.FILE);
 
                 Console.WriteLine("Deleted the package include manifest file for " + input.AppFolder);
                 return;
             }
             
-            var manifest = fileSystem.LoadFromFile<PackageIncludeManifest>(input.AppFolder,
-                                                                           PackageIncludeManifest.FILE);
+            var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.AppFolder,
+                                                                           ApplicationManifest.FILE);
 
             if (input.PackageFolder.IsNotEmpty())
             {
@@ -68,29 +68,35 @@ namespace Fubu
 
             if (input.NotepadFlag)
             {
-                fileSystem.OpenInNotepad(input.AppFolder, PackageIncludeManifest.FILE);
+                fileSystem.OpenInNotepad(input.AppFolder, ApplicationManifest.FILE);
             }
         }
 
-        private void listCurrentLinks(LinkInput input, PackageIncludeManifest manifest)
+        private void listCurrentLinks(LinkInput input, ApplicationManifest manifest)
         {
-            Console.WriteLine("Links for " + input.AppFolder);
+            var appFolder = input.AppFolder;
+
+            ListCurrentLinks(appFolder, manifest);
+        }
+
+        public static void ListCurrentLinks(string appFolder, ApplicationManifest manifest)
+        {
+            
             if (manifest.Folders.Any())
             {
+                Console.WriteLine("  Links for " + appFolder);
                 manifest.Folders.Each(x =>
                 {
-                    Console.WriteLine("  " + x);
+                    Console.WriteLine("    " + x);
                 });
             }
             else
             {
-                Console.WriteLine("No package links for " + input.AppFolder);
+                Console.WriteLine("  No package links for " + appFolder);
             }
-
-
         }
 
-        private void updateManifest(LinkInput input, FileSystem fileSystem, PackageIncludeManifest manifest)
+        private void updateManifest(LinkInput input, FileSystem fileSystem, ApplicationManifest manifest)
         {
             if (input.RemoveFlag)
             {
@@ -101,16 +107,16 @@ namespace Fubu
                 add(fileSystem, input, manifest);
             }
 
-            fileSystem.PersistToFile(manifest, input.AppFolder, PackageIncludeManifest.FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
         }
 
-        private void remove(LinkInput input, PackageIncludeManifest manifest)
+        private void remove(LinkInput input, ApplicationManifest manifest)
         {
             manifest.Exclude(input.RelativePathOfPackage());
             Console.WriteLine("Folder {0} was removed from the application at {1}", input.PackageFolder, input.AppFolder);
         }
 
-        private void add(IFileSystem system, LinkInput input, PackageIncludeManifest manifest)
+        private void add(IFileSystem system, LinkInput input, ApplicationManifest manifest)
         {
             var exists = system.FileExists(input.PackageFolder, PackageManifest.FILE);
             if (!exists)

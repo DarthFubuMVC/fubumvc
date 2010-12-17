@@ -90,6 +90,7 @@
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Commands\AliasLibraryTester.cs" />
+    <Compile Include="Commands\ManifestCommandTester.cs" />
     <Compile Include="Content\ContentRegistryCacheTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\PackagedImageUrlResolverTester.cs" />
