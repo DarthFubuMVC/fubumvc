@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,7 +50,9 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AliasCommand.cs" />
+    <Compile Include="EntryLogWriter.cs" />
     <Compile Include="InitPakCommand.cs" />
+    <Compile Include="InstallCommand.cs" />
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
     <Compile Include="OpenPackageCommand.cs" />
@@ -66,6 +69,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

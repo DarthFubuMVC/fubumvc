@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Packaging.Environment
 {
-    public class EnvironmentAppDomain : IEnvironmentProxy
+    public class EnvironmentGateway : IEnvironmentProxy
     {
         private readonly EnvironmentRun _run;
 
-        public EnvironmentAppDomain(EnvironmentRun run)
+        public EnvironmentGateway(EnvironmentRun run)
         {
             _run = run;
         }

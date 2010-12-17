@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -43,5 +44,6 @@ namespace FubuMVC.Core.Packaging
         {
             _folders.Remove(folder.ToLower());
         }
+
     }
 }

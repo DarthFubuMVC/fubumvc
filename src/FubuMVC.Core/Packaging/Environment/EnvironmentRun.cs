@@ -20,6 +20,9 @@ namespace FubuMVC.Core.Packaging.Environment
         // Use web.config if it exists?
         public string ConfigurationFile { get; set; }
 
+        // Can be different than ApplicationBase.  Thanks ASP.Net
+        public string ApplicationDirectory { get; set; }
+
         public AppDomainSetup BuildAppDomainSetup()
         {
             return new AppDomainSetup{
@@ -30,7 +33,7 @@ namespace FubuMVC.Core.Packaging.Environment
             };
         }
 
-
+        // TODO -- harden with a better exception
         public Type FindEnvironmentType()
         {
             if (EnvironmentClassName.IsNotEmpty())

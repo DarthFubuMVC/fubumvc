@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using FubuCore.Util;
+using FubuCore;
+using System.Linq;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -60,6 +62,16 @@ namespace FubuMVC.Core.Packaging
 
         public void ForData(string searchPattern, Action<string, Stream> dataCallback)
         {
+            // Guard clause for the folder not existing
+            var dirParts = searchPattern.Replace('\\', '/').Split('/');
+            if (dirParts.Count() > 1)
+            {
+                var rootDir = dirParts.Take(dirParts.Length - 1).Join("/");
+                if (rootDir.IsNotEmpty() && !Directory.Exists(FileSystem.Combine(_directories[DataFolder], rootDir))) return; 
+            }
+
+            
+
             Directory.GetFiles(_directories[DataFolder], searchPattern, SearchOption.AllDirectories).Each(fileName =>
             {
                 var name = Path.GetFileName(fileName);
@@ -69,9 +81,6 @@ namespace FubuMVC.Core.Packaging
                 }
             });
         }
-
-        //public IEnumerable<Assembly> Assemblies { get; set; }
-        //public string FilesFolder { get; set; }
 
         public override string ToString()
         {

@@ -161,7 +161,7 @@
     <Compile Include="Packaging\AssemblyLoader.cs" />
     <Compile Include="Packaging\AssemblyPackageInfo.cs" />
     <Compile Include="Packaging\AssemblyPackageLoader.cs" />
-    <Compile Include="Packaging\Environment\EnvironmentAppDomain.cs" />
+    <Compile Include="Packaging\Environment\EnvironmentGateway.cs" />
     <Compile Include="Packaging\Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Packaging\Environment\EnvironmentProxy.cs" />
     <Compile Include="Packaging\Environment\EnvironmentRun.cs" />

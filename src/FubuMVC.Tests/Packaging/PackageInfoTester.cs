@@ -56,6 +56,12 @@ namespace FubuMVC.Tests.Packaging
         }
 
         [Test]
+        public void happily_do_nothing_if_caller_requests_a_folder_That_does_not_exist()
+        {
+            thePackage.ForData("nonexistent/*.xml", (x, y) => Assert.Fail("Not supposed to call this"));
+        }
+
+        [Test]
         public void read_data_with_just_the_extension()
         {
             writeText("data/a.txt", "a");

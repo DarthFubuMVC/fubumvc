@@ -183,7 +183,14 @@ table.details TH
 	background-color: #FFFFAA;
 }
 
+pre.failure
+{
+	font-size:smaller;
+	overflow:scroll;
+}
+
 .log
 {
 	padding-left: 20px;
 }
+

@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public static HtmlDocument BuildDocument(IUrlRegistry urls, string title, params HtmlTag[] tags)
         {
-            var css = GetResourceText(typeof(BehaviorGraphWriter), "diagnostics.css");
+            string css = GetDiagnosticCss();
 
             var realTitle = "FubuMVC: " + title;
 
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Diagnostics
             var mainDiv = new HtmlTag("div").AddClass("main");
             mainDiv.Add("h2").Text("FubuMVC Diagnostics").Child(buildVersionTag());
             var navBar = mainDiv.Add("div").AddClass("homelink");
-            navBar.AddChildren(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
+            if (urls != null) navBar.AddChildren(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
             navBar.Add("span").Text(" > " + title);
             document.Add(mainDiv);
 
@@ -34,6 +34,11 @@ namespace FubuMVC.Core.Diagnostics
             document.AddStyle(css);
 
             return document;
+        }
+
+        public static string GetDiagnosticCss()
+        {
+            return GetResourceText(typeof(BehaviorGraphWriter), "diagnostics.css");
         }
 
         public static string GetResourceText(Type type, string filename)

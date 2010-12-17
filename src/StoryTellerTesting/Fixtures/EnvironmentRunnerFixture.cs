@@ -45,7 +45,7 @@ namespace IntegrationTesting.Fixtures
                 EnvironmentClassName = className
             };
 
-            var domain = new EnvironmentAppDomain(run);
+            var domain = new EnvironmentGateway(run);
             _installLogs = domain.Install();
             _environmentLogs = domain.CheckEnvironment();
             _allLogs = domain.InstallAndCheckEnvironment();

@@ -32,7 +32,18 @@ namespace FubuMVC.Core.Packaging
 
         public static string GetApplicationPath()
         {
-            return PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath;
+            return PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
+        }
+
+        private static string determineApplicationPathFromAppDomain()
+        {
+            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            if (basePath.EndsWith("bin"))
+            {
+                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd('/').TrimEnd('\\');
+            }
+
+            return basePath;
         }
 
         public static string PhysicalRootPath { get; set; }
