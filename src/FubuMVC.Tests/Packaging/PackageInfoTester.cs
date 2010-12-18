@@ -57,6 +57,25 @@ namespace FubuMVC.Tests.Packaging
         }
 
         [Test]
+        public void get_the_file_names()
+        {
+            writeText("data/st/a.txt", "a");
+            writeText("data/st/b.txt", "b");
+            writeText("data/c.txt", "c");
+            writeText("data/st/d.t2", "d");
+            writeText("data/e.t2", "e");
+
+            var list = new List<string>();
+            thePackage.ForData("*.*", (name, stream) =>
+            {
+                list.Add(name);
+            });
+
+            list.Sort();
+            list.ShouldHaveTheSameElementsAs("c.txt", "e.t2", "st/a.txt", "st/b.txt", "st/d.t2");
+        }
+
+        [Test]
         public void read_data_with_just_the_extension()
         {
             writeText("data/a.txt", "a");

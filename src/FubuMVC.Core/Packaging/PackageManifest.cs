@@ -34,5 +34,7 @@ namespace FubuMVC.Core.Packaging
                 return _assemblyNames;
             }
         }
+
+
     }
 }

@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -60,7 +63,7 @@
     <Compile Include="InstallMode.cs" />
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
-    <Compile Include="OpenPackageCommand.cs" />
+    <Compile Include="CreatePackageCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />

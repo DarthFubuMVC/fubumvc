@@ -64,17 +64,16 @@ namespace FubuMVC.Core.Packaging
         {
             // Guard clause for the folder not existing
             var dirParts = searchPattern.Replace('\\', '/').Split('/');
+            var dataFolderPath = _directories[DataFolder].ToFullPath();
             if (dirParts.Count() > 1)
             {
                 var rootDir = dirParts.Take(dirParts.Length - 1).Join("/");
-                if (rootDir.IsNotEmpty() && !Directory.Exists(FileSystem.Combine(_directories[DataFolder], rootDir))) return; 
+                if (rootDir.IsNotEmpty() && !Directory.Exists(FileSystem.Combine(dataFolderPath, rootDir))) return; 
             }
 
-            
-
-            Directory.GetFiles(_directories[DataFolder], searchPattern, SearchOption.AllDirectories).Each(fileName =>
+            Directory.GetFiles(dataFolderPath, searchPattern, SearchOption.AllDirectories).Each(fileName =>
             {
-                var name = Path.GetFileName(fileName);
+                var name = fileName.PathRelativeTo(dataFolderPath).Replace("\\", "/");
                 using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                 {
                     dataCallback(name, stream);
