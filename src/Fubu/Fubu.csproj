@@ -51,8 +51,13 @@
     </Compile>
     <Compile Include="AliasCommand.cs" />
     <Compile Include="EntryLogWriter.cs" />
+    <Compile Include="IInstallationLogger.cs" />
     <Compile Include="InitPakCommand.cs" />
+    <Compile Include="InstallationLogger.cs" />
+    <Compile Include="InstallationRunner.cs" />
     <Compile Include="InstallCommand.cs" />
+    <Compile Include="InstallInput.cs" />
+    <Compile Include="InstallMode.cs" />
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
     <Compile Include="OpenPackageCommand.cs" />

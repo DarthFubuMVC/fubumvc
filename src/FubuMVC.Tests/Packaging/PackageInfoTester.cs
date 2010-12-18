@@ -37,11 +37,6 @@ namespace FubuMVC.Tests.Packaging
                 File.Delete(name);
             }
 
-            //if (name.Contains("/"))
-            //{
-                
-            //}
-
             File.WriteAllText(name, text);
         }
         

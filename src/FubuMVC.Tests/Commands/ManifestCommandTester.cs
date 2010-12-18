@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Commands
         protected override void beforeEach()
         {
             theInput = new ManifestInput(){
-                Folder = "some folder"
+                AppFolder = "some folder"
             };
 
             theManifest = new ApplicationManifest();
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.Commands
             theInput.CreateFlag = false;
 
             Services.PartialMockTheClassUnderTest();
-            ClassUnderTest.Expect(x => x.WriteManifestCannotBeFound(theInput.Folder));
+            ClassUnderTest.Expect(x => x.WriteManifestCannotBeFound(theInput.AppFolder));
 
             theManifestFileDoesNotExist();
             
@@ -87,13 +87,13 @@ namespace FubuMVC.Tests.Commands
 
         private void theManifestFileDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.Folder, ApplicationManifest.FILE)).Return(false);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(false);
         }
 
         private void theManifestFileExists()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.Folder, ApplicationManifest.FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.Folder, ApplicationManifest.FILE)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.FILE)).Return(theManifest);
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.Commands
 
             Services.PartialMockTheClassUnderTest();
 
-            ClassUnderTest.Expect(x => x.WriteCannotOverwriteFileWithoutForce(theInput.Folder));
+            ClassUnderTest.Expect(x => x.WriteCannotOverwriteFileWithoutForce(theInput.AppFolder));
 
             execute();
 
@@ -156,7 +156,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IFileSystem>().AssertWasCalled(x => x.OpenInNotepad(theInput.Folder, ApplicationManifest.FILE));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.OpenInNotepad(theInput.AppFolder, ApplicationManifest.FILE));
         }
     }
 }

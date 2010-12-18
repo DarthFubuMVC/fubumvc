@@ -149,7 +149,16 @@ namespace FubuCore
 
             using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-                return (T)serializer.Deserialize(stream);
+                try
+                {
+                    return (T)serializer.Deserialize(stream);
+                }
+                catch (Exception e)
+                {
+                    var message = "Unable to deserialize the contents of file {0} into an instance of type {1}"
+                        .ToFormat(filename, typeof (T).FullName);
+                    throw new ApplicationException(message, e);
+                }
             }
         }
 

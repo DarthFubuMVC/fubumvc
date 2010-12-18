@@ -5,17 +5,14 @@ using FubuCore.CommandLine;
 
 namespace Fubu
 {
-
     public class VdirInput
     {
         private string _folder;
+
         public string Folder
         {
             get { return _folder; }
-            set
-            {
-                _folder = Path.GetFullPath(value.TrimEnd('/').TrimEnd('\\'));
-            }
+            set { _folder = Path.GetFullPath(value.TrimEnd('/').TrimEnd('\\')); }
         }
 
         public string VirtualDirectory { get; set; }
@@ -32,7 +29,7 @@ namespace Fubu
         public override void Execute(VdirInput input)
         {
             VDirTool.CreateVDirApp(input);
-            new AliasCommand().Execute(new AliasInput(){
+            new AliasCommand().Execute(new AliasInput{
                 Folder = input.Folder,
                 Name = input.VirtualDirectory
             });
@@ -109,7 +106,7 @@ namespace Fubu
                     @"*,%SystemRoot%\Microsoft.Net\Framework\v2.0.50727\aspnet_isapi.dll,0,All");
             }
 
-            var applicationType = new object[] { 0 };
+            var applicationType = new object[]{0};
             vDir.Invoke("AppCreate2", applicationType);
 
             vDir.CommitChanges();
@@ -147,10 +144,10 @@ namespace Fubu
         {
             using (var entry = new DirectoryEntry("IIS://localhost/W3SVC/Info"))
             {
-                var major = (int)entry.Properties["MajorIIsVersionNumber"].Value;
-                var minor = (int)entry.Properties["MinorIIsVersionNumber"].Value;
+                var major = (int) entry.Properties["MajorIIsVersionNumber"].Value;
+                var minor = (int) entry.Properties["MinorIIsVersionNumber"].Value;
 
-                return new[] { major, minor };
+                return new[]{major, minor};
             }
         }
 
@@ -161,7 +158,7 @@ namespace Fubu
                                                                   "/", virtualDirectory));
             try
             {
-                string name = directoryEntry.Name;
+                var name = directoryEntry.Name;
                 return true;
             }
             catch
@@ -173,10 +170,10 @@ namespace Fubu
         internal static void delete(string rootWeb, string virtualDirectory)
         {
             var root = new DirectoryEntry(rootWeb);
-            DirectoryEntry vdir = root.Children.Find(virtualDirectory, root.SchemaClassName);
+            var vdir = root.Children.Find(virtualDirectory, root.SchemaClassName);
 
             // Remove Entry from container.
-            string strName = vdir.Name;
+            var strName = vdir.Name;
             root.Children.Remove(vdir);
             Console.WriteLine(strName + " entry was removed from container.");
             root.CommitChanges();

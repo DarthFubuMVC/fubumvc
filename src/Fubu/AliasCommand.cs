@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.CommandLine;
-using System.Linq;
 
 namespace Fubu
 {
@@ -66,15 +66,15 @@ namespace Fubu
             var format = "  {0," + maximumLength + "} -> {1}";
 
             Console.WriteLine();
-            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine(
+                "----------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine(" Aliases:");
-            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine(
+                "----------------------------------------------------------------------------------------------------------------------");
 
-            registry.Aliases.OrderBy(x => x.Name).Each(x =>
-            {
-                Console.WriteLine(format, x.Name, x.Folder);
-            });
-            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
+            registry.Aliases.OrderBy(x => x.Name).Each(x => { Console.WriteLine(format, x.Name, x.Folder); });
+            Console.WriteLine(
+                "----------------------------------------------------------------------------------------------------------------------");
         }
 
         private void persist(IFileSystem system, AliasRegistry registry)
@@ -92,10 +92,7 @@ namespace Fubu
 
         public AliasToken[] Aliases
         {
-            get
-            {
-                return _aliases.ToArray();
-            }
+            get { return _aliases.ToArray(); }
             set
             {
                 _aliases.Clear();
@@ -108,7 +105,7 @@ namespace Fubu
             var token = AliasFor(alias);
             if (token == null)
             {
-                token = new AliasToken(){
+                token = new AliasToken{
                     Folder = folder,
                     Name = alias
                 };
@@ -137,17 +134,8 @@ namespace Fubu
     {
         [XmlAttribute("name")]
         public string Name { get; set; }
-        
+
         [XmlAttribute("folder")]
         public string Folder { get; set; }
     }
-
-
-
-
-
-
-
-
-
 }

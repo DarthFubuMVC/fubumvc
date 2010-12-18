@@ -1,4 +1,3 @@
-using System;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;

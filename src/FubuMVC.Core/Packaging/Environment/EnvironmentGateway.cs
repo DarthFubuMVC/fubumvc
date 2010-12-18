@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Packaging.Environment
 {
-    public class EnvironmentGateway : IEnvironmentProxy
+    public class EnvironmentGateway : IEnvironmentGateway
     {
         private readonly EnvironmentRun _run;
 

@@ -2,7 +2,7 @@
 
 namespace FubuMVC.Core.Packaging.Environment
 {
-    public interface IEnvironmentProxy
+    public interface IEnvironmentGateway
     {
         IEnumerable<LogEntry> Install();
         IEnumerable<LogEntry> CheckEnvironment();

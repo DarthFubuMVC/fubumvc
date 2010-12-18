@@ -5,20 +5,21 @@ using FubuMVC.Core.Packaging;
 
 namespace Fubu
 {
-    
     public class ManifestInput
     {
-        public string Folder { get; set; }
+        public string AppFolder { get; set; }
         public bool OpenFlag { get; set; }
         public bool CreateFlag { get; set; } // creates, but does not override
-        
+
         [FlagAlias("f")]
-        public bool ForceFlag { get; set; } // forces the override
+        public bool ForceFlag { get; set; }
+
+        // forces the override
 
         public string AssemblyFlag { get; set; }
 
         [FlagAlias("class")]
-        public string EnvironmentClassNameFlag { get; set; }        
+        public string EnvironmentClassNameFlag { get; set; }
     }
 
     [CommandDescription("Access an application manifest file")]
@@ -26,11 +27,10 @@ namespace Fubu
     {
         public override void Execute(ManifestInput input)
         {
-            input.Folder = AliasCommand.AliasFolder(input.Folder);
+            input.AppFolder = AliasCommand.AliasFolder(input.AppFolder);
             Execute(input, new FileSystem());
         }
 
-        
 
         public virtual bool ApplyChanges(ManifestInput input, ApplicationManifest manifest)
         {
@@ -53,7 +53,7 @@ namespace Fubu
 
         public void Execute(ManifestInput input, IFileSystem fileSystem)
         {
-            if (fileSystem.FileExists(input.Folder, ApplicationManifest.FILE))
+            if (fileSystem.FileExists(input.AppFolder, ApplicationManifest.FILE))
             {
                 if (input.CreateFlag)
                 {
@@ -66,7 +66,7 @@ namespace Fubu
 
                 if (input.OpenFlag)
                 {
-                    fileSystem.OpenInNotepad(input.Folder, ApplicationManifest.FILE);
+                    fileSystem.OpenInNotepad(input.AppFolder, ApplicationManifest.FILE);
                 }
             }
             else
@@ -77,14 +77,14 @@ namespace Fubu
                 }
                 else
                 {
-                    WriteManifestCannotBeFound(input.Folder);
+                    WriteManifestCannotBeFound(input.AppFolder);
                 }
             }
         }
 
         private void modifyAndListExistingManifest(IFileSystem fileSystem, ManifestInput input)
         {
-            var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.Folder, ApplicationManifest.FILE);
+            var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.AppFolder, ApplicationManifest.FILE);
             if (ApplyChanges(input, manifest))
             {
                 persist(fileSystem, input, manifest);
@@ -101,7 +101,7 @@ namespace Fubu
             }
             else
             {
-                WriteCannotOverwriteFileWithoutForce(input.Folder);
+                WriteCannotOverwriteFileWithoutForce(input.AppFolder);
             }
         }
 
@@ -115,22 +115,22 @@ namespace Fubu
 
             if (input.OpenFlag)
             {
-                fileSystem.OpenInNotepad(input.Folder, ApplicationManifest.FILE);
+                fileSystem.OpenInNotepad(input.AppFolder, ApplicationManifest.FILE);
             }
         }
 
         private void persist(IFileSystem fileSystem, ManifestInput input, ApplicationManifest manifest)
         {
             Console.WriteLine("");
-            Console.WriteLine("Persisted changes to " + fileSystem.Combine(input.Folder, ApplicationManifest.FILE));
+            Console.WriteLine("Persisted changes to " + fileSystem.Combine(input.AppFolder, ApplicationManifest.FILE));
             Console.WriteLine("");
 
-            fileSystem.PersistToFile(manifest, input.Folder, ApplicationManifest.FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
         }
 
         public virtual void WriteManifest(ManifestInput input, ApplicationManifest manifest)
         {
-            var title = "Application Manifest for " + FileSystem.Combine(input.Folder, ApplicationManifest.FILE);
+            var title = "Application Manifest for " + FileSystem.Combine(input.AppFolder, ApplicationManifest.FILE);
             var report = new TwoColumnReport(title);
             report.Add<ApplicationManifest>(x => x.EnvironmentAssembly, manifest);
             report.Add<ApplicationManifest>(x => x.EnvironmentClassName, manifest);
@@ -140,8 +140,8 @@ namespace Fubu
 
             Console.WriteLine();
             Console.WriteLine();
-            
-            LinkCommand.ListCurrentLinks(input.Folder, manifest);
+
+            LinkCommand.ListCurrentLinks(input.AppFolder, manifest);
         }
 
         public virtual void WriteManifestCannotBeFound(string folder)

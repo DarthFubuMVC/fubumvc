@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging.Environment;
 using HtmlTags;
-using System.Linq;
 
 namespace Fubu
 {

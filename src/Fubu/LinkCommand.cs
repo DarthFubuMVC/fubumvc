@@ -1,11 +1,10 @@
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Fubu
 {
@@ -27,8 +26,6 @@ namespace Fubu
         }
     }
 
-    
-
 
     [CommandDescription("Links a package folder to an application folder in development mode")]
     public class LinkCommand : FubuCommand<LinkInput>
@@ -38,7 +35,6 @@ namespace Fubu
             input.AppFolder = AliasCommand.AliasFolder(input.AppFolder);
             input.PackageFolder = AliasCommand.AliasFolder(input.PackageFolder);
 
-            
 
             Execute(input, new FileSystem());
         }
@@ -52,9 +48,9 @@ namespace Fubu
                 Console.WriteLine("Deleted the package include manifest file for " + input.AppFolder);
                 return;
             }
-            
+
             var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.AppFolder,
-                                                                           ApplicationManifest.FILE);
+                                                                        ApplicationManifest.FILE);
 
             if (input.PackageFolder.IsNotEmpty())
             {
@@ -64,7 +60,7 @@ namespace Fubu
             {
                 listCurrentLinks(input, manifest);
             }
-            
+
 
             if (input.NotepadFlag)
             {
@@ -81,14 +77,10 @@ namespace Fubu
 
         public static void ListCurrentLinks(string appFolder, ApplicationManifest manifest)
         {
-            
             if (manifest.Folders.Any())
             {
                 Console.WriteLine("  Links for " + appFolder);
-                manifest.Folders.Each(x =>
-                {
-                    Console.WriteLine("    " + x);
-                });
+                manifest.Folders.Each(x => { Console.WriteLine("    " + x); });
             }
             else
             {
@@ -121,7 +113,8 @@ namespace Fubu
             var exists = system.FileExists(input.PackageFolder, PackageManifest.FILE);
             if (!exists)
             {
-                throw new ApplicationException("There is no package manifest file for the requested package folder at " + input.PackageFolder);
+                throw new ApplicationException(
+                    "There is no package manifest file for the requested package folder at " + input.PackageFolder);
             }
 
             var wasAdded = manifest.Include(input.RelativePathOfPackage());

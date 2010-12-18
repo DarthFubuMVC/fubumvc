@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -19,11 +18,11 @@ namespace Fubu
     {
         public override void Execute(InitPakInput input)
         {
-            new AliasCommand().Execute(new AliasInput(){
+            new AliasCommand().Execute(new AliasInput{
                 Folder = input.Folder,
                 Name = input.AliasFlag ?? input.Name.ToLower()
             });
-            
+
             Execute(input, new FileSystem());
         }
 
@@ -31,7 +30,7 @@ namespace Fubu
         {
             var assemblyName = Path.GetFileName(input.Folder);
 
-            var manifest = new PackageManifest(){
+            var manifest = new PackageManifest{
                 Name = input.Name,
                 Assemblies = assemblyName
             };
