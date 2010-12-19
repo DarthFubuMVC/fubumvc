@@ -49,8 +49,7 @@ namespace Fubu
                 return;
             }
 
-            var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.AppFolder,
-                                                                        ApplicationManifest.FILE);
+            var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
 
             if (input.PackageFolder.IsNotEmpty())
             {

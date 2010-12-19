@@ -59,10 +59,10 @@ namespace FubuMVC.Core.Packaging
 
         private static IEnumerable<string> findCandidateAssemblyFiles(string binPath)
         {
-            return Directory.GetFiles(binPath).Where(isPotentiallyAnAssembly);
+            return Directory.GetFiles(binPath).Where(IsPotentiallyAnAssembly);
         }
 
-        private static bool isPotentiallyAnAssembly(string file)
+        public static bool IsPotentiallyAnAssembly(string file)
         {
             var extension = Path.GetExtension(file);
             return extension.Equals(".exe", StringComparison.OrdinalIgnoreCase) ||

@@ -53,7 +53,7 @@ namespace Fubu
 
         public void Execute(ManifestInput input, IFileSystem fileSystem)
         {
-            if (fileSystem.FileExists(input.AppFolder, ApplicationManifest.FILE))
+            if (fileSystem.ApplicationManifestExists(input.AppFolder))
             {
                 if (input.CreateFlag)
                 {
@@ -84,7 +84,7 @@ namespace Fubu
 
         private void modifyAndListExistingManifest(IFileSystem fileSystem, ManifestInput input)
         {
-            var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.AppFolder, ApplicationManifest.FILE);
+            var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
             if (ApplyChanges(input, manifest))
             {
                 persist(fileSystem, input, manifest);

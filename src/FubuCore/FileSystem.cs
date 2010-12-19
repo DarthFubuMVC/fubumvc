@@ -15,6 +15,7 @@ namespace FubuCore
         void OpenInNotepad(params string[] parts);
         void CreateDirectory(string directory);
         string Combine(params string[] paths);
+        void DeleteFile(params string[] path);
     }
 
     public class FileSystem : IFileSystem
