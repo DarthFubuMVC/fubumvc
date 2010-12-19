@@ -48,6 +48,7 @@ namespace Fubu.Packages
         public string RootDirectory { get; set; }
         public string ZipDirectory { get; set; }
 
+        // TODO -- need to unit test this little beastie
         public void WriteToZipFile(IZipFile zipFile)
         {
             var cache = new Cache<string, string>(file => Path.Combine(ZipDirectory, file.PathRelativeTo(RootDirectory)));
