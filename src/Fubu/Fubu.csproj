@@ -63,7 +63,14 @@
     <Compile Include="InstallMode.cs" />
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
-    <Compile Include="CreatePackageCommand.cs" />
+    <Compile Include="Packages\CreatePackageCommand.cs" />
+    <Compile Include="Packages\Classes.cs" />
+    <Compile Include="Packages\CreatePackageInput.cs" />
+    <Compile Include="Packages\IPackageLogger.cs" />
+    <Compile Include="Packages\IZipFile.cs" />
+    <Compile Include="Packages\IZipFileCreator.cs" />
+    <Compile Include="Packages\PackageLogger.cs" />
+    <Compile Include="Packages\ZipFileCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />

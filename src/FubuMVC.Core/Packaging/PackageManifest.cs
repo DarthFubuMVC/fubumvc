@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -56,32 +53,4 @@ namespace FubuMVC.Core.Packaging
             get; set;
         }
     }
-
-    public class FileSet
-    {
-        [XmlAttribute]
-        public string Include { get; set; }
-
-        [XmlAttribute]
-        public string Exclude { get; set; }
-
-        public IEnumerable<String> IncludedFilesFor(string path)
-        {
-            return getAllDistinctFiles(path, Include);
-        }
-
-        private IEnumerable<string> getAllDistinctFiles(string path, string pattern)
-        {
-            if (pattern.IsEmpty()) return new string[0];
-
-            return pattern.Split(';').SelectMany(x => Directory.GetFiles(path, x)).Distinct();
-        }
-
-        public IEnumerable<string> ExcludedFilesFor(string path)
-        {
-            return getAllDistinctFiles(path, Exclude);
-        }
-    }
-
-
 }

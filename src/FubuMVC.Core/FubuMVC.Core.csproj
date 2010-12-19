@@ -169,6 +169,7 @@
     <Compile Include="Packaging\Environment\EnvironmentRunnerException.cs" />
     <Compile Include="Packaging\Environment\IEnvironment.cs" />
     <Compile Include="Packaging\Environment\IEnvironmentGateway.cs" />
+    <Compile Include="Packaging\FileSet.cs" />
     <Compile Include="Packaging\FileSystemExtensions.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
     <Compile Include="Packaging\IAssemblyLoader.cs" />
