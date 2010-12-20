@@ -6,11 +6,6 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    public interface IPackagingRuntimeGraphConfigurer
-    {
-        void Configure(PackagingRuntimeGraph graph);
-    }
-
     public class PackagingRuntimeGraph
     {
         private readonly IList<IActivator> _activators = new List<IActivator>();

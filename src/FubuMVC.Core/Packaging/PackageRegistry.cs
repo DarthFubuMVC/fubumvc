@@ -10,12 +10,6 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Packaging
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class SkipOverForProvenanceAttribute : Attribute
-    {
-        
-    }
-
     public static class PackageRegistry
     {
         private static readonly IList<Assembly> _assemblies = new List<Assembly>();
@@ -113,15 +107,6 @@ namespace FubuMVC.Core.Packaging
 
                 throw new ApplicationException(writer.GetStringBuilder().ToString());
             });
-        }
-    }
-
-    public static class StackFrameExtensions
-    {
-        public static string ToDescription(this StackFrame frame)
-        {
-            return "{0}.{1}(), {2} line {3}".ToFormat(frame.GetMethod().DeclaringType.FullName, frame.GetMethod().Name,
-                                                      frame.GetFileName(), frame.GetFileLineNumber());
         }
     }
 }

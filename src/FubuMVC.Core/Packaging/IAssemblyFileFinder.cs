@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fubu.Packages
+namespace FubuMVC.Core.Packaging
 {
     public interface IAssemblyFileFinder
     {

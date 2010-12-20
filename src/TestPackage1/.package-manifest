@@ -2,6 +2,10 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>pak1</Name>
   <Assemblies>TestPackage1</Assemblies>
-  <DataFileSet Include="*.*" />
-  <ContentFileSet Include="*.as*x;*.master" />
+  <DataFileSet Include="*.*">
+    <DeepSearch>true</DeepSearch>
+  </DataFileSet>
+  <ContentFileSet Include="*.as*x;*.master;Content\*.*">
+    <DeepSearch>true</DeepSearch>
+  </ContentFileSet>
 </package>

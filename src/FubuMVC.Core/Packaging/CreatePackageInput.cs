@@ -1,4 +1,4 @@
-﻿namespace Fubu.Packages
+﻿namespace FubuMVC.Core.Packaging
 {
     public class CreatePackageInput
     {

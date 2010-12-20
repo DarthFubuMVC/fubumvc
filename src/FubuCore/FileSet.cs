@@ -10,6 +10,7 @@ namespace FubuCore
         public FileSet()
         {
             Include = "*.*";
+            DeepSearch = true;
         }
 
         [XmlAttribute]
@@ -18,8 +19,27 @@ namespace FubuCore
         [XmlAttribute]
         public string Exclude { get; set; }
 
+        public bool DeepSearch { get; set; }
+
+        public void AppendExclude(string exclude)
+        {
+            if (Exclude.IsEmpty())
+            {
+                Exclude = exclude;
+            }
+            else
+            {
+                Exclude += ";" + exclude;
+            }
+        }
+
         public IEnumerable<string> IncludedFilesFor(string path)
         {
+            if (!Directory.Exists(path))
+            {
+                return new string[0];
+            }
+
             return getAllDistinctFiles(path, Include.IsEmpty() ? "*.*" : Include);
         }
 
@@ -27,7 +47,20 @@ namespace FubuCore
         {
             if (pattern.IsEmpty()) return new string[0];
 
-            return pattern.Split(';').SelectMany(x => Directory.GetFiles(path, x, SearchOption.AllDirectories)).Distinct<string>();
+            return pattern.Split(';').SelectMany(x =>
+            {
+                var parts = x.Split('\\');
+                if (parts.Count() > 1)
+                {
+                    var subFolder = parts.Reverse().Skip(1).Reverse().Join("\\");
+                    if (!new FileSystem().DirectoryExists(path, subFolder))
+                    {
+                        return new string[0];
+                    }
+                }
+
+                return Directory.GetFiles(path, x, DeepSearch ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            }).Distinct<string>();
         }
 
         public IEnumerable<string> ExcludedFilesFor(string path)
@@ -38,6 +71,7 @@ namespace FubuCore
         public static FileSet ForAssemblyNames(IEnumerable<string> assemblyNames)
         {
             return new FileSet(){
+                DeepSearch = false,
                 Exclude = null,
                 Include = assemblyNames.OrderBy(x => x).Select(x => "{0}.dll;{0}.exe".ToFormat(x)).Join(";")
             };
@@ -46,6 +80,7 @@ namespace FubuCore
         public static FileSet ForAssemblyDebugFiles(IEnumerable<string> assemblyNames)
         {
             return new FileSet(){
+                DeepSearch = false,
                 Exclude = null,
                 Include = assemblyNames.OrderBy(x => x).Select(x => "{0}.pdb".ToFormat(x)).Join(";")
             };

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
-using FubuMVC.Core;
 using Ionic.Zip;
 using System.Linq;
 
-namespace Fubu.Packages
+namespace FubuMVC.Core.Packaging
 {
     public class ZipFileService : IZipFileService
     {

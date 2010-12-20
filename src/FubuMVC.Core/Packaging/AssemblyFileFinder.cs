@@ -2,9 +2,8 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
-using Enumerable = System.Linq.Enumerable;
 
-namespace Fubu.Packages
+namespace FubuMVC.Core.Packaging
 {
     public class AssemblyFileFinder : IAssemblyFileFinder
     {
@@ -25,7 +24,7 @@ namespace Fubu.Packages
                 PdbFiles = _fileSystem.FileNamesFor(debugSet, binDirectory)
             };
 
-            var assembliesFound = Enumerable.Select<string, string>(files.Files.Select(Path.GetFileNameWithoutExtension), x => x.ToLowerInvariant());
+            var assembliesFound = files.Files.Select(Path.GetFileNameWithoutExtension).Select(x => x.ToLowerInvariant());
             files.MissingAssemblies = assemblyNames.Select(x => x.ToLowerInvariant()).Where(name => !assembliesFound.Contains(name));
             files.Success = !files.MissingAssemblies.Any();
 

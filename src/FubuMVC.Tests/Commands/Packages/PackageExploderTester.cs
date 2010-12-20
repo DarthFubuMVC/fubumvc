@@ -2,6 +2,7 @@ using System;
 using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;

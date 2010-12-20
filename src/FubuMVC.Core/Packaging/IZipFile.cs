@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fubu.Packages
+﻿namespace FubuMVC.Core.Packaging
 {
     public interface IZipFile
     {

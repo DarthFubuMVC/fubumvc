@@ -1,7 +1,8 @@
 using System;
+using System.IO;
 using Ionic.Zip;
 
-namespace Fubu.Packages
+namespace FubuMVC.Core.Packaging
 {
     public class ZipFileWrapper : IZipFile
     {
@@ -25,6 +26,8 @@ namespace Fubu.Packages
 
         public void AddFiles(ZipFolderRequest request)
         {
+            if (!Directory.Exists(request.RootDirectory)) return;
+
             request.WriteToZipFile(this);
         }
     }

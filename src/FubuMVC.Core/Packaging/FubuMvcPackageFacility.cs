@@ -20,14 +20,27 @@ namespace FubuMVC.Core.Packaging
 
             if (applicationPath.IsNotEmpty())
             {
-                Loader(new PackageManifestReader(applicationPath, new FileSystem()));
+                var fileSystem = new FileSystem();
+
+                // Development mode
+                Loader(new PackageManifestReader(applicationPath, fileSystem, folder => folder));
+                
+                // Production mode with zip files
+                var zipFilePackageReader = BuildZipFilePackageReader(applicationPath, fileSystem);
+                Loader(zipFilePackageReader);
             }
 
-            // TODO -- should be a package loader for the production mode
             // TODO -- need an activator for scripts/*/styles, etc.
 
             Activator(new VirtualPathProviderActivator());
             Activator(new PackageFolderActivator(_imageUrlResolver));
+        }
+
+        public static ZipFilePackageReader BuildZipFilePackageReader(string applicationPath, FileSystem fileSystem)
+        {
+            var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, dir => FileSystem.Combine(applicationPath, FubuMvcPackages.WebContentFolder));
+            var packageExploder = new PackageExploder(new ZipFileService(), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
+            return new ZipFilePackageReader(zipFileManifestReader, packageExploder);
         }
 
         public static string GetApplicationPath()

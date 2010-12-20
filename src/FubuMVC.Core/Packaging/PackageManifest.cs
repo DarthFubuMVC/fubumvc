@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Packaging
         {
             DataFileSet = new FileSet();
             ContentFileSet = new FileSet(){
-                Include = "*.as*x;*.master"
+                Include = "*.as*x;*.master;Content\\*.*"
             };
         }
 

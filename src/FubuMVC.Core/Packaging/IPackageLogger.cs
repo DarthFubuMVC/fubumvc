@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using FubuMVC.Core.Packaging;
-
-namespace Fubu.Packages
+﻿namespace FubuMVC.Core.Packaging
 {
     public interface IPackageLogger
     {

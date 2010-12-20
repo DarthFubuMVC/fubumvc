@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Test name="Unlink a package in Zip mode" lifecycle="Regression">
+  <Comment><![CDATA[First, start with the app with no packages]]></Comment>
+  <Packaging>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <NoPackages isStep="True" />
+      </PackagingSetup>
+    </SetUp>
+    <NoActionsForAssembly isStep="True" assemblyName="TestPackage1" />
+    <Comment><![CDATA[Now, let's link the TestPackage1 and see that the 3 endpoints that should be in TestPackage1 are available in the main testing application]]></Comment>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <InstallPackage isStep="True" zipFile="pak1.zip" />
+      </PackagingSetup>
+    </SetUp>
+    <ActionsForAssemblyArePresent isStep="True" assemblyName="TestPackage1" />
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <NoPackages isStep="True" />
+      </PackagingSetup>
+    </SetUp>
+    <NoActionsForAssembly isStep="True" assemblyName="TestPackage1" />
+  </Packaging>
+</Test>

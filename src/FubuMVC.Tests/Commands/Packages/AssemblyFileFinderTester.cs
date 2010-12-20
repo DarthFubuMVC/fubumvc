@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Fubu.Packages;
 using FubuCore;
+using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using Rhino.Mocks;
 

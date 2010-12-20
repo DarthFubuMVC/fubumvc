@@ -3,7 +3,7 @@ using System.IO;
 using FubuCore;
 using FubuCore.Util;
 
-namespace Fubu.Packages
+namespace FubuMVC.Core.Packaging
 {
     public class ZipFolderRequest
     {

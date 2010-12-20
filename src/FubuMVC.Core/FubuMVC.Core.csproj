@@ -35,6 +35,9 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -158,9 +161,12 @@
     <Compile Include="Json\ProjectionFactory.cs" />
     <Compile Include="Json\ValueProjection.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
+    <Compile Include="Packaging\AssemblyFileFinder.cs" />
+    <Compile Include="Packaging\AssemblyFiles.cs" />
     <Compile Include="Packaging\AssemblyLoader.cs" />
     <Compile Include="Packaging\AssemblyPackageInfo.cs" />
     <Compile Include="Packaging\AssemblyPackageLoader.cs" />
+    <Compile Include="Packaging\CreatePackageInput.cs" />
     <Compile Include="Packaging\Environment\EnvironmentGateway.cs" />
     <Compile Include="Packaging\Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Packaging\Environment\EnvironmentProxy.cs" />
@@ -171,12 +177,24 @@
     <Compile Include="Packaging\Environment\IEnvironmentGateway.cs" />
     <Compile Include="Packaging\FileSystemExtensions.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
+    <Compile Include="Packaging\IAssemblyFileFinder.cs" />
     <Compile Include="Packaging\IAssemblyLoader.cs" />
+    <Compile Include="Packaging\IAssemblyRegistration.cs" />
     <Compile Include="Packaging\IBootstrapper.cs" />
     <Compile Include="Packaging\Environment\IInstaller.cs" />
+    <Compile Include="Packaging\IPackageExploder.cs" />
+    <Compile Include="Packaging\IPackageExploderLogger.cs" />
+    <Compile Include="Packaging\IPackageLogger.cs" />
+    <Compile Include="Packaging\IPackageManifestReader.cs" />
+    <Compile Include="Packaging\IPackagingRuntimeGraphConfigurer.cs" />
+    <Compile Include="Packaging\IZipFile.cs" />
+    <Compile Include="Packaging\IZipFileService.cs" />
     <Compile Include="Packaging\LambdaActivator.cs" />
     <Compile Include="Packaging\LambdaBootstrapper.cs" />
     <Compile Include="Packaging\Environment\LogEntry.cs" />
+    <Compile Include="Packaging\PackageCreator.cs" />
+    <Compile Include="Packaging\PackageExploder.cs" />
+    <Compile Include="Packaging\PackageExploderLogger.cs" />
     <Compile Include="Packaging\PackageFacility.cs" />
     <Compile Include="Packaging\IPackageInfo.cs" />
     <Compile Include="Packaging\IPackageLoader.cs" />
@@ -189,6 +207,7 @@
     <Compile Include="Packaging\IActivator.cs" />
     <Compile Include="Packaging\ApplicationManifest.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
+    <Compile Include="Packaging\PackageLogger.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
     <Compile Include="Packaging\PackageManifestReader.cs" />
     <Compile Include="Packaging\PackageRegistry.cs" />
@@ -196,7 +215,14 @@
     <Compile Include="Packaging\PackagingDiagnostics.cs" />
     <Compile Include="Packaging\PackagingDiagnosticsExtensions.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraph.cs" />
+    <Compile Include="Packaging\SkipOverForProvenanceAttribute.cs" />
+    <Compile Include="Packaging\StackFrameExtensions.cs" />
+    <Compile Include="Packaging\StreamExtensions.cs" />
     <Compile Include="Packaging\VirtualPathProviderActivator.cs" />
+    <Compile Include="Packaging\ZipFilePackageReader.cs" />
+    <Compile Include="Packaging\ZipFileService.cs" />
+    <Compile Include="Packaging\ZipFileWrapper.cs" />
+    <Compile Include="Packaging\ZipFolderRequest.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />

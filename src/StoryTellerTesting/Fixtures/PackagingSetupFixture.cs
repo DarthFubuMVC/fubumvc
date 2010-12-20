@@ -1,4 +1,6 @@
-﻿using StoryTeller.Engine;
+﻿using System;
+using StoryTeller.Engine;
+using FubuCore;
 
 namespace IntegrationTesting.Fixtures
 {
@@ -10,6 +12,17 @@ namespace IntegrationTesting.Fixtures
         public PackagingSetupFixture(CommandRunner runner)
         {
             _runner = runner;
+        }
+
+        public override void SetUp(ITestContext context)
+        {
+            _runner.RunFubu("packages fubu-testing -removeall");
+        }
+
+        [FormatAs("Install package {zipFile}")]
+        public void InstallPackage(string zipFile)
+        {
+            _runner.RunFubu("install-pak {0} fubu-testing".ToFormat(zipFile));            
         }
 
         [FormatAs("No packages are included")]
@@ -28,5 +41,7 @@ namespace IntegrationTesting.Fixtures
         {
             _runner.RunFubu("restart fubu-testing");
         }
+
+        
     }
 }

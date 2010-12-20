@@ -203,13 +203,25 @@ namespace FubuCore
         public IEnumerable<string> ChildDirectoriesFor(params string[] parts)
         {
             var directory = Combine(parts);
-            return Directory.GetDirectories(directory);
+
+            if (Directory.Exists(directory))
+            {
+                return Directory.GetDirectories(directory);
+            }
+
+            return new string[0];
         }
 
         // Only here for mocking/stubbing file system junk
         public IEnumerable<string> FileNamesFor(FileSet set, params string[] paths)
         {
             return set.IncludedFilesFor(Combine(paths));
+        }
+
+        public bool DirectoryExists(string path, string subFolder)
+        {
+            var directory = Combine(path, subFolder);
+            return Directory.Exists(directory);
         }
     }
 }

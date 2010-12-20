@@ -29,9 +29,7 @@ namespace FubuMVC.Tests.Packaging
 
             fileSystem.PersistToFile(manifest, packageFolder, PackageManifest.FILE);
 
-            reader = new PackageManifestReader("../../".ToFullPath(), fileSystem);
-
-            
+            reader = new PackageManifestReader("../../".ToFullPath(), fileSystem, folder => folder);
         }
 
 
@@ -48,7 +46,7 @@ namespace FubuMVC.Tests.Packaging
         public void load_a_package_info_from_a_manifest_file_when_given_the_folder()
         {
             // the reader is rooted at the folder location of the main app
-            var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath(), string.Empty);
+            var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
@@ -63,7 +61,7 @@ namespace FubuMVC.Tests.Packaging
         public void load_a_package_registers_web_content_folder()
         {
             var packageDirectory = "../../../TestPackage1".ToFullPath();
-            var package = reader.LoadFromFolder(packageDirectory, string.Empty);
+            var package = reader.LoadFromFolder(packageDirectory);
             var directoryContinuation = MockRepository.GenerateMock<Action<string>>();
         
             package.ForFolder(FubuMvcPackages.WebContentFolder, directoryContinuation);

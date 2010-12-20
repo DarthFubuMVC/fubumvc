@@ -11,13 +11,4 @@ namespace FubuMVC.Core.Packaging
         void ForFolder(string folderName, Action<string> onFound);
         void ForData(string searchPattern, Action<string, Stream> dataCallback);
     }
-
-    public static class StreamExtensions
-    {
-        public static string ReadAllText(this Stream stream)
-        {
-            var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
-        }
-    }
 }

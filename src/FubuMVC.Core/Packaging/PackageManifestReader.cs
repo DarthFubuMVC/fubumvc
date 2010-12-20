@@ -6,12 +6,13 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    public class PackageManifestReader : IPackageLoader
+    public class PackageManifestReader : IPackageLoader, IPackageManifestReader
     {
         private readonly string _applicationFolder;
         private readonly IFileSystem _fileSystem;
+        private readonly Func<string, string> _getContentFolderFromPackageFolder;
 
-        public PackageManifestReader(string applicationFolder, IFileSystem fileSystem)
+        public PackageManifestReader(string applicationFolder, IFileSystem fileSystem, Func<string, string> getContentFolderFromPackageFolder)
         {
             if (!Path.IsPathRooted(applicationFolder))
             {
@@ -20,16 +21,17 @@ namespace FubuMVC.Core.Packaging
 
             _applicationFolder = applicationFolder;
             _fileSystem = fileSystem;
+            _getContentFolderFromPackageFolder = getContentFolderFromPackageFolder;
         }
 
         public IEnumerable<IPackageInfo> Load()
         {
             var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.FILE);
 
-            return includes.Folders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f), string.Empty));
+            return includes.Folders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f)));
         }
 
-        public IPackageInfo LoadFromFolder(string folder, string contentFolder)
+        public IPackageInfo LoadFromFolder(string folder)
         {
             folder = Path.GetFullPath(folder);
 
@@ -38,7 +40,9 @@ namespace FubuMVC.Core.Packaging
                 Description = "{0} ({1})".ToFormat(manifest.Name, folder)
             };
 
-            package.RegisterFolder(FubuMvcPackages.WebContentFolder, folder);
+
+            // Right here, this needs to be different
+            package.RegisterFolder(FubuMvcPackages.WebContentFolder, _getContentFolderFromPackageFolder(folder));
             package.RegisterFolder(PackageInfo.DataFolder, Path.Combine(folder, PackageInfo.DataFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");

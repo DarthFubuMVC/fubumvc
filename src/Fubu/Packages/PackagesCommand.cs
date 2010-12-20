@@ -1,14 +1,44 @@
 using System;
+using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
+using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 
 namespace Fubu.Packages
 {
+
+    public class InstallPackageInput
+    {
+        public string PackageFile { get; set; }
+        public string AppFolder { get; set; }
+    }
+
+    [CommandDescription("Install a package zip file to the specified application", Name = "install-pak")]
+    public class InstallPackageCommand : FubuCommand<InstallPackageInput>
+    {
+        public override void Execute(InstallPackageInput input)
+        {
+            var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
+            var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
+
+            if (!Directory.Exists(packageFolder))
+            {
+                Directory.CreateDirectory(packageFolder);
+            }
+
+            Console.WriteLine("Copying {0} to {1}", input.PackageFile, packageFolder);
+            File.Copy(input.PackageFile, FileSystem.Combine(packageFolder, input.PackageFile));
+        }
+    }
+
+
     public class PackagesInput
     {
         public string AppFolder { get; set; }
         public bool CleanAllFlag { get; set; }
         public bool ExplodeFlag { get; set; }
+        public bool RemoveAllFlag { get; set; }
     }
 
     [CommandDescription("Access to the state of packages in an application folder")]
@@ -35,6 +65,12 @@ namespace Fubu.Packages
             {
                 Console.WriteLine("Exploding all the package zip files for the application at " + input.AppFolder);
                 exploder.ExplodeAll(input.AppFolder);
+            }
+
+            if (input.RemoveAllFlag)
+            {
+                Console.WriteLine("Removing all package files and directories from the application at " + input.AppFolder);
+                new FileSystem().DeleteDirectory(input.AppFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
             }
 
             exploder.LogPackageState(input.AppFolder);

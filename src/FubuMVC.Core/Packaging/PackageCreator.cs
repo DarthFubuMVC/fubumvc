@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using FubuCore;
-using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 
-namespace Fubu.Packages
+namespace FubuMVC.Core.Packaging
 {
     public class PackageCreator
     {
@@ -75,6 +73,8 @@ namespace Fubu.Packages
 
         public void AddContentFiles(CreatePackageInput input, IZipFile zipFile, PackageManifest manifest)
         {
+            manifest.ContentFileSet.AppendExclude("bin\\*.*");
+
             zipFile.AddFiles(new ZipFolderRequest()
                              {
                                  FileSet = manifest.ContentFileSet,
