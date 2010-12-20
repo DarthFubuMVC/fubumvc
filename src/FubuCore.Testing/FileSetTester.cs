@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
-using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using System.Linq;
-using FubuCore;
 
-namespace FubuMVC.Tests.Packaging
+namespace FubuCore.Testing
 {
     [TestFixture]
     public class FileSetTester
@@ -139,6 +137,24 @@ namespace FubuMVC.Tests.Packaging
             theFileSet.Exclude = null;
 
             excludedFiles().Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void get_fileset_for_assembly_names()
+        {
+            var names = new string[]{"a", "b", "c", "d"};
+            var set = FileSet.ForAssemblyNames(names);
+            set.Exclude.ShouldBeNull();
+            set.Include.ShouldEqual("a.dll;a.exe;b.dll;b.exe;c.dll;c.exe;d.dll;d.exe");
+        }
+
+        [Test]
+        public void get_fileset_for_assembly_debug_files()
+        {
+            var names = new string[] { "a", "b", "c", "d" };
+            var set = FileSet.ForAssemblyDebugFiles(names);
+            set.Exclude.ShouldBeNull();
+            set.Include.ShouldEqual("a.pdb;b.pdb;c.pdb;d.pdb");
         }
     }
 }

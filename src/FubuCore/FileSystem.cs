@@ -16,7 +16,9 @@ namespace FubuCore
         void CreateDirectory(string directory);
         string Combine(params string[] paths);
         void DeleteFile(params string[] path);
-        
+
+        IEnumerable<string> FileNamesFor(FileSet set, string path);
+        void WriteStringToFile(string text, string filename);
     }
 
     public class FileSystem : IFileSystem
@@ -182,6 +184,12 @@ namespace FubuCore
             if (!File.Exists(filename)) return;
 
             File.Delete(filename);
+        }
+
+        // Only here for mocking/stubbing file system junk
+        public IEnumerable<string> FileNamesFor(FileSet set, string path)
+        {
+            return set.IncludedFilesFor(path);
         }
     }
 }

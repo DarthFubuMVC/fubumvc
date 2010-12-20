@@ -48,8 +48,10 @@ namespace Fubu.Packages
 
         public virtual void CreatePackage(CreatePackageInput input, IFileSystem fileSystem)
         {
-            var creator = new PackageCreator(fileSystem, new ZipFileCreator(), new PackageLogger());
-            creator.CreatePackage(input);
+            var manifest = fileSystem.LoadPackageManifestFrom(input.PackageFolder);
+
+            var creator = new PackageCreator(fileSystem, new ZipFileCreator(), new PackageLogger(), new AssemblyFileFinder(new FileSystem()));
+            creator.CreatePackage(input, manifest);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Fubu.Packages
 {
     public interface IPackageLogger
     {
-        void WriteAssembliesNotFound(CreatePackageInput input, PackageManifest manifest, IEnumerable<string> candidates);
+        void WriteAssembliesNotFound(AssemblyFiles theAssemblyFiles, PackageManifest manifest, CreatePackageInput theInput);
     }
 }

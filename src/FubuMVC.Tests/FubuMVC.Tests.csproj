@@ -93,7 +93,9 @@
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
     <Compile Include="Commands\ManifestCommandTester.cs" />
+    <Compile Include="Commands\Packages\AssemblyFileFinderTester.cs" />
     <Compile Include="Commands\Packages\CreatePackageCommandTester.cs" />
+    <Compile Include="Commands\Packages\PackageCreatorTester.cs" />
     <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
     <Compile Include="Content\ContentRegistryCacheTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
@@ -105,7 +107,6 @@
     <Compile Include="Packaging\Environment\EnvironmentRunTester.cs" />
     <Compile Include="Packaging\Environment\FakeEnvironment.cs" />
     <Compile Include="Packaging\Environment\LogEntryTester.cs" />
-    <Compile Include="Packaging\FileSetTester.cs" />
     <Compile Include="Packaging\LambdaActivatorTester.cs" />
     <Compile Include="Packaging\PackageInfoTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />

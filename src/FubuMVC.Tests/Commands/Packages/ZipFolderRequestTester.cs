@@ -47,22 +47,74 @@ namespace FubuMVC.Tests.Commands.Packages
             File.WriteAllText(name, "");
         }
 
-        //[Test]
-        //public void use_single_include_filter_and_flat_folder()
-        //{
-        //    writeFile("zip/a.txt");
-        //    writeFile("zip/b.txt");
-        //    writeFile("zip/c.txt");
-        //    writeFile("zip/a.xml");
-        //    writeFile("zip/b.xml");
+        private IEnumerable<StubZipEntry> theResultingZipEntries()
+        {
+            var zipFile = new StubZipFile();
+            theRequest.WriteToZipFile(zipFile);
 
-        //    theRequest.FileSet.Include = ""
-        //}
+            return zipFile.AllZipEntries;
+        }
+
+        // Not really worried about filters here.  Just enough to prove that it is
+        // using the filter
+        [Test]
+        public void use_single_include_filter()
+        {
+            writeFile("zip\\a.txt");
+            writeFile("zip\\f1\\b.txt");
+            writeFile("zip\\f1\\f2\\c.txt");
+            writeFile("zip\\a.xml");
+            writeFile("zip\\b.xml");
+
+            theRequest.FileSet.Include = "*.txt";
+
+            theResultingZipEntries().ShouldHaveTheSameElementsAs(
+                new StubZipEntry("zip\\a.txt", string.Empty),
+                new StubZipEntry("zip\\f1\\b.txt", "f1"),
+                new StubZipEntry("zip\\f1\\f2\\c.txt", "f1\\f2")
+                );
+        }
+
+        [Test]
+        public void use_single_exclude_filter()
+        {
+            writeFile("zip\\a.txt");
+            writeFile("zip\\f1\\b.txt");
+            writeFile("zip\\f1\\f2\\c.txt");
+            writeFile("zip\\a.xml");
+            writeFile("zip\\b.xml");
+
+            theRequest.FileSet.Exclude = "*.xml";
+
+            theResultingZipEntries().ShouldHaveTheSameElementsAs(
+                new StubZipEntry("zip\\a.txt", string.Empty),
+                new StubZipEntry("zip\\f1\\b.txt", "f1"),
+                new StubZipEntry("zip\\f1\\f2\\c.txt", "f1\\f2")
+                );
+        }
+
+        [Test]
+        public void use_overlapping_include_and_exclude_filters()
+        {
+            writeFile("zip\\a.txt");
+            writeFile("zip\\f1\\b.txt");
+            writeFile("zip\\f1\\f2\\c.txt");
+            writeFile("zip\\a.xml");
+            writeFile("zip\\b.xml");
+
+            theRequest.FileSet.Include = "a.*";
+            theRequest.FileSet.Exclude = "*.xml";
+
+            theResultingZipEntries().ShouldHaveTheSameElementsAs(
+                new StubZipEntry("zip\\a.txt", string.Empty)
+                );
+        }
     }
 
     public class StubZipFile : IZipFile
     {
         public readonly IList<StubZipEntry> AllZipEntries = new List<StubZipEntry>();
+        public readonly IList<ZipFolderRequest> ZipRequests = new List<ZipFolderRequest>();
 
         public void AddFile(string fileName)
         {
@@ -81,7 +133,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
         public void AddFiles(ZipFolderRequest request)
         {
-            request.WriteToZipFile(this);
+            ZipRequests.Add(request);
         }
     }
 
@@ -93,7 +145,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
         public StubZipEntry(string file, string zipFolder)
         {
-            File = file;
+            File = file.ToFullPath();
             ZipFolder = zipFolder;
         }
 

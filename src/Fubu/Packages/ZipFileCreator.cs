@@ -7,6 +7,7 @@ namespace Fubu.Packages
     {
         public void CreateZipFile(string fileName, Action<IZipFile> configure)
         {
+            Console.WriteLine("Starting to write contents to new Zip file at " + fileName);
             using (var zipFile = new ZipFile(fileName))
             {
                 configure(new ZipFileWrapper(zipFile));
