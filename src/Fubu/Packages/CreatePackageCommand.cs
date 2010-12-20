@@ -50,7 +50,7 @@ namespace Fubu.Packages
         {
             var manifest = fileSystem.LoadPackageManifestFrom(input.PackageFolder);
 
-            var creator = new PackageCreator(fileSystem, new ZipFileCreator(), new PackageLogger(), new AssemblyFileFinder(new FileSystem()));
+            var creator = new PackageCreator(fileSystem, new ZipFileService(), new PackageLogger(), new AssemblyFileFinder(new FileSystem()));
             creator.CreatePackage(input, manifest);
         }
     }

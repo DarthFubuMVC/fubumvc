@@ -17,8 +17,12 @@ namespace FubuCore
         string Combine(params string[] paths);
         void DeleteFile(params string[] path);
 
-        IEnumerable<string> FileNamesFor(FileSet set, string path);
+        IEnumerable<string> ChildDirectoriesFor(params string[] parts);
+
+        IEnumerable<string> FileNamesFor(FileSet set, params string[] paths);
         void WriteStringToFile(string text, string filename);
+        string ReadStringFromFile(params string[] parts);
+        void DeleteDirectory(params string[] parts);
     }
 
     public class FileSystem : IFileSystem
@@ -116,11 +120,21 @@ namespace FubuCore
             }
         }
 
-        public string ReadStringFromFile(string filename)
+        public string ReadStringFromFile(params string[] parts)
         {
+            var filename = Combine(parts);
             using (var reader = new StreamReader(filename))
             {
                 return reader.ReadToEnd();
+            }
+        }
+
+        public void DeleteDirectory(params string[] parts)
+        {
+            var directory = FileSystem.Combine(parts);
+            if (Directory.Exists(directory))
+            {
+                Directory.Delete(directory, true);
             }
         }
 
@@ -186,10 +200,16 @@ namespace FubuCore
             File.Delete(filename);
         }
 
-        // Only here for mocking/stubbing file system junk
-        public IEnumerable<string> FileNamesFor(FileSet set, string path)
+        public IEnumerable<string> ChildDirectoriesFor(params string[] parts)
         {
-            return set.IncludedFilesFor(path);
+            var directory = Combine(parts);
+            return Directory.GetDirectories(directory);
+        }
+
+        // Only here for mocking/stubbing file system junk
+        public IEnumerable<string> FileNamesFor(FileSet set, params string[] paths)
+        {
+            return set.IncludedFilesFor(Combine(paths));
         }
     }
 }

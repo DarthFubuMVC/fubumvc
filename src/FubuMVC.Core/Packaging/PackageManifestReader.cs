@@ -26,10 +26,10 @@ namespace FubuMVC.Core.Packaging
         {
             var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.FILE);
 
-            return includes.Folders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f)));
+            return includes.Folders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f), string.Empty));
         }
 
-        public IPackageInfo LoadFromFolder(string folder)
+        public IPackageInfo LoadFromFolder(string folder, string contentFolder)
         {
             folder = Path.GetFullPath(folder);
 

@@ -35,6 +35,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -96,6 +97,8 @@
     <Compile Include="Commands\Packages\AssemblyFileFinderTester.cs" />
     <Compile Include="Commands\Packages\CreatePackageCommandTester.cs" />
     <Compile Include="Commands\Packages\PackageCreatorTester.cs" />
+    <Compile Include="Commands\Packages\PackageExploderTester.cs" />
+    <Compile Include="Commands\Packages\ZipFileServiceTester.cs" />
     <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
     <Compile Include="Content\ContentRegistryCacheTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />

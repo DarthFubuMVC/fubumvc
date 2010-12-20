@@ -10,14 +10,14 @@ namespace Fubu.Packages
     public class PackageCreator
     {
         private readonly IFileSystem _fileSystem;
-        private readonly IZipFileCreator _zipFileCreator;
+        private readonly IZipFileService _zipFileService;
         private readonly IPackageLogger _logger;
         private readonly IAssemblyFileFinder _assemblyFinder;
 
-        public PackageCreator(IFileSystem fileSystem, IZipFileCreator zipFileCreator, IPackageLogger logger, IAssemblyFileFinder assemblyFinder)
+        public PackageCreator(IFileSystem fileSystem, IZipFileService zipFileService, IPackageLogger logger, IAssemblyFileFinder assemblyFinder)
         {
             _fileSystem = fileSystem;
-            _zipFileCreator = zipFileCreator;
+            _zipFileService = zipFileService;
             _logger = logger;
             _assemblyFinder = assemblyFinder;
         }
@@ -38,7 +38,7 @@ namespace Fubu.Packages
 
         private void writeZipFile(CreatePackageInput input, PackageManifest manifest, AssemblyFiles assemblies)
         {
-            _zipFileCreator.CreateZipFile(input.ZipFile, zipFile =>
+            _zipFileService.CreateZipFile(input.ZipFile, zipFile =>
             {
                 assemblies.Files.Each(file =>
                 {
@@ -53,7 +53,7 @@ namespace Fubu.Packages
                     });
                 }
 
-                writeVersion(zipFile);
+                WriteVersion(zipFile);
 
                 zipFile.AddFile(_fileSystem.PackageManifestPathFor(input.PackageFolder), "");
 
@@ -63,12 +63,14 @@ namespace Fubu.Packages
             });
         }
 
-        private void writeVersion(IZipFile zipFile)
+        public Guid WriteVersion(IZipFile zipFile)
         {
             var versionFile = Path.Combine(Path.GetTempPath(), FubuMvcPackages.VersionFile);
             var guid = Guid.NewGuid();
             _fileSystem.WriteStringToFile(guid.ToString(), versionFile);
             zipFile.AddFile(versionFile);
+
+            return guid;
         }
 
         public void AddContentFiles(CreatePackageInput input, IZipFile zipFile, PackageManifest manifest)

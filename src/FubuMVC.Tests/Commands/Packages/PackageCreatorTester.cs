@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Commands.Packages
         private PackageManifest theManifest;
         private AssemblyFiles theAssemblyFiles;
         private CreatePackageInput theInput;
-        private StubZipFileCreator theZipFileCreator;
+        private StubZipFileService _theZipFileService;
         private string thePackageManifestFileName;
 
         protected override void beforeEach()
@@ -49,8 +49,8 @@ namespace FubuMVC.Tests.Commands.Packages
                 .Stub(x => x.FindAssemblies("c:\\folder1\\bin", theManifest.AssemblyNames))
                 .Return(theAssemblyFiles);
 
-            theZipFileCreator = new StubZipFileCreator();
-            Services.Inject<IZipFileCreator>(theZipFileCreator);
+            _theZipFileService = new StubZipFileService();
+            Services.Inject<IZipFileService>(_theZipFileService);
 
             thePackageManifestFileName = "c:\\folder1\\something.xml";
             MockFor<IFileSystem>().Stub(x => x.PackageManifestPathFor(theInput.PackageFolder))
@@ -68,35 +68,35 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void should_have_written_a_zip_file_to_the_value_from_the_input()
         {
-            theZipFileCreator.FileName.ShouldEqual(theInput.ZipFile);
+            _theZipFileService.FileName.ShouldEqual(theInput.ZipFile);
         }
 
         [Test]
         public void should_have_written_each_assembly_to_the_zip_file()
         {
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\a.dll", "bin"));
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\b.dll", "bin"));
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\c.dll", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\a.dll", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\b.dll", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\c.dll", "bin"));
         }
 
         [Test]
         public void should_have_written_each_pdb_to_the_zip_file()
         {
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\a.pdb", "bin"));
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\b.pdb", "bin"));
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\c.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\a.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\b.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\c.pdb", "bin"));
         }
 
         [Test]
         public void should_write_the_package_manifest_to_the_zip()
         {
-            theZipFileCreator.AllEntries.ShouldContain(new StubZipEntry(thePackageManifestFileName, string.Empty));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(thePackageManifestFileName, string.Empty));
         }
 
         [Test]
         public void add_the_content_files()
         {
-            theZipFileCreator.ZipRequests.ShouldContain(new ZipFolderRequest(){
+            _theZipFileService.ZipRequests.ShouldContain(new ZipFolderRequest(){
                 FileSet = theManifest.ContentFileSet,
                 ZipDirectory = FubuMvcPackages.WebContentFolder,
                 RootDirectory = theInput.PackageFolder
@@ -106,7 +106,7 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void add_the_data_files()
         {
-            theZipFileCreator.ZipRequests.ShouldContain(new ZipFolderRequest()
+            _theZipFileService.ZipRequests.ShouldContain(new ZipFolderRequest()
             {
                 FileSet = theManifest.DataFileSet,
                 ZipDirectory = PackageInfo.DataFolder,
@@ -121,7 +121,7 @@ namespace FubuMVC.Tests.Commands.Packages
         private PackageManifest theManifest;
         private AssemblyFiles theAssemblyFiles;
         private CreatePackageInput theInput;
-        private StubZipFileCreator theZipFileCreator;
+        private StubZipFileService _theZipFileService;
         private string thePackageManifestFileName;
 
         protected override void beforeEach()
@@ -152,8 +152,8 @@ namespace FubuMVC.Tests.Commands.Packages
                 .Stub(x => x.FindAssemblies("c:\\folder1\\bin", theManifest.AssemblyNames))
                 .Return(theAssemblyFiles);
 
-            theZipFileCreator = new StubZipFileCreator();
-            Services.Inject<IZipFileCreator>(theZipFileCreator);
+            _theZipFileService = new StubZipFileService();
+            Services.Inject<IZipFileService>(_theZipFileService);
 
             thePackageManifestFileName = "c:\\folder1\\something.xml";
             MockFor<IFileSystem>().Stub(x => x.PackageManifestPathFor(theInput.PackageFolder))
@@ -166,16 +166,16 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void should_have_written_each_pdb_to_the_zip_file()
         {
-            theZipFileCreator.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\a.pdb", "bin"));
-            theZipFileCreator.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\b.pdb", "bin"));
-            theZipFileCreator.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\c.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\a.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\b.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\c.pdb", "bin"));
         }
 
 
 
     }
 
-    public class StubZipFileCreator : IZipFileCreator
+    public class StubZipFileService : IZipFileService
     {
         private string _fileName;
         private IList<StubZipEntry> _allEntries;
@@ -189,6 +189,16 @@ namespace FubuMVC.Tests.Commands.Packages
 
             _allEntries = stubFile.AllZipEntries;
             _requests = stubFile.ZipRequests;
+        }
+
+        public void ExtractTo(string fileName, string folder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Guid GetVersion(string fileName)
+        {
+            throw new NotImplementedException();
         }
 
         public IList<ZipFolderRequest> ZipRequests
@@ -253,7 +263,7 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void do_not_call_the_zip_file_creator_at_all()
         {
-            MockFor<IZipFileCreator>().AssertWasNotCalled(x => x.CreateZipFile(null, null), x => x.IgnoreArguments());
+            MockFor<IZipFileService>().AssertWasNotCalled(x => x.CreateZipFile(null, null), x => x.IgnoreArguments());
         }
 
     }
