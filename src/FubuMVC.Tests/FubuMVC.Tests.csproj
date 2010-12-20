@@ -98,6 +98,7 @@
     <Compile Include="Commands\Packages\CreatePackageCommandTester.cs" />
     <Compile Include="Commands\Packages\PackageCreatorTester.cs" />
     <Compile Include="Commands\Packages\PackageExploderTester.cs" />
+    <Compile Include="Commands\Packages\PackagesCommandTester.cs" />
     <Compile Include="Commands\Packages\ZipFileServiceTester.cs" />
     <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
     <Compile Include="Content\ContentRegistryCacheTester.cs" />

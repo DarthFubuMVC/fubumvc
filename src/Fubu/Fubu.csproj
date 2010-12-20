@@ -67,6 +67,7 @@
     <Compile Include="Packages\AssemblyFiles.cs" />
     <Compile Include="Packages\CreatePackageCommand.cs" />
     <Compile Include="Packages\PackageExploder.cs" />
+    <Compile Include="Packages\PackagesCommand.cs" />
     <Compile Include="Packages\ZipFileWrapper.cs" />
     <Compile Include="Packages\CreatePackageInput.cs" />
     <Compile Include="Packages\IAssemblyFileFinder.cs" />
