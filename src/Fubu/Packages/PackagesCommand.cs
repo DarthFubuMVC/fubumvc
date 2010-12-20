@@ -12,6 +12,9 @@ namespace Fubu.Packages
     {
         public string PackageFile { get; set; }
         public string AppFolder { get; set; }
+
+        [FlagAlias("u")]
+        public bool UninstallFlag { get; set; }
     }
 
     [CommandDescription("Install a package zip file to the specified application", Name = "install-pak")]
@@ -22,13 +25,39 @@ namespace Fubu.Packages
             var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
             var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
 
+            var destinationFileName = FileSystem.Combine(packageFolder, input.PackageFile);
+            if (input.UninstallFlag)
+            {
+                if (File.Exists(destinationFileName))
+                {
+                    Console.WriteLine("Deleting existing file " + destinationFileName);
+                    File.Delete(destinationFileName);
+                }
+                else
+                {
+                    Console.WriteLine("File {0} does not exist", destinationFileName);
+                }
+
+
+                return;
+            }
+
             if (!Directory.Exists(packageFolder))
             {
+                Console.WriteLine("Creating folder " + packageFolder);
                 Directory.CreateDirectory(packageFolder);
             }
 
+
+            if (File.Exists(destinationFileName))
+            {
+                Console.WriteLine("Deleting existing file at " + destinationFileName);
+                File.Delete(destinationFileName);
+            }
+
             Console.WriteLine("Copying {0} to {1}", input.PackageFile, packageFolder);
-            File.Copy(input.PackageFile, FileSystem.Combine(packageFolder, input.PackageFile));
+
+            File.Copy(input.PackageFile, destinationFileName);
         }
     }
 
