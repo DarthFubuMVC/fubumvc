@@ -37,6 +37,7 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\fluent-nhibernate\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL" />
     <Reference Include="NHibernate">
       <HintPath>..\..\lib\NHibernate\NHibernate.dll</HintPath>
     </Reference>
@@ -69,6 +70,7 @@
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Fixtures\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\EnvironmentRunnerFixture.cs" />
     <Compile Include="Fixtures\HelloWorldFixture.cs" />
     <Compile Include="Fixtures\Package1Fixture.cs" />

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>pak1</Name>
-  <Assemblies>TestPackage1</Assemblies>
+  <Name>pak3</Name>
+  <Assemblies>TestPackage3</Assemblies>
   <DataFileSet Include="*.*" />
   <ContentFileSet Include="*.as*x;*.master" />
 </package>

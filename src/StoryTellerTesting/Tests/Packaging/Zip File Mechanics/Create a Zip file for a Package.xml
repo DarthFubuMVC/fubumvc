@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Test name="Create a Zip file for a Package" lifecycle="Acceptance">
+  <CreatePackageCommand>
+    <CreatePackageManifest isStep="True" folder="src/TestPackage3" name="pak3" />
+    <CreatePackage isStep="True" name="pak3" zipFile="pak3.zip" />
+    <Comment><![CDATA[The contents of this package should include all ASPX, ASCX, and Master pages files from the main directory down and all the contents of the Data folder]]></Comment>
+    <CheckFilesInPackage isStep="True">
+      <Rows>
+        <row isStep="True" expected=".package-manifest" />
+        <row isStep="True" expected=".version" />
+        <row isStep="True" expected="bin\testpackage3.dll" />
+        <row isStep="True" expected="data\a.txt" />
+        <row isStep="True" expected="data\b.txt" />
+        <row isStep="True" expected="data\activation\c.xml" />
+        <row isStep="True" expected="data\activation\d.xml" />
+        <row isStep="True" expected="webcontent\webcontrol1.ascx" />
+        <row isStep="True" expected="webcontent\webform1.aspx" />
+        <row isStep="True" expected="webcontent\folder1\webcontrol2.ascx" />
+        <row isStep="True" expected="webcontent\folder1\webform3.aspx" />
+        <row isStep="True" expected="webcontent\masterpage1.master" />
+        <row isStep="True" expected="webcontent\masterpage2.master" />
+        <row isStep="True" expected="webcontent\folder1\masterpage3.master" />
+      </Rows>
+    </CheckFilesInPackage>
+  </CreatePackageCommand>
+</Test>
