@@ -124,6 +124,7 @@
     <Compile Include="CommandLine\StringTokenizer.cs" />
     <Compile Include="CommandLine\TwoColumnReport.cs" />
     <Compile Include="CommandLine\TokenParser.cs" />
+    <Compile Include="CommandLine\UsageClasses.cs" />
     <Compile Include="Configuration\AppSettingsProvider.cs" />
     <Compile Include="Configuration\AppSettingsRequestData.cs" />
     <Compile Include="Configuration\ISettingsProvider.cs" />

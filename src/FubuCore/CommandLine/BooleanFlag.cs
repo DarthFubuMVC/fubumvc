@@ -4,16 +4,16 @@ using System.Reflection;
 
 namespace FubuCore.CommandLine
 {
-    public class BooleanFlag : ITokenHandler
+    public class BooleanFlag : TokenHandlerBase
     {
         private readonly PropertyInfo _property;
 
-        public BooleanFlag(PropertyInfo property)
+        public BooleanFlag(PropertyInfo property) : base(property)
         {
             _property = property;
         }
 
-        public bool Handle(object input, Queue<string> tokens)
+        public override bool Handle(object input, Queue<string> tokens)
         {
             if (tokens.NextIsFlag(_property))
             {
@@ -24,6 +24,11 @@ namespace FubuCore.CommandLine
             }
 
             return false;
+        }
+
+        public override string ToUsageDescription()
+        {
+            return "[{0}]".ToFormat(InputParser.ToFlagName(_property));
         }
     }
 }

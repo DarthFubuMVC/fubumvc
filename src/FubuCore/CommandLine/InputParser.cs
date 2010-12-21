@@ -27,6 +27,7 @@ namespace FubuCore.CommandLine
                 }
                 catch (InvalidOperationException e)
                 {
+                    // TODO -- show usage here
                     throw new ApplicationException("Trying to process token " + tokens.Peek(), e);
                 }
             }
