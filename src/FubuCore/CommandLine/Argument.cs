@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using FubuCore.Reflection;
-using System.Linq;
 
 namespace FubuCore.CommandLine
 {
@@ -45,10 +45,7 @@ namespace FubuCore.CommandLine
         public override bool RequiredForUsage(string usage)
         {
             var returnValue = false;
-            _property.ForAttribute<RequiredUsageAttribute>(att =>
-            {
-                returnValue = att.Usages.Contains(usage);
-            });
+            _property.ForAttribute<RequiredUsageAttribute>(att => { returnValue = att.Usages.Contains(usage); });
 
             return returnValue;
         }

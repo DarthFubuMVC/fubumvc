@@ -8,7 +8,8 @@ namespace FubuCore.CommandLine
         Type InputType { get; }
     }
 
-    // Later, think about a writer / logger
-
-    //public class LinkPackageCommand
+    public interface IFubuCommand<T> : IFubuCommand
+    {
+        
+    }
 }

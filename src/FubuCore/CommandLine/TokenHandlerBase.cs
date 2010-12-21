@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 using FubuCore.Reflection;
+using System.Linq;
 
 namespace FubuCore.CommandLine
 {
@@ -25,6 +26,8 @@ namespace FubuCore.CommandLine
             }
         }
 
+        public string PropertyName { get { return _property.Name; } }
+
         public abstract bool Handle(object input, Queue<string> tokens);
         public abstract string ToUsageDescription();
         public virtual bool RequiredForUsage(string usage)
@@ -34,7 +37,10 @@ namespace FubuCore.CommandLine
 
         public virtual bool OptionalForUsage(string usage)
         {
-            return true;
+            var returnValue =  true;
+            _property.ForAttribute<ValidUsageAttribute>(att => returnValue = att.Usages.Contains(usage));
+
+            return returnValue;
         }
     }
 }

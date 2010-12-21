@@ -90,6 +90,7 @@
     <Compile Include="CommandLine\FlagTester.cs" />
     <Compile Include="CommandLine\InputParserTester.cs" />
     <Compile Include="CommandLine\StringTokenizerTester.cs" />
+    <Compile Include="CommandLine\UsageGraphTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
     <Compile Include="FileSetTester.cs" />
     <Compile Include="FileSystemTester.cs" />

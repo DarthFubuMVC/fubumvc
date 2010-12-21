@@ -33,11 +33,19 @@ namespace FubuCore.Testing.CommandLine
         }
 
         [Test]
-        public void flag_is_always_optional()
+        public void flag_is_always_optional_if_no_attribute_stating_otherwise()
         {
             forProp(x => x.NameFlag).OptionalForUsage("a").ShouldBeTrue();
             forProp(x => x.NameFlag).OptionalForUsage("b").ShouldBeTrue();
             forProp(x => x.NameFlag).OptionalForUsage("c").ShouldBeTrue();
+        }
+
+        [Test]
+        public void flag_is_selectively_optional_if_attribute_states_specific_usages()
+        {
+            forProp(x => x.EnumFlag).OptionalForUsage("a").ShouldBeTrue();
+            forProp(x => x.EnumFlag).OptionalForUsage("b").ShouldBeTrue();
+            forProp(x => x.EnumFlag).OptionalForUsage("c").ShouldBeFalse();
         }
     }
 
@@ -50,6 +58,7 @@ namespace FubuCore.Testing.CommandLine
     {
         public string NameFlag { get; set; }
 
+        [ValidUsage("a", "b")]
         public FlagEnum EnumFlag { get; set; }
 
         [FlagAlias("a")]

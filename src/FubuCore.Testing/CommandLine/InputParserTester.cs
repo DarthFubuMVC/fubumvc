@@ -5,6 +5,7 @@ using FubuCore.CommandLine;
 using NUnit.Framework;
 using FubuCore.Reflection;
 
+
 namespace FubuCore.Testing.CommandLine
 {
     [TestFixture]
@@ -213,4 +214,6 @@ namespace FubuCore.Testing.CommandLine
         [FlagAlias("a")]
         public string AliasedFlag { get; set; }
     }
+
+
 }

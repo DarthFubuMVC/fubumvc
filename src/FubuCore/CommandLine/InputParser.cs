@@ -6,12 +6,14 @@ using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
+    // TODO -- 
     public static class InputParser
     {
         public static readonly string FLAG_PREFIX = "-";
         public static readonly string FLAG_SUFFIX = "Flag";
         private static readonly ObjectConverter _converter = new ObjectConverter();
 
+        // This needs to move into UsageGraph
         public static object BuildInput(Type inputType, Queue<string> tokens)
         {
             // Important to leave the ToList() there to force it to be evaluated
@@ -62,5 +64,6 @@ namespace FubuCore.CommandLine
 
             return FLAG_PREFIX + name.ToLower();
         }
+
     }
 }

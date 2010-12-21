@@ -2,7 +2,7 @@
 
 namespace FubuCore.CommandLine
 {
-    public abstract class FubuCommand<T> : IFubuCommand
+    public abstract class FubuCommand<T> : IFubuCommand<T>
     {
         public Type InputType
         {

@@ -10,5 +10,6 @@ namespace FubuCore.CommandLine
         bool RequiredForUsage(string usage);
         bool OptionalForUsage(string usage);
         string Description { get; }
+        string PropertyName { get; }
     }
 }
