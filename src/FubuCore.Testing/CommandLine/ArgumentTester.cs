@@ -38,6 +38,27 @@ namespace FubuCore.Testing.CommandLine
         {
             argFor(x => x.Enum).ToUsageDescription().ShouldEqual("red|blue|green");
         }
+
+        [Test]
+        public void required_forUsage_respects_the_required_usage_attribute()
+        {
+            argFor(x => x.Enum).RequiredForUsage("a").ShouldBeFalse();
+            argFor(x => x.Enum).RequiredForUsage("b").ShouldBeFalse();
+            argFor(x => x.Enum).RequiredForUsage("c").ShouldBeTrue();
+
+            argFor(x => x.Name).RequiredForUsage("a").ShouldBeTrue();
+            argFor(x => x.Name).RequiredForUsage("b").ShouldBeTrue();
+            argFor(x => x.Name).RequiredForUsage("c").ShouldBeTrue();
+        }
+
+        [Test]
+        public void arg_is_never_optional()
+        {
+            argFor(x => x.Enum).OptionalForUsage("a").ShouldBeFalse();
+            argFor(x => x.Enum).OptionalForUsage("b").ShouldBeFalse();
+            argFor(x => x.Enum).OptionalForUsage("c").ShouldBeFalse();
+            argFor(x => x.Enum).OptionalForUsage("d").ShouldBeFalse();
+        }
     }
 
     public enum TargetEnum
@@ -47,8 +68,11 @@ namespace FubuCore.Testing.CommandLine
 
     public class ArgumentTarget
     {
-        public TargetEnum Enum{ get; set;}
+        [RequiredUsage("a", "b", "c")]
         public string Name { get; set; }
+
+        [RequiredUsage( "c")]
+        public TargetEnum Enum{ get; set;}
 
         [System.ComponentModel.Description("age of target")]
         public int Age { get; set; }

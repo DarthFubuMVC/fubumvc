@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using FubuCore.Reflection;
+using System.Linq;
 
 namespace FubuCore.CommandLine
 {
@@ -28,6 +29,15 @@ namespace FubuCore.CommandLine
 
         public abstract bool Handle(object input, Queue<string> tokens);
         public abstract string ToUsageDescription();
+        public virtual bool RequiredForUsage(string usage)
+        {
+            return false;
+        }
+
+        public virtual bool OptionalForUsage(string usage)
+        {
+            return true;
+        }
     }
 
     public class Argument : TokenHandlerBase
@@ -64,6 +74,22 @@ namespace FubuCore.CommandLine
             }
 
             return "<{0}>".ToFormat(_property.Name.ToLower());
+        }
+
+        public override bool RequiredForUsage(string usage)
+        {
+            var returnValue = false;
+            _property.ForAttribute<RequiredUsageAttribute>(att =>
+            {
+                returnValue = att.Usages.Contains(usage);
+            });
+
+            return returnValue;
+        }
+
+        public override bool OptionalForUsage(string usage)
+        {
+            return false;
         }
     }
 }

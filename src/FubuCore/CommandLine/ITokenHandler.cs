@@ -7,8 +7,8 @@ namespace FubuCore.CommandLine
         bool Handle(object input, Queue<string> tokens);
 
         string ToUsageDescription();
-        //bool RequiredForUsage(string usage);
-        //bool OptionalForUsage(string usage);
-        //string Description { get; }
+        bool RequiredForUsage(string usage);
+        bool OptionalForUsage(string usage);
+        string Description { get; }
     }
 }

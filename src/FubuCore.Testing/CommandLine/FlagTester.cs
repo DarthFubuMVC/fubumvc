@@ -31,6 +31,14 @@ namespace FubuCore.Testing.CommandLine
         {
             forProp(x => x.EnumFlag).ToUsageDescription().ShouldEqual("[-enum red|blue|green]");
         }
+
+        [Test]
+        public void flag_is_always_optional()
+        {
+            forProp(x => x.NameFlag).OptionalForUsage("a").ShouldBeTrue();
+            forProp(x => x.NameFlag).OptionalForUsage("b").ShouldBeTrue();
+            forProp(x => x.NameFlag).OptionalForUsage("c").ShouldBeTrue();
+        }
     }
 
     public enum FlagEnum
