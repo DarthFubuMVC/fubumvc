@@ -78,15 +78,16 @@ namespace FubuMVC.Core.Packaging.Environment
         private IEnvironment findEnvironment(List<LogEntry> list)
         {
             var environmentType = _run.FindEnvironmentType();
+            if (environmentType == null)
+            {
+                throw new EnvironmentRunnerException("Unable to find an IEnvironment type");
+            }
 
             IEnvironment environment = null;
             try
             {
                 environment = (IEnvironment) Activator.CreateInstance(environmentType);
-                if (environment == null)
-                {
-                    throw new EnvironmentRunnerException("Unable to find an IEnvironment object");
-                }
+
             }
             catch (Exception e)
             {
