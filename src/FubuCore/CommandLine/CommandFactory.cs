@@ -29,8 +29,7 @@ namespace FubuCore.CommandLine
 
             var command = Build(commandName);
 
-            var parser = new InputParser();
-            var input = parser.BuildInput(command.InputType, queue);
+            var input = InputParser.BuildInput(command.InputType, queue);
 
             return new CommandRun{
                 Command = command,

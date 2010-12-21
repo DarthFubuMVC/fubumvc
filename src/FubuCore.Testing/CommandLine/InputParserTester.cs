@@ -22,7 +22,7 @@ namespace FubuCore.Testing.CommandLine
         private ITokenHandler handlerFor(Expression<Func<InputModel, object>> expression)
         {
             var property = expression.ToAccessor().InnerProperty;
-            return new InputParser().BuildHandler(property);
+            return InputParser.BuildHandler(property);
         }
 
         private bool handle(Expression<Func<InputModel, object>> expression, params string[] args)
@@ -160,7 +160,7 @@ namespace FubuCore.Testing.CommandLine
         private InputModel build(params string[] tokens)
         {
             var queue = new Queue<string>(tokens);
-            return (InputModel) new InputParser().BuildInput(typeof (InputModel), queue);
+            return (InputModel) InputParser.BuildInput(typeof (InputModel), queue);
         }
 
         [Test]

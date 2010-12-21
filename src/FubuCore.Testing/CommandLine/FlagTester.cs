@@ -46,7 +46,6 @@ namespace FubuCore.Testing.CommandLine
         red, blue, green
     }
 
-
     public class FlagTarget
     {
         public string NameFlag { get; set; }
