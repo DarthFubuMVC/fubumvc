@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -10,13 +11,23 @@ namespace Fubu.Packages
 
     public class InstallPackageInput
     {
+        [Description("The package zip file location to be installed.  If un-installing, just use the zip file name")]
+        [RequiredUsage("install", "uninstall")]
         public string PackageFile { get; set; }
+
+        [Description("The physical folder (or valid alias) of the main application")]
+        [RequiredUsage("install", "uninstall")]
         public string AppFolder { get; set; }
 
         [FlagAlias("u")]
+        [RequiredUsage("uninstall")]
+        [ValidUsage("uninstall")]
+        [Description("Uninstalls the named package from an application folder")]
         public bool UninstallFlag { get; set; }
     }
 
+    [Usage("install", "Install a package zip file to an application")]
+    [Usage("uninstall", "Remove a package zip file to an application")]
     [CommandDescription("Install a package zip file to the specified application", Name = "install-pak")]
     public class InstallPackageCommand : FubuCommand<InstallPackageInput>
     {
@@ -64,13 +75,20 @@ namespace Fubu.Packages
 
     public class PackagesInput
     {
+        [Description("Physical root folder (or valid alias) of the application")]
         public string AppFolder { get; set; }
+        
+        [Description("Removes all 'exploded' package folders out of the application folder")]
         public bool CleanAllFlag { get; set; }
+
+        [Description("'Explodes' all the zip files underneath <appfolder>/bin/fubu-packages")]
         public bool ExplodeFlag { get; set; }
+
+        [Description("Removes all package zip files and exploded directories from the application folder")]
         public bool RemoveAllFlag { get; set; }
     }
 
-    [CommandDescription("Access to the state of packages in an application folder")]
+    [CommandDescription("Display and modify the state of package zip files in an application folder")]
     public class PackagesCommand : FubuCommand<PackagesInput>
     {
         public override void Execute(PackagesInput input)

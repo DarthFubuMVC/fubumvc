@@ -101,6 +101,7 @@
     <Compile Include="Commands\Packages\PackagesCommandTester.cs" />
     <Compile Include="Commands\Packages\ZipFileServiceTester.cs" />
     <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
+    <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="Content\ContentRegistryCacheTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\PackagedImageUrlResolverTester.cs" />

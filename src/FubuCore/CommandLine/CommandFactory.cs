@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using FubuCore.Reflection;
@@ -7,10 +8,72 @@ using FubuCore.Util;
 
 namespace FubuCore.CommandLine
 {
-    [CommandDescription("list all the available commands", Name = "help")]
-    public class CommandFactory : FubuCommand<IEnumerable<Type>>, ICommandFactory
+    public class HelpInput
     {
-        // TODO -- Make it deal well with missing commands
+        [IgnoreOnCommandLine]
+        public IEnumerable<Type> CommandTypes { get; set; }
+
+        [RequiredUsage("usage")]
+        [Description("A command name")]
+        public string Name { get; set; }
+
+        [IgnoreOnCommandLine]
+        public bool InvalidCommandName { get; set; }
+
+        [IgnoreOnCommandLine]
+        public UsageGraph Usage { get; set; }
+    }
+    
+    // TODO -- test this nonsense
+    [Usage("list", "List all the available commands")]
+    [Usage("usage", "Show all the valid usages for a command")]
+    [CommandDescription("list all the available commands", Name = "help")]
+    public class HelpCommand : FubuCommand<HelpInput>
+    {
+        // TODO -- have it write out its own usage
+        // TODO -- look for command line stuff
+        public override void Execute(HelpInput input)
+        {
+            if (input.Usage != null)
+            {
+                input.Usage.WriteUsages();
+                return;
+            }
+
+            if (input.InvalidCommandName)
+            {
+                writeInvalidCommand(input.Name);
+            }
+
+            listAllCommands(input);
+        }
+
+        private void listAllCommands(HelpInput input)
+        {
+            var report = new TwoColumnReport("Available commands:");
+            input.CommandTypes.OrderBy(CommandFactory.CommandNameFor).Each(type =>
+            {
+                report.Add(CommandFactory.CommandNameFor(type), CommandFactory.DescriptionFor(type));
+            });
+
+            report.Write();
+        }
+
+        private void writeInvalidCommand(string commandName)
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("fubu:  '{0}' is not a command.  See available commands.", commandName);
+            Console.WriteLine();
+            Console.ResetColor();
+        }
+    }
+
+
+
+    public class CommandFactory : ICommandFactory
+    {
+        private static readonly string[] _helpCommands = new string[]{"help", "?"}; 
         private readonly Cache<string, Type> _commandTypes = new Cache<string, Type>();
 
         // TODO -- deal with the Help thing
@@ -22,20 +85,58 @@ namespace FubuCore.CommandLine
 
         public CommandRun BuildRun(IEnumerable<string> args)
         {
-            if (!args.Any()) return HelpRun();
+            if (!args.Any()) return HelpRun(new Queue<string>());
 
             var queue = new Queue<string>(args);
-            var commandName = queue.Dequeue();
+            var commandName = queue.Dequeue().ToLowerInvariant();
 
-            var command = Build(commandName);
+            // TEMPORARY
+            if (_helpCommands.Contains(commandName))
+            {
+                return HelpRun(queue);
+            }
 
-            var input = InputParser.BuildInput(command.InputType, queue);
+            if (_commandTypes.Has(commandName))
+            {
+                return buildRun(queue, commandName);
+            }
 
-            return new CommandRun{
-                Command = command,
-                Input = input
+            return InvalidCommandRun(commandName);
+        }
+
+        public IEnumerable<Type> AllCommandTypes()
+        {
+            return _commandTypes.GetAll();
+        }
+
+        public CommandRun InvalidCommandRun(string commandName)
+        {
+            return new CommandRun()
+            {
+                Command = new HelpCommand(),
+                Input = new HelpInput(){
+                    Name = commandName,
+                    CommandTypes = _commandTypes.GetAll(),
+                    InvalidCommandName = true
+                }
             };
         }
+
+        private CommandRun buildRun(Queue<string> queue, string commandName)
+        {
+            var command = Build(commandName);
+
+            // this is where we'll call into UsageGraph?
+            var input = InputParser.BuildInput(command.InputType, queue);
+
+            return new CommandRun
+                   {
+                       Command = command,
+                       Input = input
+                   };
+        }
+
+
 
         public void RegisterCommands(Assembly assembly)
         {
@@ -43,6 +144,38 @@ namespace FubuCore.CommandLine
                 .GetExportedTypes()
                 .Where(x => x.Closes(typeof(FubuCommand<>)) && x.IsConcrete())
                 .Each(t => { _commandTypes[CommandNameFor(t)] = t; });
+        }
+
+
+
+        public IFubuCommand Build(string commandName)
+        {
+            return (IFubuCommand) Activator.CreateInstance(_commandTypes[commandName.ToLower()]);
+        }
+
+
+
+        public virtual CommandRun HelpRun(Queue<string> queue)
+        {
+            var input = (HelpInput)InputParser.BuildInput(typeof (HelpInput), queue);
+            input.CommandTypes = _commandTypes.GetAll();
+
+
+            if (input.Name.IsNotEmpty())
+            {
+                input.InvalidCommandName = true;
+                input.Name = input.Name.ToLowerInvariant();
+                _commandTypes.WithValue(input.Name, type =>
+                {
+                    input.InvalidCommandName = false;
+                    input.Usage = new UsageGraph(type);
+                });
+            }
+
+            return new CommandRun(){
+                Command = new HelpCommand(),
+                Input = input
+            };
         }
 
         public static string CommandNameFor(Type type)
@@ -59,30 +192,6 @@ namespace FubuCore.CommandLine
             type.ForAttribute<CommandDescriptionAttribute>(att => description = att.Description);
 
             return description;
-        }
-
-        public IFubuCommand Build(string commandName)
-        {
-            return (IFubuCommand) Activator.CreateInstance(_commandTypes[commandName.ToLower()]);
-        }
-
-        public override void Execute(IEnumerable<Type> types)
-        {
-            var report = new TwoColumnReport("Available commands:");
-            types.OrderBy(CommandNameFor).Each(type =>
-            {
-                report.Add(CommandNameFor(type), DescriptionFor(type));
-            });
-
-            report.Write();
-        }
-
-        public virtual CommandRun HelpRun()
-        {
-            return new CommandRun(){
-                Command = this,
-                Input = _commandTypes.GetAll()
-            };
         }
     }
 }

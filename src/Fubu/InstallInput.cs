@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using FubuCore;
+using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
 
 namespace Fubu
@@ -12,9 +14,16 @@ namespace Fubu
             LogFileFlag = "installation.htm";
         }
 
+        [Description("Root folder (or alias) of the fubu application")]
         public string AppFolder { get; set; }
+
+        [Description("Determines what actions are executed for each installer.  'install' is the default")]
         public InstallMode ModeFlag { get; set; }
+
+        [Description("Overrides the location of the log file produced, otherwise 'installation.htm' is the default")]
         public string LogFileFlag { get; set; }
+
+        [Description("When specified, opens the resulting log file in the default web browser")]
         public bool OpenFlag { get; set; }
 
         public string ManifestFileName

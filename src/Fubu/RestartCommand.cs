@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using FubuCore.CommandLine;
 
@@ -6,7 +7,8 @@ namespace Fubu
 {
     public class FolderInput
     {
-        public string FolderName { get; set; }
+        [Description("Physical folder (or valid alias) of the web application")]
+        public string AppFolder { get; set; }
     }
 
     [CommandDescription("Restarts a web application by 'touching' the web.config file")]
@@ -14,7 +16,7 @@ namespace Fubu
     {
         public override void Execute(FolderInput input)
         {
-            var folder = AliasCommand.AliasFolder(input.FolderName);
+            var folder = AliasCommand.AliasFolder(input.AppFolder);
 
             var configFile = Path.Combine(folder, "web.config");
             File.SetLastWriteTimeUtc(configFile, DateTime.UtcNow);

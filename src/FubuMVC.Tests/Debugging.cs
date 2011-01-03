@@ -26,6 +26,7 @@ namespace FubuMVC.Tests
 
         #endregion
 
+
         [Test]
         public void try_dictionary()
         {

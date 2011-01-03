@@ -16,6 +16,8 @@ namespace FubuCore.CommandLine
             _title = title;
         }
 
+        public ConsoleColor? SecondColumnColor { get; set; }
+
         public void Add(string first, string second)
         {
             _data[first] = second;
@@ -46,9 +48,26 @@ namespace FubuCore.CommandLine
             Console.WriteLine("    " + _title);
             Console.WriteLine(separator);
 
-            var format = "    {0," + firstLength + "} -> {1}";
+            var format = "    {0," + firstLength + "} -> ";
+            if (!SecondColumnColor.HasValue)
+            {
+                format += "{1}";
+            }
 
-            _data.Each((left, right) => Console.WriteLine(format, left, right));
+            _data.Each((left, right) =>
+            {
+                if (SecondColumnColor.HasValue)
+                {
+                    Console.Write(format, left, right);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(right);
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine(format, left, right);
+                }
+            });
 
             Console.WriteLine(separator);
         }

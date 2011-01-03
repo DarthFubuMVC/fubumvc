@@ -1,91 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class UsageAttribute : Attribute
-    {
-        private readonly string _description;
-        private readonly string _name;
-
-        public UsageAttribute(string name, string description)
-        {
-            _name = name;
-            _description = description;
-        }
-
-        public string Name
-        {
-            get { return _name; }
-        }
-
-        public string Description
-        {
-            get { return _description; }
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Property)]
-    public class RequiredUsageAttribute : Attribute
-    {
-        private readonly string[] _usages;
-
-        public RequiredUsageAttribute(params string[] usages)
-        {
-            _usages = usages;
-        }
-
-        public string[] Usages
-        {
-            get { return _usages; }
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Property)]
-    public class ValidUsageAttribute : Attribute
-    {
-        private readonly string[] _usages;
-
-        public ValidUsageAttribute(params string[] usages)
-        {
-            _usages = usages;
-        }
-
-        public string[] Usages
-        {
-            get { return _usages; }
-        }
-    }
-
-
-    // To match the usage, gotta use the fattest one first
-    // Test this in the morning
-    public class CommandUsage
-    {
-        public string UsageKey { get; set; }
-        public string CommandName { get; set; }
-        public string Description { get; set; }
-        public IEnumerable<ITokenHandler> Mandatories { get; set; }
-        public IEnumerable<ITokenHandler> Flags { get; set; }
-
-        public string Usage
-        {
-            get
-            {
-                return "fubu {0} {1}".ToFormat(CommandName,
-                                               Mandatories.Union(Flags).Select(x => x.ToUsageDescription()).Join(" "));
-            }
-        }
-
-        public bool Matches(IEnumerable<ITokenHandler> actuals)
-        {
-            return Mandatories.All(x => actuals.Contains(x));
-        }
-    }
-
     public class UsageGraph
     {
         private readonly string _commandName;
@@ -111,6 +30,19 @@ namespace FubuCore.CommandLine
             {
                 _usages.Add(buildUsage(att));
             });
+
+            if (!_usages.Any())
+            {
+                var usage = new CommandUsage(){
+                    CommandName = _commandName,
+                    UsageKey = "default",
+                    Description = _description,
+                    Mandatories = _tokens.Where(x => x is Argument),
+                    Flags = _tokens.Where(x => !(x is Argument))
+                };
+
+                _usages.Add(usage);
+            }
 
         }
 
@@ -162,21 +94,59 @@ namespace FubuCore.CommandLine
 
         public void WriteUsages()
         {
-            Console.WriteLine("Usages for '{0}'", _commandName);
+            if (!_usages.Any())
+            {
+                Console.WriteLine("No documentation for this command");
+                return;
+            }
 
-            var usageReport = new TwoColumnReport("Usages");
+            Console.WriteLine(" Usages for '{0}'", _commandName);
+            Console.WriteLine(" " + _description);
+
+            if (_usages.Count == 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine(" " + _usages.Single().Usage);
+                Console.ResetColor();
+            }
+            else
+            {
+                writeMultipleUsages();
+            }
+
+            writeArguments();
+
+
+            if (!Flags.Any()) return;
+
+            writeFlags();
+        }
+
+        private void writeMultipleUsages()
+        {
+            var usageReport = new TwoColumnReport("Usages"){
+                SecondColumnColor = ConsoleColor.Cyan
+            };
+
             _usages.OrderBy(x => x.Mandatories.Count()).Each(u =>
             {
                 usageReport.Add(u.Description, u.Usage);
             });
-            usageReport.Write();
 
+            usageReport.Write();
+        }
+
+        private void writeArguments()
+        {
             var argumentReport = new TwoColumnReport("Arguments");
             Arguments.Each(x => argumentReport.Add(x.PropertyName.ToLower(), x.Description));
             argumentReport.Write();
+        }
 
+        private void writeFlags()
+        {
             var flagReport = new TwoColumnReport("Flags");
-            Flags.Each(x => flagReport.Add(x.Description, x.ToUsageDescription()));
+            Flags.Each(x => flagReport.Add(x.ToUsageDescription(), x.Description));
             flagReport.Write();
         }
     }

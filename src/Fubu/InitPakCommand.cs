@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -7,13 +8,20 @@ namespace Fubu
 {
     public class InitPakInput
     {
+        [Description("The physical folder of the new package")]
         public string Folder { get; set; }
+
+        [Description("The name of the new package")]
         public string Name { get; set; }
+
+        [Description("Creates a folder alias for the package folder.  Equivalent to fubu alias <folder> <alias>")]
         public string AliasFlag { get; set; }
+
+        [Description("Opens the package manifest file in notepad")]
         public bool NotepadFlag { get; set; }
     }
 
-    [CommandDescription("initialize a package manifest", Name = "init-pak")]
+    [CommandDescription("Initialize a package manifest", Name = "init-pak")]
     public class InitPakCommand : FubuCommand<InitPakInput>
     {
         public override void Execute(InitPakInput input)

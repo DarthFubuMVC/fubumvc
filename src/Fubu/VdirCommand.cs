@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.DirectoryServices;
 using System.IO;
 using FubuCore.CommandLine;
@@ -9,17 +10,21 @@ namespace Fubu
     {
         private string _folder;
 
+        [Description("Physical file path")]
         public string Folder
         {
             get { return _folder; }
             set { _folder = Path.GetFullPath(value.TrimEnd('/').TrimEnd('\\')); }
         }
 
+        [Description("The name of the virtual directory in IIS")]
         public string VirtualDirectory { get; set; }
     }
 
+
     public class VdirAppendInput : VdirInput
     {
+        [Description("The subfolder pathing underneath the virtual directory, i.e., '/content/images'")]
         public string VirtualDirectoryFolder { get; set; }
     }
 

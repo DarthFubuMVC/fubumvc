@@ -3,6 +3,7 @@ using FubuCore.CommandLine;
 using NUnit.Framework;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 using System.Linq;
+using FubuCore.Reflection;
 
 namespace FubuCore.Testing.CommandLine
 {
@@ -95,8 +96,17 @@ namespace FubuCore.Testing.CommandLine
         {
             theUsageGraph.WriteUsages();
         }
-    }
 
+        [Test]
+        public void derive_a_single_usage_for_any_command_that_has_no_specific_usages()
+        {
+            var graph = new UsageGraph(typeof (SimpleCommand));
+            var usage = graph.Usages.Single();
+            usage.Description.ShouldEqual(typeof (SimpleCommand).GetAttribute<CommandDescriptionAttribute>().Description);
+            usage.Mandatories.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("Arg1", "Arg2");
+        }
+    }
+    
     public class FakeLinkInput
     {
         [RequiredUsage("list", "link"), Description("The root directory of the web folder")]
@@ -123,6 +133,21 @@ namespace FubuCore.Testing.CommandLine
     public class FakeLinkCommand : FubuCommand<FakeLinkInput>
     {
         public override void Execute(FakeLinkInput input)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SimpleInput
+    {
+        public string Arg1 { get; set; }
+        public string Arg2 { get; set; }
+    }
+
+    [CommandDescription("does simple thing")]
+    public class SimpleCommand : FubuCommand<SimpleInput>
+    {
+        public override void Execute(SimpleInput input)
         {
             throw new NotImplementedException();
         }

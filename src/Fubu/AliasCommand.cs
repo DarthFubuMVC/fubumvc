@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
 using FubuCore;
@@ -9,11 +10,24 @@ namespace Fubu
 {
     public class AliasInput
     {
+        [RequiredUsage("create", "remove")]
+        [Description("The name of the alias")]
         public string Name { get; set; }
+
+        [RequiredUsage("create")]
+        [Description("The path to the actual folder")]
         public string Folder { get; set; }
+
+        [ValidUsage("remove")]
+        [Description("Removes the alias")]
         public bool RemoveFlag { get; set; }
     }
 
+
+    [Usage("list", "List all the aliases for this solution folder")]
+    [Usage("create", "Creates a new alias for a folder")]
+    [Usage("remove", "Removes an alias")]
+    [CommandDescription("Manage folder aliases")]
     public class AliasCommand : FubuCommand<AliasInput>
     {
         public static string AliasFolder(string folder)

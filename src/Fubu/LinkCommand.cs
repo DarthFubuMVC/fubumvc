@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -10,11 +11,23 @@ namespace Fubu
 {
     public class LinkInput
     {
+        [Description("The physical folder (or valid alias) of the main application")]
+        [RequiredUsage("list", "create", "remove")]
         public string AppFolder { get; set; }
+
+        [Description("The physical folder (or valid alias) of a package")]
+        [RequiredUsage("create", "remove")]
         public string PackageFolder { get; set; }
 
+        [Description("Remove the package folder link from the application")]
+        [RequiredUsage("remove")]
+        [ValidUsage("remove")]
         public bool RemoveFlag { get; set; }
+
+        [Description("Remove all links from an application manifest file")]
         public bool CleanAllFlag { get; set; }
+
+        [Description("Opens the package manifest file in notepad")]
         public bool NotepadFlag { get; set; }
 
         public string RelativePathOfPackage()
@@ -26,7 +39,10 @@ namespace Fubu
         }
     }
 
-
+    // TODO -- do NOT delete the manifest file
+    [Usage("list", "List the current links for the application")]
+    [Usage("create", "Create a new link for the application to the package")]
+    [Usage("remove", "Remove any existing link for the application to the package")]
     [CommandDescription("Links a package folder to an application folder in development mode")]
     public class LinkCommand : FubuCommand<LinkInput>
     {

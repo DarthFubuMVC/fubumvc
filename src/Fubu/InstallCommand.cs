@@ -7,6 +7,7 @@ using FubuMVC.Core.Packaging.Environment;
 
 namespace Fubu
 {
+    [CommandDescription("Runs installer actions and/or environment checks for an application")]
     public class InstallCommand : FubuCommand<InstallInput>
     {
         public override void Execute(InstallInput input)

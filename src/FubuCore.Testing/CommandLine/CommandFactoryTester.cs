@@ -50,6 +50,47 @@ namespace FubuCore.Testing.CommandLine
         }
 
         [Test]
+        public void trying_to_build_a_missing_command_will_list_the_existing_commands()
+        {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(GetType().Assembly);
+
+            var commandRun = factory.BuildRun("junk");
+            var theInput = commandRun.Input.ShouldBeOfType<HelpInput>();
+            theInput.Name.ShouldEqual("junk");
+            theInput.InvalidCommandName.ShouldBeTrue();
+            commandRun.Command.ShouldBeOfType<HelpCommand>();
+        }
+
+        [Test]
+        public void build_help_command_with_valid_name_argument()
+        {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(GetType().Assembly);
+
+            var commandRun = factory.BuildRun("help my");
+            var theInput = commandRun.Input.ShouldBeOfType<HelpInput>();
+            theInput.Name.ShouldEqual("my");
+            theInput.InvalidCommandName.ShouldBeFalse();
+            theInput.Usage.ShouldNotBeNull();
+            commandRun.Command.ShouldBeOfType<HelpCommand>();
+        }
+
+        [Test]
+        public void build_help_command_with_invalid_name_argument()
+        {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(GetType().Assembly);
+
+            var commandRun = factory.BuildRun("help junk");
+            var theInput = commandRun.Input.ShouldBeOfType<HelpInput>();
+            theInput.Name.ShouldEqual("junk");
+            theInput.InvalidCommandName.ShouldBeTrue();
+            theInput.Usage.ShouldBeNull();
+            commandRun.Command.ShouldBeOfType<HelpCommand>();
+        }
+
+        [Test]
         public void build_command_from_a_string()
         {
             var factory = new CommandFactory();
@@ -70,9 +111,9 @@ namespace FubuCore.Testing.CommandLine
             var factory = new CommandFactory();
             factory.RegisterCommands(GetType().Assembly);
 
-            var run = factory.HelpRun();
-            run.Command.ShouldBeTheSameAs(factory);
-            run.Input.ShouldBeOfType<IEnumerable<Type>>()
+            var run = factory.HelpRun(new Queue<string>());
+            run.Command.ShouldBeOfType<HelpCommand>();
+            run.Input.ShouldBeOfType<HelpInput>().CommandTypes
                 .ShouldContain(typeof(MyCommand));
         }
 
@@ -83,8 +124,33 @@ namespace FubuCore.Testing.CommandLine
             factory.RegisterCommands(GetType().Assembly);
 
             var run = factory.BuildRun(new string[0]);
-            run.Command.ShouldBeTheSameAs(factory);
-            run.Input.ShouldBeOfType<IEnumerable<Type>>()
+            run.Command.ShouldBeOfType<HelpCommand>();
+            run.Input.ShouldBeOfType<HelpInput>().CommandTypes
+                .ShouldContain(typeof(MyCommand));
+        }
+
+        [Test]
+        public void fetch_the_help_command_if_the_command_is_help()
+        {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(GetType().Assembly);
+
+            var run = factory.BuildRun(new string[]{"help"});
+            run.Command.ShouldBeOfType<HelpCommand>();
+            run.Input.ShouldBeOfType<HelpInput>().CommandTypes
+                .ShouldContain(typeof(MyCommand));
+        }
+
+
+        [Test]
+        public void fetch_the_help_command_if_the_command_is_question_mark()
+        {
+            var factory = new CommandFactory();
+            factory.RegisterCommands(GetType().Assembly);
+
+            var run = factory.BuildRun(new string[] { "?" });
+            run.Command.ShouldBeOfType<HelpCommand>();
+            run.Input.ShouldBeOfType<HelpInput>().CommandTypes
                 .ShouldContain(typeof(MyCommand));
         }
 
@@ -93,7 +159,7 @@ namespace FubuCore.Testing.CommandLine
         {
             var factory = new CommandFactory();
             factory.RegisterCommands(GetType().Assembly);
-            factory.HelpRun().Execute();
+            factory.HelpRun(new Queue<string>()).Execute();
         }
 
 
