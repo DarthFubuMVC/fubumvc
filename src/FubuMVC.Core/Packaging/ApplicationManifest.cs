@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Packaging
         private readonly IList<string> _folders = new List<string>();
 
         [XmlElement("include")]
-        public string[] Folders
+        public string[] LinkedFolders
         {
             get
             {
@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Packaging
         public string EnvironmentAssembly { get; set; }
         public string ConfigurationFile { get; set; }
 
-        public bool Include(string folder)
+        public bool AddLink(string folder)
         {
             if (_folders.Contains(folder.ToLower()))
             {
@@ -40,10 +40,14 @@ namespace FubuMVC.Core.Packaging
             return true;
         }
 
-        public void Exclude(string folder)
+        public void RemoveLink(string folder)
         {
             _folders.Remove(folder.ToLower());
         }
 
+        public void RemoveAllLinkedFolders()
+        {
+            _folders.Clear();
+        }
     }
 }

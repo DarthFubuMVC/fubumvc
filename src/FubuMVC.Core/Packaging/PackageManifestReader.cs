@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Packaging
         {
             var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.FILE);
 
-            return includes.Folders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f)));
+            return includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f)));
         }
 
         public IPackageInfo LoadFromFolder(string folder)

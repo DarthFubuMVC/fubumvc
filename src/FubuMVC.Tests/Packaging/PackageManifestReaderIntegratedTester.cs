@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Packaging
         public void load_all_packages_by_reading_the_include_folder()
         {
             var includes = new ApplicationManifest();
-            includes.Include("../TestPackage1");
+            includes.AddLink("../TestPackage1");
 
             new FileSystem().PersistToFile(includes, "../../".ToFullPath(), ApplicationManifest.FILE);
 

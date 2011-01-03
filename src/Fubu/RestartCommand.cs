@@ -18,6 +18,11 @@ namespace Fubu
         {
             var folder = AliasCommand.AliasFolder(input.AppFolder);
 
+            Restart(folder);
+        }
+
+        public static void Restart(string folder)
+        {
             var configFile = Path.Combine(folder, "web.config");
             File.SetLastWriteTimeUtc(configFile, DateTime.UtcNow);
         }

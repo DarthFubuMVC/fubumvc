@@ -9,10 +9,14 @@ using FubuMVC.Core.Packaging;
 
 namespace Fubu
 {
+
+
+
+
     public class LinkInput
     {
         [Description("The physical folder (or valid alias) of the main application")]
-        [RequiredUsage("list", "create", "remove")]
+        [RequiredUsage("list", "create", "remove", "clean")]
         public string AppFolder { get; set; }
 
         [Description("The physical folder (or valid alias) of a package")]
@@ -25,10 +29,11 @@ namespace Fubu
         public bool RemoveFlag { get; set; }
 
         [Description("Remove all links from an application manifest file")]
+        [ValidUsage("clean")]
         public bool CleanAllFlag { get; set; }
 
-        [Description("Opens the package manifest file in notepad")]
-        public bool NotepadFlag { get; set; }
+        [Description("Restarts the application -- fubu restart <appfolder>")]
+        public bool RestartFlag { get; set; }
 
         public string RelativePathOfPackage()
         {
@@ -39,10 +44,10 @@ namespace Fubu
         }
     }
 
-    // TODO -- do NOT delete the manifest file
     [Usage("list", "List the current links for the application")]
     [Usage("create", "Create a new link for the application to the package")]
     [Usage("remove", "Remove any existing link for the application to the package")]
+    [Usage("clean", "Remove any and all existing links from the application to any package folder")]
     [CommandDescription("Links a package folder to an application folder in development mode")]
     public class LinkCommand : FubuCommand<LinkInput>
     {
@@ -57,15 +62,22 @@ namespace Fubu
 
         private void Execute(LinkInput input, FileSystem fileSystem)
         {
-            if (input.CleanAllFlag)
-            {
-                fileSystem.DeleteFile(input.AppFolder, ApplicationManifest.FILE);
+            var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
 
-                Console.WriteLine("Deleted the package include manifest file for " + input.AppFolder);
+            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, ApplicationManifest.FILE))
+            {
+                manifest.RemoveAllLinkedFolders();
+
+                persist(input, manifest, fileSystem);
+
+                Console.WriteLine("Removed all package links from the manifest file for " + input.AppFolder);
+
+                listCurrentLinks(input, manifest);
+                
                 return;
             }
 
-            var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
+            
 
             if (input.PackageFolder.IsNotEmpty())
             {
@@ -76,10 +88,9 @@ namespace Fubu
                 listCurrentLinks(input, manifest);
             }
 
-
-            if (input.NotepadFlag)
+            if (input.RestartFlag)
             {
-                fileSystem.OpenInNotepad(input.AppFolder, ApplicationManifest.FILE);
+                RestartCommand.Restart(input.AppFolder);
             }
         }
 
@@ -92,10 +103,10 @@ namespace Fubu
 
         public static void ListCurrentLinks(string appFolder, ApplicationManifest manifest)
         {
-            if (manifest.Folders.Any())
+            if (manifest.LinkedFolders.Any())
             {
                 Console.WriteLine("  Links for " + appFolder);
-                manifest.Folders.Each(x => { Console.WriteLine("    " + x); });
+                manifest.LinkedFolders.Each(x => { Console.WriteLine("    " + x); });
             }
             else
             {
@@ -114,12 +125,17 @@ namespace Fubu
                 add(fileSystem, input, manifest);
             }
 
+            persist(input, manifest, fileSystem);
+        }
+
+        private void persist(LinkInput input, ApplicationManifest manifest, FileSystem fileSystem)
+        {
             fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
         }
 
         private void remove(LinkInput input, ApplicationManifest manifest)
         {
-            manifest.Exclude(input.RelativePathOfPackage());
+            manifest.RemoveLink(input.RelativePathOfPackage());
             Console.WriteLine("Folder {0} was removed from the application at {1}", input.PackageFolder, input.AppFolder);
         }
 
@@ -132,7 +148,7 @@ namespace Fubu
                     "There is no package manifest file for the requested package folder at " + input.PackageFolder);
             }
 
-            var wasAdded = manifest.Include(input.RelativePathOfPackage());
+            var wasAdded = manifest.AddLink(input.RelativePathOfPackage());
             Console.WriteLine(
                 wasAdded
                     ? "Folder {0} was added to the application at {1}"

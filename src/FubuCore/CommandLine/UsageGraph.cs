@@ -174,7 +174,7 @@ namespace FubuCore.CommandLine
                 SecondColumnColor = ConsoleColor.Cyan
             };
 
-            _usages.OrderBy(x => x.Arguments.Count()).Each(u =>
+            _usages.OrderBy(x => x.Arguments.Count()).ThenBy(x => x.ValidFlags.Count()).Each(u =>
             {
                 usageReport.Add(u.Description, u.Usage);
             });
