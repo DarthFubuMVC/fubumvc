@@ -10,13 +10,20 @@ namespace Fubu
             try
             {
                 var factory = new CommandFactory();
-                factory.RegisterCommands(typeof (IFubuCommand).Assembly);
-                factory.RegisterCommands(typeof (Program).Assembly);
+                factory.RegisterCommands(typeof(IFubuCommand).Assembly);
+                factory.RegisterCommands(typeof(Program).Assembly);
 
                 var executor = new CommandExecutor(factory);
                 executor.Execute(args);
             }
-            catch(Exception ex)
+            catch (CommandFailureException e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("ERROR: " + e.Message);
+                Console.ResetColor();
+                return 1;
+            }
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("ERROR: " + ex);
@@ -24,6 +31,13 @@ namespace Fubu
                 return 1;
             }
             return 0;
+        }
+    }
+
+    public class CommandFailureException : ApplicationException
+    {
+        public CommandFailureException(string message) : base(message)
+        {
         }
     }
 }

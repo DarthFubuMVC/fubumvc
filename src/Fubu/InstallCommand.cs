@@ -49,7 +49,7 @@ namespace Fubu
                 Console.WriteLine("The application manifest is either incomplete or invalid");
                 Console.WriteLine(e.Message);
 
-                return;
+                throw;
             }
 
             RunTheEnvironment(input, new EnvironmentGateway(run));

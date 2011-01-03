@@ -32,7 +32,7 @@ namespace Fubu
 
         public void WriteFailureToConsole()
         {
-            Console.WriteLine("Failures occurred.  Please see the log file");
+            throw new CommandFailureException("Failures occurred.  Please see the log file");
         }
 
         private void writeLog(LogEntry log)

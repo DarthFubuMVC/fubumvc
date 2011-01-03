@@ -16,6 +16,7 @@ namespace Fubu
             _logger = logger;
         }
 
+        // TODO -- this needs to fail!
         public void RunTheInstallation(InstallInput input)
         {
             var entries = execute(input);
