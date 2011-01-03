@@ -127,13 +127,42 @@ namespace FubuCore.CommandLine
             var command = Build(commandName);
 
             // this is where we'll call into UsageGraph?
-            var input = InputParser.BuildInput(command.InputType, queue);
+            try
+            {
+                var usageGraph = new UsageGraph(_commandTypes[commandName]);
+                var input = usageGraph.BuildInput(queue);
 
-            return new CommandRun
-                   {
-                       Command = command,
-                       Input = input
-                   };
+                return new CommandRun
+                       {
+                           Command = command,
+                           Input = input
+                       };
+            }
+            catch (InvalidUsageException e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid Usage!");
+
+                if (e.Message.IsNotEmpty())
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(e.Message);
+                }
+
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error parsing input!");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(e);
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+
+            return HelpRun(commandName);
         }
 
 
@@ -155,9 +184,14 @@ namespace FubuCore.CommandLine
 
 
 
+        public CommandRun HelpRun(string commandName)
+        {
+            return HelpRun(new Queue<string>(new []{commandName}));
+        }
+
         public virtual CommandRun HelpRun(Queue<string> queue)
         {
-            var input = (HelpInput)InputParser.BuildInput(typeof (HelpInput), queue);
+            var input = (HelpInput) (new UsageGraph(typeof (HelpCommand)).BuildInput(queue));
             input.CommandTypes = _commandTypes.GetAll();
 
 

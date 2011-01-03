@@ -51,25 +51,25 @@ namespace FubuCore.Testing.CommandLine
         [Test]
         public void first_usage_has_all_the_right_mandatories()
         {
-            theUsageGraph.FindUsage("list").Mandatories.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("AppFolder");
+            theUsageGraph.FindUsage("list").Arguments.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("AppFolder");
         }
 
         [Test]
         public void first_usage_has_all_the_right_flags()
         {
-            theUsageGraph.FindUsage("list").Flags.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("CleanAllFlag", "NotepadFlag");
+            theUsageGraph.FindUsage("list").ValidFlags.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("CleanAllFlag", "NotepadFlag");
         }
 
         [Test]
         public void second_usage_has_all_the_right_mandatories()
         {
-            theUsageGraph.FindUsage("link").Mandatories.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("AppFolder", "PackageFolder");
+            theUsageGraph.FindUsage("link").Arguments.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("AppFolder", "PackageFolder");
         }
 
         [Test]
         public void second_usage_has_all_the_right_flags()
         {
-            theUsageGraph.FindUsage("link").Flags.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("RemoveFlag", "CleanAllFlag", "NotepadFlag");
+            theUsageGraph.FindUsage("link").ValidFlags.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("RemoveFlag", "CleanAllFlag", "NotepadFlag");
         }
 
         [Test]
@@ -103,7 +103,44 @@ namespace FubuCore.Testing.CommandLine
             var graph = new UsageGraph(typeof (SimpleCommand));
             var usage = graph.Usages.Single();
             usage.Description.ShouldEqual(typeof (SimpleCommand).GetAttribute<CommandDescriptionAttribute>().Description);
-            usage.Mandatories.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("Arg1", "Arg2");
+            usage.Arguments.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("Arg1", "Arg2");
+        }
+    }
+
+    [TestFixture]
+    public class valid_usage_tester
+    {
+        private UsageGraph theUsageGraph;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theUsageGraph = new UsageGraph(typeof (FakeLinkCommand));
+        }
+
+        private bool isValidUsage(params string[] args)
+        {
+            var handlers = theUsageGraph.Handlers.Where(x => args.Contains(x.PropertyName));
+            return theUsageGraph.IsValidUsage(handlers);
+        }
+
+        [Test]
+        public void valid_with_all_required_arguments()
+        {
+            isValidUsage("AppFolder").ShouldBeTrue();
+            isValidUsage("AppFolder", "PackageFolder").ShouldBeTrue();
+        }
+
+        [Test]
+        public void invalid_with_missing_arguments()
+        {
+            isValidUsage().ShouldBeFalse();
+        }
+
+        [Test]
+        public void invalid_flags()
+        {
+            isValidUsage("AppFolder", "RemoveFlag").ShouldBeFalse();
         }
     }
     

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Reflection;
 using FubuCore.Reflection;
 using System.Linq;
+using FubuCore;
 
 namespace FubuCore.CommandLine
 {
@@ -30,10 +31,6 @@ namespace FubuCore.CommandLine
 
         public abstract bool Handle(object input, Queue<string> tokens);
         public abstract string ToUsageDescription();
-        public virtual bool RequiredForUsage(string usage)
-        {
-            return false;
-        }
 
         public virtual bool OptionalForUsage(string usage)
         {
@@ -41,6 +38,26 @@ namespace FubuCore.CommandLine
             _property.ForAttribute<ValidUsageAttribute>(att => returnValue = att.Usages.Contains(usage));
 
             return returnValue;
+        }
+
+        public bool Equals(TokenHandlerBase other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other._property.PropertyMatches(_property);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (TokenHandlerBase)) return false;
+            return Equals((TokenHandlerBase) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_property != null ? _property.GetHashCode() : 0);
         }
     }
 }

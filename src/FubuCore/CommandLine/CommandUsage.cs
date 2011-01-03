@@ -9,28 +9,30 @@ namespace FubuCore.CommandLine
         public string UsageKey { get; set; }
         public string CommandName { get; set; }
         public string Description { get; set; }
-        public IEnumerable<ITokenHandler> Mandatories { get; set; }
-        public IEnumerable<ITokenHandler> Flags { get; set; }
+        public IEnumerable<Argument> Arguments { get; set; }
+        public IEnumerable<ITokenHandler> ValidFlags { get; set; }
 
         public string Usage
         {
             get
             {
                 return "fubu {0} {1}".ToFormat(CommandName,
-                                               (Mandatories.Union(Flags).Select(x => x.ToUsageDescription())).Join(" "));
+                                               (Arguments.Cast<ITokenHandler>().Union(ValidFlags).Select(x => x.ToUsageDescription())).Join(" "));
             }
         }
 
-        public bool ArgumentsMatch(IEnumerable<ITokenHandler> actuals)
+        public bool IsValidUsage(IEnumerable<ITokenHandler> handlers)
         {
-            return Mandatories.All(x => actuals.Contains(x));
-        }
+            var actualArgs = handlers.OfType<Argument>();
+            if (actualArgs.Count() != Arguments.Count()) return false;
 
-        public bool AllFlagsAreValid(IEnumerable<ITokenHandler> actuals)
-        {
-            var flags = actuals.Where(x => !(x is Argument));
+            if (!Arguments.All(x => actualArgs.Contains(x)))
+            {
+                return false;
+            }
 
-            throw new NotImplementedException();
+            var flags = handlers.Where(x => !(x is Argument));
+            return flags.All(x => ValidFlags.Contains(x));
         }
     }
 }

@@ -5,6 +5,17 @@ using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
+    public class InvalidUsageException : ApplicationException
+    {
+        public InvalidUsageException(string message) : base(message)
+        {
+        }
+
+        public InvalidUsageException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+    }
+
     public class UsageGraph
     {
         private readonly string _commandName;
@@ -12,7 +23,7 @@ namespace FubuCore.CommandLine
         private readonly IList<CommandUsage> _usages = new List<CommandUsage>();
         private string _description;
         private readonly Type _inputType;
-        private readonly List<ITokenHandler> _tokens;
+        private readonly List<ITokenHandler> _handlers;
 
         public UsageGraph(Type commandType)
         {
@@ -24,7 +35,7 @@ namespace FubuCore.CommandLine
 
             if (_description == null) _description = _commandType.Name;
 
-            _tokens = InputParser.GetHandlers(_inputType);
+            _handlers = InputParser.GetHandlers(_inputType);
 
             _commandType.ForAttribute<UsageAttribute>(att =>
             {
@@ -37,13 +48,49 @@ namespace FubuCore.CommandLine
                     CommandName = _commandName,
                     UsageKey = "default",
                     Description = _description,
-                    Mandatories = _tokens.Where(x => x is Argument),
-                    Flags = _tokens.Where(x => !(x is Argument))
+                    Arguments = _handlers.OfType<Argument>(),
+                    ValidFlags = _handlers.Where(x => !(x is Argument))
                 };
 
                 _usages.Add(usage);
             }
 
+        }
+
+        public object BuildInput(Queue<string> tokens)
+        {
+            var model = Activator.CreateInstance(_inputType);
+            var responding = new List<ITokenHandler>();
+
+            while (tokens.Any())
+            {
+                try
+                {
+                    var handler = _handlers.First(h => h.Handle(model, tokens));
+                    responding.Add(handler);
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new InvalidUsageException("Unknown argument or flag for value " + tokens.Peek(), e);
+                }
+            }
+
+            if (IsValidUsage(responding))
+            {
+                return model;
+            }
+
+            throw new InvalidUsageException("Given usage is not valid");
+        }
+
+        public bool IsValidUsage(IEnumerable<ITokenHandler> handlers)
+        {
+            return _usages.Any(x => x.IsValidUsage(handlers));       
+        }
+
+        public IEnumerable<ITokenHandler> Handlers
+        {
+            get { return _handlers; }
         }
 
         private CommandUsage buildUsage(UsageAttribute att)
@@ -52,8 +99,8 @@ namespace FubuCore.CommandLine
                 CommandName = _commandName,
                 UsageKey = att.Name,
                 Description = att.Description,
-                Mandatories = _tokens.Where(x => x.RequiredForUsage(att.Name)),
-                Flags = _tokens.Where(x => x.OptionalForUsage(att.Name))
+                Arguments = _handlers.OfType<Argument>().Where(x => x.RequiredForUsage(att.Name)),
+                ValidFlags = _handlers.Where(x => x.OptionalForUsage(att.Name))
             };
         }
 
@@ -71,14 +118,14 @@ namespace FubuCore.CommandLine
         {
             get
             {
-                return _tokens.OfType<Argument>();
+                return _handlers.OfType<Argument>();
             }
         }
         public IEnumerable<ITokenHandler> Flags
         {
             get
             {
-                return _tokens.Where(x => !(x is Argument));
+                return _handlers.Where(x => !(x is Argument));
             }
         }
 
@@ -100,8 +147,7 @@ namespace FubuCore.CommandLine
                 return;
             }
 
-            Console.WriteLine(" Usages for '{0}'", _commandName);
-            Console.WriteLine(" " + _description);
+            Console.WriteLine(" Usages for '{0}' ({1})", _commandName, _description);
 
             if (_usages.Count == 1)
             {
@@ -128,7 +174,7 @@ namespace FubuCore.CommandLine
                 SecondColumnColor = ConsoleColor.Cyan
             };
 
-            _usages.OrderBy(x => x.Mandatories.Count()).Each(u =>
+            _usages.OrderBy(x => x.Arguments.Count()).Each(u =>
             {
                 usageReport.Add(u.Description, u.Usage);
             });

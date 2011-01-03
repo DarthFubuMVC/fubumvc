@@ -6,36 +6,12 @@ using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
-    // TODO -- 
     public static class InputParser
     {
         public static readonly string FLAG_PREFIX = "-";
         public static readonly string FLAG_SUFFIX = "Flag";
         private static readonly ObjectConverter _converter = new ObjectConverter();
 
-        // This needs to move into UsageGraph
-        public static object BuildInput(Type inputType, Queue<string> tokens)
-        {
-            // Important to leave the ToList() there to force it to be evaluated
-            List<ITokenHandler> handlers = GetHandlers(inputType);
-            var model = Activator.CreateInstance(inputType);
-
-            // TODO -- need to throw a good message here
-            while (tokens.Any())
-            {
-                try
-                {
-                    handlers.First(h => h.Handle(model, tokens));
-                }
-                catch (InvalidOperationException e)
-                {
-                    // TODO -- show usage here
-                    throw new ApplicationException("Trying to process token " + tokens.Peek(), e);
-                }
-            }
-
-            return model;
-        }
 
         public static List<ITokenHandler> GetHandlers(Type inputType)
         {

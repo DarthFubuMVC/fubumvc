@@ -161,7 +161,9 @@ namespace FubuCore.Testing.CommandLine
         private InputModel build(params string[] tokens)
         {
             var queue = new Queue<string>(tokens);
-            return (InputModel) InputParser.BuildInput(typeof (InputModel), queue);
+            var graph = new UsageGraph(typeof (InputCommand));
+
+            return (InputModel) graph.BuildInput(queue);
         }
 
         [Test]
@@ -215,5 +217,11 @@ namespace FubuCore.Testing.CommandLine
         public string AliasedFlag { get; set; }
     }
 
-
+    public class InputCommand : FubuCommand<InputModel>
+    {
+        public override void Execute(InputModel input)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
