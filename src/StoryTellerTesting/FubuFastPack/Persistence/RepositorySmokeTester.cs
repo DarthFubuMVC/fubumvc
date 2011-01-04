@@ -61,9 +61,40 @@ namespace IntegrationTesting.FubuFastPack.Persistence
 
             repository.Save(site);
 
-            var path = "Site/" + site.Id.ToString();
+            var path = "Site/" + site.Id;
 
             repository.FindByPath(path).ShouldBeOfType<Site>().Name.ShouldEqual("999");
+        }
+
+        [Test]
+        public void find_by_path_for_unknown_entity_should_return_null()
+        {
+            var site = new Site
+            {
+                Name = "999"
+            };
+
+
+            repository.Save(site);
+
+            var path = "Site/" + Guid.NewGuid();
+
+            repository.FindByPath(path).ShouldBeNull();
+        }
+
+
+        [Test]
+        public void find_by_path_for_unrecognized_id_format_should_throw()
+        {
+            typeof(ArgumentException).ShouldBeThrownBy(() => repository.FindByPath("Site/1234"))
+                .Message.ShouldContain("valid GUID");
+        }
+
+        [Test]
+        public void find_by_path_for_unknown_type_should_throw()
+        {
+            typeof (ArgumentException).ShouldBeThrownBy(() => repository.FindByPath("Unkown/" + Guid.NewGuid()))
+                .Message.ShouldContain("unknown entity type");
         }
 
         [Test]

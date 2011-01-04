@@ -35,10 +35,11 @@ namespace FubuFastPack.Persistence
         {
             var parts = path.Split('/');
             var typeName = parts[0];
-            var id = new Guid(parts[1]);
+            Guid id;
+            if (!Guid.TryParse(parts[1], out id)) throw new ArgumentException("The value '{0}' does not contain a valid GUID identifier.", "path");
 
             var theType = _source.Configuration().PersistedTypeByName(typeName);
-
+            if (theType == null) throw new ArgumentException("The value '{0}' refers to an unknown entity type.".ToFormat(path), "path");
             return _session.Get(theType, id) as DomainEntity;
         }
 
