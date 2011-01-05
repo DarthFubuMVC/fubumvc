@@ -22,6 +22,9 @@ namespace FubuMVC.Core.UI.Scripts
     {
     }
 
+
+
+
     // ScriptGraph is partially tested by StoryTeller
     public class ScriptGraph : IComparer<IScript>
     {
@@ -29,8 +32,8 @@ namespace FubuMVC.Core.UI.Scripts
 
         private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
         private readonly Cache<string, ScriptSet> _sets = new Cache<string, ScriptSet>();
-        private readonly ScriptDependencyGraph _dependencyGraph;
         private readonly List<ScriptExtension> _extenders = new List<ScriptExtension>();
+        private readonly List<ScriptRule> _rules = new List<ScriptRule>();
 
         public ScriptGraph(IScriptFinder finder)
         {
@@ -54,7 +57,6 @@ namespace FubuMVC.Core.UI.Scripts
                     new ScriptProxy(name, _finder);
             };
 
-            _dependencyGraph = new ScriptDependencyGraph();
         }
 
         /*
@@ -75,12 +77,15 @@ namespace FubuMVC.Core.UI.Scripts
 
         public void Dependency(string dependent, string dependency)
         {
-            _dependencyGraph.AddRule(dependent, dependency);
+            _rules.Fill(new ScriptRule()
+            {
+                Dependency = dependency,
+                Dependent = dependent
+            });
         }
 
         public void Extension(string extender, string @base)
         {
-            _dependencyGraph.AddRule(extender, @base);
             _extenders.Add(new ScriptExtension(){
                 Base = @base,
                 Extender = extender
@@ -98,7 +103,7 @@ namespace FubuMVC.Core.UI.Scripts
 
             return names
                 .Select(name => _objects[name])
-                .SelectMany(x => x.AllScripts(this))
+                .SelectMany(x => x.AllScripts())
                 .Distinct();
 
             //throw new NotImplementedException();
@@ -113,7 +118,13 @@ namespace FubuMVC.Core.UI.Scripts
         // TODO -- try to find circular dependencies
         public void CompileDependencies(IScriptGraphLogger logger)
         {
-            _dependencyGraph.Compile(logger, this);
+            /*
+             * 1.) "Canonicize" rules
+             * 
+             * 
+             * 
+             * 
+             */
         }
 
         // Find by name or by alias
@@ -122,15 +133,51 @@ namespace FubuMVC.Core.UI.Scripts
             return _objects[name];
         }
 
-        public class ScriptExtension
-        {
-            public string Base { get; set; }
-            public string Extender { get; set; }
-        }
-
         public IEnumerable<string> ScriptDependenciesFor(string name)
         {
-            return _dependencyGraph.ScriptDependenciesFor(name);
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ScriptExtension
+    {
+        public string Base { get; set; }
+        public string Extender { get; set; }
+    }
+
+    public class ScriptRule : IComparable<ScriptRule>
+    {
+        public string Dependency { get; set; }
+        public string Dependent { get; set; }
+
+
+
+        public bool Equals(ScriptRule other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Dependency, Dependency) && Equals(other.Dependent, Dependent);
+        }
+
+        public int CompareTo(ScriptRule other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof(ScriptRule)) return false;
+            return Equals((ScriptRule)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Dependency != null ? Dependency.GetHashCode() : 0) * 397) ^ (Dependent != null ? Dependent.GetHashCode() : 0);
+            }
         }
     }
 
@@ -140,7 +187,7 @@ namespace FubuMVC.Core.UI.Scripts
         public string FileName { get; set; }
         public string Url { get; set; }
 
-        public override IEnumerable<IScript> AllScripts(ScriptGraph graph)
+        public override IEnumerable<IScript> AllScripts()
         {
             // TODO -- dependencies and extensions
             yield return this;
@@ -152,6 +199,11 @@ namespace FubuMVC.Core.UI.Scripts
         }
 
         public HtmlTag CreateScriptTag()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShouldBeAfter(IScript script)
         {
             throw new NotImplementedException();
         }

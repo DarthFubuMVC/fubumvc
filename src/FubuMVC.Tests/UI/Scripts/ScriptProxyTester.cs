@@ -31,9 +31,9 @@ namespace FubuMVC.Tests.UI.Scripts
 
 
             var scripts = new IScript[0];
-            script.Expect(x => x.AllScripts(graph)).Return(scripts);
+            script.Expect(x => x.AllScripts()).Return(scripts);
 
-            theProxy.AllScripts(graph).ShouldBeTheSameAs(scripts);
+            theProxy.AllScripts().ShouldBeTheSameAs(scripts);
         }
 
         [Test]
@@ -53,6 +53,12 @@ namespace FubuMVC.Tests.UI.Scripts
             script.Stub(x => x.CreateScriptTag()).Return(tag);
 
             theProxy.CreateScriptTag().ShouldBeTheSameAs(tag);
+        }
+
+        [Test]
+        public void should_be_after_delegates_to_inner()
+        {
+            Assert.Fail("Do.");
         }
     }
 }

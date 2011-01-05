@@ -23,7 +23,9 @@ namespace FubuMVC.Tests.UI.Scripts
             theSet.Add("b");
             theSet.Add("c");
 
-            SpecificationExtensions.ShouldHaveTheSameElementsAs(theSet.AllScripts(theGraph).Select(x => x.Name), "a", "b", "c");
+            theSet.FindScripts(theGraph);
+
+            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("a", "b", "c");
         }
 
         [Test]
@@ -36,7 +38,10 @@ namespace FubuMVC.Tests.UI.Scripts
             var theSet = new ScriptSet();
             theSet.Add("1");
 
-            SpecificationExtensions.ShouldHaveTheSameElementsAs(theSet.AllScripts(theGraph).Select(x => x.Name), "A", "B", "C");
+            theGraph.ScriptSetFor("1").FindScripts(theGraph);
+            theSet.FindScripts(theGraph);
+
+            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C");
         }
 
         [Test]
@@ -50,7 +55,10 @@ namespace FubuMVC.Tests.UI.Scripts
             theSet.Add("1");
             theSet.Add("D");
 
-            SpecificationExtensions.ShouldHaveTheSameElementsAs(theSet.AllScripts(theGraph).Select(x => x.Name), "A", "B", "C", "D");
+            theGraph.ScriptSetFor("1").FindScripts(theGraph);
+            theSet.FindScripts(theGraph);
+
+            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D");
         }
 
         [Test]
@@ -66,7 +74,11 @@ namespace FubuMVC.Tests.UI.Scripts
             theSet.Add("1");
             theSet.Add("E");
 
-            SpecificationExtensions.ShouldHaveTheSameElementsAs(theSet.AllScripts(theGraph).Select(x => x.Name), "A", "B", "C", "D", "E");
+            theGraph.ScriptSetFor("1").FindScripts(theGraph);
+            theGraph.ScriptSetFor("2").FindScripts(theGraph);
+            theSet.FindScripts(theGraph);
+
+            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D", "E");
         }
 
         [Test]
@@ -83,7 +95,11 @@ namespace FubuMVC.Tests.UI.Scripts
             theSet.Add("2");
             theSet.Add("E");
 
-            SpecificationExtensions.ShouldHaveTheSameElementsAs(theSet.AllScripts(theGraph).Select(x => x.Name), "A", "B", "C", "D", "E");
+            theGraph.ScriptSetFor("1").FindScripts(theGraph);
+            theGraph.ScriptSetFor("2").FindScripts(theGraph);
+            theSet.FindScripts(theGraph);
+
+            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D", "E");
         }
     }
 }

@@ -347,7 +347,6 @@
     <Compile Include="UI\Scripts\Classes.cs" />
     <Compile Include="UI\Scripts\IScript.cs" />
     <Compile Include="UI\Scripts\IScriptObject.cs" />
-    <Compile Include="UI\Scripts\ScriptDependencyGraph.cs" />
     <Compile Include="UI\Scripts\ScriptObjectBase.cs" />
     <Compile Include="UI\Scripts\ScriptProxy.cs" />
     <Compile Include="UI\Scripts\ScriptSet.cs" />

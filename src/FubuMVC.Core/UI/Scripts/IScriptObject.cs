@@ -8,6 +8,8 @@ namespace FubuMVC.Core.UI.Scripts
         bool Matches(string key);
         void AddAlias(string alias);
 
-        IEnumerable<IScript> AllScripts(ScriptGraph graph);
+        IEnumerable<IScript> AllScripts();
+        IEnumerable<IScriptObject> Dependencies();
+        void AddDependency(IScriptObject scriptObject);
     }
 }

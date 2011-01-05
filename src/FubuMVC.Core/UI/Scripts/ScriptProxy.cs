@@ -14,9 +14,9 @@ namespace FubuMVC.Core.UI.Scripts
             _inner = new Lazy<IScript>(() => finder.Find(name));
         }
 
-        public override IEnumerable<IScript> AllScripts(ScriptGraph graph)
+        public override IEnumerable<IScript> AllScripts()
         {
-            return _inner.Value.AllScripts(graph);
+            return _inner.Value.AllScripts();
         }
 
         public string ReadAll()
@@ -27,6 +27,11 @@ namespace FubuMVC.Core.UI.Scripts
         public HtmlTag CreateScriptTag()
         {
             return _inner.Value.CreateScriptTag();
+        }
+
+        public bool ShouldBeAfter(IScript script)
+        {
+            throw new NotImplementedException();
         }
     }
 }

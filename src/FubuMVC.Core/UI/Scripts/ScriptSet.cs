@@ -6,10 +6,19 @@ namespace FubuMVC.Core.UI.Scripts
     public class ScriptSet : ScriptObjectBase
     {
         private readonly List<string> _includes = new List<string>();
+        private IList<IScriptObject> _objects;
 
-        public override IEnumerable<IScript> AllScripts(ScriptGraph graph)
+        public override IEnumerable<IScript> AllScripts()
         {
-            return _includes.SelectMany(x => graph.ObjectFor(x).AllScripts(graph)).Distinct();
+            return _objects.SelectMany(x => x.AllScripts()).Distinct();
+        }
+
+        public void FindScripts(ScriptGraph graph)
+        {
+            if (_objects == null)
+            {
+                _objects = _includes.Select(graph.ObjectFor).ToList();
+            }
         }
 
         public void Add(string name)

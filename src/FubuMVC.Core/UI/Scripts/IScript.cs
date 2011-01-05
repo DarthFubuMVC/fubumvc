@@ -6,5 +6,7 @@ namespace FubuMVC.Core.UI.Scripts
     {
         string ReadAll();
         HtmlTag CreateScriptTag();
+
+        bool ShouldBeAfter(IScript script);
     }
 }
