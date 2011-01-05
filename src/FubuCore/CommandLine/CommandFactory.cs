@@ -141,7 +141,7 @@ namespace FubuCore.CommandLine
             catch (InvalidUsageException e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Usage!");
+                Console.WriteLine("Invalid usage");
 
                 if (e.Message.IsNotEmpty())
                 {
@@ -155,7 +155,7 @@ namespace FubuCore.CommandLine
             catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error parsing input!");
+                Console.WriteLine("Error parsing input");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(e);
                 Console.ResetColor();

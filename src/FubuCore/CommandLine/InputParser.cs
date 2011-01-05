@@ -16,6 +16,7 @@ namespace FubuCore.CommandLine
         public static List<ITokenHandler> GetHandlers(Type inputType)
         {
             return inputType.GetProperties()
+                .Where(prop => prop.CanWrite)
                 .Where(prop => !prop.HasAttribute<IgnoreOnCommandLineAttribute>())
                 .Select(BuildHandler).ToList();
         }
