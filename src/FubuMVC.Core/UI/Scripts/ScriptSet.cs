@@ -1,65 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace FubuMVC.UI.Scripts
+namespace FubuMVC.Core.UI.Scripts
 {
-    public class ScriptSet : IEnumerable<Script>
+    public class ScriptSet : ScriptObjectBase
     {
-        private readonly string _name;
-        private readonly List<Script> _scripts;
+        private readonly List<string> _includes = new List<string>();
 
-        public ScriptSet(string name)
+        public override IEnumerable<IScript> AllScripts(ScriptGraph graph)
         {
-            _name = name;
-            _scripts = new List<Script>();
+            return _includes.SelectMany(x => graph.ObjectFor(x).AllScripts(graph)).Distinct();
         }
 
-        public string Name
+        public void Add(string name)
         {
-            get { return _name; }
-        }
-
-        public void AddScript(Script script)
-        {
-            _scripts.Fill(script);
-        }
-
-        public bool Contains(Script script)
-        {
-            return _scripts.Contains(script);
-        }
-
-        public IEnumerator<Script> GetEnumerator()
-        {
-            return _scripts.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (ScriptSet)) return false;
-            return Equals((ScriptSet) obj);
-        }
-
-        public bool Equals(ScriptSet other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other._name, _name) && _scripts.IsEqualTo(other._scripts);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ((_name != null ? _name.GetHashCode() : 0)*397) ^ (_scripts != null ? _scripts.GetHashCode() : 0);
-            }
+            _includes.Fill(name);
         }
     }
 }

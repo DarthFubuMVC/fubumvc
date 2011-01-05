@@ -4,7 +4,7 @@ using FubuMVC.Core.Diagnostics.Querying;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;
 
-namespace IntegrationTesting.Fixtures
+namespace IntegrationTesting.Fixtures.Packages
 {
     public class PackagingFixture : Fixture
     {

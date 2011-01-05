@@ -26,6 +26,12 @@ namespace FubuCore.Testing.Util
         }
 
         [Test]
+        public void on_addition_should_fire_when_a_cache_adds_something_from_its_on_missing_catch()
+        {
+            Assert.Fail("Come back here");
+        }
+
+        [Test]
         public void when_GetKey_not_set_should_throw()
         {
             typeof (NotImplementedException).ShouldBeThrownBy(() => cache.GetKey(2));

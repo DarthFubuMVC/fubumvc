@@ -1,8 +1,7 @@
-﻿using System;
-using StoryTeller.Engine;
+﻿using StoryTeller.Engine;
 using FubuCore;
 
-namespace IntegrationTesting.Fixtures
+namespace IntegrationTesting.Fixtures.Packages
 {
     [Hidden]
     public class PackagingSetupFixture : Fixture

@@ -8,7 +8,7 @@ using FubuCore;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;
 
-namespace IntegrationTesting.Fixtures
+namespace IntegrationTesting.Fixtures.Packages
 {
     public class EnvironmentRunnerFixture : Fixture
     {

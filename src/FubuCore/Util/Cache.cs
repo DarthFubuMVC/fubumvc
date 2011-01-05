@@ -93,6 +93,7 @@ namespace FubuCore.Util
                     if (!_values.ContainsKey(key))
                     {
                         TValue value = _onMissing(key);
+                        _onAddition(value);
                         _values.Add(key, value);
                     }
                 }

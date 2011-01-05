@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
@@ -7,7 +6,7 @@ using StoryTeller.Engine;
 using FubuCore;
 using System.Linq;
 
-namespace IntegrationTesting.Fixtures
+namespace IntegrationTesting.Fixtures.Packages
 {
     public class CreatePackageCommandFixture : Fixture
     {

@@ -33,10 +33,23 @@ $METHODS$
         }</MethodTemplate>
     <TargetFile>StoryTellerDebug.cs</TargetFile>
   </Options>
-  <Workspaces />
+  <Workspaces>
+    <WorkspaceFilter Name="HelloWorld">
+      <Actions />
+      <Filters>
+        <FixtureFilter Type="All" Name="ALL" />
+      </Filters>
+    </WorkspaceFilter>
+    <WorkspaceFilter Name="Packaging">
+      <Actions />
+      <Filters>
+        <FixtureFilter Type="All" Name="ALL" />
+      </Filters>
+    </WorkspaceFilter>
+  </Workspaces>
   <BinaryFolder>src\StoryTellerTesting\bin\debug</BinaryFolder>
   <TestFolder>src\StoryTellerTesting\Tests</TestFolder>
-  <FileName>C:\git\fubumvc\src\StoryTellerTesting\Storyteller.xml</FileName>
+  <FileName>C:\git\fubumvc\Storyteller.xml</FileName>
   <TimeoutInSeconds>60</TimeoutInSeconds>
   <SystemTypeName>IntegrationTesting.FubuSystem, IntegrationTesting</SystemTypeName>
   <Name>FubuMVC</Name>
