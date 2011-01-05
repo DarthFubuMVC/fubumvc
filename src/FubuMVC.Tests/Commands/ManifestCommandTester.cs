@@ -156,7 +156,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IFileSystem>().AssertWasCalled(x => x.OpenInNotepad(theInput.AppFolder, ApplicationManifest.FILE));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.LaunchEditor(theInput.AppFolder, ApplicationManifest.FILE));
         }
     }
 }

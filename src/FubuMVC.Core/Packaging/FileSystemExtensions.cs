@@ -26,12 +26,7 @@ namespace FubuMVC.Core.Packaging
 
         public static string ApplicationManifestPathFor(this IFileSystem fileSystem, string folder)
         {
-            return fileSystem.Combine(folder, ApplicationManifest.FILE);
-        }
-
-        public static string PackageManifestPathFor(this IFileSystem fileSystem, string folder)
-        {
-            return fileSystem.Combine(folder, PackageManifest.FILE);
+            return FileSystem.Combine(folder, ApplicationManifest.FILE);
         }
     }
 }

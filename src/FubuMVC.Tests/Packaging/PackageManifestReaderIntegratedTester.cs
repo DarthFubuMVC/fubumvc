@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Packaging
         [TearDown]
         public void TearDown()
         {
-            new FileSystem().DeleteFile("../../".ToFullPath(), ApplicationManifest.FILE);
+            new FileSystem().DeleteFile(FileSystem.Combine("../../".ToFullPath(), ApplicationManifest.FILE));
         }
 
 

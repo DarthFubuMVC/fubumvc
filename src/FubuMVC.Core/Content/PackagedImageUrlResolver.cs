@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Content
             {
                 return _directories.FirstValue(dir =>
                 {
-                    return _fileSystem.FileExists(dir, name) ? _fileSystem.Combine(dir, name) : null;
+                    return _fileSystem.FileExists(dir, name) ? FileSystem.Combine(dir, name) : null;
                 });
             };
         }

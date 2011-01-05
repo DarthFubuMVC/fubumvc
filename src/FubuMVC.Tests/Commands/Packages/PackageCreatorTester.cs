@@ -52,9 +52,7 @@ namespace FubuMVC.Tests.Commands.Packages
             _theZipFileService = new StubZipFileService();
             Services.Inject<IZipFileService>(_theZipFileService);
 
-            thePackageManifestFileName = "c:\\folder1\\something.xml";
-            MockFor<IFileSystem>().Stub(x => x.PackageManifestPathFor(theInput.PackageFolder))
-                .Return(thePackageManifestFileName);
+            thePackageManifestFileName = FileSystem.Combine("c:\\folder1", PackageManifest.FILE);
 
             ClassUnderTest.CreatePackage(theInput, theManifest);
         }
@@ -155,9 +153,7 @@ namespace FubuMVC.Tests.Commands.Packages
             _theZipFileService = new StubZipFileService();
             Services.Inject<IZipFileService>(_theZipFileService);
 
-            thePackageManifestFileName = "c:\\folder1\\something.xml";
-            MockFor<IFileSystem>().Stub(x => x.PackageManifestPathFor(theInput.PackageFolder))
-                .Return(thePackageManifestFileName);
+            thePackageManifestFileName = FileSystem.Combine("c:\\folder1", PackageManifest.FILE);
 
             ClassUnderTest.CreatePackage(theInput, theManifest);
         }

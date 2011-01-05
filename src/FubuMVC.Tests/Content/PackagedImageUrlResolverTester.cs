@@ -83,7 +83,6 @@ namespace FubuMVC.Tests.Content
         private void hasFile(string directory, string fileName)
         {
             MockFor<IFileSystem>().Stub(x => x.FileExists(directory, fileName)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.Combine(directory, fileName)).Return(Path.Combine(directory, fileName));
         }
     }
 }

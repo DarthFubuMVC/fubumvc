@@ -53,7 +53,7 @@ namespace FubuCore
                 if (parts.Count() > 1)
                 {
                     var subFolder = parts.Reverse().Skip(1).Reverse().Join("\\");
-                    if (!new FileSystem().DirectoryExists(path, subFolder))
+                    if (!Directory.Exists(Path.Combine(path, subFolder)))
                     {
                         return new string[0];
                     }

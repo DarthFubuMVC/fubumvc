@@ -20,8 +20,8 @@ namespace FubuMVC.Core.Packaging
             var debugSet = FileSet.ForAssemblyDebugFiles(assemblyNames);
 
             var files = new AssemblyFiles(){
-                Files = _fileSystem.FileNamesFor(assemblySet, binDirectory),
-                PdbFiles = _fileSystem.FileNamesFor(debugSet, binDirectory)
+                Files = _fileSystem.FindFiles(binDirectory, assemblySet),
+                PdbFiles = _fileSystem.FindFiles(binDirectory, debugSet)
             };
 
             var assembliesFound = files.Files.Select(Path.GetFileNameWithoutExtension).Select(x => x.ToLowerInvariant());

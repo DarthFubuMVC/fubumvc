@@ -40,5 +40,18 @@ namespace FubuCore.Testing
         {
             FileSystem.Combine("a", "b", "c", "d").ShouldEqual("a\\b\\c\\d");
         }
+
+        [Test]
+        public void combine_with_rooted_first_value()
+        {
+            FileSystem.Combine("\\a", "b", "c").ShouldEqual("\\a\\b\\c");
+        }
+
+        [Test]
+        public void combine_with_trailing_slashes()
+        {
+            FileSystem.Combine("a\\", "b", "c\\").ShouldEqual("a\\b\\c\\");
+        }
+
     }
 }
