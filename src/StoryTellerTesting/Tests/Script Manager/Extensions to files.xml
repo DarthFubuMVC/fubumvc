@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Test name="Extensions to files" lifecycle="Regression">
+  <ScriptGraph>
+    <SetupScriptGraph isStep="True">
+      <ScriptGraphSetup>
+        <Requires isStep="True" name="A" reqs="B,C" />
+        <Extends isStep="True" name="D" baseName="A" />
+        <Extends isStep="True" name="F" baseName="B" />
+      </ScriptGraphSetup>
+    </SetupScriptGraph>
+    <Query isStep="True" comment="Single file should put its extension right behind it" names="B" expected="B,F" />
+    <Query isStep="True" comment="Query for two files with extensions" names="A" expected="B, C, D, F, A" />
+  </ScriptGraph>
+</Test>

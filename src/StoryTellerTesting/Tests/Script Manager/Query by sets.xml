@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Test name="Query by sets" lifecycle="Regression">
+  <ScriptGraph>
+    <SetupScriptGraph isStep="True">
+      <ScriptGraphSetup>
+        <Includes isStep="True" setName="1" scripts="A,B,C" />
+        <Includes isStep="True" setName="2" scripts="C,D" />
+        <Includes isStep="True" setName="3" scripts="1,E" />
+        <Requires isStep="True" name="D" reqs="D1,D2" />
+        <Requires isStep="True" name="3" reqs="4" />
+        <Includes isStep="True" setName="4" scripts="jquery,jquery.validation" />
+        <Includes isStep="True" setName="Combo" scripts="1,2" />
+      </ScriptGraphSetup>
+    </SetupScriptGraph>
+    <Query isStep="True" comment="Query for only one set with no dependencies" names="1" expected="A,B,C" />
+    <Query isStep="True" comment="Query for a set whose files have a dependency" names="2" expected="C,D1,D2,D" />
+    <Query isStep="True" comment="Fetch a set that references another set" names="Combo" expected="A, B, C, D1, D2, D" />
+    <Query isStep="True" comment="Set with a dependency on another set" names="3" expected="A, B, C, E, jquery, jquery.validation" />
+  </ScriptGraph>
+</Test>

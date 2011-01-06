@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Simple Queries" lifecycle="Acceptance">
+<Test name="Simple Queries" lifecycle="Regression">
   <ScriptGraph>
     <Query isStep="True" names="A,B" expected="A,B" comment="Only scripts in order" />
     <Query isStep="True" comment="ScriptGraph should order the scripts by name if no other criteria" names="B,A" expected="A,B" />

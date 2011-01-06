@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Test name="Mixed queries" lifecycle="Regression">
+  <ScriptGraph>
+    <SetupScriptGraph isStep="True">
+      <ScriptGraphSetup>
+        <Includes isStep="True" setName="1" scripts="A,B,C" />
+        <Includes isStep="True" setName="2" scripts="C,D" />
+        <Includes isStep="True" setName="3" scripts="1,E" />
+        <Requires isStep="True" name="D" reqs="D1,D2" />
+        <Requires isStep="True" name="3" reqs="4" />
+        <Includes isStep="True" setName="4" scripts="jquery,jquery.validation" />
+        <Includes isStep="True" setName="Combo" scripts="1,2" />
+        <Extends isStep="True" name="C-1" baseName="C" />
+        <Includes isStep="True" setName="crud" scripts="crudForm.js,validation.js" />
+        <Requires isStep="True" name="A" reqs="crud" />
+      </ScriptGraphSetup>
+    </SetupScriptGraph>
+    <Query isStep="True" comment="Query for only one set with no dependencies" names="1" expected="A, B, C, C-1, crudForm.js, validation.js" />
+    <Query isStep="True" comment="Query for a set whose files have a dependency" names="2" expected="C, C-1, D1, D2, D" />
+    <Query isStep="True" comment="Fetch a set that references another set" names="Combo" expected="crudForm.js, validation.js, A, B, C, C-1, D1, D2, D" />
+    <Query isStep="True" comment="Set with a dependency on another set" names="3" expected="crudForm.js, validation.js, A, B, C, C-1, E, jquery, jquery.validation" />
+    <Query isStep="True" comment="Multiple options" names="1,2,A,C" expected="B, C, C-1, crudForm.js, D1, D2, D, validation.js, A" />
+  </ScriptGraph>
+</Test>

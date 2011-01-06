@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Test name="Dependencies between Files" lifecycle="Regression">
+  <ScriptGraph>
+    <SetupScriptGraph isStep="True">
+      <ScriptGraphSetup>
+        <Requires isStep="True" name="A" reqs="B,C,D" />
+        <Requires isStep="True" name="C" reqs="B,E" />
+        <Requires isStep="True" name="E" reqs="F" />
+        <Requires isStep="True" name="F" reqs="D" />
+        <Requires isStep="True" name="G" reqs="H,I" />
+        <Requires isStep="True" name="I" reqs="H,J" />
+      </ScriptGraphSetup>
+    </SetupScriptGraph>
+    <Query isStep="True" comment="One deep dependency" names="F" expected="D,F" />
+    <Query isStep="True" comment="Two deep dependency" names="E" expected="D,F,E" />
+    <Query isStep="True" comment="Three deep dependency" names="A" expected="B,D,F,E,C,A" />
+    <Query isStep="True" comment="3 deep in parallel" names="A,G" expected="B, D, F, E, C, A, H, J, I, G" />
+  </ScriptGraph>
+</Test>
