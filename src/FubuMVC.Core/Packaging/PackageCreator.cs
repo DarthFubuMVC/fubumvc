@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Packaging
 
         public void AddContentFiles(CreatePackageInput input, IZipFile zipFile, PackageManifest manifest)
         {
-            manifest.ContentFileSet.AppendExclude("bin\\*.*");
+            manifest.ContentFileSet.AppendExclude(FileSystem.Combine("bin","*.*"));
 
             zipFile.AddFiles(new ZipFolderRequest()
                              {

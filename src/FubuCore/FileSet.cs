@@ -49,10 +49,10 @@ namespace FubuCore
 
             return pattern.Split(';').SelectMany(x =>
             {
-                var parts = x.Split('\\');
+                var parts = x.Split(Path.DirectorySeparatorChar);
                 if (parts.Count() > 1)
                 {
-                    var subFolder = parts.Reverse().Skip(1).Reverse().Join("\\");
+                    var subFolder = parts.Reverse().Skip(1).Reverse().Join(Path.DirectorySeparatorChar.ToString());
                     if (!Directory.Exists(Path.Combine(path, subFolder)))
                     {
                         return new string[0];
