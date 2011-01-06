@@ -47,7 +47,7 @@ namespace Fubu
 
             if (input.NotepadFlag)
             {
-                fileSystem.OpenInNotepad(input.Folder, PackageManifest.FILE);
+                fileSystem.LaunchEditor(input.Folder, PackageManifest.FILE);
             }
         }
     }

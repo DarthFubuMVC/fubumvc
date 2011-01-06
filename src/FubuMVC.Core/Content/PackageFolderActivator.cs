@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Content
         {
             packages.Each(p => p.ForFolder(FubuMvcPackages.WebContentFolder, topFolder =>
             {
-                var imagesFolder = Path.Combine(topFolder, "content\\images");
+                var imagesFolder = FileSystem.Combine(topFolder, "content", "images");
 
                 log.Trace("Added folder '{0}' to the PackagedImageUrl list", imagesFolder);
                 _resolver.RegisterDirectory(imagesFolder);

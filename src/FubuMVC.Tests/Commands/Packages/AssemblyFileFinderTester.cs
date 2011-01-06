@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Commands.Packages
                 .Select(x => "{0}.pdb".ToFormat(x).ToFullPath())
                 .ToArray();
 
-            MockFor<IFileSystem>().Stub(x => x.FileNamesFor(FileSet.ForAssemblyDebugFiles(theAssemblyNames), theBinPath))
+            MockFor<IFileSystem>().Stub(x => x.FindFiles(theBinPath, FileSet.ForAssemblyDebugFiles(theAssemblyNames)))
                 .Return(theDebugFiles);
 
             theBinPath = "c:\\bin";
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Commands.Packages
         private void theActualAssemblyFilesAre(params string[] files)
         {
             theAssemblyFiles = files;
-            MockFor<IFileSystem>().Stub(x => x.FileNamesFor(FileSet.ForAssemblyNames(theAssemblyNames), theBinPath))
+            MockFor<IFileSystem>().Stub(x => x.FindFiles(theBinPath, FileSet.ForAssemblyNames(theAssemblyNames)))
                 .Return(files);
         }
 

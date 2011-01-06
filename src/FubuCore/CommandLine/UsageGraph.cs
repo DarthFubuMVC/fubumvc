@@ -5,10 +5,13 @@ using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
-    public class InvalidUsageException : ApplicationException
+    public class InvalidUsageException : Exception
     {
+        public InvalidUsageException() : base(string.Empty) {}
+
         public InvalidUsageException(string message) : base(message)
         {
+            
         }
 
         public InvalidUsageException(string message, Exception innerException) : base(message, innerException)
@@ -64,23 +67,17 @@ namespace FubuCore.CommandLine
 
             while (tokens.Any())
             {
-                try
-                {
-                    var handler = _handlers.First(h => h.Handle(model, tokens));
-                    responding.Add(handler);
-                }
-                catch (InvalidOperationException e)
-                {
-                    throw new InvalidUsageException("Unknown argument or flag for value " + tokens.Peek(), e);
-                }
+                var handler = _handlers.FirstOrDefault(h => h.Handle(model, tokens));
+                if (handler == null) throw new InvalidUsageException("Unknown argument or flag for value " + tokens.Peek());
+                responding.Add(handler);
             }
 
-            if (IsValidUsage(responding))
+            if (!IsValidUsage(responding))
             {
-                return model;
+                throw new InvalidUsageException();
             }
 
-            throw new InvalidUsageException("Given usage is not valid");
+            return model;
         }
 
         public bool IsValidUsage(IEnumerable<ITokenHandler> handlers)

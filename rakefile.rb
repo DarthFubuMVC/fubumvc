@@ -82,6 +82,7 @@ task :compile => [:clean, :version] do
   copyOutputFiles "src/FubuValidation/bin/#{COMPILE_TARGET}", "FubuValidation.{dll,pdb}", props[:stage]
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
+  copyOutputFiles "src/FubuFastPack/bin/#{COMPILE_TARGET}", "FubuFastPack.{dll,pdb}", props[:stage]
 end
 
 desc "Compiles the app for .NET Framework 3.5"

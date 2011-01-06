@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Commands.Packages
         {
             var versionFile = Path.Combine(Path.GetTempPath(), FubuMvcPackages.VersionFile);
             var guid = Guid.NewGuid();
-            new FileSystem().WriteStringToFile(guid.ToString(), versionFile);
+            new FileSystem().WriteStringToFile(versionFile, guid.ToString());
 
             if (File.Exists("zip1.zip"))
             {

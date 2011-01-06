@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Packaging
 
                 WriteVersion(zipFile);
 
-                zipFile.AddFile(_fileSystem.PackageManifestPathFor(input.PackageFolder), "");
+                zipFile.AddFile(FileSystem.Combine(input.PackageFolder, PackageManifest.FILE), "");
 
                 AddDataFiles(input, zipFile, manifest);
 
@@ -65,7 +65,7 @@ namespace FubuMVC.Core.Packaging
         {
             var versionFile = Path.Combine(Path.GetTempPath(), FubuMvcPackages.VersionFile);
             var guid = Guid.NewGuid();
-            _fileSystem.WriteStringToFile(guid.ToString(), versionFile);
+            _fileSystem.WriteStringToFile(versionFile, guid.ToString());
             zipFile.AddFile(versionFile);
 
             return guid;
@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Packaging
 
         public void AddContentFiles(CreatePackageInput input, IZipFile zipFile, PackageManifest manifest)
         {
-            manifest.ContentFileSet.AppendExclude("bin\\*.*");
+            manifest.ContentFileSet.AppendExclude(FileSystem.Combine("bin","*.*"));
 
             zipFile.AddFiles(new ZipFolderRequest()
                              {

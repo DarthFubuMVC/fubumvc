@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using FubuCore;
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.Packaging
         {
             DataFileSet = new FileSet();
             ContentFileSet = new FileSet(){
-                Include = "*.as*x;*.master;Content\\*.*"
+                Include = "*.as*x;*.master;Content{0}*.*".ToFormat(Path.DirectorySeparatorChar)
             };
         }
 

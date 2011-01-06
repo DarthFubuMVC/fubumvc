@@ -73,7 +73,7 @@ namespace Fubu
 
                 if (input.OpenFlag)
                 {
-                    fileSystem.OpenInNotepad(input.AppFolder, ApplicationManifest.FILE);
+                    fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.FILE);
                 }
             }
             else
@@ -122,14 +122,14 @@ namespace Fubu
 
             if (input.OpenFlag)
             {
-                fileSystem.OpenInNotepad(input.AppFolder, ApplicationManifest.FILE);
+                fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.FILE);
             }
         }
 
         private void persist(IFileSystem fileSystem, ManifestInput input, ApplicationManifest manifest)
         {
             Console.WriteLine("");
-            Console.WriteLine("Persisted changes to " + fileSystem.Combine(input.AppFolder, ApplicationManifest.FILE));
+            Console.WriteLine("Persisted changes to " + FileSystem.Combine(input.AppFolder, ApplicationManifest.FILE));
             Console.WriteLine("");
 
             fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);

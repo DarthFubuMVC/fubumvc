@@ -9,20 +9,59 @@ namespace FubuCore
 {
     public interface IFileSystem
     {
-        bool FileExists(params string[] path);
-        void PersistToFile(object target, params string[] filename);
-        T LoadFromFile<T>(params string[] filename) where T : new();
-        void OpenInNotepad(params string[] parts);
+        bool FileExists(string filename);
+        void DeleteFile(string filename);
+        void WriteStringToFile(string filename, string text);
+        string ReadStringFromFile(string filename);
+        void PersistToFile(object target, string filename);
+        T LoadFromFile<T>(string filename) where T : new();
+
         void CreateDirectory(string directory);
-        string Combine(params string[] paths);
-        void DeleteFile(params string[] path);
+        void DeleteDirectory(string directory);
+        void CleanDirectory(string directory);
+        bool DirectoryExists(string directory);
 
-        IEnumerable<string> ChildDirectoriesFor(params string[] parts);
+        void LaunchEditor(string filename);
+        IEnumerable<string> ChildDirectoriesFor(string directory);
+        IEnumerable<string> FindFiles(string directory, FileSet searchSpecification);
+    }
 
-        IEnumerable<string> FileNamesFor(FileSet set, params string[] paths);
-        void WriteStringToFile(string text, string filename);
-        string ReadStringFromFile(params string[] parts);
-        void DeleteDirectory(params string[] parts);
+    public static class FileSystemExtensions
+    {
+        public static void LaunchEditor(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            fileSystem.LaunchEditor(FileSystem.Combine(pathParts));
+        }
+        public static bool FileExists(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            return fileSystem.FileExists(FileSystem.Combine(pathParts));
+        }
+        public static T LoadFromFile<T>(this IFileSystem fileSystem, params string[] pathParts) where T : new()
+        {
+            return fileSystem.LoadFromFile<T>(FileSystem.Combine(pathParts));
+        }
+        public static IEnumerable<string> ChildDirectoriesFor(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            return fileSystem.ChildDirectoriesFor(FileSystem.Combine(pathParts));
+        }
+        public static IEnumerable<string> FileNamesFor(this IFileSystem fileSystem, FileSet set, params string[] pathParts)
+        {
+            return fileSystem.FindFiles(FileSystem.Combine(pathParts), set);
+        }
+
+        public static string ReadStringFromFile(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            return fileSystem.ReadStringFromFile(FileSystem.Combine(pathParts));
+        }
+
+        public static void PersistToFile(this IFileSystem fileSystem, object target, params string[] pathParts)
+        {
+            fileSystem.PersistToFile(target, FileSystem.Combine(pathParts));
+        }
+        public static void DeleteDirectory(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            fileSystem.DeleteDirectory(FileSystem.Combine(pathParts));
+        }
     }
 
     public class FileSystem : IFileSystem
@@ -37,118 +76,48 @@ namespace FubuCore
             Directory.CreateDirectory(path);
         }
 
-
-        //public void DeleteFolder(string folder)
-        //{
-        //    if (Directory.Exists(folder))
-        //    {
-        //        Directory.Delete(folder, true);
-        //    }
-        //}
-
-
-        //public string[] GetSubFolders(string folderPath)
-        //{
-        //    if (!Directory.Exists(folderPath))
-        //    {
-        //        return new string[0];
-        //    }
-
-
-        //    string[] strings = Directory.GetDirectories(folderPath);
-        //    var suiteFolders = new List<string>();
-        //    foreach (string folder in strings)
-        //    {
-        //        var dir = new DirectoryInfo(folder);
-        //        //Ignore directories that are hidden that have other FileAttributes
-        //        if (
-        //            (dir.Attributes & (FileAttributes.Hidden | FileAttributes.Directory)) ==
-        //            (FileAttributes.Hidden | FileAttributes.Directory))
-        //        {
-        //            continue;
-        //        }
-
-        //        suiteFolders.Add(folder);
-        //    }
-
-
-        //    return suiteFolders.ToArray();
-        //}
-
-        //public string[] GetFiles(string folderPath, string extensionWithoutPeriod)
-        //{
-        //    if (!Directory.Exists(folderPath))
-        //    {
-        //        return new string[0];
-        //    }
-
-        //    return Directory.GetFiles(folderPath, "*." + extensionWithoutPeriod);
-        //}
-
-        string IFileSystem.Combine(params string[] paths)
-        {
-            return Combine(paths);
-        }
-
         public static string Combine(params string[] paths)
         {
-            if (paths.Length == 0) return string.Empty;
-            if (paths.Length == 1) return paths[0];
-
-            var queue = new Queue<string>(paths);
-            var result = queue.Dequeue();
-
-            while (queue.Any())
-            {
-                result = Path.Combine(result, queue.Dequeue());
-            }
-
-            return result;
+            return paths.Aggregate(Path.Combine);
         }
 
-        public bool FileExists(params string[] path)
+        public bool FileExists(string filename)
         {
-            return File.Exists(Combine(path));
+            return File.Exists(filename);
         }
 
-        public void WriteStringToFile(string text, string filename)
+        public void WriteStringToFile(string filename, string text)
         {
-            using (var writer = new StreamWriter(filename))
-            {
-                writer.Write(text);
-                writer.Close();
-            }
+            File.WriteAllText(filename, text);
         }
 
-        public string ReadStringFromFile(params string[] parts)
+        public string ReadStringFromFile(string filename)
         {
-            var filename = Combine(parts);
-            using (var reader = new StreamReader(filename))
-            {
-                return reader.ReadToEnd();
-            }
+            return File.ReadAllText(filename);
         }
 
-        public void DeleteDirectory(params string[] parts)
+        public void DeleteDirectory(string directory)
         {
-            var directory = FileSystem.Combine(parts);
             if (Directory.Exists(directory))
             {
                 Directory.Delete(directory, true);
             }
         }
 
-        //public void SaveAndOpenHtml(string html)
-        //{
-        //    string fileName = Path.GetTempPath() + ".htm";
-        //    WriteStringToFile(html, fileName);
-        //    Process.Start(fileName);
-        //}
-
-        public void PersistToFile(object target, params string[] paths)
+        public void CleanDirectory(string directory)
         {
-            var filename = Combine(paths);
-            Console.WriteLine("Saving to " + filename);
+            Directory.GetDirectories(directory).Each(Directory.Delete);
+            Directory.GetFiles(directory).Each(File.Delete);
+        }
+
+        public bool DirectoryExists(string directory)
+        {
+            return Directory.Exists(directory);
+        }
+
+        public void PersistToFile(object target, string filename)
+        {
+            Debug.WriteLine("Saving to " + filename);
             var serializer = new XmlSerializer(target.GetType());
 
             using (var stream = new FileStream(filename, FileMode.Create, FileAccess.Write))
@@ -157,10 +126,8 @@ namespace FubuCore
             }
         }
 
-        public T LoadFromFile<T>(params string[] paths) where T : new()
+        public T LoadFromFile<T>(string filename) where T : new()
         {
-            var filename = Combine(paths);
-
             if (!FileExists(filename)) return new T();
 
             var serializer = new XmlSerializer(typeof(T));
@@ -180,30 +147,20 @@ namespace FubuCore
             }
         }
 
-        public void OpenInNotepad(params string[] parts)
+        public void LaunchEditor(string filename)
         {
-            string filename = Combine(parts);
             Process.Start("notepad", filename);
         }
 
-        //public void ClearFolder(string directory)
-        //{
-        //    DeleteFolder(directory);
-        //    CreateDirectory(directory);
-        //}
-
-        public void DeleteFile(params string[] path)
+        public void DeleteFile(string filename)
         {
-            var filename = Combine(path);
             if (!File.Exists(filename)) return;
 
             File.Delete(filename);
         }
 
-        public IEnumerable<string> ChildDirectoriesFor(params string[] parts)
+        public IEnumerable<string> ChildDirectoriesFor(string directory)
         {
-            var directory = Combine(parts);
-
             if (Directory.Exists(directory))
             {
                 return Directory.GetDirectories(directory);
@@ -213,15 +170,9 @@ namespace FubuCore
         }
 
         // Only here for mocking/stubbing file system junk
-        public IEnumerable<string> FileNamesFor(FileSet set, params string[] paths)
+        public IEnumerable<string> FindFiles(string directory, FileSet searchSpecification)
         {
-            return set.IncludedFilesFor(Combine(paths));
-        }
-
-        public bool DirectoryExists(string path, string subFolder)
-        {
-            var directory = Combine(path, subFolder);
-            return Directory.Exists(directory);
+            return searchSpecification.IncludedFilesFor(directory);
         }
     }
 }
