@@ -2,7 +2,7 @@
 
 namespace FubuMVC.Core.UI.Scripts
 {
-    public interface IScriptObject
+    public interface IScriptObject : IEnumerable<IScript>
     {
         string Name { get; }
         bool Matches(string key);

@@ -25,5 +25,15 @@ namespace FubuMVC.Core.UI.Scripts
         {
             _includes.Fill(name);
         }
+
+        public void Add(IScriptObject child)
+        {
+            if (_objects == null)
+            {
+                _objects = new List<IScriptObject>();
+            }
+
+            _objects.Add(child);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace IntegrationTesting.Fixtures.Scripts
 
         public ScriptGraphFixture()
         {
-            _graph = new ScriptGraph(new StubScriptFinder());
+            _graph = new ScriptGraph();
         }
 
         public IGrammar SetupScriptGraph()
@@ -24,7 +24,7 @@ namespace IntegrationTesting.Fixtures.Scripts
             return Embed<ScriptGraphSetupFixture>("If the script graph is configured as")
                 .Before((step, context) =>
                 {
-                    _graph = new ScriptGraph(new StubScriptFinder());
+                    _graph = new ScriptGraph();
                     context.Store(_graph);
                 });
         }
@@ -85,14 +85,9 @@ namespace IntegrationTesting.Fixtures.Scripts
         }
     }
 
-    public class StubScriptFinder : IScriptFinder
+    public class StubScriptGraphLogger : IScriptGraphLogger
     {
-        public IScript Find(string name)
-        {
-            return new Script(){
-                Name = name
-            };
-        }
+        
     }
 
     public class ScriptGraphSetupFixture : Fixture
@@ -102,6 +97,11 @@ namespace IntegrationTesting.Fixtures.Scripts
         public override void SetUp(ITestContext context)
         {
             _graph = context.Retrieve<ScriptGraph>();
+        }
+
+        public override void TearDown()
+        {
+            _graph.CompileDependencies(new StubScriptGraphLogger());
         }
 
         [FormatAs("{name} extends {baseName}")]

@@ -11,6 +11,11 @@ namespace System.Collections.Generic
             list.Add(value);
         }
 
+        public static void Fill<T>(this IList<T> list, IEnumerable<T> values)
+        {
+            list.AddRange(values.Where(v => !list.Contains(v)));
+        }
+
         /// <summary>
         /// Removes all of the items that match the provided condition
         /// </summary>

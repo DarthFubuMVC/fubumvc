@@ -344,11 +344,15 @@
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="UI\Partials\RenderPartialExpression.cs" />
-    <Compile Include="UI\Scripts\Classes.cs" />
+    <Compile Include="UI\Scripts\ScriptGatherer.cs" />
     <Compile Include="UI\Scripts\IScript.cs" />
+    <Compile Include="UI\Scripts\IScriptGraphLogger.cs" />
     <Compile Include="UI\Scripts\IScriptObject.cs" />
+    <Compile Include="UI\Scripts\Script.cs" />
+    <Compile Include="UI\Scripts\ScriptExtension.cs" />
+    <Compile Include="UI\Scripts\ScriptGraph.cs" />
     <Compile Include="UI\Scripts\ScriptObjectBase.cs" />
-    <Compile Include="UI\Scripts\ScriptProxy.cs" />
+    <Compile Include="UI\Scripts\ScriptRule.cs" />
     <Compile Include="UI\Scripts\ScriptSet.cs" />
     <Compile Include="UI\Security\AccessRight.cs" />
     <Compile Include="UI\Security\AccessRightExtensions.cs" />

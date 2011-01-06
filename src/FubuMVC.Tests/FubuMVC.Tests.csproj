@@ -167,10 +167,9 @@
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="UI\Scripts\ScriptClassTester.cs" />
-    <Compile Include="UI\Scripts\ScriptDependencyGraphTester.cs" />
     <Compile Include="UI\Scripts\ScriptObjectBaseTester.cs" />
-    <Compile Include="UI\Scripts\ScriptProxyTester.cs" />
     <Compile Include="UI\Scripts\ScriptSetTester.cs" />
+    <Compile Include="UI\Scripts\ScriptTester.cs" />
     <Compile Include="UI\Security\DegradingAccessElementBuilderTester.cs" />
     <Compile Include="UI\ServiceLocatorExtensionsTester.cs" />
     <Compile Include="UI\StubTagGenerator.cs" />

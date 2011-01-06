@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FubuMVC.Core.UI.Scripts
 {
@@ -31,6 +33,35 @@ namespace FubuMVC.Core.UI.Scripts
         public void AddDependency(IScriptObject scriptObject)
         {
             _dependencies.Fill(scriptObject);
+        }
+
+        public IEnumerator<IScript> GetEnumerator()
+        {
+            foreach (IScript script in AllScripts())
+            {
+                yield return script;
+
+                foreach (var dependency in script.Dependencies())
+                {
+                    foreach (var s in dependency)
+                    {
+                        yield return s;
+                    }
+                }
+            }
+
+            foreach (var scriptObject in _dependencies)
+            {
+                foreach (IScript s in scriptObject)
+                {
+                    yield return s;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

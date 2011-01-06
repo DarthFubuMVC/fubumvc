@@ -6,15 +6,24 @@ using System.Linq;
 
 namespace FubuMVC.Tests.UI.Scripts
 {
+
+
+    public class StubScriptGraphLogger : IScriptGraphLogger
+    {
+        
+    }
+
     [TestFixture]
     public class ScriptGraphTester
     {
         private ScriptGraph theGraph;
+        private bool _compiled;
 
         [SetUp] 
         public void SetUp()
         {
-            theGraph = new ScriptGraph(new StubScriptFinder()); 
+            _compiled = false;
+            theGraph = new ScriptGraph(); 
         }
 
         [Test]
@@ -27,6 +36,12 @@ namespace FubuMVC.Tests.UI.Scripts
 
         private IEnumerable<string> ScriptNamesFor(params string[] names)
         {
+            if (!_compiled)
+            {
+                theGraph.CompileDependencies(new StubScriptGraphLogger());
+                _compiled = true;
+            }
+
             return theGraph.GetScripts(names).Select(x => x.Name);
         }
 
@@ -61,15 +76,35 @@ namespace FubuMVC.Tests.UI.Scripts
             theGraph.ObjectFor("SetA-Alias").ShouldBeOfType<ScriptSet>().Name.ShouldEqual("SetA");
         }
 
+        [Test]
+        public void find_scripts_all_files()
+        {
+            ScriptNamesFor("a", "b", "c").ShouldHaveTheSameElementsAs("a", "b", "c");
+        }
+
+        [Test]
+        public void find_scripts_all_files_orders_by_filename_if_no_other_dependency()
+        {
+            ScriptNamesFor("a", "c", "b").ShouldHaveTheSameElementsAs("a", "b", "c");
+        }
+
+        [Test]
+        public void find_scripts_all_files_uses_dependencies_for_ordering()
+        {
+            theGraph.Dependency("a", "b");
+            theGraph.Dependency("a", "c");
+
+            ScriptNamesFor("a").ShouldHaveTheSameElementsAs("b", "c", "a");
+        }
+
+        [Test]
+        public void find_scripts_with_an_extension()
+        {
+            theGraph.Extension("a1", "a");
+            ScriptNamesFor("a", "c", "b").ShouldHaveTheSameElementsAs("a", "a1", "b", "c");
+
+        }
+
     }
 
-    public class StubScriptFinder : IScriptFinder
-    {
-        public IScript Find(string name)
-        {
-            return new Script(){
-                Name = name
-            };
-        }
-    }
 }

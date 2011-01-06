@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.UI.Scripts
         [SetUp]
         public void SetUp()
         {
-            theGraph = new ScriptGraph(new StubScriptFinder());
+            theGraph = new ScriptGraph();
         }
 
         [Test]
