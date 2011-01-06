@@ -166,7 +166,9 @@
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
-    <Compile Include="UI\Scripts\ScriptClassTester.cs" />
+    <Compile Include="UI\Scripts\ScriptDslReaderTester.cs" />
+    <Compile Include="UI\Scripts\StubScriptGraphLogger.cs" />
+    <Compile Include="UI\Scripts\ScriptGraphTester.cs" />
     <Compile Include="UI\Scripts\ScriptObjectBaseTester.cs" />
     <Compile Include="UI\Scripts\ScriptSetTester.cs" />
     <Compile Include="UI\Scripts\ScriptTester.cs" />

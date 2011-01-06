@@ -4,7 +4,15 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.UI.Scripts
 {
-    public class ScriptGraph : IComparer<IScript>
+    public interface IScriptRegistration
+    {
+        void Alias(string name, string alias);
+        void Dependency(string dependent, string dependency);
+        void Extension(string extender, string @base);
+        void AddToSet(string setName, string name);
+    }
+
+    public class ScriptGraph : IComparer<IScript>, IScriptRegistration
     {
         private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
         private readonly Cache<string, ScriptSet> _sets = new Cache<string, ScriptSet>();

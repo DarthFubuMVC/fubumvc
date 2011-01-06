@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.UI.Scripts;
 using NUnit.Framework;
-using System.Linq;
 
 namespace FubuMVC.Tests.UI.Scripts
 {
-
-
-    public class StubScriptGraphLogger : IScriptGraphLogger
-    {
-        
-    }
-
     [TestFixture]
     public class ScriptGraphTester
     {
@@ -106,5 +98,4 @@ namespace FubuMVC.Tests.UI.Scripts
         }
 
     }
-
 }

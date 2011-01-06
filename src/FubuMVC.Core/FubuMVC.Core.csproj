@@ -344,6 +344,7 @@
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="UI\Partials\RenderPartialExpression.cs" />
+    <Compile Include="UI\Scripts\ScriptDslReader.cs" />
     <Compile Include="UI\Scripts\ScriptGatherer.cs" />
     <Compile Include="UI\Scripts\IScript.cs" />
     <Compile Include="UI\Scripts\IScriptGraphLogger.cs" />

@@ -122,7 +122,7 @@ namespace IntegrationTesting.Fixtures.Scripts
             CollectionExtensions.Each(scripts, s => _graph.AddToSet(setName, s));
         }
 
-        [FormatAs("alias {name} as {alias}")]
+        [FormatAs("{alias} is {name}")]
         public void Alias(string name, string alias)
         {
             _graph.Alias(name, alias);
