@@ -10,16 +10,20 @@ namespace FubuCore
     public interface IFileSystem
     {
         bool FileExists(string filename);
-        void PersistToFile(object target, string filename);
-        T LoadFromFile<T>(string filename) where T : new();
-        void LaunchEditor(string filename);
-        void CreateDirectory(string directory);
         void DeleteFile(string filename);
-        IEnumerable<string> ChildDirectoriesFor(string directory);
-        IEnumerable<string> FindFiles(string directory, FileSet searchSpecification);
         void WriteStringToFile(string filename, string text);
         string ReadStringFromFile(string filename);
+        void PersistToFile(object target, string filename);
+        T LoadFromFile<T>(string filename) where T : new();
+
+        void CreateDirectory(string directory);
         void DeleteDirectory(string directory);
+        void CleanDirectory(string directory);
+        bool DirectoryExists(string directory);
+
+        void LaunchEditor(string filename);
+        IEnumerable<string> ChildDirectoriesFor(string directory);
+        IEnumerable<string> FindFiles(string directory, FileSet searchSpecification);
     }
 
     public static class FileSystemExtensions
@@ -98,6 +102,17 @@ namespace FubuCore
             {
                 Directory.Delete(directory, true);
             }
+        }
+
+        public void CleanDirectory(string directory)
+        {
+            Directory.GetDirectories(directory).Each(Directory.Delete);
+            Directory.GetFiles(directory).Each(File.Delete);
+        }
+
+        public bool DirectoryExists(string directory)
+        {
+            return Directory.Exists(directory);
         }
 
         public void PersistToFile(object target, string filename)
