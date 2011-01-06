@@ -14,8 +14,11 @@ namespace FubuMVC.StructureMap
 
         public static FubuApplication StructureMapObjectFactory(this IContainerFacilityExpression expression, Action<IInitializationExpression> structureMapBootstrapper)
         {
-            ObjectFactory.Initialize(structureMapBootstrapper);
-            return expression.StructureMapObjectFactory();
+            return expression.StructureMap(() =>
+            {
+                ObjectFactory.Initialize(structureMapBootstrapper);
+                return ObjectFactory.Container;
+            });
         }
 
         public static FubuApplication StructureMap(this IContainerFacilityExpression expression, Func<IContainer> createContainer)
