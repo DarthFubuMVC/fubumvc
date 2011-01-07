@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Commands
                 Folder = "/something"
             }, fileSystem);
 
-            fileSystem.AssertWasCalled(x => x.PersistToFile(theRegistry, AliasRegistry.ALIAS_FILE));
+            fileSystem.AssertWasCalled(x => x.WriteObjectToFile(AliasRegistry.ALIAS_FILE, theRegistry));
 
             theRegistry.AliasFor("agent").Folder.ShouldEqual("/something");
         }
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Commands
                 Folder = "/something"
             }, fileSystem);
 
-            fileSystem.AssertWasCalled(x => x.PersistToFile(theRegistry, AliasRegistry.ALIAS_FILE));
+            fileSystem.AssertWasCalled(x => x.WriteObjectToFile(AliasRegistry.ALIAS_FILE, theRegistry));
 
             theRegistry.AliasFor("agent").Folder.ShouldEqual("/something");
         }
@@ -77,7 +77,7 @@ namespace FubuMVC.Tests.Commands
                 RemoveFlag = true
             }, fileSystem);
 
-            fileSystem.AssertWasCalled(x => x.PersistToFile(theRegistry, AliasRegistry.ALIAS_FILE));
+            fileSystem.AssertWasCalled(x => x.WriteObjectToFile(AliasRegistry.ALIAS_FILE, theRegistry));
 
             theRegistry.Aliases.ShouldHaveCount(2);
             theRegistry.AliasFor("agent").ShouldBeNull();

@@ -93,7 +93,7 @@ namespace Fubu
 
         private void persist(IFileSystem system, AliasRegistry registry)
         {
-            system.PersistToFile(registry, AliasRegistry.ALIAS_FILE);
+            system.WriteObjectToFile(AliasRegistry.ALIAS_FILE, registry);
         }
     }
 

@@ -11,9 +11,13 @@ namespace FubuCore
     {
         bool FileExists(string filename);
         void DeleteFile(string filename);
+        void MoveFile(string from, string to);
+
+
+        void WriteStreamToFile(string filename, Stream stream);
         void WriteStringToFile(string filename, string text);
         string ReadStringFromFile(string filename);
-        void PersistToFile(object target, string filename);
+        void WriteObjectToFile(string filename, object target);
         T LoadFromFile<T>(string filename) where T : new();
 
         void CreateDirectory(string directory);
@@ -56,7 +60,7 @@ namespace FubuCore
 
         public static void PersistToFile(this IFileSystem fileSystem, object target, params string[] pathParts)
         {
-            fileSystem.PersistToFile(target, FileSystem.Combine(pathParts));
+            fileSystem.WriteObjectToFile(FileSystem.Combine(pathParts), target);
         }
         public static void DeleteDirectory(this IFileSystem fileSystem, params string[] pathParts)
         {
@@ -84,6 +88,32 @@ namespace FubuCore
         public bool FileExists(string filename)
         {
             return File.Exists(filename);
+        }
+
+        public const int BufferSize = 32768;
+
+        public void WriteStreamToFile(string filename, Stream stream)
+        {
+            CreateDirectory(Path.GetDirectoryName(filename));
+
+            var fileSize = 0;
+            using (var fileStream = new FileStream(filename, FileMode.Create, FileAccess.Write))
+            {
+                int bytesRead;
+                var buffer = new byte[BufferSize];
+                do
+                {
+                    bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    fileSize += bytesRead;
+
+                    if (bytesRead > 0)
+                    {
+                        fileStream.Write(buffer, 0, bytesRead);
+                    }
+                } while (bytesRead > 0);
+                fileStream.Flush();
+            }
+
         }
 
         public void WriteStringToFile(string filename, string text)
@@ -115,7 +145,7 @@ namespace FubuCore
             return Directory.Exists(directory);
         }
 
-        public void PersistToFile(object target, string filename)
+        public void WriteObjectToFile(string filename, object target)
         {
             Debug.WriteLine("Saving to " + filename);
             var serializer = new XmlSerializer(target.GetType());
@@ -157,6 +187,13 @@ namespace FubuCore
             if (!File.Exists(filename)) return;
 
             File.Delete(filename);
+        }
+
+        public void MoveFile(string from, string to)
+        {
+            CreateDirectory(Path.GetDirectoryName(to));
+
+            File.Move(from, to);
         }
 
         public IEnumerable<string> ChildDirectoriesFor(string directory)
