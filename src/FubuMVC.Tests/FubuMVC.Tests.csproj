@@ -103,9 +103,8 @@
     <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="Content\ContentFolderServiceTester.cs" />
-    <Compile Include="Content\ContentRegistryCacheTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
-    <Compile Include="Content\PackagedImageUrlResolverTester.cs" />
+    <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />

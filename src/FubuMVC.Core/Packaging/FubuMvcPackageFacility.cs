@@ -60,17 +60,17 @@ namespace FubuMVC.Core.Packaging
 
         public static string PhysicalRootPath { get; set; }
 
-        public void AddRoutes(ICollection<RouteBase> routes)
+        public void AddPackagingContentRoutes(ICollection<RouteBase> routes)
         {
-            var imageHandler = new FileRouteHandler(_contentFolderService);
-            imageHandler.RegisterRoute(routes);
+            new FileRouteHandler(_contentFolderService, ContentType.images).RegisterRoute(routes);
+            new FileRouteHandler(_contentFolderService, ContentType.scripts).RegisterRoute(routes);
+            new FileRouteHandler(_contentFolderService, ContentType.styles).RegisterRoute(routes);
         }
 
 
         public void RegisterServices(IServiceRegistry services)
         {
             services.AddService<IContentFolderService>(_contentFolderService);
-            services.AddService<IImageUrlResolver, PackagedImageUrlResolver>();
         }
 
         public override string ToString()

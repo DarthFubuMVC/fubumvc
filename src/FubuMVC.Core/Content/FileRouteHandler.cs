@@ -15,15 +15,17 @@ namespace FubuMVC.Core.Content
     public class FileRouteHandler : IRouteHandler
     {
         private readonly IContentFolderService _folders;
+        private readonly ContentType _contentType;
 
-        public FileRouteHandler(IContentFolderService folders)
+        public FileRouteHandler(IContentFolderService folders, ContentType contentType)
         {
             _folders = folders;
+            _contentType = contentType;
         }
 
         public void RegisterRoute(ICollection<RouteBase> routes)
         {
-            var route = new Route("_images", new RouteValueDictionary(), this);
+            var route = new Route("_" + _contentType.ToString(), new RouteValueDictionary(), this);
             for (int i = 0; i < 10; i++)
             {
                 route.Url += "/{" + i + "}";
@@ -35,9 +37,9 @@ namespace FubuMVC.Core.Content
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            var imageName = requestContext.RouteData.Values.Select(x => x.Value as string).Where(x => x.IsNotEmpty()).Join("/");
-            var fileName = _folders.FileNameFor(ContentType.images, imageName);
-            return new FileHttpHandler(fileName);
+            var fileName = requestContext.RouteData.Values.Select(x => x.Value as string).Where(x => x.IsNotEmpty()).Join("/");
+            var fullPath = _folders.FileNameFor(_contentType, fileName);
+            return new FileHttpHandler(fullPath);
         }
     }
 

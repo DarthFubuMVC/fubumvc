@@ -75,7 +75,7 @@ namespace FubuMVC.Core
                 x.Bootstrap(log => startApplication(routes));
             });
 
-            fubuFacility.AddRoutes(routes);
+            fubuFacility.AddPackagingContentRoutes(routes);
         }
 
         private IEnumerable<IActivator> startApplication(ICollection<RouteBase> routes)

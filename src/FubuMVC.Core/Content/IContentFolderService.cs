@@ -50,7 +50,7 @@ namespace FubuMVC.Core.Content
 
         public bool ExistsInApplicationDirectory(ContentType contentType, string contentFileName)
         {
-            return _fileSystem.FileExists(FubuMvcPackageFacility.GetApplicationPath(), contentFileName);
+            return _fileSystem.FileExists(FubuMvcPackageFacility.GetApplicationPath(), "content",contentType.ToString(), contentFileName);
         }
 
         public string FileNameFor(ContentType contentType, string contentFileName)
