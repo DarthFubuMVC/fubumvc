@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Content
 
         public string UrlFor(string name)
         {
-            return _folders.FileExists(name) ? "~/_images/" + name.TrimStart('/') : null;
+            return _folders.FileExists(ContentType.images, name) ? "~/_images/" + name.TrimStart('/') : null;
         }
     }
 }

@@ -30,7 +30,6 @@ namespace FubuMVC.Core.Packaging
                 Loader(zipFilePackageReader);
             }
 
-            // TODO -- need an activator for scripts/*/styles, etc.
 
             Activator(new VirtualPathProviderActivator());
             Activator(new PackageFolderActivator(_contentFolderService));
@@ -63,7 +62,7 @@ namespace FubuMVC.Core.Packaging
 
         public void AddRoutes(ICollection<RouteBase> routes)
         {
-            var imageHandler = new ImageRouteHandler(_contentFolderService);
+            var imageHandler = new FileRouteHandler(_contentFolderService);
             imageHandler.RegisterRoute(routes);
         }
 

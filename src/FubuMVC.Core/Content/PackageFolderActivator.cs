@@ -19,10 +19,10 @@ namespace FubuMVC.Core.Content
         {
             packages.Each(p => p.ForFolder(FubuMvcPackages.WebContentFolder, topFolder =>
             {
-                var imagesFolder = FileSystem.Combine(topFolder, "content", "images");
+                var contentFolder = FileSystem.Combine(topFolder, "content");
 
-                log.Trace("Added folder '{0}' to the PackagedImageUrl list", imagesFolder);
-                _contents.RegisterDirectory(imagesFolder);
+                log.Trace("Added folder '{0}' to the package folder list", contentFolder);
+                _contents.RegisterDirectory(contentFolder);
             }));
         }
 

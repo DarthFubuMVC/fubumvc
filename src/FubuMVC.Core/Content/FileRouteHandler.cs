@@ -9,11 +9,14 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Content
 {
-    public class ImageRouteHandler : IRouteHandler
+
+
+
+    public class FileRouteHandler : IRouteHandler
     {
         private readonly IContentFolderService _folders;
 
-        public ImageRouteHandler(IContentFolderService folders)
+        public FileRouteHandler(IContentFolderService folders)
         {
             _folders = folders;
         }
@@ -33,16 +36,16 @@ namespace FubuMVC.Core.Content
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
             var imageName = requestContext.RouteData.Values.Select(x => x.Value as string).Where(x => x.IsNotEmpty()).Join("/");
-            var fileName = _folders.FileNameFor(imageName);
-            return new ImageHttpHandler(fileName);
+            var fileName = _folders.FileNameFor(ContentType.images, imageName);
+            return new FileHttpHandler(fileName);
         }
     }
 
-    public class ImageHttpHandler : IHttpHandler
+    public class FileHttpHandler : IHttpHandler
     {
-        private static Cache<string, string> _mimeTypes = new Cache<string, string>();
+        private static readonly Cache<string, string> _mimeTypes = new Cache<string, string>();
 
-        static ImageHttpHandler()
+        static FileHttpHandler()
         {
             _mimeTypes[".gif"] = "image/gif";
             _mimeTypes[".png"] = "image/png";
@@ -50,11 +53,13 @@ namespace FubuMVC.Core.Content
             _mimeTypes[".jpeg"] = "image/jpeg";
             _mimeTypes[".bm"] = "image/bmp";
             _mimeTypes[".bmp"] = "image/bmp";
+            _mimeTypes[".css"] = "text/css";
+            _mimeTypes[".js"] = "application/x-javascript";
         }
 
         private readonly string _fileName;
 
-        public ImageHttpHandler(string fileName)
+        public FileHttpHandler(string fileName)
         {
             _fileName = fileName;
         }

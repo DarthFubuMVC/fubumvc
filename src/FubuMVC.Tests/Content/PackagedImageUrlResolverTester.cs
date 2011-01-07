@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Content
 
         private void hasFile(string fileName)
         {
-            MockFor<IContentFolderService>().Stub(x => x.FileExists(fileName)).Return(true);
+            MockFor<IContentFolderService>().Stub(x => x.FileExists(ContentType.images, fileName)).Return(true);
         }
     }
 }
