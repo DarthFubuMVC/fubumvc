@@ -33,5 +33,10 @@ namespace FubuMVC.Core.Content
         {
             throw new NotImplementedException();
         }
+
+        public string ScriptUrl(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

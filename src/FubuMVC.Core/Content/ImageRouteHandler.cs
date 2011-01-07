@@ -11,11 +11,11 @@ namespace FubuMVC.Core.Content
 {
     public class ImageRouteHandler : IRouteHandler
     {
-        private readonly PackagedImageUrlResolver _resolver;
+        private readonly IContentFolderService _folders;
 
-        public ImageRouteHandler(PackagedImageUrlResolver resolver)
+        public ImageRouteHandler(IContentFolderService folders)
         {
-            _resolver = resolver;
+            _folders = folders;
         }
 
         public void RegisterRoute(ICollection<RouteBase> routes)
@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Content
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
             var imageName = requestContext.RouteData.Values.Select(x => x.Value as string).Where(x => x.IsNotEmpty()).Join("/");
-            var fileName = _resolver.FileNameFor(imageName);
+            var fileName = _folders.FileNameFor(imageName);
             return new ImageHttpHandler(fileName);
         }
     }

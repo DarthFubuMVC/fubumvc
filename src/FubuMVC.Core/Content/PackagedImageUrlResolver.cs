@@ -5,39 +5,18 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Content
 {
-    public class PackagedImageUrlResolver : IImageUrlResolver, IPackagedImageUrlResolver
+    public class PackagedImageUrlResolver : IImageUrlResolver
     {
-        private readonly IFileSystem _fileSystem;
-        private readonly IList<string> _directories = new List<string>();
-        private readonly Cache<string, string> _fileNames = new Cache<string, string>();
+        private readonly IContentFolderService _folders;
 
-        public PackagedImageUrlResolver(IFileSystem fileSystem)
+        public PackagedImageUrlResolver(IContentFolderService folders)
         {
-            _fileSystem = fileSystem;
-            _fileNames.OnMissing = name =>
-            {
-                return _directories.FirstValue(dir =>
-                {
-                    return _fileSystem.FileExists(dir, name) ? FileSystem.Combine(dir, name) : null;
-                });
-            };
-        }
-
-        public void RegisterDirectory(string directory)
-        {
-            _directories.Add(directory);
-        }
-
-        public string FileNameFor(string name)
-        {
-            return _fileNames[name];
+            _folders = folders;
         }
 
         public string UrlFor(string name)
         {
-            if (_fileNames[name] == null) return null;
-
-            return "~/_images/" + name.TrimStart('/');
+            return _folders.FileExists(name) ? "~/_images/" + name.TrimStart('/') : null;
         }
     }
 }

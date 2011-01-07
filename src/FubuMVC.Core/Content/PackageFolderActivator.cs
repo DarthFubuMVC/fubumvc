@@ -8,11 +8,11 @@ namespace FubuMVC.Core.Content
 {
     public class PackageFolderActivator : IActivator
     {
-        private readonly IPackagedImageUrlResolver _resolver;
+        private readonly IContentFolderService _contents;
 
-        public PackageFolderActivator(IPackagedImageUrlResolver resolver)
+        public PackageFolderActivator(IContentFolderService contents)
         {
-            _resolver = resolver;
+            _contents = contents;
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Content
                 var imagesFolder = FileSystem.Combine(topFolder, "content", "images");
 
                 log.Trace("Added folder '{0}' to the PackagedImageUrl list", imagesFolder);
-                _resolver.RegisterDirectory(imagesFolder);
+                _contents.RegisterDirectory(imagesFolder);
             }));
         }
 

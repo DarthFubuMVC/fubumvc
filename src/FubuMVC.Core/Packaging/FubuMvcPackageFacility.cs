@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Packaging
 {
     public class FubuMvcPackageFacility : PackageFacility
     {
-        private readonly PackagedImageUrlResolver _imageUrlResolver = new PackagedImageUrlResolver(new FileSystem());
+        private readonly IContentFolderService _contentFolderService = new ContentFolderService(new FileSystem());
 
        
 
@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Packaging
             // TODO -- need an activator for scripts/*/styles, etc.
 
             Activator(new VirtualPathProviderActivator());
-            Activator(new PackageFolderActivator(_imageUrlResolver));
+            Activator(new PackageFolderActivator(_contentFolderService));
         }
 
         public static ZipFilePackageReader BuildZipFilePackageReader(string applicationPath, FileSystem fileSystem)
@@ -63,14 +63,15 @@ namespace FubuMVC.Core.Packaging
 
         public void AddRoutes(ICollection<RouteBase> routes)
         {
-            var imageHandler = new ImageRouteHandler(_imageUrlResolver);
+            var imageHandler = new ImageRouteHandler(_contentFolderService);
             imageHandler.RegisterRoute(routes);
         }
 
 
         public void RegisterServices(IServiceRegistry services)
         {
-            services.AddService<IImageUrlResolver>(_imageUrlResolver);
+            services.AddService<IContentFolderService>(_contentFolderService);
+            services.AddService<IImageUrlResolver, PackagedImageUrlResolver>();
         }
 
         public override string ToString()
