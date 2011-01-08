@@ -97,6 +97,14 @@ namespace FubuMVC.Core.Registration
             list.Add(def);
         }
 
+        public void FillType(Type interfaceType, Type concreteType)
+        {
+            List<ObjectDef> list = _services[interfaceType];
+            if (list.Any(x => x.Type == concreteType)) return;
+
+            list.Add(new ObjectDef(concreteType));
+        }
+
         public static bool ShouldBeSingleton(Type type)
         {
             return type.Name.EndsWith("Cache");

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
+using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.UI.Scripts
 {
@@ -12,6 +13,8 @@ namespace FubuMVC.Core.UI.Scripts
         void AddToSet(string setName, string name);
     }
 
+
+    // TODO -- change this to use lists so that app level wins
     public class ScriptGraph : IComparer<IScript>, IScriptRegistration
     {
         private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
@@ -38,7 +41,6 @@ namespace FubuMVC.Core.UI.Scripts
                     ?? 
                     new Script(name);
             };
-
         }
 
         public int Compare(IScript x, IScript y)
@@ -57,10 +59,10 @@ namespace FubuMVC.Core.UI.Scripts
         public void Dependency(string dependent, string dependency)
         {
             _rules.Fill(new ScriptRule()
-                        {
-                            Dependency = dependency,
-                            Dependent = dependent
-                        });
+            {
+                Dependency = dependency,
+                Dependent = dependent
+            });
         }
 
         public void Extension(string extender, string @base)
@@ -87,8 +89,8 @@ namespace FubuMVC.Core.UI.Scripts
         }
 
 
-        // TODO -- try to find circular dependencies
-        public void CompileDependencies(IScriptGraphLogger logger)
+        // TODO -- try to find circular dependencies and log to the Package log
+        public void CompileDependencies(IPackageLog log)
         {
             _sets.Each(set => set.FindScripts(this));
             _rules.Each(rule =>

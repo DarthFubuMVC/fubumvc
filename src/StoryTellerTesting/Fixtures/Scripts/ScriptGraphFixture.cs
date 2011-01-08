@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
 using StoryTeller;
 using StoryTeller.Assertions;
@@ -85,11 +86,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         }
     }
 
-    public class StubScriptGraphLogger : IScriptGraphLogger
-    {
-        
-    }
-
+    
     public class ScriptGraphSetupFixture : Fixture
     {
         private ScriptGraph _graph;
@@ -101,7 +98,7 @@ namespace IntegrationTesting.Fixtures.Scripts
 
         public override void TearDown()
         {
-            _graph.CompileDependencies(new StubScriptGraphLogger());
+            _graph.CompileDependencies(new PackageRegistryLog());
         }
 
         [FormatAs("{name} extends {baseName}")]

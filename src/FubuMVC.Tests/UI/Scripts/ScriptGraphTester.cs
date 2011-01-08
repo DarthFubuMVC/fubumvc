@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
 using NUnit.Framework;
 
@@ -30,7 +31,7 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             if (!_compiled)
             {
-                theGraph.CompileDependencies(new StubScriptGraphLogger());
+                theGraph.CompileDependencies(new PackageRegistryLog());
                 _compiled = true;
             }
 

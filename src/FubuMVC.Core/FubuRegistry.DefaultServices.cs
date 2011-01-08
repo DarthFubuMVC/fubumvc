@@ -5,6 +5,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
@@ -13,6 +14,7 @@ using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Diagnostics;
+using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
@@ -69,12 +71,16 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IContentRegistry, ContentRegistryCache>();
 
+            graph.Services.SetServiceIfNone(new ScriptGraph());
 
-
-
-
+            registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);
+        }
+
+        private void registerActivators(BehaviorGraph graph)
+        {
+            graph.Services.FillType(typeof (IActivator), typeof (ScriptGraphConfigurationActivator));
         }
 
         private void registerAuthorizationServices(BehaviorGraph graph)

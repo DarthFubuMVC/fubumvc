@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Util;
@@ -16,7 +15,6 @@ namespace FubuMVC.Core.Content
     }
 
 
-
     public enum ContentType
     {
         images,
@@ -26,21 +24,21 @@ namespace FubuMVC.Core.Content
 
     public class ContentFolderService : IContentFolderService
     {
+        private readonly IList<string> _directories = new List<string>();
         private readonly Cache<string, string> _fileNames = new Cache<string, string>();
         private readonly IFileSystem _fileSystem;
-        private readonly IList<string> _directories = new List<string>();
 
         public ContentFolderService(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
 
-            _fileNames.OnMissing = name =>
-            {
-                return _directories.FirstValue(dir =>
+            _fileNames.OnMissing =
+                name =>
                 {
-                    return _fileSystem.FileExists(dir, name) ? FileSystem.Combine(dir, name) : null;
-                });
-            };
+                    return
+                        _directories.FirstValue(
+                            dir => { return _fileSystem.FileExists(dir, name) ? FileSystem.Combine(dir, name) : null; });
+                };
         }
 
         public void RegisterDirectory(string directory)
@@ -50,7 +48,8 @@ namespace FubuMVC.Core.Content
 
         public bool ExistsInApplicationDirectory(ContentType contentType, string contentFileName)
         {
-            return _fileSystem.FileExists(FubuMvcPackageFacility.GetApplicationPath(), "content",contentType.ToString(), contentFileName);
+            return _fileSystem.FileExists(FubuMvcPackageFacility.GetApplicationPath(), "content", contentType.ToString(),
+                                          contentFileName);
         }
 
         public string FileNameFor(ContentType contentType, string contentFileName)

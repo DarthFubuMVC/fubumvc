@@ -105,6 +105,7 @@
     <Compile Include="Content\ContentFolderServiceTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />
+    <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />
@@ -167,7 +168,6 @@
     <Compile Include="UI\ImageExpressionTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="UI\Scripts\ScriptDslReaderTester.cs" />
-    <Compile Include="UI\Scripts\StubScriptGraphLogger.cs" />
     <Compile Include="UI\Scripts\ScriptGraphTester.cs" />
     <Compile Include="UI\Scripts\ScriptObjectBaseTester.cs" />
     <Compile Include="UI\Scripts\ScriptSetTester.cs" />

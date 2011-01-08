@@ -30,7 +30,9 @@ namespace FubuMVC.Tests.StructureMapIoC
         [SetUp]
         public void SetUp()
         {
-            container = new Container();
+            container = new Container(x => x.For<IFileSystem>().Use<FileSystem>());
+            
+
             graph = new FubuRegistry(x =>
             {
                 x.Route<InputModel>("/area/sub/{Name}/{Age}")
@@ -93,7 +95,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
-            facility.GetAllActivators().Count().ShouldEqual(3);
+            facility.GetAllActivators().Count().ShouldEqual(4);
         }
 
         [Test]

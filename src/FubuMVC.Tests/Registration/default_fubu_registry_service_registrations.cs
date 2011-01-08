@@ -1,15 +1,18 @@
+using System.Linq;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
@@ -193,6 +196,19 @@ namespace FubuMVC.Tests.Registration
         public void content_registry_cache_would_be_a_singleton()
         {
             ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void script_graph_is_registered()
+        {
+            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<ScriptGraph>().Value.ShouldNotBeNull();
+        }
+
+        [Test]
+        public void should_be_a_script_configuration_activator_registered_as_a_service()
+        {
+            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+                .Any(x => x.Type == typeof(ScriptGraphConfigurationActivator)).ShouldBeTrue();
         }
     }
 }

@@ -24,6 +24,8 @@ namespace FubuCore
         void LaunchEditor(string filename);
         IEnumerable<string> ChildDirectoriesFor(string directory);
         IEnumerable<string> FindFiles(string directory, FileSet searchSpecification);
+
+        void ReadTextFile(string path, Action<string> reader);
     }
 
     public static class FileSystemExtensions
@@ -173,6 +175,18 @@ namespace FubuCore
         public IEnumerable<string> FindFiles(string directory, FileSet searchSpecification)
         {
             return searchSpecification.IncludedFilesFor(directory);
+        }
+
+        public void ReadTextFile(string path, Action<string> callback)
+        {
+            using (var reader = new StreamReader(path))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    callback(line);
+                }
+            }
         }
     }
 }

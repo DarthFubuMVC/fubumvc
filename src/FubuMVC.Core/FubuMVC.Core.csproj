@@ -79,6 +79,7 @@
     <Compile Include="Content\IContentRegistry.cs" />
     <Compile Include="Content\FileRouteHandler.cs" />
     <Compile Include="Content\PackageFolderActivator.cs" />
+    <Compile Include="Content\ScriptGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
@@ -345,7 +346,6 @@
     <Compile Include="UI\Scripts\ScriptDslReader.cs" />
     <Compile Include="UI\Scripts\ScriptGatherer.cs" />
     <Compile Include="UI\Scripts\IScript.cs" />
-    <Compile Include="UI\Scripts\IScriptGraphLogger.cs" />
     <Compile Include="UI\Scripts\IScriptObject.cs" />
     <Compile Include="UI\Scripts\Script.cs" />
     <Compile Include="UI\Scripts\ScriptExtension.cs" />

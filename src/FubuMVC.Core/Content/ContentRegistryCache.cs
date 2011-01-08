@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Util;
 
@@ -8,7 +7,7 @@ namespace FubuMVC.Core.Content
     // TODO -- enable runtime compression for scripts and CSS?
     public class ContentRegistryCache : IContentRegistry
     {
-        private ContentFiles _images;
+        private readonly ContentFiles _images;
         private ContentFiles _scripts;
         private ContentFiles _styles;
 
@@ -27,19 +26,21 @@ namespace FubuMVC.Core.Content
 
         public string CssUrl(string name)
         {
-            return _images[name].ToAbsoluteUrl();
+            throw new NotImplementedException();
+            //return _styles[name].ToAbsoluteUrl();
         }
 
         public string ScriptUrl(string name)
         {
-            return _scripts[name].ToAbsoluteUrl();
+            throw new NotImplementedException();
+            //return _scripts[name].ToAbsoluteUrl();
         }
     }
 
     public class ContentFiles
     {
-        private readonly IContentFolderService _service;
         private readonly ContentType _contentType;
+        private readonly IContentFolderService _service;
         private readonly Cache<string, string> _urls = new Cache<string, string>();
 
         public ContentFiles(IContentFolderService service, ContentType contentType)
@@ -60,10 +61,7 @@ namespace FubuMVC.Core.Content
 
         public string this[string fileName]
         {
-            get
-            {
-                return _urls[fileName];
-            }
+            get { return _urls[fileName]; }
         }
     }
 }

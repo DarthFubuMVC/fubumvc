@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using FubuMVC.Core.Packaging;
+﻿using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Content
 {
