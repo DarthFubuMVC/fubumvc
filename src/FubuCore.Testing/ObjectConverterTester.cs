@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using StructureMap;
@@ -253,7 +255,8 @@ namespace FubuCore.Testing
             finder.FromString<int>("32").ShouldEqual(32);
             finder.FromString<int>("-1").ShouldEqual(-1);
 
-            finder.FromString<double>("123.45").ShouldEqual(123.45);
+            using (new ScopedCulture(CultureInfo.CreateSpecificCulture("en-us")))
+                finder.FromString<double>("123.45").ShouldEqual(123.45);
         }
 
         [Test]
@@ -311,7 +314,8 @@ namespace FubuCore.Testing
         [Test]
         public void parse_timespan_as_hours()
         {
-            finder.FromString<TimeSpan>("1.5 hours").ShouldEqual(new TimeSpan(1, 30, 0));
+            using (new ScopedCulture(CultureInfo.CreateSpecificCulture("en-us")))
+                finder.FromString<TimeSpan>("1.5 hours").ShouldEqual(new TimeSpan(1, 30, 0));
         }
 
         [Test]
@@ -440,6 +444,22 @@ namespace FubuCore.Testing
             contacts.Select(x => x.LastName)
                 .ShouldHaveTheSameElementsAs("Miller", "Paddock", "Myers");
         }
+    }
+
+    public class ScopedCulture : IDisposable
+    {
+        private readonly CultureInfo savedCulture;
+        public ScopedCulture(CultureInfo culture)
+        {
+            savedCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = culture;
+        }
+        #region IDisposable Members
+        public void Dispose()
+        {
+            Thread.CurrentThread.CurrentCulture = savedCulture;
+        }
+        #endregion
     }
 
     public class Contact
