@@ -216,5 +216,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IScriptTagWriter, BasicScriptTagWriter>();
         }
+
+        [Test]
+        public void file_system_is_registered()
+        {
+            registeredTypeIs<IFileSystem, FileSystem>();
+        }
     }
 }

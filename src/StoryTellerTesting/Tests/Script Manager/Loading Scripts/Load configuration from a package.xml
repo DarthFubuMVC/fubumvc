@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Test name="Load configuration from a package" lifecycle="Regression">
+  <ScriptLoading>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <Run isStep="True" commandLine="init-pak src/TestPackage1 pak1" />
+        <Run isStep="True" commandLine="link fubu-testing pak1" />
+      </PackagingSetup>
+    </SetUp>
+    <Comment><![CDATA[The 'Pak1' package includes a file named pak1.script.config that defines a script set named Pak1Set includes Script1.js, Script2.js, Pak1-A.js]]></Comment>
+    <LoadPageWithScripts isStep="True" scriptNames="Pak1Set" />
+    <TheScriptsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="/fubu-testing/_scripts/Pak1-A.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script2.js" />
+      </Rows>
+    </TheScriptsShouldBe>
+  </ScriptLoading>
+</Test>

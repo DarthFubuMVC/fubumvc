@@ -22,5 +22,7 @@ namespace FubuMVC.Core.UI.Scripts
                 return new HtmlTag("script").Attr("src", _registry.ScriptUrl(x.Name)).Attr("type", "text/javascript");
             });
         }
+
+
     }
 }

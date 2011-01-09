@@ -77,6 +77,7 @@
     <Compile Include="Fixtures\Packages\PackagingFixture.cs" />
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
+    <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
     <Compile Include="FubuFastPack\DatabaseDriver.cs" />
     <Compile Include="FubuFastPack\NHibernate\bootstrapping_a_database.cs" />
     <Compile Include="FubuFastPack\NHibernate\ConfigurationSourceSmokeTester.cs" />

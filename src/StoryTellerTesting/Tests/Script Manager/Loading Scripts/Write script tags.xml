@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<Test name="Write script tags" lifecycle="Regression">
+  <ScriptLoading>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <NoPackages isStep="True" />
+      </PackagingSetup>
+    </SetUp>
+    <LoadPageWithScripts isStep="True" scriptNames="Script1.js,Script2.js,Script3.js" />
+    <TheScriptsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script2.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script3.js" />
+      </Rows>
+    </TheScriptsShouldBe>
+    <Comment><![CDATA[Try it with duplicates]]></Comment>
+    <LoadPageWithScripts isStep="True" scriptNames="Script1.js,Script1.js,Script2.js,Script2.js" />
+    <TheScriptsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script2.js" />
+      </Rows>
+    </TheScriptsShouldBe>
+    <Comment><![CDATA[Load a set.  The set configuration should be read in from the DSL at startup time.]]></Comment>
+    <LoadPageWithScripts isStep="True" scriptNames="OneToFour" />
+    <TheScriptsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script2.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script3.js" />
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script4.js" />
+      </Rows>
+    </TheScriptsShouldBe>
+    <Comment><![CDATA[Now, load a package and see that it can pull a script file from a package content folder.  The url of the script should pull from the generic http handler to read directly out of the file stream rather than a straight url to the content.]]></Comment>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <Run isStep="True" commandLine="init-pak src/TestPackage1 pak1" />
+        <Run isStep="True" commandLine="link fubu-testing pak1" />
+      </PackagingSetup>
+    </SetUp>
+    <LoadPageWithScripts isStep="True" scriptNames="Pak1-A.js" />
+    <TheScriptsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="/fubu-testing/_scripts/Pak1-A.js" />
+      </Rows>
+    </TheScriptsShouldBe>
+    <Comment><![CDATA[The 'Pak1' package also has a script named Script1.js, but the main application should still have precedence]]></Comment>
+    <LoadPageWithScripts isStep="True" scriptNames="Script1.js" />
+    <TheScriptsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
+      </Rows>
+    </TheScriptsShouldBe>
+  </ScriptLoading>
+</Test>

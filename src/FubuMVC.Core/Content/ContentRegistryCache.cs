@@ -4,6 +4,7 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Content
 {
+    // Tested through StoryTeller
     public class ContentRegistryCache : IContentRegistry
     {
         private readonly ContentFiles _images;
@@ -31,8 +32,7 @@ namespace FubuMVC.Core.Content
 
         public string ScriptUrl(string name)
         {
-            throw new NotImplementedException();
-            //return _scripts[name].ToAbsoluteUrl();
+            return _scripts[name].ToAbsoluteUrl();
         }
     }
 

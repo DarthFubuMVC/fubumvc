@@ -59,6 +59,7 @@ namespace IntegrationTesting
 
         public void Teardown()
         {
+            _application.Teardown();
         }
 
         public void RegisterFixtures(FixtureRegistry registry)

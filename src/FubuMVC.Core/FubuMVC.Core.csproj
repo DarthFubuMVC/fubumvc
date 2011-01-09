@@ -343,6 +343,7 @@
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="UI\Partials\RenderPartialExpression.cs" />
+    <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
     <Compile Include="UI\Scripts\BasicScriptTagWriter.cs" />
     <Compile Include="UI\Scripts\IScriptTagWriter.cs" />
     <Compile Include="UI\Scripts\ScriptDslReader.cs" />

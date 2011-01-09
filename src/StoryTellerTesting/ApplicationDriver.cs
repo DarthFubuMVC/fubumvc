@@ -47,6 +47,8 @@ namespace IntegrationTesting
             {
                 Debug.WriteLine(e.ToString());
             }
+
+            _browser = null;
         }
 
         public T InvokeJson<T>(string url, object message)

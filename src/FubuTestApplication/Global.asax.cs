@@ -16,6 +16,8 @@ namespace FubuTestApplication
         public FubuTestApplicationRegistry()
         {
             IncludeDiagnostics(true);
+
+            Actions.IncludeType<ScriptsHandler>();
         }
     }
 }

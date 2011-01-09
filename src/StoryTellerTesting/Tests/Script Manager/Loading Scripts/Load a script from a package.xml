@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Test name="Load a script from a package" lifecycle="Regression">
+  <ScriptLoading>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <Run isStep="True" commandLine="init-pak src/TestPackage1 pak1" />
+        <Run isStep="True" commandLine="link fubu-testing pak1" />
+      </PackagingSetup>
+    </SetUp>
+    <Comment><![CDATA[The script file /fubu-testing/_scripts/Pak1-A.js contains the text var name = 'Pak1-A.js';]]></Comment>
+    <RequestContainsString isStep="True" url="http://localhost/fubu-testing/_scripts/Pak1-A.js" content="var name = 'Pak1-A.js';" />
+  </ScriptLoading>
+</Test>
