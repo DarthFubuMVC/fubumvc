@@ -73,6 +73,8 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone(new ScriptGraph());
 
+            graph.Services.SetServiceIfNone<IScriptTagWriter, BasicScriptTagWriter>();
+
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

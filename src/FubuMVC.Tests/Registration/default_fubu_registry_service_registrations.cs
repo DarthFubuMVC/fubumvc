@@ -210,5 +210,11 @@ namespace FubuMVC.Tests.Registration
             new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof(ScriptGraphConfigurationActivator)).ShouldBeTrue();
         }
+
+        [Test]
+        public void iscriptwriter_is_registered_to_the_basic_writer()
+        {
+            registeredTypeIs<IScriptTagWriter, BasicScriptTagWriter>();
+        }
     }
 }

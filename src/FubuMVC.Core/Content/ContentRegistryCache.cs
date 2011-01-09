@@ -4,7 +4,6 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Content
 {
-    // TODO -- enable runtime compression for scripts and CSS?
     public class ContentRegistryCache : IContentRegistry
     {
         private readonly ContentFiles _images;
