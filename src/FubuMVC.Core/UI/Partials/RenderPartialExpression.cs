@@ -140,7 +140,7 @@ namespace FubuMVC.Core.UI.Partials
             return this;
         }
 
-        public RenderPartialExpression<TViewModel> ForEachOf<TPartialViewModel>(Expression<Func<TViewModel, IEnumerable<TPartialViewModel>>> expression)
+        public RenderPartialExpression<TViewModel> ForEachOf<TPartialViewModel>(Expression<Func<TViewModel, IEnumerable<TPartialViewModel>>> expression, string prefix = null)
             where TPartialViewModel : class
         {
             _accessor = ReflectionHelper.GetAccessor(expression);
@@ -150,7 +150,7 @@ namespace FubuMVC.Core.UI.Partials
                 models = _accessor.GetValue(_model) as IEnumerable<TPartialViewModel> ?? new TPartialViewModel[0];
             }
 
-            _prefix = _accessor.Name;
+            _prefix = "{0}{1}".ToFormat(prefix, _accessor.Name);
 
             return ForEachOf(models);
         }
@@ -208,7 +208,7 @@ namespace FubuMVC.Core.UI.Partials
                     builder.Append(beforeEach);
                 }
 
-                var output = _renderer.Render<TPartialViewModel>(_partialView, m, _prefix);
+                var output = _renderer.Render<TPartialViewModel>(_partialView, m, _prefix, current);
                 builder.Append(output);
 
                 if (shouldRenderItemWrapper())

@@ -49,6 +49,12 @@ namespace FubuCore.Binding
             return false;
         }
 
+        public bool HasValueThatStartsWith(string key)
+        {
+            //TODO: Provide implementation if wanted
+            return false;
+        }
+
         #endregion
 
         public void SetAlias(string name, string alias)

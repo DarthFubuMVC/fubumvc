@@ -108,6 +108,8 @@
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
+    <Compile Include="Models\CollectionPropertyBinderTester.cs" />
+    <Compile Include="Models\PropertyBinderTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />
     <Compile Include="Packaging\AssemblyPackageInfoTester.cs" />
     <Compile Include="Packaging\Environment\EnvironmentRunTester.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
+    <Compile Include="UI\DotNotationNamingConventionTester.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraphTester.cs" />
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
     <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />

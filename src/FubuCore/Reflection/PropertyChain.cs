@@ -8,21 +8,25 @@ namespace FubuCore.Reflection
 {
     public class PropertyChain : Accessor
     {
-        private readonly PropertyInfo[] _chain;
+        private readonly IValueGetter[] _chain;
         private readonly SingleProperty _innerProperty;
-        private readonly PropertyInfo[] _properties;
+        private readonly IValueGetter[] _valueGetters;
 
 
-        public PropertyChain(PropertyInfo[] properties)
+        public PropertyChain(IValueGetter[] valueGetters)
         {
-            _chain = new PropertyInfo[properties.Length - 1];
+            _chain = new IValueGetter[valueGetters.Length - 1];
             for (int i = 0; i < _chain.Length; i++)
             {
-                _chain[i] = properties[i];
+                _chain[i] = valueGetters[i];
             }
 
-            _innerProperty = new SingleProperty(properties[properties.Length - 1]);
-            _properties = properties;
+            var innerValueGetter = valueGetters[valueGetters.Length - 1] as PropertyValueGetter;
+            if (innerValueGetter != null)
+            {
+                _innerProperty = new SingleProperty(innerValueGetter.PropertyInfo);
+            }
+            _valueGetters = valueGetters;
         }
 
 
@@ -54,7 +58,19 @@ namespace FubuCore.Reflection
             return _innerProperty.GetValue(target);
         }
 
-        public Type OwnerType { get { return _chain.Last().PropertyType; } }
+        public Type OwnerType
+        {
+            get 
+            {
+                //TODO: Does MethodValueGetter need to provide some kind of OwnerType if its the last item in the chain?
+                //assuming the last item is a PropertyValueGetter for now...
+                //example: Person.FamilyMembers[0].FirstName would have the _chain.Last() output a MethodValueGetter
+                //in which case we would not be able to get to our OwnerType the same way as being done below
+
+                var propertyGetter = _chain.Last() as PropertyValueGetter;
+                return propertyGetter != null ? propertyGetter.PropertyInfo.PropertyType : null;
+            }
+        }
 
         public string FieldName { get { return _innerProperty.FieldName; } }
 
@@ -67,19 +83,21 @@ namespace FubuCore.Reflection
         public Accessor GetChildAccessor<T>(Expression<Func<T, object>> expression)
         {
             PropertyInfo property = ReflectionHelper.GetProperty(expression);
-            var list = new List<PropertyInfo>(_chain);
-            list.Add(_innerProperty.InnerProperty);
-            list.Add(property);
+            var list = new List<IValueGetter>(_chain)
+            {
+                new PropertyValueGetter(_innerProperty.InnerProperty),
+                new PropertyValueGetter(property)
+            };
 
             return new PropertyChain(list.ToArray());
         }
 
         public string[] PropertyNames
         {
-            get { return Array.ConvertAll(_properties, p => p.Name); }
+            get { return _valueGetters.Select(x => x.Name).ToArray(); }
         }
 
-        public PropertyInfo[] Properties { get { return _properties; } }
+        public IValueGetter[] ValueGetters { get { return _valueGetters; } }
 
         /// <summary>
         /// Concatenated names of all the properties in the chain.
@@ -90,7 +108,7 @@ namespace FubuCore.Reflection
             get
             {
                 string returnValue = string.Empty;
-                foreach (PropertyInfo info in _chain)
+                foreach (IValueGetter info in _chain)
                 {
                     returnValue += info.Name;
                 }
@@ -104,9 +122,9 @@ namespace FubuCore.Reflection
 
         protected object findInnerMostTarget(object target)
         {
-            foreach (PropertyInfo info in _chain)
+            foreach (IValueGetter info in _chain)
             {
-                target = info.GetValue(target, null);
+                target = info.GetValue(target);
                 if (target == null)
                 {
                     return null;
@@ -130,8 +148,8 @@ namespace FubuCore.Reflection
 
             for (int i = 0; i < _chain.Length; i++)
             {
-                PropertyInfo info = _chain[i];
-                PropertyInfo otherInfo = other._chain[i];
+                IValueGetter info = _chain[i];
+                IValueGetter otherInfo = other._chain[i];
 
                 if (!info.Equals(otherInfo)) return false;
             }

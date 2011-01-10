@@ -117,6 +117,12 @@ namespace FubuFastPack.NHibernate
             _positions.WithValue(key, i => callback(_objects[i]));
             return true;
         }
+
+        public bool HasValueThatStartsWith(string key)
+        {
+            //TODO: provide implementation if wanted
+            return false;
+        }
     }
 
 

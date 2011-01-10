@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore.Util;
 
 namespace FubuCore.Binding
@@ -27,6 +28,11 @@ namespace FubuCore.Binding
         public bool Value(string key, Action<object> callback)
         {
             return _values.WithValue(key, callback);
+        }
+
+        public bool HasValueThatStartsWith(string key)
+        {
+            return _values.GetAllKeys().Any(x => x.StartsWith(key));
         }
     }
 }

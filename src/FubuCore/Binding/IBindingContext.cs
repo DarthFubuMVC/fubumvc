@@ -23,5 +23,6 @@ namespace FubuCore.Binding
 
         void BindChild(PropertyInfo property, Type childType, string prefix);
         void BindChild(PropertyInfo property);
+        object BindCollectionItem(string prefix, Type childType);
     }
 }

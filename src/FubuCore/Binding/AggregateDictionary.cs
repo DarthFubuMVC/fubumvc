@@ -144,7 +144,9 @@ namespace FubuCore.Binding
             HttpRequestBase request = @base.Request;
 
             AddLocator(RequestDataSource.Request, key => request[key]);
-            AddLocator(RequestDataSource.File, key => request.Files[key]);
+            AddLocator(RequestDataSource.File,
+                       key => request.Files[key],
+                       key => request.Form.AllKeys.Any(x => x.StartsWith(key)));
             AddLocator(RequestDataSource.Header, key => request.Headers[key]);
             AddLocator(RequestDataSource.RequestProperty, key => GetRequestProperty(request, key));
         }
@@ -154,17 +156,23 @@ namespace FubuCore.Binding
             return _requestProperties.Has(key) ? _requestProperties[key](request) : null;
         }
 
+        public bool HasValueThatStartsWith(string key)
+        {
+            return _locators.Any(x => x.StartsWith(key));
+        }
+
         public void Value(string key, Action<RequestDataSource, object> callback)
         {
             _locators.Any(x => x.Locate(key, callback));
         }
 
-        public AggregateDictionary AddLocator(RequestDataSource source, Func<string, object> locator)
+        public AggregateDictionary AddLocator(RequestDataSource source, Func<string, object> locator, Func<string, bool> startsWith = null)
         {
             _locators.Add(new Locator
                           {
                               Getter = locator,
-                              Source = source
+                              Source = source,
+                              StartsWithChecker = startsWith
                           });
 
             return this;
@@ -182,6 +190,7 @@ namespace FubuCore.Binding
         {
             public RequestDataSource Source { get; set; }
             public Func<string, object> Getter { get; set; }
+            public Func<string, bool> StartsWithChecker { get; set; }
 
             public bool Locate(string key, Action<RequestDataSource, object> callback)
             {
@@ -193,6 +202,11 @@ namespace FubuCore.Binding
                 }
 
                 return false;
+            }
+            
+            public bool StartsWith(string key)
+            {
+                return StartsWithChecker != null && StartsWithChecker(key);
             }
         }
 

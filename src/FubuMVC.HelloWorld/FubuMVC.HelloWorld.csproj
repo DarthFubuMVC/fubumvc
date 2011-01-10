@@ -64,6 +64,9 @@
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
     <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
     <Content Include="Controllers\Home\Home.aspx" />
+    <Content Include="Controllers\Products\ProductDisplayPartial.ascx" />
+    <Content Include="Controllers\Products\ProductsDisplayView.aspx" />
+    <Content Include="Controllers\Products\PartDisplayPartial.ascx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

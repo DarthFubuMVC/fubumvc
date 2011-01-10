@@ -125,6 +125,22 @@ namespace FubuCore.Binding
             _problems.Add(problem);
         }
 
+        public object BindCollectionItem(string prefix, Type childType)
+        {
+            var resolver = Service<IObjectResolver>();
+            var context = prefixWith(prefix, _propertyStack.Reverse());
+
+            //need to determine if the item is in there or not since we will be greedy
+            //and try to get as many items for our list as possible
+
+            if (_requestData.HasValueThatStartsWith(prefix))
+            {
+                var bindResult = resolver.BindModel(childType, context);
+                return bindResult.Value;
+            }
+            return null;
+        }
+
         public void BindChild(PropertyInfo property, Type childType, string prefix)
         {
             var target = Object;

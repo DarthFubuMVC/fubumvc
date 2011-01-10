@@ -143,17 +143,20 @@ namespace FubuMVC.Tests.View.WebForms
             _renderer.Expect(r => r.Render((IFubuPage)null, _partialModel, "PartialModelArray")).Return("test").Constraints(
                 Is.Anything(),
                 Is.Same(_partialModel),
-                Is.NotNull());
+                Is.NotNull(),
+                Is.Anything());
 
             _renderer.Expect(r => r.Render((IFubuPage)null, model2, "PartialModelArray")).Return("").Constraints(
                 Is.Anything(),
                 Is.Same(model2),
-                Is.NotNull());
+                Is.NotNull(),
+                Is.Anything());
 
             _renderer.Expect(r => r.Render((IFubuPage)null, model3, "PartialModelArray")).Return("").Constraints(
                 Is.Anything(),
                 Is.Same(model3),
-                Is.NotNull());
+                Is.NotNull(),
+                Is.Anything());
 
             _expression.ForEachOf(m => m.PartialModelArray).ToString();
 

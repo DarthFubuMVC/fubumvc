@@ -41,6 +41,12 @@ namespace FubuCore.Binding
             return found;
         }
 
+        public bool HasValueThatStartsWith(string key)
+        {
+            //TODO: provide implementation if wanted
+            return false;
+        }
+
         public void Alias(string header, string alias)
         {
             _indices.WithValue(header, i => _indices[alias] = i);

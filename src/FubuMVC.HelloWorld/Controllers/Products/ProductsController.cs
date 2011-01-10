@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.View;
 
@@ -28,20 +29,28 @@ namespace FubuMVC.HelloWorld.Controllers.Products
         }
 
 
-        public ProductsViewModel Command(ProductsForm form)
+        public ProductsDisplayViewModel Command(ProductsForm form)
         {
-            return new ProductsViewModel();
+            return new ProductsDisplayViewModel
+            {
+                Products = form.Products,
+            };
         }
     }
 
     public class ProductsForm
     {
-        public Product[] Products { get; set; }
+        public IList<Product> Products { get; set; }
     }
 
     public class ProductsViewModel
     {
-        public Product[] Products { get; set; }
+        public IList<Product> Products { get; set; }
+    }
+
+    public class ProductsDisplayViewModel
+    {
+        public IList<Product> Products { get; set; }
     }
 
     public class ProductsRequest
@@ -52,7 +61,7 @@ namespace FubuMVC.HelloWorld.Controllers.Products
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public ProductPart[] Parts { get; set; }
+        public IList<ProductPart> Parts { get; set; }
     }
 
     public class ProductPart
@@ -71,11 +80,23 @@ namespace FubuMVC.HelloWorld.Controllers.Products
     {
     }
 
+    public class ProductsDisplayView : FubuPage<ProductsDisplayViewModel>
+    {
+    }
+
     public class ProductPartial : FubuControl<Product>
     {
     }
 
+    public class ProductDisplayPartial : FubuControl<Product>
+    {
+    }
+
     public class PartPartial : FubuControl<ProductPart>
+    {
+    }
+
+    public class PartDisplayPartial : FubuControl<ProductPart>
     {
     }
 }

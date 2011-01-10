@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using FubuCore;
 using FubuCore.Reflection;
 using HtmlTags;
 
@@ -64,6 +66,24 @@ namespace FubuMVC.Core.UI.Configuration
         public string GetName(Type modelType, Accessor accessor)
         {
             return accessor.Name;
+        }
+    }
+
+    //TODO: Work in support for other IElementNamingConventions such as this one
+    public class DotNotationElementNamingConvention : IElementNamingConvention
+    {
+        public static Func<string, bool> IsCollectionIndexer = x => x.StartsWith("[") && x.EndsWith("]");
+
+        public string GetName(Type modelType, Accessor accessor)
+        {
+            return accessor.PropertyNames
+                .Aggregate((x, y) =>
+                    {
+                        var formatString = IsCollectionIndexer(y)
+                                               ? "{0}{1}"
+                                               : "{0}.{1}";
+                        return formatString.ToFormat(x, y);
+                    });
         }
     }
 }

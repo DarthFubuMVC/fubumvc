@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Web.UI;
+using FubuCore;
 
 namespace FubuMVC.Core.View.WebForms
 {
@@ -10,8 +11,8 @@ namespace FubuMVC.Core.View.WebForms
         IFubuPage CreateControl<T>() where T : IFubuPage;
         IFubuPage CreateControl(Type controlType);
 
-        string Render<T>(IFubuPage view, T viewModel, string prefix) where T : class;
-        void Render<T>(IFubuPage view, T viewModel, string prefix, TextWriter writer) where T : class;
+        string Render<T>(IFubuPage view, T viewModel, string prefix, int? index = null) where T : class;
+        void Render<T>(IFubuPage view, T viewModel, string prefix, TextWriter writer, int? index = null) where T : class;
 
         string Render<T>(IFubuPage parentPage, IFubuPage partialControl, T viewModel, string prefix) where T : class;
         string Render<T>(IFubuPage view, Type controlType, T viewModel, string prefix) where T : class;
@@ -49,14 +50,14 @@ namespace FubuMVC.Core.View.WebForms
             return control as IFubuPage;
         }
 
-        public string Render<T>(IFubuPage view, T viewModel, string prefix) where T : class
+        public string Render<T>(IFubuPage view, T viewModel, string prefix, int? index = null) where T : class
         {
             var writer = new StringWriter(CultureInfo.CurrentCulture);
-            Render(view, viewModel, prefix, writer);
+            Render(view, viewModel, prefix, writer, index);
             return writer.GetStringBuilder().ToString();
         }
 
-        public void Render<T>(IFubuPage view, T viewModel, string prefix, TextWriter writer) where T : class
+        public void Render<T>(IFubuPage view, T viewModel, string prefix, TextWriter writer, int? index = null) where T : class
         {
             var page = new Page();
             page.Controls.Add(view as Control);
@@ -68,6 +69,11 @@ namespace FubuMVC.Core.View.WebForms
             }
 
             setParentPageIfNotAlreadySet(view, page);
+
+            if (index.HasValue)
+            {
+                prefix = "{0}[{1}]".ToFormat(prefix, index);
+            }
 
             view.ElementPrefix = prefix;
 
