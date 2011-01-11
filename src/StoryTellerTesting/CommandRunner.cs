@@ -35,19 +35,20 @@ namespace IntegrationTesting
                 CreateNoWindow = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
-                RedirectStandardOutput = false,
+                RedirectStandardOutput = true,
                 UseShellExecute = false,
                 WorkingDirectory = _solutionDirectory
             };
 
             try
             {
+               
                 var process = Process.Start(startup);
                 process.WaitForExit();
 
                 if (process.ExitCode != 0)
                 {
-                    StoryTellerAssert.Fail("Command failed! -- " + commandLine);
+                    StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + process.StandardOutput.ReadToEnd());
                 }
             }
             catch (StorytellerAssertionException)

@@ -15,8 +15,8 @@ namespace FubuMVC.Core.Behaviors
         protected BasicBehavior(PartialBehavior partialBehavior)
         {
             _partialInvoke = partialBehavior == PartialBehavior.Executes
-                                 ? (Action) (Invoke)
-                                 : () => { if (InsideBehavior != null) InsideBehavior.InvokePartial(); };
+                ? (Action) (Invoke)
+                : () => { if (InsideBehavior != null) InsideBehavior.InvokePartial(); };
         }
 
         public IActionBehavior InsideBehavior { get; set; }

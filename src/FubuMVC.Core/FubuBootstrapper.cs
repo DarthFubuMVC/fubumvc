@@ -39,7 +39,26 @@ namespace FubuMVC.Core
             // your IoC container
             FindAllExtensions().Each(x => x.Configure(_topRegistry));
 
-            _facility.Activate(routes, _topRegistry);
+            // "Bake" the fubu configuration model into your
+            // IoC container for the application
+            var graph = _topRegistry.BuildGraph();
+            graph.EachService(_facility.Register);
+            var factory = _facility.BuildFactory();
+
+            // Register all the Route objects into the routes 
+            // collection
+
+            // TODO -- need a way to do this with debugging
+            graph.VisitRoutes(x =>
+            {
+                x.Actions += (routeDef, chain) =>
+                {
+                    var route = routeDef.ToRoute();
+                    route.RouteHandler = new FubuRouteHandler(factory, chain.UniqueId);
+
+                    routes.Add(route);
+                };
+            });
         }
 
 

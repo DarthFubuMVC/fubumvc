@@ -15,7 +15,7 @@ namespace StoryTellerTestHarness
         }
 
         [Test]
-        public void Invoke_a_Json_endpoint_from_a_package()
+        public void Create_a_Zip_file_for_a_Package()
         {
             runner.RunAndAssertTest("Packaging/Zip File Mechanics/Create a Zip file for a Package");
         }

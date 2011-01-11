@@ -10,6 +10,8 @@ namespace FubuMVC.HelloWorld
         {
             IncludeDiagnostics(true);
 
+            HomeIs<HomeInputModel>();
+
             Actions
                 .IncludeClassesSuffixedWithController();
 
@@ -17,23 +19,17 @@ namespace FubuMVC.HelloWorld
                 .IgnoreControllerNamespaceEntirely()
                 .IgnoreMethodSuffix("Command")
                 .IgnoreMethodSuffix("Query")
-                .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Command"), "POST")
-                .ConstrainToHttpMethod(action => action.Method.Name.StartsWith("Query"), "GET");
+                .ConstrainToHttpMethod(action => action.Method
+                    .Name.EndsWith("Command"), "POST")
+                .ConstrainToHttpMethod(action => action.Method
+                    .Name.StartsWith("Query"), "GET");
 
-            Views
-                .TryToAttach(x=>
-                                 {
-                                     x.by_ViewModel_and_Namespace_and_MethodName();
-                                     x.by_ViewModel_and_Namespace();
-                                     x.by_ViewModel();
-                                 });
 
+            Views.TryToAttachWithDefaultConventions();
             
-            this.HtmlConvention<SampleHtmlConventions>();
+            HtmlConvention<SampleHtmlConventions>();
 
             RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
-
-            HomeIs<HomeInputModel>();
         }
     }
 }

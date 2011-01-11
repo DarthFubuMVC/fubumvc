@@ -7,6 +7,7 @@ using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
 {
@@ -83,8 +84,27 @@ namespace FubuMVC.Core
             FindAllExtensions().Each(x => x.Configure(_registry));
 
             var facility = _facilitySource();
-            
-            facility.Activate(routes, _registry);
+
+            // "Bake" the fubu configuration model into your
+            // IoC container for the application
+            var graph = _registry.BuildGraph();
+            graph.EachService(facility.Register);
+            var factory = facility.BuildFactory();
+
+            // Register all the Route objects into the routes 
+            // collection
+
+            // TODO -- need a way to do this with debugging
+            graph.VisitRoutes(x =>
+            {
+                x.Actions += (routeDef, chain) =>
+                {
+                    var route = routeDef.ToRoute();
+                    route.RouteHandler = new FubuRouteHandler(factory, chain.UniqueId);
+
+                    routes.Add(route);
+                };
+            });
 
             return facility.GetAllActivators();
         }
