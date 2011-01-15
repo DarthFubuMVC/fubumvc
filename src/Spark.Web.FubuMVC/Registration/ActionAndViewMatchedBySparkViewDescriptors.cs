@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.ViewCreation;
 
 namespace Spark.Web.FubuMVC.Registration
@@ -24,31 +25,32 @@ namespace Spark.Web.FubuMVC.Registration
                 return new IViewToken[0];
             }
 
-            string viewName = _policyResolver.ResolveViewName(call);
-            string viewLocatorName = _policyResolver.ResolveViewLocator(call);
-            IEnumerable<SparkViewToken> allViewTokens =
-                views.Views.Where(view =>
-                    view.GetType().CanBeCastTo<SparkViewToken>()).Cast<SparkViewToken>();
+            var viewName = _policyResolver.ResolveViewName(call);
+            var viewLocatorName = _policyResolver.ResolveViewLocator(call);
+        	var allViewTokens = views
+									.Views
+									.Where(view => view.GetType().CanBeCastTo<SparkViewToken>())
+									.Cast<SparkViewToken>();
 
-            SparkViewDescriptor matchedDescriptor = null;
-            allViewTokens.FirstOrDefault(
-                token =>
-                {
-                    matchedDescriptor = token.Descriptors
-                        .Where(e => e.Templates
-                                        .Any(template => template.Contains(viewLocatorName) && template.Contains(viewName)))
-                        .SingleOrDefault();
+        	SparkViewDescriptor matchedDescriptor = null;
+        	foreach(var token in allViewTokens)
+        	{
+        		var view = viewName.RemoveSuffix(".spark");
+				var templatePath = !string.IsNullOrEmpty(viewLocatorName) ? "{0}\\{1}".ToFormat(viewLocatorName, view) : view;
+        		var descriptor = token
+        							.Descriptors
+        							.FirstOrDefault(d => d.Templates.Any(template => template.RemoveSuffix(".spark").Equals(templatePath)));
 
-                    return matchedDescriptor != null;
-                });
+				if(descriptor != null)
+				{
+					matchedDescriptor = descriptor;
+					break;
+				}
+        	}
 
-
-            IEnumerable<IViewToken> viewsBoundToActions =
-                matchedDescriptor != null
+            return matchedDescriptor != null
                     ? new IViewToken[] { new SparkViewToken(call, matchedDescriptor, viewLocatorName, viewName) }
                     : new IViewToken[0];
-
-            return viewsBoundToActions;
         }
     }
 }
