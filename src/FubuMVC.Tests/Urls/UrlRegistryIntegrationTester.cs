@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Urls
 
             var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value;
 
-            urls = new UrlRegistry(new ChainResolver((ITypeResolver) resolver, graph));
+            urls = new UrlRegistry(new ChainResolver((ITypeResolver) resolver, graph), new JQueryUrlTemplate());
         }
 
         [Test]

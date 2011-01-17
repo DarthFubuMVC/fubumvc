@@ -43,6 +43,11 @@ namespace FubuMVC.Core.Registration.Routes
             return Pattern;
         }
 
+        public string CreateTemplate(object input, Func<object, object>[] hash)
+        {
+            return Pattern;
+        }
+
         public void RootUrlAt(string baseUrl)
         {
 

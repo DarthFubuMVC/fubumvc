@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Routing;
@@ -11,6 +12,7 @@ namespace FubuMVC.Core.Registration.Routes
         int Rank { get; }
         IEnumerable<KeyValuePair<string, object>> Constraints { get; }
         string CreateUrl(object input);
+        string CreateTemplate(object input, Func<object, object>[] hash);
         Route ToRoute();
         void Append(string patternPart);
         void AddRouteInput(RouteInput input, bool appendToUrl);

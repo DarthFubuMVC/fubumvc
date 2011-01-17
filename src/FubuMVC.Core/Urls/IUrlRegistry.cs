@@ -27,6 +27,8 @@ namespace FubuMVC.Core.Urls
         string UrlForPropertyUpdate(Type type);
 
         string UrlFor(Type handlerType, MethodInfo method);
+        string TemplateFor(object model);
+        string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new();
     }
 
     // This is just to have a predictable stub for unit testing
@@ -80,6 +82,16 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type handlerType, MethodInfo method)
         {
             return "url for {0}.{1}()".ToFormat(handlerType.FullName, method.Name);
+        }
+
+        public string TemplateFor(object model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
+        {
+            throw new NotImplementedException();
         }
     }
 
