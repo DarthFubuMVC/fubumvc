@@ -67,7 +67,7 @@ namespace Spark.Web.FubuMVC.ViewLocation
                     return null;
                 }
             }
-            else if (buildDescriptorParams.FindDefaultMaster && string.IsNullOrEmpty(TrailingUseMasterName(descriptor)))
+            else if (buildDescriptorParams.FindDefaultMaster && TrailingUseMasterName(descriptor) == null)
             {
                 LocatePotentialTemplate(
                     PotentialDefaultMasterLocations(buildDescriptorParams.AcionName,
