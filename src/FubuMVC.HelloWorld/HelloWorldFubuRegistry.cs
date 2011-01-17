@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Urls;
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Controllers.Products;
 
@@ -28,6 +29,8 @@ namespace FubuMVC.HelloWorld
             HtmlConvention<SampleHtmlConventions>();
 
             RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
+
+            Services(s => s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>());
         }
     }
 }

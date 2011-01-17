@@ -34,6 +34,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
             graph.Services.SetServiceIfNone<IUrlRegistry, UrlRegistry>();
+            graph.Services.SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
             graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();
             graph.Services.SetServiceIfNone<ISecurityContext, WebSecurityContext>();
             graph.Services.SetServiceIfNone<IAuthenticationContext, WebAuthenticationContext>();
