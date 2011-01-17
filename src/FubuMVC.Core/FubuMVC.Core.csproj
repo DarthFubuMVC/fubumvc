@@ -428,10 +428,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\IFubuView.cs" />
+    <Compile Include="View\IViewActivator.cs" />
     <Compile Include="View\IViewsForActionFilter.cs" />
     <Compile Include="View\IViewEngine.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
+    <Compile Include="View\NulloViewActivator.cs" />
     <Compile Include="View\PageHarness.cs" />
     <Compile Include="View\RenderFubuViewBehavior.cs" />
     <Compile Include="View\ActionInSameFolderAsViewReturnsViewModelType.cs" />

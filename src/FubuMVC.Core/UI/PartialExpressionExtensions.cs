@@ -41,7 +41,7 @@ namespace FubuMVC.Core.UI
             where TPartialModel : class
         {
             var expression = new RenderPartialExpression<TInputModel>(page.Model, page, page.Get<IPartialRenderer>(), page.Tags(), page.Get<IEndpointService>())
-                .ForEachOf(listExpression);
+                .ForEachOf(listExpression, page.ElementPrefix);
 
             SearchPartialView<TInputModel, TPartialModel>(page, expression);
             return expression;

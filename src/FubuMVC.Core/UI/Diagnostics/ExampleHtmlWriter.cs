@@ -108,7 +108,7 @@ namespace FubuMVC.Core.UI.Diagnostics
             foreach (var propertyInfo in propertiesToShow)
             {
                 var property = propertyChainParts.Count > 0 ?
-                    (Accessor) new PropertyChain(propertyChainParts.Concat(new[]{propertyInfo}).ToArray()) :
+                    (Accessor) new PropertyChain(propertyChainParts.Concat(new[]{propertyInfo}).Select(x => new PropertyValueGetter(x)).ToArray()) :
                     new SingleProperty(propertyInfo);
                 
                 var propertyExpression = "x => x." + property.PropertyNames.Join(".");

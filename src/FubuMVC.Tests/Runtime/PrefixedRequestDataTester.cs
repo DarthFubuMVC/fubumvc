@@ -44,5 +44,14 @@ namespace FubuMVC.Tests.Runtime
             inner["Name"] = "Jeremy";
             prefixed.Value("Name", o => Assert.Fail("Should not be calling back in the continuation"));
         }
+
+        [Test]
+        public void positive_on_any_values_prefixed()
+        {
+            inner["SiteAddress[0]Name"] = "Jeremy";
+        
+            prefixed.HasAnyValuePrefixedWith("Address[0]").ShouldBeTrue();
+            prefixed.HasAnyValuePrefixedWith("Address[1]").ShouldBeFalse();
+        }
     }
 }

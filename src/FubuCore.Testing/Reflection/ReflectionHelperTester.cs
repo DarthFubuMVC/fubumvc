@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
@@ -18,7 +19,12 @@ namespace FubuCore.Testing.Reflection
             PropertyInfo second = ReflectionHelper.GetProperty<ChildTarget>(x => x.GrandChild);
             PropertyInfo birthday = ReflectionHelper.GetProperty<GrandChildTarget>(x => x.BirthDay);
 
-            _chain = new PropertyChain(new[] { top, second, birthday });
+            _chain = new PropertyChain(new[]
+            {
+                new PropertyValueGetter(top),
+                new PropertyValueGetter(second),
+                new PropertyValueGetter(birthday),
+            });
             _expression = (t => t.Child);
         }
 
@@ -311,7 +317,13 @@ namespace FubuCore.Testing.Reflection
             PropertyInfo second = ReflectionHelper.GetProperty<ChildTarget>(x => x.GrandChild);
             PropertyInfo birthday = ReflectionHelper.GetProperty<GrandChildTarget>(x => x.BirthDay);
 
-            _chain = new PropertyChain(new[] { top, second, birthday });
+            _chain = new PropertyChain(new[]
+            {
+                new PropertyValueGetter(top),
+                new PropertyValueGetter(second),
+                new PropertyValueGetter(birthday),
+
+            });
         }
 
         private PropertyChain _chain;
@@ -324,9 +336,15 @@ namespace FubuCore.Testing.Reflection
 
         public class ChildTarget
         {
+            public ChildTarget()
+            {
+                GrandChildren = new List<GrandChildTarget>();
+            }
+
             public int Age { get; set; }
             public GrandChildTarget GrandChild { get; set; }
             public GrandChildTarget SecondGrandChild { get; set; }
+            public IList<GrandChildTarget> GrandChildren { get; set; }
         }
 
         public class GrandChildTarget
@@ -461,6 +479,24 @@ namespace FubuCore.Testing.Reflection
         public void PropertyChainReturnsInnerMostPropertyType()
         {
             _chain.PropertyType.ShouldEqual(typeof(DateTime));
+        }
+
+        [Test]
+        public void CollectionIndexingPropertyAccessWorks()
+        {
+            Expression<Func<Target, object>> expression = x => x.Child.GrandChildren[0].Name;
+            var accessor = expression.ToAccessor();
+
+            var target = new Target
+            {
+                Child = new ChildTarget
+                {
+                    GrandChildren = { new GrandChildTarget { Name = "Bob" } }
+                }
+            };
+
+            accessor.GetValue(target).ShouldEqual("Bob");
+            accessor.Name.ShouldEqual("ChildGrandChildren[0]Name");
         }
     }
 }

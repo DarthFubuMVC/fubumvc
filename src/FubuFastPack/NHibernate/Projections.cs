@@ -117,6 +117,11 @@ namespace FubuFastPack.NHibernate
             _positions.WithValue(key, i => callback(_objects[i]));
             return true;
         }
+
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            throw new NotSupportedException();
+        }
     }
 
 

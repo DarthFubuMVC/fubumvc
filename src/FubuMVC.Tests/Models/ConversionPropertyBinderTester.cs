@@ -11,32 +11,13 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Models
 {
     [TestFixture]
-    public class ConversionPropertyBinderTester
+    public class ConversionPropertyBinderTester : PropertyBinderTester
     {
-        private InMemoryBindingContext context;
-        private ConversionPropertyBinder converter;
-
         [SetUp]
         public void SetUp()
         {
             context = new InMemoryBindingContext();
-            converter = new ConversionPropertyBinder(new ValueConverterRegistry(new IConverterFamily[0]));
-        }
-
-        private bool matches(Expression<Func<AddressViewModel, object>> expression)
-        {
-            var property = ReflectionHelper.GetProperty(expression);
-            return converter.Matches(property);
-        }
-
-        private void shouldMatch(Expression<Func<AddressViewModel, object>> expression)
-        {
-            matches(expression).ShouldBeTrue();
-        }
-
-        private void shouldNotMatch(Expression<Func<AddressViewModel, object>> expression)
-        {
-            matches(expression).ShouldBeFalse();
+            propertyBinder = new ConversionPropertyBinder(new ValueConverterRegistry(new IConverterFamily[0]));
         }
 
         [Test]
@@ -65,7 +46,7 @@ namespace FubuMVC.Tests.Models
 
             var property = ReflectionHelper.GetProperty<Address>(x => x.Address1);
 
-            converter.Bind(property, context);
+            propertyBinder.Bind(property, context);
 
             address.Address1.ShouldEqual("2035 Ozark");
         }

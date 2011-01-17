@@ -35,6 +35,11 @@ namespace FubuCore.Binding
             return found;
         }
 
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            return _dictionary.HasAnyValuePrefixedWith(key);
+        }
+
         public static RequestData ForDictionary(IDictionary<string, object> dictionary)
         {
             AggregateDictionary dict = new AggregateDictionary().AddDictionary(dictionary);

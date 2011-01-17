@@ -28,6 +28,7 @@ namespace FubuMVC.HelloWorld
             HtmlConvention<SampleHtmlConventions>();
 
             RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
+            RegisterPartials(x => x.For<ProductPart>().Use<PartPartial>());
         }
     }
 }
