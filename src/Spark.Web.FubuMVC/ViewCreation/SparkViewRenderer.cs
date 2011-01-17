@@ -13,14 +13,15 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
     public class SparkViewRenderer<T> : ISparkViewRenderer<T> where T : class
     {
-        private static ViewContext _outerViewContext;
         private readonly HttpContextBase _httpContext;
+        private readonly ViewContextHolder _viewContextHolder;
         private readonly SparkViewFactory _viewFactory;
 
-        public SparkViewRenderer(SparkViewFactory viewFactory, HttpContextBase httpContext)
+        public SparkViewRenderer(SparkViewFactory viewFactory, HttpContextBase httpContext, ViewContextHolder viewContextHolder)
         {
             _viewFactory = viewFactory;
             _httpContext = httpContext;
+            _viewContextHolder = viewContextHolder;
         }
 
         #region ISparkViewRenderer<T> Members
@@ -40,8 +41,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
             ActionContext actionContext;
             ISparkView view = FindSparkViewByConvention(actionNamespace, actionName, viewName, out actionContext);
-            if (_outerViewContext == null)
-                _outerViewContext = new ViewContext(actionContext, view);
+            if (_viewContextHolder.OuterViewContext == null)
+                _viewContextHolder.OuterViewContext = new ViewContext(actionContext, view);
 
             var configurableView = view as T;
             if (configurableView != null)
@@ -49,10 +50,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
             var sparkView = view as SparkView;
             if (sparkView != null)
-                sparkView.Render(_outerViewContext, writer);
+                sparkView.Render(_viewContextHolder.OuterViewContext, writer);
 
-            if(ReferenceEquals(sparkView, _outerViewContext.View))
-                _outerViewContext = null;
             return writer.ToString();
         }
 
@@ -63,11 +62,16 @@ namespace Spark.Web.FubuMVC.ViewCreation
             var routeData = new RouteData();
             routeData.Values.Add("controller", actionName);
             actionContext = new ActionContext(_httpContext, routeData, actionNamespace, actionName);
-            ViewEngineResult findResult = _outerViewContext == null
+            ViewEngineResult findResult = _viewContextHolder.OuterViewContext == null
                                               ? _viewFactory.FindView(actionContext, viewName, null)
                                               : _viewFactory.FindPartialView(actionContext, viewName);
 
             return findResult.View;
         }
+    }
+
+    public class ViewContextHolder
+    {
+        public ViewContext OuterViewContext { get; set; }
     }
 }

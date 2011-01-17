@@ -36,7 +36,7 @@ namespace Fubu.Packages
             var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
             var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
 
-            var destinationFileName = FileSystem.Combine(packageFolder, Path.GetDirectoryName(input.PackageFile));
+            var destinationFileName = FileSystem.Combine(packageFolder, Path.GetFileName(input.PackageFile));
             if (input.UninstallFlag)
             {
                 if (File.Exists(destinationFileName))
