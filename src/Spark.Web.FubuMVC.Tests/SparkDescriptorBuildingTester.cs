@@ -174,6 +174,17 @@ namespace Spark.Web.FubuMVC.Tests
         }
 
         [Test]
+        public void descriptors_with_normal_view_and_empty_master()
+        {
+            _routeData.Values.Add("controller", "Bar");
+            _viewFolder.Add(@"Layouts\Application.spark", "");
+            _viewFolder.Add(@"Bar\Index.spark", "<use master=''/>");
+
+            SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
+            AssertDescriptorTemplates(result, new List<string>(), @"Bar\Index.spark");
+        }
+
+        [Test]
         public void descriptors_with_normal_view_and_no_default_layout()
         {
             _routeData.Values.Add("controller", "Bar");
