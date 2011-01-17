@@ -70,6 +70,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodemashController.cs" />
     <Compile Include="Controllers\IntegrationTests\IntegrationTestsController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

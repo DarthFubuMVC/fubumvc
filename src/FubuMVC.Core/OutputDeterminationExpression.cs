@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
@@ -41,6 +42,15 @@ namespace FubuMVC.Core
             return output(action =>
             {
                 OutputNode node = func(action);
+                action.AddToEnd(node);
+            }, "Adding output nodes from per-call function");
+        }
+
+        public ActionCallFilterExpression ToBehavior<T>() where T : IActionBehavior
+        {
+            return output(action =>
+            {
+                var node = OutputNode.For<T>();
                 action.AddToEnd(node);
             }, "Adding output nodes from per-call function");
         }

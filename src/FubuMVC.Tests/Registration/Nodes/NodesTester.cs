@@ -54,13 +54,13 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void description_returns_behavior_type_full_name()
         {
-            _node.Description.ShouldEqual(_behaviorType.FullName);
+            _node.Description.ShouldEqual(_behaviorType.Name);
         }
 
         [Test]
         public void to_string_returns_description()
         {
-            _node.ToString().ShouldEqual(_behaviorType.FullName);
+            _node.ToString().ShouldEqual(_behaviorType.Name);
         }
     }
 

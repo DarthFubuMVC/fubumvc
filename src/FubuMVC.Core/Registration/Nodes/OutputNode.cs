@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Registration.Nodes
         public Type BehaviorType { get { return _behaviorType; } }
 
         public override BehaviorCategory Category { get { return BehaviorCategory.Output; } }
-        public virtual string Description { get { return _behaviorType.FullName; } }
+        public virtual string Description { get { return _behaviorType.Name; } }
 
         public static OutputNode For<T>() where T : IActionBehavior
         {

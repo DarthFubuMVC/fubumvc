@@ -90,6 +90,8 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
+    <Compile Include="Behaviors\ITargetController.cs" />
+    <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />
     <Compile Include="Registration\Conventions\AuthorizedByAttributeConventionTester.cs" />
+    <Compile Include="Registration\Conventions\RenderStatusCodeConventionTester.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicyTester.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />

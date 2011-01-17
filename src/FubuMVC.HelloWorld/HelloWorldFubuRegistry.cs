@@ -19,10 +19,8 @@ namespace FubuMVC.HelloWorld
                 .IgnoreControllerNamespaceEntirely()
                 .IgnoreMethodSuffix("Command")
                 .IgnoreMethodSuffix("Query")
-                .ConstrainToHttpMethod(action => action.Method
-                    .Name.EndsWith("Command"), "POST")
-                .ConstrainToHttpMethod(action => action.Method
-                    .Name.StartsWith("Query"), "GET");
+                .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Command"), "POST")
+                .ConstrainToHttpMethod(action => action.Method.Name.StartsWith("Query"), "GET");
 
 
             Views.TryToAttachWithDefaultConventions();

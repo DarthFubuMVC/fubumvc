@@ -17,7 +17,7 @@ using System.Linq;
 namespace FubuMVC.Core.UI.Diagnostics
 {
     [FubuDiagnostics("Html Conventions")]
-    internal class ExampleHtmlWriter
+    public class ExampleHtmlWriter
     {
         private readonly IServiceLocator _serviceLocator;
         private readonly IUrlRegistry _urlRegistry;
@@ -242,7 +242,7 @@ this.StringConversions(x =>
         }
     }
 
-    internal class ExampleHtmlRequest
+    public class ExampleHtmlRequest
     {
         public string Model { get; set; }
     }

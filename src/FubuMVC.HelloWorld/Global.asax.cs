@@ -1,21 +1,26 @@
 using System;
+using System.Web;
+using System.Web.Routing;
 using FubuMVC.Core;
 using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap.Bootstrap;
 using StructureMap;
+using FubuMVC.StructureMap;
 
 namespace FubuMVC.HelloWorld
 {
-    public class Global : FubuStructureMapApplication
+    public class Global : HttpApplication
     {
-        public override FubuRegistry GetMyRegistry()
+        protected void Application_Start()
         {
-            return new HelloWorldFubuRegistry();
+            FubuApplication
+                .For<HelloWorldFubuRegistry>()
+                .StructureMap(() =>
+                {
+                    return new Container(x => x.For<IHttpSession>().Use<CurrentHttpContextSession>());    
+                })
+                .Bootstrap(RouteTable.Routes);
         }
 
-        protected override void InitializeStructureMap(IInitializationExpression ex)
-        {
-            ex.For<IHttpSession>().Use<CurrentHttpContextSession>();
-        }
     }
 }

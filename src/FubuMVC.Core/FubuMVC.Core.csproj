@@ -74,6 +74,7 @@
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehavior.cs" />
+    <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
