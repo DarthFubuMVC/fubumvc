@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Packaging
 
         public static ZipFilePackageReader BuildZipFilePackageReader(string applicationPath, FileSystem fileSystem)
         {
-            var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, dir => FileSystem.Combine(applicationPath, FubuMvcPackages.WebContentFolder));
+            var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, ZipFilePackageReader.GetContentFolderForPackage);
             var packageExploder = new PackageExploder(new ZipFileService(), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
             return new ZipFilePackageReader(zipFileManifestReader, packageExploder);
         }

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -21,6 +21,11 @@ namespace FubuMVC.Core.Packaging
             _exploder.ExplodeAll(applicationDirectory);
 
             return _exploder.FindExplodedPackageDirectories(applicationDirectory).Select(dir => _reader.LoadFromFolder(dir));
+        }
+
+        public static string GetContentFolderForPackage(string packageFolder)
+        {
+            return FileSystem.Combine(packageFolder, FubuMvcPackages.WebContentFolder);
         }
     }
 }
