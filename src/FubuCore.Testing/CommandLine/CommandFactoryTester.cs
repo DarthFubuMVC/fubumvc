@@ -167,7 +167,7 @@ namespace FubuCore.Testing.CommandLine
 
     public class MyCommand : FubuCommand<MyCommandInput>
     {
-        public override void Execute(MyCommandInput input)
+        public override bool Execute(MyCommandInput input)
         {
             throw new NotImplementedException();
         }
@@ -178,7 +178,7 @@ namespace FubuCore.Testing.CommandLine
     [CommandDescription("something")]
     public class My2Command : FubuCommand<MyCommandInput>
     {
-        public override void Execute(MyCommandInput input)
+        public override bool Execute(MyCommandInput input)
         {
             throw new NotImplementedException();
         }
@@ -187,7 +187,7 @@ namespace FubuCore.Testing.CommandLine
     [CommandDescription("this", Name = "this")]
     public class DecoratedCommand : FubuCommand<MyCommandInput>
     {
-        public override void Execute(MyCommandInput input)
+        public override bool Execute(MyCommandInput input)
         {
             throw new NotImplementedException();
         }

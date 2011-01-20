@@ -5,6 +5,8 @@ namespace Fubu
 {
     internal class Program
     {
+        private static bool success;
+
         private static int Main(string[] args)
         {
             try
@@ -14,7 +16,7 @@ namespace Fubu
                 factory.RegisterCommands(typeof(Program).Assembly);
 
                 var executor = new CommandExecutor(factory);
-                executor.Execute(args);
+                success = executor.Execute(args);
             }
             catch (CommandFailureException e)
             {
@@ -30,7 +32,7 @@ namespace Fubu
                 Console.ResetColor();
                 return 1;
             }
-            return 0;
+            return success ? 0 : 1;
         }
     }
 

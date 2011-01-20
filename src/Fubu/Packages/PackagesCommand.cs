@@ -27,11 +27,11 @@ namespace Fubu.Packages
     }
 
     [Usage("install", "Install a package zip file to an application")]
-    [Usage("uninstall", "Remove a package zip file to an application")]
+    [Usage("uninstall", "Remove a package zip file from an application")]
     [CommandDescription("Install a package zip file to the specified application", Name = "install-pak")]
     public class InstallPackageCommand : FubuCommand<InstallPackageInput>
     {
-        public override void Execute(InstallPackageInput input)
+        public override bool Execute(InstallPackageInput input)
         {
             var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
             var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
@@ -50,7 +50,7 @@ namespace Fubu.Packages
                 }
 
 
-                return;
+                return true;
             }
 
             if (!Directory.Exists(packageFolder))
@@ -69,6 +69,7 @@ namespace Fubu.Packages
             Console.WriteLine("Copying {0} to {1}", input.PackageFile, packageFolder);
 
             File.Copy(input.PackageFile, destinationFileName);
+            return true;
         }
     }
 
@@ -91,11 +92,12 @@ namespace Fubu.Packages
     [CommandDescription("Display and modify the state of package zip files in an application folder")]
     public class PackagesCommand : FubuCommand<PackagesInput>
     {
-        public override void Execute(PackagesInput input)
+        public override bool Execute(PackagesInput input)
         {
             input.AppFolder = AliasCommand.AliasFolder(input.AppFolder).ToFullPath();
 
             Execute(input, new FileSystem());
+            return true;
         }
 
         public void Execute(PackagesInput input, IFileSystem fileSystem)
