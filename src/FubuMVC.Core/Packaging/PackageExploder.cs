@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Packaging
 
         public void ExplodeAll(string applicationDirectory)
         {
-            var existingDirectories = FindExplodedPackageDirectories(applicationDirectory);
+            var existingDirectories = FindExplodedPackageDirectories(applicationDirectory).ToArray();
             var packageFileNames = findPackageFileNames(applicationDirectory);
             packageFileNames.Each(file =>
             {
