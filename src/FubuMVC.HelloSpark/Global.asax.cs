@@ -1,14 +1,18 @@
-﻿using Spark.Web.FubuMVC.Registration;
-using StructureMap;
-using Spark.Web.FubuMVC;
+﻿using System.Web;
+using FubuMVC.Core;
+using FubuMVC.StructureMap;
+using System.Web.Routing;
 
 namespace FubuMVC.HelloSpark
 {
-    public class Global : SparkStructureMapApplication
+    public class Global : HttpApplication
     {
-        public override SparkFubuRegistry GetMyRegistry()
+
+        protected void Application_Start()
         {
-            return ObjectFactory.Container.GetInstance<HelloSparkRegistry>();
+            FubuApplication.For(new HelloSparkRegistry())
+                .StructureMapObjectFactory()
+                .Bootstrap(RouteTable.Routes);
         }
     }
 }
