@@ -41,6 +41,9 @@
       <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL" />
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,7 +56,8 @@
     <Compile Include="ContainerActivatorExtensionsTester.cs" />
     <Compile Include="NHibernate\DatabaseSettingsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
+    <Compile Include="Querying\SingleEntityFilterTester.cs" />
+    <Compile Include="Security\RestrictedDataAuthorizationPolicyTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -67,6 +71,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
+      <Name>FubuMVC.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
