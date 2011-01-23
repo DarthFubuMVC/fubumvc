@@ -36,10 +36,14 @@ namespace FubuMVC.Core
         }
 
 
-        public FubuRegistry(Action<FubuRegistry> configure)
-            : this()
+        public FubuRegistry(Action<FubuRegistry> configure) : this()
         {
             configure(this);
+        }
+
+        public virtual string Name
+        {
+            get { return GetType().ToString(); }
         }
 
         public static Assembly FindTheCallingAssembly()
