@@ -52,14 +52,14 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void positive_case_starting_from_authorized()
         {
-            new HtmlTag("a").Authorized(true).RequiresAccessTo("a")
+            new HtmlTag("a").Authorized(true).RequiresAccessTo("a", "b")
                 .Authorized().ShouldBeTrue();
         }
 
         [Test]
         public void positive_case_starting_from_not_authorized()
         {
-            new HtmlTag("a").Authorized(false).RequiresAccessTo("a")
+            new HtmlTag("a").Authorized(false).RequiresAccessTo("a", "b")
                 .Authorized().ShouldBeFalse();
         }
 
