@@ -31,10 +31,10 @@ namespace Fubu
     [CommandDescription("Creates virtual directories in IIS")]
     public class CreateVdirCommand : FubuCommand<VdirInput>
     {
-        public override void Execute(VdirInput input)
+        public override bool Execute(VdirInput input)
         {
             VDirTool.CreateVDirApp(input);
-            new AliasCommand().Execute(new AliasInput{
+            return new AliasCommand().Execute(new AliasInput{
                 Folder = input.Folder,
                 Name = input.VirtualDirectory
             });
@@ -44,9 +44,10 @@ namespace Fubu
     [CommandDescription("Appends to virtual directories in IIS")]
     public class AppendVdirCommand : FubuCommand<VdirAppendInput>
     {
-        public override void Execute(VdirAppendInput input)
+        public override bool Execute(VdirAppendInput input)
         {
             VDirTool.AppendVDir(input);
+            return true;
         }
     }
 

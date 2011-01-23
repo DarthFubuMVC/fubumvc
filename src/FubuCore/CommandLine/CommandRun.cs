@@ -5,9 +5,9 @@
         public IFubuCommand Command { get; set; }
         public object Input { get; set; }
 
-        public void Execute()
+        public bool Execute()
         {
-            Command.Execute(Input);
+            return Command.Execute(Input);
         }
     }
 }

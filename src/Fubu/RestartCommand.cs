@@ -14,11 +14,12 @@ namespace Fubu
     [CommandDescription("Restarts a web application by 'touching' the web.config file")]
     public class RestartCommand : FubuCommand<FolderInput>
     {
-        public override void Execute(FolderInput input)
+        public override bool Execute(FolderInput input)
         {
             var folder = AliasCommand.AliasFolder(input.AppFolder);
 
             Restart(folder);
+            return true;
         }
 
         public static void Restart(string folder)

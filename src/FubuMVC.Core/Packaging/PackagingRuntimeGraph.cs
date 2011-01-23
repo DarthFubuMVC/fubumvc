@@ -78,7 +78,7 @@ namespace FubuMVC.Core.Packaging
             var packages = new List<IPackageInfo>();
             _diagnostics.LogExecutionOnEach(_loaders, loader =>
             {
-                var packageInfos = loader.Load();
+                var packageInfos = loader.Load().ToArray();
                 _diagnostics.LogPackages(loader, packageInfos);
                 packages.AddRange(packageInfos);
             });

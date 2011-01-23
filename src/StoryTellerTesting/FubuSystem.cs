@@ -36,9 +36,9 @@ namespace IntegrationTesting
             _runner.RunFubu("init-pak src/TestPackage2 pak2");
             _runner.RunFubu("init-pak src/TestPackage3 pak3");
 
-            _runner.RunFubu("create-pak pak1 pak1.zip -force");
-            _runner.RunFubu("create-pak pak2 pak2.zip -force");
-            _runner.RunFubu("create-pak pak3 pak3.zip -force");
+            _runner.RunFubu("create-pak pak1 pak1.zip -f");
+            _runner.RunFubu("create-pak pak2 pak2.zip -f");
+            _runner.RunFubu("create-pak pak3 pak3.zip -f");
 
             _application = new ApplicationDriver();
         }

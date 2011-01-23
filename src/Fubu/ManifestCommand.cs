@@ -32,10 +32,10 @@ namespace Fubu
     [CommandDescription("Access and modify an application manifest file")]
     public class ManifestCommand : FubuCommand<ManifestInput>
     {
-        public override void Execute(ManifestInput input)
+        public override bool Execute(ManifestInput input)
         {
             input.AppFolder = AliasCommand.AliasFolder(input.AppFolder);
-            Execute(input, new FileSystem());
+            return Execute(input, new FileSystem());
         }
 
 
@@ -58,7 +58,7 @@ namespace Fubu
             return didChange;
         }
 
-        public void Execute(ManifestInput input, IFileSystem fileSystem)
+        public bool Execute(ManifestInput input, IFileSystem fileSystem)
         {
             if (fileSystem.ApplicationManifestExists(input.AppFolder))
             {
@@ -85,8 +85,10 @@ namespace Fubu
                 else
                 {
                     WriteManifestCannotBeFound(input.AppFolder);
+                    return false;
                 }
             }
+            return true;
         }
 
         private void modifyAndListExistingManifest(IFileSystem fileSystem, ManifestInput input)

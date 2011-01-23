@@ -40,7 +40,7 @@ namespace IntegrationTesting.Fixtures.Packages
         {
             _lastZipFile = zipFile;
 
-            var command = "create-pak {0} {1} -force".ToFormat(name, zipFile);
+            var command = "create-pak {0} {1} -f".ToFormat(name, zipFile);
             _runner.RunFubu(command);
         }
 

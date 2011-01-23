@@ -40,9 +40,10 @@ namespace Fubu
         }
 
 
-        public override void Execute(AliasInput input)
+        public override bool Execute(AliasInput input)
         {
             Execute(input, new FileSystem());
+            return true;
         }
 
         public void Execute(AliasInput input, IFileSystem system)

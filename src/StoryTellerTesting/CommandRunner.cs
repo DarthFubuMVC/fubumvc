@@ -28,10 +28,11 @@ namespace IntegrationTesting
 
         public void RunFubu(string commandLine)
         {
-            Console.WriteLine("Running 'fubu {0}'", commandLine);
 
             var fileName = Path.Combine(_solutionDirectory, @"src\fubu\bin\debug\fubu.exe");
-            var startup = new ProcessStartInfo(fileName, commandLine){
+            Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
+            var startup = new ProcessStartInfo(fileName, commandLine)
+            {
                 CreateNoWindow = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
@@ -44,11 +45,12 @@ namespace IntegrationTesting
             {
                
                 var process = Process.Start(startup);
+                var processOutput = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
 
                 if (process.ExitCode != 0)
                 {
-                    StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + process.StandardOutput.ReadToEnd());
+                    StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + processOutput);
                 }
             }
             catch (StorytellerAssertionException)

@@ -12,11 +12,11 @@ namespace FubuCore.CommandLine
             }
         }
 
-        public void Execute(object input)
+        public bool Execute(object input)
         {
-            Execute((T)input);
+            return Execute((T)input);
         }
 
-        public abstract void Execute(T input);
+        public abstract bool Execute(T input);
     }
 }

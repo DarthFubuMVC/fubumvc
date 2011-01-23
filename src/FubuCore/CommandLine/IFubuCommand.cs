@@ -4,7 +4,7 @@ namespace FubuCore.CommandLine
 {
     public interface IFubuCommand
     {
-        void Execute(object input);
+        bool Execute(object input);
         Type InputType { get; }
     }
 

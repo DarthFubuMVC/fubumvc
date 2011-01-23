@@ -11,16 +11,16 @@ namespace FubuCore.CommandLine
             _factory = factory;
         }
 
-        public void Execute(string commandLine)
+        public bool Execute(string commandLine)
         {
             var run = _factory.BuildRun(commandLine);
-            run.Execute();
+            return run.Execute();
         }
 
-        public void Execute(string[] args)
+        public bool Execute(string[] args)
         {
             var run = _factory.BuildRun(args);
-            run.Execute();
+            return run.Execute();
         }
     }
 }

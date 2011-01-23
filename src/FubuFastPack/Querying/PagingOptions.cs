@@ -1,25 +1,7 @@
-using System;
-using System.Linq.Expressions;
-using FubuFastPack.Domain;
-using FubuCore;
+﻿using FubuCore;
 
 namespace FubuFastPack.Querying
 {
-    public interface IDataRestriction
-    {
-    }
-
-    public interface IDataRestriction<T> : IDataRestriction where T : DomainEntity
-    {
-        void Apply(IDataSourceFilter<T> filter);
-    }
-
-    public interface IDataSourceFilter<T>
-    {
-        void WhereEqual(Expression<Func<T, object>> property, object value);
-        void WhereNotEqual(Expression<Func<T, object>> property, object value);
-    }
-
     public class PagingOptions
     {
         public PagingOptions(int page, int resultsPerPage, string sortColumn, bool sortAscending)
