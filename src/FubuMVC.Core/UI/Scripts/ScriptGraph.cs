@@ -14,7 +14,6 @@ namespace FubuMVC.Core.UI.Scripts
     }
 
 
-    // TODO -- change this to use lists so that app level wins
     public class ScriptGraph : IComparer<IScript>, IScriptRegistration
     {
         private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
@@ -45,10 +44,12 @@ namespace FubuMVC.Core.UI.Scripts
 
         public int Compare(IScript x, IScript y)
         {
-            if (x.ShouldBeAfter(y)) return 1;
-            if (y.ShouldBeAfter(x)) return -1;
+            if (ReferenceEquals(x, y)) return 0;
 
-            return x.Name.CompareTo(y.Name);
+            if (x.DependsOn(y)) return 1;
+            if (y.DependsOn(x)) return -1;
+
+            return 0;
         }
 
         public void Alias(string name, string alias)
@@ -98,7 +99,7 @@ namespace FubuMVC.Core.UI.Scripts
                 var dependency = ObjectFor(rule.Dependency);
                 var dependent = ObjectFor(rule.Dependent);
 
-                dependent.AddDependency(dependency);
+                dependency.AllScripts().Each(script => dependent.AddDependency(script));
             });
 
             _extenders.Each(x =>
@@ -106,9 +107,10 @@ namespace FubuMVC.Core.UI.Scripts
                 var @base = ScriptFor(x.Base);
                 var extender = ScriptFor(x.Extender);
 
-                @base.AddDependency(extender);
+                @base.AddExtension(extender);
                 extender.OrderedAfter(@base);
                 @base.OrderedBefore(extender);
+                extender.AddDependency(@base);
             });
         }
 

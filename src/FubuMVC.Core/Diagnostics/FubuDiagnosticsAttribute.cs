@@ -16,5 +16,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             get { return _description; }
         }
+
+        public bool ShownInIndex { get; set; }
     }
 }

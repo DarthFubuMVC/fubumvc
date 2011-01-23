@@ -9,6 +9,6 @@
       </ScriptGraphSetup>
     </SetupScriptGraph>
     <Query isStep="True" comment="Single file should put its extension right behind it" names="B" expected="B,F" />
-    <Query isStep="True" comment="Query for two files with extensions" names="A" expected="B, C, D, F, A" />
+    <Query isStep="True" comment="Query for two files with extensions" names="A" expected="B, C, F, A, D" />
   </ScriptGraph>
 </Test>

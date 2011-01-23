@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
@@ -35,7 +36,9 @@ namespace FubuMVC.Tests.UI.Scripts
                 _compiled = true;
             }
 
-            return theGraph.GetScripts(names).Select(x => x.Name);
+            IEnumerable<string> scripts = theGraph.GetScripts(names).Select(x => x.Name);
+            scripts.Each(x => Debug.WriteLine(x));
+            return scripts;
         }
 
 
@@ -86,6 +89,7 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             theGraph.Dependency("a", "b");
             theGraph.Dependency("a", "c");
+            theGraph.CompileDependencies(new PackageRegistryLog());
 
             ScriptNamesFor("a").ShouldHaveTheSameElementsAs("b", "c", "a");
         }
@@ -94,9 +98,111 @@ namespace FubuMVC.Tests.UI.Scripts
         public void find_scripts_with_an_extension()
         {
             theGraph.Extension("a1", "a");
-            ScriptNamesFor("a", "c", "b").ShouldHaveTheSameElementsAs("a", "a1", "b", "c");
+            ScriptNamesFor("a", "c", "b").ShouldHaveTheSameElementsAs("a", "b", "c", "a1");
 
         }
 
+        [Test]
+        public void use_a_dependency_on_a_set()
+        {
+            theGraph.AddToSet("basic", "jquery");
+            theGraph.AddToSet("basic", "windowManager");
+            theGraph.Dependency("script1", "basic");
+
+            
+            ScriptNamesFor("script1").ShouldHaveTheSameElementsAs("jquery", "windowManager", "script1");
+        }
+
+
+        [Test]
+        public void ordering_test()
+        {
+            theGraph.Dependency("A", "B");
+            theGraph.Dependency("A", "C");
+            theGraph.Extension("D", "A");
+            theGraph.Extension("F", "B");
+
+            theGraph.CompileDependencies(new PackageRegistryLog());
+
+            var a = theGraph.ScriptFor("A");
+            var b = theGraph.ScriptFor("B");
+            var c = theGraph.ScriptFor("C");
+            var d = theGraph.ScriptFor("D");
+            var f = theGraph.ScriptFor("F");
+
+            f.DependsOn(c).ShouldBeFalse();
+            b.DependsOn(c).ShouldBeFalse();
+
+            a.DependsOn(b).ShouldBeTrue();
+            a.DependsOn(c).ShouldBeTrue();
+            d.DependsOn(a).ShouldBeTrue();
+            d.DependsOn(b).ShouldBeTrue();
+            d.DependsOn(c).ShouldBeTrue();
+            f.DependsOn(b).ShouldBeTrue();
+
+
+            IEnumerable<string> theNames = theGraph.GetScripts(new string[]{"A"}).Select(x => x.Name).ToList();
+            theNames.Each(x => Debug.WriteLine(x));
+            theNames.ShouldHaveTheSameElementsAs("B", "C", "F", "A", "D");
+        }
+    }
+
+    [TestFixture]
+    public class sorting_scripts_tester
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            graph = new ScriptGraph();
+            var reader = new ScriptDslReader(graph);
+            reader.ReadLine("1 includes A,B,C");
+            reader.ReadLine("2 includes C,D");
+            reader.ReadLine("3 includes 1,E");
+            reader.ReadLine("D requires D1,D2");
+            reader.ReadLine("3 requires 4");
+            reader.ReadLine("4 includes jquery,validation.js");
+            reader.ReadLine("Combo includes 1,2");
+            reader.ReadLine("C-1 extends C");
+            reader.ReadLine("crud includes crudForm.js,validation.js");
+            reader.ReadLine("A requires crud");
+            graph.CompileDependencies(new PackageRegistryLog());
+        }
+
+        [Test]
+        public void d_should_be_after_d1_and_d2()
+        {
+            var d = graph.ScriptFor("D");
+            d.DependsOn(graph.ScriptFor("D1")).ShouldBeTrue();
+            d.DependsOn(graph.ScriptFor("D2")).ShouldBeTrue();
+        
+            graph.ScriptFor("D1").DependsOn(d).ShouldBeFalse();
+            graph.ScriptFor("D2").DependsOn(d).ShouldBeFalse();
+        }
+
+
+        [Test]
+        public void fetch_for_a_set_that_includes_another_set()
+        {
+            var a = graph.ScriptFor("A");
+            var b = graph.ScriptFor("B");
+            var c = graph.ScriptFor("C");
+            var c1 = graph.ScriptFor("C-1");
+            var crudForm = graph.ScriptFor("crudForm.js");
+            var validation = graph.ScriptFor("validation.js");
+
+            a.DependsOn(crudForm).ShouldBeTrue();
+            a.DependsOn(validation).ShouldBeTrue();
+            a.DependsOn(b).ShouldBeFalse();
+            b.DependsOn(a).ShouldBeFalse();
+
+            b.DependsOn(crudForm).ShouldBeFalse();
+            crudForm.DependsOn(b).ShouldBeFalse();
+
+            IEnumerable<string> theNames = graph.GetScripts(new string[] { "1" }).Select(x => x.Name).ToList();
+            theNames.Each(x => Debug.WriteLine(x));
+        }
+
+
+        private ScriptGraph graph;
     }
 }

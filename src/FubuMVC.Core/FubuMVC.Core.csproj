@@ -135,6 +135,7 @@
     <Compile Include="Diagnostics\RecordingRequestData.cs" />
     <Compile Include="Diagnostics\RedirectReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\RouteColumn.cs" />
+    <Compile Include="Diagnostics\ScriptWriter.cs" />
     <Compile Include="Diagnostics\SetValueReport.cs" />
     <Compile Include="Diagnostics\TextWriting\CharacterWidth.cs" />
     <Compile Include="Diagnostics\TextWriting\DividerLine.cs" />

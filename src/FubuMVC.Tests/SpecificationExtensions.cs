@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -214,14 +215,23 @@ namespace FubuMVC.Tests
 
         public static void ShouldHaveTheSameElementsAs(this IList actual, IList expected)
         {
-            actual.ShouldNotBeNull();
-            expected.ShouldNotBeNull();
-
-            actual.Count.ShouldEqual(expected.Count);
-
-            for (int i = 0; i < actual.Count; i++)
+            try
             {
-                actual[i].ShouldEqual(expected[i]);
+                actual.ShouldNotBeNull();
+                expected.ShouldNotBeNull();
+
+                actual.Count.ShouldEqual(expected.Count);
+
+                for (int i = 0; i < actual.Count; i++)
+                {
+                    actual[i].ShouldEqual(expected[i]);
+                }
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Actual values were:");
+                actual.Each(x => Debug.WriteLine(x));
+                throw;
             }
         }
 
