@@ -37,20 +37,10 @@ namespace FubuMVC.Core.UI.Scripts
             return returnValue;
         }
 
-        public void OrderedAfter(IScript script)
-        {
-            _isAfter[script] = true;
-        }
-
-        public void OrderedBefore(IScript script)
-        {
-            _isAfter[script] = false;
-        }
-
         public void AddExtension(IScript extender)
         {
             _extensions.Add(extender);
-            OrderedBefore(extender);
+            _isAfter[extender] = false;
         }
 
         public bool HasDependencies()

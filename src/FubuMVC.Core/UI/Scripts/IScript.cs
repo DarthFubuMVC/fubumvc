@@ -6,8 +6,6 @@ namespace FubuMVC.Core.UI.Scripts
     {
         bool DependsOn(IScript script);
 
-        void OrderedAfter(IScript script);
-        void OrderedBefore(IScript script);
         void AddExtension(IScript extender);
 
         bool HasDependencies();

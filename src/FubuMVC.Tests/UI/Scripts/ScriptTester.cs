@@ -16,17 +16,6 @@ namespace FubuMVC.Tests.UI.Scripts
             s2.DependsOn(s1).ShouldBeFalse();
         }
 
-        [Test]
-        public void register_should_be_after_explicit()
-        {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
- 
-            s1.OrderedAfter(s2);
-
-            s1.DependsOn(s2).ShouldBeTrue();
-            s2.DependsOn(s1).ShouldBeFalse();
-        }
 
         [Test]
         public void should_be_after_a_direct_dependency()
@@ -78,9 +67,6 @@ namespace FubuMVC.Tests.UI.Scripts
             var s2 = new Script("2");
 
             s2.AddDependency(s1);
-
-            s1.OrderedBefore(s2);
-            s2.OrderedAfter(s1);
 
             s2.DependsOn(s1).ShouldBeTrue();
             s1.DependsOn(s2).ShouldBeFalse();

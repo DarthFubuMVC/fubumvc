@@ -108,8 +108,6 @@ namespace FubuMVC.Core.UI.Scripts
                 var extender = ScriptFor(x.Extender);
 
                 @base.AddExtension(extender);
-                extender.OrderedAfter(@base);
-                @base.OrderedBefore(extender);
                 extender.AddDependency(@base);
             });
         }
