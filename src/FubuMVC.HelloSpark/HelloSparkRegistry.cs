@@ -13,8 +13,7 @@ namespace FubuMVC.HelloSpark
 {
     public class HelloSparkRegistry : SparkFubuRegistry
     {
-        public HelloSparkRegistry(SparkViewFactory factory)
-            : base(factory)
+        public HelloSparkRegistry()
         {
             Applies.ToThisAssembly();
             IncludeDiagnostics(true);
