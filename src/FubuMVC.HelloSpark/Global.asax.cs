@@ -7,7 +7,6 @@ namespace FubuMVC.HelloSpark
 {
     public class Global : HttpApplication
     {
-
         protected void Application_Start()
         {
             FubuApplication.For(new HelloSparkRegistry())
