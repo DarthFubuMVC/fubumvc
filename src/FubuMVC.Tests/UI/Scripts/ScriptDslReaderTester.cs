@@ -42,6 +42,13 @@ namespace FubuMVC.Tests.UI.Scripts
     public class ScriptDslReaderTester : InteractionContext<ScriptDslReader>
     {
         [Test]
+        public void preceeding()
+        {
+            ClassUnderTest.ReadLine("before-b preceeds b");
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Preceeding("before-b", "b"));
+        }
+
+        [Test]
         public void read_alias_happy_path()
         {
             ClassUnderTest.ReadLine("jquery is jquery.1.4.2.js");

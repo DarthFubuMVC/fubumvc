@@ -12,6 +12,7 @@ namespace FubuMVC.Core.UI.Scripts
 
   Valid usages:
   # comments
+  <before name> preceeds <after name>
   <name> is <alias>
   <name> requires <dependency names>
   <name> extends <name>
@@ -98,6 +99,10 @@ namespace FubuMVC.Core.UI.Scripts
 
                 case "includes":
                     tokens.Each(name => _registration.AddToSet(key, name));
+                    break;
+
+                case "preceeds":
+                    tokens.Each(name => _registration.Preceeding(key, name));
                     break;
 
                 default:

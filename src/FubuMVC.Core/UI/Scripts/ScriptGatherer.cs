@@ -66,7 +66,7 @@ namespace FubuMVC.Core.UI.Scripts
 
         public IEnumerable<IScript> Sort()
         {
-            var top = _scripts.Where(x => !x.HasDependencies()).ToList();
+            var top = _scripts.Where(x => x.IsFirstRank()).ToList();
             _scripts.RemoveAll(top.Contains);
             _levels.Add(top);
 
@@ -75,7 +75,7 @@ namespace FubuMVC.Core.UI.Scripts
                 var level = new List<IScript>();
                 foreach (var script in _scripts.ToArray())
                 {
-                    if (!_scripts.Any(x => script.DependsOn(x)))
+                    if (!_scripts.Any(x => script.MustBeAfter(x)))
                     {
                         level.Add(script);
                     }

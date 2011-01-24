@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
@@ -11,6 +12,7 @@ namespace FubuMVC.Core.UI.Scripts
         void Dependency(string dependent, string dependency);
         void Extension(string extender, string @base);
         void AddToSet(string setName, string name);
+        void Preceeding(string beforeName, string afterName);
     }
 
 
@@ -20,6 +22,7 @@ namespace FubuMVC.Core.UI.Scripts
         private readonly Cache<string, ScriptSet> _sets = new Cache<string, ScriptSet>();
         private readonly List<ScriptExtension> _extenders = new List<ScriptExtension>();
         private readonly List<ScriptRule> _rules = new List<ScriptRule>();
+        private readonly List<ScriptPreceeding> _preceedings = new List<ScriptPreceeding>();
 
         public ScriptGraph()
         {
@@ -46,8 +49,8 @@ namespace FubuMVC.Core.UI.Scripts
         {
             if (ReferenceEquals(x, y)) return 0;
 
-            if (x.DependsOn(y)) return 1;
-            if (y.DependsOn(x)) return -1;
+            if (x.MustBeAfter(y)) return 1;
+            if (y.MustBeAfter(x)) return -1;
 
             return 0;
         }
@@ -77,6 +80,14 @@ namespace FubuMVC.Core.UI.Scripts
         public void AddToSet(string setName, string name)
         {
             _sets[setName].Add(name);
+        }
+
+        public void Preceeding(string beforeName, string afterName)
+        {
+            _preceedings.Add(new ScriptPreceeding(){
+                Before = beforeName,
+                After = afterName
+            });
         }
 
         public IEnumerable<IScript> GetScripts(IEnumerable<string> names)
@@ -109,6 +120,14 @@ namespace FubuMVC.Core.UI.Scripts
 
                 @base.AddExtension(extender);
                 extender.AddDependency(@base);
+            });
+
+            _preceedings.Each(x =>
+            {
+                var before = ScriptFor(x.Before);
+                var after = ScriptFor(x.After);
+
+                after.MustBePreceededBy(before);
             });
         }
 

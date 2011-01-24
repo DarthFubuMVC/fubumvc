@@ -130,20 +130,34 @@ namespace FubuMVC.Tests.UI.Scripts
             var d = theGraph.ScriptFor("D");
             var f = theGraph.ScriptFor("F");
 
-            f.DependsOn(c).ShouldBeFalse();
-            b.DependsOn(c).ShouldBeFalse();
+            f.MustBeAfter(c).ShouldBeFalse();
+            b.MustBeAfter(c).ShouldBeFalse();
 
-            a.DependsOn(b).ShouldBeTrue();
-            a.DependsOn(c).ShouldBeTrue();
-            d.DependsOn(a).ShouldBeTrue();
-            d.DependsOn(b).ShouldBeTrue();
-            d.DependsOn(c).ShouldBeTrue();
-            f.DependsOn(b).ShouldBeTrue();
+            a.MustBeAfter(b).ShouldBeTrue();
+            a.MustBeAfter(c).ShouldBeTrue();
+            d.MustBeAfter(a).ShouldBeTrue();
+            d.MustBeAfter(b).ShouldBeTrue();
+            d.MustBeAfter(c).ShouldBeTrue();
+            f.MustBeAfter(b).ShouldBeTrue();
 
 
             IEnumerable<string> theNames = theGraph.GetScripts(new string[]{"A"}).Select(x => x.Name).ToList();
             theNames.Each(x => Debug.WriteLine(x));
             theNames.ShouldHaveTheSameElementsAs("B", "C", "F", "A", "D");
+        }
+
+        [Test]
+        public void preceeding()
+        {
+            theGraph.Preceeding("before-b", "b");
+            theGraph.CompileDependencies(new PackageRegistryLog());
+
+            theGraph.ScriptFor("before-b").MustBeAfter(theGraph.ScriptFor("b")).ShouldBeFalse();
+            theGraph.ScriptFor("b").MustBeAfter(theGraph.ScriptFor("before-b")).ShouldBeTrue();
+
+            ScriptNamesFor("b").ShouldHaveTheSameElementsAs("b");
+            ScriptNamesFor("b", "before-b").ShouldHaveTheSameElementsAs("before-b", "b");
+            ScriptNamesFor("before-b").ShouldHaveTheSameElementsAs("before-b");
         }
     }
 
@@ -172,11 +186,11 @@ namespace FubuMVC.Tests.UI.Scripts
         public void d_should_be_after_d1_and_d2()
         {
             var d = graph.ScriptFor("D");
-            d.DependsOn(graph.ScriptFor("D1")).ShouldBeTrue();
-            d.DependsOn(graph.ScriptFor("D2")).ShouldBeTrue();
+            d.MustBeAfter(graph.ScriptFor("D1")).ShouldBeTrue();
+            d.MustBeAfter(graph.ScriptFor("D2")).ShouldBeTrue();
         
-            graph.ScriptFor("D1").DependsOn(d).ShouldBeFalse();
-            graph.ScriptFor("D2").DependsOn(d).ShouldBeFalse();
+            graph.ScriptFor("D1").MustBeAfter(d).ShouldBeFalse();
+            graph.ScriptFor("D2").MustBeAfter(d).ShouldBeFalse();
         }
 
 
@@ -190,13 +204,13 @@ namespace FubuMVC.Tests.UI.Scripts
             var crudForm = graph.ScriptFor("crudForm.js");
             var validation = graph.ScriptFor("validation.js");
 
-            a.DependsOn(crudForm).ShouldBeTrue();
-            a.DependsOn(validation).ShouldBeTrue();
-            a.DependsOn(b).ShouldBeFalse();
-            b.DependsOn(a).ShouldBeFalse();
+            a.MustBeAfter(crudForm).ShouldBeTrue();
+            a.MustBeAfter(validation).ShouldBeTrue();
+            a.MustBeAfter(b).ShouldBeFalse();
+            b.MustBeAfter(a).ShouldBeFalse();
 
-            b.DependsOn(crudForm).ShouldBeFalse();
-            crudForm.DependsOn(b).ShouldBeFalse();
+            b.MustBeAfter(crudForm).ShouldBeFalse();
+            crudForm.MustBeAfter(b).ShouldBeFalse();
 
             IEnumerable<string> theNames = graph.GetScripts(new string[] { "1" }).Select(x => x.Name).ToList();
             theNames.Each(x => Debug.WriteLine(x));

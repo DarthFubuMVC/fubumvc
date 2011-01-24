@@ -12,8 +12,8 @@ namespace FubuMVC.Tests.UI.Scripts
             var s1 = new Script("1");
             var s2 = new Script("2");
         
-            s1.DependsOn(s2).ShouldBeFalse();
-            s2.DependsOn(s1).ShouldBeFalse();
+            s1.MustBeAfter(s2).ShouldBeFalse();
+            s2.MustBeAfter(s1).ShouldBeFalse();
         }
 
 
@@ -25,8 +25,8 @@ namespace FubuMVC.Tests.UI.Scripts
 
             s2.AddDependency(s1);
 
-            s1.DependsOn(s2).ShouldBeFalse();
-            s2.DependsOn(s1).ShouldBeTrue();
+            s1.MustBeAfter(s2).ShouldBeFalse();
+            s2.MustBeAfter(s1).ShouldBeTrue();
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace FubuMVC.Tests.UI.Scripts
             s3.AddDependency(s2);
             s2.AddDependency(s1);
 
-            s3.DependsOn(s1).ShouldBeTrue();
-            s3.DependsOn(s2).ShouldBeTrue();
+            s3.MustBeAfter(s1).ShouldBeTrue();
+            s3.MustBeAfter(s2).ShouldBeTrue();
         }
 
         [Test]
@@ -56,8 +56,8 @@ namespace FubuMVC.Tests.UI.Scripts
             s2.AddDependency(set);
             s3.AddDependency(s2);
 
-            s3.DependsOn(s1).ShouldBeTrue();
-            s3.DependsOn(s2).ShouldBeTrue();
+            s3.MustBeAfter(s1).ShouldBeTrue();
+            s3.MustBeAfter(s2).ShouldBeTrue();
         }
 
         [Test]
@@ -68,8 +68,8 @@ namespace FubuMVC.Tests.UI.Scripts
 
             s2.AddDependency(s1);
 
-            s2.DependsOn(s1).ShouldBeTrue();
-            s1.DependsOn(s2).ShouldBeFalse();
+            s2.MustBeAfter(s1).ShouldBeTrue();
+            s1.MustBeAfter(s2).ShouldBeFalse();
         }
     }
 }
