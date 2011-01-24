@@ -60,7 +60,7 @@ namespace FubuMVC.StructureMap.Bootstrap
         [SkipOverForProvenance]
         public void Bootstrap(IList<RouteBase> routes)
         {
-            FubuApplication.For(GetMyRegistry())
+            FubuApplication.For(GetMyRegistry)
                 .StructureMapObjectFactory(InitializeStructureMap)
                 .Bootstrap(routes);
         }

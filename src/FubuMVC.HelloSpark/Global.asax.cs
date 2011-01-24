@@ -9,7 +9,8 @@ namespace FubuMVC.HelloSpark
     {
         protected void Application_Start()
         {
-            FubuApplication.For(new HelloSparkRegistry())
+            FubuApplication
+				.For<HelloSparkRegistry>()
                 .StructureMapObjectFactory()
                 .Bootstrap(RouteTable.Routes);
         }

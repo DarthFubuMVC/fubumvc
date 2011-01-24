@@ -14,19 +14,24 @@ namespace FubuMVC.Core
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
     public class FubuApplication : IContainerFacilityExpression
     {
-        private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
+    	private readonly Func<FubuRegistry> _registryBuilder;
         private readonly FubuRegistry _registry;
-
+		private FubuRegistry _registryCache;
         private IContainerFacility _facility;
         private Func<IContainerFacility> _facilitySource;
-
         private BehaviorGraph _graph;
         private FubuMvcPackageFacility _fubuFacility;
 
-        private FubuApplication(FubuRegistry registry)
+        private FubuApplication(Func<FubuRegistry> registry)
         {
-            _registry = registry;
+            _registryBuilder = registry;
         }
+
+
+		private FubuRegistry registry()
+		{
+			return _registryCache ?? (_registryCache = _registryBuilder());
+		}
 
         FubuApplication IContainerFacilityExpression.ContainerFacility(IContainerFacility facility)
         {
@@ -36,6 +41,7 @@ namespace FubuMVC.Core
         {
             return registerContainerFacilitySource(facilitySource);
         }
+		
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
             _facilitySource = () =>
@@ -46,13 +52,13 @@ namespace FubuMVC.Core
             return this;
         }
 
-        public static IContainerFacilityExpression For(FubuRegistry registry)
+        public static IContainerFacilityExpression For(Func<FubuRegistry> registry)
         {
             return new FubuApplication(registry);
         }
         public static IContainerFacilityExpression For<T>() where T : FubuRegistry, new()
         {
-            return For(new T());
+            return For(() => new T());
         }
 
         [SkipOverForProvenance]
@@ -70,7 +76,6 @@ namespace FubuMVC.Core
             }
 
             _fubuFacility = new FubuMvcPackageFacility();
-            _registry.Services(_fubuFacility.RegisterServices);
 
             // TODO -- would be nice if this little monster also logged 
             PackageRegistry.LoadPackages(x =>
@@ -85,14 +90,18 @@ namespace FubuMVC.Core
 
         private IEnumerable<IActivator> startApplication()
         {
-            FindAllExtensions().Each(x => x.Configure(_registry));
-            var facility = _facilitySource();
+			var facility = _facilitySource();
+
+			registry()
+				.Services(_fubuFacility.RegisterServices);
+
+            FindAllExtensions().Each(x => x.Configure(registry()));
 
             // "Bake" the fubu configuration model into your
             // IoC container for the application
             _graph = _registry.BuildGraph();
             _graph.EachService(facility.Register);
-            facility.BuildFactory();
+			facility.BuildFactory();
 
             return facility.GetAllActivators();
         }
@@ -116,7 +125,7 @@ namespace FubuMVC.Core
         }
         public FubuApplication ModifyRegistry(Action<FubuRegistry> modifications)
         {
-            modifications(_registry);
+            modifications(registry());
             return this;
         }
 
