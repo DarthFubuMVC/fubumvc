@@ -26,8 +26,7 @@ namespace FubuMVC.Core.Content
 
         public string CssUrl(string name)
         {
-            throw new NotImplementedException();
-            //return _styles[name].ToAbsoluteUrl();
+            return _styles[name].ToAbsoluteUrl();
         }
 
         public string ScriptUrl(string name)
