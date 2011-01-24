@@ -90,6 +90,8 @@ namespace FubuMVC.Core
 
         private IEnumerable<IActivator> startApplication()
         {
+			// Building up the facility first forces the creation of the container
+			// and executes any additional bootstrapping done in the respective lambdas
 			var facility = _facilitySource();
 
 			registry()
