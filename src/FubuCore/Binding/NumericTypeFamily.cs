@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Reflection;
 using System.Threading;
 
@@ -7,6 +8,8 @@ namespace FubuCore.Binding
 {
     public class NumericTypeFamily : IConverterFamily
     {
+        private static CultureInfo _culture;
+        
         public bool Matches(PropertyInfo property)
         {
             return property.PropertyType.IsNumeric();
@@ -22,7 +25,6 @@ namespace FubuCore.Binding
         public static ValueConverter GetValueConverter(Type propertyType)
         {
             var converter = TypeDescriptor.GetConverter(propertyType);
-
           
             return context =>
                        {
@@ -32,9 +34,11 @@ namespace FubuCore.Binding
                                {
                                    return context.PropertyValue;
                                }
-                              
-                               var valueToConvert = removeNumericGroupSeparator(context.PropertyValue.ToString());
-                               return converter.ConvertFrom(valueToConvert);
+                               if (context.PropertyValue.ToString().IsValidNumber())
+                               {
+                                   var valueToConvert = removeNumericGroupSeparator(context.PropertyValue.ToString());
+                                   return converter.ConvertFrom(valueToConvert);
+                               }
                            }
 
                            return converter.ConvertFrom(context.PropertyValue);
@@ -43,8 +47,8 @@ namespace FubuCore.Binding
 
         private static string removeNumericGroupSeparator(string value)
         {
-            var culture = Thread.CurrentThread.CurrentCulture;
-            var numberSeparator = culture.NumberFormat.NumberGroupSeparator;
+            _culture = Thread.CurrentThread.CurrentCulture;
+            var numberSeparator = _culture.NumberFormat.NumberGroupSeparator;
             return value.Replace(numberSeparator, "");
         }
     }

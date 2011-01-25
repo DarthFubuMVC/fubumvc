@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -77,7 +78,7 @@ namespace FubuCore.Testing.Binding
 
             _context = MockRepository.GenerateMock<IBindingContext>();
             _propertyValue = "1,000.001";
-            _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(3);
+            _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(4);
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace FubuCore.Testing.Binding
 
             _context = MockRepository.GenerateMock<IBindingContext>();
             _propertyValue = "1.000,001";
-            _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(3);
+            _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(4);
         }
 
         [Test]
