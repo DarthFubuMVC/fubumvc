@@ -15,7 +15,6 @@ namespace FubuMVC.Core
     public class FubuApplication : IContainerFacilityExpression
     {
     	private readonly Func<FubuRegistry> _registryBuilder;
-        private readonly FubuRegistry _registry;
 		private FubuRegistry _registryCache;
         private IContainerFacility _facility;
         private Func<IContainerFacility> _facilitySource;
@@ -102,7 +101,7 @@ namespace FubuMVC.Core
 
             // "Bake" the fubu configuration model into your
             // IoC container for the application
-            _graph = _registry.BuildGraph();
+            _graph = registry().BuildGraph();
             _graph.EachService(facility.Register);
 			facility.BuildFactory();
 
