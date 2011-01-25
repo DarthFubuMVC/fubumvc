@@ -101,8 +101,9 @@ namespace FubuMVC.Core
         {
             var routes = new List<RouteBase>();           
             
-            // Build route objects from route definitions on graph + add packaging routes	
-            _facility.Get<IRoutePolicy>().BuildRoutes(_graph).Each(routes.Add);                      
+            // Build route objects from route definitions on graph + add packaging routes
+            var factory = _facility.BuildFactory();
+            _facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
             _fubuFacility.AddPackagingContentRoutes(routes);
 
             return routes;

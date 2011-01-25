@@ -25,8 +25,6 @@ namespace FubuMVC.Core.UI
             // TODO:  Put a hook here for things like LESS for .Net
             var url = page.Get<IContentRegistry>().CssUrl(cssName);
 
-            // <link href="/DovetailCRM/Content/Styles/dovetailcrm.css" rel="stylesheet" type="text/css" />
-
             return new HtmlTag("link").Attr("href", url).Attr("rel", "stylesheet").Attr("type", "text/css");
         }
 

@@ -9,19 +9,25 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Routing
 {
+    [TestFixture]
     public class StandardRoutePolicyTester
     {
-        private readonly IEnumerable<Guid> _actionIds;
-        private readonly IEnumerable<Route> _routes;
+        private IEnumerable<Guid> _actionIds;
+        private IEnumerable<Route> _routes;
+        private IBehaviorFactory theFactory;
 
-        public StandardRoutePolicyTester()
-        {                   
+        [SetUp]
+        public void SetUp()
+        {
+            theFactory = MockRepository.GenerateMock<IBehaviorFactory>();
+
             var graph = setupActions();
             _actionIds = graph.Actions().Select(x => x.ParentChain().UniqueId);
-            _routes = new StandardRoutePolicy(new BehaviorFactory(_actionIds)).BuildRoutes(graph).Cast<Route>();
+            _routes = new StandardRoutePolicy().BuildRoutes(graph, theFactory).Cast<Route>();
         }
         
         [Test]
@@ -36,16 +42,6 @@ namespace FubuMVC.Tests.Routing
             _routes.Each(r => r.RouteHandler.ShouldBeOfType<FubuRouteHandler>());
         }
 
-        [Test]
-        public void it_assigns_routehandler_with_necessary_chain_id()
-        {
-            _routes.Select(behaviorCreator).Each(ab => _actionIds.ShouldContain(ab.BehaviorId));
-        }
-
-        private ActionBehavior behaviorCreator(Route route)
-        {
-           return route.RouteHandler.As<FubuRouteHandler>().GetBehavior(new ServiceArguments()).As<ActionBehavior>();
-        }
         private BehaviorGraph setupActions()
         {          
             var registry = new FubuRegistry();
