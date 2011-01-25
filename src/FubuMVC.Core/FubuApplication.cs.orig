@@ -21,7 +21,6 @@ namespace FubuMVC.Core
         private Func<IContainerFacility> _facilitySource;
         private BehaviorGraph _graph;
         private FubuMvcPackageFacility _fubuFacility;
-		private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
 
         private FubuApplication(Func<FubuRegistry> registry)
         {
@@ -91,8 +90,11 @@ namespace FubuMVC.Core
 
         private IEnumerable<IActivator> startApplication()
         {
+<<<<<<< HEAD
+=======
 			// Building up the facility first forces the creation of the container
 			// and executes any additional bootstrapping done in the respective lambdas
+>>>>>>> forced facility creation before registry creation
 			var facility = _facilitySource();
 
 			registry()
