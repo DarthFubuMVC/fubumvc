@@ -95,6 +95,7 @@
     <Compile Include="Binding\ModelBinderCache.cs" />
     <Compile Include="Binding\ModelBindingAttributes.cs" />
     <Compile Include="Binding\NestedObjectPropertyBinder.cs" />
+    <Compile Include="Binding\NumericTypeFamily.cs" />
     <Compile Include="Binding\ObjectResolver.cs" />
     <Compile Include="Binding\PassthroughConverter.cs" />
     <Compile Include="Binding\PropertyBinderCache.cs" />
