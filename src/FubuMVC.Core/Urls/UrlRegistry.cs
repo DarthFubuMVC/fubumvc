@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
@@ -8,8 +9,15 @@ namespace FubuMVC.Core.Urls
 {
     public class UrlRegistry : ChainInterrogator<string>, IUrlRegistry
     {
-        public UrlRegistry(IChainResolver resolver) : base(resolver)
+        private readonly Func<string, string> _templateFunc;
+
+        public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern)
+            : base(resolver)
         {
+            _templateFunc = (s) =>
+            {
+                return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End);
+            };
         }
 
         public string UrlFor(object model)
@@ -37,9 +45,26 @@ namespace FubuMVC.Core.Urls
             return For(handlerType, method);
         }
 
+        public string TemplateFor(object model)
+        {
+            return buildUrlTemplate(model, null);
+        }
+
+        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
+        {
+            return buildUrlTemplate(new TModel(), hash);
+        }
+
+        private string buildUrlTemplate(object model, params Func<object, object>[] hash)
+        {
+            var chain = resolver.FindUnique(model);
+
+            return _templateFunc(chain.Route.CreateTemplate(model, hash));
+        }
+
         public string UrlForNew<T>()
         {
-            return UrlForNew(typeof (T));
+            return UrlForNew(typeof(T));
         }
 
         public string UrlForNew(Type entityType)
@@ -49,7 +74,7 @@ namespace FubuMVC.Core.Urls
 
         public bool HasNewUrl<T>()
         {
-            return HasNewUrl(typeof (T));
+            return HasNewUrl(typeof(T));
         }
 
         public bool HasNewUrl(Type type)

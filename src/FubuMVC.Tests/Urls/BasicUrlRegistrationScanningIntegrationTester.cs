@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Urls
 
             graph = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
 
-            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph));
+            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new JQueryUrlTemplate());
         }
 
         #endregion
@@ -50,6 +50,11 @@ namespace FubuMVC.Tests.Urls
 
             public void Querystring(ModelWithQueryStrings query)
             {
+            }
+
+            public void InputWithGuid(ModelWithGuid model)
+            {
+
             }
 
             public void NoArgMethod()
@@ -120,5 +125,57 @@ namespace FubuMVC.Tests.Urls
                 "fubumvc/tests/urls/special/noargmethod");
             registry.UrlFor<SpecialController>(x => x.Index()).ShouldEqual("fubumvc/tests/urls/special/index");
         }
+
+        [Test]
+        public void get_templated_url_for_input_model()
+        {
+            registry.TemplateFor(new SpecialModel()).ShouldEqual("special/${Name}/is/${Age}");
+        }
+
+        [Test]
+        public void get_partially_templated_url_for_input_model()
+        {
+            // this test is failing but not because the code is wrong... because int defaults to 0 and theres no way to 
+            // tell whether it really *should* be 0
+            registry.TemplateFor(new SpecialModel() { Name = "Ryan" }).ShouldEqual("special/Ryan/is/${Age}");
+        }
+
+        [Test]
+        public void get_templated_url_with_empty_guid()
+        {
+            registry.TemplateFor(new ModelWithGuid()).ShouldEqual("fubumvc/tests/urls/special/inputwithguid/${OtherGuid}/${Id}");
+        }
+
+        [Test]
+        public void get_partially_templated_url_with_empty_guid()
+        {
+            var otherguid = Guid.NewGuid();
+
+            registry.TemplateFor(new ModelWithGuid()
+            {
+                OtherGuid = otherguid
+            }).ShouldEqual("fubumvc/tests/urls/special/inputwithguid/" + otherguid.ToString() + "/${Id}");
+        }
+
+        [Test]
+        public void get_templated_url_with_explicit_params()
+        {
+            registry.TemplateFor<SpecialModel>(Age => 0).ShouldEqual("special/${Name}/is/0");
+        }
+
+        [Test]
+        public void get_templated_url_with_empty_explicit_params()
+        {
+            registry.TemplateFor<SpecialModel>().ShouldEqual("special/${Name}/is/${Age}");
+        }
+    }
+
+    public class ModelWithGuid
+    {
+        [RouteInput]
+        public Guid OtherGuid { get; set; }
+
+        [RouteInput]
+        public Guid Id { get; set; }
     }
 }

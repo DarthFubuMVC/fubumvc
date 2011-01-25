@@ -30,6 +30,11 @@ namespace FubuMVC.Core.Registration.Routes
             return _pattern.ToAbsoluteUrl();
         }
 
+        public virtual string CreateTemplate(object input, Func<object, object>[] hash)
+        {
+            return _pattern.ToAbsoluteUrl();
+        }
+
         public void RootUrlAt(string baseUrl)
         {
             Prepend(baseUrl);
@@ -37,7 +42,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual Route ToRoute()
         {
-            return new Route(_pattern, null, getConstraints(), null);;
+            return new Route(_pattern, null, getConstraints(), null); ;
         }
 
         protected RouteValueDictionary getConstraints()
@@ -110,12 +115,12 @@ namespace FubuMVC.Core.Registration.Routes
 
         public List<RouteInput> RouteInputs { get { return _routeInputs; } }
         public List<RouteInput> QueryInputs { get { return _queryInputs; } }
-        public override Type InputType { get { return typeof (T); } }
+        public override Type InputType { get { return typeof(T); } }
 
         public override string CreateUrl(object input)
         {
             string url = Pattern;
-            
+
             if (_routeInputs.Any(x => !x.CanSubstitue(input)))
             {
                 throw new FubuException(
@@ -132,6 +137,25 @@ namespace FubuMVC.Core.Registration.Routes
             return url.ToAbsoluteUrl();
         }
 
+        public override string CreateTemplate(object input, Func<object, object>[] hash)
+        {
+            string url = Pattern;
+
+            _routeInputs.Where(x => x.CanTemplate(input))
+               .Each(r => url = r.Substitute((T)input, url));
+
+            if (hash != null)
+                hash.Each(func =>
+                {
+                    var name = func.Method.GetParameters()[0].Name;
+                    var rawValue = func(null);
+                    url = url.Replace("{" + name + "}", rawValue.ToString().UrlEncoded());
+                });
+
+            url = fillQueryInputs(url, input);
+
+            return url.ToAbsoluteUrl();
+        }
 
         public override Route ToRoute()
         {
@@ -154,7 +178,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             if (_routeInputs.Count == 0) return url;
 
-            _routeInputs.Each(r => { url = r.Substitute((T) input, url); });
+            _routeInputs.Each(r => { url = r.Substitute((T)input, url); });
 
             return url;
         }
@@ -222,7 +246,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public override string ToString()
         {
-            return "{0} --> {1}".ToFormat(Pattern, typeof (T).FullName);
+            return "{0} --> {1}".ToFormat(Pattern, typeof(T).FullName);
         }
     }
 }

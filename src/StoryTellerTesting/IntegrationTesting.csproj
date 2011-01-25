@@ -57,7 +57,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\lib\sqlite\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\lib\sqlite\x64\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -122,12 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\lib\sqlite\sqlite3.dll">
-      <Link>sqlite3.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

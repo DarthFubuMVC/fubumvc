@@ -64,7 +64,10 @@
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
     <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
     <Content Include="Controllers\Home\Home.aspx" />
+    <Content Include="Controllers\UrlTemplate\Find.aspx" />
+    <Content Include="Controllers\UrlTemplate\Query.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Shared\jquery.tmpl.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -96,6 +99,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controllers\Security\SecretController.cs" />
+    <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\OddEvenLiModifier.cs" />
