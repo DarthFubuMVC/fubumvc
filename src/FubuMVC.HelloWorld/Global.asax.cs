@@ -14,10 +14,7 @@ namespace FubuMVC.HelloWorld
         {
             FubuApplication
                 .For<HelloWorldFubuRegistry>()
-                .StructureMap(() =>
-                {
-                    return new Container(x => x.For<IHttpSession>().Use<CurrentHttpContextSession>());    
-                })
+                .StructureMap(() => new Container(x => x.For<IHttpSession>().Use<CurrentHttpContextSession>()))
                 .Bootstrap(RouteTable.Routes);
 
             // If there is an error during bootstrapping, it will not automatically be considered

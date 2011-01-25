@@ -154,6 +154,7 @@
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
+    <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Json\ProjectionService.cs" />
     <Compile Include="Json\IProjection.cs" />
     <Compile Include="Json\IProjectionFactory.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="Security\IEndPointAuthorizor.cs" />
     <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
+    <Compile Include="Routing\StandardRoutePolicy.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Configuration\AccessorDef.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />

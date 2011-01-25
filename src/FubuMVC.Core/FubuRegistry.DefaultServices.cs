@@ -8,6 +8,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -75,7 +76,9 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IScriptTagWriter, BasicScriptTagWriter>();
             graph.Services.SetServiceIfNone<IFileSystem, FileSystem>();
-
+            
+            graph.Services.SetServiceIfNone<IRoutePolicy, StandardRoutePolicy>();
+            
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);
