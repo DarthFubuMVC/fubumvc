@@ -65,13 +65,20 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConfigureSparkExpression.cs" />
+    <Compile Include="Registration\DSL\ConfigureSparkSettingsExpression.cs" />
     <Compile Include="Registration\ActionAndViewMatchedBySparkViewDescriptors.cs" />
+    <Compile Include="Registration\ISparkDescriptorVisitor.cs" />
+    <Compile Include="Registration\ISparkDescriptorVisitorRegistry.cs" />
     <Compile Include="Registration\ISparkPolicy.cs" />
     <Compile Include="Registration\ISparkPolicyResolver.cs" />
+    <Compile Include="Registration\SetLanguageSparkDescriptorVisitor.cs" />
     <Compile Include="Registration\LambdaSparkPolicy.cs" />
+    <Compile Include="Registration\SparkDescriptorVisitorRegistry.cs" />
     <Compile Include="Registration\SparkPolicyResolver.cs" />
+    <Compile Include="SparkBootstrappingExtensions.cs" />
+    <Compile Include="Registration\DSL\SparkDescriptorVisitorsExpression.cs" />
     <Compile Include="SparkFubuException.cs" />
-    <Compile Include="SparkFubuRegistry.cs" />
     <Compile Include="Registration\DSL\SparkPoliciesExpression.cs" />
     <Compile Include="ISparkViewFactory.cs" />
     <Compile Include="ViewCreation\JavaScriptOutputNode.cs" />

@@ -12,13 +12,15 @@ namespace Spark.Web.FubuMVC.Registration
     public class ActionAndViewMatchedBySparkViewDescriptors : IViewsForActionFilter
     {
         private readonly ISparkPolicyResolver _policyResolver;
+    	private readonly ISparkDescriptorVisitorRegistry _visitorRegistry;
 
-        public ActionAndViewMatchedBySparkViewDescriptors(ISparkPolicyResolver policyResolver)
+        public ActionAndViewMatchedBySparkViewDescriptors(ISparkPolicyResolver policyResolver, ISparkDescriptorVisitorRegistry visitorRegistry)
         {
-            _policyResolver = policyResolver;
+        	_policyResolver = policyResolver;
+        	_visitorRegistry = visitorRegistry;
         }
 
-        public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
+    	public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
             if(call.OutputType() == typeof(FubuContinuation) || !_policyResolver.HasMatchFor(call))
             {
@@ -48,9 +50,16 @@ namespace Spark.Web.FubuMVC.Registration
 				}
         	}
 
-            return matchedDescriptor != null
-                    ? new IViewToken[] { new SparkViewToken(call, matchedDescriptor, viewLocatorName, viewName) }
-                    : new IViewToken[0];
+			if(matchedDescriptor == null)
+			{
+				return new IViewToken[0];
+			}
+
+    		_visitorRegistry
+    			.VisitorsFor(call)
+    			.Each(visitor => visitor.Visit(matchedDescriptor, call));
+
+    		return new IViewToken[] {new SparkViewToken(call, matchedDescriptor, viewLocatorName, viewName)};
         }
     }
 }
