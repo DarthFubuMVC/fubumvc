@@ -209,7 +209,7 @@ namespace FubuMVC.Tests.Registration
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             }).BuildGraph();
 
-            graph2.Import(graph1, "area1");
+            graph2.Import(graph1, b => b.PrependToUrl("area1"));
         }
 
         #endregion
@@ -251,7 +251,7 @@ namespace FubuMVC.Tests.Registration
             graph1.Services.AddService(foo1);
             graph2.Services.AddService(foo2);
 
-            graph1.Import(graph2, string.Empty);
+            graph1.Import(graph2, b => b.PrependToUrl(string.Empty));
         }
 
         #endregion

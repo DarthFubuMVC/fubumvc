@@ -217,12 +217,12 @@ namespace FubuMVC.Core.Registration
             return chain;
         }
 
-        public void Import(BehaviorGraph graph, string prefix)
+        public void Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
             graph.Behaviors.Each(b =>
             {
                 AddChain(b);
-                b.PrependToUrl(prefix);
+                alternation(b);
             });
         }
 
