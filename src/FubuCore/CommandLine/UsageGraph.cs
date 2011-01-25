@@ -157,7 +157,8 @@ namespace FubuCore.CommandLine
                 writeMultipleUsages();
             }
 
-            writeArguments();
+            if(Arguments.Any())
+                writeArguments();
 
 
             if (!Flags.Any()) return;
