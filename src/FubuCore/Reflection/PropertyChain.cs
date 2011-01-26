@@ -133,7 +133,7 @@ namespace FubuCore.Reflection
                 PropertyInfo info = _chain[i];
                 PropertyInfo otherInfo = other._chain[i];
 
-                if (!info.Equals(otherInfo)) return false;
+                if (!info.PropertyMatches(otherInfo)) return false;
             }
 
             return _innerProperty.Equals(other._innerProperty);

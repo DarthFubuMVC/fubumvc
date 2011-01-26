@@ -66,6 +66,7 @@
     <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
     <Compile Include="Extensibility\ExtensionScanner.cs" />
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
+    <Compile Include="JqGrid\JqGridClasses.cs" />
     <Compile Include="NHibernate\CriteriaExtensions.cs" />
     <Compile Include="NHibernate\DatabaseSettings.cs" />
     <Compile Include="NHibernate\ConfigurationBehavior.cs" />

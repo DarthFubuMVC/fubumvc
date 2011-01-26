@@ -75,7 +75,7 @@ namespace FubuCore.Reflection
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other._property, _property);
+            return _property.PropertyMatches(other._property);
         }
 
         public override bool Equals(object obj)
