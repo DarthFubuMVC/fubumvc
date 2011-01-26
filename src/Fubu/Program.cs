@@ -36,7 +36,8 @@ namespace Fubu
         }
     }
 
-    public class CommandFailureException : ApplicationException
+    [Serializable]
+    public class CommandFailureException : Exception
     {
         public CommandFailureException(string message) : base(message)
         {

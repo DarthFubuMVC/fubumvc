@@ -6,6 +6,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.UI.Scripts
 {
+    [Serializable]
     public class InvalidSyntaxException : Exception
     {
         public static readonly string USAGE = @"

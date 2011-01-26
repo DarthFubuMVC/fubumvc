@@ -3,7 +3,8 @@ using System.Runtime.Serialization;
 
 namespace FubuMVC.Core.Packaging.Environment
 {
-    public class EnvironmentRunnerException : ApplicationException
+    [Serializable]
+    public class EnvironmentRunnerException : Exception
     {
         public EnvironmentRunnerException()
         {

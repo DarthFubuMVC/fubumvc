@@ -5,6 +5,7 @@ using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
+    [Serializable]
     public class InvalidUsageException : Exception
     {
         public InvalidUsageException() : base(string.Empty) {}
