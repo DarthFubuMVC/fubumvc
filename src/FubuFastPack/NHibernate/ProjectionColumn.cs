@@ -11,7 +11,7 @@ namespace FubuFastPack.NHibernate
     {
         protected Accessor _accessor;
 
-        protected Accessor PropertyAccessor
+        public Accessor PropertyAccessor
         {
             get { return _accessor; }
         }

@@ -46,6 +46,12 @@ $METHODS$
         <FixtureFilter Type="All" Name="ALL" />
       </Filters>
     </WorkspaceFilter>
+    <WorkspaceFilter Name="Script Manager">
+      <Actions />
+      <Filters>
+        <FixtureFilter Type="All" Name="ALL" />
+      </Filters>
+    </WorkspaceFilter>
   </Workspaces>
   <BinaryFolder>src\StoryTellerTesting\bin\debug</BinaryFolder>
   <TestFolder>src\StoryTellerTesting\Tests</TestFolder>

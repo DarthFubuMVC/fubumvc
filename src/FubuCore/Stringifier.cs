@@ -85,6 +85,7 @@ namespace FubuCore
         {
         }
 
+
         // TODO -- get some unit tests around this very constructor
         public GetStringRequest(Accessor accessor, object rawValue, IServiceLocator locator)
         {

@@ -33,6 +33,11 @@ namespace FubuFastPack.NHibernate
             return column;
         }
 
+        public IEnumerable<Accessor> SelectAccessors()
+        {
+            return _columns.Select(x => x.PropertyAccessor);
+        }
+
         public int WhereCount { get { return _wheres.Count(); } }
 
         public void AddColumn(ProjectionColumn<T> column)

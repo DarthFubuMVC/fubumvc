@@ -8,6 +8,7 @@ namespace FubuCore
     {
         string GetDisplay(GetStringRequest request);
         string GetDisplay(Accessor accessor, object target);
+        string GetDisplayForValue(Accessor accessor, object rawValue);
     }
 
     public class DisplayFormatter : IDisplayFormatter
@@ -30,6 +31,12 @@ namespace FubuCore
         public string GetDisplay(Accessor accessor, object target)
         {
             var request = new GetStringRequest(accessor, target, _locator);
+            return _stringifier.GetString(request);
+        }
+
+        public string GetDisplayForValue(Accessor accessor, object rawValue)
+        {
+            var request = new GetStringRequest(accessor, rawValue, _locator);
             return _stringifier.GetString(request);
         }
     }
