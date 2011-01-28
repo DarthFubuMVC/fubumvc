@@ -67,8 +67,12 @@
     <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
     <Compile Include="Extensibility\ExtensionScanner.cs" />
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
+    <Compile Include="JqGrid\GridColumnDTO.cs" />
+    <Compile Include="JqGrid\GridResults.cs" />
+    <Compile Include="JqGrid\GridRunner.cs" />
     <Compile Include="JqGrid\JqGridClasses.cs" />
     <Compile Include="JqGrid\ProjectionGrid.cs" />
+    <Compile Include="JqGrid\RepositoryGrid.cs" />
     <Compile Include="NHibernate\CriteriaExtensions.cs" />
     <Compile Include="NHibernate\DatabaseSettings.cs" />
     <Compile Include="NHibernate\ConfigurationBehavior.cs" />

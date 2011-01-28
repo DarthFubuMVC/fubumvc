@@ -35,6 +35,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             checkColumns(4);
 
             runGrid<OneColumnGrid>();
+            runGrid<OneColumnRepositoryGrid>();
         }
 
 
@@ -149,6 +150,14 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         public class OneColumnGrid : ProjectionGrid<Case>
         {
             public OneColumnGrid()
+            {
+                Show(x => x.Identifier);
+            }
+        }
+
+        public class OneColumnRepositoryGrid : RepositoryGrid<Case>
+        {
+            public OneColumnRepositoryGrid()
             {
                 Show(x => x.Identifier);
             }
