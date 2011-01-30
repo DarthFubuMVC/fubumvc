@@ -5,7 +5,7 @@ namespace FubuFastPack.JqGrid
 {
     public interface IGrid
     {
-        IEnumerable<IGridColumn> Columns { get; }
+        GridDefinition Definition { get; }
         IGridDataSource BuildSource(IServiceLocator services);
     }
 }

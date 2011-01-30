@@ -13,20 +13,21 @@ namespace FubuFastPack.JqGrid
 {
     public abstract class RepositoryGrid<T> : IGrid
     {
-        private readonly IList<IGridColumn> _columns = new List<IGridColumn>();
+        private readonly GridDefinition<T> _definition = new GridDefinition<T>();
+        
         private readonly Cache<string, Expression<Func<T, object>>> _sortables
             = new Cache<string, Expression<Func<T, object>>>();
-        
 
-        public IEnumerable<IGridColumn> Columns
+
+        public GridDefinition Definition
         {
-            get { return _columns; }
+            get { return _definition; }
         }
 
         public IGridDataSource BuildSource(IServiceLocator services)
         {
             var repository = services.GetInstance<IRepository>();
-            return new RepositoryDataSource<T>(this, repository);
+            return new RepositoryDataSource(this, repository);
         }
 
         protected virtual IQueryable<T> query(IRepository repository)
@@ -34,25 +35,14 @@ namespace FubuFastPack.JqGrid
             return repository.Query<T>();
         }
 
-        protected ColumnExpression Show(Expression<Func<T, object>> expression)
+        protected GridDefinition<T>.ColumnExpression Show(Expression<Func<T, object>> expression)
         {
-            return new ColumnExpression(this, expression);
+            _sortables[expression.GetName()] = expression;
+            return _definition.Show(expression);
         }
 
-        public class ColumnExpression
-        {
-            private readonly GridColumn _column;
 
-            public ColumnExpression(RepositoryGrid<T> grid, Expression<Func<T, object>> expression)
-            {
-                var accessor = expression.ToAccessor();
-                _column = new GridColumn(accessor);
-                grid._columns.Add(_column);
-                grid._sortables[expression.GetName()] = expression;
-            }
-        }
-
-        public class RepositoryDataSource<T> : IGridDataSource
+        public class RepositoryDataSource : IGridDataSource
         {
             private readonly RepositoryGrid<T> _grid;
             private readonly IRepository _repository;

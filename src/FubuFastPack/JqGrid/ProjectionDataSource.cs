@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FubuFastPack.Domain;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Querying;

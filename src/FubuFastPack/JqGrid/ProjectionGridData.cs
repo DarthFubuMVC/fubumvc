@@ -14,8 +14,6 @@ namespace FubuFastPack.JqGrid
 
         public ProjectionGridData(IList<object> records, IList<Accessor> accessors)
         {
-            records.Each(x => Debug.WriteLine(x.GetType().Name));
-
             _records = new Queue<object>(records);
             _accessors = accessors;
         }

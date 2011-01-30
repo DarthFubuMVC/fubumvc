@@ -25,7 +25,7 @@ namespace FubuFastPack.JqGrid
         {
             var source = grid.BuildSource(_services);
             var data = source.Fetch(paging);
-            var actions = grid.Columns.Select(col => col.CreateFiller(data, _formatter, _urls));
+            var actions = grid.Definition.Columns.Select(col => col.CreateFiller(data, _formatter, _urls));
 
             var list = new List<EntityDTO>();
 

@@ -1,9 +1,18 @@
-﻿using FubuCore;
+﻿using System.Collections.Generic;
+using FubuCore;
+using System.Linq;
 
 namespace FubuFastPack.Querying
 {
+    // Rename to QueryOptions and make a reference to criteria
     public class PagingOptions
     {
+        private readonly IList<Criteria> _criterion = new List<Criteria>();
+
+        public PagingOptions()
+        {
+        }
+
         public PagingOptions(int page, int resultsPerPage, string sortColumn, bool sortAscending)
         {
             Page = page > 0 ? page : 1;
@@ -16,6 +25,19 @@ namespace FubuFastPack.Querying
         public int ResultsPerPage { get; set; }
         public string SortColumn { get; set; }
         public bool SortAscending { get; set; }
+
+        public Criteria[] Criterion
+        {
+            get
+            {
+                return _criterion.ToArray();
+            }
+            set
+            {
+                _criterion.Clear();
+                _criterion.AddRange(value);
+            }
+        }
 
         public int ResultsToSkip()
         {

@@ -107,8 +107,10 @@
     <Compile Include="Persistence\IQueryExpression.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\Repository.cs" />
+    <Compile Include="Querying\Criteria.cs" />
     <Compile Include="Querying\IDataRestriction.cs" />
     <Compile Include="Querying\IDataSourceFilter.cs" />
+    <Compile Include="Querying\OperatorKeys.cs" />
     <Compile Include="Querying\PagingOptions.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicy.cs" />
     <Compile Include="Querying\SingleEntityFilter.cs" />

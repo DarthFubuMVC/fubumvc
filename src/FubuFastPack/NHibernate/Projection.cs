@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
@@ -51,6 +52,7 @@ namespace FubuFastPack.NHibernate
 
         public ProjectionColumn<T> AddColumn(Expression<Func<T, object>> expression)
         {
+            Debug.WriteLine("Adding column " + expression.ToAccessor().Name);
             return AddColumn(ReflectionHelper.GetAccessor(expression));
         }
 

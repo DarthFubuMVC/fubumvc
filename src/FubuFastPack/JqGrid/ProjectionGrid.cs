@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
@@ -11,16 +12,17 @@ namespace FubuFastPack.JqGrid
     public class ProjectionGrid<T> : IGrid where T : DomainEntity
     {
         private readonly IList<Action<Projection<T>>> _projectionBuilders = new List<Action<Projection<T>>>();
-        private readonly IList<IGridColumn> _columns = new List<IGridColumn>();
+        private readonly GridDefinition<T> _definition = new GridDefinition<T>();
 
         public ProjectionGrid()
         {
-            alterProjection = p => p.AddColumn(x => x.Id);
+            var accessor = ReflectionHelper.GetAccessor<T>(x => x.Id);
+            _definition.AddSelectedAccessor(accessor);
         }
 
-        protected ColumnExpression Show(Expression<Func<T, object>> expression)
+        protected GridDefinition<T>.ColumnExpression Show(Expression<Func<T, object>> expression)
         {
-            return new ColumnExpression(this, expression);
+            return _definition.Show(expression);
         }
 
         private Action<Projection<T>> alterProjection
@@ -31,32 +33,22 @@ namespace FubuFastPack.JqGrid
             }
         }
 
-        public IEnumerable<IGridColumn> Columns
+        public GridDefinition Definition
         {
-            get { return _columns; }
+            get { return _definition; }
         }
 
         public IGridDataSource BuildSource(IServiceLocator services)
         {
             var projection = services.GetInstance<Projection<T>>();
             // TODO -- what to do about data restrictions?
-
+            
+            _definition.SelectedAccessors.Each(a => projection.AddColumn(a));
             _projectionBuilders.Each(x => x(projection));
 
             return new ProjectionDataSource<T>(projection);
         }
 
-        public class ColumnExpression
-        {
-            private readonly GridColumn _column;
 
-            public ColumnExpression(ProjectionGrid<T> grid, Expression<Func<T, object>> expression)
-            {
-                var accessor = expression.ToAccessor();
-                _column = new GridColumn(accessor);
-                grid._columns.Add(_column);
-                grid.alterProjection = p => p.AddColumn(accessor);
-            }
-        }
     }
 }
