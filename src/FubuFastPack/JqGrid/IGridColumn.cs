@@ -41,7 +41,6 @@ namespace FubuFastPack.JqGrid
 
     public class GridDefinition<T> : GridDefinition
     {
-        
         private readonly Cache<string, Expression<Func<T, object>>> _properties = new Cache<string, Expression<Func<T, object>>>();
 
         public ColumnExpression Show(Expression<Func<T, object>> expression)
@@ -72,4 +71,6 @@ namespace FubuFastPack.JqGrid
         GridColumnDTO ToDto();
         Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls);
     }
+
+
 }

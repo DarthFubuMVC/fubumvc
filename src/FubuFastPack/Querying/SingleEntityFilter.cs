@@ -31,6 +31,11 @@ namespace FubuFastPack.Querying
             }
         }
 
+        public void Where(Expression<Func<T, object>> property, ExpressionType expressionType, object value)
+        {
+            throw new NotImplementedException();
+        }
+
         public void WhereNotEqual(Expression<Func<T, object>> property, object value)
         {
             if (!CanView) return;

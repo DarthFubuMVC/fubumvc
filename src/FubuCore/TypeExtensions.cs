@@ -198,6 +198,11 @@ namespace FubuCore
             return typeToCheck == typeof(DateTime) || typeToCheck == typeof(DateTime?);
         }
 
+        public static bool IsBoolean(this Type typeToCheck)
+        {
+            return typeToCheck == typeof (bool) || typeToCheck == typeof (bool?);
+        }
+
         /// <summary>
         /// Displays type names using CSharp syntax style. Supports funky generic types.
         /// </summary>
@@ -243,6 +248,7 @@ namespace FubuCore
             return type.IsFloatingPoint() || type.IsIntegerBased();
         }
 
+
         /// <summary>
         /// Returns a boolean value indicating whether or not the type is:
         /// int, long or short
@@ -251,8 +257,28 @@ namespace FubuCore
         /// <returns>Bool indicating whether the type is integer based</returns>
         public static bool IsIntegerBased(this Type type)
         {
-            return type == typeof(int) || type == typeof(long) || type == typeof(short);
+            return _integerTypes.Contains(type);
         }
+
+        private static readonly IList<Type> _integerTypes = new List<Type>
+                                    {
+                                        typeof (byte),
+                                        typeof (short),
+                                        typeof (int),
+                                        typeof (long),
+                                        typeof (sbyte),
+                                        typeof (ushort),
+                                        typeof (uint),
+                                        typeof (ulong),
+                                        typeof (byte?),
+                                        typeof (short?),
+                                        typeof (int?),
+                                        typeof (long?),
+                                        typeof (sbyte?),
+                                        typeof (ushort?),
+                                        typeof (uint?),
+                                        typeof (ulong?)
+                                    };
 
         /// <summary>
         /// Returns a boolean value indicating whether or not the type is:

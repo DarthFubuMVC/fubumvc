@@ -9,12 +9,6 @@ using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
 {
-    // Need one for projections, another for entities
-
-
-    // One for projections, one for an entity
-
-
     public class GridColumn : IGridColumn
     {
         private readonly Accessor _accessor;
