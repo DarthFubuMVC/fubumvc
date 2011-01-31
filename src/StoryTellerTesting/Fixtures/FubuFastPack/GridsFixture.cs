@@ -1,13 +1,14 @@
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Reflection;
+using System.Linq;
+using FubuCore;
 using FubuFastPack.JqGrid;
-using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
 using FubuFastPack.Querying;
 using FubuFastPack.StructureMap;
 using FubuMVC.Core;
+using FubuMVC.StructureMap;
 using IntegrationTesting.Domain;
 using IntegrationTesting.FubuFastPack;
 using NHibernate;
@@ -15,21 +16,17 @@ using StoryTeller;
 using StoryTeller.Engine;
 using StoryTeller.Engine.Sets;
 using StructureMap;
-using FubuCore;
-using System.Collections.Generic;
-using System.Linq;
-using FubuMVC.StructureMap;
 
 namespace IntegrationTesting.Fixtures.FubuFastPack
 {
-    public class ProjectionFixture : Fixture
+    public class GridsFixture : Fixture
     {
         private IContainer _container;
-        private IRepository _repository;
-        private PagingOptions _paging = new PagingOptions(1, 100, null, true);
         private GridResults _lastResults;
+        private PagingOptions _paging = new PagingOptions(1, 100, null, true);
+        private IRepository _repository;
 
-        public ProjectionFixture()
+        public GridsFixture()
         {
             checkColumns(1);
             checkColumns(2);
@@ -58,8 +55,6 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             FubuApplication.For<FubuRegistry>().StructureMap(() => _container).Bootstrap();
 
             _repository = _container.GetInstance<IRepository>();
-
-
         }
 
         public IGrammar CasesAre()
@@ -100,10 +95,10 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
         private void runGrid<T>() where T : IGrid
         {
-            this[typeof(T).Name] = Do("With grid " + typeof(T).Name, () =>
+            this[typeof (T).Name] = Do("With grid " + typeof (T).Name, () =>
             {
                 var grid = _container.GetInstance<T>();
-                Debug.WriteLine("Fetching Grid {0} for {1}", typeof(T).Name, _paging);
+                Debug.WriteLine("Fetching Grid {0} for {1}", typeof (T).Name, _paging);
 
                 _lastResults = grid.Invoke(new StructureMapServiceLocator(_container), _paging);
                 Debug.WriteLine(_lastResults);
@@ -123,14 +118,17 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
         [ExposeAsTable("Apply Criteria to a Projection Grid")]
         [FormatAs("{Property}{Operator}{Value}{Identifier}{IsReturned}")]
-        public bool IsReturned([SelectionValues("fields")]string Property, [SelectionValues("operations")]string Operator, string Value, string Identifier)
+        public bool IsReturned([SelectionValues("fields")] string Property,
+                               [SelectionValues("operations")] string Operator, string Value, string Identifier)
         {
             var paging = new PagingOptions(1, 20, null, true);
-            paging.Criterion = new Criteria[]{new Criteria(){
-                op = Operator,
-                property = Property,
-                value = Value
-            } };
+            paging.Criterion = new[]{
+                new Criteria{
+                    op = Operator,
+                    property = Property,
+                    value = Value
+                }
+            };
 
             var grid = _container.GetInstance<FilterableRepositoryGrid>();
             var results = grid.Invoke(new StructureMapServiceLocator(_container), paging);
@@ -144,7 +142,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
         private void checkColumns(int count)
         {
-            SetVerificationGrammar setVerificationGrammar = VerifyDataTable(() => tableForColumns(count))
+            var setVerificationGrammar = VerifyDataTable(() => tableForColumns(count))
                 .Titled("Check {0} columns".ToFormat(count))
                 .Columns(x => setupComparer(count, x));
 
@@ -156,7 +154,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
         private void setupComparer(int count, IDataRowComparer comparer)
         {
-            for (int i = 1; i <= count; i++)
+            for (var i = 1; i <= count; i++)
             {
                 var columnName = "Column" + i;
                 comparer.MatchOn<string>(columnName);
@@ -166,7 +164,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         private DataTable tableForColumns(int count)
         {
             var table = new DataTable();
-            for (int i = 1; i <= count; i++)
+            for (var i = 1; i <= count; i++)
             {
                 table.Columns.Add("Column" + i, typeof (string));
             }
@@ -180,13 +178,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             return table;
         }
 
-        public class OneColumnGrid : ProjectionGrid<Case>
-        {
-            public OneColumnGrid()
-            {
-                Show(x => x.Identifier);
-            }
-        }
+        #region Nested type: FilterableRepositoryGrid
 
         public class FilterableRepositoryGrid : RepositoryGrid<Case>
         {
@@ -202,6 +194,22 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             }
         }
 
+        #endregion
+
+        #region Nested type: OneColumnGrid
+
+        public class OneColumnGrid : ProjectionGrid<Case>
+        {
+            public OneColumnGrid()
+            {
+                Show(x => x.Identifier);
+            }
+        }
+
+        #endregion
+
+        #region Nested type: OneColumnRepositoryGrid
+
         public class OneColumnRepositoryGrid : RepositoryGrid<Case>
         {
             public OneColumnRepositoryGrid()
@@ -209,5 +217,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
                 Show(x => x.Identifier);
             }
         }
+
+        #endregion
     }
 }

@@ -48,25 +48,4 @@ namespace FubuFastPack.Querying
             get { return _keys; }
         }
     }
-
-    public class FilterDTO
-    {
-        // Localized header
-        public string display;
-
-        // All possibly operators
-        public OperatorDTO[] operators;
-
-        // property name
-        public string value;
-    }
-
-    public class OperatorDTO
-    {
-        // localized text
-        public string display { get; set; }
-
-        // 
-        public string value { get; set; }
-    }
 }

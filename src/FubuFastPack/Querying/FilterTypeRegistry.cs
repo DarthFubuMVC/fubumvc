@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
-using FubuCore.Reflection;
 using FubuCore.Util;
-using FubuLocalization;
 
 namespace FubuFastPack.Querying
 {
@@ -135,110 +132,6 @@ namespace FubuFastPack.Querying
         }
     }
 
-    public interface IFilterType
-    {
-        StringToken Key { get; }
-        Expression GetExpression(Expression memberAccessExpression, Expression valueExpression);
-        Func<string, string> Modifier { get; set; }
-        string InputStyle { get; set; }
-    }
-
-
-    public class BinaryFilterType : IFilterType
-    {
-        public BinaryFilterType()
-        {
-            Modifier = s => s;
-        }
-
-        public ExpressionType FilterExpressionType { get; set; }
-
-        public StringToken Key { get; set; }
-
-        public Expression GetExpression(Expression memberAccessExpression, Expression valueExpression)
-        {
-            return Expression.MakeBinary(FilterExpressionType, memberAccessExpression, valueExpression);
-        }
-
-        public Func<string, string> Modifier { get; set; }
-
-        public string InputStyle
-        {
-            get;
-            set;
-        }
-    }
-
-    public class StringFilterType : IFilterType
-    {
-        private MethodInfo _stringMethodInfo;
-        private static MethodInfo _toUpperMethodCached;
-        private static MethodInfo ToUpperMethod
-        {
-            get
-            {
-                if (_toUpperMethodCached == null)
-                {
-                    _toUpperMethodCached = ReflectionHelper.GetMethod<string>(s => s.ToUpper());
-                }
-                return _toUpperMethodCached;
-            }
-        }
-
-        public Expression<Func<string, bool>> StringMethod { get; set; }
-        public bool IgnoreCase { get; set; }
-        public StringToken Key { get; set; }
-
-        public virtual Expression GetExpression(Expression memberAccessExpression, Expression valueExpression)
-        {
-            //NHibernate.Linq currently throws an exception when dealing with the ToUpper call on a partial match
-            //We will disable IgnoreCase for now, and just rely on SQL Server to do the case-insensitive matching
-            IgnoreCase = false;
-
-            if (_stringMethodInfo == null)
-            {
-                _stringMethodInfo = ReflectionHelper.GetMethod(StringMethod);
-            }
-            var valueToCheck = IgnoreCase ? Expression.Call(valueExpression, ToUpperMethod) : valueExpression;
-
-            var callee = memberAccessExpression;
-
-            if (IgnoreCase)
-            {
-                callee = Expression.Call(memberAccessExpression, ToUpperMethod);
-            }
-
-            return Expression.Call(callee, _stringMethodInfo, valueToCheck);
-        }
-
-        public Func<string, string> Modifier
-        {
-            get { return s => s; }
-            set { throw new NotImplementedException(); }
-        }
-
-        public string InputStyle
-        {
-            get;
-            set;
-        }
-    }
-
-    public static class FilterTypeExtensions
-    {
-        public static string Operator(this IFilterType filter)
-        {
-            return filter.Key.Key;
-        }
-
-        public static OperatorDTO ToDTO(this IFilterType filter)
-        {
-            return new OperatorDTO(){
-                display = filter.Key.ToString(),
-                value = filter.Key.Key
-            };
-        }
-    }
 
     //public static class DateTimeFilterTypeModifiers
     //{
@@ -267,30 +160,4 @@ namespace FubuFastPack.Querying
     //        return DateTime.Parse(dateTime).ToUniversalTime(_currentTimezone()).ToString();
     //    }
     //}
-
-    public class FilterTypeRegisterExpression
-    {
-        private readonly IFilterType _filter;
-
-        public FilterTypeRegisterExpression(IFilterType filter)
-        {
-            _filter = filter;
-        }
-
-        public FilterTypeRegisterExpression ForType<T>()
-        {
-            FilterTypeRegistry.RegisterFilterForType(_filter, typeof(T));
-            return this;
-        }
-
-        public FilterTypeRegisterExpression ForTypes(params Type[] filterableTypes)
-        {
-            foreach (var filterableType in filterableTypes)
-            {
-                FilterTypeRegistry.RegisterFilterForType(_filter, filterableType);
-            }
-
-            return this;
-        }
-    }
 }

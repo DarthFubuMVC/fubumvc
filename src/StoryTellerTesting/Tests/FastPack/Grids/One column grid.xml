@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Test name="One column grid" lifecycle="Regression">
-  <Projection>
+  <Grids>
     <CasesAre isStep="True">
       <Rows>
         <row isStep="True" Identifier="001" />
@@ -63,5 +63,5 @@
         <row isStep="True" Column1="015" />
       </Rows>
     </Check1Columns>
-  </Projection>
+  </Grids>
 </Test>
