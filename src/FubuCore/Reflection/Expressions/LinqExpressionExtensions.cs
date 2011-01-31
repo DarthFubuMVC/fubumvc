@@ -7,11 +7,15 @@ namespace FubuCore.Reflection.Expressions
 
     public static class LinqExpressionExtensions
     {
-        public static Func<object, Expression<Func<T, bool>>> GetPredicateBuilder<T>(
-            this IPropertyOperation builder, Expression<Func<T, object>> path)
+        public static Func<object, Expression<Func<T, bool>>> GetPredicateBuilder<T>(this IPropertyOperation builder, Expression<Func<T, object>> path)
         {
             MemberExpression memberExpression = path.GetMemberExpression(true);
             return builder.GetPredicateBuilder<T>(memberExpression);
+        }
+
+        public static Expression<Func<T, bool>> GetPredicate<T>(this IPropertyOperation operation, Expression<Func<T, object>> path, object value)
+        {
+            return operation.GetPredicateBuilder(path)(value);
         }
 
         public static MemberExpression ToMemberExpression<T>(this PropertyInfo property)

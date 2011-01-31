@@ -2,52 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using FubuCore.Reflection;
-using FubuCore.Util;
+using FubuCore;
+using FubuFastPack.Domain;
 using FubuFastPack.Persistence;
 using FubuFastPack.Querying;
-using Microsoft.Practices.ServiceLocation;
-using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
-    public abstract class RepositoryGrid<T> : IGrid
+    public abstract class RepositoryGrid<TEntity> : Grid<TEntity, IRepository> where TEntity : DomainEntity
     {
-        private readonly GridDefinition<T> _definition = new GridDefinition<T>();
-        
-        private readonly Cache<string, Expression<Func<T, object>>> _sortables
-            = new Cache<string, Expression<Func<T, object>>>();
-
-
-        public GridDefinition Definition
+        public override IGridDataSource<TEntity> BuildSource(IRepository repository)
         {
-            get { return _definition; }
-        }
-
-        public IGridDataSource BuildSource(IServiceLocator services)
-        {
-            var repository = services.GetInstance<IRepository>();
             return new RepositoryDataSource(this, repository);
         }
 
-        protected virtual IQueryable<T> query(IRepository repository)
+        protected virtual IQueryable<TEntity> query(IRepository repository)
         {
-            return repository.Query<T>();
+            return repository.Query<TEntity>();
         }
 
-        protected GridDefinition<T>.ColumnExpression Show(Expression<Func<T, object>> expression)
-        {
-            _sortables[expression.GetName()] = expression;
-            return _definition.Show(expression);
-        }
+        #region Nested type: RepositoryDataSource
 
-
-        public class RepositoryDataSource : IGridDataSource
+        public class RepositoryDataSource : IGridDataSource<TEntity>
         {
-            private readonly RepositoryGrid<T> _grid;
+            private readonly RepositoryGrid<TEntity> _grid;
             private readonly IRepository _repository;
+            private readonly IList<Expression<Func<TEntity, bool>>> _wheres = new List<Expression<Func<TEntity, bool>>>();
 
-            public RepositoryDataSource(RepositoryGrid<T> grid, IRepository repository)
+            public RepositoryDataSource(RepositoryGrid<TEntity> grid, IRepository repository)
             {
                 _grid = grid;
                 _repository = repository;
@@ -58,42 +40,49 @@ namespace FubuFastPack.JqGrid
                 return query().Count();
             }
 
-            private IQueryable<T> query()
-            {
-                return _grid.query(_repository);
-            }
-
             public IGridData Fetch(PagingOptions options)
             {
                 var queryable = query();
                 queryable = sort(queryable, options);
                 queryable = applyPaging(queryable, options);
 
-                // apply sorting here
-                // apply paging here
+                // TODO -- put the criteria in here
 
 
-                return new EntityGridData<T>(queryable);
+                return new EntityGridData<TEntity>(queryable);
             }
 
-            private IQueryable<T> applyPaging(IQueryable<T> queryable, PagingOptions options)
+            public void ApplyCriteria(FilterRequest<TEntity> request, IFilterHandler handler)
+            {
+                var where = handler.WhereFilterFor(request);
+                _wheres.Add(where);
+            }
+
+            private IQueryable<TEntity> query()
+            {
+                return _grid.query(_repository);
+            }
+
+            private IQueryable<TEntity> applyPaging(IQueryable<TEntity> queryable, PagingOptions options)
             {
                 return queryable.Skip(options.ResultsToSkip()).Take(options.ResultsPerPage);
             }
 
             // TODO -- default sorting?
-            private IQueryable<T> sort(IQueryable<T> queryable, PagingOptions options)
+            private IQueryable<TEntity> sort(IQueryable<TEntity> queryable, PagingOptions options)
             {
                 if (options.SortColumn.IsNotEmpty())
                 {
-                    var expression = _grid._sortables[options.SortColumn];
-                    return options.SortAscending 
-                        ? queryable.OrderBy(expression) 
-                        : queryable.OrderByDescending(expression);
+                    var expression = _grid.sortables[options.SortColumn];
+                    return options.SortAscending
+                               ? queryable.OrderBy(expression)
+                               : queryable.OrderByDescending(expression);
                 }
 
                 return queryable;
             }
         }
+
+        #endregion
     }
 }

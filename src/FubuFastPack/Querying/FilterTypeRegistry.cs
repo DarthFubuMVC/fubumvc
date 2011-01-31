@@ -85,6 +85,9 @@ namespace FubuFastPack.Querying
             RegisterFilter(new StringFilterType { Key = OperatorKeys.CONTAINS, IgnoreCase = true, StringMethod = s => s.Contains("") })
                 .ForType<string>();
 
+            RegisterFilter(new StringFilterType { Key = OperatorKeys.ENDSWITH, IgnoreCase = true, StringMethod = s => s.EndsWith("") })
+                .ForType<string>();
+
             RegisterFilter(new BinaryFilterType { Key = OperatorKeys.EQUAL, FilterExpressionType = ExpressionType.Equal })
                 .ForTypes(numericTypes)
                 .ForType<string>();
@@ -105,8 +108,7 @@ namespace FubuFastPack.Querying
             RegisterFilter(new BinaryFilterType { Key = OperatorKeys.LESSTHANOREQUAL, FilterExpressionType = ExpressionType.LessThanOrEqual })
                 .ForTypes(numericTypes);
 
-            RegisterFilter(new StringFilterType { Key = OperatorKeys.ENDSWITH, IgnoreCase = true, StringMethod = s => s.EndsWith("") })
-                .ForType<string>();
+
 
             //RegisterFilter(new BinaryFilterType() { Key = OperatorKeys.WITHIN_X_DAYS, Modifier = DateTimeFilterTypeModifiers.DaysAgo, FilterExpressionType = ExpressionType.GreaterThanOrEqual })
             //    .ForTypes(dateTypes);

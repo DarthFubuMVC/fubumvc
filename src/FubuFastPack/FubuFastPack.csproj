@@ -69,6 +69,7 @@
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
     <Compile Include="JqGrid\EntityDTO.cs" />
     <Compile Include="JqGrid\EntityGridData.cs" />
+    <Compile Include="JqGrid\Grid.cs" />
     <Compile Include="JqGrid\GridColumnDTO.cs" />
     <Compile Include="JqGrid\GridResults.cs" />
     <Compile Include="JqGrid\GridRunner.cs" />
@@ -114,9 +115,11 @@
     <Compile Include="Querying\IDataSourceFilter.cs" />
     <Compile Include="Querying\OperatorKeys.cs" />
     <Compile Include="Querying\PagingOptions.cs" />
+    <Compile Include="Querying\QueryService.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicy.cs" />
     <Compile Include="Querying\SingleEntityFilter.cs" />
     <Compile Include="StructureMap\ContainerExtensions.cs" />
+    <Compile Include="StructureMap\FastPackRegistry.cs" />
     <Compile Include="StructureMap\ITransactionProcessor.cs" />
     <Compile Include="StructureMap\StructureMapEntityFinderCache.cs" />
     <Compile Include="StructureMap\NHibernateStructureMapRegistryExtensions.cs" />

@@ -5,6 +5,7 @@ using FubuFastPack.JqGrid;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
 using FubuFastPack.Querying;
+using FubuFastPack.StructureMap;
 using FubuMVC.Core;
 using IntegrationTesting.Domain;
 using IntegrationTesting.FubuFastPack;
@@ -43,6 +44,12 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         {
             DatabaseDriver.Bootstrap();
             _container = DatabaseDriver.ContainerWithDatabase();
+            _container.Configure(x =>
+            {
+                x.AddRegistry<FastPackRegistry>();
+                x.For<IObjectConverter>().Use<ObjectConverter>();
+            });
+
             FubuApplication.For<FubuRegistry>().StructureMap(() => _container).Bootstrap();
 
             _repository = _container.GetInstance<IRepository>();
@@ -91,9 +98,9 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             this[typeof(T).Name] = Do("With grid " + typeof(T).Name, () =>
             {
                 var grid = _container.GetInstance<T>();
-                var runner = _container.GetInstance<GridRunner>();
-                Debug.WriteLine("Fetching Grid {0} for {1}", typeof (T).Name, _paging);
-                _lastResults = runner.Fetch(_paging, grid);
+                Debug.WriteLine("Fetching Grid {0} for {1}", typeof(T).Name, _paging);
+
+                _lastResults = grid.Invoke(new StructureMapServiceLocator(_container), _paging);
                 Debug.WriteLine(_lastResults);
             });
         }

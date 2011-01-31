@@ -18,4 +18,20 @@ namespace FubuCore.Reflection.Expressions
             get { return "starts with"; }
         }
     }
+
+    public class StringContainsPropertyOperation : CaseInsensitiveStringMethodPropertyOperation
+    {
+        private static readonly MethodInfo _method =
+            ReflectionHelper.GetMethod<string>(s => s.Contains(""));
+
+        public StringContainsPropertyOperation()
+            : base(_method)
+        {
+        }
+
+        public override string Text
+        {
+            get { return "contains"; }
+        }
+    }
 }

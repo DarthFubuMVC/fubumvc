@@ -6,7 +6,8 @@ using FubuFastPack.Querying;
 
 namespace FubuFastPack.JqGrid
 {
-    public class ProjectionDataSource<T> : IGridDataSource where T : DomainEntity
+    public class ProjectionDataSource<T> : IGridDataSource<T> 
+        where T : DomainEntity
     {
         private readonly Projection<T> _projection;
 
@@ -26,6 +27,11 @@ namespace FubuFastPack.JqGrid
             var accessors = _projection.SelectAccessors().ToList();
 
             return new ProjectionGridData(records, accessors);
+        }
+
+        public void ApplyCriteria(FilterRequest<T> request, IFilterHandler handler)
+        {
+            throw new NotSupportedException();
         }
     }
 }
