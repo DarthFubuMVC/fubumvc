@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<Test name="Possible filters for a repository grid with multiple filterable properties" lifecycle="Regression">
+  <Grids>
+    <AllPossibleFiltersForRepositoryGrid isStep="True">
+      <rows>
+        <row isStep="True" Property="CaseType" Operator="EQUAL" />
+        <row isStep="True" Property="CaseType" Operator="NOTEQUAL" />
+        <row isStep="True" Property="CaseType" Operator="STARTSWITH" />
+        <row isStep="True" Property="CaseType" Operator="ENDSWITH" />
+        <row isStep="True" Property="CaseType" Operator="CONTAINS" />
+        <row isStep="True" Property="Condition" Operator="EQUAL" />
+        <row isStep="True" Property="Condition" Operator="NOTEQUAL" />
+        <row isStep="True" Property="Condition" Operator="STARTSWITH" />
+        <row isStep="True" Property="Condition" Operator="ENDSWITH" />
+        <row isStep="True" Property="Condition" Operator="CONTAINS" />
+        <row isStep="True" Property="Priority" Operator="EQUAL" />
+        <row isStep="True" Property="Priority" Operator="NOTEQUAL" />
+        <row isStep="True" Property="Priority" Operator="STARTSWITH" />
+        <row isStep="True" Property="Priority" Operator="ENDSWITH" />
+        <row isStep="True" Property="Priority" Operator="CONTAINS" />
+        <row isStep="True" Property="Status" Operator="EQUAL" />
+        <row isStep="True" Property="Status" Operator="NOTEQUAL" />
+        <row isStep="True" Property="Status" Operator="STARTSWITH" />
+        <row isStep="True" Property="Status" Operator="ENDSWITH" />
+        <row isStep="True" Property="Status" Operator="CONTAINS" />
+        <row isStep="True" Property="Title" Operator="EQUAL" />
+        <row isStep="True" Property="Title" Operator="NOTEQUAL" />
+        <row isStep="True" Property="Title" Operator="STARTSWITH" />
+        <row isStep="True" Property="Title" Operator="ENDSWITH" />
+        <row isStep="True" Property="Title" Operator="CONTAINS" />
+        <row isStep="True" Property="Number" Operator="EQUAL" />
+        <row isStep="True" Property="Number" Operator="NOTEQUAL" />
+        <row isStep="True" Property="Number" Operator="LESSTHAN" />
+        <row isStep="True" Property="Number" Operator="LESSTHANOREQUAL" />
+        <row isStep="True" Property="Number" Operator="GREATERTHAN" />
+        <row isStep="True" Property="Number" Operator="GREATERTHANOREQUAL" />
+      </rows>
+    </AllPossibleFiltersForRepositoryGrid>
+  </Grids>
+</Test>

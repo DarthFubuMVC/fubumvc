@@ -45,6 +45,7 @@ namespace IntegrationTesting.Domain
         public virtual string Title { get; set; }
         public virtual string Priority { get; set; }
         public virtual string CaseType { get; set; }
+        public virtual int Number { get; set; }
 
         public override string ToString()
         {
@@ -65,6 +66,7 @@ namespace IntegrationTesting.Domain
             Map(x => x.Title);
             Map(x => x.Priority);
             Map(x => x.CaseType);
+            Map(x => x.Number);
         }
     }
 }

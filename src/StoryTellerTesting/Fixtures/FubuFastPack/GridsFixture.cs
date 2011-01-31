@@ -68,6 +68,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
                 x.SetProperty(c => c.Priority, "Urgent");
                 x.SetProperty(c => c.Status, "Working");
                 x.SetProperty(c => c.Title, "Important Case");
+                x.SetProperty(c => c.Number, "100");
 
                 x.Do = c => _repository.Save(c);
             }).AsTable("If the cases are").After(() => _container.GetInstance<ISession>().Flush());
@@ -178,6 +179,25 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             return table;
         }
 
+        public IGrammar AllPossibleFiltersForRepositoryGrid()
+        {
+            return VerifySetOf(allFilters).Titled("All the filters for FilterableRepositoryGrid should be")
+                .MatchOn(x => x.Property, x => x.Operator);
+        }
+
+        private IEnumerable<FilterOperatorRow> allFilters()
+        {
+            var grid = new FilterableRepositoryGrid();
+            var queryService = _container.GetInstance<IQueryService>();
+            return
+                grid.Definition.AllPossibleFilters(queryService).SelectMany(
+                    x => x.operators.Select(o => new FilterOperatorRow(){
+                        Operator = o.value,
+                        Property = x.value
+                    }));
+        
+        }
+        
         #region Nested type: FilterableRepositoryGrid
 
         public class FilterableRepositoryGrid : RepositoryGrid<Case>
@@ -191,6 +211,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
                 FilterOn(x => x.Priority);
                 FilterOn(x => x.Status);
                 FilterOn(x => x.Title);
+                FilterOn(x => x.Number);
             }
         }
 
@@ -219,5 +240,11 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         }
 
         #endregion
+
+        public class FilterOperatorRow
+        {
+            public string Property { get; set; }
+            public string Operator {get; set;}
+        }
     }
 }

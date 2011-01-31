@@ -31,7 +31,7 @@ namespace FubuFastPack.JqGrid
 
         
 
-        public GridDefinition Definition
+        public IGridDefinition Definition
         {
             get { return _definition; }
         }
