@@ -71,6 +71,7 @@
     <Compile Include="JqGrid\EntityGridData.cs" />
     <Compile Include="JqGrid\Grid.cs" />
     <Compile Include="JqGrid\GridColumnDTO.cs" />
+    <Compile Include="JqGrid\GridDefinition.cs" />
     <Compile Include="JqGrid\GridResults.cs" />
     <Compile Include="JqGrid\GridRunner.cs" />
     <Compile Include="JqGrid\IGrid.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="JqGrid\IGridData.cs" />
     <Compile Include="JqGrid\IGridDataSource.cs" />
     <Compile Include="JqGrid\GridColumn.cs" />
+    <Compile Include="JqGrid\IGridDefinition.cs" />
+    <Compile Include="JqGrid\IGridRunner.cs" />
     <Compile Include="JqGrid\ProjectionDataSource.cs" />
     <Compile Include="JqGrid\ProjectionGrid.cs" />
     <Compile Include="JqGrid\ProjectionGridData.cs" />

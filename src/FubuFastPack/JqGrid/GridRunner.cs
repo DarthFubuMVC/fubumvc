@@ -8,13 +8,6 @@ using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
 {
-    public interface IGridRunner<TEntity, TService>
-    {
-        TService Service { get; }
-
-        GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, PagingOptions request);
-    }
-
     public class GridRunner<TEntity, TService> : IGridRunner<TEntity, TService> where TEntity : DomainEntity
     {
         private readonly IObjectConverter _converter;
