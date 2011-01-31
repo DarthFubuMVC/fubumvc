@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using FubuCore.Binding;
+using FubuCore.Reflection;
 using NUnit.Framework;
 
 namespace FubuCore.Testing.Binding
@@ -42,6 +45,18 @@ namespace FubuCore.Testing.Binding
                 , problem.Value, Environment.NewLine, problem.ExceptionText));
             ex.Type.ShouldEqual(typeof (string));
             ex.Problems.ShouldContain(problem);
+        }
+
+        [Test]
+        public void exception_should_serialize_properly()
+        {
+            var firstProblem = new ConvertProblem { Properties = new[]{ReflectionHelper.GetProperty<DateTime>(d => d.Month)} };
+            var secondProblem = new ConvertProblem { Properties = new[] { ReflectionHelper.GetProperty<DateTime>(d => d.Day) } };
+            var originalException = new BindResultAssertionException(typeof(string), new[] { firstProblem, secondProblem });
+            
+            var deserializedException = originalException.ShouldTransferViaSerialization();
+            deserializedException.Type.ShouldEqual(originalException.Type);
+            deserializedException.Problems.ShouldHaveCount(originalException.Problems.Count);
         }
     }
 }

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
-using FubuCore;
 
 namespace FubuCore.Binding
 {
+    [Serializable]
     public class ConvertProblem
     {
         public object Item { get; set; }

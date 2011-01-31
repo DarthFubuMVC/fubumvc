@@ -108,6 +108,7 @@
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
+    <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\AssemblyLoaderTester.cs" />
