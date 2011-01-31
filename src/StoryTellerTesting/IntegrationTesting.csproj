@@ -72,6 +72,7 @@
     <Compile Include="ApplicationDriver.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
+    <Compile Include="debugging.cs" />
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Fixtures\FubuFastPack\ProjectionFixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
@@ -102,6 +103,10 @@
     <ProjectReference Include="..\FubuFastPack\FubuFastPack.csproj">
       <Project>{F274E0DD-F9B1-41FE-A3F6-89EE74FE3F56}</Project>
       <Name>FubuFastPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
+      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
+      <Name>FubuLocalization</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>

@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Reflection;
 using FubuFastPack.JqGrid;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
@@ -37,6 +38,10 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
             runGrid<OneColumnGrid>();
             runGrid<OneColumnRepositoryGrid>();
+
+            SelectionValuesFor("operations").AddRange(OperatorKeys.Keys.Select(x => x.Key));
+            SelectionValuesFor("fields").AddRange(
+                typeof (Case).GetProperties().Where(x => x.DeclaringType == typeof (Case)).Select(x => x.Name));
         }
 
 
@@ -116,6 +121,27 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             });
         }
 
+        [ExposeAsTable("Apply Criteria to a Projection Grid")]
+        [FormatAs("{Property}{Operator}{Value}{Identifier}{IsReturned}")]
+        public bool IsReturned([SelectionValues("fields")]string Property, [SelectionValues("operations")]string Operator, string Value, string Identifier)
+        {
+            var paging = new PagingOptions(1, 20, null, true);
+            paging.Criterion = new Criteria[]{new Criteria(){
+                op = Operator,
+                property = Property,
+                value = Value
+            } };
+
+            var grid = _container.GetInstance<FilterableRepositoryGrid>();
+            var results = grid.Invoke(new StructureMapServiceLocator(_container), paging);
+
+            Debug.WriteLine("Results are:");
+            results.items.Each(item => Debug.WriteLine(item.cell.Select(x => x.ToString()).Join(" | ")));
+            Debug.WriteLine("");
+
+            return results.items.Any(x => x.cell.Contains(Identifier));
+        }
+
         private void checkColumns(int count)
         {
             SetVerificationGrammar setVerificationGrammar = VerifyDataTable(() => tableForColumns(count))
@@ -159,6 +185,20 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             public OneColumnGrid()
             {
                 Show(x => x.Identifier);
+            }
+        }
+
+        public class FilterableRepositoryGrid : RepositoryGrid<Case>
+        {
+            public FilterableRepositoryGrid()
+            {
+                Show(x => x.Identifier);
+
+                FilterOn(x => x.CaseType);
+                FilterOn(x => x.Condition);
+                FilterOn(x => x.Priority);
+                FilterOn(x => x.Status);
+                FilterOn(x => x.Title);
             }
         }
 

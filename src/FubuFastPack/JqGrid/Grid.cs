@@ -36,6 +36,11 @@ namespace FubuFastPack.JqGrid
             get { return _definition; }
         }
 
+        protected void FilterOn(Expression<Func<TEntity, object>> expression)
+        {
+            _definition.FilterOn(expression);
+        }
+
         protected GridDefinition<TEntity>.ColumnExpression Show(Expression<Func<TEntity, object>> expression)
         {
             _sortables[expression.GetName()] = expression;

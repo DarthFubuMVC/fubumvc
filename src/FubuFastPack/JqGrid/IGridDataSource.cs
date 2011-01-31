@@ -7,6 +7,6 @@ namespace FubuFastPack.JqGrid
         int TotalCount();
         IGridData Fetch(PagingOptions options);
 
-        void ApplyCriteria(FilterRequest<T> request, IFilterHandler handler);
+        void ApplyCriteria(FilterRequest<T> request, IQueryService queryService);
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Test name="Query non date fields for a repository grid" lifecycle="Acceptance">
+  <Projection>
+    <CasesAre isStep="True">
+      <Rows>
+        <row isStep="True" Identifier="001" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
+        <row isStep="True" Identifier="002" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
+        <row isStep="True" Identifier="003" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
+        <row isStep="True" Identifier="004" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
+      </Rows>
+    </CasesAre>
+    <IsReturned isStep="True">
+      <table>
+        <row isStep="True" Property="Identifier" Operator="EQUAL" Value="001" Identifier="001" IsReturned="true" />
+        <row isStep="True" Property="Identifier" Operator="NOTEQUAL" Value="001" Identifier="001" IsReturned="false" />
+      </table>
+    </IsReturned>
+  </Projection>
+</Test>

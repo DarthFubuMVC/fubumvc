@@ -45,6 +45,11 @@ namespace IntegrationTesting.Domain
         public virtual string Title { get; set; }
         public virtual string Priority { get; set; }
         public virtual string CaseType { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Identifier: {1}", base.ToString(), Identifier);
+        }
     }
 
     public class CaseMap : ClassMap<Case>

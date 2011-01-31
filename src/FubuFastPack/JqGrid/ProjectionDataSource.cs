@@ -29,7 +29,7 @@ namespace FubuFastPack.JqGrid
             return new ProjectionGridData(records, accessors);
         }
 
-        public void ApplyCriteria(FilterRequest<T> request, IFilterHandler handler)
+        public void ApplyCriteria(FilterRequest<T> request, IQueryService queryService)
         {
             throw new NotSupportedException();
         }

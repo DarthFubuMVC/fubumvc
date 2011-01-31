@@ -20,6 +20,7 @@ namespace FubuFastPack.JqGrid
     {
         private readonly IList<IGridColumn> _columns = new List<IGridColumn>();
         private readonly IList<Accessor> _selectedAccessors = new List<Accessor>();
+        private readonly IList<Accessor> _filterableAccessors = new List<Accessor>();
 
         public IEnumerable<IGridColumn> Columns
         {
@@ -34,6 +35,11 @@ namespace FubuFastPack.JqGrid
         public void AddSelectedAccessor(Accessor accessor)
         {
             _selectedAccessors.Add(accessor);
+        }
+
+        public void AddFilterableAccessor(Accessor accessor)
+        {
+            _filterableAccessors.Add(accessor);
         }
 
         public IEnumerable<Accessor> SelectedAccessors
@@ -74,6 +80,14 @@ namespace FubuFastPack.JqGrid
                 grid.AddSelectedAccessor(accessor);
                 //grid.alterProjection = p => p.AddColumn(accessor);
             }
+        }
+
+        public void FilterOn(Expression<Func<T, object>> expression)
+        {
+            var accessor = expression.ToAccessor();
+
+            _properties[accessor.Name] = expression;
+            AddFilterableAccessor(accessor);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace FubuCore.Reflection.Expressions
@@ -21,6 +22,8 @@ namespace FubuCore.Reflection.Expressions
         {
             return expected =>
             {
+                Debug.WriteLine("Building expression for " + _comparisonType);
+
                 ConstantExpression expectedHolder = Expression.Constant(expected);
                 BinaryExpression comparison = Expression.MakeBinary(_comparisonType, propertyPath, expectedHolder);
                 ParameterExpression lambdaParameter = propertyPath.GetParameter<T>();

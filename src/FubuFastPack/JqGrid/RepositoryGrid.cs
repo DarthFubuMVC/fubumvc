@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
@@ -43,18 +44,25 @@ namespace FubuFastPack.JqGrid
             public IGridData Fetch(PagingOptions options)
             {
                 var queryable = query();
+                _wheres.Each(w =>
+                {
+                    Debug.WriteLine("applying " + w);
+                    queryable = queryable.Where(w);
+                });
+
+                queryable.ToList().Each(x => Debug.WriteLine(x));
+
                 queryable = sort(queryable, options);
                 queryable = applyPaging(queryable, options);
 
-                // TODO -- put the criteria in here
 
 
                 return new EntityGridData<TEntity>(queryable);
             }
 
-            public void ApplyCriteria(FilterRequest<TEntity> request, IFilterHandler handler)
+            public void ApplyCriteria(FilterRequest<TEntity> request, IQueryService queryService)
             {
-                var where = handler.WhereFilterFor(request);
+                var where = queryService.WhereFilterFor(request);
                 _wheres.Add(where);
             }
 

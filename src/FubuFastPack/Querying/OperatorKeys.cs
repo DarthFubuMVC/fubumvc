@@ -7,6 +7,7 @@ namespace FubuFastPack.Querying
 {
     public class OperatorKeys : StringToken
     {
+        private static readonly IList<OperatorKeys> _keys = new List<OperatorKeys>();
         public static readonly OperatorKeys EQUAL = new OperatorKeys("EQUAL", "Equals");
         public static readonly OperatorKeys NOTEQUAL = new OperatorKeys("NOTEQUAL", "Not Equals");
         public static readonly OperatorKeys LESSTHAN = new OperatorKeys("LESSTHAN", "Less Than");
@@ -28,8 +29,10 @@ namespace FubuFastPack.Querying
         public static readonly StringToken AFTER_DATE = new OperatorKeys("AFTER_DATE", "After Date");
         public static readonly StringToken BEFORE_DATE = new OperatorKeys("BEFORE_DATE", "Before Date");
 
+        
         protected OperatorKeys(string key, string defaultValue) : base(key, defaultValue)
         {
+            _keys.Add(this);
         }
 
         public OperatorDTO ToOperator()
@@ -38,6 +41,11 @@ namespace FubuFastPack.Querying
                 display = ToString(),
                 value = Key
             };
+        }
+
+        public static IEnumerable<OperatorKeys> Keys
+        {
+            get { return _keys; }
         }
     }
 

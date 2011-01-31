@@ -1,4 +1,5 @@
 using FubuFastPack.JqGrid;
+using FubuFastPack.Querying;
 using StructureMap.Configuration.DSL;
 
 namespace FubuFastPack.StructureMap
@@ -8,6 +9,7 @@ namespace FubuFastPack.StructureMap
         public FastPackRegistry()
         {
             For(typeof (IGridRunner<,>)).Use(typeof (GridRunner<,>));
+            For<IQueryService>().Use<QueryService>();
         }
     }
 }

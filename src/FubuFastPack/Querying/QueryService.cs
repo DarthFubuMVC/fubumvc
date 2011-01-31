@@ -8,13 +8,29 @@ using FubuCore.Reflection.Expressions;
 
 namespace FubuFastPack.Querying
 {
-    public class QueryService
+    public interface IQueryService
+    {
+        IEnumerable<OperatorKeys> FilterOptionsFor<TEntity>(Expression<Func<TEntity, object>> property);
+        Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request);
+    }
+
+    public class QueryService : IQueryService
     {
         private readonly IEnumerable<IFilterHandler> _handlers;
 
         public QueryService(IEnumerable<IFilterHandler> handlers)
         {
             _handlers = handlers;
+        }
+
+        public IEnumerable<OperatorKeys> FilterOptionsFor<TEntity>(Expression<Func<TEntity, object>> property)
+        {
+            return allHandlers().SelectMany(x => x.FilterOptionsFor(property));
+        }
+
+        public Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request)
+        {
+            return allHandlers().First(h => h.Handles(request)).WhereFilterFor(request);
         }
 
         private IEnumerable<IFilterHandler> allHandlers()
@@ -28,16 +44,6 @@ namespace FubuFastPack.Querying
             {
                 yield return filterHandler;
             }
-        }
-
-        public IEnumerable<OperatorKeys> FilterOptionsFor<TEntity>(Expression<Func<TEntity, object>> property)
-        {
-            return allHandlers().SelectMany(x => x.FilterOptionsFor(property));
-        }
-
-        public Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request)
-        {
-            return allHandlers().First(h => h.Matches(request.Property)).WhereFilterFor(request);
         }
     }
 
@@ -64,6 +70,11 @@ namespace FubuFastPack.Querying
         public Expression<Func<T, object>> Property
         {
             get { return _property; }
+        }
+
+        public string Operator
+        {
+            get { return _criteria.op; }
         }
 
         public object GetValue()
@@ -117,7 +128,7 @@ namespace FubuFastPack.Querying
     public interface IFilterHandler
     {
         IEnumerable<OperatorKeys> FilterOptionsFor<T>(Expression<Func<T, object>> property);
-        bool Matches<T>(Expression<Func<T, object>> property);
+        bool Handles<T>(FilterRequest<T> request);
 
         // TODO -- do something with ICriteria
         Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request);
@@ -141,15 +152,20 @@ namespace FubuFastPack.Querying
             yield return _key;
         }
 
-        public bool Matches<TEntity>(Expression<Func<TEntity, object>> property)
+        public bool Handles<T>(FilterRequest<T> request)
         {
-            var accessor = property.ToAccessor();
-            return _typeFilters.Any(f => f(accessor.PropertyType));
+            return _key.Key == request.Operator && Matches(request.Property);
         }
 
         public Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request)
         {
             return new TOperation().GetPredicate(request.Property, request.GetValue());
+        }
+
+        public bool Matches<TEntity>(Expression<Func<TEntity, object>> property)
+        {
+            var accessor = property.ToAccessor();
+            return _typeFilters.Any(f => f(accessor.PropertyType));
         }
     }
 }
