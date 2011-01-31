@@ -17,8 +17,7 @@ namespace FubuFastPack.JqGrid
 
         protected Grid()
         {
-            var accessor = ReflectionHelper.GetAccessor<TEntity>(x => x.Id);
-            _definition.AddSelectedAccessor(accessor);
+            _definition.Fetch(x => x.Id);
         }
 
         public GridResults Invoke(IServiceLocator services, PagingOptions request)

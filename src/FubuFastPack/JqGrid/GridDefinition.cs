@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuFastPack.Querying;
@@ -12,13 +11,7 @@ namespace FubuFastPack.JqGrid
 {
     public class GridDefinition<T> : IGridDefinition
     {
-        private readonly IList<IGridColumn> _columns = new List<IGridColumn>();
-        private readonly IList<Accessor> _filterableAccessors = new List<Accessor>();
-
-        private readonly Cache<string, Expression<Func<T, object>>> _properties =
-            new Cache<string, Expression<Func<T, object>>>();
-
-        private readonly IList<Accessor> _selectedAccessors = new List<Accessor>();
+        private readonly Cache<string, IGridColumn> _columns = new Cache<string, IGridColumn>();
 
         public IEnumerable<IGridColumn> Columns
         {
@@ -27,77 +20,76 @@ namespace FubuFastPack.JqGrid
 
         public IEnumerable<Accessor> SelectedAccessors
         {
-            get { return _selectedAccessors; }
+            get { return _columns.Where(x => x.FetchMode != ColumnFetching.NoFetch).Select(x => x.Accessor); }
         }
 
         // TODO -- think we'll need an actual Filterable column here for labels
         // maybe IGridColumn just gets a Filterable / Sortable / Displayed props
         public IEnumerable<FilterDTO> AllPossibleFilters(IQueryService queryService)
         {
-            return _filterableAccessors.Select(x =>
+            return _columns.Where(x => x.IsFilterable).Select(x =>
             {
-                return new FilterDTO(){
-                    display = LocalizationManager.GetHeader((PropertyInfo) x.InnerProperty),
-                    value = x.Name,
-                    operators = queryService.FilterOptionsFor(_properties[x.Name]).Select(o => o.ToOperator()).ToArray()
+                return new FilterDTO{
+                    display = LocalizationManager.GetHeader(x.Accessor.InnerProperty),
+                    value = x.Accessor.Name,
+                    operators =
+                        queryService.FilterOptionsFor(x.PropertyExpressionFor<T>()).Select(o => o.ToOperator()).ToArray()
                 };
             });
         }
 
         protected void addColumn(IGridColumn column)
         {
-            _columns.Add(column);
-        }
-
-        // TODO -- might make sense to demote this to private
-        public void AddSelectedAccessor(Accessor accessor)
-        {
-            _selectedAccessors.Add(accessor);
-        }
-
-        // TODO -- might make sense to demote this to private
-        public void AddFilterableAccessor(Accessor accessor)
-        {
-            _filterableAccessors.Add(accessor);
+            _columns[column.Accessor.Name] = column;
         }
 
 
         public ColumnExpression Show(Expression<Func<T, object>> expression)
         {
-            return new ColumnExpression(this, expression);
+            var column = withColumn(expression, col => col.FetchMode = ColumnFetching.FetchAndDisplay);
+            return new ColumnExpression(this, column);
         }
 
-        public Expression<Func<T, object>> PropertyFor(string propertyName)
+        public IGridColumn ColumnFor(string propertyName)
         {
-            // TODO -- better error handling here?
-            return _properties[propertyName];
+            return _columns.First(x => x.Accessor.Name == propertyName);
         }
 
         public void FilterOn(Expression<Func<T, object>> expression)
         {
-            var accessor = expression.ToAccessor();
-
-            _properties[accessor.Name] = expression;
-            AddFilterableAccessor(accessor);
+            withColumn(expression, col => col.IsFilterable = true);
         }
 
-        #region Nested type: ColumnExpression
+        private IGridColumn withColumn(Expression<Func<T, object>> expression, Action<IGridColumn> configure)
+        {
+            var accessor = expression.ToAccessor();
+
+            if (!_columns.Has(accessor.Name))
+            {
+                _columns[accessor.Name] = new GridColumn(accessor, expression);
+            }
+
+            var column = _columns[accessor.Name];
+            configure(column);
+
+            return column;
+        }
+
 
         public class ColumnExpression
         {
-            private readonly GridColumn _column;
+            private readonly IGridColumn _column;
 
-            public ColumnExpression(GridDefinition<T> grid, Expression<Func<T, object>> expression)
+            public ColumnExpression(GridDefinition<T> grid, IGridColumn column)
             {
-                var accessor = expression.ToAccessor();
-
-                grid._properties[accessor.Name] = expression;
-                _column = new GridColumn(accessor);
-                grid.addColumn(_column);
-                grid.AddSelectedAccessor(accessor);
+                _column = column;
             }
         }
 
-        #endregion
+        public ColumnExpression Fetch(Expression<Func<T, object>> expression)
+        {
+            var column = withColumn(expression, col => col.FetchMode = ColumnFetching.FetchOnly);
+            return new ColumnExpression(this, column);
+        }
     }
 }
