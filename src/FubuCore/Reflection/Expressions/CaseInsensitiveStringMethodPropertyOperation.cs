@@ -23,22 +23,21 @@ namespace FubuCore.Reflection.Expressions
         }
         public abstract string Text { get; }
 
-        public Func<object, Expression<Func<ENTITY, bool>>> GetPredicateBuilder<ENTITY>(MemberExpression propertyPath)
+        public Func<object, Expression<Func<T, bool>>> GetPredicateBuilder<T>(MemberExpression propertyPath)
         {
             return valueToCheck =>
             {
                 ConstantExpression valueToCheckConstant = Expression.Constant(valueToCheck);
-                Expression expression =
-                    Expression.Call(Expression.Coalesce(propertyPath, Expression.Constant(string.Empty)), _method,
-                                    valueToCheckConstant,
-                                    Expression.Constant(StringComparison.InvariantCultureIgnoreCase));
+                BinaryExpression binaryExpression = Expression.Coalesce(propertyPath, Expression.Constant(string.Empty));
+                ConstantExpression invariantCulture = Expression.Constant(StringComparison.InvariantCultureIgnoreCase);
+                Expression expression = Expression.Call(binaryExpression, _method, valueToCheckConstant, invariantCulture);
                 if (_negate)
                 {
                     expression = Expression.Not(expression);
                 }
 
-                ParameterExpression lambdaParameter = propertyPath.GetParameter<ENTITY>();
-                return Expression.Lambda<Func<ENTITY, bool>>(expression, lambdaParameter);
+                ParameterExpression lambdaParameter = propertyPath.GetParameter<T>();
+                return Expression.Lambda<Func<T, bool>>(expression, lambdaParameter);
             };
         }
     }

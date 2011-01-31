@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection.Expressions;
 
@@ -22,9 +23,9 @@ namespace FubuFastPack.Querying
             filterIs<GreaterThanOrEqualPropertyOperation>(OperatorKeys.GREATERTHANOREQUAL, numbers);
             filterIs<LessThanOrEqualPropertyOperation>(OperatorKeys.LESSTHANOREQUAL, numbers);
 
-            filterIs<StringStartsWithPropertyOperation>(OperatorKeys.STARTSWITH, strings);
-            filterIs<StringEndsWithPropertyOperation>(OperatorKeys.ENDSWITH, strings);
-            filterIs<StringContainsPropertyOperation>(OperatorKeys.CONTAINS, strings);
+            stringOp(OperatorKeys.STARTSWITH, s => s.StartsWith(""));
+            stringOp(OperatorKeys.ENDSWITH, s => s.EndsWith(""));
+            stringOp(OperatorKeys.CONTAINS, s => s.Contains(""));
         }
 
         public static IEnumerable<IFilterHandler> AllHandlers
@@ -41,6 +42,12 @@ namespace FubuFastPack.Querying
             where T : IPropertyOperation, new()
         {
             var handler = new BinaryFilterHandler<T>(key, typeFilters);
+            _handlers.Add(handler);
+        }
+
+        private static void stringOp(OperatorKeys key, Expression<Func<string, bool>> method)
+        {
+            var handler = new StringFilterHandler(key, method);
             _handlers.Add(handler);
         }
     }

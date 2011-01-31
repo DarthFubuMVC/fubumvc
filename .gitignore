@@ -25,3 +25,6 @@ editor.htm
 testEditor.css
 TestResult.xml
 history.xml
+
+pak*.zip
+test.db

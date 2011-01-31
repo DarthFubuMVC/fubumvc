@@ -4,7 +4,7 @@
     <CasesAre isStep="True">
       <Rows>
         <row isStep="True" Identifier="001" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
-        <row isStep="True" Identifier="002" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
+        <row isStep="True" Identifier="002" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="About Firefly" />
         <row isStep="True" Identifier="003" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
         <row isStep="True" Identifier="004" CaseType="Question" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" />
       </Rows>
@@ -13,6 +13,15 @@
       <table>
         <row isStep="True" Property="Identifier" Operator="EQUAL" Value="001" Identifier="001" IsReturned="true" />
         <row isStep="True" Property="Identifier" Operator="NOTEQUAL" Value="001" Identifier="001" IsReturned="false" />
+        <row isStep="True" Property="Title" Operator="CONTAINS" Value="Firefly" Identifier="002" IsReturned="true" />
+        <row isStep="True" Property="Title" Operator="CONTAINS" Value="firefly" Identifier="002" IsReturned="true" />
+        <row isStep="True" Property="Title" Operator="CONTAINS" Value="Firefly" Identifier="001" IsReturned="false" />
+        <row isStep="True" Property="Title" Operator="STARTSWITH" Value="About" Identifier="002" IsReturned="true" />
+        <row isStep="True" Property="Title" Operator="STARTSWITH" Value="about" Identifier="002" IsReturned="true" />
+        <row isStep="True" Property="Title" Operator="STARTSWITH" Value="about" Identifier="001" IsReturned="false" />
+        <row isStep="True" Property="Title" Operator="ENDSWITH" Value="Firefly" Identifier="002" IsReturned="true" />
+        <row isStep="True" Property="Title" Operator="ENDSWITH" Value="firefly" Identifier="002" IsReturned="true" />
+        <row isStep="True" Property="Title" Operator="ENDSWITH" Value="Firefly" Identifier="001" IsReturned="false" />
       </table>
     </IsReturned>
   </Grids>
