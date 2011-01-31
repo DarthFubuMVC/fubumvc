@@ -279,11 +279,6 @@ namespace FubuFastPack.NHibernate
             Where(property).IsEqualTo(value);
         }
 
-        public void Where(Expression<Func<T, object>> property, ExpressionType expressionType, object value)
-        {
-            throw new NotImplementedException();
-        }
-
         void IDataSourceFilter<T>.WhereNotEqual(Expression<Func<T, object>> property, object value)
         {
             Where(property).IsNot(value);
