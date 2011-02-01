@@ -9,5 +9,7 @@ namespace FubuFastPack.JqGrid
         IEnumerable<IGridColumn> Columns { get; }
         IEnumerable<Accessor> SelectedAccessors { get; }
         IEnumerable<FilterDTO> AllPossibleFilters(IQueryService queryService);
+
+        
     }
 }

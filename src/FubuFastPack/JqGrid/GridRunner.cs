@@ -49,7 +49,7 @@ namespace FubuFastPack.JqGrid
         {
             var requests = paging.Criterion.Select(x =>
             {
-                var expression = grid.ColumnFor(x.property).PropertyExpressionFor<T>();
+                var expression = grid.PropertyExpressionFor(x.property);
                 return new FilterRequest<T>(x, _converter, expression);
             });
 

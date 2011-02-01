@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuFastPack.Querying;
 using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
@@ -21,21 +22,20 @@ namespace FubuFastPack.JqGrid
     {
         GridColumnDTO ToDto();
         Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls);
-        ColumnFetching FetchMode { get; set; }
-        bool IsFilterable { get; set; }
-        bool IsSortable { get; set; }
-        Accessor Accessor { get; }
-        Expression Expression { get; }
-    }
 
-    public static class GridColumnExtensions
-    {
-        public static Expression<Func<T, object>> PropertyExpressionFor<T>(this IGridColumn column)
-        {
-            return (Expression<Func<T, object>>) column.Expression;
-        }
+        IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService);
+        IEnumerable<Accessor> SelectAccessors();
+
+
+        // Prolly shouldn't be part of the interface
+        ColumnFetching FetchMode { get; set; }
 
         
+        
+        // Not wild about these being public
+        bool IsFilterable { get; set; }
+        bool IsSortable { get; set; }
+
     }
 
 

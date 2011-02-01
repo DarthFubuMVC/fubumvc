@@ -1,17 +1,27 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuFastPack.Querying;
+using FubuLocalization;
 using FubuMVC.Core.Urls;
+using System.Linq;
 
 namespace FubuFastPack.JqGrid
 {
-    public class GridColumn : IGridColumn
+    public class GridColumn<T> : IGridColumn
     {
-        private readonly Accessor _accessor;
-        private readonly Expression _expression;
+        public static GridColumn<T> ColumnFor<T>(Expression<Func<T, object>> property)
+        {
+            return new GridColumn<T>(property.ToAccessor(), property);
+        }
 
-        public GridColumn(Accessor accessor, Expression expression)
+        private readonly Accessor _accessor;
+        private readonly Expression<Func<T, object>> _expression;
+        private StringToken _header;
+
+        public GridColumn(Accessor accessor, Expression<Func<T, object>> expression)
         {
             _accessor = accessor;
             _expression = expression;
@@ -23,14 +33,27 @@ namespace FubuFastPack.JqGrid
             get { return _accessor; }
         }
 
-        public Expression Expression
-        {
-            get { return _expression; }
-        }
-
         public GridColumnDTO ToDto()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService)
+        {
+            if (!IsFilterable) yield break;
+
+            yield return new FilterDTO(){
+                display = GetHeader(),
+                value = _accessor.Name,
+                operators = queryService.FilterOptionsFor(_expression).Select(x => x.ToOperator()).ToArray()
+            };
+        }
+
+        public IEnumerable<Accessor> SelectAccessors()
+        {
+            if (FetchMode == ColumnFetching.NoFetch) yield break;
+
+            yield return _accessor;
         }
 
         public ColumnFetching FetchMode { get; set; }
@@ -60,6 +83,18 @@ namespace FubuFastPack.JqGrid
 
                 dto.AddCellDisplay(formatter.GetDisplayForValue(_accessor, rawValue));
             };
+        }
+
+        public void OverrideHeader(StringToken token)
+        {
+            _header = token;
+        }
+
+        public string GetHeader()
+        {
+            if (_header != null) return _header.ToString();
+
+            return LocalizationManager.GetHeader(_expression);
         }
     }
 }
