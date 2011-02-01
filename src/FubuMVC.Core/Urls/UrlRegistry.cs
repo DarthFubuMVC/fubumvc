@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Urls
 {
@@ -38,6 +39,18 @@ namespace FubuMVC.Core.Urls
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
             return findAnswerFromResolver(null, r => r.Find(expression));
+        }
+
+        public string UrlFor<TInput>(RouteParameters parameters)
+        {
+            var chain = resolver.FindUniqueByInputType(typeof (TInput));
+            return chain.Route.CreateUrlFromParameters(parameters);
+        }
+
+        public string UrlFor<TInput>(RouteParameters parameters, string category)
+        {
+            var chain = resolver.FindUniqueByInputType(typeof (TInput), category);
+            return chain.Route.CreateUrlFromParameters(parameters);
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
@@ -107,7 +120,9 @@ namespace FubuMVC.Core.Urls
         protected override string findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
         {
             BehaviorChain chain = finder(resolver);
-            return chain.Route.CreateUrl(model);
+            return chain.Route.CreateUrlFromInput(model);
         }
     }
+
+
 }

@@ -111,10 +111,22 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteDefinition<SampleViewModel>("test/edit/{InPath}");
             url.AddRouteInput(x => x.InPath);
 
-            url.CreateUrl(new SampleViewModel
+            url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "some text"
             }).ShouldEqual("test/edit/some%20text");
+        }
+
+        [Test]
+        public void create_url_will_escape_the_url_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModel>("test/edit/{InPath}");
+            url.AddRouteInput(x => x.InPath);
+
+            var parameters = new RouteParameters<SampleViewModel>();
+            parameters[x => x.InPath] = "some text";
+
+            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/some%20text");
         }
 
         [Test]
@@ -123,10 +135,22 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteDefinition<SampleViewModel>("test/edit/{InPath}");
             url.AddRouteInput(x => x.InPath);
 
-            url.CreateUrl(new SampleViewModel
+            url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "5"
             }).ShouldEqual("test/edit/5");
+        }
+
+        [Test]
+        public void create_url_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModel>("test/edit/{InPath}");
+            url.AddRouteInput(x => x.InPath);
+
+            var parameters = new RouteParameters<SampleViewModel>();
+            parameters[x => x.InPath] = "5";
+
+            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5");
         }
 
         [Test]
@@ -136,10 +160,24 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.OptionalInput);
 
             url
-                .CreateUrl(new SampleViewModelWithInputs
+                .CreateUrlFromInput(new SampleViewModelWithInputs
                 {
                     OptionalInput = "a"
                 })
+                .ShouldEndWith("test/edit/a");
+        }
+
+        [Test]
+        public void create_url_with_input_model_and_default_value_for_optional_input_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
+            url.AddRouteInput(x => x.OptionalInput);
+
+            var parameters = new RouteParameters<SampleViewModelWithInputs>();
+            parameters[x => x.OptionalInput] = "a";
+
+            url
+                .CreateUrlFromParameters(parameters)
                 .ShouldEndWith("test/edit/a");
         }
 
@@ -150,10 +188,24 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.RequiredInput);
 
             url
-                .CreateUrl(new SampleViewModelWithInputs
+                .CreateUrlFromInput(new SampleViewModelWithInputs
                 {
                     RequiredInput = "a"
                 })
+                .ShouldEndWith("test/edit/a");
+        }
+
+        [Test]
+        public void create_url_with_input_model_and_default_value_for_required_input_by_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
+            url.AddRouteInput(x => x.RequiredInput);
+
+            var parameters = new RouteParameters<SampleViewModelWithInputs>();
+            parameters[x => x.RequiredInput] = "a";
+
+            url
+                .CreateUrlFromParameters(parameters)
                 .ShouldEndWith("test/edit/a");
         }
 
@@ -164,7 +216,21 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.OptionalInput);
 
             url
-                .CreateUrl(new SampleViewModelWithInputs())
+                .CreateUrlFromInput(new SampleViewModelWithInputs())
+                .ShouldEndWith("test/edit/default");
+        }
+
+
+        [Test]
+        public void create_url_with_input_model_and_no_default_value_specified_for_optional_input_by_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
+            url.AddRouteInput(x => x.OptionalInput);
+
+            var parameters = new RouteParameters<SampleViewModelWithInputs>();
+
+            url
+                .CreateUrlFromParameters(parameters)
                 .ShouldEndWith("test/edit/default");
         }
 
@@ -174,7 +240,16 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
             url.AddRouteInput(x => x.RequiredInput);
 
-            typeof (FubuException).ShouldBeThrownBy(() => url.CreateUrl(new SampleViewModelWithInputs()));
+            typeof (FubuException).ShouldBeThrownBy(() => url.CreateUrlFromInput(new SampleViewModelWithInputs()));
+        }
+
+        [Test]
+        public void create_url_with_input_model_and_no_default_value_specified_for_required_input_by_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
+            url.AddRouteInput(x => x.RequiredInput);
+
+            typeof(FubuException).ShouldBeThrownBy(() => url.CreateUrlFromParameters(new RouteParameters()));
         }
 
         [Test]
@@ -184,11 +259,25 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.InPath);
             url.AddRouteInput(x => x.AlsoInPath);
 
-            url.CreateUrl(new SampleViewModel
+            url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "5",
                 AlsoInPath = "some text"
             }).ShouldEqual("test/edit/5/some%20text");
+        }
+
+        [Test]
+        public void create_url_with_multiple_variables_in_path_by_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModel>("test/edit/{InPath}/{AlsoInPath}");
+            url.AddRouteInput(x => x.InPath);
+            url.AddRouteInput(x => x.AlsoInPath);
+
+            var parameters = new RouteParameters<SampleViewModel>();
+            parameters[x => x.InPath] = "5";
+            parameters[x => x.AlsoInPath] = "some text";
+
+            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5/some%20text");
         }
 
         [Test]
@@ -203,7 +292,7 @@ namespace FubuMVC.Tests.Registration
             var inputs = props.Select(x => new RouteInput(ReflectionHelper.GetAccessor(x)));
             url.AddQueryInputs(inputs);
 
-            url.CreateUrl(new SampleViewModel
+            url.CreateUrlFromInput(new SampleViewModel
             {
                 InQueryString = "query",
                 AlsoInQueryString = "alsoquery"
@@ -218,7 +307,21 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.OptionalInput);
 
             url
-                .CreateUrl(null)
+                .CreateUrlFromInput(null)
+                .ShouldEndWith("test/edit/default");
+        }
+
+
+        [Test]
+        public void create_url_with_null_input_model_and_no_default_value_specified_for_optional_input_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{OptionalInput}");
+            url.AddRouteInput(x => x.OptionalInput);
+
+            var parameters = new RouteParameters<SampleViewModelWithInputs>();
+
+            url
+                .CreateUrlFromParameters(parameters)
                 .ShouldEndWith("test/edit/default");
         }
 
@@ -228,7 +331,16 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
             url.AddRouteInput(x => x.RequiredInput);
 
-            typeof (FubuException).ShouldBeThrownBy(() => url.CreateUrl(null));
+            typeof (FubuException).ShouldBeThrownBy(() => url.CreateUrlFromInput(null));
+        }
+
+        [Test]
+        public void create_url_with_null_input_model_and_no_default_value_specified_for_required_input_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModelWithInputs>("test/edit/{RequiredInput}");
+            url.AddRouteInput(x => x.RequiredInput);
+
+            typeof(FubuException).ShouldBeThrownBy(() => url.CreateUrlFromParameters(null));
         }
 
         [Test]
@@ -238,11 +350,25 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.InPath);
             url.AddQueryInput(x => x.InQueryString);
 
-            url.CreateUrl(new SampleViewModel
+            url.CreateUrlFromInput(new SampleViewModel
             {
                 InPath = "5",
                 InQueryString = "query"
             }).ShouldEqual("test/edit/5?InQueryString=query");
+        }
+
+        [Test]
+        public void create_url_with_querystring_and_inputmodel_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModel>("test/edit/{InPath}");
+            url.AddRouteInput(x => x.InPath);
+            url.AddQueryInput(x => x.InQueryString);
+
+            var parameters = new RouteParameters<SampleViewModel>();
+            parameters[x => x.InPath] = "5";
+            parameters[x => x.InQueryString] = "query";
+
+            url.CreateUrlFromParameters(parameters).ShouldEqual("test/edit/5?InQueryString=query");
         }
 
         [Test]
@@ -251,10 +377,23 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteDefinition<SampleViewModel>("/my/sample/path");
             url.AddQueryInput(x => x.InQueryString);
 
-            url.CreateUrl(new SampleViewModel
+            url.CreateUrlFromInput(new SampleViewModel
             {
                 InQueryString = "query"
             }).ShouldEqual("/my/sample/path?InQueryString=query");
+        }
+
+
+        [Test]
+        public void create_url_with_variables_in_querystring_with_parameters()
+        {
+            var url = new RouteDefinition<SampleViewModel>("/my/sample/path");
+            url.AddQueryInput(x => x.InQueryString);
+
+            var parameters = new RouteParameters<SampleViewModel>();
+            parameters[x => x.InQueryString] = "query";
+
+            url.CreateUrlFromParameters(parameters).ShouldEqual("/my/sample/path?InQueryString=query");
         }
 
         [Test]

@@ -11,7 +11,8 @@ namespace FubuMVC.Core.Registration.Routes
         string Pattern { get; }
         int Rank { get; }
         IEnumerable<KeyValuePair<string, object>> Constraints { get; }
-        string CreateUrl(object input);
+        string CreateUrlFromInput(object input);
+        string CreateUrlFromParameters(RouteParameters parameters);
         string CreateTemplate(object input, Func<object, object>[] hash);
         Route ToRoute();
         void Append(string patternPart);

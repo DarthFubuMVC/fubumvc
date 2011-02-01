@@ -59,6 +59,8 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(new Model1()).ShouldEqual("one/m1");
         }
 
+
+
         [Test]
         public void retrieve_a_url_for_a_model_that_does_not_exist()
         {
@@ -76,6 +78,15 @@ namespace FubuMVC.Tests.Urls
             urls.UrlFor(new ModelWithInputs{
                 Name = "Jeremy"
             }).ShouldEqual("find/Jeremy");
+        }
+
+        [Test]
+        public void retrieve_url_by_input_type_with_parameters()
+        {
+            var parameters = new RouteParameters<ModelWithInputs>();
+            parameters[x => x.Name] = "Max";
+
+            urls.UrlFor<ModelWithInputs>(parameters).ShouldEqual("find/Max");
         }
 
         [Test]

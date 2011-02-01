@@ -18,5 +18,7 @@ namespace FubuMVC.Core.Registration.Querying
         void RootAt(string baseUrl);
         IChainForwarder FindForwarder(object model, string category);
         IChainForwarder FindForwarder(object model);
+        BehaviorChain FindUniqueByInputType(Type modelType);
+        BehaviorChain FindUniqueByInputType(Type modelType, string category);
     }
 }

@@ -6,14 +6,16 @@ using System.Reflection;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.Routes
 {
+
+
+
     public class RouteDefinition : IRouteDefinition
     {
-        private string _pattern;
         private readonly RouteValueDictionary _constraints = new RouteValueDictionary();
+        private string _pattern;
 
         public RouteDefinition(string pattern)
         {
@@ -25,9 +27,14 @@ namespace FubuMVC.Core.Registration.Routes
             get { return null; }
         }
 
-        public virtual string CreateUrl(object input)
+        public virtual string CreateUrlFromInput(object input)
         {
             return _pattern.ToAbsoluteUrl();
+        }
+
+        public virtual string CreateUrlFromParameters(RouteParameters parameters)
+        {
+            return CreateUrlFromParameters(null);
         }
 
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
@@ -42,12 +49,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual Route ToRoute()
         {
-            return new Route(_pattern, null, getConstraints(), null); ;
-        }
-
-        protected RouteValueDictionary getConstraints()
-        {
-            return _constraints.Count > 0 ? _constraints : null;
+            return new Route(_pattern, null, getConstraints(), null);
+            ;
         }
 
         public void Append(string patternPart)
@@ -56,12 +59,15 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = _pattern.Replace("//", "/").TrimStart('/');
         }
 
-        public string Pattern { get { return _pattern; } }
+        public string Pattern
+        {
+            get { return _pattern; }
+        }
 
         public void RemoveLastPatternPart()
         {
-            string[] parts = Pattern.Split('/');
-            string[] newParts = parts.Take(parts.Length - 1).ToArray();
+            var parts = Pattern.Split('/');
+            var newParts = parts.Take(parts.Length - 1).ToArray();
             _pattern = newParts.Join("/");
         }
 
@@ -70,7 +76,10 @@ namespace FubuMVC.Core.Registration.Routes
             get { return 0; }
         }
 
-        public IEnumerable<KeyValuePair<string, object>> Constraints { get { return _constraints; } }
+        public IEnumerable<KeyValuePair<string, object>> Constraints
+        {
+            get { return _constraints; }
+        }
 
         public void AddRouteConstraint(string inputName, IRouteConstraint constraint)
         {
@@ -97,6 +106,11 @@ namespace FubuMVC.Core.Registration.Routes
             // do nothing
         }
 
+        protected RouteValueDictionary getConstraints()
+        {
+            return _constraints.Count > 0 ? _constraints : null;
+        }
+
         public override string ToString()
         {
             return string.Format("{0}", _pattern);
@@ -113,13 +127,29 @@ namespace FubuMVC.Core.Registration.Routes
         {
         }
 
-        public List<RouteInput> RouteInputs { get { return _routeInputs; } }
-        public List<RouteInput> QueryInputs { get { return _queryInputs; } }
-        public override Type InputType { get { return typeof(T); } }
-
-        public override string CreateUrl(object input)
+        public List<RouteInput> RouteInputs
         {
-            string url = Pattern;
+            get { return _routeInputs; }
+        }
+
+        public List<RouteInput> QueryInputs
+        {
+            get { return _queryInputs; }
+        }
+
+        public override Type InputType
+        {
+            get { return typeof (T); }
+        }
+
+        public override int Rank
+        {
+            get { return _routeInputs.Count; }
+        }
+
+        public override string CreateUrlFromInput(object input)
+        {
+            var url = Pattern;
 
             if (_routeInputs.Any(x => !x.CanSubstitue(input)))
             {
@@ -132,17 +162,41 @@ namespace FubuMVC.Core.Registration.Routes
             }
 
             url = fillRouteValues(url, input);
-            url = fillQueryInputs(url, input);
+            url = fillQueryInputs(url, x => x.ToQueryString(input));
+
+            return url.ToAbsoluteUrl();
+        }
+
+        public override string CreateUrlFromParameters(RouteParameters parameters)
+        {
+            var url = Pattern;
+
+            if (parameters == null)
+            {
+                throw new FubuException(2107, "RouteParameters cannot be null");
+            }
+
+            if (_routeInputs.Any(x => !x.IsSatisfied(parameters)))
+            {
+                throw new FubuException(
+                    2107,
+                    "Missing required parameters for route {0}, got '{1}'",
+                    Pattern,
+                    parameters.AllNames.Join(", "));
+            }
+
+            _routeInputs.Each(input => url = input.Substitute(parameters, url));
+            url = fillQueryInputs(url, input => input.ToQueryString(parameters));
 
             return url.ToAbsoluteUrl();
         }
 
         public override string CreateTemplate(object input, Func<object, object>[] hash)
         {
-            string url = Pattern;
+            var url = Pattern;
 
             _routeInputs.Where(x => x.CanTemplate(input))
-               .Each(r => url = r.Substitute((T)input, url));
+                .Each(r => url = r.Substitute((T) input, url));
 
             if (hash != null)
                 hash.Each(func =>
@@ -152,7 +206,7 @@ namespace FubuMVC.Core.Registration.Routes
                     url = url.Replace("{" + name + "}", rawValue.ToString().UrlEncoded());
                 });
 
-            url = fillQueryInputs(url, input);
+            url = fillQueryInputs(url, i => i.ToQueryString(input));
 
             return url.ToAbsoluteUrl();
         }
@@ -167,25 +221,25 @@ namespace FubuMVC.Core.Registration.Routes
             return new Route(Pattern, defaults, getConstraints(), null);
         }
 
-        private string fillQueryInputs(string url, object input)
+        private string fillQueryInputs(string url, Func<RouteInput, string> getQuerystring)
         {
             if (_queryInputs.Count == 0) return url;
 
-            return url + "?" + _queryInputs.Select(x => x.ToQueryString(input)).Join("&");
+            return url + "?" + _queryInputs.Select(getQuerystring).Join("&");
         }
 
         private string fillRouteValues(string url, object input)
         {
             if (_routeInputs.Count == 0) return url;
 
-            _routeInputs.Each(r => { url = r.Substitute((T)input, url); });
+            _routeInputs.Each(r => { url = r.Substitute((T) input, url); });
 
             return url;
         }
 
         public void AddRouteInput(Expression<Func<T, object>> expression)
         {
-            Accessor accessor = ReflectionHelper.GetAccessor(expression);
+            var accessor = ReflectionHelper.GetAccessor(expression);
             var input = new RouteInput(accessor);
 
             if (_routeInputs.Any(x => x.Name == input.Name)) return;
@@ -200,7 +254,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public void AddQueryInput(Expression<Func<T, object>> expression)
         {
-            Accessor accessor = ReflectionHelper.GetAccessor(expression);
+            var accessor = ReflectionHelper.GetAccessor(expression);
             var input = new RouteInput(accessor);
 
             _queryInputs.Add(input);
@@ -236,17 +290,9 @@ namespace FubuMVC.Core.Registration.Routes
             return _queryInputs.Single(x => x.Name == querystringKey);
         }
 
-        public override int Rank
-        {
-            get
-            {
-                return _routeInputs.Count;
-            }
-        }
-
         public override string ToString()
         {
-            return "{0} --> {1}".ToFormat(Pattern, typeof(T).FullName);
+            return "{0} --> {1}".ToFormat(Pattern, typeof (T).FullName);
         }
     }
 }

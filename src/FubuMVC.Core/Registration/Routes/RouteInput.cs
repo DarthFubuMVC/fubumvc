@@ -29,7 +29,18 @@ namespace FubuMVC.Core.Registration.Routes
         public string Substitute(object input, string url)
         {
             object rawValue = GetRawValue(input);
-            return url.Replace("{" + Name + "}", rawValue.ToString().UrlEncoded());
+            string parameterValue = rawValue.ToString();
+            return substitute(url, parameterValue);
+        }
+
+        private string substitute(string url, string parameterValue)
+        {
+            return url.Replace("{" + Name + "}", parameterValue.UrlEncoded());
+        }
+
+        public string Substitute(RouteParameters parameters, string url)
+        {
+            return substitute(url, parameters[_accessor.Name] ?? DefaultValue.ToString());
         }
 
         public bool CanTemplate(object inputModel)
@@ -49,12 +60,22 @@ namespace FubuMVC.Core.Registration.Routes
         {
             object rawValue = GetRawValue(input);
 
+            return makeQueryString(rawValue);
+        }
+
+        private string makeQueryString(object rawValue)
+        {
             if (rawValue == null || string.Empty.Equals(rawValue))
             {
                 return Name.UrlEncoded() + "=";
             }
 
             return Name.UrlEncoded() + "=" + rawValue.ToString().UrlEncoded();
+        }
+
+        public string ToQueryString(RouteParameters parameters)
+        {
+            return makeQueryString(parameters[Name]);
         }
 
         private object GetRawValue(object input)
@@ -64,6 +85,11 @@ namespace FubuMVC.Core.Registration.Routes
                                   : _accessor.GetValue(input);
 
             return rawValue ?? DefaultValue;
+        }
+
+        public bool IsSatisfied(RouteParameters routeParameters)
+        {
+            return routeParameters.Has(_accessor.Name) || DefaultValue != null;
         }
     }
 }

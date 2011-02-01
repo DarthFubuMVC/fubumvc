@@ -57,6 +57,11 @@ namespace FubuMVC.Core.Registration.Querying
             var modelType = _typeResolver.ResolveType(model);
             
 
+            return FindUniqueByInputType(modelType);
+        }
+
+        public BehaviorChain FindUniqueByInputType(Type modelType)
+        {
             var chains = findChainsByType(modelType);
             switch (chains.Count())
             {
@@ -96,6 +101,11 @@ namespace FubuMVC.Core.Registration.Querying
             }
 
             var modelType = _typeResolver.ResolveType(model);
+            return FindUniqueByInputType(modelType, category);
+        }
+
+        public BehaviorChain FindUniqueByInputType(Type modelType, string category)
+        {
             var chains = findChainsByType(modelType).Where(x => x.UrlCategory.Category == category);
 
             if (!chains.Any())

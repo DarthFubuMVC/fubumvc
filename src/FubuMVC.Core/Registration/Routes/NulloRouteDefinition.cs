@@ -38,7 +38,12 @@ namespace FubuMVC.Core.Registration.Routes
             get { return new KeyValuePair<string, object>[0]; }
         }
 
-        public string CreateUrl(object input)
+        public string CreateUrlFromInput(object input)
+        {
+            return Pattern;
+        }
+
+        public string CreateUrlFromParameters(RouteParameters parameters)
         {
             return Pattern;
         }

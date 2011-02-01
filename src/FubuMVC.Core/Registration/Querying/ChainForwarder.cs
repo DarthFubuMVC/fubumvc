@@ -62,7 +62,7 @@ namespace FubuMVC.Core.Registration.Querying
 
             var chain = resolver.FindUnique(realInput);
 
-            return chain.Route.CreateUrl(realInput);
+            return chain.Route.CreateUrlFromInput(realInput);
         }
     }
 }

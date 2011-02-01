@@ -320,7 +320,7 @@ namespace FubuMVC.Tests.Registration
             chain.FirstCall().HandlerType.ShouldEqual(typeof (Action1));
             chain.FirstCall().Method.Name.ShouldEqual("Go");
             chain.Route.ShouldBeOfType<RouteDefinition<ArgModel>>().Pattern.ShouldEqual("go/{Id}");
-            chain.Route.CreateUrl(new ArgModel(){
+            chain.Route.CreateUrlFromInput(new ArgModel(){
                 Id = 5
             }).ShouldEqual("go/5");
 
@@ -336,7 +336,7 @@ namespace FubuMVC.Tests.Registration
             chain.FirstCall().HandlerType.ShouldEqual(typeof(Action2<string>));
             chain.FirstCall().Method.Name.ShouldEqual("Go");
             chain.Route.ShouldBeOfType<RouteDefinition<ArgModel>>().Pattern.ShouldEqual("go/{Id}");
-            chain.Route.CreateUrl(new ArgModel()
+            chain.Route.CreateUrlFromInput(new ArgModel()
             {
                 Id = 5
             }).ShouldEqual("go/5");

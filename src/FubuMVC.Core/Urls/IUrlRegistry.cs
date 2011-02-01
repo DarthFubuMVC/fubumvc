@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore;
+using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Urls
 {
@@ -15,6 +16,9 @@ namespace FubuMVC.Core.Urls
         string UrlFor(object model);
         string UrlFor(object model, string category);
         string UrlFor<TController>(Expression<Action<TController>> expression);
+
+        string UrlFor<TInput>(RouteParameters parameters);
+        string UrlFor<TInput>(RouteParameters parameters, string category);
 
         string UrlForNew<T>();
         string UrlForNew(Type entityType);
@@ -29,6 +33,25 @@ namespace FubuMVC.Core.Urls
         string UrlFor(Type handlerType, MethodInfo method);
         string TemplateFor(object model);
         string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new();
+    }
+
+    public static class UrlRegistryExtensions
+    {
+        public static string UrlFor<T>(this IUrlRegistry registry, Action<RouteParameters<T>> configure)
+        {
+            var parameters = new RouteParameters<T>();
+            configure(parameters);
+
+            return registry.UrlFor<T>(parameters);
+        }
+
+        public static string UrlFor<T>(this IUrlRegistry registry, string category, Action<RouteParameters<T>> configure)
+        {
+            var parameters = new RouteParameters<T>();
+            configure(parameters);
+
+            return registry.UrlFor<T>(parameters, category);
+        }
     }
 
     // This is just to have a predictable stub for unit testing
@@ -47,6 +70,16 @@ namespace FubuMVC.Core.Urls
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
             return "url for " + typeof (TController).FullName + "." + ReflectionHelper.GetMethod(expression).Name + "()";
+        }
+
+        public string UrlFor<TInput>(RouteParameters parameters)
+        {
+            return "url for {0} with parameters {1}".ToFormat(typeof(TInput).FullName, parameters);
+        }
+
+        public string UrlFor<TInput>(RouteParameters parameters, string category)
+        {
+            return "url for {0}/{1} with parameters {2}".ToFormat(typeof (TInput).FullName, category, parameters);
         }
 
         public string UrlForNew<T>()

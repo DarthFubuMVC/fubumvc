@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Urls
 
         public string GetUrl(object input)
         {
-            return _route.CreateUrl(input);
+            return _route.CreateUrlFromInput(input);
         }
 
         public bool Equals(ActionUrl other)
