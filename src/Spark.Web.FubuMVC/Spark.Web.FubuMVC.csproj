@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Spark">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
     </Reference>
     <Reference Include="System" />
