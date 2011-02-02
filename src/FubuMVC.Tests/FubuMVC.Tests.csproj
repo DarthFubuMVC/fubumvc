@@ -123,6 +123,7 @@
     <Compile Include="Packaging\PackagingDiagnosticsTester.cs" />
     <Compile Include="Packaging\PackagingRegistryLogTester.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraphTester.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />
     <Compile Include="Packaging\StubPackage.cs" />
     <Compile Include="Packaging\ZipFilePackageReaderTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />

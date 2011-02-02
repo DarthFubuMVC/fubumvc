@@ -9,7 +9,7 @@ namespace Spark.Web.FubuMVC.ViewLocation
             target.GetService<IDescriptorBuilder>().AddFilter(filter);
         }
 
-        public static void AddFilter(this SparkViewFactory target, IDescriptorFilter filter)
+        public static void AddFilter(this ISparkViewFactory target, IDescriptorFilter filter)
         {
             target.DescriptorBuilder.AddFilter(filter);
         }

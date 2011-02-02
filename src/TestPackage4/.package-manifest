@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Name>pak1</Name>
-  <Assemblies>TestPackage1</Assemblies>
+  <Name>pak4</Name>
+  <Assemblies>TestPackage4</Assemblies>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>
-  <ContentFileSet Include="*.as*x;*.master;Content\*.*">
+  <ContentFileSet Include="*.spark">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
 </package>

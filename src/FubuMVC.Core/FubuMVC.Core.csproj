@@ -154,6 +154,9 @@
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
+    <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Json\ProjectionService.cs" />
     <Compile Include="Json\IProjection.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Spark.FileSystem;
 
@@ -6,6 +7,7 @@ namespace Spark.Web.FubuMVC.Registration.DSL
 {
 	public class ConfigureSparkSettingsExpression
 	{
+		public static readonly string ViewFolderParam = "virtualBaseDir";
 		private readonly SparkSettings _settings;
 
 		public ConfigureSparkSettingsExpression(SparkSettings settings)
@@ -38,7 +40,11 @@ namespace Spark.Web.FubuMVC.Registration.DSL
 
 		public ConfigureSparkSettingsExpression AddViewFolder(string virtualFolderRoot)
 		{
-			_settings.AddViewFolder(ViewFolderType.VirtualPathProvider, new Dictionary<string, string> { { "virtualBaseDir", virtualFolderRoot } });
+			if (!_settings.ViewFolders.Any(f => f.Parameters.ContainsKey(ViewFolderParam) && f.Parameters[ViewFolderParam] == virtualFolderRoot))
+			{
+				_settings.AddViewFolder(ViewFolderType.VirtualPathProvider, new Dictionary<string, string> { { ViewFolderParam, virtualFolderRoot } });
+			}
+
 			return this;
 		}
 	}

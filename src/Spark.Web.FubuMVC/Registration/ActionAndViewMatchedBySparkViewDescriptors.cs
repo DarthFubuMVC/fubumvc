@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Continuations;
@@ -38,10 +39,10 @@ namespace Spark.Web.FubuMVC.Registration
         	foreach(var token in allViewTokens)
         	{
         		var view = viewName.RemoveSuffix(".spark");
-				var templatePath = !string.IsNullOrEmpty(viewLocatorName) ? "{0}\\{1}".ToFormat(viewLocatorName, view) : view;
+				var templatePath = !string.IsNullOrEmpty(viewLocatorName) ? "{0}{1}{2}".ToFormat(viewLocatorName, Path.DirectorySeparatorChar, view) : view;
         		var descriptor = token
         							.Descriptors
-        							.FirstOrDefault(d => d.Templates.Any(template => template.RemoveSuffix(".spark").Equals(templatePath)));
+        							.FirstOrDefault(d => d.Templates.Any(template => template.RemoveSuffix(".spark").ToLower().Equals(templatePath.ToLower())));
 
 				if(descriptor != null)
 				{

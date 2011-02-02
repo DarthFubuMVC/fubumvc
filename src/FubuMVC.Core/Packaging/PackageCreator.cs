@@ -23,6 +23,13 @@ namespace FubuMVC.Core.Packaging
         public void CreatePackage(CreatePackageInput input, PackageManifest manifest)
         {
             var binFolder = Path.Combine(input.PackageFolder, "bin");
+        	var debugFolder = Path.Combine(binFolder, "debug");
+			if(Directory.Exists(debugFolder))
+			{
+				binFolder = debugFolder;
+			}
+
+
             var assemblies = _assemblyFinder.FindAssemblies(binFolder, manifest.AssemblyNames);
             if (assemblies.Success)
             {
