@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Packaging
 		public IEnumerable<IPackageInfo> Load()
 		{
 			var assemblies = _assemblyFinder.FindAssemblies(FubuMvcPackageFacility.GetApplicationPath());
-			return assemblies.Select(assembly => new AssemblyPackageInfo(Assembly.Load(assembly)));
+			return assemblies.Select(assembly => new AssemblyPackageInfo(Assembly.Load(assembly))).Cast<IPackageInfo>();
 		}
 	}
 }
