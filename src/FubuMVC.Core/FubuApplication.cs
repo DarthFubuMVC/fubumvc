@@ -41,14 +41,24 @@ namespace FubuMVC.Core
         {
             return registerContainerFacilitySource(facilitySource);
         }
+
+        // TODO -- replace w/ Lazy<T> when we ditch 3.5 support
+        private IContainerFacility facility
+        {
+            get
+            {
+                if (_facility == null)
+                {
+                    _facility = _facilitySource();
+                }
+
+                return _facility;
+            }
+        }
 		
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
-            _facilitySource = () =>
-            {
-                _facility = facilitySource();
-                return _facility;
-            };
+            _facilitySource = facilitySource;
             return this;
         }
 
@@ -92,7 +102,8 @@ namespace FubuMVC.Core
         {
 			// Building up the facility first forces the creation of the container
 			// and executes any additional bootstrapping done in the respective lambdas
-			var facility = _facilitySource();
+            facility.SpinUp();
+            
 
 			registry()
 				.Services(_fubuFacility.RegisterServices);
@@ -113,8 +124,8 @@ namespace FubuMVC.Core
             var routes = new List<RouteBase>();           
             
             // Build route objects from route definitions on graph + add packaging routes
-            var factory = _facility.BuildFactory();
-            _facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
+            var factory = facility.BuildFactory();
+            facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
             _fubuFacility.AddPackagingContentRoutes(routes);
 
             return routes;
