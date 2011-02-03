@@ -1,13 +1,13 @@
 using System.IO;
 using FubuFastPack.NHibernate;
-using NHibernate.ByteCode.Castle;
+using FubuMVC.Core.Packaging;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using FubuCore;
 using StructureMap;
 using FubuFastPack.StructureMap;
 
-namespace IntegrationTesting.FubuFastPack
+namespace FubuTestApplication
 {
 
 
@@ -37,32 +37,49 @@ namespace IntegrationTesting.FubuFastPack
     public static class DatabaseDriver
     {
         private static IContainer _container;
-        private static readonly string FILE_NAME = "test.db";
+        private static readonly string FILE_NAME;
         private static DatabaseSettings _settings;
 
-        public static void Bootstrap()
+        static DatabaseDriver()
+        {
+            FILE_NAME = FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), "test.db");
+        }
+
+        public static void Bootstrap(bool cleanFile)
         {
             if (_container != null) return;
 
-            if (File.Exists(FILE_NAME))
+
+            _container = BootstrapContainer(FILE_NAME, true);
+        }
+
+        public static IContainer BootstrapContainer(string fileName, bool cleanFile)
+        {
+            if (File.Exists(fileName) && cleanFile)
             {
-                File.Delete(FILE_NAME);
+                File.Delete(fileName);
             }
 
             _settings = new DatabaseSettings(){
-                ConnectionString = "Data Source={0};Version=3;New=True;".ToFormat(FILE_NAME),
+                ConnectionString = "Data Source={0};Version=3;New=True;".ToFormat(fileName),
                 DialectType = typeof (SQLiteDialect),
                 ProxyFactory = "NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle",
                 ShowSql = true,
                 DriverType = typeof(SQLite20Driver)
             };
-
-            _container = new Container(x =>
+            
+            return new Container(x =>
             {
                 x.For<DatabaseSettings>().Use(_settings);
                 x.BootstrapNHibernate<FakeDomainNHIbernateRegistry>(ConfigurationBehavior.AlwaysUseNewConfiguration);
             });
+        }
 
+        public static IContainer BuildWebsiteContainer()
+        {
+            Bootstrap(true);
+
+            return _container;
         }
 
         public static IContainer ContainerWithoutDatabase()

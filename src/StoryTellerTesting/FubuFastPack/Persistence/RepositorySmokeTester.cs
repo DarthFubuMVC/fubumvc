@@ -1,7 +1,8 @@
 using System;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
-using IntegrationTesting.Domain;
+using FubuTestApplication;
+using FubuTestApplication.Domain;
 using NUnit.Framework;
 using StructureMap;
 using FubuMVC.Tests;
@@ -18,7 +19,7 @@ namespace IntegrationTesting.FubuFastPack.Persistence
         [SetUp]
         public void SetUp()
         {
-            DatabaseDriver.Bootstrap();
+            DatabaseDriver.Bootstrap(true);
 
             container = DatabaseDriver.ContainerWithDatabase();
             container.Configure(x =>

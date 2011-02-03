@@ -26,7 +26,7 @@ namespace FubuFastPack.NHibernate
             return new SortRule<T>() { _ascending = false, _fieldName = fieldName };
         }
 
-        public void ModifyPaging(PagingOptions paging)
+        public void ModifyPaging(GridDataRequest paging)
         {
             if (paging.SortColumn.IsNotEmpty()) return;
 

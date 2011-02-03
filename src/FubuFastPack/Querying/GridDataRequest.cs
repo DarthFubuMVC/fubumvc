@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FubuCore;
 using System.Linq;
 
 namespace FubuFastPack.Querying
 {
-    // Rename to QueryOptions and make a reference to criteria
-    public class PagingOptions
+    // Add initial request
+    public class GridDataRequest
     {
         private readonly IList<Criteria> _criterion = new List<Criteria>();
 
-        public PagingOptions()
+        public GridDataRequest()
         {
         }
 
-        public PagingOptions(int page, int resultsPerPage, string sortColumn, bool sortAscending)
+        public GridDataRequest(int page, int resultsPerPage, string sortColumn, bool sortAscending)
         {
             Page = page > 0 ? page : 1;
             ResultsPerPage = resultsPerPage;
@@ -39,6 +40,8 @@ namespace FubuFastPack.Querying
             }
         }
 
+        public Criteria[] GridOptions { get; set; }
+
         public int ResultsToSkip()
         {
             return (Page - 1) * ResultsPerPage;
@@ -51,7 +54,7 @@ namespace FubuFastPack.Querying
         }
 
 
-        public bool Equals(PagingOptions obj)
+        public bool Equals(GridDataRequest obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
@@ -63,8 +66,8 @@ namespace FubuFastPack.Querying
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(PagingOptions)) return false;
-            return Equals((PagingOptions)obj);
+            if (obj.GetType() != typeof(GridDataRequest)) return false;
+            return Equals((GridDataRequest)obj);
         }
 
         public override int GetHashCode()

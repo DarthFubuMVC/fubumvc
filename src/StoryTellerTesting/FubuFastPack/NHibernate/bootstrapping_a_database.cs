@@ -1,7 +1,8 @@
 using System.IO;
 using System.Linq;
 using FubuFastPack.NHibernate;
-using IntegrationTesting.Domain;
+using FubuTestApplication;
+using FubuTestApplication.Domain;
 using NHibernate;
 using NUnit.Framework;
 using FubuMVC.Tests;
@@ -14,7 +15,7 @@ namespace IntegrationTesting.FubuFastPack.NHibernate
         [SetUp]
         public void SetUp()
         {
-            DatabaseDriver.Bootstrap();
+            DatabaseDriver.Bootstrap(true);
         }
 
         [Test]

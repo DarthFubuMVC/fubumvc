@@ -9,7 +9,8 @@ using FubuFastPack.Querying;
 using FubuFastPack.StructureMap;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
-using IntegrationTesting.Domain;
+using FubuTestApplication;
+using FubuTestApplication.Domain;
 using IntegrationTesting.FubuFastPack;
 using NHibernate;
 using StoryTeller;
@@ -23,7 +24,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
     {
         private IContainer _container;
         private GridResults _lastResults;
-        private PagingOptions _paging = new PagingOptions(1, 100, null, true);
+        private GridDataRequest _paging = new GridDataRequest(1, 100, null, true);
         private IRepository _repository;
 
         public GridsFixture()
@@ -44,7 +45,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
         public override void SetUp(ITestContext context)
         {
-            DatabaseDriver.Bootstrap();
+            DatabaseDriver.Bootstrap(true);
             _container = DatabaseDriver.ContainerWithDatabase();
             _container.Configure(x =>
             {
@@ -77,7 +78,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         [FormatAs("Fetch page {pageNumber} with {resultsPerPage} results per page")]
         public void LookForPage(int pageNumber, int resultsPerPage)
         {
-            _paging = new PagingOptions(pageNumber, resultsPerPage, null, true);
+            _paging = new GridDataRequest(pageNumber, resultsPerPage, null, true);
         }
 
         [FormatAs("Sort ascending by {field}")]
@@ -122,7 +123,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         public bool IsReturned([SelectionValues("fields")] string Property,
                                [SelectionValues("operations")] string Operator, string Value, string Identifier)
         {
-            var paging = new PagingOptions(1, 20, null, true);
+            var paging = new GridDataRequest(1, 20, null, true);
             paging.Criterion = new[]{
                 new Criteria{
                     op = Operator,

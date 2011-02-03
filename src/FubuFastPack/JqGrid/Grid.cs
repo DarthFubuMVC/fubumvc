@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuCore.Util;
@@ -20,7 +21,7 @@ namespace FubuFastPack.JqGrid
             _definition.Fetch(x => x.Id);
         }
 
-        public GridResults Invoke(IServiceLocator services, PagingOptions request)
+        public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {
             var runner = services.GetInstance<IGridRunner<TEntity, TService>>();
             var source = BuildSource(runner.Service);
@@ -28,7 +29,11 @@ namespace FubuFastPack.JqGrid
             return runner.RunGrid(_definition, source, request);
         }
 
-        
+        public IEnumerable<Criteria> BaselineCriterion
+        {
+            get { return new Criteria[0]; }
+        }
+
 
         public IGridDefinition Definition
         {

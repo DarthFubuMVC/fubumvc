@@ -73,7 +73,6 @@
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="debugging.cs" />
-    <Compile Include="Domain\Address.cs" />
     <Compile Include="Fixtures\FubuFastPack\GridsFixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />
@@ -83,7 +82,6 @@
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
-    <Compile Include="FubuFastPack\DatabaseDriver.cs" />
     <Compile Include="FubuFastPack\NHibernate\bootstrapping_a_database.cs" />
     <Compile Include="FubuFastPack\NHibernate\ConfigurationSourceSmokeTester.cs" />
     <Compile Include="FubuFastPack\NHibernate\configuration_file_caching_smoke_tester.cs" />

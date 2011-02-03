@@ -17,7 +17,7 @@ namespace FubuFastPack.Testing.jqGrid
         [SetUp]
         public void SetUp()
         {
-            theColumn = GridColumn<Case>.ColumnFor<Case>(x => x.Condition);
+            theColumn = GridColumn<Case>.ColumnFor(x => x.Condition);
             queryService = new QueryService(new IFilterHandler[0]);
         }
 
@@ -44,7 +44,22 @@ namespace FubuFastPack.Testing.jqGrid
             theColumn.PossibleFilters(queryService).Any().ShouldBeFalse();
         }
 
-        
+        [Test]
+        public void if_the_column_is_not_fetched_return_no_select_accessors()
+        {
+            theColumn.FetchMode = ColumnFetching.NoFetch;
+            theColumn.SelectAccessors().Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void return_a_single_select_accessor_if_the_mode_is_fetch()
+        {
+            theColumn.FetchMode = ColumnFetching.FetchOnly;
+            theColumn.SelectAccessors().Single().Name.ShouldEqual("Condition");
+            theColumn.FetchMode = ColumnFetching.FetchAndDisplay;
+            theColumn.SelectAccessors().Single().Name.ShouldEqual("Condition");
+
+        }
     }
 
     [TestFixture]
@@ -57,7 +72,7 @@ namespace FubuFastPack.Testing.jqGrid
         [SetUp]
         public void SetUp()
         {
-            theColumn = GridColumn<Case>.ColumnFor<Case>(x => x.Condition);
+            theColumn = GridColumn<Case>.ColumnFor(x => x.Condition);
             theColumn.IsFilterable = true;
             
             queryService = new QueryService(new IFilterHandler[0]);

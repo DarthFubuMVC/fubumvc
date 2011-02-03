@@ -6,6 +6,6 @@ namespace FubuFastPack.JqGrid
     {
         TService Service { get; }
 
-        GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, PagingOptions request);
+        GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request);
     }
 }

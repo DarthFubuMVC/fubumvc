@@ -5,7 +5,7 @@ namespace FubuFastPack.JqGrid
     public interface IGridDataSource<T>
     {
         int TotalCount();
-        IGridData Fetch(PagingOptions options);
+        IGridData Fetch(GridDataRequest options);
 
         void ApplyCriteria(FilterRequest<T> request, IQueryService queryService);
     }

@@ -41,7 +41,7 @@ namespace FubuFastPack.JqGrid
                 return query().Count();
             }
 
-            public IGridData Fetch(PagingOptions options)
+            public IGridData Fetch(GridDataRequest options)
             {
                 var queryable = query();
                 _wheres.Each(w =>
@@ -71,13 +71,13 @@ namespace FubuFastPack.JqGrid
                 return _grid.query(_repository);
             }
 
-            private IQueryable<TEntity> applyPaging(IQueryable<TEntity> queryable, PagingOptions options)
+            private IQueryable<TEntity> applyPaging(IQueryable<TEntity> queryable, GridDataRequest options)
             {
                 return queryable.Skip(options.ResultsToSkip()).Take(options.ResultsPerPage);
             }
 
             // TODO -- default sorting?
-            private IQueryable<TEntity> sort(IQueryable<TEntity> queryable, PagingOptions options)
+            private IQueryable<TEntity> sort(IQueryable<TEntity> queryable, GridDataRequest options)
             {
                 if (options.SortColumn.IsNotEmpty())
                 {

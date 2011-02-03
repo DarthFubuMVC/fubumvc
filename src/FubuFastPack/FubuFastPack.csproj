@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,7 +71,9 @@
     <Compile Include="JqGrid\EntityDTO.cs" />
     <Compile Include="JqGrid\EntityGridData.cs" />
     <Compile Include="JqGrid\Grid.cs" />
-    <Compile Include="JqGrid\GridColumnDTO.cs" />
+    <Compile Include="JqGrid\GridColumnBase.cs" />
+    <Compile Include="JqGrid\jqGridModel.cs" />
+    <Compile Include="JqGrid\SmartGridController.cs" />
     <Compile Include="JqGrid\GridDefinition.cs" />
     <Compile Include="JqGrid\GridResults.cs" />
     <Compile Include="JqGrid\GridRunner.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="JqGrid\GridColumn.cs" />
     <Compile Include="JqGrid\IGridDefinition.cs" />
     <Compile Include="JqGrid\IGridRunner.cs" />
+    <Compile Include="JqGrid\LinkColumn.cs" />
     <Compile Include="JqGrid\ProjectionDataSource.cs" />
     <Compile Include="JqGrid\ProjectionGrid.cs" />
     <Compile Include="JqGrid\ProjectionGridData.cs" />
@@ -122,7 +126,7 @@
     <Compile Include="Querying\IQueryService.cs" />
     <Compile Include="Querying\OperatorDTO.cs" />
     <Compile Include="Querying\OperatorKeys.cs" />
-    <Compile Include="Querying\PagingOptions.cs" />
+    <Compile Include="Querying\GridDataRequest.cs" />
     <Compile Include="Querying\QueryService.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicy.cs" />
     <Compile Include="Querying\SingleEntityFilter.cs" />
@@ -157,9 +161,16 @@
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
       <Name>FubuValidation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lists\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Scripts\fubufastpack.grid.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

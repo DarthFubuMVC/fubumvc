@@ -1,7 +1,7 @@
 using FluentNHibernate.Mapping;
 using FubuFastPack.Domain;
 
-namespace IntegrationTesting.Domain
+namespace FubuTestApplication.Domain
 {
     public class Address : DomainEntity
     {

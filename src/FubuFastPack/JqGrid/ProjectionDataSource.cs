@@ -21,7 +21,7 @@ namespace FubuFastPack.JqGrid
             return _projection.Count();
         }
 
-        public IGridData Fetch(PagingOptions options)
+        public IGridData Fetch(GridDataRequest options)
         {
             var records = _projection.ExecuteCriteriaWithProjection(options).Cast<object>().ToList();
             var accessors = _projection.SelectAccessors().ToList();

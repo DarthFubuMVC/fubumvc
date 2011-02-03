@@ -32,28 +32,96 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=1.1.0.694, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\lib\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\images\icon-add.png" />
+    <Content Include="content\scripts\css\ellipsis-xbl.xml" />
+    <Content Include="content\scripts\css\ui.jqgrid.css" />
+    <Content Include="content\scripts\css\ui.multiselect.css" />
+    <Content Include="content\scripts\grid.base.js" />
+    <Content Include="content\scripts\grid.celledit.js" />
+    <Content Include="content\scripts\grid.common.js" />
+    <Content Include="content\scripts\grid.custom.js" />
+    <Content Include="content\scripts\grid.formedit.js" />
+    <Content Include="content\scripts\grid.grouping.js" />
+    <Content Include="content\scripts\grid.import.js" />
+    <Content Include="content\scripts\grid.inlinedit.js" />
+    <Content Include="content\scripts\grid.jqueryui.js" />
+    <Content Include="content\scripts\grid.loader.js" />
+    <Content Include="content\scripts\grid.postext.js" />
+    <Content Include="content\scripts\grid.setcolumns.js" />
+    <Content Include="content\scripts\grid.subgrid.js" />
+    <Content Include="content\scripts\grid.tbltogrid.js" />
+    <Content Include="content\scripts\grid.treegrid.js" />
+    <Content Include="content\scripts\i18n\grid.locale-bg.js" />
+    <Content Include="content\scripts\i18n\grid.locale-bg1251.js" />
+    <Content Include="content\scripts\i18n\grid.locale-cat.js" />
+    <Content Include="content\scripts\i18n\grid.locale-cn.js" />
+    <Content Include="content\scripts\i18n\grid.locale-cs.js" />
+    <Content Include="content\scripts\i18n\grid.locale-da.js" />
+    <Content Include="content\scripts\i18n\grid.locale-de.js" />
+    <Content Include="content\scripts\i18n\grid.locale-dk.js" />
+    <Content Include="content\scripts\i18n\grid.locale-el.js" />
+    <Content Include="content\scripts\i18n\grid.locale-en.js" />
+    <Content Include="content\scripts\i18n\grid.locale-es.js" />
+    <Content Include="content\scripts\i18n\grid.locale-fa.js" />
+    <Content Include="content\scripts\i18n\grid.locale-fi.js" />
+    <Content Include="content\scripts\i18n\grid.locale-fr.js" />
+    <Content Include="content\scripts\i18n\grid.locale-gl.js" />
+    <Content Include="content\scripts\i18n\grid.locale-he.js" />
+    <Content Include="content\scripts\i18n\grid.locale-hu.js" />
+    <Content Include="content\scripts\i18n\grid.locale-is.js" />
+    <Content Include="content\scripts\i18n\grid.locale-it.js" />
+    <Content Include="content\scripts\i18n\grid.locale-ja.js" />
+    <Content Include="content\scripts\i18n\grid.locale-nl.js" />
+    <Content Include="content\scripts\i18n\grid.locale-no.js" />
+    <Content Include="content\scripts\i18n\grid.locale-pl.js" />
+    <Content Include="content\scripts\i18n\grid.locale-pt-br.js" />
+    <Content Include="content\scripts\i18n\grid.locale-pt.js" />
+    <Content Include="content\scripts\i18n\grid.locale-ro.js" />
+    <Content Include="content\scripts\i18n\grid.locale-ru.js" />
+    <Content Include="content\scripts\i18n\grid.locale-sk.js" />
+    <Content Include="content\scripts\i18n\grid.locale-sr.js" />
+    <Content Include="content\scripts\i18n\grid.locale-sv.js" />
+    <Content Include="content\scripts\i18n\grid.locale-tr.js" />
+    <Content Include="content\scripts\i18n\grid.locale-ua.js" />
+    <Content Include="content\scripts\jqDnR.js" />
+    <Content Include="content\scripts\jqModal.js" />
+    <Content Include="content\scripts\jquery-1.4.2.js" />
+    <Content Include="content\scripts\jquery.fmatter.js" />
+    <Content Include="content\scripts\jquery.searchFilter.js" />
+    <Content Include="content\scripts\JsonXml.js" />
     <Content Include="content\scripts\Script2.js" />
     <Content Include="content\scripts\Script4.js" />
     <Content Include="content\scripts\Script3.js" />
     <Content Include="content\scripts\Script1.js" />
     <Content Include="content\scripts\sub\Script1.js" />
+    <Content Include="content\scripts\ui.multiselect.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseDriver.cs" />
+    <Compile Include="Domain\Entities.cs" />
     <Compile Include="Environments.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Grids\CaseGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptsHandler.cs" />
   </ItemGroup>
@@ -61,6 +129,10 @@
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuFastPack\FubuFastPack.csproj">
+      <Project>{F274E0DD-F9B1-41FE-A3F6-89EE74FE3F56}</Project>
+      <Name>FubuFastPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
@@ -78,6 +150,7 @@
   <ItemGroup>
     <Content Include="sets.script.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

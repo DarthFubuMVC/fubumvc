@@ -56,7 +56,7 @@ namespace FubuFastPack.NHibernate
             return AddColumn(ReflectionHelper.GetAccessor(expression));
         }
 
-        public IEnumerable<T> GetData(PagingOptions page)
+        public IEnumerable<T> GetData(GridDataRequest page)
         {
             return assembleCriteria(page, false).List<T>();
         }
@@ -72,7 +72,7 @@ namespace FubuFastPack.NHibernate
             return criteria.List();
         }
 
-        private ICriteria assembleCriteria(PagingOptions page, bool withProjection)
+        private ICriteria assembleCriteria(GridDataRequest page, bool withProjection)
         {
             var criteria = GetFilteredCriteria();
             if (withProjection) criteria = AddTheProjections(criteria);
@@ -88,7 +88,7 @@ namespace FubuFastPack.NHibernate
             return criteria;
         }
 
-        public ICriteria AddSorting(ICriteria criteria, PagingOptions page)
+        public ICriteria AddSorting(ICriteria criteria, GridDataRequest page)
         {
             SortBy.ModifyPaging(page);
 
@@ -96,7 +96,7 @@ namespace FubuFastPack.NHibernate
             return criteria;
         }
 
-        public ICriteria AddPaging(ICriteria criteria, PagingOptions page)
+        public ICriteria AddPaging(ICriteria criteria, GridDataRequest page)
         {
             if (page.ResultsPerPage > MaxCount)
             {
@@ -107,7 +107,7 @@ namespace FubuFastPack.NHibernate
             return criteria;
         }
 
-        public IList ExecuteCriteriaWithProjection(PagingOptions page)
+        public IList ExecuteCriteriaWithProjection(GridDataRequest page)
         {
             return assembleCriteria(page, true).List();
         }
