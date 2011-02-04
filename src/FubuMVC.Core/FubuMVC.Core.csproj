@@ -308,6 +308,10 @@
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\SmartRequest.cs" />
     <Compile Include="Security\AllowRole.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryData.cs" />
+    <Compile Include="Security\AntiForgery\MachineKeyAntiForgeryEncoder.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgerySerializer.cs" />
+    <Compile Include="Security\AntiForgery\IAntiForgeryEncoder.cs" />
     <Compile Include="Security\AttachAuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationBehavior.cs" />
     <Compile Include="Security\AuthorizationNode.cs" />
