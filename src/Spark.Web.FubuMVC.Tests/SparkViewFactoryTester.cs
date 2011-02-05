@@ -25,10 +25,7 @@ namespace Spark.Web.FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
-            //CompiledViewHolder.Current = null; //clear the view cache
-
             var settings = new SparkSettings();
-            var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
 
             _factory = new SparkViewFactory(settings) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
 
@@ -38,7 +35,7 @@ namespace Spark.Web.FubuMVC.Tests
 
             _routeData = new RouteData();
             _routeData.Values.Add("action", "Index");
-            _actionContext = new ActionContext(_httpContext, _routeData, new StubController().GetType().Namespace, "Stub");
+            _actionContext = new ActionContext(_routeData, new StubController().GetType().Namespace, "Stub");
         }
 
         #endregion

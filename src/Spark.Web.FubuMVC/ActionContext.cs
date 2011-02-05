@@ -1,40 +1,18 @@
-﻿using System.Web;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 
 namespace Spark.Web.FubuMVC
 {
     public class ActionContext
     {
-        private readonly string _actionNamespace;
-        private readonly HttpContextBase _httpContext;
-        private readonly RouteData _routeData;
-        private readonly string _actionName;
-
-        public ActionContext(HttpContextBase httpContext, RouteData routeData, string actionNamespace, string actionName)
+        public ActionContext(RouteData routeData, string actionNamespace, string actionName)
         {
-            _httpContext = httpContext;
-            _routeData = routeData;
-            _actionNamespace = actionNamespace;
-            _actionName = actionName;
+            RouteData = routeData;
+            ActionNamespace = actionNamespace;
+            ActionName = actionName;
         }
 
-        public RouteData RouteData
-        {
-            get { return _routeData; }
-        }
-
-        public string ActionNamespace
-        {
-            get { return _actionNamespace; }
-        }
-
-        public HttpContextBase HttpContext
-        {
-            get { return _httpContext; }
-        }
-        public string ActionName
-        {
-            get { return _actionName; }
-        }
+        public RouteData RouteData { get; private set; }
+        public string ActionNamespace { get; private set; }
+        public string ActionName { get; private set; }
     }
 }

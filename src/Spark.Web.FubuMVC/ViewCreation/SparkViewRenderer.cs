@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -13,65 +12,79 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
     public class SparkViewRenderer<T> : ISparkViewRenderer<T> where T : class
     {
-        private readonly HttpContextBase _httpContext;
         private readonly ViewContextHolder _viewContextHolder;
         private readonly ISparkViewFactory _viewFactory;
 
-        public SparkViewRenderer(ISparkViewFactory viewFactory, HttpContextBase httpContext, ViewContextHolder viewContextHolder)
+        public SparkViewRenderer(ISparkViewFactory viewFactory, ViewContextHolder viewContextHolder)
         {
             _viewFactory = viewFactory;
-            _httpContext = httpContext;
             _viewContextHolder = viewContextHolder;
         }
 
-        #region ISparkViewRenderer<T> Members
-
         public string RenderSparkView(SparkViewToken viewToken, ActionCall actionCall, Action<T> configureView)
         {
-            string actionNamespace = actionCall.HandlerType.Namespace;
-            string actionName = viewToken.ActionName;
-            string viewName = viewToken.Name;
+            var actionNamespace = actionCall.HandlerType.Namespace;
+            var actionName = viewToken.ActionName;
+            var viewName = viewToken.Name;
+            
             TextWriter writer = new StringWriter();
 
             if (viewToken.MatchedDescriptor != null && viewToken.MatchedDescriptor.Language == LanguageType.Javascript)
             {
-                ISparkViewEntry entry = _viewFactory.Engine.CreateEntry(viewToken.MatchedDescriptor);
+                var entry = _viewFactory.Engine.CreateEntry(viewToken.MatchedDescriptor);
                 return entry.SourceCode;
             }
+            
+            var viewResult = findSparkViewByConvention(actionNamespace, actionName, viewName);
 
-            ActionContext actionContext;
-            ISparkView view = FindSparkViewByConvention(actionNamespace, actionName, viewName, out actionContext);
             if (_viewContextHolder.OuterViewContext == null)
-                _viewContextHolder.OuterViewContext = new ViewContext(actionContext, view);
+            {
+                _viewContextHolder.OuterViewContext = new ViewContext(viewResult.ActionContext, viewResult.View);
+            }
 
-            var configurableView = view as T;
+            var configurableView = viewResult.View as T;
             if (configurableView != null)
+            {
                 configureView(configurableView);
+            }
 
-            var sparkView = view as SparkView;
+            var sparkView = viewResult.View as SparkView;
             if (sparkView != null)
+            {
                 sparkView.Render(_viewContextHolder.OuterViewContext, writer);
+            }
 
             return writer.ToString();
         }
 
-        #endregion
-
-        private ISparkView FindSparkViewByConvention(string actionNamespace, string actionName, string viewName, out ActionContext actionContext)
+        private ViewSearchResult findSparkViewByConvention(string actionNamespace, string actionName, string viewName)
         {
             var routeData = new RouteData();
-            routeData.Values.Add("controller", actionName);
-            actionContext = new ActionContext(_httpContext, routeData, actionNamespace, actionName);
-            ViewEngineResult findResult = _viewContextHolder.OuterViewContext == null
-                                              ? _viewFactory.FindView(actionContext, viewName, null)
-                                              : _viewFactory.FindPartialView(actionContext, viewName);
+            routeData.Values.Add("controller", actionName);            
+            var actionContext = new ActionContext(routeData, actionNamespace, actionName);
+            
+            var view = _viewContextHolder.OuterViewContext == null 
+                ? _viewFactory.FindView(actionContext, viewName, null)
+                : _viewFactory.FindPartialView(actionContext, viewName);
 
-            return findResult.View;
+            return new ViewSearchResult(view.View, actionContext);
         }
-    }
 
-    public class ViewContextHolder
-    {
-        public ViewContext OuterViewContext { get; set; }
+        public class ViewSearchResult
+        {
+            public ViewSearchResult(ISparkView view, ActionContext actionContext)
+            {
+                View = view;
+                ActionContext = actionContext;
+            }
+
+            public ISparkView View { get; private set; }
+            public ActionContext ActionContext { get; private set; }
+        }
+
+        public class ViewContextHolder
+        {
+            public ViewContext OuterViewContext { get; set; }
+        }
     }
 }

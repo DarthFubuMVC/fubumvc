@@ -5,7 +5,6 @@ using FubuMVC.Core.View;
 using Microsoft.Practices.ServiceLocation;
 using FubuMVC.Core.Urls;
 using FubuCore.Util;
-using Spark;
 using System.IO;
 
 namespace Spark.Web.FubuMVC.ViewCreation
