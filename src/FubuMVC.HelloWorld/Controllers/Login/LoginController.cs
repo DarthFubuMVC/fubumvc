@@ -1,4 +1,5 @@
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Services;
 
@@ -13,6 +14,7 @@ namespace FubuMVC.HelloWorld.Controllers.Login
             _session = session;
         }
 
+		[AntiForgeryToken(Salt = "Login")]
         public FubuContinuation Login(LoginRequestModel model)
         {
             _session[CurrentLoginStatus.Key] = new CurrentLoginStatus {UserName = "Cookie Monster"};

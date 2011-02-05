@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
@@ -289,5 +290,17 @@ namespace FubuMVC.Core.UI
         {
             return viewPage.Get<IContentRegistry>().ImageUrl(imageFilename);
         }
+
+		public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)
+		{
+			var antiForgeryService = page.ServiceLocator.GetInstance<IAntiForgeryService>();
+			var tokenProvider = page.ServiceLocator.GetInstance<IAntiForgeryTokenProvider>();
+			var cookieToken = antiForgeryService.GetCookieToken(salt);
+			antiForgeryService.SetCookieToken(cookieToken, null, null);
+			var tokenString = antiForgeryService.GetFormTokenString(cookieToken,salt);
+			var name = tokenProvider.GetTokenName();
+
+			return new HiddenTag().Name(name).Value(tokenString);
+		}
     }
 }

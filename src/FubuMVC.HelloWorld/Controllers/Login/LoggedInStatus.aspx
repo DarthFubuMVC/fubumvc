@@ -8,7 +8,11 @@
     }
     else {
 %> 
-        [ <%= this.LinkTo<LoginRequestModel>().Text("Log On") %> ]
+
+    <form method="post" action="<%= Urls.UrlFor(new LoginRequestModel()) %>">
+		<%= this.AntiForgeryToken("Login") %>
+		<input type="submit" value="Log On!" />
+	</form>
 <%
     }
 %>
