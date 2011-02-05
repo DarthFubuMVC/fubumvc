@@ -20,6 +20,7 @@ namespace FubuMVC.Core
         private Func<IContainerFacility> _facilitySource;
         private BehaviorGraph _graph;
         private FubuMvcPackageFacility _fubuFacility;
+		private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
 		private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
 
         private FubuApplication(Func<FubuRegistry> registry)
@@ -108,6 +109,8 @@ namespace FubuMVC.Core
 			registry()
 				.Services(_fubuFacility.RegisterServices);
 
+        	_registryModifications.Each(m => m(registry()));
+
             FindAllExtensions().Each(x => x.Configure(registry()));
 
             // "Bake" the fubu configuration model into your
@@ -136,9 +139,10 @@ namespace FubuMVC.Core
             _packagingDirectives.Add(configure);
             return this;
         }
+
         public FubuApplication ModifyRegistry(Action<FubuRegistry> modifications)
         {
-            modifications(registry());
+        	_registryModifications.Add(modifications);
             return this;
         }
 

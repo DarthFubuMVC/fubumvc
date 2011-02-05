@@ -25,15 +25,24 @@ namespace FubuMVC.Core.Packaging
                 // Development mode
                 Loader(new PackageManifestReader(applicationPath, fileSystem, folder => folder));
                 
-                // Production mode with zip files
+                // Production mode with zip files and standalone assemblies (e.g., Spark.Web.FubuMVC)
                 var zipFilePackageReader = BuildZipFilePackageReader(applicationPath, fileSystem);
                 Loader(zipFilePackageReader);
+
+            	var standaloneLoader = BuildStandaloneAssemblyPackageLoader(fileSystem);
+				Loader(standaloneLoader);
             }
 
 
             Activator(new VirtualPathProviderActivator());
             Activator(new PackageFolderActivator(_contentFolderService));
         }
+
+		public static StandaloneAssemblyPackageLoader BuildStandaloneAssemblyPackageLoader(FileSystem fileSystem)
+		{
+			var assemblyFinder = new StandaloneAssemblyFinder(fileSystem);
+			return new StandaloneAssemblyPackageLoader(assemblyFinder);
+		}
 
         public static ZipFilePackageReader BuildZipFilePackageReader(string applicationPath, FileSystem fileSystem)
         {

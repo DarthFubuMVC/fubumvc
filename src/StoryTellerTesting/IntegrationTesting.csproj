@@ -70,6 +70,7 @@
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="Domain\Address.cs" />
+    <Compile Include="Fixtures\Packages\Package4Fixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />
     <Compile Include="Fixtures\HelloWorldFixture.cs" />
@@ -114,6 +115,10 @@
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fubu\Fubu.csproj">
+      <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
+      <Name>Fubu</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>

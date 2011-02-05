@@ -15,9 +15,9 @@ namespace Spark.Web.FubuMVC.ViewCreation
     {
         private readonly HttpContextBase _httpContext;
         private readonly ViewContextHolder _viewContextHolder;
-        private readonly SparkViewFactory _viewFactory;
+        private readonly ISparkViewFactory _viewFactory;
 
-        public SparkViewRenderer(SparkViewFactory viewFactory, HttpContextBase httpContext, ViewContextHolder viewContextHolder)
+        public SparkViewRenderer(ISparkViewFactory viewFactory, HttpContextBase httpContext, ViewContextHolder viewContextHolder)
         {
             _viewFactory = viewFactory;
             _httpContext = httpContext;

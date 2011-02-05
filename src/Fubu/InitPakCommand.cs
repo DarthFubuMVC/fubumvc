@@ -44,7 +44,11 @@ namespace Fubu
                 Assemblies = assemblyName
             };
 
-            fileSystem.PersistToFile(manifest, input.Folder, PackageManifest.FILE);
+			if(!fileSystem.FileExists(FileSystem.Combine(input.Folder, PackageManifest.FILE)))
+			{
+				fileSystem.PersistToFile(manifest, input.Folder, PackageManifest.FILE);
+			}
+            
 
             if (input.NotepadFlag)
             {

@@ -10,7 +10,7 @@ namespace FubuMVC.HelloSpark.Controllers
 
         public JavaScriptResponse BreatheView()
         {
-            return new JavaScriptResponse() { ViewName = "_Breathe" };
+            return new JavaScriptResponse() { ViewName = "Breathe" };
         }
 
         public JsonResponse Breathe(AirInputModel model)

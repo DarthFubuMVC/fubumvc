@@ -26,6 +26,10 @@ namespace Spark.Web.FubuMVC.Tests.Registration
             _token.Descriptors.Add(_descriptor);
 
             _views = new ViewBag(new List<IViewToken> { _token });
+
+        	MockFor<ISparkDescriptorVisitorRegistry>()
+        		.Expect(r => r.VisitorsFor(Arg<ActionCall>.Is.NotNull))
+        		.Return(new List<ISparkDescriptorVisitor>());
         }
 
 		protected SparkViewDescriptor newDescriptor()
