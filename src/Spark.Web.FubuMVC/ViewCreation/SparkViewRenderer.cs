@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Web.Routing;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace Spark.Web.FubuMVC.ViewCreation
@@ -59,9 +58,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
         private ViewSearchResult findSparkViewByConvention(string actionNamespace, string actionName, string viewName)
         {
-            var routeData = new RouteData();
-            routeData.Values.Add("controller", actionName);            
-            var actionContext = new ActionContext(routeData, actionNamespace, actionName);
+            var actionContext = new ActionContext(actionNamespace, actionName, d => d.Add("controller", actionName));
             
             var view = _viewContextHolder.OuterViewContext == null 
                 ? _viewFactory.FindView(actionContext, viewName, null)

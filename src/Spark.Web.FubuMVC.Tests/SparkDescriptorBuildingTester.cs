@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Routing;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -24,16 +23,14 @@ namespace Spark.Web.FubuMVC.Tests
             _factory = new SparkViewFactory(null);
             _viewFolder = new InMemoryViewFolder();
             _factory.ViewFolder = _viewFolder;
-            _routeData = new RouteData();
             var controller = new StubController();
-            _actionContext = new ActionContext(_routeData, controller.GetType().Namespace, "Bar");
+            _actionContext = new ActionContext(controller.GetType().Namespace, "Bar");
         }
 
         #endregion
 
         private SparkViewFactory _factory;
         private InMemoryViewFolder _viewFolder;
-        private RouteData _routeData;
         private ActionContext _actionContext;
 
         private static void AssertDescriptorTemplates(SparkViewDescriptor descriptor, IEnumerable<string> searchedLocations, params string[] templates)
@@ -103,8 +100,8 @@ namespace Spark.Web.FubuMVC.Tests
         public void descriptors_with_custom_parameter_should_be_added_to_the_view_search_path()
         {
             _factory.DescriptorBuilder = new ExtendingDescriptorBuilderWithInheritance(_factory.Engine);
-            _routeData.Values.Add("controller", "Bar");
-            _routeData.Values.Add("language", "en-gb");
+            _actionContext.Params.Add("controller", "Bar");
+            _actionContext.Params.Add("language", "en-gb");
             _viewFolder.Add(@"Bar\Index.en-gb.spark", "");
             _viewFolder.Add(@"Bar\Index.en.spark", "");
             _viewFolder.Add(@"Bar\Index.spark", "");
@@ -119,7 +116,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_named_master_should_override_the_view_master()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "<use master='Lion'/>");
             _viewFolder.Add(@"Layouts\Elephant.spark", "<use master='Whale'/>");
             _viewFolder.Add(@"Layouts\Lion.spark", "<use master='Elephant'/>");
@@ -134,7 +131,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_normal_view_and_controller_layout_overrides()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"Layouts\Bar.spark", "");
@@ -146,7 +143,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_normal_view_and_default_layout_present()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
 
@@ -157,7 +154,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_normal_view_and_named_master()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"Layouts\Home.spark", "");
@@ -170,7 +167,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_normal_view_and_empty_master()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"Bar\Index.spark", "<use master=''/>");
 
@@ -181,7 +178,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_normal_view_and_no_default_layout()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
 
             SparkViewDescriptor result = _factory.CreateDescriptor(_actionContext, "Index", null, true, new List<string>());
@@ -191,8 +188,8 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_partial_view_from_area_should_ignore_layout()
         {
-            _routeData.Values.Add("area", "SomeFooArea");
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"SomeFooArea\Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Bar.spark", "");
@@ -208,7 +205,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_partial_view_should_ignore_default_layouts()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"Layouts\Home.spark", "");
@@ -222,7 +219,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_partial_view_should_ignore_use_master_and_default()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "<use master='Lion'/>");
             _viewFolder.Add(@"Layouts\Elephant.spark", "<use master='Whale'/>");
             _viewFolder.Add(@"Layouts\Lion.spark", "<use master='Elephant'/>");
@@ -238,8 +235,8 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_route_area_present_should_default_to_normal_location()
         {
-            _routeData.Values.Add("area", "SomeFooArea");
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
 
@@ -270,8 +267,8 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_some_foo_area_folder_could_contain_controller_folder()
         {
-            _routeData.Values.Add("area", "SomeFooArea");
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"SomeFooArea\Bar\Index.spark", "");
@@ -283,8 +280,8 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_some_foo_area_folder_could_contain_layouts_folder()
         {
-            _routeData.Values.Add("area", "SomeFooArea");
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"SomeFooArea\Bar\Index.spark", "");
@@ -297,8 +294,8 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_some_foo_area_should_contain_named_layout()
         {
-            _routeData.Values.Add("area", "SomeFooArea");
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "");
             _viewFolder.Add(@"Layouts\Application.spark", "");
             _viewFolder.Add(@"SomeFooArea\Bar\Index.spark", "");
@@ -312,7 +309,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void descriptors_with_use_master_should_create_a_template_chain()
         {
-            _routeData.Values.Add("controller", "Bar");
+            _actionContext.Params.Add("controller", "Bar");
             _viewFolder.Add(@"Bar\Index.spark", "<use master='Lion'/>");
             _viewFolder.Add(@"Layouts\Elephant.spark", "<use master='Whale'/>");
             _viewFolder.Add(@"Layouts\Lion.spark", "<use master='Elephant'/>");
@@ -336,9 +333,9 @@ namespace Spark.Web.FubuMVC.Tests
         public override IDictionary<string, object> GetExtraParameters(ActionContext actionContext)
         {
             return new Dictionary<string, object>
-                       {
-                           {"language", Convert.ToString(actionContext.RouteData.Values["language"])}
-                       };
+            {
+                {"language", Convert.ToString(actionContext.Params["language"])}
+            };
         }
 
         protected override IEnumerable<string> PotentialViewLocations(string actionName, string viewName, IDictionary<string, object> extra)

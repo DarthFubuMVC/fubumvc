@@ -12,7 +12,6 @@ using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.Tests.Helpers;
 using Spark.Web.FubuMVC.Tests.Models;
 using Spark.Web.FubuMVC.ViewCreation;
-using Microsoft.Practices.ServiceLocation;
 using HtmlTags;
 
 namespace Spark.Web.FubuMVC.Tests
@@ -35,7 +34,7 @@ namespace Spark.Web.FubuMVC.Tests
 
             _routeData = new RouteData();
             _routeData.Values.Add("action", "Index");
-            _actionContext = new ActionContext(_routeData, new StubController().GetType().Namespace, "Stub");
+            _actionContext = new ActionContext(new StubController().GetType().Namespace, "Stub");
         }
 
         #endregion
@@ -184,7 +183,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_partial_view_in_an_area()
         {
-            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("area", "SomeFooArea");
             FindPartialViewAndRender("index");
 
             _output.ToString().ShouldEqual("<div>default view some foo area</div>");
@@ -193,7 +192,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_view_in_an_area()
         {
-            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("area", "SomeFooArea");
             FindViewAndRender("index");
             _output.ToString().ShouldEqual("<div>default view some foo area</div>");
         }
@@ -201,7 +200,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_view_in_an_area_with_a_layout()
         {
-            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("area", "SomeFooArea");
             FindViewAndRender("index", "layout");
 
             _output.ToString().ShouldContainInOrder("<body>", "<div>default view some foo area</div>", "</body>");
@@ -210,7 +209,7 @@ namespace Spark.Web.FubuMVC.Tests
         [Test]
         public void should_be_able_to_locate_view_in_an_area_with_a_layout_in_the_same_area()
         {
-            _actionContext.RouteData.Values.Add("area", "SomeFooArea");
+            _actionContext.Params.Add("area", "SomeFooArea");
             FindViewAndRender("index", "fooAreaLayout");
 
             ContainsInOrder(_output.ToString(),
