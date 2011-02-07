@@ -8,6 +8,7 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap.Bootstrap;
 using FubuMVC.StructureMap;
 using FubuFastPack.StructureMap;
+using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
 
 namespace FubuTestApplication
@@ -48,8 +49,8 @@ namespace FubuTestApplication
             Actions.IncludeType<ScriptsHandler>();
 
             Route("cases").Calls<CaseController>(x => x.AllCases());
-            Route("case/{Id}").Calls<CaseController>(x => x.Show(null));
-            Route("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
+            Route<Case>("case/{Id}").Calls<CaseController>(x => x.Show(null));
+            Route<CaseRequest>("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
             Route("loadcases").Calls<CaseController>(x => x.LoadCases(null));
         }
     }

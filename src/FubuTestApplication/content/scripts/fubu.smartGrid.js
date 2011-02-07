@@ -3,7 +3,7 @@
 
     link: function (cellValue, options, rowObject) { 
         var linkName = options.colModel.linkName;
-        var url = rowObject[linkName];
+        var url = rowObject[0][linkName];
         
         return '<a href="' + url + '" target="_top">' + cellValue + '</a>'; 
     },
