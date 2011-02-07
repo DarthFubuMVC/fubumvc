@@ -12,6 +12,5 @@ namespace FubuFastPack.JqGrid
         public string url { get; set; }
         public string[] headers { get; set; }
         public string pagerId { get; set; }
-        public string imageBaseUrl { get; set; }
     }
 }

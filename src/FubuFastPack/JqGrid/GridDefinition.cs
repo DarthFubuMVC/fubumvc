@@ -33,7 +33,7 @@ namespace FubuFastPack.JqGrid
             return _columns.SelectMany(x => x.PossibleFilters(queryService));
         }
 
-        protected TColumn addColumn<TColumn>(TColumn column) where TColumn : IGridColumn
+        public TColumn AddColumn<TColumn>(TColumn column) where TColumn : IGridColumn
         {
             _columns.Add(column);
             return column;
@@ -41,29 +41,17 @@ namespace FubuFastPack.JqGrid
 
         public GridColumn<T> Show(Expression<Func<T, object>> expression)
         {
-            return addColumn(new GridColumn<T>(expression));
+            return AddColumn(new GridColumn<T>(expression));
         }
 
         public LinkColumn<T> ShowViewLink(Expression<Func<T, object>> expression)
         {
-            return addColumn(new LinkColumn<T>(expression));
+            return AddColumn(new LinkColumn<T>(expression));
         }
 
         public OtherEntityLinkExpression<TOther> ShowViewLinkForOther<TOther>(Expression<Func<T, TOther>> entityProperty) where TOther : DomainEntity
         {
             return new OtherEntityLinkExpression<TOther>(this, entityProperty);
-        }
-
-
-        public void FilterOn(Expression<Func<T, object>> expression)
-        {
-            throw new NotImplementedException();
-            //var column = new GridColumn<T>(expression)
-            //{
-            //    IsFilterable = true
-            //};
-
-            //_columns.Add(column);
         }
 
         public class OtherEntityLinkExpression<TOther> where TOther : DomainEntity
@@ -83,7 +71,7 @@ namespace FubuFastPack.JqGrid
                 var displayAccessor = topAccessor.GetChildAccessor(property);
                 var idAccessor = topAccessor.GetChildAccessor<TOther>(x => x.Id);
 
-                return _grid.addColumn(new LinkColumn<T>(displayAccessor, idAccessor, typeof(TOther)));
+                return _grid.AddColumn(new LinkColumn<T>(displayAccessor, idAccessor, typeof(TOther)));
             } 
         }
 

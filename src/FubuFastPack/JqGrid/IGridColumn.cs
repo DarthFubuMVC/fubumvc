@@ -9,7 +9,7 @@ namespace FubuFastPack.JqGrid
 {
     public interface IGridColumn
     {
-        IDictionary<string, object> ToDictionary();
+        IEnumerable<IDictionary<string, object>> ToDictionary();
         Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls);
 
         IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService);

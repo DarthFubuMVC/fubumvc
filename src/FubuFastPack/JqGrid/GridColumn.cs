@@ -30,9 +30,9 @@ namespace FubuFastPack.JqGrid
         }
 
         // TODO -- UT this.  Duh.
-        public IDictionary<string, object> ToDictionary()
+        public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
-            return new Dictionary<string, object>{
+            yield return new Dictionary<string, object>{
                 {"name", Accessor.Name},
                 {"index", Accessor.Name},
                 {"sortable", IsSortable}
@@ -42,15 +42,6 @@ namespace FubuFastPack.JqGrid
         public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
         {
             var source = data.GetterFor(Accessor);
-
-            //if (FetchMode == ColumnFetching.FetchOnly)
-            //{
-            //    return dto =>
-            //    {
-            //        var rawValue = source();
-            //        dto[Accessor.Name] = rawValue == null ? string.Empty : rawValue.ToString();
-            //    };
-            //}
 
             // TODO -- later, this will do formatting stuff too
             return dto =>

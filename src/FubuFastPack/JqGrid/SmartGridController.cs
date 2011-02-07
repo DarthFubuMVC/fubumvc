@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
 using FubuFastPack.Querying;
-using FubuLocalization;
 using FubuMVC.Core;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
@@ -11,7 +9,6 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
-using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
@@ -34,7 +31,7 @@ namespace FubuFastPack.JqGrid
 
         public GridDataRequest ToDataRequest()
         {
-            bool sortAscending = !"desc".Equals(sord, StringComparison.OrdinalIgnoreCase);
+            var sortAscending = !"desc".Equals(sord, StringComparison.OrdinalIgnoreCase);
             return new GridDataRequest(page, rows, sidx, sortAscending){
                 Criterion = criterion,
                 GridOptions = gridOptions
@@ -55,8 +52,8 @@ namespace FubuFastPack.JqGrid
 
     public class SmartGridController
     {
-        private readonly IServiceLocator _services;
         private readonly IQueryService _queryService;
+        private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
 
         public SmartGridController(IServiceLocator services, IQueryService queryService, IUrlRegistry urls)
@@ -80,24 +77,21 @@ namespace FubuFastPack.JqGrid
             return ModelFor(grid);
         }
 
-        //public JqGridModel ModelFor(string gridName)
-        //{
-            
-        //}
 
         // TODO -- lots of unit tests here
         public JqGridModel ModelFor(ISmartGrid grid)
         {
             string gridName = grid.GetType().NameForGrid();
-            return new JqGridModel(){
-                baselineCriterion = Enumerable.ToArray<Criteria>(grid.BaselineCriterion),
-                colModel = grid.Definition.Columns.Select(x => x.ToDictionary()).ToArray(),
+            return new JqGridModel{
+                baselineCriterion = grid.BaselineCriterion.ToArray(),
+                colModel = grid.Definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),
                 filters = grid.Definition.AllPossibleFilters(_queryService).ToArray(),
                 gridName = gridName,
-                url = _urls.UrlFor(new GridRequest{gridName = gridName}),
+                url = _urls.UrlFor(new GridRequest{
+                    gridName = gridName
+                }),
                 headers = grid.Definition.Columns.Select(x => x.GetHeader()).ToArray(),
                 pagerId = gridName + "_pager",
-                imageBaseUrl = "content/images/grid".ToAbsoluteUrl()  // TEMPORARY
             };
         }
     }
@@ -150,7 +144,7 @@ namespace FubuFastPack.JqGrid
         public static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows) where T : ISmartGrid
         {
             var tag = page.SmartGridFor(page.Get<T>(), initialRows);
-            typeof(T).ForAttribute<AllowRoleAttribute>(att => tag.RequiresAccessTo(att.Roles));
+            typeof (T).ForAttribute<AllowRoleAttribute>(att => tag.RequiresAccessTo(att.Roles));
 
             return tag;
         }

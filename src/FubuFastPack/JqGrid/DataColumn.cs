@@ -18,9 +18,9 @@ namespace FubuFastPack.JqGrid
         }
 
         // TODO -- UT this
-        public IDictionary<string, object> ToDictionary()
+        public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
-            return new Dictionary<string, object>{
+            yield return new Dictionary<string, object>{
                 {"name", "data"},
                 {"index", "data"},
                 {"sortable", false},

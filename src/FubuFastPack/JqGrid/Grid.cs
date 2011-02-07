@@ -30,9 +30,9 @@ namespace FubuFastPack.JqGrid
             get { return _definition; }
         }
 
-        protected void FilterOn(Expression<Func<TEntity, object>> expression)
+        protected FilterColumn<TEntity> FilterOn(Expression<Func<TEntity, object>> expression)
         {
-            _definition.FilterOn(expression);
+            return _definition.AddColumn(new FilterColumn<TEntity>(expression));
         }
 
         protected GridColumn<TEntity> Show(Expression<Func<TEntity, object>> expression)

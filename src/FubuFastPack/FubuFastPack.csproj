@@ -71,6 +71,7 @@
     <Compile Include="JqGrid\DataColumn.cs" />
     <Compile Include="JqGrid\EntityDTO.cs" />
     <Compile Include="JqGrid\EntityGridData.cs" />
+    <Compile Include="JqGrid\FilterColumn.cs" />
     <Compile Include="JqGrid\Grid.cs" />
     <Compile Include="JqGrid\GridColumnBase.cs" />
     <Compile Include="JqGrid\jqGridModel.cs" />
