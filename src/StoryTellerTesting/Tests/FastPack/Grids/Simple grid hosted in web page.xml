@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Test name="Simple grid hosted in web page" lifecycle="Acceptance">
+  <SmartGrid>
+    <CasesAre isStep="True">
+      <Rows>
+        <row isStep="True" Identifier="001" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" Number="100" />
+        <row isStep="True" Identifier="002" Condition="Closed" Priority="Medium" Status="Finished" Title="Different Case" Number="101" />
+        <row isStep="True" Identifier="003" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" Number="99" />
+        <row isStep="True" Identifier="004" Condition="Closed" Priority="High" Status="Not Started" Title="Important Case" Number="200" />
+        <row isStep="True" Identifier="005" Condition="Open" Priority="Urgent" Status="Working" Title="Case #2" Number="201" />
+        <row isStep="True" Identifier="006" Condition="Open" Priority="Low" Status="Not Started" Title="Case #3" Number="300" />
+        <row isStep="True" Identifier="007" Condition="Open" Priority="Urgent" Status="Working" Title="Case #4" Number="295" />
+        <row isStep="True" Identifier="008" Condition="Open" Priority="Urgent" Status="Working" Title="Important Case" Number="100" />
+        <row isStep="True" Identifier="009" Condition="Closed" Priority="Urgent" Status="Working" Title="Important Case" Number="555" />
+        <row isStep="True" Identifier="010" Condition="Reopened" Priority="Medium" Status="Finished" Title="Case #5" Number="102" />
+        <row isStep="True" Identifier="011" Condition="Closed" Priority="High" Status="Not Started" Title="Case #6" Number="444" />
+      </Rows>
+    </CasesAre>
+  </SmartGrid>
+</Test>

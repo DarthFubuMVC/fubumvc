@@ -9,17 +9,13 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    public abstract class Grid<TEntity, TService> : IGrid where TEntity : DomainEntity
+    public abstract class Grid<TEntity, TService> : ISmartGrid where TEntity : DomainEntity
     {
         private readonly GridDefinition<TEntity> _definition = new GridDefinition<TEntity>();
 
         private readonly Cache<string, Expression<Func<TEntity, object>>> _sortables
             = new Cache<string, Expression<Func<TEntity, object>>>();
 
-        protected Grid()
-        {
-            _definition.Fetch(x => x.Id);
-        }
 
         public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {

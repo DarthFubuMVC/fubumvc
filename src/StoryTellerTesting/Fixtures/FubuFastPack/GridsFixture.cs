@@ -49,7 +49,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             _container = DatabaseDriver.ContainerWithDatabase();
             _container.Configure(x =>
             {
-                x.AddRegistry<FastPackRegistry>();
+                x.AddRegistry(new FastPackRegistry(typeof(DatabaseDriver).Assembly));
                 x.For<IObjectConverter>().Use<ObjectConverter>();
             });
 
@@ -95,7 +95,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             _paging.SortColumn = field;
         }
 
-        private void runGrid<T>() where T : IGrid
+        private void runGrid<T>() where T : ISmartGrid
         {
             this[typeof (T).Name] = Do("With grid " + typeof (T).Name, () =>
             {

@@ -1,6 +1,12 @@
+using System;
+using System.Diagnostics;
 using System.IO;
+using FubuFastPack.JqGrid;
 using FubuFastPack.NHibernate;
+using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
+using FubuMVC.StructureMap;
+using FubuTestApplication.Domain;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using FubuCore;
@@ -30,7 +36,7 @@ namespace FubuTestApplication
         public FakeDomainNHIbernateRegistry(DatabaseSettings settings)
         {
             SetProperties(settings.GetProperties());
-            MappingFromThisAssembly();
+            MappingsFromAssembly(typeof(Case).Assembly);
         }
     }
 
@@ -70,9 +76,30 @@ namespace FubuTestApplication
             
             return new Container(x =>
             {
+                x.AddRegistry(new FastPackRegistry(typeof(DatabaseDriver).Assembly));
+
                 x.For<DatabaseSettings>().Use(_settings);
                 x.BootstrapNHibernate<FakeDomainNHIbernateRegistry>(ConfigurationBehavior.AlwaysUseNewConfiguration);
+                x.UseExplicitNHibernateTransactionBoundary();
             });
+        }
+
+        public static IContainer GetFullFastPackContainer()
+        {
+            var file = FileSystem.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../test.db").ToFullPath();
+
+            _container = BootstrapContainer(file, true);
+            _container.Configure(x =>
+            {
+                x.AddRegistry(new FastPackRegistry(typeof(DatabaseDriver).Assembly));
+                x.For<IObjectConverter>().Use<ObjectConverter>();
+            });
+
+            FubuApplication.For<SmartGridRegistry>().StructureMap(() => _container).Bootstrap();
+
+            _container.GetInstance<ISchemaWriter>().BuildSchema();
+
+            return _container;
         }
 
         public static IContainer BuildWebsiteContainer()

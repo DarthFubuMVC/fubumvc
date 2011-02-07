@@ -36,7 +36,7 @@ namespace FubuFastPack.Querying
             set
             {
                 _criterion.Clear();
-                _criterion.AddRange(value);
+                if (value != null) _criterion.AddRange(value);
             }
         }
 

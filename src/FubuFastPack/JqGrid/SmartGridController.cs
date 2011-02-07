@@ -11,6 +11,7 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
+using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
@@ -43,9 +44,12 @@ namespace FubuFastPack.JqGrid
 
     public class SmartGridRegistry : FubuPackageRegistry
     {
+        // TODO -- very temporary
         public SmartGridRegistry()
         {
-            this.Route("griddata/{gridname}").Calls<SmartGridController>(x => x.Data(null));
+            Actions.IncludeMethods(
+                call =>
+                call.HandlerType == typeof (SmartGridController) && call.Method.HasAttribute<UrlPatternAttribute>());
         }
     }
 
@@ -63,13 +67,14 @@ namespace FubuFastPack.JqGrid
         }
 
         // Maybe turn this into other requests
+        [UrlPattern("griddata/{gridName}")]
         public GridResults Data(GridRequest input)
         {
-            var grid = _services.GetInstance<IGrid>(input.gridName);
+            var grid = _services.GetInstance<ISmartGrid>(input.gridName);
             return grid.Invoke(_services, input.ToDataRequest());
         }
 
-        public JqGridModel ModelFor<T>() where T : IGrid
+        public JqGridModel ModelFor<T>() where T : ISmartGrid
         {
             var grid = _services.GetInstance<T>();
             return ModelFor(grid);
@@ -80,15 +85,19 @@ namespace FubuFastPack.JqGrid
             
         //}
 
-        public JqGridModel ModelFor(IGrid grid)
+        // TODO -- lots of unit tests here
+        public JqGridModel ModelFor(ISmartGrid grid)
         {
             string gridName = grid.GetType().NameForGrid();
             return new JqGridModel(){
                 baselineCriterion = Enumerable.ToArray<Criteria>(grid.BaselineCriterion),
-                colModel = Enumerable.Select<IGridColumn, IDictionary<string, object>>(grid.Definition.Columns, x => x.ToDictionary()).ToArray(),
-                filters = Enumerable.ToArray<FilterDTO>(grid.Definition.AllPossibleFilters(_queryService)),
+                colModel = grid.Definition.Columns.Select(x => x.ToDictionary()).ToArray(),
+                filters = grid.Definition.AllPossibleFilters(_queryService).ToArray(),
                 gridName = gridName,
-                url = _urls.UrlFor(new GridRequest{gridName = gridName})
+                url = _urls.UrlFor(new GridRequest{gridName = gridName}),
+                headers = grid.Definition.Columns.Select(x => x.GetHeader()).ToArray(),
+                pagerId = gridName + "_pager",
+                imageBaseUrl = "content/images/grid".ToAbsoluteUrl()  // TEMPORARY
             };
         }
     }
@@ -106,7 +115,7 @@ namespace FubuFastPack.JqGrid
             return gridName.ContainerNameForGrid();
         }
 
-        public static string Name(this IGrid grid)
+        public static string Name(this ISmartGrid grid)
         {
             return grid.GetType().NameForGrid();
         }
@@ -116,27 +125,29 @@ namespace FubuFastPack.JqGrid
             return "gridContainer_" + gridName;
         }
 
-        public static HtmlTag SmartGridFor(this IFubuPage page, IGrid grid, int? initialRows)
+        public static HtmlTag SmartGridFor(this IFubuPage page, ISmartGrid grid, int? initialRows)
         {
             // TODO -- later
-            //page.Script("shared/dovetail.smartGrid.js");
+            page.Script("grid");
 
             // TODO -- add security!!!!!!!!!!!!
+
+            var model = page.Get<SmartGridController>().ModelFor(grid);
 
             return new HtmlTag("div", top =>
             {
                 string gridName = grid.Name();
                 top.Add("div")
                     .AddClass("grid-container")
-                    .MetaData("definition", grid)
+                    .MetaData("definition", model)
                     .MetaData("initialRows", initialRows.GetValueOrDefault(10))
                     .Add("table").Id(gridName).AddClass("smartgrid");
 
-                top.Add("div").Id(gridName + "_pager").AddClass("pager-bottom").AddClass("clean");
+                top.Add("div").Id(gridName + "_pager").AddClass("pager-bottom").AddClass("grid-pager").AddClass("clean");
             });
         }
 
-        private static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows) where T : IGrid
+        public static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows) where T : ISmartGrid
         {
             var tag = page.SmartGridFor(page.Get<T>(), initialRows);
             typeof(T).ForAttribute<AllowRoleAttribute>(att => tag.RequiresAccessTo(att.Roles));

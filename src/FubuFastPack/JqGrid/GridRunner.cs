@@ -33,7 +33,7 @@ namespace FubuFastPack.JqGrid
             get { return _service; }
         }
 
-        public GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request)
+        public GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request) where T : DomainEntity
         {
             applyCriteria(request, grid, source);
 
@@ -45,7 +45,7 @@ namespace FubuFastPack.JqGrid
             return ApplyPaging(source, request, list);
         }
 
-        private void applyCriteria<T>(GridDataRequest paging, GridDefinition<T> grid, IGridDataSource<T> source)
+        private void applyCriteria<T>(GridDataRequest paging, GridDefinition<T> grid, IGridDataSource<T> source) where T : DomainEntity
         {
             var requests = paging.Criterion.Select(x =>
             {

@@ -80,7 +80,7 @@ namespace FubuFastPack.StructureMap
             {
                 if (!nestedContainer.Model.HasDefaultImplementationFor<ITransactionBoundary>())
                 {
-                    throw new ApplicationException("This container has already been disposed");
+                    throw new ApplicationException("This container has already been disposed or does not have an ITransactionBoundary registration");
                 }
 
                 var boundary = nestedContainer.GetInstance<ITransactionBoundary>();

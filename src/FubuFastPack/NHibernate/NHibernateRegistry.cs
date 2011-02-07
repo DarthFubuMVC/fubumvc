@@ -64,6 +64,7 @@ namespace FubuFastPack.NHibernate
             modifyModel = m => m.AddMappingsFromAssembly(assembly);
         }
 
+        // TODO -- test by using an NH registry from another assembly
         public void MappingFromThisAssembly()
         {
             modifyModel = m => m.AddMappingsFromAssembly(findTheCallingAssembly());

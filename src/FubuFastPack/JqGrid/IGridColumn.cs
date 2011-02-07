@@ -22,5 +22,7 @@ namespace FubuFastPack.JqGrid
 
         IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService);
         IEnumerable<Accessor> SelectAccessors();
+
+        string GetHeader();
     }
 }

@@ -77,7 +77,7 @@
     <Compile Include="JqGrid\GridDefinition.cs" />
     <Compile Include="JqGrid\GridResults.cs" />
     <Compile Include="JqGrid\GridRunner.cs" />
-    <Compile Include="JqGrid\IGrid.cs" />
+    <Compile Include="JqGrid\ISmartGrid.cs" />
     <Compile Include="JqGrid\IGridColumn.cs" />
     <Compile Include="JqGrid\IGridData.cs" />
     <Compile Include="JqGrid\IGridDataSource.cs" />
@@ -167,10 +167,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Scripts\" />
     <Folder Include="Lists\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\fubufastpack.grid.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

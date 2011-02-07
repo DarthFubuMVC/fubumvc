@@ -336,6 +336,7 @@
     <Compile Include="UI\Forms\DefinitionListLabelAndField.cs" />
     <Compile Include="UI\Forms\FormLineExpression.cs" />
     <Compile Include="UI\Forms\ILabelAndFieldLayout.cs" />
+    <Compile Include="UI\FubuHtmlDocument.cs" />
     <Compile Include="UI\FubuPageExtensions.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />

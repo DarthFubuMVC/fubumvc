@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 
@@ -56,6 +57,11 @@ namespace HtmlTags
         }
 
 #pragma warning restore 618,612
+        public static T Get<T>(byte[] rawJson)
+        {
+            var jsonString = Encoding.Default.GetString(rawJson);
+            return Get<T>(jsonString);
+        }
     }
 
     public static class javascript

@@ -222,5 +222,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IFileSystem, FileSystem>();
         }
+
+        [Test]
+        public void object_converter_is_registered()
+        {
+            registeredTypeIs<IObjectConverter, ObjectConverter>();
+        }
     }
 }

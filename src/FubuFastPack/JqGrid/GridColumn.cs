@@ -3,10 +3,52 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuFastPack.Domain;
+using FubuFastPack.Querying;
 using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
 {
+
+    public class DataColumn<T> : IGridColumn where T : DomainEntity
+    {
+        public IDictionary<string, object> ToDictionary()
+        {
+            var dictionary = new Dictionary<string, object>();
+            dictionary.Add("name", "data");
+            dictionary.Add("index", "data");
+            dictionary.Add("sortable", false);
+            dictionary.Add("hidden", true);
+
+            return dictionary;
+        }
+
+        
+
+        public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
+        {
+            var accessor = ReflectionHelper.GetAccessor<T>(x => x.Id);
+            var getter = data.GetterFor(accessor);
+            return dto => dto["Id"] = getter().ToString();
+        }
+
+        public IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService)
+        {
+            yield break;
+        }
+
+        public IEnumerable<Accessor> SelectAccessors()
+        {
+            yield break;
+        }
+
+        public string GetHeader()
+        {
+            return "Data";
+        }
+    }
+
+
     public class GridColumn<T> : GridColumnBase<T>, IGridColumn
     {
         public static GridColumn<T> ColumnFor(Expression<Func<T, object>> property)
@@ -17,6 +59,7 @@ namespace FubuFastPack.JqGrid
         public GridColumn(Accessor accessor, Expression<Func<T, object>> expression) : base(accessor, expression)
         {
             FetchMode = ColumnFetching.FetchAndDisplay;
+            IsSortable = true;
         }
 
         public IEnumerable<Accessor> SelectAccessors()
@@ -32,7 +75,13 @@ namespace FubuFastPack.JqGrid
         // TODO -- UT this.  Duh.
         public IDictionary<string, object> ToDictionary()
         {
-            throw new NotImplementedException();
+            var dictionary = new Dictionary<string, object>();
+
+            dictionary.Add("name", Accessor.Name);
+            dictionary.Add("index", Accessor.Name);
+            dictionary.Add("sortable", IsSortable);
+
+            return dictionary;
         }
 
         public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)

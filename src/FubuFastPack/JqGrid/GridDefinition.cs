@@ -4,16 +4,22 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 
 namespace FubuFastPack.JqGrid
 {
-    public class GridDefinition<T> : IGridDefinition
+    public class GridDefinition<T> : IGridDefinition where T : DomainEntity
     {
         private readonly List<IGridColumn> _columns = new List<IGridColumn>();
 
         private readonly Cache<string, Expression<Func<T, object>>> _properties =
             new Cache<string, Expression<Func<T, object>>>();
+
+        public GridDefinition()
+        {
+            _columns.Add(new DataColumn<T>());
+        }
 
         public IEnumerable<IGridColumn> Columns
         {

@@ -4,7 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    public interface IGrid
+    public interface ISmartGrid
     {
         IGridDefinition Definition { get; }
 

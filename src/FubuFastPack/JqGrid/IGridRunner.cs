@@ -1,4 +1,5 @@
-﻿using FubuFastPack.Querying;
+﻿using FubuFastPack.Domain;
+using FubuFastPack.Querying;
 
 namespace FubuFastPack.JqGrid
 {
@@ -6,6 +7,6 @@ namespace FubuFastPack.JqGrid
     {
         TService Service { get; }
 
-        GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request);
+        GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request) where T : DomainEntity;
     }
 }

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -74,6 +75,7 @@
     <Compile Include="debugger.cs" />
     <Compile Include="debugging.cs" />
     <Compile Include="Fixtures\FubuFastPack\GridsFixture.cs" />
+    <Compile Include="Fixtures\FubuFastPack\SmartGridFixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />
     <Compile Include="Fixtures\HelloWorldFixture.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
+    <Compile Include="FubuFastPack\JqGrid\GridSmokeTester.cs" />
     <Compile Include="FubuFastPack\NHibernate\bootstrapping_a_database.cs" />
     <Compile Include="FubuFastPack\NHibernate\ConfigurationSourceSmokeTester.cs" />
     <Compile Include="FubuFastPack\NHibernate\configuration_file_caching_smoke_tester.cs" />
@@ -121,6 +124,10 @@
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
