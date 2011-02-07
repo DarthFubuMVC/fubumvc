@@ -79,6 +79,20 @@ namespace FubuCore.Reflection
             get { return Array.ConvertAll(_properties, p => p.Name); }
         }
 
+        public Expression<Func<T, object>> ToExpression<T>()
+        {
+            var parameter = Expression.Parameter(typeof(T), "x");
+            Expression body = parameter;
+
+            _properties.Each(prop =>
+            {
+                body = Expression.Property(body, prop);
+            });
+
+            var delegateType = typeof(Func<,>).MakeGenericType(typeof(T), typeof(object));
+            return (Expression<Func<T, object>>) Expression.Lambda(delegateType, body, parameter);
+        }
+
         public PropertyInfo[] Properties { get { return _properties; } }
 
         /// <summary>

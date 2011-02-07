@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using FubuCore.Reflection;
-using FubuCore.Util;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 using Microsoft.Practices.ServiceLocation;
@@ -12,10 +10,6 @@ namespace FubuFastPack.JqGrid
     public abstract class Grid<TEntity, TService> : ISmartGrid where TEntity : DomainEntity
     {
         private readonly GridDefinition<TEntity> _definition = new GridDefinition<TEntity>();
-
-        private readonly Cache<string, Expression<Func<TEntity, object>>> _sortables
-            = new Cache<string, Expression<Func<TEntity, object>>>();
-
 
         public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {
@@ -41,23 +35,16 @@ namespace FubuFastPack.JqGrid
             _definition.FilterOn(expression);
         }
 
-        protected GridDefinition<TEntity>.ColumnExpression Show(Expression<Func<TEntity, object>> expression)
+        protected GridColumn<TEntity> Show(Expression<Func<TEntity, object>> expression)
         {
-            _sortables[expression.GetName()] = expression;
             return _definition.Show(expression);
         }
 
         protected LinkColumn<TEntity> ShowViewLink(Expression<Func<TEntity, object>> expression)
         {
-            _sortables[expression.GetName()] = expression;
             return _definition.ShowViewLink(expression);
         }
 
         public abstract IGridDataSource<TEntity> BuildSource(TService service);
-
-        protected Cache<string, Expression<Func<TEntity, object>>> sortables
-        {
-            get { return _sortables; }
-        }
     }
 }

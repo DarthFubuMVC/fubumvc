@@ -13,9 +13,6 @@ namespace FubuFastPack.JqGrid
     {
         private readonly List<IGridColumn> _columns = new List<IGridColumn>();
 
-        private readonly Cache<string, Expression<Func<T, object>>> _properties =
-            new Cache<string, Expression<Func<T, object>>>();
-
         public GridDefinition()
         {
             _columns.Add(new DataColumn<T>());
@@ -41,27 +38,18 @@ namespace FubuFastPack.JqGrid
             _columns.Add(column);
         }
 
-        // TODO -- get rid of duplication here.
-        public ColumnExpression Show(Expression<Func<T, object>> expression)
+        public GridColumn<T> Show(Expression<Func<T, object>> expression)
         {
-            var accessor = expression.ToAccessor();
-            _properties[accessor.Name] = expression;
-
-            var column = new GridColumn<T>(accessor, expression){
-                FetchMode = ColumnFetching.FetchAndDisplay
-            };
+            var column = new GridColumn<T>(expression);
 
             _columns.Add(column);
 
-            return new ColumnExpression(this, column);
+            return column;
         }
 
         public LinkColumn<T> ShowViewLink(Expression<Func<T, object>> expression)
         {
-            var accessor = expression.ToAccessor();
-            _properties[accessor.Name] = expression;
-
-            var column = new LinkColumn<T>(accessor, expression);
+            var column = new LinkColumn<T>(expression);
 
             _columns.Add(column);
 
@@ -70,50 +58,23 @@ namespace FubuFastPack.JqGrid
 
         public void FilterOn(Expression<Func<T, object>> expression)
         {
-            var accessor = expression.ToAccessor();
-            _properties[accessor.Name] = expression;
+            throw new NotImplementedException();
+            //var column = new GridColumn<T>(expression)
+            //{
+            //    IsFilterable = true
+            //};
 
-            var column = new GridColumn<T>(accessor, expression){
-                FetchMode = ColumnFetching.NoFetch,
-                IsFilterable = true
-            };
-
-            _columns.Add(column);
+            //_columns.Add(column);
         }
 
-
-        public void Fetch(Expression<Func<T, object>> expression)
+        public class OtherEntityLinkExpression<TOther> where TOther : DomainEntity
         {
-            var accessor = expression.ToAccessor();
-            _properties[accessor.Name] = expression;
 
-            var column = new GridColumn<T>(accessor, expression){
-                FetchMode = ColumnFetching.FetchOnly,
-                IsFilterable = false
-            };
-
-            _columns.Add(column);
         }
-
-        #region Nested type: ColumnExpression
-
-        public class ColumnExpression
-        {
-            private readonly GridColumn<T> _column;
-
-            public ColumnExpression(GridDefinition<T> grid, GridColumn<T> column)
-            {
-                _column = column;
-            }
-        }
-
-        #endregion
 
         public Expression<Func<T, object>> PropertyExpressionFor(string propertyName)
         {
-            return _properties[propertyName];
+            return _columns.SelectMany(x => x.AllAccessors()).First(x => x.Name == propertyName).ToExpression<T>();
         }
-
-
     }
 }

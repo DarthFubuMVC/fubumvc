@@ -44,19 +44,11 @@ namespace FubuFastPack.Testing.jqGrid
             theColumn.PossibleFilters(queryService).Any().ShouldBeFalse();
         }
 
-        [Test]
-        public void if_the_column_is_not_fetched_return_no_select_accessors()
-        {
-            theColumn.FetchMode = ColumnFetching.NoFetch;
-            theColumn.SelectAccessors().Any().ShouldBeFalse();
-        }
 
         [Test]
-        public void return_a_single_select_accessor_if_the_mode_is_fetch()
+        public void return_a_single_select_accessor()
         {
-            theColumn.FetchMode = ColumnFetching.FetchOnly;
             theColumn.SelectAccessors().Single().Name.ShouldEqual("Condition");
-            theColumn.FetchMode = ColumnFetching.FetchAndDisplay;
             theColumn.SelectAccessors().Single().Name.ShouldEqual("Condition");
 
         }

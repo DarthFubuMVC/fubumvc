@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using FubuCore;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 using FubuMVC.Core.Urls;
-using FubuFastPack.JqGrid;
 
 namespace FubuFastPack.JqGrid
 {
@@ -33,7 +31,8 @@ namespace FubuFastPack.JqGrid
             get { return _service; }
         }
 
-        public GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request) where T : DomainEntity
+        public GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request)
+            where T : DomainEntity
         {
             applyCriteria(request, grid, source);
 
@@ -45,7 +44,8 @@ namespace FubuFastPack.JqGrid
             return ApplyPaging(source, request, list);
         }
 
-        private void applyCriteria<T>(GridDataRequest paging, GridDefinition<T> grid, IGridDataSource<T> source) where T : DomainEntity
+        private void applyCriteria<T>(GridDataRequest paging, GridDefinition<T> grid, IGridDataSource<T> source)
+            where T : DomainEntity
         {
             var requests = paging.Criterion.Select(x =>
             {

@@ -81,7 +81,9 @@ namespace FubuFastPack.JqGrid
             {
                 if (options.SortColumn.IsNotEmpty())
                 {
-                    var expression = _grid.sortables[options.SortColumn];
+                    var accessor = _grid.Definition.SelectedAccessors.First(x => x.Name == options.SortColumn);
+
+                    var expression = accessor.ToExpression<TEntity>();
                     return options.SortAscending
                                ? queryable.OrderBy(expression)
                                : queryable.OrderByDescending(expression);

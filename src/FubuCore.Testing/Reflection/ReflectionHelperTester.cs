@@ -215,6 +215,19 @@ namespace FubuCore.Testing.Reflection
         }
 
         [Test]
+        public void get_expression_from_accessor()
+        {
+            var target = new Target{
+                Name = "Chad"
+            };
+
+            Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Name);
+
+            var expression = accessor.ToExpression<Target>();
+            expression.Compile()(target).ShouldEqual("Chad");
+        }
+
+        [Test]
         public void DeclaringType_of_a_single_property_is_type_of_the_object_containing_the_property()
         {
             Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Child);
@@ -333,6 +346,29 @@ namespace FubuCore.Testing.Reflection
         {
             public DateTime BirthDay { get; set; }
             public string Name { get; set; }
+        }
+
+        [Test]
+        public void to_expression_test()
+        {
+            var target = new Target{
+                Child = new ChildTarget(){
+                    GrandChild = new GrandChildTarget(){
+                        Name = "Jessica"
+                    },
+                    SecondGrandChild = new GrandChildTarget(){
+                        Name = "Natalie"
+                    }
+                }
+            };
+
+            ReflectionHelper.GetAccessor<Target>(x => x.Child.GrandChild.Name)
+                .ToExpression<Target>().Compile()(target)
+                .ShouldEqual("Jessica");
+
+            ReflectionHelper.GetAccessor<Target>(x => x.Child.SecondGrandChild.Name)
+                .ToExpression<Target>().Compile()(target)
+                .ShouldEqual("Natalie");
         }
 
         [Test]

@@ -31,13 +31,15 @@ namespace FubuFastPack.JqGrid
 
         public static LinkColumn<T> For(Expression<Func<T, object>> expression)
         {
-            return new LinkColumn<T>(expression.ToAccessor(), expression);
+            return new LinkColumn<T>(expression);
         }
 
-        public LinkColumn(Accessor accessor, Expression<Func<T, object>> expression) : base(accessor, expression)
+        public LinkColumn(Expression<Func<T, object>> expression) : base(expression)
         {
             _idAccessor = ReflectionHelper.GetAccessor<T>(x => x.Id);
-            _linkName = "linkFor" + accessor.Name;
+            _linkName = "linkFor" + Accessor.Name;
+
+            IsSortable = true;
         }
 
         // TODO -- UT this little monster
@@ -73,6 +75,11 @@ namespace FubuFastPack.JqGrid
         public IEnumerable<Accessor> SelectAccessors()
         {
             yield return Accessor;
+        }
+
+        public IEnumerable<Accessor> AllAccessors()
+        {
+            return SelectAccessors();
         }
     }
 }

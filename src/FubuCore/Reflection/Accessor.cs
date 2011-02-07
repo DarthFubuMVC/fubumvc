@@ -19,5 +19,7 @@ namespace FubuCore.Reflection
         Accessor GetChildAccessor<T>(Expression<Func<T, object>> expression);
 
         string[] PropertyNames { get; }
+
+        Expression<Func<T, object>> ToExpression<T>();
     }
 }

@@ -7,14 +7,6 @@ using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
 {
-    public enum ColumnFetching
-    {
-        FetchAndDisplay,
-        FetchOnly,
-        NoFetch
-    }
-
-
     public interface IGridColumn
     {
         IDictionary<string, object> ToDictionary();
@@ -22,6 +14,7 @@ namespace FubuFastPack.JqGrid
 
         IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService);
         IEnumerable<Accessor> SelectAccessors();
+        IEnumerable<Accessor> AllAccessors();
 
         string GetHeader();
     }

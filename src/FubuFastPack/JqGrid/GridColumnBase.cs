@@ -14,9 +14,9 @@ namespace FubuFastPack.JqGrid
         private readonly Expression<Func<T, object>> _expression;
         private StringToken _header;
 
-        protected GridColumnBase(Accessor accessor, Expression<Func<T, object>> expression)
+        protected GridColumnBase(Expression<Func<T, object>> expression)
         {
-            _accessor = accessor;
+            _accessor = expression.ToAccessor();
             _expression = expression;
         }
 
@@ -42,7 +42,7 @@ namespace FubuFastPack.JqGrid
         {
             if (_header != null) return _header.ToString();
 
-            return LocalizationManager.GetHeader(_expression);
+            return LocalizationManager.GetHeader(_accessor.InnerProperty);
         }
 
         public IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService)

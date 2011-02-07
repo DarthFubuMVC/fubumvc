@@ -41,6 +41,15 @@ namespace FubuCore.Reflection
             get { return new[] { _property.Name }; }
         }
 
+        public Expression<Func<T, object>> ToExpression<T>()
+        {
+            var parameter = Expression.Parameter(typeof(T), "x");
+            var body = Expression.Property(parameter, _property);
+
+            var delegateType = typeof(Func<,>).MakeGenericType(typeof(T), typeof(object));
+            return (Expression<Func<T, object>>) Expression.Lambda(delegateType, body, parameter);
+        }
+
         public string Name { get { return _property.Name; } }
 
         public virtual void SetValue(object target, object propertyValue)
