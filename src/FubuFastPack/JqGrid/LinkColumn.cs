@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
-using FubuFastPack.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 
@@ -28,18 +27,20 @@ namespace FubuFastPack.JqGrid
     {
         private readonly Accessor _idAccessor;
         private string _linkName;
-
-        public static LinkColumn<T> For(Expression<Func<T, object>> expression)
-        {
-            return new LinkColumn<T>(expression);
-        }
+        private Type _entityType;
 
         public LinkColumn(Expression<Func<T, object>> expression) : base(expression)
         {
             _idAccessor = ReflectionHelper.GetAccessor<T>(x => x.Id);
-            _linkName = "linkFor" + Accessor.Name;
+            _entityType = typeof (T);
+            initialize();
+        }
 
-            IsSortable = true;
+        public LinkColumn(Accessor displayAccessor, Accessor idAccessor, Type entityType) : base(displayAccessor)
+        {
+            _idAccessor = idAccessor;
+            _entityType = entityType;
+            initialize();
         }
 
         // TODO -- UT this little monster
@@ -65,21 +66,35 @@ namespace FubuFastPack.JqGrid
                 dto.AddCellDisplay(display);
 
                 var parameters = new RouteParameters();
-                parameters[_idAccessor.Name] = idSource().ToString();
 
-                var url = urls.UrlFor<T>(parameters);
+                // This line of code below may be a problem later
+                parameters[_idAccessor.InnerProperty.Name] = idSource().ToString();
+
+                var url = urls.UrlFor(_entityType, parameters);
                 dto[_linkName] = url;
             };
         }
 
         public IEnumerable<Accessor> SelectAccessors()
         {
+            yield return _idAccessor;
             yield return Accessor;
         }
 
         public IEnumerable<Accessor> AllAccessors()
         {
             return SelectAccessors();
+        }
+
+        public static LinkColumn<T> For(Expression<Func<T, object>> expression)
+        {
+            return new LinkColumn<T>(expression);
+        }
+
+        private void initialize()
+        {
+            _linkName = "linkFor" + Accessor.Name;
+            IsSortable = true;
         }
     }
 }

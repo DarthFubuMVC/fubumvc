@@ -25,7 +25,7 @@ namespace FubuFastPack.JqGrid
 
         public IEnumerable<Accessor> SelectedAccessors
         {
-            get { return _columns.SelectMany(x => x.SelectAccessors()); }
+            get { return _columns.SelectMany(x => x.SelectAccessors()).Distinct(); }
         }
 
         public IEnumerable<FilterDTO> AllPossibleFilters(IQueryService queryService)
@@ -33,28 +33,27 @@ namespace FubuFastPack.JqGrid
             return _columns.SelectMany(x => x.PossibleFilters(queryService));
         }
 
-        protected void addColumn(IGridColumn column)
+        protected TColumn addColumn<TColumn>(TColumn column) where TColumn : IGridColumn
         {
             _columns.Add(column);
+            return column;
         }
 
         public GridColumn<T> Show(Expression<Func<T, object>> expression)
         {
-            var column = new GridColumn<T>(expression);
-
-            _columns.Add(column);
-
-            return column;
+            return addColumn(new GridColumn<T>(expression));
         }
 
         public LinkColumn<T> ShowViewLink(Expression<Func<T, object>> expression)
         {
-            var column = new LinkColumn<T>(expression);
-
-            _columns.Add(column);
-
-            return column;
+            return addColumn(new LinkColumn<T>(expression));
         }
+
+        public OtherEntityLinkExpression<TOther> ShowViewLinkForOther<TOther>(Expression<Func<T, TOther>> entityProperty) where TOther : DomainEntity
+        {
+            return new OtherEntityLinkExpression<TOther>(this, entityProperty);
+        }
+
 
         public void FilterOn(Expression<Func<T, object>> expression)
         {
@@ -69,7 +68,23 @@ namespace FubuFastPack.JqGrid
 
         public class OtherEntityLinkExpression<TOther> where TOther : DomainEntity
         {
+            private readonly GridDefinition<T> _grid;
+            private readonly Expression<Func<T, TOther>> _entityProperty;
 
+            public OtherEntityLinkExpression(GridDefinition<T> grid, Expression<Func<T, TOther>> entityProperty)
+            {
+                _grid = grid;
+                _entityProperty = entityProperty;
+            }
+
+            public LinkColumn<T> DisplayTextFrom(Expression<Func<TOther, object>> property)
+            {
+                var topAccessor = ReflectionHelper.GetAccessor(_entityProperty);
+                var displayAccessor = topAccessor.GetChildAccessor(property);
+                var idAccessor = topAccessor.GetChildAccessor<TOther>(x => x.Id);
+
+                return _grid.addColumn(new LinkColumn<T>(displayAccessor, idAccessor, typeof(TOther)));
+            } 
         }
 
         public Expression<Func<T, object>> PropertyExpressionFor(string propertyName)

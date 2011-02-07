@@ -45,6 +45,11 @@ namespace FubuFastPack.JqGrid
             return _definition.ShowViewLink(expression);
         }
 
+        public GridDefinition<TEntity>.OtherEntityLinkExpression<TOther> ShowViewLinkForOther<TOther>(Expression<Func<TEntity, TOther>> entityProperty) where TOther : DomainEntity
+        {
+            return _definition.ShowViewLinkForOther(entityProperty);
+        }
+
         public abstract IGridDataSource<TEntity> BuildSource(TService service);
     }
 }

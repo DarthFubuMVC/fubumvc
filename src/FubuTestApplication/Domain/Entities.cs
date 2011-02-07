@@ -47,9 +47,27 @@ namespace FubuTestApplication.Domain
         public virtual string CaseType { get; set; }
         public virtual int Number { get; set; }
 
+        public virtual Person Person { get; set; }
+
         public override string ToString()
         {
             return string.Format("{0}, Identifier: {1}", base.ToString(), Identifier);
+        }
+    }
+
+    public class Person : DomainEntity
+    {
+        public virtual string Name { get; set; }
+    }
+
+    public class PersonMap : ClassMap<Person>
+    {
+        public PersonMap()
+        {
+            Table("people");
+            Id(x => x.Id);
+
+            Map(x => x.Name);
         }
     }
 
@@ -67,6 +85,8 @@ namespace FubuTestApplication.Domain
             Map(x => x.Priority);
             Map(x => x.CaseType);
             Map(x => x.Number);
+
+            References(x => x.Person).Cascade.All();
         }
     }
 }

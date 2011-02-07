@@ -43,13 +43,24 @@ namespace FubuMVC.Core.Urls
 
         public string UrlFor<TInput>(RouteParameters parameters)
         {
-            var chain = resolver.FindUniqueByInputType(typeof (TInput));
+            return UrlFor(typeof (TInput), parameters);
+        }
+
+        public string UrlFor(Type modelType, RouteParameters parameters)
+        {
+            var chain = resolver.FindUniqueByInputType(modelType);
             return chain.Route.CreateUrlFromParameters(parameters);
         }
 
         public string UrlFor<TInput>(RouteParameters parameters, string category)
         {
-            var chain = resolver.FindUniqueByInputType(typeof (TInput), category);
+            Type modelType = typeof (TInput);
+            return UrlFor(modelType, category, parameters);
+        }
+
+        public string UrlFor(Type modelType, string category, RouteParameters parameters)
+        {
+            var chain = resolver.FindUniqueByInputType(modelType, category);
             return chain.Route.CreateUrlFromParameters(parameters);
         }
 

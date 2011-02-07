@@ -20,6 +20,12 @@ namespace FubuFastPack.JqGrid
             _expression = expression;
         }
 
+        protected GridColumnBase(Accessor accessor)
+        {
+            _accessor = accessor;
+            _expression = accessor.ToExpression<T>();
+        }
+
         public Accessor Accessor
         {
             get { return _accessor; }

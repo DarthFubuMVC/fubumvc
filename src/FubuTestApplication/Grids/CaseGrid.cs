@@ -18,6 +18,7 @@ namespace FubuTestApplication.Grids
             ShowViewLink(x => x.Identifier);
             Show(x => x.Title);
             Show(x => x.Priority);
+            ShowViewLinkForOther(x => x.Person).DisplayTextFrom(x => x.Name);
         }
     }
 
@@ -88,6 +89,17 @@ namespace FubuTestApplication.Grids
             return showCase(@case);
         }
 
+        public HtmlDocument Person(Person first)
+        {
+            var person = _repository.Find<Person>(first.Id);
+
+            string title = "Person:  " + person.Name;
+            _document.Title = title;
+            _document.Add("h1").Text(title);
+
+            return _document;
+        }
+
         public HtmlDocument Case(CaseRequest request)
         {
             var @case = _repository.FindBy<Case>(c => c.Identifier == request.Identifier);
@@ -98,9 +110,14 @@ namespace FubuTestApplication.Grids
         {
             try
             {
+                _runner.ExecuteCommand("delete from people");
                 _runner.ExecuteCommand("delete from cases");
 
-                request.Cases.Each(c => _repository.Save(c));
+                request.Cases.Each(c =>
+                {
+                    c.Person = new Person(){Name = c.Identifier + " Smith"};
+                    _repository.Save(c);
+                });
 
                 return new CaseDataResponse(){
                     Success = true

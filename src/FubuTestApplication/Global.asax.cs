@@ -52,6 +52,7 @@ namespace FubuTestApplication
             Route<Case>("case/{Id}").Calls<CaseController>(x => x.Show(null));
             Route<CaseRequest>("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
             Route("loadcases").Calls<CaseController>(x => x.LoadCases(null));
+            Route<Person>("person/{Id}").Calls<CaseController>(x => x.Person(null));
         }
     }
 }
