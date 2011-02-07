@@ -1,39 +1,41 @@
 using System;
+using System.Collections.Specialized;
 using System.Web;
+using FubuCore.Binding;
 
 namespace FubuMVC.Core.Security.AntiForgery
 {
-	public interface IAntiForgeryValidator
-	{
-		bool Validate(string salt);
-	}
-
 	public class AntiForgeryValidator : IAntiForgeryValidator
 	{
 		private readonly IAntiForgeryTokenProvider _tokenProvider;
 		private readonly IAntiForgerySerializer _serializer;
-		private readonly HttpContextBase _httpContext;
+		private readonly IRequestData _requestData;
+		private readonly ISecurityContext _securityContext;
 
-		public AntiForgeryValidator(IAntiForgeryTokenProvider tokenProvider, IAntiForgerySerializer serializer, HttpContextBase httpContext)
+		public AntiForgeryValidator(IAntiForgeryTokenProvider tokenProvider, IAntiForgerySerializer serializer, IRequestData requestData, ISecurityContext securityContext)
 		{
 			_tokenProvider = tokenProvider;
 			_serializer = serializer;
-			_httpContext = httpContext;
+			_requestData = requestData;
+			_securityContext = securityContext;
 		}
 
 		public bool Validate(string salt)
 		{
+			var cookies = (HttpCookieCollection)_requestData.Value("Cookies");
+			var applicationPath = (string)_requestData.Value("ApplicationPath");
+			var form = (NameValueCollection) _requestData.Value("Form");
 			string fieldName = _tokenProvider.GetTokenName();
-			string cookieName = _tokenProvider.GetTokenName(_httpContext.Request.ApplicationPath);
+			string cookieName = _tokenProvider.GetTokenName(applicationPath);
 
-			HttpCookie cookie = _httpContext.Request.Cookies[cookieName];
+			HttpCookie cookie = cookies[cookieName];
 			if (cookie == null || string.IsNullOrEmpty(cookie.Value))
 			{
 				return false;
 			}
 			AntiForgeryData cookieToken = _serializer.Deserialize(cookie.Value);
 
-			string formValue = _httpContext.Request.Form[fieldName];
+			string formValue = form[fieldName];
 			if (string.IsNullOrEmpty(formValue))
 			{
 				return false;
@@ -45,7 +47,7 @@ namespace FubuMVC.Core.Security.AntiForgery
 				return false;
 			}
 
-			string currentUsername = AntiForgeryData.GetUsername(_httpContext.User);
+			string currentUsername = AntiForgeryData.GetUsername(_securityContext.CurrentUser);
 			if (!string.Equals(formToken.Username, currentUsername, StringComparison.OrdinalIgnoreCase))
 			{
 				return false;

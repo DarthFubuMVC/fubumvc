@@ -316,9 +316,11 @@
     <Compile Include="Security\AntiForgery\AntiForgeryData.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryNode.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryValidator.cs" />
+    <Compile Include="Security\AntiForgery\FormToken.cs" />
     <Compile Include="Security\AntiForgery\IAntiForgeryService.cs" />
     <Compile Include="Security\AntiForgery\IAntiForgeryTokenProvider.cs" />
     <Compile Include="Security\AntiForgery\IAntiForgerySerializer.cs" />
+    <Compile Include="Security\AntiForgery\IAntiForgeryValidator.cs" />
     <Compile Include="Security\AntiForgery\MachineKeyAntiForgeryEncoder.cs" />
     <Compile Include="Security\AntiForgery\BinaryAntiForgerySerializer.cs" />
     <Compile Include="Security\AntiForgery\IAntiForgeryEncoder.cs" />

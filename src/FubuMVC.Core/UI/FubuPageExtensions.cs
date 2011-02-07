@@ -293,14 +293,18 @@ namespace FubuMVC.Core.UI
 
 		public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)
 		{
-			var antiForgeryService = page.ServiceLocator.GetInstance<IAntiForgeryService>();
-			var tokenProvider = page.ServiceLocator.GetInstance<IAntiForgeryTokenProvider>();
-			var cookieToken = antiForgeryService.GetCookieToken(salt);
-			antiForgeryService.SetCookieToken(cookieToken, null, null);
-			var tokenString = antiForgeryService.GetFormTokenString(cookieToken,salt);
-			var name = tokenProvider.GetTokenName();
+			return AntiForgeryToken(page, salt, null, null);
+		}
 
-			return new HiddenTag().Name(name).Value(tokenString);
+
+		public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt, string path, string domain)
+		{
+			var antiForgeryService = page.Get<IAntiForgeryService>();
+			var cookieToken = antiForgeryService.SetCookieToken(path, domain);
+			var formToken = antiForgeryService.GetFormToken(cookieToken,salt);
+
+
+			return new HiddenTag().Name(formToken.Name).Value(formToken.TokenString);
 		}
     }
 }

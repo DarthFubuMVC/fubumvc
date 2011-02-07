@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Security.AntiForgery
 			_serializer = serializer;
 		}
 
-		public AntiForgeryData GetCookieToken(string salt)
+		public AntiForgeryData GetCookieToken()
 		{
 			string name = _tokenProvider.GetTokenName(_httpContext.Request.ApplicationPath);
 			HttpCookie cookie = _httpContext.Request.Cookies[name];
@@ -37,8 +37,9 @@ namespace FubuMVC.Core.Security.AntiForgery
 			return cookieToken;
 		}
 
-		public void SetCookieToken(AntiForgeryData token, string path, string domain)
+		public AntiForgeryData SetCookieToken(string path, string domain)
 		{
+			var token = GetCookieToken();
 			string name = _tokenProvider.GetTokenName(_httpContext.Request.ApplicationPath);
 			string cookieValue = _serializer.Serialize(token);
 
@@ -48,15 +49,23 @@ namespace FubuMVC.Core.Security.AntiForgery
 				newCookie.Path = path;
 			}
 			_httpContext.Response.Cookies.Set(newCookie);
+
+			return token;
 		}
 
-		public string GetFormTokenString(AntiForgeryData token, string salt)
+		public FormToken GetFormToken(AntiForgeryData token, string salt)
 		{
             var formToken = new AntiForgeryData(token) {
                 Salt = salt,
                 Username = AntiForgeryData.GetUsername(_httpContext.User)
             };
-            return _serializer.Serialize(formToken);
+            var tokenString = _serializer.Serialize(formToken);
+
+			return new FormToken
+			{
+				Name = _tokenProvider.GetTokenName(),
+				TokenString = tokenString
+			};
 		}
 	}
 }
