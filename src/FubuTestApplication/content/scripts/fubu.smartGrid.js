@@ -1,6 +1,12 @@
 ﻿(function ($) {
     jQuery.extend($.fn.fmatter, {
 
+    link: function (cellValue, options, rowObject) { 
+        var linkName = options.colModel.linkName;
+        var url = rowObject[linkName];
+        
+        return '<a href="' + url + '" target="_top">' + cellValue + '</a>'; 
+    },
 });
 
 /*

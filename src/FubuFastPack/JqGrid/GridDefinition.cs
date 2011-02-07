@@ -56,6 +56,18 @@ namespace FubuFastPack.JqGrid
             return new ColumnExpression(this, column);
         }
 
+        public LinkColumn<T> ShowViewLink(Expression<Func<T, object>> expression)
+        {
+            var accessor = expression.ToAccessor();
+            _properties[accessor.Name] = expression;
+
+            var column = new LinkColumn<T>(accessor, expression);
+
+            _columns.Add(column);
+
+            return column;
+        }
+
         public void FilterOn(Expression<Func<T, object>> expression)
         {
             var accessor = expression.ToAccessor();
@@ -101,5 +113,7 @@ namespace FubuFastPack.JqGrid
         {
             return _properties[propertyName];
         }
+
+
     }
 }

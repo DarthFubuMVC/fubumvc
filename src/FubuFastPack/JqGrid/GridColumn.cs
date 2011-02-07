@@ -70,18 +70,15 @@ namespace FubuFastPack.JqGrid
         }
 
         public ColumnFetching FetchMode { get; set; }
-        public bool IsSortable { get; set; }
 
         // TODO -- UT this.  Duh.
         public IDictionary<string, object> ToDictionary()
         {
-            var dictionary = new Dictionary<string, object>();
-
-            dictionary.Add("name", Accessor.Name);
-            dictionary.Add("index", Accessor.Name);
-            dictionary.Add("sortable", IsSortable);
-
-            return dictionary;
+            return new Dictionary<string, object>{
+                {"name", Accessor.Name},
+                {"index", Accessor.Name},
+                {"sortable", IsSortable}
+            };
         }
 
         public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)

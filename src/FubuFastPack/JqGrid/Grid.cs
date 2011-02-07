@@ -47,6 +47,12 @@ namespace FubuFastPack.JqGrid
             return _definition.Show(expression);
         }
 
+        protected LinkColumn<TEntity> ShowViewLink(Expression<Func<TEntity, object>> expression)
+        {
+            _sortables[expression.GetName()] = expression;
+            return _definition.ShowViewLink(expression);
+        }
+
         public abstract IGridDataSource<TEntity> BuildSource(TService service);
 
         protected Cache<string, Expression<Func<TEntity, object>>> sortables

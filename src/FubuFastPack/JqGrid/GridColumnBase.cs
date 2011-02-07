@@ -31,6 +31,7 @@ namespace FubuFastPack.JqGrid
         }
 
         public bool IsFilterable { get; set; }
+        public bool IsSortable { get; set; }
 
         public void OverrideHeader(StringToken token)
         {

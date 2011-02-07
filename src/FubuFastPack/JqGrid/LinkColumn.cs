@@ -5,6 +5,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
@@ -21,9 +22,12 @@ namespace FubuFastPack.JqGrid
      * 
      */
 
+    // TODO -- need to add other accessors for getting the Url?
+    // TODO -- way to override the link name?
     public class LinkColumn<T> : GridColumnBase<T>, IGridColumn where T : DomainEntity
     {
         private readonly Accessor _idAccessor;
+        private string _linkName;
 
         public static LinkColumn<T> For(Expression<Func<T, object>> expression)
         {
@@ -33,11 +37,19 @@ namespace FubuFastPack.JqGrid
         public LinkColumn(Accessor accessor, Expression<Func<T, object>> expression) : base(accessor, expression)
         {
             _idAccessor = ReflectionHelper.GetAccessor<T>(x => x.Id);
+            _linkName = "linkFor" + accessor.Name;
         }
 
+        // TODO -- UT this little monster
         public IDictionary<string, object> ToDictionary()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, object>{
+                {"name", Accessor.Name},
+                {"index", Accessor.Name},
+                {"sortable", IsSortable},
+                {"linkName", _linkName},
+                {"formatter", "link"}
+            };
         }
 
         public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
@@ -50,7 +62,11 @@ namespace FubuFastPack.JqGrid
                 var display = formatter.GetDisplay(Accessor, displaySource());
                 dto.AddCellDisplay(display);
 
-                throw new NotImplementedException("NEED TO PLAY WITH UI FIRST");
+                var parameters = new RouteParameters();
+                parameters[_idAccessor.Name] = idSource().ToString();
+
+                var url = urls.UrlFor<T>(parameters);
+                dto[_linkName] = url;
             };
         }
 

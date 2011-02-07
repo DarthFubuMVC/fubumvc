@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual string CreateUrlFromParameters(RouteParameters parameters)
         {
-            return CreateUrlFromParameters(null);
+            throw new NotSupportedException();
         }
 
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)

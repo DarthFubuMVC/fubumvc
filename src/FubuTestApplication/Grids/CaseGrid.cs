@@ -15,7 +15,7 @@ namespace FubuTestApplication.Grids
     {
         public CaseGrid()
         {
-            Show(x => x.Identifier);
+            ShowViewLink(x => x.Identifier);
             Show(x => x.Title);
             Show(x => x.Priority);
         }
