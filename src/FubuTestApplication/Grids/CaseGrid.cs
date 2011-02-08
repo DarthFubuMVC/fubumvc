@@ -84,6 +84,7 @@ namespace FubuTestApplication.Grids
             _document.Add(x => x.FiltersFor<CaseGrid>());
             _document.Add("button").Text("Add").Id("add");
             _document.Add("button").Text("Clear").Id("clear");
+            _document.Add("button").Text("Search").Id("search-criteria-search");
             _document.Add("hr");
             _document.Add(x => x.SmartGridFor<CaseGrid>(null));
 

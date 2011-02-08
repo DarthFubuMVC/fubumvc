@@ -46,11 +46,12 @@ namespace FubuFastPack.Querying
         public HtmlTag FilterTemplatesFor<T>() where T : ISmartGrid
         {
             var tag = new HtmlTag("div");
+            tag.Id("filters_" + typeof (T).ContainerNameForGrid());
             tag.AddClass("smart-grid-filter");
             tag.Child(new TableTag());
 
             var metadata = new Dictionary<string, object>{
-                {"gridId", typeof (T).NameForGrid()}
+                {"gridId", typeof (T).ContainerNameForGrid()}
             };
 
             tag.MetaData("filters", metadata);

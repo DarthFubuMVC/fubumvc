@@ -16,27 +16,25 @@ $.fn.asQueryBuilder = function (userOptions) {
 
     return this.each(function (i, div) {
         div.tbody = $('tbody', div).get(0);
-
-
+        div.grid = $('#' + $(div).metadata().filters.gridId).get(0);
 
         var queryRunner = function () {
-            // What to do?
-            // Execute the query against the grid
+            var criterion = div.getCriteria();
 
-            var criteria = div.getCriteria();
+            div.grid.runQuery(criterion);
 
             return false;
         }
 
         div.getCriteria = function () {
-            // do something here
+            return $('tr', div.tbody).map(function () { return this.getCriteria(); });
         }
 
         $(options.runQuerySelector).click(queryRunner);
 
         if (this.context == document) {
             // We cannot wire up the Enter key if a context was used in the selector
-            $(this.selector + " input[type=text]").live("keypress", function (keyEvent) {
+            $("#" + div.id + "input[type=text]").live("keypress", function (keyEvent) {
                 if (keyEvent.which == 13) {
                     queryRunner();
                 }
@@ -59,23 +57,7 @@ $.fn.asQueryBuilder = function (userOptions) {
             return false;
         });
 
-        /*
-        FilterTable(table, options.filterChoices, options.removeCriteriaTemplateSelector);
-        var queryRunner = function () {
-        var filters = table.createFilters();
-        options.runQuery(filters);
-        return false;
-        };
 
-        table.runQuery = queryRunner;
-
-        $(options.addCriteriaSelector).click(function () { table.addFilterRow(); return false; });
-        
-
-
-
-        
-        */
 
         // THIS MAY NEED TO CHANGE, MAYBE A SERVER SIDE MODEL?
         //        if (options.initialFilters) {
@@ -93,15 +75,14 @@ $.fn.asQueryBuilder = function (userOptions) {
 
 $.fn.asQueryBuilder.defaults =
 {
-    runQuery: function () { },
+    clearCriteriaSelector: "#search-criteria-cancel",
     addCriteriaSelector: "#add",
     removeCriteriaTemplateSelector: "#removeFilter",
-    runQuerySelector: "#query",
-    clearCriteriaSelector: "#clear",
-    onFormClear: function () { }
+    runQuerySelector: "#search-criteria-search",
+    clearCriteriaSelector: "#clear"
 };
 
-function buildQueryOptions(onFormClear) {
+function buildQueryOptions(onFormClear) {search-criteria-search
     return {
         runQuerySelector: "#search-criteria-search",
         clearCriteriaSelector: "#search-criteria-cancel",
@@ -181,7 +162,9 @@ $.fn.asFilterRow = function (templates, options) {
 
     row.getCriteria = function () {
         return {
-        // put properties here
+            op: row.operator(),
+            value: row.editor.getValue(),
+            property: row.property()
         }
     };
 

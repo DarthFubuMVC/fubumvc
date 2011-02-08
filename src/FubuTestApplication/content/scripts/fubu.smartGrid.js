@@ -18,7 +18,7 @@ timeAgo: function (column, originalValue, subject) { return $.timeago(originalVa
 */
 
 $.fn.smartGrid = function (userOptions) {
-    this.each(function (i, div) {
+    return this.each(function (i, div) {
         SmartGrid(div, userOptions);
     });
 }
@@ -30,7 +30,6 @@ var SmartGrid = function (div, userOptions) {
     var gridDefaultOptions =
     {
         height: "auto",
-        imgpath: definition.imageBaseUrl,
         url: definition.url,
         datatype: 'json',
         mtype: 'POST',
@@ -97,6 +96,26 @@ var SmartGrid = function (div, userOptions) {
 
     var gridOptions = {};
     gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
+
+    div.grid = $('table', div);
+
+    div.runQuery = function(criterion){
+    alert('trying to run query');
+    alert(div.grid.setPostData);
+        div.grid.setPostDataItem("criterion", criterion);
+        div.grid.trigger("reloadGrid");
+    }
+
+    /*
+                    runQuery: function(criteria){
+                            $("#gridContainer_Console").setPostData(
+                            { 
+                                entityType : $("#EntityType").val() ,
+                                filterJson : JSON.stringify({"filters" : criteria})
+                            });
+                            $.ourGrid.from("#gridContainer_Console").refresh({page:1});
+                    }
+    */
 
     $('table', div).jqGrid(gridOptions);
 }

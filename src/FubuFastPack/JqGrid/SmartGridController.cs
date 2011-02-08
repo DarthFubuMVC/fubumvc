@@ -12,7 +12,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    public class GridRequest
+    public class GridRequest : JsonMessage
     {
         public int page { get; set; }
         public int rows { get; set; }
@@ -23,7 +23,6 @@ namespace FubuFastPack.JqGrid
 // ReSharper restore InconsistentNaming
         public string nd { get; set; }
 
-        public Criteria[] gridOptions { get; set; }
         public Criteria[] criterion { get; set; }
         public string gridName { get; set; }
 
@@ -33,8 +32,7 @@ namespace FubuFastPack.JqGrid
         {
             var sortAscending = !"desc".Equals(sord, StringComparison.OrdinalIgnoreCase);
             return new GridDataRequest(page, rows, sidx, sortAscending){
-                Criterion = criterion,
-                GridOptions = gridOptions
+                Criterion = criterion
             };
         }
     }
@@ -52,14 +50,12 @@ namespace FubuFastPack.JqGrid
 
     public class SmartGridController
     {
-        private readonly IQueryService _queryService;
         private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
 
-        public SmartGridController(IServiceLocator services, IQueryService queryService, IUrlRegistry urls)
+        public SmartGridController(IServiceLocator services, IUrlRegistry urls)
         {
             _services = services;
-            _queryService = queryService;
             _urls = urls;
         }
 
@@ -136,8 +132,10 @@ namespace FubuFastPack.JqGrid
 
             return new HtmlTag("div", top =>
             {
+                
                 string gridName = grid.Name();
                 top.Add("div")
+                    .Id(grid.GetType().ContainerNameForGrid())
                     .AddClass("grid-container")
                     .MetaData("definition", model)
                     .MetaData("initialRows", initialRows.GetValueOrDefault(10))
