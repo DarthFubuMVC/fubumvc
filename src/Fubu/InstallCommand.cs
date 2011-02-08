@@ -10,10 +10,11 @@ namespace Fubu
     [CommandDescription("Runs installer actions and/or environment checks for an application")]
     public class InstallCommand : FubuCommand<InstallInput>
     {
-        public override void Execute(InstallInput input)
+        public override bool Execute(InstallInput input)
         {
             input.AppFolder = AliasCommand.AliasFolder(input.AppFolder);
             Execute(input, new FileSystem());
+            return true;
         }
 
         public void Execute(InstallInput input, IFileSystem fileSystem)

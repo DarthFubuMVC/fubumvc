@@ -18,6 +18,7 @@ _ReSharper.*
 *.stresult
 .fubu-alias
 .fubu-includes
+.fubu-manifest
 
 src/FubuMVC.5.1.ReSharper
 editor.htm

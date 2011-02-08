@@ -108,6 +108,7 @@
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
+    <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Models\CollectionPropertyBinderTester.cs" />
@@ -124,7 +125,9 @@
     <Compile Include="Packaging\PackagingDiagnosticsTester.cs" />
     <Compile Include="Packaging\PackagingRegistryLogTester.cs" />
     <Compile Include="Packaging\PackagingRuntimeGraphTester.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />
     <Compile Include="Packaging\StubPackage.cs" />
+    <Compile Include="Packaging\ZipFilePackageReaderTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Registration\TypePoolTester.cs" />
     <Compile Include="Routing\RouteDefinitionExtensionsTester.cs" />
+    <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
     <Compile Include="Security\AuthorizationBehaviorTester.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Continuations;
@@ -12,13 +13,15 @@ namespace Spark.Web.FubuMVC.Registration
     public class ActionAndViewMatchedBySparkViewDescriptors : IViewsForActionFilter
     {
         private readonly ISparkPolicyResolver _policyResolver;
+    	private readonly ISparkDescriptorVisitorRegistry _visitorRegistry;
 
-        public ActionAndViewMatchedBySparkViewDescriptors(ISparkPolicyResolver policyResolver)
+        public ActionAndViewMatchedBySparkViewDescriptors(ISparkPolicyResolver policyResolver, ISparkDescriptorVisitorRegistry visitorRegistry)
         {
-            _policyResolver = policyResolver;
+        	_policyResolver = policyResolver;
+        	_visitorRegistry = visitorRegistry;
         }
 
-        public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
+    	public IEnumerable<IViewToken> Apply(ActionCall call, ViewBag views)
         {
             if(call.OutputType() == typeof(FubuContinuation) || !_policyResolver.HasMatchFor(call))
             {
@@ -36,10 +39,10 @@ namespace Spark.Web.FubuMVC.Registration
         	foreach(var token in allViewTokens)
         	{
         		var view = viewName.RemoveSuffix(".spark");
-				var templatePath = !string.IsNullOrEmpty(viewLocatorName) ? "{0}\\{1}".ToFormat(viewLocatorName, view) : view;
+				var templatePath = !string.IsNullOrEmpty(viewLocatorName) ? "{0}{1}{2}".ToFormat(viewLocatorName, Path.DirectorySeparatorChar, view) : view;
         		var descriptor = token
         							.Descriptors
-        							.FirstOrDefault(d => d.Templates.Any(template => template.RemoveSuffix(".spark").Equals(templatePath)));
+        							.FirstOrDefault(d => d.Templates.Any(template => template.RemoveSuffix(".spark").ToLower().Equals(templatePath.ToLower())));
 
 				if(descriptor != null)
 				{
@@ -48,9 +51,16 @@ namespace Spark.Web.FubuMVC.Registration
 				}
         	}
 
-            return matchedDescriptor != null
-                    ? new IViewToken[] { new SparkViewToken(call, matchedDescriptor, viewLocatorName, viewName) }
-                    : new IViewToken[0];
+			if(matchedDescriptor == null)
+			{
+				return new IViewToken[0];
+			}
+
+    		_visitorRegistry
+    			.VisitorsFor(call)
+    			.Each(visitor => visitor.Visit(matchedDescriptor, call));
+
+    		return new IViewToken[] {new SparkViewToken(call, matchedDescriptor, viewLocatorName, viewName)};
         }
     }
 }

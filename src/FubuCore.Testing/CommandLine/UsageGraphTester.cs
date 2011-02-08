@@ -169,7 +169,7 @@ namespace FubuCore.Testing.CommandLine
     [CommandDescription("Manage links", Name = "link")]
     public class FakeLinkCommand : FubuCommand<FakeLinkInput>
     {
-        public override void Execute(FakeLinkInput input)
+        public override bool Execute(FakeLinkInput input)
         {
             throw new NotImplementedException();
         }
@@ -184,7 +184,7 @@ namespace FubuCore.Testing.CommandLine
     [CommandDescription("does simple thing")]
     public class SimpleCommand : FubuCommand<SimpleInput>
     {
-        public override void Execute(SimpleInput input)
+        public override bool Execute(SimpleInput input)
         {
             throw new NotImplementedException();
         }

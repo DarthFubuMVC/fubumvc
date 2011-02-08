@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 using FubuCore.Reflection;
 
@@ -29,6 +30,19 @@ namespace FubuMVC.Core.Registration.Routes
         {
             object rawValue = GetRawValue(input);
             return url.Replace("{" + Name + "}", rawValue.ToString().UrlEncoded());
+        }
+
+        public bool CanTemplate(object inputModel)
+        {
+            object rawValue = GetRawValue(inputModel);
+            if (rawValue != null)
+            {
+                return _accessor.PropertyType.IsValueType
+                           ? !rawValue.Equals(Activator.CreateInstance(_accessor.PropertyType))
+                           : true;
+
+            }
+            return false;
         }
 
         public string ToQueryString(object input)

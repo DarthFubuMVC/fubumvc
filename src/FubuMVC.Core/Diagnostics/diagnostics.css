@@ -194,3 +194,15 @@ pre.failure
 	padding-left: 20px;
 }
 
+.script-query
+{
+	padding: 5px 2px 2px 10px;
+	background-color:White;
+	padding-top:10px;
+	padding-bottom: 20px;
+}
+
+#script-names-text
+{
+	width: 400px;
+}

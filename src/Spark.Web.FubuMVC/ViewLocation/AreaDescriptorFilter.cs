@@ -9,8 +9,10 @@ namespace Spark.Web.FubuMVC.ViewLocation
         public override void ExtraParameters(ActionContext context, IDictionary<string, object> extra)
         {
             object value;
-            if (context.RouteData.Values.TryGetValue("area", out value))
+            if (context.Params.TryGetValue("area", out value))
+            {
                 extra["area"] = value;
+            }
         }
 
         public override IEnumerable<string> PotentialLocations(IEnumerable<string> locations, IDictionary<string, object> extra)

@@ -16,10 +16,12 @@ namespace FubuMVC.Core.UI
             return tag;
         }
 
-        public static HtmlTag RequiresAccessTo(this HtmlTag tag, string roleName)
+        public static HtmlTag RequiresAccessTo(this HtmlTag tag, params string[] roleName)
         {
             return tag.Authorized(tag.Authorized() && PrincipalRoles.IsInRole(roleName));
         }
+
+
 
         public static HtmlTag ReadOnly(this HtmlTag tag)
         {

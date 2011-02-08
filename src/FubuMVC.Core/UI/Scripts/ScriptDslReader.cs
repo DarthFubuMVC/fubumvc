@@ -6,17 +6,22 @@ using FubuCore;
 
 namespace FubuMVC.Core.UI.Scripts
 {
+    [Serializable]
     public class InvalidSyntaxException : Exception
     {
         public static readonly string USAGE = @"
 
   Valid usages:
-
+  # comments
+  <before name> preceeds <after name>
   <name> is <alias>
   <name> requires <dependency names>
   <name> extends <name>
   <set> includes <names>
-
+  ordered set <name> is
+  <script1>
+  <script2>
+  <script3>
 ";
 
 
@@ -33,6 +38,8 @@ namespace FubuMVC.Core.UI.Scripts
     public class ScriptDslReader
     {
         private readonly IScriptRegistration _registration;
+        private Action<string> _readerAction;
+        private string _lastName;
 
         public ScriptDslReader(IScriptRegistration registration)
         {
@@ -41,9 +48,24 @@ namespace FubuMVC.Core.UI.Scripts
 
         public void ReadLine(string text)
         {
+            if (text.Trim().StartsWith("#")) return;
+
             var tokens = new Queue<string>(StringTokenizer.Tokenize(text.Replace(',', ' ')));
 
-            // TODO -- more specific exception
+            if (tokens.Count == 1)
+            {
+                if (_readerAction == null)
+                {
+                    throw new InvalidSyntaxException("Not enough tokens in the command line");
+                }
+
+                _readerAction(tokens.First());
+                return;
+            }
+
+            _lastName = null;
+            _readerAction = null;
+
             if (tokens.Count() < 3)
             {
                 throw new InvalidSyntaxException("Not enough tokens in the command line");
@@ -52,6 +74,12 @@ namespace FubuMVC.Core.UI.Scripts
             var key = tokens.Dequeue();
             var verb = tokens.Dequeue();
 
+            if (key == "ordered")
+            {
+                handleOrderedSet(tokens, verb);
+
+                return;
+            }
 
             switch (verb)
             {
@@ -74,11 +102,41 @@ namespace FubuMVC.Core.UI.Scripts
                     tokens.Each(name => _registration.AddToSet(key, name));
                     break;
 
+                case "preceeds":
+                    tokens.Each(name => _registration.Preceeding(key, name));
+                    break;
+
                 default:
                     string message = "'{0}' is an invalid verb".ToFormat(verb);
                     throw new InvalidSyntaxException(message);
             }
 
+        }
+
+        private void handleOrderedSet(Queue<string> tokens, string verb)
+        {
+            if (verb != "set")
+            {
+                throw new InvalidSyntaxException("Malformed call to ordered set <name> is");
+            }
+
+            var setName = tokens.Dequeue();
+            _readerAction = name =>
+            {
+                _registration.AddToSet(setName, name);
+                _lastName = name;
+
+                _readerAction = next =>
+                {
+                    _registration.AddToSet(setName, next);
+                    if (_lastName.IsNotEmpty())
+                    {
+                        _registration.Dependency(next, _lastName);
+                    }
+
+                    _lastName = next;
+                };
+            };
         }
     }
 }

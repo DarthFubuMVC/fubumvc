@@ -16,6 +16,6 @@
     <Query isStep="True" comment="One deep dependency" names="F" expected="D,F" />
     <Query isStep="True" comment="Two deep dependency" names="E" expected="D,F,E" />
     <Query isStep="True" comment="Three deep dependency" names="A" expected="B.js,D,F,E,C,A.js" />
-    <Query isStep="True" comment="3 deep in parallel" names="A,G" expected="B.js, D, F, E, C, A.js, H, J, I, G" />
+    <Query isStep="True" comment="3 deep in parallel" names="A,G" expected="B.js, D, H, J, F, I, E, G, C, A.js" />
   </ScriptGraph>
 </Test>

@@ -54,14 +54,13 @@ namespace FubuMVC.StructureMap.Bootstrap
         protected void Application_Start(object sender, EventArgs e)
         {
             var routeCollection = RouteTable.Routes;
-
             Bootstrap(routeCollection);
         }
 
         [SkipOverForProvenance]
-        public void Bootstrap(ICollection<RouteBase> routes)
+        public void Bootstrap(IList<RouteBase> routes)
         {
-            FubuApplication.For(GetMyRegistry())
+            FubuApplication.For(GetMyRegistry)
                 .StructureMapObjectFactory(InitializeStructureMap)
                 .Bootstrap(routes);
         }

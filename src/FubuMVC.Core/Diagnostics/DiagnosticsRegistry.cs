@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             Applies.ToAssemblyContainingType<DiagnosticsRegistry>();
 
-            Actions.IncludeTypes(x => x.HasAttribute<FubuDiagnosticsAttribute>()).IncludeType<GraphQuery>();
+            Actions.IncludeTypes(x => x.HasAttribute<FubuDiagnosticsAttribute>()).IncludeType<GraphQuery>().IncludeType<ScriptWriter>();
             Routes.UrlPolicy<DiagnosticUrlPolicy>();
         }
     }

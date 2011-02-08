@@ -12,21 +12,10 @@ namespace FubuMVC.Tests.UI.Scripts
             var s1 = new Script("1");
             var s2 = new Script("2");
         
-            s1.ShouldBeAfter(s2).ShouldBeFalse();
-            s2.ShouldBeAfter(s1).ShouldBeFalse();
+            s1.MustBeAfter(s2).ShouldBeFalse();
+            s2.MustBeAfter(s1).ShouldBeFalse();
         }
 
-        [Test]
-        public void register_should_be_after_explicit()
-        {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
- 
-            s1.OrderedAfter(s2);
-
-            s1.ShouldBeAfter(s2).ShouldBeTrue();
-            s2.ShouldBeAfter(s1).ShouldBeFalse();
-        }
 
         [Test]
         public void should_be_after_a_direct_dependency()
@@ -36,8 +25,8 @@ namespace FubuMVC.Tests.UI.Scripts
 
             s2.AddDependency(s1);
 
-            s1.ShouldBeAfter(s2).ShouldBeFalse();
-            s2.ShouldBeAfter(s1).ShouldBeTrue();
+            s1.MustBeAfter(s2).ShouldBeFalse();
+            s2.MustBeAfter(s1).ShouldBeTrue();
         }
 
         [Test]
@@ -50,8 +39,8 @@ namespace FubuMVC.Tests.UI.Scripts
             s3.AddDependency(s2);
             s2.AddDependency(s1);
 
-            s3.ShouldBeAfter(s1).ShouldBeTrue();
-            s3.ShouldBeAfter(s2).ShouldBeTrue();
+            s3.MustBeAfter(s1).ShouldBeTrue();
+            s3.MustBeAfter(s2).ShouldBeTrue();
         }
 
         [Test]
@@ -67,8 +56,8 @@ namespace FubuMVC.Tests.UI.Scripts
             s2.AddDependency(set);
             s3.AddDependency(s2);
 
-            s3.ShouldBeAfter(s1).ShouldBeTrue();
-            s3.ShouldBeAfter(s2).ShouldBeTrue();
+            s3.MustBeAfter(s1).ShouldBeTrue();
+            s3.MustBeAfter(s2).ShouldBeTrue();
         }
 
         [Test]
@@ -79,11 +68,8 @@ namespace FubuMVC.Tests.UI.Scripts
 
             s2.AddDependency(s1);
 
-            s1.OrderedBefore(s2);
-            s2.OrderedAfter(s1);
-
-            s2.ShouldBeAfter(s1).ShouldBeTrue();
-            s1.ShouldBeAfter(s2).ShouldBeFalse();
+            s2.MustBeAfter(s1).ShouldBeTrue();
+            s1.MustBeAfter(s2).ShouldBeFalse();
         }
     }
 }

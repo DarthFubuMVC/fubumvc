@@ -135,6 +135,7 @@
     <Compile Include="Diagnostics\RecordingRequestData.cs" />
     <Compile Include="Diagnostics\RedirectReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\RouteColumn.cs" />
+    <Compile Include="Diagnostics\ScriptWriter.cs" />
     <Compile Include="Diagnostics\SetValueReport.cs" />
     <Compile Include="Diagnostics\TextWriting\CharacterWidth.cs" />
     <Compile Include="Diagnostics\TextWriting\DividerLine.cs" />
@@ -153,6 +154,10 @@
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
+    <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
+    <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Json\ProjectionService.cs" />
     <Compile Include="Json\IProjection.cs" />
     <Compile Include="Json\IProjectionFactory.cs" />
@@ -312,6 +317,7 @@
     <Compile Include="Security\IEndPointAuthorizor.cs" />
     <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
+    <Compile Include="Routing\StandardRoutePolicy.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Configuration\AccessorDef.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
@@ -379,6 +385,7 @@
     <Compile Include="UI\Tags\TagProfileLibrary.cs" />
     <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
+    <Compile Include="Urls\IUrlTemplatePattern.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />
     <Compile Include="Registration\Nodes\BehaviorChain.cs" />
     <Compile Include="Registration\Nodes\BehaviorExtensions.cs" />

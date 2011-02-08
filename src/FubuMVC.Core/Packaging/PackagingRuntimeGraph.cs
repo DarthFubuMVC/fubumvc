@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
@@ -14,12 +13,13 @@ namespace FubuMVC.Core.Packaging
         private readonly IPackagingDiagnostics _diagnostics;
         private readonly IList<IPackageLoader> _loaders = new List<IPackageLoader>();
         private readonly Stack<string> _provenanceStack = new Stack<string>();
-        private List<IPackageInfo> _packages;
+        private readonly IList<IPackageInfo> _packages;
 
-        public PackagingRuntimeGraph(IPackagingDiagnostics diagnostics, IAssemblyLoader assemblies)
+        public PackagingRuntimeGraph(IPackagingDiagnostics diagnostics, IAssemblyLoader assemblies, IList<IPackageInfo> packages)
         {
             _diagnostics = diagnostics;
             _assemblies = assemblies;
+        	_packages = packages;
         }
 
         private string currentProvenance
@@ -38,17 +38,16 @@ namespace FubuMVC.Core.Packaging
             _provenanceStack.Pop();
         }
 
-        public IEnumerable<IPackageInfo> DiscoverAndLoadPackages(Action onAssembliesScanned)
+        public void DiscoverAndLoadPackages(Action onAssembliesScanned)
         {
-            _packages = findAllPackages();
+            findAllPackages();
+
             loadAssemblies(_packages, onAssembliesScanned);
             var discoveredActivators = runAllBootstrappers();
             activatePackages(_packages, discoveredActivators);
-
-            return _packages;
         }
 
-        private void activatePackages(List<IPackageInfo> packages, List<IActivator> discoveredActivators)
+        private void activatePackages(IList<IPackageInfo> packages, IList<IActivator> discoveredActivators)
         {
             _diagnostics.LogExecutionOnEach(discoveredActivators.Union(_activators),
                                             a => { a.Activate(packages, _diagnostics.LogFor(a)); });
@@ -73,16 +72,14 @@ namespace FubuMVC.Core.Packaging
             onAssembliesScanned();
         }
 
-        private List<IPackageInfo> findAllPackages()
+        private void findAllPackages()
         {
-            var packages = new List<IPackageInfo>();
             _diagnostics.LogExecutionOnEach(_loaders, loader =>
             {
-                var packageInfos = loader.Load();
+                var packageInfos = loader.Load().ToArray();
                 _diagnostics.LogPackages(loader, packageInfos);
-                packages.AddRange(packageInfos);
+                _packages.AddRange(packageInfos);
             });
-            return packages;
         }
 
         public void AddBootstrapper(IBootstrapper bootstrapper)

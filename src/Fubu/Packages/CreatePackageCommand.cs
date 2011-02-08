@@ -8,10 +8,11 @@ namespace Fubu.Packages
     [CommandDescription("Create a package file from a package directory", Name = "create-pak")]
     public class CreatePackageCommand : FubuCommand<CreatePackageInput>
     {
-        public override void Execute(CreatePackageInput input)
+        public override bool Execute(CreatePackageInput input)
         {
             input.PackageFolder = AliasCommand.AliasFolder(input.PackageFolder);
             Execute(input, new FileSystem());
+            return true;
         }
 
         public void Execute(CreatePackageInput input, IFileSystem fileSystem)

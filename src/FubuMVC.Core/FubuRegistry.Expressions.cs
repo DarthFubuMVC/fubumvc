@@ -178,7 +178,11 @@ namespace FubuMVC.Core
 
             public void ImportInto(BehaviorGraph graph)
             {
-                graph.Import(Registry.BuildGraph(), Prefix);
+                graph.Import(Registry.BuildGraph(), b =>
+                {
+                    b.PrependToUrl(Prefix);
+                    b.Origin = Registry.Name;
+                });
             }
         }
 

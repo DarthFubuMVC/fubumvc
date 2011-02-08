@@ -5,6 +5,7 @@ using FubuCore.Reflection;
 
 namespace FubuCore.CommandLine
 {
+    [Serializable]
     public class InvalidUsageException : Exception
     {
         public InvalidUsageException() : base(string.Empty) {}
@@ -157,7 +158,8 @@ namespace FubuCore.CommandLine
                 writeMultipleUsages();
             }
 
-            writeArguments();
+            if(Arguments.Any())
+                writeArguments();
 
 
             if (!Flags.Any()) return;

@@ -1,8 +1,18 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace FubuMVC.Core.UI.Scripts
 {
+
+    public class ScriptLevel
+    {
+        public IScript Script { get; set; }
+        public int Level { get; set; }
+    }
+
+
     public class ScriptGatherer
     {
         private readonly ScriptGraph _graph;
@@ -19,10 +29,14 @@ namespace FubuMVC.Core.UI.Scripts
         {
             _names.Select(x => _graph.ObjectFor(x)).Distinct().Each(gatherFrom);
 
-            _scripts.Sort(_graph);
+            var sorter = new ScriptSorter(_scripts);
 
-            return _scripts;
+            
+
+            return sorter.Sort();
         }
+
+
 
         private readonly IList<IScriptObject> _gatheredList = new List<IScriptObject>();
 
@@ -38,4 +52,42 @@ namespace FubuMVC.Core.UI.Scripts
             scriptObject.Dependencies().Each(gatherFrom);
         }
     }
+
+
+    public class ScriptSorter
+    {
+        private readonly IList<IScript> _scripts;
+        private readonly IList<IList<IScript>> _levels = new List<IList<IScript>>();
+
+        public ScriptSorter(IList<IScript> scripts)
+        {
+            _scripts = scripts;
+        }
+
+        public IEnumerable<IScript> Sort()
+        {
+            var top = _scripts.Where(x => x.IsFirstRank()).ToList();
+            _scripts.RemoveAll(top.Contains);
+            _levels.Add(top);
+
+            while (_scripts.Any())
+            {
+                var level = new List<IScript>();
+                foreach (var script in _scripts.ToArray())
+                {
+                    if (!_scripts.Any(x => script.MustBeAfter(x)))
+                    {
+                        level.Add(script);
+                    }
+                }
+
+                _levels.Add(level);
+                _scripts.RemoveAll(level.Contains);
+            }
+
+            return _levels.SelectMany(x => x.OrderBy(y => y.Name));
+        }
+    }
 }
+
+

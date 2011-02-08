@@ -32,20 +32,23 @@ namespace FubuCore.CommandLine
     {
         // TODO -- have it write out its own usage
         // TODO -- look for command line stuff
-        public override void Execute(HelpInput input)
+        public override bool Execute(HelpInput input)
         {
             if (input.Usage != null)
             {
                 input.Usage.WriteUsages();
-                return;
+                return false;
             }
 
             if (input.InvalidCommandName)
             {
                 writeInvalidCommand(input.Name);
+                listAllCommands(input);
+                return false;
             }
 
             listAllCommands(input);
+            return true;
         }
 
         private void listAllCommands(HelpInput input)
@@ -68,8 +71,6 @@ namespace FubuCore.CommandLine
             Console.ResetColor();
         }
     }
-
-
 
     public class CommandFactory : ICommandFactory
     {

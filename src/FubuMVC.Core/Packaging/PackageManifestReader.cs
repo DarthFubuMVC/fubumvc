@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
@@ -26,10 +27,20 @@ namespace FubuMVC.Core.Packaging
 
         public IEnumerable<IPackageInfo> Load()
         {
+        	var packages = new List<IPackageInfo>();
             var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.FILE);
 
-            return includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f)));
+        	packages.AddRange(includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f))));
+        	packages.AddRange(includes.Assemblies.Select(LoadFromAssembly));
+
+        	return packages;
         }
+
+		public IPackageInfo LoadFromAssembly(string assemblyName)
+		{
+			var assembly = Assembly.Load(assemblyName);
+			return new AssemblyPackageInfo(assembly);
+		}
 
         public IPackageInfo LoadFromFolder(string folder)
         {
@@ -46,6 +57,11 @@ namespace FubuMVC.Core.Packaging
             package.RegisterFolder(PackageInfo.DataFolder, Path.Combine(folder, PackageInfo.DataFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
+        	var debugPath = FileSystem.Combine(binPath, "debug");
+			if(new FileSystem().DirectoryExists(debugPath))
+			{
+				binPath = debugPath;
+			}
 
 
             var assemblyPaths = findCandidateAssemblyFiles(binPath);

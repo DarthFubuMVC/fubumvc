@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.Content;
 using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.View;
 using HtmlTags;
@@ -21,7 +22,10 @@ namespace FubuMVC.Core.UI
         // Tested manually
         public static HtmlTag CSS(this IFubuPage page, string cssName)
         {
-            throw new NotImplementedException();
+            // TODO:  Put a hook here for things like LESS for .Net
+            var url = page.Get<IContentRegistry>().CssUrl(cssName);
+
+            return new HtmlTag("link").Attr("href", url).Attr("rel", "stylesheet").Attr("type", "text/css");
         }
 
         public static TagList WriteScriptTags(this IFubuPage page)

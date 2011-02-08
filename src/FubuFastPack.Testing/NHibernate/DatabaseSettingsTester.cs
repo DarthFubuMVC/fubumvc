@@ -1,4 +1,5 @@
 using FubuFastPack.NHibernate;
+using FubuMVC.Tests;
 using NHibernate.Connection;
 using NUnit.Framework;
 

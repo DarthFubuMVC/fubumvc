@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
@@ -11,16 +12,17 @@ namespace FubuMVC.Core.UI.Scripts
         void Dependency(string dependent, string dependency);
         void Extension(string extender, string @base);
         void AddToSet(string setName, string name);
+        void Preceeding(string beforeName, string afterName);
     }
 
 
-    // TODO -- change this to use lists so that app level wins
     public class ScriptGraph : IComparer<IScript>, IScriptRegistration
     {
         private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
         private readonly Cache<string, ScriptSet> _sets = new Cache<string, ScriptSet>();
         private readonly List<ScriptExtension> _extenders = new List<ScriptExtension>();
         private readonly List<ScriptRule> _rules = new List<ScriptRule>();
+        private readonly List<ScriptPreceeding> _preceedings = new List<ScriptPreceeding>();
 
         public ScriptGraph()
         {
@@ -45,10 +47,12 @@ namespace FubuMVC.Core.UI.Scripts
 
         public int Compare(IScript x, IScript y)
         {
-            if (x.ShouldBeAfter(y)) return 1;
-            if (y.ShouldBeAfter(x)) return -1;
+            if (ReferenceEquals(x, y)) return 0;
 
-            return x.Name.CompareTo(y.Name);
+            if (x.MustBeAfter(y)) return 1;
+            if (y.MustBeAfter(x)) return -1;
+
+            return 0;
         }
 
         public void Alias(string name, string alias)
@@ -78,6 +82,14 @@ namespace FubuMVC.Core.UI.Scripts
             _sets[setName].Add(name);
         }
 
+        public void Preceeding(string beforeName, string afterName)
+        {
+            _preceedings.Add(new ScriptPreceeding(){
+                Before = beforeName,
+                After = afterName
+            });
+        }
+
         public IEnumerable<IScript> GetScripts(IEnumerable<string> names)
         {
             return new ScriptGatherer(this, names).Gather();
@@ -98,7 +110,7 @@ namespace FubuMVC.Core.UI.Scripts
                 var dependency = ObjectFor(rule.Dependency);
                 var dependent = ObjectFor(rule.Dependent);
 
-                dependent.AddDependency(dependency);
+                dependency.AllScripts().Each(script => dependent.AddDependency(script));
             });
 
             _extenders.Each(x =>
@@ -106,9 +118,16 @@ namespace FubuMVC.Core.UI.Scripts
                 var @base = ScriptFor(x.Base);
                 var extender = ScriptFor(x.Extender);
 
-                @base.AddDependency(extender);
-                extender.OrderedAfter(@base);
-                @base.OrderedBefore(extender);
+                @base.AddExtension(extender);
+                extender.AddDependency(@base);
+            });
+
+            _preceedings.Each(x =>
+            {
+                var before = ScriptFor(x.Before);
+                var after = ScriptFor(x.After);
+
+                after.MustBePreceededBy(before);
             });
         }
 

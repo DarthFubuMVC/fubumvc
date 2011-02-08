@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Content
 
         public bool FileExists(ContentType contentType, string contentFileName)
         {
-            return FileNameFor(ContentType.images, contentFileName) != null;
+            return FileNameFor(contentType, contentFileName) != null;
         }
     }
 }

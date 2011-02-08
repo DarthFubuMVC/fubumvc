@@ -1,32 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore.Util;
-using HtmlTags;
 
 namespace FubuMVC.Core.UI.Scripts
 {
-    public class ScriptFile
-    {
-        public string FileName { get; set; }
-        public string Url { get; set; }
-        public string ReadAll()
-        {
-            throw new NotImplementedException();
-        }
-        public HtmlTag CreateScriptTag()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class Script : ScriptObjectBase, IScript
     {
+        private readonly IList<IScript> _extensions = new List<IScript>();
         private readonly Cache<IScript, bool> _isAfter = new Cache<IScript, bool>();
+        private bool _hasPreceeding;
 
         public Script()
         {
-            _isAfter.OnMissing = searchForDependency;
+            _isAfter.OnMissing = isAfterInChain;
         }
 
         public Script(string name) : this()
@@ -37,26 +25,51 @@ namespace FubuMVC.Core.UI.Scripts
         public override IEnumerable<IScript> AllScripts()
         {
             yield return this;
+
+            foreach (var extension in _extensions)
+            {
+                yield return extension;
+            }
         }
 
-        public bool ShouldBeAfter(IScript script)
+        public bool MustBeAfter(IScript script)
         {
-            return _isAfter[script];
+            var returnValue = _isAfter[script];
+            return returnValue;
         }
 
-        public void OrderedAfter(IScript script)
+        public void MustBePreceededBy(IScript script)
         {
+            _hasPreceeding = true;
             _isAfter[script] = true;
         }
 
-        public void OrderedBefore(IScript script)
+        public void AddExtension(IScript extender)
         {
-            _isAfter[script] = false;
+            _extensions.Add(extender);
+            _isAfter[extender] = false;
         }
 
-        private bool searchForDependency(IScript script)
+        public bool IsFirstRank()
         {
-            return this.Any(x => x == script);
+            return (!_hasPreceeding) && (!Dependencies().Any());
+        }
+
+        public int CompareTo(IScript other)
+        {
+            return Name.CompareTo(other.Name);
+        }
+
+        private bool isAfterInChain(IScript script)
+        {
+            // The filter on "not this" is introduced because of the extensions
+            var dependencies = Dependencies().SelectMany(x => x.AllScripts()).Where(x => !ReferenceEquals(x, this));
+            return dependencies.Contains(script) || dependencies.Any(x => x.MustBeAfter(script));
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Script: {0}", Name);
         }
     }
 }

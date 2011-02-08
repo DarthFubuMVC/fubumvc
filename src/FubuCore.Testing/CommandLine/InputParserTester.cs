@@ -219,7 +219,7 @@ namespace FubuCore.Testing.CommandLine
 
     public class InputCommand : FubuCommand<InputModel>
     {
-        public override void Execute(InputModel input)
+        public override bool Execute(InputModel input)
         {
             throw new NotImplementedException();
         }

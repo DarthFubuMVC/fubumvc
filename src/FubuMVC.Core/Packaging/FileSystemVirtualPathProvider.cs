@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web.Caching;
 using System.Web.Hosting;
 using FubuCore;
 using FubuCore.Util;
@@ -85,6 +86,36 @@ namespace FubuMVC.Core.Packaging
             var physicalPath = originalPath.Replace("~", "").TrimStart('/');
 
             return Path.Combine(directory, physicalPath);
+        }
+
+        public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
+        {
+            if (virtualPathDependencies == null)
+            {
+                return null;
+            }
+
+
+            var knownFiles = new List<string>();
+            var unknownVirtualPaths = new List<string>();
+
+            foreach (string dependency in virtualPathDependencies)
+            {
+                var file = _files[dependency];
+                if (file == null)
+                {
+                    unknownVirtualPaths.Add(dependency);
+                }
+                else
+                {
+                    knownFiles.Add(file);
+                }
+            }
+
+            var otherDependencies = Previous.GetCacheDependency(virtualPath, unknownVirtualPaths, utcStart);
+            
+
+            return new CacheDependency(knownFiles.ToArray(), new string[0], otherDependencies);
         }
     }
 }

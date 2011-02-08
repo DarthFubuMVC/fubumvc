@@ -51,13 +51,14 @@ namespace Fubu
     [CommandDescription("Links a package folder to an application folder in development mode")]
     public class LinkCommand : FubuCommand<LinkInput>
     {
-        public override void Execute(LinkInput input)
+        public override bool Execute(LinkInput input)
         {
             input.AppFolder = AliasCommand.AliasFolder(input.AppFolder);
             input.PackageFolder = AliasCommand.AliasFolder(input.PackageFolder);
 
 
             Execute(input, new FileSystem());
+            return true;
         }
 
         private void Execute(LinkInput input, FileSystem fileSystem)

@@ -40,10 +40,6 @@
     <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -69,20 +65,27 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConfigureSparkExpression.cs" />
+    <Compile Include="Policies\ControllerSparkPolicy.cs" />
+    <Compile Include="FubuRegistryExtensions.cs" />
+    <Compile Include="Registration\DSL\ConfigureSparkSettingsExpression.cs" />
     <Compile Include="Registration\ActionAndViewMatchedBySparkViewDescriptors.cs" />
+    <Compile Include="Registration\ISparkDescriptorVisitor.cs" />
+    <Compile Include="Registration\ISparkDescriptorVisitorRegistry.cs" />
     <Compile Include="Registration\ISparkPolicy.cs" />
     <Compile Include="Registration\ISparkPolicyResolver.cs" />
+    <Compile Include="Registration\SetLanguageSparkDescriptorVisitor.cs" />
     <Compile Include="Registration\LambdaSparkPolicy.cs" />
+    <Compile Include="Registration\SparkDescriptorVisitorRegistry.cs" />
     <Compile Include="Registration\SparkPolicyResolver.cs" />
+    <Compile Include="Registration\DSL\SparkDescriptorVisitorsExpression.cs" />
+    <Compile Include="SparkPackageExtension.cs" />
     <Compile Include="SparkFubuException.cs" />
-    <Compile Include="SparkFubuRegistry.cs" />
     <Compile Include="Registration\DSL\SparkPoliciesExpression.cs" />
     <Compile Include="ISparkViewFactory.cs" />
     <Compile Include="ViewCreation\JavaScriptOutputNode.cs" />
     <Compile Include="ViewCreation\JavaScriptResponse.cs" />
     <Compile Include="ActionContext.cs" />
-    <Compile Include="Registration\SparkStructureMapApplication.cs" />
-    <Compile Include="Registration\SparkStructureMapBootstrapper.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ICacheServiceProvider.cs" />
     <Compile Include="ViewCreation\SparkView.cs" />
@@ -110,10 +113,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
-      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
-      <Name>FubuMVC.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>
@@ -122,6 +121,7 @@
   <ItemGroup>
     <Content Include="Licence_Readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

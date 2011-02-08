@@ -15,10 +15,10 @@
         <Requires isStep="True" name="A" reqs="crud" />
       </ScriptGraphSetup>
     </SetupScriptGraph>
-    <Query isStep="True" comment="Query for only one set with no dependencies" names="1" expected="A, B, C, C-1, crudForm.js, validation.js" />
-    <Query isStep="True" comment="Query for a set whose files have a dependency" names="2" expected="C, C-1, D1, D2, D" />
-    <Query isStep="True" comment="Fetch a set that references another set" names="Combo" expected="crudForm.js, validation.js, A, B, C, C-1, D1, D2, D" />
-    <Query isStep="True" comment="Set with a dependency on another set" names="3" expected="crudForm.js, validation.js, A, B, C, C-1, E, jquery, jquery.validation" />
-    <Query isStep="True" comment="Multiple options" names="1,2,A,C" expected="B, C, C-1, crudForm.js, D1, D2, D, validation.js, A" />
+    <Query isStep="True" comment="Query for only one set with no dependencies" names="1" expected="B, C, crudForm.js, validation.js, A, C-1" />
+    <Query isStep="True" comment="Query for a set whose files have a dependency" names="2" expected="C, D1, D2, C-1, D" />
+    <Query isStep="True" comment="Fetch a set that references another set" names="Combo" expected="B, C, crudForm.js, D1, D2, validation.js, A, C-1, D" />
+    <Query isStep="True" comment="Set with a dependency on another set" names="3" expected="B, C, crudForm.js, E, jquery, jquery.validation, validation.js, A, C-1" />
+    <Query isStep="True" comment="Multiple options" names="1,2,A,C" expected="B, C, crudForm.js, D1, D2, validation.js, A, C-1, D" />
   </ScriptGraph>
 </Test>

@@ -75,6 +75,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConfigureSparkExpressionTester.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Helpers\MockHttpContextBase.cs" />
     <Compile Include="InteractionContext.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Registration\when_resolving_policies.cs" />
     <Compile Include="SparkBatchCompilationTester.cs" />
     <Compile Include="SparkDescriptorBuildingTester.cs" />
+    <Compile Include="SparkRegistrationTester.cs" />
     <Compile Include="SparkViewFactoryTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="Controllers\StubController.cs" />

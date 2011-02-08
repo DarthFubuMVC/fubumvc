@@ -99,7 +99,7 @@ namespace FubuMVC.Core.Diagnostics
 
             var groups = _graph
                 .Actions()
-                .Where(x => x.HandlerType.HasAttribute<FubuDiagnosticsAttribute>() && !x.HasInput && x.Method.Name != "Index")
+                .Where(x => x.HandlerType.HasAttribute<FubuDiagnosticsAttribute>() && (!x.HasInput || x.HandlerType.GetAttribute<FubuDiagnosticsAttribute>().ShownInIndex) && x.Method.Name != "Index")
                 .GroupBy(x => x.HandlerType.GetAttribute<FubuDiagnosticsAttribute>().Description)
                 .OrderBy(x => x.Key);
 

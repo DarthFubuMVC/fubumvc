@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.IncludeTypesNamed(n => n.StartsWith("UrlCategory"));
             }).BuildGraph();
 
-            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph));
+            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new JQueryUrlTemplate());
         }
 
         [Test]

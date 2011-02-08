@@ -7,108 +7,132 @@ using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Routing;
 
 namespace FubuMVC.Core
 {
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
     public class FubuApplication : IContainerFacilityExpression
     {
-        private readonly FubuRegistry _registry;
+    	private readonly Func<FubuRegistry> _registryBuilder;
+		private FubuRegistry _registryCache;
+        private IContainerFacility _facility;
         private Func<IContainerFacility> _facilitySource;
-        private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
+        private BehaviorGraph _graph;
+        private FubuMvcPackageFacility _fubuFacility;
+		private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
+		private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
 
-        private FubuApplication(FubuRegistry registry)
+        private FubuApplication(Func<FubuRegistry> registry)
         {
-            _registry = registry;
+            _registryBuilder = registry;
         }
 
+
+		private FubuRegistry registry()
+		{
+			return _registryCache ?? (_registryCache = _registryBuilder());
+		}
 
         FubuApplication IContainerFacilityExpression.ContainerFacility(IContainerFacility facility)
         {
             return registerContainerFacilitySource(() => facility);
         }
-
         FubuApplication IContainerFacilityExpression.ContainerFacility(Func<IContainerFacility> facilitySource)
         {
             return registerContainerFacilitySource(facilitySource);
         }
 
+        // TODO -- replace w/ Lazy<T> when we ditch 3.5 support
+        private IContainerFacility facility
+        {
+            get
+            {
+                if (_facility == null)
+                {
+                    _facility = _facilitySource();
+                }
+
+                return _facility;
+            }
+        }
+		
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
-            _facilitySource = () =>
-            {
-                _facility = facilitySource();
-                return _facility;
-            };
+            _facilitySource = facilitySource;
             return this;
         }
 
-        public static IContainerFacilityExpression For(FubuRegistry registry)
+        public static IContainerFacilityExpression For(Func<FubuRegistry> registry)
         {
             return new FubuApplication(registry);
         }
-
         public static IContainerFacilityExpression For<T>() where T : FubuRegistry, new()
         {
-            return For(new T());
+            return For(() => new T());
         }
 
-        private IContainerFacility _facility;
+        [SkipOverForProvenance]
+        public void Bootstrap(IList<RouteBase> routes)
+        {
+            Bootstrap().Each(routes.Add);
+        }
 
         [SkipOverForProvenance]
-        public void Bootstrap(ICollection<RouteBase> routes)
+        public IList<RouteBase> Bootstrap()
         {
             if (HttpContext.Current != null)
             {
                 UrlContext.Live();
             }
 
-            var fubuFacility = new FubuMvcPackageFacility();
-
-            _registry.Services(fubuFacility.RegisterServices);
+            _fubuFacility = new FubuMvcPackageFacility();
 
             // TODO -- would be nice if this little monster also logged 
             PackageRegistry.LoadPackages(x =>
             {
-                x.Facility(fubuFacility);
+                x.Facility(_fubuFacility);
                 _packagingDirectives.Each(d => d(x));
-                x.Bootstrap(log => startApplication(routes));
+                x.Bootstrap(log => startApplication());
             });
 
-            fubuFacility.AddPackagingContentRoutes(routes);
+            return buildRoutes();
         }
 
-        private IEnumerable<IActivator> startApplication(ICollection<RouteBase> routes)
+        private IEnumerable<IActivator> startApplication()
         {
-            FindAllExtensions().Each(x => x.Configure(_registry));
+			// Building up the facility first forces the creation of the container
+			// and executes any additional bootstrapping done in the respective lambdas
+            facility.SpinUp();
+            
 
-            var facility = _facilitySource();
+			registry()
+				.Services(_fubuFacility.RegisterServices);
+
+        	_registryModifications.Each(m => m(registry()));
+
+            FindAllExtensions().Each(x => x.Configure(registry()));
 
             // "Bake" the fubu configuration model into your
             // IoC container for the application
-            var graph = _registry.BuildGraph();
-            graph.EachService(facility.Register);
-            var factory = facility.BuildFactory();
-
-            // Register all the Route objects into the routes 
-            // collection
-
-            // TODO -- need a way to do this with debugging
-            graph.VisitRoutes(x =>
-            {
-                x.Actions += (routeDef, chain) =>
-                {
-                    var route = routeDef.ToRoute();
-                    route.RouteHandler = new FubuRouteHandler(factory, chain.UniqueId);
-
-                    routes.Add(route);
-                };
-            });
+            _graph = registry().BuildGraph();
+            _graph.EachService(facility.Register);
+			facility.BuildFactory();
 
             return facility.GetAllActivators();
         }
 
+        private IList<RouteBase> buildRoutes()
+        {
+            var routes = new List<RouteBase>();           
+            
+            // Build route objects from route definitions on graph + add packaging routes
+            var factory = facility.BuildFactory();
+            facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
+            _fubuFacility.AddPackagingContentRoutes(routes);
+
+            return routes;
+        }
 
         public FubuApplication Packages(Action<IPackageFacility> configure)
         {
@@ -118,7 +142,7 @@ namespace FubuMVC.Core
 
         public FubuApplication ModifyRegistry(Action<FubuRegistry> modifications)
         {
-            modifications(_registry);
+        	_registryModifications.Add(modifications);
             return this;
         }
 
@@ -138,22 +162,17 @@ namespace FubuMVC.Core
                 hasDefaultCtor(t) && t.GetInterfaces().Any(i => i.FullName == typeof(IFubuRegistryExtension).FullName))
                 .Select(buildExtension);
         }
-
         private static bool hasDefaultCtor(Type type)
         {
             return type.GetConstructor(new Type[0]) != null;
         }
-
         private static IFubuRegistryExtension buildExtension(Type type)
         {
             var contextType = Type.GetType(type.AssemblyQualifiedName);
             return (IFubuRegistryExtension)Activator.CreateInstance(contextType);
         }
 
-        public IContainerFacility Facility
-        {
-            get { return _facility; }
-        }
+        public IContainerFacility Facility { get { return _facility; } }
     }
 
     public interface IContainerFacilityExpression
@@ -161,6 +180,4 @@ namespace FubuMVC.Core
         FubuApplication ContainerFacility(IContainerFacility facility);
         FubuApplication ContainerFacility(Func<IContainerFacility> facilitySource);
     }
-
-
 }

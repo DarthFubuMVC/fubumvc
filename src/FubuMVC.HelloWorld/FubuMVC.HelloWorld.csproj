@@ -67,7 +67,10 @@
     <Content Include="Controllers\Products\ProductDisplayPartial.ascx" />
     <Content Include="Controllers\Products\ProductsDisplayView.aspx" />
     <Content Include="Controllers\Products\PartDisplayPartial.ascx" />
+    <Content Include="Controllers\UrlTemplate\Find.aspx" />
+    <Content Include="Controllers\UrlTemplate\Query.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Shared\jquery.tmpl.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -98,6 +101,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controllers\Security\SecretController.cs" />
+    <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\OddEvenLiModifier.cs" />

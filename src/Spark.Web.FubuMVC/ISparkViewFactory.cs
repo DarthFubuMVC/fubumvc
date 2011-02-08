@@ -14,5 +14,7 @@ namespace Spark.Web.FubuMVC
         List<SparkViewDescriptor> CreateDescriptors(SparkBatchDescriptor batch, string viewLocatorName);
         IList<SparkViewDescriptor> CreateDescriptors(SparkBatchEntry entry, string viewLocatorName);
         SparkViewDescriptor CreateDescriptor(string targetNamespace, string actionName, string viewName, string masterName, bool findDefaultMaster);
+    	ViewEngineResult FindView(ActionContext actionContext, string viewName, string masterName);
+    	ViewEngineResult FindPartialView(ActionContext actionContext, string partialViewName);
     }
 }

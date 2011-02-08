@@ -26,8 +26,7 @@ namespace FubuMVC.Core.Content
 
         public string CssUrl(string name)
         {
-            throw new NotImplementedException();
-            //return _styles[name].ToAbsoluteUrl();
+            return _styles[name].ToAbsoluteUrl();
         }
 
         public string ScriptUrl(string name)
@@ -47,6 +46,17 @@ namespace FubuMVC.Core.Content
             _service = service;
             _contentType = contentType;
 
+
+            /*
+             * You might be wondering, "why is it doing this?"
+             * The goal of the below is to say:
+             * 1.) Use the url to the main application's content/{type} if the file exists there
+             * 2.) If not, try to find it in a package folder.  If found, pull it from the package folder
+             * 3.) Finally, try the url to the main application and just hope.
+             * 
+             * This implementation isn't smart enough to deal with "appended" virtual directory paths
+             * 
+             */
             _urls.OnMissing = filename =>
             {
                 if (_service.ExistsInApplicationDirectory(_contentType, filename))
@@ -54,7 +64,12 @@ namespace FubuMVC.Core.Content
                     return "~/content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
                 }
 
-                return "~/_{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
+                if (_service.FileExists(_contentType, filename))
+                {
+                    return "~/_{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
+                }
+
+                return "~/content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
             };
         }
 

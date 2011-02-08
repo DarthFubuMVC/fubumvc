@@ -12,7 +12,7 @@ namespace FubuCore.Testing
         public void can_transfer_fubuexception_across_boundaries()
         {
             var original = new FubuException(42, "The answer to {0}, the {1} and {2}", "life", "universe", "everything");
-            var transferred = TransferViaSerialization(original);
+            var transferred = original.ShouldTransferViaSerialization();
             transferred.ErrorCode.ShouldEqual(original.ErrorCode);
             transferred.Message.ShouldEqual(original.Message);
         }
@@ -21,20 +21,11 @@ namespace FubuCore.Testing
         public void can_transfer_fubuassertionexception_across_boundaries()
         {
             var original = new FubuAssertionException("Nothing works");
-            var transferred = TransferViaSerialization(original);
+            var transferred = original.ShouldTransferViaSerialization();
             transferred.Message.ShouldEqual(original.Message);
         }
 
 
-        public static T TransferViaSerialization<T>(T instance)
-        {
-            var formatter = new BinaryFormatter();
-            var stream = new MemoryStream();
-            formatter.Serialize(stream, instance);
-            stream.Position = 0;
-
-            return (T)formatter.Deserialize(stream);
-        }
 
     }
 }

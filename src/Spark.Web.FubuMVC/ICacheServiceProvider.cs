@@ -5,20 +5,14 @@ namespace Spark.Web.FubuMVC
 {
     public interface ICacheServiceProvider
     {
-        ICacheService GetCacheService(HttpContextBase httpContext);
+        ICacheService GetCacheService();
     }
 
     public class DefaultCacheServiceProvider : ICacheServiceProvider
     {
-        #region ICacheServiceProvider Members
-
-        public ICacheService GetCacheService(HttpContextBase httpContext)
+        public ICacheService GetCacheService()
         {
-            if (httpContext != null && httpContext.Cache != null)
-                return new DefaultCacheService(httpContext.Cache);
-            return null;
+            return HttpRuntime.Cache != null ? new DefaultCacheService(HttpRuntime.Cache) : null;
         }
-
-        #endregion
     }
 }

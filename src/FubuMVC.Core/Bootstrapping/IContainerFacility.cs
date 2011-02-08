@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Web.Routing;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -14,5 +13,17 @@ namespace FubuMVC.Core.Bootstrapping
         void Register(Type serviceType, ObjectDef def);
         IEnumerable<IActivator> GetAllActivators();
         IEnumerable<IInstaller> GetAllInstallers();
+        T Get<T>() where T : class;
     }
+
+    public static class ContainerFacilityExtensions
+    {
+        public static void SpinUp(this IContainerFacility facility)
+        {
+    
+        }
+    }
+
+    
+
 }

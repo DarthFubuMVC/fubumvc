@@ -30,6 +30,8 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return BehaviorCategory.Chain; }
         }
 
+        public string Origin { get; set; }
+
         public IEnumerable<ActionCall> Calls
         {
             get { return this.OfType<ActionCall>(); }

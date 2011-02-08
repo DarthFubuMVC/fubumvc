@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.UI.Scripts;
 using NUnit.Framework;
@@ -6,8 +7,47 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.UI.Scripts
 {
     [TestFixture]
+    public class when_reading_an_ordered_set : InteractionContext<ScriptDslReader>
+    {
+        protected override void beforeEach()
+        {
+            ClassUnderTest.ReadLine("ordered set SET01 is");
+            ClassUnderTest.ReadLine("D.js");
+            ClassUnderTest.ReadLine("E.js");
+            ClassUnderTest.ReadLine("F.js");
+            ClassUnderTest.ReadLine("G.js");
+
+        }
+
+        [Test]
+        public void should_have_added_all_the_scripts_to_the_set()
+        {
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "D.js"));
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "E.js"));
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "F.js"));
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "G.js"));
+        }
+
+        [Test]
+        public void uses_the_order_to_set_dependencies()
+        {
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("E.js", "D.js"));
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("F.js", "E.js"));
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("G.js", "F.js"));
+        }
+    }
+
+
+    [TestFixture]
     public class ScriptDslReaderTester : InteractionContext<ScriptDslReader>
     {
+        [Test]
+        public void preceeding()
+        {
+            ClassUnderTest.ReadLine("before-b preceeds b");
+            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Preceeding("before-b", "b"));
+        }
+
         [Test]
         public void read_alias_happy_path()
         {
@@ -108,5 +148,7 @@ namespace FubuMVC.Tests.UI.Scripts
                 ClassUnderTest.ReadLine("a wrong b");
             }).Message.ShouldContain("'wrong' is an invalid verb");
         }
+
+
     }
 }

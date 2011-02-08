@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Continuations
 
         public void RedirectToCall(ActionCall call)
         {
-            string url = _registry.UrlFor(call);
+            string url = _registry.UrlFor(call.HandlerType, call.Method);
             _writer.RedirectToUrl(url);
         }
 

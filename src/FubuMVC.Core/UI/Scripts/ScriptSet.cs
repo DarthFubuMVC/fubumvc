@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FubuMVC.Core.UI.Scripts
@@ -34,6 +35,11 @@ namespace FubuMVC.Core.UI.Scripts
             }
 
             _objects.Add(child);
+        }
+
+        public override string ToString()
+        {
+            return "Set:  " + Name;
         }
     }
 }
