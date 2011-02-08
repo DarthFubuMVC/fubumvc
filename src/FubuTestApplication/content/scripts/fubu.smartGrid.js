@@ -12,9 +12,6 @@
 /*
 columnFormatters:
 {
-link: function (column, originalValue, subject) { return '<a href="' + subject[column.UrlPropertyName] + '" target="_top">' + originalValue + '</a>'; },
-linktoentity: function (column, originalValue, subject) { eval('var x = ' + originalValue); return '<a href="{Url}" target="_top">{DisplayText}</a>'.fillWith(x); },
-image: function (column, originalValue, subject) { return '<img src="' + subject[column.ImageUrlPropertyName] + '" border="0"/>'; },
 command: function (column, originalValue, subject) { return '<a href="' + originalValue + '" class="invoke">' + column.Header + '</a>'; },
 timeAgo: function (column, originalValue, subject) { return $.timeago(originalValue); }
 }

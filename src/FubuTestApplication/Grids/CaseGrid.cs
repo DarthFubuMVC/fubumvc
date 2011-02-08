@@ -18,6 +18,7 @@ namespace FubuTestApplication.Grids
             ShowViewLink(x => x.Identifier);
             Show(x => x.Title);
             Show(x => x.Priority);
+            Show(x => x.Number);
             ShowViewLinkForOther(x => x.Person).DisplayTextFrom(x => x.Name);
         }
     }
@@ -59,6 +60,8 @@ namespace FubuTestApplication.Grids
 
             _document.Title = "All Cases";
 
+            _document.Add("div").Hide().Add("button").Text("Remove").Id("removeFilter");
+
             _document.Add("h1").Text("All Cases");
             _document.Add("hr");
 
@@ -73,6 +76,9 @@ namespace FubuTestApplication.Grids
             _document.Pop();
 
 
+            _document.Add("hr");
+            _document.Add(x => x.FiltersFor<CaseGrid>());
+            _document.Add("button").Text("Add").Id("add");
             _document.Add("hr");
             _document.Add(x => x.SmartGridFor<CaseGrid>(null));
 

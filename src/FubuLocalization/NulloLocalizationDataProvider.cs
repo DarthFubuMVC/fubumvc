@@ -20,7 +20,7 @@ namespace FubuLocalization
 
         public string GetTextForKey(StringToken key)
         {
-            return Culture.Name + "_" + key.Key;
+            return key.DefaultValue ?? Culture.Name + "_" + key.Key;
         }
 
         public string GetTextForListValue(string listName, string key)

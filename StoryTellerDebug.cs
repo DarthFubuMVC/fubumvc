@@ -15,9 +15,9 @@ namespace StoryTellerTestHarness
         }
 
         [Test]
-        public void One_column_grid()
+        public void Query_options_for_a_grid_with_strings_and_numbers()
         {
-            runner.RunAndAssertTest("FastPack/Grids/One column grid");
+            runner.RunAndAssertTest("FastPack/Grids/Query options for a grid with strings and numbers");
         }
 
         [TestFixtureTearDown]

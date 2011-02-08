@@ -1,6 +1,6 @@
 ﻿namespace FubuFastPack.Querying
 {
-    public class OperatorDTO
+    public class OperatorDto
     {
         // localized text
         public string display { get; set; }

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Test name="Query operators for a string field" lifecycle="Regression">
+  <QueryService>
+    <StringFieldsShouldBeFilteredWith isStep="True">
+      <Rows>
+        <row isStep="True" expected="EQUAL" />
+        <row isStep="True" expected="NOTEQUAL" />
+        <row isStep="True" expected="STARTSWITH" />
+        <row isStep="True" expected="ENDSWITH" />
+        <row isStep="True" expected="CONTAINS" />
+      </Rows>
+    </StringFieldsShouldBeFilteredWith>
+  </QueryService>
+</Test>

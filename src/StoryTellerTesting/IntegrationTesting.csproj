@@ -75,6 +75,7 @@
     <Compile Include="debugger.cs" />
     <Compile Include="debugging.cs" />
     <Compile Include="Fixtures\FubuFastPack\GridsFixture.cs" />
+    <Compile Include="Fixtures\FubuFastPack\QueryServiceFixture.cs" />
     <Compile Include="Fixtures\FubuFastPack\SmartGridFixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />

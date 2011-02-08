@@ -35,9 +35,9 @@ namespace FubuFastPack.Querying
             _keys.Add(this);
         }
 
-        public OperatorDTO ToOperator()
+        public OperatorDto ToOperator()
         {
-            return new OperatorDTO{
+            return new OperatorDto{
                 display = ToString(),
                 value = Key
             };

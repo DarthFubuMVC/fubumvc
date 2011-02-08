@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Test name="Query options for a grid with strings and numbers" lifecycle="Regression">
+  <QueryService>
+    <MixedNumberAndStrings isStep="True">
+      <rows>
+        <row isStep="True" Operator="EQUAL" PropertyName="Title" />
+        <row isStep="True" Operator="NOTEQUAL" PropertyName="Title" />
+        <row isStep="True" Operator="STARTSWITH" PropertyName="Title" />
+        <row isStep="True" Operator="ENDSWITH" PropertyName="Title" />
+        <row isStep="True" Operator="CONTAINS" PropertyName="Title" />
+        <row isStep="True" Operator="EQUAL" PropertyName="Identifier" />
+        <row isStep="True" Operator="NOTEQUAL" PropertyName="Identifier" />
+        <row isStep="True" Operator="STARTSWITH" PropertyName="Identifier" />
+        <row isStep="True" Operator="ENDSWITH" PropertyName="Identifier" />
+        <row isStep="True" Operator="CONTAINS" PropertyName="Identifier" />
+        <row isStep="True" Operator="EQUAL" PropertyName="Number" />
+        <row isStep="True" Operator="NOTEQUAL" PropertyName="Number" />
+        <row isStep="True" Operator="GREATERTHAN" PropertyName="Number" />
+        <row isStep="True" Operator="LESSTHAN" PropertyName="Number" />
+        <row isStep="True" Operator="GREATERTHANOREQUAL" PropertyName="Number" />
+        <row isStep="True" Operator="LESSTHANOREQUAL" PropertyName="Number" />
+      </rows>
+    </MixedNumberAndStrings>
+  </QueryService>
+</Test>

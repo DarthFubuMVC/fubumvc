@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Test name="Query operators for a number field" lifecycle="Regression">
+  <QueryService>
+    <NumberFieldsShouldBeFilteredWith isStep="True">
+      <Rows>
+        <row isStep="True" expected="EQUAL" />
+        <row isStep="True" expected="NOTEQUAL" />
+        <row isStep="True" expected="GREATERTHAN" />
+        <row isStep="True" expected="LESSTHAN" />
+        <row isStep="True" expected="GREATERTHANOREQUAL" />
+        <row isStep="True" expected="LESSTHANOREQUAL" />
+      </Rows>
+    </NumberFieldsShouldBeFilteredWith>
+  </QueryService>
+</Test>

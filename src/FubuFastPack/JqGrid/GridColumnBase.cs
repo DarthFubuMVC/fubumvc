@@ -44,6 +44,7 @@ namespace FubuFastPack.JqGrid
             _header = token;
         }
 
+        // TODO -- get rid of this
         public string GetHeader()
         {
             if (_header != null) return _header.ToString();
@@ -51,15 +52,15 @@ namespace FubuFastPack.JqGrid
             return LocalizationManager.GetHeader(_accessor.InnerProperty);
         }
 
-        public IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService)
+        public IEnumerable<FilteredProperty> FilteredProperties()
         {
             if (!IsFilterable) yield break;
 
-            yield return new FilterDTO {
-                display = GetHeader(),
-                value = Accessor.Name,
-                operators = queryService.FilterOptionsFor(Expression).Select(x => x.ToOperator()).ToArray()
+            yield return new FilteredProperty(){
+                Accessor = Accessor,
+                Header = GetHeader()
             };
         }
+
     }
 }

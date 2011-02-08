@@ -41,7 +41,7 @@ namespace FubuFastPack.Testing.jqGrid
         public void if_the_column_is_not_queryable_return_no_filters()
         {
             theColumn.IsFilterable = false;
-            theColumn.PossibleFilters(queryService).Any().ShouldBeFalse();
+            theColumn.FilteredProperties().Any().ShouldBeFalse();
         }
 
 
@@ -54,43 +54,4 @@ namespace FubuFastPack.Testing.jqGrid
         }
     }
 
-    [TestFixture]
-    public class when_creating_filters_for_a_filterable_column
-    {
-        private GridColumn<Case> theColumn;
-        private QueryService queryService;
-        private FilterDTO theFilter;
-
-        [SetUp]
-        public void SetUp()
-        {
-            theColumn = GridColumn<Case>.ColumnFor(x => x.Condition);
-            theColumn.IsFilterable = true;
-            
-            queryService = new QueryService(new IFilterHandler[0]);
-
-            theFilter = theColumn.PossibleFilters(queryService).Single();
-        }
-
-        [Test]
-        public void the_filter_display_is_the_header_text()
-        {
-            theFilter.display.ShouldEqual(theColumn.GetHeader());
-        }
-
-        [Test]
-        public void the_value_of_the_filter_is_the_accessor_name()
-        {
-            theFilter.value.ShouldEqual(theColumn.Accessor.Name);
-        }
-
-        [Test]
-        public void should_have_all_the_string_operators()
-        {
-            // The exact list is tested by StoryTeller
-            theFilter.operators.Any(x => x.value == OperatorKeys.EQUAL.Key).ShouldBeTrue();
-            theFilter.operators.Any(x => x.value == OperatorKeys.NOTEQUAL.Key).ShouldBeTrue();
-            theFilter.operators.Any(x => x.value == OperatorKeys.CONTAINS.Key).ShouldBeTrue();
-        }
-    }
 }

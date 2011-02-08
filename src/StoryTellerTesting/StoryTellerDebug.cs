@@ -17,7 +17,7 @@ namespace StoryTellerTestHarness
         [Test]
         public void Invoke_a_Json_endpoint_from_a_package()
         {
-            runner.RunAndAssertTest("FastPack/Grids/One column grid");
+            runner.RunAndAssertTest("FastPack/Grids/Query options for a grid with strings and numbers");
         }
 
         [TestFixtureTearDown]

@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 using Microsoft.Practices.ServiceLocation;
+using System.Linq;
 
 namespace FubuFastPack.JqGrid
 {
@@ -19,11 +20,13 @@ namespace FubuFastPack.JqGrid
             return runner.RunGrid(_definition, source, request);
         }
 
-        public IEnumerable<Criteria> BaselineCriterion
+        public IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService)
         {
-            get { return new Criteria[0]; }
+            // Force the enumerable to execute so we don't keep building new FilteredProperty objects
+            var properties = _definition.Columns.SelectMany(x => x.FilteredProperties()).ToList();
+            properties.Each(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
+            return properties;
         }
-
 
         public IGridDefinition Definition
         {

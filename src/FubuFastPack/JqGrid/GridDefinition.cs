@@ -28,11 +28,6 @@ namespace FubuFastPack.JqGrid
             get { return _columns.SelectMany(x => x.SelectAccessors()).Distinct(); }
         }
 
-        public IEnumerable<FilterDTO> AllPossibleFilters(IQueryService queryService)
-        {
-            return _columns.SelectMany(x => x.PossibleFilters(queryService));
-        }
-
         public TColumn AddColumn<TColumn>(TColumn column) where TColumn : IGridColumn
         {
             _columns.Add(column);

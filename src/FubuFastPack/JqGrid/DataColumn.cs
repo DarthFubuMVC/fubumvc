@@ -34,11 +34,6 @@ namespace FubuFastPack.JqGrid
             return dto => dto["Id"] = getter().ToString();
         }
 
-        public IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService)
-        {
-            yield break;
-        }
-
         public IEnumerable<Accessor> SelectAccessors()
         {
             yield return _accessor;
@@ -47,6 +42,11 @@ namespace FubuFastPack.JqGrid
         public IEnumerable<Accessor> AllAccessors()
         {
             return SelectAccessors();
+        }
+
+        public IEnumerable<FilteredProperty> FilteredProperties()
+        {
+            yield break;
         }
 
         public string GetHeader()

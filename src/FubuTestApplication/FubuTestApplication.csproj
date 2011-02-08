@@ -85,6 +85,7 @@
     <Content Include="content\images\grid\tree_plus.gif" />
     <Content Include="content\images\grid\up.gif" />
     <Content Include="content\images\icon-add.png" />
+    <Content Include="content\scripts\fubu.query.js" />
     <Content Include="content\styles\ellipsis-xbl.xml" />
     <Content Include="content\styles\ui.jqgrid.css" />
     <Content Include="content\styles\ui.multiselect.css" />

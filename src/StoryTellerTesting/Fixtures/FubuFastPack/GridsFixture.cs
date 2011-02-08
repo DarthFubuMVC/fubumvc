@@ -180,25 +180,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             return table;
         }
 
-        public IGrammar AllPossibleFiltersForRepositoryGrid()
-        {
-            return VerifySetOf(allFilters).Titled("All the filters for FilterableRepositoryGrid should be")
-                .MatchOn(x => x.Property, x => x.Operator);
-        }
 
-        private IEnumerable<FilterOperatorRow> allFilters()
-        {
-            var grid = new FilterableRepositoryGrid();
-            var queryService = _container.GetInstance<IQueryService>();
-            return
-                grid.Definition.AllPossibleFilters(queryService).SelectMany(
-                    x => x.operators.Select(o => new FilterOperatorRow(){
-                        Operator = o.value,
-                        Property = x.value
-                    }));
-        
-        }
-        
         #region Nested type: FilterableRepositoryGrid
 
         public class FilterableRepositoryGrid : RepositoryGrid<Case>

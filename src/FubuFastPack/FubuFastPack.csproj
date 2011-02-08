@@ -120,7 +120,7 @@
     <Compile Include="Querying\BasicFiltersCache.cs" />
     <Compile Include="Querying\BinaryFilterHandler.cs" />
     <Compile Include="Querying\Criteria.cs" />
-    <Compile Include="Querying\FilterDTO.cs" />
+    <Compile Include="Querying\FilteredProperty.cs" />
     <Compile Include="Querying\FilterRequest.cs" />
     <Compile Include="Querying\IDataRestriction.cs" />
     <Compile Include="Querying\IDataSourceFilter.cs" />
@@ -130,6 +130,7 @@
     <Compile Include="Querying\OperatorKeys.cs" />
     <Compile Include="Querying\GridDataRequest.cs" />
     <Compile Include="Querying\QueryService.cs" />
+    <Compile Include="Querying\StringFilterHandler.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicy.cs" />
     <Compile Include="Querying\SingleEntityFilter.cs" />
     <Compile Include="StructureMap\ContainerExtensions.cs" />

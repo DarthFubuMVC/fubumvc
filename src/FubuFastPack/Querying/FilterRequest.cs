@@ -35,6 +35,11 @@ namespace FubuFastPack.Querying
             get { return _criteria.op; }
         }
 
+        public Accessor Accessor
+        {
+            get { return _accessor; }
+        }
+
         public object GetValue()
         {
             if (PropertyType == typeof (string)) return _criteria.value;

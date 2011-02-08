@@ -11,6 +11,6 @@ namespace FubuFastPack.JqGrid
         // TODO -- let's move this inside.  Could use, *gasp* Setter injection here
         GridResults Invoke(IServiceLocator services, GridDataRequest request);
 
-        IEnumerable<Criteria> BaselineCriterion { get; }
+        IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService);
     }
 }

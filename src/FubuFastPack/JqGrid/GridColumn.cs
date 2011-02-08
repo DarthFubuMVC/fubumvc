@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuFastPack.Querying;
 using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
 {
     public class GridColumn<T> : GridColumnBase<T>, IGridColumn
     {
+
+
         public static GridColumn<T> ColumnFor(Expression<Func<T, object>> property)
         {
             return new GridColumn<T>(property);
@@ -17,6 +20,7 @@ namespace FubuFastPack.JqGrid
         public GridColumn(Expression<Func<T, object>> expression) : base(expression)
         {
             IsSortable = true;
+            IsFilterable = true;
         }
 
         public IEnumerable<Accessor> SelectAccessors()
@@ -28,6 +32,8 @@ namespace FubuFastPack.JqGrid
         {
             yield return Accessor;
         }
+
+
 
         // TODO -- UT this.  Duh.
         public IEnumerable<IDictionary<string, object>> ToDictionary()

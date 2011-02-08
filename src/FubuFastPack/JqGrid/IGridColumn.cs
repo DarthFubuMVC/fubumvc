@@ -12,9 +12,10 @@ namespace FubuFastPack.JqGrid
         IEnumerable<IDictionary<string, object>> ToDictionary();
         Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls);
 
-        IEnumerable<FilterDTO> PossibleFilters(IQueryService queryService);
         IEnumerable<Accessor> SelectAccessors();
         IEnumerable<Accessor> AllAccessors();
+
+        IEnumerable<FilteredProperty> FilteredProperties();
 
         string GetHeader();
     }

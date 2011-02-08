@@ -23,6 +23,7 @@ namespace FubuFastPack.JqGrid
 
     // TODO -- need to add other accessors for getting the Url?
     // TODO -- way to override the link name?
+    // TODO -- move the ctor's to static factory methods
     public class LinkColumn<T> : GridColumnBase<T>, IGridColumn where T : DomainEntity
     {
         private readonly Accessor _idAccessor;
@@ -95,6 +96,7 @@ namespace FubuFastPack.JqGrid
         {
             _linkName = "linkFor" + Accessor.Name;
             IsSortable = true;
+            IsFilterable = true;
         }
     }
 }

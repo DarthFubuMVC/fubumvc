@@ -81,11 +81,9 @@ namespace FubuFastPack.JqGrid
         // TODO -- lots of unit tests here
         public JqGridModel ModelFor(ISmartGrid grid)
         {
-            string gridName = grid.GetType().NameForGrid();
+            var gridName = grid.GetType().NameForGrid();
             return new JqGridModel{
-                baselineCriterion = grid.BaselineCriterion.ToArray(),
                 colModel = grid.Definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),
-                filters = grid.Definition.AllPossibleFilters(_queryService).ToArray(),
                 gridName = gridName,
                 url = _urls.UrlFor(new GridRequest{
                     gridName = gridName
@@ -98,6 +96,14 @@ namespace FubuFastPack.JqGrid
 
     public static class SmartGridViewExtensions
     {
+        // TODO -- move to interface?
+        public static HtmlTag FiltersFor<T>(this IFubuPage page) where T : ISmartGrid
+        {
+            page.Script("grid");
+            return page.Get<FilterTagWriter>().FilterTemplatesFor<T>();
+        }
+
+
         public static string NameForGrid(this Type gridType)
         {
             return gridType.Name.Replace("Grid", string.Empty);
