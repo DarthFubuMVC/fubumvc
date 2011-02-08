@@ -60,7 +60,11 @@ namespace FubuTestApplication.Grids
 
             _document.Title = "All Cases";
 
-            _document.Add("div").Hide().Add("button").Text("Remove").Id("removeFilter");
+            _document.Push("div").Hide();
+            _document.Add("button").Text("Remove").Id("removeFilter");
+            
+            _document.Pop();
+
 
             _document.Add("h1").Text("All Cases");
             _document.Add("hr");
@@ -79,6 +83,7 @@ namespace FubuTestApplication.Grids
             _document.Add("hr");
             _document.Add(x => x.FiltersFor<CaseGrid>());
             _document.Add("button").Text("Add").Id("add");
+            _document.Add("button").Text("Clear").Id("clear");
             _document.Add("hr");
             _document.Add(x => x.SmartGridFor<CaseGrid>(null));
 

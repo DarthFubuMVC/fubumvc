@@ -22,7 +22,17 @@ $.fn.asQueryBuilder = function (userOptions) {
         var queryRunner = function () {
             // What to do?
             // Execute the query against the grid
+
+            var criteria = div.getCriteria();
+
+            return false;
         }
+
+        div.getCriteria = function () {
+            // do something here
+        }
+
+        $(options.runQuerySelector).click(queryRunner);
 
         if (this.context == document) {
             // We cannot wire up the Enter key if a context was used in the selector
@@ -37,9 +47,17 @@ $.fn.asQueryBuilder = function (userOptions) {
 
         div.addFilterRow = function () {
             $('<tr class="filter"><td></td><td></td><td></td><td></td></tr>').appendTo(div.tbody).asFilterRow(templates, options);
+            return false;
         }
 
         $(options.addCriteriaSelector).click(div.addFilterRow);
+
+        $(options.clearCriteriaSelector).click(function () {
+            $(div.tbody).empty();
+
+            $(div).trigger('filters-cleared');
+            return false;
+        });
 
         /*
         FilterTable(table, options.filterChoices, options.removeCriteriaTemplateSelector);
@@ -52,17 +70,11 @@ $.fn.asQueryBuilder = function (userOptions) {
         table.runQuery = queryRunner;
 
         $(options.addCriteriaSelector).click(function () { table.addFilterRow(); return false; });
-        $(options.runQuerySelector).click(queryRunner);
+        
 
 
 
-        $(options.clearCriteriaSelector).click(function () {
-        table.clear();
-        table.addFilterRow();
-
-        options.onFormClear();
-        return false;
-        });
+        
         */
 
         // THIS MAY NEED TO CHANGE, MAYBE A SERVER SIDE MODEL?
@@ -75,17 +87,27 @@ $.fn.asQueryBuilder = function (userOptions) {
     });
 
 
+}
 
 
-    /*
-    if (window.parent.createAutoQuery) {
-    var criterion = window.parent.createAutoQuery(options.autoQueryPrefix);
-    table.loadQuery(criterion);
-    if (criterion.length > 0) {
-    queryRunner();
+
+$.fn.asQueryBuilder.defaults =
+{
+    runQuery: function () { },
+    addCriteriaSelector: "#add",
+    removeCriteriaTemplateSelector: "#removeFilter",
+    runQuerySelector: "#query",
+    clearCriteriaSelector: "#clear",
+    onFormClear: function () { }
+};
+
+function buildQueryOptions(onFormClear) {
+    return {
+        runQuerySelector: "#search-criteria-search",
+        clearCriteriaSelector: "#search-criteria-cancel",
+        runQuery: runQuery,
+        onFormClear: onFormClear
     }
-    }
-    */
 }
 
 $(document).ready(function () {
@@ -106,7 +128,7 @@ $.fn.asFilterRow = function (templates, options) {
 
     $(options.removeCriteriaTemplateSelector).clone().appendTo(row.childNodes[3]).click(function () {
         $(row).remove();
-        return true;
+        return false;
     });
 
     row.findEditorTemplate = function () {
@@ -127,7 +149,7 @@ $.fn.asFilterRow = function (templates, options) {
             row.changeOperator();
         });
 
-        return true;
+        return false;
     }
 
     row.property = function () { return $(row.propertySelector).val(); }
@@ -160,285 +182,15 @@ $.fn.asFilterRow = function (templates, options) {
     row.getCriteria = function () {
         return {
         // put properties here
-    }
-};
-
-row.changeProperty();
-row.changeOperator();
-}
-
-
-
-$.fn.asQueryBuilder.defaults =
-{
-    filterChoices: [],
-    autoQueryPrefix: "",
-    runQuery: function () { },
-    addCriteriaSelector: "#add",
-    removeCriteriaTemplateSelector: "#removeFilter",
-    runQuerySelector: "#query",
-    clearCriteriaSelector: "#clear",
-    onFormClear: function () { }
-};
-
-
-
-/*
-function getInitialFilters() {
-    var filters = dovetail.windowManager.retrieve('filters');
-    return filters == null ? initialCriteria.filters : filters;
-}
-
-function buildQueryOptions(onFormClear) {
-    return {
-        filterChoices: modelFilters,
-        removeCriteriaTemplateSelector: "#removeFilter",
-        autoQueryPrefix: prefix,
-        runQuerySelector: "#search-criteria-search",
-        clearCriteriaSelector: "#search-criteria-cancel",
-        initialFilters: getInitialFilters(),
-        runQuery: runQuery,
-        onFormClear: onFormClear
-    }
-}
-*/
-
-FilterTable = function (table, filters, removeTemplate) {
-    LayoutTable(table);
-    table.properties = filters;
-    table.removeTemplate = removeTemplate;
-    table.lastRow = null;
-
-    table.addFilterRow = function () {
-        var row = new FilterRow(this.removeTemplate);
-        row.loadProperties(this.properties);
-        this.tBody.appendChild(row);
-
-        this.lastRow = row;
-
-        return row;
-    }
-
-    table.removeFilterRow = function (row) {
-        this.tBody.removeChild(row);
-    }
-/*
-    table.loadQuery = function (criterion) {
-        if (criterion.length == 0) return;
-
-        this.clear();
-        for (var i = 0; i < criterion.length; i++) {
-            var row = this.addFilterRow();
-            row.loadCriteria(criterion[i]);
         }
-    }
+    };
 
-    table.createFilters = function () {
-        var sendFilters = new Array();
-
-        $(this.tBody.childNodes).each(function (i, row) {
-            sendFilters.push(row.createCriteria());
-        });
-
-        return sendFilters;
-    }
-*/
-
-    table.addFilterRow();
-}
-
-
-function FilterDropdown(width) {
-    var select = $('<select></select>').dropdown()[0];
-    width = width ? width : 0;
-    select.style.width = width + 'px';
-
-    return select;
-}
-
-function Property(display, value, operators) {
-    this.display = display;
-    this.value = value;
-    this.operators = operators;
-
-    return this;
-}
-
-function Operator(display, value, inputStyle) {
-    this.display = display;
-    this.value = value;
-    this.inputStyle = inputStyle;
-
-    return this;
+    row.changeProperty();
+    row.changeOperator();
 }
 
 
 
-function nothing() { }
 
-function FilterRow(removeTemplate) {
-    var row = new LayoutRow();
-    $(row).addClass('filter');
 
-    row.propertySelect = row.addChild(new FilterDropdown(150));
-    row.operatorSelect = row.addChild(new FilterDropdown(150));
-    row.valueTextbox = $('<input type="text"></input>').appendTo(row.addCell()).get(0);
-
-    var removeLink = $(removeTemplate).clone()
-    removeLink.appendTo(row.addCell());
-
-    row.removeLink = removeLink.get(0);
-
-    row.select = function (field, operator, value) {
-        this.propertySelect.value = field;
-        this.propertySelect.onchange();
-        this.operatorSelect.value = operator;
-        this.operatorSelect.onchange();
-        this.valueTextbox.value = value;
-    }
-
-    row.removeLink.onclick = function () {
-        this.parentNode.parentNode.remove();
-        return false;
-    }
-
-    row.propertySelect.onSelect = function (property) {
-        if (property) {
-            var row = this.parentNode.parentNode;
-            row.operatorSelect.setOptions(property.operators);
-        }
-    }
-
-    row.operatorSelect.onSelect = function (operator) {
-        var row = this.parentNode.parentNode;
-        var newInput = $('<input type="text"></input>');
-        $(row.valueTextbox).datepicker("destroy").replaceWith(newInput);
-
-        //This is smelly, if this needs to change we'll probably want to revisit this design later and make it more robust.
-        if (operator.inputStyle == 'DateTime') {
-            newInput.datepicker({
-                showOn: "button",
-                buttonImage: global.calendarIcon,
-                constrainInput: true
-            });
-        }
-        row.valueTextbox = newInput.get(0);
-    }
-
-    row.remove = function () {
-        this.parentNode.parentNode.removeFilterRow(this);
-    }
-
-    row.createCriteria = function () {
-        return { property: this.propertySelect.value, op: this.operatorSelect.value, value: this.valueTextbox.value };
-    }
-
-    row.loadCriteria = function (criteria) {
-        $(this.propertySelect).val(criteria.property);
-        this.propertySelect.onchange();
-
-        $(this.operatorSelect).val(criteria.op);
-        $(this.valueTextbox).val(criteria.value);
-    }
-
-    row.loadProperties = function (properties) {
-        row.propertySelect.setOptions(properties);
-        row.propertySelect.selectedIndex = -1;
-    }
-
-    return row;
-}
-
-function LayoutTable(layoutTable) {
-    if (!layoutTable) {
-        layoutTable = document.createElement("table");
-    }
-
-    $('<thead></thead>').appendTo(layoutTable)[0];
-
-    layoutTable.tBody = $('<tbody></tbody>').appendTo(layoutTable)[0];
-
-    // Properties
-    layoutTable.lastRow = null;
-    layoutTable.headerRow = $('<tr></tr>').appendTo(layoutTable.tHead)[0];
-
-    // Methods
-    layoutTable.addHeading = function (text) {
-        return $('<th></th>').appendTo(this.headerRow).attr('innerHTML', text)[0];
-    }
-
-    layoutTable.addRow = function () {
-        var row = new LayoutRow();
-        this.tBody.appendChild(row);
-        this.lastRow = row;
-
-        return row;
-    }
-
-    layoutTable.addCell = function (child) {
-        var cell = document.createElement("td");
-        this.lastRow.appendChild(cell);
-
-        if (child) {
-            if (typeof child == 'string') {
-                cell.innerHTML = child;
-            }
-            else {
-                cell.appendChild(child);
-            }
-        }
-
-        return cell;
-    }
-
-    layoutTable.addElement = function (tag) {
-        var cell = this.addCell();
-        var element = document.createElement(tag);
-        cell.appendChild(element);
-
-        return element;
-    }
-
-    layoutTable.addHeaderCell = function (text) {
-        var headerCell = document.createElement("th");
-        headerCell.innerHTML = text;
-        this.lastRow.appendChild(headerCell);
-
-        return headerCell;
-    }
-
-    layoutTable.clear = function () {
-        $(this.headerRow).empty();
-        $(this.tBody).empty();
-    }
-
-    return layoutTable;
-}
-
-function LayoutRow() {
-    var row = document.createElement("tr");
-
-    row.addCell = function (child) {
-        var cell = document.createElement("td");
-        this.appendChild(cell);
-
-        if (child) {
-            if (typeof child == 'string') {
-                cell.innerHTML = child;
-            }
-            else {
-                cell.appendChild(child);
-            }
-        }
-
-        return cell;
-    }
-
-    row.addChild = function (child) {
-        this.addCell(child);
-        return child;
-    }
-
-    return row;
-}
 
