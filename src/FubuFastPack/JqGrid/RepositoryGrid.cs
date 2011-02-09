@@ -36,9 +36,15 @@ namespace FubuFastPack.JqGrid
                 _repository = repository;
             }
 
+            // TODO -- test this
             public int TotalCount()
             {
-                return query().Count();
+                var queryable = query();
+                _wheres.Each(w =>
+                {
+                    queryable = queryable.Where(w);
+                });
+                return queryable.Count();
             }
 
             public IGridData Fetch(GridDataRequest options)
@@ -46,11 +52,8 @@ namespace FubuFastPack.JqGrid
                 var queryable = query();
                 _wheres.Each(w =>
                 {
-                    Debug.WriteLine("applying " + w);
                     queryable = queryable.Where(w);
                 });
-
-                queryable.ToList().Each(x => Debug.WriteLine(x));
 
                 queryable = sort(queryable, options);
                 queryable = applyPaging(queryable, options);

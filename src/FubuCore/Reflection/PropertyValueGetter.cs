@@ -32,7 +32,13 @@ namespace FubuCore.Reflection
 
         public Expression ChainExpression(Expression body)
         {
-            return Expression.Property(body, _propertyInfo);
+            var memberExpression = Expression.Property(body, _propertyInfo);
+            if (!_propertyInfo.PropertyType.IsValueType)
+            {
+                return memberExpression;
+            }
+
+            return Expression.Convert(memberExpression, typeof (object));
         }
 
         public override bool Equals(object obj)

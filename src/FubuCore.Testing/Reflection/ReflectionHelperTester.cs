@@ -205,6 +205,7 @@ namespace FubuCore.Testing.Reflection
         {
             public string Name { get; set; }
             public ChildTarget Child { get; set; }
+            public int Number { get; set; }
         }
 
         public class ChildTarget
@@ -231,6 +232,23 @@ namespace FubuCore.Testing.Reflection
 
             var expression = accessor.ToExpression<Target>();
             expression.Compile()(target).ShouldEqual("Chad");
+        }
+
+
+        [Test]
+        public void get_expression_from_accessor_for_a_number()
+        {
+            var target = new Target
+            {
+                Number = 3
+            };
+
+            Expression<Func<Target, object>> exp = x => x.Number;
+
+            Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Number);
+
+            var expression = accessor.ToExpression<Target>();
+            expression.Compile()(target).ShouldEqual(3);
         }
 
         [Test]
@@ -364,6 +382,7 @@ namespace FubuCore.Testing.Reflection
         {
             public DateTime BirthDay { get; set; }
             public string Name { get; set; }
+            public int Number { get; set; }
         }
 
         [Test]
@@ -387,6 +406,33 @@ namespace FubuCore.Testing.Reflection
             ReflectionHelper.GetAccessor<Target>(x => x.Child.SecondGrandChild.Name)
                 .ToExpression<Target>().Compile()(target)
                 .ShouldEqual("Natalie");
+        }
+
+        [Test]
+        public void to_expression_test_with_a_value_type()
+        {
+            var target = new Target
+            {
+                Child = new ChildTarget()
+                {
+                    GrandChild = new GrandChildTarget()
+                    {
+                        Number = 1
+                    },
+                    SecondGrandChild = new GrandChildTarget()
+                    {
+                        Number = 2
+                    }
+                }
+            };
+
+            ReflectionHelper.GetAccessor<Target>(x => x.Child.GrandChild.Number)
+                .ToExpression<Target>().Compile()(target)
+                .ShouldEqual(1);
+
+            ReflectionHelper.GetAccessor<Target>(x => x.Child.SecondGrandChild.Number)
+                .ToExpression<Target>().Compile()(target)
+                .ShouldEqual(2);
         }
 
         [Test]

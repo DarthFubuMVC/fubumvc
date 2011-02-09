@@ -57,6 +57,7 @@ namespace FubuTestApplication.Grids
         public HtmlDocument AllCases()
         {
             _document.Head.Child(_document.CSS("ui.jqgrid.css"));
+            _document.Head.Child(_document.CSS("redmond/jquery.ui.theme.css"));
 
             _document.Title = "All Cases";
 

@@ -44,7 +44,12 @@ namespace FubuCore.Reflection
         public Expression<Func<T, object>> ToExpression<T>()
         {
             var parameter = Expression.Parameter(typeof(T), "x");
-            var body = Expression.Property(parameter, _property);
+            Expression body = Expression.Property(parameter, _property);
+            if (_property.PropertyType.IsValueType)
+            {
+                body = Expression.Convert(body, typeof (Object));
+            }
+
 
             var delegateType = typeof(Func<,>).MakeGenericType(typeof(T), typeof(object));
             return (Expression<Func<T, object>>) Expression.Lambda(delegateType, body, parameter);

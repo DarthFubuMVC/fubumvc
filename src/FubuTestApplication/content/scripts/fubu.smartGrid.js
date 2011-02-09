@@ -100,8 +100,7 @@ var SmartGrid = function (div, userOptions) {
     div.grid = $('table', div);
 
     div.runQuery = function(criterion){
-    alert('trying to run query');
-    alert(div.grid.setPostData);
+        div.grid.setGridParam({page: 1});
         div.grid.setPostDataItem("criterion", criterion);
         div.grid.trigger("reloadGrid");
     }

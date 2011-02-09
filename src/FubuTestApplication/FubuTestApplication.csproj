@@ -35,7 +35,6 @@
     <Reference Include="FluentNHibernate, Version=1.1.0.694, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-
     <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
     <Reference Include="NHibernate.ByteCode.Castle">
       <HintPath>..\..\lib\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
@@ -44,7 +43,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
-
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -92,6 +90,36 @@
     <Content Include="content\images\icon-add.png" />
     <Content Include="content\scripts\fubu.query.js" />
     <Content Include="content\styles\ellipsis-xbl.xml" />
+    <Content Include="content\styles\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="content\styles\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="content\styles\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="content\styles\redmond\jquery-ui-1.8.9.custom.css" />
+    <Content Include="content\styles\redmond\jquery.ui.accordion.css" />
+    <Content Include="content\styles\redmond\jquery.ui.all.css" />
+    <Content Include="content\styles\redmond\jquery.ui.autocomplete.css" />
+    <Content Include="content\styles\redmond\jquery.ui.base.css" />
+    <Content Include="content\styles\redmond\jquery.ui.button.css" />
+    <Content Include="content\styles\redmond\jquery.ui.core.css" />
+    <Content Include="content\styles\redmond\jquery.ui.datepicker.css" />
+    <Content Include="content\styles\redmond\jquery.ui.dialog.css" />
+    <Content Include="content\styles\redmond\jquery.ui.progressbar.css" />
+    <Content Include="content\styles\redmond\jquery.ui.resizable.css" />
+    <Content Include="content\styles\redmond\jquery.ui.selectable.css" />
+    <Content Include="content\styles\redmond\jquery.ui.slider.css" />
+    <Content Include="content\styles\redmond\jquery.ui.tabs.css" />
+    <Content Include="content\styles\redmond\jquery.ui.theme.css" />
     <Content Include="content\styles\ui.jqgrid.css" />
     <Content Include="content\styles\ui.multiselect.css" />
     <Content Include="content\scripts\fubu.smartGrid.js" />
