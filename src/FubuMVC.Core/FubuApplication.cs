@@ -20,6 +20,7 @@ namespace FubuMVC.Core
         private Func<IContainerFacility> _facilitySource;
         private BehaviorGraph _graph;
         private FubuMvcPackageFacility _fubuFacility;
+		private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
 		private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
 
         private FubuApplication(Func<FubuRegistry> registry)
@@ -41,14 +42,24 @@ namespace FubuMVC.Core
         {
             return registerContainerFacilitySource(facilitySource);
         }
+
+        // TODO -- replace w/ Lazy<T> when we ditch 3.5 support
+        private IContainerFacility facility
+        {
+            get
+            {
+                if (_facility == null)
+                {
+                    _facility = _facilitySource();
+                }
+
+                return _facility;
+            }
+        }
 		
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
-            _facilitySource = () =>
-            {
-                _facility = facilitySource();
-                return _facility;
-            };
+            _facilitySource = facilitySource;
             return this;
         }
 
@@ -92,10 +103,13 @@ namespace FubuMVC.Core
         {
 			// Building up the facility first forces the creation of the container
 			// and executes any additional bootstrapping done in the respective lambdas
-			var facility = _facilitySource();
+            facility.SpinUp();
+            
 
 			registry()
 				.Services(_fubuFacility.RegisterServices);
+
+        	_registryModifications.Each(m => m(registry()));
 
             FindAllExtensions().Each(x => x.Configure(registry()));
 
@@ -113,8 +127,8 @@ namespace FubuMVC.Core
             var routes = new List<RouteBase>();           
             
             // Build route objects from route definitions on graph + add packaging routes
-            var factory = _facility.BuildFactory();
-            _facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
+            var factory = facility.BuildFactory();
+            facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
             _fubuFacility.AddPackagingContentRoutes(routes);
 
             return routes;
@@ -125,9 +139,10 @@ namespace FubuMVC.Core
             _packagingDirectives.Add(configure);
             return this;
         }
+
         public FubuApplication ModifyRegistry(Action<FubuRegistry> modifications)
         {
-            modifications(registry());
+        	_registryModifications.Add(modifications);
             return this;
         }
 

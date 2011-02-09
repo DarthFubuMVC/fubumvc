@@ -96,7 +96,6 @@
     <Compile Include="NHibernate\ConfigurationBehavior.cs" />
     <Compile Include="NHibernate\ConfigurationExtensions.cs" />
     <Compile Include="NHibernate\ConfigurationSource.cs" />
-    <Compile Include="NHibernate\DtoProjection.cs" />
     <Compile Include="NHibernate\FileCacheConfigurationSource.cs" />
     <Compile Include="NHibernate\IConfigurationModifier.cs" />
     <Compile Include="NHibernate\IConfigurationSource.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="NHibernate\NHibernateRegistry.cs" />
     <Compile Include="NHibernate\Projection.cs" />
     <Compile Include="NHibernate\ProjectionExtensions.cs" />
-    <Compile Include="NHibernate\ProjectionRequestData.cs" />
     <Compile Include="NHibernate\ProjectionColumn.cs" />
     <Compile Include="NHibernate\SortRule.cs" />
     <Compile Include="NHibernate\SqlRunner.cs" />

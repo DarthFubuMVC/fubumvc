@@ -155,6 +155,9 @@
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Registration\Routes\RouteParameters.cs" />
+    <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
+    <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Json\ProjectionService.cs" />
     <Compile Include="Json\IProjection.cs" />
@@ -434,10 +437,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\IFubuView.cs" />
+    <Compile Include="View\IViewActivator.cs" />
     <Compile Include="View\IViewsForActionFilter.cs" />
     <Compile Include="View\IViewEngine.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
+    <Compile Include="View\NulloViewActivator.cs" />
     <Compile Include="View\PageHarness.cs" />
     <Compile Include="View\RenderFubuViewBehavior.cs" />
     <Compile Include="View\ActionInSameFolderAsViewReturnsViewModelType.cs" />

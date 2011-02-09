@@ -33,7 +33,7 @@ namespace FubuCore.Reflection
         public Accessor GetChildAccessor<T>(Expression<Func<T, object>> expression)
         {
             PropertyInfo property = ReflectionHelper.GetProperty(expression);
-            return new PropertyChain(new[] {_property, property});
+            return new PropertyChain(new[] {new PropertyValueGetter(_property), new PropertyValueGetter(property)});
         }
 
         public string[] PropertyNames

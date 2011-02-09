@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Runtime
         {
             dictionary = new Dictionary<string, object>();
             aggregate = new AggregateDictionary();
-            aggregate.AddLocator(RequestDataSource.Route, key => dictionary.ContainsKey(key) ? dictionary[key] : null);
+            aggregate.AddDictionary(dictionary);
 
 
             request = new RequestData(aggregate);

@@ -38,10 +38,12 @@ namespace FubuMVC.Core.Packaging
 
         public static void LoadPackages(Action<IPackageFacility> configuration)
         {
+			_packages.Clear();
+
             var facility = new PackageFacility();
             Diagnostics = new PackagingDiagnostics();
             var assemblyLoader = new AssemblyLoader(Diagnostics);
-            var graph = new PackagingRuntimeGraph(Diagnostics, assemblyLoader);
+            var graph = new PackagingRuntimeGraph(Diagnostics, assemblyLoader, _packages);
 
             var codeLocation = findCallToLoadPackages();
             graph.PushProvenance(codeLocation);
@@ -49,15 +51,11 @@ namespace FubuMVC.Core.Packaging
             facility.As<IPackagingRuntimeGraphConfigurer>().Configure(graph);
 
             graph.PopProvenance();
-
-            var packages = graph.DiscoverAndLoadPackages(() =>
-            {
-                _assemblies.Clear();
-                _assemblies.AddRange(assemblyLoader.Assemblies);
-            });
-
-            _packages.Clear();
-            _packages.AddRange(packages);
+        	graph.DiscoverAndLoadPackages(() =>
+        	                              	{
+        	                              		_assemblies.Clear();
+        	                              		_assemblies.AddRange(assemblyLoader.Assemblies);
+        	                              	});
         }
 
         public static PackagingDiagnostics Diagnostics { get; private set; }

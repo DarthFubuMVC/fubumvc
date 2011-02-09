@@ -104,12 +104,15 @@ namespace FubuCore.Binding
 
         public AggregateDictionary(RequestContext context)
         {
-            AddLocator(RequestDataSource.Route, key =>
+            Func<string, object> locator = key =>
             {
                 object found;
                 context.RouteData.Values.TryGetValue(key, out found);
                 return found;
-            });
+            };
+
+
+            AddLocator(RequestDataSource.Route, locator, () => context.RouteData.Values.Keys);
 
             HttpContextBase @base = context.HttpContext;
 
@@ -139,14 +142,31 @@ namespace FubuCore.Binding
             return dict;
         }
 
+
+        private static IEnumerable<string> keysForRequest(HttpRequestBase request)
+        {
+            foreach (var key in request.QueryString.AllKeys)
+            {
+                yield return key;
+            }
+
+            foreach (var key in request.Form.AllKeys)
+            {
+                yield return key;
+            }
+        }
+
         private void configureForRequest(HttpContextBase @base)
         {
             HttpRequestBase request = @base.Request;
 
-            AddLocator(RequestDataSource.Request, key => request[key]);
-            AddLocator(RequestDataSource.File, key => request.Files[key]);
-            AddLocator(RequestDataSource.Header, key => request.Headers[key]);
-            AddLocator(RequestDataSource.RequestProperty, key => GetRequestProperty(request, key));
+            AddLocator(RequestDataSource.Request, key => request[key], () => keysForRequest(request));
+
+            AddLocator(RequestDataSource.File,
+                       key => request.Files[key],
+                       () => request.Files.AllKeys);
+            AddLocator(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys);
+            AddLocator(RequestDataSource.RequestProperty, key => GetRequestProperty(request, key), () => _requestProperties.GetAllKeys());
         }
 
         private static object GetRequestProperty(HttpRequestBase request, string key)
@@ -154,17 +174,23 @@ namespace FubuCore.Binding
             return _requestProperties.Has(key) ? _requestProperties[key](request) : null;
         }
 
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            return _locators.Any(x => x.StartsWith(key));
+        }
+
         public void Value(string key, Action<RequestDataSource, object> callback)
         {
             _locators.Any(x => x.Locate(key, callback));
         }
 
-        public AggregateDictionary AddLocator(RequestDataSource source, Func<string, object> locator)
+        public AggregateDictionary AddLocator(RequestDataSource source, Func<string, object> locator, Func<IEnumerable<string>> allKeys)
         {
             _locators.Add(new Locator
                           {
                               Getter = locator,
-                              Source = source
+                              Source = source,
+                              AllKeys = allKeys
                           });
 
             return this;
@@ -172,7 +198,7 @@ namespace FubuCore.Binding
 
         public AggregateDictionary AddDictionary(IDictionary<string, object> dictionary)
         {
-            AddLocator(RequestDataSource.Other, key => dictionary.ContainsKey(key) ? dictionary[key] : null);
+            AddLocator(RequestDataSource.Other, key => dictionary.ContainsKey(key) ? dictionary[key] : null, () => dictionary.Keys);
             return this;
         }
 
@@ -180,8 +206,11 @@ namespace FubuCore.Binding
 
         public class Locator
         {
+            public Func<IEnumerable<string>> AllKeys { get; set; }
             public RequestDataSource Source { get; set; }
             public Func<string, object> Getter { get; set; }
+
+
 
             public bool Locate(string key, Action<RequestDataSource, object> callback)
             {
@@ -193,6 +222,11 @@ namespace FubuCore.Binding
                 }
 
                 return false;
+            }
+            
+            public bool StartsWith(string key)
+            {
+                return AllKeys().Any(x => x.StartsWith(key));
             }
         }
 

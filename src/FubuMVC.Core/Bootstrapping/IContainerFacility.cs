@@ -15,4 +15,15 @@ namespace FubuMVC.Core.Bootstrapping
         IEnumerable<IInstaller> GetAllInstallers();
         T Get<T>() where T : class;
     }
+
+    public static class ContainerFacilityExtensions
+    {
+        public static void SpinUp(this IContainerFacility facility)
+        {
+    
+        }
+    }
+
+    
+
 }

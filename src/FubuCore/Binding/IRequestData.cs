@@ -6,6 +6,7 @@ namespace FubuCore.Binding
     {
         object Value(string key);
         bool Value(string key, Action<object> callback);
+        bool HasAnyValuePrefixedWith(string key);
     }
 
     public class PrefixedRequestData : IRequestData
@@ -27,6 +28,11 @@ namespace FubuCore.Binding
         public bool Value(string key, Action<object> callback)
         {
             return _inner.Value(_prefix + key, callback);
+        }
+
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            return _inner.HasAnyValuePrefixedWith(_prefix + key);
         }
     }
 }

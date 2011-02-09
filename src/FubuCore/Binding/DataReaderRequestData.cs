@@ -49,6 +49,11 @@ namespace FubuCore.Binding
             return false;
         }
 
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            throw new NotSupportedException();
+        }
+
         #endregion
 
         public void SetAlias(string name, string alias)

@@ -35,10 +35,14 @@ namespace IntegrationTesting
             _runner.RunFubu("init-pak src/TestPackage1 pak1");
             _runner.RunFubu("init-pak src/TestPackage2 pak2");
             _runner.RunFubu("init-pak src/TestPackage3 pak3");
+			_runner.RunFubu("init-pak src/TestPackage4 pak4");
+			_runner.RunFubu("init-pak src/Spark.Web.FubuMVC spark");
 
             _runner.RunFubu("create-pak pak1 pak1.zip -f");
             _runner.RunFubu("create-pak pak2 pak2.zip -f");
             _runner.RunFubu("create-pak pak3 pak3.zip -f");
+			_runner.RunFubu("create-pak pak4 pak4.zip -f");
+			_runner.RunFubu("create-pak spark spark.zip -f");
 
             _application = new ApplicationDriver();
         }
@@ -51,6 +55,8 @@ namespace IntegrationTesting
             fileSystem.DeleteFile("pak1.zip");
             fileSystem.DeleteFile("pak2.zip");
             fileSystem.DeleteFile("pak3.zip");
+			fileSystem.DeleteFile("pak4.zip");
+			fileSystem.DeleteFile("spark.zip");
         }
 
         public void Setup()

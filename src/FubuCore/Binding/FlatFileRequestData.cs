@@ -41,6 +41,11 @@ namespace FubuCore.Binding
             return found;
         }
 
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            throw new NotSupportedException();
+        }
+
         public void Alias(string header, string alias)
         {
             _indices.WithValue(header, i => _indices[alias] = i);

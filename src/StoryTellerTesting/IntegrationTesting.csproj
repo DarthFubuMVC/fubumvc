@@ -77,6 +77,7 @@
     <Compile Include="Fixtures\FubuFastPack\GridsFixture.cs" />
     <Compile Include="Fixtures\FubuFastPack\QueryServiceFixture.cs" />
     <Compile Include="Fixtures\FubuFastPack\SmartGridFixture.cs" />
+    <Compile Include="Fixtures\Packages\Package4Fixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />
     <Compile Include="Fixtures\HelloWorldFixture.cs" />
@@ -129,6 +130,10 @@
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
       <Name>HtmlTags</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fubu\Fubu.csproj">
+      <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
+      <Name>Fubu</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>

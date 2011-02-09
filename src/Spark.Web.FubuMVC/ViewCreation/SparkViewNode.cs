@@ -17,7 +17,15 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
         public override string Description
         {
-            get { return string.Format("Spark View {0}", _viewToken.Name); }
+            get
+            {
+            	if(_viewToken.MatchedDescriptor == null)
+            	{
+					return string.Format("Spark View {0}", _viewToken.Name);
+            	}
+
+				return string.Format("Spark View {0} as {1}", _viewToken.Name, _viewToken.MatchedDescriptor.Language);
+            }
         }
 
         protected override void configureObject(ObjectDef def)

@@ -49,6 +49,18 @@ namespace FubuMVC.Tests.Configuration
 
             callback.AssertWasNotCalled(x => x.Invoke("Max"));
         }
+
+        [Test]
+        public void has_any_prefixed_positive()
+        {
+            data.HasAnyValuePrefixedWith("FakeSettings.").ShouldBeTrue();
+        }
+
+        [Test]
+        public void has_any_prefixed_negative()
+        {
+            data.HasAnyValuePrefixedWith("NonExistentKey").ShouldBeFalse();
+        }
     }
 
     [TestFixture]

@@ -77,7 +77,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelloSparkJavaScriptViewPolicy.asax.cs" />
+    <Compile Include="HelloSparkPolicy.asax.cs" />
     <Compile Include="HelloSparkRegistry.cs" />
+    <Compile Include="HelloSparkUrlPolicy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -107,7 +110,7 @@
     <None Include="Features\FifthElement\FubuJourney.spark" />
     <None Include="Features\FifthElement\_SparkJourney.spark" />
     <None Include="Features\FifthElement\_SparkProceedToEventHorizon.spark" />
-    <None Include="Views\Air\_Breathe.spark" />
+    <None Include="Views\Air\Breathe.spark" />
     <None Include="Views\Air\TakeABreath.spark" />
     <None Include="Views\Earth\Rock.spark" />
     <None Include="Views\Location\WhereAreWe.spark" />

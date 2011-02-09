@@ -85,5 +85,27 @@ namespace FubuMVC.Tests.Packaging
 
             assemblyLoader.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
         }
+
+		[Test]
+		public void load_packages_by_assembly()
+		{
+			var includes = new ApplicationManifest();
+			includes.AddAssembly("TestPackage1");
+
+			new FileSystem().PersistToFile(includes, "../../".ToFullPath(), ApplicationManifest.FILE);
+
+			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
+            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
+
+			var package = reader.Load().Single();
+			assemblyLoader.LoadAssembliesFromPackage(package);
+
+			assemblyLoader
+				.Assemblies
+				.Single()
+				.GetName()
+				.Name
+				.ShouldEqual("TestPackage1");
+		}
     }
 }

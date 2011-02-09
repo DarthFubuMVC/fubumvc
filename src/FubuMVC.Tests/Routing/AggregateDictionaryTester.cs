@@ -43,9 +43,9 @@ namespace FubuMVC.Tests.Routing
             };
 
             aggregate = new AggregateDictionary();
-            aggregate.AddLocator(RequestDataSource.Route, key => dict1.ContainsKey(key) ? dict1[key] : null);
-            aggregate.AddLocator(RequestDataSource.Request, key => dict2.ContainsKey(key) ? dict2[key] : null);
-            aggregate.AddLocator(RequestDataSource.Header, key => dict3.ContainsKey(key) ? dict3[key] : null);
+            aggregate.AddLocator(RequestDataSource.Route, key => dict1.ContainsKey(key) ? dict1[key] : null, () => dict1.Keys);
+            aggregate.AddLocator(RequestDataSource.Request, key => dict2.ContainsKey(key) ? dict2[key] : null, () => dict2.Keys);
+            aggregate.AddLocator(RequestDataSource.Header, key => dict3.ContainsKey(key) ? dict3[key] : null, () => dict3.Keys);
         }
 
         #endregion
@@ -55,6 +55,29 @@ namespace FubuMVC.Tests.Routing
         private Dictionary<string, object> dict2;
         private Dictionary<string, object> dict3;
         private AggregateDictionary aggregate;
+
+        [Test]
+        public void has_prefixed_value_positive()
+        {
+            dict3.Add("SiteName", "a");
+            aggregate.HasAnyValuePrefixedWith("Site").ShouldBeTrue();
+
+            dict2.Add("AddressName", "b");
+            aggregate.HasAnyValuePrefixedWith("Address").ShouldBeTrue();
+
+            dict1.Add("CaseName", "c");
+            aggregate.HasAnyValuePrefixedWith("Case").ShouldBeTrue();
+        }
+
+        [Test]
+        public void has_prefixed_value_negative()
+        {
+            aggregate.HasAnyValuePrefixedWith("Site").ShouldBeFalse();
+
+            aggregate.HasAnyValuePrefixedWith("Address").ShouldBeFalse();
+
+            aggregate.HasAnyValuePrefixedWith("Case").ShouldBeFalse();
+        }
 
         private void forKey(string key)
         {

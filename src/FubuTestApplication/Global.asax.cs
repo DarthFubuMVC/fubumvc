@@ -1,3 +1,4 @@
+
 ﻿using System.Web;
 using System.Web.Routing;
 using FubuCore;
@@ -10,6 +11,8 @@ using FubuMVC.StructureMap;
 using FubuFastPack.StructureMap;
 using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
+
+
 
 namespace FubuTestApplication
 {
@@ -35,7 +38,10 @@ namespace FubuTestApplication
                     return new TransactionalStructureMapContainerFacility(container);
                 })
                 .Bootstrap(RouteTable.Routes);
+
+            PackageRegistry.AssertNoFailures();
         }
+
     }
 
     public class FubuTestApplicationRegistry : FubuRegistry

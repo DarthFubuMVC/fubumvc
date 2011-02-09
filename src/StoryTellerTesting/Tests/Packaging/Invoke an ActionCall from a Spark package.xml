@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Test name="Invoke an ActionCall from a Spark package" lifecycle="Acceptance">
+  <Package4>
+    <SetUp isStep="True">
+      <PackagingSetup>
+        <InstallPackage isStep="True" zipFile="spark.zip" />
+        <InstallPackage isStep="True" zipFile="pak4.zip" />
+      </PackagingSetup>
+    </SetUp>
+    <OpenPage isStep="True" url="http://localhost/fubu-testing/testpackage4/hellospark/helloworld" />
+    <TextOfMessageHeadingShouldBe isStep="True" message="Hello, World!" />
+  </Package4>
+</Test>

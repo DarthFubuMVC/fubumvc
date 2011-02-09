@@ -22,6 +22,11 @@ namespace FubuMVC.StructureMap
         {
             return false;
         }
+
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            return false;
+        }
     }
 
     public class StructureMapFubuRegistry : Registry
