@@ -20,7 +20,9 @@ namespace FubuCore.Binding
             _namingStrategies = new List<Func<PropertyInfo, string>>
             {
                 p => p.Name,
-                p => p.Name.Replace("_", "-")
+                p => p.Name.Replace("_", "-"),
+                p => "[{0}]".ToFormat(p.Name)  // This was necessary 
+
             };
         }
 

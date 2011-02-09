@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
 using FubuFastPack.Querying;
@@ -12,7 +13,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    public class GridRequest : JsonMessage
+    public class GridRequest
     {
         public int page { get; set; }
         public int rows { get; set; }
@@ -23,7 +24,7 @@ namespace FubuFastPack.JqGrid
 // ReSharper restore InconsistentNaming
         public string nd { get; set; }
 
-        public Criteria[] criterion { get; set; }
+        public IList<Criteria> criterion { get; set; }
         public string gridName { get; set; }
 
         // TODO -- put a UT around this.
@@ -32,7 +33,7 @@ namespace FubuFastPack.JqGrid
         {
             var sortAscending = !"desc".Equals(sord, StringComparison.OrdinalIgnoreCase);
             return new GridDataRequest(page, rows, sidx, sortAscending){
-                Criterion = criterion
+                Criterion = criterion == null ? new Criteria[0] : criterion.ToArray()
             };
         }
     }
