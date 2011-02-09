@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -13,8 +15,22 @@ namespace IntegrationTesting
         [Test]
         public void TESTNAME()
         {
-            OperatorKeys.Keys.Each(x => Debug.WriteLine(x.Key));
+            var assembly = typeof (JqGridModel).Assembly;
+            assembly.GetManifestResourceNames().Each(x =>
+            {
+                var info = assembly.GetManifestResourceInfo(x);
 
+                var stream = assembly.GetManifestResourceStream(x);
+                var reader = new StreamReader(stream);
+                Debug.WriteLine(reader.ReadToEnd());
+
+
+                Debug.WriteLine(info.FileName);
+            });
+
+
+            var i = assembly.GetManifestResourceInfo("JScript1.js");
+            Debug.WriteLine(i.FileName);
         }
     }
 }

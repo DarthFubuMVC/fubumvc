@@ -7,6 +7,11 @@ namespace FubuMVC.Core.Packaging
 {
     public class ZipFolderRequest
     {
+        public ZipFolderRequest()
+        {
+            FileSet = new FileSet();
+        }
+
         public FileSet FileSet { get; set; }
         public string RootDirectory { get; set; }
         public string ZipDirectory { get; set; }

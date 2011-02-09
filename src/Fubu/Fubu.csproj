@@ -36,6 +36,7 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Engine" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -61,6 +62,7 @@
     <Compile Include="InstallMode.cs" />
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
+    <Compile Include="Packages\AssemblyPackageCommand.cs" />
     <Compile Include="Packages\CreatePackageCommand.cs" />
     <Compile Include="Packages\PackagesCommand.cs" />
     <Compile Include="Program.cs" />

@@ -168,8 +168,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Scripts\" />
     <Folder Include="Lists\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Scripts\fubu.JScript4.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -179,4 +181,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="pak-content.zip" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>fubu.exe assembly-pak $(ProjectDir) -projfile $(ProjectPath)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
