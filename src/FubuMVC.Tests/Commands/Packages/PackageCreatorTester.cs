@@ -107,8 +107,8 @@ namespace FubuMVC.Tests.Commands.Packages
             _theZipFileService.ZipRequests.ShouldContain(new ZipFolderRequest()
             {
                 FileSet = theManifest.DataFileSet,
-                ZipDirectory = PackageInfo.DataFolder,
-                RootDirectory = Path.Combine(theInput.PackageFolder, PackageInfo.DataFolder)
+                ZipDirectory = FubuMvcPackages.DataFolder,
+                RootDirectory = Path.Combine(theInput.PackageFolder, FubuMvcPackages.DataFolder)
             });
         }
     }

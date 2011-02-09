@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Packaging
             }
 
             thePackage = new PackageInfo("something");
-            thePackage.RegisterFolder(PackageInfo.DataFolder, Path.GetFullPath("data"));
+            thePackage.RegisterFolder(FubuMvcPackages.DataFolder, Path.GetFullPath("data"));
         }
 
 

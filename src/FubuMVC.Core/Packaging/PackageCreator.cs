@@ -95,8 +95,8 @@ namespace FubuMVC.Core.Packaging
             zipFile.AddFiles(new ZipFolderRequest()
                              {
                                  FileSet = manifest.DataFileSet,
-                                 ZipDirectory = PackageInfo.DataFolder,
-                                 RootDirectory = Path.Combine(input.PackageFolder, PackageInfo.DataFolder)
+                                 ZipDirectory = FubuMvcPackages.DataFolder,
+                                 RootDirectory = Path.Combine(input.PackageFolder, FubuMvcPackages.DataFolder)
                              });
         }
 

@@ -154,6 +154,7 @@
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
+    <Compile Include="Packaging\PackageFiles.cs" />
     <Compile Include="Registration\Routes\RouteParameters.cs" />
     <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />

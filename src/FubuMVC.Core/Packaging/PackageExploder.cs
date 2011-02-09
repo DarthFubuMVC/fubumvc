@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Packaging
      * 3.) load by package name, change ZipFilePackageReader
      * 
      */
-
+    
 
     public class PackageExploder : IPackageExploder
     {
@@ -55,6 +55,10 @@ namespace FubuMVC.Core.Packaging
             return directory;
         }
 
+        
+
+        
+
         private string directoryForZipFile(string applicationDirectory, string file)
         {
             return FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
@@ -80,7 +84,6 @@ namespace FubuMVC.Core.Packaging
                 if (packageVersion == folderVersion)
                 {
                     request.LogSameVersion();
-                    //_logger.WritePackageZipFileWasSameVersionAsExploded(file);
                     return;
                 }
             }
