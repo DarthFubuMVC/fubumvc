@@ -39,7 +39,7 @@ namespace FubuMVC.Core.Packaging
 		public IPackageInfo LoadFromAssembly(string assemblyName)
 		{
 			var assembly = Assembly.Load(assemblyName);
-			return new AssemblyPackageInfo(assembly);
+			return AssemblyPackageInfo.CreateFor(assembly);
 		}
 
         public IPackageInfo LoadFromFolder(string folder)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuCore.Reflection.Expressions;
+using FubuLocalization;
 
 namespace FubuFastPack.Querying
 {
@@ -18,7 +19,7 @@ namespace FubuFastPack.Querying
             _typeFilters = typeFilters;
         }
 
-        public IEnumerable<OperatorKeys> FilterOptionsFor<TEntity>(Accessor accessor)
+        public IEnumerable<StringToken> FilterOptionsFor<TEntity>(Accessor accessor)
         {
             if (!Matches(accessor)) yield break;
 

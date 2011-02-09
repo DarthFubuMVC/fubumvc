@@ -182,7 +182,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)\fubu\bin\$(ConfigurationName)\fubu.exe assembly-pak $(ProjectDir) -projfile $(ProjectPath)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="pak-WebContent.zip" />

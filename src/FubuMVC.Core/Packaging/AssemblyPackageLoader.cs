@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.Packaging
 
         public IEnumerable<IPackageInfo> Load()
         {
-            yield return new AssemblyPackageInfo(_assembly);
+            yield return AssemblyPackageInfo.CreateFor(_assembly);
         }
 
         public override string ToString()

@@ -7,17 +7,6 @@ using System.Linq;
 
 namespace FubuMVC.Core.Packaging
 {
-    /********
-     * 1.) check for existing directory on the fly
-     * 2.) method for deleting any package directories that aren't used
-     *   a.) put in a bootstrapper
-     *   b.) register in fubupackageregistry
-     *   c.) test
-     * 3.) load by package name, change ZipFilePackageReader
-     * 
-     */
-    
-
 
     public class PackageExploder : IPackageExploder
     {
@@ -73,6 +62,13 @@ namespace FubuMVC.Core.Packaging
             };
 
             explode(request);
+
+            _fileSystem.ChildDirectoriesFor(directory).Each(child =>
+            {
+                var name = Path.GetFileName(child);
+
+                files.RegisterFolder(name, child.ToFullPath());
+            });
         }
 
         private void explodeAssembly(Assembly assembly, string directory, IPackageFiles files)
@@ -88,8 +84,9 @@ namespace FubuMVC.Core.Packaging
                 var destinationFolder = FileSystem.Combine(directory, folderName);
                 
                 _service.ExtractTo(description, stream, destinationFolder);
-                
-                files.RegisterFolder(folderName, destinationFolder);
+
+                var version = assembly.GetName().Version.ToString();
+                _fileSystem.WriteStringToFile(FileSystem.Combine(directory, FubuMvcPackages.VersionFile), version);
             });
         }
 
@@ -177,11 +174,10 @@ namespace FubuMVC.Core.Packaging
 
         public void LogPackageState(string applicationDirectory)
         {
-            //var existingDirectories = FindExplodedPackageDirectories(applicationDirectory);
-            //var packageFileNames = findPackageFileNames(applicationDirectory);
-
-            //_logger.WritePackageZipsFound(applicationDirectory, packageFileNames);
-            //_logger.WriteExistingDirectories(applicationDirectory, existingDirectories);
+            var existingDirectories = _fileSystem.ChildDirectoriesFor(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder);
+            var packageFileNames = findPackageFileNames(applicationDirectory);
+            _logger.WritePackageZipsFound(applicationDirectory, packageFileNames);
+            _logger.WriteExistingDirectories(applicationDirectory, existingDirectories);
         }
 
 

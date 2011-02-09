@@ -1,7 +1,11 @@
+using System.IO;
 using System.Reflection;
+using AssemblyPackage;
+using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using Rhino.Mocks;
+using FubuCore;
 
 namespace FubuMVC.Tests.Packaging
 {
@@ -15,7 +19,7 @@ namespace FubuMVC.Tests.Packaging
         public void SetUp()
         {
             assembly = Assembly.GetExecutingAssembly();
-            package = new AssemblyPackageInfo(assembly);
+            package = AssemblyPackageInfo.CreateFor(assembly);
         }
 
         [Test]
@@ -31,6 +35,45 @@ namespace FubuMVC.Tests.Packaging
             package.LoadAssemblies(loader);
 
             loader.AssertWasCalled(x => x.Use(assembly));
+        }
+    }
+
+    [TestFixture]
+    public class AssemblyPackageInfoIntegratedTester
+    {
+        private AssemblyPackageInfo thePackage;
+
+        [SetUp]
+        public void SetUp()
+        {
+            thePackage = AssemblyPackageInfo.CreateFor(typeof (AssemblyPackageMarker).Assembly);
+        }
+
+
+        [Test]
+        public void can_retrieve_data_from_package()
+        {
+            var text = "not the right thing";
+            thePackage.ForData("1.txt", (name, data) =>
+            {
+                name.ShouldEqual("1.txt");
+                text = new StreamReader(data).ReadToEnd();
+            });
+
+            // The text of this file in the AssemblyPackage data is just "1"
+            text.ShouldEqual("1");
+        }
+
+        [Test]
+        public void can_retrieve_web_content_folder_from_package()
+        {
+            var expected = "not this";
+            thePackage.ForFolder(FubuMvcPackages.WebContentFolder, folder =>
+            {
+                expected = folder;
+            });
+
+            expected.ShouldEqual("bin\\fubu-packages\\AssemblyPackage\\WebContent".ToFullPath());
         }
     }
 }

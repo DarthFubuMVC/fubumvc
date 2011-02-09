@@ -7,15 +7,15 @@ namespace FubuFastPack.NHibernate
 {
     public class ConfigurationSource : IConfigurationSource
     {
-        private readonly Lazy<Configuration> _configuration;
-        private readonly Lazy<PersistenceModel> _model;
+        private readonly FubuCore.Util.Lazy<Configuration> _configuration;
+        private readonly FubuCore.Util.Lazy<PersistenceModel> _model;
         private readonly IEnumerable<IConfigurationModifier> _registries;
 
         public ConfigurationSource(IEnumerable<IConfigurationModifier> registries)
         {
             _registries = registries;
 
-            _model = new Lazy<PersistenceModel>(() =>
+            _model = new FubuCore.Util.Lazy<PersistenceModel>(() =>
             {
                 var model = new PersistenceModel();
                 _registries.Each(r => r.Configure(model));
@@ -23,7 +23,7 @@ namespace FubuFastPack.NHibernate
                 return model;
             });
 
-            _configuration = new Lazy<Configuration>(() =>
+            _configuration = new FubuCore.Util.Lazy<Configuration>(() =>
             {
                 var configuration = new Configuration();
                 _registries.Each(r => r.ApplyProperties(configuration));

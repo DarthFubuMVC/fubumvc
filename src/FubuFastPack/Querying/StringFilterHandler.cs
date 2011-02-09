@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuFastPack.Querying
 {
@@ -17,7 +18,7 @@ namespace FubuFastPack.Querying
             _stringMethod = ReflectionHelper.GetMethod(expression);
         }
 
-        public IEnumerable<OperatorKeys> FilterOptionsFor<T>(Accessor accessor)
+        public IEnumerable<StringToken> FilterOptionsFor<T>(Accessor accessor)
         {
             if (accessor.PropertyType != typeof(string)) yield break;
 

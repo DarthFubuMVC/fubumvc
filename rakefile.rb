@@ -87,19 +87,19 @@ end
 
 desc "Compiles the app for .NET Framework 3.5"
 task :compile35 do
-  output = "bin\\#{COMPILE_TARGET}35\\"
-  MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.Fx35.sln', :clrversion => CLR_TOOLS_VERSION,
-   :properties=>[
-     "TargetFrameworkVersion=v3.5",
-     "OutDir=#{output}",
-     "DefineConstants=\"LEGACY;TRACE\""
-     ]
+  #output = "bin\\#{COMPILE_TARGET}35\\"
+  #MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.Fx35.sln', :clrversion => CLR_TOOLS_VERSION,
+  # :properties=>[
+  #   "TargetFrameworkVersion=v3.5",
+  #   "OutDir=#{output}",
+  #   "DefineConstants=\"LEGACY;TRACE\""
+  #   ]
 
-  Dir.mkdir props[:stage35] unless exists?(props[:stage35])
-  output_nix = output.gsub('\\', '/')
-  copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/FubuValidation/#{output_nix}", "FubuValidation.{dll,pdb}", props[:stage35]
+  #Dir.mkdir props[:stage35] unless exists?(props[:stage35])
+  #output_nix = output.gsub('\\', '/')
+  #copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
+  #copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
+  #copyOutputFiles "src/FubuValidation/#{output_nix}", "FubuValidation.{dll,pdb}", props[:stage35]
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuFastPack.Querying
 {
@@ -16,7 +17,7 @@ namespace FubuFastPack.Querying
             _handlers = handlers;
         }
 
-        public IEnumerable<OperatorKeys> FilterOptionsFor<TEntity>(Accessor accessor)
+        public IEnumerable<StringToken> FilterOptionsFor<TEntity>(Accessor accessor)
         {
             return allHandlers().SelectMany(x => x.FilterOptionsFor<TEntity>(accessor));
         }

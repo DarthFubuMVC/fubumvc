@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -16,7 +17,7 @@ namespace FubuMVC.Core.Packaging
 		public IEnumerable<IPackageInfo> Load()
 		{
 			var assemblies = _assemblyFinder.FindAssemblies(FubuMvcPackageFacility.GetApplicationPath());
-			return assemblies.Select(assembly => new AssemblyPackageInfo(Assembly.Load(assembly)));
+            return assemblies.Select(assembly => AssemblyPackageInfo.CreateFor(Assembly.Load(assembly)).As<IPackageInfo>());
 		}
 	}
 }

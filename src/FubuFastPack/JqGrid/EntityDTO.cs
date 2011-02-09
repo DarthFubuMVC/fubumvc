@@ -5,7 +5,7 @@ namespace FubuFastPack.JqGrid
 {
     public class EntityDTO
     {
-        private readonly List<string> _cells = new List<string>();
+        private readonly List<object> _cells = new List<object>();
         private readonly Cache<string, string> _properties = new Cache<string, string>();
 
         public string this[string key]
@@ -29,8 +29,9 @@ namespace FubuFastPack.JqGrid
         {
             get
             {
-                var list = new List<object>();
-                list.Add(_properties.ToDictionary());
+                var list = new List<object>{
+                    _properties.ToDictionary()
+                };
                 list.AddRange(_cells);
 
                 return list.ToArray();

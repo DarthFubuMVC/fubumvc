@@ -13,7 +13,7 @@ namespace FubuFastPack.Testing.jqGrid
         public void should_return_the_display_accessor()
         {
             var column = LinkColumn<Case>.For(x => x.Condition);
-            column.SelectAccessors().Single().Name.ShouldEqual("Condition");
+            column.SelectAccessors().Select(x => x.Name).ShouldHaveTheSameElementsAs("Id", "Condition");
         }
     }
 }

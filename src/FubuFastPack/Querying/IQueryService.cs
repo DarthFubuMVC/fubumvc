@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuFastPack.JqGrid;
+using FubuLocalization;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace FubuFastPack.Querying
 {
     public interface IQueryService
     {
-        IEnumerable<OperatorKeys> FilterOptionsFor<TEntity>(Accessor accessor);
+        IEnumerable<StringToken> FilterOptionsFor<TEntity>(Accessor accessor);
         Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request);
     }
 

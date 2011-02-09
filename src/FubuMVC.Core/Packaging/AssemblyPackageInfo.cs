@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -9,9 +10,18 @@ namespace FubuMVC.Core.Packaging
         private readonly Assembly _assembly;
         private readonly PackageFiles _files = new PackageFiles();
 
-        public AssemblyPackageInfo(Assembly assembly)
+        private AssemblyPackageInfo(Assembly assembly)
         {
             _assembly = assembly;
+        }
+
+        public static AssemblyPackageInfo CreateFor(Assembly assembly)
+        {
+            var package = new AssemblyPackageInfo(assembly);
+            var exploder = FubuMvcPackageFacility.GetPackageExploder(new FileSystem());
+            exploder.ExplodeAssembly(FubuMvcPackageFacility.GetApplicationPath(), assembly, package.Files);
+
+            return package;
         }
 
         public PackageFiles Files

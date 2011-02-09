@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
+using FubuLocalization;
 using Microsoft.Practices.ServiceLocation;
 using System.Linq;
+using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
@@ -24,7 +26,7 @@ namespace FubuFastPack.JqGrid
         {
             // Force the enumerable to execute so we don't keep building new FilteredProperty objects
             var properties = _definition.Columns.SelectMany(x => x.FilteredProperties()).ToList();
-            properties.Each(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
+            properties.Each<FilteredProperty>(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
             return properties;
         }
 

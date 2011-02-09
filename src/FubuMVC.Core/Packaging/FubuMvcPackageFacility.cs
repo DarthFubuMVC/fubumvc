@@ -47,8 +47,13 @@ namespace FubuMVC.Core.Packaging
         public static ZipFilePackageReader BuildZipFilePackageReader(string applicationPath, FileSystem fileSystem)
         {
             var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, ZipFilePackageReader.GetContentFolderForPackage);
-            var packageExploder = new PackageExploder(new ZipFileService(), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
+            PackageExploder packageExploder = GetPackageExploder(fileSystem);
             return new ZipFilePackageReader(zipFileManifestReader, packageExploder);
+        }
+
+        public static PackageExploder GetPackageExploder(FileSystem fileSystem)
+        {
+            return new PackageExploder(new ZipFileService(), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
         }
 
         public static string GetApplicationPath()
