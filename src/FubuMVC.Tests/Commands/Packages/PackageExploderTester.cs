@@ -215,7 +215,7 @@ namespace FubuMVC.Tests.Commands.Packages
         protected void theZipVersionIs(string packageName, Guid version)
         {
             var file = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder, packageName + ".zip");
-            MockFor<IZipFileService>().Stub(x => x.GetVersion(file)).Return(version);
+            MockFor<IZipFileService>().Stub(x => x.GetVersion(file)).Return(version.ToString());
         }
 
         protected void thePackagesAlreadyExplodedAre(params string[] packageNames)
@@ -223,6 +223,11 @@ namespace FubuMVC.Tests.Commands.Packages
             var directories = packageNames.Select(x =>
             {
                 return FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder, x);
+            });
+
+            directories.Each(dir =>
+            {
+                MockFor<IFileSystem>().Stub(x => x.DirectoryExists(dir)).Return(true);
             });
 
             MockFor<IFileSystem>().Stub(x => x.ChildDirectoriesFor(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder))

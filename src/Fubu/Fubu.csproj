@@ -63,8 +63,12 @@
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
     <Compile Include="Packages\AssemblyPackageCommand.cs" />
+    <Compile Include="Packages\AssemblyPackageInput.cs" />
     <Compile Include="Packages\CreatePackageCommand.cs" />
+    <Compile Include="Packages\InstallPackageCommand.cs" />
+    <Compile Include="Packages\InstallPackageInput.cs" />
     <Compile Include="Packages\PackagesCommand.cs" />
+    <Compile Include="Packages\PackagesInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />

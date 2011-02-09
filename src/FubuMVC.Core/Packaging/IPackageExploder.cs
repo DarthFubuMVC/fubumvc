@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Packaging
         void ExplodeAll(string applicationDirectory);
         void Explode(string applicationDirectory, string zipFile);
         void CleanAll(string applicationDirectory);
-        Guid ReadVersion(string directoryName);
+        string ReadVersion(string directoryName);
         void LogPackageState(string applicationDirectory);
         IEnumerable<string> FindExplodedPackageDirectories(string applicationDirectory);
     }

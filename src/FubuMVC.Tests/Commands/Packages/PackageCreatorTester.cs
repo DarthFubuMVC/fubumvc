@@ -192,7 +192,7 @@ namespace FubuMVC.Tests.Commands.Packages
             throw new NotImplementedException();
         }
 
-        public Guid GetVersion(string fileName)
+        public string GetVersion(string fileName)
         {
             throw new NotImplementedException();
         }

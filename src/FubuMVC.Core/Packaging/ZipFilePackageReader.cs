@@ -17,6 +17,7 @@ namespace FubuMVC.Core.Packaging
 
         public IEnumerable<IPackageInfo> Load()
         {
+            // This is going to break
             var applicationDirectory = FubuMvcPackageFacility.GetApplicationPath();
             _exploder.ExplodeAll(applicationDirectory);
 

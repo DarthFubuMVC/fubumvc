@@ -6,6 +6,6 @@ namespace FubuMVC.Core.Packaging
     {
         void CreateZipFile(string fileName, Action<IZipFile> configure);
         void ExtractTo(string fileName, string folder);
-        Guid GetVersion(string fileName);
+        string GetVersion(string fileName);
     }
 }

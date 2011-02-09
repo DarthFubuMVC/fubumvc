@@ -33,22 +33,20 @@ namespace FubuMVC.Core.Packaging
             }
         }
 
-        public Guid GetVersion(string fileName)
+        public string GetVersion(string fileName)
         {
             using (var zipFile = new ZipFile(fileName))
             {
 
                 var entry = zipFile.Entries.SingleOrDefault(x => x.FileName == FubuMvcPackages.VersionFile);
-                if (entry == null) return Guid.Empty;
+                if (entry == null) return Guid.Empty.ToString();
 
                 var stream = new MemoryStream();
                 entry.Extract(stream);
 
                 stream.Position = 0;
                 var reader = new StreamReader(stream);
-                string raw = reader.ReadToEnd();
-
-                return new Guid(raw);
+                return reader.ReadToEnd();
             }
         }
     }

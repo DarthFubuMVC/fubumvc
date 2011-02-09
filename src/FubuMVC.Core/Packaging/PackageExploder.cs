@@ -6,6 +6,17 @@ using System.Linq;
 
 namespace FubuMVC.Core.Packaging
 {
+    /********
+     * 1.) check for existing directory on the fly
+     * 2.) method for deleting any package directories that aren't used
+     *   a.) put in a bootstrapper
+     *   b.) register in fubupackageregistry
+     *   c.) test
+     * 3.) load by package name, change ZipFilePackageReader
+     * 
+     */
+
+
     public class PackageExploder : IPackageExploder
     {
         private readonly IZipFileService _service;
@@ -21,29 +32,53 @@ namespace FubuMVC.Core.Packaging
 
         public void ExplodeAll(string applicationDirectory)
         {
-            var existingDirectories = FindExplodedPackageDirectories(applicationDirectory).ToArray();
             var packageFileNames = findPackageFileNames(applicationDirectory);
             packageFileNames.Each(file =>
             {
-                var directoryName = FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                                       Path.GetFileNameWithoutExtension(file));
-
-                if (existingDirectories.Contains(directoryName))
-                {
-                    var zipVersion = _service.GetVersion(file);
-                    var folderVersion = ReadVersion(directoryName);
-
-                    if (zipVersion == folderVersion)
-                    {
-                        _logger.WritePackageZipFileWasSameVersionAsExploded(file);
-                        return;
-                    }
-                }
+                var request = new ExplodeRequest(){
+                    Directory = directoryForZipFile(applicationDirectory, file),
+                    ExplodeAction = () => Explode(applicationDirectory, file),
+                    GetVersion = () => _service.GetVersion(file),
+                    LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
+                };
                 
                 
-                Explode(applicationDirectory, file);
+                explode(request);
                 
             });
+        }
+
+        private string directoryForZipFile(string applicationDirectory, string file)
+        {
+            return FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
+                                      Path.GetFileNameWithoutExtension(file));
+        }
+
+        public class ExplodeRequest
+        {
+            public Func<string> GetVersion { get; set;}
+            public string Directory { get; set; }
+            public Action ExplodeAction { get; set; }
+            public Action LogSameVersion { get; set; }
+        }
+
+        private void explode(ExplodeRequest request)
+        {
+
+            if (_fileSystem.DirectoryExists(request.Directory))
+            {
+                var packageVersion = request.GetVersion();
+                var folderVersion = ReadVersion(request.Directory);
+
+                if (packageVersion == folderVersion)
+                {
+                    request.LogSameVersion();
+                    //_logger.WritePackageZipFileWasSameVersionAsExploded(file);
+                    return;
+                }
+            }
+
+            request.ExplodeAction();
         }
 
         public IEnumerable<string> FindExplodedPackageDirectories(string applicationDirectory)
@@ -81,7 +116,7 @@ namespace FubuMVC.Core.Packaging
 
         }
 
-        public Guid ReadVersion(string directoryName)
+        public string ReadVersion(string directoryName)
         {
             var parts = new string[]{
                 directoryName,
@@ -90,11 +125,10 @@ namespace FubuMVC.Core.Packaging
             // TODO -- harden?
             if (_fileSystem.FileExists(parts))
             {
-                var raw = _fileSystem.ReadStringFromFile(parts);
-                return new Guid(raw);
+                return _fileSystem.ReadStringFromFile(parts);
             }
 
-            return Guid.Empty;
+            return Guid.Empty.ToString();
                 
         }
 
