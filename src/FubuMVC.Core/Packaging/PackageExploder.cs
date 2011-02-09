@@ -30,22 +30,29 @@ namespace FubuMVC.Core.Packaging
             _fileSystem = fileSystem;
         }
 
-        public void ExplodeAll(string applicationDirectory)
+        public IEnumerable<string> ExplodeAllZipsAndReturnPackageDirectories(string applicationDirectory)
         {
             var packageFileNames = findPackageFileNames(applicationDirectory);
-            packageFileNames.Each(file =>
+
+            // Needs to be evaluated right now.
+            return packageFileNames.Select(file => explodeZipAndReturnDirectory(file, applicationDirectory)).ToList();
+        }
+
+        private string explodeZipAndReturnDirectory(string file, string applicationDirectory)
+        {
+            var directory = directoryForZipFile(applicationDirectory, file);
+            var request = new ExplodeRequest()
             {
-                var request = new ExplodeRequest(){
-                    Directory = directoryForZipFile(applicationDirectory, file),
-                    ExplodeAction = () => Explode(applicationDirectory, file),
-                    GetVersion = () => _service.GetVersion(file),
-                    LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
-                };
-                
-                
-                explode(request);
-                
-            });
+                Directory = directory,
+                ExplodeAction = () => Explode(applicationDirectory, file),
+                GetVersion = () => _service.GetVersion(file),
+                LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
+            };
+
+
+            explode(request);
+
+            return directory;
         }
 
         private string directoryForZipFile(string applicationDirectory, string file)
@@ -81,11 +88,6 @@ namespace FubuMVC.Core.Packaging
             request.ExplodeAction();
         }
 
-        public IEnumerable<string> FindExplodedPackageDirectories(string applicationDirectory)
-        {
-            return _fileSystem.ChildDirectoriesFor(applicationDirectory, "bin",
-                                                   FubuMvcPackages.FubuPackagesFolder);
-        }
 
         private IEnumerable<string> findPackageFileNames(string applicationDirectory)
         {
@@ -134,11 +136,11 @@ namespace FubuMVC.Core.Packaging
 
         public void LogPackageState(string applicationDirectory)
         {
-            var existingDirectories = FindExplodedPackageDirectories(applicationDirectory);
-            var packageFileNames = findPackageFileNames(applicationDirectory);
+            //var existingDirectories = FindExplodedPackageDirectories(applicationDirectory);
+            //var packageFileNames = findPackageFileNames(applicationDirectory);
 
-            _logger.WritePackageZipsFound(applicationDirectory, packageFileNames);
-            _logger.WriteExistingDirectories(applicationDirectory, existingDirectories);
+            //_logger.WritePackageZipsFound(applicationDirectory, packageFileNames);
+            //_logger.WriteExistingDirectories(applicationDirectory, existingDirectories);
         }
 
 

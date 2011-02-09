@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Commands.Packages
             // No packages are already exploded
             thePackagesAlreadyExplodedAre();
 
-            ClassUnderTest.ExplodeAll(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Commands.Packages
             theExistingVersionIs("pak1", folderGuid);
             theZipVersionIs("pak1", zipGuid);
 
-            ClassUnderTest.ExplodeAll(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace FubuMVC.Tests.Commands.Packages
             theExistingVersionDoesNotExist("pak1");
             theZipVersionIs("pak1", zipGuid);
 
-            ClassUnderTest.ExplodeAll(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace FubuMVC.Tests.Commands.Packages
             theExistingVersionIs("pak1", theSameGuid);
             theZipVersionIs("pak1", theSameGuid);
 
-            ClassUnderTest.ExplodeAll(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
         }
 
         [Test]
@@ -264,6 +264,7 @@ namespace FubuMVC.Tests.Commands.Packages
             var pathParts = new string[]{theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder, packageName,
                              FubuMvcPackages.VersionFile};
 
+            
             MockFor<IFileSystem>().Stub(x => x.FileExists(pathParts)).Return(false);
         }
 

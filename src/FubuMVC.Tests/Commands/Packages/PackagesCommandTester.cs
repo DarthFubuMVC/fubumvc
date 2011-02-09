@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasCalled(x => x.ExplodeAll(theInput.AppFolder));
+            MockFor<IPackageExploder>().AssertWasCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasNotCalled(x => x.ExplodeAll(theInput.AppFolder));
+            MockFor<IPackageExploder>().AssertWasNotCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder));
         }
 
         [Test]

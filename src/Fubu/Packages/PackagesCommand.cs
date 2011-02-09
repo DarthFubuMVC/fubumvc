@@ -29,8 +29,10 @@ namespace Fubu.Packages
 
             if (input.ExplodeFlag)
             {
+                // TODO -- will need to do this for assembly packages as well
+
                 Console.WriteLine("Exploding all the package zip files for the application at " + input.AppFolder);
-                exploder.ExplodeAll(input.AppFolder);
+                exploder.ExplodeAllZipsAndReturnPackageDirectories(input.AppFolder);
             }
 
             if (input.RemoveAllFlag)
