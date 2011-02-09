@@ -19,8 +19,8 @@ namespace Fubu.Packages
             var zipService = new ZipFileService();
 
 
-            createZipFile(input, "webcontent", zipService);
-            createZipFile(input, "data", zipService);
+            createZipFile(input, "WebContent", zipService);
+            createZipFile(input, "Data", zipService);
 
 
             return true;

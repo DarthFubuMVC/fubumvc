@@ -1,0 +1,1 @@
+﻿var name = 'Pak1-A.js';

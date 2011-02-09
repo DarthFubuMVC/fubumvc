@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using AssemblyPackage;
 using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core;
@@ -10,6 +12,78 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Commands.Packages
 {
+    [TestFixture]
+    public class integration_test_of_exploding_an_assembly_package
+    {
+        private PackageFiles theFiles;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var exploder = new PackageExploder(new ZipFileService(),
+                                               new PackageExploderLogger(s => Console.WriteLine(s)), new FileSystem());
+
+            theFiles = new PackageFiles();
+            exploder.ExplodeAssembly("app1", typeof(AssemblyPackageMarker).Assembly, theFiles);
+        }
+
+        [Test]
+        public void can_retrieve_data_from_package()
+        {
+            var text = "not the right thing";
+            theFiles.ForData("1.txt", (name, data) =>
+            {
+                name.ShouldEqual("1.txt");
+                text = new StreamReader(data).ReadToEnd();
+            });
+
+            // The text of this file in the AssemblyPackage data is just "1"
+            text.ShouldEqual("1");
+        }
+
+        [Test]
+        public void can_retrieve_web_content_folder_from_package()
+        {
+            var expected = "not this";
+            theFiles.ForFolder(FubuMvcPackages.WebContentFolder, folder =>
+            {
+                expected = folder;
+            });
+
+            expected.ShouldEqual("app1\\bin\\fubu-packages\\AssemblyPackage\\WebContent");
+        }
+    }
+
+
+    [TestFixture]
+    public class when_extracting_package_zip_files : PackageExploderContext
+    {
+        [Test]
+        public void is_package_zip_positive()
+        {
+            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.zip").ShouldBeTrue();
+        }
+
+        [Test]
+        public void is_package_zip_negative_1()
+        {
+            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.txt").ShouldBeFalse();
+        }
+
+        [Test]
+        public void is_package_zip_negative_2()
+        {
+            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.webcontent.zip").ShouldBeFalse();
+        }
+
+        [Test]
+        public void get_package_folder_name()
+        {
+            PackageExploder.EmbeddedPackageFolderName("a.b.c.pak-webcontent.zip").ShouldEndWith("webcontent");
+            PackageExploder.EmbeddedPackageFolderName("a.b.c.pak-data.zip").ShouldEndWith("data");
+        }
+    }
+
     [TestFixture]
     public class when_cleaning_all_the_packages : PackageExploderContext
     {

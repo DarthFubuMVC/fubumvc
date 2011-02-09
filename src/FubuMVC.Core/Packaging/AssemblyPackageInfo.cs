@@ -7,10 +7,16 @@ namespace FubuMVC.Core.Packaging
     public class AssemblyPackageInfo : IPackageInfo
     {
         private readonly Assembly _assembly;
+        private readonly PackageFiles _files = new PackageFiles();
 
         public AssemblyPackageInfo(Assembly assembly)
         {
             _assembly = assembly;
+        }
+
+        public PackageFiles Files
+        {
+            get { return _files; }
         }
 
         public string Name
@@ -25,12 +31,12 @@ namespace FubuMVC.Core.Packaging
 
         public void ForFolder(string folderName, Action<string> onFound)
         {
-            // do nothing
+            _files.ForFolder(folderName, onFound);
         }
 
         public void ForData(string searchPattern, Action<string, Stream> dataCallback)
         {
-            // do nothing
+            _files.ForData(searchPattern, dataCallback);
         }
     }
 }

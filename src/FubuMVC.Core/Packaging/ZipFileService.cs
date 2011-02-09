@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FubuCore;
 using Ionic.Zip;
 using System.Linq;
 
@@ -15,6 +16,28 @@ namespace FubuMVC.Core.Packaging
                 configure(new ZipFileWrapper(zipFile));
                 zipFile.Save();
             }
+        }
+
+        public void ExtractTo(string description, Stream stream, string folder)
+        {
+            Console.WriteLine("Writing contents of zip file {0} to {1}", description, folder);
+            if (Directory.Exists(folder))
+            {
+                Directory.Delete(folder, true);
+            }
+
+            Directory.CreateDirectory(folder);
+
+            var system = new FileSystem();
+            string fileName = Path.GetTempFileName();
+            system.WriteStreamToFile(fileName, stream);
+
+            using (var zipFile = new ZipFile(fileName))
+            {
+                zipFile.ExtractAll(folder, ExtractExistingFileAction.OverwriteSilently);
+            }
+
+            system.DeleteFile(fileName);
         }
 
         public void ExtractTo(string fileName, string folder)

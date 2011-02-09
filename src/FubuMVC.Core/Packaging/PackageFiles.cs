@@ -7,7 +7,14 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Packaging
 {
-    public class PackageFiles
+    public interface IPackageFiles
+    {
+        void RegisterFolder(string folderName, string directory);
+        void ForFolder(string folderName, Action<string> onFound);
+        void ForData(string searchPattern, Action<string, Stream> dataCallback);
+    }
+
+    public class PackageFiles : IPackageFiles
     {
         private readonly Cache<string, string> _directories = new Cache<string, string>();
 

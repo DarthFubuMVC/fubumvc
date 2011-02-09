@@ -128,6 +128,7 @@
     <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />
     <Compile Include="Packaging\StubPackage.cs" />
     <Compile Include="Packaging\ZipFilePackageReaderTester.cs" />
+    <Compile Include="Packaging\ZipFileServiceTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
@@ -353,6 +354,10 @@
     <Compile Include="Web\Security\WebAuthenticationContextTester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
+      <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
+      <Name>AssemblyPackage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>

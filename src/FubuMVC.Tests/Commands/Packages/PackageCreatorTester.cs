@@ -187,6 +187,11 @@ namespace FubuMVC.Tests.Commands.Packages
             _requests = stubFile.ZipRequests;
         }
 
+        public void ExtractTo(string description, Stream stream, string folder)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExtractTo(string fileName, string folder)
         {
             throw new NotImplementedException();

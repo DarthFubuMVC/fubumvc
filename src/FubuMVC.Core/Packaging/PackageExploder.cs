@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using FubuCore;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace FubuMVC.Core.Packaging
      * 
      */
     
+
 
     public class PackageExploder : IPackageExploder
     {
@@ -55,7 +57,41 @@ namespace FubuMVC.Core.Packaging
             return directory;
         }
 
-        
+        public void ExplodeAssembly(string applicationDirectory, Assembly assembly, IPackageFiles files)
+        {
+            var directory = FileSystem.Combine(
+                applicationDirectory, 
+                "bin", 
+                FubuMvcPackages.FubuPackagesFolder, assembly.GetName().Name);
+
+            var request = new ExplodeRequest{
+                Directory = directory,
+                GetVersion = () => assembly.GetName().Version.ToString(),
+                LogSameVersion = () => Console.WriteLine("Assembly {0} has already been 'exploded' onto disk".ToFormat(assembly.GetName().FullName)),
+
+                ExplodeAction = () => explodeAssembly(assembly, directory, files)
+            };
+
+            explode(request);
+        }
+
+        private void explodeAssembly(Assembly assembly, string directory, IPackageFiles files)
+        {
+            _fileSystem.DeleteDirectory(directory);
+            _fileSystem.CreateDirectory(directory);
+            assembly.GetManifestResourceNames().Where(IsEmbeddedPackageZipFile).Each(name =>
+            {
+                var folderName = EmbeddedPackageFolderName(name);
+                var stream = assembly.GetManifestResourceStream(name);
+
+                var description = "Resource {0} in Assembly {1}".ToFormat(name, assembly.GetName().FullName);
+                var destinationFolder = FileSystem.Combine(directory, folderName);
+                
+                _service.ExtractTo(description, stream, destinationFolder);
+                
+                files.RegisterFolder(folderName, destinationFolder);
+            });
+        }
 
         
 
@@ -89,6 +125,8 @@ namespace FubuMVC.Core.Packaging
             }
 
             request.ExplodeAction();
+
+
         }
 
 
@@ -151,5 +189,21 @@ namespace FubuMVC.Core.Packaging
         {
             return Path.GetFileNameWithoutExtension(name);
         }
+
+        public static bool IsEmbeddedPackageZipFile(string resourceName)
+        {
+            var parts = resourceName.Split('.');
+
+            if (parts.Length < 2) return false;
+            if (parts.Last().ToLower() != "zip") return false;
+            return parts[parts.Length - 2].ToLower().StartsWith("pak");
+
+        }
+
+        public static string EmbeddedPackageFolderName(string resourceName)
+        {
+            var parts = resourceName.Split('.');
+            return parts[parts.Length - 2].Replace("pak-", "");
+        } 
     }
 }
