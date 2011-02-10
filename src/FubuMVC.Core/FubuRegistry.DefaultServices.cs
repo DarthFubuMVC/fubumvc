@@ -80,6 +80,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IFileSystem, FileSystem>();
             
             graph.Services.SetServiceIfNone<IRoutePolicy, StandardRoutePolicy>();
+            graph.Services.SetServiceIfNone(new DiagnosticsIndicator());
             
             registerActivators(graph);
             registerHtmlConventions(graph);
