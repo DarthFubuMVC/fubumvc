@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Content
 
         public void RegisterRoute(ICollection<RouteBase> routes)
         {
-            var route = new Route("_" + _contentType.ToString(), new RouteValueDictionary(), this);
+            var route = new Route("_content/" + _contentType.ToString(), new RouteValueDictionary(), this);
             for (int i = 0; i < 10; i++)
             {
                 route.Url += "/{" + i + "}";

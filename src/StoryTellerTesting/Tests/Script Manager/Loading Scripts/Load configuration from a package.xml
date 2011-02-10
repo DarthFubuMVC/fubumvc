@@ -11,7 +11,7 @@
     <LoadPageWithScripts isStep="True" scriptNames="Pak1Set" />
     <TheScriptsShouldBe isStep="True">
       <Rows>
-        <row isStep="True" expected="/fubu-testing/_scripts/Pak1-A.js" />
+        <row isStep="True" expected="/fubu-testing/_content/scripts/Pak1-A.js" />
         <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
         <row isStep="True" expected="/fubu-testing/content/scripts/Script2.js" />
       </Rows>
