@@ -110,15 +110,5 @@ namespace FubuFastPack.Persistence
             return _session.Linq<T>().FirstOrDefault(where);
         }
 
-        public IQueryable<T> RestrictedQuery<T>() where T : DomainEntity
-        {
-            var restrictions = _dataRestrictions.OfType<IDataRestriction<T>>();
-            if (!restrictions.Any()) return Query<T>();
-
-            var projection = new Projection<T>(_session);
-            restrictions.Each(r => r.Apply(projection));
-            var filteredCriteria = projection.GetFilteredCriteria();
-            return _session.Linq<T>(filteredCriteria);
-        }
     }
 }

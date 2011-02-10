@@ -63,6 +63,14 @@ namespace FubuFastPack.JqGrid
                 return new EntityGridData<TEntity>(queryable);
             }
 
+            public void ApplyRestrictions(Action<IDataSourceFilter<TEntity>> configure)
+            {
+                var filter = new QueryableDataSourceFilter<TEntity>();
+                configure(filter);
+
+                _wheres.AddRange(filter.Wheres);
+            }
+
             public void ApplyCriteria(FilterRequest<TEntity> request, IQueryService queryService)
             {
                 var where = queryService.WhereFilterFor(request);

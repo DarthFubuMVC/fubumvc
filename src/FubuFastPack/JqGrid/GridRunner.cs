@@ -13,17 +13,19 @@ namespace FubuFastPack.JqGrid
         private readonly IObjectConverter _converter;
         private readonly IDisplayFormatter _formatter;
         private readonly IQueryService _queryService;
+        private readonly IEnumerable<IDataRestriction<TEntity>> _restrictions;
         private readonly TService _service;
         private readonly IUrlRegistry _urls;
 
         public GridRunner(IDisplayFormatter formatter, IUrlRegistry urls, IObjectConverter converter, TService service,
-                          IQueryService queryService)
+                          IQueryService queryService, IEnumerable<IDataRestriction<TEntity>> restrictions)
         {
             _formatter = formatter;
             _urls = urls;
             _converter = converter;
             _service = service;
             _queryService = queryService;
+            _restrictions = restrictions;
         }
 
         public TService Service
@@ -31,10 +33,10 @@ namespace FubuFastPack.JqGrid
             get { return _service; }
         }
 
-        public GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request)
-            where T : DomainEntity
+        public GridResults RunGrid(GridDefinition<TEntity> grid, IGridDataSource<TEntity> source, GridDataRequest request)
         {
             applyCriteria(request, grid, source);
+            source.ApplyRestrictions(filter => _restrictions.Each(r => r.Apply(filter)));
 
             var data = source.Fetch(request);
             var actions = grid.Columns.Select(col => col.CreateFiller(data, _formatter, _urls));
@@ -70,7 +72,7 @@ namespace FubuFastPack.JqGrid
             return list;
         }
 
-        public GridResults ApplyPaging<T>(IGridDataSource<T> source, GridDataRequest paging, List<EntityDTO> list)
+        public GridResults ApplyPaging<T>(IGridDataSource<T> source, GridDataRequest paging, List<EntityDTO> list) where T : DomainEntity
         {
             var recordCount = source.TotalCount();
             var pageCount = (int) Math.Ceiling(recordCount/(double) paging.ResultsPerPage);

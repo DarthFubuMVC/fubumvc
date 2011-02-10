@@ -60,6 +60,7 @@
     <Compile Include="jqGrid\SmartGridConventionTester.cs" />
     <Compile Include="NHibernate\DatabaseSettingsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Querying\QueryableDataSourceFilterTester.cs" />
     <Compile Include="Querying\SingleEntityFilterTester.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicyTester.cs" />
   </ItemGroup>

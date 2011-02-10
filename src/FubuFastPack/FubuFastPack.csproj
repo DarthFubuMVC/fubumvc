@@ -131,6 +131,7 @@
     <Compile Include="Querying\OperatorDTO.cs" />
     <Compile Include="Querying\OperatorKeys.cs" />
     <Compile Include="Querying\GridDataRequest.cs" />
+    <Compile Include="Querying\QueryableDataSourceFilter.cs" />
     <Compile Include="Querying\QueryService.cs" />
     <Compile Include="Querying\StringFilterHandler.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicy.cs" />

@@ -3,10 +3,10 @@ using FubuFastPack.Querying;
 
 namespace FubuFastPack.JqGrid
 {
-    public interface IGridRunner<TEntity, TService>
+    public interface IGridRunner<TEntity, out TService> where TEntity : DomainEntity
     {
         TService Service { get; }
 
-        GridResults RunGrid<T>(GridDefinition<T> grid, IGridDataSource<T> source, GridDataRequest request) where T : DomainEntity;
+        GridResults RunGrid(GridDefinition<TEntity> grid, IGridDataSource<TEntity> source, GridDataRequest request);
     }
 }

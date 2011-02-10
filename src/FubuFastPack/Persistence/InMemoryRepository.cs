@@ -159,11 +159,6 @@ namespace FubuFastPack.Persistence
             return Query<T>(t => true).ToArray();
         }
 
-        public IQueryable<T> RestrictedQuery<T>() where T : DomainEntity
-        {
-            throw new NotSupportedException();
-        }
-
         private IQueryable<T> findItems<T>()
         {
             return _items.Where(e => e is T).Cast<T>().AsQueryable();
