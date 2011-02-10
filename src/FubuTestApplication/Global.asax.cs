@@ -1,18 +1,13 @@
-
-﻿using System.Web;
+using System.Web;
 using System.Web.Routing;
 using FubuCore;
 using FubuFastPack.JqGrid;
 using FubuFastPack.NHibernate;
+using FubuFastPack.StructureMap;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
-using FubuMVC.StructureMap.Bootstrap;
-using FubuMVC.StructureMap;
-using FubuFastPack.StructureMap;
 using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
-
-
 
 namespace FubuTestApplication
 {
@@ -24,24 +19,22 @@ namespace FubuTestApplication
             FubuApplication.For<FubuTestApplicationRegistry>()
                 .ContainerFacility(() =>
                 {
-                    var databaseFile = FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), @"..\..\test.db").ToFullPath();
+                    var databaseFile =
+                        FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), @"..\..\test.db").ToFullPath();
                     var container = DatabaseDriver.BootstrapContainer(databaseFile, false);
 
-                    container.Configure(x =>
-                    {
-                        x.Activate<ISchemaWriter>("Building the schema", writer =>
-                        {
-                            writer.BuildSchema();
-                        });
-                    });
+                    container.Configure(
+                        x => { x.Activate<ISchemaWriter>("Building the schema", writer => { writer.BuildSchema(); }); });
 
                     return new TransactionalStructureMapContainerFacility(container);
                 })
+
+                // TODO -- convenience method here?
+                .Packages(x => x.Assembly(typeof (IGridColumn).Assembly))
                 .Bootstrap(RouteTable.Routes);
 
             PackageRegistry.AssertNoFailures();
         }
-
     }
 
     public class FubuTestApplicationRegistry : FubuRegistry
@@ -58,10 +51,7 @@ namespace FubuTestApplication
             Route("loadcases").Calls<CaseController>(x => x.LoadCases(null));
             Route<Person>("person/{Id}").Calls<CaseController>(x => x.Person(null));
 
-            this.ApplySmartGridConventions(x =>
-            {
-                x.ToThisAssembly();
-            });
+            this.ApplySmartGridConventions(x => { x.ToThisAssembly(); });
         }
     }
 }

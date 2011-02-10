@@ -70,6 +70,8 @@ task :clean do
 	Dir.mkdir props[:artifacts] unless exists?(props[:artifacts])
 end
 
+
+
 desc "Compiles the app"
 task :compile => [:clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
@@ -83,6 +85,11 @@ task :compile => [:clean, :version] do
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
   copyOutputFiles "src/FubuFastPack/bin/#{COMPILE_TARGET}", "FubuFastPack.{dll,pdb}", props[:stage]
+end
+
+desc "Bundles up the packaged content in FubuFastPack"
+task :bundle_fast_pack => [:compile] do
+  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe assembly-pak src/FubuFastPack -projfile FubuFastPack.csproj"
 end
 
 desc "Compiles the app for .NET Framework 3.5"

@@ -174,9 +174,6 @@
   <ItemGroup>
     <Folder Include="Lists\" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WebContent\Content\Scripts\fubu.JScript4.js" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -191,5 +188,62 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WebContent\Content\Scripts\fubu.query.js" />
+    <Content Include="WebContent\Content\Scripts\fubu.smartGrid.js" />
+    <Content Include="WebContent\Content\Scripts\grid.base.js" />
+    <Content Include="WebContent\Content\Scripts\grid.celledit.js" />
+    <Content Include="WebContent\Content\Scripts\grid.common.js" />
+    <Content Include="WebContent\Content\Scripts\grid.custom.js" />
+    <Content Include="WebContent\Content\Scripts\grid.formedit.js" />
+    <Content Include="WebContent\Content\Scripts\grid.grouping.js" />
+    <Content Include="WebContent\Content\Scripts\grid.import.js" />
+    <Content Include="WebContent\Content\Scripts\grid.inlinedit.js" />
+    <Content Include="WebContent\Content\Scripts\grid.jqueryui.js" />
+    <Content Include="WebContent\Content\Scripts\grid.loader.js" />
+    <Content Include="WebContent\Content\Scripts\grid.postext.js" />
+    <Content Include="WebContent\Content\Scripts\grid.setcolumns.js" />
+    <Content Include="WebContent\Content\Scripts\grid.subgrid.js" />
+    <Content Include="WebContent\Content\Scripts\grid.tbltogrid.js" />
+    <Content Include="WebContent\Content\Scripts\grid.treegrid.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-bg.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-bg1251.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-cat.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-cn.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-cs.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-da.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-de.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-dk.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-el.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-en.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-es.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-fa.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-fi.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-fr.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-gl.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-he.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-hu.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-is.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-it.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-ja.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-nl.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-no.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-pl.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-pt-br.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-pt.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-ro.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-ru.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-sk.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-sr.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-sv.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-tr.js" />
+    <Content Include="WebContent\Content\Scripts\i18n\grid.locale-ua.js" />
+    <Content Include="WebContent\Content\Scripts\jquery.fmatter.js" />
+    <Content Include="WebContent\Content\Scripts\jquery.metadata.js" />
+    <Content Include="WebContent\Content\styles\ui.jqgrid.css" />
+    <Content Include="WebContent\grid.script.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
 </Project>
