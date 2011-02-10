@@ -73,7 +73,9 @@
     <Compile Include="JqGrid\EntityGridData.cs" />
     <Compile Include="JqGrid\FilterColumn.cs" />
     <Compile Include="JqGrid\Grid.cs" />
+    <Compile Include="JqGrid\GridActionCall.cs" />
     <Compile Include="JqGrid\GridColumnBase.cs" />
+    <Compile Include="JqGrid\GridRequest.cs" />
     <Compile Include="JqGrid\jqGridModel.cs" />
     <Compile Include="JqGrid\SmartGridController.cs" />
     <Compile Include="JqGrid\GridDefinition.cs" />
@@ -91,6 +93,8 @@
     <Compile Include="JqGrid\ProjectionGrid.cs" />
     <Compile Include="JqGrid\ProjectionGridData.cs" />
     <Compile Include="JqGrid\RepositoryGrid.cs" />
+    <Compile Include="JqGrid\SmartGridConvention.cs" />
+    <Compile Include="JqGrid\SmartGridViewExtensions.cs" />
     <Compile Include="NHibernate\CriteriaExtensions.cs" />
     <Compile Include="NHibernate\DatabaseSettings.cs" />
     <Compile Include="NHibernate\ConfigurationBehavior.cs" />

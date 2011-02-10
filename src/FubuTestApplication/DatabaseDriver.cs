@@ -95,7 +95,8 @@ namespace FubuTestApplication
                 x.For<IObjectConverter>().Use<ObjectConverter>();
             });
 
-            FubuApplication.For<SmartGridRegistry>().StructureMap(() => _container).Bootstrap();
+
+            FubuApplication.For<FubuTestApplicationRegistry>().StructureMap(() => _container).Bootstrap();
 
             _container.GetInstance<ISchemaWriter>().BuildSchema();
 

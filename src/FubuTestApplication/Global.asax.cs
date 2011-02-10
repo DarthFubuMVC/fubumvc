@@ -50,8 +50,6 @@ namespace FubuTestApplication
         {
             IncludeDiagnostics(true);
 
-            Import<SmartGridRegistry>("data");
-
             Actions.IncludeType<ScriptsHandler>();
 
             Route("cases").Calls<CaseController>(x => x.AllCases());
@@ -59,6 +57,11 @@ namespace FubuTestApplication
             Route<CaseRequest>("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
             Route("loadcases").Calls<CaseController>(x => x.LoadCases(null));
             Route<Person>("person/{Id}").Calls<CaseController>(x => x.Person(null));
+
+            this.ApplySmartGridConventions(x =>
+            {
+                x.ToThisAssembly();
+            });
         }
     }
 }
