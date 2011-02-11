@@ -14,6 +14,8 @@ namespace FubuMVC.HelloSpark
             Applies
 				.ToThisAssembly();
 
+            HomeIs<AirController>(c => c.TakeABreath());
+
             Actions
                 .IncludeTypesNamed(x => x.EndsWith("Controller"));
 
@@ -40,8 +42,6 @@ namespace FubuMVC.HelloSpark
             Output
 				.ToJson
 				.WhenTheOutputModelIs<JsonResponse>();
-
-            HomeIs<AirController>(c => c.TakeABreath());
         }
     }
 }
