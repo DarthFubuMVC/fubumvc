@@ -18,6 +18,8 @@ namespace FubuFastPack.Extensibility
 
         public void Bind(PropertyInfo property, IBindingContext context)
         {
+            if (context.Object == null) return;
+
             Type entityType = context.Object.GetTrueType();
             
             // If there is no Extends<> for the entity type, do nothing
