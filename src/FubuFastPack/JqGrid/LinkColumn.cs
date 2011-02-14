@@ -29,24 +29,29 @@ namespace FubuFastPack.JqGrid
     {
         private readonly Accessor _idAccessor;
         private string _linkName;
-        private Type _entityType;
+        private readonly Type _inputModelType;
         private StringToken _literalText;
 
+        public LinkColumn(Accessor accessor, Type inputModelType, StringToken literalText) : base(accessor)
+        {
+            _inputModelType = inputModelType;
+            _literalText = literalText;
+        }
 
         public LinkColumn(Expression<Func<T, object>> expression) : base(expression)
         {
             _idAccessor = ReflectionHelper.GetAccessor<T>(x => x.Id);
-            _entityType = typeof (T);
+            _inputModelType = typeof (T);
             initialize();
         }
 
-        public LinkColumn(Accessor displayAccessor, Accessor idAccessor, Type entityType) : base(displayAccessor)
+        public LinkColumn(Accessor displayAccessor, Accessor idAccessor, Type inputModelType) : base(displayAccessor)
         {
             _idAccessor = idAccessor;
-            _entityType = entityType;
+            _inputModelType = inputModelType;
             initialize();
         }
-
+        
         // TODO -- UT this little monster
         public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
@@ -73,7 +78,8 @@ namespace FubuFastPack.JqGrid
             return dto =>
             {
                 // TODO -- test this
-                var display = _literalText == null ? formatter.GetDisplay(Accessor, displaySource()) : _literalText.ToString();
+                var rawValue = displaySource();
+                var display = _literalText == null ? formatter.GetDisplayForValue(Accessor, rawValue) : _literalText.ToString();
                 dto.AddCellDisplay(display);
 
                 var parameters = new RouteParameters();
@@ -81,7 +87,7 @@ namespace FubuFastPack.JqGrid
                 // This line of code below may be a problem later
                 parameters[_idAccessor.InnerProperty.Name] = idSource().ToString();
 
-                var url = urls.UrlFor(_entityType, parameters);
+                var url = urls.UrlFor(_inputModelType, parameters);
                 dto[_linkName] = url;
             };
         }

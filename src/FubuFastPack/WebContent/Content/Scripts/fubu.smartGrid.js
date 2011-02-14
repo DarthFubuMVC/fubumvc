@@ -1,24 +1,27 @@
 ﻿(function ($) {
     jQuery.extend($.fn.fmatter, {
-
-        link: function (cellValue, options, rowObject) {
+        toLink: function(cellValue, rowObject, target){
             var linkName = options.colModel.linkName;
             var url = rowObject[0][linkName];
 
             return '<a href="' + url + '" target="_top">' + cellValue + '</a>';
         },
 
+        link: function (cellValue, options, rowObject) {
+            return $.fn.fmatter
+        },
+
+        command: function(cellValue, options, rowObject) {
+            var linkName = options.colModel.linkName;
+            var url = rowObject[0][linkName];
+
+            return '<a href="' + url + '" class="invoke">' + cellValue + '</a>';
+        },
+
         timeAgo: function (cellValue, options, rowObject) {
             return $.timeago(cellValue);
         },
     });
-
-    /*
-    columnFormatters:
-    {
-    command: function (column, originalValue, subject) { return '<a href="' + originalValue + '" class="invoke">' + column.Header + '</a>'; },
-    }
-    */
 
     $.fn.smartGrid = function (userOptions) {
         return this.each(function (i, div) {

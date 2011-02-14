@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
+using FubuLocalization;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
@@ -59,6 +60,12 @@ namespace FubuFastPack.JqGrid
         public void SortDescending(Expression<Func<TEntity, object>> property)
         {
             _definition.SortBy = SortRule<TEntity>.Descending(property);
+        }
+
+        public void ShowItemActionLink<TInputModel>(StringToken key)
+        {
+            var column = new CommandColumn<TEntity, TInputModel>(key);
+            _definition.AddColumn(column);
         }
 
         protected void LimitRowsTo(int count)

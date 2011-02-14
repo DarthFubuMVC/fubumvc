@@ -68,6 +68,7 @@
     <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
     <Compile Include="Extensibility\ExtensionScanner.cs" />
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
+    <Compile Include="JqGrid\CommandColumn.cs" />
     <Compile Include="JqGrid\DataColumn.cs" />
     <Compile Include="JqGrid\EntityDTO.cs" />
     <Compile Include="JqGrid\EntityGridData.cs" />
