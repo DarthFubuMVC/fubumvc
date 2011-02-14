@@ -41,8 +41,9 @@ namespace FubuFastPack.JqGrid
             }
 
             grid.SortBy.ApplyDefaultSorting(request);
+            
             applyCriteria(request, grid, source);
-            source.ApplyRestrictions(filter => _restrictions.Each(r => r.Apply(filter)));
+            applyRestrictions(source);
 
             var data = source.Fetch(request);
             var actions = grid.Columns.Select(col => col.CreateDtoFiller(data, _formatter, _urls));
@@ -50,6 +51,17 @@ namespace FubuFastPack.JqGrid
 
             // TODO -- needs some UT's
             return ApplyPaging(source, request, list);
+        }
+
+        private void applyRestrictions(IGridDataSource<TEntity> source)
+        {
+            source.ApplyRestrictions(filter => _restrictions.Each(r => r.Apply(filter)));
+        }
+
+        public int GetCount(IGridDataSource<TEntity> source)
+        {
+            applyRestrictions(source);
+            return source.TotalCount();
         }
 
         private void applyCriteria<T>(GridDataRequest paging, GridDefinition<T> grid, IGridDataSource<T> source)

@@ -24,6 +24,12 @@ namespace FubuFastPack.JqGrid
         public SortRule<T> SortBy { get; set; }
 
         public int MaxCount { get; set; }
+        public bool AllowCreationOfNew { get; set; }
+
+        public bool CanSaveQuery
+        {
+            get; set;
+        }
 
         public IEnumerable<IGridColumn> Columns
         {

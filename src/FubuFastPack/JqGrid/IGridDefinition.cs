@@ -7,5 +7,7 @@ namespace FubuFastPack.JqGrid
     {
         IEnumerable<IGridColumn> Columns { get; }
         IEnumerable<Accessor> SelectedAccessors { get; }
+        bool AllowCreationOfNew { get; set; }
+        bool CanSaveQuery { get; }
     }
 }

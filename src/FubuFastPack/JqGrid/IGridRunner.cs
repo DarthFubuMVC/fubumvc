@@ -8,5 +8,6 @@ namespace FubuFastPack.JqGrid
         TService Service { get; }
 
         GridResults RunGrid(GridDefinition<TEntity> grid, IGridDataSource<TEntity> source, GridDataRequest request);
+        int GetCount(IGridDataSource<TEntity> source);
     }
 }

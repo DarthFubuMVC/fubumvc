@@ -23,12 +23,27 @@ namespace FubuFastPack.JqGrid
             }
         }
 
+        protected StringToken Header { get; set; }
+
+        public virtual string GetHeader()
+        {
+            return Header == null ? string.Empty : Header.ToString();
+        }
+
         public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {
             var runner = services.GetInstance<IGridRunner<TEntity, TService>>();
             var source = BuildSource(runner.Service);
 
             return runner.RunGrid(_definition, source, request);
+        }
+
+        public int Count(IServiceLocator services)
+        {
+            var runner = services.GetInstance<IGridRunner<TEntity, TService>>();
+            var source = BuildSource(runner.Service);
+
+            return runner.GetCount(source);
         }
 
         public IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService)
@@ -68,22 +83,22 @@ namespace FubuFastPack.JqGrid
             _definition.AddColumn(column);
         }
 
-        protected void LimitRowsTo(int count)
+        public void LimitRowsTo(int count)
         {
             _definition.MaxCount = count;
         }
 
-        protected FilterColumn<TEntity> FilterOn(Expression<Func<TEntity, object>> expression)
+        public FilterColumn<TEntity> FilterOn(Expression<Func<TEntity, object>> expression)
         {
             return _definition.AddColumn(new FilterColumn<TEntity>(expression));
         }
 
-        protected GridColumn<TEntity> Show(Expression<Func<TEntity, object>> expression)
+        public GridColumn<TEntity> Show(Expression<Func<TEntity, object>> expression)
         {
             return _definition.Show(expression);
         }
 
-        protected LinkColumn<TEntity> ShowViewLink(Expression<Func<TEntity, object>> expression)
+        public LinkColumn<TEntity> ShowViewLink(Expression<Func<TEntity, object>> expression)
         {
             return _definition.ShowViewLink(expression);
         }
@@ -109,6 +124,16 @@ namespace FubuFastPack.JqGrid
                     dict.Add("sortable", false);
                 }
             };
+        }
+
+        public void AllowCreateNew()
+        {
+            _definition.AllowCreationOfNew = true;
+        }
+
+        public void CanSaveQuery()
+        {
+            _definition.CanSaveQuery = true;
         }
     }
 }

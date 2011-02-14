@@ -14,5 +14,7 @@ namespace FubuFastPack.JqGrid
         IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService);
 
         IEnumerable<IDictionary<string, object>> ToColumnModel();
+        int Count(IServiceLocator services);
+        string GetHeader();
     }
 }

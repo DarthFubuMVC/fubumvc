@@ -49,6 +49,11 @@ namespace FubuFastPack.JqGrid
             return buildGrid().Invoke(_services, input.ToDataRequest());
         }
 
+        public int Count()
+        {
+            return buildGrid().Count(_services);
+        }
+
         // TODO -- get a UT against this
         public DataTable ToDataTable(GridRequest<T> input)
         {
