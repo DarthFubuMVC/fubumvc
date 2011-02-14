@@ -11,6 +11,16 @@ namespace FubuFastPack.JqGrid
     public abstract class Grid<TEntity, TService> : ISmartGrid where TEntity : DomainEntity
     {
         private readonly GridDefinition<TEntity> _definition = new GridDefinition<TEntity>();
+        private readonly IList<Action<IDictionary<string, object>>> _colModelModifications 
+            = new List<Action<IDictionary<string, object>>>();
+
+        protected Action<IDictionary<string, object>> modifyColumnModel
+        {
+            set
+            {
+                _colModelModifications.Add(value);
+            }
+        }
 
         public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {
@@ -26,6 +36,14 @@ namespace FubuFastPack.JqGrid
             var properties = _definition.Columns.SelectMany(x => x.FilteredProperties()).ToList();
             properties.Each(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
             return properties;
+        }
+
+        public IEnumerable<IDictionary<string, object>> ToColumnModel()
+        {
+            var columns = _definition.Columns.SelectMany(x => x.ToDictionary()).ToList();
+            columns.Each(c => _colModelModifications.Each(m => m(c)));
+
+            return columns;
         }
 
         public IGridDefinition Definition
@@ -70,5 +88,20 @@ namespace FubuFastPack.JqGrid
         }
 
         public abstract IGridDataSource<TEntity> BuildSource(TService service);
+
+        public void DoNotAllowUserSorting()
+        {
+            modifyColumnModel = dict =>
+            {
+                if (dict.ContainsKey("sortable"))
+                {
+                    dict["sortable"] = false;
+                }
+                else
+                {
+                    dict.Add("sortable", false);
+                }
+            };
+        }
     }
 }

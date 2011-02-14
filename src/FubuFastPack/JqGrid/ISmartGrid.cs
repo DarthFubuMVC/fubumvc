@@ -12,5 +12,7 @@ namespace FubuFastPack.JqGrid
         GridResults Invoke(IServiceLocator services, GridDataRequest request);
 
         IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService);
+
+        IEnumerable<IDictionary<string, object>> ToColumnModel();
     }
 }

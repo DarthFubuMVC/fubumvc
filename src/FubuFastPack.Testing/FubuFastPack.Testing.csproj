@@ -57,6 +57,7 @@
     <Compile Include="ContainerActivatorExtensionsTester.cs" />
     <Compile Include="jqGrid\GridColumnTester.cs" />
     <Compile Include="jqGrid\GridRequestTester.cs" />
+    <Compile Include="jqGrid\GridTester.cs" />
     <Compile Include="jqGrid\LinkColumnTester.cs" />
     <Compile Include="jqGrid\SmartGridConventionTester.cs" />
     <Compile Include="NHibernate\DatabaseSettingsTester.cs" />
