@@ -91,9 +91,11 @@
     <Compile Include="StructureMap\StructureMapEntityFinderCache.cs" />
     <Compile Include="StructureMap\NHibernateStructureMapRegistryExtensions.cs" />
     <Compile Include="NHibernate\SchemaWriter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StructureMap\TransactionalStructureMapContainerFacility.cs" />
     <Compile Include="StructureMap\TransactionProcessor.cs" />
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">

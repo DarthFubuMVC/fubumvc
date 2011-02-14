@@ -11,7 +11,7 @@ COPYRIGHT = 'Copyright 2008-2010 Chad Myers, Jeremy D. Miller, Joshua Flanagan, 
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
 
-props = { :stage => "build", :stage35 => "build35", :artifacts => "artifacts" }
+props = { :stage => File.expand_path("build"), :stage35 => File.expand_path("build35"), :artifacts => File.expand_path("artifacts") }
 
 desc "Displays a list of tasks"
 task :help do
