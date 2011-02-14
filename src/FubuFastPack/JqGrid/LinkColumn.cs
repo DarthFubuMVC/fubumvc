@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
+using FubuLocalization;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 
@@ -24,11 +25,13 @@ namespace FubuFastPack.JqGrid
     // TODO -- need to add other accessors for getting the Url?
     // TODO -- way to override the link name?
     // TODO -- move the ctor's to static factory methods
-    public class LinkColumn<T> : GridColumnBase<T>, IGridColumn where T : DomainEntity
+    public class LinkColumn<T> : GridColumnBase<T, LinkColumn<T>>, IGridColumn where T : DomainEntity
     {
         private readonly Accessor _idAccessor;
         private string _linkName;
         private Type _entityType;
+        private StringToken _literalText;
+
 
         public LinkColumn(Expression<Func<T, object>> expression) : base(expression)
         {
@@ -56,14 +59,21 @@ namespace FubuFastPack.JqGrid
             };
         }
 
-        public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
+        public LinkColumn<T> LiteralText(StringToken literal)
+        {
+            _literalText = literal;
+            return this;
+        }
+
+        public Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
         {
             var displaySource = data.GetterFor(Accessor);
             var idSource = data.GetterFor(_idAccessor);
 
             return dto =>
             {
-                var display = formatter.GetDisplay(Accessor, displaySource());
+                // TODO -- test this
+                var display = _literalText == null ? formatter.GetDisplay(Accessor, displaySource()) : _literalText.ToString();
                 dto.AddCellDisplay(display);
 
                 var parameters = new RouteParameters();

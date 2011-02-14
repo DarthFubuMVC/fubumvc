@@ -10,7 +10,7 @@ namespace FubuFastPack.JqGrid
     public interface IGridColumn
     {
         IEnumerable<IDictionary<string, object>> ToDictionary();
-        Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls);
+        Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls);
 
         IEnumerable<Accessor> SelectAccessors();
         IEnumerable<Accessor> AllAccessors();
@@ -18,5 +18,7 @@ namespace FubuFastPack.JqGrid
         IEnumerable<FilteredProperty> FilteredProperties();
 
         string GetHeader();
+
+        bool IsOuterJoin { get; set; }
     }
 }

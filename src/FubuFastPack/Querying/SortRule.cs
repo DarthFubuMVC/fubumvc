@@ -3,9 +3,8 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
-using FubuFastPack.Querying;
 
-namespace FubuFastPack.NHibernate
+namespace FubuFastPack.Querying
 {
     public class SortRule<T> where T : DomainEntity
     {
@@ -26,7 +25,7 @@ namespace FubuFastPack.NHibernate
             return new SortRule<T>() { _ascending = false, _fieldName = fieldName };
         }
 
-        public void ModifyPaging(GridDataRequest paging)
+        public void ApplyDefaultSorting(GridDataRequest paging)
         {
             if (paging.SortColumn.IsNotEmpty()) return;
 

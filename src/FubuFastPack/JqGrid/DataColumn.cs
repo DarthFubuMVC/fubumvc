@@ -28,7 +28,7 @@ namespace FubuFastPack.JqGrid
             };
         }
 
-        public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
+        public Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
         {
             var getter = data.GetterFor(_accessor);
             return dto => dto["Id"] = getter().ToString();
@@ -52,6 +52,11 @@ namespace FubuFastPack.JqGrid
         public string GetHeader()
         {
             return "Data";
+        }
+
+        public bool IsOuterJoin
+        {
+            get; set;
         }
     }
 }

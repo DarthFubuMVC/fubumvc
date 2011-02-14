@@ -38,14 +38,14 @@ namespace FubuFastPack.Testing.jqGrid
         public void registers_an_action_call_for_smart_grid_controller_data()
         {
             var call = theGraph.BehaviorFor(typeof (GridRequest<Fake1Grid>)).FirstCall();
-            call.HandlerType.ShouldEqual(typeof (SmartGridController<Fake1Grid>));
+            call.HandlerType.ShouldEqual(typeof (SmartGridHarness<Fake1Grid>));
             call.Method.Name.ShouldEqual("Data");
         }
 
         [Test]
         public void use_the_grid_name_in_the_route()
         {
-            theGraph.BehaviorFor<SmartGridController<Fake1Grid>>(x => x.Data(null))
+            theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null))
                 .RoutePattern.ShouldEqual("_griddata/fake1");
         }
 
@@ -58,7 +58,7 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void should_put_a_json_output_node_at_the_end()
         {
-            theGraph.BehaviorFor<SmartGridController<Fake1Grid>>(x => x.Data(null)).Any(x => x is RenderJsonNode)
+            theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null)).Any(x => x is RenderJsonNode)
                 .ShouldBeTrue();
         }
     }

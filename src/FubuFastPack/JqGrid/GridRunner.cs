@@ -35,11 +35,17 @@ namespace FubuFastPack.JqGrid
 
         public GridResults RunGrid(GridDefinition<TEntity> grid, IGridDataSource<TEntity> source, GridDataRequest request)
         {
+            if (request.ResultsPerPage > grid.MaxCount)
+            {
+                request.ResultsPerPage = grid.MaxCount;
+            }
+
+            grid.SortBy.ApplyDefaultSorting(request);
             applyCriteria(request, grid, source);
             source.ApplyRestrictions(filter => _restrictions.Each(r => r.Apply(filter)));
 
             var data = source.Fetch(request);
-            var actions = grid.Columns.Select(col => col.CreateFiller(data, _formatter, _urls));
+            var actions = grid.Columns.Select(col => col.CreateDtoFiller(data, _formatter, _urls));
             var list = createEntityDtos(data, actions);
 
             // TODO -- needs some UT's

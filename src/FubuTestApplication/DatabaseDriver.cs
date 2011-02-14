@@ -76,7 +76,7 @@ namespace FubuTestApplication
             
             return new Container(x =>
             {
-                x.AddRegistry(new FastPackRegistry(typeof(DatabaseDriver).Assembly));
+                x.AddRegistry(new FastPackRegistry());
 
                 x.For<DatabaseSettings>().Use(_settings);
                 x.BootstrapNHibernate<FakeDomainNHIbernateRegistry>(ConfigurationBehavior.AlwaysUseNewConfiguration);
@@ -91,7 +91,7 @@ namespace FubuTestApplication
             _container = BootstrapContainer(file, true);
             _container.Configure(x =>
             {
-                x.AddRegistry(new FastPackRegistry(typeof(DatabaseDriver).Assembly));
+                x.AddRegistry(new FastPackRegistry());
                 x.For<IObjectConverter>().Use<ObjectConverter>();
             });
 

@@ -77,7 +77,8 @@
     <Compile Include="JqGrid\GridColumnBase.cs" />
     <Compile Include="JqGrid\GridRequest.cs" />
     <Compile Include="JqGrid\jqGridModel.cs" />
-    <Compile Include="JqGrid\SmartGridController.cs" />
+    <Compile Include="Querying\PagingOptions.cs" />
+    <Compile Include="JqGrid\SmartGridHarness.cs" />
     <Compile Include="JqGrid\GridDefinition.cs" />
     <Compile Include="JqGrid\GridResults.cs" />
     <Compile Include="JqGrid\GridRunner.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="NHibernate\Projection.cs" />
     <Compile Include="NHibernate\ProjectionExtensions.cs" />
     <Compile Include="NHibernate\ProjectionColumn.cs" />
-    <Compile Include="NHibernate\SortRule.cs" />
+    <Compile Include="Querying\SortRule.cs" />
     <Compile Include="NHibernate\SqlRunner.cs" />
     <Compile Include="NHibernate\TransactionBoundary.cs" />
     <Compile Include="Persistence\EntityFinder.cs" />

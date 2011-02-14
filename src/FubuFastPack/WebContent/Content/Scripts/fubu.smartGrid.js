@@ -1,33 +1,36 @@
 ﻿(function ($) {
     jQuery.extend($.fn.fmatter, {
 
-    link: function (cellValue, options, rowObject) { 
-        var linkName = options.colModel.linkName;
-        var url = rowObject[0][linkName];
-        
-        return '<a href="' + url + '" target="_top">' + cellValue + '</a>'; 
-    },
-});
+        link: function (cellValue, options, rowObject) {
+            var linkName = options.colModel.linkName;
+            var url = rowObject[0][linkName];
 
-/*
-columnFormatters:
-{
-command: function (column, originalValue, subject) { return '<a href="' + originalValue + '" class="invoke">' + column.Header + '</a>'; },
-timeAgo: function (column, originalValue, subject) { return $.timeago(originalValue); }
-}
-*/
+            return '<a href="' + url + '" target="_top">' + cellValue + '</a>';
+        },
 
-$.fn.smartGrid = function (userOptions) {
-    return this.each(function (i, div) {
-        SmartGrid(div, userOptions);
+        timeAgo: function (cellValue, options, rowObject) {
+            return $.timeago(cellValue);
+        },
     });
-}
 
-var SmartGrid = function (div, userOptions) {
-    var model = $(div).metadata();
-    var definition = model.definition;
+    /*
+    columnFormatters:
+    {
+    command: function (column, originalValue, subject) { return '<a href="' + originalValue + '" class="invoke">' + column.Header + '</a>'; },
+    }
+    */
 
-    var gridDefaultOptions =
+    $.fn.smartGrid = function (userOptions) {
+        return this.each(function (i, div) {
+            SmartGrid(div, userOptions);
+        });
+    }
+
+    var SmartGrid = function (div, userOptions) {
+        var model = $(div).metadata();
+        var definition = model.definition;
+
+        var gridDefaultOptions =
     {
         height: "auto",
         url: definition.url,
@@ -94,30 +97,30 @@ var SmartGrid = function (div, userOptions) {
 
     };
 
-    var gridOptions = {};
-    gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
+        var gridOptions = {};
+        gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
 
-    div.grid = $('table', div);
+        div.grid = $('table', div);
 
-    div.runQuery = function(criterion){
-        div.grid.setGridParam({page: 1});
-        div.grid.setPostDataItem("criterion", criterion);
-        div.grid.trigger("reloadGrid");
+        div.runQuery = function (criterion) {
+            div.grid.setGridParam({ page: 1 });
+            div.grid.setPostDataItem("criterion", criterion);
+            div.grid.trigger("reloadGrid");
+        }
+
+        /*
+        runQuery: function(criteria){
+        $("#gridContainer_Console").setPostData(
+        { 
+        entityType : $("#EntityType").val() ,
+        filterJson : JSON.stringify({"filters" : criteria})
+        });
+        $.ourGrid.from("#gridContainer_Console").refresh({page:1});
+        }
+        */
+
+        $('table', div).jqGrid(gridOptions);
     }
-
-    /*
-                    runQuery: function(criteria){
-                            $("#gridContainer_Console").setPostData(
-                            { 
-                                entityType : $("#EntityType").val() ,
-                                filterJson : JSON.stringify({"filters" : criteria})
-                            });
-                            $.ourGrid.from("#gridContainer_Console").refresh({page:1});
-                    }
-    */
-
-    $('table', div).jqGrid(gridOptions);
-}
 
 })(jQuery);
 

@@ -7,7 +7,7 @@ using FubuMVC.Core.Urls;
 
 namespace FubuFastPack.JqGrid
 {
-    public class FilterColumn<T> : GridColumnBase<T>, IGridColumn
+    public class FilterColumn<T> : GridColumnBase<T, FilterColumn<T>>, IGridColumn
     {
         public FilterColumn(Expression<Func<T, object>> expression) : base(expression)
         {
@@ -19,7 +19,7 @@ namespace FubuFastPack.JqGrid
             yield break;
         }
 
-        public Action<EntityDTO> CreateFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
+        public Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
         {
             return dto => { };
         }

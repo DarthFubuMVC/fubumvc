@@ -90,7 +90,7 @@ namespace FubuFastPack.NHibernate
 
         public ICriteria AddSorting(ICriteria criteria, GridDataRequest page)
         {
-            SortBy.ModifyPaging(page);
+            SortBy.ApplyDefaultSorting(page);
 
             criteria = criteria.AddOrder(new Order(page.SortColumn, page.SortAscending));
             return criteria;
@@ -129,6 +129,11 @@ namespace FubuFastPack.NHibernate
             }
 
             return criteria;
+        }
+
+        public void AddRestriction(ICriterion criterion)
+        {
+            _wheres.Add(criterion);
         }
 
         public WhereExpression Where(Expression<Func<T, object>> expression)
@@ -282,6 +287,15 @@ namespace FubuFastPack.NHibernate
         void IDataSourceFilter<T>.WhereNotEqual(Expression<Func<T, object>> property, object value)
         {
             Where(property).IsNot(value);
+        }
+
+        public void OuterJoin(Accessor accessor)
+        {
+            var column = _columns.FirstOrDefault(c => c.PropertyAccessor == accessor);
+            if (column != null)
+            {
+                column.OuterJoin = true;
+            }
         }
     }
 }

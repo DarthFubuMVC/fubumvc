@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
-using FubuLocalization;
 using Microsoft.Practices.ServiceLocation;
-using System.Linq;
-using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
@@ -26,13 +24,28 @@ namespace FubuFastPack.JqGrid
         {
             // Force the enumerable to execute so we don't keep building new FilteredProperty objects
             var properties = _definition.Columns.SelectMany(x => x.FilteredProperties()).ToList();
-            properties.Each<FilteredProperty>(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
+            properties.Each(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
             return properties;
         }
 
         public IGridDefinition Definition
         {
             get { return _definition; }
+        }
+
+        public void SortAscending(Expression<Func<TEntity, object>> property)
+        {
+            _definition.SortBy = SortRule<TEntity>.Ascending(property);
+        }
+
+        public void SortDescending(Expression<Func<TEntity, object>> property)
+        {
+            _definition.SortBy = SortRule<TEntity>.Descending(property);
+        }
+
+        protected void LimitRowsTo(int count)
+        {
+            _definition.MaxCount = count;
         }
 
         protected FilterColumn<TEntity> FilterOn(Expression<Func<TEntity, object>> expression)
@@ -50,7 +63,8 @@ namespace FubuFastPack.JqGrid
             return _definition.ShowViewLink(expression);
         }
 
-        public GridDefinition<TEntity>.OtherEntityLinkExpression<TOther> ShowViewLinkForOther<TOther>(Expression<Func<TEntity, TOther>> entityProperty) where TOther : DomainEntity
+        public GridDefinition<TEntity>.OtherEntityLinkExpression<TOther> ShowViewLinkForOther<TOther>(
+            Expression<Func<TEntity, TOther>> entityProperty) where TOther : DomainEntity
         {
             return _definition.ShowViewLinkForOther(entityProperty);
         }

@@ -49,7 +49,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
             _container = DatabaseDriver.ContainerWithDatabase();
             _container.Configure(x =>
             {
-                x.AddRegistry(new FastPackRegistry(typeof(DatabaseDriver).Assembly));
+                x.AddRegistry(new FastPackRegistry());
                 x.For<IObjectConverter>().Use<ObjectConverter>();
             });
 

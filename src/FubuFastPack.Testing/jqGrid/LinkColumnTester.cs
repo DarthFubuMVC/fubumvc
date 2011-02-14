@@ -15,5 +15,7 @@ namespace FubuFastPack.Testing.jqGrid
             var column = LinkColumn<Case>.For(x => x.Condition);
             column.SelectAccessors().Select(x => x.Name).ShouldHaveTheSameElementsAs("Id", "Condition");
         }
+
+
     }
 }

@@ -11,12 +11,19 @@ namespace FubuFastPack.JqGrid
 {
     public class GridDefinition<T> : IGridDefinition where T : DomainEntity
     {
+        private const int INITIAL_MAX_PAGE_COUNT = 1000;
         private readonly List<IGridColumn> _columns = new List<IGridColumn>();
 
         public GridDefinition()
         {
             _columns.Add(new DataColumn<T>());
+            SortBy = SortRule<T>.Ascending(x => x.Id);
+            MaxCount = INITIAL_MAX_PAGE_COUNT;
         }
+
+        public SortRule<T> SortBy { get; set; }
+
+        public int MaxCount { get; set; }
 
         public IEnumerable<IGridColumn> Columns
         {

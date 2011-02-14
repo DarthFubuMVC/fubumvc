@@ -87,7 +87,7 @@ namespace FubuFastPack.JqGrid
                 return queryable.Skip(options.ResultsToSkip()).Take(options.ResultsPerPage);
             }
 
-            // TODO -- default sorting?
+            // TODO -- UT this baby
             private IQueryable<TEntity> sort(IQueryable<TEntity> queryable, GridDataRequest options)
             {
                 if (options.SortColumn.IsNotEmpty())

@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore.Reflection;
+using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -54,25 +55,36 @@ namespace FubuFastPack.JqGrid
             return "gridContainer_" + gridName;
         }
 
-        // TODO -- End to End stuff on this one
         public static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows) where T : ISmartGrid
         {
-            var endpoint = page.Get<IEndpointService>().EndpointFor<SmartGridController<T>>(x => x.Data(null));
+            return page.SmartGridFor<T>(initialRows, h => { });
+        }
+
+        public static HtmlTag SmartGridFor<TGrid, TEntity>(this IFubuPage page, int? initialRows, TEntity subject) where TGrid : ISmartGrid where TEntity : DomainEntity
+        {
+            return page.SmartGridFor<TGrid>(initialRows, h => h.RegisterArgument(typeof(TEntity), subject));
+        }
+
+        // TODO -- End to End stuff on this one
+        private static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows, Action<SmartGridHarness<T>> modification) where T : ISmartGrid
+        {
+            var endpoint = page.Get<IEndpointService>().EndpointFor<SmartGridHarness<T>>(x => x.Data(null));
             if (!endpoint.IsAuthorized)
             {
                 return HtmlTag.Empty();
             }
 
-            ISmartGrid grid = page.Get<T>();
-            
             page.Script("grid");
 
-            var model = page.Get<SmartGridController<T>>().BuildModel(grid);
+            var harness = page.Get<SmartGridHarness<T>>();
+            modification(harness);
+
+            var model = harness.BuildModel();
             return new HtmlTag("div", top =>
             {
-                string gridName = grid.Name();
+                string gridName = typeof(T).NameForGrid();
                 top.Add("div")
-                    .Id(grid.GetType().ContainerNameForGrid())
+                    .Id(typeof(T).ContainerNameForGrid())
                     .AddClass("grid-container")
                     .MetaData("definition", model)
                     .MetaData("initialRows", initialRows.GetValueOrDefault(10))

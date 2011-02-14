@@ -8,7 +8,7 @@ using FubuLocalization;
 
 namespace FubuFastPack.JqGrid
 {
-    public abstract class GridColumnBase<T>
+    public abstract class GridColumnBase<T, TColumnType> where TColumnType : class
     {
         private readonly Accessor _accessor;
         private readonly Expression<Func<T, object>> _expression;
@@ -39,9 +39,25 @@ namespace FubuFastPack.JqGrid
         public bool IsFilterable { get; set; }
         public bool IsSortable { get; set; }
 
-        public void OverrideHeader(StringToken token)
+        public TColumnType OuterJoin()
         {
-            _header = token;
+            IsOuterJoin = true;
+            return this as TColumnType;
+        }
+
+        public bool IsOuterJoin { get; set; }
+
+        public TColumnType HeaderFrom(StringToken header)
+        {
+            _header = header;
+
+            return this as TColumnType;
+        }
+
+        public TColumnType Sortable(bool isSortable)
+        {
+            IsSortable = isSortable;
+            return this as TColumnType;
         }
 
         // TODO -- get rid of this
