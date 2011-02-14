@@ -20,6 +20,11 @@ namespace FubuFastPack.JqGrid
             }
         }
 
+        public bool HasProperty(string key)
+        {
+            return _properties.Has(key);
+        }
+
         public void AddCellDisplay(string display)
         {
             _cells.Add(display);

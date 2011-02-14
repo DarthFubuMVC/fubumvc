@@ -16,5 +16,6 @@ namespace FubuFastPack.JqGrid
         IEnumerable<IDictionary<string, object>> ToColumnModel();
         int Count(IServiceLocator services);
         string GetHeader();
+        void DisableLinks();
     }
 }

@@ -123,6 +123,56 @@ namespace FubuFastPack.Testing.jqGrid
             var url = theHarness.Urls.UrlFor(typeof (Case), parameters);
             theDto["linkForCondition"].ShouldEqual(url);
         }
+
+
+    }
+    
+    [TestFixture]
+    public class when_writing_a_disabled_link_column
+    {
+        private const string theRawValue = "raw value";
+        private const string theFormattedValue = "formatted value";
+        private LinkColumn<Case> theColumn;
+        private ColumnFillerHarness theHarness;
+        private EntityDTO theDto;
+        private Guid _id = Guid.NewGuid();
+
+        [SetUp]
+        public void SetUp()
+        {
+            theColumn = LinkColumn<Case>.For(x => x.Condition);
+            theColumn.DisableLink();
+
+            theHarness = new ColumnFillerHarness();
+            theHarness.Formatter.Stub(x => x.GetDisplayForValue(theColumn.Accessor, theRawValue)).Return(theFormattedValue);
+
+
+            theDto = theHarness.RunColumn<Case>(theColumn, x =>
+            {
+                x.SetValue(c => c.Id, _id);
+                x.SetValue(c => c.Condition, theRawValue);
+            });
+
+            
+        }
+
+        [Test]
+        public void does_not_write_the_link_to_the_dto()
+        {
+            theDto.HasProperty("linkForCondition").ShouldBeFalse();
+        }
+
+        [Test]
+        public void writes_the_formatted_value_to_the_cell_array()
+        {
+            theDto.cell.Last().ShouldEqual(theFormattedValue);
+        }
+
+        [Test]
+        public void formatter_is_the_default_empty()
+        {
+            theColumn.ToDictionary().Single().ContainsKey("formatter").ShouldBeFalse();
+        }
     }
 
     [TestFixture]

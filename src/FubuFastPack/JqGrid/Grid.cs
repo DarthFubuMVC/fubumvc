@@ -30,6 +30,11 @@ namespace FubuFastPack.JqGrid
             return Header == null ? string.Empty : Header.ToString();
         }
 
+        public void DisableLinks()
+        {
+            _definition.Columns.OfType<LinkColumn<TEntity>>().Each(x => x.DisableLink());
+        }
+
         public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {
             var runner = services.GetInstance<IGridRunner<TEntity, TService>>();

@@ -31,6 +31,7 @@ namespace FubuFastPack.JqGrid
         private string _linkName;
         private readonly Type _inputModelType;
         private StringToken _literalText;
+        private bool _disabled;
 
         public LinkColumn(Accessor accessor, Type inputModelType, StringToken literalText) : base(accessor)
         {
@@ -55,13 +56,25 @@ namespace FubuFastPack.JqGrid
         // TODO -- UT this little monster
         public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
-            yield return new Dictionary<string, object>{
+            var dictionary = new Dictionary<string, object>{
                 {"name", Accessor.Name},
                 {"index", Accessor.Name},
                 {"sortable", IsSortable},
                 {"linkName", _linkName},
                 {"formatter", "link"}
             };
+
+            if (_disabled)
+            {
+                dictionary.Remove("formatter");
+            }
+
+            yield return dictionary;
+        }
+
+        public void DisableLink()
+        {
+            _disabled = true;
         }
 
         public LinkColumn<T> LiteralText(StringToken literal)
@@ -75,9 +88,18 @@ namespace FubuFastPack.JqGrid
             var displaySource = data.GetterFor(Accessor);
             var idSource = data.GetterFor(_idAccessor);
 
+            if (_disabled)
+            {
+                return dto =>
+                {
+                    var rawValue = displaySource();
+                    var display = _literalText == null ? formatter.GetDisplayForValue(Accessor, rawValue) : _literalText.ToString();
+                    dto.AddCellDisplay(display);
+                };
+            }
+
             return dto =>
             {
-                // TODO -- test this
                 var rawValue = displaySource();
                 var display = _literalText == null ? formatter.GetDisplayForValue(Accessor, rawValue) : _literalText.ToString();
                 dto.AddCellDisplay(display);
