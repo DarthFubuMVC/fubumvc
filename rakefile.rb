@@ -40,19 +40,15 @@ assemblyinfo :version do |asm|
   asm_version = BUILD_NUMBER_BASE + ".0"
   
   begin
-	gittag = `git describe --long`.chomp 	# looks something like v0.1.0-63-g92228f4
-    gitnumberpart = /-(\d+)-/.match(gittag)
-    gitnumber = gitnumberpart.nil? ? '0' : gitnumberpart[1]
     commit = `git log -1 --pretty=format:%H`
   rescue
     commit = "git unavailable"
-    gitnumber = "0"
   end
-  build_number = "#{BUILD_NUMBER_BASE}.#{gitnumber}"
+  build_number = "#{BUILD_NUMBER_BASE}.#{Date.today.strftime('%y%j')}"
   tc_build_number = ENV["BUILD_NUMBER"]
   puts "##teamcity[buildNumber '#{build_number}-#{tc_build_number}']" unless tc_build_number.nil?
   asm.trademark = commit
-  asm.product_name = "#{PRODUCT} #{gittag}"
+  asm.product_name = PRODUCT
   asm.description = build_number
   asm.version = asm_version
   asm.file_version = build_number
