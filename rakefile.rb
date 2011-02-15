@@ -66,8 +66,22 @@ task :clean do
 	#TODO: do any other tasks required to clean/prepare the working directory
 	FileUtils.rm_rf props[:stage]
 	FileUtils.rm_rf props[:stage35]
-	Dir.mkdir props[:stage] unless exists?(props[:stage])
+    # work around nasty latency issue where folder still exists for a short while after it is removed
+    waitfor { !exists?(props[:stage]) }
+	Dir.mkdir props[:stage]
+    waitfor { !exists?(props[:stage35]) }
+	Dir.mkdir props[:stage35]
+    
 	Dir.mkdir props[:artifacts] unless exists?(props[:artifacts])
+end
+
+def waitfor(&block)
+  checks = 0
+  until block.call || checks >10 
+    sleep 0.5
+    checks += 1
+  end
+  raise 'waitfor timeout expired' if checks > 10
 end
 
 desc "Compiles the app"
@@ -86,7 +100,7 @@ task :compile => [:clean, :version] do
 end
 
 desc "Compiles the app for .NET Framework 3.5"
-task :compile35 do
+task :compile35 => [:clean, :version] do
   output = "bin\\#{COMPILE_TARGET}35\\"
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.Fx35.sln', :clrversion => CLR_TOOLS_VERSION,
    :properties=>[
@@ -95,7 +109,6 @@ task :compile35 do
      "DefineConstants=\"LEGACY;TRACE\""
      ]
 
-  Dir.mkdir props[:stage35] unless exists?(props[:stage35])
   output_nix = output.gsub('\\', '/')
   copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
   copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
