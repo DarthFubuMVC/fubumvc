@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Registration
         void SetServiceIfNone(Type interfaceType, Type concreteType);
 
         ObjectDef AddService<TService, TImplementation>() where TImplementation : TService;
+        ObjectDef AddService<TService>(Type implementation);
         void ReplaceService<TService, TImplementation>() where TImplementation : TService;
         void ReplaceService<TService>(TService value);
         void AddService<TService>(TService value);

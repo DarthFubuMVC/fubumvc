@@ -31,7 +31,13 @@ namespace FubuMVC.Core.Registration
 
         public ObjectDef AddService<TService, TImplementation>() where TImplementation : TService
         {
-            var objectDef = new ObjectDef(typeof (TImplementation));
+            var implementationType = typeof (TImplementation);
+            return AddService<TService>(implementationType);
+        }
+
+        public ObjectDef AddService<TService>(Type implementationType)
+        {
+            var objectDef = new ObjectDef(implementationType);
             _services[typeof (TService)].Add(objectDef);
 
             return objectDef;

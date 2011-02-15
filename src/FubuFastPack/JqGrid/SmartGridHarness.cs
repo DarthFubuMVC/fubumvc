@@ -3,49 +3,43 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Util;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
-using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
-    public class SmartGridException : Exception
+    // TODO -- need this to throw a good exception when all necessary arguments don't exist
+    public class SmartGridHarness<T> : ISmartGridHarness where T : ISmartGrid
     {
-        public SmartGridException(string message) : base(message)
-        {
-        }
-
-        public SmartGridException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected SmartGridException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-    }
-
-
-    // Right now, SmartGrid's can *only* have a dependency on 1 Entity in the ctor
-    public class SmartGridHarness<T> where T : ISmartGrid
-    {
+        private readonly Cache<string, object> _args = new Cache<string, object>();
         private readonly IQueryService _queryService;
         private readonly ISmartRequest _request;
         private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
-        private readonly Cache<string, object> _args = new Cache<string, object>();
 
-        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IQueryService queryService, ISmartRequest request)
+        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IQueryService queryService,
+                                ISmartRequest request)
         {
             _services = services;
             _urls = urls;
             _queryService = queryService;
             _request = request;
+        }
+
+        public Type GridType
+        {
+            get { return typeof (T); }
+        }
+
+        // TODO -- hit this with StoryTeller
+        public IEnumerable<FilteredProperty> FilteredProperties()
+        {
+            return BuildGrid().AllFilteredProperties(_queryService);
         }
 
         public T BuildGrid()
@@ -55,13 +49,12 @@ namespace FubuFastPack.JqGrid
             return (T) Activator.CreateInstance(typeof (T), args);
         }
 
-        
 
         public void RegisterArgument(string name, object value)
         {
             var ctor = getConstructor();
             var parameter = ctor.GetParameters().FirstOrDefault(x => x.Name == name);
-            
+
             if (parameter == null)
             {
                 var argList = ctor.GetParameters().Select(x => x.Name).Join(", ");
@@ -90,16 +83,16 @@ namespace FubuFastPack.JqGrid
         // TODO -- deal with nulls and missing arguments
         private object[] buildArgs()
         {
-            ConstructorInfo ctor = getConstructor();
-            return ctor.GetParameters().Select(p =>
-            {
-                return _args.Has(p.Name) ? _args[p.Name] : _request.Value(p.ParameterType, p.Name);
-            }).ToArray();
+            var ctor = getConstructor();
+            return
+                ctor.GetParameters().Select(
+                    p => { return _args.Has(p.Name) ? _args[p.Name] : _request.Value(p.ParameterType, p.Name); }).
+                    ToArray();
         }
 
         private ConstructorInfo getConstructor()
         {
-            return typeof(T).GetConstructors().Single();
+            return typeof (T).GetConstructors().Single();
         }
 
         public string GetUrl()
@@ -175,16 +168,8 @@ namespace FubuFastPack.JqGrid
         {
             var grid = BuildGrid();
 
-            var gridName = typeof(T).NameForGrid();
+            var gridName = typeof (T).NameForGrid();
             var definition = grid.Definition;
-
-            // TODO -- UT for this
-            //var entity = _args.OfType<DomainEntity>().SingleOrDefault();
-            //if (entity != null)
-            //{
-            //    url += "?Id=" + entity.Id;
-            //}
-            
 
             return new JqGridModel{
                 colModel = definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),

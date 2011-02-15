@@ -38,6 +38,12 @@ namespace FubuFastPack.Testing.jqGrid
             
         }
 
+        [Test]
+        public void grid_type()
+        {
+            ClassUnderTest.GridType.ShouldEqual(typeof (NoArgGrid));
+        }
+
     }
 
     [TestFixture]

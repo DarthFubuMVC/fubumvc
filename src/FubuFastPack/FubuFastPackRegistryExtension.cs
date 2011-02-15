@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuFastPack.Binding;
+using FubuFastPack.Querying;
 using FubuMVC.Core;
 
 namespace FubuFastPack
@@ -10,6 +11,7 @@ namespace FubuFastPack
         public void Configure(FubuRegistry registry)
         {
             registry.Services(x => x.SetServiceIfNone<IObjectConverter, FastPackObjectConverter>());
+            registry.Services(x => x.SetServiceIfNone<IQueryService, QueryService>());
         }
     }
 }

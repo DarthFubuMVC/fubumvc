@@ -1,13 +1,19 @@
 using FubuFastPack.JqGrid;
+using FubuFastPack.NHibernate;
+using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
+using FubuMVC.StructureMap;
 using FubuMVC.Tests.Behaviors;
 using NUnit.Framework;
 using FubuMVC.Tests;
 using System.Linq;
+using StructureMap;
+using FubuFastPack.StructureMap;
 
 namespace FubuFastPack.Testing.jqGrid
 {
@@ -15,16 +21,21 @@ namespace FubuFastPack.Testing.jqGrid
     public class SmartGridConventionTester
     {
         private BehaviorGraph theGraph;
+        private FubuRegistry theRegistry;
 
         [SetUp]
         public void SetUp()
         {
-            var registry = new FubuRegistry(x => x.ApplySmartGridConventions(o =>
+            theRegistry = new FubuRegistry(x => x.ApplySmartGridConventions(o =>
             {
+                
                 o.ToAssemblyContainingType<SmartGridConventionTester>();
             }));
 
-            theGraph = registry.BuildGraph();
+            // Want no types here
+            theRegistry.Actions.IncludeTypes(t => false);
+
+            theGraph = theRegistry.BuildGraph();
         }
 
         [Test]
@@ -61,6 +72,29 @@ namespace FubuFastPack.Testing.jqGrid
             theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null)).Any(x => x is RenderJsonNode)
                 .ShouldBeTrue();
         }
+
+        [Test]
+        public void each_smart_grid_harness_is_registered_by_name_in_the_container()
+        {
+            var container = new Container(x =>
+            {
+                x.For<IRepository>().Use<InMemoryRepository>();
+                x.For<IEntityFinder>().Use<EntityFinder>();
+                x.For<IEntityFinderCache>().Use<StructureMapEntityFinderCache>();
+            });
+
+            FubuApplication.For(() => theRegistry)
+                .StructureMap(() => container)
+                .Packages(x => x.Assembly(typeof(ISmartGrid).Assembly))
+                .Bootstrap();
+
+            PackageRegistry.AssertNoFailures();
+
+            container.GetInstance<ISmartGridHarness>("Fake1").ShouldBeOfType<SmartGridHarness<Fake1Grid>>();
+            container.GetInstance<ISmartGridHarness>("Fake2").ShouldBeOfType<SmartGridHarness<Fake2Grid>>();
+        }
+
+
     }
 
     [AllowRole("Role1", "Role2")]
