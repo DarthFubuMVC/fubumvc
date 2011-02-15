@@ -11,12 +11,11 @@ namespace FubuMVC.HelloWorld
         {
             IncludeDiagnostics(true);
 
-            HomeIs<HomeInputModel>();
-
             Actions
                 .IncludeClassesSuffixedWithController();
 
             Routes
+                .HomeIs<HomeInputModel>()
                 .IgnoreControllerNamespaceEntirely()
                 .IgnoreMethodSuffix("Command")
                 .IgnoreMethodSuffix("Query")

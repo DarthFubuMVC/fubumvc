@@ -37,7 +37,8 @@ namespace FubuMVC.HelloSpark
         	           	});
 
             Routes
-                .UrlPolicy<HelloSparkUrlPolicy>();
+                .UrlPolicy<HelloSparkUrlPolicy>()
+                .HomeIs<AirController>(c => c.TakeABreath());
             
             Output
 				.ToJson
