@@ -8,6 +8,7 @@ using FubuCore.Binding;
 using FubuCore.Util;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
+using FubuLocalization;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 
@@ -164,10 +165,15 @@ namespace FubuFastPack.JqGrid
 
 
         // TODO -- lots of unit tests here
-        public JqGridModel BuildModel()
+        public JqGridModel BuildJqModel()
         {
             var grid = BuildGrid();
 
+            return buildJqModel(grid);
+        }
+
+        private JqGridModel buildJqModel(T grid)
+        {
             var gridName = typeof (T).NameForGrid();
             var definition = grid.Definition;
 
@@ -178,6 +184,29 @@ namespace FubuFastPack.JqGrid
                 headers = definition.Columns.Select(x => x.GetHeader()).ToArray(),
                 pagerId = gridName + "_pager",
             };
+        }
+
+        public GridViewModel BuildGridModel()
+        {
+            var grid = BuildGrid();
+
+            var model = new GridViewModel(){
+                AllowCreateNew = grid.Definition.AllowCreationOfNew,
+                CanSaveQuery = grid.Definition.CanSaveQuery,
+                FilteredProperties = FilteredProperties(),
+                GridModel = buildJqModel(grid),
+                GridName = typeof(T).NameForGrid(),
+                GridType = typeof(T),
+                HeaderText = grid.GetHeader()
+            };
+
+            if (grid.Definition.AllowCreationOfNew)
+            {
+                model.NewEntityText = StringToken.FromKeyString("CREATE_NEW_" + grid.EntityType).ToString();
+                model.NewEntityUrl = _urls.UrlForNew(grid.EntityType);
+            }
+
+            return model;
         }
     }
 }

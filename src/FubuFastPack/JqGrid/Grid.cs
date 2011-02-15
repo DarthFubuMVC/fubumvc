@@ -35,6 +35,16 @@ namespace FubuFastPack.JqGrid
             _definition.Columns.OfType<LinkColumn<TEntity>>().Each(x => x.DisableLink());
         }
 
+        private readonly IList<Criteria> _initialCriteria = new List<Criteria>();
+        public void AddCriteria(Expression<Func<TEntity, object>> property, StringToken op, object value)
+        {
+            _initialCriteria.Add(Criteria.For(property, op.Key, value.ToString()));
+        }
+        public IEnumerable<Criteria> InitialCriteria()
+        {
+            return _initialCriteria;
+        }
+
         public GridResults Invoke(IServiceLocator services, GridDataRequest request)
         {
             var runner = services.GetInstance<IGridRunner<TEntity, TService>>();
@@ -139,6 +149,11 @@ namespace FubuFastPack.JqGrid
         public void CanSaveQuery()
         {
             _definition.CanSaveQuery = true;
+        }
+
+        public Type EntityType
+        {
+            get { return typeof (TEntity); }
         }
     }
 }

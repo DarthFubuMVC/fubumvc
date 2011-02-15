@@ -8,5 +8,6 @@ namespace FubuFastPack.JqGrid
     {
         Type GridType { get; }
         IEnumerable<FilteredProperty> FilteredProperties();
+        GridViewModel BuildGridModel();
     }
 }

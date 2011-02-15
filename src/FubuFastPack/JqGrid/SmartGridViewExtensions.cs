@@ -81,7 +81,7 @@ namespace FubuFastPack.JqGrid
             var harness = page.Get<SmartGridHarness<T>>();
             modification(harness);
 
-            var model = harness.BuildModel();
+            var model = harness.BuildJqModel();
             return new HtmlTag("div", top =>
             {
                 string gridName = typeof (T).NameForGrid();

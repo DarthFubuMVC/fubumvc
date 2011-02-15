@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FubuFastPack.Querying;
 using Microsoft.Practices.ServiceLocation;
 
@@ -17,5 +18,8 @@ namespace FubuFastPack.JqGrid
         int Count(IServiceLocator services);
         string GetHeader();
         void DisableLinks();
+        IEnumerable<Criteria> InitialCriteria();
+
+        Type EntityType { get; }
     }
 }
