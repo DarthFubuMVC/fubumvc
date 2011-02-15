@@ -82,6 +82,9 @@ namespace FubuFastPack.Testing.Security
         public Person Owner { get; set; }
     }
 
+    public class Site : DomainEntity{}
+    public class Solution : DomainEntity {}
+
     public class Person :DomainEntity
     {
         public string Name { get; set; }

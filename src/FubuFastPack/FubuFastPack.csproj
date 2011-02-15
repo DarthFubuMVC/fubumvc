@@ -57,9 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binding\DomainEntityConverterFamily.cs" />
+    <Compile Include="Binding\FastPackObjectConverter.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="Domain\DomainExtensions.cs" />
+    <Compile Include="Domain\IHaveIdentifier.cs" />
     <Compile Include="Extensibility\HideOnNewAttribute.cs" />
     <Compile Include="Extensibility\Extends.cs" />
     <Compile Include="Extensibility\ExtensionFieldRegistry.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Extensibility\ExtensionPropertyBinder.cs" />
     <Compile Include="Extensibility\ExtensionScanner.cs" />
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
+    <Compile Include="FubuFastPackRegistryExtension.cs" />
     <Compile Include="JqGrid\CommandColumn.cs" />
     <Compile Include="JqGrid\DataColumn.cs" />
     <Compile Include="JqGrid\EntityDTO.cs" />
@@ -78,6 +82,7 @@
     <Compile Include="JqGrid\GridColumnBase.cs" />
     <Compile Include="JqGrid\GridRequest.cs" />
     <Compile Include="JqGrid\jqGridModel.cs" />
+    <Compile Include="NonExistentEntityException.cs" />
     <Compile Include="Querying\PagingOptions.cs" />
     <Compile Include="JqGrid\SmartGridHarness.cs" />
     <Compile Include="JqGrid\GridDefinition.cs" />

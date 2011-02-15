@@ -228,5 +228,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IObjectConverter, ObjectConverter>();
         }
+
+        [Test]
+        public void smart_request_is_registered()
+        {
+            registeredTypeIs<ISmartRequest, SmartRequest>();
+        }
     }
 }

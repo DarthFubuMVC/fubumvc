@@ -1,11 +1,8 @@
 ﻿using System;
-using FubuCore.Reflection;
 using FubuFastPack.Domain;
-using FubuFastPack.Querying;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using HtmlTags;
@@ -29,8 +26,10 @@ namespace FubuFastPack.JqGrid
         // TODO -- move to interface?
         public static HtmlTag FiltersFor<T>(this IFubuPage page) where T : ISmartGrid
         {
-            page.Script("grid");
-            return page.Get<FilterTagWriter>().FilterTemplatesFor<T>();
+            throw new NotImplementedException();
+
+            //page.Script("grid");
+            //return page.Get<FilterTagWriter>().FilterTemplatesFor<T>();
         }
 
 
@@ -60,13 +59,16 @@ namespace FubuFastPack.JqGrid
             return page.SmartGridFor<T>(initialRows, h => { });
         }
 
-        public static HtmlTag SmartGridFor<TGrid, TEntity>(this IFubuPage page, int? initialRows, TEntity subject) where TGrid : ISmartGrid where TEntity : DomainEntity
+        public static HtmlTag SmartGridFor<TGrid, TEntity>(this IFubuPage page, int? initialRows, TEntity subject)
+            where TGrid : ISmartGrid where TEntity : DomainEntity
         {
-            return page.SmartGridFor<TGrid>(initialRows, h => h.RegisterArgument(typeof(TEntity), subject));
+            throw new NotImplementedException();
+            //return page.SmartGridFor<TGrid>(initialRows, h => h.RegisterArgument(typeof(TEntity), subject));
         }
 
         // TODO -- End to End stuff on this one
-        private static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows, Action<SmartGridHarness<T>> modification) where T : ISmartGrid
+        private static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows,
+                                               Action<SmartGridHarness<T>> modification) where T : ISmartGrid
         {
             var endpoint = page.Get<IEndpointService>().EndpointFor<SmartGridHarness<T>>(x => x.Data(null));
             if (!endpoint.IsAuthorized)
@@ -82,9 +84,9 @@ namespace FubuFastPack.JqGrid
             var model = harness.BuildModel();
             return new HtmlTag("div", top =>
             {
-                string gridName = typeof(T).NameForGrid();
+                string gridName = typeof (T).NameForGrid();
                 top.Add("div")
-                    .Id(typeof(T).ContainerNameForGrid())
+                    .Id(typeof (T).ContainerNameForGrid())
                     .AddClass("grid-container")
                     .MetaData("definition", model)
                     .MetaData("initialRows", initialRows.GetValueOrDefault(10))

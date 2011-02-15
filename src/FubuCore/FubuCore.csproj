@@ -93,6 +93,7 @@
     <Compile Include="Binding\IPropertyBinder.cs" />
     <Compile Include="Binding\IPropertyBinderCache.cs" />
     <Compile Include="Binding\IRequestData.cs" />
+    <Compile Include="Binding\ISmartRequest.cs" />
     <Compile Include="Binding\IValueConverterRegistry.cs" />
     <Compile Include="Binding\MapFromWebPathFamily.cs" />
     <Compile Include="Binding\MapWebToPhysicalPathFamily.cs" />
@@ -101,11 +102,13 @@
     <Compile Include="Binding\NestedObjectPropertyBinder.cs" />
     <Compile Include="Binding\ObjectResolver.cs" />
     <Compile Include="Binding\PassthroughConverter.cs" />
+    <Compile Include="Binding\PrefixedRequestData.cs" />
     <Compile Include="Binding\PropertyBinderCache.cs" />
     <Compile Include="Binding\ReaderBinder.cs" />
     <Compile Include="Binding\RequestData.cs" />
     <Compile Include="Binding\ResolveConnectionStringFamily.cs" />
     <Compile Include="Binding\ServiceArguments.cs" />
+    <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
     <Compile Include="Binding\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />

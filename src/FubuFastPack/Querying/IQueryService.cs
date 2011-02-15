@@ -19,7 +19,7 @@ namespace FubuFastPack.Querying
     // TODO -- need to register this
     public interface IFilterTagWriter
     {
-        HtmlTag FilterTemplatesFor<T>() where T : ISmartGrid;
+        HtmlTag FilterTemplatesFor(ISmartGrid grid);
     }
 
     public interface IFilterTemplateSource
@@ -33,31 +33,40 @@ namespace FubuFastPack.Querying
     public class FilterTagWriter : IFilterTagWriter
     {
         private readonly IQueryService _queryService;
-        private readonly IServiceLocator _services;
         private readonly IEnumerable<IFilterTemplateSource> _sources;
 
-        public FilterTagWriter(IQueryService queryService, IServiceLocator services, IEnumerable<IFilterTemplateSource> sources)
+        public FilterTagWriter(IQueryService queryService, IEnumerable<IFilterTemplateSource> sources)
         {
             _queryService = queryService;
-            _services = services;
             _sources = sources;
         }
 
         // TODO -- might need to do default criteria here
-        public HtmlTag FilterTemplatesFor<T>() where T : ISmartGrid
+        /*
+         * Push in:
+         * 1.) grid type
+         * 2.) FilteredProperty*
+         * 3.) initial criteria
+         * 
+         * 
+         * 
+         * 
+         */
+        public HtmlTag FilterTemplatesFor(ISmartGrid grid)
         {
             var tag = new HtmlTag("div");
-            tag.Id("filters_" + typeof (T).ContainerNameForGrid());
+            var containerNameForGrid = grid.GetType().ContainerNameForGrid();
+            tag.Id("filters_" + containerNameForGrid);
             tag.AddClass("smart-grid-filter");
             tag.Child(new TableTag());
 
             var metadata = new Dictionary<string, object>{
-                {"gridId", typeof (T).ContainerNameForGrid()}
+                {"gridId", containerNameForGrid}
             };
 
             tag.MetaData("filters", metadata);
             
-            var grid = _services.GetInstance<T>();
+            // Might get FilteredProperty's out of here
             var properties = grid.AllFilteredProperties(_queryService);
             var templates = _sources.SelectMany(x => x.TagsFor(properties));
 

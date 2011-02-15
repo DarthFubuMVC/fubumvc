@@ -81,6 +81,7 @@
     <Compile Include="Binding\ReaderBinderTester.cs" />
     <Compile Include="Binding\RequestDataTester.cs" />
     <Compile Include="Binding\ServiceArgumentsTester.cs" />
+    <Compile Include="Binding\SmartRequestTester.cs" />
     <Compile Include="Binding\TypeDescriptorCacheTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
     <Compile Include="CommandLine\ArgumentTester.cs" />

@@ -2,62 +2,144 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using FubuCore.Binding;
 using FubuCore.Util;
 using FubuFastPack.Domain;
+using FubuFastPack.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
+using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
+    public class SmartGridException : Exception
+    {
+        public SmartGridException(string message) : base(message)
+        {
+        }
+
+        public SmartGridException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected SmartGridException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+
+
     // Right now, SmartGrid's can *only* have a dependency on 1 Entity in the ctor
     public class SmartGridHarness<T> where T : ISmartGrid
     {
-        private readonly Cache<Type, object> _args = new Cache<Type, object>();
-        private readonly IFubuRequest _request;
+        private readonly IQueryService _queryService;
+        private readonly ISmartRequest _request;
         private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
+        private readonly Cache<string, object> _args = new Cache<string, object>();
 
-        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IFubuRequest request)
+        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IQueryService queryService, ISmartRequest request)
         {
             _services = services;
             _urls = urls;
+            _queryService = queryService;
             _request = request;
-            _args.OnMissing = findArg;
         }
 
-        private object findArg(Type type)
+        public T BuildGrid()
         {
-            return _request.Get(type);
+            var args = buildArgs();
+
+            return (T) Activator.CreateInstance(typeof (T), args);
         }
 
-        private T buildGrid()
-        {
-            var ctor = typeof (T).GetConstructors().Single();
-            var args = ctor.GetParameters().Select(x => _args[x.ParameterType]);
+        
 
-            return (T) Activator.CreateInstance(typeof (T), args.ToArray());
+        public void RegisterArgument(string name, object value)
+        {
+            var ctor = getConstructor();
+            var parameter = ctor.GetParameters().FirstOrDefault(x => x.Name == name);
+            
+            if (parameter == null)
+            {
+                var argList = ctor.GetParameters().Select(x => x.Name).Join(", ");
+                var message = "Argument {0} is invalid.  The possible arguments are {1}"
+                    .ToFormat(name, argList);
+
+                throw new SmartGridException(message);
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (!value.GetType().CanBeCastTo(parameter.ParameterType))
+            {
+                var message = "Type {0} received for parameter {1}, but expected {2}"
+                    .ToFormat(value.GetType().FullName, name, parameter.ParameterType.FullName);
+                throw new SmartGridException(message);
+            }
+
+
+            _args[name] = value;
         }
 
-        public void RegisterArgument(Type argumentType, object argument)
+        // TODO -- deal with nulls and missing arguments
+        private object[] buildArgs()
         {
-            _args[argumentType] = argument;
+            ConstructorInfo ctor = getConstructor();
+            return ctor.GetParameters().Select(p =>
+            {
+                return _args.Has(p.Name) ? _args[p.Name] : _request.Value(p.ParameterType, p.Name);
+            }).ToArray();
+        }
+
+        private ConstructorInfo getConstructor()
+        {
+            return typeof(T).GetConstructors().Single();
+        }
+
+        public string GetUrl()
+        {
+            var url = _urls.UrlFor(new GridRequest<T>());
+
+            var ctor = getConstructor();
+            if (ctor.GetParameters().Any())
+            {
+                var queryStrings = ctor.GetParameters().Select(p => buildQueryStringForArg(p.ParameterType, p.Name));
+                url += "?" + queryStrings.Join("&");
+            }
+
+            return url;
+        }
+
+        private string buildQueryStringForArg(Type type, string key)
+        {
+            var value = _args.Has(key) ? _args[key] : _request.Value(type, key);
+            var stringValue = type.CanBeCastTo<DomainEntity>()
+                                  ? value.As<DomainEntity>().Id.ToString()
+                                  : value.ToString().UrlEncoded();
+
+            return "{0}={1}".ToFormat(key, stringValue);
         }
 
         public GridResults Data(GridRequest<T> input)
         {
-            return buildGrid().Invoke(_services, input.ToDataRequest());
+            return BuildGrid().Invoke(_services, input.ToDataRequest());
         }
 
         public int Count()
         {
-            return buildGrid().Count(_services);
+            return BuildGrid().Count(_services);
         }
 
         // TODO -- get a UT against this
         public DataTable ToDataTable(GridRequest<T> input)
         {
-            var grid = buildGrid();
+            var grid = BuildGrid();
 
             var results = Data(input);
             var dataFields = new List<string>();
@@ -91,26 +173,23 @@ namespace FubuFastPack.JqGrid
         // TODO -- lots of unit tests here
         public JqGridModel BuildModel()
         {
-            var grid = buildGrid();
+            var grid = BuildGrid();
 
             var gridName = typeof(T).NameForGrid();
             var definition = grid.Definition;
-            var url = _urls.UrlFor(new GridRequest<T>{
-                gridName = gridName
-            });
 
             // TODO -- UT for this
-            var entity = _args.OfType<DomainEntity>().SingleOrDefault();
-            if (entity != null)
-            {
-                url += "?Id=" + entity.Id;
-            }
-
+            //var entity = _args.OfType<DomainEntity>().SingleOrDefault();
+            //if (entity != null)
+            //{
+            //    url += "?Id=" + entity.Id;
+            //}
+            
 
             return new JqGridModel{
                 colModel = definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),
                 gridName = gridName,
-                url = url,
+                url = GetUrl(),
                 headers = definition.Columns.Select(x => x.GetHeader()).ToArray(),
                 pagerId = gridName + "_pager",
             };

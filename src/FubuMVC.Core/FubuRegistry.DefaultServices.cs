@@ -82,7 +82,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IRoutePolicy, StandardRoutePolicy>();
             graph.Services.SetServiceIfNone<IObjectConverter, ObjectConverter>();
 
-
+            graph.Services.SetServiceIfNone<ISmartRequest, SmartRequest>();
             
             registerActivators(graph);
             registerHtmlConventions(graph);
