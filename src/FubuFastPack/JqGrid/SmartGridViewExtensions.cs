@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuFastPack.Domain;
+using FubuFastPack.Querying;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
@@ -9,6 +10,7 @@ using HtmlTags;
 
 namespace FubuFastPack.JqGrid
 {
+    // TODO -- add tests for this mess
     public static class SmartGridViewExtensions
     {
         public static void ApplySmartGridConventions(this FubuRegistry registry, Action<AppliesToExpression> configure)
@@ -23,13 +25,18 @@ namespace FubuFastPack.JqGrid
             registry.ApplyConvention(new SmartGridConvention(pool));
         }
 
-        // TODO -- move to interface?
         public static HtmlTag FiltersFor<T>(this IFubuPage page) where T : ISmartGrid
         {
-            throw new NotImplementedException();
+            var harness = page.Get<SmartGridHarness<T>>();
+            var model = harness.BuildGridModel();
 
-            //page.Script("grid");
-            //return page.Get<FilterTagWriter>().FilterTemplatesFor<T>();
+            return FiltersFor(page, model);
+        }
+
+        public static HtmlTag FiltersFor(this IFubuPage page, GridViewModel model)
+        {
+            page.Script("grid");
+            return page.Get<FilterTagWriter>().FilterTemplatesFor(model);
         }
 
 
@@ -59,11 +66,10 @@ namespace FubuFastPack.JqGrid
             return page.SmartGridFor<T>(initialRows, h => { });
         }
 
-        public static HtmlTag SmartGridFor<TGrid, TEntity>(this IFubuPage page, int? initialRows, TEntity subject)
-            where TGrid : ISmartGrid where TEntity : DomainEntity
+        public static HtmlTag SmartGridFor<TGrid>(this IFubuPage page, int? initialRows, params object[] arguments)
+            where TGrid : ISmartGrid
         {
-            throw new NotImplementedException();
-            //return page.SmartGridFor<TGrid>(initialRows, h => h.RegisterArgument(typeof(TEntity), subject));
+            return page.SmartGridFor<TGrid>(initialRows, h => h.RegisterArguments(arguments));
         }
 
         // TODO -- End to End stuff on this one

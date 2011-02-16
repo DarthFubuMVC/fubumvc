@@ -1,14 +1,10 @@
 ﻿(function ($) {
     jQuery.extend($.fn.fmatter, {
-        toLink: function(cellValue, rowObject, target){
+        link: function (cellValue, options, rowObject) {
             var linkName = options.colModel.linkName;
             var url = rowObject[0][linkName];
 
             return '<a href="' + url + '" target="_top">' + cellValue + '</a>';
-        },
-
-        link: function (cellValue, options, rowObject) {
-            return $.fn.fmatter
         },
 
         command: function(cellValue, options, rowObject) {
@@ -54,6 +50,7 @@
             cell: "cell",
             id: "id"
         },
+        postData: {criterion: definition.initialCriteria},
         pager: $('#' + definition.pagerId),
         onPaging: function (pgButton) {
             if (pgButton == 'records') {
@@ -123,6 +120,7 @@
         */
 
         $('table', div).jqGrid(gridOptions);
+		div.grid.trigger("reloadGrid");
     }
 
 })(jQuery);

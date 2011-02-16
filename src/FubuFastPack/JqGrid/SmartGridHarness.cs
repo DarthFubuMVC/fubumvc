@@ -183,6 +183,7 @@ namespace FubuFastPack.JqGrid
                 url = GetUrl(),
                 headers = definition.Columns.Select(x => x.GetHeader()).ToArray(),
                 pagerId = gridName + "_pager",
+                initialCriteria = grid.InitialCriteria().ToArray()
             };
         }
 
@@ -200,13 +201,35 @@ namespace FubuFastPack.JqGrid
                 HeaderText = grid.GetHeader()
             };
 
+            model.AddCriterion(grid.InitialCriteria());
+
             if (grid.Definition.AllowCreationOfNew)
             {
                 model.NewEntityText = StringToken.FromKeyString("CREATE_NEW_" + grid.EntityType).ToString();
                 model.NewEntityUrl = _urls.UrlForNew(grid.EntityType);
             }
 
+
             return model;
+        }
+
+        public void RegisterArguments(params object[] arguments)
+        {
+            var ctor = getConstructor();
+            if (arguments.Length != ctor.GetParameters().Length)
+            {
+                var parameterList = ctor.GetParameters().Select(x => x.Name).Join(", ");
+                throw new SmartGridException("Wrong number of arguments.  Should be " + parameterList);
+            }
+
+            var parameters = ctor.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                var parameter = parameters[i];
+                var arg = arguments[i];
+
+                RegisterArgument(parameter.Name, arg);
+            }
         }
     }
 }

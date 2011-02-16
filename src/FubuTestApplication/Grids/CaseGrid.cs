@@ -2,6 +2,7 @@ using System;
 using FubuFastPack.JqGrid;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
+using FubuFastPack.Querying;
 using FubuMVC.Core;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
@@ -20,6 +21,8 @@ namespace FubuTestApplication.Grids
             Show(x => x.Priority);
             Show(x => x.Number);
             ShowViewLinkForOther(x => x.Person).DisplayTextFrom(x => x.Name);
+
+            AddCriteria(x => x.Number, OperatorKeys.GREATERTHAN, 150);
         }
     }
 

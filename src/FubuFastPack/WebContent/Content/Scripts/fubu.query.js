@@ -1,15 +1,4 @@
-﻿/*
-var queryControl = null;
-var grid = null;
-var columns = null;
-*/
-
-$.fn.textboxEditor = function () {
-    this.each(function (i, box) {
-        
-    });
-}
-
+﻿
 $.fn.asQueryBuilder = function (userOptions) {
     var options = {};
     $.extend(options, $.fn.asQueryBuilder.defaults, userOptions || {});
@@ -44,27 +33,42 @@ $.fn.asQueryBuilder = function (userOptions) {
         var templates = $('.templates', div).get(0);
 
         div.addFilterRow = function () {
-            $('<tr class="filter"><td></td><td></td><td></td><td></td></tr>').appendTo(div.tbody).asFilterRow(templates, options);
-            return false;
+            return $('<tr class="filter"><td></td><td></td><td></td><td></td></tr>').appendTo(div.tbody).asFilterRow(templates, options);
         }
 
-        $(options.addCriteriaSelector).click(div.addFilterRow);
+        $(options.addCriteriaSelector).click(function () {
+            div.addFilterRow();
+            return false;
+        });
 
-        $(options.clearCriteriaSelector).click(function () {
+        var clearFilters = function () {
             $(div.tbody).empty();
 
             $(div).trigger('filters-cleared');
             return false;
-        });
+        }
 
+        $(options.clearCriteriaSelector).click(clearFilters);
 
+        div.loadQuery = function (criterion) {
+            if (criterion.length == 0) return;
 
-        // THIS MAY NEED TO CHANGE, MAYBE A SERVER SIDE MODEL?
-        //        if (options.initialFilters) {
-        //            table.loadQuery(options.initialFilters);
-        //        }
+            clearFilters();
 
-        div.addFilterRow();
+            for (var i = 0; i < criterion.length; i++) {
+                var row = this.addFilterRow();
+                row.setCriteria(criterion[i]);
+            }
+        }
+
+		var metadata = $(div).metadata();
+        if (metadata.filters.initialCriteria.length > 0) {
+            div.loadQuery(metadata.filters.initialCriteria);
+        }
+		else {
+			div.addFilterRow();
+		}
+
         return false;
     });
 
@@ -168,8 +172,18 @@ $.fn.asFilterRow = function (templates, options) {
         }
     };
 
+    row.setCriteria = function (criteria) {
+        $(row.propertySelector).val(criteria.property);
+        row.changeProperty();
+        row.operatorSelector.val(criteria.op);
+        row.changeOperator();
+        row.editor.setValue(criteria.value);
+    }
+
     row.changeProperty();
     row.changeOperator();
+
+    return row;
 }
 
 

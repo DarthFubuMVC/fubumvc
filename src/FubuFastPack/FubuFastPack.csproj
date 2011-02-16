@@ -86,6 +86,7 @@
     <Compile Include="JqGrid\jqGridModel.cs" />
     <Compile Include="JqGrid\SmartGridException.cs" />
     <Compile Include="NonExistentEntityException.cs" />
+    <Compile Include="Querying\FilterTagWriter.cs" />
     <Compile Include="Querying\PagingOptions.cs" />
     <Compile Include="JqGrid\SmartGridHarness.cs" />
     <Compile Include="JqGrid\GridDefinition.cs" />

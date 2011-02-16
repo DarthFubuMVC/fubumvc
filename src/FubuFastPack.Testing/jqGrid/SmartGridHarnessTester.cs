@@ -48,6 +48,14 @@ namespace FubuFastPack.Testing.jqGrid
             ClassUnderTest.GridType.ShouldEqual(typeof (NoArgGrid));
         }
 
+        [Test]
+        public void trying_to_pass_in_arguments_throws_the_smart_grid_exception()
+        {
+            Exception<SmartGridException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.RegisterArguments("a");
+            });
+        }
     }
 
     [TestFixture]
@@ -141,6 +149,24 @@ namespace FubuFastPack.Testing.jqGrid
             var model = harnessFor<CanCreateNewGrid>().BuildGridModel();
             model.NewEntityText.ShouldEqual(StringToken.FromKeyString("CREATE_NEW_" + typeof(Case)).ToString());
             model.NewEntityUrl.ShouldEqual(urls.UrlForNew(typeof (Case)));
+        }
+
+        [Test]
+        public void puts_all_the_initial_criteria_into_the_grid_model()
+        {
+            var model = harnessFor<CriteriaGrid>().BuildGridModel();
+            model.InitialCriteria().Count().ShouldEqual(2);
+            model.InitialCriteria().Any(x => x.property == "CaseType").ShouldBeTrue();
+        }
+    }
+
+
+    public class CriteriaGrid : ProjectionGrid<Case>
+    {
+        public CriteriaGrid()
+        {
+            AddCriteria(c => c.CaseType, OperatorKeys.EQUAL, "Question");
+            AddCriteria(c => c.Condition, OperatorKeys.EQUAL, "Open");
         }
     }
 
@@ -324,6 +350,31 @@ namespace FubuFastPack.Testing.jqGrid
             grid.Person.ShouldBeTheSameAs(person);
         }
 
+        [Test]
+        public void register_arguments_happy_path()
+        {
+            var person = new Person
+            {
+                Id = Guid.NewGuid()
+            };
+
+            var theTitle = "something";
+
+            ClassUnderTest.RegisterArguments(person, theTitle);
+            var grid = ClassUnderTest.BuildGrid();
+
+            grid.Title.ShouldEqual(theTitle);
+            grid.Person.ShouldBeTheSameAs(person);
+        }
+
+        [Test]
+        public void register_arguments_with_the_correct_number_but_a_wrong_type()
+        {
+            Exception<SmartGridException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.RegisterArguments("not a person", "a perfectly good title");
+            });
+        }
     }
 
     public class NoArgGrid : ProjectionGrid<Case>

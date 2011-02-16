@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FubuFastPack.Querying;
 
 namespace FubuFastPack.JqGrid
 {
@@ -9,5 +10,6 @@ namespace FubuFastPack.JqGrid
         public string url { get; set; }
         public string[] headers { get; set; }
         public string pagerId { get; set; }
+        public Criteria[] initialCriteria { get; set; }
     }
 }
