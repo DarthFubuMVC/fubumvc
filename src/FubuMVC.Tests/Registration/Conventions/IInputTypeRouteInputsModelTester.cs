@@ -149,13 +149,15 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         public class OneController
         {
-            public void Home()
-            {
-            }
+            public void Home() { }
 
-            public void HomeWithOutput(SimpleOutputModel model) {}
+            public SimpleOutputModel HomeWithInputOutput(SimpleInputModel model)
+            {
+                return new SimpleOutputModel();
+            }
         }
         public class SimpleOutputModel {}
+        public class SimpleInputModel {}
         public class AllEncompassingUrlPolicy : IUrlPolicy
         {
             public bool Matches(ActionCall call, IConfigurationObserver log)
@@ -184,7 +186,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             graphWithModelHome = new FubuRegistry(x =>
                 {
                     x.Actions.IncludeClassesSuffixedWithController();
-                    x.Routes.HomeIs<SimpleOutputModel>();
+                    x.Routes.HomeIs<SimpleInputModel>();
                 }).BuildGraph();
 
             graphWithoutHome = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
@@ -192,9 +194,10 @@ namespace FubuMVC.Tests.Registration.Conventions
             graphWithHomeAndUrlPolicy = new FubuRegistry(x =>
                 {
                     x.Actions.IncludeClassesSuffixedWithController();
+
                     x.Routes
                         .UrlPolicy<AllEncompassingUrlPolicy>()
-                        .HomeIs<SimpleOutputModel>();
+                        .HomeIs<SimpleInputModel>();
                 }).BuildGraph();
         }
 
@@ -202,7 +205,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void home_route_definition_pattern_should_be_empty()
         {
             var homeDefinition1 = graphWithMethodHome.RouteFor<OneController>(c => c.Home());
-            var homeDefinition2 = graphWithModelHome.RouteFor<OneController>(c => c.HomeWithOutput(new SimpleOutputModel()));
+            var homeDefinition2 = graphWithModelHome.RouteFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
             var notHomeDefinition = graphWithoutHome.RouteFor<OneController>(c => c.Home());
             homeDefinition1.Pattern.ShouldEqual("");
             homeDefinition2.Pattern.ShouldEqual("");
@@ -212,7 +215,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void home_url_policy_registration_should_be_higher_priority()
         {
-            var homeDefinition = graphWithHomeAndUrlPolicy.RouteFor<OneController>(c => c.Home());
+            var homeDefinition = graphWithHomeAndUrlPolicy.RouteFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
             homeDefinition.Pattern.ShouldEqual("");
         }
     }

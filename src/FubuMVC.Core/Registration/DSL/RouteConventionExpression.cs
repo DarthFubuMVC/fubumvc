@@ -151,9 +151,9 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public RouteConventionExpression HomeIs<TModel>()
+        public RouteConventionExpression HomeIs<TInputModel>()
         {
-            _resolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TModel)), true);
+            _resolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TInputModel)), true);
             return this;
         }
 
