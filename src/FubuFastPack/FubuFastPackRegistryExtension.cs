@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuFastPack.Binding;
+using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
 using FubuMVC.Core;
 
@@ -12,6 +13,7 @@ namespace FubuFastPack
         {
             registry.Services(x => x.SetServiceIfNone<IObjectConverter, FastPackObjectConverter>());
             registry.Services(x => x.SetServiceIfNone<IQueryService, QueryService>());
+            registry.Services(x => x.SetServiceIfNone<ISmartGridService, SmartGridService>());
         }
     }
 }

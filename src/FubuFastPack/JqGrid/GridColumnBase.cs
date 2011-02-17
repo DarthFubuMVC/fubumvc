@@ -36,6 +36,12 @@ namespace FubuFastPack.JqGrid
             get { return _expression; }
         }
 
+        public TColumnType Filterable(bool filterable)
+        {
+            IsFilterable = filterable;
+            return this as TColumnType;
+        }
+
         public bool IsFilterable { get; set; }
         public bool IsSortable { get; set; }
 

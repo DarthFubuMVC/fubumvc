@@ -19,6 +19,7 @@ namespace FubuFastPack.JqGrid
             _columns.Add(new DataColumn<T>());
             SortBy = SortRule<T>.Ascending(x => x.Id);
             MaxCount = INITIAL_MAX_PAGE_COUNT;
+            CanSaveQuery = true;
         }
 
         public SortRule<T> SortBy { get; set; }

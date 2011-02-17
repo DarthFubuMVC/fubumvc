@@ -41,14 +41,26 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void can_save_query_is_true_by_default()
+        {
+            var grid = new FakeCaseGrid();
+            grid.Definition.CanSaveQuery.ShouldBeTrue();           
+        }
+
+        [Test]
         public void can_save_query()
         {
             var grid = new FakeCaseGrid();
+
+            grid.CanSaveQuery(false);
             grid.Definition.CanSaveQuery.ShouldBeFalse();
 
-            grid.CanSaveQuery();
-            grid.Definition.CanSaveQuery.ShouldBeTrue();
+        }
 
+        [Test]
+        public void can_save_query_negative()
+        {
+            
         }
     }
 

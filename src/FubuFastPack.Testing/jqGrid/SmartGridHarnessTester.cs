@@ -184,6 +184,7 @@ namespace FubuFastPack.Testing.jqGrid
         public SimpleGrid()
         {
             Show(x => x.Title);
+            CanSaveQuery(false);
         }
 
         public override string GetHeader()
@@ -197,7 +198,7 @@ namespace FubuFastPack.Testing.jqGrid
         public CanCreateNewGrid()
         {
             AllowCreateNew();
-            CanSaveQuery();
+            CanSaveQuery(true);
         }
     }
 
@@ -213,6 +214,12 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void get_header_text_delegates_to_the_grid()
+        {
+            ClassUnderTest.HeaderText().ShouldEqual(new EntityArgGrid(null).GetHeader());
+        }
+
+        [Test]
         public void url_on_the_model_has_a_query_string_for_the_person_arg()
         {
             var person = new Person{
@@ -225,6 +232,19 @@ namespace FubuFastPack.Testing.jqGrid
             url += "?person=" + person.Id.ToString();
 
             ClassUnderTest.GetUrl().ShouldEqual(url);
+        }
+
+        [Test]
+        public void get_url_query_string()
+        {
+            var person = new Person
+            {
+                Id = Guid.NewGuid()
+            };
+
+            MockFor<ISmartRequest>().Stub(x => x.Value(typeof(Person), "person")).Return(person);
+
+            ClassUnderTest.GetQuerystring().ShouldEqual("?person=" + person.Id.ToString());
         }
 
         [Test]
@@ -330,6 +350,26 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void get_query_string()
+        {
+            var person = new Person
+            {
+                Id = Guid.NewGuid()
+            };
+
+            MockFor<ISmartRequest>().Stub(x => x.Value(typeof(Person), "person")).Return(person);
+
+
+            var theTitle = "something";
+            MockFor<ISmartRequest>().Stub(x => x.Value(typeof(string), "title")).Return(theTitle);
+
+            var expected = "?person=" + person.Id.ToString();
+            expected += "&title=" + theTitle;
+
+            ClassUnderTest.GetQuerystring().ShouldEqual(expected);
+        }
+
+        [Test]
         public void build_the_grid_with_the_proper_arguments()
         {
             var person = new Person
@@ -394,6 +434,11 @@ namespace FubuFastPack.Testing.jqGrid
         public Person Person
         {
             get { return _person; }
+        }
+
+        public override string GetHeader()
+        {
+            return "header of the entity arg grid";
         }
     }
 

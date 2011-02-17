@@ -12,6 +12,8 @@ namespace FubuFastPack.JqGrid
 {
     public abstract class RepositoryGrid<TEntity> : Grid<TEntity, IRepository> where TEntity : DomainEntity
     {
+        private readonly IList<Expression<Func<TEntity, bool>>> _wheres = new List<Expression<Func<TEntity, bool>>>();
+
         public override IGridDataSource<TEntity> BuildSource(IRepository repository)
         {
             return new RepositoryDataSource(this, repository);
@@ -20,6 +22,11 @@ namespace FubuFastPack.JqGrid
         protected virtual IQueryable<TEntity> query(IRepository repository)
         {
             return repository.Query<TEntity>();
+        }
+
+        public void Where(Expression<Func<TEntity, bool>> where)
+        {
+            _wheres.Add(where);
         }
 
         #region Nested type: RepositoryDataSource
@@ -34,6 +41,7 @@ namespace FubuFastPack.JqGrid
             {
                 _grid = grid;
                 _repository = repository;
+                _wheres.AddRange(_grid._wheres);
             }
 
             // TODO -- test this
@@ -102,6 +110,8 @@ namespace FubuFastPack.JqGrid
 
                 return queryable;
             }
+
+
         }
 
         #endregion

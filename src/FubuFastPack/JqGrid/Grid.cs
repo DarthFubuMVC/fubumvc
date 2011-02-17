@@ -146,9 +146,9 @@ namespace FubuFastPack.JqGrid
             _definition.AllowCreationOfNew = true;
         }
 
-        public void CanSaveQuery()
+        public void CanSaveQuery(bool canSave)
         {
-            _definition.CanSaveQuery = true;
+            _definition.CanSaveQuery = canSave;
         }
 
         public Type EntityType

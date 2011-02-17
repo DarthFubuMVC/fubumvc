@@ -14,7 +14,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    // TODO -- need this to throw a good exception when all necessary arguments don't exist
+    // TODO -- only build the grid once
     public class SmartGridHarness<T> : ISmartGridHarness where T : ISmartGrid
     {
         private readonly Cache<string, object> _args = new Cache<string, object>();
@@ -100,14 +100,22 @@ namespace FubuFastPack.JqGrid
         {
             var url = _urls.UrlFor(new GridRequest<T>());
 
+            url += GetQuerystring();
+
+            return url;
+        }
+
+        public string GetQuerystring()
+        {
             var ctor = getConstructor();
             if (ctor.GetParameters().Any())
             {
                 var queryStrings = ctor.GetParameters().Select(p => buildQueryStringForArg(p.ParameterType, p.Name));
-                url += "?" + queryStrings.Join("&");
+
+                return "?" + queryStrings.Join("&");
             }
 
-            return url;
+            return string.Empty;
         }
 
         private string buildQueryStringForArg(Type type, string key)
@@ -230,6 +238,11 @@ namespace FubuFastPack.JqGrid
 
                 RegisterArgument(parameter.Name, arg);
             }
+        }
+
+        public string HeaderText()
+        {
+            return BuildGrid().GetHeader();
         }
     }
 }
