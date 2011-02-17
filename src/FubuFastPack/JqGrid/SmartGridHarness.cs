@@ -188,6 +188,7 @@ namespace FubuFastPack.JqGrid
             return new JqGridModel{
                 colModel = definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),
                 gridName = gridName,
+                containerName = typeof(T).ContainerNameForGrid(),
                 url = GetUrl(),
                 headers = definition.Columns.Select(x => x.GetHeader()).ToArray(),
                 pagerId = gridName + "_pager",

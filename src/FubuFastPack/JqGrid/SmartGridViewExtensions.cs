@@ -82,17 +82,23 @@ namespace FubuFastPack.JqGrid
                 return HtmlTag.Empty();
             }
 
-            page.Script("grid");
-
             var harness = page.Get<SmartGridHarness<T>>();
             modification(harness);
 
             var model = harness.BuildJqModel();
+
+
+            return SmartGridFor(page, model, initialRows);
+        }
+
+        public static HtmlTag SmartGridFor(this IFubuPage page, JqGridModel model, int? initialRows)
+        {
+            page.Script("grid");
             return new HtmlTag("div", top =>
             {
-                string gridName = typeof (T).NameForGrid();
+                string gridName = model.gridName;
                 top.Add("div")
-                    .Id(typeof (T).ContainerNameForGrid())
+                    .Id(model.containerName)
                     .AddClass("grid-container")
                     .MetaData("definition", model)
                     .MetaData("initialRows", initialRows.GetValueOrDefault(10))
