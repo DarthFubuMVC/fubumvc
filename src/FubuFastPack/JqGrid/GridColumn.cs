@@ -50,6 +50,11 @@ namespace FubuFastPack.JqGrid
             yield return Accessor;
         }
 
+        public IEnumerable<string> Headers()
+        {
+            yield return GetHeader();
+        }
+
         public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
             var dictionary = new Dictionary<string, object>{

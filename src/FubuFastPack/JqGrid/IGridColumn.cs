@@ -16,6 +16,7 @@ namespace FubuFastPack.JqGrid
         IEnumerable<Accessor> AllAccessors();
 
         IEnumerable<FilteredProperty> FilteredProperties();
+        IEnumerable<string> Headers();
 
         string GetHeader();
 

@@ -58,6 +58,7 @@
     <Compile Include="Binding\DomainEntityConverterFamilyTester.cs" />
     <Compile Include="ContainerActivatorExtensionsTester.cs" />
     <Compile Include="FubuFastPackRegistryExtensionTester.cs" />
+    <Compile Include="jqGrid\FilterColumnTester.cs" />
     <Compile Include="jqGrid\GridColumnTester.cs" />
     <Compile Include="jqGrid\GridRequestTester.cs" />
     <Compile Include="jqGrid\GridTester.cs" />

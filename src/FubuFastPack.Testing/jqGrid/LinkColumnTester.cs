@@ -82,6 +82,12 @@ namespace FubuFastPack.Testing.jqGrid
             theColumn.ToDictionary().Single()["sortable"].ShouldEqual(false);
         }
 
+        [Test]
+        public void returns_a_single_header()
+        {
+            theColumn.Headers().Single().ShouldEqual(theColumn.GetHeader());
+        }
+
     }
 
     [TestFixture]
@@ -198,6 +204,12 @@ namespace FubuFastPack.Testing.jqGrid
             });
 
             theColumnModel = theColumn.ToDictionary().Single();
+        }
+
+        [Test]
+        public void headers_returns_one_header()
+        {
+            theColumn.Headers().Single().ShouldEqual(theColumn.GetHeader());
         }
 
         [Test]

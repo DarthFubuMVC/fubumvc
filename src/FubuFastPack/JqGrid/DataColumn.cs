@@ -49,6 +49,11 @@ namespace FubuFastPack.JqGrid
             yield break;
         }
 
+        public IEnumerable<string> Headers()
+        {
+            yield return GetHeader();
+        }
+
         public string GetHeader()
         {
             return "Data";

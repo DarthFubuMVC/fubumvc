@@ -107,6 +107,15 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void get_headers_returns_the_one_vlaue()
+        {
+            StringToken token = StringToken.FromKeyString("HeaderText");
+            theColumn.HeaderFrom(token);
+
+            theColumn.Headers().Single().ShouldEqual(token.ToString());
+        }
+
+        [Test]
         public void get_header_without_a_string_token_should_just_localize_the_header()
         {
             theColumn.GetHeader().ShouldEqual(LocalizationManager.GetHeader<Case>(x => x.Condition));

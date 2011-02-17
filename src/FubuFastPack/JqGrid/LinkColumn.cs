@@ -125,6 +125,11 @@ namespace FubuFastPack.JqGrid
             return SelectAccessors();
         }
 
+        public IEnumerable<string> Headers()
+        {
+            yield return GetHeader();
+        }
+
         public static LinkColumn<T> For(Expression<Func<T, object>> expression)
         {
             return new LinkColumn<T>(expression);

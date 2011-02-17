@@ -33,5 +33,10 @@ namespace FubuFastPack.JqGrid
         {
             yield return Accessor;
         }
+
+        public IEnumerable<string> Headers()
+        {
+            yield break;
+        }
     }
 }

@@ -190,7 +190,7 @@ namespace FubuFastPack.JqGrid
                 gridName = gridName,
                 containerName = typeof(T).ContainerNameForGrid(),
                 url = GetUrl(),
-                headers = definition.Columns.Select(x => x.GetHeader()).ToArray(),
+                headers = definition.Columns.SelectMany(x => x.Headers()).ToArray(),
                 pagerId = gridName + "_pager",
                 initialCriteria = grid.InitialCriteria().ToArray()
             };
