@@ -35,6 +35,14 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlTags" Condition="'$(LEGACY)' != 'True'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags" Condition="'$(LEGACY)' == 'True'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\2.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -479,10 +487,6 @@
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -102,6 +102,7 @@ task :compile35 => [:clean, :version] do
    :properties=>[
      "TargetFrameworkVersion=v3.5",
      "OutDir=#{output}",
+	 "Legacy=True",
      "DefineConstants=\"LEGACY;TRACE\""
      ]
 
@@ -123,7 +124,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'HtmlTags.Testing', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing']
+  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing']
 end
 
 
