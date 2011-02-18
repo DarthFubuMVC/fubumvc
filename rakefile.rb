@@ -11,7 +11,7 @@ COPYRIGHT = 'Copyright 2008-2010 Chad Myers, Jeremy D. Miller, Joshua Flanagan, 
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
 
-props = { :stage => "build", :stage35 => "build35", :artifacts => "artifacts" }
+props = { :stage => File.expand_path("build"), :stage35 => File.expand_path("build35"), :artifacts => File.expand_path("artifacts") }
 
 desc "Displays a list of tasks"
 task :help do
@@ -40,19 +40,15 @@ assemblyinfo :version do |asm|
   asm_version = BUILD_NUMBER_BASE + ".0"
   
   begin
-	gittag = `git describe --long`.chomp 	# looks something like v0.1.0-63-g92228f4
-    gitnumberpart = /-(\d+)-/.match(gittag)
-    gitnumber = gitnumberpart.nil? ? '0' : gitnumberpart[1]
     commit = `git log -1 --pretty=format:%H`
   rescue
     commit = "git unavailable"
-    gitnumber = "0"
   end
-  build_number = "#{BUILD_NUMBER_BASE}.#{gitnumber}"
+  build_number = "#{BUILD_NUMBER_BASE}.#{Date.today.strftime('%y%j')}"
   tc_build_number = ENV["BUILD_NUMBER"]
   puts "##teamcity[buildNumber '#{build_number}-#{tc_build_number}']" unless tc_build_number.nil?
   asm.trademark = commit
-  asm.product_name = "#{PRODUCT} #{gittag}"
+  asm.product_name = PRODUCT
   asm.description = build_number
   asm.version = asm_version
   asm.file_version = build_number
@@ -66,8 +62,22 @@ task :clean do
 	#TODO: do any other tasks required to clean/prepare the working directory
 	FileUtils.rm_rf props[:stage]
 	FileUtils.rm_rf props[:stage35]
-	Dir.mkdir props[:stage] unless exists?(props[:stage])
+    # work around nasty latency issue where folder still exists for a short while after it is removed
+    waitfor { !exists?(props[:stage]) }
+	Dir.mkdir props[:stage]
+    waitfor { !exists?(props[:stage35]) }
+	Dir.mkdir props[:stage35]
+    
 	Dir.mkdir props[:artifacts] unless exists?(props[:artifacts])
+end
+
+def waitfor(&block)
+  checks = 0
+  until block.call || checks >10 
+    sleep 0.5
+    checks += 1
+  end
+  raise 'waitfor timeout expired' if checks > 10
 end
 
 desc "Compiles the app"
@@ -86,7 +96,7 @@ task :compile => [:clean, :version] do
 end
 
 desc "Compiles the app for .NET Framework 3.5"
-task :compile35 do
+task :compile35 => [:clean, :version] do
   output = "bin\\#{COMPILE_TARGET}35\\"
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.Fx35.sln', :clrversion => CLR_TOOLS_VERSION,
    :properties=>[
@@ -95,7 +105,6 @@ task :compile35 do
      "DefineConstants=\"LEGACY;TRACE\""
      ]
 
-  Dir.mkdir props[:stage35] unless exists?(props[:stage35])
   output_nix = output.gsub('\\', '/')
   copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
   copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
