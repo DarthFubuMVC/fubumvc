@@ -36,6 +36,15 @@ namespace FubuFastPack.Querying
             return new TOperation().GetPredicate(request.Property, request.GetValue());
         }
 
+        public FilterRule ToFilterRule<T>(FilterRequest<T> request)
+        {
+            return new FilterRule(){
+                Accessor = request.Accessor,
+                Operator = _key,
+                Value = request.GetValue()
+            };
+        }
+
         public bool Matches(Accessor accessor)
         {
             return _typeFilters.Any(f => f(accessor.PropertyType));

@@ -15,15 +15,39 @@ namespace FubuFastPack.NHibernate
     public class Projection<T> : IProjection, IDataSourceFilter<T> where T : DomainEntity
     {
         private const int INITIAL_MAX_PAGE_COUNT = 1000;
+        private readonly IList<ProjectionColumn<T>> _columns = new List<ProjectionColumn<T>>();
         private readonly ISession _session;
         private readonly List<ICriterion> _wheres = new List<ICriterion>();
-        private readonly IList<ProjectionColumn<T>> _columns = new List<ProjectionColumn<T>>();
 
         public Projection(ISession session)
         {
             MaxCount = INITIAL_MAX_PAGE_COUNT;
             SortBy = SortRule<T>.Ascending(x => x.Id);
             _session = session;
+        }
+
+        public int WhereCount
+        {
+            get { return _wheres.Count(); }
+        }
+
+        public SortRule<T> SortBy { get; set; }
+
+        public int MaxCount { get; set; }
+
+        void IDataSourceFilter<T>.WhereEqual(Expression<Func<T, object>> property, object value)
+        {
+            Where(property).IsEqualTo(value);
+        }
+
+        void IDataSourceFilter<T>.WhereNotEqual(Expression<Func<T, object>> property, object value)
+        {
+            Where(property).IsNot(value);
+        }
+
+        public int Count()
+        {
+            return Count(c => c);
         }
 
         public ProjectionColumn<T> AddColumn(Accessor accessor)
@@ -39,16 +63,10 @@ namespace FubuFastPack.NHibernate
             return _columns.Select(x => x.PropertyAccessor);
         }
 
-        public int WhereCount { get { return _wheres.Count(); } }
-
         public void AddColumn(ProjectionColumn<T> column)
         {
             _columns.Add(column);
         }
-
-        public SortRule<T> SortBy { get; set; }
-
-        public int MaxCount { get; set; }
 
         public ProjectionColumn<T> AddColumn(Expression<Func<T, object>> expression)
         {
@@ -63,7 +81,7 @@ namespace FubuFastPack.NHibernate
 
         public IEnumerable GetAllData()
         {
-            ICriteria criteria = _session.CreateCriteria(typeof(T));
+            var criteria = _session.CreateCriteria(typeof (T));
             criteria = _columns.AddAliases(criteria);
             criteria = addWheres(criteria);
             criteria = AddTheProjections(criteria);
@@ -82,7 +100,7 @@ namespace FubuFastPack.NHibernate
 
         public ICriteria GetFilteredCriteria()
         {
-            ICriteria criteria = _session.CreateCriteria(typeof(T));
+            var criteria = _session.CreateCriteria(typeof (T));
             criteria = _columns.AddAliases(criteria);
             criteria = addWheres(criteria);
             return criteria;
@@ -114,7 +132,7 @@ namespace FubuFastPack.NHibernate
 
         public ICriteria AddTheProjections(ICriteria criteria)
         {
-            ProjectionList projections = Projections.ProjectionList();
+            var projections = Projections.ProjectionList();
 
             _columns.Each(column => column.AddProjection(projections));
 
@@ -141,6 +159,69 @@ namespace FubuFastPack.NHibernate
             return new WhereExpression(expression, _wheres);
         }
 
+
+        // TODO -- Reuse the CriterionBuilder here 
+
+        public int Count(Func<ICriteria, ICriteria> chain)
+        {
+            var criteria = criteriaForCount(chain);
+            var count = (int) criteria.UniqueResult();
+            return count;
+        }
+
+        public void CountsOf<U>(Expression<Func<T, U>> property, Action<U, int> callback)
+        {
+            var criteria = _session.CreateCriteria(typeof (T));
+            criteria = addWheres(criteria);
+
+            var propertyName = property.ToPropertyName();
+            var projections = Projections.ProjectionList();
+            projections.Add(Projections.GroupProperty(propertyName));
+            projections.Add(Projections.Count(propertyName));
+
+
+            criteria = criteria.SetProjection(projections);
+
+
+            criteria.List().Cast<object[]>().Each(o => { callback((U) o.GetValue(0), (int) o.GetValue(1)); });
+        }
+
+        protected ICriteria criteriaForCount(Func<ICriteria, ICriteria> chain)
+        {
+            var criteria = _session.CreateCriteria(typeof (T));
+            //criteria = addAliases(criteria);
+            criteria = addWheres(criteria);
+            criteria = chain(criteria);
+
+            criteria = criteria.SetProjection(Projections.Count(_columns[0].PropertyName));
+            return criteria;
+        }
+
+        public void OuterJoin(Accessor accessor)
+        {
+            var column = _columns.FirstOrDefault(c => c.PropertyAccessor == accessor);
+            if (column != null)
+            {
+                column.OuterJoin = true;
+            }
+        }
+
+        public void AddWhere(ICriterion criterion)
+        {
+            _wheres.Add(criterion);
+        }
+
+        #region Nested type: AndExpression
+
+        public interface AndExpression
+        {
+            WhereExpression And(Expression<Func<T, object>> expression);
+        }
+
+        #endregion
+
+        #region Nested type: WhereExpression
+
         public class WhereExpression : AndExpression
         {
             private readonly List<ICriterion> _wheres;
@@ -150,6 +231,12 @@ namespace FubuFastPack.NHibernate
             {
                 _wheres = wheres;
                 _lastAccessor = ReflectionHelper.GetAccessor(expression);
+            }
+
+            public WhereExpression And(Expression<Func<T, object>> expression)
+            {
+                _lastAccessor = ReflectionHelper.GetAccessor(expression);
+                return this;
             }
 
             public AndExpression IsEqualTo(object value)
@@ -195,12 +282,6 @@ namespace FubuFastPack.NHibernate
                 return this;
             }
 
-            public WhereExpression And(Expression<Func<T, object>> expression)
-            {
-                _lastAccessor = ReflectionHelper.GetAccessor(expression);
-                return this;
-            }
-
             public AndExpression IsNot(object value)
             {
                 var criterion = Restrictions.Not(Restrictions.Eq(_lastAccessor.Name, value));
@@ -231,71 +312,6 @@ namespace FubuFastPack.NHibernate
             }
         }
 
-        public interface AndExpression
-        {
-            WhereExpression And(Expression<Func<T, object>> expression);
-        }
-
-        public int Count()
-        {
-            return Count(c => c);
-        }
-
-        public int Count(Func<ICriteria, ICriteria> chain)
-        {
-            ICriteria criteria = criteriaForCount(chain);
-            var count = (int)criteria.UniqueResult();
-            return count;
-        }
-
-        public void CountsOf<U>(Expression<Func<T, U>> property, Action<U, int> callback)
-        {
-            ICriteria criteria = _session.CreateCriteria(typeof(T));
-            criteria = addWheres(criteria);
-
-            var propertyName = property.ToPropertyName();
-            ProjectionList projections = Projections.ProjectionList();
-            projections.Add(Projections.GroupProperty(propertyName));
-            projections.Add(Projections.Count(propertyName));
-
-
-            criteria = criteria.SetProjection(projections);
-
-
-            criteria.List().Cast<object[]>().Each(o =>
-            {
-                callback((U)o.GetValue(0), (int)o.GetValue(1));
-            });
-        }
-
-        protected ICriteria criteriaForCount(Func<ICriteria, ICriteria> chain)
-        {
-            ICriteria criteria = _session.CreateCriteria(typeof(T));
-            //criteria = addAliases(criteria);
-            criteria = addWheres(criteria);
-            criteria = chain(criteria);
-
-            criteria = criteria.SetProjection(Projections.Count(_columns[0].PropertyName));
-            return criteria;
-        }
-
-        void IDataSourceFilter<T>.WhereEqual(Expression<Func<T, object>> property, object value)
-        {
-            Where(property).IsEqualTo(value);
-        }
-
-        void IDataSourceFilter<T>.WhereNotEqual(Expression<Func<T, object>> property, object value)
-        {
-            Where(property).IsNot(value);
-        }
-
-        public void OuterJoin(Accessor accessor)
-        {
-            var column = _columns.FirstOrDefault(c => c.PropertyAccessor == accessor);
-            if (column != null)
-            {
-                column.OuterJoin = true;
-            }
-        }
+        #endregion
     }
 }

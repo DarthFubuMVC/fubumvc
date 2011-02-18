@@ -41,5 +41,14 @@ namespace FubuFastPack.Querying
 
             return Expression.Lambda<Func<T, bool>>(expression, parameterExpression);
         }
+
+        public FilterRule ToFilterRule<T>(FilterRequest<T> request)
+        {
+            return new FilterRule(){
+                Accessor = request.Accessor,
+                Operator = _key,
+                Value = request.GetValue()
+            };
+        }
     }
 }

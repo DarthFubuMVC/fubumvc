@@ -24,7 +24,17 @@ namespace FubuFastPack.Querying
 
         public Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request)
         {
-            return allHandlers().First(h => h.Handles(request)).WhereFilterFor(request);
+            return findHandler(request).WhereFilterFor(request);
+        }
+
+        private IFilterHandler findHandler<T>(FilterRequest<T> request)
+        {
+            return allHandlers().First(h => h.Handles(request));
+        }
+
+        public FilterRule FilterRuleFor<T>(FilterRequest<T> request)
+        {
+            return findHandler(request).ToFilterRule(request);
         }
 
         private IEnumerable<IFilterHandler> allHandlers()

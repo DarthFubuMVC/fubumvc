@@ -12,6 +12,7 @@ namespace FubuFastPack.Querying
     {
         IEnumerable<StringToken> FilterOptionsFor<TEntity>(Accessor accessor);
         Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request);
+        FilterRule FilterRuleFor<T>(FilterRequest<T> request);
     }
 
     public interface IFilterTemplateSource

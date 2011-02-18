@@ -12,5 +12,14 @@ namespace FubuFastPack.Querying
         IEnumerable<StringToken> FilterOptionsFor<T>(Accessor accessor);
         bool Handles<T>(FilterRequest<T> request);
         Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request);
+
+        FilterRule ToFilterRule<T>(FilterRequest<T> request);
+    }
+
+    public class FilterRule
+    {
+        public Accessor Accessor { get; set; }
+        public object Value { get; set; }
+        public StringToken Operator { get; set; }
     }
 }

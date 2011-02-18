@@ -80,6 +80,8 @@ namespace FubuFastPack.Testing.Security
         public string Reason { get; set; }
         public bool IsSecret { get; set; }
         public Person Owner { get; set; }
+
+        public int Integer { get; set; }
     }
 
     public class Site : DomainEntity{}
