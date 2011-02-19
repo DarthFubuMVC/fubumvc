@@ -110,6 +110,7 @@ task :compile35 => [:clean, :version] do
   copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
   copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
   copyOutputFiles "src/FubuValidation/#{output_nix}", "FubuValidation.{dll,pdb}", props[:stage35]
+  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage35]
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
@@ -153,4 +154,9 @@ zip :package35 do |zip|
 	zip.directories_to_zip = [props[:stage35]]
 	zip.output_file = 'fubumvc_net35.zip'
 	zip.output_path = [props[:artifacts]]
+end
+
+desc "Build the nuget package"
+task :nuget do
+	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o artifacts"
 end
