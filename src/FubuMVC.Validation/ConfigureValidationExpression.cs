@@ -7,7 +7,7 @@ namespace FubuMVC.Validation
 {
     public class ConfigureValidationExpression
     {
-        private readonly IList<ObjectDef> _policies = new List<ObjectDef>();
+        private readonly ListDependency _policies = new ListDependency(typeof (IEnumerable<IValidationFailurePolicy>));
         private readonly ValidationCallMatcher _callMatcher = new ValidationCallMatcher();
 
         public ValidationFailureExpression Failures { get { return new ValidationFailureExpression(_policies); } }
@@ -17,10 +17,8 @@ namespace FubuMVC.Validation
         {
             registry.Services(x =>
                                   {
-                                      var handler = x.SetServiceIfNone(typeof (IValidationFailureHandler<>), typeof (ValidationFailureHandler<>));
-                                      var policies = new ListDependency(typeof(IEnumerable<IValidationFailurePolicy>));
-                                      _policies.Each(policy => policies.Items.Add(policy));
-                                      handler.Dependencies.Add(policies);
+                                      var handler = x.SetServiceIfNone(typeof (IValidationFailureHandler), typeof (ValidationFailureHandler));
+                                      handler.Dependencies.Add(_policies);
                                   });
 
             registry

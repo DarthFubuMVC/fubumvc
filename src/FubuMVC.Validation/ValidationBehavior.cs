@@ -10,9 +10,9 @@ namespace FubuMVC.Validation
     {
         private readonly IFubuRequest _request;
         private readonly IValidationProvider _provider;
-        private readonly IValidationFailureHandler<T> _failureHandler;
+        private readonly IValidationFailureHandler _failureHandler;
 
-        public ValidationBehavior(IFubuRequest request, IValidationProvider provider, IValidationFailureHandler<T> failureHandler) 
+        public ValidationBehavior(IFubuRequest request, IValidationProvider provider, IValidationFailureHandler failureHandler) 
             : base(PartialBehavior.Executes)
         {
             _request = request;
@@ -30,7 +30,7 @@ namespace FubuMVC.Validation
             }
 
             _request.Set(notification);
-            _failureHandler.Handle();
+            _failureHandler.Handle(typeof(T));
 
             return DoNext.Stop;
         }

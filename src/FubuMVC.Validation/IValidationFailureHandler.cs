@@ -1,8 +1,9 @@
-﻿namespace FubuMVC.Validation
+﻿using System;
+
+namespace FubuMVC.Validation
 {
-    public interface IValidationFailureHandler<T>
-        where T : class
+    public interface IValidationFailureHandler
     {
-        void Handle();
+        void Handle(Type modelType);
     }
 }

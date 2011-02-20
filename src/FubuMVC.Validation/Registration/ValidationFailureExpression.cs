@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Validation.Registration
 {
     public class ValidationFailureExpression
     {
-        private readonly IList<ObjectDef> _policies;
+        private readonly ListDependency _policies;
 
-        public ValidationFailureExpression(IList<ObjectDef> policies)
+        public ValidationFailureExpression(ListDependency policies)
         {
             _policies = policies;
         }
@@ -21,7 +20,7 @@ namespace FubuMVC.Validation.Registration
 
         public ValidationFailureExpression Add(IValidationFailurePolicy policy)
         {
-            _policies.Fill(new ObjectDef(typeof(IValidationFailurePolicy)) { Value = policy });
+            _policies.AddValue(policy);
             return this;
         }
 

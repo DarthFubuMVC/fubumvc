@@ -53,14 +53,14 @@ namespace FubuMVC.Validation.Tests
             MockFor<IFubuRequest>()
                 .Expect(request => request.Set(notification));
 
-            MockFor<IValidationFailureHandler<SampleInputModel>>()
-                .Expect(handler => handler.Handle());
+            MockFor<IValidationFailureHandler>()
+                .Expect(handler => handler.Handle(typeof(SampleInputModel)));
 
             ClassUnderTest
                 .Invoke();
 
             VerifyCallsFor<IFubuRequest>();
-            VerifyCallsFor<IValidationFailureHandler<SampleInputModel>>();
+            VerifyCallsFor<IValidationFailureHandler>();
 
             MockFor<IActionBehavior>()
                 .AssertWasNotCalled(inner => inner.Invoke());

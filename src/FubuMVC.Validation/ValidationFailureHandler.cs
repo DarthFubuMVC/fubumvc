@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Runtime;
 using FubuValidation;
 
 namespace FubuMVC.Validation
 {
-    public class ValidationFailureHandler<T> : IValidationFailureHandler<T>
-        where T : class
+    public class ValidationFailureHandler : IValidationFailureHandler
     {
         private readonly IEnumerable<IValidationFailurePolicy> _policies;
         private readonly IFubuRequest _request;
@@ -17,9 +17,8 @@ namespace FubuMVC.Validation
             _request = request;
         }
 
-        public void Handle()
+        public void Handle(Type modelType)
         {
-            var modelType = typeof (T);
             var notification = _request.Get<Notification>();
             var policy = _policies.FirstOrDefault(p => p.Matches(modelType));
             if(policy == null)

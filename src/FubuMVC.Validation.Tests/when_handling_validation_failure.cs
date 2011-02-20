@@ -10,7 +10,7 @@ namespace FubuMVC.Validation.Tests
     [TestFixture]
     public class when_handling_validation_failure
     {
-        private ValidationFailureHandler<SampleInputModel> _handler;
+        private ValidationFailureHandler _handler;
         private List<IValidationFailurePolicy> _policies;
 
         [SetUp]
@@ -20,14 +20,14 @@ namespace FubuMVC.Validation.Tests
             var request = services.Get<IFubuRequest>();
 
             _policies = new List<IValidationFailurePolicy>();
-            _handler = new ValidationFailureHandler<SampleInputModel>(_policies, request);
+            _handler = new ValidationFailureHandler(_policies, request);
         }
 
         [Test]
         public void should_throw_validation_exception_if_no_policies_are_found()
         {
             Exception<FubuMVCValidationException>
-                .ShouldBeThrownBy(() => _handler.Handle());
+                .ShouldBeThrownBy(() => _handler.Handle(typeof(SampleInputModel)));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace FubuMVC.Validation.Tests
             _policies.Add(new SampleValidationFailurePolicy(() => { }));
             _policies.Add(new SampleValidationFailurePolicy(() => Assert.Fail("Invalid policy invoked")));
 
-            _handler.Handle();
+            _handler.Handle(typeof(SampleInputModel));
         }
 
         public class SampleValidationFailurePolicy : IValidationFailurePolicy
