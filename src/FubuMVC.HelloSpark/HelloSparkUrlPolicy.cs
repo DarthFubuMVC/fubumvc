@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Diagnostics;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -10,7 +11,7 @@ namespace FubuMVC.HelloSpark
 	{
 		public bool Matches(ActionCall call, IConfigurationObserver log)
 		{
-			return call.HandlerType.Name.EndsWith("Controller");
+			return call.HandlerType.Name.EndsWith("Controller") && !call.HasAttribute<UrlPatternAttribute>();
 		}
 
 		public IRouteDefinition Build(ActionCall call)

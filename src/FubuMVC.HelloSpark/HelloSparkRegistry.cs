@@ -1,5 +1,7 @@
 using FubuMVC.Core;
 using FubuMVC.HelloSpark.Controllers;
+using FubuMVC.Validation;
+using FubuValidation;
 using Spark.Web.FubuMVC;
 using Spark.Web.FubuMVC.ViewCreation;
 
@@ -35,6 +37,11 @@ namespace FubuMVC.HelloSpark
         	           			.ToJavaScriptWhen(call => call.HasOutput && call.OutputType().Equals(typeof (JavaScriptResponse)));
 
         	           	});
+
+            this.Validation<ValidationRegistry>(validation => validation
+                                                                  .Failures
+                                                                  .IfModelTypeIs<CreateProductInput>()
+                                                                  .TransferTo<CreateProductRequest>());
 
             Routes
                 .UrlPolicy<HelloSparkUrlPolicy>();

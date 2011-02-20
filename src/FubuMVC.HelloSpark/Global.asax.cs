@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;
 using System.Web.Routing;
 
@@ -13,6 +14,8 @@ namespace FubuMVC.HelloSpark
 				.For<HelloSparkRegistry>()
                 .StructureMapObjectFactory()
                 .Bootstrap(RouteTable.Routes);
+
+            PackageRegistry.AssertNoFailures();
         }
     }
 }
