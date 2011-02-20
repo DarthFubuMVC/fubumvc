@@ -69,6 +69,9 @@
     <Compile Include="ValidationBehavior.cs" />
     <Compile Include="ValidationConvention.cs" />
     <Compile Include="ValidationFailureHandler.cs" />
+    <Compile Include="ValidationFubuRegistryExtension.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -83,6 +86,9 @@
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
       <Name>FubuValidation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".package-manifest" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
