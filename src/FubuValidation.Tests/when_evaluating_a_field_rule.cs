@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuLocalization;
 using FubuValidation.Strategies;
-using FubuValidation.Tests.Strategies;
+using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -16,6 +16,8 @@ namespace FubuValidation.Tests
         private Notification _notification;
         private string _rawValue;
         private StringToken _token;
+        private ValidationContext _context;
+        private ValidationStrategyContext _strategyContext;
 
         protected override void beforeEach()
         {
@@ -23,6 +25,8 @@ namespace FubuValidation.Tests
             _notification = new Notification();
             _rawValue = "Test";
             _token = StringToken.FromKeyString("test-key", "Test message");
+            _context = new ValidationContext(null);
+            _strategyContext = new ValidationStrategyContext(_model, _rawValue, typeof(AddressModel), null, _notification);
 
             MockFor<ITypeResolver>()
                 .Expect(resolver => resolver.ResolveType(_model))
@@ -39,10 +43,10 @@ namespace FubuValidation.Tests
         public void should_delegate_to_field_strategy()
         {
             MockFor<IFieldValidationStrategy>()
-                .Expect(strategy => strategy.Validate(_model, _rawValue, typeof(AddressModel), _notification))
+                .Expect(strategy => strategy.Validate(_strategyContext))
                 .Return(ValidationStrategyResult.Valid());
 
-            ClassUnderTest.Validate(_model, _notification);
+            ClassUnderTest.Validate(_model, _context, _notification);
 
             VerifyCallsFor<IFieldValidationStrategy>();
         }
@@ -51,10 +55,10 @@ namespace FubuValidation.Tests
         public void should_not_set_substitution_variables_if_validation_passes()
         {
             MockFor<IFieldValidationStrategy>()
-                .Expect(strategy => strategy.Validate(_model, _rawValue, typeof(AddressModel), _notification))
+                .Expect(strategy => strategy.Validate(_strategyContext))
                 .Return(ValidationStrategyResult.Valid());
 
-            ClassUnderTest.Validate(_model, _notification);
+            ClassUnderTest.Validate(_model, _context, _notification);
 
             MockFor<IFieldValidationStrategy>()
                 .AssertWasNotCalled(s => s.GetMessageSubstitutions(null), options => options.IgnoreArguments());
@@ -66,15 +70,15 @@ namespace FubuValidation.Tests
             var message = new NotificationMessage(_token);
 
             MockFor<IFieldValidationStrategy>()
-                .Expect(strategy => strategy.Validate(_model, _rawValue, typeof(AddressModel), _notification))
+                .Expect(strategy => strategy.Validate(_strategyContext))
                 .Return(ValidationStrategyResult.Invalid(message));
 
             MockFor<IFieldValidationStrategy>()
                 .Expect(strategy => strategy.GetMessageSubstitutions(MockFor<Accessor>()))
-                .Return(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>(RequiredFieldStrategy.FIELD, "test") });
+                .Return(new NameValueCollection { {RequiredFieldStrategy.FIELD, "test"} });
 
             ClassUnderTest
-                .Validate(_model, _notification);
+                .Validate(_model, _context, _notification);
 
             message
                 .MessageSubstitutions
@@ -85,15 +89,15 @@ namespace FubuValidation.Tests
         public void should_register_message_if_validation_fails()
         {
             MockFor<IFieldValidationStrategy>()
-                .Expect(strategy => strategy.Validate(_model, _rawValue, typeof(AddressModel), _notification))
+                .Expect(strategy => strategy.Validate(_strategyContext))
                 .Return(ValidationStrategyResult.Invalid(new NotificationMessage(StringToken.FromKeyString("key"))));
 
             MockFor<IFieldValidationStrategy>()
                 .Expect(strategy => strategy.GetMessageSubstitutions(MockFor<Accessor>()))
-                .Return(new List<KeyValuePair<string, string>>());
+                .Return(new NameValueCollection());
 
             ClassUnderTest
-                .Validate(_model, _notification);
+                .Validate(_model, _context, _notification);
 
             _notification
                 .MessagesFor(MockFor<Accessor>())

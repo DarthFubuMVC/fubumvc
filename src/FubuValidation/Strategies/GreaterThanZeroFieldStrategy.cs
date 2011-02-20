@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using FubuCore.Reflection;
 
 namespace FubuValidation.Strategies
 {
     public class GreaterThanZeroFieldStrategy : IFieldValidationStrategy
     {
-        public IEnumerable<KeyValuePair<string, string>> GetMessageSubstitutions(Accessor accessor)
+        public NameValueCollection GetMessageSubstitutions(Accessor accessor)
         {
-            return new List<KeyValuePair<string, string>>();
+            return new NameValueCollection();
         }
 
-        public ValidationStrategyResult Validate(object target, object rawValue, Type declaringType, Notification notification)
+        public ValidationStrategyResult Validate(ValidationStrategyContext context)
         {
+            var rawValue = context.RawValue;
             if (rawValue != null)
             {
                 var value = Convert.ToDecimal(rawValue);

@@ -47,7 +47,7 @@ namespace FubuValidation
             }
         }
 
-        public NotificationMessage RegisterMessage<TARGET>(Expression<Func<TARGET, object>> expression, StringToken token, string messageTemplate)
+        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> expression, StringToken token, string messageTemplate)
         {
             return RegisterMessage(expression.ToAccessor(), token, messageTemplate);
         }
@@ -64,7 +64,7 @@ namespace FubuValidation
             return _bags[accessor];
         }
 
-        public MessageBag MessagesFor<TARGET>(Expression<Func<TARGET, object>> property)
+        public MessageBag MessagesFor<T>(Expression<Func<T, object>> property)
         {
             return MessagesFor(property.ToAccessor());
         }

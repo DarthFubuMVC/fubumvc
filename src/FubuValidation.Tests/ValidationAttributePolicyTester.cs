@@ -3,6 +3,7 @@ using FubuValidation.Registration;
 using FubuValidation.Registration.Policies;
 using FubuValidation.Registration.Sources;
 using FubuValidation.Strategies;
+using FubuValidation.Tests.Models;
 using NUnit.Framework;
 
 namespace FubuValidation.Tests

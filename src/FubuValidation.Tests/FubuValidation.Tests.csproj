@@ -52,12 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessorFactory.cs" />
+    <Compile Include="CompositeModelTests.cs" />
+    <Compile Include="ContinuationValidationPolicyTester.cs" />
+    <Compile Include="ExplicitValidationTests.cs" />
+    <Compile Include="EnumerableValidationPolicyTester.cs" />
+    <Compile Include="ConventionalValidationTests.cs" />
+    <Compile Include="Models\CompositeModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\ModelWithNoAttributes.cs" />
+    <Compile Include="ModelWithEnumerablePropertyTests.cs" />
     <Compile Include="InteractionContext.cs" />
+    <Compile Include="Models\AddressModel.cs" />
+    <Compile Include="Models\SimpleModel.cs" />
     <Compile Include="NotificationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AddressModel.cs" />
-    <Compile Include="SimpleModel.cs" />
-    <Compile Include="Strategies\AccessorFactory.cs" />
     <Compile Include="Strategies\when_evaluating_greater_or_equal_to_zero_rule.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,4 +1,4 @@
-﻿namespace FubuValidation.Tests
+﻿namespace FubuValidation.Tests.Models
 {
     public class SimpleModel
     {

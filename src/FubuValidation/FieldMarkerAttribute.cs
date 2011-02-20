@@ -1,6 +1,7 @@
 ﻿using System;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuValidation.Strategies;
 
 namespace FubuValidation
 {

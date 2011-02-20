@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 
-namespace FubuValidation.Tests.Strategies
+namespace FubuValidation.Tests
 {
     public static class AccessorFactory
     {

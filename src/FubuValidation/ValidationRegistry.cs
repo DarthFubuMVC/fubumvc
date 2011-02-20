@@ -12,24 +12,31 @@ namespace FubuValidation
     {
         private readonly List<IValidationSource> _sources = new List<IValidationSource>();
         private readonly List<IValidationPolicy> _policies = new List<IValidationPolicy>();
-        private readonly List<IValidationPolicy> _rules = new List<IValidationPolicy>();
 
         public SourcesExpression Sources { get { return new SourcesExpression(_sources); } }
         public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
-        public RulesExpression Rules { get { return new RulesExpression(_rules); } }
+        public RulesExpression Rules { get { return new RulesExpression(_policies); } }
 
         public ValidationRegistry()
         {
-            Sources
-                .AddSource(new ValidationPolicySource(_policies));
-
-            Policies
-                .ApplyPolicy<ValidationAttributePolicy>();
+            setupDefaults();
         }
 
         public ValidationRegistry(Action<ValidationRegistry> configure)
+            : this()
         {
             configure(this);
+        }
+
+        private void setupDefaults()
+        {
+            Policies
+                .ApplyPolicy<ValidationAttributePolicy>()
+                .ApplyPolicy<EnumerableValidationPolicy>()
+                .ApplyPolicy<ContinuationValidationPolicy>();
+
+            Sources
+                .AddSource(new ValidationPolicySource(_policies));
         }
 
         public IValidationQuery BuildQuery()

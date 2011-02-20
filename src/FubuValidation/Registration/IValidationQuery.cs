@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore.Reflection;
+using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration
 {

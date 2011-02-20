@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using FubuCore.Reflection;
 
 namespace FubuValidation.Strategies
@@ -15,17 +14,14 @@ namespace FubuValidation.Strategies
 
         public int Length { get; set; }
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageSubstitutions(Accessor accessor)
+        public NameValueCollection GetMessageSubstitutions(Accessor accessor)
         {
-            return new List<KeyValuePair<string, string>>
-                        {
-                            new KeyValuePair<string, string>(LENGTH, Length.ToString())
-                        };
+            return new NameValueCollection { { LENGTH,Length.ToString()} };
         }
 
-        public ValidationStrategyResult Validate(object target, object rawValue, Type declaringType, Notification notification)
+        public ValidationStrategyResult Validate(ValidationStrategyContext context)
         {
-            if (rawValue != null && rawValue.ToString().Length > Length)
+            if (context.RawValue != null && context.RawValue.ToString().Length > Length)
             {
                 return ValidationStrategyResult.Invalid(new NotificationMessage(ValidationKeys.MAX_LENGTH));
             }

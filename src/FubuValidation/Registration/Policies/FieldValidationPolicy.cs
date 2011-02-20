@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration.Policies
 {

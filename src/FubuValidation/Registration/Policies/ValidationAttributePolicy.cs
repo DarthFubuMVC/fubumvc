@@ -13,7 +13,7 @@ namespace FubuValidation.Registration.Policies
         public IEnumerable<IValidationRule> BuildRules(Accessor accessor)
         {
             var rules = new List<IValidationRule>();
-            accessor.ForAttribute<ValidationAttribute>(attr => rules.Add(attr.CreateRule(accessor)));
+            accessor.ForAttribute<ValidationAttribute>(attr => rules.Fill(attr.CreateRule(accessor)));
             return rules;
         }
     }
