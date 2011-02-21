@@ -37,6 +37,7 @@ namespace FubuFastPack.JqGrid
         GridCounts GetCounts<T>(params object[] args) where T : ISmartGrid;
         GridCounts GetCounts(string gridName, params object[] args);
         GridViewModel GetModel(NamedGridRequest request);
+        string QuerystringFor(string gridName, params object[] args);
     }
 
     public class SmartGridService : ISmartGridService
@@ -78,6 +79,14 @@ namespace FubuFastPack.JqGrid
         {
             var harness = _locator.GetInstance<ISmartGridHarness>(request.GridName);
             return harness.BuildGridModel(request.Policies ?? new IGridPolicy[0]);
+        }
+
+        public string QuerystringFor(string gridName, params object[] args)
+        {
+            var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
+            harness.RegisterArguments(args);
+
+            return harness.GetQuerystring();
         }
     }
 

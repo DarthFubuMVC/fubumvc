@@ -64,6 +64,36 @@ namespace FubuFastPack.Testing.jqGrid
     }
 
     [TestFixture]
+    public class when_getting_the_querystring_for_a_grid : InteractionContext<SmartGridService>
+    {
+        private readonly string theGridName = "name of the grid";
+        private readonly object[] theArgs = new object[]{"a", "b"};
+        private string theResultingUrl;
+
+        protected override void beforeEach()
+        {
+            MockFor<IServiceLocator>().Stub(x => x.GetInstance<ISmartGridHarness>(theGridName))
+                .Return(MockFor<ISmartGridHarness>());
+
+            MockFor<ISmartGridHarness>().Stub(x => x.GetQuerystring()).Return("the url");
+
+            theResultingUrl = ClassUnderTest.QuerystringFor(theGridName, theArgs);
+        }
+
+        [Test]
+        public void should_set_the_arguments_on_the_harness()
+        {
+            MockFor<ISmartGridHarness>().AssertWasCalled(x => x.RegisterArguments(theArgs));
+        }
+
+        [Test]
+        public void should_get_the_resulting_url()
+        {
+            theResultingUrl.ShouldEqual("the url");
+        }
+    }
+
+    [TestFixture]
     public class when_getting_the_counts_for_a_grid : InteractionContext<SmartGridService>
     {
         private NamedGridRequest theRequest;
