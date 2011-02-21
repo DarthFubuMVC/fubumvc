@@ -30,6 +30,11 @@ namespace FubuFastPack.JqGrid
             return Header == null ? string.Empty : Header.ToString();
         }
 
+        public T AddColumn<T>(T column) where T : IGridColumn
+        {
+            return _definition.AddColumn(column);
+        }
+
         public void DisableLinks()
         {
             _definition.Columns.OfType<LinkColumn<TEntity>>().Each(x => x.DisableLink());

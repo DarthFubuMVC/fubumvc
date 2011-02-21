@@ -47,4 +47,21 @@ namespace FubuFastPack.NHibernate
             aliasAndJoinTypeMap[key] = OuterJoin;
         }
     }
+
+    public class DiscriminatorProjectionColumn<T> : ProjectionColumn<T> where T : DomainEntity
+    {
+        public DiscriminatorProjectionColumn() : base(null as Accessor)
+        {
+        }
+
+        public override void AddProjection(ProjectionList projections)
+        {
+            projections.Add(Projections.Property("class"));
+        }
+
+        public override void AddAlias(Cache<string, bool> aliasAndJoinTypeMap)
+        {
+            // no-op
+        }
+    }
 }

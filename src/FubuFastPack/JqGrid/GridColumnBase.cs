@@ -11,18 +11,21 @@ namespace FubuFastPack.JqGrid
     public abstract class GridColumnBase<T, TColumnType> where TColumnType : class
     {
         private readonly Accessor _accessor;
+        private Accessor _headerAccessor;
         private readonly Expression<Func<T, object>> _expression;
         private StringToken _header;
 
         protected GridColumnBase(Expression<Func<T, object>> expression)
         {
             _accessor = expression.ToAccessor();
+            _headerAccessor = _accessor;
             _expression = expression;
         }
 
         protected GridColumnBase(Accessor accessor)
         {
             _accessor = accessor;
+            _headerAccessor = accessor;
             _expression = accessor.ToExpression<T>();
         }
 
@@ -60,6 +63,13 @@ namespace FubuFastPack.JqGrid
             return this as TColumnType;
         }
 
+        public TColumnType HeaderFrom(Expression<Func<T, object>> property)
+        {
+            _headerAccessor = property.ToAccessor();
+
+            return this as TColumnType;
+        }
+
         public TColumnType Sortable(bool isSortable)
         {
             IsSortable = isSortable;
@@ -71,7 +81,7 @@ namespace FubuFastPack.JqGrid
         {
             if (_header != null) return _header.ToString();
 
-            return LocalizationManager.GetHeader(_accessor.InnerProperty);
+            return LocalizationManager.GetHeader(_headerAccessor.InnerProperty);
         }
 
         public IEnumerable<FilteredProperty> FilteredProperties()

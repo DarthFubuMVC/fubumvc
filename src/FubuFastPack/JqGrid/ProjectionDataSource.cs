@@ -14,10 +14,12 @@ namespace FubuFastPack.JqGrid
         where T : DomainEntity
     {
         private readonly Projection<T> _projection;
+        private readonly ProjectionSelectMode _selectMode;
 
-        public ProjectionDataSource(Projection<T> projection)
+        public ProjectionDataSource(Projection<T> projection, ProjectionSelectMode selectMode)
         {
             _projection = projection;
+            _selectMode = selectMode;
         }
 
         public int TotalCount()
@@ -28,9 +30,14 @@ namespace FubuFastPack.JqGrid
         public IGridData Fetch(GridDataRequest options)
         {
             var records = _projection.ExecuteCriteriaWithProjection(options).Cast<object>().ToList();
-            var accessors = _projection.SelectAccessors().ToList();
 
-            return new ProjectionGridData(records, accessors);
+            if (_selectMode == ProjectionSelectMode.OnlySpecifiedColumns)
+            {
+                var accessors = _projection.SelectAccessors().ToList();
+                return new ProjectionGridData<T>(records, accessors);
+            }
+
+            return new EntityGridData(records);
         }
 
         public void ApplyRestrictions(Action<IDataSourceFilter<T>> configure)

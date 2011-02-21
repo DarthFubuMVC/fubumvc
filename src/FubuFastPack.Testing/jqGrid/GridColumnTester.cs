@@ -50,6 +50,11 @@ namespace FubuFastPack.Testing.jqGrid
             _currentRow = _rows.Dequeue();
             return true;
         }
+
+        public object CurrentRowType()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ColumnFillerHarness
@@ -119,6 +124,13 @@ namespace FubuFastPack.Testing.jqGrid
         public void get_header_without_a_string_token_should_just_localize_the_header()
         {
             theColumn.GetHeader().ShouldEqual(LocalizationManager.GetHeader<Case>(x => x.Condition));
+        }
+
+        [Test]
+        public void get_header_by_overriding_the_header_column()
+        {
+            theColumn.HeaderFrom(c => c.Title);
+            theColumn.GetHeader().ShouldEqual(LocalizationManager.GetHeader<Case>(x => x.Title));
         }
 
         [Test]

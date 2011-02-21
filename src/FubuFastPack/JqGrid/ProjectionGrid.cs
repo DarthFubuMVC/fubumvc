@@ -9,12 +9,29 @@ using NHibernate.Criterion;
 
 namespace FubuFastPack.JqGrid
 {
+    public enum ProjectionSelectMode
+    {
+        OnlySpecifiedColumns,
+        WholeEntities
+    }
+
     public class ProjectionGrid<TEntity> : Grid<TEntity, ISession> where TEntity : DomainEntity
     {
         private readonly IList<Action<Projection<TEntity>>> _projectionBuilders = new List<Action<Projection<TEntity>>>();
 
+        public ProjectionGrid()
+        {
+            SelectMode = ProjectionSelectMode.OnlySpecifiedColumns;
+        }
 
-        private Action<Projection<TEntity>> alterProjection
+        public ProjectionSelectMode SelectMode { get; set; }
+
+        public void AddDiscriminatorColumn()
+        {
+            alterProjection = p => p.AddColumn(new DiscriminatorProjectionColumn<TEntity>());
+        }
+
+        protected Action<Projection<TEntity>> alterProjection
         {
             set { _projectionBuilders.Add(value); }
         }
@@ -22,16 +39,21 @@ namespace FubuFastPack.JqGrid
         public override IGridDataSource<TEntity> BuildSource(ISession session)
         {
             var projection = new Projection<TEntity>(session);
-            Definition.SelectedAccessors.Each(a => projection.AddColumn(a));
-            Definition.Columns.Where(c => c.IsOuterJoin).SelectMany(c => c.SelectAccessors()).Each(a =>
+
+
+            if (SelectMode == ProjectionSelectMode.OnlySpecifiedColumns)
             {
-                alterProjection = p => p.OuterJoin(a);
-            });
+                Definition.SelectedAccessors.Each(a => projection.AddColumn(a));
+                Definition.Columns.Where(c => c.IsOuterJoin).SelectMany(c => c.SelectAccessors()).Each(a =>
+                {
+                    alterProjection = p => p.OuterJoin(a);
+                });
+            }
 
 
             _projectionBuilders.Each(x => x(projection));
 
-            return new ProjectionDataSource<TEntity>(projection);
+            return new ProjectionDataSource<TEntity>(projection, SelectMode);
         }
 
         protected Projection<TEntity>.WhereExpression Where(Expression<Func<TEntity, object>> property)

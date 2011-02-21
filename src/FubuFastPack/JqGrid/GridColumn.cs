@@ -68,7 +68,7 @@ namespace FubuFastPack.JqGrid
             yield return dictionary;
         }
 
-        public Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
+        public virtual Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
         {
             var source = data.GetterFor(Accessor);
             var toString = _formatterStrategy.ToFormatter(formatter);

@@ -52,7 +52,22 @@ namespace FubuFastPack.JqGrid
             _inputModelType = inputModelType;
             initialize();
         }
-        
+
+        public Accessor IdAccessor
+        {
+            get { return _idAccessor; }
+        }
+
+        public Type InputModelType
+        {
+            get { return _inputModelType; }
+        }
+
+        public string LinkName
+        {
+            get { return _linkName; }
+        }
+
         // TODO -- UT this little monster
         public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
@@ -83,10 +98,10 @@ namespace FubuFastPack.JqGrid
             return this;
         }
 
-        public Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
+        public virtual Action<EntityDTO> CreateDtoFiller(IGridData data, IDisplayFormatter formatter, IUrlRegistry urls)
         {
             var displaySource = data.GetterFor(Accessor);
-            var idSource = data.GetterFor(_idAccessor);
+            var idSource = data.GetterFor(IdAccessor);
 
             if (_disabled)
             {

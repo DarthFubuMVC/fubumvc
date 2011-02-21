@@ -25,82 +25,72 @@
         });
     }
 
+
+
     var SmartGrid = function (div, userOptions) {
         var model = $(div).metadata();
         var definition = model.definition;
 
+        div.selectedRow = null;
+        div.grid = $('table', div);
+
+        div.getData = function(rowid){
+            var item = div.grid.getRowData(rowid);
+            var rowData = div.data[rowid];
+            item.data = rowData.cell[0];
+            return item;
+        }
+
         var gridDefaultOptions =
-    {
-        height: "auto",
-        url: definition.url,
-        datatype: 'json',
-        mtype: 'POST',
-        readjustHeaderWidths: true,
-        colNames: definition.headers,
-        colModel: definition.colModel,
-        /*onCellSelect: onCellSelect,*/
-        rowNum: 10,
-        rowList: [3, 10, 20, 30],
-        loadui: "disable",
-        sortorder: "asc",
-        viewrecords: true,
-        jsonReader: {
-            repeatitems: true,
-            root: "items",
-            cell: "cell",
-            id: "id"
-        },
-        postData: {criterion: definition.initialCriteria},
-        pager: $('#' + definition.pagerId),
-        onPaging: function (pgButton) {
-            if (pgButton == 'records') {
-                this.page = 1;
+        {
+            height: "auto",
+            url: definition.url,
+            datatype: 'json',
+            mtype: 'POST',
+            readjustHeaderWidths: true,
+            colNames: definition.headers,
+            colModel: definition.colModel,
+            /*onCellSelect: onCellSelect,*/
+            rowNum: 10,
+            rowList: [3, 10, 20, 30],
+            loadui: "disable",
+            sortorder: "asc",
+            viewrecords: true,
+            jsonReader: {
+                repeatitems: true,
+                root: "items",
+                cell: "cell",
+                id: "id"
+            },
+            postData: {criterion: definition.initialCriteria},
+            pager: $('#' + definition.pagerId),
+            onPaging: function (pgButton) {
+                if (pgButton == 'records') {
+                    this.page = 1;
+                }
+            },
+            gridComplete: function(data){
+                $(div).trigger("grid-refreshed", data);
+                div.selectedRow = null;    
+            },
+            ondblClickRow: function(rowId, iCol, cellcontent, e){
+                var row = div.getData(rowId);
+                $(div).trigger("row-doubleclicked", row);
+            },
+            onSelectRow: function(rowid, status){
+                div.selectedRow = div.getData(rowid);
+                $(div).trigger("row-selected", div.selectedRow);
+            },
+            loadComplete: function(data){
+                div.data = data.items;
+                return true;
             }
-        }
-        /*
-        ondblClickRow: function (rowid) { ourGridInstance.onDoubleClick(rowid, ourGridInstance); },
-        afterInsertRow: function (rowid, rowdata, rowelem) {
-        for (var i = 0; i < gridDefinition.Columns.length; i++) {
-        var columnDefinition = gridDefinition.Columns[i];
-
-        var columnFormatter = $.ourGrid.columnFormatters[columnDefinition.DisplayType];
-        if (columnFormatter) {
-        try {
-        theGrid.setCell(rowid, i, columnFormatter(columnDefinition, rowdata[columnDefinition.Name], rowelem));
-        } catch (formatError) { }
-        }
-        }
-
-        if (rowelem.findUrl) {
-        theGrid.setRowMetaData(rowid, "_dt_findUrl", rowelem.findUrl);
-        }
-
-        if (rowelem.viewUrl) {
-        theGrid.setRowMetaData(rowid, "_dt_viewUrl", rowelem.viewUrl);
-        }
-        },
-        */
-        /*            gridComplete: function () {
-
-        if (onGridComplete) {
-        onGridComplete();
-        }
-        },
-        onPaging: function (pgButton) {
-        if (pgButton == 'records') {
-        this.page = 1;
-        }
-        },  */
-        /*            postData: initalPostData,   */
-        //,
-        /*            pager: $(pagerSelector),*/
-
-    };
+        };
 
         var gridOptions = {};
         gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
 
-        div.grid = $('table', div);
+        
 
         div.runQuery = function (criterion) {
             div.grid.setGridParam({ page: 1 });
@@ -108,18 +98,7 @@
             div.grid.trigger("reloadGrid");
         }
 
-        /*
-        runQuery: function(criteria){
-        $("#gridContainer_Console").setPostData(
-        { 
-        entityType : $("#EntityType").val() ,
-        filterJson : JSON.stringify({"filters" : criteria})
-        });
-        $.ourGrid.from("#gridContainer_Console").refresh({page:1});
-        }
-        */
-
-        $('table', div).jqGrid(gridOptions);
+        div.grid.jqGrid(gridOptions);
 		div.grid.trigger("reloadGrid");
     }
 

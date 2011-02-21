@@ -85,6 +85,7 @@ namespace FubuFastPack.JqGrid
                 _wheres.Add(where);
             }
 
+
             private IQueryable<TEntity> query()
             {
                 return _grid.query(_repository);

@@ -26,6 +26,12 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void string_arguments_should_be_empty()
+        {
+            ClassUnderTest.GetArgumentsAsString().Any().ShouldBeFalse();
+        }
+
+        [Test]
         public void url_on_the_model_has_no_query_string()
         {
             var url = urls.UrlFor(new GridRequest<NoArgGrid>());
@@ -214,6 +220,18 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void get_arguments_as_string_should_convert_entity_to_the_id_string()
+        {
+            var person = new Person
+            {
+                Id = Guid.NewGuid()
+            };
+            ClassUnderTest.RegisterArgument("person", person);
+
+            ClassUnderTest.GetArgumentsAsString().Single().ShouldEqual(person.Id.ToString());
+        }
+
+        [Test]
         public void get_header_text_delegates_to_the_grid()
         {
             ClassUnderTest.HeaderText().ShouldEqual(new EntityArgGrid(null).GetHeader());
@@ -283,6 +301,14 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void get_arguments_as_string_array()
+        {
+            ClassUnderTest.RegisterArgument("title", "the title");
+
+            ClassUnderTest.GetArgumentsAsString().Single().ShouldEqual("the title");
+        }
+
+        [Test]
         public void url_on_the_model_has_a_query_string_for_the_title_arg()
         {
             var theTitle = "something";
@@ -347,6 +373,19 @@ namespace FubuFastPack.Testing.jqGrid
             url += "&title=" + theTitle;
 
             ClassUnderTest.GetUrl().ShouldEqual(url);
+        }
+
+        [Test]
+        public void get_arguments_as_string_array()
+        {
+            var person = new Person
+            {
+                Id = Guid.NewGuid()
+            };
+
+            ClassUnderTest.RegisterArguments(person, "the title");
+
+            ClassUnderTest.GetArgumentsAsString().ShouldHaveTheSameElementsAs(person.Id.ToString(), "the title");
         }
 
         [Test]

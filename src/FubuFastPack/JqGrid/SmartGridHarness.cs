@@ -189,12 +189,33 @@ namespace FubuFastPack.JqGrid
                 colModel = definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),
                 gridName = gridName,
                 containerName = typeof(T).ContainerNameForGrid(),
+                arguments = GetArgumentsAsString().Join(","),
                 url = GetUrl(),
                 headers = definition.Columns.SelectMany(x => x.Headers()).ToArray(),
                 pagerId = gridName + "_pager",
                 initialCriteria = grid.InitialCriteria().ToArray()
             };
         }
+
+        public IEnumerable<string> GetArgumentsAsString()
+        {
+            foreach (var buildArg in buildArgs())
+            {
+                var entity = buildArg as DomainEntity;
+                if (entity != null)
+                {
+                    yield return entity.Id.ToString();
+                }
+                else
+                {
+                    yield return buildArg.ToString();
+                }
+
+                
+            }
+        }
+
+
 
         public GridViewModel BuildGridModel()
         {

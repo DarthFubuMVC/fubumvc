@@ -1,5 +1,4 @@
-﻿
-$.fn.asQueryBuilder = function (userOptions) {
+﻿$.fn.asQueryBuilder = function (userOptions) {
     var options = {};
     $.extend(options, $.fn.asQueryBuilder.defaults, userOptions || {});
 
@@ -19,6 +18,10 @@ $.fn.asQueryBuilder = function (userOptions) {
             return $('tr', div.tbody).map(function () { return this.getCriteria(); });
         }
 
+        div.hasCriteria = function () {
+            return $('tr', div.tbody).length > 0;
+        }
+
         $(options.runQuerySelector).click(queryRunner);
 
         if (this.context == document) {
@@ -33,7 +36,10 @@ $.fn.asQueryBuilder = function (userOptions) {
         var templates = $('.templates', div).get(0);
 
         div.addFilterRow = function () {
-            return $('<tr class="filter"><td></td><td></td><td></td><td></td></tr>').appendTo(div.tbody).asFilterRow(templates, options);
+            var row = $('<tr class="filter"><td></td><td></td><td></td><td></td></tr>').appendTo(div.tbody).asFilterRow(templates, options, div);
+            $(div).trigger("filter-added", row);
+            $(div).trigger("filters-changed");
+            return row;
         }
 
         $(options.addCriteriaSelector).click(function () {
@@ -43,8 +49,8 @@ $.fn.asQueryBuilder = function (userOptions) {
 
         var clearFilters = function () {
             $(div.tbody).empty();
-
             $(div).trigger('filters-cleared');
+            $(div).trigger("filters-changed");
             return false;
         }
 
@@ -61,13 +67,13 @@ $.fn.asQueryBuilder = function (userOptions) {
             }
         }
 
-		var metadata = $(div).metadata();
+        var metadata = $(div).metadata();
         if (metadata.filters.initialCriteria.length > 0) {
             div.loadQuery(metadata.filters.initialCriteria);
         }
-		else {
-			div.addFilterRow();
-		}
+        else {
+            div.addFilterRow();
+        }
 
         return false;
     });
@@ -106,13 +112,15 @@ $.fn.asQueryBuilder.editors = {
     }
 }
 
-$.fn.asFilterRow = function (templates, options) {
+$.fn.asFilterRow = function (templates, options, div) {
     var row = this.get(0);
     row.operatorCell = row.childNodes[1];
     row.editorCell = row.childNodes[2];
 
     $(options.removeCriteriaTemplateSelector).clone().appendTo(row.childNodes[3]).click(function () {
         $(row).remove();
+        $(div).trigger("filter-removed");
+        $(div).trigger("filters-changed");
         return false;
     });
 

@@ -7,5 +7,7 @@ namespace FubuFastPack.JqGrid
     {
         Func<object> GetterFor(Accessor accessor);
         bool MoveNext();
+
+        object CurrentRowType();
     }
 }

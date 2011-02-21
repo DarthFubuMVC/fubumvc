@@ -5,6 +5,7 @@ namespace FubuFastPack.JqGrid
 {
     public class JqGridModel
     {
+        public string arguments { get; set;}
         public IDictionary<string, object>[] colModel { get; set; }
         public string gridName { get; set; }
         public string containerName { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuFastPack.Querying;
 using FubuLocalization;
+using System.Linq;
 
 namespace FubuFastPack.JqGrid
 {
@@ -30,6 +31,16 @@ namespace FubuFastPack.JqGrid
             var criteria = Criteria.For(property, op.Key, value);
             AddCriteria(criteria);
         }
+
+        public void ReplaceCriterion(IEnumerable<Criteria> criterion)
+        {
+            _criterion.Clear();
+            _criterion.AddRange(criterion);
+
+            GridModel.initialCriteria = criterion.ToArray();
+        }
+
+
 
         public Type GridType { get; set; }
         public string GridName { get; set; }

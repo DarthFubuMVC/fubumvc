@@ -193,7 +193,8 @@ namespace FubuFastPack.NHibernate
             criteria = addWheres(criteria);
             criteria = chain(criteria);
 
-            criteria = criteria.SetProjection(Projections.Count(_columns[0].PropertyName));
+            var propertyName = _columns.Any() ? _columns[0].PropertyName : "Id";
+            criteria = criteria.SetProjection(Projections.Count(propertyName));
             return criteria;
         }
 

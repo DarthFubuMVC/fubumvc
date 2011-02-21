@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Reflection;
+using FubuFastPack.Domain;
 
 namespace FubuFastPack.JqGrid
 {
@@ -29,6 +30,11 @@ namespace FubuFastPack.JqGrid
             }
 
             return false;
+        }
+
+        public object CurrentRowType()
+        {
+            return _current.GetTrueType();
         }
     }
 }
