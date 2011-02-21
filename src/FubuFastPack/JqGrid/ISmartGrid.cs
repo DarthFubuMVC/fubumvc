@@ -21,5 +21,7 @@ namespace FubuFastPack.JqGrid
         IEnumerable<Criteria> InitialCriteria();
 
         Type EntityType { get; }
+
+        void ApplyPolicies(IEnumerable<IGridPolicy> policies);
     }
 }

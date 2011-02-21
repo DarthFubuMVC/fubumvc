@@ -160,5 +160,15 @@ namespace FubuFastPack.JqGrid
         {
             get { return typeof (TEntity); }
         }
+
+        public void ApplyPolicies(IEnumerable<IGridPolicy> policies)
+        {
+            policies.Each(p =>
+            {
+                p.AlterGrid(this);
+                p.AlterDefinition(_definition);
+            });
+            
+        }
     }
 }

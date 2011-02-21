@@ -28,7 +28,7 @@ namespace FubuFastPack.JqGrid
         public static HtmlTag FiltersFor<T>(this IFubuPage page) where T : ISmartGrid
         {
             var harness = page.Get<SmartGridHarness<T>>();
-            var model = harness.BuildGridModel();
+            var model = harness.BuildGridModel(null);
 
             return FiltersFor(page, model);
         }

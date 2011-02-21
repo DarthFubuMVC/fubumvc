@@ -20,16 +20,17 @@ namespace FubuFastPack.JqGrid
         private readonly Cache<string, object> _args = new Cache<string, object>();
         private readonly IQueryService _queryService;
         private readonly ISmartRequest _request;
+        private readonly IEnumerable<IGridPolicy> _globalPolicies;
         private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
 
-        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IQueryService queryService,
-                                ISmartRequest request)
+        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IQueryService queryService, ISmartRequest request, IEnumerable<IGridPolicy> globalPolicies)
         {
             _services = services;
             _urls = urls;
             _queryService = queryService;
             _request = request;
+            _globalPolicies = globalPolicies;
         }
 
         public Type GridType
@@ -47,7 +48,10 @@ namespace FubuFastPack.JqGrid
         {
             var args = buildArgs();
 
-            return (T) Activator.CreateInstance(typeof (T), args);
+            var grid = (T) Activator.CreateInstance(typeof (T), args);
+            grid.ApplyPolicies(_globalPolicies);
+
+            return grid;
         }
 
 
@@ -217,9 +221,12 @@ namespace FubuFastPack.JqGrid
 
 
 
-        public GridViewModel BuildGridModel()
+        public GridViewModel BuildGridModel(IEnumerable<IGridPolicy> gridPolicies)
         {
             var grid = BuildGrid();
+            
+            // TODO -- get an integration test against this
+            grid.ApplyPolicies(gridPolicies ?? new IGridPolicy[0]);
 
             var model = new GridViewModel(){
                 AllowCreateNew = grid.Definition.AllowCreationOfNew,

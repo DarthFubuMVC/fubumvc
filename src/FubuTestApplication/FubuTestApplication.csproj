@@ -88,7 +88,6 @@
     <Content Include="content\images\grid\tree_plus.gif" />
     <Content Include="content\images\grid\up.gif" />
     <Content Include="content\images\icon-add.png" />
-    <Content Include="content\scripts\fubu.smartGrid.js" />
     <Content Include="content\styles\ellipsis-xbl.xml" />
     <Content Include="content\styles\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="content\styles\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />

@@ -56,6 +56,11 @@ namespace FubuFastPack.Testing.jqGrid
         {
             get { throw new NotImplementedException(); }
         }
+
+        public void ApplyPolicies(IEnumerable<IGridPolicy> policies)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]

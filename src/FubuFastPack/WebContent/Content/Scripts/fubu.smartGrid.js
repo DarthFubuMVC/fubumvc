@@ -36,7 +36,9 @@
 
         div.getData = function(rowid){
             var item = div.grid.getRowData(rowid);
-            var rowData = div.data[rowid];
+
+            var index = parseInt(rowid) - 1;
+            var rowData = div.data[index];
             item.data = rowData.cell[0];
             return item;
         }

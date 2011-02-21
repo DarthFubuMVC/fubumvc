@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using FubuFastPack.Domain;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 
@@ -13,7 +15,21 @@ namespace FubuFastPack.JqGrid
 
     public class NamedGridRequest
     {
+        public static NamedGridRequest For<T>() where T : ISmartGrid
+        {
+            return new NamedGridRequest(){
+                GridName = typeof(T).NameForGrid()
+            };
+        }
+
         public string GridName { get; set; }
+        public IEnumerable<IGridPolicy> Policies { get; set; }
+    }
+
+    public interface IGridPolicy
+    {
+        void AlterDefinition<T>(GridDefinition<T> definition) where T : DomainEntity;
+        void AlterGrid(ISmartGrid grid);
     }
 
     public interface ISmartGridService
@@ -61,7 +77,7 @@ namespace FubuFastPack.JqGrid
         public GridViewModel GetModel(NamedGridRequest request)
         {
             var harness = _locator.GetInstance<ISmartGridHarness>(request.GridName);
-            return harness.BuildGridModel();
+            return harness.BuildGridModel(request.Policies ?? new IGridPolicy[0]);
         }
     }
 

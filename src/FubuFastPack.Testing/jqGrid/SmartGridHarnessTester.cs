@@ -82,37 +82,37 @@ namespace FubuFastPack.Testing.jqGrid
 
         private ISmartGridHarness harnessFor<T>() where T : ISmartGrid
         {
-            return new SmartGridHarness<T>(null, urls, queryService, request);
+            return new SmartGridHarness<T>(null, urls, queryService, request, new IGridPolicy[0]);
         }
 
         [Test]
         public void allow_create_new_negative()
         {
-            harnessFor<SimpleGrid>().BuildGridModel().AllowCreateNew.ShouldBeFalse();
+            harnessFor<SimpleGrid>().BuildGridModel(null).AllowCreateNew.ShouldBeFalse();
         }
 
         [Test]
         public void allow_create_new_positive()
         {
-            harnessFor<CanCreateNewGrid>().BuildGridModel().AllowCreateNew.ShouldBeTrue();
+            harnessFor<CanCreateNewGrid>().BuildGridModel(null).AllowCreateNew.ShouldBeTrue();
         }
 
         [Test]
         public void can_save_query_negative()
         {
-            harnessFor<SimpleGrid>().BuildGridModel().CanSaveQuery.ShouldBeFalse();
+            harnessFor<SimpleGrid>().BuildGridModel(null).CanSaveQuery.ShouldBeFalse();
         }
 
         [Test]
         public void can_save_query_positive()
         {
-            harnessFor<CanCreateNewGrid>().BuildGridModel().CanSaveQuery.ShouldBeTrue();
+            harnessFor<CanCreateNewGrid>().BuildGridModel(null).CanSaveQuery.ShouldBeTrue();
         }
 
         [Test]
         public void get_filtered_properties()
         {
-            var filters = harnessFor<FilteredGrid>().BuildGridModel().FilteredProperties;
+            var filters = harnessFor<FilteredGrid>().BuildGridModel(null).FilteredProperties;
             filters.Any(x => x.Accessor.Name == "CaseType").ShouldBeTrue();
             filters.Any(x => x.Accessor.Name == "Condition").ShouldBeTrue();
         }
@@ -120,31 +120,31 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void jq_grid_model_is_set()
         {
-            harnessFor<SimpleGrid>().BuildGridModel().GridModel.ShouldNotBeNull();
+            harnessFor<SimpleGrid>().BuildGridModel(null).GridModel.ShouldNotBeNull();
         }
 
         [Test]
         public void grid_name_is_set_on_build_model()
         {
-            harnessFor<SimpleGrid>().BuildGridModel().GridName.ShouldEqual("Simple");
+            harnessFor<SimpleGrid>().BuildGridModel(null).GridName.ShouldEqual("Simple");
         }
 
         [Test]
         public void grid_type_is_set_on_build_model()
         {
-            harnessFor<SimpleGrid>().BuildGridModel().GridType.ShouldEqual(typeof (SimpleGrid));
+            harnessFor<SimpleGrid>().BuildGridModel(null).GridType.ShouldEqual(typeof (SimpleGrid));
         }
 
         [Test]
         public void header_text_is_pulled_from_grid()
         {
-            harnessFor<SimpleGrid>().BuildGridModel().HeaderText.ShouldEqual("The simple grid");
+            harnessFor<SimpleGrid>().BuildGridModel(null).HeaderText.ShouldEqual("The simple grid");
         }
 
         [Test]
         public void allow_creation_is_false_so_no_new_entity_values()
         {
-            var model = harnessFor<SimpleGrid>().BuildGridModel();
+            var model = harnessFor<SimpleGrid>().BuildGridModel(null);
             model.NewEntityText.ShouldBeNull();
             model.NewEntityUrl.ShouldBeNull();
         }
@@ -152,7 +152,7 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void allow_creation_is_true_should_get_new_entity_values_on_grid_model()
         {
-            var model = harnessFor<CanCreateNewGrid>().BuildGridModel();
+            var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
             model.NewEntityText.ShouldEqual(StringToken.FromKeyString("CREATE_NEW_" + typeof(Case)).ToString());
             model.NewEntityUrl.ShouldEqual(urls.UrlForNew(typeof (Case)));
         }
@@ -160,7 +160,7 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void puts_all_the_initial_criteria_into_the_grid_model()
         {
-            var model = harnessFor<CriteriaGrid>().BuildGridModel();
+            var model = harnessFor<CriteriaGrid>().BuildGridModel(null);
             model.InitialCriteria().Count().ShouldEqual(2);
             model.InitialCriteria().Any(x => x.property == "CaseType").ShouldBeTrue();
         }
