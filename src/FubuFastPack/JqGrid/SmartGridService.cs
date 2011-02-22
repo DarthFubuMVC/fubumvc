@@ -34,8 +34,11 @@ namespace FubuFastPack.JqGrid
 
     public interface ISmartGridService
     {
-        GridCounts GetCounts<T>(params object[] args) where T : ISmartGrid;
-        GridCounts GetCounts(string gridName, params object[] args);
+        GridCounts GetCounts<TGrid, TInput>(params object[] args)
+            where TGrid : ISmartGrid
+            where TInput : NamedGridRequest, new();
+
+        GridCounts GetCounts<TInput>(string gridName, params object[] args) where TInput : NamedGridRequest, new();
         GridViewModel GetModel(NamedGridRequest request);
         string QuerystringFor(string gridName, params object[] args);
     }
@@ -52,27 +55,27 @@ namespace FubuFastPack.JqGrid
             _urls = urls;
         }
 
-        public GridCounts GetCounts<T>(params object[] args) where T : ISmartGrid
+        public GridCounts GetCounts<TGrid, TInput>(params object[] args) where TGrid : ISmartGrid where TInput : NamedGridRequest, new()
         {
-            var harness = _locator.GetInstance<SmartGridHarness<T>>();
-            return getCounts(harness, args);
+            var harness = _locator.GetInstance<SmartGridHarness<TGrid>>();
+            return getCounts<TInput>(harness, args);
         }
 
-        private GridCounts getCounts(ISmartGridHarness harness, object[] args)
+        private GridCounts getCounts<TInput>(ISmartGridHarness harness, object[] args) where TInput : NamedGridRequest, new()
         {
             harness.RegisterArguments(args);
 
             return new GridCounts(){
                 Count = harness.Count(),
-                Url = _urls.UrlFor(new NamedGridRequest(){GridName = harness.GridType.NameForGrid()}) + harness.GetQuerystring(),
+                Url = _urls.UrlFor(new TInput(){GridName = harness.GridType.NameForGrid()}) + harness.GetQuerystring(),
                 HeaderText = harness.HeaderText()
             };
         }
 
-        public GridCounts GetCounts(string gridName, params object[] args)
+        public GridCounts GetCounts<TInput>(string gridName, params object[] args) where TInput : NamedGridRequest, new()
         {
             var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
-            return getCounts(harness, args);
+            return getCounts<TInput>(harness, args);
         }
 
         public GridViewModel GetModel(NamedGridRequest request)

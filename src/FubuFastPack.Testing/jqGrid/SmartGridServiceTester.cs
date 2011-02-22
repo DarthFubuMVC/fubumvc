@@ -121,7 +121,7 @@ namespace FubuFastPack.Testing.jqGrid
             MockFor<ISmartGridHarness>().Stub(x => x.GetQuerystring()).Return(theQuerystring);
             MockFor<ISmartGridHarness>().Stub(x => x.HeaderText()).Return("the header");
 
-            theCounts = ClassUnderTest.GetCounts(theRequest.GridName, theArgs);
+            theCounts = ClassUnderTest.GetCounts<NamedGridRequest>(theRequest.GridName, theArgs);
         }
 
         [Test]
