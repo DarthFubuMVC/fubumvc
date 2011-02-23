@@ -9,7 +9,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    public abstract class Grid<TEntity, TService> : ISmartGrid where TEntity : DomainEntity
+    public abstract class Grid<TEntity, TService> : ISmartGrid, ISmartGrid<TEntity> where TEntity : DomainEntity
     {
         private readonly GridDefinition<TEntity> _definition = new GridDefinition<TEntity>();
         private readonly IList<Action<IDictionary<string, object>>> _colModelModifications 

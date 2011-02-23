@@ -43,6 +43,8 @@ namespace FubuFastPack.JqGrid
         GridCounts GetCounts<TInput>(string gridName, params object[] args) where TInput : NamedGridRequest, new();
         GridViewModel GetModel(NamedGridRequest request);
         string QuerystringFor(string gridName, params object[] args);
+
+        Type EntityTypeForGrid(string gridName);
     }
 
     public class SmartGridService : ISmartGridService
@@ -97,6 +99,12 @@ namespace FubuFastPack.JqGrid
             harness.RegisterArguments(args);
 
             return harness.GetQuerystring();
+        }
+
+        public Type EntityTypeForGrid(string gridName)
+        {
+            var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
+            return harness.EntityType();
         }
     }
 

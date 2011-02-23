@@ -149,6 +149,7 @@ namespace FubuFastPack.NHibernate
             return criteria;
         }
 
+
         public void AddRestriction(ICriterion criterion)
         {
             _wheres.Add(criterion);

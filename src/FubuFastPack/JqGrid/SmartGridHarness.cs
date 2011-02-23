@@ -166,6 +166,11 @@ namespace FubuFastPack.JqGrid
             return BuildGrid().Count(_services);
         }
 
+        public Type EntityType()
+        {
+            return BuildGrid().GetType().FindInterfaceThatCloses(typeof (ISmartGrid<>)).GetGenericArguments().First();
+        }
+
         // TODO -- get a UT against this
         public DataTable ToDataTable(GridRequest<T> input)
         {

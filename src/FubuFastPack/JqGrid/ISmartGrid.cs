@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 using Microsoft.Practices.ServiceLocation;
 
@@ -23,5 +24,10 @@ namespace FubuFastPack.JqGrid
         Type EntityType { get; }
 
         void ApplyPolicies(IEnumerable<IGridPolicy> policies);
+    }
+
+    public interface ISmartGrid<T> where T : DomainEntity
+    {
+        
     }
 }

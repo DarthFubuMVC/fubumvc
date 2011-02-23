@@ -14,5 +14,6 @@ namespace FubuFastPack.JqGrid
         void RegisterArguments(params object[] arguments);
         string HeaderText();
         int Count();
+        Type EntityType();
     }
 }
