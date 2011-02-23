@@ -1,22 +1,36 @@
 ﻿using System;
+using FubuCore;
+using FubuCore.Binding;
 
-namespace FubuCore.Binding
+namespace FubuMVC.Core.Runtime
 {
     public class SmartRequest : ISmartRequest
     {
         private readonly IRequestData _data;
         private readonly IObjectConverter _converter;
+        private readonly IFubuRequest _request;
 
-        public SmartRequest(IRequestData data, IObjectConverter converter)
+        public SmartRequest(IRequestData data, IObjectConverter converter, IFubuRequest request)
         {
             _data = data;
             _converter = converter;
+            _request = request;
         }
 
         public object Value(Type type, string key)
         {
-            var rawValue = _data.Value(key);
-            return convertValue(rawValue, type);
+            object returnValue = null;
+            _data.Value(key, o =>
+            {
+                returnValue = convertValue(o, type);
+            });
+
+            if (returnValue == null)
+            {
+                returnValue = _request.Get(type);
+            }
+
+            return returnValue;
         }
 
         private object convertValue(object rawValue, Type type)

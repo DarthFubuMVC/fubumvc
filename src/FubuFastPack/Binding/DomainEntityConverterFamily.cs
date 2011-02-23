@@ -28,6 +28,8 @@ namespace FubuFastPack.Binding
         {
             return text =>
             {
+                if (text.IsEmpty()) return null;
+
                 var guid = new Guid(text);
                 return _repository.Find(type, guid);
             };

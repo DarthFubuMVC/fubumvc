@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuFastPack.Domain;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
+using System.Linq;
 
 namespace FubuFastPack.JqGrid
 {
@@ -24,6 +25,7 @@ namespace FubuFastPack.JqGrid
 
         public string GridName { get; set; }
         public IEnumerable<IGridPolicy> Policies { get; set; }
+        public IEnumerable<object> Arguments { get; set; }
     }
 
     public interface IGridPolicy
@@ -81,6 +83,11 @@ namespace FubuFastPack.JqGrid
         public GridViewModel GetModel(NamedGridRequest request)
         {
             var harness = _locator.GetInstance<ISmartGridHarness>(request.GridName);
+            if (request.Arguments != null)
+            {
+                harness.RegisterArguments(request.Arguments.ToArray());
+            }
+            
             return harness.BuildGridModel(request.Policies ?? new IGridPolicy[0]);
         }
 

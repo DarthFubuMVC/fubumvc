@@ -232,6 +232,12 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void can_use_a_null_entity_argument()
+        {
+            ClassUnderTest.RegisterArgument("person", null);
+        }
+
+        [Test]
         public void get_header_text_delegates_to_the_grid()
         {
             ClassUnderTest.HeaderText().ShouldEqual(new EntityArgGrid(null).GetHeader());

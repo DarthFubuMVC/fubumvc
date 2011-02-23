@@ -1,21 +1,36 @@
 using System;
-using FubuCore.Binding;
+using FubuCore;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
+using InMemoryRequestData = FubuCore.Binding.InMemoryRequestData;
 
-namespace FubuCore.Testing.Binding
+namespace FubuMVC.Tests.Runtime
 {
+    public class Model{}
+
     [TestFixture]
     public class SmartRequestTester
     {
         private InMemoryRequestData theData;
         private SmartRequest theRequest;
+        private InMemoryFubuRequest theFubuRequest;
 
         [SetUp]
         public void SetUp()
         {
+            theFubuRequest = new InMemoryFubuRequest();
             theData = new InMemoryRequestData();
-            theRequest = new SmartRequest(theData, new ObjectConverter());
+            theRequest = new SmartRequest(theData, new ObjectConverter(), theFubuRequest);
+        }
+
+        [Test]
+        public void if_converter_cannot_handle_existing_value_type_use_fuburequest()
+        {
+            var model = new Model();
+            theFubuRequest.Set(model);
+
+            theRequest.Value(typeof (Model), "anything").ShouldBeTheSameAs(model);
         }
 
         [Test]

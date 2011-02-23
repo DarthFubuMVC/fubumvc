@@ -69,30 +69,54 @@ namespace FubuFastPack.JqGrid
                 throw new SmartGridException(message);
             }
 
-            if (value == null)
+            if (parameter.ParameterType.CanBeCastTo<DomainEntity>())
             {
-                throw new ArgumentNullException("value");
+                if (value != null && !(value is DomainEntity))
+                {
+                    var message = "Type {0} received for parameter {1}, but expected {2}"
+                        .ToFormat(value.GetType().FullName, name, parameter.ParameterType.FullName);
+                    throw new SmartGridException(message);
+                }
+            }
+            else
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (!value.GetType().CanBeCastTo(parameter.ParameterType))
+                {
+                    var message = "Type {0} received for parameter {1}, but expected {2}"
+                        .ToFormat(value.GetType().FullName, name, parameter.ParameterType.FullName);
+                    throw new SmartGridException(message);
+                }
             }
 
-            if (!value.GetType().CanBeCastTo(parameter.ParameterType))
-            {
-                var message = "Type {0} received for parameter {1}, but expected {2}"
-                    .ToFormat(value.GetType().FullName, name, parameter.ParameterType.FullName);
-                throw new SmartGridException(message);
-            }
+
 
 
             _args[name] = value;
         }
 
-        // TODO -- deal with nulls and missing arguments
         private object[] buildArgs()
         {
             var ctor = getConstructor();
-            return
-                ctor.GetParameters().Select(
-                    p => { return _args.Has(p.Name) ? _args[p.Name] : _request.Value(p.ParameterType, p.Name); }).
-                    ToArray();
+            return ctor.GetParameters().Select(p =>
+            {
+                if (_args.Has(p.Name))
+                {
+                    return _args[p.Name];
+                }
+
+                var arg = _request.Value(p.ParameterType, p.Name);
+                if (arg == null && !p.ParameterType.CanBeCastTo<DomainEntity>())
+                {
+                    throw new SmartGridException("Querystring argument {0} cannot be found".ToFormat(p.Name));
+                }
+
+                return arg;
+            }).ToArray();
         }
 
         private ConstructorInfo getConstructor()
@@ -126,8 +150,8 @@ namespace FubuFastPack.JqGrid
         {
             var value = _args.Has(key) ? _args[key] : _request.Value(type, key);
             var stringValue = type.CanBeCastTo<DomainEntity>()
-                                  ? value.As<DomainEntity>().Id.ToString()
-                                  : value.ToString().UrlEncoded();
+                ? (value == null ? string.Empty : value.As<DomainEntity>().Id.ToString())
+                : value.ToString().UrlEncoded();
 
             return "{0}={1}".ToFormat(key, stringValue);
         }
@@ -212,7 +236,7 @@ namespace FubuFastPack.JqGrid
                 }
                 else
                 {
-                    yield return buildArg.ToString();
+                    yield return buildArg == null ? string.Empty: buildArg.ToString();
                 }
 
                 

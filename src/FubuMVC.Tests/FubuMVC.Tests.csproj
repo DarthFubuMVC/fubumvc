@@ -156,6 +156,7 @@
     <Compile Include="Routing\RouteDefinitionExtensionsTester.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
+    <Compile Include="Runtime\SmartRequestTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
     <Compile Include="Security\AuthorizationBehaviorTester.cs" />
     <Compile Include="Security\AuthorizationNodeTester.cs" />

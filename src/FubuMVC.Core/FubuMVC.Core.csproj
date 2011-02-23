@@ -300,6 +300,7 @@
     <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
+    <Compile Include="Runtime\SmartRequest.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AttachAuthorizationPolicy.cs" />
     <Compile Include="Security\AuthorizationBehavior.cs" />

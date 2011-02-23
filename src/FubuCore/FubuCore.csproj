@@ -108,7 +108,6 @@
     <Compile Include="Binding\RequestData.cs" />
     <Compile Include="Binding\ResolveConnectionStringFamily.cs" />
     <Compile Include="Binding\ServiceArguments.cs" />
-    <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
     <Compile Include="Binding\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />
