@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuFastPack.Domain;
+using FubuFastPack.Querying;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 using System.Linq;
@@ -58,6 +59,12 @@ namespace FubuFastPack.JqGrid
         Type EntityTypeForGrid(string gridName);
 
         GridState StateForGrid<TGrid>(params object[] args) where TGrid : ISmartGrid;
+
+        int RecordCountFor<TGrid, TEntity>(IDataRestriction<TEntity> restriction, params object[] arguments) 
+            where TEntity : DomainEntity
+            where TGrid : ISmartGrid<TEntity>;
+
+        string GetUrl<TInput, TGrid>(params object[] args) where TInput : NamedGridRequest, new() where TGrid : ISmartGrid;
     }
 
     public class SmartGridService : ISmartGridService
@@ -108,23 +115,21 @@ namespace FubuFastPack.JqGrid
 
         public string QuerystringFor(string gridName, params object[] args)
         {
-            var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
-            harness.RegisterArguments(args);
+            var harness = getHarnessByName(gridName, args);
 
             return harness.GetQuerystring();
         }
 
         public Type EntityTypeForGrid(string gridName)
         {
-            var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
+            var harness = getHarnessByName(gridName);
             return harness.EntityType();
         }
 
         public GridState StateForGrid<TGrid>(params object[] args) where TGrid : ISmartGrid
         {
             var gridType = typeof(TGrid);
-            var harness = _locator.GetInstance<ISmartGridHarness>(gridType.NameForGrid());
-            harness.RegisterArguments(args);
+            var harness = getHarness<TGrid>(args);
             
             return new GridState(){
                 ContainerId = gridType.ContainerNameForGrid(),
@@ -134,6 +139,40 @@ namespace FubuFastPack.JqGrid
                 LabelId = gridType.IdForLabel(),
                 Url = _urls.UrlFor(new GridRequest<TGrid>()) + harness.GetQuerystring()
             };
+        }
+
+        // TODO -- eliminate some of the duplication
+        // More testing.
+        // This is well tested in Dovetail code, but want tests in fastpack code where it belongs
+        public int RecordCountFor<TGrid, TEntity>(IDataRestriction<TEntity> restriction, params object[] arguments) where TGrid : ISmartGrid<TEntity> where TEntity : DomainEntity
+        {
+            var harness = getHarness<TGrid>(arguments);
+            return harness.Count(restriction);
+        }
+
+        private ISmartGridHarness getHarness<TGrid>(object[] args)
+        {
+            var gridName = typeof(TGrid).NameForGrid();
+            return getHarnessByName(gridName, args);
+        }
+
+        private ISmartGridHarness getHarnessByName(string gridName, params object[] args)
+        {
+            var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
+            harness.RegisterArguments(args);
+            return harness;
+        }
+
+        public string GetUrl<TInput, TGrid>(params object[] args) where TInput : NamedGridRequest, new() where TGrid : ISmartGrid
+        {
+            var harness = getHarness<TGrid>(args);
+            var url = _urls.UrlFor(new TInput{
+                GridName = typeof (TGrid).Name
+            });
+
+            url += harness.GetQuerystring();
+
+            return url;
         }
     }
 

@@ -64,6 +64,59 @@ namespace FubuFastPack.Testing.jqGrid
         }
     }
 
+    public class LookupRequest : NamedGridRequest
+    {
+        public override string ToString()
+        {
+            return "Lookup:  " + GridName;
+        }
+    }
+
+    [TestFixture]
+    public class when_getting_the_url_for_a_grid : InteractionContext<SmartGridService>
+    {
+        private object[] theArgs;
+        private string theResultingUrl;
+        private StubUrlRegistry theUrls;
+        private string theQuerystringFromTheHarness = "?Something=Else";
+
+        protected override void beforeEach()
+        {
+            MockFor<IServiceLocator>().Stub(x => x.GetInstance<ISmartGridHarness>(typeof (TheTestGrid).NameForGrid()))
+                .Return(MockFor<ISmartGridHarness>());
+
+            MockFor<ISmartGridHarness>().Stub(x => x.GetQuerystring()).Return(theQuerystringFromTheHarness);
+
+            theUrls = new StubUrlRegistry();
+            Services.Inject<IUrlRegistry>(theUrls);
+
+            theArgs = new object[]{"a", "b"};
+            theResultingUrl = ClassUnderTest.GetUrl<LookupRequest, TheTestGrid>(theArgs);
+        }
+
+        [Test]
+        public void should_register_the_arguments_with_the_underlying_harness()
+        {
+            MockFor<ISmartGridHarness>().AssertWasCalled(x => x.RegisterArguments(theArgs));
+        }
+
+        [Test]
+        public void the_url_includes_the_query_string_from_the_smartgridharness()
+        {
+            theResultingUrl.ShouldEndWith(theQuerystringFromTheHarness);
+        }
+
+        [Test]
+        public void the_url_should_start_with_the_url_for_the_grid_name_and_model()
+        {
+            var expected = theUrls.UrlFor(new LookupRequest(){
+                GridName = "TheTest"
+            });
+
+            theResultingUrl.ShouldStartWith(expected);
+        }
+    }
+
     [TestFixture]
     public class when_getting_the_grid_state_for_a_grid : InteractionContext<SmartGridService>
     {

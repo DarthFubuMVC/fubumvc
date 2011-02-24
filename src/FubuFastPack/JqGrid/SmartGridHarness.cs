@@ -166,6 +166,11 @@ namespace FubuFastPack.JqGrid
             return BuildGrid().Count(_services);
         }
 
+        public int Count<TEntity>(IDataRestriction<TEntity> restriction) where TEntity : DomainEntity
+        {
+            return BuildGrid().As<ISmartGrid<TEntity>>().Count(_services, restriction);
+        }
+
         public Type EntityType()
         {
             return BuildGrid().GetType().FindInterfaceThatCloses(typeof (ISmartGrid<>)).GetGenericArguments().First();

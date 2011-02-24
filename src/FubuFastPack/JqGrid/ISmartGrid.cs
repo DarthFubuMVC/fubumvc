@@ -26,8 +26,8 @@ namespace FubuFastPack.JqGrid
         void ApplyPolicies(IEnumerable<IGridPolicy> policies);
     }
 
-    public interface ISmartGrid<T> where T : DomainEntity
+    public interface ISmartGrid<T> : ISmartGrid where T : DomainEntity
     {
-        
+        int Count(IServiceLocator services, IDataRestriction<T> restriction);
     }
 }

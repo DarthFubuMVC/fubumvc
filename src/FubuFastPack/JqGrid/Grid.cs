@@ -58,12 +58,23 @@ namespace FubuFastPack.JqGrid
             return runner.RunGrid(_definition, source, request);
         }
 
-        public int Count(IServiceLocator services)
+        public int Count(IServiceLocator services, Action<IGridDataSource<TEntity>> configure)
         {
             var runner = services.GetInstance<IGridRunner<TEntity, TService>>();
             var source = BuildSource(runner.Service);
+            configure(source);
 
             return runner.GetCount(source);
+        }
+
+        public int Count(IServiceLocator services)
+        {
+            return Count(services, x => { });
+        }
+
+        public int Count(IServiceLocator services, IDataRestriction<TEntity> restriction)
+        {
+            return Count(services, x => x.ApplyRestrictions(restriction.Apply));
         }
 
         public IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 
 namespace FubuFastPack.JqGrid
@@ -14,6 +15,9 @@ namespace FubuFastPack.JqGrid
         void RegisterArguments(params object[] arguments);
         string HeaderText();
         int Count();
+
+        int Count<TEntity>(IDataRestriction<TEntity> restriction) where TEntity : DomainEntity;
+
         Type EntityType();
     }
 }
