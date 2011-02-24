@@ -96,6 +96,8 @@ namespace FubuMVC.Core
                 x.Bootstrap(log => startApplication());
             });
 
+            PackageRegistry.AssertNoFailures();
+
             return buildRoutes();
         }
 

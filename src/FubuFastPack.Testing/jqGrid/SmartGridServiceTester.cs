@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
+using FubuFastPack.Testing.Security;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests;
 using Microsoft.Practices.ServiceLocation;
@@ -60,6 +61,75 @@ namespace FubuFastPack.Testing.jqGrid
         public void ApplyPolicies(IEnumerable<IGridPolicy> policies)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    [TestFixture]
+    public class when_getting_the_grid_state_for_a_grid : InteractionContext<SmartGridService>
+    {
+        private const int theCountFromTheGrid = 123;
+        private Case theCase;
+        private GridState theGridState;
+        private string theQuerystringFromTheHarness;
+
+        protected override void beforeEach()
+        {
+            MockFor<IServiceLocator>().Stub(x => x.GetInstance<ISmartGridHarness>(typeof (TheTestGrid).NameForGrid()))
+                .Return(MockFor<ISmartGridHarness>());
+
+            MockFor<ISmartGridHarness>().Stub(x => x.Count()).Return(theCountFromTheGrid);
+            MockFor<ISmartGridHarness>().Stub(x => x.HeaderText()).Return("the header");
+            theQuerystringFromTheHarness = "?Case=someguid";
+            MockFor<ISmartGridHarness>().Stub(x => x.GetQuerystring()).Return(theQuerystringFromTheHarness);
+
+            Services.Inject<IUrlRegistry>(new StubUrlRegistry());
+
+            theCase = new Case();
+
+            theGridState = ClassUnderTest.StateForGrid<TheTestGrid>(theCase);
+        }
+
+        [Test]
+        public void should_set_the_arguments_of_the_grid()
+        {
+            MockFor<ISmartGridHarness>().AssertWasCalled(x => x.RegisterArguments(theCase));
+        }
+
+        [Test]
+        public void should_set_the_grid_id()
+        {
+            theGridState.GridId.ShouldEqual(typeof (TheTestGrid).NameForGrid());
+        }
+
+        [Test]
+        public void should_set_the_grid_container_id()
+        {
+            theGridState.ContainerId.ShouldEqual(typeof (TheTestGrid).ContainerNameForGrid());
+        }
+
+        [Test]
+        public void should_set_the_label_id()
+        {
+            theGridState.LabelId.ShouldEqual(typeof (TheTestGrid).IdForLabel());
+        }
+
+        [Test]
+        public void should_have_the_row_count()
+        {
+            theGridState.Count.ShouldEqual(theCountFromTheGrid);
+        }
+
+        [Test]
+        public void header_text_should_be_from_the_grid()
+        {
+            theGridState.HeaderText.ShouldEqual("the header");
+        }
+
+        [Test]
+        public void url_should_be_the_url_for_grid_request_plus_the_querystring_from_the_harness()
+        {
+            var url = new StubUrlRegistry().UrlFor(new GridRequest<TheTestGrid>()) + theQuerystringFromTheHarness;
+            theGridState.Url.ShouldEqual(url);
         }
     }
 

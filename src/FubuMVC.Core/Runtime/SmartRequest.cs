@@ -20,10 +20,14 @@ namespace FubuMVC.Core.Runtime
         public object Value(Type type, string key)
         {
             object returnValue = null;
-            _data.Value(key, o =>
+
+            if (_converter.CanBeParsed(type))
             {
-                returnValue = convertValue(o, type);
-            });
+                _data.Value(key, o =>
+                {
+                    returnValue = convertValue(o, type);
+                });
+            }
 
             if (returnValue == null)
             {

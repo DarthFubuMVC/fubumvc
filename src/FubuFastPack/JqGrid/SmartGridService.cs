@@ -7,6 +7,17 @@ using System.Linq;
 
 namespace FubuFastPack.JqGrid
 {
+    public class GridState
+    {
+        public string GridId { get; set; }
+        public string Url { get; set; }
+        public int Count { get; set; }
+        public string HeaderText { get; set; }
+        public string ContainerId { get; set; }
+        public string LabelId { get; set; }
+    }
+
+
     public class GridCounts
     {
         public string HeaderText { get; set; }
@@ -45,6 +56,8 @@ namespace FubuFastPack.JqGrid
         string QuerystringFor(string gridName, params object[] args);
 
         Type EntityTypeForGrid(string gridName);
+
+        GridState StateForGrid<TGrid>(params object[] args) where TGrid : ISmartGrid;
     }
 
     public class SmartGridService : ISmartGridService
@@ -105,6 +118,22 @@ namespace FubuFastPack.JqGrid
         {
             var harness = _locator.GetInstance<ISmartGridHarness>(gridName);
             return harness.EntityType();
+        }
+
+        public GridState StateForGrid<TGrid>(params object[] args) where TGrid : ISmartGrid
+        {
+            var gridType = typeof(TGrid);
+            var harness = _locator.GetInstance<ISmartGridHarness>(gridType.NameForGrid());
+            harness.RegisterArguments(args);
+            
+            return new GridState(){
+                ContainerId = gridType.ContainerNameForGrid(),
+                GridId = gridType.NameForGrid(),
+                Count = harness.Count(),
+                HeaderText = harness.HeaderText(),
+                LabelId = gridType.IdForLabel(),
+                Url = _urls.UrlFor(new GridRequest<TGrid>()) + harness.GetQuerystring()
+            };
         }
     }
 

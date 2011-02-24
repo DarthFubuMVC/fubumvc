@@ -15,13 +15,15 @@ namespace FubuMVC.Tests.Runtime
         private InMemoryRequestData theData;
         private SmartRequest theRequest;
         private InMemoryFubuRequest theFubuRequest;
+        private ObjectConverter objectConverter;
 
         [SetUp]
         public void SetUp()
         {
             theFubuRequest = new InMemoryFubuRequest();
             theData = new InMemoryRequestData();
-            theRequest = new SmartRequest(theData, new ObjectConverter(), theFubuRequest);
+            objectConverter = new ObjectConverter();
+            theRequest = new SmartRequest(theData, objectConverter, theFubuRequest);
         }
 
         [Test]
@@ -43,6 +45,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void do_not_convert_the_type_if_it_is_already_in_the_correct_type()
         {
+            objectConverter.RegisterConverter<Blob>(b => new Blob());
             var theBlob = new Blob();
             theData["blob"] = theBlob;
             theRequest.Value<Blob>("blob").ShouldBeTheSameAs(theBlob);

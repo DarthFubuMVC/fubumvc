@@ -61,9 +61,21 @@ namespace FubuFastPack.JqGrid
             return "gridContainer_" + gridName;
         }
 
+        public static string IdForLabel(this Type gridType)
+        {
+            return gridType.NameForGrid() + "-label";
+        }
+
         public static HtmlTag SmartGridFor<T>(this IFubuPage page, int? initialRows) where T : ISmartGrid
         {
             return page.SmartGridFor<T>(initialRows, h => { });
+        }
+
+        public static HtmlTag DisabledSmartGridFor<TGrid>(this IFubuPage page, int? initialRows) where TGrid : ISmartGrid
+        {
+            var tag = page.SmartGridFor<TGrid>(initialRows, h => { });
+            tag.FirstChild().MetaData("disabled", true);
+            return tag;
         }
 
         public static HtmlTag SmartGridFor<TGrid>(this IFubuPage page, int? initialRows, params object[] arguments)

@@ -30,6 +30,7 @@
     var SmartGrid = function (div, userOptions) {
         var model = $(div).metadata();
         var definition = model.definition;
+        div.isDisabled = model.disabled == true;
 
         div.selectedRow = null;
         div.grid = $('table', div);
@@ -92,21 +93,35 @@
         var gridOptions = {};
         gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
 
-        
+        div.refresh = function(){
+            if (!div.isDisabled){
+                div.grid.trigger("reloadGrid");
+            }
+        }
 
         div.runQuery = function (criterion) {
             div.grid.setGridParam({ page: 1 });
             div.grid.setPostDataItem("criterion", criterion);
-            div.grid.trigger("reloadGrid");
+            div.refresh();
+        }
+
+        div.activateUrl = function(url){
+            div.grid.setGridParam({url: url});
+            div.isDisabled = false;
+            div.refresh();
         }
 
         div.grid.jqGrid(gridOptions);
-		div.grid.trigger("reloadGrid");
+		div.refresh();
     }
 
 })(jQuery);
 
-
+$.fn.activateGrid = function(url){
+    return this.each(function(i, div){
+        div.activateUrl(url);
+    });
+}
 
 $(document).ready(function () {
     $(".grid-container").smartGrid();

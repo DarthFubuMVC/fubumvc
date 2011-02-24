@@ -15,7 +15,7 @@ namespace FubuFastPack.JqGrid
         WholeEntities
     }
 
-    public class ProjectionGrid<TEntity> : Grid<TEntity, ISession> where TEntity : DomainEntity
+    public abstract class ProjectionGrid<TEntity> : Grid<TEntity, ISession> where TEntity : DomainEntity
     {
         private readonly IList<Action<Projection<TEntity>>> _projectionBuilders = new List<Action<Projection<TEntity>>>();
 
