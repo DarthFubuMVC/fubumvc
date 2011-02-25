@@ -11,7 +11,7 @@ COPYRIGHT = 'Copyright 2008-2010 Chad Myers, Jeremy D. Miller, Joshua Flanagan, 
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
 
-props = { :stage => File.expand_path("build"), :stage35 => File.expand_path("build35"), :artifacts => File.expand_path("artifacts") }
+props = { :stage => File.expand_path("build"), :artifacts => File.expand_path("artifacts") }
 
 desc "Displays a list of tasks"
 task :help do
@@ -33,7 +33,7 @@ desc "Compiles, unit tests, generates the database"
 task :all => [:default]
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test, :compile35]
+task :default => [:compile, :unit_test]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -61,12 +61,9 @@ desc "Prepares the working directory for a new build"
 task :clean do
 	#TODO: do any other tasks required to clean/prepare the working directory
 	FileUtils.rm_rf props[:stage]
-	FileUtils.rm_rf props[:stage35]
     # work around nasty latency issue where folder still exists for a short while after it is removed
     waitfor { !exists?(props[:stage]) }
 	Dir.mkdir props[:stage]
-    waitfor { !exists?(props[:stage35]) }
-	Dir.mkdir props[:stage35]
     
 	Dir.mkdir props[:artifacts] unless exists?(props[:artifacts])
 end
@@ -101,25 +98,6 @@ task :bundle_fast_pack => [:compile] do
   sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe assembly-pak src/FubuFastPack -projfile FubuFastPack.csproj"
 end
 
-desc "Compiles the app for .NET Framework 3.5"
-
-task :compile35 => [:clean, :version] do
-  output = "bin\\#{COMPILE_TARGET}35\\"
-  MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.Fx35.sln', :clrversion => CLR_TOOLS_VERSION,
-   :properties=>[
-     "TargetFrameworkVersion=v3.5",
-     "OutDir=#{output}",
-	 "Legacy=True",
-     "DefineConstants=\"LEGACY;TRACE\""
-     ]
-
-  output_nix = output.gsub('\\', '/')
-  copyOutputFiles "src/FubuMVC.StructureMap/#{output_nix}", "*.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/FubuLocalization/#{output_nix}", "FubuLocalization.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/FubuValidation/#{output_nix}", "FubuValidation.{dll,pdb}", props[:stage35]
-  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage35]
-
-end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
   Dir.glob(File.join(fromDir, filePattern)){|file| 		
@@ -149,7 +127,7 @@ task :virtual_dir => [:compile] do
 end
 
 desc "Target used for the CI server"
-task :ci => [:default,:package,:package35]
+task :ci => [:default,:package]
 
 desc "ZIPs up the build results"
 zip :package do |zip|
@@ -158,11 +136,6 @@ zip :package do |zip|
 	zip.output_path = [props[:artifacts]]
 end
 
-zip :package35 do |zip|
-	zip.directories_to_zip = [props[:stage35]]
-	zip.output_file = 'fubumvc_net35.zip'
-	zip.output_path = [props[:artifacts]]
-end
 
 desc "Build the nuget package"
 task :nuget do
