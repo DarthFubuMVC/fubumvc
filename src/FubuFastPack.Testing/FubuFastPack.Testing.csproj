@@ -59,6 +59,7 @@
     <Compile Include="ContainerActivatorExtensionsTester.cs" />
     <Compile Include="FubuFastPackRegistryExtensionTester.cs" />
     <Compile Include="jqGrid\BinaryFilterHandlerTester.cs" />
+    <Compile Include="jqGrid\EntityDTOTester.cs" />
     <Compile Include="jqGrid\FilterColumnTester.cs" />
     <Compile Include="jqGrid\GridColumnTester.cs" />
     <Compile Include="jqGrid\GridRequestTester.cs" />

@@ -176,6 +176,19 @@ namespace FubuFastPack.JqGrid
             return BuildGrid().GetType().FindInterfaceThatCloses(typeof (ISmartGrid<>)).GetGenericArguments().First();
         }
 
+
+        // TODO -- get an E to E test on this mess
+        public Guid IdOfFirstResult()
+        {
+            var request = new GridRequest<T>(){
+                page = 1,
+                rows = 1
+            };
+
+            var dto = Data(request);
+            return dto.items.First().Id();
+        }
+
         // TODO -- get a UT against this
         public DataTable ToDataTable(GridRequest<T> input)
         {

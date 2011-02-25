@@ -5,6 +5,7 @@ using FubuFastPack.Querying;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 using System.Linq;
+using FubuFastPack.JqGrid;
 
 namespace FubuFastPack.JqGrid
 {
@@ -64,7 +65,11 @@ namespace FubuFastPack.JqGrid
             where TEntity : DomainEntity
             where TGrid : ISmartGrid<TEntity>;
 
+        int RecordCountFor<TGrid>(params object[] arguments) where TGrid : ISmartGrid;
+
         string GetUrl<TInput, TGrid>(params object[] args) where TInput : NamedGridRequest, new() where TGrid : ISmartGrid;
+
+        Guid IdOfFirstResult<TGrid>(params object[] args) where TGrid : ISmartGrid;
     }
 
     public class SmartGridService : ISmartGridService
@@ -150,6 +155,11 @@ namespace FubuFastPack.JqGrid
             return harness.Count(restriction);
         }
 
+        public int RecordCountFor<TGrid>(params object[] arguments) where TGrid : ISmartGrid
+        {
+            return getHarness<TGrid>(arguments).Count();
+        }
+
         private ISmartGridHarness getHarness<TGrid>(object[] args)
         {
             var gridName = typeof(TGrid).NameForGrid();
@@ -167,12 +177,19 @@ namespace FubuFastPack.JqGrid
         {
             var harness = getHarness<TGrid>(args);
             var url = _urls.UrlFor(new TInput{
-                GridName = typeof (TGrid).Name
+                GridName = typeof (TGrid).NameForGrid()
             });
 
             url += harness.GetQuerystring();
 
             return url;
+        }
+
+        // TODO -- get and end to end test
+        public Guid IdOfFirstResult<TGrid>(params object[] args) where TGrid : ISmartGrid
+        {
+            var harness = getHarness<TGrid>(args);
+            return harness.IdOfFirstResult();
         }
     }
 

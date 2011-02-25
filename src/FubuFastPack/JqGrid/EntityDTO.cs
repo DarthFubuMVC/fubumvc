@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FubuCore.Util;
 
 namespace FubuFastPack.JqGrid
@@ -45,6 +46,11 @@ namespace FubuFastPack.JqGrid
             {
                 
             }
+        }
+
+        public Guid Id()
+        {
+            return Guid.Parse(this["Id"]);
         }
     }
 }

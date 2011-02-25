@@ -19,5 +19,6 @@ namespace FubuFastPack.JqGrid
         int Count<TEntity>(IDataRestriction<TEntity> restriction) where TEntity : DomainEntity;
 
         Type EntityType();
+        Guid IdOfFirstResult();
     }
 }

@@ -110,11 +110,12 @@ namespace FubuFastPack.JqGrid
             {
                 string gridName = model.gridName;
                 top.Add("div")
-                    .Id(model.containerName)
+                    .Id("grid_" + gridName)
                     .AddClass("grid-container")
                     .MetaData("definition", model)
                     .MetaData("initialRows", initialRows.GetValueOrDefault(10))
-                    .Add("table").Id(gridName).AddClass("smartgrid");
+                    .MetaData("disabled", false)
+                    .Add("table").Id(model.containerName).AddClass("smartgrid");
 
                 top.Add("div").Id(gridName + "_pager").AddClass("pager-bottom").AddClass("grid-pager").AddClass("clean");
             });

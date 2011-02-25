@@ -30,7 +30,7 @@
     var SmartGrid = function (div, userOptions) {
         var model = $(div).metadata();
         var definition = model.definition;
-        div.isDisabled = model.disabled == true;
+        div.isGridDisabled = model.disabled == true;
 
         div.selectedRow = null;
         div.grid = $('table', div);
@@ -94,7 +94,7 @@
         gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
 
         div.refresh = function(){
-            if (!div.isDisabled){
+            if (!div.isGridDisabled){
                 div.grid.trigger("reloadGrid");
             }
         }
@@ -107,7 +107,7 @@
 
         div.activateUrl = function(url){
             div.grid.setGridParam({url: url});
-            div.isDisabled = false;
+            div.isGridDisabled = false;
             div.refresh();
         }
 

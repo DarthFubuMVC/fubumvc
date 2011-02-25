@@ -55,7 +55,10 @@ namespace FubuMVC.Core.Packaging
 
             var request = new ExplodeRequest{
                 Directory = directory,
-                GetVersion = () => assembly.GetName().Version.ToString(),
+                GetVersion = () =>
+                {
+                    return assembly.GetName().Version.ToString();
+                },
                 LogSameVersion = () => Console.WriteLine("Assembly {0} has already been 'exploded' onto disk".ToFormat(assembly.GetName().FullName)),
 
                 ExplodeAction = () => explodeAssembly(assembly, directory, files)
