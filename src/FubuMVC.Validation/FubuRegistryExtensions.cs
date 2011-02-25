@@ -1,7 +1,8 @@
 using System;
-using FubuCore;
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuValidation;
+using FubuValidation.Registration;
 
 namespace FubuMVC.Validation
 {
@@ -20,6 +21,30 @@ namespace FubuMVC.Validation
 
         public static void Validation(this FubuRegistry registry, ValidationRegistry validationRegistry, Action<ConfigureValidationExpression> configure)
         {
+            // Don't override existing configuration
+            if(registry.IsValidationConfigured())
+            {
+                return;
+            }
+
+            var sources = validationRegistry.GetConfiguredSources();
+            registry
+                .Services(x =>
+                              {
+                                  sources.Each(x.AddService<IValidationSource>);
+                                  x.SetServiceIfNone<IValidationQuery, ValidationQuery>();
+                                  x.SetServiceIfNone<IValidationProvider, ValidationProvider>();
+                              });
+
+            var expression = new ConfigureValidationExpression();
+            configure(expression);
+
+            expression.ConfigureRegistry(registry);
+        }
+
+        public static bool IsValidationConfigured(this FubuRegistry registry)
+        {
+            // TODO -- There's GOT to be a cleaner way to do this
             var configured = false;
             registry
                 .Services(x =>
@@ -27,26 +52,7 @@ namespace FubuMVC.Validation
                                   configured = x.DefaultServiceFor<IValidationProvider>() != null;
                               });
 
-            // Don't override existing configuration
-            if(configured)
-            {
-                return;
-            }
-
-            var query = validationRegistry.BuildQuery();
-            var provider = new ValidationProvider(new TypeResolver(), query);
-
-            registry
-                .Services(x =>
-                              {
-                                  x.SetServiceIfNone(query);
-                                  x.SetServiceIfNone<IValidationProvider>(provider);
-                              });
-
-            var expression = new ConfigureValidationExpression();
-            configure(expression);
-
-            expression.ConfigureRegistry(registry);
+            return configured;
         }
     }
 }

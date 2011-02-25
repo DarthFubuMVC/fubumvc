@@ -90,7 +90,6 @@
     <Compile Include="Strategies\IFieldValidationStrategy.cs" />
     <Compile Include="Strategies\ValidationStrategyContext.cs" />
     <Compile Include="TemplateExtensions.cs" />
-    <Compile Include="UniqueAttribute.cs" />
     <Compile Include="ValidationContext.cs" />
     <Compile Include="ValidationQueryExtensions.cs" />
     <Compile Include="RequiredAttribute.cs" />
@@ -115,7 +114,6 @@
     <Compile Include="ValidationProvider.cs" />
     <Compile Include="ValidationRegistry.cs" />
     <Compile Include="ValidationStrategyResult.cs" />
-    <Compile Include="Validator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

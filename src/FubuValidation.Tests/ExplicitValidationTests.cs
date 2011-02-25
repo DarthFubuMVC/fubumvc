@@ -25,8 +25,9 @@ namespace FubuValidation.Tests
                                                                                 m => m.Id)
                                                                             .ApplyStrategy<GreaterThanZeroFieldStrategy>(
                                                                                 m => m.AncillaryId));
-            _query = validationRegistry.BuildQuery();
-            _provider = new ValidationProvider(new TypeResolver(), _query);
+            var resolver = new TypeResolver();
+            _query = new ValidationQuery(resolver, validationRegistry.GetConfiguredSources());
+            _provider = new ValidationProvider(resolver, _query);
         }
 
         [Test]

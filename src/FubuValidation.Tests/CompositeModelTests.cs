@@ -16,8 +16,9 @@ namespace FubuValidation.Tests
         public void SetUp()
         {
             var registry = new ValidationRegistry();
-            _query = registry.BuildQuery();
-            _provider = new ValidationProvider(new TypeResolver(), _query);
+            var resolver = new TypeResolver();
+            _query = new ValidationQuery(resolver, registry.GetConfiguredSources());
+            _provider = new ValidationProvider(resolver, _query);
         }
 
         [Test]

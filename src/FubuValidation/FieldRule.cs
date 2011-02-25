@@ -36,6 +36,7 @@ namespace FubuValidation
                 return;
             }
 
+            // TODO -- this is clunky. Need to make the localization pieces easier to consume
             _strategy
                 .GetMessageSubstitutions(_accessor)
                 .Each((key, value) => result.Message.AddSubstitution(key, value));

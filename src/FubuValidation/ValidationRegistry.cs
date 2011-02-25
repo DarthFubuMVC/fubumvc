@@ -39,9 +39,9 @@ namespace FubuValidation
                 .AddSource(new ValidationPolicySource(_policies));
         }
 
-        public IValidationQuery BuildQuery()
+        public IEnumerable<IValidationSource> GetConfiguredSources()
         {
-            return new ValidationQuery(new TypeResolver(), _sources);
+            return _sources.ToArray();
         }
     }
 }
