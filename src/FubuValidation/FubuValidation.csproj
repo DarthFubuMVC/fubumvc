@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlTags" Condition="'$(LEGACY)' == 'True'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\2.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -53,27 +57,22 @@
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
-      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
-      <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CollectionLengthAttribute.cs" />
+    <Compile Include="ContinuationValidationRule.cs" />
     <Compile Include="CoreExtensions.cs" />
+    <Compile Include="EnumerableValidationRule.cs" />
     <Compile Include="FieldMarkerAttribute.cs" />
     <Compile Include="FieldRule.cs" />
-    <Compile Include="FubuHtmlExtensions.cs" />
+    <Compile Include="Registration\Policies\ContinuationValidationPolicy.cs" />
+    <Compile Include="Registration\Policies\EnumerableValidationPolicy.cs" />
     <Compile Include="Registration\Policies\FieldValidationPolicy.cs" />
     <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
     <Compile Include="GreaterThanZeroAttribute.cs" />
-    <Compile Include="IFieldValidationStrategy.cs" />
     <Compile Include="IValidationRule.cs" />
     <Compile Include="Registration\IValidationSource.cs" />
     <Compile Include="IValidationProvider.cs" />
@@ -87,8 +86,11 @@
     <Compile Include="Registration\DSL\SourcesExpression.cs" />
     <Compile Include="Registration\IValidationQuery.cs" />
     <Compile Include="Registration\ValidationQuery.cs" />
+    <Compile Include="Strategies\CollectionLengthValidationStrategy.cs" />
+    <Compile Include="Strategies\IFieldValidationStrategy.cs" />
+    <Compile Include="Strategies\ValidationStrategyContext.cs" />
     <Compile Include="TemplateExtensions.cs" />
-    <Compile Include="UniqueAttribute.cs" />
+    <Compile Include="ValidationContext.cs" />
     <Compile Include="ValidationQueryExtensions.cs" />
     <Compile Include="RequiredAttribute.cs" />
     <Compile Include="Registration\Sources\ValidationPolicySource.cs" />
@@ -112,7 +114,6 @@
     <Compile Include="ValidationProvider.cs" />
     <Compile Include="ValidationRegistry.cs" />
     <Compile Include="ValidationStrategyResult.cs" />
-    <Compile Include="Validator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

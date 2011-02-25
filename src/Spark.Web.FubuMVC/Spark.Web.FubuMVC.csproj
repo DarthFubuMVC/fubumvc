@@ -36,6 +36,10 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlTags, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
@@ -112,10 +116,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

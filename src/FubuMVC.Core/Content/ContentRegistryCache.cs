@@ -66,7 +66,7 @@ namespace FubuMVC.Core.Content
 
                 if (_service.FileExists(_contentType, filename))
                 {
-                    return "~/_{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
+                    return "~/_content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
                 }
 
                 return "~/content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));

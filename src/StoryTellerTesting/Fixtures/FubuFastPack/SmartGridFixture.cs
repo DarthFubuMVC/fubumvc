@@ -1,31 +1,20 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Text;
-using FubuCore;
-using FubuFastPack.NHibernate;
-using FubuFastPack.Persistence;
-using FubuFastPack.StructureMap;
-using FubuMVC.Core;
-using FubuMVC.StructureMap;
-using FubuTestApplication;
 using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
 using HtmlTags;
-using NHibernate;
 using StoryTeller;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;
-using StructureMap;
-using System.Linq;
 
 namespace IntegrationTesting.Fixtures.FubuFastPack
 {
     public class SmartGridFixture : Fixture
     {
-
         private IList<Case> _cases = new List<Case>();
+
         public IGrammar CasesAre()
         {
             return CreateNewObject<Case>(x =>
@@ -45,7 +34,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
         private void postCases()
         {
-            var request = new CaseDataRequest(){
+            var request = new CaseDataRequest{
                 Cases = _cases.ToArray()
             };
 

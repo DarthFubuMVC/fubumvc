@@ -31,28 +31,28 @@ namespace FubuMVC.Tests.Content
         public void return_url_for_the_image_file_found_at_the_first_package()
         {
             hasFile("something.png");
-            theContentFiles["something.png"].ShouldEqual("~/_images/something.png");
+            theContentFiles["something.png"].ShouldEqual("~/_content/images/something.png");
         }
 
         [Test]
         public void return_url_for_the_image_file_found_at_the_first_package_2()
         {
             hasFile("something.png");
-            theContentFiles["something.png"].ShouldEqual("~/_images/something.png");
+            theContentFiles["something.png"].ShouldEqual("~/_content/images/something.png");
         }
 
         [Test]
         public void return_url_for_the_image_file_found_at_the_first_package_3()
         {
             hasFile("something.png");
-            theContentFiles["something.png"].ShouldEqual("~/_images/something.png");
+            theContentFiles["something.png"].ShouldEqual("~/_content/images/something.png");
         }
 
         [Test]
         public void return_url_for_the_image_file_found_at_the_first_package_4()
         {
             hasFile("e/j/something.png");
-            theContentFiles["e/j/something.png"].ShouldEqual("~/_images/e/j/something.png");
+            theContentFiles["e/j/something.png"].ShouldEqual("~/_content/images/e/j/something.png");
         }
 
 

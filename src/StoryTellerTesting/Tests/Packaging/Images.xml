@@ -11,7 +11,7 @@
     <Comment><![CDATA[This image is in the main application, so should be downloaded directly from the website content]]></Comment>
     <ImageUrlFor isStep="True" name="icon-add.png" url="/fubu-testing/content/images/icon-add.png" />
     <Comment><![CDATA[These images are in the TestPackage1 package, so should be downloaded from the _images/*** url]]></Comment>
-    <ImageUrlFor isStep="True" name="icon-add-alt.png" url="/fubu-testing/_images/icon-add-alt.png" />
+    <ImageUrlFor isStep="True" name="icon-add-alt.png" url="/fubu-testing/_content/images/icon-add-alt.png" />
     <DownloadImage isStep="True" name="icon-add-alt.png" mimeType="image/png" />
   </Packaging>
 </Test>

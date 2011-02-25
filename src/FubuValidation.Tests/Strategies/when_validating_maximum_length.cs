@@ -2,6 +2,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuValidation.Strategies;
+using FubuValidation.Tests.Models;
 using NUnit.Framework;
 
 namespace FubuValidation.Tests.Strategies
@@ -14,6 +15,7 @@ namespace FubuValidation.Tests.Strategies
         private MaximumStringLengthFieldStrategy _strategy;
         private FieldRule _rule;
         private Accessor _accessor;
+        private ValidationContext _context;
 
         [SetUp]
         public void BeforeEach()
@@ -23,13 +25,14 @@ namespace FubuValidation.Tests.Strategies
             _strategy = new MaximumStringLengthFieldStrategy() { Length = 10 };
             _accessor = AccessorFactory.Create<AddressModel>(m => m.Address1);
             _rule = new FieldRule(_accessor, new TypeResolver(), _strategy);
+            _context = new ValidationContext(null);
         }
 
         [Test]
         public void should_not_register_message_if_value_is_null()
         {
             _model.Address1 = null;
-            _rule.Validate(_model, _notification);
+            _rule.Validate(_model, _context, _notification);
 
             _notification
                 .MessagesFor(_accessor)
@@ -41,7 +44,7 @@ namespace FubuValidation.Tests.Strategies
         public void should_register_message_if_string_is_greater_than_limit()
         {
             _model.Address1 = "Invalid property value";
-            _rule.Validate(_model, _notification);
+            _rule.Validate(_model, _context, _notification);
 
             _notification
                 .MessagesFor(_accessor)
@@ -53,7 +56,7 @@ namespace FubuValidation.Tests.Strategies
         public void should_not_register_a_message_if_property_is_valid()
         {
             _model.Address1 = "Valid";
-            _rule.Validate(_model, _notification);
+            _rule.Validate(_model, _context, _notification);
 
             _notification
                 .MessagesFor(_accessor)

@@ -70,6 +70,7 @@
     <Compile Include="jqGrid\SmartGridHarnessTester.cs" />
     <Compile Include="jqGrid\SmartGridServiceTester.cs" />
     <Compile Include="jqGrid\StringFilterHandlerTester.cs" />
+    <Compile Include="Extensibility\ExtensionPropertyBinderTester.cs" />
     <Compile Include="NHibernate\DatabaseSettingsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Querying\QueryableDataSourceFilterTester.cs" />

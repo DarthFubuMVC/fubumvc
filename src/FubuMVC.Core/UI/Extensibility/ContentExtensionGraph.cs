@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuCore;
 
 namespace FubuMVC.Core.UI.Extensibility
 {
@@ -45,22 +47,25 @@ namespace FubuMVC.Core.UI.Extensibility
             _lastShelf.FilterLast(filter);
         }
 
-        private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page) where T : class
+        private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page, string tag) where T : class
         {
             var writer = page.ServiceLocator.GetInstance<IOutputWriter>();
-            extensions
-                .SelectMany(ex => ex.GetExtensions(page))
-                .Where(o => o != null).Each(o => writer.WriteHtml(o));
+            var extensionOutput = extensions.SelectMany(ex => ex.GetExtensions(page)).Where(o => o != null).ToArray();
+            if (extensionOutput.Length == 0 && page.Get<DiagnosticsIndicator>().IsDiagnosticsEnabled)
+            {
+                writer.WriteHtml("<!-- Content extensions '{1}' for {0} would be rendered here -->".ToFormat(typeof(T).Name, tag));
+            }
+            extensionOutput.Each(o => writer.WriteHtml(o));
         }
 
         public void ApplyExtensions<T>(IFubuPage<T> page) where T : class
         {
-            apply(shelfFor<T>().AllExtensions(), page);
+            apply(shelfFor<T>().AllExtensions(), page, "ALL");
         }
 
         public void ApplyExtensions<T>(IFubuPage<T> page, string tag) where T : class
         {
-            apply(shelfFor<T>().ExtensionsFor(tag), page);
+            apply(shelfFor<T>().ExtensionsFor(tag), page, tag);
         }
     }
 }

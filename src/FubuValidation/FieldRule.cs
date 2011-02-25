@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuValidation.Strategies;
 
 namespace FubuValidation
 {
@@ -24,20 +24,22 @@ namespace FubuValidation
     		return _accessor.Equals(accessor);
     	}
 
-    	public void Validate(object target, Notification notification)
+    	public void Validate(object target, ValidationContext context, Notification notification)
         {
             var declaringType = _typeResolver.ResolveType(target);
             var rawValue = _accessor.GetValue(target);
 
-            var result = _strategy.Validate(target, rawValue, declaringType, notification);
+    	    var strategyContext = new ValidationStrategyContext(target, rawValue, declaringType, context.Provider, notification);
+            var result = _strategy.Validate(strategyContext);
             if(result.IsValid)
             {
                 return;
             }
 
+            // TODO -- this is clunky. Need to make the localization pieces easier to consume
             _strategy
                 .GetMessageSubstitutions(_accessor)
-                .Each(pair => result.Message.AddSubstitution(pair.Key, pair.Value));
+                .Each((key, value) => result.Message.AddSubstitution(key, value));
 
             notification
                 .RegisterMessage(_accessor, result.Message);

@@ -38,6 +38,9 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\fluent-nhibernate\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="NHibernate">
@@ -126,10 +129,6 @@
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>

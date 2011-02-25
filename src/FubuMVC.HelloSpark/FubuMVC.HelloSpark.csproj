@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AirController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Features\FifthElement\FifthElementController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\EarthController.cs" />
@@ -77,8 +78,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HelloSparkJavaScriptViewPolicy.asax.cs" />
-    <Compile Include="HelloSparkPolicy.asax.cs" />
+    <Compile Include="HelloSparkJavaScriptViewPolicy.cs" />
+    <Compile Include="HelloSparkPolicy.cs" />
     <Compile Include="HelloSparkRegistry.cs" />
     <Compile Include="HelloSparkUrlPolicy.cs" />
   </ItemGroup>
@@ -86,6 +87,10 @@
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
+      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
+      <Name>FubuLocalization</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
@@ -95,9 +100,13 @@
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
+    <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">
+      <Project>{1D14C442-9F90-4B28-B4F9-79CD6E1B6E40}</Project>
+      <Name>FubuMVC.Validation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
+      <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
+      <Name>FubuValidation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
       <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
@@ -114,6 +123,7 @@
     <None Include="Views\Air\TakeABreath.spark" />
     <None Include="Views\Earth\Rock.spark" />
     <None Include="Views\Location\WhereAreWe.spark" />
+    <None Include="Views\Products\Create.spark" />
     <None Include="Views\Shared\Application.spark" />
     <None Include="Views\Fire\Create.spark" />
     <None Include="Views\Shared\_global.spark" />

@@ -125,7 +125,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
         }
         public void SetModel(object model)
         {
-            throw new NotImplementedException();
+            Model = (TModel)model;
         }
     }
 }

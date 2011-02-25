@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuValidation.Registration.Policies;
+using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration.DSL
 {

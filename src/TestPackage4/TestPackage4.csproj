@@ -66,10 +66,6 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
       <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
       <Name>Spark.Web.FubuMVC</Name>

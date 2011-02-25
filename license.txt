@@ -1,4 +1,5 @@
-Copyright 2009 Chad Myers, Jeremy Miller, Joshua Flanagan, Mark Nijhof
+Copyright 2011 Jeremy Miller, Chad Myers, Joshua Flanagan, Robert Greyling, Joshua Arnold, Brandon Behrens, and Tim Tyrrell
+Copyright 2009-2010 Chad Myers, Jeremy Miller, Joshua Flanagan, Mark Nijhof
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

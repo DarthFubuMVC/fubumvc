@@ -24,9 +24,10 @@ namespace FubuValidation
 
         public void Validate(object target, Notification notification)
         {
+            var context = new ValidationContext(this);
             _query
                 .RulesFor(target)
-                .Each(rule => rule.Validate(target, notification));
+                .Each(rule => rule.Validate(target, context, notification));
         }
     }
 }

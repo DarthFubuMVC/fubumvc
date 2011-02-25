@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC</id>
+    <version>0.4.0</version>
+    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
+    <owners>Joshua Flanagan</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://fubumvc.com</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A compositional, convention-based framework for complex web applications</description>
+    <tags>web framework mvc</tags>
+    <dependencies>
+      <dependency id="HtmlTags" version="0.8.1" />
+      <dependency id="StructureMap" version="2.6.2" />
+      <dependency id="CommonServiceLocator" version="1.0" />
+      <dependency id="WebActivator" version="1.1" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="AppStart_FubuMVC.cs.pp" target="content" />
+	<file src="ConfigureFubuMVC.cs.pp" target="content" />
+
+	<file src="..\..\build\FubuCore.*" target="lib\4.0" />
+	<file src="..\..\build\FubuLocalization.*" target="lib\4.0" />
+	<file src="..\..\build\FubuMVC.Core.*" target="lib\4.0" />
+	<file src="..\..\build\Ionic.Zip.*" target="lib\4.0" />
+	<file src="..\..\build\FubuMVC.StructureMap.*" target="lib\4.0" />
+
+	<file src="..\..\build35\FubuCore.*" target="lib\2.0" />
+	<file src="..\..\build35\FubuLocalization.*" target="lib\2.0" />
+	<file src="..\..\build35\FubuMVC.Core.*" target="lib\2.0" />
+	<file src="..\..\build35\Ionic.Zip.*" target="lib\2.0" />
+	<file src="..\..\build35\FubuMVC.StructureMap.*" target="lib\2.0" />
+
+	<file src="..\..\build\fubu.exe" target="tools" />
+	<file src="..\..\build\FubuCore.*" target="tools" />
+	<file src="..\..\build\FubuMVC.Core.*" target="tools" />
+	<file src="..\..\build\Ionic.Zip.*" target="tools" />
+  </files>
+</package>

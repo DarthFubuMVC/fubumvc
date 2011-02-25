@@ -2,8 +2,6 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.HelloWorld.Services;
 using FubuMVC.StructureMap;
-using FubuValidation;
-using FubuValidation.Registration;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 
@@ -21,13 +19,7 @@ namespace FubuMVC.HelloWorld
         public void BootstrapStructureMap()
         {
             UrlContext.Reset();
-            Validator.Initialize<HelloWorldValidationRegistry>();
-            ObjectFactory.Initialize(x =>
-                                        {
-                                            x.For<IHttpSession>().Use<CurrentHttpContextSession>();
-                                            x.For<IValidationProvider>().Use(() => Validator.Provider);
-                                            x.For<IValidationQuery>().Use(() => Validator.Model);
-                                        });
+            ObjectFactory.Initialize(x => x.For<IHttpSession>().Use<CurrentHttpContextSession>());
             ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator(ObjectFactory.Container));
             BootstrapFubu(ObjectFactory.Container, _routes);
         }

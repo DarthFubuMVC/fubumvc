@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlTags" Condition="'$(LEGACY)' != 'True'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags" Condition="'$(LEGACY)' == 'True'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\2.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -82,10 +90,6 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

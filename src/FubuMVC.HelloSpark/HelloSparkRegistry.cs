@@ -1,5 +1,7 @@
 using FubuMVC.Core;
 using FubuMVC.HelloSpark.Controllers;
+using FubuMVC.Validation;
+using FubuValidation;
 using Spark.Web.FubuMVC;
 using Spark.Web.FubuMVC.ViewCreation;
 
@@ -13,6 +15,8 @@ namespace FubuMVC.HelloSpark
 
             Applies
 				.ToThisAssembly();
+
+            HomeIs<AirController>(c => c.TakeABreath());
 
             Actions
                 .IncludeTypesNamed(x => x.EndsWith("Controller"));
@@ -34,14 +38,17 @@ namespace FubuMVC.HelloSpark
 
         	           	});
 
+            this.Validation<ValidationRegistry>(validation => validation
+                                                                  .Failures
+                                                                  .IfModelTypeIs<CreateProductInput>()
+                                                                  .TransferTo<CreateProductRequest>());
+
             Routes
                 .UrlPolicy<HelloSparkUrlPolicy>();
             
             Output
 				.ToJson
 				.WhenTheOutputModelIs<JsonResponse>();
-
-            HomeIs<AirController>(c => c.TakeABreath());
         }
     }
 }

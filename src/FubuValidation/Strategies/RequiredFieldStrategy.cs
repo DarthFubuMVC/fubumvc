@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using FubuCore.Reflection;
 
 namespace FubuValidation.Strategies
@@ -8,17 +7,14 @@ namespace FubuValidation.Strategies
     {
         public static readonly string FIELD = "field";
 
-        public IEnumerable<KeyValuePair<string, string>> GetMessageSubstitutions(Accessor accessor)
+        public NameValueCollection GetMessageSubstitutions(Accessor accessor)
         {
-            return new List<KeyValuePair<string, string>>
-                        {
-                            new KeyValuePair<string, string>(FIELD, accessor.Name)
-                        };
+            return new NameValueCollection { {FIELD, accessor.Name} };
         }
 
-        public ValidationStrategyResult Validate(object target, object rawValue, Type declaringType, Notification notification)
+        public ValidationStrategyResult Validate(ValidationStrategyContext context)
         {
-            if(rawValue == null || rawValue.ToString() == string.Empty)
+            if (context.RawValue == null || context.RawValue.ToString() == string.Empty)
             {
                 return ValidationStrategyResult.Invalid(new NotificationMessage(ValidationKeys.REQUIRED));
             }

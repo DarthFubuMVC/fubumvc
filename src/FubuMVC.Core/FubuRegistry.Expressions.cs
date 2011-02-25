@@ -135,6 +135,7 @@ namespace FubuMVC.Core
                 Import<DiagnosticsRegistry>(string.Empty);
                 new DiagnosticsPackage().Configure(this);
                 _systemPolicies.Add(new DiagnosticBehaviorPrepender());
+                Services(graph => graph.AddService(new DiagnosticsIndicator().SetEnabled()));
             }
             else
             {

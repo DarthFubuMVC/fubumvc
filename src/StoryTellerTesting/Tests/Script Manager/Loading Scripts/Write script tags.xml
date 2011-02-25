@@ -42,7 +42,7 @@
     <LoadPageWithScripts isStep="True" scriptNames="Pak1-A.js" />
     <TheScriptsShouldBe isStep="True">
       <Rows>
-        <row isStep="True" expected="/fubu-testing/_scripts/Pak1-A.js" />
+        <row isStep="True" expected="/fubu-testing/_content/scripts/Pak1-A.js" />
       </Rows>
     </TheScriptsShouldBe>
     <Comment><![CDATA[The 'Pak1' package also has a script named Script1.js, but the main application should still have precedence]]></Comment>
