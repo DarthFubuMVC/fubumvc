@@ -84,9 +84,11 @@
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
+    <Compile Include="Content\DefaultMimeTypeProvider.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
     <Compile Include="Content\IContentRegistry.cs" />
     <Compile Include="Content\FileRouteHandler.cs" />
+    <Compile Include="Content\IMimeTypeProvider.cs" />
     <Compile Include="Content\PackageFolderActivator.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
