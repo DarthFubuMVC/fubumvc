@@ -1,6 +1,7 @@
+using System.Linq;
 using FubuMVC.Core;
-using FubuValidation;
 using FubuValidation.Registration;
+using FubuValidation.Registration.Sources;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests
@@ -9,35 +10,20 @@ namespace FubuMVC.Validation.Tests
     public class ValidationRegistrationTester
     {
         [Test]
-        public void should_register_validation_query()
+        public void should_register_validation_policy_source()
         {
             var registry = new FubuRegistry();
             registry.WithValidationDefaults();
 
-            IValidationQuery query = null;
+            var isRegistered = false;
             registry.Services(x =>
                                   {
-                                      query = (IValidationQuery)x.DefaultServiceFor<IValidationQuery>().Value;
+                                      var sources = x.ServicesFor<IValidationSource>();
+                                      isRegistered = sources.Any(def => def.Value.GetType() == typeof(ValidationPolicySource));
                                   });
             registry.BuildGraph();
 
-            query.ShouldNotBeNull();
-        }
-
-        [Test]
-        public void should_register_validation_provider()
-        {
-            var registry = new FubuRegistry();
-            registry.WithValidationDefaults();
-
-            IValidationProvider provider = null;
-            registry.Services(x =>
-                                  {
-                                      provider = (IValidationProvider)x.DefaultServiceFor<IValidationProvider>().Value;
-                                  });
-
-            registry.BuildGraph();
-            provider.ShouldNotBeNull();
+            isRegistered.ShouldBeTrue();
         }
     }
 }
