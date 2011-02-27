@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlTags, Version=0.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HtmlTags">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />

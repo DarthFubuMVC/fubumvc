@@ -31,9 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlTags" Condition="'$(LEGACY)' == 'True'">
+    <Reference Include="HtmlTags">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\2.0\HtmlTags.dll</HintPath>
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -11,11 +11,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core.UI.Forms
 {
-    public class FormLineExpression<T> : ITagSource
-#if !LEGACY
-                                         , IHtmlString
-#endif
-        where T : class
+    public class FormLineExpression<T> : ITagSource, IHtmlString where T : class
     {
         private readonly ITagGenerator<T> _tags;
         private readonly ILabelAndFieldLayout _layout;

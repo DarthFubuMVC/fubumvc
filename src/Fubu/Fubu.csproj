@@ -33,13 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlTags" Condition="'$(LEGACY)' != 'True'">
+    <Reference Include="HtmlTags">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlTags" Condition="'$(LEGACY)' == 'True'">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\2.0\HtmlTags.dll</HintPath>
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>

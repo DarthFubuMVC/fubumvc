@@ -33,13 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentNHibernate, Version=1.1.0.694, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL" />
-    <Reference Include="HtmlTags" Condition="'$(LEGACY)' != 'True'">
+    <Reference Include="HtmlTags">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlTags" Condition="'$(LEGACY)' == 'True'">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\2.0\HtmlTags.dll</HintPath>
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
