@@ -22,17 +22,11 @@
 	<file src="AppStart_FubuMVC.cs.pp" target="content" />
 	<file src="ConfigureFubuMVC.cs.pp" target="content" />
 
-	<file src="..\..\build\FubuCore.*" target="lib\4.0" />
-	<file src="..\..\build\FubuLocalization.*" target="lib\4.0" />
-	<file src="..\..\build\FubuMVC.Core.*" target="lib\4.0" />
-	<file src="..\..\build\Ionic.Zip.*" target="lib\4.0" />
-	<file src="..\..\build\FubuMVC.StructureMap.*" target="lib\4.0" />
-
-	<file src="..\..\build35\FubuCore.*" target="lib\2.0" />
-	<file src="..\..\build35\FubuLocalization.*" target="lib\2.0" />
-	<file src="..\..\build35\FubuMVC.Core.*" target="lib\2.0" />
-	<file src="..\..\build35\Ionic.Zip.*" target="lib\2.0" />
-	<file src="..\..\build35\FubuMVC.StructureMap.*" target="lib\2.0" />
+	<file src="..\..\build\FubuCore.*" target="lib" />
+	<file src="..\..\build\FubuLocalization.*" target="lib" />
+	<file src="..\..\build\FubuMVC.Core.*" target="lib" />
+	<file src="..\..\build\Ionic.Zip.*" target="lib" />
+	<file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
 
 	<file src="..\..\build\fubu.exe" target="tools" />
 	<file src="..\..\build\FubuCore.*" target="tools" />
