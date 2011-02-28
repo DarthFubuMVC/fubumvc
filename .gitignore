@@ -28,3 +28,7 @@ history.xml
 
 pak*.zip
 test.db
+
+*.userprefs
+*.pidb
+test-results
