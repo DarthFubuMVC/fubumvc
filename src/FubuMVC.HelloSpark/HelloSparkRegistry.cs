@@ -11,32 +11,30 @@ namespace FubuMVC.HelloSpark
     {
         public HelloSparkRegistry()
         {
-			IncludeDiagnostics(true);
+            IncludeDiagnostics(true);
 
             Applies
-				.ToThisAssembly();
-
-            HomeIs<AirController>(c => c.TakeABreath());
+                .ToThisAssembly();
 
             Actions
-                .IncludeTypesNamed(x => x.EndsWith("Controller"));
+                .IncludeClassesSuffixedWithController();
 
-        	this.Spark(spark =>
-        	           	{
-        	           		spark
-        	           			.Settings
-        	           			.AddViewFolder("/Features/");
+            this.Spark(spark =>
+            {
+                spark
+                    .Settings
+                    .AddViewFolder("/Features/");
 
-        	           		spark
-        	           			.Policies
-        	           			.Add<HelloSparkJavaScriptViewPolicy>()
-        	           			.Add<HelloSparkPolicy>();
+                spark
+                    .Policies
+                    .Add<HelloSparkJavaScriptViewPolicy>()
+                    .Add<HelloSparkPolicy>();
 
-        	           		spark
-        	           			.Output
-        	           			.ToJavaScriptWhen(call => call.HasOutput && call.OutputType().Equals(typeof (JavaScriptResponse)));
+                spark
+                    .Output
+                    .ToJavaScriptWhen(call => call.HasOutput && call.OutputType().Equals(typeof(JavaScriptResponse)));
 
-        	           	});
+            });
 
             this.Validation<ValidationRegistry>(validation => validation
                                                                   .Failures
@@ -44,11 +42,12 @@ namespace FubuMVC.HelloSpark
                                                                   .TransferTo<CreateProductRequest>());
 
             Routes
-                .UrlPolicy<HelloSparkUrlPolicy>();
-            
+                .UrlPolicy<HelloSparkUrlPolicy>()
+                .HomeIs<AirController>(c => c.TakeABreath());
+
             Output
-				.ToJson
-				.WhenTheOutputModelIs<JsonResponse>();
+                .ToJson
+                .WhenTheOutputModelIs<JsonResponse>();
         }
     }
 }
