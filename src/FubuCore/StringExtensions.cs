@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using System.Linq;
 
@@ -142,6 +143,23 @@ namespace FubuCore
             }
 
             return array;
+        }
+
+        public static bool IsValidNumber(this string number)
+        {
+            return IsValidNumber(number, Thread.CurrentThread.CurrentCulture);
+        }
+
+        public static bool IsValidNumber(this string number, CultureInfo culture)
+        {
+            string _validNumberPattern =
+            @"^-?(?:\d+|\d{1,3}(?:" 
+            + culture.NumberFormat.NumberGroupSeparator + 
+            @"\d{3})+)?(?:\" 
+            + culture.NumberFormat.NumberDecimalSeparator + 
+            @"\d+)?$";
+
+            return new Regex(_validNumberPattern, RegexOptions.ECMAScript).IsMatch(number);
         }
     }
 }
