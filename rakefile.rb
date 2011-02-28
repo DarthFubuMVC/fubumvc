@@ -88,6 +88,7 @@ task :compile => [:clean, :version] do
   copyOutputFiles "src/Spark.Web.FubuMVC/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuValidation/bin/#{COMPILE_TARGET}", "FubuValidation.{dll,pdb}", props[:stage]
+  copyOutputFiles "src/FubuMVC.Validation/bin", "FubuMVC.Validation.{dll,pdb}", props[:stage]
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
   copyOutputFiles "src/FubuFastPack/bin/#{COMPILE_TARGET}", "FubuFastPack.{dll,pdb}", props[:stage]
