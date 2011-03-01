@@ -302,6 +302,12 @@ namespace FubuFastPack.Testing.jqGrid
             theColumnModel["name"].ShouldEqual("Action");
             theColumnModel["index"].ShouldEqual("Action");
         }
+
+        [Test]
+        public void can_override_the_formatter()
+        {
+            theColumn.Formatter("something").ToDictionary().Single()["formatter"].ShouldEqual("something");
+        }
     }
 
     public class CaseActionModel

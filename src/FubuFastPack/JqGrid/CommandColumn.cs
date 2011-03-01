@@ -16,6 +16,7 @@ namespace FubuFastPack.JqGrid
         private StringToken _body;
         private Accessor _accessor;
         private string _linkName;
+        private string _formatter = "command";
 
         public CommandColumn(StringToken header)
         {
@@ -31,10 +32,16 @@ namespace FubuFastPack.JqGrid
             return this;
         }
 
+        public CommandColumn<TEntity, TInputType> Formatter(string formatterName)
+        {
+            _formatter = formatterName;
+            return this;
+        }
+
         public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
             yield return new Dictionary<string, object>{
-                {"formatter", "command"},
+                {"formatter", _formatter},
                 {"name", _header.Key},
                 {"index", _header.Key},
                 {"sortable", false},
