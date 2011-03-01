@@ -27,7 +27,7 @@ namespace FubuFastPack.Querying
             tag.Child(new TableTag());
 
             var metadata = new Dictionary<string, object>{
-                {"gridId", containerNameForGrid},
+                {"gridId", "grid_" + model.GridName},
                 {"initialCriteria", model.InitialCriteria()}
             };
 

@@ -108,10 +108,12 @@ namespace FubuFastPack.JqGrid
             _definition.SortBy = SortRule<TEntity>.Descending(property);
         }
 
-        public void ShowItemActionLink<TInputModel>(StringToken key)
+        public CommandColumn<TEntity, TInputModel> ShowItemActionLink<TInputModel>(StringToken key)
         {
             var column = new CommandColumn<TEntity, TInputModel>(key);
             _definition.AddColumn(column);
+
+            return column;
         }
 
         public void LimitRowsTo(int count)

@@ -39,6 +39,26 @@ namespace FubuFastPack.JqGrid
         public string GridName { get; set; }
         public IEnumerable<IGridPolicy> Policies { get; set; }
         public IEnumerable<object> Arguments { get; set; }
+
+        public bool Equals(NamedGridRequest other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.GridName, GridName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (NamedGridRequest)) return false;
+            return Equals((NamedGridRequest) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (GridName != null ? GridName.GetHashCode() : 0);
+        }
     }
 
     public interface IGridPolicy
@@ -137,8 +157,8 @@ namespace FubuFastPack.JqGrid
             var harness = getHarness<TGrid>(args);
             
             return new GridState(){
-                ContainerId = gridType.ContainerNameForGrid(),
-                GridId = gridType.NameForGrid(),
+                ContainerId = gridType.NameForGrid() + "-container",
+                GridId = gridType.ContainerNameForGrid(),
                 Count = harness.Count(),
                 HeaderText = harness.HeaderText(),
                 LabelId = gridType.IdForLabel(),

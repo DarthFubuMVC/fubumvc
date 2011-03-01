@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuFastPack.Domain;
 using FubuFastPack.Persistence;
 using FubuFastPack.Querying;
@@ -101,7 +102,12 @@ namespace FubuFastPack.JqGrid
             {
                 if (options.SortColumn.IsNotEmpty())
                 {
-                    var accessor = _grid.Definition.SelectedAccessors.First(x => x.Name == options.SortColumn);
+                    var accessor = _grid.Definition.SelectedAccessors.FirstOrDefault(x => x.Name == options.SortColumn);
+                    if (accessor == null)
+                    {
+                        var property = typeof (TEntity).GetProperty(options.SortColumn);
+                        accessor = new SingleProperty(property);
+                    }
 
                     var expression = accessor.ToExpression<TEntity>();
                     return options.SortAscending

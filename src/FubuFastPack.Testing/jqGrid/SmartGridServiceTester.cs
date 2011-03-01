@@ -151,13 +151,13 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void should_set_the_grid_id()
         {
-            theGridState.GridId.ShouldEqual(typeof (TheTestGrid).NameForGrid());
+            theGridState.GridId.ShouldEqual(typeof (TheTestGrid).ContainerNameForGrid());
         }
 
         [Test]
         public void should_set_the_grid_container_id()
         {
-            theGridState.ContainerId.ShouldEqual(typeof (TheTestGrid).ContainerNameForGrid());
+            theGridState.ContainerId.ShouldEqual("TheTest-container");
         }
 
         [Test]

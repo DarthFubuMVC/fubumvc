@@ -48,6 +48,21 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void formatter_can_be_overriden()
+        {
+            theColumn.Formatter("trimmedLink").ToDictionary().Single()["formatter"].ShouldEqual("trimmedLink");
+        }
+
+
+        [Test]
+        public void formatter_can_be_overriden_by_trimmed()
+        {
+            var dictionary = theColumn.TrimToLength(10).ToDictionary().Single();
+            dictionary["formatter"].ShouldEqual("trimmedLink");
+            dictionary["trim-length"].ShouldEqual(10);
+        }
+
+        [Test]
         public void link_name_is_driven_off_of_the_accessor_name()
         {
             theColumn.ToDictionary().Single()["linkName"].ShouldEqual("linkForCondition");
@@ -231,6 +246,18 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void can_override_the_body()
+        {
+            theColumn.Body(CommandKey.Install);
+            theDto = theHarness.RunColumn<Case>(theColumn, x =>
+            {
+                x.SetValue(c => c.Id, _id);
+            });
+
+            theDto.cell.Last().ShouldEqual(CommandKey.Install.ToString());
+        }
+
+        [Test]
         public void the_formatter_in_the_col_model_should_be_command()
         {
             theColumnModel["formatter"].ShouldEqual("command");
@@ -289,5 +316,6 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         public static CommandKey Action = new CommandKey("Action", "Action"); 
+        public static CommandKey Install = new CommandKey("Install", "Install"); 
     }
 }

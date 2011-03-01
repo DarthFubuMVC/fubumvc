@@ -89,7 +89,6 @@ $.fn.asQueryBuilder.defaults =
     addCriteriaSelector: "#add",
     removeCriteriaTemplateSelector: "#removeFilter",
     runQuerySelector: "#search-criteria-search",
-    clearCriteriaSelector: "#clear"
 };
 
 function buildQueryOptions(onFormClear) {search-criteria-search

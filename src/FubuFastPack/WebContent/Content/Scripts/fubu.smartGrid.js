@@ -7,7 +7,7 @@
             return '<a href="' + url + '" target="_top">' + cellValue + '</a>';
         },
 
-        command: function(cellValue, options, rowObject) {
+        command: function (cellValue, options, rowObject) {
             var linkName = options.colModel.linkName;
             var url = rowObject[0][linkName];
 
@@ -16,6 +16,19 @@
 
         timeAgo: function (cellValue, options, rowObject) {
             return $.timeago(cellValue);
+        },
+
+        trimmedLink: function (cellValue, options, rowObject) {
+            var linkName = options.colModel.linkName;
+            var url = rowObject[0][linkName];
+
+            var length = parseInt(options.colModel.trim-length);
+            var displayValue = cellValue;
+            if (displayValue.length > 10){
+                displayValue = displayValue.substr(0, 10) + "&hellip;";
+            }
+
+            return '<a href="' + url + '" target="_top" title="' + cellValue + '">' + displayValue + '</a>';
         },
     });
 
@@ -35,7 +48,7 @@
         div.selectedRow = null;
         div.grid = $('table', div);
 
-        div.getData = function(rowid){
+        div.getData = function (rowid) {
             var item = div.grid.getRowData(rowid);
 
             var index = parseInt(rowid) - 1;
@@ -65,26 +78,26 @@
                 cell: "cell",
                 id: "id"
             },
-            postData: {criterion: definition.initialCriteria},
+            postData: { criterion: definition.initialCriteria },
             pager: $('#' + definition.pagerId),
             onPaging: function (pgButton) {
                 if (pgButton == 'records') {
                     this.page = 1;
                 }
             },
-            gridComplete: function(data){
+            gridComplete: function (data) {
                 $(div).trigger("grid-refreshed", data);
-                div.selectedRow = null;    
+                div.selectedRow = null;
             },
-            ondblClickRow: function(rowId, iCol, cellcontent, e){
+            ondblClickRow: function (rowId, iCol, cellcontent, e) {
                 var row = div.getData(rowId);
                 $(div).trigger("row-doubleclicked", row);
             },
-            onSelectRow: function(rowid, status){
+            onSelectRow: function (rowid, status) {
                 div.selectedRow = div.getData(rowid);
                 $(div).trigger("row-selected", div.selectedRow);
             },
-            loadComplete: function(data){
+            loadComplete: function (data) {
                 div.data = data.items;
                 return true;
             }
@@ -93,8 +106,8 @@
         var gridOptions = {};
         gridOptions = $.extend(gridOptions, gridDefaultOptions, userOptions || {});
 
-        div.refresh = function(){
-            if (!div.isGridDisabled){
+        div.refresh = function () {
+            if (!div.isGridDisabled) {
                 div.grid.trigger("reloadGrid");
             }
         }
@@ -105,14 +118,14 @@
             div.refresh();
         }
 
-        div.activateUrl = function(url){
-            div.grid.setGridParam({url: url});
+        div.activateUrl = function (url) {
+            div.grid.setGridParam({ url: url });
             div.isGridDisabled = false;
             div.refresh();
         }
 
         div.grid.jqGrid(gridOptions);
-		div.refresh();
+        div.refresh();
     }
 
 })(jQuery);

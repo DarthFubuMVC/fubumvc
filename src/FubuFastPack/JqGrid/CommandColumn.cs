@@ -12,23 +12,31 @@ namespace FubuFastPack.JqGrid
 {
     public class CommandColumn<TEntity, TInputType> : IGridColumn where TEntity : DomainEntity
     {
-        private readonly StringToken _key;
+        private readonly StringToken _header;
+        private StringToken _body;
         private Accessor _accessor;
         private string _linkName;
 
-        public CommandColumn(StringToken key)
+        public CommandColumn(StringToken header)
         {
-            _key = key;
+            _header = header;
+            _body = header;
             _accessor = ReflectionHelper.GetAccessor<TEntity>(x => x.Id);
-            _linkName = "linkFor" + _key.Key;
+            _linkName = "linkFor" + _header.Key;
+        }
+
+        public CommandColumn<TEntity, TInputType> Body(StringToken body)
+        {
+            _body = body;
+            return this;
         }
 
         public IEnumerable<IDictionary<string, object>> ToDictionary()
         {
             yield return new Dictionary<string, object>{
                 {"formatter", "command"},
-                {"name", _key.Key},
-                {"index", _key.Key},
+                {"name", _header.Key},
+                {"index", _header.Key},
                 {"sortable", false},
                 {"linkName", _linkName},
 
@@ -41,7 +49,7 @@ namespace FubuFastPack.JqGrid
 
             return dto =>
             {
-                dto.AddCellDisplay(_key.ToString());
+                dto.AddCellDisplay(_body.ToString());
 
                 var parameters = new RouteParameters();
                 parameters[_accessor.Name] = idSource().ToString();
@@ -73,7 +81,7 @@ namespace FubuFastPack.JqGrid
 
         public string GetHeader()
         {
-            return _key.ToString();
+            return _header.ToString();
         }
 
         public bool IsOuterJoin

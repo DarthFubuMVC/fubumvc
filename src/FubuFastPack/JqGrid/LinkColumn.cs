@@ -32,6 +32,7 @@ namespace FubuFastPack.JqGrid
         private readonly Type _inputModelType;
         private StringToken _literalText;
         private bool _disabled;
+        private readonly IList<Action<IDictionary<string, object>>> _alterations = new List<Action<IDictionary<string, object>>>();
 
         public LinkColumn(Accessor accessor, Type inputModelType, StringToken literalText) : base(accessor)
         {
@@ -51,6 +52,21 @@ namespace FubuFastPack.JqGrid
             _idAccessor = idAccessor;
             _inputModelType = inputModelType;
             initialize();
+        }
+
+        private Action<IDictionary<string, object>> alter
+        {
+            set
+            {
+                _alterations.Add(value);
+            }
+        }
+
+        public LinkColumn<T> Formatter(string columnFormatName)
+        {
+            alter = dict => dict["formatter"] = columnFormatName;
+
+            return this;
         }
 
         public Accessor IdAccessor
@@ -78,6 +94,8 @@ namespace FubuFastPack.JqGrid
                 {"linkName", _linkName},
                 {"formatter", "link"}
             };
+
+            _alterations.Each(a => a(dictionary));
 
             if (_disabled)
             {
@@ -155,6 +173,17 @@ namespace FubuFastPack.JqGrid
             _linkName = "linkFor" + Accessor.Name;
             IsSortable = true;
             IsFilterable = true;
+        }
+
+        public LinkColumn<T> TrimToLength(int length)
+        {
+            alter = dict =>
+            {
+                dict["formatter"] = "trimmedLink";
+                dict["trim-length"] = length;
+            };
+
+            return this;
         }
     }
 }

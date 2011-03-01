@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore.Util;
+using FubuCore;
 
 namespace FubuFastPack.JqGrid
 {
@@ -28,7 +29,7 @@ namespace FubuFastPack.JqGrid
 
         public void AddCellDisplay(string display)
         {
-            _cells.Add(display);
+            _cells.Add(display.HtmlEncode());
         }
 
         public object[] cell

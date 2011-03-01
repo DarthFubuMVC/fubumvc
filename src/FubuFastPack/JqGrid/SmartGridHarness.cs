@@ -203,11 +203,23 @@ namespace FubuFastPack.JqGrid
             });
 
             var columnNames =
-                grid.Definition.Columns.Skip(1).SelectMany(x => x.ToDictionary()).Select(x => (string) x["name"]);
+                grid.Definition.Columns.Skip(1).SelectMany(x => x.ToDictionary()).Select(x => (string) x["name"]).ToList();
+
+
 
             var table = new DataTable();
             dataFields.Each(x => table.Columns.Add(x, typeof (string)));
-            columnNames.Each(x => table.Columns.Add(x, typeof (string)));
+
+
+            columnNames.Each(x =>
+            {
+                var name = x;
+                while (table.Columns.IndexOf(name) > -1)
+                {
+                    name += "1";
+                }
+                table.Columns.Add(name, typeof (string));
+            });
 
             results.items.Each(item =>
             {
