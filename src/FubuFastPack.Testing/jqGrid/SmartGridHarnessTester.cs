@@ -60,14 +60,6 @@ namespace FubuFastPack.Testing.jqGrid
             ClassUnderTest.EntityType().ShouldEqual(typeof (Case));
         }
 
-        [Test]
-        public void trying_to_pass_in_arguments_throws_the_smart_grid_exception()
-        {
-            Exception<SmartGridException>.ShouldBeThrownBy(() =>
-            {
-                ClassUnderTest.RegisterArguments("a");
-            });
-        }
     }
 
     [TestFixture]

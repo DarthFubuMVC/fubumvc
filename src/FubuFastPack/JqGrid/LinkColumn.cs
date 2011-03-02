@@ -120,6 +120,7 @@ namespace FubuFastPack.JqGrid
         {
             var displaySource = data.GetterFor(Accessor);
             var idSource = data.GetterFor(IdAccessor);
+            var urlSource = this.toUrlSource(urls, idSource);
 
             if (_disabled)
             {
@@ -137,13 +138,17 @@ namespace FubuFastPack.JqGrid
                 var display = _literalText == null ? formatter.GetDisplayForValue(Accessor, rawValue) : _literalText.ToString();
                 dto.AddCellDisplay(display);
 
+                dto[_linkName] = urlSource();
+            };
+        }
+
+        protected virtual Func<string> toUrlSource(IUrlRegistry urls, Func<object> idSource)
+        {
+            return () =>
+            {
                 var parameters = new RouteParameters();
-
-                // This line of code below may be a problem later
                 parameters[_idAccessor.InnerProperty.Name] = idSource().ToString();
-
-                var url = urls.UrlFor(_inputModelType, parameters);
-                dto[_linkName] = url;
+                return urls.UrlFor(_inputModelType, parameters);
             };
         }
 

@@ -312,14 +312,9 @@ namespace FubuFastPack.JqGrid
         public void RegisterArguments(params object[] arguments)
         {
             var ctor = getConstructor();
-            if (arguments.Length != ctor.GetParameters().Length)
-            {
-                var parameterList = ctor.GetParameters().Select(x => x.Name).Join(", ");
-                throw new SmartGridException("Wrong number of arguments.  Should be " + parameterList);
-            }
 
             var parameters = ctor.GetParameters();
-            for (int i = 0; i < parameters.Length; i++)
+            for (int i = 0; i < arguments.Length; i++) // Important to do this to the argument length
             {
                 var parameter = parameters[i];
                 var arg = arguments[i];

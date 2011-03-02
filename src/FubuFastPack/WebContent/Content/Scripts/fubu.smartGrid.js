@@ -24,8 +24,8 @@
 
             var length = parseInt(options.colModel.trim-length);
             var displayValue = cellValue;
-            if (displayValue.length > 10){
-                displayValue = displayValue.substr(0, 10) + "&hellip;";
+            if (displayValue.length > length){
+                displayValue = displayValue.substr(0, length) + "&hellip;";
             }
 
             return '<a href="' + url + '" target="_top" title="' + cellValue + '">' + displayValue + '</a>';
