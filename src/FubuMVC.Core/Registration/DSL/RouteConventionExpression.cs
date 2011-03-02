@@ -144,6 +144,19 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        public RouteConventionExpression HomeIs<TController>(Expression<Action<TController>> controllerAction)
+        {
+            var method = ReflectionHelper.GetMethod(controllerAction);
+            _resolver.RegisterUrlPolicy(new DefaultRouteMethodBasedUrlPolicy(method), true);
+            return this;
+        }
+
+        public RouteConventionExpression HomeIs<TInputModel>()
+        {
+            _resolver.RegisterUrlPolicy(new DefaultRouteInputTypeBasedUrlPolicy(typeof (TInputModel)), true);
+            return this;
+        }
+
         #region Nested type: RouteMethodAlteration
 
         public class RouteMethodAlteration<T> : IConfigurationAction

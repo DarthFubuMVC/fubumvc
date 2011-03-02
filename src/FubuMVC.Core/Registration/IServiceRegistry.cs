@@ -22,5 +22,6 @@ namespace FubuMVC.Core.Registration
         void ClearAll<T>();
         IEnumerable<ObjectDef> ServicesFor<TService>();
         void FillType(Type interfaceType, Type concreteType);
+        void AddService(Type type, ObjectDef objectDef);
     }
 }

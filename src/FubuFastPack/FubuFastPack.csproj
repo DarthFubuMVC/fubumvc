@@ -38,7 +38,7 @@
       <HintPath>..\..\lib\fluent-nhibernate\FluentNHibernate.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\..\lib\htmltags\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="NHibernate">

@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 using NUnit.Framework;
@@ -81,6 +83,18 @@ namespace FubuMVC.Tests.Registration
 
             services.FindAllValues<HtmlConventionRegistry>()
                 .ShouldHaveTheSameElementsAs(registry1, registry2, registry3, registry4);
+        }
+
+        [Test]
+        public void should_add_object_def_directly()
+        {
+            var registry1 = new HtmlConventionRegistry();
+
+            var services = new ServiceRegistry();
+            var objectDef = new ObjectDef(typeof(HtmlConventionRegistry)){Value = registry1};
+            services.AddService(typeof(HtmlConventionRegistry), objectDef);
+
+            services.DefaultServiceFor<HtmlConventionRegistry>().ShouldEqual(objectDef);
         }
 
         [Test]

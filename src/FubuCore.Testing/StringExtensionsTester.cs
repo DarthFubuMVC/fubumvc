@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Globalization;
 using NUnit.Framework;
 
 namespace FubuCore.Testing
@@ -43,6 +45,54 @@ namespace FubuCore.Testing
             var textWithBreaks = plainText.ConvertCRLFToBreaks();
 
             textWithBreaks.ShouldEqual(@"before<br/>middle<br/>after");
+        }
+
+        [Test]
+        public void numbers_with_commas_and_periods_should_be_valid()
+        {
+            var numbers = new[]
+                              {
+                                  "1,000",
+                                  "100.1",
+                                  "1000.1",
+                                  "1,000.1",
+                                  "10,000.1",
+                                  "100,000.1",
+                              };
+
+            numbers.Each(x => x.IsValidNumber(CultureInfo.CreateSpecificCulture("en-us")).ShouldBeTrue());
+          
+        }
+
+        [Test]
+        public void numbers_with_commas_and_periods_should_be_valid_in_european_culture()
+        {
+            var numbers = new[]
+                              {
+                                  "1.000",
+                                  "100,1",
+                                  "1000,1",
+                                  "1.000,1",
+                                  "10.000,1",
+                                  "100.000,1",
+                              };
+
+            numbers.Each(x => x.IsValidNumber(CultureInfo.CreateSpecificCulture("de-DE")).ShouldBeTrue());
+          
+        }
+
+        [Test]
+        public void numbers_should_be_invalid()
+        {
+            var numbers = new[]
+                              {
+                                  "1,00",
+                                  "100,1",
+                                  "100,1.01",
+                                  "A,Jun.K",
+                              };
+
+            numbers.Each(x => x.IsValidNumber(CultureInfo.CreateSpecificCulture("en-us")).ShouldBeFalse());
         }
 
         [Test]

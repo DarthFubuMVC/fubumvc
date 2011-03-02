@@ -66,6 +66,11 @@ namespace FubuMVC.Core.Registration
             _services[typeof (TService)].Add(objectDef);
         }
 
+        public void AddService(Type type, ObjectDef objectDef)
+        {
+            _services[type].Add(objectDef);
+        }
+
         public ObjectDef DefaultServiceFor<TService>()
         {
             return _services[typeof (TService)].FirstOrDefault();

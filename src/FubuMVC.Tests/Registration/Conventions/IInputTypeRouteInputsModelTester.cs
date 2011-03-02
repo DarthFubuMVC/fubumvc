@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Urls;
-using FubuMVC.Core.View;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -143,48 +142,91 @@ namespace FubuMVC.Tests.Registration.Conventions
     [TestFixture]
     public class when_registering_home
     {
-        private BehaviorGraph graphWithHome;
         private BehaviorGraph graphWithMethodHome;
+        private BehaviorGraph graphWithModelHome;
         private BehaviorGraph graphWithoutHome;
+        private BehaviorGraph graphWithHomeAndUrlPolicy;
 
         public class OneController
         {
-            public void Home()
-            {
-            }
+            public void Home() { }
 
-            public void HomeWithOutput(SimpleOutputModel model) {}
+            public SimpleOutputModel HomeWithInputOutput(SimpleInputModel model)
+            {
+                return new SimpleOutputModel();
+            }
         }
         public class SimpleOutputModel {}
+        public class SimpleInputModel {}
+        public class AllEncompassingUrlPolicy : IUrlPolicy
+        {
+            public bool Matches(ActionCall call, IConfigurationObserver log)
+            {
+                return call.HandlerType.Name.EndsWith("Controller");
+            }
+
+            public IRouteDefinition Build(ActionCall call)
+            {
+                var route = call.ToRouteDefinition();
+                route.Append(call.HandlerType.Name.RemoveSuffix("Controller"));
+                route.Append(call.Method.Name);
+                return route;
+            }
+        }
 
         [SetUp]
         public void SetUp()
         {
-            graphWithHome = new FubuRegistry(x =>
-                {
-                    x.Actions.IncludeClassesSuffixedWithController();
-                    x.HomeIs<OneController>(c => c.Home());
-                }).BuildGraph();
-
             graphWithMethodHome = new FubuRegistry(x =>
                 {
                     x.Actions.IncludeClassesSuffixedWithController();
-                    x.HomeIs<SimpleOutputModel>();
+                    x.Routes.HomeIs<OneController>(c => c.Home());
+                }).BuildGraph();
+
+            graphWithModelHome = new FubuRegistry(x =>
+                {
+                    x.Actions.IncludeClassesSuffixedWithController();
+                    x.Routes.HomeIs<SimpleInputModel>();
                 }).BuildGraph();
 
             graphWithoutHome = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
+
+            graphWithHomeAndUrlPolicy = new FubuRegistry(x =>
+                {
+                    x.Actions.IncludeClassesSuffixedWithController();
+
+                    x.Routes
+                        .UrlPolicy<AllEncompassingUrlPolicy>()
+                        .HomeIs<SimpleInputModel>();
+                }).BuildGraph();
         }
 
         [Test]
         public void home_route_definition_pattern_should_be_empty()
         {
-            var homeDefinition1 = graphWithHome.RouteFor<OneController>(c => c.Home());
-            var homeDefinition2 = graphWithMethodHome.RouteFor<OneController>(c=>c.HomeWithOutput(new SimpleOutputModel()));
+            var homeDefinition1 = graphWithMethodHome.RouteFor<OneController>(c => c.Home());
+            var homeDefinition2 = graphWithModelHome.RouteFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
             var notHomeDefinition = graphWithoutHome.RouteFor<OneController>(c => c.Home());
             homeDefinition1.Pattern.ShouldEqual("");
             homeDefinition2.Pattern.ShouldEqual("");
             notHomeDefinition.Pattern.ShouldNotBeEmpty();
         }
+
+        [Test]
+        public void home_url_policy_registration_should_be_higher_priority()
+        {
+            var homeDefinition = graphWithHomeAndUrlPolicy.RouteFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
+            homeDefinition.Pattern.ShouldEqual("");
+        }
     }
 
+    public static class StringExtensions
+    {
+        public static string RemoveSuffix(this string value, string suffix)
+        {
+            if (value.EndsWith(suffix, StringComparison.InvariantCultureIgnoreCase))
+                return value.Substring(0, value.Length - suffix.Length);
+            return value;
+        }
+    }
 }

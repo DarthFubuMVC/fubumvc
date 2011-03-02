@@ -66,7 +66,19 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void RegisterUrlPolicy(IUrlPolicy policy)
         {
-            _policies.Add(policy);
+            RegisterUrlPolicy(policy, false);
+        }
+        
+        public void RegisterUrlPolicy(IUrlPolicy policy, bool prepend)
+        {
+            if (prepend)
+            {
+                _policies.Insert(0, policy);
+            }
+            else
+            {
+                _policies.Add(policy);
+            }
         }
 
         public void RegisterRouteInputPolicy(Func<ActionCall, bool> where, Action<IRouteDefinition, ActionCall> action)

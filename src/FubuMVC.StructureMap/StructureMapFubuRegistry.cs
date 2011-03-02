@@ -39,17 +39,12 @@ namespace FubuMVC.StructureMap
             For<AggregateDictionary>().Use(
                 ctx =>
                 {
-#if !LEGACY
                     //TODO: This should be unnecesary. AggregateDictionary should always come from the current request - not created by the container
                     if (HttpContext.Current == null)
                         return new AggregateDictionary();
 
                     var context = ctx.GetInstance<HttpContextBase>();
                     return new AggregateDictionary(context.Request.RequestContext);
-#else
-                        return new AggregateDictionary();
-#endif
-
                 });
 
             For<HttpContextBase>().Use<HttpContextWrapper>().Ctor<HttpContext>().Is(

@@ -38,9 +38,6 @@
     <Reference Include="HtmlTags">
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags, Version=0.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>C:\git\fubumvc\lib\htmltags\4.0\HtmlTags.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -83,9 +80,11 @@
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
+    <Compile Include="Content\DefaultMimeTypeProvider.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
     <Compile Include="Content\IContentRegistry.cs" />
     <Compile Include="Content\FileRouteHandler.cs" />
+    <Compile Include="Content\IMimeTypeProvider.cs" />
     <Compile Include="Content\PackageFolderActivator.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />

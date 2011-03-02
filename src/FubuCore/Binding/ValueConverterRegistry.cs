@@ -40,6 +40,7 @@ namespace FubuCore.Binding
             Add<ResolveConnectionStringFamily>();
 
             Add<BooleanFamily>();
+            Add<NumericTypeFamily>();
             Add<BasicTypeConverter>();
         }
 
@@ -75,7 +76,7 @@ namespace FubuCore.Binding
         {
             var converter = TypeDescriptor.GetConverter(propertyType);
 
-
+           
             return context =>
             {
                 if (context.PropertyValue != null)
@@ -90,4 +91,5 @@ namespace FubuCore.Binding
             };
         }
     }
+   
 }

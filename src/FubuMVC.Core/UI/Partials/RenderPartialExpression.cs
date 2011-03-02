@@ -14,11 +14,7 @@ using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core.UI.Partials
 {
-    public class RenderPartialExpression<TViewModel>
-#if !LEGACY
-        : IHtmlString
-#endif
-        where TViewModel : class
+    public class RenderPartialExpression<TViewModel> : IHtmlString where TViewModel : class
     {
         private readonly IFubuPage _parentPage;
         private Action<StringBuilder> _multiModeAction;
