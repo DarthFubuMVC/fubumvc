@@ -68,6 +68,7 @@
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
     <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
     <Content Include="Controllers\Home\Home.aspx" />
+    <Content Include="Controllers\OutputModels\Index.aspx" />
     <Content Include="Controllers\Products\ProductDisplayPartial.ascx" />
     <Content Include="Controllers\Products\ProductsDisplayView.aspx" />
     <Content Include="Controllers\Products\PartDisplayPartial.ascx" />
@@ -101,6 +102,10 @@
     </Compile>
     <Compile Include="Controllers\Login\LoggedInStatusController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\OutputModels\OutputModelController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controllers\OutputModels\OutputModelSettingBehavior.cs" />
     <Compile Include="Controllers\Products\ProductsController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -111,7 +116,6 @@
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\OddEvenLiModifier.cs" />
-    <Compile Include="FubuStructureMapBootstrapper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

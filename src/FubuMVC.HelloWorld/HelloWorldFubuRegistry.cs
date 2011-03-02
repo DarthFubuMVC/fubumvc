@@ -1,6 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Urls;
 using FubuMVC.HelloWorld.Controllers.Home;
+using FubuMVC.HelloWorld.Controllers.OutputModels;
 using FubuMVC.HelloWorld.Controllers.Products;
 
 namespace FubuMVC.HelloWorld
@@ -22,6 +23,7 @@ namespace FubuMVC.HelloWorld
                 .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Command"), "POST")
                 .ConstrainToHttpMethod(action => action.Method.Name.StartsWith("Query"), "GET");
 
+            ApplyConvention<OutputModelSettingBehaviorConfiguration>();
 
             Views.TryToAttachWithDefaultConventions();
 
