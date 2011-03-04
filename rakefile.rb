@@ -44,7 +44,7 @@ assemblyinfo :version do |asm|
   rescue
     commit = "git unavailable"
   end
-  build_number = "#{BUILD_NUMBER_BASE}.#{Date.today.strftime('%y%j')}"
+  build_number = getBuildNumber
   tc_build_number = ENV["BUILD_NUMBER"]
   puts "##teamcity[buildNumber '#{build_number}-#{tc_build_number}']" unless tc_build_number.nil?
   asm.trademark = commit
@@ -55,6 +55,10 @@ assemblyinfo :version do |asm|
   asm.custom_attributes :AssemblyInformationalVersion => asm_version
   asm.copyright = COPYRIGHT
   asm.output_file = COMMON_ASSEMBLY_INFO
+end
+
+def getBuildNumber
+  "#{BUILD_NUMBER_BASE}.#{Date.today.strftime('%y%j')}"
 end
 
 desc "Prepares the working directory for a new build"
@@ -128,7 +132,7 @@ task :virtual_dir => [:compile] do
 end
 
 desc "Target used for the CI server"
-task :ci => [:default,:package]
+task :ci => [:default,:package,:nuget]
 
 desc "ZIPs up the build results"
 zip :package do |zip|
@@ -140,5 +144,5 @@ end
 
 desc "Build the nuget package"
 task :nuget do
-	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o artifacts"
+	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o artifacts -Version #{getBuildNumber}"
 end
