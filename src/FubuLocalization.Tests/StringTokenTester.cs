@@ -8,6 +8,22 @@ namespace FubuLocalization.Tests
     public class StringTokenTester
     {
         [Test]
+        public void from_type_just_uses_type_name()
+        {
+            var token = StringToken.FromType<StringTokenTester>();
+            token.Key.ShouldEqual(GetType().Name);
+            token.DefaultValue.ShouldEqual(GetType().Name);
+        }
+
+        [Test]
+        public void from_type_just_uses_type_name_2()
+        {
+            var token = StringToken.FromType(GetType());
+            token.Key.ShouldEqual(GetType().Name);
+            token.DefaultValue.ShouldEqual(GetType().Name);
+        }
+
+        [Test]
         public void two_instances_with_the_same_key_should_equal_equal_each_other()
         {
             var x = buildCommonToken();

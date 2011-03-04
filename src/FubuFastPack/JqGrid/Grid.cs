@@ -15,6 +15,7 @@ namespace FubuFastPack.JqGrid
         private readonly IList<Action<IDictionary<string, object>>> _colModelModifications 
             = new List<Action<IDictionary<string, object>>>();
 
+
         protected Action<IDictionary<string, object>> modifyColumnModel
         {
             set
@@ -27,7 +28,12 @@ namespace FubuFastPack.JqGrid
 
         public virtual string GetHeader()
         {
-            return Header == null ? string.Empty : Header.ToString();
+            if (Header == null)
+            {
+                return LocalizationManager.GetPluralTextForType(typeof (TEntity));
+            }
+
+            return Header.ToString();
         }
 
         public T AddColumn<T>(T column) where T : IGridColumn

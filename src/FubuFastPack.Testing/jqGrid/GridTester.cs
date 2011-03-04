@@ -31,6 +31,13 @@ namespace FubuFastPack.Testing.jqGrid
         }
 
         [Test]
+        public void if_the_header_is_null_get_header_returns_pluralization_of_the_entity_type()
+        {
+            var grid = new WithoutHeaderGrid();
+            grid.GetHeader().ShouldEqual("en-US_Case_PLURAL");
+        }
+
+        [Test]
         public void allow_create_new()
         {
             var grid = new FakeCaseGrid();
@@ -57,10 +64,13 @@ namespace FubuFastPack.Testing.jqGrid
 
         }
 
-        [Test]
-        public void can_save_query_negative()
+    }
+
+    public class WithoutHeaderGrid : Grid<Case, ISession>
+    {
+        public override IGridDataSource<Case> BuildSource(ISession service)
         {
-            
+            throw new NotImplementedException();
         }
     }
 

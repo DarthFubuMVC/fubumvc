@@ -17,6 +17,16 @@ namespace FubuLocalization
             return new StringToken(key, defaultValue);
         }
 
+        public static StringToken FromType<T>()
+        {
+            return FromType(typeof (T));
+        }
+
+        public static StringToken FromType(Type type)
+        {
+            return new StringToken(type.Name, type.Name);
+        }
+
         protected StringToken(string key, string defaultValue)
         {
             _key = key;
@@ -69,5 +79,7 @@ namespace FubuLocalization
         {
             return (_key != null ? _key.GetHashCode() : 0);
         }
+
+
     }
 }
