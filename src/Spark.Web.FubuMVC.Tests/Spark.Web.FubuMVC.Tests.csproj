@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,29 +34,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlTags">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework, Version=2.4.6.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\spark\Spark.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -65,6 +42,32 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="HtmlTags, Version=0.8.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.4.6.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\lib\spark\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -117,16 +120,7 @@
     <None Include="FubuMVC.Tests.Views\Batch\_row.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FubuMVC.Tests.Views\Layouts\AnotherLayout.spark">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="FubuMVC.Tests.Views\Shared\Partial.spark">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="FubuMVC.Tests.Views\Shared\ElementLayout.spark">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="FubuMVC.Tests.Views\Shared\Layout.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="FubuMVC.Tests.Views\SomeFooArea\Layouts\FooAreaLayout.spark">
@@ -177,13 +171,22 @@
     <None Include="FubuMVC.Tests.Views\Stub\HtmlTags.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FubuMVC.Tests.Views\Stub\_row.spark">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="FubuMVC.Tests.Views\Stub\Index.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="FubuMVC.Tests.Views\Stub\List.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Layouts\anotherLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Shared\elementLayout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Shared\layout.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FubuMVC.Tests.Views\Stub\_Row.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
