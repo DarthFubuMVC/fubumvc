@@ -145,4 +145,5 @@ end
 desc "Build the nuget package"
 task :nuget do
 	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o artifacts -Version #{getBuildNumber}"
+	sh "lib/nuget.exe pack packaging/nuget/spark.web.fubumvc.nuspec -o artifacts -Version #{getBuildNumber}"
 end
