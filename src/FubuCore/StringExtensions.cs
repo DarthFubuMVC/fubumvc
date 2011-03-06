@@ -10,6 +10,19 @@ namespace FubuCore
 {
     public static class StringExtensions
     {
+        public static string CombinePath(this string path1, string path2, params string[] additionalPaths)
+        {
+            return CombinePath(path1, new[]{ path2 }.Union(additionalPaths).ToArray());
+        }
+
+        public static string CombinePath(this string path, params string[] paths)
+        {
+            var seed = Path.Combine(path, paths.First());
+            var tail = paths.Skip(1);
+            
+            return tail.Aggregate(seed, Path.Combine);
+        }
+
         public static string ToFullPath(this string path)
         {
             return Path.GetFullPath(path);

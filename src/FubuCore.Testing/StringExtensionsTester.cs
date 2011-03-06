@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using NUnit.Framework;
 
 namespace FubuCore.Testing
@@ -7,9 +9,45 @@ namespace FubuCore.Testing
     [TestFixture]
     public class StringExtensionsTester
     {
+        static readonly char Sep = Path.DirectorySeparatorChar;
+
         [SetUp]
         public void SetUp()
         {
+        }
+
+        [Test]
+        public void combining_path_with_empty_yields_path()
+        {
+            var path1 = AppDomain.CurrentDomain.BaseDirectory;
+
+            path1.CombinePath(string.Empty).ShouldEqual(path1);
+            path1.CombinePath(string.Empty, string.Empty).ShouldEqual(path1);
+            path1.CombinePath(string.Empty, string.Empty, string.Empty).ShouldEqual(path1);
+        }
+
+        [Test]
+        public void combining_path1_with_path2_yields_combined()
+        {
+            var path1 = AppDomain.CurrentDomain.BaseDirectory;
+
+            path1.CombinePath("p2").ShouldEqual(path1 + Sep + "p2");
+        }
+
+        [Test]
+        public void combining_path1_with_path2_and_additionalpaths_yields_combined()
+        {
+            var path1 = AppDomain.CurrentDomain.BaseDirectory;
+            const string path2 = "p2";
+            var additionals = new[] {"p3", "p4"};
+            
+            var expected = 
+                path1 + Sep + 
+                path2 + Sep + 
+                additionals[0] + Sep + 
+                additionals[1];
+
+            path1.CombinePath(path2, additionals).ShouldEqual(expected);
         }
 
         [Test]
