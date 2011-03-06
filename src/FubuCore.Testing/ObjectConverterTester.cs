@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
 using StructureMap;
-using System.Linq;
 
 namespace FubuCore.Testing
 {
@@ -44,12 +45,19 @@ namespace FubuCore.Testing
     [TestFixture]
     public class ObjectConverterTester
     {
+		string timeZoneId;
+		
         #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
         {
             finder = new ObjectConverter();
+			
+			// Determines which time zone id to use for the time_zone_info test, since 
+			// the value can differ based on platform the test is running on
+			ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
+			timeZoneId = timeZones.Where(timeZone => timeZone.Id.Equals("Eastern Standard Time") || timeZone.Id.Equals("US/Eastern")).Single().Id;
         }
 
         #endregion
@@ -78,7 +86,7 @@ namespace FubuCore.Testing
         [Test]
         public void time_zone_info()
         {
-            finder.FromString<TimeZoneInfo>("Eastern Standard Time").Id.ShouldEqual("Eastern Standard Time");
+			finder.FromString<TimeZoneInfo>(timeZoneId).Id.ShouldEqual(timeZoneId);
         }
 
         [Test]
