@@ -7,7 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Tests", "FubuMVC.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Build_Utilities", "__Build_Utilities", "{7AC4D197-535A-4686-8E21-18257B2ADB3A}"
 	ProjectSection(SolutionItems) = preProject
-		..\Build.bat = ..\Build.bat
 		..\InstallGems.bat = ..\InstallGems.bat
 		..\rakefile.rb = ..\rakefile.rb
 	EndProjectSection
@@ -297,6 +296,7 @@ Global
 		{290ECAD5-5086-4020-B137-C6AFA7C50874}.Retail|Any CPU.Build.0 = Release|Any CPU
 		{290ECAD5-5086-4020-B137-C6AFA7C50874}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{290ECAD5-5086-4020-B137-C6AFA7C50874}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+
 		{290ECAD5-5086-4020-B137-C6AFA7C50874}.Retail|x86.ActiveCfg = Release|Any CPU
 		{2F439925-4A3E-4476-B08E-221A41FA8F35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F439925-4A3E-4476-B08E-221A41FA8F35}.Debug|Any CPU.Build.0 = Debug|Any CPU
