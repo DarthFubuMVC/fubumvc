@@ -51,9 +51,8 @@ namespace FubuCore.Testing.Util
         [Test]
         public void when_key_not_found_should_throw_by_default()
         {
-            int i;
             const string key = "nonexisting key";
-            typeof (KeyNotFoundException).ShouldBeThrownBy(() => i = cache[key]).
+            typeof (KeyNotFoundException).ShouldBeThrownBy(() => cache[key].ShouldEqual(0)).
                 Message.ShouldEqual("Key '{0}' could not be found".ToFormat(key));
         }
 

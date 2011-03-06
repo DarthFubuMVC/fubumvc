@@ -27,7 +27,6 @@ namespace FubuMVC.StructureMap
 
         void IDependencyVisitor.List(ListDependency dependency)
         {
-            var elementType = dependency.ElementType;
             var elements = dependency.Items.Select(instanceFor).ToArray();
 
             ChildArray(dependency.DependencyType).Contains(elements);

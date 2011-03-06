@@ -243,8 +243,6 @@ namespace FubuCore.Testing.Reflection
                 Number = 3
             };
 
-            Expression<Func<Target, object>> exp = x => x.Number;
-
             Accessor accessor = ReflectionHelper.GetAccessor<Target>(x => x.Number);
 
             var expression = accessor.ToExpression<Target>();
