@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             HtmlTag header = new HtmlTag("div", x =>
             {
-                var table = x.Child<TableTag>()
+                var table = x.Add<TableTag>()
                     .AddBodyRow(row =>
                         {
                             row.Cell("Request Url:");
@@ -55,7 +55,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             tag.Add("h4").Text("Form Data");
 
 
-            var table = tag.Add("div").AddClass("formData").Child<TableTag>();
+            var table = tag.Add("div").AddClass("formData").Add<TableTag>();
 
             table.AddHeaderRow(row =>
             {

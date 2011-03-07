@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
-            cell.Child(new LinkTag(Text(chain), "chain/" + chain.UniqueId).AddClass("chainId"));
+            cell.Append(new LinkTag(Text(chain), "chain/" + chain.UniqueId).AddClass("chainId"));
         }
 
         public string Text(BehaviorChain chain)

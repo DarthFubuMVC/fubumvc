@@ -39,7 +39,7 @@ namespace FubuMVC.Core.UI
 
         public void WriteScriptsToBody()
         {
-            Body.AddChildren(this.WriteScriptTags());
+            Body.Append(this.WriteScriptTags());
         }
     }
 

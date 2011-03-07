@@ -62,7 +62,7 @@ namespace FubuMVC.Core.UI.Forms
         public void Display(Expression<Func<TModel, object>> expression)
         {
             var layout = _form.Display(expression);
-            _top.AddChildren(layout);
+            _top.Append(layout);
         }
     }
 }

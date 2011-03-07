@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             var text = Text(chain);
             if (shouldBeClickable(chain.Route))
             {
-                cell.Child(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
+                cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
             }
             else
             {

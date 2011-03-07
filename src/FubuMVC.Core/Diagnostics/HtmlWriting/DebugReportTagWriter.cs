@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             _behaviorTags.OnMissing = b =>
             {
                 HtmlTag tag = BuildBehaviorTag(b);
-                _lastTag.Child(tag);
+                _lastTag.Append(tag);
                 _lastTag = tag;
 
                 return tag;

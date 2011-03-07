@@ -23,13 +23,13 @@ namespace FubuMVC.Core.Diagnostics
             document.Title = realTitle;
 
             var mainDiv = new HtmlTag("div").AddClass("main");
-            mainDiv.Add("h2").Text("FubuMVC Diagnostics").Child(buildVersionTag());
+            mainDiv.Add("h2").Text("FubuMVC Diagnostics").Append(buildVersionTag());
             var navBar = mainDiv.Add("div").AddClass("homelink");
-            if (urls != null) navBar.AddChildren(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
+            if (urls != null) navBar.Append(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
             navBar.Add("span").Text(" > " + title);
             document.Add(mainDiv);
 
-            mainDiv.AddChildren(tags);
+            mainDiv.Append(tags);
 
             document.AddStyle(css);
 
@@ -57,7 +57,7 @@ namespace FubuMVC.Core.Diagnostics
             var commitAttribute = fubuAssembly.GetAttribute<AssemblyTrademarkAttribute>();
             var commit = commitAttribute == null ? null : commitAttribute.Trademark;
             var versionUrl = commit.IsNotEmpty() ? sourceControlUrlFormat.ToFormat(commit) : sourceControlUrlBase;
-            return new HtmlTag("span").Id("version-display").Text("version: ").Child(new LinkTag(version, versionUrl).Attr("title", commit));
+            return new HtmlTag("span").Id("version-display").Text("version: ").Append(new LinkTag(version, versionUrl).Attr("title", commit));
         }
     }
 }

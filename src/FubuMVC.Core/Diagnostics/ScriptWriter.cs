@@ -3,6 +3,7 @@ using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
+using HtmlTags.Extended.Attributes;
 
 namespace FubuMVC.Core.Diagnostics
 {
