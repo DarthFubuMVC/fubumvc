@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Commands.Packages
                 expected = folder;
             });
 
-            expected.ShouldEqual("app1\\bin\\fubu-packages\\AssemblyPackage\\WebContent".ToFullPath());
+            expected.ShouldEqual(FileSystem.Combine("app1", "bin", "fubu-packages", "AssemblyPackage", "WebContent").ToFullPath());
         }
     }
 
