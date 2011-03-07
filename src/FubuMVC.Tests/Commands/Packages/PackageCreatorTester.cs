@@ -10,8 +10,6 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Commands.Packages
 {
-
-
     [TestFixture]
     public class when_creating_a_package_for_all_assemblies_found_and_including_pdbs : InteractionContext<PackageCreator>
     {
@@ -20,9 +18,14 @@ namespace FubuMVC.Tests.Commands.Packages
         private CreatePackageInput theInput;
         private StubZipFileService _theZipFileService;
         private string thePackageManifestFileName;
-
+		private string theBaseFolder;
+		private string theBinFolder;
+		
         protected override void beforeEach()
         {
+			theBaseFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "folder1");
+			theBinFolder = Path.Combine(theBaseFolder, "bin");	
+			
             theManifest = new PackageManifest
             {
                 Assemblies = "A;B;C",
@@ -32,27 +35,35 @@ namespace FubuMVC.Tests.Commands.Packages
 
             theInput = new CreatePackageInput()
             {
-                PackageFolder = "c:\\folder1",
-                ZipFile = "c:\\package1.zip",
+                PackageFolder = theBaseFolder,
+                ZipFile = Path.Combine(theBaseFolder, "package1.zip"),
                 PdbFlag = true
             };
 
             theAssemblyFiles = new AssemblyFiles()
             {
-                Files = new string[] { "c:\\folder1\\bin\\a.dll", "c:\\folder1\\bin\\b.dll", "c:\\folder1\\bin\\c.dll" },
+                Files = new string[] { 
+					FileSystem.Combine(theBinFolder, "a.dll"), 
+					FileSystem.Combine(theBinFolder, "b.dll"), 
+					FileSystem.Combine(theBinFolder, "c.dll") 
+				},
                 MissingAssemblies = new string[0],
-                PdbFiles = new string[] { "c:\\folder1\\bin\\a.pdb", "c:\\folder1\\bin\\b.pdb", "c:\\folder1\\bin\\c.pdb" },
+                PdbFiles = new string[] { 
+					FileSystem.Combine(theBinFolder, "a.pdb"), 
+					FileSystem.Combine(theBinFolder, "b.pdb"), 
+					FileSystem.Combine(theBinFolder, "c.pdb")
+				},
                 Success = true
             };
 
             MockFor<IAssemblyFileFinder>()
-                .Stub(x => x.FindAssemblies("c:\\folder1\\bin", theManifest.AssemblyNames))
+                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.AssemblyNames))
                 .Return(theAssemblyFiles);
 
             _theZipFileService = new StubZipFileService();
             Services.Inject<IZipFileService>(_theZipFileService);
 
-            thePackageManifestFileName = FileSystem.Combine("c:\\folder1", PackageManifest.FILE);
+            thePackageManifestFileName = FileSystem.Combine(theBaseFolder, PackageManifest.FILE);
 
             ClassUnderTest.CreatePackage(theInput, theManifest);
         }
@@ -72,17 +83,17 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void should_have_written_each_assembly_to_the_zip_file()
         {
-            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\a.dll", "bin"));
-            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\b.dll", "bin"));
-            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\c.dll", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(Path.Combine(theBinFolder, "a.dll"), "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(Path.Combine(theBinFolder, "b.dll"), "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(Path.Combine(theBinFolder, "c.dll"), "bin"));
         }
 
         [Test]
         public void should_have_written_each_pdb_to_the_zip_file()
         {
-            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\a.pdb", "bin"));
-            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\b.pdb", "bin"));
-            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry("c:\\folder1\\bin\\c.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(Path.Combine(theBinFolder, "a.pdb"), "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(Path.Combine(theBinFolder, "b.pdb"), "bin"));
+            _theZipFileService.AllEntries.ShouldContain(new StubZipEntry(Path.Combine(theBinFolder, "c.pdb"), "bin"));
         }
 
         [Test]
@@ -121,9 +132,15 @@ namespace FubuMVC.Tests.Commands.Packages
         private CreatePackageInput theInput;
         private StubZipFileService _theZipFileService;
         private string thePackageManifestFileName;
+		
+		private string theBaseFolder;
+		private string theBinFolder;
 
         protected override void beforeEach()
         {
+			theBaseFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "folder1");
+			theBinFolder = Path.Combine(theBaseFolder, "bin");	
+			
             theManifest = new PackageManifest
             {
                 Assemblies = "A;B;C",
@@ -133,27 +150,35 @@ namespace FubuMVC.Tests.Commands.Packages
 
             theInput = new CreatePackageInput()
             {
-                PackageFolder = "c:\\folder1",
-                ZipFile = "c:\\package1.zip",
+                PackageFolder = theBaseFolder,
+                ZipFile = Path.Combine(theBaseFolder, "package1.zip"),
                 PdbFlag = false
             };
 
             theAssemblyFiles = new AssemblyFiles()
             {
-                Files = new string[] { "c:\\folder1\\bin\\a.dll", "c:\\folder1\\bin\\b.dll", "c:\\folder1\\bin\\c.dll" },
+                Files = new string[] { 
+					FileSystem.Combine(theBinFolder, "a.dll"), 
+					FileSystem.Combine(theBinFolder, "b.dll"), 
+					FileSystem.Combine(theBinFolder, "c.dll") 
+				},
                 MissingAssemblies = new string[0],
-                PdbFiles = new string[] { "c:\\folder1\\bin\\a.pdb", "c:\\folder1\\bin\\b.pdb", "c:\\folder1\\bin\\c.pdb" },
+                PdbFiles = new string[] { 
+					FileSystem.Combine(theBinFolder, "a.pdb"), 
+					FileSystem.Combine(theBinFolder, "b.pdb"), 
+					FileSystem.Combine(theBinFolder, "c.pdb") 
+				},
                 Success = true
             };
 
             MockFor<IAssemblyFileFinder>()
-                .Stub(x => x.FindAssemblies("c:\\folder1\\bin", theManifest.AssemblyNames))
+                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.AssemblyNames))
                 .Return(theAssemblyFiles);
 
             _theZipFileService = new StubZipFileService();
             Services.Inject<IZipFileService>(_theZipFileService);
 
-            thePackageManifestFileName = FileSystem.Combine("c:\\folder1", PackageManifest.FILE);
+            thePackageManifestFileName = FileSystem.Combine(theBaseFolder, PackageManifest.FILE);
 
             ClassUnderTest.CreatePackage(theInput, theManifest);
         }
@@ -162,13 +187,10 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void should_have_written_each_pdb_to_the_zip_file()
         {
-            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\a.pdb", "bin"));
-            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\b.pdb", "bin"));
-            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry("c:\\folder1\\bin\\c.pdb", "bin"));
+            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry(Path.Combine(theBinFolder, "a.pdb"), "bin"));
+            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry(Path.Combine(theBinFolder, "b.pdb"), "bin"));
+            _theZipFileService.AllEntries.ShouldNotContain(new StubZipEntry(Path.Combine(theBinFolder, "c.pdb"), "bin"));
         }
-
-
-
     }
 
     public class StubZipFileService : IZipFileService
@@ -227,9 +249,14 @@ namespace FubuMVC.Tests.Commands.Packages
         private PackageManifest theManifest;
         private AssemblyFiles theAssemblyFiles;
         private CreatePackageInput theInput;
-
+		private string theBaseFolder;
+		private string theBinFolder;
+		
         protected override void beforeEach()
         {
+			theBaseFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "folder1");
+			theBinFolder = Path.Combine(theBaseFolder, "bin");	
+			
             theManifest = new PackageManifest{
                 Assemblies = "A;B;C",
                 DataFileSet = new FileSet(),
@@ -237,7 +264,7 @@ namespace FubuMVC.Tests.Commands.Packages
             };
 
             theInput = new CreatePackageInput(){
-                PackageFolder = "c:\\folder1"
+                PackageFolder = theBaseFolder
             };
 
             theAssemblyFiles = new AssemblyFiles()
@@ -249,7 +276,7 @@ namespace FubuMVC.Tests.Commands.Packages
             };
 
             MockFor<IAssemblyFileFinder>()
-                .Stub(x => x.FindAssemblies("c:\\folder1\\bin", theManifest.AssemblyNames))
+                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.AssemblyNames))
                 .Return(theAssemblyFiles);
         
             ClassUnderTest.CreatePackage(theInput, theManifest);
