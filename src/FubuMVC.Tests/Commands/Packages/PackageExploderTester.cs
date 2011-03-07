@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Commands.Packages
                 expected = folder;
             });
 
-            expected.ShouldEqual("app1\\fubu-content\\AssemblyPackage\\WebContent".ToFullPath());
+            expected.ShouldEqual(FileSystem.Combine("app1", "fubu-content", "AssemblyPackage", "WebContent").ToFullPath());
         }
     }
 
@@ -247,7 +247,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
     public abstract class PackageExploderContext : InteractionContext<PackageExploder>
     {
-        protected readonly string theApplicationDirectory = "c:\\app";
+        protected readonly string theApplicationDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app");
 
         protected void assertZipFileWasExploded(string packageName)
         {
