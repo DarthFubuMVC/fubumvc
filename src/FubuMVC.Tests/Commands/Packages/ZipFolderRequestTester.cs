@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
@@ -23,10 +22,11 @@ namespace FubuMVC.Tests.Commands.Packages
 
             Directory.CreateDirectory("zip");
 
-            theRequest = new ZipFolderRequest(){
+            theRequest = new ZipFolderRequest
+            {
                 FileSet = new FileSet(),
                 RootDirectory = Path.GetFullPath("zip"),
-                ZipDirectory = ""
+                ZipDirectory = string.Empty
             };
         }
 
@@ -60,53 +60,53 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void use_single_include_filter()
         {
-            writeFile("zip\\a.txt");
-            writeFile("zip\\f1\\b.txt");
-            writeFile("zip\\f1\\f2\\c.txt");
-            writeFile("zip\\a.xml");
-            writeFile("zip\\b.xml");
+            writeFile(FileSystem.Combine("zip", "a.txt"));
+            writeFile(FileSystem.Combine("zip", "f1", "b.txt"));
+            writeFile(FileSystem.Combine("zip", "f1", "f2", "c.txt"));
+            writeFile(FileSystem.Combine("zip", "a.xml"));
+            writeFile(FileSystem.Combine("zip", "b.xml"));
 
             theRequest.FileSet.Include = "*.txt";
 
             theResultingZipEntries().ShouldHaveTheSameElementsAs(
-                new StubZipEntry("zip\\a.txt", string.Empty),
-                new StubZipEntry("zip\\f1\\b.txt", "f1"),
-                new StubZipEntry("zip\\f1\\f2\\c.txt", "f1\\f2")
+                new StubZipEntry(FileSystem.Combine("zip", "a.txt"), string.Empty),
+                new StubZipEntry(FileSystem.Combine("zip", "f1", "b.txt"), "f1"),
+                new StubZipEntry(FileSystem.Combine("zip", "f1", "f2", "c.txt"), FileSystem.Combine("f1","f2"))
                 );
         }
 
         [Test]
         public void use_single_exclude_filter()
         {
-            writeFile("zip\\a.txt");
-            writeFile("zip\\f1\\b.txt");
-            writeFile("zip\\f1\\f2\\c.txt");
-            writeFile("zip\\a.xml");
-            writeFile("zip\\b.xml");
+            writeFile(FileSystem.Combine("zip", "a.txt"));
+            writeFile(FileSystem.Combine("zip", "f1", "b.txt"));
+            writeFile(FileSystem.Combine("zip", "f1", "f2", "c.txt"));
+            writeFile(FileSystem.Combine("zip", "a.xml"));
+            writeFile(FileSystem.Combine("zip", "b.xml"));
 
             theRequest.FileSet.Exclude = "*.xml";
 
             theResultingZipEntries().ShouldHaveTheSameElementsAs(
-                new StubZipEntry("zip\\a.txt", string.Empty),
-                new StubZipEntry("zip\\f1\\b.txt", "f1"),
-                new StubZipEntry("zip\\f1\\f2\\c.txt", "f1\\f2")
+                new StubZipEntry(FileSystem.Combine("zip", "a.txt"), string.Empty),
+                new StubZipEntry(FileSystem.Combine("zip", "f1", "b.txt"), "f1"),
+                new StubZipEntry(FileSystem.Combine("zip", "f1", "f2", "c.txt"), FileSystem.Combine("f1","f2"))
                 );
         }
 
         [Test]
         public void use_overlapping_include_and_exclude_filters()
         {
-            writeFile("zip\\a.txt");
-            writeFile("zip\\f1\\b.txt");
-            writeFile("zip\\f1\\f2\\c.txt");
-            writeFile("zip\\a.xml");
-            writeFile("zip\\b.xml");
+            writeFile(FileSystem.Combine("zip", "a.txt"));
+            writeFile(FileSystem.Combine("zip", "f1", "b.txt"));
+            writeFile(FileSystem.Combine("zip", "f1", "f2", "c.txt"));
+            writeFile(FileSystem.Combine("zip", "a.xml"));
+            writeFile(FileSystem.Combine("zip", "b.xml"));
 
             theRequest.FileSet.Include = "a.*";
             theRequest.FileSet.Exclude = "*.xml";
 
             theResultingZipEntries().ShouldHaveTheSameElementsAs(
-                new StubZipEntry("zip\\a.txt", string.Empty)
+                new StubZipEntry(FileSystem.Combine("zip", "a.txt"), string.Empty)
                 );
         }
     }
