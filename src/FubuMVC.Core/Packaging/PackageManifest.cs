@@ -36,7 +36,8 @@ namespace FubuMVC.Core.Packaging
                 _assemblyNames.AddRange(names);
             }
         }
-
+		
+		[XmlIgnore]
         public IEnumerable<string> AssemblyNames
         {
             get
