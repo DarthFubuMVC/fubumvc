@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.IO;
 
 namespace FubuMVC.Tests.Commands
 {
@@ -17,7 +18,7 @@ namespace FubuMVC.Tests.Commands
         {
             theInput = new InstallInput()
             {
-                AppFolder = "some folder"
+                AppFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "folder1")
             };
 
             theManifest = new ApplicationManifest();
@@ -58,22 +59,20 @@ namespace FubuMVC.Tests.Commands
         public void create_environment_run_uses_web_config_by_default_if_it_is_not_specified_in_the_manifest()
         {
             theManifest.ConfigurationFile = null;
-            theInput.AppFolder = "c:\\folder1";
 
             var run = InstallCommand.CreateEnvironmentRun(theInput, theManifest);
 
-            run.ConfigurationFile.ShouldEqual("c:\\folder1\\web.config");
+            run.ConfigurationFile.ShouldEqual(Path.Combine(theInput.AppFolder, "web.config"));
         }
 
         [Test]
         public void create_environment_run_uses_the_specific_config_file_if_one_is_given()
         {
             theManifest.ConfigurationFile = "different.config";
-            theInput.AppFolder = "c:\\folder1";
 
             var run = InstallCommand.CreateEnvironmentRun(theInput, theManifest);
 
-            run.ConfigurationFile.ShouldEqual("c:\\folder1\\different.config");
+            run.ConfigurationFile.ShouldEqual(Path.Combine(theInput.AppFolder, "different.config"));
         }
 
         [Test]
@@ -81,7 +80,6 @@ namespace FubuMVC.Tests.Commands
         {
             theManifest.EnvironmentClassName = "some class";
             theManifest.EnvironmentAssembly = "some assembly";
-            theInput.AppFolder = "c:\\folder1";
 
             var run = InstallCommand.CreateEnvironmentRun(theInput, theManifest);
 
@@ -91,11 +89,9 @@ namespace FubuMVC.Tests.Commands
 
         [Test]
         public void create_environment_defaults_the_application_base_to_the_bin_directory_underneath_the_app_folder()
-        {
-            theInput.AppFolder = "c:\\folder1";
-
-            InstallCommand.CreateEnvironmentRun(theInput, theManifest)
-                .ApplicationBase.ShouldEqual("c:\\folder1\\bin");
+        {		
+            InstallCommand.CreateEnvironmentRun(theInput, theManifest).ApplicationBase
+				.ShouldEqual(Path.Combine(theInput.AppFolder, "bin"));
         }
 
 
