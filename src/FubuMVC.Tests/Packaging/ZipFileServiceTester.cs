@@ -19,9 +19,9 @@ namespace FubuMVC.Tests.Packaging
             service.ExtractTo("description of this", stream, "package-data");
 
             // These 3 files should be in the zip file embedded within the AssemblyPackage assembly
-            File.Exists("package-data\\1.txt").ShouldBeTrue();
-            File.Exists("package-data\\2.txt").ShouldBeTrue(); ;
-            File.Exists("package-data\\3.txt").ShouldBeTrue(); ;
+            File.Exists(Path.Combine("package-data", "1.txt")).ShouldBeTrue();
+            File.Exists(Path.Combine("package-data", "2.txt")).ShouldBeTrue(); ;
+            File.Exists(Path.Combine("package-data", "3.txt")).ShouldBeTrue(); ;
         }
     }
 }
