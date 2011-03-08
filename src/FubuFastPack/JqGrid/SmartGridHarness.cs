@@ -301,7 +301,7 @@ namespace FubuFastPack.JqGrid
 
             if (grid.Definition.AllowCreationOfNew)
             {
-                model.NewEntityText = StringToken.FromKeyString("CREATE_NEW_" + grid.EntityType).ToString();
+                model.NewEntityText = StringToken.FromKeyString("CREATE_NEW_" + grid.EntityType.Name.ToUpper()).ToString();
                 model.NewEntityUrl = _urls.UrlForNew(grid.EntityType);
             }
 
