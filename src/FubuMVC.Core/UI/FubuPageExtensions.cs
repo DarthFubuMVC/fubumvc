@@ -9,6 +9,7 @@ using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
 using HtmlTags;
+using HtmlTags.Extended.Attributes;
 
 namespace FubuMVC.Core.UI
 {
