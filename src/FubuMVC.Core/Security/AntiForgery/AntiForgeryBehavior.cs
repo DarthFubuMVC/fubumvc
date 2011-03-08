@@ -19,8 +19,6 @@ namespace FubuMVC.Core.Security.AntiForgery
 
 		protected override DoNext performInvoke()
 		{
-
-
 			if(_validator.Validate(_salt))
 			{
 				return DoNext.Continue;
@@ -28,7 +26,6 @@ namespace FubuMVC.Core.Security.AntiForgery
 
 			_outputWriter.WriteResponseCode(HttpStatusCode.InternalServerError);
             return DoNext.Stop;
-
 		}
 
 

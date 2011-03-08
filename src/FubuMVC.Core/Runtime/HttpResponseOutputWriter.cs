@@ -39,6 +39,11 @@ namespace FubuMVC.Core.Runtime
             response.Redirect(url, false);
         }
 
+        public void AppendCookie(HttpCookie cookie)
+        {
+            response.AppendCookie(cookie);
+        }
+
         public void WriteResponseCode(HttpStatusCode status)
         {
             response.StatusCode = (int)status;

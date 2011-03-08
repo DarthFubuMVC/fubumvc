@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Web;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
@@ -28,7 +29,12 @@ namespace FubuMVC.Core.Diagnostics
             _inner.RedirectToUrl(url);
         }
 
-        public void WriteResponseCode(HttpStatusCode status)
+    	public void AppendCookie(HttpCookie cookie)
+    	{
+			_inner.AppendCookie(cookie);
+    	}
+
+    	public void WriteResponseCode(HttpStatusCode status)
         {
             _inner.WriteResponseCode(status);
         }

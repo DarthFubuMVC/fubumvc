@@ -1,6 +1,6 @@
-using System.Security.Principal;
 using System.Web;
-using FubuMVC.Core.Security;
+using FubuCore.Binding;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -10,41 +10,30 @@ namespace FubuMVC.Tests.Security.AntiForgery
 	[TestFixture]
 	public class AntiForgeryServiceTester:InteractionContext<AntiForgeryService>
 	{
-		private HttpCookieCollection _requestCookies;
-		private HttpCookieCollection _responseCookies;
-
 		protected override void beforeEach()
 		{
-
-			//TODO: Stop using HttpContext
-			_requestCookies = new HttpCookieCollection();
-			_responseCookies = new HttpCookieCollection();
-			MockFor<HttpContextBase>().Stub(x => x.Request).Return(MockFor<HttpRequestBase>());
-			MockFor<HttpContextBase>().Stub(x => x.Response).Return(MockFor<HttpResponseBase>());
-			MockFor<HttpRequestBase>().Stub(x => x.ApplicationPath).Return("Path");
-			MockFor<HttpRequestBase>().Stub(x => x.Cookies).Return(_requestCookies);
-			MockFor<HttpResponseBase>().Stub(x => x.Cookies).Return(_responseCookies);
+			MockFor<IRequestData>().Stub(r => r.Value("ApplicationPath")).Return("Path");
+			MockFor<IRequestData>().Stub(r => r.Value("Cookies")).Return(new HttpCookieCollection());
 
 			MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName("Path")).Return("CookieName");
 
 			MockFor<IAntiForgerySerializer>()
 				.Stub(x => x.Serialize(default(AntiForgeryData))).IgnoreArguments().Return("Serialized!");
-
 		}
 
 		[Test]
 		public void should_set_cookie()
 		{
+			MockFor<IOutputWriter>().Expect(o => o.AppendCookie(default(HttpCookie))).IgnoreArguments();
+
 			ClassUnderTest.SetCookieToken(null, null);
 
-			_responseCookies.Count.ShouldEqual(1);
+			MockFor<IOutputWriter>().VerifyAllExpectations();
 		}
 
-
 		[Test]
-		public void should_return_form_token_from()
+		public void should_return_form_token_from_cookie_data()
 		{
-
 			MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName()).Return("FormName");
 
 			var input = new AntiForgeryData
@@ -56,7 +45,6 @@ namespace FubuMVC.Tests.Security.AntiForgery
 
 			formToken.Name.ShouldEqual("FormName");
 			formToken.TokenString.ShouldEqual("Serialized!");
-
 		}
 		
 	}

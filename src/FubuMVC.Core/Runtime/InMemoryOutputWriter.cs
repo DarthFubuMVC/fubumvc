@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -25,6 +26,10 @@ namespace FubuMVC.Core.Runtime
         }
 
         public void RedirectToUrl(string url)
+        {
+        }
+
+        public void AppendCookie(HttpCookie cookie)
         {
         }
 
