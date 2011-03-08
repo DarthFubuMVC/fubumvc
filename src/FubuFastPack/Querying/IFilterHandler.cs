@@ -15,11 +15,4 @@ namespace FubuFastPack.Querying
 
         FilterRule ToFilterRule<T>(FilterRequest<T> request);
     }
-
-    public class FilterRule
-    {
-        public Accessor Accessor { get; set; }
-        public object Value { get; set; }
-        public StringToken Operator { get; set; }
-    }
 }
