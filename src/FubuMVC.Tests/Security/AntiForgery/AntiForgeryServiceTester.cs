@@ -7,45 +7,44 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-	[TestFixture]
-	public class AntiForgeryServiceTester:InteractionContext<AntiForgeryService>
-	{
-		protected override void beforeEach()
-		{
-			MockFor<IRequestData>().Stub(r => r.Value("ApplicationPath")).Return("Path");
-			MockFor<IRequestData>().Stub(r => r.Value("Cookies")).Return(new HttpCookieCollection());
+    [TestFixture]
+    public class AntiForgeryServiceTester : InteractionContext<AntiForgeryService>
+    {
+        protected override void beforeEach()
+        {
+            MockFor<IRequestData>().Stub(r => r.Value("ApplicationPath")).Return("Path");
+            MockFor<IRequestData>().Stub(r => r.Value("Cookies")).Return(new HttpCookieCollection());
 
-			MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName("Path")).Return("CookieName");
+            MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName("Path")).Return("CookieName");
 
-			MockFor<IAntiForgerySerializer>()
-				.Stub(x => x.Serialize(default(AntiForgeryData))).IgnoreArguments().Return("Serialized!");
-		}
+            MockFor<IAntiForgerySerializer>()
+                .Stub(x => x.Serialize(default(AntiForgeryData))).IgnoreArguments().Return("Serialized!");
+        }
 
-		[Test]
-		public void should_set_cookie()
-		{
-			MockFor<IOutputWriter>().Expect(o => o.AppendCookie(default(HttpCookie))).IgnoreArguments();
+        [Test]
+        public void should_return_form_token_from_cookie_data()
+        {
+            MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName()).Return("FormName");
 
-			ClassUnderTest.SetCookieToken(null, null);
+            var input = new AntiForgeryData
+            {
+                Username = "CookieUser",
+                Value = "12345"
+            };
+            FormToken formToken = ClassUnderTest.GetFormToken(input, "Salty");
 
-			MockFor<IOutputWriter>().VerifyAllExpectations();
-		}
+            formToken.Name.ShouldEqual("FormName");
+            formToken.TokenString.ShouldEqual("Serialized!");
+        }
 
-		[Test]
-		public void should_return_form_token_from_cookie_data()
-		{
-			MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName()).Return("FormName");
+        [Test]
+        public void should_set_cookie()
+        {
+            MockFor<IOutputWriter>().Expect(o => o.AppendCookie(default(HttpCookie))).IgnoreArguments();
 
-			var input = new AntiForgeryData
-			{
-				Username = "CookieUser",
-				Value = "12345"
-			};
-			var formToken = ClassUnderTest.GetFormToken(input, "Salty");
+            ClassUnderTest.SetCookieToken(null, null);
 
-			formToken.Name.ShouldEqual("FormName");
-			formToken.TokenString.ShouldEqual("Serialized!");
-		}
-		
-	}
+            MockFor<IOutputWriter>().VerifyAllExpectations();
+        }
+    }
 }

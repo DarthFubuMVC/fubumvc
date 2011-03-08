@@ -10,107 +10,105 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Security.AntiForgery
 {
-	[TestFixture]
-	public class AntiForgeryValidatorTester:InteractionContext<AntiForgeryValidator>
-	{
-		private NameValueCollection _form;
-		private HttpCookieCollection _cookies;
-		private AntiForgeryData _cookieToken;
-		private AntiForgeryData _formToken;
+    [TestFixture]
+    public class AntiForgeryValidatorTester : InteractionContext<AntiForgeryValidator>
+    {
+        private NameValueCollection _form;
+        private HttpCookieCollection _cookies;
+        private AntiForgeryData _cookieToken;
+        private AntiForgeryData _formToken;
 
-		protected override void beforeEach()
-		{
-			MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName()).Return("FormName");
-			MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName("String")).IgnoreArguments().Return("CookieName");
+        protected override void beforeEach()
+        {
+            MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName()).Return("FormName");
+            MockFor<IAntiForgeryTokenProvider>().Stub(x => x.GetTokenName("String")).IgnoreArguments().Return(
+                "CookieName");
 
-			MockFor<IRequestData>().Stub(x => x.Value("ApplicationPath")).Return("Path");
+            MockFor<IRequestData>().Stub(x => x.Value("ApplicationPath")).Return("Path");
 
-			_form = new NameValueCollection {{"FormName", "FormValue"}};
-			MockFor<IRequestData>().Stub(x => x.Value("Form")).Return(_form);
-			
-			_cookies = new HttpCookieCollection {new HttpCookie("CookieName", "CookieValue")};
-			MockFor<IRequestData>().Stub(x => x.Value("Cookies")).Return(_cookies);
+            _form = new NameValueCollection {{"FormName", "FormValue"}};
+            MockFor<IRequestData>().Stub(x => x.Value("Form")).Return(_form);
 
-			_formToken = new AntiForgeryData
-			{
-				CreationDate = new DateTime(2010, 12, 12),
-				Salt = "Salty",
-				Username = "User",
-				Value = "12345"
-			};
+            _cookies = new HttpCookieCollection {new HttpCookie("CookieName", "CookieValue")};
+            MockFor<IRequestData>().Stub(x => x.Value("Cookies")).Return(_cookies);
 
-			_cookieToken = new AntiForgeryData
-			{
-				CreationDate = new DateTime(2010, 12, 12),
-				Salt = "Salty",
-				Username = "User",
-				Value = "12345"
-			};
-			MockFor<IAntiForgerySerializer>().Stub(x => x.Deserialize("CookieValue")).Return(_cookieToken);
-			MockFor<IAntiForgerySerializer>().Stub(x => x.Deserialize("FormValue")).Return(_formToken);
+            _formToken = new AntiForgeryData
+            {
+                CreationDate = new DateTime(2010, 12, 12),
+                Salt = "Salty",
+                Username = "User",
+                Value = "12345"
+            };
 
-
-			MockFor<IPrincipal>().Stub(x => x.Identity).Return(MockFor<IIdentity>());
-			MockFor<ISecurityContext>().Stub(x => x.CurrentUser).Return(MockFor<IPrincipal>());
-
-		}
-
-		[Test]
-		public void should_validate_with_correct_request_data()
-		{
-
-			MockFor<IIdentity>().Stub(x => x.IsAuthenticated).Return(true);
-			MockFor<IIdentity>().Stub(x => x.Name).Return("User");
-			ClassUnderTest.Validate("Salty").ShouldBeTrue();
-		}
+            _cookieToken = new AntiForgeryData
+            {
+                CreationDate = new DateTime(2010, 12, 12),
+                Salt = "Salty",
+                Username = "User",
+                Value = "12345"
+            };
+            MockFor<IAntiForgerySerializer>().Stub(x => x.Deserialize("CookieValue")).Return(_cookieToken);
+            MockFor<IAntiForgerySerializer>().Stub(x => x.Deserialize("FormValue")).Return(_formToken);
 
 
-		[Test]
-		public void should_not_validate_with_incorrect_user()
-		{
-			SetupIdentity(true, "DifferentUser");
-			ClassUnderTest.Validate("Salty").ShouldBeFalse();
-		}
+            MockFor<IPrincipal>().Stub(x => x.Identity).Return(MockFor<IIdentity>());
+            MockFor<ISecurityContext>().Stub(x => x.CurrentUser).Return(MockFor<IPrincipal>());
+        }
+
+        private void SetupIdentity(bool authenticated, string name)
+        {
+            MockFor<IIdentity>().Stub(x => x.IsAuthenticated).Return(authenticated);
+            MockFor<IIdentity>().Stub(x => x.Name).Return(name);
+        }
 
 
-		[Test]
-		public void should_not_validate_with_unauthenticated_user()
-		{
-			SetupIdentity(false, "User");
-			ClassUnderTest.Validate("Salty").ShouldBeFalse();
-		}
+        [Test]
+        public void should_not_validate_with_incorrect_user()
+        {
+            SetupIdentity(true, "DifferentUser");
+            ClassUnderTest.Validate("Salty").ShouldBeFalse();
+        }
 
-		[Test]
-		public void should_not_validate_without_form_token()
-		{
-			SetupIdentity(true,"User");
-			_form.Clear();
-			ClassUnderTest.Validate("Salty").ShouldBeFalse();
-		}
+        [Test]
+        public void should_not_validate_with_nonmatching_token_values()
+        {
+            SetupIdentity(true, "User");
 
-		[Test]
-		public void should_not_validate_without_cookie_token()
-		{
-			SetupIdentity(true,"User");
-			_cookies.Clear();
-			ClassUnderTest.Validate("Salty").ShouldBeFalse();
-		}
+            _formToken.Value = "I don't match!";
 
-		[Test]
-		public void should_not_validate_with_nonmatching_token_values()
-		{
-			SetupIdentity(true,"User");
+            ClassUnderTest.Validate("Salty").ShouldBeFalse();
+        }
 
-			_formToken.Value = "I don't match!";
 
-			ClassUnderTest.Validate("Salty").ShouldBeFalse();
-		}
+        [Test]
+        public void should_not_validate_with_unauthenticated_user()
+        {
+            SetupIdentity(false, "User");
+            ClassUnderTest.Validate("Salty").ShouldBeFalse();
+        }
 
-		private void SetupIdentity(bool authenticated, string name)
-		{
-			MockFor<IIdentity>().Stub(x => x.IsAuthenticated).Return(authenticated);
-			MockFor<IIdentity>().Stub(x => x.Name).Return(name);
-		}
-		
-	}
+        [Test]
+        public void should_not_validate_without_cookie_token()
+        {
+            SetupIdentity(true, "User");
+            _cookies.Clear();
+            ClassUnderTest.Validate("Salty").ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_not_validate_without_form_token()
+        {
+            SetupIdentity(true, "User");
+            _form.Clear();
+            ClassUnderTest.Validate("Salty").ShouldBeFalse();
+        }
+
+        [Test]
+        public void should_validate_with_correct_request_data()
+        {
+            MockFor<IIdentity>().Stub(x => x.IsAuthenticated).Return(true);
+            MockFor<IIdentity>().Stub(x => x.Name).Return("User");
+            ClassUnderTest.Validate("Salty").ShouldBeTrue();
+        }
+    }
 }

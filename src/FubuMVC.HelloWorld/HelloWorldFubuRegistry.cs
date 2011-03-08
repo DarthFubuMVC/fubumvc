@@ -26,7 +26,7 @@ namespace FubuMVC.HelloWorld
 
             ApplyConvention<OutputModelSettingBehaviorConfiguration>();
 
-			ApplyConvention<AntiForgeryConfiguration>();
+            Policies.Add<AntiForgeryPolicy>();
             Views.TryToAttachWithDefaultConventions();
 
             HtmlConvention<SampleHtmlConventions>();

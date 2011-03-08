@@ -1,7 +1,7 @@
 ﻿namespace FubuMVC.Core.Security.AntiForgery
 {
-	public interface IAntiForgeryValidator
-	{
-		bool Validate(string salt);
-	}
+    public interface IAntiForgeryValidator
+    {
+        bool Validate(string salt);
+    }
 }

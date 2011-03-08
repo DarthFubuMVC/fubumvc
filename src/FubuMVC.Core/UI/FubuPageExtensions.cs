@@ -297,13 +297,11 @@ namespace FubuMVC.Core.UI
             return AntiForgeryToken(page, salt, null, null);
         }
 
-
         public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt, string path, string domain)
         {
             var antiForgeryService = page.Get<IAntiForgeryService>();
             var cookieToken = antiForgeryService.SetCookieToken(path, domain);
             var formToken = antiForgeryService.GetFormToken(cookieToken, salt);
-
 
             return new HiddenTag().Name(formToken.Name).Value(formToken.TokenString);
         }
