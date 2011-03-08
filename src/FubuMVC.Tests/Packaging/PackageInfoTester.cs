@@ -67,16 +67,10 @@ namespace FubuMVC.Tests.Packaging
             writeText(FileSystem.Combine("data", "e.t2"), "e");
 
             var list = new List<string>();
-            thePackage.ForData("*.*", (name, stream) =>
-            {
-                list.Add(name);
-            });
+            thePackage.ForData("*.*", (name, stream) => list.Add(name));
 
             list.Sort();
-            list.ShouldHaveTheSameElementsAs("c.txt", "e.t2", 
-				FileSystem.Combine("st", "a.txt"), 
-				FileSystem.Combine("st", "b.txt"), 
-				FileSystem.Combine("st", "d.t2"));
+            list.ShouldHaveTheSameElementsAs("c.txt", "e.t2", "st/a.txt", "st/b.txt", "st/d.t2");
         }
 
         [Test]
