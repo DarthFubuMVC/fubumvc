@@ -24,12 +24,7 @@ namespace FubuFastPack.Querying
         public static readonly OperatorKeys ENDSWITH = new OperatorKeys("ENDSWITH", "Ends With");
         public static readonly OperatorKeys CONTAINS = new OperatorKeys("CONTAINS", "Contains");
 
-        public static readonly StringToken WITHIN_X_DAYS = new OperatorKeys("WITHIN_X_DAYS", "Within x days");
-        public static readonly StringToken AFTER_X_DAYS = new OperatorKeys("AFTER_X_DAYS", "After x days");
-        public static readonly StringToken AFTER_DATE = new OperatorKeys("AFTER_DATE", "After Date");
-        public static readonly StringToken BEFORE_DATE = new OperatorKeys("BEFORE_DATE", "Before Date");
 
-        
         protected OperatorKeys(string key, string defaultValue) : base(key, defaultValue)
         {
             _keys.Add(this);

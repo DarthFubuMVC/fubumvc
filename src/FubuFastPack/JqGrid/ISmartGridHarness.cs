@@ -8,7 +8,6 @@ namespace FubuFastPack.JqGrid
     public interface ISmartGridHarness
     {
         Type GridType { get; }
-        IEnumerable<FilteredProperty> FilteredProperties();
         GridViewModel BuildGridModel(IEnumerable<IGridPolicy> gridPolicies);
 
         string GetQuerystring();

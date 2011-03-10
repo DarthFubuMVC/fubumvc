@@ -86,7 +86,8 @@ namespace FubuFastPack.JqGrid
         public IEnumerable<FilteredProperty> AllFilteredProperties(IQueryService queryService)
         {
             // Force the enumerable to execute so we don't keep building new FilteredProperty objects
-            var properties = _definition.Columns.SelectMany(x => x.FilteredProperties()).ToList();
+            // *has* to be distinct
+            var properties = _definition.Columns.SelectMany(x => x.FilteredProperties()).Distinct().ToList();
             properties.Each(x => x.Operators = queryService.FilterOptionsFor<TEntity>(x.Accessor));
             return properties;
         }

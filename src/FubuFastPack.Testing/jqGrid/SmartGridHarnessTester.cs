@@ -151,7 +151,7 @@ namespace FubuFastPack.Testing.jqGrid
         public void allow_creation_is_true_should_get_new_entity_values_on_grid_model()
         {
             var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
-            model.NewEntityText.ShouldEqual(StringToken.FromKeyString("CREATE_NEW_" + typeof(Case)).ToString());
+            model.NewEntityText.ShouldEqual(StringToken.FromKeyString("CREATE_NEW_" + typeof(Case).Name.ToUpper()).ToString());
             model.NewEntityUrl.ShouldEqual(urls.UrlForNew(typeof (Case)));
         }
 

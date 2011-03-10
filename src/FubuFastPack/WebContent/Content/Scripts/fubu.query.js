@@ -141,6 +141,8 @@ $.fn.asFilterRow = function (templates, options, div) {
             row.changeOperator();
         });
 
+        row.changeOperator();
+
         return false;
     }
 
@@ -164,7 +166,7 @@ $.fn.asFilterRow = function (templates, options, div) {
         var metadata = template.metadata();
         var editorName = "textbox";
         if (metadata != null && metadata.formatter != null) {
-            editorName = metadata.editor;
+            editorName = metadata.formatter;
         }
 
         row.editor = template.get(0);

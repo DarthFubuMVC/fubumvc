@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuFastPack.Querying
 {
@@ -11,6 +12,12 @@ namespace FubuFastPack.Querying
         private readonly IObjectConverter _converter;
         private readonly Criteria _criteria;
         private readonly Expression<Func<T, object>> _property;
+
+        public static FilterRequest<T> For(Expression<Func<T, object>> property, StringToken op, string value)
+        {
+            var criteria = Criteria.For<T>(property, op.Key, value);
+            return new FilterRequest<T>(criteria, new ObjectConverter(), property);
+        }
 
         public FilterRequest(Criteria criteria, IObjectConverter converter, Expression<Func<T, object>> property)
         {
@@ -38,6 +45,11 @@ namespace FubuFastPack.Querying
         public Accessor Accessor
         {
             get { return _accessor; }
+        }
+
+        public TArg GetValueAs<TArg>()
+        {
+            return _converter.FromString<TArg>(_criteria.value);
         }
 
         public object GetValue()

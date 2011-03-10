@@ -39,9 +39,9 @@ namespace FubuFastPack.JqGrid
         }
 
         // TODO -- hit this with StoryTeller
-        public IEnumerable<FilteredProperty> FilteredProperties()
+        public IEnumerable<FilteredProperty> FilteredProperties(T grid)
         {
-            return BuildGrid().AllFilteredProperties(_queryService);
+            return grid.AllFilteredProperties(_queryService);
         }
 
         public T BuildGrid()
@@ -290,7 +290,7 @@ namespace FubuFastPack.JqGrid
             var model = new GridViewModel(){
                 AllowCreateNew = grid.Definition.AllowCreationOfNew,
                 CanSaveQuery = grid.Definition.CanSaveQuery,
-                FilteredProperties = FilteredProperties(),
+                FilteredProperties = FilteredProperties(grid),
                 GridModel = buildJqModel(grid),
                 GridName = typeof(T).NameForGrid(),
                 GridType = typeof(T),

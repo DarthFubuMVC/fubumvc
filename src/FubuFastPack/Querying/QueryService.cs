@@ -19,7 +19,7 @@ namespace FubuFastPack.Querying
 
         public IEnumerable<StringToken> FilterOptionsFor<TEntity>(Accessor accessor)
         {
-            return allHandlers().SelectMany(x => x.FilterOptionsFor<TEntity>(accessor));
+            return allHandlers().SelectMany(x => x.FilterOptionsFor<TEntity>(accessor)).Distinct();
         }
 
         public Expression<Func<T, bool>> WhereFilterFor<T>(FilterRequest<T> request)

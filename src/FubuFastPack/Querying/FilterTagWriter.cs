@@ -34,7 +34,8 @@ namespace FubuFastPack.Querying
             tag.MetaData("filters", metadata);
 
             var properties = model.FilteredProperties;
-            var templates = _sources.SelectMany(x => x.TagsFor(properties));
+
+            var templates = _sources.Distinct().SelectMany(x => x.TagsFor(properties));
 
             var operators = properties.Select(prop =>
             {
