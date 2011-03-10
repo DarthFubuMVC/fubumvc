@@ -24,7 +24,7 @@ namespace FubuFastPack.Querying
             var containerNameForGrid = model.GridType.ContainerNameForGrid();
             tag.Id("filters_" + containerNameForGrid);
             tag.AddClass("smart-grid-filter");
-            tag.Child(new TableTag());
+            tag.Append(new TableTag());
 
             var metadata = new Dictionary<string, object>{
                 {"gridId", "grid_" + model.GridName},
@@ -49,10 +49,10 @@ namespace FubuFastPack.Querying
             {
                 div.Hide();
                 div.AddClass("templates");
-                div.Add("div").AddClass("smart-grid-editors").AddChildren(templates);
-                div.Add("div").AddClass("smart-grid-operators").AddChildren(operators);
+                div.Add("div").AddClass("smart-grid-editors").Append(templates);
+                div.Add("div").AddClass("smart-grid-operators").Append(operators);
 
-                div.Child(new SelectTag(select =>
+                div.Append(new SelectTag(select =>
                 {
                     select.AddClass("smart-grid-properties");
                     properties.Each(prop => select.Option(prop.Header, prop.Accessor.Name));

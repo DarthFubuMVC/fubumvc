@@ -8,6 +8,7 @@ using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.UI.Tags;
 using HtmlTags;
+using HtmlTags.Extended.Attributes;
 
 namespace FubuMVC.Core.UI.Forms
 {

@@ -148,7 +148,7 @@ namespace FubuMVC.Core.Diagnostics
             {
                 pattern = "(default)";
             }
-            document.Child(new HtmlTag("div").Text("Route: " + pattern));
+            document.Append(new HtmlTag("div").Text("Route: " + pattern));
 
             var nodeTable = new TableTag();
             nodeTable.AddHeaderRow(header =>
@@ -164,7 +164,7 @@ namespace FubuMVC.Core.Diagnostics
                 nodeTable.AddBodyRow(row =>
                 {
                     row.Cell().Text(node.Category.ToString());
-                    row.Cell().UnEncoded().Text(description);
+                    row.Cell().Encoded(false).Text(description);
                     row.Cell().Text(node.GetType().FullName);
                     if (description.Contains(_diagnosticsNamespace))
                     {
@@ -182,7 +182,7 @@ namespace FubuMVC.Core.Diagnostics
                 call => observer.GetLog(call).Each(
                             entry => ul.Add("li").Text(entry)));
 
-            content.AddChildren(new[]{
+            content.Append(new[]{
                 document, 
                 new HtmlTag("h3").Text("Nodes:"),
                 nodeTable,

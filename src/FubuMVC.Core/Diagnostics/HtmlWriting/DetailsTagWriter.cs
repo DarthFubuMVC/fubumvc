@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public void ModelBinding(ModelBindingReport report)
         {
-            var table = addDetail().Text("Bound Model " + report.BoundType.FullName).Child<TableTag>();
+            var table = addDetail().Text("Bound Model " + report.BoundType.FullName).Add<TableTag>();
 
             table.AddClass("details");
             table.AddHeaderRow(row =>
@@ -69,7 +69,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public void Authorization(AuthorizationReport report)
         {
-            var table = addDetail().Text("Authorization").Child<TableTag>();
+            var table = addDetail().Text("Authorization").Add<TableTag>();
 
             table.AddClass("details");
             table.AddHeaderRow(row =>
@@ -96,7 +96,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
 
         public void CustomTable(DataTable report)
         {
-            var table = addDetail().Child<TableTag>();
+            var table = addDetail().Add<TableTag>();
 
             table.AddClass("details");
             table.AddHeaderRow(row => { row.Header(report.TableName).Attr("colspan", report.Columns.Count); });

@@ -97,9 +97,9 @@ namespace FubuMVC.Core.UI.Diagnostics
             foreach (var propertyInfo in propertiesToLink)
             {
                 var linkTag = new LinkTag("", _examplePageUrl + "?model=" + modelPath + "-" + propertyInfo.Name);
-                linkTag.Child(new HtmlTag("code").Text(getPropertySourceCode(propertyInfo)));
-                var listItem = new HtmlTag("li").Child(linkTag);
-                linkList.Child(listItem);
+                linkTag.Append(new HtmlTag("code").Text(getPropertySourceCode(propertyInfo)));
+                var listItem = new HtmlTag("li").Append(linkTag);
+                linkList.Append(listItem);
             }
             if (linkList.Children.Count > 0) tags.Add(linkList);
 
@@ -116,10 +116,10 @@ namespace FubuMVC.Core.UI.Diagnostics
                 var propertySource = getPropertySourceCode(propertyInfo);
                 
                 var example = new HtmlTag("div").AddClass("example");
-                example.AddChildren(new HtmlTag("code").AddClass("property").Text(propertySource));
-                example.AddChildren(createExample(tagGenerator.LabelFor(tagGenerator.GetRequest(property)), "LabelFor({0})".ToFormat(propertyExpression)));
-                example.AddChildren(createExample(tagGenerator.DisplayFor(tagGenerator.GetRequest(property)), "DisplayFor({0})".ToFormat(propertyExpression)));
-                example.AddChildren(createExample(tagGenerator.InputFor(tagGenerator.GetRequest(property)), "InputFor({0})".ToFormat(propertyExpression)));
+                example.Append(new HtmlTag("code").AddClass("property").Text(propertySource));
+                example.Append(createExample(tagGenerator.LabelFor(tagGenerator.GetRequest(property)), "LabelFor({0})".ToFormat(propertyExpression)));
+                example.Append(createExample(tagGenerator.DisplayFor(tagGenerator.GetRequest(property)), "DisplayFor({0})".ToFormat(propertyExpression)));
+                example.Append(createExample(tagGenerator.InputFor(tagGenerator.GetRequest(property)), "InputFor({0})".ToFormat(propertyExpression)));
                 tags.Add(example);
             }
 
@@ -186,32 +186,32 @@ namespace FubuMVC.Core.UI.Diagnostics
         {
             var example = new HtmlTag("fieldset").AddClass("tag");
             example.Add("legend").Text(methodCall);
-            example.AddChildren(new HtmlTag("code").AddClass("source").Text(htmlTag.ToString()));
-            example.AddChildren(new HtmlTag("div").AddClass("rendered").AddChildren(htmlTag));
+            example.Append(new HtmlTag("code").AddClass("source").Text(htmlTag.ToString()));
+            example.Append(new HtmlTag("div").AddClass("rendered").Append(htmlTag));
             return example;
         }
 
         private HtmlTag showIntro()
         {
             var container = new HtmlTag("div").AddClass("intro");
-            container.Child(
+            container.Append(
             new HtmlTag("p").Text(@"
 These pages demonstrate the output that is rendered when using the FubuMVC.UI conventional HTML generators (InputFor/DisplayFor/LabelFor).
 To alter how the tags are generated, create your own class that derives from HtmlConventionRegistry, and declare it in your FubuRegistry using:"
 ));
-            container.Child(new HtmlTag("pre").Text("this.HtmlConvention<MyHtmlConventionRegistry>();"));
-            container.Child(
+            container.Append(new HtmlTag("pre").Text("this.HtmlConvention<MyHtmlConventionRegistry>();"));
+            container.Append(
             new HtmlTag("p").Text(@"
 To alter how a property value is converted to a string value, use the StringConversions() extension method in your FubuRegistry. For example:"
 ));
 
-            container.Child(new HtmlTag("pre").Text(@"
+            container.Append(new HtmlTag("pre").Text(@"
 this.StringConversions(x =>
 {
    x.IfIsType<DateTime>().ConvertBy(date => date.ToShortDateString());
 });
 "));
-            container.Child(new HtmlTag("p").Text(@"You can see the conventions applied by selecting one of your view models below, or applied to ").Child(new LinkTag("the built-in example model.", _examplePageUrl)));
+            container.Append(new HtmlTag("p").Text(@"You can see the conventions applied by selecting one of your view models below, or applied to ").Append(new LinkTag("the built-in example model.", _examplePageUrl)));
             return container;
         }
     }
@@ -233,7 +233,7 @@ this.StringConversions(x =>
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             var outputType = chain.ActionOutputType();
-            cell.Child(new LinkTag(outputType.Name, _examplePageUrl + "?model=" + outputType.FullName));
+            cell.Append(new LinkTag(outputType.Name, _examplePageUrl + "?model=" + outputType.FullName));
         }
 
         public string Text(BehaviorChain chain)
