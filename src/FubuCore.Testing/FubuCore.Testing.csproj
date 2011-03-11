@@ -100,6 +100,16 @@
     <Compile Include="ObjectConverterTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExtensionsTester.cs" />
+    <Compile Include="Reflection\Expressions\EqualsPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\GreaterThanOrEqualPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\GreaterThanPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\LessThanOrEqualPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\LessThanPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\NotEqualPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\StringContainsPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\StringEndsWithPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\StringEqualsPropertyOperationTester.cs" />
+    <Compile Include="Reflection\Expressions\StringStartsWithPropertyOperationTester.cs" />
     <Compile Include="Reflection\ReflectionExtensionsTester.cs" />
     <Compile Include="Reflection\ReflectionHelperTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />

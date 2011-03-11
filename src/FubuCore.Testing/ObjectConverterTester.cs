@@ -464,10 +464,28 @@ namespace FubuCore.Testing
 
     public class Contact
     {
+        public Contact()
+        {
+            PrimarySite = new Site();
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
+    
+        public Site PrimarySite { get; set;}
     }
 
+    
+
+    public class Site
+    {
+        public Site()
+        {
+            PrimaryAddress = new Address();
+        }
+
+        public Address PrimaryAddress { get; set; }     
+    }
 
 
     [TestFixture]
