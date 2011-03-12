@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Diagnostics</RootNamespace>
+    <AssemblyName>FubuMVC.Diagnostics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlTags, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Scripts\jquery\jquery-1.4.4.js" />
+    <Content Include="diagnostics.script.config" />
+    <None Include="Views\Dashboard.spark" />
+    <None Include="Views\Routes.spark" />
+    <None Include="Views\Shared\Application.spark" />
+    <Content Include="Content\Images\block.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-bg.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-bg1251.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-cat.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-cn.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-cs.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-da.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-de.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-el.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-en.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-es.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-fa.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-fi.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-fr.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-gl.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-he.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-hu.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-is.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-it.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ja.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-nl.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-no.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-pl.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-pt-br.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-pt.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ro.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ru.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-sk.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-sr.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-sv.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-tr.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ua.js" />
+    <Content Include="Content\Scripts\jquery\jquery-1.4.4.min.js" />
+    <Content Include="Content\Scripts\jquery\jquery-ui-1.8.10.custom.min.js" />
+    <Content Include="Content\Scripts\jquery\jquery.jqGrid.min.js" />
+    <Content Include="Content\Scripts\jquery\jquery.metadata.js" />
+    <Content Include="Content\Scripts\routes.js" />
+    <Content Include="Content\Styles\blueprint\ie.css" />
+    <Content Include="Content\Styles\blueprint\print.css" />
+    <Content Include="Content\Styles\blueprint\screen.css" />
+    <Content Include="Content\Styles\default.css" />
+    <Content Include="Content\Styles\jquery\images\bg_fallback.png" />
+    <Content Include="Content\Styles\jquery\images\icon_sprite.png" />
+    <Content Include="Content\Styles\jquery\images\progress_bar.gif" />
+    <Content Include="Content\Styles\jquery\images\slider_handles.png" />
+    <Content Include="Content\Styles\jquery\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Styles\jquery\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Styles\jquery\jquery-ui-1.8.7.custom.css" />
+    <Content Include="Content\Styles\jquery\ui.jqgrid.css" />
+    <Content Include="Content\Styles\master.css" />
+    <Content Include="Content\Styles\snapdragon\common.css" />
+    <Content Include="Content\Styles\snapdragon\forms.css" />
+    <Content Include="Views\Bindings.xml" />
+    <None Include="Views\Shared\Empty.spark" />
+    <None Include="Views\Shared\NavigationMenu.spark" />
+    <None Include="Views\Shared\_global.spark" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\PartialActionSource.cs" />
+    <Compile Include="Configuration\Partials\IPartialDecorator.cs" />
+    <Compile Include="Configuration\Partials\IPartialModel.cs" />
+    <Compile Include="Configuration\Partials\NavigationMenuDecorator.cs" />
+    <Compile Include="Configuration\Partials\PartialAction.cs" />
+    <Compile Include="Configuration\Spark\PartialActionSparkPolicy.cs" />
+    <Compile Include="CoreExtensions.cs" />
+    <Compile Include="Endpoints\Routes\FilterEndpoint.cs" />
+    <Compile Include="Extensions\TagExtensions.cs" />
+    <Compile Include="FubuDiagnosticsRegistry.cs" />
+    <Compile Include="Configuration\FubuExtensions.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicy.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsUrls.cs" />
+    <Compile Include="Configuration\Spark\DiagnosticsEndpointSparkPolicy.cs" />
+    <Compile Include="Endpoints\DiagnosticsEndpointMarker.cs" />
+    <Compile Include="Endpoints\DashboardEndpoint.cs" />
+    <Compile Include="Endpoints\RoutesEndpoint.cs" />
+    <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
+    <Compile Include="Models\DashboardRequestModel.cs" />
+    <Compile Include="Navigation\DashboardAction.cs" />
+    <Compile Include="Navigation\INavigationItemAction.cs" />
+    <Compile Include="Models\DashboardModel.cs" />
+    <Compile Include="Models\Grids\JsonGridModel.cs" />
+    <Compile Include="Models\Grids\JsonGridRow.cs" />
+    <Compile Include="Models\RouteDataBuilder.cs" />
+    <Compile Include="Models\RouteDataModel.cs" />
+    <Compile Include="Models\RouteQuery.cs" />
+    <Compile Include="Models\RouteRequestModel.cs" />
+    <Compile Include="Models\RoutesModel.cs" />
+    <Compile Include="Navigation\INavigationMenuBuilder.cs" />
+    <Compile Include="Navigation\NavigationItemCaseBase.cs" />
+    <Compile Include="Navigation\NavigationMenu.cs" />
+    <Compile Include="Navigation\NavigationMenuItem.cs" />
+    <Compile Include="Navigation\RouteExplorerAction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
+      <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
+      <Name>Spark.Web.FubuMVC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50535</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

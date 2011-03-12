@@ -1,0 +1,10 @@
+﻿<viewdata model="RoutesModel" />
+<content:title>Route Explorer</content:title>
+<content:head>
+  <Script src="routes.js" />
+</content:head>
+<content:main>
+	<h2>Route Explorer</h2>
+  <table id="route-explorer" class="{ url: '${this.Urls.UrlFor(new RouteQuery { page = 1, rows = 30 })}' }"></table>
+  <div id="col-chooser"></div>
+</content:main>

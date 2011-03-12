@@ -1,0 +1,12 @@
+﻿<use master="Empty" />
+<use namespace="FubuMVC.Diagnostics.Navigation" />
+<viewdata model="NavigationMenu" />
+<content:main>
+  <ul id="Menu">
+    <li each="var item in Model.Items">
+      <a href="${item.Url}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+        <span class="ui-button-text">${item.Text}</span>
+      </a>
+    </li>
+  </ul>
+</content:main>
