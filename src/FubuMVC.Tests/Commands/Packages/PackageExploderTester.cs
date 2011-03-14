@@ -61,26 +61,26 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void is_package_zip_positive()
         {
-            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.zip").ShouldBeTrue();
+            FubuMvcPackages.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.zip").ShouldBeTrue();
         }
 
         [Test]
         public void is_package_zip_negative_1()
         {
-            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.txt").ShouldBeFalse();
+            FubuMvcPackages.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.txt").ShouldBeFalse();
         }
 
         [Test]
         public void is_package_zip_negative_2()
         {
-            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.webcontent.zip").ShouldBeFalse();
+            FubuMvcPackages.IsEmbeddedPackageZipFile("a.b.c.webcontent.zip").ShouldBeFalse();
         }
 
         [Test]
         public void get_package_folder_name()
         {
-            PackageExploder.EmbeddedPackageFolderName("a.b.c.pak-webcontent.zip").ShouldEndWith("webcontent");
-            PackageExploder.EmbeddedPackageFolderName("a.b.c.pak-data.zip").ShouldEndWith("data");
+            FubuMvcPackages.EmbeddedPackageFolderName("a.b.c.pak-webcontent.zip").ShouldEndWith("webcontent");
+            FubuMvcPackages.EmbeddedPackageFolderName("a.b.c.pak-data.zip").ShouldEndWith("data");
         }
     }
 
@@ -255,7 +255,7 @@ namespace FubuMVC.Tests.Commands.Packages
             var fileName = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
                                               packageName + ".zip");
 
-            var directoryName = PackageExploder.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
+            var directoryName = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
             MockFor<IZipFileService>().AssertWasCalled(x => x.ExtractTo(fileName, directoryName));
             
@@ -266,7 +266,7 @@ namespace FubuMVC.Tests.Commands.Packages
             var fileName = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
                                               packageName + ".zip");
 
-            var directoryName = PackageExploder.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
+            var directoryName = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
             MockFor<IZipFileService>().AssertWasNotCalled(x => x.ExtractTo(fileName, directoryName));
 
@@ -294,7 +294,7 @@ namespace FubuMVC.Tests.Commands.Packages
         {
             var directories = packageNames.Select(x =>
             {
-                return PackageExploder.GetDirectoryForExplodedPackage(theApplicationDirectory, x);
+                return FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, x);
             });
 
             directories.Each(dir =>

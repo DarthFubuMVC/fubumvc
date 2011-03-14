@@ -33,6 +33,8 @@ namespace Spark.Web.FubuMVC
 
 			var expression = new ConfigureSparkExpression(settings, policies, visitors);
 			
+            // TODO -- this shouldn't be assuming the location of the package folder.
+            // go through the front end and get this out of the package
 			PackageRegistry
 				.Packages
 				.Each(package => expression.Settings.AddViewFolder("~/bin/{0}/{1}/{2}/views/".ToFormat(FubuMvcPackages.FubuPackagesFolder, 

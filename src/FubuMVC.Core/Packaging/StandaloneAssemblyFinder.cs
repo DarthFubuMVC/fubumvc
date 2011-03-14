@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Packaging
 		public IEnumerable<string> FindAssemblies(string applicationDirectory)
 		{
 			var assemblyNames = new FileSet { Include = "*.dll", DeepSearch = false };
-		    var directory = PackageExploder.GetPackageDirectory(applicationDirectory);
+		    var directory = FubuMvcPackages.GetApplicationPackagesDirectory(applicationDirectory);
 		    return _fileSystem.FindFiles(directory, assemblyNames).Select(Path.GetFileNameWithoutExtension);
 		}
 	}
