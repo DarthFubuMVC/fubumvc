@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuFastPack.JqGrid;
+using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
 using FubuFastPack.Querying;
 using FubuFastPack.StructureMap;
@@ -26,6 +28,7 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
         private GridResults _lastResults;
         private GridDataRequest _paging = new GridDataRequest(1, 100, null, true);
         private IRepository _repository;
+        private ITransactionBoundary _boundary;
 
         public GridsFixture()
         {
@@ -55,7 +58,14 @@ namespace IntegrationTesting.Fixtures.FubuFastPack
 
             FubuApplication.For<FubuRegistry>().StructureMap(() => _container).Bootstrap();
 
+            _boundary = _container.GetInstance<ITransactionBoundary>();
+            _boundary.Start();
             _repository = _container.GetInstance<IRepository>();
+        }
+
+        public override void TearDown()
+        {
+            _container.Dispose();
         }
 
         public IGrammar CasesAre()

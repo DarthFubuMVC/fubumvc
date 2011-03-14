@@ -42,6 +42,14 @@ namespace FubuMVC.Core.Packaging
         public void CleanAll(string applicationDirectory)
         {
             var directory = FubuMvcPackages.GetExplodedPackagesDirectory(applicationDirectory);
+            clearExplodedDirectories(directory);
+
+            // This is here for legacy installations that may have old exploded packages in bin/fubu-packages
+            clearExplodedDirectories(FubuMvcPackages.GetApplicationPackagesDirectory(applicationDirectory));
+        }
+
+        private void clearExplodedDirectories(string directory)
+        {
             _fileSystem.ChildDirectoriesFor(directory).Each(x =>
             {
                 _logger.WritePackageDirectoryDeleted(x);
