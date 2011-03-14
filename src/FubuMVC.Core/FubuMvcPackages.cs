@@ -10,6 +10,7 @@ namespace FubuMVC.Core
         public static readonly string VersionFile = ".version";
         public static readonly string FubuPackagesFolder = "fubu-packages";
         public static readonly string DataFolder = "Data";
+        public static readonly string FubuContentFolder = "fubu-content";
 
 
 
@@ -41,8 +42,7 @@ namespace FubuMVC.Core
 
         public static string GetDirectoryForExplodedPackage(string applicationDirectory, string packageName)
         {
-            return FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                      packageName);
+            return FileSystem.Combine(applicationDirectory, FubuContentFolder, packageName);
         }
 
         public static string GetApplicationPackagesDirectory(string applicationDirectory)
@@ -52,8 +52,7 @@ namespace FubuMVC.Core
 
         public static string GetExplodedPackagesDirectory(string applicationDirectory)
         {
-            // TODO
-            return GetApplicationPackagesDirectory(applicationDirectory);
+            return FileSystem.Combine(applicationDirectory, FubuContentFolder);
         }
     }
 }

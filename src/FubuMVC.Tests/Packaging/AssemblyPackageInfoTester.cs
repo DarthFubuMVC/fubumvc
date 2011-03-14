@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Packaging
                 expected = folder;
             });
 
-            expected.ShouldEqual("bin\\fubu-packages\\AssemblyPackage\\WebContent".ToFullPath());
+            expected.ShouldEqual("fubu-content\\AssemblyPackage\\WebContent".ToFullPath());
         }
     }
 }

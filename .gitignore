@@ -32,3 +32,5 @@ test.db
 *.userprefs
 *.pidb
 test-results
+fubu-content
+spark.zip

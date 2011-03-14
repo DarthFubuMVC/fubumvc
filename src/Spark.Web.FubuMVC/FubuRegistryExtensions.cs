@@ -7,6 +7,7 @@ using FubuMVC.Core.UI;
 using HtmlTags;
 using Spark.Web.FubuMVC.Policies;
 using Spark.Web.FubuMVC.Registration;
+using Spark.Web.FubuMVC.Registration.DSL;
 using Spark.Web.FubuMVC.ViewCreation;
 using Spark.Web.FubuMVC.ViewLocation;
 
@@ -35,10 +36,7 @@ namespace Spark.Web.FubuMVC
 			
             // TODO -- this shouldn't be assuming the location of the package folder.
             // go through the front end and get this out of the package
-			PackageRegistry
-				.Packages
-				.Each(package => expression.Settings.AddViewFolder("~/bin/{0}/{1}/{2}/views/".ToFormat(FubuMvcPackages.FubuPackagesFolder, 
-					package.Name, FubuMvcPackages.WebContentFolder)));
+			PackageRegistry.Packages.Each(package => registerViewFolder(expression, package));
 
 			configure(expression);
 
@@ -61,5 +59,12 @@ namespace Spark.Web.FubuMVC
 
 			return registry;
 		}
+
+	    private static ConfigureSparkSettingsExpression registerViewFolder(ConfigureSparkExpression expression, IPackageInfo package)
+	    {
+	        var virtualFolderRoot = "~/{0}/{1}/{2}/views/".ToFormat(FubuMvcPackages.FubuContentFolder, 
+	                                                                    package.Name, FubuMvcPackages.WebContentFolder);
+	        return expression.Settings.AddViewFolder(virtualFolderRoot);
+	    }
 	}
 }
