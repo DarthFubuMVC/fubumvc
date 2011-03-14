@@ -1,36 +1,41 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuCore.Testing
 {
     [TestFixture]
     public class FileSystemTester
-    {
+    {      
+        private string fullPath(params string[] paths)
+        {
+            return Path.GetFullPath(paths.Join(Path.DirectorySeparatorChar.ToString()));
+        }
+
         [Test]
         public void get_relative_path()
         {
-			"/a/b/1.bat".PathRelativeTo("/a/b").ShouldEqual("1.bat");
-            @"c:\a\b\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("1.bat");
-			
-			"/a/b/c/1.bat".PathRelativeTo("/a/b").ShouldEqual("c{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-            @"c:\a\b\c\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("c{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-            
-			"/a/b/c/d/1.bat".PathRelativeTo("/a/b").ShouldEqual("c{0}d{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-			@"c:\a\b\c\d\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("c{0}d{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-            
-			"/a/1.bat".PathRelativeTo("/a/b").ShouldEqual("..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-			@"c:\a\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-            
-			"/a/1.bat".PathRelativeTo("/a/b/c").ShouldEqual("..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-			@"c:\a\1.bat".PathRelativeTo(@"c:\a\b\c").ShouldEqual("..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-            
-			"/a/1.bat".PathRelativeTo("/a/b/c/d").ShouldEqual("..{0}..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-			@"c:\a\1.bat".PathRelativeTo(@"c:\a\b\c\d").ShouldEqual("..{0}..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
-            
-			"/A/b/1.bat".PathRelativeTo("/a/b").ShouldEqual("1.bat");
-			@"c:\A\b\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("1.bat");
+            fullPath("a", "b", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("1.bat");
+
+            fullPath("a", "b", "c", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("c{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "b", "c", "d", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("c{0}d{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "1.bat").PathRelativeTo(fullPath("a", "b", "c"))
+                .ShouldEqual("..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "1.bat").PathRelativeTo(fullPath("a", "b", "c", "d"))
+                .ShouldEqual("..{0}..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("A", "b", "1.bat").PathRelativeTo(fullPath("A", "b"))
+                .ShouldEqual("1.bat");
         }
 
         [Test]
