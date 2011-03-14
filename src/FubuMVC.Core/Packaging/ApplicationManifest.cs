@@ -22,7 +22,7 @@ namespace FubuMVC.Core.Packaging
 			set
 			{
 				_folders.Clear();
-				if (value != null) _folders.AddRange(value.Select(x => x.ToLower()));
+				if (value != null) _folders.AddRange(value);
 			}
 		}
 
@@ -43,29 +43,29 @@ namespace FubuMVC.Core.Packaging
 
 		public bool AddLink(string folder)
 		{
-			if (_folders.Contains(folder.ToLower()))
+			if (_folders.Contains(folder))
 			{
 				return false;
 			}
 
-			_folders.Add(folder.ToLower());
+			_folders.Add(folder);
 			return true;
 		}
 
 		public bool AddAssembly(string assemblyName)
 		{
-			if(_assemblies.Contains(assemblyName.ToLower()))
+			if(_assemblies.Contains(assemblyName))
 			{
 				return false;
 			}
 
-			_assemblies.Add(assemblyName.ToLower());
+			_assemblies.Add(assemblyName);
 			return true;
 		}
 
 		public void RemoveLink(string folder)
 		{
-			_folders.Remove(folder.ToLower());
+			_folders.Remove(folder);
 		}
 
 		public void RemoveAllLinkedFolders()
