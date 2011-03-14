@@ -11,17 +11,20 @@ namespace FubuMVC.Tests.Packaging
     public class PackageInfoTester
     {
         private PackageInfo thePackage;
+		private string theDataFolder;
 
         [SetUp]
         public void SetUp()
         {
-            if (Directory.Exists("data"))
+			theDataFolder = "data";
+			
+            if (Directory.Exists(theDataFolder))
             {
-                Directory.Delete("data", true);
+                Directory.Delete(theDataFolder, true);
             }
 
             thePackage = new PackageInfo("something");
-            thePackage.RegisterFolder(FubuMvcPackages.DataFolder, Path.GetFullPath("data"));
+            thePackage.RegisterFolder(FubuMvcPackages.DataFolder, Path.GetFullPath(theDataFolder));
         }
 
 
@@ -60,11 +63,11 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void get_the_file_names()
         {
-            writeText(FileSystem.Combine("data", "st", "a.txt"), "a");
-            writeText(FileSystem.Combine("data", "st", "b.txt"), "b");
-            writeText(FileSystem.Combine("data", "c.txt"), "c");
-            writeText(FileSystem.Combine("data", "st", "d.t2"), "d");
-            writeText(FileSystem.Combine("data", "e.t2"), "e");
+            writeText(FileSystem.Combine(theDataFolder, "st", "a.txt"), "a");
+            writeText(FileSystem.Combine(theDataFolder, "st", "b.txt"), "b");
+            writeText(FileSystem.Combine(theDataFolder, "c.txt"), "c");
+            writeText(FileSystem.Combine(theDataFolder, "st", "d.t2"), "d");
+            writeText(FileSystem.Combine(theDataFolder, "e.t2"), "e");
 
             var list = new List<string>();
             thePackage.ForData("*.*", (name, stream) => list.Add(name));
@@ -76,11 +79,11 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void read_data_with_just_the_extension()
         {
-            writeText(FileSystem.Combine("data", "a.txt"), "a");
-            writeText(FileSystem.Combine("data", "b.txt"), "b");
-            writeText(FileSystem.Combine("data", "c.txt"), "c");
-            writeText(FileSystem.Combine("data", "d.t2"), "d");
-            writeText(FileSystem.Combine("data", "e.t2"), "e");
+            writeText(FileSystem.Combine(theDataFolder, "a.txt"), "a");
+            writeText(FileSystem.Combine(theDataFolder, "b.txt"), "b");
+            writeText(FileSystem.Combine(theDataFolder, "c.txt"), "c");
+            writeText(FileSystem.Combine(theDataFolder, "d.t2"), "d");
+            writeText(FileSystem.Combine(theDataFolder, "e.t2"), "e");
 
             readFiles("*.txt").ShouldHaveTheSameElementsAs("a", "b", "c");
             readFiles("*.t2").ShouldHaveTheSameElementsAs("d", "e");
@@ -89,11 +92,11 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void read_data_from_a_folder_and_extension()
         {
-            writeText(FileSystem.Combine("data", "st", "a.txt"), "a");
-            writeText(FileSystem.Combine("data", "st", "b.txt"), "b");
-            writeText(FileSystem.Combine("data", "c.txt"), "c");
-            writeText(FileSystem.Combine("data", "st", "d.t2"), "d");
-            writeText(FileSystem.Combine("data", "e.t2"), "e");
+            writeText(FileSystem.Combine(theDataFolder, "st", "a.txt"), "a");
+            writeText(FileSystem.Combine(theDataFolder, "st", "b.txt"), "b");
+            writeText(FileSystem.Combine(theDataFolder, "c.txt"), "c");
+            writeText(FileSystem.Combine(theDataFolder, "st", "d.t2"), "d");
+            writeText(FileSystem.Combine(theDataFolder, "e.t2"), "e");
 
             readFiles("*.txt").ShouldHaveTheSameElementsAs("a", "b", "c");
             readFiles("*.t2").ShouldHaveTheSameElementsAs("d", "e");
