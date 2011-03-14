@@ -27,6 +27,10 @@ namespace FubuMVC.Tests.Packaging
             thePackage.RegisterFolder(FubuMvcPackages.DataFolder, Path.GetFullPath(theDataFolder));
         }
 
+        private string join(params string[] paths)
+        {
+            return paths.Join(Path.DirectorySeparatorChar.ToString());
+        }
 
         private void writeText(string name, string text)
         {
@@ -57,7 +61,7 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void happily_do_nothing_if_caller_requests_a_folder_That_does_not_exist()
         {
-            thePackage.ForData("nonexistent/*.xml", (x, y) => Assert.Fail("Not supposed to call this"));
+            thePackage.ForData(join("nonexistent", "*.xml"), (x, y) => Assert.Fail("Not supposed to call this"));
         }
 
         [Test]
@@ -73,7 +77,7 @@ namespace FubuMVC.Tests.Packaging
             thePackage.ForData("*.*", (name, stream) => list.Add(name));
 
             list.Sort();
-            list.ShouldHaveTheSameElementsAs("c.txt", "e.t2", "st/a.txt", "st/b.txt", "st/d.t2");
+            list.ShouldHaveTheSameElementsAs("c.txt", "e.t2", join("st", "a.txt"), join("st",  "b.txt"), join("st", "d.t2"));
         }
 
         [Test]
@@ -101,8 +105,8 @@ namespace FubuMVC.Tests.Packaging
             readFiles("*.txt").ShouldHaveTheSameElementsAs("a", "b", "c");
             readFiles("*.t2").ShouldHaveTheSameElementsAs("d", "e");
 
-            readFiles("st/*.txt").ShouldHaveTheSameElementsAs("a", "b");
-            readFiles("st/*.t2").ShouldHaveTheSameElementsAs("d");
+            readFiles(join("st", "*.txt")).ShouldHaveTheSameElementsAs("a", "b");
+            readFiles(join("st", "*.t2")).ShouldHaveTheSameElementsAs("d");
         }
     }
 }
