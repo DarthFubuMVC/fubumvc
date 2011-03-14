@@ -48,17 +48,13 @@ namespace FubuMVC.Core.Packaging
 
         public void ExplodeAssembly(string applicationDirectory, Assembly assembly, IPackageFiles files)
         {
-            var directory = FileSystem.Combine(
-                applicationDirectory, 
-                "bin", 
-                FubuMvcPackages.FubuPackagesFolder, assembly.GetName().Name);
+            var directory = GetDirectoryForExplodedPackage(applicationDirectory, assembly.GetName().Name);
 
             var request = new ExplodeRequest{
                 Directory = directory,
-                GetVersion = () =>
-                {
-                    return assembly.GetName().Version.ToString();
-                },
+                
+                GetVersion = () => assembly.GetName().Version.ToString(),
+                
                 LogSameVersion = () => Console.WriteLine("Assembly {0} has already been 'exploded' onto disk".ToFormat(assembly.GetName().FullName)),
 
                 ExplodeAction = () => explodeAssembly(assembly, directory, files)
@@ -95,10 +91,21 @@ namespace FubuMVC.Core.Packaging
 
         
 
-        private string directoryForZipFile(string applicationDirectory, string file)
+        private static string directoryForZipFile(string applicationDirectory, string file)
+        {
+            var packageName = Path.GetFileNameWithoutExtension(file);
+            return GetDirectoryForExplodedPackage(applicationDirectory, packageName);
+        }
+
+        public static string GetDirectoryForExplodedPackage(string applicationDirectory, string packageName)
         {
             return FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                      Path.GetFileNameWithoutExtension(file));
+                                      packageName);
+        }
+
+        public static string GetPackageDirectory(string applicationDirectory)
+        {
+            return FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder);
         }
 
         public class ExplodeRequest
@@ -136,12 +143,17 @@ namespace FubuMVC.Core.Packaging
                           {
                               Include = "*.zip"
                           };
-            return _fileSystem.FileNamesFor(fileSet, applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder);
+
+            var packageFolder = GetPackageDirectory(applicationDirectory);
+
+            return _fileSystem.FileNamesFor(fileSet, packageFolder);
         }
 
+        // TODO -- whay is this here?  What's the different with explodeZipAndReturnDirectory
         public void Explode(string applicationDirectory, string zipFile)
         {
-            var directoryName = FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder, Path.GetFileNameWithoutExtension(zipFile));
+            var directoryName = directoryForZipFile(applicationDirectory, zipFile);
+            
             _fileSystem.DeleteDirectory(directoryName);
 
             _logger.WritePackageZipFileExploded(zipFile, directoryName);
@@ -150,8 +162,8 @@ namespace FubuMVC.Core.Packaging
 
         public void CleanAll(string applicationDirectory)
         {
-            
-            _fileSystem.ChildDirectoriesFor(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder).Each(x =>
+            var directory = GetPackageDirectory(applicationDirectory);
+            _fileSystem.ChildDirectoriesFor(directory).Each(x =>
             {
                 _logger.WritePackageDirectoryDeleted(x);
                 _fileSystem.DeleteDirectory(x);
@@ -177,7 +189,8 @@ namespace FubuMVC.Core.Packaging
 
         public void LogPackageState(string applicationDirectory)
         {
-            var existingDirectories = _fileSystem.ChildDirectoriesFor(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder);
+            var directory = GetPackageDirectory(applicationDirectory);
+            var existingDirectories = _fileSystem.ChildDirectoriesFor(directory);
             var packageFileNames = findPackageFileNames(applicationDirectory);
             _logger.WritePackageZipsFound(applicationDirectory, packageFileNames);
             _logger.WriteExistingDirectories(applicationDirectory, existingDirectories);

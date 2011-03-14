@@ -8,6 +8,6 @@
       </PackagingSetup>
     </SetUp>
     <Comment><![CDATA[The script file /fubu-testing/_scripts/Pak1-A.js contains the text var name = 'Pak1-A.js';]]></Comment>
-    <RequestContainsString isStep="True" url="http://localhost/fubu-testing/_scripts/Pak1-A.js" content="var name = 'Pak1-A.js';" />
+    <RequestContainsString isStep="True" url="http://localhost/fubu-testing/_content/scripts/Pak1-A.js" content="var name = 'Pak1-A.js';" />
   </ScriptLoading>
 </Test>
