@@ -69,7 +69,7 @@
             colNames: definition.headers,
             colModel: definition.colModel,
             /*onCellSelect: onCellSelect,*/
-            rowNum: 10,
+            rowNum: model.initialRows || 10,
             rowList: [3, 10, 20, 30],
             loadui: "disable",
             sortorder: "asc",
