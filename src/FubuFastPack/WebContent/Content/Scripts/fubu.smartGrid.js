@@ -66,7 +66,6 @@
             altRows: true,
             autowidth: true,
             gridview: true,
-            readjustHeaderWidths: true,
             colNames: definition.headers,
             colModel: definition.colModel,
             /*onCellSelect: onCellSelect,*/
