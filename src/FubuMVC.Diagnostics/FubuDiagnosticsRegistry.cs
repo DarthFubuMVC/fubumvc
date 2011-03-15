@@ -2,7 +2,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Diagnostics.Configuration;
 using FubuMVC.Diagnostics.Configuration.Partials;
-using FubuMVC.Diagnostics.Configuration.Spark;
+using FubuMVC.Diagnostics.Configuration.SparkPolicies;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;

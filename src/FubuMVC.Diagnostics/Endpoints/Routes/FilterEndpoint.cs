@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Models;
@@ -19,33 +19,17 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
 
         public JsonGridModel Get(RouteQuery query)
         {
-            var data = _dataBuilder.BuildRoutes(_graph).AsQueryable();
+            var data = _dataBuilder.BuildRoutes(_graph);
             var totalRecords = data.Count();
             var totalPages = 0;
+            var nrRows = query.rows == 0 ? 20 : query.rows;
+
             if(totalRecords != 0)
             {
-                totalPages = totalRecords / query.rows;
+                totalPages = (int)Math.Ceiling((double)totalRecords / nrRows);
             }
 
-            var page = query.page;
-            if(page >= 1)
-            {
-                page = page - 1;
-            }
-
-            IEnumerable<RouteDataModel> orderedRows;
-            if(query.sord == "asc")
-            {
-                orderedRows = data.OrderBy(query.sidx);
-            }
-            else
-            {
-                orderedRows = data.OrderByDescending(query.sidx);
-            }
-                
-            var rows = orderedRows
-                        .Skip(page*query.rows)
-                        .Take(query.rows)
+            var rows = data
                         .Select(d => new JsonGridRow
                                          {
                                              id = d.Id,

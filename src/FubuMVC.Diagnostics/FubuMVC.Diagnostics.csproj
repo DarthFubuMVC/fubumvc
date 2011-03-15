@@ -110,8 +110,9 @@
     <Content Include="Content\Styles\snapdragon\common.css" />
     <Content Include="Content\Styles\snapdragon\forms.css" />
     <Content Include="Views\Bindings.xml" />
-    <None Include="Views\Shared\Empty.spark" />
-    <None Include="Views\Shared\NavigationMenu.spark" />
+    <None Include="Views\Shared\NavigationMenu.spark">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Views\Shared\_global.spark" />
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +121,7 @@
     <Compile Include="Configuration\Partials\IPartialModel.cs" />
     <Compile Include="Configuration\Partials\NavigationMenuDecorator.cs" />
     <Compile Include="Configuration\Partials\PartialAction.cs" />
-    <Compile Include="Configuration\Spark\PartialActionSparkPolicy.cs" />
+    <Compile Include="Configuration\SparkPolicies\PartialActionSparkPolicy.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="Endpoints\Routes\FilterEndpoint.cs" />
     <Compile Include="Extensions\TagExtensions.cs" />
@@ -129,12 +130,13 @@
     <Compile Include="Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicy.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrls.cs" />
-    <Compile Include="Configuration\Spark\DiagnosticsEndpointSparkPolicy.cs" />
+    <Compile Include="Configuration\SparkPolicies\DiagnosticsEndpointSparkPolicy.cs" />
     <Compile Include="Endpoints\DiagnosticsEndpointMarker.cs" />
     <Compile Include="Endpoints\DashboardEndpoint.cs" />
     <Compile Include="Endpoints\RoutesEndpoint.cs" />
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
     <Compile Include="Models\DashboardRequestModel.cs" />
+    <Compile Include="Models\IRouteDataBuilder.cs" />
     <Compile Include="Navigation\DashboardAction.cs" />
     <Compile Include="Navigation\INavigationItemAction.cs" />
     <Compile Include="Models\DashboardModel.cs" />

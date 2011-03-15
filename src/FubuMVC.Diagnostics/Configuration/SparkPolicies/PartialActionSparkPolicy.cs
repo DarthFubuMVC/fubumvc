@@ -4,7 +4,7 @@ using FubuMVC.Diagnostics.Configuration.Partials;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.Registration;
 
-namespace FubuMVC.Diagnostics.Configuration.Spark
+namespace FubuMVC.Diagnostics.Configuration.SparkPolicies
 {
     public class PartialActionSparkPolicy : ISparkPolicy
     {

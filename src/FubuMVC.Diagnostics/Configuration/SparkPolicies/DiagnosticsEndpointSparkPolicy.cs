@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Configuration.Policies;
@@ -7,7 +8,7 @@ using FubuMVC.Diagnostics.Endpoints;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.Registration;
 
-namespace FubuMVC.Diagnostics.Configuration.Spark
+namespace FubuMVC.Diagnostics.Configuration.SparkPolicies
 {
     public class DiagnosticsEndpointSparkPolicy : ISparkPolicy
     {
@@ -43,7 +44,7 @@ namespace FubuMVC.Diagnostics.Configuration.Spark
                 var hasNext = strippedName.Contains(".");
                 if (hasNext)
                 {
-                    viewLocator.Append("\\");
+                    viewLocator.Append(Path.DirectorySeparatorChar);
                 }
             }
 

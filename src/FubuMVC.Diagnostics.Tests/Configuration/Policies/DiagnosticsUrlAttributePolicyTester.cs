@@ -22,7 +22,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [Test]
         public void should_match_calls_with_diagnostics_url_attribute()
         {
-            var callWithAttribute = ActionCall.For<ClassWithAttribute>(c => c.Execute());
+            var callWithAttribute = ActionCall.For<DiagnosticsCallWithAttribute>(c => c.Execute());
             _policy
                 .Matches(callWithAttribute, _observer)
                 .ShouldBeTrue();
@@ -40,7 +40,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [Test]
         public void should_make_url_relative()
         {
-            var call = ActionCall.For<ClassWithAttribute>(c => c.Execute());
+            var call = ActionCall.For<DiagnosticsCallWithAttribute>(c => c.Execute());
             _policy
                 .Build(call)
                 .Pattern
@@ -53,14 +53,6 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
             public void Execute()
             {
             }
-        }
-
-        public class ClassWithAttribute
-        {
-            [FubuDiagnosticsUrl("~/my-extension")]
-            public void Execute()
-            {
-            }
-        }
+        }   
     }
 }

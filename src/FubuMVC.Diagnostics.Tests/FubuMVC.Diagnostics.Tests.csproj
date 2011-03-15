@@ -52,12 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\FubuExtensionsTester.cs" />
+    <Compile Include="DiagnosticsCallWithAttribute.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
     <Compile Include="Configuration\Spark\DiagnosticsEndpointSparkPolicyTester.cs" />
+    <Compile Include="Endpoints\DiagnosticsTestEndpointMarker.cs" />
+    <Compile Include="Endpoints\Nested\AnotherEndpoint.cs" />
+    <Compile Include="Endpoints\TestEndpoint.cs" />
+    <Compile Include="Endpoints\when_filtering_routes.cs" />
+    <Compile Include="ObjectMother.cs" />
     <Compile Include="Partials\when_executing_a_partial_action.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteDataBuilderTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -81,6 +89,7 @@
       <Name>Spark.Web.FubuMVC</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
