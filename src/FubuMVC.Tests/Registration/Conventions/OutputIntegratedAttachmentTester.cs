@@ -80,11 +80,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void methods_that_take_in_a_json_message_class_should_have_the_json_deserialization_behavior_in_front_of_the_action_call()
         {
-            chainFor(x => x.JsonInput1(null)).FirstCall().Previous.ShouldEqual(new DeserializeJsonNode(typeof (Json1)));
-            chainFor(x => x.JsonInput2(null)).FirstCall().Previous.ShouldEqual(new DeserializeJsonNode(typeof(Json2)));
-            chainFor(x => x.JsonInput3(null)).FirstCall().Previous.ShouldEqual(new DeserializeJsonNode(typeof(Json3)));
-        
-            
+            new DeserializeJsonNode(typeof(Json1)).Equals(chainFor(x => x.JsonInput1(null)).FirstCall().Previous).ShouldBeTrue();
+            new DeserializeJsonNode(typeof(Json2)).Equals(chainFor(x => x.JsonInput2(null)).FirstCall().Previous).ShouldBeTrue();
+            new DeserializeJsonNode(typeof(Json3)).Equals(chainFor(x => x.JsonInput3(null)).FirstCall().Previous).ShouldBeTrue();                 
         }
 
         [Test]

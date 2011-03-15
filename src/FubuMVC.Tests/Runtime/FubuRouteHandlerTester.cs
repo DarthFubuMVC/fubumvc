@@ -7,6 +7,7 @@ using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
+using Is = Rhino.Mocks.Constraints.Is;
 
 namespace FubuMVC.Tests.Runtime
 {

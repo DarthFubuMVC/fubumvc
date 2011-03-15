@@ -11,8 +11,7 @@ using NUnit.Framework.Constraints;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Interfaces;
-using Is = NUnit.Framework.SyntaxHelpers.Is;
-using Text = NUnit.Framework.SyntaxHelpers.Text;
+using Is = NUnit.Framework.Is;
 
 namespace FubuMVC.Validation.Tests
 {
@@ -76,7 +75,7 @@ namespace FubuMVC.Validation.Tests
 
         public static void ShouldMatch(this string actual, string pattern)
         {
-            Assert.That(actual, Text.Matches(pattern));
+            Assert.That(actual, Is.StringMatching(pattern));
         }
 
         public static XmlElement AttributeShouldEqual(this XmlElement element, string attributeName, object expected)
@@ -165,13 +164,13 @@ namespace FubuMVC.Validation.Tests
 
         public static object ShouldBeOfType(this object actual, Type expected)
         {
-            Assert.IsInstanceOfType(expected, actual);
+            Assert.IsInstanceOf(expected, actual);
             return actual;
         }
 
         public static void ShouldNotBeOfType(this object actual, Type expected)
         {
-            Assert.IsNotInstanceOfType(expected, actual);
+            Assert.IsNotInstanceOf(expected, actual);
         }
 
         public static void ShouldContain(this IList actual, object expected)

@@ -9,7 +9,7 @@ using FubuMVC.Core.View.WebForms;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
+using Is = Rhino.Mocks.Constraints.Is;
 
 namespace FubuMVC.Tests.View.WebForms
 {
