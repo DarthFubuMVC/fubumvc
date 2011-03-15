@@ -121,6 +121,10 @@
             div.refresh();
         }
 
+        div.setArgument = function(key, value){
+            div.grid.setPostDataItem(key, value);
+        }
+
         div.activateUrl = function (url) {
             div.grid.setGridParam({ url: url });
             div.isGridDisabled = false;

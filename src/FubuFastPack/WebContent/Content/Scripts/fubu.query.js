@@ -7,8 +7,15 @@
         div.grid = $('#' + $(div).metadata().filters.gridId).get(0);
 
         var queryRunner = function () {
+            var notification = div.validate();
+            if (notification.errors.length > 0){
+                $(div).trigger('invalid-filters', notification);
+                return;
+            }
+
             var criterion = div.getCriteria();
 
+            $(div).trigger('valid-filters');
             div.grid.runQuery(criterion);
 
             return false;
@@ -16,6 +23,19 @@
 
         div.getCriteria = function () {
             return $('tr', div.tbody).map(function () { return this.getCriteria(); });
+        }
+
+        div.validate = function() {
+            var messages = [];
+			
+			$('tr', div.tbody).each(function(i, row){
+				var message = row.validate();
+				if (message == null || message.messages.length == 0) return;
+				
+				messages.push(message);
+			});
+			
+            return {errors: messages};
         }
 
         div.hasCriteria = function () {
@@ -104,10 +124,28 @@ $(document).ready(function () {
     $('.smart-grid-filter').asQueryBuilder({});
 });
 
+
+if( ! $.jgrid ){ 
+	$.jgrid = {
+		defaults: {
+			missingvalue: 'Missing value'
+		} 
+	}
+}
+
+
 $.fn.asQueryBuilder.editors = {
     textbox: function (textbox) {
         textbox.setValue = function (value) { $(textbox).val(value); }
-        textbox.getValue = function (value) { return $(textbox).val(); }
+        textbox.getValue = function () { return $(textbox).val(); }
+        textbox.validate = function() {
+            var value = textbox.getValue();
+            if ($.trim(value).length == 0){
+                return [$.jgrid.defaults.missingvalue];
+            }
+
+            return [];
+        }
     }
 }
 
@@ -171,6 +209,15 @@ $.fn.asFilterRow = function (templates, options, div) {
 
         row.editor = template.get(0);
         $.fn.asQueryBuilder.editors[editorName](row.editor);
+    }
+
+    row.validate = function(){
+		if ($.isFunction(row.editor.validate) == false) return false;
+	
+        return {
+            header: $('option:selected', row.propertySelector).text(),
+            messages: row.editor.validate(),
+        };
     }
 
     row.getCriteria = function () {
