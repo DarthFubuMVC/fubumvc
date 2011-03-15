@@ -306,6 +306,8 @@ namespace FubuMVC.Tests.Commands.Packages
             MockFor<IFileSystem>().Stub(x => x.ChildDirectoriesFor(FubuMvcPackages.GetExplodedPackagesDirectory(theApplicationDirectory)))
                 .Return(directories);
 
+            MockFor<IFileSystem>().Stub(x => x.ChildDirectoriesFor(FubuMvcPackages.GetApplicationPackagesDirectory(theApplicationDirectory)))
+                .Return(new string[0]);
         }
 
         protected void assertPackageFolderWasDeleted(string packageName)

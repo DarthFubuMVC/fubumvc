@@ -136,7 +136,9 @@
     <Content Include="content\scripts\sub\Script1.js" />
     <Content Include="content\scripts\ui.multiselect.js" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseDriver.cs" />
