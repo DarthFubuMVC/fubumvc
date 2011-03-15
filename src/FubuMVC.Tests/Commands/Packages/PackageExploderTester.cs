@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Commands.Packages
                 expected = folder;
             });
 
-            expected.ShouldEqual("app1\\bin\\fubu-packages\\AssemblyPackage\\WebContent".ToFullPath());
+            expected.ShouldEqual("app1\\fubu-content\\AssemblyPackage\\WebContent".ToFullPath());
         }
     }
 
@@ -61,26 +61,26 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void is_package_zip_positive()
         {
-            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.zip").ShouldBeTrue();
+            FubuMvcPackages.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.zip").ShouldBeTrue();
         }
 
         [Test]
         public void is_package_zip_negative_1()
         {
-            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.txt").ShouldBeFalse();
+            FubuMvcPackages.IsEmbeddedPackageZipFile("a.b.c.pak-webcontent.txt").ShouldBeFalse();
         }
 
         [Test]
         public void is_package_zip_negative_2()
         {
-            PackageExploder.IsEmbeddedPackageZipFile("a.b.c.webcontent.zip").ShouldBeFalse();
+            FubuMvcPackages.IsEmbeddedPackageZipFile("a.b.c.webcontent.zip").ShouldBeFalse();
         }
 
         [Test]
         public void get_package_folder_name()
         {
-            PackageExploder.EmbeddedPackageFolderName("a.b.c.pak-webcontent.zip").ShouldEndWith("webcontent");
-            PackageExploder.EmbeddedPackageFolderName("a.b.c.pak-data.zip").ShouldEndWith("data");
+            FubuMvcPackages.EmbeddedPackageFolderName("a.b.c.pak-webcontent.zip").ShouldEndWith("webcontent");
+            FubuMvcPackages.EmbeddedPackageFolderName("a.b.c.pak-data.zip").ShouldEndWith("data");
         }
     }
 
@@ -111,8 +111,7 @@ namespace FubuMVC.Tests.Commands.Packages
             var guid = Guid.NewGuid();
             theExistingVersionIs("pak1", guid);
 
-            string directory = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                      "pak1");
+            string directory = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, "pak1");
 
             ClassUnderTest.ReadVersion(directory).ShouldEqual(guid);
         }
@@ -255,8 +254,7 @@ namespace FubuMVC.Tests.Commands.Packages
             var fileName = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
                                               packageName + ".zip");
 
-            var directoryName = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                              packageName);
+            var directoryName = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
             MockFor<IZipFileService>().AssertWasCalled(x => x.ExtractTo(fileName, directoryName));
             
@@ -267,8 +265,7 @@ namespace FubuMVC.Tests.Commands.Packages
             var fileName = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
                                               packageName + ".zip");
 
-            var directoryName = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                              packageName);
+            var directoryName = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
             MockFor<IZipFileService>().AssertWasNotCalled(x => x.ExtractTo(fileName, directoryName));
 
@@ -281,9 +278,11 @@ namespace FubuMVC.Tests.Commands.Packages
                     x =>
                     FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder, x + ".zip"));
 
+            var directory = FubuMvcPackages.GetApplicationPackagesDirectory(theApplicationDirectory);
+
             MockFor<IFileSystem>().Stub(x => x.FileNamesFor(new FileSet(){
                 Include = "*.zip"
-            }, theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder)).Return(zipFiles);
+            }, directory)).Return(zipFiles);
         }
 
         protected void theZipVersionIs(string packageName, Guid version)
@@ -296,7 +295,7 @@ namespace FubuMVC.Tests.Commands.Packages
         {
             var directories = packageNames.Select(x =>
             {
-                return FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder, x);
+                return FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, x);
             });
 
             directories.Each(dir =>
@@ -304,15 +303,14 @@ namespace FubuMVC.Tests.Commands.Packages
                 MockFor<IFileSystem>().Stub(x => x.DirectoryExists(dir)).Return(true);
             });
 
-            MockFor<IFileSystem>().Stub(x => x.ChildDirectoriesFor(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder))
+            MockFor<IFileSystem>().Stub(x => x.ChildDirectoriesFor(FubuMvcPackages.GetExplodedPackagesDirectory(theApplicationDirectory)))
                 .Return(directories);
 
         }
 
         protected void assertPackageFolderWasDeleted(string packageName)
         {
-            var packageDirectory = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                                      packageName);
+            var packageDirectory = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
             MockFor<IFileSystem>().AssertWasCalled(x => x.DeleteDirectory(packageDirectory));
         }
 
@@ -326,8 +324,7 @@ namespace FubuMVC.Tests.Commands.Packages
         protected void theExistingVersionIs(string packageName, Guid guid)
         {
 
-            string directory = FileSystem.Combine(theApplicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder,
-                                                  packageName);
+            string directory = FubuMvcPackages.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
             MockFor<IFileSystem>().Stub(x => x.FileExists(directory, FubuMvcPackages.VersionFile)).Return(true);
             MockFor<IFileSystem>().Stub(x => x.ReadStringFromFile(directory, FubuMvcPackages.VersionFile)).Return(guid.ToString());

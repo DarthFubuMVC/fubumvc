@@ -319,7 +319,7 @@ namespace FubuFastPack.JqGrid
                 var parameter = parameters[i];
                 var arg = arguments[i];
 
-                RegisterArgument(parameter.Name, arg);
+                if (arg != null) RegisterArgument(parameter.Name, arg);
             }
         }
 
