@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Web;
 using FubuMVC.Core.Behaviors;
 
@@ -32,7 +33,7 @@ namespace FubuMVC.Core.Diagnostics
                 {
                     Url = context.Request.Url.PathAndQuery;
                     NameValueCollection formData = context.Request.Form;
-                    formData.AllKeys.Each(key =>
+                    formData.AllKeys.Where(x => x != null).Each(key =>
                     {
                         FormData.Add(key, formData[key]);
                     });
