@@ -1,11 +1,13 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Diagnostics.Behaviors;
 using FubuMVC.Diagnostics.Configuration;
 using FubuMVC.Diagnostics.Configuration.Partials;
 using FubuMVC.Diagnostics.Configuration.SparkPolicies;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
+using FubuMVC.Diagnostics.Models.Routes;
 using FubuMVC.Diagnostics.Navigation;
 using Spark.Web.FubuMVC;
 
@@ -31,6 +33,10 @@ namespace FubuMVC.Diagnostics
                              x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(DashboardAction) });
                              x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteExplorerAction) });
                          });
+
+        	Policies
+        		.ConditionallyWrapBehaviorChainsWith<UnknownChainBehavior>(
+        			call => call.InputType() == typeof (UnknownChainRequest));
 
             Actions
                 .FindWith<PartialActionSource>();

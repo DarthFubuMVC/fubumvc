@@ -1,4 +1,4 @@
-namespace FubuMVC.Diagnostics.Models
+﻿namespace FubuMVC.Diagnostics.Models.Routes
 {
     public class RouteRequestModel
     {

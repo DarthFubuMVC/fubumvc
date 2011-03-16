@@ -3,6 +3,7 @@ using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
+using FubuMVC.Diagnostics.Models.Routes;
 
 namespace FubuMVC.Diagnostics.Endpoints.Routes
 {

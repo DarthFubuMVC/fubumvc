@@ -1,4 +1,5 @@
 using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Models.Routes;
 
 namespace FubuMVC.Diagnostics.Endpoints
 {

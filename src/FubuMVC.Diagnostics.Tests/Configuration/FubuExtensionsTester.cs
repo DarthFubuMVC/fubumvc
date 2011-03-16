@@ -2,6 +2,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Configuration;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Models.Routes;
 using FubuMVC.Tests;
 using NUnit.Framework;
 

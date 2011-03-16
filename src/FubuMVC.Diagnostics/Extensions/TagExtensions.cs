@@ -2,6 +2,7 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Content;
 using FubuMVC.Core.View;
 using HtmlTags;
 
@@ -14,7 +15,8 @@ namespace FubuMVC.Diagnostics.Extensions
 
         public static HtmlTag ImageFor(this IFubuPage page, string path)
         {
-            return new HtmlTag("img").Attr("src", "~/Content/Images/{0}".ToFormat(path).ToAbsoluteUrl());
+			var url = page.Get<IContentRegistry>().ImageUrl(path);
+            return new HtmlTag("img").Attr("src", url);
         }
 
         public static HtmlTag FubuVersion(this IFubuPage page)

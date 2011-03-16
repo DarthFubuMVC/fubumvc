@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 
-namespace FubuMVC.Diagnostics.Models
+namespace FubuMVC.Diagnostics.Models.Routes
 {
     public class RouteDataBuilder : IRouteDataBuilder
     {

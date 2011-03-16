@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Endpoints.Routes;
 using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Models.Routes;
 using FubuMVC.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;

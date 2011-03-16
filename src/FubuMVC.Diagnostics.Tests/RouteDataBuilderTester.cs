@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Models.Routes;
 using FubuMVC.Tests;
 using NUnit.Framework;
 

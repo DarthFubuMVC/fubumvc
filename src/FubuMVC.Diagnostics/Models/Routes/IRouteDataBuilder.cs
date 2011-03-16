@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core.Registration;
 
-namespace FubuMVC.Diagnostics.Models
+namespace FubuMVC.Diagnostics.Models.Routes
 {
     public interface IRouteDataBuilder
     {

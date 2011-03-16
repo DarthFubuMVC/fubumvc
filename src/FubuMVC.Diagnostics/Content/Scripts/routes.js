@@ -12,12 +12,11 @@
             {name:'InputModel', index: 'InputModel', width:200},
             {name:'OutputModel', index: 'OutputModel', width:200}
         ],
+        rowNum: -1,
         height: '100%',
-        rowNum: 15,
         loadonce: true,
         sortorder: 'desc',
         sortname: 'Route',
-        pager: '#col-chooser',
         caption: 'Routes'
     });
 });

@@ -50,6 +50,7 @@ h1, h2, h3, h4
 #Content
 {
 	padding-top:20px;
+	padding-bottom:20px;
 	background: #fff url("../Images/block.png") repeat-x scroll 0 0;
 	min-height:500px;
 }
