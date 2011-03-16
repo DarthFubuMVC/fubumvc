@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Web;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
@@ -160,7 +161,12 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
-            public void WriteResponseCode(HttpStatusCode status)
+        	public void AppendCookie(HttpCookie cookie)
+        	{
+        		throw new NotImplementedException();
+        	}
+
+        	public void WriteResponseCode(HttpStatusCode status)
             {
                 throw new NotImplementedException();
             }

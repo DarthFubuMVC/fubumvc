@@ -4,10 +4,12 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
 using HtmlTags;
+using HtmlTags.Extended.Attributes;
 
 namespace FubuMVC.Core.UI
 {
@@ -288,6 +290,20 @@ namespace FubuMVC.Core.UI
         public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
         {
             return viewPage.Get<IContentRegistry>().ImageUrl(imageFilename);
+        }
+
+        public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)
+        {
+            return AntiForgeryToken(page, salt, null, null);
+        }
+
+        public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt, string path, string domain)
+        {
+            var antiForgeryService = page.Get<IAntiForgeryService>();
+            var cookieToken = antiForgeryService.SetCookieToken(path, domain);
+            var formToken = antiForgeryService.GetFormToken(cookieToken, salt);
+
+            return new HiddenTag().Name(formToken.Name).Value(formToken.TokenString);
         }
     }
 }

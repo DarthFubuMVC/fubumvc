@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Urls;
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Controllers.OutputModels;
@@ -25,6 +26,7 @@ namespace FubuMVC.HelloWorld
 
             ApplyConvention<OutputModelSettingBehaviorConfiguration>();
 
+            Policies.Add<AntiForgeryPolicy>();
             Views.TryToAttachWithDefaultConventions();
 
             HtmlConvention<SampleHtmlConventions>();

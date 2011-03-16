@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Web;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
@@ -40,9 +41,14 @@ namespace FubuMVC.Core.Diagnostics
             });
         }
 
+        public void AppendCookie(HttpCookie cookie)
+        {
+
+        }
+
         public void WriteResponseCode(HttpStatusCode status)
         {
-            
+
         }
     }
 }

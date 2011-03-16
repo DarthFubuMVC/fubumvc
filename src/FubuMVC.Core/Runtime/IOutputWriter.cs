@@ -1,4 +1,5 @@
 using System.Net;
+using System.Web;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -7,6 +8,7 @@ namespace FubuMVC.Core.Runtime
         void WriteFile(string contentType, string localFilePath, string displayName);
         void Write(string contentType, string renderedOutput);
         void RedirectToUrl(string url);
+        void AppendCookie(HttpCookie cookie);
 
         void WriteResponseCode(HttpStatusCode status);
     }
