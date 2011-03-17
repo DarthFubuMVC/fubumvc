@@ -1,4 +1,5 @@
-﻿<viewdata model="RoutesModel" />
+﻿<use namespace="FubuMVC.Diagnostics.Models.Routes" />
+<viewdata model="RoutesModel" />
 <content:title>Route Explorer</content:title>
 <content:head>
   <Script src="routes.js" />

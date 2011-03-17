@@ -5,6 +5,7 @@ using FubuMVC.Diagnostics.Configuration;
 using FubuMVC.Diagnostics.Configuration.Partials;
 using FubuMVC.Diagnostics.Configuration.SparkPolicies;
 using FubuMVC.Diagnostics.Endpoints;
+using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Models.Routes;
@@ -26,7 +27,9 @@ namespace FubuMVC.Diagnostics
             Services(x =>
                          {
                              // Typically you'd do this in your container but we're keeping this IoC-agnostic
+                             x.SetServiceIfNone<IHttpRequest, HttpRequest>();
                              x.SetServiceIfNone<IRouteDataBuilder, RouteDataBuilder>();
+                             x.SetServiceIfNone<IHttpConstraintResolver, HttpConstraintResolver>();
                              x.SetServiceIfNone<INavigationMenuBuilder, NavigationMenuBuilder>();
                              x.AddService(typeof(IPartialModel), new ObjectDef { Type = typeof(NavigationMenu) });
                              x.AddService(typeof(IPartialDecorator<NavigationMenu>), new ObjectDef { Type = typeof(NavigationMenuDecorator) });

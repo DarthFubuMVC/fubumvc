@@ -54,8 +54,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Scripts\core.js" />
     <Content Include="Content\Scripts\jquery\jquery-1.4.4.js" />
+    <Content Include="Content\Styles\chains\view.css" />
     <Content Include="diagnostics.script.config" />
+    <None Include="Views\Chains\View.spark" />
     <None Include="Views\Dashboard.spark" />
     <None Include="Views\Routes.spark" />
     <None Include="Views\Shared\Application.spark" />
@@ -141,6 +144,9 @@
     <Compile Include="Endpoints\DashboardEndpoint.cs" />
     <Compile Include="Endpoints\RoutesEndpoint.cs" />
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
+    <Compile Include="Infrastructure\HttpRequest.cs" />
+    <Compile Include="Infrastructure\IHttpRequest.cs" />
+    <Compile Include="Models\BehaviorModel.cs" />
     <Compile Include="Models\ChainModel.cs" />
     <Compile Include="Models\ChainRequest.cs" />
     <Compile Include="Models\DashboardRequestModel.cs" />
@@ -159,6 +165,7 @@
     <Compile Include="Navigation\INavigationMenuBuilder.cs" />
     <Compile Include="Navigation\NavigationItemCaseBase.cs" />
     <Compile Include="Navigation\NavigationMenu.cs" />
+    <Compile Include="Navigation\NavigationMenuBuilder.cs" />
     <Compile Include="Navigation\NavigationMenuItem.cs" />
     <Compile Include="Navigation\RouteExplorerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,7 +12,9 @@
 	<div class="container">
 		<div id="Logo">
 			<h2>
-				<Image src="logo.png" />
+				<a href="${this.Urls.UrlFor(new DashboardRequestModel())}">
+					<Image src="logo.png" />
+				</a>
 			</h2>
 		</div>
 		<Navigation />

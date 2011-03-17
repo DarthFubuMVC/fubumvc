@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Models.Routes;
 
@@ -34,7 +33,7 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
                         .Select(d => new JsonGridRow
                                          {
                                              id = d.Id,
-                                             cell = new[] { d.Route, d.Constraints, d.Action, d.InputModel, d.OutputModel }
+                                             cell = new[] { d.Route, d.Constraints, d.Action, d.InputModel, d.OutputModel, d.ChainUrl }
                                          });
 
             return new JsonGridModel

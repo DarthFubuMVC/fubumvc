@@ -8,5 +8,6 @@
         public string InputModel { get; set; }
         public string OutputModel { get; set; }
         public string Constraints { get; set; }
+        public string ChainUrl { get; set; }
     }
 }

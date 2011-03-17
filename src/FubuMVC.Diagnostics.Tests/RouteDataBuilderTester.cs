@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Urls;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Routes;
 using FubuMVC.Tests;
@@ -21,7 +24,7 @@ namespace FubuMVC.Diagnostics.Tests
         {
             _graph = ObjectMother.DiagnosticsGraph();
             _chain = _graph.BehaviorFor(typeof (DashboardRequestModel));
-            _builder = new RouteDataBuilder();
+            _builder = new RouteDataBuilder(new UrlRegistry(new ChainResolver(new TypeResolver(), _graph), new NulloUrlTemplate()), new HttpConstraintResolver());
             _models = _builder.BuildRoutes(_graph);
         }
 
