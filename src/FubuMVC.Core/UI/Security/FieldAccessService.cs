@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
@@ -14,6 +15,19 @@ namespace FubuMVC.Core.UI.Security
     {
         AccessRight RightsFor(ElementRequest request);
         AccessRight RightsFor(object target, PropertyInfo property);
+    }
+
+    public static class FieldAccessServiceExtensions
+    {
+        public static AccessRight RightsFor<T>(this IFieldAccessService fieldAccessService, T model, Expression<Func<T, object>> expression)
+        {
+            return fieldAccessService.RightsFor(model, expression.ToAccessor().InnerProperty);
+        }
+
+        public static bool HasRights<T>(this IFieldAccessService fieldAccessService, T model, Expression<Func<T, object>> expression, AccessRight requiredRights)
+        {
+            return fieldAccessService.RightsFor(model, expression.ToAccessor().InnerProperty) >= requiredRights;
+        }
     }
 
     public class FieldAccessService : IFieldAccessService
