@@ -17,12 +17,40 @@ namespace FubuFastPack.JqGrid
         public GridDefinition()
         {
             _columns.Add(new DataColumn<T>());
-            SortBy = SortRule<T>.Ascending(x => x.Id);
+
             MaxCount = INITIAL_MAX_PAGE_COUNT;
             CanSaveQuery = true;
         }
 
-        public SortRule<T> SortBy { get; set; }
+        private SortRule<T> _sortBy;
+
+        public SortRule<T> SortBy
+        {
+            get
+            {
+                if (_sortBy == null)
+                {
+                    var column = _columns.Skip(1).FirstOrDefault();
+                    if (column != null)
+                    {
+                        var accessor = column.SelectAccessors().FirstOrDefault(x => x.Name != "Id");
+                        if (accessor != null)
+                        {
+                            _sortBy = SortRule<T>.Ascending(accessor.ToExpression<T>());
+                        }
+                    }
+
+                    if (_sortBy == null)
+                    {
+                        _sortBy = SortRule<T>.Ascending(x => x.Id);
+                    }
+                }
+                
+                
+                return _sortBy;
+            }
+            set { _sortBy = value; }
+        }
 
         public int MaxCount { get; set; }
         public bool AllowCreationOfNew { get; set; }
@@ -87,6 +115,15 @@ namespace FubuFastPack.JqGrid
         public Expression<Func<T, object>> PropertyExpressionFor(string propertyName)
         {
             return _columns.SelectMany(x => x.AllAccessors()).First(x => x.Name == propertyName).ToExpression<T>();
+        }
+
+        public SortOrder SortOrder()
+        {
+            var rule = SortBy;
+            return new SortOrder(){
+                sortname = rule.FieldName,
+                sortorder = rule.IsAscending ? "asc" : "desc"
+            };
         }
     }
 }

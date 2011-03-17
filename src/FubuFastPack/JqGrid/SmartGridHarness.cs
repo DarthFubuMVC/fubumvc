@@ -247,6 +247,7 @@ namespace FubuFastPack.JqGrid
         {
             var gridName = typeof (T).NameForGrid();
             var definition = grid.Definition;
+            var sorting = definition.SortOrder();
 
             return new JqGridModel{
                 colModel = definition.Columns.SelectMany(x => x.ToDictionary()).ToArray(),
@@ -256,7 +257,9 @@ namespace FubuFastPack.JqGrid
                 url = GetUrl(),
                 headers = definition.Columns.SelectMany(x => x.Headers()).ToArray(),
                 pagerId = gridName + "_pager",
-                initialCriteria = grid.InitialCriteria().ToArray()
+                initialCriteria = grid.InitialCriteria().ToArray(),
+                sortname = sorting.sortname,
+                sortorder = sorting.sortorder
             };
         }
 

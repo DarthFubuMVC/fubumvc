@@ -13,5 +13,8 @@ namespace FubuFastPack.JqGrid
         public string[] headers { get; set; }
         public string pagerId { get; set; }
         public Criteria[] initialCriteria { get; set; }
+
+        public string sortname { get; set; }
+        public string sortorder { get; set; }
     }
 }

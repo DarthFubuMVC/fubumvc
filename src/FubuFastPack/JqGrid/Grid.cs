@@ -9,7 +9,13 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuFastPack.JqGrid
 {
-    public abstract class Grid<TEntity, TService> : ISmartGrid, ISmartGrid<TEntity> where TEntity : DomainEntity
+    public class SortOrder
+    {
+        public string sortname { get; set; }
+        public string sortorder { get; set; }
+    }
+
+    public abstract class Grid<TEntity, TService> : ISmartGrid<TEntity> where TEntity : DomainEntity
     {
         private readonly GridDefinition<TEntity> _definition = new GridDefinition<TEntity>();
         private readonly IList<Action<IDictionary<string, object>>> _colModelModifications 
@@ -189,6 +195,11 @@ namespace FubuFastPack.JqGrid
                 p.AlterDefinition(_definition);
             });
             
+        }
+
+        public SortOrder SortOrder()
+        {
+            return _definition.SortOrder();
         }
     }
 }

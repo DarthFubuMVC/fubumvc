@@ -9,5 +9,6 @@ namespace FubuFastPack.JqGrid
         IEnumerable<Accessor> SelectedAccessors { get; }
         bool AllowCreationOfNew { get; set; }
         bool CanSaveQuery { get; }
+        SortOrder SortOrder();
     }
 }

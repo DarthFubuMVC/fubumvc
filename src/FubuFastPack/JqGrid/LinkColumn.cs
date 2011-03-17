@@ -154,8 +154,8 @@ namespace FubuFastPack.JqGrid
 
         public IEnumerable<Accessor> SelectAccessors()
         {
-            yield return _idAccessor;
             yield return Accessor;
+            yield return _idAccessor;
         }
 
         public IEnumerable<Accessor> AllAccessors()

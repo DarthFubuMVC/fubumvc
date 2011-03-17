@@ -38,7 +38,7 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void should_return_the_display_accessor()
         {
-            theColumn.SelectAccessors().Select(x => x.Name).ShouldHaveTheSameElementsAs("Id", "Condition");
+            theColumn.SelectAccessors().Select(x => x.Name).ShouldHaveTheSameElementsAs( "Condition", "Id");
         }
 
         [Test]

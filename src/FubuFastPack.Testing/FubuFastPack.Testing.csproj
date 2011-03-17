@@ -62,6 +62,7 @@
     <Compile Include="jqGrid\EntityDTOTester.cs" />
     <Compile Include="jqGrid\FilterColumnTester.cs" />
     <Compile Include="jqGrid\GridColumnTester.cs" />
+    <Compile Include="jqGrid\GridDefinitionTester.cs" />
     <Compile Include="jqGrid\GridRequestTester.cs" />
     <Compile Include="jqGrid\GridTester.cs" />
     <Compile Include="jqGrid\LinkColumnTester.cs" />

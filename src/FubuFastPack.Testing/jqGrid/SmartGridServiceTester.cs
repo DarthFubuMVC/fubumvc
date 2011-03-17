@@ -62,6 +62,11 @@ namespace FubuFastPack.Testing.jqGrid
         {
             throw new NotImplementedException();
         }
+
+        public SortOrder SortOrder()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class LookupRequest : NamedGridRequest

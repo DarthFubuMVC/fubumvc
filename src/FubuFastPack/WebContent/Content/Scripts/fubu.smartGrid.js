@@ -72,7 +72,8 @@
             rowNum: model.initialRows || 10,
             rowList: [3, 10, 20, 30],
             loadui: "disable",
-            sortorder: "asc",
+            sortorder: definition.sortorder,
+            sortname: definition.sortname,
             viewrecords: true,
             jsonReader: {
                 repeatitems: true,

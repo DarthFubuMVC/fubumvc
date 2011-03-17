@@ -24,6 +24,8 @@ namespace FubuFastPack.JqGrid
         Type EntityType { get; }
 
         void ApplyPolicies(IEnumerable<IGridPolicy> policies);
+
+        SortOrder SortOrder();
     }
 
     public interface ISmartGrid<T> : ISmartGrid where T : DomainEntity
