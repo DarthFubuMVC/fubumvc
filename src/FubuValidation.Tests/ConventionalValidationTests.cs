@@ -16,21 +16,23 @@ namespace FubuValidation.Tests
         [SetUp]
         public void SetUp()
         {
-            var validationRegistry = new ValidationRegistry(registry =>
-                                                                {
-                                                                    registry
-                                                                        .Rules
-                                                                        .IfPropertyIs<int>()
-                                                                        .ApplyStrategy<GreaterThanZeroFieldStrategy>();
+            //var validationRegistry = new ValidationRegistry(registry =>
+            //                                                    {
+            //                                                        registry
+            //                                                            .Rules
+            //                                                            .IfPropertyIs<int>()
+            //                                                            .ApplyStrategy<GreaterThanZeroFieldStrategy>();
 
-                                                                    registry
-                                                                        .Rules
-                                                                        .If(a => a.Name.ToLower().Contains("required"))
-                                                                        .ApplyStrategy<RequiredFieldStrategy>();
-                                                                });
-            var resolver = new TypeResolver();
-            _query = new ValidationQuery(resolver, validationRegistry.GetConfiguredSources());
-            _provider = new ValidationProvider(resolver, _query);
+            //                                                        registry
+            //                                                            .Rules
+            //                                                            .If(a => a.Name.ToLower().Contains("required"))
+            //                                                            .ApplyStrategy<RequiredFieldStrategy>();
+            //                                                    });
+            //var resolver = new TypeResolver();
+            //_query = new ValidationQuery(resolver, validationRegistry.GetConfiguredSources());
+            //_provider = new ValidationProvider(resolver, _query);
+
+            Assert.Fail("NWO");
         }
 
         [Test]

@@ -10,6 +10,8 @@ namespace FubuValidation
     public class Notification
     {
         private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
+
+        // TODO -- does MessageBag deserve to live?
         private readonly Cache<Accessor, MessageBag> _bags;
 
         public Notification()
@@ -82,6 +84,14 @@ namespace FubuValidation
         public static Notification Valid()
         {
             return new Notification();
+        }
+
+        public NotificationMessage RegisterMessage(Accessor accessor, StringToken notificationMessage)
+        {
+            var message = new NotificationMessage(notificationMessage);
+            RegisterMessage(accessor, message);
+
+            return message;
         }
     }
 }

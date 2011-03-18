@@ -17,18 +17,9 @@ namespace FubuValidation.Registration.DSL
             _policies = policies;
         }
 
-        public RuleConfigurationExpression ApplyStrategy<TStrategy>()
-            where TStrategy : IFieldValidationStrategy, new()
-        {
-            return ApplyStrategy<TStrategy>(strategy => { });
-        }
+        // TODO -- add some stuff back in here for adding strategies
 
-        public RuleConfigurationExpression ApplyStrategy<TStrategy>(Action<TStrategy> configure)
-            where TStrategy : IFieldValidationStrategy, new()
-        {
-            _policies.Add(new FieldValidationPolicy<TStrategy>(_filter, configure));
-            return this;
-        }
+
 
         public RuleConfigurationExpression AddRule(IValidationRule rule)
         {

@@ -24,30 +24,30 @@ namespace FubuMVC.Validation
                             });
         }
 
-        public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag> modification)
-            where TStrategy : class, IFieldValidationStrategy
-        {
-            expression.ModifyForStrategy<TStrategy>((tag, strategy, accessor) => modification(tag));
-        }
+        //public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag> modification)
+        //    where TStrategy : class, IFieldValidationStrategy
+        //{
+        //    expression.ModifyForStrategy<TStrategy>((tag, strategy, accessor) => modification(tag));
+        //}
 
-        public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag, TStrategy> modification)
-            where TStrategy : class, IFieldValidationStrategy
-        {
-            expression.ModifyForStrategy<TStrategy>((tag, strategy, accessor) => modification(tag, strategy));
-        }
+        //public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag, TStrategy> modification)
+        //    where TStrategy : class, IFieldValidationStrategy
+        //{
+        //    expression.ModifyForStrategy<TStrategy>((tag, strategy, accessor) => modification(tag, strategy));
+        //}
 
-        public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag, TStrategy, Accessor> modification)
-            where TStrategy : class, IFieldValidationStrategy
-        {
-            expression
-                .Always
-                .Modify((request, tag) =>
-                            {
-                                var query = request.Get<IValidationQuery>();
-                                var strategy = query.GetStrategy<TStrategy>(request.Accessor);
-                                if (strategy == null) return;
-                                modification(tag, strategy, request.Accessor);
-                            });
-        }
+        //public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag, TStrategy, Accessor> modification)
+        //    where TStrategy : class, IFieldValidationStrategy
+        //{
+        //    expression
+        //        .Always
+        //        .Modify((request, tag) =>
+        //                    {
+        //                        var query = request.Get<IValidationQuery>();
+        //                        var strategy = query.GetStrategy<TStrategy>(request.Accessor);
+        //                        if (strategy == null) return;
+        //                        modification(tag, strategy, request.Accessor);
+        //                    });
+        //}
     }
 }

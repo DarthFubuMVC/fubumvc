@@ -66,11 +66,13 @@
     <Compile Include="ContinuationValidationRule.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="EnumerableValidationRule.cs" />
-    <Compile Include="FieldMarkerAttribute.cs" />
-    <Compile Include="FieldRule.cs" />
+    <Compile Include="Fields\FieldClasses.cs" />
+    <Compile Include="Fields\GreaterOrEqualToZeroRule.cs" />
+    <Compile Include="Fields\GreaterThanZeroRule.cs" />
+    <Compile Include="Fields\MaximumLengthRule.cs" />
+    <Compile Include="Fields\RequiredFieldRule.cs" />
     <Compile Include="Registration\Policies\ContinuationValidationPolicy.cs" />
     <Compile Include="Registration\Policies\EnumerableValidationPolicy.cs" />
-    <Compile Include="Registration\Policies\FieldValidationPolicy.cs" />
     <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
     <Compile Include="GreaterThanZeroAttribute.cs" />
     <Compile Include="IValidationRule.cs" />
@@ -86,34 +88,19 @@
     <Compile Include="Registration\DSL\SourcesExpression.cs" />
     <Compile Include="Registration\IValidationQuery.cs" />
     <Compile Include="Registration\ValidationQuery.cs" />
-    <Compile Include="Strategies\CollectionLengthValidationStrategy.cs" />
-    <Compile Include="Strategies\IFieldValidationStrategy.cs" />
     <Compile Include="Strategies\ValidationStrategyContext.cs" />
     <Compile Include="TemplateExtensions.cs" />
     <Compile Include="ValidationContext.cs" />
-    <Compile Include="ValidationQueryExtensions.cs" />
     <Compile Include="RequiredAttribute.cs" />
     <Compile Include="Registration\Sources\ValidationPolicySource.cs" />
     <Compile Include="Registration\IValidationPolicy.cs" />
     <Compile Include="Registration\Policies\LambdaValidationPolicy.cs" />
     <Compile Include="Registration\Policies\ValidationAttributePolicy.cs" />
-    <Compile Include="Strategies\GreaterOrEqualToZeroFieldStrategy.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\GreaterThanZeroFieldStrategy.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\MaximumStringLengthFieldStrategy.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\RequiredFieldStrategy.cs" />
     <Compile Include="Strategies\ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
-    <Compile Include="ValidationDslExtensions.cs" />
     <Compile Include="ValidationProvider.cs" />
     <Compile Include="ValidationRegistry.cs" />
-    <Compile Include="ValidationStrategyResult.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

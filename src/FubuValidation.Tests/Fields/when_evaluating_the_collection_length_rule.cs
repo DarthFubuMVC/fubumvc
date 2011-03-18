@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Specialized;
-using FubuCore.Reflection;
+using NUnit.Framework;
 
-namespace FubuValidation.Strategies
+namespace FubuValidation.Tests.Fields
 {
-    public class CollectionLengthValidationStrategy : IFieldValidationStrategy
-    {
+    /*
         public static readonly string FIELD = "field";
         public static readonly string LENGTH = "length";
 
@@ -31,5 +28,12 @@ namespace FubuValidation.Strategies
 
             return ValidationStrategyResult.Valid();
         }
+     */
+
+
+    [TestFixture]
+    public class when_evaluating_the_collection_length_rule
+    {
+
     }
 }

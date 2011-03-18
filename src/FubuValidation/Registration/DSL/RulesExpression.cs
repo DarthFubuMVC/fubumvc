@@ -43,18 +43,20 @@ namespace FubuValidation.Registration.DSL
             _policies = policies;
         }
 
-        public TypedRuleConfigurationExpression<T> ApplyStrategy<TStrategy>(Expression<Func<T, object>> expression)
-            where TStrategy : IFieldValidationStrategy, new()
-        {
-            return ApplyStrategy<TStrategy>(expression, strategy => { });
-        }
+        // TODO -- bring this back
 
-        public TypedRuleConfigurationExpression<T> ApplyStrategy<TStrategy>(Expression<Func<T, object>> expression, Action<TStrategy> configure)
-            where TStrategy : IFieldValidationStrategy, new()
-        {
-            var property = expression.ToAccessor();
-            _policies.Add(new FieldValidationPolicy<TStrategy>(accessor => accessor.OwnerType == typeof(T) && accessor.Name == property.Name, configure));
-            return this;
-        }
+        //public TypedRuleConfigurationExpression<T> ApplyStrategy<TStrategy>(Expression<Func<T, object>> expression)
+        //    where TStrategy : IFieldValidationStrategy, new()
+        //{
+        //    return ApplyStrategy<TStrategy>(expression, strategy => { });
+        //}
+
+        //public TypedRuleConfigurationExpression<T> ApplyStrategy<TStrategy>(Expression<Func<T, object>> expression, Action<TStrategy> configure)
+        //    where TStrategy : IFieldValidationStrategy, new()
+        //{
+        //    var property = expression.ToAccessor();
+        //    _policies.Add(new FieldValidationPolicy<TStrategy>(accessor => accessor.OwnerType == typeof(T) && accessor.Name == property.Name, configure));
+        //    return this;
+        //}
     }
 }

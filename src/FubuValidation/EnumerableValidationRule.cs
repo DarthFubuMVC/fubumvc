@@ -16,14 +16,9 @@ namespace FubuValidation
             _resolver = resolver;
         }
 
-        public bool AppliesTo(Accessor accessor)
+        public void Validate(ValidationContext context)
         {
-            return _accessor.Equals(accessor);
-        }
-
-        public void Validate(object target, ValidationContext context, Notification notification)
-        {
-            var values = _accessor.GetValue(target) as IEnumerable;
+            var values = _accessor.GetValue(context.Target) as IEnumerable;
             if(values == null)
             {
                 return;
@@ -33,7 +28,7 @@ namespace FubuValidation
             var childNotification = new Notification(targetType);
 
             values.Each(value => context.Provider.Validate(value, childNotification));
-            notification.Include(childNotification);
+            context.Notification.Include(childNotification);
         }
     }
 }

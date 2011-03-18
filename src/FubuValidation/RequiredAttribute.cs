@@ -1,12 +1,10 @@
-﻿using FubuValidation.Strategies;
+﻿using System;
+using FubuValidation.Strategies;
 
 namespace FubuValidation
 {
-    public class RequiredAttribute : FieldMarkerAttribute
+    public class RequiredAttribute : Attribute
     {
-        public RequiredAttribute()
-            : base(typeof(RequiredFieldStrategy))
-        {
-        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuLocalization;
+using FubuValidation.Fields;
 
 namespace FubuValidation.Strategies
 {
@@ -15,10 +16,10 @@ namespace FubuValidation.Strategies
         {
         }
 
-        public static readonly StringToken REQUIRED = new ValidationKeys("REQUIRED", "{0} is required.".ToFormat(RequiredFieldStrategy.FIELD.AsTemplateField()));
-        public static readonly StringToken COLLECTION_LENGTH = new ValidationKeys("COLLECTION_LENGTH", "Invalid length for {0}. Length must be equal to {1}.".ToFormat(CollectionLengthValidationStrategy.FIELD.AsTemplateField(), CollectionLengthValidationStrategy.LENGTH.AsTemplateField()));
-		public static readonly StringToken MAX_LENGTH = new ValidationKeys("MAX_LENGTH", "Maximum length exceeded. Must be less than or equal to {0}.".ToFormat(MaximumStringLengthFieldStrategy.LENGTH.AsTemplateField()));
-        public static readonly StringToken GREATER_THAN_ZERO = new ValidationKeys("GREATER_THAN_ZERO", "Value must be greater than zero.");
-        public static readonly StringToken GREATER_OR_EQUAL_TO_ZERO = new ValidationKeys("GREATER_OR_EQUAL_TO_ZERO", "Value must be greater than or equal to zero."); 
+        public static readonly StringToken REQUIRED = new ValidationKeys("REQUIRED", "Required Field");
+        public static readonly StringToken COLLECTION_LENGTH = new ValidationKeys("COLLECTION_LENGTH", "Invalid length for {0}. Length must be equal to {1}".ToFormat(CollectionLengthRule.FIELD.AsTemplateField(), CollectionLengthRule.LENGTH.AsTemplateField()));
+		public static readonly StringToken MAX_LENGTH = new ValidationKeys("MAX_LENGTH", "Maximum length exceeded. Must be less than or equal to {0}".ToFormat(MaximumLengthRule.LENGTH.AsTemplateField()));
+        public static readonly StringToken GREATER_THAN_ZERO = new ValidationKeys("GREATER_THAN_ZERO", "Value must be greater than zero");
+        public static readonly StringToken GREATER_OR_EQUAL_TO_ZERO = new ValidationKeys("GREATER_OR_EQUAL_TO_ZERO", "Value must be greater than or equal to zero"); 
     }
 }

@@ -18,19 +18,16 @@ namespace FubuValidation
             StringToken = stringToken;
         }
 
-        // TODO -- convert to method
-        public string Message
-        {
-            get
-            {
-                if(_message == null)
-                {
-                    var localizedMessage = StringToken.ToString();
-                    _message = TemplateParser.Parse(localizedMessage, _messageSubstitutions);
-                }
 
-                return _message;
+        public string GetMessage()
+        {
+            if (_message == null)
+            {
+                var localizedMessage = StringToken.ToString();
+                _message = TemplateParser.Parse(localizedMessage, _messageSubstitutions);
             }
+
+            return _message;
         }
 
         public StringToken StringToken { get; private set; }
@@ -68,7 +65,7 @@ namespace FubuValidation
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return Equals(other.Message, Message) && Accessors.IsEqualTo(other.Accessors);
+            return Equals(other.GetMessage(), GetMessage()) && Accessors.IsEqualTo(other.Accessors);
         }
 
         public override int GetHashCode()
@@ -76,14 +73,14 @@ namespace FubuValidation
             unchecked
             {
                 int result = (Accessors != null ? Accessors.GetHashCode() : 0);
-                result = (result*397) ^ (Message != null ? Message.GetHashCode() : 0);
+                result = (result*397) ^ (GetMessage() != null ? GetMessage().GetHashCode() : 0);
                 return result;
             }
         }
 
         public override string ToString()
         {
-            return Message;
+            return GetMessage();
         }
     }
 }

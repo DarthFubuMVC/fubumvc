@@ -55,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureValidationExpression.cs" />
-    <Compile Include="Fields\FieldClasses.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
     <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="HtmlConventionExtensions.cs" />

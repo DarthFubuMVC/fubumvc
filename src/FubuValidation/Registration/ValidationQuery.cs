@@ -7,6 +7,7 @@ using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration
 {
+    [Obsolete]
     public class ValidationQuery : IValidationQuery
     {
         private readonly ITypeResolver _typeResolver;
@@ -27,44 +28,24 @@ namespace FubuValidation.Registration
 
         public T GetRule<T>(Accessor accessor) where T : class, IValidationRule
         {
-            foreach (var source in _sources)
-            {
-                var targetRule = source
-                                    .RulesFor(accessor.OwnerType)
-                                    .FirstOrDefault(rule => typeof (T) == _typeResolver.ResolveType(rule) && rule.AppliesTo(accessor))
-                                    .As<T>();
+            throw new NotImplementedException();
+            //foreach (var source in _sources)
+            //{
+            //    var targetRule = source
+            //                        .RulesFor(accessor.OwnerType)
+            //                        .FirstOrDefault(rule => typeof (T) == _typeResolver.ResolveType(rule) && rule.AppliesTo(accessor))
+            //                        .As<T>();
 
-                if(targetRule != null)
-                {
-                    return targetRule;
-                }
-            }
+            //    if(targetRule != null)
+            //    {
+            //        return targetRule;
+            //    }
+            //}
 
-            return null;
+            //return null;
         }
 
-        public T GetStrategy<T>(Accessor accessor)
-			where T : class, IFieldValidationStrategy
-        {
-            foreach (var source in _sources)
-            {
-                var fieldRules = source
-                                    .RulesFor(accessor.OwnerType)
-                                    .Where(rule => typeof(FieldRule) == rule.GetType() && rule.AppliesTo(accessor))
-                                    .Cast<FieldRule>();
 
-                foreach (var fieldRule in fieldRules)
-                {
-					if (typeof(T) == _typeResolver.ResolveType(fieldRule.Strategy))
-                    {
-                        return fieldRule.Strategy.As<T>();
-                    }
-                }
-                
-            }
-
-            return null;
-        }
 
         public void ForRule<T>(Accessor accessor, Action<T, Accessor> action) where T : class, IValidationRule
         {
@@ -75,14 +56,6 @@ namespace FubuValidation.Registration
             }
         }
 
-        public void ForStrategy<T>(Accessor accessor, Action<T, Accessor> action) where T : class, IFieldValidationStrategy
-        {
-            var strategy = GetStrategy<T>(accessor);
-            if (strategy != null)
-            {
-                action(strategy, accessor);
-            }
-        }
 
         public bool HasRule<T>(Accessor accessor) 
 			where T : class, IValidationRule
@@ -90,10 +63,5 @@ namespace FubuValidation.Registration
             return GetRule<T>(accessor) != null;
         }
 
-        public bool HasStrategy<T>(Accessor accessor)
-			where T : class, IFieldValidationStrategy
-        {
-        	return GetStrategy<T>(accessor) != null;
-        }
     }
 }

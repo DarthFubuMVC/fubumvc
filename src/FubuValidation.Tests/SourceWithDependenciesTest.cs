@@ -103,21 +103,16 @@ namespace FubuValidation.Tests
             _userService = userService;
         }
 
-        public bool AppliesTo(Accessor accessor)
+        public void Validate(ValidationContext context)
         {
-            return _accessor.Equals(accessor);
-        }
-
-        public void Validate(object target, ValidationContext context, Notification notification)
-        {
-            var value = (string)_accessor.GetValue(target);
+            var value = (string)_accessor.GetValue(context.Target);
             if(_userService.ExistsByUsername(value))
             {
                 var token = new ValidationKeys("UNIQUE_USER", "Username {0} is already in use.".ToFormat(FIELD.AsTemplateField()));
                 var msg = new NotificationMessage(token);
                 msg.AddSubstitution(FIELD, value);
 
-                notification.RegisterMessage(_accessor, msg);
+                context.Notification.RegisterMessage(_accessor, msg);
             }
         }
     }

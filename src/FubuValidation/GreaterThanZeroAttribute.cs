@@ -1,11 +1,11 @@
-﻿using FubuValidation.Strategies;
+﻿using System;
+using FubuValidation.Strategies;
 
 namespace FubuValidation
 {
-    public class GreaterThanZeroAttribute : FieldMarkerAttribute
+    public class GreaterThanZeroAttribute : Attribute
     {
         public GreaterThanZeroAttribute()
-            : base(typeof(GreaterThanZeroFieldStrategy))
         {
         }
     }
