@@ -25,7 +25,7 @@ namespace FubuValidation.Tests.Strategies
             _accessor = AccessorFactory.Create<AddressModel>(m => m.Address1);
             _strategy = new RequiredFieldStrategy();
             _rule = new FieldRule(_accessor, new TypeResolver(), _strategy);
-            _context = new ValidationContext(null);
+            _context = new ValidationContext(null, null, null);
         }
 
         [Test]

@@ -18,6 +18,7 @@ namespace FubuValidation
             StringToken = stringToken;
         }
 
+        // TODO -- convert to method
         public string Message
         {
             get

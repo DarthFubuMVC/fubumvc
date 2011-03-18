@@ -3,6 +3,7 @@ using FubuCore.Reflection;
 
 namespace FubuValidation.Strategies
 {
+    // Needs love
     public class MaximumStringLengthFieldStrategy : IFieldValidationStrategy
     {
         public static readonly string LENGTH = "length";

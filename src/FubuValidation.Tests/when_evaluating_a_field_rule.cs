@@ -25,7 +25,7 @@ namespace FubuValidation.Tests
             _notification = new Notification();
             _rawValue = "Test";
             _token = StringToken.FromKeyString("test-key", "Test message");
-            _context = new ValidationContext(null);
+            _context = new ValidationContext(null, null, null);
             _strategyContext = new ValidationStrategyContext(_model, _rawValue, typeof(AddressModel), null, _notification);
 
             MockFor<ITypeResolver>()

@@ -24,7 +24,7 @@ namespace FubuValidation.Tests.Strategies
             _strategy = new GreaterThanZeroFieldStrategy();
             _accessor = AccessorFactory.Create<SimpleModel>(m => m.GreaterThanZero);
             _rule = new FieldRule(_accessor, new TypeResolver(), _strategy);
-            _context = new ValidationContext(null);
+            _context = new ValidationContext(null, null, null);
         }
 
         [Test]
