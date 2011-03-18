@@ -31,6 +31,7 @@ namespace FubuValidation.Registration.Policies
 
             _configure(strategy);
 
+            // TODO -- BUG!!!!  Can't do this with TypeResolver.
             return new[] {new FieldRule(accessor, new TypeResolver(), strategy)};
         }
     }
