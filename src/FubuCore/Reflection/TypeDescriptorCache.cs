@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using FubuCore.Util;
 
-namespace FubuCore.Binding
+namespace FubuCore.Reflection
 {
     public interface ITypeDescriptorCache
     {

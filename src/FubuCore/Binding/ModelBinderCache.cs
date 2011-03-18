@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuCore.Binding;
 using FubuMVC.Core;

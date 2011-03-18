@@ -5,6 +5,7 @@ using FubuValidation.Strategies;
 
 namespace FubuValidation
 {
+    // TODO -- make this cleaner
     public abstract class FieldMarkerAttribute: ValidationAttribute
     {
         private readonly Type _strategyType;

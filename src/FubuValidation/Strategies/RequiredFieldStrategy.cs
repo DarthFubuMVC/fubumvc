@@ -12,6 +12,7 @@ namespace FubuValidation.Strategies
             return new NameValueCollection { {FIELD, accessor.Name} };
         }
 
+        // TODO -- WTF is ValidationStrategyContext?
         public ValidationStrategyResult Validate(ValidationStrategyContext context)
         {
             if (context.RawValue == null || context.RawValue.ToString() == string.Empty)
