@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using FubuCore.Reflection;
 using FubuValidation.Registration.Policies;
-using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration.DSL
 {
@@ -18,7 +17,6 @@ namespace FubuValidation.Registration.DSL
         }
 
         // TODO -- add some stuff back in here for adding strategies
-
 
 
         public RuleConfigurationExpression AddRule(IValidationRule rule)

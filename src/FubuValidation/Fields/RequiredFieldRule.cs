@@ -1,4 +1,5 @@
-﻿using FubuCore.Reflection;
+﻿using System;
+using FubuCore.Reflection;
 using FubuValidation.Strategies;
 
 namespace FubuValidation.Fields
@@ -13,6 +14,24 @@ namespace FubuValidation.Fields
             {
                 context.Notification.RegisterMessage(accessor, ValidationKeys.REQUIRED);
             }
+        }
+
+        public bool Equals(RequiredFieldRule other)
+        {
+            return !ReferenceEquals(null, other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (RequiredFieldRule)) return false;
+            return Equals((RequiredFieldRule) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return 0;
         }
     }
 }

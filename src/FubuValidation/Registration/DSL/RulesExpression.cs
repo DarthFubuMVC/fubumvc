@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using FubuCore.Reflection;
-using FubuValidation.Registration.Policies;
-using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration.DSL
 {
@@ -34,7 +31,7 @@ namespace FubuValidation.Registration.DSL
     }
 
     public class TypedRuleConfigurationExpression<T>
-        where T : class 
+        where T : class
     {
         private readonly IList<IValidationPolicy> _policies;
 

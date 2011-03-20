@@ -1,5 +1,3 @@
-using FubuCore.Reflection;
-
 namespace FubuValidation
 {
     public interface IValidationRule

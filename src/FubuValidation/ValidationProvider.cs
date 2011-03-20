@@ -6,8 +6,8 @@ namespace FubuValidation
 {
     public class ValidationProvider : IValidationProvider
     {
-        private readonly ITypeResolver _typeResolver;
         private readonly IValidationQuery _query;
+        private readonly ITypeResolver _typeResolver;
 
         public ValidationProvider(ITypeResolver typeResolver, IValidationQuery query)
         {

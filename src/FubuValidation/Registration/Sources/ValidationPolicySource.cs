@@ -14,7 +14,9 @@ namespace FubuValidation.Registration.Sources
 
         public ValidationPolicySource(IEnumerable<IValidationPolicy> policies)
         {
-            _rules = new Cache<Type, IEnumerable<IValidationRule>> { OnMissing = BuildRulesFor };
+            _rules = new Cache<Type, IEnumerable<IValidationRule>>{
+                OnMissing = BuildRulesFor
+            };
             _policies = policies;
         }
 
@@ -28,12 +30,12 @@ namespace FubuValidation.Registration.Sources
             var rules = new List<IValidationRule>();
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             properties.Each(property =>
-                                    {
-                                        var accessor = new SingleProperty(property, type);
-                                        _policies
-                                            .Where(policy => policy.Matches(accessor))
-                                            .Each(policy => rules.AddRange(policy.BuildRules(accessor)));
-                                    });
+            {
+                var accessor = new SingleProperty(property, type);
+                _policies
+                    .Where(policy => policy.Matches(accessor))
+                    .Each(policy => rules.AddRange(policy.BuildRules(accessor)));
+            });
             return rules;
         }
     }

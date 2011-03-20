@@ -27,7 +27,7 @@ namespace FubuValidation.Registration.Policies
 
         public IEnumerable<IValidationRule> BuildRules(Accessor accessor)
         {
-            return new[] { _rule(accessor) };
+            return new[]{_rule(accessor)};
         }
     }
 }

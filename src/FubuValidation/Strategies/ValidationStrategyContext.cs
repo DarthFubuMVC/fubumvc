@@ -4,8 +4,8 @@ namespace FubuValidation.Strategies
 {
     public class ValidationStrategyContext
     {
-        public ValidationStrategyContext(object target, object rawValue, Type declaringType, 
-            IValidationProvider provider, Notification notification)
+        public ValidationStrategyContext(object target, object rawValue, Type declaringType,
+                                         IValidationProvider provider, Notification notification)
         {
             Target = target;
             RawValue = rawValue;
@@ -32,14 +32,16 @@ namespace FubuValidation.Strategies
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Target, Target) && Equals(other.RawValue, RawValue) && Equals(other.DeclaringType, DeclaringType) && Equals(other.Provider, Provider) && Equals(other.Notification, Notification);
+            return Equals(other.Target, Target) && Equals(other.RawValue, RawValue) &&
+                   Equals(other.DeclaringType, DeclaringType) && Equals(other.Provider, Provider) &&
+                   Equals(other.Notification, Notification);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int result = (Target != null ? Target.GetHashCode() : 0);
+                var result = (Target != null ? Target.GetHashCode() : 0);
                 result = (result*397) ^ (RawValue != null ? RawValue.GetHashCode() : 0);
                 result = (result*397) ^ (DeclaringType != null ? DeclaringType.GetHashCode() : 0);
                 result = (result*397) ^ (Provider != null ? Provider.GetHashCode() : 0);

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using FubuCore;
 using FubuValidation.Registration;
 using FubuValidation.Registration.DSL;
 using FubuValidation.Registration.Policies;
@@ -10,12 +9,8 @@ namespace FubuValidation
 {
     public class ValidationRegistry
     {
-        private readonly List<IValidationSource> _sources = new List<IValidationSource>();
         private readonly List<IValidationPolicy> _policies = new List<IValidationPolicy>();
-
-        public SourcesExpression Sources { get { return new SourcesExpression(_sources); } }
-        public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
-        public RulesExpression Rules { get { return new RulesExpression(_policies); } }
+        private readonly List<IValidationSource> _sources = new List<IValidationSource>();
 
         public ValidationRegistry()
         {
@@ -26,6 +21,21 @@ namespace FubuValidation
             : this()
         {
             configure(this);
+        }
+
+        public SourcesExpression Sources
+        {
+            get { return new SourcesExpression(_sources); }
+        }
+
+        public PoliciesExpression Policies
+        {
+            get { return new PoliciesExpression(_policies); }
+        }
+
+        public RulesExpression Rules
+        {
+            get { return new RulesExpression(_policies); }
         }
 
         private void setupDefaults()

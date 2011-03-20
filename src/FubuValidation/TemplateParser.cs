@@ -8,6 +8,7 @@ namespace FubuValidation
     {
         private static readonly string TemplateGroup;
         private static readonly Regex TemplateExpression;
+
         static TemplateParser()
         {
             TemplateGroup = "Template";
@@ -16,9 +17,9 @@ namespace FubuValidation
 
         public static string Parse(string template, IDictionary<string, string> substitutions)
         {
-            MatchCollection matches = TemplateExpression.Matches(template);
+            var matches = TemplateExpression.Matches(template);
 
-            int lastIndex = 0;
+            var lastIndex = 0;
             var builder = new StringBuilder();
             foreach (Match match in matches)
             {

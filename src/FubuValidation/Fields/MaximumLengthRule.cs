@@ -5,8 +5,8 @@ namespace FubuValidation.Fields
 {
     public class MaximumLengthRule : IFieldValidationRule
     {
-        private readonly int _length;
         public static readonly string LENGTH = "length";
+        private readonly int _length;
 
         public MaximumLengthRule(int length)
         {
@@ -26,7 +26,6 @@ namespace FubuValidation.Fields
                 context.Notification.RegisterMessage(accessor, ValidationKeys.MAX_LENGTH)
                     .AddSubstitution(LENGTH, _length.ToString());
             }
-
         }
     }
 }

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuValidation.Strategies;
 
 namespace FubuValidation.Registration
 {
     [Obsolete]
     public class ValidationQuery : IValidationQuery
     {
-        private readonly ITypeResolver _typeResolver;
         private readonly IEnumerable<IValidationSource> _sources;
+        private readonly ITypeResolver _typeResolver;
 
         public ValidationQuery(ITypeResolver typeResolver, IEnumerable<IValidationSource> sources)
         {
@@ -46,22 +44,20 @@ namespace FubuValidation.Registration
         }
 
 
-
         public void ForRule<T>(Accessor accessor, Action<T, Accessor> action) where T : class, IValidationRule
         {
             var rule = GetRule<T>(accessor);
-            if(rule != null)
+            if (rule != null)
             {
                 action(rule, accessor);
             }
         }
 
 
-        public bool HasRule<T>(Accessor accessor) 
-			where T : class, IValidationRule
+        public bool HasRule<T>(Accessor accessor)
+            where T : class, IValidationRule
         {
             return GetRule<T>(accessor) != null;
         }
-
     }
 }

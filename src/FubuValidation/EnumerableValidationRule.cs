@@ -19,7 +19,7 @@ namespace FubuValidation
         public void Validate(ValidationContext context)
         {
             var values = _accessor.GetValue(context.Target) as IEnumerable;
-            if(values == null)
+            if (values == null)
             {
                 return;
             }

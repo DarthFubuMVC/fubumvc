@@ -9,15 +9,32 @@ namespace FubuValidation
     [Serializable]
     public class NotificationMessage
     {
-        private string _message;
         private readonly List<Accessor> _accessors = new List<Accessor>();
         private readonly Dictionary<string, string> _messageSubstitutions = new Dictionary<string, string>();
+        private string _message;
 
         public NotificationMessage(StringToken stringToken)
         {
             StringToken = stringToken;
         }
 
+
+        public StringToken StringToken { get; private set; }
+
+        public Accessor[] Accessors
+        {
+            get { return _accessors.ToArray(); }
+        }
+
+        public IEnumerable<KeyValuePair<string, string>> MessageSubstitutions
+        {
+            get
+            {
+                return _messageSubstitutions
+                    .Keys
+                    .Select(key => new KeyValuePair<string, string>(key, _messageSubstitutions[key]));
+            }
+        }
 
         public string GetMessage()
         {
@@ -28,18 +45,6 @@ namespace FubuValidation
             }
 
             return _message;
-        }
-
-        public StringToken StringToken { get; private set; }
-        public Accessor[] Accessors { get { return _accessors.ToArray(); } }
-        public IEnumerable<KeyValuePair<string, string>> MessageSubstitutions
-        {
-            get
-            {
-                return _messageSubstitutions
-                    .Keys
-                    .Select(key => new KeyValuePair<string, string>(key, _messageSubstitutions[key]));
-            }
         }
 
         public void AddAccessor(Accessor accessor)
@@ -72,7 +77,7 @@ namespace FubuValidation
         {
             unchecked
             {
-                int result = (Accessors != null ? Accessors.GetHashCode() : 0);
+                var result = (Accessors != null ? Accessors.GetHashCode() : 0);
                 result = (result*397) ^ (GetMessage() != null ? GetMessage().GetHashCode() : 0);
                 return result;
             }

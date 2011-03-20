@@ -1,6 +1,4 @@
 ﻿using System;
-using FubuCore;
-using FubuValidation.Strategies;
 
 namespace FubuValidation
 {
@@ -17,6 +15,5 @@ namespace FubuValidation
         {
             get { return _length; }
         }
-
     }
 }

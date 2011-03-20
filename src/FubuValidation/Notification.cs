@@ -9,28 +9,29 @@ namespace FubuValidation
 {
     public class Notification
     {
-        private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
-
         // TODO -- does MessageBag deserve to live?
         private readonly Cache<Accessor, MessageBag> _bags;
+        private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
 
         public Notification()
         {
-            _bags = new Cache<Accessor, MessageBag>
-                        {
-                            OnMissing = (accessor => new MessageBag(accessor))
-                        };
+            _bags = new Cache<Accessor, MessageBag>{
+                OnMissing = (accessor => new MessageBag(accessor))
+            };
         }
 
         public Notification(Type targetType)
-			: this()
+            : this()
         {
             TargetType = targetType;
         }
 
         public Type TargetType { get; private set; }
 
-        public NotificationMessage[] AllMessages { get { return _messages.ToArray(); } }
+        public NotificationMessage[] AllMessages
+        {
+            get { return _messages.ToArray(); }
+        }
 
         public void Include(Notification notification)
         {
@@ -49,7 +50,8 @@ namespace FubuValidation
             }
         }
 
-        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> expression, StringToken token, string messageTemplate)
+        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> expression, StringToken token,
+                                                      string messageTemplate)
         {
             return RegisterMessage(expression.ToAccessor(), token, messageTemplate);
         }
