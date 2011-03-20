@@ -51,6 +51,13 @@ namespace FubuValidation.Tests.Fields
         {
             rulesFor(x => x.NumberOfChildren).Single().ShouldBeOfType<GreaterOrEqualToZeroRule>();
         }
+
+        [Test]
+        public void found_collection_length_rule()
+        {
+            rulesFor(x => x.Names).Single().ShouldBeOfType<CollectionLengthRule>()
+                .Length.ShouldEqual(2);
+        }
     }
 
     public class AttributeScanningTarget
@@ -63,7 +70,8 @@ namespace FubuValidation.Tests.Fields
 
         [GreaterOrEqualToZero]
         public int NumberOfChildren { get; set; }
-    
-        
+
+        [CollectionLength(2)]
+        public string[] Names { get; set; }
     }
 }
