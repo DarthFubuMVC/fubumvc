@@ -17,12 +17,13 @@ namespace FubuValidation.Tests
     {
         protected override void beforeEach()
         {
-            Container.Configure(x =>
-                                    {
-                                        x.For<IValidationQuery>().Use<ValidationQuery>();
-                                        x.For<ITypeResolver>().Use<TypeResolver>();
-                                        x.For<IValidationSource>().Add(ctx => ctx.GetInstance<UniquePropertySource>());
-                                    });
+            Assert.Fail("NWO");
+            //Container.Configure(x =>
+            //                        {
+            //                            x.For<IValidationQuery>().Use<ValidationQuery>();
+            //                            x.For<ITypeResolver>().Use<TypeResolver>();
+            //                            x.For<IValidationSource>().Add(ctx => ctx.GetInstance<UniquePropertySource>());
+            //                        });
         }
 
         [Test]

@@ -4,7 +4,7 @@ using FubuCore.Reflection;
 
 namespace FubuValidation.Registration.Policies
 {
-    public class EnumerableValidationPolicy : IValidationPolicy
+    public class EnumerableValidationPolicy
     {
         public bool Matches(Accessor accessor)
         {

@@ -58,7 +58,6 @@
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="ValidationContextTester.cs" />
-    <Compile Include="ValidationRegistrationTester.cs" />
     <Compile Include="when_handling_validation_failure.cs" />
     <Compile Include="when_validating_an_input_model.cs" />
   </ItemGroup>

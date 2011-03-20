@@ -13,15 +13,15 @@ namespace FubuMVC.Validation
         public static void ModifyForRule<TRule>(this TagFactoryExpression expression, Action<HtmlTag, TRule, Accessor> modification)
             where TRule : class, IValidationRule
         {
-            expression
-                .Always
-                .Modify((request, tag) =>
-                            {
-                                var query = request.Get<IValidationQuery>();
-                                var rule = query.GetRule<TRule>(request.Accessor);
-                                if (rule == null) return;
-                                modification(tag, rule, request.Accessor);
-                            });
+            //expression
+            //    .Always
+            //    .Modify((request, tag) =>
+            //                {
+            //                    var query = request.Get<IValidationQuery>();
+            //                    var rule = query.GetRule<TRule>(request.Accessor);
+            //                    if (rule == null) return;
+            //                    modification(tag, rule, request.Accessor);
+            //                });
         }
 
         //public static void ModifyForStrategy<TStrategy>(this TagFactoryExpression expression, Action<HtmlTag> modification)

@@ -10,7 +10,7 @@ namespace FubuValidation.Tests
     [TestFixture]
     public class ConventionalValidationTests
     {
-        private IValidationQuery _query;
+        //private IValidationQuery _query;
         private IValidationProvider _provider;
 
         [SetUp]

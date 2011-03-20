@@ -82,7 +82,6 @@
     </Compile>
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="TemplateParserTester.cs" />
-    <Compile Include="ValidationAttributePolicyTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">

@@ -10,16 +10,18 @@ namespace FubuValidation.Tests
     [TestFixture]
     public class ModelWithEnumerablePropertyTests
     {
-        private IValidationQuery _query;
+        //private IValidationQuery _query;
         private IValidationProvider _provider;
 
         [SetUp]
         public void SetUp()
         {
+            Assert.Fail("NWO");
+            
             var registry = new ValidationRegistry();
             var resolver = new TypeResolver();
-            _query = new ValidationQuery(resolver, registry.GetConfiguredSources());
-            _provider = new ValidationProvider(resolver, _query);
+            //_query = new ValidationQuery(resolver, registry.GetConfiguredSources());
+            //_provider = new ValidationProvider(resolver, _query);
         }
 
         [Test]

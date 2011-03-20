@@ -32,7 +32,7 @@ namespace FubuMVC.Validation
                 .Services(x =>
                               {
                                   sources.Each(x.AddService<IValidationSource>);
-                                  x.SetServiceIfNone<IValidationQuery, ValidationQuery>();
+                                  //x.SetServiceIfNone<IValidationQuery, ValidationQuery>();
                                   x.SetServiceIfNone<IValidationProvider, ValidationProvider>();
                               });
 

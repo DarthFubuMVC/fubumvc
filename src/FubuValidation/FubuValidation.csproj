@@ -84,33 +84,26 @@
     <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
     <Compile Include="GreaterThanZeroAttribute.cs" />
     <Compile Include="IValidationRule.cs" />
-    <Compile Include="Registration\IValidationSource.cs" />
+    <Compile Include="IValidationSource.cs" />
     <Compile Include="IValidationProvider.cs" />
     <Compile Include="MaximumStringLengthAttribute.cs" />
     <Compile Include="MessageBag.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
-    <Compile Include="Registration\DSL\PoliciesExpression.cs" />
-    <Compile Include="Registration\DSL\RuleConfigurationExpression.cs" />
-    <Compile Include="Registration\DSL\RulesExpression.cs" />
-    <Compile Include="Registration\DSL\SourcesExpression.cs" />
-    <Compile Include="Registration\IValidationQuery.cs" />
-    <Compile Include="Registration\ValidationQuery.cs" />
     <Compile Include="Strategies\ValidationStrategyContext.cs" />
     <Compile Include="TemplateExtensions.cs" />
     <Compile Include="ValidationContext.cs" />
     <Compile Include="RequiredAttribute.cs" />
-    <Compile Include="Registration\Sources\ValidationPolicySource.cs" />
-    <Compile Include="Registration\IValidationPolicy.cs" />
     <Compile Include="Registration\Policies\LambdaValidationPolicy.cs" />
-    <Compile Include="Registration\Policies\ValidationAttributePolicy.cs" />
     <Compile Include="Strategies\ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
     <Compile Include="ValidationProvider.cs" />
     <Compile Include="ValidationRegistry.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Registration\DSL\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

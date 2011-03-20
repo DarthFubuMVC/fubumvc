@@ -4,7 +4,7 @@ using FubuCore.Reflection;
 
 namespace FubuValidation.Registration.Policies
 {
-    public class LambdaValidationPolicy : IValidationPolicy
+    public class LambdaValidationPolicy
     {
         private readonly Func<Accessor, bool> _predicate;
         private readonly Func<Accessor, IValidationRule> _rule;

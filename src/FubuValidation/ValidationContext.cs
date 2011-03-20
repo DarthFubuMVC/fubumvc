@@ -20,6 +20,8 @@ namespace FubuValidation
             _target = target;
         }
 
+        public Type TargetType { get; set; }
+
         public IValidationProvider Provider
         {
             get { return _provider; }
