@@ -66,13 +66,16 @@
     <Compile Include="ContinuationValidationRule.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="EnumerableValidationRule.cs" />
+    <Compile Include="Fields\AttributeFieldValidationSource.cs" />
     <Compile Include="Fields\ClassFieldValidationRules.cs" />
     <Compile Include="Fields\FieldClasses.cs" />
     <Compile Include="Fields\FieldRulesRegistry.cs" />
+    <Compile Include="Fields\FieldValidationAttribute.cs" />
     <Compile Include="Fields\FieldValidationRuleExtensions.cs" />
     <Compile Include="Fields\GreaterOrEqualToZeroRule.cs" />
     <Compile Include="Fields\GreaterThanZeroRule.cs" />
     <Compile Include="Fields\IFieldRulesRegistry.cs" />
+    <Compile Include="Fields\IFieldValidationSource.cs" />
     <Compile Include="Fields\MaximumLengthRule.cs" />
     <Compile Include="Fields\RequiredFieldRule.cs" />
     <Compile Include="Registration\Policies\ContinuationValidationPolicy.cs" />

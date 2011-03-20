@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using FubuCore.Reflection;
 
 namespace FubuValidation.Fields
@@ -23,20 +21,6 @@ namespace FubuValidation.Fields
     public interface IFieldValidationRule
     {
         void Validate(Accessor accessor, ValidationContext context);
-    }
-
-    public interface IFieldValidationSource
-    {
-        IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property);
-    }
-
-    // Could have other adapters.
-    public class AttributeFieldValidationSource : IFieldValidationSource
-    {
-        public IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 
