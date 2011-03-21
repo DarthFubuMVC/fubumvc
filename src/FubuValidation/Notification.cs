@@ -11,7 +11,8 @@ namespace FubuValidation
 {
     public class Notification
     {
-        private readonly Cache<Accessor, IList<NotificationMessage>> _messages = new Cache<Accessor, IList<NotificationMessage>>(a => new List<NotificationMessage>());
+        // TODO -- make this a list!!
+        private readonly IList<NotificationMessage> _messages = new List<NotificationMessage>();
 
         public Notification()
         {
@@ -27,7 +28,7 @@ namespace FubuValidation
 
         public IEnumerable<NotificationMessage> AllMessages
         {
-            get { return _messages.GetAll().SelectMany(x => x); }
+            get { return _messages; }
         }
 
         public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> property, StringToken message)
@@ -46,18 +47,17 @@ namespace FubuValidation
         public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
         {
             notificationMessage.AddAccessor(accessor);
-            _messages[accessor].Fill(notificationMessage);
+            _messages.Fill(notificationMessage);
         }
 
         public void AddChild(PropertyInfo property, Notification child)
         {
-
-            throw new NotImplementedException();
+            _messages.AddRange(child.AllMessages.Select(x => x.Prepend(property)));
         }
 
         public IEnumerable<NotificationMessage> MessagesFor(Accessor accessor)
         {
-            return _messages[accessor];
+            return _messages.Where(x => x.Accessors.Contains(accessor));
         }
 
         public IEnumerable<NotificationMessage> MessagesFor<T>(Expression<Func<T, object>> property)

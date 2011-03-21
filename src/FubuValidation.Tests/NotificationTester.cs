@@ -1,5 +1,8 @@
+using FubuCore.Reflection;
 using FubuLocalization;
+using FubuValidation.Tests.Models;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuValidation.Tests
 {
@@ -53,6 +56,22 @@ namespace FubuValidation.Tests
             notification
                 .MessagesFor<EntityToValidate>(e => e.Something)
                 .ShouldHaveCount(3);
+        }
+
+        [Test]
+        public void add_child()
+        {
+            var child = new Notification();
+            child.RegisterMessage<ContactModel>(x => x.FirstName, ValidationKeys.REQUIRED);
+            child.RegisterMessage<ContactModel>(x => x.LastName, ValidationKeys.REQUIRED);
+
+            var notification = new Notification(typeof (CompositeModel));
+            var property = ReflectionHelper.GetProperty<CompositeModel>(x => x.Contact);
+
+            notification.AddChild(property, child);
+
+            notification.MessagesFor<CompositeModel>(x => x.Contact.FirstName).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+            notification.MessagesFor<CompositeModel>(x => x.Contact.LastName).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
         }
 
         #region Nested Type: EntityToValidate
