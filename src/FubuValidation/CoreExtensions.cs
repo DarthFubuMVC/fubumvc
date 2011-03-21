@@ -11,7 +11,7 @@ namespace FubuValidation
     {
         public static void Fill<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, KEY key, VALUE value)
         {
-            if(dictionary.ContainsKey(key))
+            if (dictionary.ContainsKey(key))
             {
                 dictionary[key] = value;
                 return;
@@ -48,14 +48,14 @@ namespace FubuValidation
             var actualList = actual.ToArray();
             var expectedList = expected.ToArray();
 
-            if(actualList.Length != expectedList.Length)
+            if (actualList.Length != expectedList.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < actualList.Length; ++i)
+            for (var i = 0; i < actualList.Length; ++i)
             {
-                if(!actualList[i].Equals(expectedList[i]))
+                if (!actualList[i].Equals(expectedList[i]))
                 {
                     return false;
                 }
@@ -66,7 +66,7 @@ namespace FubuValidation
 
         public static bool IsEnumerable(this Type type)
         {
-            return !type.IsString() && typeof(IEnumerable).IsAssignableFrom(type);
+            return !type.IsString() && typeof (IEnumerable).IsAssignableFrom(type);
         }
 
         public static void Each(this NameValueCollection collection, Action<string, string> action)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuLocalization;
 
@@ -9,39 +10,40 @@ namespace FubuValidation
     [Serializable]
     public class NotificationMessage
     {
-        private string _message;
         private readonly List<Accessor> _accessors = new List<Accessor>();
-        private readonly Dictionary<string, string> _messageSubstitutions = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _messageSubstitutions;
+        private readonly Lazy<string> _message;
 
-        public NotificationMessage(StringToken stringToken)
+        private NotificationMessage(StringToken stringToken, Dictionary<string, string> messageSubstitutions)
         {
+            _messageSubstitutions = messageSubstitutions;
             StringToken = stringToken;
-        }
-
-        public string Message
-        {
-            get
+            _message = new Lazy<string>(() =>
             {
-                if(_message == null)
-                {
-                    var localizedMessage = StringToken.ToString();
-                    _message = TemplateParser.Parse(localizedMessage, _messageSubstitutions);
-                }
-
-                return _message;
-            }
+                var localizedMessage = StringToken.ToString();
+                return TemplateParser.Parse(localizedMessage, _messageSubstitutions);
+            });
         }
+
+        public NotificationMessage(StringToken stringToken) : this(stringToken, new Dictionary<string, string>())
+        {
+
+        }
+
+
+
+
 
         public StringToken StringToken { get; private set; }
-        public Accessor[] Accessors { get { return _accessors.ToArray(); } }
-        public IEnumerable<KeyValuePair<string, string>> MessageSubstitutions
+
+        public Accessor[] Accessors
         {
-            get
-            {
-                return _messageSubstitutions
-                    .Keys
-                    .Select(key => new KeyValuePair<string, string>(key, _messageSubstitutions[key]));
-            }
+            get { return _accessors.ToArray(); }
+        }
+
+        public string GetMessage()
+        {
+            return _message.Value;
         }
 
         public void AddAccessor(Accessor accessor)
@@ -49,9 +51,10 @@ namespace FubuValidation
             _accessors.Fill(accessor);
         }
 
-        public void AddSubstitution(string key, string value)
+        public NotificationMessage AddSubstitution(string key, string value)
         {
             _messageSubstitutions.Fill(key, value);
+            return this;
         }
 
         public override bool Equals(object obj)
@@ -67,22 +70,31 @@ namespace FubuValidation
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return Equals(other.Message, Message) && Accessors.IsEqualTo(other.Accessors);
+            return Equals(other.GetMessage(), GetMessage()) && Accessors.IsEqualTo(other.Accessors);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int result = (Accessors != null ? Accessors.GetHashCode() : 0);
-                result = (result*397) ^ (Message != null ? Message.GetHashCode() : 0);
+                var result = (Accessors != null ? Accessors.GetHashCode() : 0);
+                result = (result*397) ^ (GetMessage() != null ? GetMessage().GetHashCode() : 0);
                 return result;
             }
         }
 
         public override string ToString()
         {
-            return Message;
+            return GetMessage();
+        }
+
+        public NotificationMessage Prepend(Accessor accessor)
+        {
+            var prependedAccessors = _accessors.Select(x => x.Prepend(accessor)).ToList();
+            var message = new NotificationMessage(StringToken, _messageSubstitutions);
+            message._accessors.AddRange(prependedAccessors);
+
+            return message;
         }
     }
 }

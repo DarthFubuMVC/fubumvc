@@ -1,12 +1,15 @@
-﻿using FubuValidation.Strategies;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using FubuValidation.Fields;
 
 namespace FubuValidation
 {
-    public class RequiredAttribute : FieldMarkerAttribute
+    public class RequiredAttribute : FieldValidationAttribute
     {
-        public RequiredAttribute()
-            : base(typeof(RequiredFieldStrategy))
+        public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
         {
+            yield return new RequiredFieldRule();
         }
     }
 }

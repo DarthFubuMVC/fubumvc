@@ -110,7 +110,7 @@
     <Compile Include="Binding\ResolveConnectionStringFamily.cs" />
     <Compile Include="Binding\ServiceArguments.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
-    <Compile Include="Binding\TypeDescriptorCache.cs" />
+    <Compile Include="Reflection\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />
     <Compile Include="Binding\ValueConverterRegistry.cs" />
     <Compile Include="BooleanExtensions.cs" />

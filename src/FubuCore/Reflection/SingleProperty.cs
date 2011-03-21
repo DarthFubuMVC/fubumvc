@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -53,6 +54,18 @@ namespace FubuCore.Reflection
 
             var delegateType = typeof(Func<,>).MakeGenericType(typeof(T), typeof(object));
             return (Expression<Func<T, object>>) Expression.Lambda(delegateType, body, parameter);
+        }
+
+        public Accessor Prepend(PropertyInfo property)
+        {
+            return
+                new PropertyChain(new IValueGetter[]
+                                  {new PropertyValueGetter(property), new PropertyValueGetter(_property)});
+        }
+
+        public IEnumerable<IValueGetter> Getters()
+        {
+            yield return new PropertyValueGetter(_property);
         }
 
         public string Name { get { return _property.Name; } }

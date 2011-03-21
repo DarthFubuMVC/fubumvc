@@ -4,8 +4,6 @@ using System.Linq;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuValidation.Registration;
-using FubuValidation.Strategies;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
@@ -19,7 +17,6 @@ namespace FubuValidation.Tests
         {
             Container.Configure(x =>
                                     {
-                                        x.For<IValidationQuery>().Use<ValidationQuery>();
                                         x.For<ITypeResolver>().Use<TypeResolver>();
                                         x.For<IValidationSource>().Add(ctx => ctx.GetInstance<UniquePropertySource>());
                                     });
@@ -37,7 +34,6 @@ namespace FubuValidation.Tests
             var notification = ClassUnderTest.Validate(model);
             notification
                 .MessagesFor<ModelWithUniqueProperty>(m => m.Username)
-                .Messages
                 .ShouldHaveCount(1);
         }
 
@@ -53,7 +49,6 @@ namespace FubuValidation.Tests
             var notification = ClassUnderTest.Validate(model);
             notification
                 .MessagesFor<ModelWithUniqueProperty>(m => m.Username)
-                .Messages
                 .ShouldHaveCount(0);
         }
     }
@@ -103,21 +98,16 @@ namespace FubuValidation.Tests
             _userService = userService;
         }
 
-        public bool AppliesTo(Accessor accessor)
+        public void Validate(ValidationContext context)
         {
-            return _accessor.Equals(accessor);
-        }
-
-        public void Validate(object target, ValidationContext context, Notification notification)
-        {
-            var value = (string)_accessor.GetValue(target);
+            var value = (string)_accessor.GetValue(context.Target);
             if(_userService.ExistsByUsername(value))
             {
                 var token = new ValidationKeys("UNIQUE_USER", "Username {0} is already in use.".ToFormat(FIELD.AsTemplateField()));
                 var msg = new NotificationMessage(token);
                 msg.AddSubstitution(FIELD, value);
 
-                notification.RegisterMessage(_accessor, msg);
+                context.Notification.RegisterMessage(_accessor, msg);
             }
         }
     }

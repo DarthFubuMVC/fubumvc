@@ -1,14 +1,15 @@
-using FubuCore;
-using FubuValidation.Strategies;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using FubuValidation.Fields;
 
 namespace FubuValidation
 {
-    public class CollectionLengthAttribute : FieldMarkerAttribute
+    public class CollectionLengthAttribute : FieldValidationAttribute
     {
         private readonly int _length;
 
-        public CollectionLengthAttribute(int length) 
-            : base(typeof(CollectionLengthValidationStrategy))
+        public CollectionLengthAttribute(int length)
         {
             _length = length;
         }
@@ -18,11 +19,9 @@ namespace FubuValidation
             get { return _length; }
         }
 
-        protected override void visitStrategy(IFieldValidationStrategy strategy)
+        public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
         {
-            strategy
-                .As<CollectionLengthValidationStrategy>()
-                .Length = Length;
+            yield return new CollectionLengthRule(_length);
         }
     }
 }

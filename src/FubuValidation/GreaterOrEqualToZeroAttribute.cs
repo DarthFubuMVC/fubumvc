@@ -1,12 +1,15 @@
-﻿using FubuValidation.Strategies;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using FubuValidation.Fields;
 
 namespace FubuValidation
 {
-    public class GreaterOrEqualToZeroAttribute : FieldMarkerAttribute
+    public class GreaterOrEqualToZeroAttribute : FieldValidationAttribute
     {
-        public GreaterOrEqualToZeroAttribute()
-            : base(typeof(GreaterOrEqualToZeroFieldStrategy))
+        public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
         {
+            yield return new GreaterOrEqualToZeroRule();
         }
     }
 }

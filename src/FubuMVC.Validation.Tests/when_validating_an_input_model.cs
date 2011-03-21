@@ -40,7 +40,7 @@ namespace FubuMVC.Validation.Tests
         {
             var input = new SampleInputModel();
             var notification = new Notification(typeof (SampleInputModel));
-            notification.RegisterMessage<SampleInputModel>(m => m.Field, StringToken.FromKeyString("REQUIRED"), "Field is required");
+            notification.RegisterMessage<SampleInputModel>(m => m.Field, StringToken.FromKeyString("REQUIRED"));
 
             MockFor<IFubuRequest>()
                 .Expect(request => request.Get<SampleInputModel>())

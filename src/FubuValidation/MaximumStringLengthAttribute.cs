@@ -1,14 +1,15 @@
-﻿using FubuCore;
-using FubuValidation.Strategies;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using FubuValidation.Fields;
 
 namespace FubuValidation
 {
-    public class MaximumStringLengthAttribute : FieldMarkerAttribute
+    public class MaximumStringLengthAttribute : FieldValidationAttribute
     {
         private readonly int _length;
 
         public MaximumStringLengthAttribute(int length)
-            : base(typeof(MaximumStringLengthFieldStrategy))
         {
             _length = length;
         }
@@ -18,12 +19,9 @@ namespace FubuValidation
             get { return _length; }
         }
 
-        protected override void visitStrategy(IFieldValidationStrategy strategy)
+        public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
         {
-            // attributes don't allow generics...
-            strategy
-                .As<MaximumStringLengthFieldStrategy>()
-                .Length = Length;
+            yield return new MaximumLengthRule(_length);
         }
     }
 }

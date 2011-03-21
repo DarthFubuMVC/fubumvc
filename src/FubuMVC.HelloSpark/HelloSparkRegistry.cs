@@ -36,10 +36,10 @@ namespace FubuMVC.HelloSpark
 
             });
 
-            this.Validation<ValidationRegistry>(validation => validation
-                                                                  .Failures
-                                                                  .IfModelTypeIs<CreateProductInput>()
-                                                                  .TransferTo<CreateProductRequest>());
+            //this.Validation<ValidationRegistry>(validation => validation
+            //                                                      .Failures
+            //                                                      .IfModelTypeIs<CreateProductInput>()
+            //                                                      .TransferTo<CreateProductRequest>());
 
             Routes
                 .UrlPolicy<HelloSparkUrlPolicy>()

@@ -1,87 +1,81 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuLocalization;
+using System.Linq;
 
 namespace FubuValidation
 {
     public class Notification
     {
-        private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
-        private readonly Cache<Accessor, MessageBag> _bags;
+        // TODO -- make this a list!!
+        private readonly IList<NotificationMessage> _messages = new List<NotificationMessage>();
 
         public Notification()
         {
-            _bags = new Cache<Accessor, MessageBag>
-                        {
-                            OnMissing = (accessor => new MessageBag(accessor))
-                        };
         }
 
         public Notification(Type targetType)
-			: this()
+            : this()
         {
             TargetType = targetType;
         }
 
         public Type TargetType { get; private set; }
 
-        public NotificationMessage[] AllMessages { get { return _messages.ToArray(); } }
-
-        public void Include(Notification notification)
+        public IEnumerable<NotificationMessage> AllMessages
         {
-            _messages.AddRange(notification.AllMessages);
+            get { return _messages; }
+        }
+
+        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> property, StringToken message)
+        {
+            return RegisterMessage(property.ToAccessor(), message);
+        }
+
+        public NotificationMessage RegisterMessage(Accessor accessor, StringToken notificationMessage)
+        {
+            var message = new NotificationMessage(notificationMessage);
+            RegisterMessage(accessor, message);
+
+            return message;
         }
 
         public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
         {
             notificationMessage.AddAccessor(accessor);
-
-            if (!_messages.Contains(notificationMessage))
-            {
-                _messages.Add(notificationMessage);
-                MessagesFor(accessor)
-                    .Add(notificationMessage);
-            }
+            _messages.Fill(notificationMessage);
         }
 
-        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> expression, StringToken token, string messageTemplate)
+        public void AddChild(Accessor accessor, Notification childNotification)
         {
-            return RegisterMessage(expression.ToAccessor(), token, messageTemplate);
+            _messages.AddRange(childNotification.AllMessages.Select(x => x.Prepend(accessor)));
         }
 
-        public NotificationMessage RegisterMessage(Accessor accessor, StringToken token, string messageTemplate)
+        public IEnumerable<NotificationMessage> MessagesFor(Accessor accessor)
         {
-            var notificationMessage = new NotificationMessage(token);
-            RegisterMessage(accessor, notificationMessage);
-            return notificationMessage;
+            return _messages.Where(x => x.Accessors.Contains(accessor));
         }
 
-        public MessageBag MessagesFor(Accessor accessor)
-        {
-            return _bags[accessor];
-        }
-
-        public MessageBag MessagesFor<T>(Expression<Func<T, object>> property)
+        public IEnumerable<NotificationMessage> MessagesFor<T>(Expression<Func<T, object>> property)
         {
             return MessagesFor(property.ToAccessor());
         }
 
-        public void ForEachProperty(Action<MessageBag> action)
-        {
-            _bags.Each(action);
-        }
-
         public bool IsValid()
         {
-            return _messages.Count == 0;
+            return !AllMessages.Any();
         }
 
         public static Notification Valid()
         {
             return new Notification();
         }
+
+
+
     }
 }

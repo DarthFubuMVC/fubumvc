@@ -56,8 +56,6 @@
   <ItemGroup>
     <Compile Include="ConfigureValidationExpression.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
-    <Compile Include="FubuRegistryExtensions.cs" />
-    <Compile Include="HtmlConventionExtensions.cs" />
     <Compile Include="IValidationFailureHandler.cs" />
     <Compile Include="IValidationFailurePolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,9 +67,6 @@
     <Compile Include="ValidationBehavior.cs" />
     <Compile Include="ValidationConvention.cs" />
     <Compile Include="ValidationFailureHandler.cs" />
-    <Compile Include="ValidationFubuRegistryExtension.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
@@ -90,6 +85,7 @@
   <ItemGroup>
     <None Include=".package-manifest" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
@@ -98,7 +94,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56242</DevelopmentServerPort>
+          <DevelopmentServerPort>18912</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

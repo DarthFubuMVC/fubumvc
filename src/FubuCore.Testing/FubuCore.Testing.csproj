@@ -110,8 +110,10 @@
     <Compile Include="Reflection\Expressions\StringEndsWithPropertyOperationTester.cs" />
     <Compile Include="Reflection\Expressions\StringEqualsPropertyOperationTester.cs" />
     <Compile Include="Reflection\Expressions\StringStartsWithPropertyOperationTester.cs" />
+    <Compile Include="Reflection\PropertyChainTester.cs" />
     <Compile Include="Reflection\ReflectionExtensionsTester.cs" />
     <Compile Include="Reflection\ReflectionHelperTester.cs" />
+    <Compile Include="Reflection\SinglePropertyTester.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="StringExtensionsTester.cs" />
     <Compile Include="StringifierTester.cs" />

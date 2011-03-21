@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Content;

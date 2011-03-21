@@ -1,25 +1,24 @@
 using System;
 using System.Collections.Generic;
-using FubuCore;
-using FubuValidation.Registration;
-using FubuValidation.Registration.DSL;
-using FubuValidation.Registration.Policies;
-using FubuValidation.Registration.Sources;
+using System.Linq;
+using System.Reflection;
+using FubuValidation.Fields;
 
 namespace FubuValidation
 {
-    public class ValidationRegistry
+    public interface IValidationRegistration
     {
-        private readonly List<IValidationSource> _sources = new List<IValidationSource>();
-        private readonly List<IValidationPolicy> _policies = new List<IValidationPolicy>();
+        void RegisterFieldRules(IFieldRulesRegistration registration);
+        IEnumerable<IFieldValidationSource> FieldSources();
+    }
 
-        public SourcesExpression Sources { get { return new SourcesExpression(_sources); } }
-        public PoliciesExpression Policies { get { return new PoliciesExpression(_policies); } }
-        public RulesExpression Rules { get { return new RulesExpression(_policies); } }
+    public class ValidationRegistry : IValidationRegistration
+    {
+        private readonly List<IValidationRegistration> _innerRegistrations = new List<IValidationRegistration>();
+        private readonly List<IFieldValidationSource> _sources = new List<IFieldValidationSource>();
 
         public ValidationRegistry()
         {
-            setupDefaults();
         }
 
         public ValidationRegistry(Action<ValidationRegistry> configure)
@@ -28,20 +27,63 @@ namespace FubuValidation
             configure(this);
         }
 
-        private void setupDefaults()
+        public LambdaFieldValidationSource Required
         {
-            Policies
-                .ApplyPolicy<ValidationAttributePolicy>()
-                .ApplyPolicy<EnumerableValidationPolicy>()
-                .ApplyPolicy<ContinuationValidationPolicy>();
-
-            Sources
-                .AddSource(new ValidationPolicySource(_policies));
+            get { return ApplyRule<RequiredFieldRule>(); }
         }
 
-        public IEnumerable<IValidationSource> GetConfiguredSources()
+        public LambdaFieldValidationSource Continue
         {
-            return _sources.ToArray();
+            get { throw new NotImplementedException(); }
+        }
+
+        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
+        {
+            _innerRegistrations.Each(i => i.RegisterFieldRules(registration));
+        }
+
+        IEnumerable<IFieldValidationSource> IValidationRegistration.FieldSources()
+        {
+            return _sources.Union(_innerRegistrations.SelectMany(x => x.FieldSources()));
+        }
+
+        public void FieldSource<T>() where T : IFieldValidationSource, new()
+        {
+            FieldSource(new T());
+        }
+
+        public void FieldSource(IFieldValidationSource source)
+        {
+            _sources.Add(source);
+        }
+
+        public LambdaFieldValidationSource ApplyRule<T>() where T : IFieldValidationRule, new()
+        {
+            return ApplyRule(new T());
+        }
+
+        private LambdaFieldValidationSource applyPolicy(LambdaFieldValidationSource source)
+        {
+            _sources.Add(source);
+            return source;
+        }
+
+        public LambdaFieldValidationSource ApplyRule(IFieldValidationRule rule)
+        {
+            return applyPolicy(new LambdaFieldValidationSource(rule));
+        }
+
+        public LambdaFieldValidationSource ApplyRule(Func<PropertyInfo, IFieldValidationRule> ruleSource)
+        {
+            return applyPolicy(new LambdaFieldValidationSource(ruleSource));
+        }
+
+        public void ForClass<T>(Action<ClassValidationRules<T>> configuration) where T : class
+        {
+            var rules = new ClassValidationRules<T>();
+            configuration(rules);
+
+            _innerRegistrations.Add(rules);
         }
     }
 }
