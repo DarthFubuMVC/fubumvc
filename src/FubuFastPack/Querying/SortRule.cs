@@ -15,7 +15,7 @@ namespace FubuFastPack.Querying
 
         public static SortRule<T> Ascending(Expression<Func<T, object>> property)
         {
-            string fieldName = ReflectionHelper.GetProperty(property).Name;
+            string fieldName = ReflectionHelper.GetAccessor(property).Name;
             return new SortRule<T>() { _ascending = true, _fieldName = fieldName };
         }
 
