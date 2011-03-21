@@ -2,7 +2,6 @@ using System;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Tags;
 using FubuValidation;
-using FubuValidation.Registration;
 using HtmlTags;
 
 namespace FubuMVC.Validation

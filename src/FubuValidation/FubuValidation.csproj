@@ -83,8 +83,6 @@
     <Compile Include="Fields\RequiredFieldRule.cs" />
     <Compile Include="Fields\LambdaFieldValidationSource.cs" />
     <Compile Include="FubuValidationException.cs" />
-    <Compile Include="Registration\Policies\ContinuationValidationPolicy.cs" />
-    <Compile Include="Registration\Policies\EnumerableValidationPolicy.cs" />
     <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
     <Compile Include="GreaterThanZeroAttribute.cs" />
     <Compile Include="IValidationRule.cs" />
@@ -96,16 +94,13 @@
     <Compile Include="TemplateExtensions.cs" />
     <Compile Include="ValidationContext.cs" />
     <Compile Include="RequiredAttribute.cs" />
-    <Compile Include="Registration\Policies\LambdaValidationPolicy.cs" />
     <Compile Include="ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
     <Compile Include="ValidationProvider.cs" />
     <Compile Include="ValidationRegistry.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Registration\DSL\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
