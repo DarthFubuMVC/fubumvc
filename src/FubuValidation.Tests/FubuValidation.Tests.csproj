@@ -57,7 +57,6 @@
     <Compile Include="CompositeModelTests.cs" />
     <Compile Include="ContinuationValidationPolicyTester.cs" />
     <Compile Include="EnumerableValidationPolicyTester.cs" />
-    <Compile Include="ConventionalValidationTests.cs" />
     <Compile Include="Fields\attribute_scanning_tester.cs" />
     <Compile Include="Fields\ConditionalFieldRuleTester.cs" />
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />

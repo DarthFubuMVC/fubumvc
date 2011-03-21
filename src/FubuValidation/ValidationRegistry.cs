@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using FubuCore.Reflection;
-using FubuValidation.Fields;
 using System.Linq;
+using System.Reflection;
+using FubuValidation.Fields;
 
 namespace FubuValidation
 {
@@ -15,8 +14,8 @@ namespace FubuValidation
 
     public class ValidationRegistry : IValidationRegistration
     {
-        private readonly List<IFieldValidationSource> _sources = new List<IFieldValidationSource>();
         private readonly List<IValidationRegistration> _innerRegistrations = new List<IValidationRegistration>();
+        private readonly List<IFieldValidationSource> _sources = new List<IFieldValidationSource>();
 
         public ValidationRegistry()
         {
@@ -28,16 +27,6 @@ namespace FubuValidation
             configure(this);
         }
 
-        public void FieldSource<T>() where T : IFieldValidationSource, new()
-        {
-            FieldSource(new T());
-        }
-
-        public void FieldSource(IFieldValidationSource source)
-        {
-            _sources.Add(source);
-        }
-
         public LambdaFieldValidationSource Required
         {
             get { return ApplyRule<RequiredFieldRule>(); }
@@ -46,6 +35,26 @@ namespace FubuValidation
         public LambdaFieldValidationSource Continue
         {
             get { throw new NotImplementedException(); }
+        }
+
+        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
+        {
+            _innerRegistrations.Each(i => i.RegisterFieldRules(registration));
+        }
+
+        IEnumerable<IFieldValidationSource> IValidationRegistration.FieldSources()
+        {
+            return _sources.Union(_innerRegistrations.SelectMany(x => x.FieldSources()));
+        }
+
+        public void FieldSource<T>() where T : IFieldValidationSource, new()
+        {
+            FieldSource(new T());
+        }
+
+        public void FieldSource(IFieldValidationSource source)
+        {
+            _sources.Add(source);
         }
 
         public LambdaFieldValidationSource ApplyRule<T>() where T : IFieldValidationRule, new()
@@ -75,16 +84,6 @@ namespace FubuValidation
             configuration(rules);
 
             _innerRegistrations.Add(rules);
-        }
-
-        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
-        {
-            _innerRegistrations.Each(i => i.RegisterFieldRules(registration));
-        }
-
-        IEnumerable<IFieldValidationSource> IValidationRegistration.FieldSources()
-        {
-            return _sources.Union(_innerRegistrations.SelectMany(x => x.FieldSources()));
         }
     }
 }
