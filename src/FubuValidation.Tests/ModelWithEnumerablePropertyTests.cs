@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuValidation.Registration;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
@@ -53,8 +54,8 @@ namespace FubuValidation.Tests
             var notification = _provider.Validate(model);
             var messages = notification.AllMessages;
 
-            var country = AccessorFactory.Create<AddressModel>(m => m.Country);
-            var postalCode = AccessorFactory.Create<AddressModel>(m => m.PostalCode);
+            var country = ReflectionHelper.GetAccessor<AddressModel>(m => m.Country);
+            var postalCode = ReflectionHelper.GetAccessor<AddressModel>(m => m.PostalCode);
 
             messages.ShouldContain(m => m.Accessors.Any(a => a.Equals(country)));
             messages.ShouldContain(m => m.Accessors.Any(a => a.Equals(postalCode)));
@@ -71,7 +72,7 @@ namespace FubuValidation.Tests
 
             var notification = _provider.Validate(model);
             var messages = notification.AllMessages;
-            var addresses = AccessorFactory.Create<ContactModel>(m => m.Addresses);
+            var addresses = ReflectionHelper.GetAccessor<ContactModel>(m => m.Addresses);
 
             messages
                 .ShouldContain(m => m.Accessors.Any(a => a.Equals(addresses)));

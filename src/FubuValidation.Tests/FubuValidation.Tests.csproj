@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessorFactory.cs" />
     <Compile Include="ClassValidationRulesTester.cs" />
     <Compile Include="CompositeModelTests.cs" />
     <Compile Include="ContinuationValidationPolicyTester.cs" />

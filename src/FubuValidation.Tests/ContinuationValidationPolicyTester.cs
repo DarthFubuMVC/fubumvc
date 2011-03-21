@@ -1,4 +1,5 @@
-﻿using FubuValidation.Registration.Policies;
+﻿using FubuCore.Reflection;
+using FubuValidation.Registration.Policies;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace FubuValidation.Tests
         [Test]
         public void should_not_match_primitive_properties()
         {
-            var prop = AccessorFactory.Create<CompositeModel>(m => m.Id);
+            var prop = ReflectionHelper.GetAccessor<CompositeModel>(m => m.Id);
 
             _policy
                 .Matches(prop)
@@ -28,7 +29,7 @@ namespace FubuValidation.Tests
         [Test]
         public void should_not_match_enumerable_properties()
         {
-            var prop = AccessorFactory.Create<ContactModel>(m => m.Addresses);
+            var prop = ReflectionHelper.GetAccessor<ContactModel>(m => m.Addresses);
 
             _policy
                 .Matches(prop)
@@ -38,7 +39,7 @@ namespace FubuValidation.Tests
         [Test]
         public void should_not_match_strings()
         {
-            var prop = AccessorFactory.Create<ContactModel>(m => m.FirstName);
+            var prop = ReflectionHelper.GetAccessor<ContactModel>(m => m.FirstName);
             
             _policy
                 .Matches(prop)
@@ -48,7 +49,7 @@ namespace FubuValidation.Tests
         [Test]
         public void should_match_other_types()
         {
-            var prop = AccessorFactory.Create<CompositeModel>(m => m.Contact);
+            var prop = ReflectionHelper.GetAccessor<CompositeModel>(m => m.Contact);
 
             _policy
                 .Matches(prop)

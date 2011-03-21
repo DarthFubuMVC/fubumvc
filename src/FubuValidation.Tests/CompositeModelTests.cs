@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuValidation.Registration;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
@@ -30,7 +31,7 @@ namespace FubuValidation.Tests
             var notification = _provider.Validate(model);
             var messages = notification.AllMessages;
 
-            var firstName = AccessorFactory.Create<ContactModel>(m => m.FirstName);
+            var firstName = ReflectionHelper.GetAccessor<ContactModel>(m => m.FirstName);
             messages.ShouldContain(m => m.Accessors.Any(a => a.Equals(firstName)));
         }
     }
