@@ -5,6 +5,7 @@ using System.Reflection;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
 using FubuValidation.Tests.Fields;
+using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using System.Linq;
 using FubuCore;
@@ -47,6 +48,13 @@ namespace FubuValidation.Tests
             rulesFor(x => x.Address2).Single().ShouldBeOfType<RequiredFieldRule>();
             rulesFor(x => x.Age).Any().ShouldBeFalse();
             rulesFor(x => x.NullableAge).Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void continuation_convention()
+        {
+            theRegistry.Continue.IfPropertyType<ContactModel>();
+            rulesFor(x => x.Contact).Single().ShouldBeOfType<ContinuationFieldRule>();
         }
 
         [Test]
@@ -107,5 +115,7 @@ namespace FubuValidation.Tests
 
         public int Age { get; set; }
         public int? NullableAge { get; set; }
+
+        public ContactModel Contact { get; set; }
     }
 }

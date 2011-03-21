@@ -16,7 +16,7 @@ namespace FubuValidation.Fields
 
         public void Validate()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

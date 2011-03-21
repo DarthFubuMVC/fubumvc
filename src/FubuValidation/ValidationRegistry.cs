@@ -34,7 +34,7 @@ namespace FubuValidation
 
         public LambdaFieldValidationSource Continue
         {
-            get { throw new NotImplementedException(); }
+            get { return ApplyRule<ContinuationFieldRule>(); }
         }
 
         void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
