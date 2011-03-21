@@ -9,6 +9,7 @@ using FubuCore.Util;
 using FubuFastPack.Domain;
 using FubuFastPack.Querying;
 using FubuLocalization;
+using FubuMVC.Core;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 
@@ -22,12 +23,12 @@ namespace FubuFastPack.JqGrid
         private readonly ISmartRequest _request;
         private readonly IEnumerable<IGridPolicy> _globalPolicies;
         private readonly IServiceLocator _services;
-        private readonly IUrlRegistry _urls;
+        private readonly IEndpointService _endpointService;
 
-        public SmartGridHarness(IServiceLocator services, IUrlRegistry urls, IQueryService queryService, ISmartRequest request, IEnumerable<IGridPolicy> globalPolicies)
+        public SmartGridHarness(IServiceLocator services, IEndpointService endpointService, IQueryService queryService, ISmartRequest request, IEnumerable<IGridPolicy> globalPolicies)
         {
             _services = services;
-            _urls = urls;
+            _endpointService = endpointService;
             _queryService = queryService;
             _request = request;
             _globalPolicies = globalPolicies;
@@ -126,7 +127,7 @@ namespace FubuFastPack.JqGrid
 
         public string GetUrl()
         {
-            var url = _urls.UrlFor(new GridRequest<T>());
+            var url = _endpointService.EndpointFor(new GridRequest<T>()).Url;
 
             url += GetQuerystring();
 
@@ -301,15 +302,26 @@ namespace FubuFastPack.JqGrid
             };
 
             model.AddCriterion(grid.InitialCriteria());
-
-            if (grid.Definition.AllowCreationOfNew)
-            {
-                model.NewEntityText = StringToken.FromKeyString("CREATE_NEW_" + grid.EntityType.Name.ToUpper()).ToString();
-                model.NewEntityUrl = _urls.UrlForNew(grid.EntityType);
-            }
-
+            
+            setupCreateNewProperties(grid, model);
 
             return model;
+        }
+
+        private void setupCreateNewProperties(T grid, GridViewModel model)
+        {
+            if (!grid.Definition.AllowCreationOfNew) return;
+
+            var endpoint = _endpointService.EndpointForNew(grid.EntityType);
+
+            if (!endpoint.IsAuthorized)
+            {
+                model.AllowCreateNew = false;
+                return;
+            }
+            
+            model.NewEntityText = StringToken.FromKeyString("CREATE_NEW_" + grid.EntityType.Name.ToUpper()).ToString();
+            model.NewEntityUrl = endpoint.Url;
         }
 
         public void RegisterArguments(params object[] arguments)

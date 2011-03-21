@@ -4,6 +4,7 @@ using FubuCore.Reflection;
 using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
 using FubuLocalization;
+using FubuMVC.Core;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests;
 using FubuTestApplication.Domain;
@@ -65,14 +66,14 @@ namespace FubuFastPack.Testing.jqGrid
     [TestFixture]
     public class when_building_the_grid_model
     {
-        private StubUrlRegistry urls;
+        private IEndpointService endpoints;
         private InMemorySmartRequest request;
         private QueryService queryService;
 
         [SetUp]
         public void SetUp()
         {
-            urls = new StubUrlRegistry();
+            endpoints = MockRepository.GenerateMock<IEndpointService>();
             request = new InMemorySmartRequest();
             queryService = new QueryService(new IFilterHandler[0]);
         }
@@ -80,7 +81,10 @@ namespace FubuFastPack.Testing.jqGrid
 
         private ISmartGridHarness harnessFor<T>() where T : ISmartGrid
         {
-            return new SmartGridHarness<T>(null, urls, queryService, request, new IGridPolicy[0]);
+            var endpoint = new Endpoint { IsAuthorized = true, Url = "some url" };
+            endpoints.Stub(e => e.EndpointFor(Arg<GridRequest<T>>.Is.Anything)).Return(endpoint);
+            endpoints.Stub(e => e.EndpointForNew(Arg<Type>.Is.Anything)).Return(endpoint);
+            return new SmartGridHarness<T>(null, endpoints, queryService, request, new IGridPolicy[0]);
         }
 
         [Test]
@@ -152,7 +156,28 @@ namespace FubuFastPack.Testing.jqGrid
         {
             var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
             model.NewEntityText.ShouldEqual(StringToken.FromKeyString("CREATE_NEW_" + typeof(Case).Name.ToUpper()).ToString());
-            model.NewEntityUrl.ShouldEqual(urls.UrlForNew(typeof (Case)));
+            model.NewEntityUrl.ShouldEqual("some url");
+        }
+
+        [Test]
+        public void allow_creation_is_true_but_endpoint_is_not_authorized_so_no_new_entity_values()
+        {
+            var newEndpoint = new Endpoint { Url = "my url", IsAuthorized = false };
+            endpoints.Stub(e => e.EndpointForNew(typeof(Case))).Return(newEndpoint);
+            var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
+
+            model.NewEntityText.ShouldBeNull();
+            model.NewEntityUrl.ShouldBeNull();
+        }
+
+        [Test]
+        public void allow_creation_is_true_but_endpoint_is_not_authorized_so_allow_creation_is_overriden()
+        {
+            var newEndpoint = new Endpoint { Url = "my url", IsAuthorized = false };
+            endpoints.Stub(e => e.EndpointForNew(typeof(Case))).Return(newEndpoint);
+            var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
+
+            model.AllowCreateNew.ShouldBeFalse();
         }
 
         [Test]
@@ -163,7 +188,6 @@ namespace FubuFastPack.Testing.jqGrid
             model.InitialCriteria().Any(x => x.property == "CaseType").ShouldBeTrue();
         }
     }
-
 
     public class CriteriaGrid : ProjectionGrid<Case>
     {
