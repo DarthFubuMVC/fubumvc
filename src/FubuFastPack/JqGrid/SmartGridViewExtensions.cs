@@ -74,7 +74,11 @@ namespace FubuFastPack.JqGrid
         public static HtmlTag DisabledSmartGridFor<TGrid>(this IFubuPage page, int? initialRows) where TGrid : ISmartGrid
         {
             var tag = page.SmartGridFor<TGrid>(initialRows, h => { });
-            tag.FirstChild().MetaData("disabled", true);
+            var grid = tag.FirstChild();
+            if (grid != null)
+            {
+                grid.MetaData("disabled", true);
+            }
             return tag;
         }
 
