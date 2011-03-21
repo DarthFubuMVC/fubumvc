@@ -67,7 +67,6 @@
     <Compile Include="ContinueValidationAttribute.cs" />
     <Compile Include="Fields\ConditionalFieldRule.cs" />
     <Compile Include="CoreExtensions.cs" />
-    <Compile Include="EnumerableValidationRule.cs" />
     <Compile Include="Fields\AttributeFieldValidationSource.cs" />
     <Compile Include="Fields\ClassFieldValidationRules.cs" />
     <Compile Include="Fields\CollectionLengthRule.cs" />
