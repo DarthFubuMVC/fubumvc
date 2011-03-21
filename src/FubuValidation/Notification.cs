@@ -50,9 +50,9 @@ namespace FubuValidation
             _messages.Fill(notificationMessage);
         }
 
-        public void AddChild(PropertyInfo property, Notification child)
+        public void AddChild(Accessor accessor, Notification childNotification)
         {
-            _messages.AddRange(child.AllMessages.Select(x => x.Prepend(property)));
+            _messages.AddRange(childNotification.AllMessages.Select(x => x.Prepend(accessor)));
         }
 
         public IEnumerable<NotificationMessage> MessagesFor(Accessor accessor)
@@ -74,6 +74,7 @@ namespace FubuValidation
         {
             return new Notification();
         }
+
 
 
     }

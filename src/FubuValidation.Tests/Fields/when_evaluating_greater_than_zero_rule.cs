@@ -25,7 +25,7 @@ namespace FubuValidation.Tests.Fields
         public void should_register_message_if_value_is_less_than_zero()
         {
             theModel.GreaterThanZero = -1;
-            theRule.Validate(theModel, x => x.GreaterThanZero)
+            theRule.ValidateProperty(theModel, x => x.GreaterThanZero)
                 .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Select(x => x.StringToken).ShouldHaveTheSameElementsAs(ValidationKeys.GREATER_THAN_ZERO);
         }
 
@@ -33,7 +33,7 @@ namespace FubuValidation.Tests.Fields
         public void should_register_a_message_if_value_is_zero()
         {
             theModel.GreaterThanZero = 0;
-            theRule.Validate(theModel, x => x.GreaterThanZero)
+            theRule.ValidateProperty(theModel, x => x.GreaterThanZero)
                 .MessagesFor<SimpleModel>(x => x.GreaterThanZero)
                 .Select(x => x.StringToken).ShouldHaveTheSameElementsAs(ValidationKeys.GREATER_THAN_ZERO);
         }
@@ -42,7 +42,7 @@ namespace FubuValidation.Tests.Fields
         public void should_not_register_a_message_if_value_is_greater_than_zero()
         {
             theModel.GreaterThanZero = 10;
-            theRule.Validate(theModel, x => x.GreaterThanZero)
+            theRule.ValidateProperty(theModel, x => x.GreaterThanZero)
                 .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Any().ShouldBeFalse();
         }
     }

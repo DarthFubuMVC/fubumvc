@@ -13,7 +13,7 @@ namespace FubuValidation.Fields
 
         public void Validate(ValidationContext context)
         {
-            throw new NotImplementedException();
+            _rules.Each((accessor, rules) => rules.Each(rule => rule.Validate(accessor, context)));
         }
 
         public void AddRule(Accessor accessor, IFieldValidationRule rule)

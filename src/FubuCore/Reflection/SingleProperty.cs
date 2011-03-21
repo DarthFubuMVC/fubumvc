@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -60,6 +61,11 @@ namespace FubuCore.Reflection
             return
                 new PropertyChain(new IValueGetter[]
                                   {new PropertyValueGetter(property), new PropertyValueGetter(_property)});
+        }
+
+        public IEnumerable<IValueGetter> Getters()
+        {
+            yield return new PropertyValueGetter(_property);
         }
 
         public string Name { get { return _property.Name; } }

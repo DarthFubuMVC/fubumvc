@@ -17,7 +17,7 @@ namespace FubuValidation.Tests.Fields
         [SetUp]
         public void SetUp()
         {
-            theRegistry = new FieldRulesRegistry(new IFieldValidationSource[]{new AttributeFieldValidationSource()},
+            theRegistry = new FieldRulesRegistry(new IFieldValidationSource[0],
                                                  new TypeDescriptorCache());
 
             theRules = theRegistry.RulesFor<AttributeScanningTarget>();

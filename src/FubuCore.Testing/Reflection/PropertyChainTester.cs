@@ -48,6 +48,56 @@ namespace FubuCore.Testing.Reflection
             prependedAccessor.GetValue(target).ShouldEqual(new DateTime(1974, 1, 1));
         }
 
+        [Test]
+        public void prepend_accessor()
+        {
+            var top = ReflectionHelper.GetAccessor<Target>(x => x.Child);
+            var accessor = ReflectionHelper.GetAccessor<ChildTarget>(x => x.GrandChild.BirthDay);
+            var prependedAccessor = accessor.Prepend(top);
+
+            prependedAccessor.PropertyNames.ShouldHaveTheSameElementsAs("Child", "GrandChild", "BirthDay");
+
+            prependedAccessor.ShouldBeOfType<PropertyChain>();
+
+            var target = new Target()
+            {
+                Child = new ChildTarget()
+                {
+                    GrandChild = new GrandChildTarget()
+                    {
+                        BirthDay = new DateTime(1974, 1, 1)
+                    }
+                }
+            };
+
+            prependedAccessor.GetValue(target).ShouldEqual(new DateTime(1974, 1, 1));
+        }
+
+        [Test]
+        public void prepend_accessor_2()
+        {
+            var top = ReflectionHelper.GetAccessor<Target>(x => x.Child.GrandChild);
+            var accessor = ReflectionHelper.GetAccessor<GrandChildTarget>(x => x.BirthDay);
+            var prependedAccessor = accessor.Prepend(top);
+
+            prependedAccessor.PropertyNames.ShouldHaveTheSameElementsAs("Child", "GrandChild", "BirthDay");
+
+            prependedAccessor.ShouldBeOfType<PropertyChain>();
+
+            var target = new Target()
+            {
+                Child = new ChildTarget()
+                {
+                    GrandChild = new GrandChildTarget()
+                    {
+                        BirthDay = new DateTime(1974, 1, 1)
+                    }
+                }
+            };
+
+            prependedAccessor.GetValue(target).ShouldEqual(new DateTime(1974, 1, 1));
+        }
+
         private PropertyChain _chain;
 
         public class Target

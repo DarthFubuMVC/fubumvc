@@ -26,7 +26,7 @@ namespace FubuValidation.Tests.Fields
         public void should_not_register_a_message_if_property_is_valid()
         {
             theTarget.Address1 = "1234 Test Lane";
-            theRule.Validate(theTarget, x => x.Address1)
+            theRule.ValidateProperty(theTarget, x => x.Address1)
                 .MessagesFor<AddressModel>(x => x.Address1).Any().ShouldBeFalse();
         }
 
@@ -34,7 +34,7 @@ namespace FubuValidation.Tests.Fields
         public void should_register_message_if_string_value_is_empty()
         {
             theTarget.Address1 = "";
-            theRule.Validate(theTarget, x => x.Address1)
+            theRule.ValidateProperty(theTarget, x => x.Address1)
                 .MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(
                     ValidationKeys.REQUIRED);
         }
@@ -43,7 +43,7 @@ namespace FubuValidation.Tests.Fields
         public void should_register_message_if_value_is_null()
         {
             theTarget.Address1 = null;
-            theRule.Validate(theTarget, x => x.Address1)
+            theRule.ValidateProperty(theTarget, x => x.Address1)
                 .MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(
                     ValidationKeys.REQUIRED);
         }

@@ -33,7 +33,7 @@ namespace FubuValidation.Tests
             message.AddAccessor(ReflectionHelper.GetAccessor<ContactModel>(x => x.FirstName));
             message.AddAccessor(ReflectionHelper.GetAccessor<ContactModel>(x => x.LastName));
 
-            var property = ReflectionHelper.GetProperty<CompositeModel>(x => x.Contact);
+            var property = ReflectionHelper.GetAccessor<CompositeModel>(x => x.Contact);
 
             var prepended = message.Prepend(property);
 

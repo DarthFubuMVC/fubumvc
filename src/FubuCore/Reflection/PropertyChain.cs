@@ -122,6 +122,11 @@ namespace FubuCore.Reflection
             return new PropertyChain(list.ToArray());
         }
 
+        public IEnumerable<IValueGetter> Getters()
+        {
+            return _valueGetters;
+        }
+
         public IValueGetter[] ValueGetters { get { return _valueGetters; } }
 
 

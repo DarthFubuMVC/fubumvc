@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuValidation
@@ -9,6 +10,7 @@ namespace FubuValidation
         private readonly Notification _notification;
         private readonly IValidationProvider _provider;
         private readonly object _target;
+        private ITypeResolver _resolver;
 
         public ValidationContext(IValidationProvider provider, Notification notification, object target)
         {
@@ -37,6 +39,12 @@ namespace FubuValidation
             get { return _target; }
         }
 
+        public ITypeResolver Resolver
+        {
+            get { return _resolver ?? new TypeResolver(); }
+            set { _resolver = value; }
+        }
+
         public T GetFieldValue<T>(Accessor accessor)
         {
             var rawValue = accessor.GetValue(_target);
@@ -44,6 +52,18 @@ namespace FubuValidation
 
             var converter = TypeDescriptor.GetConverter(typeof (T));
             return (T) converter.ConvertFrom(rawValue);
+        }
+
+        
+        public void ContinueValidation(Accessor accessor)
+        {
+            var childTarget = accessor.GetValue(_target);
+            if (childTarget == null) return;
+
+
+
+            var childNotification = Provider.Validate(childTarget);
+            Notification.AddChild(accessor, childNotification);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace FubuValidation.Fields
 {
     public static class FieldValidationRuleExtensions
     {
-        public static Notification Validate<T>(this IFieldValidationRule rule, T target,
+        public static Notification ValidateProperty<T>(this IFieldValidationRule rule, T target,
                                                Expression<Func<T, object>> property)
         {
             var notification = new Notification(typeof (T));

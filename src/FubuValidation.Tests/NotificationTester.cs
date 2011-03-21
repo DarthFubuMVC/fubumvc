@@ -66,7 +66,7 @@ namespace FubuValidation.Tests
             child.RegisterMessage<ContactModel>(x => x.LastName, ValidationKeys.REQUIRED);
 
             var notification = new Notification(typeof (CompositeModel));
-            var property = ReflectionHelper.GetProperty<CompositeModel>(x => x.Contact);
+            var property = ReflectionHelper.GetAccessor<CompositeModel>(x => x.Contact);
 
             notification.AddChild(property, child);
 

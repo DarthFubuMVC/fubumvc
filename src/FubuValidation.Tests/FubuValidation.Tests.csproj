@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassValidationRulesTester.cs" />
-    <Compile Include="CompositeModelTests.cs" />
+    <Compile Include="ContinuationRuleTester.cs" />
     <Compile Include="Fields\attribute_scanning_tester.cs" />
     <Compile Include="Fields\ConditionalFieldRuleTester.cs" />
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />

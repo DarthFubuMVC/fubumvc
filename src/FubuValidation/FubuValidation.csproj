@@ -64,13 +64,14 @@
     </Compile>
     <Compile Include="ClassValidationRules.cs" />
     <Compile Include="CollectionLengthAttribute.cs" />
+    <Compile Include="ContinueValidationAttribute.cs" />
     <Compile Include="Fields\ConditionalFieldRule.cs" />
-    <Compile Include="ContinuationValidationRule.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="EnumerableValidationRule.cs" />
     <Compile Include="Fields\AttributeFieldValidationSource.cs" />
     <Compile Include="Fields\ClassFieldValidationRules.cs" />
     <Compile Include="Fields\CollectionLengthRule.cs" />
+    <Compile Include="Fields\ContinuationFieldRule.cs" />
     <Compile Include="Fields\FieldRulesRegistry.cs" />
     <Compile Include="Fields\FieldValidationAttribute.cs" />
     <Compile Include="Fields\FieldValidationRuleExtensions.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="FubuValidationException.cs" />
     <Compile Include="GreaterOrEqualToZeroAttribute.cs" />
     <Compile Include="GreaterThanZeroAttribute.cs" />
+    <Compile Include="IValidated.cs" />
     <Compile Include="IValidationRule.cs" />
     <Compile Include="IValidationSource.cs" />
     <Compile Include="IValidationProvider.cs" />

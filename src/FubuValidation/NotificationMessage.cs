@@ -88,9 +88,9 @@ namespace FubuValidation
             return GetMessage();
         }
 
-        public NotificationMessage Prepend(PropertyInfo property)
+        public NotificationMessage Prepend(Accessor accessor)
         {
-            var prependedAccessors = _accessors.Select(x => x.Prepend(property)).ToList();
+            var prependedAccessors = _accessors.Select(x => x.Prepend(accessor)).ToList();
             var message = new NotificationMessage(StringToken, _messageSubstitutions);
             message._accessors.AddRange(prependedAccessors);
 

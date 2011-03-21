@@ -13,9 +13,9 @@ namespace FubuValidation.Fields
     }
 
     // TODO -- needs to be registered as a singleton
-    public class FieldRulesRegistry : IFieldRulesRegistry, IFieldRulesRegistration
+    public class FieldRulesRegistry : IFieldRulesRegistry, IFieldRulesRegistration, IValidationSource
     {
-        private readonly IEnumerable<IFieldValidationSource> _sources;
+        private readonly IList<IFieldValidationSource> _sources;
         private readonly ITypeDescriptorCache _typeDescriptors;
 
         private readonly Cache<Type, ClassFieldValidationRules> _typeRules =
@@ -23,7 +23,10 @@ namespace FubuValidation.Fields
 
         public FieldRulesRegistry(IEnumerable<IFieldValidationSource> sources, ITypeDescriptorCache typeDescriptors)
         {
-            _sources = sources;
+            _sources = new List<IFieldValidationSource>(sources){
+                new AttributeFieldValidationSource()
+            };
+
             _typeDescriptors = typeDescriptors;
             _typeRules.OnMissing = findRules;
         }
@@ -47,16 +50,15 @@ namespace FubuValidation.Fields
             return _typeRules[typeof (T)];
         }
 
+        IEnumerable<IValidationRule> IValidationSource.RulesFor(Type type)
+        {
+            yield return RulesFor(type);
+        }
+
         public ClassFieldValidationRules RulesFor(Type type)
         {
             return _typeRules[type];
         }
-
-
-        //public void AddRule(Type type, Accessor accessor, IFieldValidationRule rule)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public bool HasRule<T>(Accessor accessor) where T : IFieldValidationRule
         {

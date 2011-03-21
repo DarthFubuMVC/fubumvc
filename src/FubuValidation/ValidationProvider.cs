@@ -6,13 +6,13 @@ namespace FubuValidation
 {
     public class ValidationProvider : IValidationProvider
     {
-        private readonly IEnumerable<IValidationSource> _sources;
+        private readonly IList<IValidationSource> _sources;
         private readonly ITypeResolver _typeResolver;
 
         public ValidationProvider(ITypeResolver typeResolver, IEnumerable<IValidationSource> sources)
         {
             _typeResolver = typeResolver;
-            _sources = sources;
+            _sources = new List<IValidationSource>(sources);
         }
 
         public Notification Validate(object target)
@@ -27,7 +27,8 @@ namespace FubuValidation
         {
             var validatedType = _typeResolver.ResolveType(target);
             var context = new ValidationContext(this, notification, target){
-                TargetType = validatedType
+                TargetType = validatedType,
+                Resolver = _typeResolver
             };
 
             _sources.SelectMany(x => x.RulesFor(validatedType))

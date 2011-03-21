@@ -17,7 +17,7 @@ namespace FubuValidation.Tests.Fields
             };
 
             var rule = new CollectionLengthRule(1);
-            rule.Validate(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Any().ShouldBeFalse();
+            rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Any().ShouldBeFalse();
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace FubuValidation.Tests.Fields
             };
 
             var rule = new CollectionLengthRule(1);
-            rule.Validate(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
+            rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
                 .ShouldEqual("Must be exactly 1 element(s)"); 
         }
 
@@ -41,7 +41,7 @@ namespace FubuValidation.Tests.Fields
             };
 
             var rule = new CollectionLengthRule(1);
-            rule.Validate(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
+            rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
                 .ShouldEqual("Must be exactly 1 element(s)");
         }
 
@@ -55,7 +55,7 @@ namespace FubuValidation.Tests.Fields
             };
 
             var rule = new CollectionLengthRule(2);
-            rule.Validate(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
+            rule.ValidateProperty(target, x => x.Names).MessagesFor<CollectionLengthTarget>(x => x.Names).Single().GetMessage()
                 .ShouldEqual("Must be exactly 2 element(s)");
         }
     }
