@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="ConfigureValidationExpression.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
-    <Compile Include="HtmlConventionExtensions.cs" />
     <Compile Include="IValidationFailureHandler.cs" />
     <Compile Include="IValidationFailurePolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
