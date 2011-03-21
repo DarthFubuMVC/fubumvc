@@ -13,6 +13,7 @@ namespace FubuValidation
         {
             _typeResolver = typeResolver;
             _sources = new List<IValidationSource>(sources);
+            _sources.Add(new SelfValidatingClassRuleSource());
         }
 
         public Notification Validate(object target)
