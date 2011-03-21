@@ -62,7 +62,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ClassValidationRules.cs" />
     <Compile Include="CollectionLengthAttribute.cs" />
+    <Compile Include="Fields\ConditionalFieldRule.cs" />
     <Compile Include="ContinuationValidationRule.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="EnumerableValidationRule.cs" />
@@ -90,12 +92,11 @@
     <Compile Include="MessageBag.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
-    <Compile Include="Strategies\ValidationStrategyContext.cs" />
     <Compile Include="TemplateExtensions.cs" />
     <Compile Include="ValidationContext.cs" />
     <Compile Include="RequiredAttribute.cs" />
     <Compile Include="Registration\Policies\LambdaValidationPolicy.cs" />
-    <Compile Include="Strategies\ValidationKeys.cs" />
+    <Compile Include="ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
     <Compile Include="ValidationProvider.cs" />

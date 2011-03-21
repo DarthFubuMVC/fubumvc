@@ -5,7 +5,6 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuValidation.Registration;
-using FubuValidation.Strategies;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;

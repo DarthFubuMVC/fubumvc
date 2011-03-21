@@ -2,7 +2,7 @@
 using FubuLocalization;
 using FubuValidation.Fields;
 
-namespace FubuValidation.Strategies
+namespace FubuValidation
 {
     public class ValidationKeys : StringToken
     {

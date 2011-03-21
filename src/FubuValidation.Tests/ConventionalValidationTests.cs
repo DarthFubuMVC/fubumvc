@@ -1,7 +1,6 @@
 using System.Linq;
 using FubuCore;
 using FubuValidation.Registration;
-using FubuValidation.Strategies;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
 

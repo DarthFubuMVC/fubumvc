@@ -1,5 +1,4 @@
 ﻿using FubuCore.Reflection;
-using FubuValidation.Strategies;
 
 namespace FubuValidation.Fields
 {
@@ -26,6 +25,26 @@ namespace FubuValidation.Fields
                 context.Notification.RegisterMessage(accessor, ValidationKeys.MAX_LENGTH)
                     .AddSubstitution(LENGTH, _length.ToString());
             }
+        }
+
+        public bool Equals(MaximumLengthRule other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other._length == _length;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (MaximumLengthRule)) return false;
+            return Equals((MaximumLengthRule) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _length;
         }
     }
 }

@@ -53,11 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessorFactory.cs" />
+    <Compile Include="ClassValidationRulesTester.cs" />
     <Compile Include="CompositeModelTests.cs" />
     <Compile Include="ContinuationValidationPolicyTester.cs" />
     <Compile Include="EnumerableValidationPolicyTester.cs" />
     <Compile Include="ConventionalValidationTests.cs" />
     <Compile Include="Fields\attribute_scanning_tester.cs" />
+    <Compile Include="Fields\ConditionalFieldRuleTester.cs" />
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
     <Compile Include="Fields\when_validating_required_fields.cs" />
