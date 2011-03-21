@@ -48,6 +48,8 @@ namespace FubuMVC.Core.Packaging
                 filePattern = dirParts.Last();
             }
 
+            if (!Directory.Exists(folderPath)) return;
+
             Directory.GetFiles(folderPath, filePattern, SearchOption.AllDirectories).Each(fileName =>
             {
                 var name = fileName.PathRelativeTo(folderPath);

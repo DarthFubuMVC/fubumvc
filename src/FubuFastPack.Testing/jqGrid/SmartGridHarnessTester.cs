@@ -4,6 +4,7 @@ using FubuCore.Reflection;
 using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
 using FubuLocalization;
+using FubuMVC.Core;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests;
 using FubuTestApplication.Domain;
@@ -17,14 +18,6 @@ namespace FubuFastPack.Testing.jqGrid
     [TestFixture]
     public class smart_grid_harness_with_no_grid_args_ : InteractionContext<SmartGridHarness<NoArgGrid>>
     {
-        private StubUrlRegistry urls;
-
-        protected override void beforeEach()
-        {
-            urls = new StubUrlRegistry();
-            Services.Inject<IUrlRegistry>(urls);
-        }
-
         [Test]
         public void string_arguments_should_be_empty()
         {
@@ -34,7 +27,12 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void url_on_the_model_has_no_query_string()
         {
-            var url = urls.UrlFor(new GridRequest<NoArgGrid>());
+            const string url = "endpoint url";
+            var endpoint = new Endpoint { Url = url };
+
+            MockFor<IEndpointService>()
+                .Stub(x => x.EndpointFor(Arg<GridRequest<NoArgGrid>>.Is.Anything))
+                .Return(endpoint);
             ClassUnderTest.BuildJqModel().url.ShouldEqual(url);
         }
 
@@ -65,14 +63,14 @@ namespace FubuFastPack.Testing.jqGrid
     [TestFixture]
     public class when_building_the_grid_model
     {
-        private StubUrlRegistry urls;
+        private IEndpointService endpoints;
         private InMemorySmartRequest request;
         private QueryService queryService;
 
         [SetUp]
         public void SetUp()
         {
-            urls = new StubUrlRegistry();
+            endpoints = MockRepository.GenerateMock<IEndpointService>();
             request = new InMemorySmartRequest();
             queryService = new QueryService(new IFilterHandler[0]);
         }
@@ -80,7 +78,10 @@ namespace FubuFastPack.Testing.jqGrid
 
         private ISmartGridHarness harnessFor<T>() where T : ISmartGrid
         {
-            return new SmartGridHarness<T>(null, urls, queryService, request, new IGridPolicy[0]);
+            var endpoint = new Endpoint { IsAuthorized = true, Url = "some url" };
+            endpoints.Stub(e => e.EndpointFor(Arg<GridRequest<T>>.Is.Anything)).Return(endpoint);
+            endpoints.Stub(e => e.EndpointForNew(Arg<Type>.Is.Anything)).Return(endpoint);
+            return new SmartGridHarness<T>(null, endpoints, queryService, request, new IGridPolicy[0]);
         }
 
         [Test]
@@ -152,7 +153,28 @@ namespace FubuFastPack.Testing.jqGrid
         {
             var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
             model.NewEntityText.ShouldEqual(StringToken.FromKeyString("CREATE_NEW_" + typeof(Case).Name.ToUpper()).ToString());
-            model.NewEntityUrl.ShouldEqual(urls.UrlForNew(typeof (Case)));
+            model.NewEntityUrl.ShouldEqual("some url");
+        }
+
+        [Test]
+        public void allow_creation_is_true_but_endpoint_is_not_authorized_so_no_new_entity_values()
+        {
+            var newEndpoint = new Endpoint { Url = "my url", IsAuthorized = false };
+            endpoints.Stub(e => e.EndpointForNew(typeof(Case))).Return(newEndpoint);
+            var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
+
+            model.NewEntityText.ShouldBeNull();
+            model.NewEntityUrl.ShouldBeNull();
+        }
+
+        [Test]
+        public void allow_creation_is_true_but_endpoint_is_not_authorized_so_allow_creation_is_overriden()
+        {
+            var newEndpoint = new Endpoint { Url = "my url", IsAuthorized = false };
+            endpoints.Stub(e => e.EndpointForNew(typeof(Case))).Return(newEndpoint);
+            var model = harnessFor<CanCreateNewGrid>().BuildGridModel(null);
+
+            model.AllowCreateNew.ShouldBeFalse();
         }
 
         [Test]
@@ -163,7 +185,6 @@ namespace FubuFastPack.Testing.jqGrid
             model.InitialCriteria().Any(x => x.property == "CaseType").ShouldBeTrue();
         }
     }
-
 
     public class CriteriaGrid : ProjectionGrid<Case>
     {
@@ -209,14 +230,6 @@ namespace FubuFastPack.Testing.jqGrid
     [TestFixture]
     public class smart_grid_harness_with_a_single_entity_arg : InteractionContext<SmartGridHarness<EntityArgGrid>>
     {
-        private StubUrlRegistry urls;
-
-        protected override void beforeEach()
-        {
-            urls = new StubUrlRegistry();
-            Services.Inject<IUrlRegistry>(urls);
-        }
-
         [Test]
         public void get_arguments_as_string_should_convert_entity_to_the_id_string()
         {
@@ -250,8 +263,14 @@ namespace FubuFastPack.Testing.jqGrid
 
             MockFor<ISmartRequest>().Stub(x => x.Value(typeof (Person), "person")).Return(person);
 
-            var url = urls.UrlFor(new GridRequest<EntityArgGrid>());
-            url += "?person=" + person.Id.ToString();
+            var url = "endpoint url";
+            var endpoint = new Endpoint { Url = url };
+
+            MockFor<IEndpointService>()
+                .Stub(x => x.EndpointFor(Arg<GridRequest<EntityArgGrid>>.Is.Anything))
+                .Return(endpoint);
+
+            url += "?person=" + person.Id;
 
             ClassUnderTest.GetUrl().ShouldEqual(url);
         }
@@ -296,15 +315,7 @@ namespace FubuFastPack.Testing.jqGrid
     [TestFixture]
     public class smart_grid_harness_with_a_single_simple_arg : InteractionContext<SmartGridHarness<StringArgGrid>>
     {
-        private StubUrlRegistry urls;
-
-        protected override void beforeEach()
-        {
-            urls = new StubUrlRegistry();
-            Services.Inject<IUrlRegistry>(urls);
-        }
-
-        [Test]
+       [Test]
         public void get_arguments_as_string_array()
         {
             ClassUnderTest.RegisterArgument("title", "the title");
@@ -318,20 +329,31 @@ namespace FubuFastPack.Testing.jqGrid
             var theTitle = "something";
             MockFor<ISmartRequest>().Stub(x => x.Value(typeof (string), "title")).Return(theTitle);
 
-            var url = urls.UrlFor(new GridRequest<StringArgGrid>());
+            var url = "endpoint url";
+            var endpoint = new Endpoint { Url = url };
+
+            MockFor<IEndpointService>()
+                .Stub(x => x.EndpointFor(Arg<GridRequest<StringArgGrid>>.Is.Anything))
+                .Return(endpoint);
+
             url += "?title=" + theTitle;
 
             ClassUnderTest.GetUrl().ShouldEqual(url);
         }
-
-
+        
         [Test]
         public void url_on_the_model_has_a_query_string_for_the_title_arg_is_url_encoded()
         {
             var theTitle = "something else";
             MockFor<ISmartRequest>().Stub(x => x.Value(typeof(string), "title")).Return(theTitle);
 
-            var url = urls.UrlFor(new GridRequest<StringArgGrid>());
+            var url = "endpoint url";
+            var endpoint = new Endpoint { Url = url };
+
+            MockFor<IEndpointService>()
+                .Stub(x => x.EndpointFor(Arg<GridRequest<StringArgGrid>>.Is.Anything))
+                .Return(endpoint);
+
             url += "?title=" + theTitle.UrlEncoded();
 
             ClassUnderTest.GetUrl().ShouldEqual(url);
@@ -350,14 +372,6 @@ namespace FubuFastPack.Testing.jqGrid
     [TestFixture]
     public class smart_grid_harness_for_a_grid_with_multiple_args : InteractionContext<SmartGridHarness<MultiArgGrid>>
     {
-        private StubUrlRegistry urls;
-
-        protected override void beforeEach()
-        {
-            urls = new StubUrlRegistry();
-            Services.Inject<IUrlRegistry>(urls);
-        }
-
         [Test]
         public void url_on_the_model_has_a_query_string_for_both_the_person_and_the_title_arg()
         {
@@ -372,8 +386,14 @@ namespace FubuFastPack.Testing.jqGrid
             var theTitle = "something";
             MockFor<ISmartRequest>().Stub(x => x.Value(typeof(string), "title")).Return(theTitle);
 
-            var url = urls.UrlFor(new GridRequest<MultiArgGrid>());
-            url += "?person=" + person.Id.ToString();
+            var url = "endpoint url";
+            var endpoint = new Endpoint {Url = url};
+            
+            MockFor<IEndpointService>()
+                .Stub(x => x.EndpointFor(Arg<GridRequest<MultiArgGrid>>.Is.Anything))
+                .Return(endpoint);
+            
+            url += "?person=" + person.Id;
             url += "&title=" + theTitle;
 
             ClassUnderTest.GetUrl().ShouldEqual(url);
