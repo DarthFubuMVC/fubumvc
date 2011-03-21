@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+	<Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Routing" />
@@ -41,6 +41,7 @@
     <Reference Include="HtmlTags, Version=0.8.0.0, Culture=neutral, PublicKeyToken=null">
 		<SpecificVersion>False</SpecificVersion>
 		<HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
+
     </Reference>
     <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4">
       <HintPath>..\..\lib\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
