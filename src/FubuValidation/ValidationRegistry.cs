@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
 
@@ -10,41 +9,6 @@ namespace FubuValidation
     {
         void RegisterFieldRules(IFieldRulesRegistration registration);
         IEnumerable<IFieldValidationSource> FieldSources();
-    }
-
-    public class LambdaFieldValidationSource : IFieldValidationSource
-    {
-        private readonly Func<PropertyInfo, IFieldValidationRule> _ruleSource;
-
-        public LambdaFieldValidationSource(IFieldValidationRule rule)
-        {
-            _ruleSource = prop => rule;
-        }
-
-        public LambdaFieldValidationSource(Func<PropertyInfo, IFieldValidationRule> ruleSource)
-        {
-            _ruleSource = ruleSource;
-        }
-
-        IEnumerable<IFieldValidationRule> IFieldValidationSource.RulesFor(PropertyInfo property)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void If(Func<Accessor, bool> filter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void IfPropertyType<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void IfPropertyType(Func<Type, bool> filter)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class ValidationRegistry : IValidationRegistration

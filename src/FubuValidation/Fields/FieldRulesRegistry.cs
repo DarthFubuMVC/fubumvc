@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuCore.Util;
 
@@ -75,6 +76,18 @@ namespace FubuValidation.Fields
         public void Register(Type type, Accessor accessor, IFieldValidationRule rule)
         {
             RulesFor(type).AddRule(accessor, rule);
+        }
+
+        /// <summary>
+        /// Convenience method to quickly examine all the validation rules
+        /// for a given type and accessor
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public IEnumerable<IFieldValidationRule> RulesFor<T>(Expression<Func<T, object>> expression)
+        {
+            return RulesFor<T>().RulesFor(expression.ToAccessor());
         }
     }
 }

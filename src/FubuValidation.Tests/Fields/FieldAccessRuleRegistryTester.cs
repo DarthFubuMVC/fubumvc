@@ -141,6 +141,11 @@ namespace FubuValidation.Tests.Fields
             var holder = new PropertyHolder(property);
             return _rules[holder];
         }
+
+        public void Validate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

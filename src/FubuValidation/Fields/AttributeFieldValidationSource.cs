@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FubuCore.Reflection;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace FubuValidation.Fields
         {
             return property.GetAllAttributes<FieldValidationAttribute>()
                 .SelectMany(x => x.RulesFor(property));
+        }
+
+        public void Validate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

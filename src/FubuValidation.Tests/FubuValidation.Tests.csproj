@@ -61,6 +61,7 @@
     <Compile Include="Fields\attribute_scanning_tester.cs" />
     <Compile Include="Fields\ConditionalFieldRuleTester.cs" />
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />
+    <Compile Include="Fields\LambdaFieldValidationSourceTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
     <Compile Include="Fields\when_validating_required_fields.cs" />
     <Compile Include="Models\CompositeModel.cs" />
