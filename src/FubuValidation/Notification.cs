@@ -4,20 +4,16 @@ using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuLocalization;
+using System.Linq;
 
 namespace FubuValidation
 {
     public class Notification
     {
-        // TODO -- does MessageBag deserve to live?
-        private readonly Cache<Accessor, MessageBag> _bags;
-        private readonly List<NotificationMessage> _messages = new List<NotificationMessage>();
+        private readonly Cache<Accessor, IList<NotificationMessage>> _messages = new Cache<Accessor, IList<NotificationMessage>>(a => new List<NotificationMessage>());
 
         public Notification()
         {
-            _bags = new Cache<Accessor, MessageBag>{
-                OnMissing = (accessor => new MessageBag(accessor))
-            };
         }
 
         public Notification(Type targetType)
@@ -28,64 +24,14 @@ namespace FubuValidation
 
         public Type TargetType { get; private set; }
 
-        public NotificationMessage[] AllMessages
+        public IEnumerable<NotificationMessage> AllMessages
         {
-            get { return _messages.ToArray(); }
+            get { return _messages.GetAll().SelectMany(x => x); }
         }
 
-        public void Include(Notification notification)
+        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> property, StringToken message)
         {
-            _messages.AddRange(notification.AllMessages);
-        }
-
-        public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
-        {
-            notificationMessage.AddAccessor(accessor);
-
-            if (!_messages.Contains(notificationMessage))
-            {
-                _messages.Add(notificationMessage);
-                MessagesFor(accessor)
-                    .Add(notificationMessage);
-            }
-        }
-
-        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> expression, StringToken token,
-                                                      string messageTemplate)
-        {
-            return RegisterMessage(expression.ToAccessor(), token, messageTemplate);
-        }
-
-        public NotificationMessage RegisterMessage(Accessor accessor, StringToken token, string messageTemplate)
-        {
-            var notificationMessage = new NotificationMessage(token);
-            RegisterMessage(accessor, notificationMessage);
-            return notificationMessage;
-        }
-
-        public MessageBag MessagesFor(Accessor accessor)
-        {
-            return _bags[accessor];
-        }
-
-        public MessageBag MessagesFor<T>(Expression<Func<T, object>> property)
-        {
-            return MessagesFor(property.ToAccessor());
-        }
-
-        public void ForEachProperty(Action<MessageBag> action)
-        {
-            _bags.Each(action);
-        }
-
-        public bool IsValid()
-        {
-            return _messages.Count == 0;
-        }
-
-        public static Notification Valid()
-        {
-            return new Notification();
+            return RegisterMessage(property.ToAccessor(), message);
         }
 
         public NotificationMessage RegisterMessage(Accessor accessor, StringToken notificationMessage)
@@ -95,5 +41,33 @@ namespace FubuValidation
 
             return message;
         }
+
+        public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
+        {
+            notificationMessage.AddAccessor(accessor);
+            _messages[accessor].Fill(notificationMessage);
+        }
+
+        public IEnumerable<NotificationMessage> MessagesFor(Accessor accessor)
+        {
+            return _messages[accessor];
+        }
+
+        public IEnumerable<NotificationMessage> MessagesFor<T>(Expression<Func<T, object>> property)
+        {
+            return MessagesFor(property.ToAccessor());
+        }
+
+        public bool IsValid()
+        {
+            return !AllMessages.Any();
+        }
+
+        public static Notification Valid()
+        {
+            return new Notification();
+        }
+
+
     }
 }

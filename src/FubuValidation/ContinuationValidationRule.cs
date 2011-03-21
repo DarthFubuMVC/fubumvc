@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System;
+using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuValidation
@@ -25,7 +26,8 @@ namespace FubuValidation
                 .Provider
                 .Validate(targetValue, childNotification);
 
-            context.Notification.Include(childNotification);
+            throw new NotImplementedException();
+            //context.Notification.Include(childNotification);
         }
     }
 }

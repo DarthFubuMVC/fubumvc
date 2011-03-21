@@ -35,7 +35,6 @@ namespace FubuValidation.Tests
             var notification = ClassUnderTest.Validate(model);
             notification
                 .MessagesFor<ModelWithUniqueProperty>(m => m.Username)
-                .Messages
                 .ShouldHaveCount(1);
         }
 
@@ -51,7 +50,6 @@ namespace FubuValidation.Tests
             var notification = ClassUnderTest.Validate(model);
             notification
                 .MessagesFor<ModelWithUniqueProperty>(m => m.Username)
-                .Messages
                 .ShouldHaveCount(0);
         }
     }

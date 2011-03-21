@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
@@ -28,7 +29,9 @@ namespace FubuValidation
             var childNotification = new Notification(targetType);
 
             values.Each(value => context.Provider.Validate(value, childNotification));
-            context.Notification.Include(childNotification);
+            
+            throw new NotImplementedException();
+            //context.Notification.Include(childNotification);
         }
     }
 }

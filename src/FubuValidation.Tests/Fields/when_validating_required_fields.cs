@@ -27,7 +27,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Address1 = "1234 Test Lane";
             theRule.Validate(theTarget, x => x.Address1)
-                .MessagesFor<AddressModel>(x => x.Address1).Messages.Any().ShouldBeFalse();
+                .MessagesFor<AddressModel>(x => x.Address1).Any().ShouldBeFalse();
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Address1 = "";
             theRule.Validate(theTarget, x => x.Address1)
-                .MessagesFor<AddressModel>(x => x.Address1).Messages.Single().StringToken.ShouldEqual(
+                .MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(
                     ValidationKeys.REQUIRED);
         }
 
@@ -44,7 +44,7 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Address1 = null;
             theRule.Validate(theTarget, x => x.Address1)
-                .MessagesFor<AddressModel>(x => x.Address1).Messages.Single().StringToken.ShouldEqual(
+                .MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(
                     ValidationKeys.REQUIRED);
         }
     }

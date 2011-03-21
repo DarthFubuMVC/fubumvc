@@ -91,7 +91,6 @@
     <Compile Include="IValidationSource.cs" />
     <Compile Include="IValidationProvider.cs" />
     <Compile Include="MaximumStringLengthAttribute.cs" />
-    <Compile Include="MessageBag.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
     <Compile Include="TemplateExtensions.cs" />

@@ -10,11 +10,11 @@ namespace FubuValidation.Tests
         public void should_ignore_duplicates()
         {
             var notification = new Notification();
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"), "message");
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"), "message");
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"), "message");
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"), "message");
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"), "message");
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"));
 
             notification
                 .AllMessages
@@ -34,7 +34,7 @@ namespace FubuValidation.Tests
         public void should_be_invalid_if_any_messages_are_registered()
         {
             var notification = new Notification();
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"), "message");
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test"));
 
             notification
                 .IsValid()
@@ -45,14 +45,13 @@ namespace FubuValidation.Tests
         public void should_return_registered_messages()
         {
             var notification = new Notification();
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test1"), "message1");
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test2"), "message2");
-            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test3"), "message3");
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test1"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test2"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test3"));
 
 
             notification
                 .MessagesFor<EntityToValidate>(e => e.Something)
-                .Messages
                 .ShouldHaveCount(3);
         }
 

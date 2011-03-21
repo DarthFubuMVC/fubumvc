@@ -26,8 +26,7 @@ namespace FubuValidation.Tests.Fields
         {
             theModel.GreaterThanZero = -1;
             theRule.Validate(theModel, x => x.GreaterThanZero)
-                .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Messages
-                .Select(x => x.StringToken).ShouldHaveTheSameElementsAs(ValidationKeys.GREATER_THAN_ZERO);
+                .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Select(x => x.StringToken).ShouldHaveTheSameElementsAs(ValidationKeys.GREATER_THAN_ZERO);
         }
 
         [Test]
@@ -35,7 +34,7 @@ namespace FubuValidation.Tests.Fields
         {
             theModel.GreaterThanZero = 0;
             theRule.Validate(theModel, x => x.GreaterThanZero)
-                .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Messages
+                .MessagesFor<SimpleModel>(x => x.GreaterThanZero)
                 .Select(x => x.StringToken).ShouldHaveTheSameElementsAs(ValidationKeys.GREATER_THAN_ZERO);
         }
 
@@ -44,7 +43,7 @@ namespace FubuValidation.Tests.Fields
         {
             theModel.GreaterThanZero = 10;
             theRule.Validate(theModel, x => x.GreaterThanZero)
-                .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Messages.ShouldBeEmpty();
+                .MessagesFor<SimpleModel>(x => x.GreaterThanZero).Any().ShouldBeFalse();
         }
     }
 }
