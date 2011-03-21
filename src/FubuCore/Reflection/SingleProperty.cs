@@ -55,6 +55,13 @@ namespace FubuCore.Reflection
             return (Expression<Func<T, object>>) Expression.Lambda(delegateType, body, parameter);
         }
 
+        public Accessor Prepend(PropertyInfo property)
+        {
+            return
+                new PropertyChain(new IValueGetter[]
+                                  {new PropertyValueGetter(property), new PropertyValueGetter(_property)});
+        }
+
         public string Name { get { return _property.Name; } }
 
         public virtual void SetValue(object target, object propertyValue)

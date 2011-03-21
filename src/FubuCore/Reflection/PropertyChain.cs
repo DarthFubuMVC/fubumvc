@@ -112,6 +112,16 @@ namespace FubuCore.Reflection
             return (Expression<Func<T, object>>) Expression.Lambda(delegateType, body, parameter);
         }
 
+        public Accessor Prepend(PropertyInfo property)
+        {
+            var list = new List<IValueGetter>{
+                new PropertyValueGetter(property)
+            };
+            list.AddRange(_valueGetters);
+
+            return new PropertyChain(list.ToArray());
+        }
+
         public IValueGetter[] ValueGetters { get { return _valueGetters; } }
 
 

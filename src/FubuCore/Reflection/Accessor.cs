@@ -21,5 +21,7 @@ namespace FubuCore.Reflection
         string[] PropertyNames { get; }
 
         Expression<Func<T, object>> ToExpression<T>();
+
+        Accessor Prepend(PropertyInfo property);
     }
 }
