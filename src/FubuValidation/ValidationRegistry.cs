@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
+using System.Linq;
 
 namespace FubuValidation
 {
@@ -13,7 +15,8 @@ namespace FubuValidation
 
     public class ValidationRegistry : IValidationRegistration
     {
-        private readonly List<IValidationSource> _sources = new List<IValidationSource>();
+        private readonly List<IFieldValidationSource> _sources = new List<IFieldValidationSource>();
+        private readonly List<IValidationRegistration> _innerRegistrations = new List<IValidationRegistration>();
 
         public ValidationRegistry()
         {
@@ -27,17 +30,17 @@ namespace FubuValidation
 
         public void FieldSource<T>() where T : IFieldValidationSource, new()
         {
-            throw new NotImplementedException();
+            FieldSource(new T());
         }
 
         public void FieldSource(IFieldValidationSource source)
         {
-            throw new NotImplementedException();
+            _sources.Add(source);
         }
 
         public LambdaFieldValidationSource Required
         {
-            get { throw new NotImplementedException(); }
+            get { return ApplyRule<RequiredFieldRule>(); }
         }
 
         public LambdaFieldValidationSource Continue
@@ -47,32 +50,41 @@ namespace FubuValidation
 
         public LambdaFieldValidationSource ApplyRule<T>() where T : IFieldValidationRule, new()
         {
-            throw new NotImplementedException();
+            return ApplyRule(new T());
+        }
+
+        private LambdaFieldValidationSource applyPolicy(LambdaFieldValidationSource source)
+        {
+            _sources.Add(source);
+            return source;
         }
 
         public LambdaFieldValidationSource ApplyRule(IFieldValidationRule rule)
         {
-            throw new NotImplementedException();
+            return applyPolicy(new LambdaFieldValidationSource(rule));
         }
 
-        public LambdaFieldValidationSource ApplyRule(Func<Accessor, IFieldValidationRule> ruleSource)
+        public LambdaFieldValidationSource ApplyRule(Func<PropertyInfo, IFieldValidationRule> ruleSource)
         {
-            throw new NotImplementedException();
+            return applyPolicy(new LambdaFieldValidationSource(ruleSource));
+        }
+
+        public void ForClass<T>(Action<ClassValidationRules<T>> configuration) where T : class
+        {
+            var rules = new ClassValidationRules<T>();
+            configuration(rules);
+
+            _innerRegistrations.Add(rules);
         }
 
         void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
         {
-            throw new NotImplementedException();
+            _innerRegistrations.Each(i => i.RegisterFieldRules(registration));
         }
 
         IEnumerable<IFieldValidationSource> IValidationRegistration.FieldSources()
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<IValidationSource> GetConfiguredSources()
-        {
-            return _sources.ToArray();
+            return _sources.Union(_innerRegistrations.SelectMany(x => x.FieldSources()));
         }
     }
 }

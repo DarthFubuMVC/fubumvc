@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="ConfigureValidationExpression.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
-    <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="HtmlConventionExtensions.cs" />
     <Compile Include="IValidationFailureHandler.cs" />
     <Compile Include="IValidationFailurePolicy.cs" />
@@ -69,9 +68,6 @@
     <Compile Include="ValidationBehavior.cs" />
     <Compile Include="ValidationConvention.cs" />
     <Compile Include="ValidationFailureHandler.cs" />
-    <Compile Include="ValidationFubuRegistryExtension.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
