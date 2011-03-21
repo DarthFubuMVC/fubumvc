@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuLocalization;
@@ -46,6 +47,12 @@ namespace FubuValidation
         {
             notificationMessage.AddAccessor(accessor);
             _messages[accessor].Fill(notificationMessage);
+        }
+
+        public void AddChild(PropertyInfo property, Notification child)
+        {
+
+            throw new NotImplementedException();
         }
 
         public IEnumerable<NotificationMessage> MessagesFor(Accessor accessor)

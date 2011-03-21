@@ -69,6 +69,7 @@
     <Compile Include="InteractionContext.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\SimpleModel.cs" />
+    <Compile Include="NotificationMessageTester.cs" />
     <Compile Include="NotificationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceWithDependenciesTest.cs" />

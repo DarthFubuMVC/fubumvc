@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuLocalization;
 
@@ -10,13 +11,27 @@ namespace FubuValidation
     public class NotificationMessage
     {
         private readonly List<Accessor> _accessors = new List<Accessor>();
-        private readonly Dictionary<string, string> _messageSubstitutions = new Dictionary<string, string>();
-        private string _message;
+        private readonly Dictionary<string, string> _messageSubstitutions;
+        private readonly Lazy<string> _message;
 
-        public NotificationMessage(StringToken stringToken)
+        private NotificationMessage(StringToken stringToken, Dictionary<string, string> messageSubstitutions)
         {
+            _messageSubstitutions = messageSubstitutions;
             StringToken = stringToken;
+            _message = new Lazy<string>(() =>
+            {
+                var localizedMessage = StringToken.ToString();
+                return TemplateParser.Parse(localizedMessage, _messageSubstitutions);
+            });
         }
+
+        public NotificationMessage(StringToken stringToken) : this(stringToken, new Dictionary<string, string>())
+        {
+
+        }
+
+
+
 
 
         public StringToken StringToken { get; private set; }
@@ -26,25 +41,9 @@ namespace FubuValidation
             get { return _accessors.ToArray(); }
         }
 
-        public IEnumerable<KeyValuePair<string, string>> MessageSubstitutions
-        {
-            get
-            {
-                return _messageSubstitutions
-                    .Keys
-                    .Select(key => new KeyValuePair<string, string>(key, _messageSubstitutions[key]));
-            }
-        }
-
         public string GetMessage()
         {
-            if (_message == null)
-            {
-                var localizedMessage = StringToken.ToString();
-                _message = TemplateParser.Parse(localizedMessage, _messageSubstitutions);
-            }
-
-            return _message;
+            return _message.Value;
         }
 
         public void AddAccessor(Accessor accessor)
@@ -52,9 +51,10 @@ namespace FubuValidation
             _accessors.Fill(accessor);
         }
 
-        public void AddSubstitution(string key, string value)
+        public NotificationMessage AddSubstitution(string key, string value)
         {
             _messageSubstitutions.Fill(key, value);
+            return this;
         }
 
         public override bool Equals(object obj)
@@ -86,6 +86,15 @@ namespace FubuValidation
         public override string ToString()
         {
             return GetMessage();
+        }
+
+        public NotificationMessage Prepend(PropertyInfo property)
+        {
+            var prependedAccessors = _accessors.Select(x => x.Prepend(property)).ToList();
+            var message = new NotificationMessage(StringToken, _messageSubstitutions);
+            message._accessors.AddRange(prependedAccessors);
+
+            return message;
         }
     }
 }
