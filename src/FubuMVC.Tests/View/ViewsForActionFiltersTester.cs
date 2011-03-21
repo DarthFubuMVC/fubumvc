@@ -158,7 +158,7 @@ namespace FubuMVC.Tests.View
 
         public override string ToString()
         {
-            return Name;
+            return Name ?? string.Empty;
         }
     }
 

@@ -25,7 +25,7 @@ namespace FubuCore.Testing.Binding
 
         [Test]
         public void value_returns_value_for_key()
-        {ResolveConnectionStringFamily family = new ResolveConnectionStringFamily();
+        {
             IDictionary<string, object> dictionary = new Dictionary<string, object> { { "UserAgent", _expectedValue } };
             RequestData data = RequestData.ForDictionary(dictionary);
             data.Value("UserAgent").ShouldEqual(_expectedValue);

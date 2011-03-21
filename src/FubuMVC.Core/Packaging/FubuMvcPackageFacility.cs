@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.Hosting;
 using System.Web.Routing;
 using FubuCore;
@@ -65,7 +66,7 @@ namespace FubuMVC.Core.Packaging
             var basePath = AppDomain.CurrentDomain.BaseDirectory;
             if (basePath.EndsWith("bin"))
             {
-                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd('/').TrimEnd('\\');
+                basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd(Path.DirectorySeparatorChar);
             }
 
             return basePath;

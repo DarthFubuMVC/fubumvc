@@ -201,7 +201,7 @@ namespace FubuCore.Testing.Reflection
         public void propertyChain_hashcode()
         {
             var chain = (PropertyChain)ReflectionHelper.GetAccessor<Target>(t => t.Child.Age);
-            chain.GetHashCode().ShouldBeGreaterThan(0);
+            chain.GetHashCode().ShouldNotEqual(0);
         }
 
         [Test]

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FubuMVC.Core;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging;
@@ -33,9 +34,8 @@ namespace FubuMVC.Tests.Content
         [Test]
         public void should_have_added_the_image_content_folder_of_the_2_packages_that_do_have_content_folders()
         {
-            MockFor<IContentFolderService>().AssertWasCalled(x => x.RegisterDirectory("folder1\\content"));
-            MockFor<IContentFolderService>().AssertWasCalled(x => x.RegisterDirectory("folder3\\content"));
+            MockFor<IContentFolderService>().AssertWasCalled(x => x.RegisterDirectory(Path.Combine("folder1", "content")));
+            MockFor<IContentFolderService>().AssertWasCalled(x => x.RegisterDirectory(Path.Combine("folder3", "content")));
         }
-
     }
 }

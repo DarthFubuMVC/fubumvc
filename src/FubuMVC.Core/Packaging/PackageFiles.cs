@@ -27,23 +27,33 @@ namespace FubuMVC.Core.Packaging
         {
             _directories.WithValue(folderName, onFound);
         }
-
-        public void ForData(string searchPattern, Action<string, Stream> dataCallback)
+		
+		public void ForData(string searchPattern, Action<string, Stream> dataCallback)
         {
-            // Guard clause for the folder not existing
-            var dirParts = searchPattern.Replace('\\', '/').Split('/');
-            var dataFolderPath = _directories[FubuMvcPackages.DataFolder].ToFullPath();
+            var dirParts = searchPattern.Split(Path.DirectorySeparatorChar);
+
+            var folderPath = _directories[FubuMvcPackages.DataFolder].ToFullPath();
+            var filePattern = searchPattern;
+
             if (dirParts.Count() > 1)
             {
-                var rootDir = dirParts.Take(dirParts.Length - 1).Join("/");
-                if (rootDir.IsNotEmpty() && !Directory.Exists(FileSystem.Combine(dataFolderPath, rootDir))) return;
+                var rootDir = dirParts.Take(dirParts.Length - 1).Join(Path.DirectorySeparatorChar.ToString());
+                folderPath = FileSystem.Combine(folderPath, rootDir);
+
+                if (rootDir.IsNotEmpty() && !Directory.Exists(folderPath))
+                {
+                    return;
+                }
+
+                filePattern = dirParts.Last();
             }
 
-            Directory.GetFiles(dataFolderPath, searchPattern, SearchOption.AllDirectories).Each(fileName =>
+            Directory.GetFiles(folderPath, filePattern, SearchOption.AllDirectories).Each(fileName =>
             {
-                var name = fileName.PathRelativeTo(dataFolderPath).Replace("\\", "/");
+                var name = fileName.PathRelativeTo(folderPath);
                 using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                 {
+
                     dataCallback(name, stream);
                 }
             });

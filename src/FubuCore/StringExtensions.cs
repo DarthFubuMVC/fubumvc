@@ -17,8 +17,8 @@ namespace FubuCore
 
         public static string PathRelativeTo(this string path, string root)
         {
-            var pathParts = path.ToLower().Replace('/', '\\').Split('\\').ToList();
-            var rootParts = root.ToLower().Replace('/', '\\').Split('\\').ToList();
+            var pathParts = path.Split(Path.DirectorySeparatorChar).ToList();
+            var rootParts = root.Split(Path.DirectorySeparatorChar).ToList();
 
             var length = pathParts.Count > rootParts.Count ? rootParts.Count : pathParts.Count;
             for (int i = 0; i < length; i++)

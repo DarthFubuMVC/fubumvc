@@ -1,23 +1,41 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuCore.Testing
 {
     [TestFixture]
     public class FileSystemTester
-    {
+    {      
+        private string fullPath(params string[] paths)
+        {
+            return Path.GetFullPath(paths.Join(Path.DirectorySeparatorChar.ToString()));
+        }
+
         [Test]
         public void get_relative_path()
         {
-            @"c:\a\b\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("1.bat");
-            @"c:\a\b\c\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual(@"c\1.bat");
-            @"c:\a\b\c\d\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual(@"c\d\1.bat");
-            @"c:\a\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual(@"..\1.bat");
-            @"c:\a\1.bat".PathRelativeTo(@"c:\a\b\c").ShouldEqual(@"..\..\1.bat");
-            @"c:\a\1.bat".PathRelativeTo(@"c:\a\b\c\d").ShouldEqual(@"..\..\..\1.bat");
-            @"c:\A\b\1.bat".PathRelativeTo(@"c:\a\b").ShouldEqual("1.bat");
+            fullPath("a", "b", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("1.bat");
+
+            fullPath("a", "b", "c", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("c{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "b", "c", "d", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("c{0}d{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "1.bat").PathRelativeTo(fullPath("a", "b"))
+                .ShouldEqual("..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "1.bat").PathRelativeTo(fullPath("a", "b", "c"))
+                .ShouldEqual("..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("a", "1.bat").PathRelativeTo(fullPath("a", "b", "c", "d"))
+                .ShouldEqual("..{0}..{0}..{0}1.bat".ToFormat(Path.DirectorySeparatorChar));
+
+            fullPath("A", "b", "1.bat").PathRelativeTo(fullPath("A", "b"))
+                .ShouldEqual("1.bat");
         }
 
         [Test]
@@ -29,31 +47,32 @@ namespace FubuCore.Testing
         [Test]
         public void combine_with_two_values()
         {
-            FileSystem.Combine("a", "b").ShouldEqual("a\\b");
+            FileSystem.Combine("a", "b").ShouldEqual("a{0}b".ToFormat(Path.DirectorySeparatorChar));
         }
 
         [Test]
         public void combine_with_three_values()
         {
-            FileSystem.Combine("a", "b", "c").ShouldEqual("a\\b\\c");
+            FileSystem.Combine("a", "b", "c").ShouldEqual("a{0}b{0}c".ToFormat(Path.DirectorySeparatorChar));
         }
 
         [Test]
         public void combine_with_four_values()
         {
-            FileSystem.Combine("a", "b", "c", "d").ShouldEqual("a\\b\\c\\d");
+            FileSystem.Combine("a", "b", "c", "d").ShouldEqual("a{0}b{0}c{0}d".ToFormat(Path.DirectorySeparatorChar));
         }
 
         [Test]
         public void combine_with_rooted_first_value()
         {
-            FileSystem.Combine("\\a", "b", "c").ShouldEqual("\\a\\b\\c");
+            FileSystem.Combine("{0}a".ToFormat(Path.DirectorySeparatorChar), "b", "c").ShouldEqual("{0}a{0}b{0}c".ToFormat(Path.DirectorySeparatorChar));
         }
 
         [Test]
         public void combine_with_trailing_slashes()
         {
-            FileSystem.Combine("a\\", "b", "c\\").ShouldEqual("a\\b\\c\\");
+            FileSystem.Combine("a{0}".ToFormat(Path.DirectorySeparatorChar), "b", "c{0}".ToFormat(Path.DirectorySeparatorChar)).
+				ShouldEqual("a{0}b{0}c{0}".ToFormat(Path.DirectorySeparatorChar));
         }
 
     }

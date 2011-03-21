@@ -103,8 +103,6 @@ namespace FubuCore.Testing
                 City = "Joplin"
             };
 
-            var site = new FakeSite {Billing = address, Shipping = address};
-
             const string expectedDefaultFormatting = "2050 Ozark, Joplin";
             const string expectedOverrideFormatting = "Joplin-2050 Ozark";
             var billingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Billing), address, locator);
@@ -135,7 +133,6 @@ namespace FubuCore.Testing
             });
 
             var address = new Address();
-            var site = new FakeSite { Billing = address, Shipping = address };
 
             var shippingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 
@@ -166,7 +163,6 @@ namespace FubuCore.Testing
             });
 
             var address = new Address();
-            var site = new FakeSite { Billing = address, Shipping = address };
 
             var shippingRequest = new GetStringRequest(ReflectionHelper.GetAccessor<FakeSite>(s => s.Shipping), address, locator);
 

@@ -160,11 +160,8 @@ namespace Fubu
 
         internal static bool checkIfExists(string rootWeb, string virtualDirectory)
         {
-            var directoryEntry = new DirectoryEntry(String.Concat(rootWeb,
-                                                                  "/", virtualDirectory));
             try
             {
-                var name = directoryEntry.Name;
                 return true;
             }
             catch

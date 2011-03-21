@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuMVC.Core.Content;
+using System.IO;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -12,7 +13,7 @@ namespace FubuMVC.Tests.Content
         {
             ClassUnderTest.RegisterDirectory("a");
             ClassUnderTest.RegisterDirectory("b");
-            ClassUnderTest.RegisterDirectory("c\\d");
+            ClassUnderTest.RegisterDirectory(Path.Combine("c", "d"));
 
 
         }
@@ -32,21 +33,21 @@ namespace FubuMVC.Tests.Content
         public void return_the_image_file_found_at_the_first_package()
         {
             hasFile("a", "something.png", ContentType.images);
-            ClassUnderTest.FileNameFor(ContentType.images, "something.png").ShouldEqual("a\\images\\something.png");
+            ClassUnderTest.FileNameFor(ContentType.images, "something.png").ShouldEqual(FileSystem.Combine("a", "images", "something.png"));
         }
 
         [Test]
         public void return_the_image_file_found_at_the_first_package_2()
         {
             hasFile("b", "something.png", ContentType.images);
-            ClassUnderTest.FileNameFor(ContentType.images, "something.png").ShouldEqual("b\\images\\something.png");
+            ClassUnderTest.FileNameFor(ContentType.images, "something.png").ShouldEqual(FileSystem.Combine("b", "images", "something.png"));
         }
 
         [Test]
         public void return_the_image_file_found_at_the_first_package_3()
         {
-            hasFile("c\\d", "something.png", ContentType.images);
-            ClassUnderTest.FileNameFor(ContentType.images, "something.png").ShouldEqual("c\\d\\images\\something.png");
+            hasFile(Path.Combine("c","d"), "something.png", ContentType.images);
+            ClassUnderTest.FileNameFor(ContentType.images, "something.png").ShouldEqual(FileSystem.Combine("c", "d", "images", "something.png"));
         }
 
         [Test]
