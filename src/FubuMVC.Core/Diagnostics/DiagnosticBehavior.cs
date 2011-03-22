@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Diagnostics
         private readonly IUrlRegistry _urls;
 
         public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IActionBehavior inner, IUrlRegistry urls,
-                                  IRequestHistoryService history)
+                                  IRequestHistoryCache history)
         {
             _report = report;
             _detector = detector;

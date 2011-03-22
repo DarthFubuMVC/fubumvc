@@ -98,37 +98,7 @@ namespace FubuMVC.Tests.Registration
                 .ShouldContain(routeDef => routeDef.Pattern == expectedPattern);
         }
 
-        [Test]
-        public void apply_full_tracing_diagnostics_should_put_a_diagnostic_behavior_around_each_chain()
-        {
-            var graph = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
-            graph.Behaviors.Any().ShouldBeTrue();
 
-            graph.Behaviors.Any(x =>
-            {
-                var first = x.FirstOrDefault() as Wrapper;
-                if (first == null) return false;
-
-                return first.BehaviorType == typeof (DiagnosticBehavior);
-            }).ShouldBeFalse();
-
-            graph.ApplyDiagnostics(DiagnosticLevel.FullRequestTracing);
-
-            graph.Behaviors.All(x =>
-            {
-                var first = x.FirstOrDefault() as Wrapper;
-                if (first == null) return false;
-
-                return first.BehaviorType == typeof(DiagnosticBehavior);
-            }).ShouldBeTrue();
-
-            graph.Behaviors.All(x => x.Any(w =>
-            {
-                var wrapper = w as Wrapper;
-                return (wrapper != null && wrapper.BehaviorType == typeof (BehaviorTracer));
-            }));
-            
-        }
 
         public class FakeController
         {

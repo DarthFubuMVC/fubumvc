@@ -4,13 +4,13 @@ using System.Linq;
 namespace FubuMVC.Core.Diagnostics
 {
     // needs to be a singleton
-    public interface IRequestHistoryService
+    public interface IRequestHistoryCache
     {
         void AddReport(IDebugReport report);
         IEnumerable<IDebugReport> RecentReports();
     }
 
-    public class RequestHistoryService : IRequestHistoryService
+    public class RequestHistoryCache : IRequestHistoryCache
     {
         private readonly Queue<IDebugReport> _reports = new Queue<IDebugReport>();
 

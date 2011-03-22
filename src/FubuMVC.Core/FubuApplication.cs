@@ -47,9 +47,9 @@ namespace FubuMVC.Core
             return registerContainerFacilitySource(facilitySource);
         }
 
-        public FubuApplication ApplyDiagnostics()
+        public FubuApplication ApplyDiagnostics(bool applies)
         {
-            _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
+            _diagnosticLevel = applies ? DiagnosticLevel.FullRequestTracing : DiagnosticLevel.None;
             return this;
         }
 
@@ -135,7 +135,6 @@ namespace FubuMVC.Core
         private BehaviorGraph buildBehaviorGraph()
         {
             var graph = registry().BuildGraph();
-            graph.ApplyDiagnostics(_diagnosticLevel);
 
             return graph;
         }

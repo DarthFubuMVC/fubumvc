@@ -260,15 +260,6 @@ namespace FubuMVC.Core.Registration
 
             return chain.UniqueId;
         }
-
-        public void ApplyDiagnostics(DiagnosticLevel diagnosticLevel)
-        {
-            if (diagnosticLevel == DiagnosticLevel.None) return;
-
-            new DiagnosticBehaviorPrepender().Configure(this);
-
-            Behaviors.Each(x => x.WrapWith<DiagnosticBehavior>());
-        }
     }
 
     public class SortByRouteRankIterator : IRouteIterator

@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void only_keeps_50_records()
         {
-            var history = new RequestHistoryService();
+            var history = new RequestHistoryCache();
             for (int i = 0; i < 60; i++)
             {
                 history.AddReport(new DebugReport());
@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void keep_the_newest_reports()
         {
-            var history = new RequestHistoryService();
+            var history = new RequestHistoryCache();
             for (int i = 0; i < 50; i++)
             {
                 history.AddReport(new DebugReport());
