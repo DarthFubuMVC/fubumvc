@@ -28,4 +28,6 @@ namespace FubuMVC.Core.Diagnostics
             return _reports.ToList();
         }
     }
+
+    
 }

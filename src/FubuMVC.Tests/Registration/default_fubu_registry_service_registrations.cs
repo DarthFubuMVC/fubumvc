@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -233,6 +234,12 @@ namespace FubuMVC.Tests.Registration
         public void smart_request_is_registered()
         {
             registeredTypeIs<ISmartRequest, SmartRequest>();
+        }
+
+        [Test]
+        public void request_history_cache_is_registered()
+        {
+            registeredTypeIs<IRequestHistoryCache, RequestHistoryCache>();
         }
     }
 }
