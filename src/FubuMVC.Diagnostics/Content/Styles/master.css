@@ -105,16 +105,24 @@ h1, h2, h3, h4
     margin-bottom:10px;
 }
 
-#filter-dialog #apply-filter
+#filter-dialog button
 {
     width:100%;
 }
 
-#filter-dialog input[type="text"]
+#filter-dialog select, #filter-dialog input[type="text"]
 {
-    width:98%;
-    color:#333;
     font-size: 12px;
     padding: 5px;
     line-height:1.4em;
+    float:left;
+    margin-top:0;
+    margin-right:5px;
+    color:#333;
+}
+
+#filter-dialog input[type="text"]
+{
+    width:350px;
+    margin-right:0px;
 }

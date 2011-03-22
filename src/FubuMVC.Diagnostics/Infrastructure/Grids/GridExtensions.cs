@@ -64,7 +64,7 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids
                               }
 
                               // TODO: We should do some better matching here
-                              if(row.Columns.Any(c => filter.Values.Any(value => c.Value.ToLower().StartsWith(value.ToLower()))))
+                              if(row.Columns.Any(c => filter.Values.Any(value => c.Value.ToLower().Contains(value.ToLower()))))
                               {
                                   filteredRows.Add(row);
                               }

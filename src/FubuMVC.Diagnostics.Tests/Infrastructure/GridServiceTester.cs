@@ -15,13 +15,13 @@ namespace FubuMVC.Diagnostics.Tests.Infrastructure
     {
         private List<JsonGridRow> _rows;
         private SampleGridModel _model;
-        private JsonGridQuery<SampleGridModel> _query;
+        private JsonGridQuery _query;
 
         protected override void beforeEach()
         {
             _rows = new List<JsonGridRow>();
             _model = new SampleGridModel();
-            _query = new JsonGridQuery<SampleGridModel>();
+            _query = new JsonGridQuery();
 
             MockFor<IGridRowBuilder<SampleGridModel>>()
                 .Expect(builder => builder.RowsFor(_model))

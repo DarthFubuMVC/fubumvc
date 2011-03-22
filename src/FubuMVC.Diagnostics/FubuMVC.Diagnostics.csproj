@@ -41,6 +41,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\storyteller\tools\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -64,6 +67,9 @@
     <Content Include="Content\Scripts\core.js" />
     <Content Include="Content\Scripts\jquery\jquery-1.4.4.js" />
     <Content Include="Content\Scripts\jquery\jquery.hotkeys.js" />
+    <Content Include="Content\Scripts\jquery\jquery.tmpl.js" />
+    <Content Include="Content\Scripts\json2.js" />
+    <Content Include="Content\Scripts\knockout-1.1.2.js" />
     <Content Include="Content\Styles\chains\view.css" />
     <Content Include="diagnostics.script.config" />
     <None Include="Views\Chains\Unknown.spark" />
@@ -135,6 +141,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\UnknownChainBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
+    <Compile Include="Infrastructure\JsonService.cs" />
     <Compile Include="Configuration\PartialActionSource.cs" />
     <Compile Include="Configuration\Partials\IPartialDecorator.cs" />
     <Compile Include="Configuration\Partials\IPartialModel.cs" />
@@ -179,6 +186,7 @@
     <Compile Include="Models\Grids\JsonGridColumn.cs" />
     <Compile Include="Models\Grids\JsonGridFilter.cs" />
     <Compile Include="Models\Grids\JsonGridQuery.cs" />
+    <Compile Include="Models\Grids\RouteQuery.cs" />
     <Compile Include="Models\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Models\PackageDiagnosticsModel.cs" />
     <Compile Include="Models\PackageDiagnosticsRequestModel.cs" />

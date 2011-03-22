@@ -11,7 +11,7 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids
             _gridRowBuilder = gridRowBuilder;
         }
 
-        public JsonGridModel GridFor(T target, JsonGridQuery<T> query)
+        public JsonGridModel GridFor(T target, JsonGridQuery query)
         {
             int totalRecords;
             int totalPages;
