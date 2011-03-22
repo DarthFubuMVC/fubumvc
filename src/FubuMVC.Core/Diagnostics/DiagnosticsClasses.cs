@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
@@ -34,13 +35,22 @@ namespace FubuMVC.Core.Diagnostics
 
     public class DiagnosticBehaviorFactory : IBehaviorFactory
     {
-        public DiagnosticBehaviorFactory(IBehaviorFactory inner)
+        private readonly IBehaviorFactory _inner;
+        private readonly IContainerFacility _container;
+
+        public DiagnosticBehaviorFactory(IBehaviorFactory inner, IContainerFacility container)
         {
+            _inner = inner;
+            _container = container;
         }
 
         public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
-            throw new NotImplementedException();
+            var diagnostics = _container.Get<DiagnosticBehavior>();
+            var behavior = _inner.BuildBehavior(arguments, behaviorId);
+            diagnostics.Inner = behavior;
+
+            return diagnostics;
         }
     }
 }

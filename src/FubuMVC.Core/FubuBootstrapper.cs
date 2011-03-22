@@ -43,7 +43,7 @@ namespace FubuMVC.Core
             // IoC container for the application
             var graph = _topRegistry.BuildGraph();
             graph.EachService(_facility.Register);
-            var factory = _facility.BuildFactory();
+            var factory = _facility.BuildFactory(DiagnosticLevel.None);
 
             // Register all the Route objects into the routes 
             // collection

@@ -167,6 +167,7 @@
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="SelfMockingServiceLocator.cs" />
     <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
+    <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\DotNotationNamingConventionTester.cs" />

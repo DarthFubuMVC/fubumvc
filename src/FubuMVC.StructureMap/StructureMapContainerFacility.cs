@@ -7,6 +7,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration;
@@ -42,10 +43,29 @@ namespace FubuMVC.StructureMap
             return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
         }
 
-        public IBehaviorFactory BuildFactory()
+        public IBehaviorFactory BuildFactory(DiagnosticLevel diagnosticLevel)
         {
             _registry.For<IBehaviorFactory>().Use<PartialBehaviorFactory>();
-            _container.Configure(x => { x.AddRegistry(_registry); });
+            _container.Configure(x => x.AddRegistry(_registry));
+
+            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+            {
+                _container.Configure(x =>
+                {
+                    x.For<IActionBehavior>().EnrichAllWith((context, behavior) =>
+                    {
+                        if (behavior is BehaviorTracer || behavior is DiagnosticBehavior) return behavior;
+
+                        var tracer = context.GetInstance<BehaviorTracer>();
+                        tracer.Inner = behavior;
+
+                        return tracer;
+                    });
+
+                    x.For<IDebugReport>().Use<DebugReport>();
+                    x.For<IDebugDetector>().Use<DebugDetector>();
+                });
+            }
 
             if (_initializeSingletonsToWorkAroundSMBug)
             {

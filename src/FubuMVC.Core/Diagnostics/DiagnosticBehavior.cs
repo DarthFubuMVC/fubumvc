@@ -8,7 +8,6 @@ namespace FubuMVC.Core.Diagnostics
     public class DiagnosticBehavior : IActionBehavior
     {
         private readonly IDebugDetector _detector;
-        private IActionBehavior _inner;
         private readonly IDebugReport _report;
         private readonly IUrlRegistry _urls;
 
@@ -22,21 +21,18 @@ namespace FubuMVC.Core.Diagnostics
             history.AddReport(report);
         }
 
-        public void WrapBehavior(IActionBehavior inner)
-        {
-            _inner = inner;
-        }
+        public IActionBehavior Inner { get; set; }
 
         public void Invoke()
         {
-            _inner.Invoke();
+            Inner.Invoke();
 
             write();
         }
 
         public void InvokePartial()
         {
-            _inner.InvokePartial();
+            Inner.InvokePartial();
 
             write();
         }

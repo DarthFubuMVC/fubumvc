@@ -360,7 +360,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.Register(facility.Register);
 
-            facility.BuildFactory();
+            facility.BuildFactory(DiagnosticLevel.None);
 
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
@@ -378,7 +378,7 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.Register(facility.Register);
 
-            facility.BuildFactory();
+            facility.BuildFactory(DiagnosticLevel.None);
 
             Debug.WriteLine(chain.UniqueId);
             Debug.WriteLine(container.WhatDoIHave());

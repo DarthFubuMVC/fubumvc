@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration;
@@ -116,7 +117,11 @@ namespace FubuMVC.Core
                     bakeBehaviorGraphIntoContainer(graph, containerFacility);
 
                     // factory HAS to be spun up here.
-                    factory = containerFacility.BuildFactory();
+                    factory = containerFacility.BuildFactory(_diagnosticLevel);
+                    if (_diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+                    {
+                        factory = new DiagnosticBehaviorFactory(factory, containerFacility);
+                    }
 
                     return containerFacility.GetAllActivators();
                 });
