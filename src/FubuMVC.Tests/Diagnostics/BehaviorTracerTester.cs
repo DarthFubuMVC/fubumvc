@@ -14,6 +14,8 @@ namespace FubuMVC.Tests.Diagnostics
         protected override void beforeEach()
         {
             inner = MockFor<IActionBehavior>();
+            ClassUnderTest.Inner = inner;
+
             ClassUnderTest.Invoke();
         }
 
@@ -50,6 +52,7 @@ namespace FubuMVC.Tests.Diagnostics
             inner.Expect(x => x.Invoke()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
 
+            ClassUnderTest.Inner = inner;
             ClassUnderTest.Invoke();
         }
 
@@ -91,6 +94,8 @@ namespace FubuMVC.Tests.Diagnostics
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
+
+            ClassUnderTest.Inner = inner;
         }
 
         [Test]
@@ -115,6 +120,7 @@ namespace FubuMVC.Tests.Diagnostics
             inner.Expect(x => x.InvokePartial()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
 
+            ClassUnderTest.Inner = inner;
             ClassUnderTest.InvokePartial();
         }
 
@@ -156,6 +162,8 @@ namespace FubuMVC.Tests.Diagnostics
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.InvokePartial()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
+
+            ClassUnderTest.Inner = inner;
         }
 
         [Test]
@@ -173,6 +181,8 @@ namespace FubuMVC.Tests.Diagnostics
         protected override void beforeEach()
         {
             inner = MockFor<IActionBehavior>();
+
+            ClassUnderTest.Inner = inner;
             ClassUnderTest.InvokePartial();
         }
 

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
 
 namespace FubuMVC.Core.Diagnostics
 {
+    [WannaKill]
     public class DiagnosticBehaviorPrepender : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

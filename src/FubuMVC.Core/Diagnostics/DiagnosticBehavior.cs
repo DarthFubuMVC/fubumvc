@@ -8,19 +8,23 @@ namespace FubuMVC.Core.Diagnostics
     public class DiagnosticBehavior : IActionBehavior
     {
         private readonly IDebugDetector _detector;
-        private readonly IActionBehavior _inner;
+        private IActionBehavior _inner;
         private readonly IDebugReport _report;
         private readonly IUrlRegistry _urls;
 
-        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IActionBehavior inner, IUrlRegistry urls,
+        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IUrlRegistry urls,
                                   IRequestHistoryCache history)
         {
             _report = report;
             _detector = detector;
-            _inner = inner;
             _urls = urls;
 
             history.AddReport(report);
+        }
+
+        public void WrapBehavior(IActionBehavior inner)
+        {
+            _inner = inner;
         }
 
         public void Invoke()

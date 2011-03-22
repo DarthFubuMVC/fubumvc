@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore.Binding;
+using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
 {
-    // needs to be a singleton
     public interface IRequestHistoryCache
     {
         void AddReport(IDebugReport report);
@@ -29,5 +32,15 @@ namespace FubuMVC.Core.Diagnostics
         }
     }
 
-    
+    public class DiagnosticBehaviorFactory : IBehaviorFactory
+    {
+        public DiagnosticBehaviorFactory(IBehaviorFactory inner)
+        {
+        }
+
+        public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

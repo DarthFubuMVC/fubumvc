@@ -5,30 +5,30 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class BehaviorTracer : IActionBehavior
     {
-        private readonly IActionBehavior _inner;
         private readonly IDebugReport _report;
         private readonly IDebugDetector _debugDetector;
 
-        public BehaviorTracer(IDebugReport report, IDebugDetector debugDetector, IActionBehavior inner)
+        public BehaviorTracer(IDebugReport report, IDebugDetector debugDetector)
         {
             _report = report;
             _debugDetector = debugDetector;
-            _inner = inner;
         }
+
+        public IActionBehavior Inner { get; set; }
 
         public void Invoke()
         {
-            invoke(() => _inner.Invoke());
+            invoke(() => Inner.Invoke());
         }
 
         public void InvokePartial()
         {
-            invoke(() => _inner.InvokePartial());
+            invoke(() => Inner.InvokePartial());
         }
 
         private void invoke(Action action)
         {
-            _report.StartBehavior(_inner);
+            _report.StartBehavior(Inner);
 
             try
             {
