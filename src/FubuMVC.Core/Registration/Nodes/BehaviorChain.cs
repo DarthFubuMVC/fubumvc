@@ -199,5 +199,18 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             return this.Where(x => x is Wrapper).Cast<Wrapper>().Any(x => x.BehaviorType == behaviorType);
         }
+
+        public override Wrapper WrapWith(Type behaviorType)
+        {
+            var first = this.FirstOrDefault();
+            if (first == null)
+            {
+                var wrapper = new Wrapper(behaviorType);
+                AddToEnd(wrapper);
+                return wrapper;
+            }
+
+            return first.WrapWith(behaviorType);
+        }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Runtime;
@@ -8,12 +7,13 @@ namespace FubuMVC.Core.Diagnostics
 {
     public class DiagnosticBehavior : IActionBehavior
     {
-        private readonly IDebugReport _report;
         private readonly IDebugDetector _detector;
         private readonly IActionBehavior _inner;
+        private readonly IDebugReport _report;
         private readonly IUrlRegistry _urls;
 
-        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IActionBehavior inner, IUrlRegistry urls, IRequestHistoryService history)
+        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IActionBehavior inner, IUrlRegistry urls,
+                                  IRequestHistoryService history)
         {
             _report = report;
             _detector = detector;
@@ -30,6 +30,13 @@ namespace FubuMVC.Core.Diagnostics
             write();
         }
 
+        public void InvokePartial()
+        {
+            _inner.InvokePartial();
+
+            write();
+        }
+
         private void write()
         {
             _report.MarkFinished();
@@ -40,13 +47,6 @@ namespace FubuMVC.Core.Diagnostics
             var outputWriter = new HttpResponseOutputWriter();
 
             outputWriter.Write(MimeType.Html.ToString(), debugWriter.Write().ToString());
-        }
-
-        public void InvokePartial()
-        {
-            _inner.InvokePartial();
-
-            write();
         }
     }
 }

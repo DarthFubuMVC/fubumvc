@@ -142,6 +142,7 @@
     <Compile Include="EndpointService.cs" />
     <Compile Include="FubuApplication.cs" />
     <Compile Include="FubuEnvironment.cs" />
+    <Compile Include="FubuExtensionFinder.cs" />
     <Compile Include="FubuMvcPackages.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />

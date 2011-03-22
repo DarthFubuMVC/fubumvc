@@ -164,7 +164,7 @@ namespace FubuMVC.Core.Registration.Nodes
             return WrapWith(typeof (T));
         }
 
-        public Wrapper WrapWith(Type behaviorType)
+        public virtual Wrapper WrapWith(Type behaviorType)
         {
             var wrapper = new Wrapper(behaviorType);
             AddBefore(wrapper);

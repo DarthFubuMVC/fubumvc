@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Routing;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core
 {
@@ -20,25 +21,21 @@ namespace FubuMVC.Core
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
     public class FubuApplication : IContainerFacilityExpression
     {
-    	private readonly Func<FubuRegistry> _registryBuilder;
-		private FubuRegistry _registryCache;
-        private IContainerFacility _facility;
+        private readonly Lazy<IContainerFacility> _facility;
+        private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
+        private readonly Func<FubuRegistry> _registryBuilder;
+        private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
+        private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
         private Func<IContainerFacility> _facilitySource;
-        private BehaviorGraph _graph;
         private FubuMvcPackageFacility _fubuFacility;
-		private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
-		private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
+        private FubuRegistry _registryCache;
 
         private FubuApplication(Func<FubuRegistry> registry)
         {
             _registryBuilder = registry;
+
+            _facility = new Lazy<IContainerFacility>(() => _facilitySource());
         }
-
-
-		private FubuRegistry registry()
-		{
-			return _registryCache ?? (_registryCache = _registryBuilder());
-		}
 
         FubuApplication IContainerFacilityExpression.ContainerFacility(IContainerFacility facility)
         {
@@ -50,20 +47,18 @@ namespace FubuMVC.Core
             return registerContainerFacilitySource(facilitySource);
         }
 
-        // TODO -- replace w/ Lazy<T> when we ditch 3.5 support
-        private IContainerFacility facility
+        public FubuApplication ApplyDiagnostics()
         {
-            get
-            {
-                if (_facility == null)
-                {
-                    _facility = _facilitySource();
-                }
-
-                return _facility;
-            }
+            _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
+            return this;
         }
-		
+
+
+        private FubuRegistry registry()
+        {
+            return _registryCache ?? (_registryCache = _registryBuilder());
+        }
+
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
             _facilitySource = facilitySource;
@@ -74,6 +69,7 @@ namespace FubuMVC.Core
         {
             return new FubuApplication(registry);
         }
+
         public static IContainerFacilityExpression For<T>() where T : FubuRegistry, new()
         {
             return For(() => new T());
@@ -95,52 +91,79 @@ namespace FubuMVC.Core
 
             _fubuFacility = new FubuMvcPackageFacility();
 
-            // TODO -- would be nice if this little monster also logged 
+            IBehaviorFactory factory = null;
+            BehaviorGraph graph = null;
+
             PackageRegistry.LoadPackages(x =>
             {
                 x.Facility(_fubuFacility);
                 _packagingDirectives.Each(d => d(x));
-                x.Bootstrap(log => startApplication());
+
+                
+                x.Bootstrap(log =>
+                {
+                    // container facility has to be spun up here
+                    var containerFacility = _facility.Value;
+
+                    registerServicesFromFubuFacility();
+
+                    applyRegistryModifications();
+
+                    applyFubuExtensionsFromPackages();
+
+                    graph = buildBehaviorGraph();
+
+                    bakeBehaviorGraphIntoContainer(graph, containerFacility);
+
+                    // factory HAS to be spun up here.
+                    factory = containerFacility.BuildFactory();
+
+                    return containerFacility.GetAllActivators();
+                });
             });
 
             PackageRegistry.AssertNoFailures();
 
-            return buildRoutes();
+            return buildRoutes(factory, graph);
         }
 
-        private IEnumerable<IActivator> startApplication()
+        private static void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
-			// Building up the facility first forces the creation of the container
-			// and executes any additional bootstrapping done in the respective lambdas
-            facility.SpinUp();
-            
-
-			registry()
-				.Services(_fubuFacility.RegisterServices);
-
-        	_registryModifications.Each(m => m(registry()));
-
-            FindAllExtensions().Each(x => x.Configure(registry()));
-
-            // "Bake" the fubu configuration model into your
-            // IoC container for the application
-            _graph = registry().BuildGraph();
-            _graph.EachService(facility.Register);
-			facility.BuildFactory();
-
-            return facility.GetAllActivators();
+            graph.EachService(containerFacility.Register);
         }
 
-        private IList<RouteBase> buildRoutes()
+        private BehaviorGraph buildBehaviorGraph()
         {
-            var routes = new List<RouteBase>();           
-            
+            var graph = registry().BuildGraph();
+            graph.ApplyDiagnostics(_diagnosticLevel);
+
+            return graph;
+        }
+
+        private void registerServicesFromFubuFacility()
+        {
+            registry().Services(_fubuFacility.RegisterServices);
+        }
+
+        private void applyRegistryModifications()
+        {
+            _registryModifications.Each(m => m(registry()));
+        }
+
+        private IList<RouteBase> buildRoutes(IBehaviorFactory factory, BehaviorGraph graph)
+        {
+            var routes = new List<RouteBase>();
+
             // Build route objects from route definitions on graph + add packaging routes
-            var factory = facility.BuildFactory();
-            facility.Get<IRoutePolicy>().BuildRoutes(_graph, factory).Each(routes.Add);                      
+            _facility.Value.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
             _fubuFacility.AddPackagingContentRoutes(routes);
 
             return routes;
+        }
+
+        private void applyFubuExtensionsFromPackages()
+        {
+            FubuExtensionFinder.FindAllExtensions().Each(x1 => x1.Configure(registry()));
         }
 
         public FubuApplication Packages(Action<IPackageFacility> configure)
@@ -151,37 +174,14 @@ namespace FubuMVC.Core
 
         public FubuApplication ModifyRegistry(Action<FubuRegistry> modifications)
         {
-        	_registryModifications.Add(modifications);
+            _registryModifications.Add(modifications);
             return this;
         }
 
-        public static IEnumerable<IFubuRegistryExtension> FindAllExtensions()
+        public IEnumerable<IInstaller> GetAllInstallers()
         {
-            if (!PackageRegistry.PackageAssemblies.Any()) return new IFubuRegistryExtension[0];
-
-            var pool = new TypePool(null)
-            {
-                ShouldScanAssemblies = true
-            };
-            pool.AddAssemblies(PackageRegistry.PackageAssemblies);
-
-            // Yeah, it really does have to be this way
-            return pool.TypesMatching(
-                t =>
-                hasDefaultCtor(t) && t.GetInterfaces().Any(i => i.FullName == typeof(IFubuRegistryExtension).FullName))
-                .Select(buildExtension);
+            return _facility.Value.GetAllInstallers();
         }
-        private static bool hasDefaultCtor(Type type)
-        {
-            return type.GetConstructor(new Type[0]) != null;
-        }
-        private static IFubuRegistryExtension buildExtension(Type type)
-        {
-            var contextType = Type.GetType(type.AssemblyQualifiedName);
-            return (IFubuRegistryExtension)Activator.CreateInstance(contextType);
-        }
-
-        public IContainerFacility Facility { get { return _facility; } }
     }
 
     public interface IContainerFacilityExpression

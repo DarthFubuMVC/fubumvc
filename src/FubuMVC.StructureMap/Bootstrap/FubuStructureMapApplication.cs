@@ -10,6 +10,7 @@ using StructureMap;
 
 namespace FubuMVC.StructureMap.Bootstrap
 {
+    [Obsolete]
     public class FubuStructureMapApplication : HttpApplication
     {
         private string _controllerAssembly;

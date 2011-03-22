@@ -112,6 +112,7 @@ namespace FubuMVC.Core
             });
         }
 
+        [WannaKill]
         public void IncludeDiagnostics(bool shouldInclude)
         {
             if (shouldInclude)

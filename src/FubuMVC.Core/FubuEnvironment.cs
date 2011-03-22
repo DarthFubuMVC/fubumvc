@@ -12,7 +12,7 @@ namespace FubuMVC.Core
         {
             var application = createApplication();            
             application.Bootstrap();
-            return application.Facility.GetAllInstallers();
+            return application.GetAllInstallers();
         }
 
         protected abstract FubuApplication createApplication();
