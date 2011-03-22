@@ -13,12 +13,14 @@
             { name: 'OutputModel', index: 'OutputModel', width: 200 },
             { name: 'ChainUrl', index: 'ChainUrl', hidden: true, hidedlg: true }
         ],
-        rowNum: -1,
+        jsonReader: $.fubu.jsonReader,
+        rowNum: 20,
         height: '100%',
-        loadonce: true,
-        sortorder: 'desc',
+        mtype: 'POST',
+        sortorder: 'asc',
         sortname: 'Route',
         caption: 'Routes',
+        pager: '#pager',
         ondblClickRow: function (rowId, iRow, iCol, e) {
             var url = $explorer.jqGrid('getCell', rowId, 'ChainUrl');
             window.location = url;

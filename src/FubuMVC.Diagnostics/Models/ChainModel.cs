@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Models.Routes;
+using FubuMVC.Diagnostics.Infrastructure;
 
 namespace FubuMVC.Diagnostics.Models
 {

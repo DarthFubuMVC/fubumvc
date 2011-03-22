@@ -1,11 +1,27 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Diagnostics.Models.Grids
 {
-    // jqGrid-specific format
     public class JsonGridRow
     {
-        public string id { get; set; }
-        public IEnumerable<string> cell { get; set; }
+        public JsonGridRow()
+        {
+            Columns = new List<JsonGridColumn>();
+        }
+
+        public string Id { get; set; }
+        public IEnumerable<JsonGridColumn> Columns { get; set; }
+
+        public JsonGridColumn FindColumn(string columnName)
+        {
+            if(columnName.IsEmpty())
+            {
+                return null;
+            }
+
+            return Columns.SingleOrDefault(c => c.Name.ToLower() == columnName.ToLower());
+        }
     }
 }

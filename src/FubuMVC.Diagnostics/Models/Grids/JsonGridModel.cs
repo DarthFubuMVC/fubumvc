@@ -2,12 +2,16 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Diagnostics.Models.Grids
 {
-    // jqGrid-specific format
     public class JsonGridModel
     {
-        public int page { get; set; }
-        public int total { get; set; }
-        public int records { get; set; }
-        public IEnumerable<JsonGridRow> rows { get; set; }
+        public JsonGridModel()
+        {
+            Rows = new List<JsonGridRow>();
+        }
+
+        public int PageNr { get; set; }
+        public int TotalPages { get; set; }
+        public int TotalRecords { get; set; }
+        public IEnumerable<JsonGridRow> Rows { get; set; }
     }
 }

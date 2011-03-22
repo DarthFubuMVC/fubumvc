@@ -1,50 +1,23 @@
-using System;
-using System.Linq;
 using FubuMVC.Core.Registration;
+using FubuMVC.Diagnostics.Infrastructure.Grids;
 using FubuMVC.Diagnostics.Models.Grids;
-using FubuMVC.Diagnostics.Models.Routes;
 
 namespace FubuMVC.Diagnostics.Endpoints.Routes
 {
     public class FilterEndpoint
     {
         private readonly BehaviorGraph _graph;
-        private readonly IRouteDataBuilder _dataBuilder;
+        private readonly IGridService<BehaviorGraph> _gridService;
 
-        public FilterEndpoint(BehaviorGraph graph, IRouteDataBuilder dataBuilder)
+        public FilterEndpoint(BehaviorGraph graph, IGridService<BehaviorGraph> gridService)
         {
             _graph = graph;
-            _dataBuilder = dataBuilder;
+            _gridService = gridService;
         }
 
-        public JsonGridModel Get(RouteQuery query)
+        public JsonGridModel Post(JsonGridQuery<BehaviorGraph> query)
         {
-            var data = _dataBuilder.BuildRoutes(_graph);
-            var totalRecords = data.Count();
-            var totalPages = 0;
-            var nrRows = query.rows == 0 ? 20 : query.rows;
-
-            if(totalRecords != 0)
-            {
-                totalPages = (int)Math.Ceiling((double)totalRecords / nrRows);
-            }
-
-            var rows = data
-                        .Select(d => new JsonGridRow
-                                         {
-                                             id = d.Id,
-                                             cell = new[] { d.Route, d.Constraints, d.Action, d.InputModel, d.OutputModel, d.ChainUrl }
-                                         });
-
-            return new JsonGridModel
-                       {
-                           page = query.page,
-                           records = totalRecords,
-                           total = totalPages,
-                           rows = rows.ToList()
-                       };
+            return _gridService.GridFor(_graph, query);
         }
-
-        
     }
 }

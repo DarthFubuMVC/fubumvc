@@ -1,8 +1,8 @@
 using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Models;
-using FubuMVC.Diagnostics.Models.Routes;
 
 namespace FubuMVC.Diagnostics.Endpoints.Chains
 {

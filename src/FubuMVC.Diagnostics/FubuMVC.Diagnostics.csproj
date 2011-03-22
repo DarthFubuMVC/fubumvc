@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\UnknownChainBehavior.cs" />
+    <Compile Include="BindFromAttribute.cs" />
     <Compile Include="Configuration\PartialActionSource.cs" />
     <Compile Include="Configuration\Partials\IPartialDecorator.cs" />
     <Compile Include="Configuration\Partials\IPartialModel.cs" />
@@ -144,14 +145,26 @@
     <Compile Include="Endpoints\DashboardEndpoint.cs" />
     <Compile Include="Endpoints\RoutesEndpoint.cs" />
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
+    <Compile Include="DiagnosticsException.cs" />
+    <Compile Include="Infrastructure\Grids\BehaviorGraphGridRowBuilder.cs" />
+    <Compile Include="Infrastructure\Grids\Builders\DefaultGridColumnBuilder.cs" />
+    <Compile Include="Infrastructure\Grids\GridExtensions.cs" />
+    <Compile Include="Infrastructure\Grids\GridService.cs" />
+    <Compile Include="Infrastructure\Grids\IGridRowBuilder.cs" />
+    <Compile Include="Infrastructure\Grids\IGridColumnBuilder.cs" />
+    <Compile Include="Infrastructure\Grids\IGridService.cs" />
+    <Compile Include="Infrastructure\Grids\RowComparer.cs" />
+    <Compile Include="Infrastructure\HttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\HttpRequest.cs" />
+    <Compile Include="Infrastructure\IHttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\IHttpRequest.cs" />
     <Compile Include="Models\BehaviorModel.cs" />
     <Compile Include="Models\ChainModel.cs" />
     <Compile Include="Models\ChainRequest.cs" />
     <Compile Include="Models\DashboardRequestModel.cs" />
-    <Compile Include="Models\Routes\IRouteDataBuilder.cs" />
-    <Compile Include="Models\Routes\RouteDataBuilder.cs" />
+    <Compile Include="Models\Grids\JsonGridColumn.cs" />
+    <Compile Include="Models\Grids\JsonGridFilter.cs" />
+    <Compile Include="Models\Grids\JsonGridQuery.cs" />
     <Compile Include="Models\Routes\RouteDataModel.cs" />
     <Compile Include="Models\Routes\RouteQuery.cs" />
     <Compile Include="Models\Routes\RouteRequestModel.cs" />
