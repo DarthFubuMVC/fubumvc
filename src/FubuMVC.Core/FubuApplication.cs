@@ -11,6 +11,12 @@ using FubuMVC.Core.Routing;
 
 namespace FubuMVC.Core
 {
+    public enum DiagnosticLevel
+    {
+        None,
+        FullRequestTracing
+    }
+
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
     public class FubuApplication : IContainerFacilityExpression
     {
@@ -38,6 +44,7 @@ namespace FubuMVC.Core
         {
             return registerContainerFacilitySource(() => facility);
         }
+
         FubuApplication IContainerFacilityExpression.ContainerFacility(Func<IContainerFacility> facilitySource)
         {
             return registerContainerFacilitySource(facilitySource);

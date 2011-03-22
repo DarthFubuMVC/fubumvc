@@ -81,6 +81,7 @@
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="Diagnostics\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\DiagnosticHtml.cs" />
+    <Compile Include="Diagnostics\DiagnosticsClasses.cs" />
     <Compile Include="Diagnostics\DiagnosticsIndicator.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationRulesColumn.cs" />

@@ -13,12 +13,14 @@ namespace FubuMVC.Core.Diagnostics
         private readonly IActionBehavior _inner;
         private readonly IUrlRegistry _urls;
 
-        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IActionBehavior inner, IUrlRegistry urls)
+        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IActionBehavior inner, IUrlRegistry urls, IRequestHistoryService history)
         {
             _report = report;
             _detector = detector;
             _inner = inner;
             _urls = urls;
+
+            history.AddReport(report);
         }
 
         public void Invoke()
@@ -30,8 +32,9 @@ namespace FubuMVC.Core.Diagnostics
 
         private void write()
         {
-            if (!_detector.IsDebugCall()) return;
             _report.MarkFinished();
+
+            if (!_detector.IsDebugCall()) return;
 
             var debugWriter = new DebugWriter(_report, _urls);
             var outputWriter = new HttpResponseOutputWriter();
