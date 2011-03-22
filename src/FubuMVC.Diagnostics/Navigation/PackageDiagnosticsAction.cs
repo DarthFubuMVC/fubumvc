@@ -1,24 +1,24 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Models.Routes;
+using FubuMVC.Diagnostics.Models;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
-    public class RouteExplorerAction : NavigationItemCaseBase
+    public class PackageDiagnosticsAction : NavigationItemCaseBase
     {
-        public RouteExplorerAction(BehaviorGraph graph, IEndpointService endpointService)
+        public PackageDiagnosticsAction(BehaviorGraph graph, IEndpointService endpointService)
             : base(graph, endpointService)
         {
         }
 
         public override string Text()
         {
-            return "Route Explorer";
+            return "Package Diagnostics";
         }
 
         protected override object inputModel()
         {
-            return new RouteRequestModel();
+            return new PackageDiagnosticsRequestModel();
         }
     }
 }

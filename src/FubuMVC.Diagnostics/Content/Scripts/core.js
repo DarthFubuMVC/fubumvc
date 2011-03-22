@@ -28,4 +28,13 @@ $(document).ready(function () {
         $(this).toggleClass('ui-state-hover');
     };
     $('.ui-button').hover(toggleHover, toggleHover);
+
+    $('.grid > thead > tr > th').each(function() {
+        $(this)
+            .addClass('ui-state-default')
+            .addClass('ui-th-column')
+            .addClass('ui-th-ltr');
+
+        $(this).hover(toggleHover, toggleHover);
+    });
 });

@@ -37,6 +37,10 @@
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -60,7 +64,9 @@
     <Content Include="diagnostics.script.config" />
     <None Include="Views\Chains\View.spark" />
     <None Include="Views\Dashboard.spark" />
+    <None Include="Views\Packaging\Log.spark" />
     <None Include="Views\Routes.spark" />
+    <None Include="Views\Routes\Authorization.spark" />
     <None Include="Views\Shared\Application.spark" />
     <Content Include="Content\Images\block.png" />
     <Content Include="Content\Images\logo.png" />
@@ -131,8 +137,10 @@
     <Compile Include="Configuration\Partials\PartialAction.cs" />
     <Compile Include="Configuration\SparkPolicies\PartialActionSparkPolicy.cs" />
     <Compile Include="CoreExtensions.cs" />
+    <Compile Include="Endpoints\Routes\AuthorizationEndpoint.cs" />
     <Compile Include="Endpoints\Chains\UnknownEndpoint.cs" />
     <Compile Include="Endpoints\Chains\ViewEndpoint.cs" />
+    <Compile Include="Endpoints\Packaging\LogEndpoint.cs" />
     <Compile Include="Endpoints\Routes\FilterEndpoint.cs" />
     <Compile Include="Extensions\TagExtensions.cs" />
     <Compile Include="FubuDiagnosticsRegistry.cs" />
@@ -156,6 +164,7 @@
     <Compile Include="Infrastructure\Grids\RowComparer.cs" />
     <Compile Include="Infrastructure\HttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\HttpRequest.cs" />
+    <Compile Include="Infrastructure\IAuthorizationDescriptor.cs" />
     <Compile Include="Infrastructure\IHttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\IHttpRequest.cs" />
     <Compile Include="Models\BehaviorModel.cs" />
@@ -165,8 +174,13 @@
     <Compile Include="Models\Grids\JsonGridColumn.cs" />
     <Compile Include="Models\Grids\JsonGridFilter.cs" />
     <Compile Include="Models\Grids\JsonGridQuery.cs" />
-    <Compile Include="Models\Routes\RouteDataModel.cs" />
-    <Compile Include="Models\Routes\RouteQuery.cs" />
+    <Compile Include="Models\PackageDiagnosticsLogModel.cs" />
+    <Compile Include="Models\PackageDiagnosticsModel.cs" />
+    <Compile Include="Models\PackageDiagnosticsRequestModel.cs" />
+    <Compile Include="Models\Routes\AuthorizationModel.cs" />
+    <Compile Include="Models\Routes\AuthorizationRequestModel.cs" />
+    <Compile Include="Models\Routes\AuthorizationRuleModel.cs" />
+    <Compile Include="Models\Routes\AuthorizedRouteModel.cs" />
     <Compile Include="Models\Routes\RouteRequestModel.cs" />
     <Compile Include="Models\Routes\RoutesModel.cs" />
     <Compile Include="Models\UnknownChainRequest.cs" />
@@ -180,6 +194,7 @@
     <Compile Include="Navigation\NavigationMenu.cs" />
     <Compile Include="Navigation\NavigationMenuBuilder.cs" />
     <Compile Include="Navigation\NavigationMenuItem.cs" />
+    <Compile Include="Navigation\PackageDiagnosticsAction.cs" />
     <Compile Include="Navigation\RouteExplorerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnknownChainException.cs" />

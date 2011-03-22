@@ -21,6 +21,11 @@ h1, h2, h3, h4
 	border-bottom:1px solid #7096AB;
 }
 
+#Header .container
+{
+    padding: 0 0 0 15px;
+}
+
 #Header #Logo
 {
 	float:left;
@@ -39,6 +44,7 @@ h1, h2, h3, h4
 	padding-top:5px;
 	float:right;
 	list-style: none;
+	margin-right:.5em;
 }
 
 #Header #Menu li

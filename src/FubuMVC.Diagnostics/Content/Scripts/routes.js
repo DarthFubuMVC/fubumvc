@@ -15,6 +15,7 @@
         ],
         jsonReader: $.fubu.jsonReader,
         rowNum: 20,
+        autowidth: true,
         height: '100%',
         mtype: 'POST',
         sortorder: 'asc',
@@ -22,8 +23,13 @@
         caption: 'Routes',
         pager: '#pager',
         ondblClickRow: function (rowId, iRow, iCol, e) {
-            var url = $explorer.jqGrid('getCell', rowId, 'ChainUrl');
+            var url = $('#route-explorer').jqGrid('getCell', rowId, 'ChainUrl');
             window.location = url;
         }
+    });
+
+    $(window).bind('resize', function() {
+        // don't really want to keep that jqGrid reference lying around
+        $('#route-explorer').setGridWidth($('#route-heading').width());
     });
 });
