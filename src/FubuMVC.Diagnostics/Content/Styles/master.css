@@ -86,3 +86,35 @@ h1, h2, h3, h4
 {
     cursor:pointer;
 }
+
+.filter-container h4, .filter-container .filter
+{
+    float:left;
+    margin-right: 10px;
+}
+
+.filter-container h4, .filter-container .ui-button-text
+{
+    font-weight:bold;
+    font-size:12px;
+    line-height:1;
+}
+
+.filter-container
+{
+    margin-bottom:10px;
+}
+
+#filter-dialog #apply-filter
+{
+    width:100%;
+}
+
+#filter-dialog input[type="text"]
+{
+    width:98%;
+    color:#333;
+    font-size: 12px;
+    padding: 5px;
+    line-height:1.4em;
+}

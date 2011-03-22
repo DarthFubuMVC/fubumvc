@@ -27,7 +27,7 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
                                 var authorizor = _authorizationDescriptor.AuthorizorFor(chain);
                                 authorizor
                                     .RulesDescriptions()
-                                    .Each(r => rules[r].AddRoute(new AuthorizedRouteModel(chain.UniqueId, chain.RoutePattern)));
+                                    .Each(r => rules[r].AddRoute(new AuthorizedRouteModel(chain.UniqueId, chain.Route == null ? "(no route)" : chain.Route.Pattern)));
                             });
             return new AuthorizationModel
                        {

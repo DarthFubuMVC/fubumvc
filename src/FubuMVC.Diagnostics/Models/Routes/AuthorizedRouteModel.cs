@@ -17,7 +17,7 @@ namespace FubuMVC.Diagnostics.Models.Routes
 
         public string Route()
         {
-            return _urlPattern.IsEmpty() ? "[unroutable]" : _urlPattern;
+            return _urlPattern.IsEmpty() ? "(default)" : _urlPattern;
         }
     }
 }

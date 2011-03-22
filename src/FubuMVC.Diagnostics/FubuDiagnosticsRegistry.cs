@@ -39,6 +39,7 @@ namespace FubuMVC.Diagnostics
                              x.AddService(typeof(IPartialDecorator<NavigationMenu>), new ObjectDef { Type = typeof(NavigationMenuDecorator) });
                              x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(DashboardAction) });
                              x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteExplorerAction) });
+                             x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteAuthorizationAction) });
                              x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(PackageDiagnosticsAction) });
                              x.AddService(typeof(IGridColumnBuilder<>), new ObjectDef { Type = typeof(DefaultGridColumnBuilder) });
                          });

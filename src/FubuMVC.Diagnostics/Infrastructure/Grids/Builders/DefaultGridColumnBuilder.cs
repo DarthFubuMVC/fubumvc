@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 using FubuMVC.Diagnostics.Models;
@@ -19,10 +20,20 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids.Builders
 
         public IEnumerable<JsonGridColumn> ColumnsFor(BehaviorChain target)
         {
+            var route = target.RoutePattern;
+            if(target.Route == null)
+            {
+                route = "(no route)";
+            }
+            else if(target.RoutePattern.IsEmpty())
+            {
+                route = "(default)";
+            }
+
             return new List<JsonGridColumn>
                        {
                            new JsonGridColumn {IsIdentifier = true, Name = "Id", Value = target.UniqueId.ToString()},
-                           new JsonGridColumn {Name = "Route", Value = target.RoutePattern},
+                           new JsonGridColumn {Name = "Route", Value = route},
                            new JsonGridColumn {Name = "Constraints", Value = _resolver.Resolve(target)},
                            new JsonGridColumn {Name = "Action", Value = target.FirstCallDescription},
                            new JsonGridColumn {Name = "InputModel", Value = target.InputType() == null ? string.Empty : target.InputType().FullName},
