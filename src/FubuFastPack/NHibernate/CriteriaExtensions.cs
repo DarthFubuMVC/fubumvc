@@ -78,7 +78,7 @@ namespace FubuFastPack.NHibernate
 
         public static ICriteria WhereCaseInsensitiveContains<T>(this ICriteria criteria, Expression<Func<T, object>> expression, string value)
         {
-            var criterion = Restrictions.InsensitiveLike(expression.ToAccessor().Name, "%" + value + "%");
+            var criterion = Restrictions.InsensitiveLike(expression.ToPropertyName(), "%" + value + "%");
             return criteria.Add(criterion);
         }
     }

@@ -25,7 +25,7 @@ namespace FubuFastPack.NHibernate
         public ProjectionColumn(Accessor accessor)
         {
             _accessor = accessor;
-            if (_accessor != null) PropertyName = _accessor.Name;
+            if (_accessor != null) PropertyName = _accessor.ToPropertyName();
         }
 
         public string PropertyName { get; set; }
@@ -33,8 +33,7 @@ namespace FubuFastPack.NHibernate
 
         public virtual void AddProjection(ProjectionList projections)
         {
-            string propertyName = String.Join(".", _accessor.PropertyNames);
-            var projection = Projections.Property(propertyName).As(_accessor.Name);
+            var projection = Projections.Property(_accessor.ToPropertyName()).As(_accessor.Name);
             projections.Add(projection);
         }
 

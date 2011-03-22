@@ -63,15 +63,15 @@ namespace FubuFastPack.JqGrid
 
         static CriterionBuilder()
         {
-            _builders[OperatorKeys.EQUAL] = rule => Restrictions.Eq(rule.Accessor.Name, rule.Value);
-            _builders[OperatorKeys.NOTEQUAL] = rule => Restrictions.Not(Restrictions.Eq(rule.Accessor.Name, rule.Value));
-            _builders[OperatorKeys.CONTAINS] = rule => Restrictions.InsensitiveLike(rule.Accessor.Name, (string)rule.Value, MatchMode.Anywhere);
-            _builders[OperatorKeys.STARTSWITH] = rule => Restrictions.InsensitiveLike(rule.Accessor.Name, (string)rule.Value, MatchMode.Start);
-            _builders[OperatorKeys.ENDSWITH] = rule => Restrictions.InsensitiveLike(rule.Accessor.Name, (string)rule.Value, MatchMode.End);
-            _builders[OperatorKeys.LESSTHAN] = rule => Restrictions.Lt(rule.Accessor.Name, rule.Value);
-            _builders[OperatorKeys.LESSTHANOREQUAL] = rule => Restrictions.Le(rule.Accessor.Name, rule.Value);
-            _builders[OperatorKeys.GREATERTHAN] = rule => Restrictions.Gt(rule.Accessor.Name, rule.Value);
-            _builders[OperatorKeys.GREATERTHANOREQUAL] = rule => Restrictions.Ge(rule.Accessor.Name, rule.Value);
+            _builders[OperatorKeys.EQUAL] = rule => Restrictions.Eq(rule.Accessor.ToPropertyName(), rule.Value);
+            _builders[OperatorKeys.NOTEQUAL] = rule => Restrictions.Not(Restrictions.Eq(rule.Accessor.ToPropertyName(), rule.Value));
+            _builders[OperatorKeys.CONTAINS] = rule => Restrictions.InsensitiveLike(rule.Accessor.ToPropertyName(), (string)rule.Value, MatchMode.Anywhere);
+            _builders[OperatorKeys.STARTSWITH] = rule => Restrictions.InsensitiveLike(rule.Accessor.ToPropertyName(), (string)rule.Value, MatchMode.Start);
+            _builders[OperatorKeys.ENDSWITH] = rule => Restrictions.InsensitiveLike(rule.Accessor.ToPropertyName(), (string)rule.Value, MatchMode.End);
+            _builders[OperatorKeys.LESSTHAN] = rule => Restrictions.Lt(rule.Accessor.ToPropertyName(), rule.Value);
+            _builders[OperatorKeys.LESSTHANOREQUAL] = rule => Restrictions.Le(rule.Accessor.ToPropertyName(), rule.Value);
+            _builders[OperatorKeys.GREATERTHAN] = rule => Restrictions.Gt(rule.Accessor.ToPropertyName(), rule.Value);
+            _builders[OperatorKeys.GREATERTHANOREQUAL] = rule => Restrictions.Ge(rule.Accessor.ToPropertyName(), rule.Value);
         }
 
         public static ICriterion CriterionForRule(FilterRule rule)

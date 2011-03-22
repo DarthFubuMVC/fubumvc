@@ -190,7 +190,7 @@ namespace FubuFastPack.NHibernate
         protected ICriteria criteriaForCount(Func<ICriteria, ICriteria> chain)
         {
             var criteria = _session.CreateCriteria(typeof (T));
-            //criteria = addAliases(criteria);
+            criteria = _columns.AddAliases(criteria);
             criteria = addWheres(criteria);
             criteria = chain(criteria);
 
@@ -286,28 +286,28 @@ namespace FubuFastPack.NHibernate
 
             public AndExpression IsNot(object value)
             {
-                var criterion = Restrictions.Not(Restrictions.Eq(_lastAccessor.Name, value));
+                var criterion = Restrictions.Not(Restrictions.Eq(_lastAccessor.ToPropertyName(), value));
                 _wheres.Add(criterion);
                 return this;
             }
 
             public AndExpression IsNull()
             {
-                var criterion = Restrictions.IsNull(_lastAccessor.Name);
+                var criterion = Restrictions.IsNull(_lastAccessor.ToPropertyName());
                 _wheres.Add(criterion);
                 return this;
             }
 
             public AndExpression IsOnOrAfter(DateTime date)
             {
-                var criterion = Restrictions.Ge(_lastAccessor.Name, date);
+                var criterion = Restrictions.Ge(_lastAccessor.ToPropertyName(), date);
                 _wheres.Add(criterion);
                 return this;
             }
 
             public AndExpression IsOnOrBefore(DateTime date)
             {
-                var criterion = Restrictions.Le(_lastAccessor.Name, date);
+                var criterion = Restrictions.Le(_lastAccessor.ToPropertyName(), date);
 
                 _wheres.Add(criterion);
                 return this;
