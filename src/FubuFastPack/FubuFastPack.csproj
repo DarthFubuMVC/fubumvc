@@ -168,6 +168,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Validation\FastPackKeys.cs" />
+    <Compile Include="Validation\UniqueAttribute.cs" />
+    <Compile Include="Validation\UniqueValidationRule.cs" />
+    <Compile Include="Validation\UniqueValidationSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">

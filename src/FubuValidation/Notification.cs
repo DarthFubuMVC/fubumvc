@@ -76,6 +76,9 @@ namespace FubuValidation
         }
 
 
-
+        public void RegisterMessage(NotificationMessage message)
+        {
+            _messages.Add(message);
+        }
     }
 }
