@@ -1,4 +1,5 @@
 using FubuFastPack.NHibernate;
+using FubuFastPack.StructureMap;
 using FubuTestApplication;
 using NUnit.Framework;
 using StructureMap;
@@ -28,6 +29,7 @@ namespace IntegrationTesting.FubuFastPack.NHibernate
         [Test]
         public void try_to_run_sql()
         {
+            container.Configure(x => x.UseOnDemandNHibernateTransactionBoundary());
             var sqlRunner = container.GetInstance<ISqlRunner>();
             sqlRunner.ExecuteCommand("delete from site");
             sqlRunner.ExecuteScalarCommand<long>("select count(*) from site")

@@ -44,14 +44,16 @@ namespace FubuFastPack.Validation
 
         public void Validate(ValidationContext context)
         {
-            _transactions.Execute<ISession>(session =>
-            {
-                var projection = buildProjection(session, (DomainEntity)context.Target);
+            _transactions.Execute<ISession>(session => ValidateAgainstSession(session, context));
+        }
 
-                var count =  Convert.ToInt64(projection.UniqueResult());
+        public void ValidateAgainstSession(ISession session, ValidationContext context)
+        {
+            var projection = buildProjection(session, (DomainEntity)context.Target);
+
+            var count =  Convert.ToInt64(projection.UniqueResult());
                 
-                Validate(count, context);
-            });
+            Validate(count, context);
         }
 
         public void Validate(long count, ValidationContext context)

@@ -1,11 +1,10 @@
-using System.Reflection;
 using FubuFastPack.JqGrid;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Querying;
+using FubuFastPack.Validation;
+using FubuValidation;
 using StructureMap;
 using StructureMap.Configuration.DSL;
-using System.Collections.Generic;
-using StructureMap.Pipeline;
 
 namespace FubuFastPack.StructureMap
 {
@@ -15,8 +14,10 @@ namespace FubuFastPack.StructureMap
         {
             For(typeof (IGridRunner<,>)).Use(typeof (GridRunner<,>));
             For<IQueryService>().Use<QueryService>();
-            For(typeof (Projection<>)).LifecycleIs(InstanceScope.Unique).Use(typeof(Projection<>));
+            For(typeof (Projection<>)).LifecycleIs(InstanceScope.Unique).Use(typeof (Projection<>));
+
+            For<IValidationProvider>().Use<ValidationProvider>();
+            For<IValidationSource>().Add<UniqueValidationSource>();
         }
     }
-
 }

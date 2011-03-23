@@ -6,6 +6,7 @@ using FubuTestApplication.Domain;
 using NHibernate;
 using NUnit.Framework;
 using FubuMVC.Tests;
+using FubuFastPack.StructureMap;
 
 namespace IntegrationTesting.FubuFastPack.NHibernate
 {
@@ -28,6 +29,8 @@ namespace IntegrationTesting.FubuFastPack.NHibernate
 
             using (var container = DatabaseDriver.ContainerWithDatabase())
             {
+                container.Configure(x => x.UseOnDemandNHibernateTransactionBoundary());
+
                 var session = container.GetInstance<ISession>();
                 session.FlushMode = FlushMode.Always;
                 

@@ -1,6 +1,7 @@
 using System;
 using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
+using FubuFastPack.StructureMap;
 using FubuTestApplication;
 using FubuTestApplication.Domain;
 using NUnit.Framework;
@@ -22,6 +23,9 @@ namespace IntegrationTesting.FubuFastPack.Persistence
             DatabaseDriver.Bootstrap(true);
 
             container = DatabaseDriver.ContainerWithDatabase();
+
+            container.Configure(x => x.UseOnDemandNHibernateTransactionBoundary());
+
             container.Configure(x =>
             {
                 x.For<Func<IRepository, string, Site>>()
