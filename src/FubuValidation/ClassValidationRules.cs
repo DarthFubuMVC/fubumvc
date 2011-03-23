@@ -26,7 +26,7 @@ namespace FubuValidation
             return new FieldValidationExpression(this, property.ToAccessor());
         }
 
-        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
+        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistry registration)
         {
             _rules.Each(r => r.Register(registration));
         }
@@ -60,7 +60,7 @@ namespace FubuValidation
                 _ruleSource = a => new ConditionalFieldRule<T>(filter, innerSource(a));
             }
 
-            internal void Register(IFieldRulesRegistration registration)
+            internal void Register(IFieldRulesRegistry registration)
             {
                 _accessors.Each(a => registration.Register(typeof(T), a, _ruleSource(a)));
             } 

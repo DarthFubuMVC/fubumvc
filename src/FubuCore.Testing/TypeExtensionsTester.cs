@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using NUnit.Framework;
 using FubuCore.Testing;
 using Rhino.Mocks;
@@ -252,6 +253,15 @@ namespace FubuCore.Testing
             message.ShouldNotBeNull();
         }
 
+        [Test]
+        public void is_concrete_with_default_ctor()
+        {
+            typeof(Message1).IsConcreteWithDefaultCtor().ShouldBeTrue();
+            typeof(IMessage).IsConcreteWithDefaultCtor().ShouldBeFalse();
+
+            typeof(ClassWithGreedyCtor).IsConcreteWithDefaultCtor().ShouldBeFalse();
+        }
+
         public interface IMessage{}
         public abstract class AbstractMessage : IMessage{}
         public class Message3 : AbstractMessage{}
@@ -261,7 +271,14 @@ namespace FubuCore.Testing
         public interface IListener<T>{}
         public class ConcreteListener : IListener<string>{}
     
-
+        public class ClassWithGreedyCtor
+        {
+            public ClassWithGreedyCtor(string name)
+            {
+                Debug.WriteLine(name);
+            }
+        }
+        
 
         public class OpenClass<T> : IMessage{}
     }

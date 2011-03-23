@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuCore.Util;
 
@@ -34,6 +35,11 @@ namespace FubuValidation.Fields
         public IEnumerable<IFieldValidationRule> RulesFor(Accessor accessor)
         {
             return _rules[accessor];
+        }
+
+        public IEnumerable<IFieldValidationRule> RulesFor<T>(Expression<Func<T, object>> property)
+        {
+            return _rules[property.ToAccessor()];
         }
 
         public void ForRule<T>(Accessor accessor, Action<T> continuation) where T : IFieldValidationRule

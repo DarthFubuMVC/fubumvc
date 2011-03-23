@@ -8,7 +8,7 @@ namespace FubuValidation
 {
     public interface IValidationRegistration
     {
-        void RegisterFieldRules(IFieldRulesRegistration registration);
+        void RegisterFieldRules(IFieldRulesRegistry registry);
         IEnumerable<IFieldValidationSource> FieldSources();
     }
 
@@ -37,9 +37,9 @@ namespace FubuValidation
             get { return ApplyRule<ContinuationFieldRule>(); }
         }
 
-        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistration registration)
+        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistry registry)
         {
-            _innerRegistrations.Each(i => i.RegisterFieldRules(registration));
+            _innerRegistrations.Each(i => i.RegisterFieldRules(registry));
         }
 
         IEnumerable<IFieldValidationSource> IValidationRegistration.FieldSources()

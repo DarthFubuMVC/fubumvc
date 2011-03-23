@@ -7,13 +7,23 @@ using FubuCore.Util;
 
 namespace FubuValidation.Fields
 {
-    public interface IFieldRulesRegistration
+    public class FieldRuleSource : IValidationSource
     {
-        void Register(Type type, Accessor accessor, IFieldValidationRule rule);
+        private readonly IFieldRulesRegistry _registry;
+
+        public FieldRuleSource(IFieldRulesRegistry registry)
+        {
+            _registry = registry;
+        }
+
+        public IEnumerable<IValidationRule> RulesFor(Type type)
+        {
+            yield return _registry.RulesFor(type);
+        }
     }
 
     // TODO -- needs to be registered as a singleton
-    public class FieldRulesRegistry : IFieldRulesRegistry, IFieldRulesRegistration, IValidationSource
+    public class FieldRulesRegistry : IFieldRulesRegistry
     {
         private readonly IList<IFieldValidationSource> _sources;
         private readonly ITypeDescriptorCache _typeDescriptors;
@@ -48,11 +58,6 @@ namespace FubuValidation.Fields
         public ClassFieldValidationRules RulesFor<T>()
         {
             return _typeRules[typeof (T)];
-        }
-
-        IEnumerable<IValidationRule> IValidationSource.RulesFor(Type type)
-        {
-            yield return RulesFor(type);
         }
 
         public ClassFieldValidationRules RulesFor(Type type)

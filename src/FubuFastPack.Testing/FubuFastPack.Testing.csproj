@@ -87,6 +87,7 @@
     <Compile Include="RegistrationTester.cs" />
     <Compile Include="Security\RestrictedDataAuthorizationPolicyTester.cs" />
     <Compile Include="Validation\UniqueValidationSourceTester.cs" />
+    <Compile Include="Validation\ValidationScanningTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">

@@ -86,6 +86,11 @@ namespace FubuCore
             return false;
         }
 
+        public static bool IsConcreteWithDefaultCtor(this Type type)
+        {
+            return type.IsConcrete() && type.GetConstructor(new Type[0]) != null;
+        }
+
         public static Type FindInterfaceThatCloses(this Type type, Type openType)
         {
             if (type.IsInterface && type.IsGenericType && type.GetGenericTypeDefinition() == openType) return type;

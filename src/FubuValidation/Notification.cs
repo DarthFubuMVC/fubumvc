@@ -11,7 +11,6 @@ namespace FubuValidation
 {
     public class Notification
     {
-        // TODO -- make this a list!!
         private readonly IList<NotificationMessage> _messages = new List<NotificationMessage>();
 
         public Notification()
