@@ -26,5 +26,11 @@ namespace FubuMVC.Tests.Packaging
 				.Name
 				.ShouldEqual("Assembly:  " + assembly.GetName().FullName);
 		}
+
+        [TearDown]
+        public void TearDown()
+        {
+            FubuMvcPackageFacility.PhysicalRootPath = null;
+        }
 	}
 }

@@ -117,9 +117,7 @@ namespace FubuMVC.StructureMap
         public static IContainer GetBasicFubuContainer(Action<ConfigurationExpression> containerConfiguration)
         {
             var container = new Container(containerConfiguration);
-            var facility = new StructureMapContainerFacility(container);
-            new FubuBootstrapper(facility, new FubuRegistry()).Bootstrap(
-                new List<RouteBase>());
+            FubuApplication.For(() => new FubuRegistry()).StructureMap(container).Bootstrap();
 
             return container;
         }

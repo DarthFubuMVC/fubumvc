@@ -11,6 +11,7 @@ using FubuMVC.StructureMap;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;
+using StructureMap;
 
 namespace FubuMVC.Tests.UI.Security
 {
@@ -93,8 +94,10 @@ namespace FubuMVC.Tests.UI.Security
                 x.DegradeAccessToFields();
             });
 
-            var container = StructureMapBootstrapper.BuildContainer(registry);
+
+            var container = new Container();
             container.Configure(x => x.For<IFieldAccessRule>().Add<TheModelFieldRules>());
+            FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
             
             tags = container.GetInstance<ITagGenerator<TheModel>>();
             tags.Model = new TheModel("No", "ReadOnly", "AllRights");

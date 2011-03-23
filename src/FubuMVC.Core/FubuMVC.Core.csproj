@@ -258,7 +258,6 @@
     <Compile Include="Behaviors\RenderTextBehavior.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
-    <Compile Include="FubuBootstrapper.cs" />
     <Compile Include="FubuRegistry.Expressions.cs" />
     <Compile Include="Registration\BehaviorVisitor.cs" />
     <Compile Include="Registration\Conventions\BehaviorMatcher.cs" />

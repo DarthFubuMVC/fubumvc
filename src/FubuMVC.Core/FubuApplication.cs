@@ -24,17 +24,14 @@ namespace FubuMVC.Core
     {
         private readonly Lazy<IContainerFacility> _facility;
         private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
-        private readonly Func<FubuRegistry> _registryBuilder;
         private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
-        private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
         private Func<IContainerFacility> _facilitySource;
         private FubuMvcPackageFacility _fubuFacility;
-        private FubuRegistry _registryCache;
+        private readonly Lazy<FubuRegistry> _registry;
 
-        private FubuApplication(Func<FubuRegistry> registry)
+        private FubuApplication(Func<FubuRegistry> registryBuilder)
         {
-            _registryBuilder = registry;
-
+            _registry = new Lazy<FubuRegistry>(registryBuilder);
             _facility = new Lazy<IContainerFacility>(() => _facilitySource());
         }
 
@@ -48,18 +45,6 @@ namespace FubuMVC.Core
             return registerContainerFacilitySource(facilitySource);
         }
 
-        public FubuApplication ApplyDiagnostics(bool applies)
-        {
-            _diagnosticLevel = applies ? DiagnosticLevel.FullRequestTracing : DiagnosticLevel.None;
-            return this;
-        }
-
-
-        private FubuRegistry registry()
-        {
-            return _registryCache ?? (_registryCache = _registryBuilder());
-        }
-
         private FubuApplication registerContainerFacilitySource(Func<IContainerFacility> facilitySource)
         {
             _facilitySource = facilitySource;
@@ -69,6 +54,11 @@ namespace FubuMVC.Core
         public static IContainerFacilityExpression For(Func<FubuRegistry> registry)
         {
             return new FubuApplication(registry);
+        }
+
+        public static IContainerFacilityExpression For(FubuRegistry registry)
+        {
+            return new FubuApplication(() => registry);
         }
 
         public static IContainerFacilityExpression For<T>() where T : FubuRegistry, new()
@@ -117,8 +107,8 @@ namespace FubuMVC.Core
                     bakeBehaviorGraphIntoContainer(graph, containerFacility);
 
                     // factory HAS to be spun up here.
-                    factory = containerFacility.BuildFactory(_diagnosticLevel);
-                    if (_diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+                    factory = containerFacility.BuildFactory(_registry.Value.DiagnosticLevel);
+                    if (_registry.Value.DiagnosticLevel == DiagnosticLevel.FullRequestTracing)
                     {
                         factory = new DiagnosticBehaviorFactory(factory, containerFacility);
                     }
@@ -139,19 +129,19 @@ namespace FubuMVC.Core
 
         private BehaviorGraph buildBehaviorGraph()
         {
-            var graph = registry().BuildGraph();
+            var graph = _registry.Value.BuildGraph();
 
             return graph;
         }
 
         private void registerServicesFromFubuFacility()
         {
-            registry().Services(_fubuFacility.RegisterServices);
+            _registry.Value.Services(_fubuFacility.RegisterServices);
         }
 
         private void applyRegistryModifications()
         {
-            _registryModifications.Each(m => m(registry()));
+            _registryModifications.Each(m => m(_registry.Value));
         }
 
         private IList<RouteBase> buildRoutes(IBehaviorFactory factory, BehaviorGraph graph)
@@ -167,7 +157,7 @@ namespace FubuMVC.Core
 
         private void applyFubuExtensionsFromPackages()
         {
-            FubuExtensionFinder.FindAllExtensions().Each(x1 => x1.Configure(registry()));
+            FubuExtensionFinder.FindAllExtensions().Each(x1 => x1.Configure(_registry.Value));
         }
 
         public FubuApplication Packages(Action<IPackageFacility> configure)

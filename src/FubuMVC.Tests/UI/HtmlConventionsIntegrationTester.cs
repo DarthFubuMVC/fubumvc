@@ -51,9 +51,8 @@ namespace FubuMVC.Tests.UI
                 x.HtmlConvention<TestHtmlConventions>();
             });
             container = new Container(x => x.For<IFubuRequest>().Singleton());
-            var facility = new StructureMapContainerFacility(container);
 
-            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+            FubuApplication.For(registry).StructureMap(container).Bootstrap();
 
             var request = container.GetInstance<IFubuRequest>();
 

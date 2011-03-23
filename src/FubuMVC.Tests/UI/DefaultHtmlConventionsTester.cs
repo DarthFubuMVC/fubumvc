@@ -221,9 +221,11 @@ namespace FubuMVC.Tests.UI
                 x.HtmlConvention<DefaultHtmlConventions>();
             });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
-            var facility = new StructureMapContainerFacility(container);
 
-            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+
+            FubuApplication.For(registry).StructureMap(container).Bootstrap();
+
+
             Model = new Address
             {
                 Address1 = "123 Main St.",

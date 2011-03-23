@@ -29,8 +29,7 @@ namespace FubuMVC.Tests.Security
             registry.Configure(configure);
 
             var container = new Container();
-            var bootstrapper = new StructureMapBootstrapper(container, registry);
-            bootstrapper.Bootstrap(new List<RouteBase>());
+            FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
             return container.GetInstance<AuthorizationPreviewService>();
         }

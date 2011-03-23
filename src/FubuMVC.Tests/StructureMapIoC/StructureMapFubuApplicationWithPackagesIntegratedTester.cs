@@ -33,10 +33,17 @@ namespace FubuMVC.Tests.StructureMapIoC
             graph.Behaviors.Each(x => Debug.WriteLine(x.FirstCallDescription));
         }
 
+        public void TearDown()
+        {
+            FubuMvcPackageFacility.PhysicalRootPath = null;
+        }
+
+
+
         [Test]
         public void should_be_able_to_find_extensions()
         {
-            var extensions = FubuBootstrapper.FindAllExtensions();
+            var extensions = FubuExtensionFinder.FindAllExtensions();
 
             extensions.Each(x => Debug.WriteLine(x.GetType().FullName));
 

@@ -26,10 +26,9 @@ namespace FubuMVC.Tests.StructureMapIoC
             theRoutes = FubuApplication.For(() => new FubuRegistry(x =>
             {
                 x.Actions.IncludeType<DiagnosticController>();
-            
+                x.IncludeDiagnostics(true);
             }))
                 .StructureMap(() => theContainer)
-                .ApplyDiagnostics(true)
                 .Bootstrap();
         }
 

@@ -46,11 +46,7 @@ namespace FubuMVC.Tests
 
             container = new Container();
 
-
-            var bootstrapper = new StructureMapBootstrapper(container, registry);
-            routes = new RouteCollection();
-
-            bootstrapper.Bootstrap(routes);
+            routes = FubuApplication.For(registry).StructureMap(container).Bootstrap().Where(r => !r.As<Route>().Url.StartsWith("_content")).ToList();
 
             container.Configure(x => x.For<IOutputWriter>().Use(new InMemoryOutputWriter()));
             Debug.WriteLine(container.WhatDoIHave());
@@ -60,7 +56,7 @@ namespace FubuMVC.Tests
 
         private FubuRegistry registry;
         private Container container;
-        private RouteCollection routes;
+        private IList<RouteBase> routes;
 
         [Test]
         public void each_route_can_resolve_its_behavior()
