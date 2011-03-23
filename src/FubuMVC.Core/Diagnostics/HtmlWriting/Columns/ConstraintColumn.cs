@@ -1,12 +1,12 @@
-﻿namespace FubuMVC.Core.Diagnostics.HtmlWriting
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Routing;
-    using HtmlTags;
-    using Registration.Conventions;
-    using Registration.Nodes;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Routing;
+using HtmlTags;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
 
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
+{
     public class ConstraintColumn : IColumn
     {
         public string Header()

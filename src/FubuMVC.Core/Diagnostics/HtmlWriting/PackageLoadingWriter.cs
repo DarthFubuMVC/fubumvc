@@ -1,11 +1,9 @@
-using System.ComponentModel;
-using System.Reflection;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using FubuCore;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
     [FubuDiagnostics("Package Loading and Bootstrapping")]
     public class PackageLoadingWriter

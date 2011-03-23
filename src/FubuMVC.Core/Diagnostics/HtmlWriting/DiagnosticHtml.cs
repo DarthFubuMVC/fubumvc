@@ -6,8 +6,9 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
+    [WannaKill] // Mostly...
     public static class DiagnosticHtml
     {
         private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";

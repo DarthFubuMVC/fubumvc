@@ -123,7 +123,6 @@ namespace FubuMVC.Core
                 UsingObserver(new RecordingConfigurationObserver());
 
                 Import<DiagnosticsRegistry>(string.Empty);
-                new DiagnosticsPackage().Configure(this);
 
                 Services(graph => graph.AddService(new DiagnosticsIndicator().SetEnabled()));
             }

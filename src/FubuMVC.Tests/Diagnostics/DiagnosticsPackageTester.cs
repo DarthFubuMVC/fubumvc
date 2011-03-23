@@ -1,6 +1,7 @@
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace FubuMVC.Tests.Diagnostics
         [SetUp]
         public void SetUp()
         {
-            graph = new FubuRegistry(x => new DiagnosticsPackage().Configure(x)).BuildGraph();
+            graph = new FubuRegistry(x => x.IncludeDiagnostics(true)).BuildGraph();
         }
 
         #endregion

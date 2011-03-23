@@ -1,12 +1,13 @@
 using System;
 using System.Web.Routing;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using HtmlTags;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class RouteColumn : IColumn
     {

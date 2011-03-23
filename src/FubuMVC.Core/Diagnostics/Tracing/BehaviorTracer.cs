@@ -1,7 +1,7 @@
 using System;
 using FubuMVC.Core.Behaviors;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class BehaviorTracer : IActionBehavior
     {

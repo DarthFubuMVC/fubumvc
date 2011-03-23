@@ -1,9 +1,9 @@
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class DiagnosticBehavior : IActionBehavior
     {

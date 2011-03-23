@@ -1,11 +1,12 @@
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class DiagnosticUrlPolicy : IUrlPolicy
     {

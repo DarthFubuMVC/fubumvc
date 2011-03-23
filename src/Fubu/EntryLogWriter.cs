@@ -2,6 +2,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Packaging.Environment;
 using HtmlTags;
 

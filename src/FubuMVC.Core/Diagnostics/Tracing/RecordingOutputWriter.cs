@@ -1,9 +1,8 @@
-using System;
 using System.Net;
 using System.Web;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class RecordingOutputWriter : IOutputWriter
     {

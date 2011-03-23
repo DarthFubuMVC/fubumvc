@@ -3,7 +3,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using System.Linq;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class RecordingAuthorizationPolicyExecutor : AuthorizationPolicyExecutor
     {

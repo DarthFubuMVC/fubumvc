@@ -1,7 +1,7 @@
 using FubuCore.Util;
 using HtmlTags;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class DebugReportTagWriter
     {

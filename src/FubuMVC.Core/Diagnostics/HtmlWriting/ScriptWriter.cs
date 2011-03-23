@@ -5,7 +5,7 @@ using HtmlTags;
 using System.Linq;
 using HtmlTags.Extended.Attributes;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
     public class ScriptQuery
     {

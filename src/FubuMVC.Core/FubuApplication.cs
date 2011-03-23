@@ -5,6 +5,7 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration;

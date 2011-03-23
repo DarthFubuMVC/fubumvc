@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Diagnostics.TextWriting;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
@@ -14,8 +12,9 @@ using HtmlTags;
 using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
+    [WannaKill]
     [FubuDiagnostics("Authorization")]
     public class AuthorizationDiagnosticWriter
     {

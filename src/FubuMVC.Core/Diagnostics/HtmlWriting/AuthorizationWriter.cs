@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
 using HtmlTags;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
+    [WannaKill]
     public class AuthorizationWriter
     {
         public static HtmlTag BuildListOfRoles(BehaviorGraph behaviors, Action<BehaviorChain, HtmlTag> buildChainElement)
@@ -26,6 +28,7 @@ namespace FubuMVC.Core.Diagnostics
         }
     }
 
+    [WannaKill]
     public class RoleCollector
     {
         private readonly Cache<string, RoleSet> _roles = new Cache<string, RoleSet>(r => new RoleSet(r));
@@ -44,6 +47,7 @@ namespace FubuMVC.Core.Diagnostics
         }
     }
 
+    [WannaKill]
     public class RoleSet
     {
         private readonly string _role;

@@ -1,7 +1,7 @@
 using FubuMVC.Core.Registration.Nodes;
 using HtmlTags;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class ChainColumn : IColumn
     {

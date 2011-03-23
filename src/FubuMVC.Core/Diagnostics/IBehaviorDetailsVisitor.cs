@@ -1,4 +1,5 @@
 using System.Data;
+using FubuMVC.Core.Diagnostics.Tracing;
 
 namespace FubuMVC.Core.Diagnostics
 {

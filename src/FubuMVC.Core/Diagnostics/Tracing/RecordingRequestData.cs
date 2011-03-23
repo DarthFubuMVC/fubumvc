@@ -1,6 +1,6 @@
 using FubuCore.Binding;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class RecordingRequestData : RequestData
     {

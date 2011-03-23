@@ -4,6 +4,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Registration;
 using NUnit.Framework;

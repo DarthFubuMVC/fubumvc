@@ -4,7 +4,7 @@ using FubuMVC.Core.Security;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class AuthorizationRulesColumn : IColumn
     {

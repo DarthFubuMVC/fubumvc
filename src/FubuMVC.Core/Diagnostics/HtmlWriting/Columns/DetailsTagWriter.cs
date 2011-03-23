@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Data;
 using FubuCore;
+using FubuMVC.Core.Diagnostics.Tracing;
 using HtmlTags;
 using System.Linq;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
+    [WannaKill]
     public class DetailsTagWriter : IBehaviorDetailsVisitor
     {
         private readonly HtmlTag _holderTag;

@@ -1,5 +1,7 @@
 using FubuCore.Binding;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Diagnostics;

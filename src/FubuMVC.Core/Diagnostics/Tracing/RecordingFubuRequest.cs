@@ -2,7 +2,7 @@ using System;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Diagnostics
+namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class RecordingFubuRequest : FubuRequest
     {

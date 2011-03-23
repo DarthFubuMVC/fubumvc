@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 
-namespace FubuMVC.Core.Diagnostics.HtmlWriting
+namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class DebugWriter
     {
