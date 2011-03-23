@@ -153,6 +153,7 @@
     <Compile Include="Endpoints\Routes\AutocompleteEndpoint.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Infrastructure\Grids\Filters\AuthorizationFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\ViewFilter.cs" />
     <Compile Include="Infrastructure\Grids\Filters\HttpMethodFilter.cs" />
     <Compile Include="Infrastructure\Grids\Filters\InputModelFilter.cs" />
     <Compile Include="Infrastructure\Grids\Filters\OutputModelFilter.cs" />

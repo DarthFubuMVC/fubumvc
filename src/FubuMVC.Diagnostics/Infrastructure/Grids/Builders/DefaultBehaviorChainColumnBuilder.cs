@@ -33,6 +33,7 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids.Builders
                 route = "(default)";
             }
 
+			// TODO -- columns should inherit from JsonGridColumn to allow some reusable value generators
             var rules = _descriptor.AuthorizorFor(target).RulesDescriptions();
             var authorization = rules.Any() ? rules.Join(", ") : "none";
             return new List<JsonGridColumn>
@@ -45,7 +46,8 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids.Builders
                            new JsonGridColumn {Name = "ChainUrl", IsIdentifier = true, Value = _urls.UrlFor(new ChainRequest { Id = target.UniqueId }), IsHidden = true, HideFilter = true},
                            new JsonGridColumn {Name = "UrlCategory", Value = target.UrlCategory.Category, IsHidden = true},
                            new JsonGridColumn {Name = "Provenance", Value = target.Origin, IsHidden = true},
-                           new JsonGridColumn {Name = "Authorization", Value = authorization, IsHidden = true}
+                           new JsonGridColumn {Name = "Authorization", Value = authorization, IsHidden = true},
+						   new JsonGridColumn {Name = "View", Value = target.Outputs.Select(output => output.Description).Join(","), IsHidden = true}
                        };
         }
     }

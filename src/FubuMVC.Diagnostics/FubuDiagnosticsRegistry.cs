@@ -45,6 +45,7 @@ namespace FubuMVC.Diagnostics
                              x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(PackageDiagnosticsAction) });
                              x.AddService(typeof(IGridColumnBuilder<>), new ObjectDef { Type = typeof(DefaultBehaviorChainColumnBuilder) });
 
+							 // TODO -- a scanning mechanism for registering these would be nice
                              x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(HttpMethodFilter) });
                              x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(InputModelFilter) });
                              x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(OutputModelFilter) });
@@ -52,6 +53,7 @@ namespace FubuMVC.Diagnostics
                              x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(RouteFilter) });
                              x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(UrlCategoryFilter) });
                              x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(AuthorizationFilter) });
+							 x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(ViewFilter) });
                          });
 
         	Policies
