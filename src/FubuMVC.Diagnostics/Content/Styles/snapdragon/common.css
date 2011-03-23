@@ -1,0 +1,167 @@
+/* -----------------------------------------------------------------------
+
+   SpecialFormula CSS Framework 0.0.1
+   Better CSS Forms + More
+   
+   Provides some basic styling and sense for semantic, simple CSS forms.
+   This framework compliments Blueprint CSS & JQuery/JQuery UI
+   
+   * Copyright (c) 2008-2009 Dustin Ground.
+   License revisions coming soon....
+
+----------------------------------------------------------------------- */
+/* COMMON
+ *
+ * These are simple helpers for grids, feedback and more. 
+ *
+ * Documentation coming soon...
+*/
+/* Feedback */
+.error, .notice, .success
+{
+    padding: .8em;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+}
+.error
+{
+    background: #FBE3E4;
+    border-color: #FBC2C4;
+}
+.error
+{
+    color: #cc0000;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+.error ul li
+{
+    list-style: disc;
+    margin: 0 0 0 20px;
+}
+.error h5
+{
+    margin: 0 0 .5em 0;
+}
+.notice
+{
+    background: #FFF6BF;
+    color: #514721;
+    border-color: #FFD324;
+}
+.success
+{
+    background: #E6EFC2;
+    color: #264409;
+    border-color: #C6D880;
+}
+.error a
+{
+    color: #8a1f11;
+}
+.notice a
+{
+    color: #514721;
+}
+.success a
+{
+    color: #264409;
+}
+.error-highlight, .error-highlight label, .error h5
+{
+    color: #cc0000;
+}
+/* Helpers */
+.center
+{
+    text-align: center;
+}
+.left
+{
+    text-align: left;
+}
+.right
+{
+    text-align: right;
+}
+.fright
+{
+    float: right;
+}
+.fleft
+{
+    float: left;
+}
+.cboth
+{
+    clear: both;
+}
+a.icon-link
+{
+    text-decoration: none;
+}
+a.icon-link img
+{
+    float: left;
+    margin: 0 4px 0 0;
+}
+a.icon-link span
+{
+    float: left;
+    text-decoration: underline;
+    line-height: normal;
+}
+/* Grid Views */
+table, th, td
+{
+    width: auto;
+    padding: 0;
+    background: none;
+}
+table.grid
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+table.grid thead th
+{
+    font-size: 11pt;
+    padding: .2em .5em;
+}
+table.grid td
+{
+    padding: .2em .5em;
+}
+.alt
+{
+}
+.paging
+{
+    float: right;
+    clear: none;
+    display: block;
+}
+.paging li
+{
+    float: left;
+    clear: none;
+    margin: 0 6px 0 0;
+}
+.paging li a
+{
+    display: inline;
+}
+.browse-nav
+{
+    float: left;
+    clear: both;
+    width: 100%;
+    margin: 0;
+}
+.browse-tool
+{
+    float: left;
+    width: auto;
+}

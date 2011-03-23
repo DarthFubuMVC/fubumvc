@@ -1,0 +1,4 @@
+﻿﻿<use namespace="FubuMVC.Core.UI" />
+<use namespace="FubuMVC.Diagnostics.Extensions"/>
+<use namespace="FubuMVC.Diagnostics.Models"/>
+<use namespace="System.Linq" />
