@@ -217,8 +217,7 @@
                 caption: 'Routes',
                 pager: '#pager',
                 ondblClickRow: function (rowId, iRow, iCol, e) {
-                    var url = grid().jqGrid('getCell', rowId, 'ChainUrl');
-                    window.location = url;
+                    window.location = rowId;
                 }
             });
 
