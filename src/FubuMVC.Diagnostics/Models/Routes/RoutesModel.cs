@@ -2,5 +2,6 @@
 {
     public class RoutesModel
     {
+        public JqGridColumnModel ColumnModel { get; set; }
     }
 }

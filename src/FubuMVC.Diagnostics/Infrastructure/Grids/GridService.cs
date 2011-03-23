@@ -16,8 +16,7 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids
             int totalRecords;
             int totalPages;
             var rows = _gridRowBuilder
-                            .RowsFor(target)
-                            .ApplyFilters(query.Filters)
+                            .RowsFor(target, query.Filters)
                             .OrderBy(query.sidx, query.sord)
                             .Page(query.rows == 0 ? 20 : query.rows, query.page, out totalRecords, out totalPages);
 

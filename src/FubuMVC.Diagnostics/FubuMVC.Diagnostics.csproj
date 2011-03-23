@@ -42,7 +42,7 @@
       <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\storyteller\tools\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\lib\StoryTeller\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -76,7 +76,9 @@
     <None Include="Views\Chains\View.spark" />
     <None Include="Views\Dashboard.spark" />
     <None Include="Views\Packaging\Log.spark" />
-    <None Include="Views\Routes.spark" />
+    <None Include="Views\Routes.spark">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Views\Routes\Authorization.spark" />
     <None Include="Views\Shared\Application.spark" />
     <Content Include="Content\Images\block.png" />
@@ -137,10 +139,27 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Views\Shared\_global.spark" />
+    <Content Include="web.config" />
+    <Content Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+    <Content Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\UnknownChainBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
+    <Compile Include="Endpoints\Routes\AutocompleteEndpoint.cs" />
+    <Compile Include="Extensions\JsonExtensions.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\AuthorizationFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\HttpMethodFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\InputModelFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\OutputModelFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\ProvenanceFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\RouteFilter.cs" />
+    <Compile Include="Infrastructure\Grids\Filters\UrlCategoryFilter.cs" />
+    <Compile Include="Infrastructure\Grids\IGridFilter.cs" />
     <Compile Include="Infrastructure\JsonService.cs" />
     <Compile Include="Configuration\PartialActionSource.cs" />
     <Compile Include="Configuration\Partials\IPartialDecorator.cs" />
@@ -167,7 +186,7 @@
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="Infrastructure\Grids\BehaviorGraphGridRowBuilder.cs" />
-    <Compile Include="Infrastructure\Grids\Builders\DefaultGridColumnBuilder.cs" />
+    <Compile Include="Infrastructure\Grids\Builders\DefaultBehaviorChainColumnBuilder.cs" />
     <Compile Include="Infrastructure\Grids\GridExtensions.cs" />
     <Compile Include="Infrastructure\Grids\GridService.cs" />
     <Compile Include="Infrastructure\Grids\IGridRowBuilder.cs" />
@@ -179,6 +198,11 @@
     <Compile Include="Infrastructure\IAuthorizationDescriptor.cs" />
     <Compile Include="Infrastructure\IHttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\IHttpRequest.cs" />
+    <Compile Include="Models\AutocompleteRequestModel.cs" />
+    <Compile Include="Models\JqGridColumn.cs" />
+    <Compile Include="Models\JqGridColumnModel.cs" />
+    <Compile Include="Models\JqGridColumnModelRequest.cs" />
+    <Compile Include="Models\JsonAutocompleteResultModel.cs" />
     <Compile Include="Models\BehaviorModel.cs" />
     <Compile Include="Models\ChainModel.cs" />
     <Compile Include="Models\ChainRequest.cs" />

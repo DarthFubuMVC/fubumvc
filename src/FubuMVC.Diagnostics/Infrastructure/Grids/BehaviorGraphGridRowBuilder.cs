@@ -9,16 +9,19 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids
     public class BehaviorGraphGridRowBuilder : IGridRowBuilder<BehaviorGraph>
     {
         private readonly IEnumerable<IGridColumnBuilder<BehaviorChain>> _columnBuilders;
+        private readonly IEnumerable<IGridFilter<BehaviorChain>> _filters;
 
-        public BehaviorGraphGridRowBuilder(IEnumerable<IGridColumnBuilder<BehaviorChain>> columnBuilders)
+        public BehaviorGraphGridRowBuilder(IEnumerable<IGridColumnBuilder<BehaviorChain>> columnBuilders, IEnumerable<IGridFilter<BehaviorChain>> filters)
         {
             _columnBuilders = columnBuilders;
+            _filters = filters;
         }
 
-        public IEnumerable<JsonGridRow> RowsFor(BehaviorGraph target)
+        public IEnumerable<JsonGridRow> RowsFor(BehaviorGraph target, IEnumerable<JsonGridFilter> filters)
         {
             return target
                 .Behaviors
+                .Where(chain => _filters.Matches(filters, chain))
                 .Select(chain =>
                             {
                                 var columns = _columnBuilders

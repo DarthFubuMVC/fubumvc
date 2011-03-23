@@ -8,6 +8,11 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids
 {
     public static class GridExtensions
     {
+        public static bool Matches<T>(this IEnumerable<IGridFilter<T>> filters, IEnumerable<JsonGridFilter> gridFilters, T target)
+        {
+            return filters.All(filter => !gridFilters.Any(gridFilter => filter.AppliesTo(target, gridFilter) && !filter.Matches(target, gridFilter)));
+        }
+
         public static IEnumerable<JsonGridRow> OrderBy(this IEnumerable<JsonGridRow> rows, string columnName, string sortOrder)
         {
             var orderedRows = new List<JsonGridRow>(rows);

@@ -4,12 +4,18 @@ namespace FubuMVC.Diagnostics.Infrastructure
 {
 	public interface IJsonProvider
 	{
+	    string Serialize(object target);
 		T Deserialize<T>(string input);
 	}
 
 	public class JsonProvider : IJsonProvider
 	{
-		public T Deserialize<T>(string input)
+	    public string Serialize(object target)
+	    {
+	        return JsonConvert.SerializeObject(target);
+	    }
+
+	    public T Deserialize<T>(string input)
 		{
 			return JsonConvert.DeserializeObject<T>(input);
 		}
@@ -28,6 +34,11 @@ namespace FubuMVC.Diagnostics.Infrastructure
 		{
 			Provider = provider;
 		}
+
+        public static string Serialize(object target)
+        {
+            return Provider.Serialize(target);
+        }
 
 		public static T Deserialize<T>(string input)
 		{

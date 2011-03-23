@@ -8,21 +8,22 @@
         return $('#filter-dialog');
     }
 
-    // TODO -- maybe generate this in metadata from our JsonGridModel?
-    var columnModel = [
-        { name: 'Route', index: 'Route', width: 165 },
-        { name: 'Constraints', index: 'Constraints', width: 55 },
-        { name: 'Action', index: 'Action', width: 280 },
-        { name: 'InputModel', index: 'InputModel', width: 200 },
-        { name: 'OutputModel', index: 'OutputModel', width: 200 },
-        { name: 'ChainUrl', index: 'ChainUrl', hidden: true, hidedlg: true }
-    ];
+    var columnModel = $('#column-model').metadata({type:'elem', name:'script'});
+    function colNames() {
+        var cols = [];
+        for(var i = 0; i < columnModel.length; i++) {
+            var col = columnModel[i];
+            cols.push(col.name);
+        }
+
+        return cols;
+    }
 
     function filterColumns() {
         var cols = [];
         for(var i = 0; i < columnModel.length; i++) {
             var col = columnModel[i];
-            if(col.hidden) {
+            if(col.hideFilter) {
                 continue;
             }
 
@@ -138,6 +139,37 @@
         });
     }
 
+    function setupAutocomplete() {
+        var filterInput = $('#filter-value');
+        var filterUrl = filterInput.metadata().url;
+
+        filterInput.autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: filterUrl,
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        Column: viewModel.selectedFilter().Name,
+                        Query: request.term
+                    },
+                    success: function(data) {
+                        response($.map( data.Values, function( item ) {
+							return {
+								label: item.ColumnName,
+								value: item.Value
+							}
+						}));
+                    }
+                });
+            },
+            minLength: 2,
+            select: function(event, ui) {
+                filterInput.val(ui.item.value);
+            }
+        });
+    }
+
     function getData(gridData) {
         var params = {};
         params.page = gridData.page;
@@ -159,7 +191,9 @@
                 grid()[0].addJSONData(data);
             },
             error: function() {
-                alert('Uh oh');
+                if(window.console) {
+                    console.log('An error occurred loading the grid');
+                }
             }
         });
     }
@@ -171,7 +205,7 @@
                     getData(gridData);
                 },
                 url: grid().metadata().url,
-                colNames: ['Route', 'Constraints', 'Action', 'InputModel', 'OutputModel', 'ChainUrl'],
+                colNames: colNames(),
                 colModel: columnModel,
                 jsonReader: $.fubu.jsonReader,
                 rowNum: 20,
@@ -196,4 +230,5 @@
     ko.applyBindings(viewModel);
     setupFilters();
     setupGrid();
+    setupAutocomplete();
 });

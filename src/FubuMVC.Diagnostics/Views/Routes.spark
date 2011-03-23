@@ -14,11 +14,16 @@
     </div>
     <div class="clear"></div>
   </div>
-  <table id="route-explorer" class="{ url: '${this.Urls.UrlFor(new RouteQuery())}' }"></table>
+  <table id="route-explorer" class="{ url: '${this.Urls.UrlFor(new RouteQuery())}'}"></table>
   <div id="pager"></div>
+  <div id="column-model">
+    <script type="application/json">
+      ${Model.ColumnModel.Columns.AsJson()}
+    </script>
+  </div>
   <div id="filter-dialog" style="display:none;" title="Filter Routes">
     <select data-bind="options: availableFilters, optionsText: 'Name', value: selectedFilter"></select>
-    <input type="text" name="filter-value" data-bind="value: filterValue" />
+    <input type="text" id="filter-value" name="filter-value" data-bind="value: filterValue" class="{ url: '${this.Urls.UrlFor(new AutocompleteRequestModel())}' }" />
     <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" data-bind="click: addFilter">
       <span class="ui-button-text">Go</span>
     </button>

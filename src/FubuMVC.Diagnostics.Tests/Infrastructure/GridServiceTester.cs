@@ -1,7 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Registration;
+using FubuCore;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Urls;
+using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Infrastructure.Grids;
+using FubuMVC.Diagnostics.Infrastructure.Grids.Builders;
+using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Tests.Models;
 using FubuMVC.Tests;
@@ -24,7 +31,7 @@ namespace FubuMVC.Diagnostics.Tests.Infrastructure
             _query = new JsonGridQuery();
 
             MockFor<IGridRowBuilder<SampleGridModel>>()
-                .Expect(builder => builder.RowsFor(_model))
+                .Expect(builder => builder.RowsFor(_model, _query.Filters))
                 .Return(_rows.AsQueryable());
         }
 
@@ -105,22 +112,6 @@ namespace FubuMVC.Diagnostics.Tests.Infrastructure
         }
 
         [Test]
-        public void should_apply_single_filter()
-        {
-            fillBasicRows();
-            _query.Filters = new List<JsonGridFilter> {new JsonGridFilter
-                                                           {
-                                                               ColumnName = "FirstName",
-                                                               Values = new List<string> { "j" }
-                                                           }};
-
-            ClassUnderTest
-                .GridFor(_model, _query)
-                .Rows
-                .ShouldHaveCount(2);
-        }
-
-        [Test]
         public void should_order_rows_in_ascending_order()
         {
             fillBasicRows();
@@ -163,6 +154,40 @@ namespace FubuMVC.Diagnostics.Tests.Infrastructure
             grid.Rows.ShouldHaveCount(1);
             grid.TotalRecords.ShouldEqual(3);
             grid.TotalPages.ShouldEqual(3);
+        }
+    }
+
+    [TestFixture]
+    public class GridExtensionsTester
+    {
+        [Test]
+        public void should_apply_filters()
+        {
+            var graph = ObjectMother.DiagnosticsGraph();
+            var queryFilters = new List<JsonGridFilter> { new JsonGridFilter { ColumnName = "InputModel", Values = new List<string> { typeof(DashboardRequestModel).Name } } };
+
+            var urlRegistry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new NulloUrlTemplate());
+            var columnBuilders = new List<IGridColumnBuilder<BehaviorChain>> {new DefaultBehaviorChainColumnBuilder(new HttpConstraintResolver(), urlRegistry)};
+            var gridFilters = new List<IGridFilter<BehaviorChain>> {new TestInputModelFilter()};
+
+            graph
+                .Behaviors
+                .Single(chain => gridFilters.Matches(queryFilters, chain))
+                .InputType()
+                .ShouldEqual(typeof (DashboardRequestModel));
+        }
+
+        public class TestInputModelFilter : IGridFilter<BehaviorChain>
+        {
+            public bool AppliesTo(BehaviorChain target, JsonGridFilter filter)
+            {
+                return filter.ColumnName.Equals("InputModel", StringComparison.OrdinalIgnoreCase);
+            }
+
+            public bool Matches(BehaviorChain target, JsonGridFilter filter)
+            {
+                return target.InputType() != null && filter.Values.Any(v => target.InputType().Name.ToLower().Contains(v.ToLower()));
+            }
         }
     }
 }

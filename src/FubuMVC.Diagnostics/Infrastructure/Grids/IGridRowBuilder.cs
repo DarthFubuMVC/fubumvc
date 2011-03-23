@@ -5,6 +5,6 @@ namespace FubuMVC.Diagnostics.Infrastructure.Grids
 {
     public interface IGridRowBuilder<T>
     {
-        IEnumerable<JsonGridRow> RowsFor(T target);
+        IEnumerable<JsonGridRow> RowsFor(T target, IEnumerable<JsonGridFilter> filters);
     }
 }
