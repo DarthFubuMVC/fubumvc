@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.DSL;
@@ -88,5 +89,10 @@ namespace FubuMVC.Diagnostics.Configuration
         {
             return call.IsDiagnosticsEndpoint() || call.Method.HasAttribute<FubuDiagnosticsUrlAttribute>();
         }
+
+		public static MethodInfo GetExecuteMethod(this Type type)
+		{
+			return type.GetMethod("Execute", BindingFlags.Public | BindingFlags.Instance);
+		}
     }
 }

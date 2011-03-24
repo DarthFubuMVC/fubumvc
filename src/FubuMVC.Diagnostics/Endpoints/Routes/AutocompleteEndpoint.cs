@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Infrastructure.Grids;
+using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 
@@ -22,14 +22,7 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
         public JsonAutocompleteResultModel Post(AutocompleteRequestModel request)
         {
             var filter = new JsonGridFilter {ColumnName = request.Column, Values = new List<string> {request.Query}};
-            var query = new JsonGridQuery
-                            {
-                                Filters = new List<JsonGridFilter> {filter},
-                                page = 0,
-                                rows = -1,
-                                sidx = request.Column,
-                                sord = JsonGridQuery.ASCENDING
-                            };
+        	var query = JsonGridQuery.ForFilter(filter);
             return new JsonAutocompleteResultModel
                        {
                            Values = _gridService

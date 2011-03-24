@@ -1,0 +1,2 @@
+﻿<use namespace="FubuMVC.Diagnostics.Notifications" />
+<use content="notification" />

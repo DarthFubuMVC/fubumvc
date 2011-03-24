@@ -56,8 +56,14 @@
                 return;
             }
 
-            var self = this;
             var value = this.filterValue();
+            this.explicitAddFilter(type, value);
+
+            this.closeDialog();
+            this.reloadGrid();
+        },
+        explicitAddFilter: function(type, value) {
+            var self = this;
             this.filters.push({
                 type: type,
                 value: value,
@@ -65,9 +71,6 @@
                     self.removeFilter(type, value);
                 }
             });
-
-            this.closeDialog();
-            this.reloadGrid();
         },
         closeDialog: function() {
             filterDialog().dialog('close');
@@ -137,6 +140,16 @@
             filterDialog().dialog('open');
             return false;
         });
+
+        var startupFilters = $('#filters').metadata({type:'elem', name:'script'});
+        if(startupFilters.Values) {
+            var value = '';
+            if(startupFilters.Values.length != 0) {
+                value = startupFilters.Values[0];
+            }
+            
+            viewModel.explicitAddFilter(startupFilters.ColumnName, value);
+        }
     }
 
     function setupAutocomplete() {

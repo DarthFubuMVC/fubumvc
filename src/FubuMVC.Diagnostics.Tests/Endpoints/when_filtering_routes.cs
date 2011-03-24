@@ -1,7 +1,7 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Endpoints.Routes;
+using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Infrastructure;
-using FubuMVC.Diagnostics.Infrastructure.Grids;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Tests;
 using NUnit.Framework;

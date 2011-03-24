@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.Diagnostics.Configuration.Partials;
+using FubuMVC.Diagnostics.Partials;
 using FubuMVC.Tests;
 using NUnit.Framework;
 using Rhino.Mocks;

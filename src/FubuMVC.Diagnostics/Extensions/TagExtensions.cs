@@ -3,11 +3,22 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
+using FubuMVC.Diagnostics.Notifications;
 using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Extensions
 {
+	public static class PageExtensions
+	{
+		public static void Notification<T>(this IFubuPage page, T notification)
+			where T : class, INotificationModel
+		{
+			page.Get<PartialInvoker>().InvokeObject(notification);
+		}
+	}
+
     public static class TagExtensions
     {
         private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";

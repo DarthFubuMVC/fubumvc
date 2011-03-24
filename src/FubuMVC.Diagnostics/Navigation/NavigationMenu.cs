@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FubuMVC.Diagnostics.Configuration.Partials;
+using FubuMVC.Diagnostics.Partials;
 
 namespace FubuMVC.Diagnostics.Navigation
 {

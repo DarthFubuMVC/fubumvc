@@ -20,5 +20,17 @@ namespace FubuMVC.Diagnostics.Models.Grids
 		public string sord { get; set; }
 
 		public IEnumerable<JsonGridFilter> Filters { get; set; }
+
+		public static JsonGridQuery ForFilter(JsonGridFilter filter)
+		{
+			return new JsonGridQuery
+			       	{
+						Filters = new List<JsonGridFilter> { filter },
+						page = 0,
+						rows = -1,
+						sidx = filter.ColumnName,
+						sord = JsonGridQuery.ASCENDING
+			       	};
+		}
     }
 }

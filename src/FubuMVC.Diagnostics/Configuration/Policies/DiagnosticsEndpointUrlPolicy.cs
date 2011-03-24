@@ -51,6 +51,7 @@ namespace FubuMVC.Diagnostics.Configuration.Policies
 
             routeDefinition.Append(BreakUpCamelCaseWithHypen(call.HandlerType.Name.Replace(ENDPOINT, string.Empty)));
             routeDefinition.ApplyRouteInputAttributes(call);
+			routeDefinition.ApplyQueryStringAttributes(call);
             return routeDefinition;
         }
 

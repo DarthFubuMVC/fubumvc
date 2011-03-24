@@ -21,6 +21,11 @@ namespace FubuMVC.Diagnostics.Navigation
             return _actions.Select(a =>
                                        {
                                            var url = a.Url().ToAbsoluteUrl();
+										   if(url.EndsWith("/"))
+										   {
+										   		url = url.TrimEnd('/');
+										   }
+
                                            return new NavigationMenuItem
                                                           {
                                                               Text = a.Text(),

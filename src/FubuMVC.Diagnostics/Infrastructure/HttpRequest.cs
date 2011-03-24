@@ -6,7 +6,13 @@ namespace FubuMVC.Diagnostics.Infrastructure
     {
         public string CurrentUrl()
         {
-            return HttpContext.Current.Request.RawUrl;
+            var url = HttpContext.Current.Request.RawUrl;
+			if (url.EndsWith("/"))
+			{
+				url = url.TrimEnd('/');
+			}
+
+        	return url;
         }
     }
 }

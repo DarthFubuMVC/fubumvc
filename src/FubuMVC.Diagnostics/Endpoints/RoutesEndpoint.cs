@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Infrastructure.Grids;
+using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Models.Routes;
 
 namespace FubuMVC.Diagnostics.Endpoints
@@ -34,7 +36,13 @@ namespace FubuMVC.Diagnostics.Endpoints
                                                            index = col.Name
                                                        }));
 
-            return new RoutesModel { ColumnModel = columnModel };
+            var model = new RoutesModel { ColumnModel = columnModel };
+			if(request.Column.IsNotEmpty() && request.Value.IsNotEmpty())
+			{
+				model.Filter = new JsonGridFilter {ColumnName = request.Column, Values = new List<string> {request.Value}};
+			}
+
+        	return model;
         }
     }
 }

@@ -1,6 +1,6 @@
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Configuration.Partials;
+using FubuMVC.Diagnostics.Partials;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.Registration;
 
