@@ -3,8 +3,8 @@ using FubuMVC.Diagnostics.Models.Grids;
 
 namespace FubuMVC.Diagnostics.Grids
 {
-    public interface IGridRowBuilder<T>
+    public interface IGridRowBuilder<TModel, TRow>
     {
-        IEnumerable<JsonGridRow> RowsFor(T target, IEnumerable<JsonGridFilter> filters);
+        IEnumerable<JsonGridRow> RowsFor(TModel target, IEnumerable<JsonGridFilter> filters);
     }
 }

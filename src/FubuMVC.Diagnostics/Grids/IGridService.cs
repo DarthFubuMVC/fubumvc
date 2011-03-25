@@ -2,8 +2,8 @@
 
 namespace FubuMVC.Diagnostics.Grids
 {
-    public interface IGridService<T>
+    public interface IGridService<TModel, TRow>
     {
-        JsonGridModel GridFor(T target, JsonGridQuery query);
+        JsonGridModel GridFor(TModel target, JsonGridQuery query);
     }
 }

@@ -1,0 +1,28 @@
+﻿<use namespace="FubuMVC.Diagnostics.Models.Requests" />
+<viewdata model="RequestExplorerModel" />
+<content:title>Request Explorer</content:title>
+<content:head>
+</content:head>
+<content:main>
+  <h2>Request Explorer</h2>
+  <table class="grid">
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Status</th>
+        <th>Action</th>
+        <th>Timing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <for each="var request in Model.Requests">
+        <tr>
+          <td>${request.Url}</td>
+          <td>${request.Status}</td>
+          <td>${request.Action}</td>
+          <td>${request.Time}</td>
+        </tr>
+      </for>
+    </tbody>
+  </table>
+</content:main>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
@@ -11,9 +12,9 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
     public class AutocompleteEndpoint
     {
         private readonly BehaviorGraph _behaviorGraph;
-        private readonly IGridService<BehaviorGraph> _gridService;
+        private readonly IGridService<BehaviorGraph, BehaviorChain> _gridService;
 
-        public AutocompleteEndpoint(BehaviorGraph behaviorGraph, IGridService<BehaviorGraph> gridService)
+        public AutocompleteEndpoint(BehaviorGraph behaviorGraph, IGridService<BehaviorGraph, BehaviorChain> gridService)
         {
             _behaviorGraph = behaviorGraph;
             _gridService = gridService;

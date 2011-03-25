@@ -1,4 +1,5 @@
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Endpoints.Routes;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Infrastructure;
@@ -33,7 +34,7 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints
 
 			JsonService.Stub(MockFor<IJsonProvider>());
 
-            MockFor<IGridService<BehaviorGraph>>()
+            MockFor<IGridService<BehaviorGraph, BehaviorChain>>()
                 .Expect(s => s.GridFor(_graph, gridQuery))
                 .Return(grid);
 

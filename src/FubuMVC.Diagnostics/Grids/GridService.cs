@@ -2,16 +2,16 @@
 
 namespace FubuMVC.Diagnostics.Grids
 {
-    public class GridService<T> : IGridService<T>
+    public class GridService<TModel, TRow> : IGridService<TModel, TRow>
     {
-        private readonly IGridRowBuilder<T> _gridRowBuilder;
+        private readonly IGridRowBuilder<TModel, TRow> _gridRowBuilder;
 
-        public GridService(IGridRowBuilder<T> gridRowBuilder)
+        public GridService(IGridRowBuilder<TModel, TRow> gridRowBuilder)
         {
             _gridRowBuilder = gridRowBuilder;
         }
 
-        public JsonGridModel GridFor(T target, JsonGridQuery query)
+        public JsonGridModel GridFor(TModel target, JsonGridQuery query)
         {
             int totalRecords;
             int totalPages;

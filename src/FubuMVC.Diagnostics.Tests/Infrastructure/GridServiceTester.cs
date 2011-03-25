@@ -8,7 +8,6 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Grids.Builders;
 using FubuMVC.Diagnostics.Grids.Columns;
-using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Tests.Models;
@@ -19,7 +18,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Diagnostics.Tests.Infrastructure
 {
     [TestFixture]
-    public class GridServiceTester : InteractionContext<GridService<SampleGridModel>>
+    public class GridServiceTester : InteractionContext<GridService<SampleGridModel, SampleGridRowModel>>
     {
         private List<JsonGridRow> _rows;
         private SampleGridModel _model;
@@ -31,7 +30,7 @@ namespace FubuMVC.Diagnostics.Tests.Infrastructure
             _model = new SampleGridModel();
             _query = new JsonGridQuery();
 
-            MockFor<IGridRowBuilder<SampleGridModel>>()
+            MockFor<IGridRowBuilder<SampleGridModel, SampleGridRowModel>>()
                 .Expect(builder => builder.RowsFor(_model, _query.Filters))
                 .Return(_rows.AsQueryable());
         }
