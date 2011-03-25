@@ -11,7 +11,7 @@ using StructureMap;
 namespace FubuValidation.Tests
 {
     [TestFixture]
-    public class SourceWithDependenciesTest : InteractionContext<ValidationProvider> // piggy-backing on interactioncontext for container setup
+    public class SourceWithDependenciesTest : InteractionContext<Validator> // piggy-backing on interactioncontext for container setup
     {
         protected override void beforeEach()
         {

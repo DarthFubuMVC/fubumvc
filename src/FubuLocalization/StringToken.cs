@@ -2,6 +2,8 @@ using System;
 
 namespace FubuLocalization
 {
+
+
     public class StringToken
     {
         private readonly string _key;

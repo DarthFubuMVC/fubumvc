@@ -15,9 +15,9 @@ namespace FubuCore.Reflection
 
     public class TypeDescriptorCache : ITypeDescriptorCache
     {
-        private readonly Cache<Type, IDictionary<string, PropertyInfo>> _cache;
+        private static readonly Cache<Type, IDictionary<string, PropertyInfo>> _cache;
 
-        public TypeDescriptorCache()
+        static TypeDescriptorCache()
         {
             _cache = new Cache<Type, IDictionary<string, PropertyInfo>>(type =>
             {
@@ -34,9 +34,9 @@ namespace FubuCore.Reflection
             });
         }
 
-        public IDictionary<string, PropertyInfo> GetPropertiesFor<TYPE>()
+        public IDictionary<string, PropertyInfo> GetPropertiesFor<T>()
         {
-            return GetPropertiesFor(typeof (TYPE));
+            return GetPropertiesFor(typeof (T));
         }
 
         public IDictionary<string, PropertyInfo> GetPropertiesFor(Type itemType)
@@ -52,6 +52,12 @@ namespace FubuCore.Reflection
         public void ClearAll()
         {
             _cache.ClearAll();
+        }
+
+        public static PropertyInfo GetPropertyFor(Type modelType, string propertyName)
+        {
+            var dict = _cache[modelType];
+            return dict.ContainsKey(propertyName) ? dict[propertyName] : null;
         }
     }
 }

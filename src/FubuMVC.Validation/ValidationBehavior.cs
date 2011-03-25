@@ -9,10 +9,10 @@ namespace FubuMVC.Validation
         where T : class
     {
         private readonly IFubuRequest _request;
-        private readonly IValidationProvider _provider;
+        private readonly IValidator _provider;
         private readonly IValidationFailureHandler _failureHandler;
 
-        public ValidationBehavior(IFubuRequest request, IValidationProvider provider, IValidationFailureHandler failureHandler) 
+        public ValidationBehavior(IFubuRequest request, IValidator provider, IValidationFailureHandler failureHandler) 
             : base(PartialBehavior.Executes)
         {
             _request = request;

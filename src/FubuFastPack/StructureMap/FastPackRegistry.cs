@@ -39,7 +39,7 @@ namespace FubuFastPack.StructureMap
         public static void FubuValidationWith(this Registry registry, IncludePackageAssemblies packageAssemblies, params Assembly[] assemblies)
         {
             registry.ForSingletonOf<ITypeDescriptorCache>().Use<TypeDescriptorCache>();
-            registry.For<IValidationProvider>().Use<ValidationProvider>();
+            registry.For<IValidator>().Use<Validator>();
             registry.For<IValidationSource>().Add<UniqueValidationSource>();
             registry.ForSingletonOf<IFieldRulesRegistry>().Add<FieldRulesRegistry>();
             registry.For<IValidationSource>().Add<FieldRuleSource>();

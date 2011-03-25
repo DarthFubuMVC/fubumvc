@@ -24,7 +24,7 @@ namespace FubuMVC.Validation.Tests
                 .Expect(request => request.Get<SampleInputModel>())
                 .Return(input);
 
-            MockFor<IValidationProvider>()
+            MockFor<IValidator>()
                 .Expect(provider => provider.Validate(input))
                 .Return(Notification.Valid());
 
@@ -46,7 +46,7 @@ namespace FubuMVC.Validation.Tests
                 .Expect(request => request.Get<SampleInputModel>())
                 .Return(input);
 
-            MockFor<IValidationProvider>()
+            MockFor<IValidator>()
                 .Expect(provider => provider.Validate(input))
                 .Return(notification);
 

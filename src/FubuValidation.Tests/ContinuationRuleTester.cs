@@ -11,13 +11,13 @@ namespace FubuValidation.Tests
     [TestFixture]
     public class ContinuationRuleTester
     {
-        private IValidationProvider _provider;
+        private IValidator _provider;
 
         [SetUp]
         public void SetUp()
         {
             var fieldRegistry = new FieldRulesRegistry(new IFieldValidationSource[0], new TypeDescriptorCache());
-            _provider = new ValidationProvider(new TypeResolver(), new IValidationSource[] { new FieldRuleSource(fieldRegistry) });
+            _provider = new Validator(new TypeResolver(), new IValidationSource[] { new FieldRuleSource(fieldRegistry) });
         }
 
         [Test]

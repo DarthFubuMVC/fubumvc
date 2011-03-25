@@ -3,6 +3,7 @@ using FubuLocalization;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace FubuValidation.Tests
 {
@@ -59,6 +60,52 @@ namespace FubuValidation.Tests
         }
 
         [Test]
+        public void to_validation_error_simple()
+        {
+            var notification = new Notification();
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test1", "test1"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test2", "test2"));
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test3", "test3"));
+
+            var errors = notification.ToValidationErrors();
+            errors.Count().ShouldEqual(3);
+            errors.First().message.ShouldEqual("test1");
+            errors.First().field.ShouldEqual("Something");
+
+        }
+
+        [Test]
+        public void to_validation_error_when_an_error_is_registered_without_an_accessor()
+        {
+            var notification = new Notification();
+            notification.RegisterMessage(StringToken.FromKeyString("test1", "test1"));
+
+            var error = notification.ToValidationErrors().Single();
+            error.message.ShouldEqual("test1");
+            error.field.ShouldBeEmpty();
+        }
+
+        [Test]
+        public void to_validation_error_if_multiple_accessors_match_a_message()
+        {
+            var notification = new Notification();
+            var token = StringToken.FromKeyString("test1", "test1");
+            var message = new NotificationMessage(token);
+            message.AddAccessor(ReflectionHelper.GetAccessor<EntityToValidate>(x => x.Something));
+            message.AddAccessor(ReflectionHelper.GetAccessor<EntityToValidate>(x => x.Else));
+
+            notification.RegisterMessage(message);
+
+            var errors = notification.ToValidationErrors();
+            errors.Length.ShouldEqual(2);
+
+            errors.Each(x => x.message.ShouldEqual("test1"));
+
+            errors.First().field.ShouldEqual("Something");
+            errors.Last().field.ShouldEqual("Else");
+        }
+
+        [Test]
         public void add_child()
         {
             var child = new Notification();
@@ -78,6 +125,7 @@ namespace FubuValidation.Tests
         public class EntityToValidate
         {
             public string Something { get; set; }
+            public string Else { get; set; }
             public EntityToValidate Child { get; set; }
         }
         #endregion

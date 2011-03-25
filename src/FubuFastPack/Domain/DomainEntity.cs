@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using FubuCore;
+using FubuValidation;
 
 namespace FubuFastPack.Domain
 {
@@ -59,6 +60,7 @@ namespace FubuFastPack.Domain
         //    Validator.ValidateObject(ExtendedProperties, notification);
         //}
 
+        [ContinueValidation]
         public virtual object ExtendedProperties { get; set; }
 
 

@@ -88,7 +88,7 @@
     <Compile Include="IValidated.cs" />
     <Compile Include="IValidationRule.cs" />
     <Compile Include="IValidationSource.cs" />
-    <Compile Include="IValidationProvider.cs" />
+    <Compile Include="IValidator.cs" />
     <Compile Include="MaximumStringLengthAttribute.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="ValidationKeys.cs" />
     <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
-    <Compile Include="ValidationProvider.cs" />
+    <Compile Include="Validator.cs" />
     <Compile Include="ValidationRegistry.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -85,7 +85,7 @@ namespace FubuValidation
 
         public override string ToString()
         {
-            return GetMessage();
+            return Accessors.Select(x => x.Name).Join(", ") + ":  " + GetMessage();
         }
 
         public NotificationMessage Prepend(Accessor accessor)
@@ -95,6 +95,17 @@ namespace FubuValidation
             message._accessors.AddRange(prependedAccessors);
 
             return message;
+        }
+
+        public IEnumerable<ValidationError> ToValidationErrors()
+        {
+            var message = GetMessage();
+            if (_accessors.Any())
+            {
+                return _accessors.Select(a => new ValidationError(a.Name, message));
+            }
+
+            return new ValidationError[]{new ValidationError(string.Empty, message)};
         }
     }
 }

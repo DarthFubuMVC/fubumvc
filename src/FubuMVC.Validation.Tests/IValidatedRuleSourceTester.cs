@@ -9,12 +9,12 @@ namespace FubuMVC.Validation.Tests
     [TestFixture]
     public class IValidatedRuleSourceTester
     {
-        private ValidationProvider theValidator;
+        private Validator theValidator;
 
         [SetUp]
         public void SetUp()
         {
-            theValidator = new ValidationProvider(new TypeResolver(), new IValidationSource[0]);
+            theValidator = new Validator(new TypeResolver(), new IValidationSource[0]);
         }
 
         [Test]

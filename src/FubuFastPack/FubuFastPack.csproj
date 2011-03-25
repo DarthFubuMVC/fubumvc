@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,8 +65,57 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AjaxContinuation.cs" />
     <Compile Include="Binding\DomainEntityConverterFamily.cs" />
     <Compile Include="Binding\FastPackObjectConverter.cs" />
+    <Compile Include="Crud\ActionCallSet.cs" />
+    <Compile Include="Crud\BlankEditModel.cs" />
+    <Compile Include="Crud\CreationRequest.cs" />
+    <Compile Include="Crud\CrudActionModifier.cs" />
+    <Compile Include="Crud\CrudController.cs" />
+    <Compile Include="Crud\CrudEndpointsConvention.cs" />
+    <Compile Include="Crud\CrudReport.cs" />
+    <Compile Include="Crud\CrudRules.cs" />
+    <Compile Include="Crud\CrudTypeExtensions.cs" />
+    <Compile Include="Crud\CrudUrlBehavior.cs" />
+    <Compile Include="Crud\DomainEntityFinder.cs" />
+    <Compile Include="Crud\EditEntityModel.cs" />
+    <Compile Include="Crud\EditEntityModelBinder.cs" />
+    <Compile Include="Crud\EnsureEntityExistsBehavior.cs" />
+    <Compile Include="Crud\EnsureEntityExistsConvention.cs" />
+    <Compile Include="Crud\EntityConversionFamily.cs" />
+    <Compile Include="Crud\EntityCreator.cs" />
+    <Compile Include="Crud\EntityFinderForwarder.cs" />
+    <Compile Include="Crud\EntityFindViewModel.cs" />
+    <Compile Include="Crud\EntityModelBinder.cs" />
+    <Compile Include="Crud\EntitySaver.cs" />
+    <Compile Include="Crud\EntityViewModelExtensions.cs" />
+    <Compile Include="Crud\ExtensionPropertyAccessor.cs" />
+    <Compile Include="Crud\FindItemRequest.cs" />
+    <Compile Include="Crud\IEntitySaver.cs" />
+    <Compile Include="Crud\IEntityViewModel.cs" />
+    <Compile Include="Crud\IFlattener.cs" />
+    <Compile Include="Crud\IgnoreEntityInBindingAttribute.cs" />
+    <Compile Include="Crud\IHaveSubmitAction.cs" />
+    <Compile Include="Crud\INewEntityHandler.cs" />
+    <Compile Include="Crud\LinkToCreateAttribute.cs" />
+    <Compile Include="Crud\LinkToViewAttribute.cs" />
+    <Compile Include="Crud\NewEntityHandler.cs" />
+    <Compile Include="Crud\Properties\IPropertyHandler.cs" />
+    <Compile Include="Crud\Properties\IPropertyUpdateLogger.cs" />
+    <Compile Include="Crud\Properties\IPropertyUpdater.cs" />
+    <Compile Include="Crud\Properties\ISimplePropertyHandler.cs" />
+    <Compile Include="Crud\Properties\NulloPropertyUpdateLogger.cs" />
+    <Compile Include="Crud\Properties\EditPropertyResult.cs" />
+    <Compile Include="Crud\Properties\PropertyToUpdate.cs" />
+    <Compile Include="Crud\Properties\PropertyUpdater.cs" />
+    <Compile Include="Crud\Properties\PropertyUpdaterForwarder.cs" />
+    <Compile Include="Crud\Properties\PropertyUtility.cs" />
+    <Compile Include="Crud\Properties\SaveResult.cs" />
+    <Compile Include="Crud\Properties\SimplePropertyHandler.cs" />
+    <Compile Include="Crud\Properties\UpdatePropertyModel.cs" />
+    <Compile Include="Crud\Properties\UpdatePropertyResultViewModel.cs" />
+    <Compile Include="Crud\UpdateEntityModel.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="Domain\DomainExtensions.cs" />
@@ -79,6 +129,8 @@
     <Compile Include="Extensibility\ExtensionScanner.cs" />
     <Compile Include="Extensibility\HideOnViewAttribute.cs" />
     <Compile Include="FubuFastPackRegistryExtension.cs" />
+    <Compile Include="InvalidPropertyConversionException.cs" />
+    <Compile Include="ItemRequest.cs" />
     <Compile Include="JqGrid\CommandColumn.cs" />
     <Compile Include="JqGrid\DataColumn.cs" />
     <Compile Include="JqGrid\EntityDTO.cs" />
@@ -93,6 +145,7 @@
     <Compile Include="JqGrid\jqGridModel.cs" />
     <Compile Include="JqGrid\SmartGridException.cs" />
     <Compile Include="JqGrid\SmartGridService.cs" />
+    <Compile Include="Lists\Classes.cs" />
     <Compile Include="NonExistentEntityException.cs" />
     <Compile Include="Querying\FilterRule.cs" />
     <Compile Include="Querying\FilterTagWriter.cs" />
@@ -195,9 +248,7 @@
       <Name>FubuValidation</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Lists\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

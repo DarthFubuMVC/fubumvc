@@ -137,7 +137,7 @@ namespace IntegrationTesting.FubuFastPack.Validation
 
         public static ValidationContext ValidationContextFor(this IContainer container, object target)
         {
-            return new ValidationContext(container.GetInstance<IValidationProvider>(), new Notification(target.GetType()), target){
+            return new ValidationContext(container.GetInstance<IValidator>(), new Notification(target.GetType()), target){
                 Resolver = container.GetInstance<ITypeResolver>(),
                 TargetType = target.GetType()
             };

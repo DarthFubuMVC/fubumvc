@@ -8,11 +8,11 @@ namespace FubuValidation
     public class ValidationContext
     {
         private readonly Notification _notification;
-        private readonly IValidationProvider _provider;
+        private readonly IValidator _provider;
         private readonly object _target;
         private ITypeResolver _resolver;
 
-        public ValidationContext(IValidationProvider provider, Notification notification, object target)
+        public ValidationContext(IValidator provider, Notification notification, object target)
         {
             if (target == null) throw new ArgumentNullException("target");
             if (notification == null) throw new ArgumentNullException("notification");
@@ -24,7 +24,7 @@ namespace FubuValidation
 
         public Type TargetType { get; set; }
 
-        public IValidationProvider Provider
+        public IValidator Provider
         {
             get { return _provider; }
         }

@@ -9,6 +9,23 @@ using System.Linq;
 
 namespace FubuValidation
 {
+    public class ValidationError
+    {
+        public ValidationError()
+        {
+        }
+
+        public ValidationError(string field, string message)
+        {
+            this.field = field;
+            this.message = message;
+        }
+
+        public string field { get; set; }
+        public string message { get; set; }
+    }
+
+    [Serializable]
     public class Notification
     {
         private readonly IList<NotificationMessage> _messages = new List<NotificationMessage>();
@@ -21,6 +38,11 @@ namespace FubuValidation
             : this()
         {
             TargetType = targetType;
+        }
+
+        public ValidationError[] ToValidationErrors()
+        {
+            return AllMessages.SelectMany(x => x.ToValidationErrors()).ToArray();
         }
 
         public Type TargetType { get; private set; }
@@ -41,6 +63,11 @@ namespace FubuValidation
             RegisterMessage(accessor, message);
 
             return message;
+        }
+
+        public NotificationMessage RegisterMessage(PropertyInfo property, StringToken notificationMessage)
+        {
+            return RegisterMessage(new SingleProperty(property), notificationMessage);
         }
 
         public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
@@ -74,10 +101,26 @@ namespace FubuValidation
             return new Notification();
         }
 
+        public static Notification Invalid()
+        {
+            var notification = new Notification();
+            notification.RegisterMessage(ValidationKeys.REQUIRED);
+
+            return notification;
+        }
+
 
         public void RegisterMessage(NotificationMessage message)
         {
             _messages.Add(message);
+        }
+
+        public NotificationMessage RegisterMessage(StringToken stringToken)
+        {
+            var message = new NotificationMessage(stringToken);
+            RegisterMessage(message);
+
+            return message;
         }
     }
 }
