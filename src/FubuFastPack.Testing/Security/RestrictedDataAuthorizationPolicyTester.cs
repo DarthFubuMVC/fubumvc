@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using FubuFastPack.Domain;
+using FubuFastPack.Lists;
 using FubuFastPack.Querying;
 using FubuFastPack.Security;
 using FubuMVC.Core.Runtime;
@@ -73,6 +74,11 @@ namespace FubuFastPack.Testing.Security
         }
     }
 
+    public class User : DomainEntity
+    {
+        public string Username { get; set; }
+    }
+
     public class Case : DomainEntity
     {
         public string Condition { get; set; }
@@ -82,6 +88,11 @@ namespace FubuFastPack.Testing.Security
         public Person Owner { get; set; }
 
         public int Integer { get; set; }
+
+        [ListValue("CaseType")]
+        public string CaseType { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class Site : DomainEntity{}
@@ -99,5 +110,12 @@ namespace FubuFastPack.Testing.Security
             entity.Id = Guid.NewGuid();
             return entity;
         }
+    }
+
+    public class Part : DomainEntity
+    {
+        public string Name { get; set; }
+
+        public int WarrantyDays { get; set; }
     }
 }

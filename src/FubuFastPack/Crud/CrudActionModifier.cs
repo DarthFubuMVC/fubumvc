@@ -139,21 +139,4 @@ namespace FubuFastPack.Crud
 
     }
 
-
-    // TODO: [FubuBound("Look at how nasty this was.  Gotta, gotta, gotta make this nicer from the Fubu side")]
-
-
-    // TODO -- unit test the heck out of this
-
-
-    // TODO -- write a *LOT* of unit tests for all this mess
-    // Just implement this on the CrudControllers themselves
-
-    // This is strictly a NULLO
-
-
-    // TODO: [FubuBound("Put some sort of convenience method for this")]
-
-    // Marker interface used for (among other things) getting the correct
-    // list name for a TypeSpecificListAttribute property
 }

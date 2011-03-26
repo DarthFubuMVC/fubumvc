@@ -1,3 +1,4 @@
+using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
@@ -49,5 +50,14 @@ namespace FubuMVC.Tests
         {
             MockFor<MOCK>().VerifyAllExpectations();
         }
+
+        public IUrlRegistry UseStubUrlRegistry()
+        {
+            var registry = new StubUrlRegistry();
+            Services.Inject<IUrlRegistry>(registry);
+
+            return registry;
+        }
+
     }
 }
