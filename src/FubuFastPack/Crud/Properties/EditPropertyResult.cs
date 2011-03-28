@@ -70,7 +70,7 @@ namespace FubuFastPack.Crud.Properties
             };
         }
 
-        public ValidationError[] ToValidationErrors()
+        public virtual ValidationError[] ToValidationErrors()
         {
             if (FailureMessage.IsEmpty()) return new ValidationError[0];
 

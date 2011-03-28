@@ -60,7 +60,7 @@ namespace FubuFastPack.Crud
             // Get the binding errors from conversion of the Entity
             prefixedContext.Problems.Each(x =>
             {
-                model.Notification.RegisterMessage(Enumerable.Last<PropertyInfo>(x.Properties), FastPackKeys.PARSE_VALUE);
+                model.Notification.RegisterMessage(x.Properties.Last(), FastPackKeys.PARSE_VALUE);
             });
 
             _innerBinder.Bind(type, model, context);
