@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Models
             context["Hungry"] = "Hungry";
 
             ValueConverter converter = new BooleanFamily().Build(null, property);
-            context.ForProperty(property, () =>
+            context.ForProperty(property, x =>
             {
                 converter(context).As<bool>().ShouldBeTrue();
             });
@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Models
             var convertedValue = false;
 
             ValueConverter converter = new BooleanFamily().Build(null, property);
-            context.ForProperty(property, () =>
+            context.ForProperty(property, x =>
             {
                 convertedValue = converter(context).As<bool>();
             });

@@ -13,7 +13,7 @@ namespace FubuCore.Testing.Binding
         private ValueConverterRegistry _registry;
         private ASPNetObjectConversionFamily _aspNetObjectConversionFamily;
         private PropertyInfo _property;
-        private IBindingContext _context;
+        private IPropertyContext _context;
         private object _propertyValue;
 
         [SetUp]
@@ -25,7 +25,7 @@ namespace FubuCore.Testing.Binding
                 cf.Matches(_property)) as ASPNetObjectConversionFamily;
             _aspNetObjectConversionFamily.ShouldNotBeNull();
 
-            _context = MockRepository.GenerateMock<IBindingContext>();
+            _context = MockRepository.GenerateMock<IPropertyContext>();
             _propertyValue = new object();
             _context.Expect(c => c.PropertyValue).Return(_propertyValue);
         }

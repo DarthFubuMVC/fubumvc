@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Models
         public void build_passes_through()
         {
             var binder = new PassthroughConverter<HttpPostedFileBase>();
-            IBindingContext context = MockRepository.GenerateMock<IBindingContext>();
+            var context = MockRepository.GenerateMock<IPropertyContext>();
             context.Expect(c => c.PropertyValue).Return(new object());
             ValueConverter converter = binder.Build(MockRepository.GenerateStub<IValueConverterRegistry>(), property(x => x.File));
             converter(context);
