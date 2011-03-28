@@ -2,7 +2,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Endpoints.Routes;
 using FubuMVC.Diagnostics.Grids;
-using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Tests;
 using NUnit.Framework;
@@ -25,17 +24,10 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints
         public void should_build_grid_from_grid_service()
         {
             var grid = new JsonGridModel();
-            var gridQuery = new JsonGridQuery();
-			var query = new RouteQuery();
-
-        	MockFor<IJsonProvider>()
-        		.Expect(p => p.Deserialize<JsonGridQuery>(query.Body))
-        		.Return(gridQuery);
-
-			JsonService.Stub(MockFor<IJsonProvider>());
+            var query = new JsonGridQuery<BehaviorGraph>();
 
             MockFor<IGridService<BehaviorGraph, BehaviorChain>>()
-                .Expect(s => s.GridFor(_graph, gridQuery))
+                .Expect(s => s.GridFor(_graph, query))
                 .Return(grid);
 
             ClassUnderTest

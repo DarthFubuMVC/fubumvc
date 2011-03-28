@@ -28,7 +28,7 @@ namespace FubuMVC.Diagnostics.Grids.Columns
 
 		public override bool IsHidden(BehaviorChain chain)
 		{
-			return false;
+			return true;
 		}
 
 		public override bool HideFilter(BehaviorChain chain)

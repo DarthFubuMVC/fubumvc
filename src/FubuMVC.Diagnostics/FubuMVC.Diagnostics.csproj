@@ -64,6 +64,7 @@
     <Content Include="Content\Images\down-arrow.png" />
     <Content Include="Content\Images\filter_wrap_left.gif" />
     <Content Include="Content\Images\filter_wrap_right.gif" />
+    <Content Include="Content\Scripts\requests.js" />
     <Content Include="Content\Scripts\core.js" />
     <Content Include="Content\Scripts\jquery\jquery-1.4.4.js" />
     <Content Include="Content\Scripts\jquery\jquery.hotkeys.js" />
@@ -153,10 +154,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyScanner.cs" />
     <Compile Include="Behaviors\UnknownChainBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
     <Compile Include="Configuration\SparkPolicies\NotificationActionSparkPolicy.cs" />
     <Compile Include="Endpoints\RequestsEndpoint.cs" />
+    <Compile Include="Endpoints\Requests\FilterEndpoint.cs" />
     <Compile Include="Endpoints\Routes\AutocompleteEndpoint.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Grids\BehaviorGraphRowProvider.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="Grids\IGridRowProvider.cs" />
     <Compile Include="Grids\IGridService.cs" />
     <Compile Include="Grids\RowComparer.cs" />
+    <Compile Include="IAssemblyScanner.cs" />
     <Compile Include="Infrastructure\JsonService.cs" />
     <Compile Include="Configuration\PartialActionSource.cs" />
     <Compile Include="Configuration\SparkPolicies\PartialActionSparkPolicy.cs" />
@@ -219,6 +223,7 @@
     <Compile Include="Infrastructure\IAuthorizationDescriptor.cs" />
     <Compile Include="Infrastructure\IHttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\IHttpRequest.cs" />
+    <Compile Include="IServiceRegistrationConvention.cs" />
     <Compile Include="Models\AutocompleteRequestModel.cs" />
     <Compile Include="Models\Grids\IGridModel.cs" />
     <Compile Include="Models\IDebugReportModelBuilder.cs" />
@@ -273,11 +278,10 @@
     <Compile Include="Partials\NavigationMenuDecorator.cs" />
     <Compile Include="Partials\PartialAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceRegistryExtensions.cs" />
     <Compile Include="UnknownChainException.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Endpoints\Requests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>

@@ -66,6 +66,7 @@
     <Compile Include="Endpoints\DiagnosticsTestEndpointMarker.cs" />
     <Compile Include="Endpoints\Nested\AnotherEndpoint.cs" />
     <Compile Include="Endpoints\TestEndpoint.cs" />
+    <Compile Include="Endpoints\when_filtering_requests.cs" />
     <Compile Include="Endpoints\when_filtering_routes.cs" />
     <Compile Include="Infrastructure\GridServiceTester.cs" />
     <Compile Include="Infrastructure\RowComparerTester.cs" />

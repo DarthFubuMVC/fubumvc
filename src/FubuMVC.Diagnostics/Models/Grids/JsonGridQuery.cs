@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FubuMVC.Core;
 
 namespace FubuMVC.Diagnostics.Models.Grids
 {
@@ -33,4 +34,9 @@ namespace FubuMVC.Diagnostics.Models.Grids
 			       	};
 		}
     }
+
+	// Open generic for reuse in action calls
+	public class JsonGridQuery<T> : JsonGridQuery, JsonMessage
+	{
+	}
 }

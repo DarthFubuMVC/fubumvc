@@ -5,7 +5,7 @@
 	<Stylesheet href="default.css" />
 	<Script src="diagnostics" />
 	<use content="head"/>
-    <Scripts />
+	<Scripts />
 </head>
 <body>
 <div id="Header">

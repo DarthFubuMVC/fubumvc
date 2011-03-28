@@ -1,4 +1,5 @@
-﻿using FubuMVC.Diagnostics.Navigation;
+﻿using System.Linq;
+using FubuMVC.Diagnostics.Navigation;
 
 namespace FubuMVC.Diagnostics.Partials
 {
@@ -13,7 +14,7 @@ namespace FubuMVC.Diagnostics.Partials
 
         public NavigationMenu Enrich(NavigationMenu target)
         {
-            target.Items = _builder.MenuItems();
+            target.Items = _builder.MenuItems().OrderBy(i => i.Url);
             return target;
         }
     }

@@ -20,7 +20,7 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
             _gridService = gridService;
         }
 
-        public JsonAutocompleteResultModel Post(AutocompleteRequestModel request)
+        public JsonAutocompleteResultModel Post(AutocompleteRequestModel<BehaviorGraph> request)
         {
             var filter = new JsonGridFilter {ColumnName = request.Column, Values = new List<string> {request.Query}};
         	var query = JsonGridQuery.ForFilter(filter);

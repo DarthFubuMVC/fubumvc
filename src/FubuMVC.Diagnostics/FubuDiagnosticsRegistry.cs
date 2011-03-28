@@ -7,9 +7,7 @@ using FubuMVC.Diagnostics.Configuration;
 using FubuMVC.Diagnostics.Configuration.SparkPolicies;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Grids;
-using FubuMVC.Diagnostics.Grids.Builders;
 using FubuMVC.Diagnostics.Grids.Columns;
-using FubuMVC.Diagnostics.Grids.Filters;
 using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Requests;
@@ -40,39 +38,57 @@ namespace FubuMVC.Diagnostics
                              x.SetServiceIfNone<IAuthorizationDescriptor, AuthorizationDescriptor>();
                              x.SetServiceIfNone(typeof(IGridService<,>), typeof(GridService<,>));
                              x.SetServiceIfNone(typeof(IGridRowBuilder<,>), typeof(GridRowBuilder<,>));
-                             x.SetServiceIfNone<IGridRowProvider<BehaviorGraph, BehaviorChain>, BehaviorGraphRowProvider>();
-                             x.SetServiceIfNone<IGridRowProvider<DebugReportModel, BehaviorReportModel>, DebugReportRowProvider>();
-                             x.AddService(typeof(IPartialModel), new ObjectDef { Type = typeof(NavigationMenu) });
-                             x.AddService(typeof(IPartialDecorator<NavigationMenu>), new ObjectDef { Type = typeof(NavigationMenuDecorator) });
-                             x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(DashboardAction) });
-                             x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteExplorerAction) });
-                             x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RequestExplorerAction) });
-                             x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteAuthorizationAction) });
-                             x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(PackageDiagnosticsAction) });
-                             x.AddService(typeof(IGridColumnBuilder<>), new ObjectDef { Type = typeof(DefaultBehaviorChainColumnBuilder) });
 
-							 x.AddService(typeof(INotificationPolicy), new ObjectDef { Type = typeof(NoOutputsNotificationPolicy)});
+							 x.SetServiceIfNone<IGridRowProvider<BehaviorGraph, BehaviorChain>, BehaviorGraphRowProvider>();
+							 x.SetServiceIfNone<IGridRowProvider<DebugReportModel, BehaviorReportModel>, DebugReportRowProvider>();
+							 //x.AddService(typeof(IPartialModel), new ObjectDef { Type = typeof(NavigationMenu) });
+                             //x.AddService(typeof(IPartialDecorator<NavigationMenu>), new ObjectDef { Type = typeof(NavigationMenuDecorator) });
+							 //x.AddService(typeof(INotificationPolicy), new ObjectDef { Type = typeof(NoOutputsNotificationPolicy)});
 
-							 // TODO -- a scanning mechanism for registering these would be nice
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(RouteColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ConstraintsColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ActionColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(InputModelColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(OutputModelColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ChainUrlColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(UrlCategoryColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(OriginColumn) });
-							 x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ViewColumn) });
+							 x.Scan(scan =>
+							        	{
+							        		scan
+												.Applies
+												.ToThisAssembly()
+												.ToAllPackageAssemblies();
 
-							 // TODO -- a scanning mechanism for registering these would be nice
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(ConstraintsFilter) });
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(InputModelFilter) });
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(OutputModelFilter) });
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(OriginFilter) });
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(RouteFilter) });
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(UrlCategoryFilter) });
-                             x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(AuthorizationFilter) });
-							 x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(ViewFilter) });
+											scan
+												.AddAllTypesOf<IPartialModel>()
+												.AddAllTypesOf<IBehaviorChainColumn>()
+												.AddAllTypesOf<INavigationItemAction>()
+												.AddAllTypesOf<INotificationPolicy>();
+
+							        		scan
+							        			.ConnectImplementationsToTypesClosing(typeof (IPartialDecorator<>))
+							        			.ConnectImplementationsToTypesClosing(typeof (IGridColumnBuilder<>))
+												.ConnectImplementationsToTypesClosing(typeof(IGridFilter<>));
+							        	});
+
+							 //x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(DashboardAction) });
+							 //x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteExplorerAction) });
+							 //x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RequestExplorerAction) });
+							 //x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(RouteAuthorizationAction) });
+							 //x.AddService(typeof(INavigationItemAction), new ObjectDef { Type = typeof(PackageDiagnosticsAction) });
+							 //x.AddService(typeof(IGridColumnBuilder<>), new ObjectDef { Type = typeof(DefaultBehaviorChainColumnBuilder) });
+
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(RouteColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ConstraintsColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ActionColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(InputModelColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(OutputModelColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ChainUrlColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(UrlCategoryColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(OriginColumn) });
+							 //x.AddService(typeof(IBehaviorChainColumn), new ObjectDef { Type = typeof(ViewColumn) });
+
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(ConstraintsFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(InputModelFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(OutputModelFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(OriginFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(RouteFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(UrlCategoryFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(AuthorizationFilter) });
+							 //x.AddService(typeof(IGridFilter<BehaviorChain>), new ObjectDef { Type = typeof(ViewFilter) });
                          });
 
         	Policies

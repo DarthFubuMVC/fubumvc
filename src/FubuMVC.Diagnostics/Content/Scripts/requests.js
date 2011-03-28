@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
     function grid() {
-        return $('#route-explorer');
+        return $('#request-explorer');
     }
 
     function filterDialog() {
@@ -232,7 +232,7 @@
             });
 
         $(window).bind('resize', function() {
-            grid().setGridWidth($('#route-heading').width());
+            grid().setGridWidth($('#explorer-heading').width());
         });
     }
 

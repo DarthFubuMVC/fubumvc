@@ -24,9 +24,11 @@ namespace FubuMVC.Diagnostics.Endpoints
         public RequestExplorerModel Get(RequestExplorerRequestModel request)
         {
             var report = _reportBuilder.Build(_debugReport);
-            // TODO -- move to types? Need to support no data in here
+            
+			// TODO -- move to types? Need to support no data in here
             var columnModel = new JqGridColumnModel();
             var behaviorReport = report.BehaviorReports.FirstOrDefault();
+
             _columnBuilders
                 .SelectMany(builder => builder.ColumnsFor(behaviorReport))
                 .Each(col => columnModel.AddColumn(new JqGridColumn
@@ -37,7 +39,7 @@ namespace FubuMVC.Diagnostics.Endpoints
                                                            name = col.Name,
                                                            index = col.Name
                                                        }));
-            return new RequestExplorerModel();
+            return new RequestExplorerModel { ColumnModel = columnModel };
         }
     }
 }

@@ -5,6 +5,11 @@ namespace FubuMVC.Diagnostics.Navigation
 {
     public class NavigationMenu : IPartialModel
     {
+    	public NavigationMenu()
+    	{
+    		Items = new List<NavigationMenuItem>();
+    	}
+
         public IEnumerable<NavigationMenuItem> Items { get; set; }
     }
 }

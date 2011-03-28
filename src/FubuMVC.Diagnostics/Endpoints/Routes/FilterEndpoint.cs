@@ -1,7 +1,6 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Grids;
-using FubuMVC.Diagnostics.Infrastructure;
 using FubuMVC.Diagnostics.Models.Grids;
 
 namespace FubuMVC.Diagnostics.Endpoints.Routes
@@ -17,10 +16,9 @@ namespace FubuMVC.Diagnostics.Endpoints.Routes
             _gridService = gridService;
         }
 
-        public JsonGridModel Post(RouteQuery query)
+        public JsonGridModel Post(JsonGridQuery<BehaviorGraph> query)
         {
-        	var gridQuery = JsonService.Deserialize<JsonGridQuery>(query.Body);
-			return _gridService.GridFor(_graph, gridQuery);
+			return _gridService.GridFor(_graph, query);
         }
     }
 }
