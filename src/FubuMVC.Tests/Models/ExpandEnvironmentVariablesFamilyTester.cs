@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Models
 
             bool wasCalled = false;
             ValueConverter converter = _family.Build(null, expandProp);
-            context.ForProperty(expandProp, () =>
+            context.ForProperty(expandProp, x =>
             {
                 wasCalled = true;
 

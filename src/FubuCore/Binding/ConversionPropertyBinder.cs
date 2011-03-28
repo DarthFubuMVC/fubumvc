@@ -21,13 +21,13 @@ namespace FubuCore.Binding
         // TODO -- need an integrated test with Connection String providers
         public void Bind(PropertyInfo property, IBindingContext context)
         {
-            context.ForProperty(property, () =>
+            context.ForProperty(property, x =>
             {
-                ValueConverter converter = _cache[property];
+                var converter = _cache[property];
 
-                var value = converter(context);
+                var value = converter(x);
                     
-                property.SetValue(context.Object, value, null);
+                property.SetValue(x.Object, value, null);
             });
         }
     }

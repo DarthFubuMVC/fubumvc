@@ -8,7 +8,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuCore.Binding
 {
-    public class BindingContext : IBindingContext
+    public class BindingContext : IBindingContext, IPropertyContext
     {
         private static readonly List<Func<PropertyInfo, string>> _namingStrategies;
         private readonly IServiceLocator _locator;
@@ -50,7 +50,7 @@ namespace FubuCore.Binding
         }
 
         private readonly Stack<object> _objectStack = new Stack<object>();
-        public void ForProperty(PropertyInfo property, Action action)
+        public void ForProperty(PropertyInfo property, Action<IPropertyContext> action)
         {
             _propertyStack.Push(property);
 
@@ -68,7 +68,14 @@ namespace FubuCore.Binding
             }
         }
 
-        private void findPropertyValueInRequestData(Action action)
+        public void ForObject(object @object, Action action)
+        {
+            StartObject(@object);
+            action();
+            FinishObject();
+        }
+
+        private void findPropertyValueInRequestData(Action<IPropertyContext> action)
         {
             _namingStrategies.Any(naming =>
             {
@@ -76,7 +83,7 @@ namespace FubuCore.Binding
                 return _requestData.Value(name, o =>
                 {
                     PropertyValue = o;
-                    action();
+                    action(this);
                 });
             });
         }

@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Runtime
             var property = ReflectionHelper.GetProperty<Address>(x => x.Address1);
 
             bool wasCalled = false;
-            context.ForProperty(property, () =>
+            context.ForProperty(property, x =>
             {
                 context.PropertyValue.ShouldEqual(request["Address1"]);
 
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Runtime
 
             bool wasCalled = false;
 
-            context.ForProperty(property, () =>
+            context.ForProperty(property, x =>
             {
                 context.PropertyValue.ShouldEqual("hank");
                 wasCalled = true;
@@ -71,9 +71,9 @@ namespace FubuMVC.Tests.Runtime
             
             context.StartObject(new Address());
             IBindingContext prefixed = context.PrefixWith("Address");
-            prefixed.ForProperty(property, () =>
+            prefixed.ForProperty(property, x =>
             {
-                prefixed.PropertyValue.ShouldEqual(request["AddressAddress1"]);
+                x.PropertyValue.ShouldEqual(request["AddressAddress1"]);
 
 
                 wasCalled = true;

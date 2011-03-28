@@ -1,4 +1,4 @@
 namespace FubuCore.Binding
 {
-    public delegate object ValueConverter(IBindingContext context);
+    public delegate object ValueConverter(IPropertyContext context);
 }

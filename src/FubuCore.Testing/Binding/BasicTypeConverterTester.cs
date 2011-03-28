@@ -16,7 +16,7 @@ namespace FubuCore.Testing.Binding
         private ValueConverterRegistry _registry;
         private BasicTypeConverter _basicTypeConverter;
         private PropertyInfo _property;
-        private IBindingContext _context;
+        private IPropertyContext _context;
         private string _propertyValue;
 
         private class PropertyHolder{public string Property { get; set; }}
@@ -30,7 +30,7 @@ namespace FubuCore.Testing.Binding
                 cf.Matches(_property)) as BasicTypeConverter;
             _basicTypeConverter.ShouldNotBeNull();
 
-            _context = MockRepository.GenerateMock<IBindingContext>();
+            _context = MockRepository.GenerateMock<IPropertyContext>();
             _propertyValue = "some value";
             _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(3);
         }
@@ -62,7 +62,7 @@ namespace FubuCore.Testing.Binding
         private ValueConverterRegistry _registry;
         private NumericTypeFamily _numericTypeFamily;
         private PropertyInfo _property;
-        private IBindingContext _context;
+        private IPropertyContext _context;
         private string _propertyValue;
 
         private class PropertyHolder { public decimal Property { get; set; } }
@@ -76,7 +76,7 @@ namespace FubuCore.Testing.Binding
                 cf.Matches(_property)) as NumericTypeFamily;
             _numericTypeFamily.ShouldNotBeNull();
 
-            _context = MockRepository.GenerateMock<IBindingContext>();
+            _context = MockRepository.GenerateMock<IPropertyContext>();
             _propertyValue = "1,000.001";
             _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(4);
         }
@@ -106,7 +106,7 @@ namespace FubuCore.Testing.Binding
         private ValueConverterRegistry _registry;
         private NumericTypeFamily _numericTypeFamily;
         private PropertyInfo _property;
-        private IBindingContext _context;
+        private IPropertyContext _context;
         private string _propertyValue;
 
         private class PropertyHolder { public Decimal Property { get; set; } }
@@ -120,7 +120,7 @@ namespace FubuCore.Testing.Binding
                 cf.Matches(_property)) as NumericTypeFamily;
             _numericTypeFamily.ShouldNotBeNull();
 
-            _context = MockRepository.GenerateMock<IBindingContext>();
+            _context = MockRepository.GenerateMock<IPropertyContext>();
             _propertyValue = "1.000,001";
             _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(4);
         }
