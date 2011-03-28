@@ -180,7 +180,7 @@ namespace FubuMVC.Tests.UI.Forms
 		[Test]
 		public void should_return_text_box_tag_with_blank_value()
 		{
-			_page.TextBoxFor(_expression).ToString().ShouldEqual("<input type=\"text\" name=\"name\" value=\"\" />");
+			_page.TextBoxFor(_expression).ToString().ShouldEqual("<input type=\"text\" name=\"name\" />");
 			_page.VerifyAllExpectations();
 		}
 	}
@@ -210,7 +210,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void return_html_tag_on_input_for()
         {
-            _page.InputFor(x => x.Name).ToString().ShouldEqual("<input type=\"text\" value=\"\" name=\"Name\" />");
+            _page.InputFor(x => x.Name).ToString().ShouldEqual("<input type=\"text\" name=\"Name\" />");
         }
 
         [Test]

@@ -12,8 +12,8 @@
     <description>A compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc</tags>
     <dependencies>
-      <dependency id="HtmlTags" version="0.8.1" />
-      <dependency id="StructureMap" version="2.6.2" />
+      <dependency id="HtmlTags" version="[0.9.1.9]" />
+      <dependency id="StructureMap" version="[2.6.2,2.7)" />
       <dependency id="CommonServiceLocator" version="1.0" />
       <dependency id="WebActivator" version="1.1" />
     </dependencies>

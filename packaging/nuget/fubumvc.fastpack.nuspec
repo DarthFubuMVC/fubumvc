@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.FastPack</id>
+    <version>0.0</version>
+    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
+    <owners>Joshua Flanagan</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://fubumvc.com</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Additional functionality useful for FubuMVC applications that use NHibernate and StructureMap</description>
+    <tags>fubumvc mvc nhibernate</tags>
+    <dependencies>
+      <dependency id="FubuMVC" version="[0.4.0.1,0.4.1)" />
+      <dependency id="NHibernate" version="[2.1.2.4000]" />
+      <dependency id="NHibernate.Linq" version="[1.0]" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="..\..\build\FubuFastPack.*" target="lib" />
+  </files>
+</package>
