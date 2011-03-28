@@ -3,9 +3,9 @@ using FubuMVC.Diagnostics.Models.Requests;
 
 namespace FubuMVC.Diagnostics.Grids
 {
-    public class DebugReportRowProvider : IGridRowProvider<DebugReportModel, BehaviorReportModel>
+    public class DebugReportRowProvider : IGridRowProvider<RequestCacheModel, RecordedRequestModel>
     {
-        public IEnumerable<BehaviorReportModel> RowsFor(DebugReportModel target)
+        public IEnumerable<RecordedRequestModel> RowsFor(RequestCacheModel target)
         {
             return target.BehaviorReports;
         }

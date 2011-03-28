@@ -40,7 +40,7 @@ namespace FubuMVC.Diagnostics
                              x.SetServiceIfNone(typeof(IGridRowBuilder<,>), typeof(GridRowBuilder<,>));
 
 							 x.SetServiceIfNone<IGridRowProvider<BehaviorGraph, BehaviorChain>, BehaviorGraphRowProvider>();
-							 x.SetServiceIfNone<IGridRowProvider<DebugReportModel, BehaviorReportModel>, DebugReportRowProvider>();
+							 x.SetServiceIfNone<IGridRowProvider<RequestCacheModel, RecordedRequestModel>, DebugReportRowProvider>();
 							 //x.AddService(typeof(IPartialModel), new ObjectDef { Type = typeof(NavigationMenu) });
                              //x.AddService(typeof(IPartialDecorator<NavigationMenu>), new ObjectDef { Type = typeof(NavigationMenuDecorator) });
 							 //x.AddService(typeof(INotificationPolicy), new ObjectDef { Type = typeof(NoOutputsNotificationPolicy)});

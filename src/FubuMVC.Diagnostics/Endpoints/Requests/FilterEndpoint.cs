@@ -1,4 +1,3 @@
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
@@ -8,20 +7,18 @@ namespace FubuMVC.Diagnostics.Endpoints.Requests
 {
 	public class FilterEndpoint
 	{
-		private readonly IDebugReport _debugReport;
-		private readonly IGridService<DebugReportModel, BehaviorReportModel> _gridService;
-		private readonly IDebugReportModelBuilder _modelBuilder;
+		private readonly IGridService<RequestCacheModel, RecordedRequestModel> _gridService;
+		private readonly IRequestCacheModelBuilder _modelBuilder;
 
-		public FilterEndpoint(IDebugReport debugReport, IGridService<DebugReportModel, BehaviorReportModel> gridService, IDebugReportModelBuilder modelBuilder)
+		public FilterEndpoint(IGridService<RequestCacheModel, RecordedRequestModel> gridService, IRequestCacheModelBuilder modelBuilder)
 		{
-			_debugReport = debugReport;
 			_modelBuilder = modelBuilder;
 			_gridService = gridService;
 		}
 
-		public JsonGridModel Post(JsonGridQuery<DebugReportModel> query)
+		public JsonGridModel Post(JsonGridQuery<RequestCacheModel> query)
 		{
-			var model = _modelBuilder.Build(_debugReport);
+			var model = _modelBuilder.Build();
 			return _gridService.GridFor(model, query);
 		}
 	}

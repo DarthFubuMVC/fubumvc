@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Requests;
@@ -9,13 +8,11 @@ namespace FubuMVC.Diagnostics.Endpoints
 {
     public class RequestsEndpoint
     {
-        private readonly IDebugReport _debugReport;
-        private readonly IEnumerable<IGridColumnBuilder<BehaviorReportModel>> _columnBuilders;
-        private readonly IDebugReportModelBuilder _reportBuilder;
+        private readonly IEnumerable<IGridColumnBuilder<RecordedRequestModel>> _columnBuilders;
+        private readonly IRequestCacheModelBuilder _reportBuilder;
 
-        public RequestsEndpoint(IDebugReport debugReport, IEnumerable<IGridColumnBuilder<BehaviorReportModel>> columnBuilders, IDebugReportModelBuilder reportBuilder)
+        public RequestsEndpoint(IEnumerable<IGridColumnBuilder<RecordedRequestModel>> columnBuilders, IRequestCacheModelBuilder reportBuilder)
         {
-            _debugReport = debugReport;
             _reportBuilder = reportBuilder;
             _columnBuilders = columnBuilders;
         }
@@ -23,7 +20,7 @@ namespace FubuMVC.Diagnostics.Endpoints
 
         public RequestExplorerModel Get(RequestExplorerRequestModel request)
         {
-            var report = _reportBuilder.Build(_debugReport);
+            var report = _reportBuilder.Build();
             
 			// TODO -- move to types? Need to support no data in here
             var columnModel = new JqGridColumnModel();

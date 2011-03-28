@@ -1,4 +1,3 @@
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Endpoints.Requests;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
@@ -17,15 +16,15 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints
 		[Test]
 		public void should_build_grid_from_debug_report()
 		{
-			var model = new DebugReportModel();
-			var query = new JsonGridQuery<DebugReportModel>();
+			var model = new RequestCacheModel();
+			var query = new JsonGridQuery<RequestCacheModel>();
 			var grid = new JsonGridModel();
 
-			MockFor<IDebugReportModelBuilder>()
-				.Expect(b => b.Build(MockFor<IDebugReport>()))
+			MockFor<IRequestCacheModelBuilder>()
+				.Expect(b => b.Build())
 				.Return(model);
 
-			MockFor<IGridService<DebugReportModel, BehaviorReportModel>>()
+			MockFor<IGridService<RequestCacheModel, RecordedRequestModel>>()
 				.Expect(s => s.GridFor(model, query))
 				.Return(grid);
 

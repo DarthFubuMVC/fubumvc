@@ -226,7 +226,7 @@
     <Compile Include="IServiceRegistrationConvention.cs" />
     <Compile Include="Models\AutocompleteRequestModel.cs" />
     <Compile Include="Models\Grids\IGridModel.cs" />
-    <Compile Include="Models\IDebugReportModelBuilder.cs" />
+    <Compile Include="Models\IRequestCacheModelBuilder.cs" />
     <Compile Include="Models\JqGridColumn.cs" />
     <Compile Include="Models\JqGridColumnModel.cs" />
     <Compile Include="Models\JqGridColumnModelRequest.cs" />
@@ -242,8 +242,8 @@
     <Compile Include="Models\PackageDiagnosticsLogModel.cs" />
     <Compile Include="Models\PackageDiagnosticsModel.cs" />
     <Compile Include="Models\PackageDiagnosticsRequestModel.cs" />
-    <Compile Include="Models\Requests\BehaviorReportModel.cs" />
-    <Compile Include="Models\Requests\DebugReportModel.cs" />
+    <Compile Include="Models\Requests\RecordedRequestModel.cs" />
+    <Compile Include="Models\Requests\RequestCacheModel.cs" />
     <Compile Include="Models\Requests\RequestExplorerModel.cs" />
     <Compile Include="Models\Requests\RequestExplorerRequestModel.cs" />
     <Compile Include="Models\Routes\AuthorizationModel.cs" />

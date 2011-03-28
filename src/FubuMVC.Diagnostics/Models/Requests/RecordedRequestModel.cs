@@ -4,9 +4,9 @@ using FubuMVC.Core.Diagnostics;
 
 namespace FubuMVC.Diagnostics.Models.Requests
 {
-    public class BehaviorReportModel
+    public class RecordedRequestModel
     {
-        public BehaviorReportModel()
+        public RecordedRequestModel()
         {
             FormData = new Dictionary<string, object>();
             Details = new List<IBehaviorDetails>();
