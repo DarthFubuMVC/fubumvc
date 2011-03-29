@@ -1,23 +1,19 @@
 ﻿using System;
-using FubuCore;
-using FubuCore.Binding;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuCore.Binding
 {
     public class SmartRequest : ISmartRequest
     {
         private readonly IRequestData _data;
         private readonly IObjectConverter _converter;
-        private readonly IFubuRequest _request;
 
-        public SmartRequest(IRequestData data, IObjectConverter converter, IFubuRequest request)
+        public SmartRequest(IRequestData data, IObjectConverter converter)
         {
             _data = data;
             _converter = converter;
-            _request = request;
         }
 
-        public object Value(Type type, string key)
+        public virtual object Value(Type type, string key)
         {
             object returnValue = null;
 
@@ -27,11 +23,6 @@ namespace FubuMVC.Core.Runtime
                 {
                     returnValue = convertValue(o, type);
                 });
-            }
-
-            if (returnValue == null)
-            {
-                returnValue = _request.Get(type);
             }
 
             return returnValue;
@@ -58,6 +49,11 @@ namespace FubuMVC.Core.Runtime
                 var value = (T)convertValue(raw, typeof (T));
                 callback(value);
             });
+        }
+
+        public virtual ISmartRequest PrefixedWith(string prefix)
+        {
+            return new SmartRequest(new PrefixedRequestData(_data, prefix), _converter);
         }
     }
 }

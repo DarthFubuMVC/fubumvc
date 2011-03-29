@@ -1,6 +1,7 @@
 using System;
 using FubuCore.Binding;
 using FubuCore.Reflection;
+using FubuCore.Util;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
 using Microsoft.Practices.ServiceLocation;
@@ -23,6 +24,10 @@ namespace FubuMVC.Tests.Runtime
         {
             request = new InMemoryRequestData();
             locator = MockRepository.GenerateMock<IServiceLocator>();
+
+            var smartRequest = MockRepository.GenerateMock<ISmartRequest>();
+            smartRequest.Stub(x => x.PrefixedWith(null)).Return(smartRequest).IgnoreArguments();
+            locator.Stub(x => x.GetInstance<ISmartRequest>()).Return(smartRequest);
 
             context = new BindingContext(request, locator);
         }
@@ -273,6 +278,151 @@ namespace FubuMVC.Tests.Runtime
             problem.PropertyName().ShouldEqual("HeldClass.Age");
             //taken out ' is not a valid value for Int32' to support non english culture tests
             problem.ExceptionText.ShouldContain("NOT A NUMBER");
+        }
+    }
+
+    [TestFixture]
+    public class value_of_scenarios : InteractionContext<BindingContext>
+    {
+        private StubSmartRequest theSmartRequest;
+        private InMemoryRequestData theRawRequest;
+
+        protected override void beforeEach()
+        {
+            theRawRequest = new InMemoryRequestData();
+            Services.Inject<IRequestData>(theRawRequest);
+
+            theSmartRequest = new StubSmartRequest();
+            Services.Inject<ISmartRequest>(theSmartRequest);
+            Services.Inject<IServiceLocator>(new StructureMapServiceLocator(Services.Container));
+        }
+
+        [Test]
+        public void value_as_t_by_name()
+        {
+            var theValue = Guid.NewGuid();
+            var theKey = "some key";
+            theSmartRequest[theKey] = theValue;
+
+            ClassUnderTest.As<IBindingContext>().ValueAs<Guid>(theKey).ShouldEqual(theValue);
+        }
+
+        [Test]
+        public void value_as_t_by_name_with_a_naming_strategy()
+        {
+            var theValue = Guid.NewGuid();
+            var theKey = "some key";
+            theSmartRequest["[" + theKey + "]"] = theValue;
+
+            ClassUnderTest.As<IBindingContext>().ValueAs<Guid>(theKey).ShouldEqual(theValue);
+        }
+
+
+        [Test]
+        public void value_as_t_by_name_with_continuation()
+        {
+            var action = MockRepository.GenerateMock<Action<Guid>>();
+            var theKey = "some key";
+            var theValue = Guid.NewGuid();
+
+            theSmartRequest[theKey] = theValue;
+
+            ClassUnderTest.As<IBindingContext>().ValueAs(theKey, action).ShouldBeTrue();
+        
+            action.AssertWasCalled(x => x.Invoke(theValue));
+        }
+
+        [Test]
+        public void value_as_t_from_property_info()
+        {
+            var property = ReflectionHelper.GetProperty<ClassThatIsHeld>(x => x.Name);
+
+            var theValue = Guid.NewGuid();
+            theSmartRequest["Name"] = theValue;
+
+
+            ClassUnderTest.ForProperty(property, context =>
+            {
+                context.ValueAs<Guid>().ShouldEqual(theValue);
+            });
+        }
+
+        [Test]
+        public void value_as_t_from_property_info_with_naming_strategy()
+        {
+            var property = ReflectionHelper.GetProperty<ClassThatIsHeld>(x => x.Name);
+
+            var theValue = Guid.NewGuid();
+            theSmartRequest["[Name]"] = theValue;
+
+
+            ClassUnderTest.ForProperty(property, context =>
+            {
+                context.ValueAs<Guid>().ShouldEqual(theValue);
+            });
+        }
+
+        [Test]
+        public void value_as_t_from_property_by_continuation()
+        {
+            var property = ReflectionHelper.GetProperty<ClassThatIsHeld>(x => x.Name);
+
+            var theValue = Guid.NewGuid().ToString();
+            theSmartRequest["[Name]"] = theValue;
+            theRawRequest["[Name]"] = theValue;
+
+            var action = MockRepository.GenerateMock<Action<string>>();
+
+            ClassUnderTest.ForProperty(property, context =>
+            {
+                context.ValueAs<string>(action).ShouldBeTrue();
+            });
+
+            action.AssertWasCalled(x => x.Invoke(theValue));
+        }
+    }
+
+    public class StubSmartRequest : ISmartRequest
+    {
+        private readonly Cache<string, object> _values = new Cache<string, object>();
+
+        public object this[string key]
+        {
+            get
+            {
+                return _values[key];
+            }
+            set
+            {
+                _values[key] = value;
+            }
+        }
+
+        public object Value(Type type, string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Value<T>(string key)
+        {
+            return (T) _values[key];
+        }
+
+        public bool Value<T>(string key, Action<T> callback)
+        {
+            if (!_values.Has(key))
+            {
+                return false;
+            }
+
+            callback((T) _values[key]);
+
+            return true;
+        }
+
+        public ISmartRequest PrefixedWith(string prefix)
+        {
+            throw new NotImplementedException();
         }
     }
 

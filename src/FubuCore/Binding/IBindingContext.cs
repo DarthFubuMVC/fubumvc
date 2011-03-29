@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FubuCore.Binding;
 
 namespace FubuCore.Binding
 {
     public interface IBindingContext
     {
         IList<ConvertProblem> Problems { get; }
-
+        
         IBindingContext PrefixWith(string prefix);
         void ForProperty(PropertyInfo property, Action<IPropertyContext> action);
 
@@ -18,8 +17,11 @@ namespace FubuCore.Binding
         void BindChild(PropertyInfo property);
         object BindObject(string prefix, Type childType);
 
-        T Service<T>();
         object Object { get; }
+        T Service<T>();
+
+        T ValueAs<T>(string name);
+        bool ValueAs<T>(string name, Action<T> continuation);
     }
 
     public interface IPropertyContext
@@ -29,5 +31,8 @@ namespace FubuCore.Binding
         PropertyInfo Property { get; }
         object Object { get; }
         T Service<T>();
+
+        T ValueAs<T>();
+        bool ValueAs<T>(Action<T> continuation);
     }
 }

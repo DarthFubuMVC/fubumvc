@@ -15,7 +15,12 @@ namespace FubuMVC.Tests.Models
             context = new InMemoryBindingContext();
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
             var objectResolver = container.GetInstance<ObjectResolver>();
-            context.Container.Configure(x => x.For<IObjectResolver>().Use(objectResolver));
+            context.Container.Configure(x =>
+            {
+                x.For<IObjectResolver>().Use(objectResolver);
+                x.For<ISmartRequest>().Use(new InMemorySmartRequest());
+                x.For<IRequestData>().Use(new InMemoryRequestData());
+            });
             propertyBinder = new CollectionPropertyBinder(new DefaultCollectionTypeProvider());
         }
 

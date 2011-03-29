@@ -288,13 +288,13 @@
     <Compile Include="Registration\TypePool.cs" />
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
     <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
+    <Compile Include="Runtime\FubuSmartRequest.cs" />
     <Compile Include="Runtime\IgnoredRoute.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
-    <Compile Include="Runtime\SmartRequest.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />
