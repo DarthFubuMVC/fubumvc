@@ -230,9 +230,9 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void smart_request_is_registered()
+        public void smart_request_is_registered_as_the_fubu_smart_request()
         {
-            registeredTypeIs<ISmartRequest, SmartRequest>();
+            registeredTypeIs<ISmartRequest, FubuSmartRequest>();
         }
     }
 }

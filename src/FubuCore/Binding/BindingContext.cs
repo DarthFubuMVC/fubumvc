@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FubuCore.Binding;
 using FubuMVC.Core;
 using Microsoft.Practices.ServiceLocation;
 
@@ -10,18 +9,19 @@ namespace FubuCore.Binding
 {
     public class BindingContext : IBindingContext, IPropertyContext
     {
-        private static readonly List<Func<PropertyInfo, string>> _namingStrategies;
+        private static readonly List<Func<string, string>> _namingStrategies;
         private readonly IServiceLocator _locator;
         private readonly IRequestData _requestData;
         private readonly IList<ConvertProblem> _problems = new List<ConvertProblem>();
+        private readonly Lazy<ISmartRequest> _request;
 
         static BindingContext()
         {
-            _namingStrategies = new List<Func<PropertyInfo, string>>
+            _namingStrategies = new List<Func<string, string>>
             {
-                p => p.Name,
-                p => p.Name.Replace("_", "-"),
-                p => "[{0}]".ToFormat(p.Name)  // This was necessary 
+                p => p,
+                p => p.Replace("_", "-"),
+                p => "[{0}]".ToFormat(p)  // This was necessary 
 
             };
         }
@@ -30,15 +30,69 @@ namespace FubuCore.Binding
         {
             _requestData = requestData;
             _locator = locator;
+
+            _request = new Lazy<ISmartRequest>(() => _locator.GetInstance<ISmartRequest>());
+        }
+
+        private BindingContext(IRequestData requestData, IServiceLocator locator, ISmartRequest prefixedSmartRequest)
+        {
+            _requestData = requestData;
+            _locator = locator;
+            _request = new Lazy<ISmartRequest>(() => prefixedSmartRequest);
         }
 
         public IList<ConvertProblem> Problems
         {
-            get { return _problems; } }
+            get { return _problems; } 
+        }
 
         public T Service<T>()
         {
             return _locator.GetInstance<T>();
+        }
+
+        T IPropertyContext.ValueAs<T>()
+        {
+            T value = default(T);
+
+            _namingStrategies.Any(naming =>
+            {
+                string name = naming(Property.Name);
+                return _request.Value.Value<T>(name, x => value = x);
+            });
+
+            return value;
+        }
+
+        bool IPropertyContext.ValueAs<T>(Action<T> continuation)
+        {
+            return _namingStrategies.Any(naming =>
+            {
+                string n = naming(Property.Name);
+                return _request.Value.Value<T>(n, continuation);
+            });
+        }
+
+        T IBindingContext.ValueAs<T>(string name)
+        {
+            T value = default(T);
+
+            _namingStrategies.Any(naming =>
+            {
+                string n = naming(name);
+                return _request.Value.Value<T>(n, x => value = x);
+            });
+
+            return value;
+        }
+
+        bool IBindingContext.ValueAs<T>(string name, Action<T> continuation)
+        {
+            return _namingStrategies.Any(naming =>
+            {
+                var n = naming(name);
+                return _request.Value.Value(n, continuation);
+            });
         }
 
         public object PropertyValue { get; protected set; }
@@ -50,6 +104,9 @@ namespace FubuCore.Binding
         }
 
         private readonly Stack<object> _objectStack = new Stack<object>();
+
+
+
         public void ForProperty(PropertyInfo property, Action<IPropertyContext> action)
         {
             _propertyStack.Push(property);
@@ -79,7 +136,7 @@ namespace FubuCore.Binding
         {
             _namingStrategies.Any(naming =>
             {
-                string name = naming(Property);
+                string name = naming(Property.Name);
                 return _requestData.Value(name, o =>
                 {
                     PropertyValue = o;
@@ -90,7 +147,8 @@ namespace FubuCore.Binding
 
         public object Object
         {
-            get { return _objectStack.Any() ? _objectStack.Peek() : null; } }
+            get { return _objectStack.Any() ? _objectStack.Peek() : null; } 
+        }
 
         public void StartObject(object @object)
         {
@@ -111,7 +169,10 @@ namespace FubuCore.Binding
         private BindingContext prefixWith(string prefix, IEnumerable<PropertyInfo> properties)
         {
             var prefixedData = new PrefixedRequestData(_requestData, prefix);
-            var child = new BindingContext(prefixedData, _locator);
+            var prefixedSmartRequest = _request.Value.PrefixedWith(prefix);
+            var child = new BindingContext(prefixedData, _locator, prefixedSmartRequest);
+            
+                
             properties.Each(p => child._propertyStack.Push(p));
             return child;
         }

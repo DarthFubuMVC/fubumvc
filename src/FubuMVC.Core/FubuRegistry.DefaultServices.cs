@@ -84,7 +84,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IObjectConverter, ObjectConverter>();
 
-            graph.Services.SetServiceIfNone<ISmartRequest, SmartRequest>();
+            graph.Services.SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
 
             graph.Services.SetServiceIfNone(new DiagnosticsIndicator());
             

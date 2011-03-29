@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -10,7 +11,7 @@ namespace FubuMVC.Tests.Runtime
     public class Model{}
 
     [TestFixture]
-    public class SmartRequestTester
+    public class FubuSmartRequestTester
     {
         private InMemoryRequestData theData;
         private SmartRequest theRequest;
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.Runtime
             theFubuRequest = new InMemoryFubuRequest();
             theData = new InMemoryRequestData();
             objectConverter = new ObjectConverter();
-            theRequest = new SmartRequest(theData, objectConverter, theFubuRequest);
+            theRequest = new FubuSmartRequest(theData, objectConverter, theFubuRequest);
         }
 
         [Test]

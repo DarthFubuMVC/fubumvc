@@ -7,6 +7,8 @@ namespace FubuCore.Binding
         object Value(Type type, string key);
         T Value<T>(string key);
         bool Value<T>(string key, Action<T> callback);
+
+        ISmartRequest PrefixedWith(string prefix);
     }
 
     public class InMemorySmartRequest : ISmartRequest
@@ -38,6 +40,11 @@ namespace FubuCore.Binding
         public bool Value<T>(string key, Action<T> callback)
         {
             return _request.Value(key, o => callback((T) o));
+        }
+
+        public ISmartRequest PrefixedWith(string prefix)
+        {
+            return new InMemorySmartRequest();
         }
     }
 }
