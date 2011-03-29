@@ -5,6 +5,8 @@ namespace FubuCore.Binding
     public interface ISmartRequest
     {
         object Value(Type type, string key);
+        bool Value(Type type, string key, Action<object> continuation);
+
         T Value<T>(string key);
         bool Value<T>(string key, Action<T> callback);
 
@@ -30,6 +32,11 @@ namespace FubuCore.Binding
         public object Value(Type type, string key)
         {
             return _request.Value(key);
+        }
+
+        public bool Value(Type type, string key, Action<object> continuation)
+        {
+            _request.Value(key, continuation);
         }
 
         public T Value<T>(string key)

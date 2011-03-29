@@ -51,6 +51,30 @@ namespace FubuCore.Binding
             return _locator.GetInstance<T>();
         }
 
+        public object ValueAs(Type type, string name)
+        {
+            foreach (var naming in _namingStrategies)
+            {
+                var actualName = naming(name);
+                var rawValue = _request.Value.Value(type, actualName);
+                if (rawValue != null)
+                {
+                    return rawValue;
+                }
+            }
+
+            return null;
+        }
+
+        public bool ValueAs(Type type, string name, Action<object> continuation)
+        {
+            return _namingStrategies.Any(naming =>
+            {
+                string n = naming(Property.Name);
+                return _request.Value.Value(type, n, continuation);
+            });
+        }
+
         T IPropertyContext.ValueAs<T>()
         {
             T value = default(T);

@@ -96,7 +96,9 @@ namespace FubuTestApplication
             });
 
 
-            FubuApplication.For<FubuTestApplicationRegistry>().StructureMap(() => _container).Bootstrap();
+            FubuApplication.For<FubuTestApplicationRegistry>()
+                .StructureMap(() => _container)
+                .Packages(x => x.Assembly(typeof(FastPackRegistry).Assembly)).Bootstrap();
 
             _container.GetInstance<ISchemaWriter>().BuildSchema();
 

@@ -23,6 +23,8 @@ namespace FubuFastPack.Crud
         }
     }
 
+    // TODO:  Get some integration tests around this monster.  It's well covered in Dovetail
+    // tests, but still...
     public class EditEntityModelBinder : IModelBinder
     {
         private readonly IModelBinder _innerBinder;
@@ -87,17 +89,10 @@ namespace FubuFastPack.Crud
         {
             DomainEntity entity = null;
 
-            context.Service<IRequestData>().Value("Id", rawId =>
+            context.ValueAs(entityType, "Id", o =>
             {
-                if (rawId == null || rawId.ToString() == string.Empty) return;
-
-                Guid id;
-                var gotIt = Guid.TryParse(rawId.ToString(), out id);
-                if (gotIt)
-                {
-                    entity = context.Service<IRepository>().Find(entityType, id);
-                    _innerBinder.Bind(entityType, entity, prefixedContext);
-                }
+                entity = (DomainEntity) o;
+                _innerBinder.Bind(entityType, entity, prefixedContext);
             });
 
             return entity;

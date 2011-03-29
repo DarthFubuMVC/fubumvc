@@ -20,6 +20,9 @@ namespace FubuCore.Binding
         object Object { get; }
         T Service<T>();
 
+        object ValueAs(Type type, string name);
+        bool ValueAs(Type type, string name, Action<object> continuation);
+
         T ValueAs<T>(string name);
         bool ValueAs<T>(string name, Action<T> continuation);
     }
