@@ -28,6 +28,20 @@ namespace FubuCore.Binding
             return returnValue;
         }
 
+        public bool Value(Type type, string key, Action<object> continuation)
+        {
+            if (_converter.CanBeParsed(type))
+            {
+                return _data.Value(key, o =>
+                {
+                    var value = convertValue(o, type);
+                    continuation(value);
+                });
+            }
+
+            return false;
+        }
+
         private object convertValue(object rawValue, Type type)
         {
             if (rawValue == null) return null;

@@ -97,6 +97,7 @@
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
+    <Compile Include="FubuFastPack\Crud\EntityModelBindingIntegrationTester.cs" />
     <Compile Include="FubuFastPack\JqGrid\GridSmokeTester.cs" />
     <Compile Include="FubuFastPack\NHibernate\bootstrapping_a_database.cs" />
     <Compile Include="FubuFastPack\NHibernate\ConfigurationSourceSmokeTester.cs" />

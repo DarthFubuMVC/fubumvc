@@ -403,6 +403,11 @@ namespace FubuMVC.Tests.Runtime
             throw new NotImplementedException();
         }
 
+        public bool Value(Type type, string key, Action<object> continuation)
+        {
+            throw new NotImplementedException();
+        }
+
         public T Value<T>(string key)
         {
             return (T) _values[key];
