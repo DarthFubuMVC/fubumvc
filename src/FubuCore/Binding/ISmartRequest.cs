@@ -36,7 +36,7 @@ namespace FubuCore.Binding
 
         public bool Value(Type type, string key, Action<object> continuation)
         {
-            _request.Value(key, continuation);
+            return _request.Value(key, continuation);
         }
 
         public T Value<T>(string key)
