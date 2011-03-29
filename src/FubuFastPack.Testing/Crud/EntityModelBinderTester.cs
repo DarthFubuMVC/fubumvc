@@ -41,21 +41,6 @@ namespace FubuFastPack.Testing.Crud
             ClassUnderTest.Matches(typeof(Address)).ShouldBeFalse();
         }
 
-        [Test]
-        public void can_find_an_entity_by_id()
-        {
-            var theId = Guid.NewGuid();
-
-            MockFor<IBindingContext>().Stub(x => x.Service<IRepository>()).Return(MockFor<IRepository>());
-            MockFor<IBindingContext>().Stub(x => x.Service<IRequestData>()).Return(MockFor<IRequestData>());
-            MockFor<IRequestData>().Stub(x => x.Value("Id")).Return(theId.ToString());
-
-            var theEntity = new User();
-
-            MockFor<IRepository>().Stub(x => x.Find<User>(theId)).Return(theEntity);
-
-            ClassUnderTest.Bind(typeof(User), MockFor<IBindingContext>()).ShouldBeTheSameAs(theEntity);
-        }
 
         [Test]
         public void try_to_return_a_new_object_of_that_type_if_it_cannot_be_found_in_the_repository_for_child_object_binding_scenarios()
