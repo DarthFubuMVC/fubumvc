@@ -22,7 +22,7 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints.Chains
 		{
 			var request = new ChainRequest {Id = Guid.NewGuid()};
 
-			Exception<UnknownChainException>
+			Exception<UnknownObjectException>
 				.ShouldBeThrownBy(() => ClassUnderTest.Get(request));
 		}
 

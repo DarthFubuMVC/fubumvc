@@ -63,7 +63,7 @@ namespace FubuMVC.StructureMap
                         return tracer;
                     });
 
-                    x.For<IDebugReport>().Use<DebugReport>();
+                    x.For<IDebugReport>().HybridHttpOrThreadLocalScoped().Use<DebugReport>();
                     x.For<IDebugDetector>().Use<DebugDetector>();
                 });
             }

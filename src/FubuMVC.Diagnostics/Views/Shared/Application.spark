@@ -5,7 +5,6 @@
 	<Stylesheet href="default.css" />
 	<Script src="diagnostics" />
 	<use content="head"/>
-	<Scripts />
 </head>
 <body>
 <div id="Header">
@@ -32,5 +31,6 @@
 		<h4>${this.FubuVersion()}</h4>
 	</div>
 </div>
+<Scripts />
 </body>
 </html>

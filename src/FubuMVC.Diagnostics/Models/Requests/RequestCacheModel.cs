@@ -6,9 +6,9 @@ namespace FubuMVC.Diagnostics.Models.Requests
     {
         public RequestCacheModel()
         {
-            BehaviorReports = new List<RecordedRequestModel>();
+            Requests = new List<RecordedRequestModel>();
         }
 
-        public IEnumerable<RecordedRequestModel> BehaviorReports { get; set; }
+        public IEnumerable<RecordedRequestModel> Requests { get; set; }
     }
 }

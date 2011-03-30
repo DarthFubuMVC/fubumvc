@@ -24,7 +24,7 @@ namespace FubuMVC.Diagnostics.Endpoints
             
 			// TODO -- move to types? Need to support no data in here
             var columnModel = new JqGridColumnModel();
-            var behaviorReport = report.BehaviorReports.FirstOrDefault();
+            var behaviorReport = report.Requests.FirstOrDefault();
 
             _columnBuilders
                 .SelectMany(builder => builder.ColumnsFor(behaviorReport))

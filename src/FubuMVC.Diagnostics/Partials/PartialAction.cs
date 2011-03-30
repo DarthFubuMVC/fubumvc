@@ -3,7 +3,7 @@
 namespace FubuMVC.Diagnostics.Partials
 {
     public class PartialAction<T>
-        where T : class, IPartialModel
+        where T : class
     {
         private readonly IEnumerable<IPartialDecorator<T>> _decorators;
 

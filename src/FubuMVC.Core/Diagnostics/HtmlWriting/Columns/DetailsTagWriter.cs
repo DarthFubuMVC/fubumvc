@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using FubuCore;
@@ -115,7 +116,12 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             });
         }
 
-        private HtmlTag addDetail()
+    	public void HttpStatus(HttpStatusReport report)
+    	{
+    		// NO-OP
+    	}
+
+    	private HtmlTag addDetail()
         {
             return _holderTag.Add("div").AddClass("details");
         }

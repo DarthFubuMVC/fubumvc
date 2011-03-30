@@ -1,8 +1,6 @@
-﻿using FubuMVC.Diagnostics.Partials;
-
-namespace FubuMVC.Diagnostics.Models.Grids
+﻿namespace FubuMVC.Diagnostics.Models.Grids
 {
-    public interface IGridModel : IPartialModel
+    public interface IGridModel
     {
         JqGridColumnModel ColumnModel { get; set; }
     }

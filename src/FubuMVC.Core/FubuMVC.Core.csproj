@@ -80,6 +80,7 @@
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
+    <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorFactory.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DiagnosticHtml.cs" />
     <Compile Include="Diagnostics\DiagnosticsExtensions.cs" />
@@ -97,7 +98,6 @@
     <Compile Include="Diagnostics\BehaviorReport.cs" />
     <Compile Include="Diagnostics\Tracing\BehaviorTracer.cs" />
     <Compile Include="Diagnostics\DebugDetector.cs" />
-    <Compile Include="Diagnostics\Tracing\DebuggingOutputWriter.cs" />
     <Compile Include="Diagnostics\DebugReport.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehavior.cs" />
     <Compile Include="Diagnostics\DiagnosticsRegistry.cs" />

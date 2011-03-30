@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuCore;
+using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
@@ -103,7 +104,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void has_the_debugging_services_registred()
         {
-            graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof (DebuggingOutputWriter));
+            graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RecordingRequestData));
         }
 
         [Test]

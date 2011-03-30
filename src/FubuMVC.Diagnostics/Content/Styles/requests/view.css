@@ -1,0 +1,58 @@
+#nodes
+{
+    width:100%;
+}
+
+#nodes li
+{
+    list-style-type: none;
+    margin-top:10px;
+    text-align:left;
+}
+
+#nodes li .ui-button
+{
+    text-align:center;
+}
+
+h2.request
+{
+    margin-bottom:0;
+}
+
+h4.request-identifier
+{
+    font-style:italic;
+}
+
+pre {
+	font-size: 12px;
+	padding: 0;
+	margin: 0;
+	background: #f0f0f0;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	line-height: 20px; /*--Height of each line of code--*/
+	width: 800px;
+	text-align:left;
+	overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
+	overflow-Y: hidden;  /*--Hides vertical scroll created by IE--*/
+}
+
+pre code {
+	margin: 0 0 0 40px;  /*--Left Margin--*/
+	padding: 18px 0;
+	display: block;
+}
+
+pre.blk {
+    background: url("../../Images/pre_code_bg_blk.gif") repeat-y scroll left top transparent;
+    border: medium none;
+    color: #FFFFFF;
+}
+
+.model-binding .grid
+{
+    border: 1px solid #9D9D9D;
+    width:80%;
+}

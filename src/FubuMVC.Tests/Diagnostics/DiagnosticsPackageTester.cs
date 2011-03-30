@@ -48,12 +48,6 @@ namespace FubuMVC.Tests.Diagnostics
         }
 
         [Test]
-        public void output_writer_is_overridden()
-        {
-            graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof (DebuggingOutputWriter));
-        }
-
-        [Test]
         public void request_data_is_overriden()
         {
             graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RecordingRequestData));

@@ -22,7 +22,7 @@ namespace FubuMVC.Diagnostics.Endpoints.Chains
 			var chain = _graph.Behaviors.SingleOrDefault(c => c.UniqueId == request.Id);
 			if(chain == null)
 			{
-				throw new UnknownChainException(request.Id);
+				throw new UnknownObjectException(request.Id);
 			}
 
 		    return new ChainModel

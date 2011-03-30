@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Diagnostics
 {
@@ -25,7 +24,7 @@ namespace FubuMVC.Diagnostics
 		{
 			matchedTypes
 				.Where(t => _pluginType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
-				.Each(t => services.AddService(_pluginType, new ObjectDef(t)));
+				.Each(t => services.FillType(_pluginType, t));
 		}
 	}
 
@@ -42,7 +41,7 @@ namespace FubuMVC.Diagnostics
 		{
 			matchedTypes
 				.Where(t => t.Closes(_openType) && t.IsClass && !t.IsAbstract)
-				.Each(t => services.AddService(_openType, new ObjectDef(t)));
+				.Each(t => services.FillType(_openType, t));
 		}
 	}
 

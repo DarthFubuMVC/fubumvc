@@ -25,7 +25,7 @@ namespace FubuMVC.Diagnostics.Tests.Partials
         }
     }
 
-    public class TestPartialModel : IPartialModel
+    public class TestPartialModel
     {
         public Guid Id { get; set; }
     }

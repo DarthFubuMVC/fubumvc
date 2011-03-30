@@ -214,7 +214,6 @@
     <Compile Include="Diagnostics\BehaviorGraphWriterTester.cs" />
     <Compile Include="Diagnostics\BehaviorTracerTester.cs" />
     <Compile Include="Diagnostics\DebugDetectorTester.cs" />
-    <Compile Include="Diagnostics\DebuggingOutputWriterTester.cs" />
     <Compile Include="Diagnostics\DebugReportTester.cs" />
     <Compile Include="Diagnostics\DiagnosticsPackageTester.cs" />
     <Compile Include="Diagnostics\DiagnosticsRegistryTester.cs" />

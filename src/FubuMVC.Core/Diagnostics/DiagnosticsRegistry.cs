@@ -4,7 +4,6 @@ using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.UI.Diagnostics;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Diagnostics
@@ -20,7 +19,6 @@ namespace FubuMVC.Core.Diagnostics
 
             Services(x =>
             {
-                x.ReplaceService<IOutputWriter, DebuggingOutputWriter>();
                 x.ReplaceService<IObjectResolver, RecordingObjectResolver>();
                 x.ReplaceService<IDebugReport, DebugReport>();
                 x.ReplaceService<IRequestData, RecordingRequestData>();

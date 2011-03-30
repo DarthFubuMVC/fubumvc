@@ -1,3 +1,5 @@
+using System;
+
 namespace FubuMVC.Core.Diagnostics
 {
     public class ExceptionReport : IBehaviorDetails

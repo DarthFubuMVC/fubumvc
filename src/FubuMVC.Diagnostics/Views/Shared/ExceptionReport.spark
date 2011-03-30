@@ -1,0 +1,9 @@
+﻿<use master="" />
+<use namespace="FubuCore" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<viewdata model="ExceptionReport" />
+<div class="exception">
+  <pre>
+    <code>${Model.Text.HtmlEncode()}</code>
+  </pre>
+</div>
