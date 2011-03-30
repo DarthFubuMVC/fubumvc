@@ -13,6 +13,7 @@ namespace FubuMVC.Core.Packaging
     {
         private readonly IContentFolderService _contentFolderService = new ContentFolderService(new FileSystem());
         private readonly IMimeTypeProvider _mimeTypeProvider = new DefaultMimeTypeProvider();
+        private readonly IContentCacheBehavior _contentCacheBehavior = new ContentCacheBehavior();
 
         public FubuMvcPackageFacility()
         {
@@ -76,9 +77,9 @@ namespace FubuMVC.Core.Packaging
 
         public void AddPackagingContentRoutes(ICollection<RouteBase> routes)
         {
-            new FileRouteHandler(_contentFolderService, ContentType.images, _mimeTypeProvider).RegisterRoute(routes);
-            new FileRouteHandler(_contentFolderService, ContentType.scripts, _mimeTypeProvider).RegisterRoute(routes);
-            new FileRouteHandler(_contentFolderService, ContentType.styles, _mimeTypeProvider).RegisterRoute(routes);
+            new FileRouteHandler(_contentFolderService, ContentType.images, _mimeTypeProvider, _contentCacheBehavior).RegisterRoute(routes);
+            new FileRouteHandler(_contentFolderService, ContentType.scripts, _mimeTypeProvider, _contentCacheBehavior).RegisterRoute(routes);
+            new FileRouteHandler(_contentFolderService, ContentType.styles, _mimeTypeProvider, _contentCacheBehavior).RegisterRoute(routes);
         }
 
 
@@ -86,6 +87,7 @@ namespace FubuMVC.Core.Packaging
         {
             services.AddService<IContentFolderService>(_contentFolderService);
             services.AddService<IMimeTypeProvider>(_mimeTypeProvider);
+            services.AddService<IContentCacheBehavior>(_contentCacheBehavior);
         }
 
         public override string ToString()

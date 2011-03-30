@@ -12,12 +12,14 @@ namespace FubuMVC.Core.Content
         private readonly IContentFolderService _folders;
         private readonly ContentType _contentType;
         private readonly IMimeTypeProvider _mimeTypeProvider;
+        private readonly IContentCacheBehavior _contentCacheBehavior;
 
-        public FileRouteHandler(IContentFolderService folders, ContentType contentType, IMimeTypeProvider mimeTypeProvider)
+        public FileRouteHandler(IContentFolderService folders, ContentType contentType, IMimeTypeProvider mimeTypeProvider, IContentCacheBehavior contentCacheBehavior)
         {
             _folders = folders;
             _contentType = contentType;
             _mimeTypeProvider = mimeTypeProvider;
+            _contentCacheBehavior = contentCacheBehavior;
         }
 
         public void RegisterRoute(ICollection<RouteBase> routes)
@@ -36,7 +38,7 @@ namespace FubuMVC.Core.Content
         {
             var fileName = requestContext.RouteData.Values.Select(x => x.Value as string).Where(x => x.IsNotEmpty()).Join("/");
             var fullPath = _folders.FileNameFor(_contentType, fileName);
-            return new FileHttpHandler(fullPath, _mimeTypeProvider);
+            return new FileHttpHandler(fullPath, _mimeTypeProvider, _contentCacheBehavior);
         }
     }
 
@@ -44,11 +46,13 @@ namespace FubuMVC.Core.Content
     {
         private readonly string _fileName;
         private readonly IMimeTypeProvider _mimeTypeProvider;
+        private readonly IContentCacheBehavior _contentCacheBehavior;
 
-        public FileHttpHandler(string fileName, IMimeTypeProvider mimeTypeProvider)
+        public FileHttpHandler(string fileName, IMimeTypeProvider mimeTypeProvider, IContentCacheBehavior contentCacheBehavior)
         {
             _fileName = fileName;
             _mimeTypeProvider = mimeTypeProvider;
+            _contentCacheBehavior = contentCacheBehavior;
         }
 
         public void ProcessRequest(HttpContext context)
@@ -56,7 +60,8 @@ namespace FubuMVC.Core.Content
             var extension = Path.GetExtension(_fileName).ToLower();
 
             context.Response.ContentType = _mimeTypeProvider.For(extension);
-            context.Response.WriteFile(_fileName);
+            _contentCacheBehavior.ApplyCacheBehavior(_fileName, context.Response.Cache);
+            context.Response.TransmitFile(_fileName);
         }
 
         public bool IsReusable
