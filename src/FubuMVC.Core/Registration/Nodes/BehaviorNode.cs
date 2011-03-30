@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuCore;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -41,14 +43,14 @@ namespace FubuMVC.Core.Registration.Nodes
         public BehaviorNode Next
         {
             get { return _next; }
-            protected set
+            internal set
             {
                 _next = value;
                 if (value != null) value.Previous = this;
             }
         }
 
-        public BehaviorNode Previous { get; protected set; }
+        public BehaviorNode Previous { get; internal set; }
 
         public void ForFollowingBehavior(BehaviorSearch search)
         {
@@ -68,7 +70,7 @@ namespace FubuMVC.Core.Registration.Nodes
             return GetEnumerator();
         }
 
-        public virtual IEnumerator<BehaviorNode> GetEnumerator()
+        public IEnumerator<BehaviorNode> GetEnumerator()
         {
             if (Next != null)
             {
@@ -81,18 +83,21 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        internal BehaviorChain Chain
+        {
+            get; set;
+        }
+
         public BehaviorChain ParentChain()
         {
-            if (this is BehaviorChain) return (BehaviorChain) this;
+            if (Chain != null) return Chain;
 
             if (Previous == null) return null;
-
-            if (Previous is BehaviorChain) return (BehaviorChain) Previous;
 
             return Previous.ParentChain();
         }
 
-        public virtual ObjectDef ToObjectDef()
+        public ObjectDef ToObjectDef()
         {
             ObjectDef objectDef = toObjectDef();
             objectDef.Name = UniqueId.ToString();
@@ -133,13 +138,22 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public void AddBefore(BehaviorNode newNode)
         {
+            Debug.WriteLine("Adding {0} before {1}".ToFormat(newNode.ToString(), this.ToString()));
+            
             if (PreviousNodes.Contains(newNode)) return;
+
+            newNode.Remove();
 
             if (Previous != null)
             {
-                newNode.Remove();
                 Previous.Next = newNode;
             }
+
+            if (Previous == null && Chain != null)
+            {
+                Chain.Prepend(newNode);
+            }
+
             newNode.Next = this;
         }
 
@@ -147,14 +161,13 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             get
             {
-                if (Previous != null && !(Previous is BehaviorChain))
-                {
-                    yield return Previous;
+                if (Previous == null) yield break;
 
-                    foreach (var node in Previous.PreviousNodes)
-                    {
-                        yield return node;
-                    }
+                yield return Previous;
+
+                foreach (var node in Previous.PreviousNodes)
+                {
+                    yield return node;
                 }
             }
         }
@@ -172,7 +185,7 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
-        public virtual void AddToEnd(BehaviorNode node)
+        public void AddToEnd(BehaviorNode node)
         {
             // Do not append any duplicates
             if (this.Contains(node)) return;
@@ -181,27 +194,40 @@ namespace FubuMVC.Core.Registration.Nodes
             last.Next = node;
         }
 
-        public virtual void Remove()
+        public void Remove()
         {
-            if (Previous == null)
+            if (Next != null)
             {
-                if (Next != null) Next.Previous = null;
+                Next.Previous = Previous;
             }
-            else
+
+            if (Previous == null && Chain != null && Next != null)
+            {
+                Chain.SetTop(Next);
+            }
+
+            if (Previous != null)
             {
                 Previous.Next = Next;
             }
+
             Previous = null;
             Next = null;
         }
 
-        public virtual void ReplaceWith(BehaviorNode newNode)
+        public void ReplaceWith(BehaviorNode newNode)
         {
+            newNode.Next = Next;
+
             if (Previous != null)
             {
                 Previous.Next = newNode;
             }
-            newNode.Next = Next;
+            else if (Chain != null)
+            {
+                Chain.SetTop(newNode);
+            }
+            
             Previous = null;
             Next = null;
         }

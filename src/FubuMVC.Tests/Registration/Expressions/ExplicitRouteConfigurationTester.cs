@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Expressions
 
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Filters += chain => !chain.ContainsCall(call => call.InputType() == typeof (InputModel));
-            visitor.Actions += chain => chain.ShouldHaveCount(0);
+            visitor.Actions += chain => chain.Top.ShouldBeNull();
 
             _graph.VisitBehaviors(visitor);
         }

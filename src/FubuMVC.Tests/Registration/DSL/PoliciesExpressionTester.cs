@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Registration.DSL
             // Ordinarily, AuthorizationNode would be before any other behavior wrappers
 
             var chain = graph.BehaviorFor<OrderingPolicyController>(x => x.M1());
-            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof (OPWrapper1));
+            chain.First().ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(OPWrapper1));
             chain.ToList()[1].ShouldBeOfType<AuthorizationNode>();
         }
     }

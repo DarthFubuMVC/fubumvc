@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,7 +10,7 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public class BehaviorChain : BehaviorNode
+    public class BehaviorChain : IEnumerable<BehaviorNode>
     {
         public BehaviorChain()
         {
@@ -17,17 +18,33 @@ namespace FubuMVC.Core.Registration.Nodes
             UrlCategory = new UrlCategory();
         }
 
-        public UrlCategory UrlCategory { get; private set; }
-
-        public BehaviorNode Top
+        public Guid UniqueId
         {
-            get { return Next; }
-            private set { Next = value; }
+            get
+            {
+                return Top == null ? Guid.Empty : Top.UniqueId;
+            }
         }
 
-        public override BehaviorCategory Category
+        public UrlCategory UrlCategory { get; private set; }
+
+        private BehaviorNode _top;
+        internal void SetTop(BehaviorNode node)
         {
-            get { return BehaviorCategory.Chain; }
+            node.Previous = null;
+
+            if (_top != null)
+            {
+                _top.Chain = null;
+            }
+
+            _top = node;
+            node.Chain = this;
+        }
+        
+        public BehaviorNode Top
+        {
+            get { return _top; }
         }
 
         public string Origin { get; set; }
@@ -56,6 +73,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public AuthorizationNode Authorization { get; private set; }
 
+        [Obsolete]
         public string FirstCallDescription
         {
             get
@@ -65,13 +83,17 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        [Obsolete("Maybe")]
         public string RoutePattern
         {
             get { return Route == null ? string.Empty : Route.Pattern; }
         }
 
 
-
+        public bool HasOutputBehavior()
+        {
+            return Top == null ? false : Top.HasOutputBehavior();
+        }
 
         public void PrependToUrl(string prefix)
         {
@@ -81,19 +103,15 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        public override void AddToEnd(BehaviorNode node)
+        public void AddToEnd(BehaviorNode node)
         {
             if (Top == null)
             {
-                Top = node;
+                SetTop(node);
                 return;
             }
 
-            var last = this.OfType<BehaviorNode>().LastOrDefault();
-            if (last != null)
-            {
-                last.AddAfter(node);
-            }
+            Top.AddToEnd(node);
         }
 
         public T AddToEnd<T>() where T : BehaviorNode, new()
@@ -103,57 +121,31 @@ namespace FubuMVC.Core.Registration.Nodes
             return node;
         }
 
+        [Obsolete("Maybe")]
         public Type ActionOutputType()
         {
             var call = Calls.FirstOrDefault();
             return call == null ? null : call.OutputType();
         }
 
-        public override ObjectDef ToObjectDef()
-        {
-            // TODO -- throw if there is no Top.  Invalid state
-
-            var def = Top.ToObjectDef();
-            def.Name = UniqueId.ToString();
-            return def;
-        }
-
+ 
         public void Register(Action<Type, ObjectDef> callback)
         {
-            callback(typeof (IActionBehavior), ToObjectDef());
-            Authorization.Register(UniqueId, callback);
+            callback(typeof (IActionBehavior), Top.ToObjectDef());
+            Authorization.Register(Top.UniqueId, callback);
         }
 
         public void Prepend(BehaviorNode node)
         {
-            if (Top == null)
+            var next = Top;
+            SetTop(node);
+
+            if (next != null)
             {
-                Top = node;
-            }
-            else
-            {
-                Top.AddBefore(node);
-                Top = node;
+                Top.Next = next;
             }
         }
 
-        protected override ObjectDef buildObjectDef()
-        {
-            // does not get called.  It's goofy.  We'll fix this at some point
-            throw new NotImplementedException();
-        }
-
-        public override IEnumerator<BehaviorNode> GetEnumerator()
-        {
-            if (Top != null)
-            {
-                yield return Top;
-                foreach (BehaviorNode node in Top)
-                {
-                    yield return node;
-                }
-            }
-        }
 
         public ActionCall FirstCall()
         {
@@ -167,6 +159,8 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public Type InputType()
         {
+            if (Top == null) return null;
+
             var inputTypeHolder =  this.OfType<IMayHaveInputType>().FirstOrDefault();
             return inputTypeHolder == null ? null : inputTypeHolder.InputType();
         }
@@ -198,6 +192,23 @@ namespace FubuMVC.Core.Registration.Nodes
         public bool IsWrappedBy(Type behaviorType)
         {
             return this.Where(x => x is Wrapper).Cast<Wrapper>().Any(x => x.BehaviorType == behaviorType);
+        }
+
+        public IEnumerator<BehaviorNode> GetEnumerator()
+        {
+            if (Top == null) yield break;
+
+            yield return Top;
+
+            foreach (var node in Top)
+            {
+                yield return node;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

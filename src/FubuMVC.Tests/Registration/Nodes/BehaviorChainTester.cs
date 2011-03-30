@@ -16,6 +16,19 @@ using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {
+    public class StubNode : BehaviorNode
+    {
+        public override BehaviorCategory Category
+        {
+            get { return BehaviorCategory.Chain; }
+        }
+
+        protected override ObjectDef buildObjectDef()
+        {
+            return new ObjectDef();
+        }
+    }
+
     [TestFixture]
     public class BehaviorChainTester
     {
@@ -82,7 +95,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.Top.ShouldBeTheSameAs(wrapper2);
             wrapper2.Next.ShouldBeTheSameAs(wrapper);
 
-            wrapper2.Previous.ShouldBeTheSameAs(chain);
+            wrapper2.Previous.ShouldBeNull();
             wrapper.Previous.ShouldBeTheSameAs(wrapper2);
         }
 
@@ -119,14 +132,14 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.AddToEnd(wrapper);
 
-            wrapper.Previous.ShouldBeTheSameAs(chain);
+            wrapper.Previous.ShouldBeNull();
 
             var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
             wrapper.AddToEnd(wrapper2);
 
             wrapper2.Previous.ShouldBeTheSameAs(wrapper);
-            wrapper.Previous.ShouldBeTheSameAs(chain);
+            wrapper.Previous.ShouldBeNull();
         }
 
 
@@ -138,14 +151,16 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             chain.AddToEnd(wrapper);
 
-            wrapper.Previous.ShouldBeTheSameAs(chain);
+            wrapper.Previous.ShouldBeNull();
+            wrapper.ParentChain().ShouldBeTheSameAs(chain);
 
             var wrapper2 = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
 
             chain.AddToEnd(wrapper2);
 
             wrapper2.Previous.ShouldBeTheSameAs(wrapper);
-            wrapper.Previous.ShouldBeTheSameAs(chain);
+            wrapper.Previous.ShouldBeNull();
+            wrapper.ParentChain().ShouldBeTheSameAs(chain);
         }
 
         [Test]
@@ -226,23 +241,6 @@ namespace FubuMVC.Tests.Registration.Nodes
 
 
         [Test]
-        public void the_unique_id_of_the_behavior_chain_matches_the_object_def_name()
-        {
-            var chain = new BehaviorChain();
-            ActionCall call = ActionCall.For<TestController>(x => x.AnotherAction(null));
-            chain.AddToEnd(call);
-
-            chain.UniqueId.ToString().ShouldEqual(chain.ToObjectDef().Name);
-        }
-
-        [Test]
-        public void finding_the_chain_from_a_chain_returns_itself()
-        {
-            var chain = new BehaviorChain();
-            chain.ParentChain().ShouldBeTheSameAs(chain);
-        }
-
-        [Test]
         public void find_the_chain_when_the_parent_is_null_should_be_null()
         {
             var node = new Wrapper(typeof (ObjectDefInstanceTester.FakeJsonBehavior));
@@ -272,13 +270,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             node2.AddToEnd(node3);
 
             node3.ParentChain().ShouldBeTheSameAs(chain);
-        }
-
-        [Test]
-        public void category_returns_chain()
-        {
-            var chain = new BehaviorChain();
-            chain.Category.ShouldEqual(BehaviorCategory.Chain);
         }
 
         [Test]
@@ -313,37 +304,6 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.FirstCallDescription.ShouldEqual("");
         }
 
-        [Test]
-        public void get_enum_should_yield_top()
-        {
-            var firstNode = new BehaviorChain();
-            var secondNode = new BehaviorChain();
-            var thirdNode = new BehaviorChain();
-            firstNode.AddToEnd(secondNode);
-            secondNode.AddToEnd(thirdNode);
-            var enumerator = firstNode.GetEnumerator();
-            enumerator.MoveNext();
-            enumerator.Current.ShouldEqual(secondNode);
-            enumerator.MoveNext();
-            enumerator.Current.ShouldEqual(thirdNode);
-            enumerator.MoveNext().ShouldBeFalse();
-        }
-
-        [Test]
-        public void behavior_node_get_enum_should_yield_next()
-        {
-            BehaviorNode node = new FakeViewToken();
-            var secondNode = new BehaviorChain();
-            var thirdNode = new BehaviorChain();
-            node.AddAfter(secondNode);
-            secondNode.AddAfter(thirdNode);
-            var enumerator = node.GetEnumerator();
-            enumerator.MoveNext();
-            enumerator.Current.ShouldEqual(secondNode);
-            enumerator.MoveNext();
-            enumerator.Current.ShouldEqual(thirdNode);
-            enumerator.MoveNext().ShouldBeFalse();
-        }
 
         [Test]
         public void should_register_an_endpoint_authorizor_if_there_are_any_authorization_rules()

@@ -15,7 +15,9 @@ namespace FubuMVC.Core.Diagnostics
         private static void modifyChain(BehaviorChain chain, IConfigurationObserver observer)
         {
             chain.Calls.Each(c => observer.RecordCallStatus(c, "Wrapping with diagnostic tracer and behavior"));
-            chain.ToArray().Each(node => node.AddBefore(Wrapper.For<BehaviorTracer>()));
+            
+            // Gets eliminated in the advanced diagnostic branch
+            //chain.ToArray().Each(node => node.AddBefore(Wrapper.For<BehaviorTracer>()));
             chain.Prepend(new Wrapper(typeof (DiagnosticBehavior)));
         }
     }

@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         private void shouldBeNoRolesFor<T>(Expression<Action<T>> method)
         {
-            graph.BehaviorFor(method).Any(x => x is AuthorizationNode).ShouldBeFalse();
+            graph.BehaviorFor(method).Top.Any(x => x is AuthorizationNode).ShouldBeFalse();
         }
 
         [Test]

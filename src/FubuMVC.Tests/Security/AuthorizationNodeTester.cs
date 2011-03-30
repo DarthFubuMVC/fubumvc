@@ -123,7 +123,7 @@ namespace FubuMVC.Tests.Security
         [Test]
         public void the_name_should_be_the_behavior_id_from_the_parent_chain()
         {
-            endpointObjectDef.Name.ShouldEqual(chain.ToObjectDef().Name);
+            endpointObjectDef.Name.ShouldEqual(chain.Top.ToObjectDef().Name);
         }
 
         [Test]

@@ -102,7 +102,9 @@ namespace FubuMVC.Tests
             var graph = parent.BuildGraph();
 
             // Chains from the import should have the wrapper
-            graph.BehaviorFor<Action1>(x => x.M1()).IsWrappedBy(typeof(Wrapper)).ShouldBeTrue();
+            var chain = graph.BehaviorFor<Action1>(x => x.M1());
+            chain.IsWrappedBy(typeof(Wrapper)).ShouldBeTrue();
+
             graph.BehaviorFor<Action1>(x => x.M2()).IsWrappedBy(typeof(Wrapper)).ShouldBeTrue();
         
         

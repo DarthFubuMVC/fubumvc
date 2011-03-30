@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             ()
         {
             graph.BehaviorChainCount.ShouldEqual(20);
-            graph.Behaviors.Where(chain => chain.Any(x => x is RenderJsonNode)).Select(x => x.Calls.First().Method.Name)
+            graph.Behaviors.Where(chain => chain.Top.Any(x => x is RenderJsonNode)).Select(x => x.Calls.First().Method.Name)
                 .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
         }
 
@@ -88,33 +88,33 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
         {
-            chainFor(x => x.NotJson1(null)).Any(x => x is DeserializeJsonNode).ShouldBeFalse();
-            chainFor(x => x.NotJson2(null)).Any(x => x is DeserializeJsonNode).ShouldBeFalse();
-            chainFor(x => x.NotJson3(null)).Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+            chainFor(x => x.NotJson1(null)).Top.Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+            chainFor(x => x.NotJson2(null)).Top.Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+            chainFor(x => x.NotJson3(null)).Top.Any(x => x is DeserializeJsonNode).ShouldBeFalse();
         }
 
         [Test]
         public void methods_that_return_a_json_message_should_output_json()
         {
             BehaviorChain chain = chainFor(x => x.OutputJson1());
-            chain.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
-            chainFor(x => x.OutputJson2()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
-            chainFor(x => x.OutputJson3()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+            chain.Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+            chainFor(x => x.OutputJson2()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+            chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
         }
 
         [Test]
         public void methods_that_do_not_return_a_json_message_should_not_output_json()
         {
-            chainFor(x => x.NotOutputJson1()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson2()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson3()).Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson1()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson2()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
         }
 
         [Test]
         public void methods_that_return_html_tag_should_output_html_tag()
         {
             var chain = chainFor(x=>x.GetFake());
-            chain.Any(x => x.GetType() == typeof(RenderHtmlTagNode)).ShouldBeTrue();
+            chain.Top.Any(x => x.GetType() == typeof(RenderHtmlTagNode)).ShouldBeTrue();
         }
     }
 

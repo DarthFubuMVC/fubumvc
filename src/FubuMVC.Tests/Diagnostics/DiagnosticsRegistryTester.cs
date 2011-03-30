@@ -120,7 +120,8 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void index_action_writes_out_to_html_document()
         {
-            graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index()).Outputs.First().ShouldBeOfType
+            var chain = graph.BehaviorFor<BehaviorGraphWriter>(x => x.Index());
+            chain.Outputs.First().ShouldBeOfType
                 <RenderHtmlDocumentNode>();
         }
     }

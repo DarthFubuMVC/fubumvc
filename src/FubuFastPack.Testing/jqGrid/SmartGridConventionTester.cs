@@ -69,7 +69,7 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void should_put_a_json_output_node_at_the_end()
         {
-            theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null)).Any(x => x is RenderJsonNode)
+            theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null)).Top.Any(x => x is RenderJsonNode)
                 .ShouldBeTrue();
         }
 

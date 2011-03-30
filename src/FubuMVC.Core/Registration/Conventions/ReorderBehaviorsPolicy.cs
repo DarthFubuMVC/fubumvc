@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.SelectMany(x => x).Where(WhatMustBeAfter).Each(shouldBeAfter =>
+            graph.Behaviors.SelectMany(x => x).Where(WhatMustBeAfter).ToList().Each(shouldBeAfter =>
             {
                 shouldBeAfter.ForFollowingBehavior(new BehaviorSearch(WhatMustBeBefore){
                     OnFound = shouldBeAfter.AddBefore

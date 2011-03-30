@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void do_not_attach_the_authorization_node_if_there_are_no_authorization_rules_for_a_chain()
         {
-            moveChain.Any(x => x is AuthorizationNode).ShouldBeFalse();
+            moveChain.Top.Any(x => x is AuthorizationNode).ShouldBeFalse();
         }
 
         [Test]

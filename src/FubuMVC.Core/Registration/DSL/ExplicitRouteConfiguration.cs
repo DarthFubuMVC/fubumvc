@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 
@@ -6,7 +8,7 @@ namespace FubuMVC.Core.Registration.DSL
     public class ExplicitRouteConfiguration : IConfigurationAction
     {
         private readonly IRouteDefinition _route;
-        private BehaviorNode _topBehavior;
+        private readonly IList<BehaviorNode> _nodes = new List<BehaviorNode>();
 
         public ExplicitRouteConfiguration(IRouteDefinition route)
         {
@@ -20,14 +22,16 @@ namespace FubuMVC.Core.Registration.DSL
 
         void IConfigurationAction.Configure(BehaviorGraph graph)
         {
-            graph.BehaviorFor(_route).AddToEnd(_topBehavior);
+            var chain = graph.BehaviorFor(_route);
+            _nodes.Each(chain.AddToEnd);
+            
             //graph.Observer.RecordStatus("Adding explicit route {0}".ToFormat(_route));
         }
 
 
         public ChainedBehaviorExpression Chain()
         {
-            return new ChainedBehaviorExpression(node => _topBehavior = node);
+            return new ChainedBehaviorExpression(node => _nodes.Add(node));
         }
     }
 

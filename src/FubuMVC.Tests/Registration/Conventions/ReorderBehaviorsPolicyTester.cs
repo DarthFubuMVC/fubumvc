@@ -82,9 +82,10 @@ namespace FubuMVC.Tests.Registration.Conventions
             policy.ThisNodeMustBeAfter<Node2>();
             policy.ThisNodeMustBeBefore<Node1>();
 
-            orderedNodes[0].ShouldBeOfType<Node1>();
-            orderedNodes[1].ShouldBeOfType<Node2>();
-            orderedNodes[2].ShouldBeOfType<Node3>();
+            var nodes = orderedNodes;
+            nodes[0].ShouldBeOfType<Node1>();
+            nodes[1].ShouldBeOfType<Node2>();
+            nodes[2].ShouldBeOfType<Node3>();
         }
 
 

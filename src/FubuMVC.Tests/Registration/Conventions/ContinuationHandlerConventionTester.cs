@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph = new FubuRegistry(x => { x.Actions.IncludeType<ContinuationHandlerController>(); }).BuildGraph();
 
 
-            graph.Behaviors.SelectMany(x => x).Each(x => Debug.WriteLine(x));
+            graph.Behaviors.SelectMany(x => x.Top).Each(x => Debug.WriteLine(x));
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_not_attach_continuation_handlers_to_actions_that_do_not_return_continuations()
         {
-            graph.BehaviorFor<ContinuationHandlerController>(x => x.ZeroInOneOut()).Any(x => x is ContinuationNode).
+            graph.BehaviorFor<ContinuationHandlerController>(x => x.ZeroInOneOut()).Top.Any(x => x is ContinuationNode).
                 ShouldBeFalse();
         }
 

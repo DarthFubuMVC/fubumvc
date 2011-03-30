@@ -23,6 +23,15 @@ namespace FubuMVC.Tests.Registration.Conventions
             graph = registry.BuildGraph();
 
             graph.BehaviorChainCount.ShouldBeGreaterThan(0);
+
+            graph.Behaviors.SelectMany(x => x.Calls).Each(x => Debug.WriteLine(x.Description));
+        }
+
+        [Test]
+        public void should_have_a_call_in_each_behavior_chain()
+        {
+            int callCount = graph.Behaviors.SelectMany(x => x.Calls).Count();
+            callCount.ShouldEqual(graph.BehaviorChainCount);
         }
 
         [Test]
@@ -55,14 +64,14 @@ namespace FubuMVC.Tests.Registration.Conventions
     public class WrapWithAttributeController
     {
         [WrapWith(typeof(Wrapper1))]
-        public void MethodWithOneAttribute(){}
+        public void MethodWithOneAttribute() { }
 
         [WrapWith(typeof(Wrapper1), typeof(Wrapper2), typeof(Wrapper3))]
         public void MethodWithMultipleAttributes(){}
-        public void M3(){}
-        public void M4(){}
-        public void M5(){}
-        public void MethodWithNoAttributes(){}
+        public void M3() { }
+        public void M4() { }
+        public void M5() { }
+        public void MethodWithNoAttributes() { }
         
         
     }
