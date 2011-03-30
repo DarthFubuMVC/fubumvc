@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Tests.View.FakeViews;
+using FubuTestingSupport;
 using NUnit.Framework;
 using FubuCore;
 

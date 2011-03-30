@@ -1,10 +1,10 @@
 using System;
 using FubuFastPack.JqGrid;
 using FubuFastPack.Testing.Security;
+using FubuTestingSupport;
 using NHibernate;
 using NUnit.Framework;
 using System.Linq;
-using FubuMVC.Tests;
 using System.Collections.Generic;
 
 namespace FubuFastPack.Testing.jqGrid

@@ -10,6 +10,7 @@ using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using StructureMap;

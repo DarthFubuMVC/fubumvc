@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

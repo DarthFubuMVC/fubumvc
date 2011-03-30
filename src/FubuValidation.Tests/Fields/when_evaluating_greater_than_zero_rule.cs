@@ -1,5 +1,4 @@
-using FubuCore;
-using FubuCore.Reflection;
+using FubuTestingSupport;
 using FubuValidation.Fields;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;

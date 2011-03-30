@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using FubuCore.Binding;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;

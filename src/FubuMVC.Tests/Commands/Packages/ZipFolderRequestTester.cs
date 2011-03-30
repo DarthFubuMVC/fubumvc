@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.Packaging;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Commands.Packages

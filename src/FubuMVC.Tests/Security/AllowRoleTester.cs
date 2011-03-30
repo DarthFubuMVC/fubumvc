@@ -1,6 +1,7 @@
 using System.Security.Principal;
 using System.Threading;
 using FubuMVC.Core.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Security

@@ -4,6 +4,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Tests.Packaging;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

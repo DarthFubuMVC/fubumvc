@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;

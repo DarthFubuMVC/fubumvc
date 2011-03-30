@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Tests.Diagnostics;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;

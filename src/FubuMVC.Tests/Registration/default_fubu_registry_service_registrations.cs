@@ -17,6 +17,7 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

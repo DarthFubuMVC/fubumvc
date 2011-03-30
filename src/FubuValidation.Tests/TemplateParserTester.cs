@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuValidation.Tests

@@ -5,10 +5,10 @@ using FubuFastPack.Crud;
 using FubuFastPack.Persistence;
 using FubuTestApplication;
 using FubuTestApplication.Domain;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using InMemoryRequestData = FubuMVC.Core.Runtime.InMemoryRequestData;
-using FubuMVC.Tests;
 using FubuFastPack.StructureMap;
 
 namespace IntegrationTesting.FubuFastPack.Crud

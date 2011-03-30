@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 

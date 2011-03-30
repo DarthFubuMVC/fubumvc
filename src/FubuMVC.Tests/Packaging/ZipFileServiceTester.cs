@@ -2,6 +2,7 @@ using System.IO;
 using System.Reflection;
 using AssemblyPackage;
 using FubuMVC.Core.Packaging;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Packaging

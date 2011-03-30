@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using FubuCore.Reflection;
+using FubuTestingSupport;
 using NUnit.Framework;
 using FubuCore.Testing;
 

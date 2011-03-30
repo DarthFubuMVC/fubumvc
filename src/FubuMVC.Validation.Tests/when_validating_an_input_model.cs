@@ -1,6 +1,7 @@
 using FubuLocalization;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using FubuValidation;
 using NUnit.Framework;
 using Rhino.Mocks;

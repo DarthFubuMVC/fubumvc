@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using FubuLocalization;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using FubuMVC.Core.UI;

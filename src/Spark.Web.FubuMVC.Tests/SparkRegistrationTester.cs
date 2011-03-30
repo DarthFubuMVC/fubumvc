@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.UI;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Spark.Web.FubuMVC.ViewCreation;

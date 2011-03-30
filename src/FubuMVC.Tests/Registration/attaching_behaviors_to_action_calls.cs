@@ -3,6 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Collections.Generic;
 

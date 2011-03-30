@@ -76,7 +76,6 @@
     <Compile Include="ConfigureSparkExpressionTester.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Helpers\MockHttpContextBase.cs" />
-    <Compile Include="InteractionContext.cs" />
     <Compile Include="Models\FakeViewModel.cs" />
     <Compile Include="Registration\TestSparkPolicy.cs" />
     <Compile Include="Registration\DSL\when_adding_a_policy.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="SparkDescriptorBuildingTester.cs" />
     <Compile Include="SparkRegistrationTester.cs" />
     <Compile Include="SparkViewFactoryTester.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="Controllers\StubController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +98,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
       <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>

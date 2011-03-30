@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using FubuMVC.Tests.View.FakeViews;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Urls

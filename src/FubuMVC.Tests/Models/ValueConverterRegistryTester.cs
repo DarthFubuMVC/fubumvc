@@ -3,6 +3,7 @@ using System.Web;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models

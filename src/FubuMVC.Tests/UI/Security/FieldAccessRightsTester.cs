@@ -2,6 +2,7 @@
 using System.Linq;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

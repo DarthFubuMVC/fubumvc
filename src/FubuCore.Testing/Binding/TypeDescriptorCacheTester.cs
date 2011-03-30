@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuCore.Reflection;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 

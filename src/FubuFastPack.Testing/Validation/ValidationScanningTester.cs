@@ -1,5 +1,6 @@
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core.Packaging;
+using FubuTestingSupport;
 using FubuValidation;
 using FubuValidation.Fields;
 using NUnit.Framework;
@@ -7,7 +8,6 @@ using StructureMap;
 using StructureMap.Configuration.DSL;
 using FubuFastPack.StructureMap;
 using System.Linq;
-using FubuMVC.Tests;
 using FubuCore;
 using System.Collections.Generic;
 

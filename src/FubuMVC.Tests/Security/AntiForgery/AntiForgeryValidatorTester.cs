@@ -5,6 +5,7 @@ using System.Web;
 using FubuCore.Binding;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Security.AntiForgery;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

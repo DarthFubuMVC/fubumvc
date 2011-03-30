@@ -74,6 +74,7 @@
     <Compile Include="Crud\Property Updating Contexts.cs" />
     <Compile Include="Crud\when_handling_a_valid_creation_request.cs" />
     <Compile Include="FubuFastPackRegistryExtensionTester.cs" />
+    <Compile Include="InteractionContextExtensions.cs" />
     <Compile Include="jqGrid\BinaryFilterHandlerTester.cs" />
     <Compile Include="jqGrid\EntityDTOTester.cs" />
     <Compile Include="jqGrid\FilterColumnTester.cs" />
@@ -120,13 +121,13 @@
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
-      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
-      <Name>FubuMVC.Tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>

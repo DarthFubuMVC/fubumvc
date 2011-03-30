@@ -2,7 +2,7 @@ using System;
 using FubuFastPack.Binding;
 using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

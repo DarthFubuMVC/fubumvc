@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.StructureMap.Bootstrap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;

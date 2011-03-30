@@ -1,7 +1,7 @@
 ﻿using System;
 using FubuFastPack.Crud;
 using FubuFastPack.Testing.Security;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuFastPack.Testing.Crud

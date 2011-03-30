@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Spark.Web.FubuMVC.Registration;
 using Spark.Web.FubuMVC.Registration.DSL;

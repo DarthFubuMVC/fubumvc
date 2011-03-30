@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;

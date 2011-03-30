@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests

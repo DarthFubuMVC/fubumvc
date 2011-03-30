@@ -2,6 +2,7 @@ using System;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using InMemoryRequestData = FubuCore.Binding.InMemoryRequestData;

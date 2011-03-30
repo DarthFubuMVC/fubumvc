@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Util;
+using FubuTestingSupport;
 using FubuValidation.Fields;
 using NUnit.Framework;
 using FubuCore;

@@ -1,7 +1,7 @@
 using FubuFastPack.Querying;
 using FubuFastPack.Testing.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing.Querying
 {

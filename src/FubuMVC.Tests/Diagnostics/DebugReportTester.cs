@@ -4,6 +4,7 @@ using System.Threading;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics

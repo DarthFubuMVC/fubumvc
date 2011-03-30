@@ -1,5 +1,6 @@
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuTestingSupport;
 using NUnit.Framework;
 using FubuMVC.Core.View.WebForms;
 

@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuMVC.Core;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

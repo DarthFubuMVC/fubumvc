@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuTestingSupport;
 using FubuValidation.Fields;
 using NUnit.Framework;
 

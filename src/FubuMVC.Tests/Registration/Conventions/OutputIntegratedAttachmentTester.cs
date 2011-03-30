@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Behaviors;
 using FubuMVC.Tests.View.FakeViews;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions

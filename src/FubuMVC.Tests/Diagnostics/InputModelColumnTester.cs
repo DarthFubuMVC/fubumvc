@@ -1,6 +1,7 @@
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Registration;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 

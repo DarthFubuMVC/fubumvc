@@ -1,6 +1,7 @@
 using FubuFastPack.NHibernate;
 using FubuFastPack.StructureMap;
 using FubuTestApplication;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using FubuMVC.Tests;

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.Tests.Controllers;

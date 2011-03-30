@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using FubuMVC.Core.Packaging;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 using Rhino.Mocks;

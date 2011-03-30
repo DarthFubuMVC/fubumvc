@@ -1,5 +1,6 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime

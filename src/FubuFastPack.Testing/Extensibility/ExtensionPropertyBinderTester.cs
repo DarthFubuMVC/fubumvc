@@ -1,7 +1,7 @@
 using FubuCore.Reflection;
 using FubuFastPack.Domain;
 using FubuFastPack.Extensibility;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuFastPack.Testing.Extensibility

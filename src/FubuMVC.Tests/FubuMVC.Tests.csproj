@@ -164,7 +164,6 @@
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
-    <Compile Include="SelfMockingServiceLocator.cs" />
     <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
@@ -226,7 +225,6 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="InteractionContext.cs" />
     <Compile Include="Models\BooleanFamilyTester.cs" />
     <Compile Include="Models\ConversionPropertyBinderTester.cs" />
     <Compile Include="Models\ConverterFamilyTester.cs" />
@@ -295,7 +293,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Routing\AggregateDictionaryTester.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="UI\Address.cs" />
     <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
     <Compile Include="UI\DefaultHtmlConventionsTester.cs" />
@@ -379,6 +376,10 @@
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>

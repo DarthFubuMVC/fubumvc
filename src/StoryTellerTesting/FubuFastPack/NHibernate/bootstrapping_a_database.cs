@@ -3,9 +3,9 @@ using System.Linq;
 using FubuFastPack.NHibernate;
 using FubuTestApplication;
 using FubuTestApplication.Domain;
+using FubuTestingSupport;
 using NHibernate;
 using NUnit.Framework;
-using FubuMVC.Tests;
 using FubuFastPack.StructureMap;
 
 namespace IntegrationTesting.FubuFastPack.NHibernate

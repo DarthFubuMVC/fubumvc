@@ -7,6 +7,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Routes;
+using FubuTestingSupport;
 using NUnit.Framework;
 using FubuMVC.Tests;
 

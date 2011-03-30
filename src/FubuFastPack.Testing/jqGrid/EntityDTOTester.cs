@@ -1,7 +1,7 @@
 using System;
 using FubuFastPack.JqGrid;
+using FubuTestingSupport;
 using NUnit.Framework;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing.jqGrid
 {

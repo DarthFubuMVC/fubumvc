@@ -3,6 +3,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Tests.Urls;
+using FubuTestingSupport;
 using NUnit.Framework;
 using FubuCore;
 

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using FubuCore.Binding;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

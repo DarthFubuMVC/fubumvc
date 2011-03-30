@@ -1,4 +1,5 @@
 using FubuCore.Util;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuCore.Testing.Util

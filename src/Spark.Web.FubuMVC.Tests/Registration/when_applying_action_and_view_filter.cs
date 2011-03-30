@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Spark.Web.FubuMVC.Registration;

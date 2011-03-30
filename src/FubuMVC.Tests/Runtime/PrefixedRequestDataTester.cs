@@ -1,4 +1,5 @@
 using FubuCore.Binding;
+using FubuTestingSupport;
 using NUnit.Framework;
 using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 

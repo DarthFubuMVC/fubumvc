@@ -140,6 +140,10 @@
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
       <Name>FubuValidation</Name>

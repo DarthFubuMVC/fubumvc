@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Validation", "FubuM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Validation.Tests", "FubuMVC.Validation.Tests\FubuMVC.Validation.Tests.csproj", "{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuTestingSupport", "FubuTestingSupport\FubuTestingSupport.csproj", "{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -458,6 +460,21 @@ Global
 		{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}.Retail|x86.ActiveCfg = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Release|x86.ActiveCfg = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

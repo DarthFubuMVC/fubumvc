@@ -1,9 +1,9 @@
 using FubuFastPack.Querying;
 using FubuFastPack.Testing.Security;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace DovetailCRM.Testing.Authorization
+namespace FubuFastPack.Testing.Querying
 {
     [TestFixture]
     public class SingleEntityFilterTester

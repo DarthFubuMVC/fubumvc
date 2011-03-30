@@ -1,6 +1,7 @@
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Routes;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration

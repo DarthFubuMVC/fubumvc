@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 using FubuCore;
@@ -31,7 +32,7 @@ namespace FubuValidation.Tests.Fields
         {
             theSource = new LambdaFieldValidationSource(new RequiredFieldRule());
 
-            Exception<FubuValidationException>.ShouldBeThrownBy(() => theSource.As<IFieldValidationSource>().Validate())
+            Exception<FubuValidationException>.ShouldBeThrownBy(() => TypeExtensions.As<IFieldValidationSource>(theSource).Validate())
                 .Message.ShouldEqual("Missing filter on validation convention");
         }
 

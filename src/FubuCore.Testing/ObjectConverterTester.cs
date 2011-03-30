@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 

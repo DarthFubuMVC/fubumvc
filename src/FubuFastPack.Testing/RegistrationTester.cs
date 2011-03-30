@@ -3,10 +3,10 @@ using FubuFastPack.Binding;
 using FubuFastPack.Persistence;
 using FubuFastPack.StructureMap;
 using FubuMVC.Core;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing
 {

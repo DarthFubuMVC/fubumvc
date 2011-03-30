@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Web;
 using FubuCore.Binding;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 using Rhino.Mocks;

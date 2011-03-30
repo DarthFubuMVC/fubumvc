@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,7 +16,7 @@ using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Interfaces;
 using Is = NUnit.Framework.Is;
 
-namespace FubuCore.Testing
+namespace FubuTestingSupport
 {
     public static class Exception<T> where T : Exception
     {
@@ -38,6 +39,7 @@ namespace FubuCore.Testing
         }
     }
 
+
     public delegate void MethodThatThrows();
 
     public static class SpecificationExtensions
@@ -54,6 +56,11 @@ namespace FubuCore.Testing
         public static void ShouldHave<T>(this IEnumerable<T> values, Func<T, bool> func)
         {
             values.FirstOrDefault(func).ShouldNotBeNull();
+        }
+
+        public static void ShouldNotHave<T>(this IEnumerable<T> values, Func<T, bool> func)
+        {
+            values.FirstOrDefault(func).ShouldBeNull();
         }
 
         public static void ShouldBeFalse(this bool condition)
@@ -162,15 +169,15 @@ namespace FubuCore.Testing
         public static T ShouldBeOfType<T>(this object actual)
         {
             actual.ShouldNotBeNull();
-            actual.ShouldBeOfType(typeof (T));
-            return (T) actual;
+            actual.ShouldBeOfType(typeof(T));
+            return (T)actual;
         }
 
         public static T As<T>(this object actual)
         {
             actual.ShouldNotBeNull();
-            actual.ShouldBeOfType(typeof (T));
-            return (T) actual;
+            actual.ShouldBeOfType(typeof(T));
+            return (T)actual;
         }
 
         public static object ShouldBeOfType(this object actual, Type expected)
@@ -217,27 +224,35 @@ namespace FubuCore.Testing
 
         public static void ShouldHaveTheSameElementsAs(this IList actual, IList expected)
         {
-            actual.ShouldNotBeNull();
-            expected.ShouldNotBeNull();
-
-            Assert.AreEqual(expected.Count, actual.Count, "Was:  " + actual);
-
-
-            for (int i = 0; i < actual.Count; i++)
+            try
             {
-                actual[i].ShouldEqual(expected[i]);
+                actual.ShouldNotBeNull();
+                expected.ShouldNotBeNull();
+
+                actual.Count.ShouldEqual(expected.Count);
+
+                for (int i = 0; i < actual.Count; i++)
+                {
+                    actual[i].ShouldEqual(expected[i]);
+                }
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Actual values were:");
+                actual.Each(x => Debug.WriteLine(x));
+                throw;
             }
         }
 
         public static void ShouldHaveTheSameElementsAs<T>(this IEnumerable<T> actual, params T[] expected)
         {
-            ShouldHaveTheSameElementsAs(actual, (IEnumerable<T>) expected);
+            ShouldHaveTheSameElementsAs(actual, (IEnumerable<T>)expected);
         }
 
         public static void ShouldHaveTheSameElementsAs<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
         {
-            IList actualList = (actual is IList) ? (IList) actual : actual.ToList();
-            IList expectedList = (expected is IList) ? (IList) expected : expected.ToList();
+            IList actualList = (actual is IList) ? (IList)actual : actual.ToList();
+            IList expectedList = (expected is IList) ? (IList)expected : expected.ToList();
 
             ShouldHaveTheSameElementsAs(actualList, expectedList);
         }
@@ -357,6 +372,16 @@ namespace FubuCore.Testing
             return exception;
         }
 
+        public static void ShouldContainInOrder(this string actual, params string[] values)
+        {
+            int index = 0;
+            foreach (string value in values)
+            {
+                int nextIndex = actual.IndexOf(value, index);
+                Assert.GreaterOrEqual(nextIndex, 0, string.Format("Looking for {0}", value));
+                index = nextIndex + value.Length;
+            }
+        }
 
         public static void ShouldEqualSqlDate(this DateTime actual, DateTime expected)
         {
@@ -479,7 +504,7 @@ namespace FubuCore.Testing
 
             public T ArgumentAt<T>(int pos)
             {
-                return (T) argList[pos];
+                return (T)argList[pos];
             }
 
             public T Second<T>()

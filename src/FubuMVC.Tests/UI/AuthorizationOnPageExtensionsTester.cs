@@ -1,4 +1,5 @@
 using FubuMVC.Core.Security;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using FubuMVC.Core.UI;

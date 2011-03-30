@@ -4,6 +4,7 @@ using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;

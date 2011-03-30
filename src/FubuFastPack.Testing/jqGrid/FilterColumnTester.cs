@@ -1,8 +1,8 @@
 using FubuFastPack.JqGrid;
 using FubuFastPack.Testing.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing.jqGrid
 {

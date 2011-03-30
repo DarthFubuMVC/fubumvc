@@ -7,9 +7,9 @@ using FubuFastPack.StructureMap;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing
 {

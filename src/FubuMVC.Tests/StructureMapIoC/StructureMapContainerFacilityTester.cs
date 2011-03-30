@@ -14,6 +14,7 @@ using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Packaging;
 using FubuMVC.Tests.Registration;
+using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using StructureMap;

@@ -1,5 +1,6 @@
 using FubuCore.Reflection;
 using FubuLocalization;
+using FubuTestingSupport;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using System.Linq;

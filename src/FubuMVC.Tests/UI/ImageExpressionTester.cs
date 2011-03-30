@@ -1,5 +1,6 @@
 using FubuMVC.Core.Content;
 using FubuMVC.Core.View;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuMVC.Core.UI;

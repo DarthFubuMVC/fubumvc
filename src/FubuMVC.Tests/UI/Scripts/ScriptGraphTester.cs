@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI.Scripts

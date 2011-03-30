@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore.CommandLine;
+using FubuTestingSupport;
 using NUnit.Framework;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 using System.Linq;

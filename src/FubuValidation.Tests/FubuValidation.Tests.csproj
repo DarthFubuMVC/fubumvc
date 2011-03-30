@@ -63,7 +63,6 @@
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\ModelWithNoAttributes.cs" />
-    <Compile Include="InteractionContext.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\SimpleModel.cs" />
     <Compile Include="NotificationMessageTester.cs" />
@@ -79,7 +78,6 @@
     <Compile Include="Fields\when_validating_maximum_length.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="TemplateParserTester.cs" />
     <Compile Include="ValidationRegistryTester.cs" />
   </ItemGroup>
@@ -91,6 +89,10 @@
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>

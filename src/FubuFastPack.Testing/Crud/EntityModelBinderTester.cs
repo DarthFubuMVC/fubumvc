@@ -4,7 +4,7 @@ using FubuFastPack.Crud;
 using FubuFastPack.Domain;
 using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

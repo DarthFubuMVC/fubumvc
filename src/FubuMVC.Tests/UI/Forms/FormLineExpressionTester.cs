@@ -4,6 +4,7 @@ using FubuLocalization;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Core.UI.Security;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using System.Linq;

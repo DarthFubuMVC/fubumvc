@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
+using FubuTestingSupport;
 using FubuValidation.Fields;
 using NUnit.Framework;
 using System.Linq;

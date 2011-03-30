@@ -1,5 +1,6 @@
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

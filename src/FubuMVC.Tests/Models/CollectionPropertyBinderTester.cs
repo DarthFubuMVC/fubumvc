@@ -2,6 +2,7 @@
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Models

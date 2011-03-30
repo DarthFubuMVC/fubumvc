@@ -14,6 +14,7 @@ using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;

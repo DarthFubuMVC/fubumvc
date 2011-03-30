@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;

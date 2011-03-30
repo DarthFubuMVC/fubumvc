@@ -1,4 +1,5 @@
 using FubuMVC.Core.Security.AntiForgery;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Security.AntiForgery

@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Registration;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

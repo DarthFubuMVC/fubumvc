@@ -50,7 +50,6 @@
     <Compile Include="LocalStringTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyTokenTester.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="StringTokenTester.cs" />
     <Compile Include="ThreadSafeLocaleCacheTester.cs" />
   </ItemGroup>
@@ -62,6 +61,10 @@
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

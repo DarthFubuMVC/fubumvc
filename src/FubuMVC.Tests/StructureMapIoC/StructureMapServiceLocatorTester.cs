@@ -3,6 +3,7 @@ using System.Linq;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Web.Security;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
