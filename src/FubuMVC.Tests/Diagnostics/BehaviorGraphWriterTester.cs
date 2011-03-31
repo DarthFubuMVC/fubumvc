@@ -49,11 +49,6 @@ namespace FubuMVC.Tests.Diagnostics
             Debug.WriteLine(doc.ToString());
         }
 
-        [Test]
-        public void smoke_test_input_models_table()
-        {
-            writer.Inputs();
-        }
 
         [Test]
         public void smoke_test_routes()

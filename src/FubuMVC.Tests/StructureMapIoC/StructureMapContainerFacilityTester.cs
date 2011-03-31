@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             }).BuildGraph();
 
             facility = new StructureMapContainerFacility(container);
-            graph.EachService(facility.Register);
+            graph.As<IRegisterable>().Register(facility.Register);
 
             factory = facility.BuildFactory();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
@@ -67,19 +68,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             chain.Calls.Contains(call2).ShouldBeTrue();
         }
 
-        [Test]
-        public void has_input()
-        {
-            var chain = new BehaviorChain();
-            chain.HasInput().ShouldBeFalse();
 
-            chain.AddToEnd(ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut()));
-            chain.HasInput().ShouldBeFalse();
-
-            chain = new BehaviorChain();
-            chain.AddToEnd(ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null)));
-            chain.HasInput().ShouldBeTrue();
-        }
 
         [Test]
         public void insert_before_on_a_node()
@@ -318,7 +307,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);
 
-            chain.Register(facility.Register);
+            chain.As<IRegisterable>().Register(facility.Register);
 
             facility.BuildFactory();
 
@@ -336,7 +325,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);
 
-            chain.Register(facility.Register);
+            chain.As<IRegisterable>().Register(facility.Register);
 
             facility.BuildFactory();
 

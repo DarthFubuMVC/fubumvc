@@ -10,13 +10,14 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
+
     /// <summary>
     /// BehaviorChain is a configuration model for a single endpoint in a 
     /// FubuMVC system.  Models route information, the behaviors, and 
     /// authorization rules
     ///   system
     /// </summary>
-    public class BehaviorChain : IEnumerable<BehaviorNode>
+    public class BehaviorChain : IRegisterable, IEnumerable<BehaviorNode>
     {
         private BehaviorNode _top;
 
@@ -163,15 +164,18 @@ namespace FubuMVC.Core.Registration.Nodes
             return node;
         }
 
-        // TODO -- this should return the *last* output model, not the first
+        /// <summary>
+        /// Finds the output model type of the *last*
+        /// ActionCall in this BehaviorChain.  May be null
+        /// </summary>
+        /// <returns></returns>
         public Type ActionOutputType()
         {
-            var call = Calls.FirstOrDefault();
+            var call = Calls.LastOrDefault();
             return call == null ? null : call.OutputType();
         }
 
-        // TODO -- move this to an interface implementation
-        public void Register(Action<Type, ObjectDef> callback)
+        void IRegisterable.Register(Action<Type, ObjectDef> callback)
         {
             callback(typeof (IActionBehavior), Top.ToObjectDef());
             Authorization.Register(Top.UniqueId, callback);
@@ -210,12 +214,6 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             var inputTypeHolder = this.OfType<IMayHaveInputType>().FirstOrDefault();
             return inputTypeHolder == null ? null : inputTypeHolder.InputType();
-        }
-
-
-        public bool HasInput()
-        {
-            return InputType() != null;
         }
 
         /// <summary>

@@ -42,7 +42,7 @@ namespace FubuMVC.Core
             // "Bake" the fubu configuration model into your
             // IoC container for the application
             var graph = _topRegistry.BuildGraph();
-            graph.EachService(_facility.Register);
+            graph.As<IRegisterable>().Register(_facility.Register);
             var factory = _facility.BuildFactory();
 
             // Register all the Route objects into the routes 

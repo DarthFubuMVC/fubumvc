@@ -118,7 +118,7 @@ namespace FubuMVC.Core
             // "Bake" the fubu configuration model into your
             // IoC container for the application
             _graph = registry().BuildGraph();
-            _graph.EachService(facility.Register);
+            _graph.As<IRegisterable>().Register(facility.Register);
 			facility.BuildFactory();
 
             return facility.GetAllActivators();

@@ -250,14 +250,6 @@ namespace FubuMVC.Core.Diagnostics
             return writeTextTable(x => x.FirstCallDescription(), actions, routes, outputs);
         }
 
-        [FubuDiagnostics("Input models to actions")]
-        public HtmlDocument Inputs()
-        {
-            var table = writeTable(x => x.HasInput(), x => x.GetInputTypeName(), inputModels, actions);
-
-            return BuildDocument("Registered Input Types", table);
-        }
-
 
 
 

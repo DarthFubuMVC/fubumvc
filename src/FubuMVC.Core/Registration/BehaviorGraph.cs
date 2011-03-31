@@ -11,7 +11,12 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration
 {
-    public class BehaviorGraph
+    public interface IRegisterable
+    {
+        void Register(Action<Type, ObjectDef> action);
+    }
+
+    public class BehaviorGraph : IRegisterable
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
@@ -100,7 +105,7 @@ namespace FubuMVC.Core.Registration
             return _behaviors.Select(x => x.Route).Where(x => x != null).OfType<RouteDefinition<T>>();
         }
 
-        public void EachService(Action<Type, ObjectDef> action)
+        void IRegisterable.Register(Action<Type, ObjectDef> action)
         {
             /*
              * 1.) Loop through each service
@@ -111,7 +116,7 @@ namespace FubuMVC.Core.Registration
 
             _services.Each(action);
 
-            _behaviors.Each(chain => chain.Register(action));
+            _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(action));
 
             action(typeof (BehaviorGraph), new ObjectDef{
                 Value = this
