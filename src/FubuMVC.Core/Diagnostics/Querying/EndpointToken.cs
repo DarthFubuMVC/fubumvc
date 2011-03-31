@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics.Querying
 
         public EndpointToken(BehaviorChain chain)
         {
-            RoutePattern = chain.RoutePattern;
+            RoutePattern = chain.GetRoutePattern();
             Actions = chain.Calls.Select(x => new ActionToken(x)).ToArray();
         }
 

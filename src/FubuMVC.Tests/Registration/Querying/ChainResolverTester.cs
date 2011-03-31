@@ -3,6 +3,7 @@ using System.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
@@ -27,7 +28,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 x.Actions.IncludeType<ChainResolverController>();
             }).BuildGraph();
 
-            graph.Behaviors.Each(x => Debug.WriteLine(x.FirstCallDescription));
+            graph.Behaviors.Each(x => Debug.WriteLine(x.FirstCallDescription()));
 
             typeResolver = new TypeResolver();
             typeResolver.AddStrategy<ProxyDetector>();

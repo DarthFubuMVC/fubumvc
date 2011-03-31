@@ -90,5 +90,11 @@ namespace FubuMVC.Core.Registration.Routes
         public void Prepend(string prefix)
         {
         }
+
+        private static IRouteDefinition _flyweight = new NulloRouteDefinition();
+        public static IRouteDefinition Flyweight()
+        {
+            return _flyweight;
+        }
     }
 }

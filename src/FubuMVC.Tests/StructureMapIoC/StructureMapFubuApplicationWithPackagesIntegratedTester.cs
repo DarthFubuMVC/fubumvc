@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Web.Routing;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.StructureMap.Bootstrap;
@@ -30,7 +31,7 @@ namespace FubuMVC.Tests.StructureMapIoC
 
             graph = ObjectFactory.GetInstance<BehaviorGraph>();
 
-            graph.Behaviors.Each(x => Debug.WriteLine(x.FirstCallDescription));
+            graph.Behaviors.Each(x => Debug.WriteLine(x.FirstCallDescription()));
         }
 
         [Test]

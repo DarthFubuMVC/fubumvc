@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Diagnostics
         [FubuDiagnostics("Routes with no authorization rules or policies")]
         public HtmlDocument RoutesWithoutAuthorization()
         {
-            var table = _writer.writeTable(x => !x.Authorization.HasRules(), x => x.RoutePattern, _writer.routes, _writer.actions);
+            var table = _writer.writeTable(x => !x.Authorization.HasRules(), x => x.GetRoutePattern(), _writer.routes, _writer.actions);
             return _writer.BuildDocument("Routes without any Authorization Rules", table);
         }
 
@@ -45,7 +45,7 @@ namespace FubuMVC.Core.Diagnostics
         [FubuDiagnostics("Authorization rules by route")]
         public HtmlDocument AuthorizationRulesByRoutes()
         {
-            var table = _writer.writeTable(x => x.RoutePattern, _writer.routes, _writer.authorization);
+            var table = _writer.writeTable(x => x.GetRoutePattern(), _writer.routes, _writer.authorization);
             return _writer.BuildDocument("Registered Authorization Rules", table);
         }
 
@@ -65,10 +65,30 @@ namespace FubuMVC.Core.Diagnostics
         {
             var list = AuthorizationWriter.BuildListOfRoles(_graph, (chain, tag) =>
             {
-                tag.Text(chain.RoutePattern);
+                tag.Text(chain.GetRoutePattern());
             });
 
             return _writer.BuildDocument("Routes by Role", list);
+        }
+    }
+
+    public static class BehaviorGraphExtensions
+    {
+        public static string FirstCallDescription(this BehaviorChain chain)
+        {
+            var call = chain.FirstCall();
+            return call == null ? string.Empty : call.Description;
+        }
+
+        public static string GetRoutePattern(this BehaviorChain chain)
+        {
+            return chain.Route == null ? string.Empty : chain.Route.Pattern;
+        }
+
+        public static string GetInputTypeName(this BehaviorChain chain)
+        {
+            var type = chain.InputType();
+            return type == null ? string.Empty : type.Name;
         }
     }
 
@@ -116,7 +136,7 @@ namespace FubuMVC.Core.Diagnostics
                     action.Method.ForAttribute<FubuDiagnosticsAttribute>(att => text = att.Description);
 
                     ul.Add("li/a").Text(text)
-                        .Attr("href", action.ParentChain().RoutePattern);
+                        .Attr("href", action.ParentChain().GetRoutePattern());
                 });
             });
 
@@ -143,7 +163,7 @@ namespace FubuMVC.Core.Diagnostics
             var content = new HtmlTag("div").AddClass("main-content");
 
             var document = new HtmlTag("div");
-            var pattern = behaviorChain.RoutePattern;
+            var pattern = behaviorChain.GetRoutePattern();
             if( pattern == string.Empty )
             {
                 pattern = "(default)";
@@ -195,7 +215,7 @@ namespace FubuMVC.Core.Diagnostics
         [FubuDiagnostics("Behavior chains")]
         public HtmlDocument Chains()
         {
-            var table = writeTable(x => x.RoutePattern, chains, constraints, routes, actions);
+            var table = writeTable(x => x.GetRoutePattern(), chains, constraints, routes, actions);
 
             return BuildDocument("Registered Behavior Chains", table);
         } 
@@ -204,7 +224,7 @@ namespace FubuMVC.Core.Diagnostics
         [FubuDiagnostics("Registered routes with their related actions and output")]
         public HtmlDocument Routes()
         {
-            var table = writeTable(x => x.Route != null, x => x.RoutePattern, constraints, routes, actions, outputs, chains);
+            var table = writeTable(x => x.Route != null, x => x.GetRoutePattern(), constraints, routes, actions, outputs, chains);
 
             return BuildDocument("Registered Routes", table);
         }
@@ -212,13 +232,13 @@ namespace FubuMVC.Core.Diagnostics
         [FubuDiagnostics("Print the available routes")]
         public string PrintRoutes()
         {
-            return writeTextTable(x => x.RoutePattern, routes, actions, outputs);
+            return writeTextTable(x => x.GetRoutePattern(), routes, actions, outputs);
         }
 
         [FubuDiagnostics("Available actions")]
         public HtmlDocument Actions()
         {
-            var table = writeTable(x => x.Calls.Any(), x => x.FirstCallDescription, actions, routes, outputs);
+            var table = writeTable(x => x.Calls.Any(), x => x.FirstCallDescription(), actions, routes, outputs);
 
             return BuildDocument("Registered Actions", table);
         }
@@ -227,13 +247,13 @@ namespace FubuMVC.Core.Diagnostics
         [FubuDiagnostics("Print the available actions")]
         public string PrintActions()
         {
-            return writeTextTable(x => x.FirstCallDescription, actions, routes, outputs);
+            return writeTextTable(x => x.FirstCallDescription(), actions, routes, outputs);
         }
 
         [FubuDiagnostics("Input models to actions")]
         public HtmlDocument Inputs()
         {
-            var table = writeTable(x => x.HasInput(), x => x.InputTypeName, inputModels, actions);
+            var table = writeTable(x => x.HasInput(), x => x.GetInputTypeName(), inputModels, actions);
 
             return BuildDocument("Registered Input Types", table);
         }

@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         public void other_actions_should_not_be_wrapped()
         {
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
-            visitor.Filters += chain => chain.ContainsCall(call => call.Method.Name != "SomeAction");
+            visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
             visitor.Actions += chain => chain.Top.ShouldBeOfType<ActionCall>();
 
             _graph.VisitBehaviors(visitor);
@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         public void someaction_call_should_be_wrapped()
         {
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
-            visitor.Filters += chain => chain.ContainsCall(call => call.Method.Name == "SomeAction");
+            visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name == "SomeAction");
             visitor.Actions += chain =>
             {
                 var wrapper = chain.Top.ShouldBeOfType<Wrapper>();

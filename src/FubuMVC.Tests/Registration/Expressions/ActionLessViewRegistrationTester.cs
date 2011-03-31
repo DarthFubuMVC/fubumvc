@@ -19,8 +19,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             var registry = new FubuRegistry();
 
 
-            registry.Views.RegisterActionLessViews(WebFormViewFacility.IsWebFormControl,
-                                                   chain => chain.PartialOnly());
+            registry.Views.RegisterActionLessViews(WebFormViewFacility.IsWebFormControl, chain => chain.PartialOnly());
 
             theBehaviorGraph = registry.BuildGraph();
         }

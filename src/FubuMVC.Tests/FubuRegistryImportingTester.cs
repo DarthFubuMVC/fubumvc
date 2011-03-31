@@ -4,6 +4,7 @@ using System.Net;
 using System.Web;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
@@ -68,8 +69,8 @@ namespace FubuMVC.Tests
             var graph = parent.BuildGraph();
 
             graph.Behaviors.ShouldHaveCount(2);
-            graph.BehaviorFor<Action1>(x => x.M1()).RoutePattern.ShouldEqual("a/m1");
-            graph.BehaviorFor<Action1>(x => x.M2()).RoutePattern.ShouldEqual("a/m2");
+            graph.BehaviorFor<Action1>(x => x.M1()).GetRoutePattern().ShouldEqual("a/m1");
+            graph.BehaviorFor<Action1>(x => x.M2()).GetRoutePattern().ShouldEqual("a/m2");
         }
 
         [Test]
@@ -82,8 +83,8 @@ namespace FubuMVC.Tests
             var graph = parent.BuildGraph();
 
             graph.Behaviors.ShouldHaveCount(2);
-            graph.BehaviorFor<Action1>(x => x.M1()).RoutePattern.ShouldEqual("import/a/m1");
-            graph.BehaviorFor<Action1>(x => x.M2()).RoutePattern.ShouldEqual("import/a/m2");
+            graph.BehaviorFor<Action1>(x => x.M1()).GetRoutePattern().ShouldEqual("import/a/m1");
+            graph.BehaviorFor<Action1>(x => x.M2()).GetRoutePattern().ShouldEqual("import/a/m2");
         }
 
         [Test]

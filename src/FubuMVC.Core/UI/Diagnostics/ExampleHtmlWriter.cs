@@ -46,7 +46,7 @@ namespace FubuMVC.Core.UI.Diagnostics
             var table = BehaviorGraphWriter.WriteBehaviorChainTable(_behaviorGraph.Behaviors
                 .Where(b => b.HasOutputBehavior() && !b.ActionOutputType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
-                .OrderBy(b => b.RoutePattern),
+                .OrderBy(b => b.GetRoutePattern()),
                 new RouteColumn(),
                 new OutputModelColumn(_examplePageUrl),
                 new OutputColumn());

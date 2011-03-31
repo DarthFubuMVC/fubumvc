@@ -1,3 +1,4 @@
+using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -71,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             _graph.Behaviors.ShouldHaveCount(2);
 
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
-            visitor.Filters += chain => !chain.ContainsCall(call => call.InputType() == typeof (InputModel));
+            visitor.Filters += chain => !chain.Calls.Any(call => call.InputType() == typeof (InputModel));
             visitor.Actions += chain => chain.Top.ShouldBeNull();
 
             _graph.VisitBehaviors(visitor);

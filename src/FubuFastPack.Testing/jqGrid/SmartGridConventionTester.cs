@@ -3,6 +3,7 @@ using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -56,8 +57,7 @@ namespace FubuFastPack.Testing.jqGrid
         [Test]
         public void use_the_grid_name_in_the_route()
         {
-            theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null))
-                .RoutePattern.ShouldEqual("_griddata/fake1");
+            theGraph.BehaviorFor<SmartGridHarness<Fake1Grid>>(x => x.Data(null)).GetRoutePattern().ShouldEqual("_griddata/fake1");
         }
 
         [Test]

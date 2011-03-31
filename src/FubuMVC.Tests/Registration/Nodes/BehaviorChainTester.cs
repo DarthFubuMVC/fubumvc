@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
@@ -278,14 +279,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             Type type = typeof(ControllerTarget);
             chain.AddToEnd(new ActionCall(type, type.GetMethod("OneInOneOut")));
-            chain.InputTypeName.ShouldEqual("Model1");
+            chain.GetInputTypeName().ShouldEqual("Model1");
         }
 
         [Test]
         public void input_type_name_return_empty_if_first_call_is_null()
         {
             var chain = new BehaviorChain();
-            chain.InputTypeName.ShouldEqual("");
+            chain.GetInputTypeName().ShouldEqual("");
         }
 
         [Test]
@@ -294,14 +295,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             var chain = new BehaviorChain();
             Type type = typeof(ControllerTarget);
             chain.AddToEnd(new ActionCall(type, type.GetMethod("OneInZeroOut")));
-            chain.FirstCallDescription.ShouldEqual("ControllerTarget.OneInZeroOut(Model1 input) : void");
+            chain.FirstCallDescription().ShouldEqual("ControllerTarget.OneInZeroOut(Model1 input) : void");
         }
 
         [Test]
         public void first_call_description_return_empty_if_first_call_is_null()
         {
             var chain = new BehaviorChain();
-            chain.FirstCallDescription.ShouldEqual("");
+            chain.FirstCallDescription().ShouldEqual("");
         }
 
 
