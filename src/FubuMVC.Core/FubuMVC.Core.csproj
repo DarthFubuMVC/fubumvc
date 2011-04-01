@@ -151,11 +151,12 @@
     <Compile Include="Packaging\PackageFiles.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
+    <Compile Include="Registration\Routes\IRouteInput.cs" />
     <Compile Include="Registration\Routes\RouteParameters.cs" />
     <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
-    <Compile Include="Registration\Routes\TypedRouteThing.cs" />
+    <Compile Include="Registration\Routes\RouteInput.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Json\ProjectionService.cs" />
     <Compile Include="Json\IProjection.cs" />
