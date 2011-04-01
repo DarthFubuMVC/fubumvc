@@ -7,27 +7,32 @@ namespace FubuMVC.Core.Registration.Routes
 {
     public class RouteBuilder
     {
-        public static RouteInput<T> Build<T>(string pattern)
+        public static RouteDefinition Build<T>(string pattern)
         {
-            var route = new RouteInput<T>(pattern);
+            var parent = new RouteDefinition(pattern);
+            var input = new RouteInput<T>(parent);
             Type inputType = typeof (T);
 
-            populateRoute(pattern, inputType, route);
+            populateRoute(pattern, inputType, input);
 
-            return route;
+            parent.Input = input;
+
+            return parent;
         }
 
         public static IRouteDefinition Build(Type inputType, string pattern)
         {
+            var parent = new RouteDefinition(pattern);
             Type routeType = typeof (RouteInput<>).MakeGenericType(inputType);
-            var route = Activator.CreateInstance(routeType, pattern) as IRouteDefinition;
+            var input = Activator.CreateInstance(routeType, pattern) as IRouteInput;
 
-            populateRoute(pattern, inputType, route);
+            populateRoute(pattern, inputType, input);
+            parent.Input = input;
 
-            return route;
+            return parent;
         }
 
-        private static void populateRoute(string pattern, Type inputType, IRouteDefinition route)
+        private static void populateRoute(string pattern, Type inputType, IRouteInput input)
         {
             parse(pattern, (propName, defaultValue) =>
             {
@@ -35,11 +40,12 @@ namespace FubuMVC.Core.Registration.Routes
                 if (property == null)
                     throw new FubuException(1002, "Url pattern \"{0}\" refers to non-existent property {1} on {2}.",
                                             pattern, propName, inputType.FullName);
-                var input = new RouteParameter(new SingleProperty(property))
+                var parameter = new RouteParameter(new SingleProperty(property))
                 {
                     DefaultValue = defaultValue
                 };
-                route.AddRouteInput(input, false);
+
+                input.AddRouteInput(parameter, false);
             });
         }
 

@@ -6,6 +6,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Registration.Routes
 {
+    [Obsolete]
     public class NulloRouteDefinition : IRouteDefinition
     {
         public NulloRouteDefinition()
@@ -38,19 +39,19 @@ namespace FubuMVC.Core.Registration.Routes
             get { return new KeyValuePair<string, object>[0]; }
         }
 
-        public string CreateUrlFromInput(object input)
-        {
-            return Pattern;
-        }
-
-        public string CreateUrlFromParameters(RouteParameters parameters)
-        {
-            return Pattern;
-        }
-
         public string CreateTemplate(object input, Func<object, object>[] hash)
         {
-            return Pattern;
+            throw new NotImplementedException();
+        }
+
+        public IRouteInput Input
+        {
+            get { return null; }
+        }
+
+        public string CreateUrlFromInput(object input)
+        {
+            throw new NotImplementedException();
         }
 
         public void RootUrlAt(string baseUrl)
@@ -68,17 +69,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         }
 
-        public void AddRouteInput(RouteParameter parameter, bool appendToUrl)
-        {
-
-        }
-
         public void RemoveLastPatternPart()
-        {
-
-        }
-
-        public void AddQueryInput(PropertyInfo property)
         {
 
         }

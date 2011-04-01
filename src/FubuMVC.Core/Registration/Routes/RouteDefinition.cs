@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Web.Routing;
 using FubuCore;
-using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-
-
-
     public class RouteDefinition : IRouteDefinition
     {
         private readonly RouteValueDictionary _constraints = new RouteValueDictionary();
@@ -22,24 +16,20 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = pattern;
         }
 
-        public virtual Type InputType
-        {
-            get { return null; }
-        }
-
-        public virtual string CreateUrlFromInput(object input)
-        {
-            return _pattern.ToAbsoluteUrl();
-        }
-
-        public virtual string CreateUrlFromParameters(RouteParameters parameters)
-        {
-            throw new NotSupportedException();
-        }
-
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
-            return _pattern.ToAbsoluteUrl();
+            return Input == null ? _pattern.ToAbsoluteUrl() : Input.CreateTemplate(input, hash);
+        }
+
+        public IRouteInput Input { get; set;}
+        public string CreateUrlFromInput(object input)
+        {
+            if (Input == null)
+            {
+                throw new InvalidOperationException("Cannot call this method if the RouteDefinition has not input type");
+            }
+
+            return Input.CreateUrlFromInput(input);
         }
 
         public void RootUrlAt(string baseUrl)
@@ -49,8 +39,13 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual Route ToRoute()
         {
-            return new Route(_pattern, null, getConstraints(), null);
-            ;
+            var route = new Route(_pattern, null, getConstraints(), null);
+            if (Input != null)
+            {
+                Input.AlterRoute(route);
+            }
+
+            return route;
         }
 
         public void Append(string patternPart)
@@ -73,7 +68,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual int Rank
         {
-            get { return 0; }
+            get { return Input == null ? 0 : Input.Rank; }
         }
 
         public IEnumerable<KeyValuePair<string, object>> Constraints
@@ -96,16 +91,6 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = prefix.TrimEnd('/') + "/" + _pattern;
         }
 
-        public virtual void AddRouteInput(RouteParameter parameter, bool appendToUrl)
-        {
-            // do nothing
-        }
-
-        public virtual void AddQueryInput(PropertyInfo property)
-        {
-            // do nothing
-        }
-
         protected RouteValueDictionary getConstraints()
         {
             return _constraints.Count > 0 ? _constraints : null;
@@ -113,9 +98,8 @@ namespace FubuMVC.Core.Registration.Routes
 
         public override string ToString()
         {
+            // TODO -- need to account for the input?
             return string.Format("{0}", _pattern);
         }
     }
-
-    
 }

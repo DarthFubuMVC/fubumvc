@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _inputPolicy.PropertyFilters.Includes +=
                 prop => prop.InputProperty.HasAttribute<QueryStringAttribute>();
             _inputPolicy.PropertyAlterations.Register(prop => prop.HasAttribute<QueryStringAttribute>(),
-                                                      (route, prop) => route.AddQueryInput(prop));
+                                                      (route, prop) => route.Input.AddQueryInput(prop));
 
             _policies.Add(new FubuPartialRequestUrlPolicy());
             _policies.Add(new UrlPatternAttributePolicy());

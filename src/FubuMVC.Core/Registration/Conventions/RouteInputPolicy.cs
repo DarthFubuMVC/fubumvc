@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Registration.Conventions
         private static void addPropertyInput(IRouteDefinition route, PropertyInfo property)
         {
             var input = new RouteParameter(new SingleProperty(property));
-            route.AddRouteInput(input, true);
+            route.Input.AddRouteInput(input, true);
         }
 
         public CompositeFilter<InputPropertyForAction> PropertyFilters { get { return _propertyFilters; } }

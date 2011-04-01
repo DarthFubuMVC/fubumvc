@@ -143,7 +143,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_when_ignoring_the_controller_namespace()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
+
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
             route.Pattern.ShouldEqual("fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
         }
 
@@ -151,7 +153,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_when_ignoring_controller_names_entirely()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true;
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
             route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/somemethod/{Name}/{Age}");
         }
 
@@ -159,7 +163,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_when_ignoring_the_controller_namespace_entirely()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
+
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
             route.Pattern.ShouldEqual("routeresolver/somemethod/{Name}/{Age}");
         }
 
@@ -168,7 +175,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
             resolver.DefaultUrlPolicy.RegisterRouteModification(x => true, r => r.Prepend("prepend-something"));
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
+
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
             route.Pattern.ShouldEqual("prepend-something/fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
         }
 
@@ -176,33 +186,36 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_with_a_namespace_ignore()
         {
             resolver.DefaultUrlPolicy.IgnoreNamespace(GetType().Namespace);
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
+
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
             route.Pattern.ShouldEqual("routeresolver/somemethod/{Name}/{Age}");
 
-            route.RouteParameters.Count.ShouldEqual(2);
-            route.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            route.Input.RouteParameters.Count.ShouldEqual(2);
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
         [Test]
         public void build_route_with_an_appended_class_suffix()
         {
             resolver.DefaultUrlPolicy.AppendClassesWith(x=>true,".aspx");
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
             route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver.aspx/somemethod/{Name}/{Age}");
 
-            route.RouteParameters.Count.ShouldEqual(2);
-            route.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            route.Input.RouteParameters.Count.ShouldEqual(2);
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
         [Test]
         public void build_route_with_all_simple_inputs_and_default_conventions()
         {
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null));
             route.Pattern.ShouldEqual(
                 "fubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}");
 
-            route.RouteParameters.Count.ShouldEqual(2);
-            route.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            route.Input.RouteParameters.Count.ShouldEqual(2);
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
         [Test]
@@ -217,7 +230,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void pick_up_default_value_on_the_RouteInputAttribute()
         {
             resolver.DefaultUrlPolicy.IgnoreNamespace(GetType().Namespace);
-            var route = buildRoute(x => x.SomeMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null)).Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
             route.RouteInputFor("Name").DefaultValue.ShouldEqual("Jeremy");
         }
@@ -225,8 +238,9 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_querystrings()
         {
-            var route = buildRoute(x => x.Querystring(null)).ShouldBeOfType<RouteInput<ModelWithQueryStrings>>();
-            route.QueryParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            var route = buildRoute(x => x.Querystring(null));
+            route.Input.ShouldBeOfType<RouteInput<ModelWithQueryStrings>>();
+            route.Input.QueryParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
         [Test]
@@ -240,10 +254,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void use_the_override_url_pattern_from_the_UrlPattern_attribute()
         {
-            var route = buildRoute(x => x.OverrideMethod(null)).ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.OverrideMethod(null));
 
             route.Pattern.ShouldEqual("special/{From}/to/{To}");
-            route.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("From", "To");
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("From", "To");
         }
 
         [Test]

@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Registration
         public void by_default_input_type_returns_null()
         {
             var routeDefinition = new FakeRouteDefinition("");
-            routeDefinition.InputType.ShouldBeNull();
+            routeDefinition.Input.ShouldBeNull();
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.Registration
         public void to_string_gets_pattern_and_type_full_name()
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
-            url.ToString().ShouldEqual("{0} --> {1}".ToFormat(url.Pattern, typeof(SampleViewModel).FullName));
+            url.ToString().ShouldEqual("{0} --> {1}".ToFormat(url.Parent.Pattern, typeof(SampleViewModel).FullName));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace FubuMVC.Tests.Registration
             var url = new RouteInput<SampleViewModel>("my/sample");
             url.AddRouteInput(x => x.InPath);
             url.RouteInputFor("InPath").DefaultValue = "something";
-            Route route = url.ToRoute();
+            Route route = url.Parent.ToRoute();
 
             route.Defaults["InPath"].ShouldEqual("something");
         }
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.AlsoInPath);
             url.RouteInputFor("InPath").DefaultValue = "something";
             url.RouteInputFor("AlsoInPath").DefaultValue = "something else";
-            Route route = url.ToRoute();
+            Route route = url.Parent.ToRoute();
 
             route.Defaults.Count().ShouldEqual(2);
         }
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.InPath);
             url.AddRouteInput(x => x.AlsoInPath);
 
-            url.ToRoute().Url.ShouldEqual("my/sample/{InPath}/{AlsoInPath}");
+            url.Parent.ToRoute().Url.ShouldEqual("my/sample/{InPath}/{AlsoInPath}");
         }
 
         [Test]
@@ -401,7 +401,7 @@ namespace FubuMVC.Tests.Registration
         {
             var url = new RouteInput<SampleViewModel>("my/sample");
             url.AddRouteInput(x => x.InPath);
-            Route route = url.ToRoute();
+            Route route = url.Parent.ToRoute();
 
             route.Defaults.Count().ShouldEqual(0);
         }
@@ -445,7 +445,7 @@ namespace FubuMVC.Tests.Registration
             url.AddQueryInput(x => x.InQueryString);
             url.RouteInputFor("InPath").DefaultValue = "something";
             url.QueryInputFor("InQueryString").DefaultValue = "querysomething";
-            Route route = url.ToRoute();
+            Route route = url.Parent.ToRoute();
 
             route.Defaults.Count().ShouldEqual(1);
         }
@@ -457,7 +457,7 @@ namespace FubuMVC.Tests.Registration
             url.AddRouteInput(x => x.InPath);
             url.AddRouteInput(x => x.AlsoInPath);
             url.RouteInputFor("InPath").DefaultValue = "something";
-            Route route = url.ToRoute();
+            Route route = url.Parent.ToRoute();
 
             route.Defaults.Count().ShouldEqual(1);
         }
@@ -485,10 +485,11 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void add_constraint_to_route_with_model()
         {
-            var url = new RouteInput<SampleViewModel>("my/sample");
+            var parent = new RouteDefinition("my/sample");
+            parent.Input = new RouteInput<SampleViewModel>(parent);
             var constraintToAdd = new HttpMethodConstraint("POST");
-            url.AddRouteConstraint("httpMethod", constraintToAdd);
-            Route route = url.ToRoute();
+            parent.AddRouteConstraint("httpMethod", constraintToAdd);
+            Route route = parent.ToRoute();
 
             route.Constraints["httpMethod"].ShouldEqual(constraintToAdd);
         }

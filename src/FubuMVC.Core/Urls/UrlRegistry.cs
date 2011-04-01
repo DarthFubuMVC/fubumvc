@@ -49,7 +49,7 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType);
-            return chain.Route.CreateUrlFromParameters(parameters);
+            return chain.Route.Input.CreateUrlFromParameters(parameters);
         }
 
         public string UrlFor<TInput>(RouteParameters parameters, string category)
@@ -61,7 +61,7 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType, category);
-            return chain.Route.CreateUrlFromParameters(parameters);
+            return chain.Route.Input.CreateUrlFromParameters(parameters);
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
@@ -131,7 +131,10 @@ namespace FubuMVC.Core.Urls
         protected override string findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
         {
             BehaviorChain chain = finder(resolver);
-            return chain.Route.CreateUrlFromInput(model);
+            
+            // TODO -- throw if no input
+
+            return model == null ? chain.Route.Pattern : chain.Route.Input.CreateUrlFromInput(model);
         }
     }
 

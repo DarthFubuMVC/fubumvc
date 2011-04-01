@@ -189,7 +189,8 @@ namespace FubuMVC.Core.Registration.Nodes
             try
             {
                 Type defType = typeof (RouteInput<>).MakeGenericType(InputType());
-                return Activator.CreateInstance(defType, string.Empty) as IRouteDefinition;
+                var input = (IRouteInput)Activator.CreateInstance(defType, string.Empty);
+                return input.Parent;
             }
             catch (Exception e)
             {

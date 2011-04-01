@@ -19,13 +19,13 @@ namespace FubuMVC.Tests.Registration
 
         #endregion
 
-        private RouteInput<InputModel> route;
+        private IRouteDefinition route;
         private string thePattern;
 
         [Test]
         public void has_a_route_input_for_each_property_in_the_pattern()
         {
-            route.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
         [Test]
@@ -57,18 +57,18 @@ namespace FubuMVC.Tests.Registration
         public void SetUp()
         {
             thePattern = "here/there/{Name}/{Age}";
-            route = RouteBuilder.Build(typeof (InputModel), thePattern).ShouldBeOfType<RouteInput<InputModel>>();
+            route = RouteBuilder.Build(typeof (InputModel), thePattern);
         }
 
         #endregion
 
-        private RouteInput<InputModel> route;
+        private IRouteDefinition route;
         private string thePattern;
 
         [Test]
         public void has_a_route_input_for_each_property_in_the_pattern()
         {
-            route.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
+            route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
 
         [Test]
@@ -93,18 +93,18 @@ namespace FubuMVC.Tests.Registration
         #endregion
 
         private string thePattern;
-        private RouteInput<InputModel> route;
+        private IRouteDefinition route;
 
         [Test]
         public void pick_up_the_default_value_if_it_exists()
         {
-            route.RouteParameters.First(x => x.Name == "Name").DefaultValue.ShouldEqual("Josh");
+            route.Input.RouteParameters.First(x => x.Name == "Name").DefaultValue.ShouldEqual("Josh");
         }
 
         [Test]
         public void should_have_a_null_default_for_input_that_has_no_default_in_the_pattern()
         {
-            route.RouteParameters.First(x => x.Name == "Age").DefaultValue.ShouldBeNull();
+            route.Input.RouteParameters.First(x => x.Name == "Age").DefaultValue.ShouldBeNull();
         }
     }
 

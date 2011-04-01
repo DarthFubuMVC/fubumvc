@@ -15,24 +15,17 @@ namespace FubuMVC.Core.Registration.Routes
         Route ToRoute();
         void Append(string patternPart);
         
-
         void RemoveLastPatternPart();
-
 
         void AddRouteConstraint(string inputName, IRouteConstraint constraint);
         void Prepend(string prefix);
 
         void RootUrlAt(string baseUrl);
 
-        string CreateUrlFromInput(object input);
-        string CreateUrlFromParameters(RouteParameters parameters);
         string CreateTemplate(object input, Func<object, object>[] hash);
 
-        [Obsolete]
-        void AddRouteInput(RouteParameter parameter, bool appendToUrl);
-
-        [Obsolete]
-        void AddQueryInput(PropertyInfo property);
+        IRouteInput Input { get; }
+        string CreateUrlFromInput(object input);
     }
 
     public static class RouteDefinitionExtensions

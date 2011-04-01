@@ -400,7 +400,6 @@
     <Compile Include="UI\Tags\TagProfile.cs" />
     <Compile Include="UI\Tags\TagProfileExpression.cs" />
     <Compile Include="UI\Tags\TagProfileLibrary.cs" />
-    <Compile Include="Urls\ActionUrl.cs" />
     <Compile Include="Registration\Querying\ChainInterrogator.cs" />
     <Compile Include="Urls\IUrlTemplatePattern.cs" />
     <Compile Include="Urls\UrlRegistry.cs" />

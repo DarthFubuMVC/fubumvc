@@ -9,14 +9,43 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteInput<T> : RouteDefinition
+    public interface IRouteInput
     {
+        List<RouteParameter> RouteParameters { get; }
+        List<RouteParameter> QueryParameters { get; }
+        Type InputType { get; }
+        int Rank { get; }
+        RouteDefinition Parent { get; }
+        string CreateUrlFromInput(object input);
+        string CreateUrlFromParameters(RouteParameters parameters);
+        void AlterRoute(Route route);
+        void AddQueryInputs(IEnumerable<RouteParameter> inputs);
+        void AddQueryInput(PropertyInfo property);
+        void AddRouteInput(RouteParameter parameter, bool appendToUrl);
+        RouteParameter RouteInputFor(string routeKey);
+        RouteParameter QueryInputFor(string querystringKey);
+        string CreateTemplate(object input, Func<object, object>[] hash);
+    }
+
+    public class RouteInput<T> : IRouteInput
+    {
+        private readonly RouteDefinition _parent;
         private readonly List<RouteParameter> _queryParameters = new List<RouteParameter>();
         private readonly List<RouteParameter> _routeParameters = new List<RouteParameter>();
 
-        public RouteInput(string pattern)
-            : base(pattern)
+        public RouteInput(RouteDefinition parent)
         {
+            _parent = parent;
+        }
+
+        public RouteInput(string pattern) : this(new RouteDefinition(pattern))
+        {
+            _parent.Input = this;
+        }
+
+        public RouteDefinition Parent
+        {
+            get { return _parent; }
         }
 
         public List<RouteParameter> RouteParameters
@@ -29,19 +58,19 @@ namespace FubuMVC.Core.Registration.Routes
             get { return _queryParameters; }
         }
 
-        public override Type InputType
+        public Type InputType
         {
             get { return typeof(T); }
         }
 
-        public override int Rank
+        public int Rank
         {
             get { return _routeParameters.Count; }
         }
 
-        public override string CreateUrlFromInput(object input)
+        public string CreateUrlFromInput(object input)
         {
-            var url = Pattern;
+            var url = _parent.Pattern;
 
             if (_routeParameters.Any(x => !x.CanSubstitue(input)))
             {
@@ -49,7 +78,7 @@ namespace FubuMVC.Core.Registration.Routes
                     2107,
                     "Input model type '{0}' for route '{1}' requires a value for property '{2}', but no value was provided when creating the url and the route definition does not have a default value for this property.",
                     InputType.Name,
-                    Pattern,
+                    _parent.Pattern,
                     _routeParameters.First(x => x.DefaultValue == null).Name);
             }
 
@@ -59,9 +88,9 @@ namespace FubuMVC.Core.Registration.Routes
             return url.ToAbsoluteUrl();
         }
 
-        public override string CreateUrlFromParameters(RouteParameters parameters)
+        public string CreateUrlFromParameters(RouteParameters parameters)
         {
-            var url = Pattern;
+            var url = _parent.Pattern;
 
             if (parameters == null)
             {
@@ -73,7 +102,7 @@ namespace FubuMVC.Core.Registration.Routes
                 throw new FubuException(
                     2107,
                     "Missing required parameters for route {0}, got '{1}'",
-                    Pattern,
+                    _parent.Pattern,
                     parameters.AllNames.Join(", "));
             }
 
@@ -83,9 +112,9 @@ namespace FubuMVC.Core.Registration.Routes
             return url.ToAbsoluteUrl();
         }
 
-        public override string CreateTemplate(object input, Func<object, object>[] hash)
+        public string CreateTemplate(object input, Func<object, object>[] hash)
         {
-            var url = Pattern;
+            var url = _parent.Pattern;
 
             _routeParameters.Where(x => x.CanTemplate(input))
                 .Each(r => url = r.Substitute((T)input, url));
@@ -103,14 +132,15 @@ namespace FubuMVC.Core.Registration.Routes
             return url.ToAbsoluteUrl();
         }
 
-        public override Route ToRoute()
+
+        public void AlterRoute(Route route)
         {
             var defaults = new RouteValueDictionary();
 
             _routeParameters.Where(r => r.DefaultValue != null).Each(
                 input => defaults.Add(input.Name, input.DefaultValue));
 
-            return new Route(Pattern, defaults, getConstraints(), null);
+            route.Defaults = defaults;
         }
 
         private string fillQueryInputs(string url, Func<RouteParameter, string> getQuerystring)
@@ -152,7 +182,7 @@ namespace FubuMVC.Core.Registration.Routes
             _queryParameters.Add(input);
         }
 
-        public override void AddQueryInput(PropertyInfo property)
+        public void AddQueryInput(PropertyInfo property)
         {
             Accessor accessor = new SingleProperty(property);
             var input = new RouteParameter(accessor);
@@ -160,13 +190,13 @@ namespace FubuMVC.Core.Registration.Routes
             _queryParameters.Add(input);
         }
 
-        public override void AddRouteInput(RouteParameter parameter, bool appendToUrl)
+        public void AddRouteInput(RouteParameter parameter, bool appendToUrl)
         {
             if (_routeParameters.Any(x => x.Name == parameter.Name)) return;
 
             if (appendToUrl)
             {
-                Append("{" + parameter.Name + "}");
+                _parent.Append("{" + parameter.Name + "}");
             }
 
             _routeParameters.Add(parameter);
@@ -184,7 +214,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public override string ToString()
         {
-            return "{0} --> {1}".ToFormat(Pattern, typeof(T).FullName);
+            return "{0} --> {1}".ToFormat(_parent.Pattern, typeof(T).FullName);
         }
     }
 }

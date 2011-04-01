@@ -8,6 +8,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Tests.Registration.Conventions;
 using NUnit.Framework;
 
@@ -138,6 +139,21 @@ namespace FubuMVC.Tests.Registration
             {
                 ActionCall.For(typeof (InvalidActionWithMultipleMethods));
             });
+        }
+
+        [Test]
+        public void to_definition_with_no_input_type()
+        {
+            var action = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
+            action.ToRouteDefinition().ShouldBeOfType<RouteDefinition>().Input.ShouldBeNull();
+        }
+
+        [Test]
+        public void to_definition_with_an_input_type()
+        {
+            ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null))
+                .ToRouteDefinition()
+                .Input.ShouldBeOfType<RouteInput<Model1>>();
         }
 
     }
