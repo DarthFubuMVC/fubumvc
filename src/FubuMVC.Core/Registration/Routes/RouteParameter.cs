@@ -4,14 +4,14 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes
 {
-    public class RouteInput
+    public class RouteParameter
     {
         // Use the first property to get the name
         // use the full blown accessor to get the value
 
         private readonly Accessor _accessor;
 
-        public RouteInput(Accessor accessor)
+        public RouteParameter(Accessor accessor)
         {
             _accessor = accessor;
             accessor.ForAttribute<RouteInputAttribute>(x => DefaultValue = x.DefaultValue);

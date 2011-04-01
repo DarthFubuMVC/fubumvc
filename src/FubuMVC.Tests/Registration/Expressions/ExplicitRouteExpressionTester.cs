@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         #endregion
 
         private BehaviorGraph graph;
-        private RouteDefinition<Registration.InputModel> route;
+        private RouteInput<Registration.InputModel> route;
 
         public class InputModel
         {

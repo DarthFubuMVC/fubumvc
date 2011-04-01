@@ -91,50 +91,50 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void
             each_route_with_the_input_type_matching_the_policy_should_have_the_route_inputs_specified_in_the_convention()
         {
-            graph.RouteFor<SpecialController>(x => x.Go1(null)).As<RouteDefinition<InputModel>>().RouteInputs.Count.
+            graph.RouteFor<SpecialController>(x => x.Go1(null)).As<RouteInput<InputModel>>().RouteParameters.Count.
                 ShouldEqual(0);
-            graph.RouteFor<SpecialController>(x => x.Go2(null)).As<RouteDefinition<SpecialMessage1>>().RouteInputs.
+            graph.RouteFor<SpecialController>(x => x.Go2(null)).As<RouteInput<SpecialMessage1>>().RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
-            graph.RouteFor<SpecialController>(x => x.Go3(null)).As<RouteDefinition<SpecialMessage2>>().RouteInputs.
+            graph.RouteFor<SpecialController>(x => x.Go3(null)).As<RouteInput<SpecialMessage2>>().RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
-            graph.RouteFor<SpecialController>(x => x.Go4(null)).As<RouteDefinition<SpecialMessage3>>().RouteInputs.
+            graph.RouteFor<SpecialController>(x => x.Go4(null)).As<RouteInput<SpecialMessage3>>().RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
         }
 
         [Test]
         public void the_url_pattern_should_include_ExtraParam_for_NeedsId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NeedsId(null)).As<RouteDefinition<SpecialRouteInputTestingMessage>>
+            graph.RouteFor<SpecialController>(x => x.NeedsId(null)).As<RouteInput<SpecialRouteInputTestingMessage>>
                 ().Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
         }
 
         [Test]
         public void the_url_pattern_should_include_ExtraParam_for_NoId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NoId(null)).As<RouteDefinition<SpecialRouteInputTestingMessage>>().
+            graph.RouteFor<SpecialController>(x => x.NoId(null)).As<RouteInput<SpecialRouteInputTestingMessage>>().
                 Pattern.ShouldEqual("special/noid/{ExtraParam}");
         }
 
         [Test]
         public void the_url_pattern_should_include_id_for_NeedsId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NeedsId(null)).As<RouteDefinition<SpecialRouteInputTestingMessage>>
+            graph.RouteFor<SpecialController>(x => x.NeedsId(null)).As<RouteInput<SpecialRouteInputTestingMessage>>
                 ().Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
         }
 
         [Test]
         public void the_url_pattern_should_include_the_route_input()
         {
-            graph.RouteFor<SpecialController>(x => x.Go1(null)).As<RouteDefinition<InputModel>>().Pattern.ShouldEqual(
+            graph.RouteFor<SpecialController>(x => x.Go1(null)).As<RouteInput<InputModel>>().Pattern.ShouldEqual(
                 "special/go1");
-            graph.RouteFor<SpecialController>(x => x.Go2(null)).As<RouteDefinition<SpecialMessage1>>().Pattern.
+            graph.RouteFor<SpecialController>(x => x.Go2(null)).As<RouteInput<SpecialMessage1>>().Pattern.
                 ShouldEqual("special/go2/{Id}");
         }
 
         [Test]
         public void the_url_pattern_should_not_include_id_for_NoId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NoId(null)).As<RouteDefinition<SpecialRouteInputTestingMessage>>().
+            graph.RouteFor<SpecialController>(x => x.NoId(null)).As<RouteInput<SpecialRouteInputTestingMessage>>().
                 Pattern.ShouldEqual("special/noid/{ExtraParam}");
         }
     }

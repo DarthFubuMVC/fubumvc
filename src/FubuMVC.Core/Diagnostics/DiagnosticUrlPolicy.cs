@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Diagnostics
             definition.Append(DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method));
             if (call.InputType().CanBeCastTo<ChainRequest>())
             {
-                definition.AddRouteInput(new RouteInput(ReflectionHelper.GetAccessor<ChainRequest>(x => x.Id)), true);
+                definition.AddRouteInput(new RouteParameter(ReflectionHelper.GetAccessor<ChainRequest>(x => x.Id)), true);
             }
             return definition;
         }

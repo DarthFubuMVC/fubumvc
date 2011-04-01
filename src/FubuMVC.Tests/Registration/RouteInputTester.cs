@@ -7,19 +7,19 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class RouteInputTester
     {
-        private RouteInput _input;
+        private RouteParameter _parameter;
         public class FakeInput {public string Code { get; set; }}
         
         [SetUp]
         public void SetUp()
         {
-            _input = new RouteInput(ReflectionHelper.GetAccessor<FakeInput>(x => x.Code));
+            _parameter = new RouteParameter(ReflectionHelper.GetAccessor<FakeInput>(x => x.Code));
         }
 
         [Test]
         public void to_query_string_of_empty_value_returns_name()
         {
-            _input.ToQueryString(new FakeInput()).ShouldEqual(_input.Name + "=");
+            _parameter.ToQueryString(new FakeInput()).ShouldEqual(_parameter.Name + "=");
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something";
-            _input.Substitute(parameters, "aaa/{Code}/aaa").ShouldEqual("aaa/something/aaa");
+            _parameter.Substitute(parameters, "aaa/{Code}/aaa").ShouldEqual("aaa/something/aaa");
         }
 
         [Test]
@@ -35,13 +35,13 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something&else";
-            _input.Substitute(parameters, "aaa/{Code}/aaa").ShouldEqual("aaa/something%26else/aaa");
+            _parameter.Substitute(parameters, "aaa/{Code}/aaa").ShouldEqual("aaa/something%26else/aaa");
         }
 
         [Test]
         public void is_satisfied_negative()
         {
-            _input.IsSatisfied(new RouteParameters()).ShouldBeFalse();
+            _parameter.IsSatisfied(new RouteParameters()).ShouldBeFalse();
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something";
 
-            _input.IsSatisfied(parameters).ShouldBeTrue();
+            _parameter.IsSatisfied(parameters).ShouldBeTrue();
         }
 
         [Test]
@@ -58,15 +58,15 @@ namespace FubuMVC.Tests.Registration
         {
             var parameters = new RouteParameters<FakeInput>();
 
-            _input.DefaultValue = "something";
+            _parameter.DefaultValue = "something";
 
-            _input.IsSatisfied(parameters).ShouldBeTrue();
+            _parameter.IsSatisfied(parameters).ShouldBeTrue();
         }
 
         [Test]
         public void to_query_string_from_route_parameter_with_no_values()
         {
-            _input.ToQueryString(new RouteParameters()).ShouldEqual("Code=");
+            _parameter.ToQueryString(new RouteParameters()).ShouldEqual("Code=");
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace FubuMVC.Tests.Registration
             var parameters = new RouteParameters<FakeInput>();
             parameters[x => x.Code] = "something";
 
-            _input.ToQueryString(parameters).ShouldEqual("Code=something");
+            _parameter.ToQueryString(parameters).ShouldEqual("Code=something");
         }
     }
 }

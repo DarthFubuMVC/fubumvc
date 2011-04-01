@@ -188,12 +188,12 @@ namespace FubuMVC.Core.Registration.Nodes
 
             try
             {
-                Type defType = typeof (RouteDefinition<>).MakeGenericType(InputType());
+                Type defType = typeof (RouteInput<>).MakeGenericType(InputType());
                 return Activator.CreateInstance(defType, string.Empty) as IRouteDefinition;
             }
             catch (Exception e)
             {
-                throw new FubuException(1001, e, "Could not create a RouteDefinition<> for {0}",
+                throw new FubuException(1001, e, "Could not create a RouteInput<> for {0}",
                                         InputType().AssemblyQualifiedName);
             }
         }

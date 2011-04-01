@@ -7,9 +7,9 @@ namespace FubuMVC.Core.Registration.Routes
 {
     public class RouteBuilder
     {
-        public static RouteDefinition<T> Build<T>(string pattern)
+        public static RouteInput<T> Build<T>(string pattern)
         {
-            var route = new RouteDefinition<T>(pattern);
+            var route = new RouteInput<T>(pattern);
             Type inputType = typeof (T);
 
             populateRoute(pattern, inputType, route);
@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public static IRouteDefinition Build(Type inputType, string pattern)
         {
-            Type routeType = typeof (RouteDefinition<>).MakeGenericType(inputType);
+            Type routeType = typeof (RouteInput<>).MakeGenericType(inputType);
             var route = Activator.CreateInstance(routeType, pattern) as IRouteDefinition;
 
             populateRoute(pattern, inputType, route);
@@ -35,7 +35,7 @@ namespace FubuMVC.Core.Registration.Routes
                 if (property == null)
                     throw new FubuException(1002, "Url pattern \"{0}\" refers to non-existent property {1} on {2}.",
                                             pattern, propName, inputType.FullName);
-                var input = new RouteInput(new SingleProperty(property))
+                var input = new RouteParameter(new SingleProperty(property))
                 {
                     DefaultValue = defaultValue
                 };

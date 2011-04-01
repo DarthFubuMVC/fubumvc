@@ -11,18 +11,28 @@ namespace FubuMVC.Core.Registration.Routes
         string Pattern { get; }
         int Rank { get; }
         IEnumerable<KeyValuePair<string, object>> Constraints { get; }
-        string CreateUrlFromInput(object input);
-        string CreateUrlFromParameters(RouteParameters parameters);
-        string CreateTemplate(object input, Func<object, object>[] hash);
+
         Route ToRoute();
         void Append(string patternPart);
-        void AddRouteInput(RouteInput input, bool appendToUrl);
+        
+
         void RemoveLastPatternPart();
-        void AddQueryInput(PropertyInfo property);
+
+
         void AddRouteConstraint(string inputName, IRouteConstraint constraint);
         void Prepend(string prefix);
 
         void RootUrlAt(string baseUrl);
+
+        string CreateUrlFromInput(object input);
+        string CreateUrlFromParameters(RouteParameters parameters);
+        string CreateTemplate(object input, Func<object, object>[] hash);
+
+        [Obsolete]
+        void AddRouteInput(RouteParameter parameter, bool appendToUrl);
+
+        [Obsolete]
+        void AddQueryInput(PropertyInfo property);
     }
 
     public static class RouteDefinitionExtensions

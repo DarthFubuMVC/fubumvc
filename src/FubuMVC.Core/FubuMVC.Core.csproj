@@ -155,6 +155,7 @@
     <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
+    <Compile Include="Registration\Routes\TypedRouteThing.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="Json\ProjectionService.cs" />
     <Compile Include="Json\IProjection.cs" />
@@ -425,7 +426,7 @@
     <Compile Include="Registration\Routes\IRouteDefinition.cs" />
     <Compile Include="Registration\Nodes\RenderJsonNode.cs" />
     <Compile Include="Registration\Routes\RouteDefinition.cs" />
-    <Compile Include="Registration\Routes\RouteInput.cs" />
+    <Compile Include="Registration\Routes\RouteParameter.cs" />
     <Compile Include="Runtime\FubuRequest.cs" />
     <Compile Include="Runtime\HttpResponseOutputWriter.cs" />
     <Compile Include="Runtime\IBehaviorFactory.cs" />

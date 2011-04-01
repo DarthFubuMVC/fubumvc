@@ -188,7 +188,7 @@ namespace FubuMVC.Core.Registration.DSL
 
     public interface IInputTypeRouteInputsModel<T>
     {
-        RouteInput RouteInputFor(Expression<Func<T, object>> expression);
+        RouteParameter RouteInputFor(Expression<Func<T, object>> expression);
     }
 
     // TODO -- need a specific unit test for this little monster
@@ -196,10 +196,10 @@ namespace FubuMVC.Core.Registration.DSL
     {
         private readonly List<Action<IRouteDefinition>> _modifiers = new List<Action<IRouteDefinition>>();
 
-        public RouteInput RouteInputFor(Expression<Func<T, object>> expression)
+        public RouteParameter RouteInputFor(Expression<Func<T, object>> expression)
         {
             Accessor accessor = ReflectionHelper.GetAccessor(expression);
-            var input = new RouteInput(accessor);
+            var input = new RouteParameter(accessor);
             _modifiers.Add(r => r.AddRouteInput(input, true));
 
             return input;

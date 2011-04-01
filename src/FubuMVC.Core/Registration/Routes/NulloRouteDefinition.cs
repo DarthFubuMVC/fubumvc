@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Routing;
@@ -68,7 +68,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         }
 
-        public void AddRouteInput(RouteInput input, bool appendToUrl)
+        public void AddRouteInput(RouteParameter parameter, bool appendToUrl)
         {
 
         }

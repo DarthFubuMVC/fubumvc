@@ -100,9 +100,9 @@ namespace FubuMVC.Core.Registration
             return chain;
         }
 
-        public IEnumerable<RouteDefinition<T>> RoutesFor<T>()
+        public IEnumerable<RouteInput<T>> RoutesFor<T>()
         {
-            return _behaviors.Select(x => x.Route).Where(x => x != null).OfType<RouteDefinition<T>>();
+            return _behaviors.Select(x => x.Route).Where(x => x != null).OfType<RouteInput<T>>();
         }
 
         void IRegisterable.Register(Action<Type, ObjectDef> action)

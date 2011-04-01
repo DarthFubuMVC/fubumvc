@@ -33,11 +33,7 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return Top == null ? Guid.Empty : Top.UniqueId; }
         }
 
-        /// <summary>
-        ///   Categorizes this BehaviorChain for the IUrlRegistry and 
-        ///   IEndpointService UrlFor(***, category) methods
-        /// </summary>
-        public UrlCategory UrlCategory { get; private set; }
+
 
         /// <summary>
         /// The outermost BehaviorNode in the chain
@@ -69,7 +65,24 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return this.OfType<OutputNode>(); }
         }
 
+        public void PartialOnly()
+        {
+            Route = new NulloRouteDefinition();
+        }
+
+        public bool IsPartialOnly()
+        {
+            return Route is NulloRouteDefinition;
+        }
+
         public IRouteDefinition Route { get; set; }
+
+        /// <summary>
+        ///   Categorizes this BehaviorChain for the IUrlRegistry and 
+        ///   IEndpointService UrlFor(***, category) methods
+        /// </summary>
+        public UrlCategory UrlCategory { get; private set; }
+
 
         /// <summary>
         /// Model of the authorization rules for this BehaviorChain
@@ -109,15 +122,7 @@ namespace FubuMVC.Core.Registration.Nodes
             node.Chain = this;
         }
 
-        public void PartialOnly()
-        {
-            Route = new NulloRouteDefinition();
-        }
 
-        public bool IsPartialOnly()
-        {
-            return Route is NulloRouteDefinition;
-        }
 
         /// <summary>
         /// Tests whether or not this chain has any output nodes
