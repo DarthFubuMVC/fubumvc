@@ -66,7 +66,7 @@ namespace FubuMVC.Core
             _registry.Policies.Add(modification);
 //            _registry.ApplyConvention(modification);
 
-            modification.Filters.Excludes += call => call.HasOutputBehavior();
+            modification.Filters.Excludes += call => call.HasAnyOutputBehavior();
 
             return new ActionCallFilterExpression(modification.Filters);
         }

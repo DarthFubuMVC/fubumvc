@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void render_text_node_should_add_mime_to_children_on_configure_object()
         {
             var text = new RenderTextNode<RouteInput>();
-            ObjectDef def = text.ToObjectDef();
+            ObjectDef def = text.As<IContainerModel>().ToObjectDef();
             def.Dependencies.ShouldHaveCount(1).ShouldContain(
                 dependency =>
                 {

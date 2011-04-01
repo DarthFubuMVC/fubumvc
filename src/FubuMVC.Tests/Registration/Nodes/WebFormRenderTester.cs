@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var render = new WebFormView(path.ViewName);
             var container = new Container(x =>
             {
-                x.For<IActionBehavior>().Use(new ObjectDefInstance(render.ToObjectDef()));
+                x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef()));
                 x.For<IWebFormsControlBuilder>().Use<WebFormsControlBuilder>();
                 x.For<IWebFormRenderer>().Use<WebFormRenderer>();
                 x.For<IOutputWriter>().Use<HttpResponseOutputWriter>();

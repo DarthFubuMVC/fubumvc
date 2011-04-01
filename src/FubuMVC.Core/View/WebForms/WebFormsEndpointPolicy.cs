@@ -12,7 +12,7 @@ namespace FubuMVC.Core.View.WebForms
         public void Configure(BehaviorGraph graph)
         {
             graph.Actions()
-                .Where(x => !x.HasOutputBehavior())
+                .Where(x => !x.HasAnyOutputBehavior())
                 .Each(x => x.Method.ForAttribute<WebFormsEndpointAttribute>(att =>
                 {
                     var token = new WebFormViewToken(att.ViewType);

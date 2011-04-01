@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -121,7 +122,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <returns></returns>
         public bool HasOutputBehavior()
         {
-            return Top == null ? false : Top.HasOutputBehavior();
+            return Top == null ? false : Top.HasAnyOutputBehavior();
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         void IRegisterable.Register(Action<Type, ObjectDef> callback)
         {
-            callback(typeof (IActionBehavior), Top.ToObjectDef());
+            callback(typeof (IActionBehavior), Top.As<IContainerModel>().ToObjectDef());
             Authorization.Register(Top.UniqueId, callback);
         }
 

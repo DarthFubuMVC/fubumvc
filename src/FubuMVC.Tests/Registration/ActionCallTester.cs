@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Registration
         {
             action.Next.ShouldBeNull();
 
-            ObjectDef objectDef = action.ToObjectDef();
+            ObjectDef objectDef = action.As<IContainerModel>().ToObjectDef();
             objectDef.Dependencies.Select(x => x as ConfiguredDependency).Count().ShouldEqual(1);
         }
 
@@ -95,7 +95,7 @@ namespace FubuMVC.Tests.Registration
         public void to_object_def_throws_when_has_no_return_and_no_input()
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
-            Exception<FubuException>.ShouldBeThrownBy(() => action.ToObjectDef())
+            Exception<FubuException>.ShouldBeThrownBy(() => action.As<IContainerModel>().ToObjectDef())
                 .ErrorCode.ShouldEqual(1005);
         }
 
@@ -270,7 +270,7 @@ namespace FubuMVC.Tests.Registration
         {
             definition = new ActionCall(typeof (ControllerTarget), method);
 
-            theObjectDef = definition.ToObjectDef();
+            theObjectDef = definition.As<IContainerModel>().ToObjectDef();
         }
     }
 

@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.View.WebForms
         {
             _policy.Configure(_graph);
             var token = new WebFormViewToken(typeof(FakeView));
-            var actions = _graph.Actions().Where(x => !x.HasOutputBehavior()
+            var actions = _graph.Actions().Where(x => !x.HasAnyOutputBehavior()
                 && x.Method.HasAttribute<WebFormsEndpointAttribute>()).ToList();
             for (int index = 0; index < actions.Count; index++)
             {
@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.View.WebForms
         {
             _policy.Configure(_graph);
             var token = new WebFormViewToken(typeof(FakeView));
-            var actions = _graph.Actions().Where(x => !x.HasOutputBehavior()
+            var actions = _graph.Actions().Where(x => !x.HasAnyOutputBehavior()
                 && x.Method.HasAttribute<WebFormsEndpointAttribute>()).ToList();
             for (int index = 0; index < actions.Count; index++)
             {

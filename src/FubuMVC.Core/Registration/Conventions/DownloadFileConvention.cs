@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public DownloadFileConvention()
             : base(call => call.AddToEnd(new OutputNode(typeof (DownloadFileBehavior))), "Adding download file behavior as the output node")
         {
-            Filters.Excludes.Add(call => call.HasOutputBehavior());
+            Filters.Excludes.Add(call => call.HasAnyOutputBehavior());
             Filters.Includes.Add(call => call.OutputType().CanBeCastTo<DownloadFileModel>());
         }
     }
