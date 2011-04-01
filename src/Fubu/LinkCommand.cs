@@ -9,10 +9,6 @@ using FubuMVC.Core.Packaging;
 
 namespace Fubu
 {
-
-
-
-
     public class LinkInput
     {
         [Description("The physical folder (or valid alias) of the main application")]
@@ -61,7 +57,7 @@ namespace Fubu
             return true;
         }
 
-        private void Execute(LinkInput input, FileSystem fileSystem)
+        public void Execute(LinkInput input, IFileSystem fileSystem)
         {
             var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
 
@@ -115,7 +111,7 @@ namespace Fubu
             }
         }
 
-        private void updateManifest(LinkInput input, FileSystem fileSystem, ApplicationManifest manifest)
+        private void updateManifest(LinkInput input, IFileSystem fileSystem, ApplicationManifest manifest)
         {
             if (input.RemoveFlag)
             {
@@ -129,7 +125,7 @@ namespace Fubu
             persist(input, manifest, fileSystem);
         }
 
-        private void persist(LinkInput input, ApplicationManifest manifest, FileSystem fileSystem)
+        private void persist(LinkInput input, ApplicationManifest manifest, IFileSystem fileSystem)
         {
             fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
         }
