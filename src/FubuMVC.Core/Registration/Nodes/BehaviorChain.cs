@@ -71,6 +71,9 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public IRouteDefinition Route { get; set; }
 
+        /// <summary>
+        /// Model of the authorization rules for this BehaviorChain
+        /// </summary>
         public AuthorizationNode Authorization { get; private set; }
 
 
@@ -179,7 +182,7 @@ namespace FubuMVC.Core.Registration.Nodes
         void IRegisterable.Register(Action<Type, ObjectDef> callback)
         {
             callback(typeof (IActionBehavior), Top.As<IContainerModel>().ToObjectDef());
-            Authorization.Register(Top.UniqueId, callback);
+            Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
 
         /// <summary>

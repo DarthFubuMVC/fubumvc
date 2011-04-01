@@ -111,7 +111,7 @@ namespace FubuMVC.Tests.Security
 
             chain.AddToEnd(node);
 
-            endpointObjectDef = node.ToEndpointAuthorizorObjectDef();
+            endpointObjectDef = node.As<IAuthorizationRegistration>().ToEndpointAuthorizorObjectDef();
         }
 
         [Test]

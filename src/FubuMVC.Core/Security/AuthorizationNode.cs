@@ -7,7 +7,13 @@ using System.Linq;
 
 namespace FubuMVC.Core.Security
 {
-    public class AuthorizationNode : BehaviorNode
+    public interface IAuthorizationRegistration
+    {
+        ObjectDef ToEndpointAuthorizorObjectDef();
+        void Register(Guid uniqueId, Action<Type, ObjectDef> callback);
+    }
+
+    public class AuthorizationNode : BehaviorNode, IAuthorizationRegistration
     {
         private readonly ListDependency _policies = new ListDependency(typeof(IEnumerable<IAuthorizationPolicy>));
 
@@ -24,6 +30,12 @@ namespace FubuMVC.Core.Security
             return objectDef;
         }
 
+        /// <summary>
+        /// Adds an authorization rule based on membership in a given role
+        /// on the principal
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
         public AllowRole AddRole(string roleName)
         {
             if (AllowedRoles().Contains(roleName)) return null;
@@ -36,6 +48,12 @@ namespace FubuMVC.Core.Security
             return allow;
         }
 
+        /// <summary>
+        /// Adds an authorization rule of type IAuthorizationRule<TModel>
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TRule"></typeparam>
+        /// <returns></returns>
         public ObjectDef AddPolicy<TModel, TRule>() where TRule : IAuthorizationRule<TModel> where TModel : class
         {
             var topDef = _policies.AddType(typeof (AuthorizationPolicy<TModel>));
@@ -49,29 +67,51 @@ namespace FubuMVC.Core.Security
             return ruleObjectDef;
         }
 
+        /// <summary>
+        /// Adds an authorization policy of the given policyType to this behavior chain
+        /// </summary>
+        /// <param name="policyType"></param>
+        /// <returns></returns>
         public ObjectDef AddPolicy(Type policyType)
         {
+            // TODO -- blow up if this isn't IAuthorizationPolicy
             return _policies.AddType(policyType);
         }
 
+        /// <summary>
+        /// Adds an authorization policy to this behavior chain
+        /// </summary>
+        /// <param name="policy"></param>
         public void AddPolicy(IAuthorizationPolicy policy)
         {
             _policies.AddValue(policy);
         }
 
+        /// <summary>
+        /// List of all roles that have privileges to this BehaviorChain endpoint
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<string> AllowedRoles()
         {
             return _policies.Items.Where(x => x.Value is AllowRole).Select(x => x.Value.As<AllowRole>().Role);
         }
 
-        // To any followers here, there definitely needs to be more stuff here, but roles are
-        // all Dovetail needs at this moment, so...
+        /// <summary>
+        /// Simple boolean test of whether or not this BehaviorChain has any
+        /// authorization rules
+        /// </summary>
+        /// <returns></returns>
         public bool HasRules()
         {
             return _policies.Items.Any();
         }
 
-        public ObjectDef ToEndpointAuthorizorObjectDef()
+        ObjectDef IAuthorizationRegistration.ToEndpointAuthorizorObjectDef()
+        {
+            return toEndpointAuthorizationObjectDef();
+        }
+
+        private ObjectDef toEndpointAuthorizationObjectDef()
         {
             var objectDef = new ObjectDef(typeof(EndPointAuthorizor)){
                 Name = ParentChain().UniqueId.ToString()
@@ -82,10 +122,10 @@ namespace FubuMVC.Core.Security
             return objectDef;
         }
 
-        public void Register(Guid uniqueId, Action<Type, ObjectDef> callback)
+        void IAuthorizationRegistration.Register(Guid uniqueId, Action<Type, ObjectDef> callback)
         {
-            var objectDef = HasRules() 
-                ? ToEndpointAuthorizorObjectDef()
+            var objectDef = HasRules()
+                ? toEndpointAuthorizationObjectDef()
                 : new ObjectDef(){
                     Value = NulloEndPointAuthorizor.Flyweight
                 };
