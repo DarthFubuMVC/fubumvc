@@ -190,13 +190,13 @@ namespace FubuMVC.Tests.Registration
         {
             graph1 = new FubuRegistry(x =>
             {
-                x.Route<InputModel>("method1/{Name}/{Age}")
+                x.Route("method1/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-                x.Route<InputModel>("method2/{Name}/{Age}")
+                x.Route("method2/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-                x.Route<InputModel>("method3/{Name}/{Age}")
+                x.Route("method3/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             }).BuildGraph();
 
@@ -205,7 +205,7 @@ namespace FubuMVC.Tests.Registration
 
             graph2 = new FubuRegistry(x =>
             {
-                x.Route<InputModel>("/root/{Name}/{Age}")
+                x.Route("/root/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             }).BuildGraph();
 

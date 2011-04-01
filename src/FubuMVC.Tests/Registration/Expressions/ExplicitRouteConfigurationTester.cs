@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             {
                 
 
-                registry.Route<InputModel>("some/pattern")
+                registry.Route("some/pattern")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
             })
                     .BuildGraph();

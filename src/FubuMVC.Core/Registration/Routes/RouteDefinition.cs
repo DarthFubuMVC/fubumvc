@@ -22,6 +22,11 @@ namespace FubuMVC.Core.Registration.Routes
         }
 
         public IRouteInput Input { get; set;}
+        public void ApplyInputType(Type inputType)
+        {
+            Input = RouteBuilder.Build(inputType, Pattern).Input;
+        }
+
         public string CreateUrlFromInput(object input)
         {
             if (Input == null)

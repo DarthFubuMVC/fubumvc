@@ -25,6 +25,9 @@ namespace FubuMVC.Core.Registration.Routes
         string CreateTemplate(object input, Func<object, object>[] hash);
 
         IRouteInput Input { get; }
+
+        void ApplyInputType(Type inputType);
+
         string CreateUrlFromInput(object input);
     }
 

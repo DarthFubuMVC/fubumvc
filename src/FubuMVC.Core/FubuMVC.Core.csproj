@@ -149,6 +149,7 @@
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\PackageFiles.cs" />
+    <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />

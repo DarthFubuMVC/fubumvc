@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             graph = new FubuRegistry(x =>
             {
-                x.Route<Registration.InputModel>("/area/sub/{Name}/{Age}")
+                x.Route("/area/sub/{Name}/{Age}")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
             }).BuildGraph();
 

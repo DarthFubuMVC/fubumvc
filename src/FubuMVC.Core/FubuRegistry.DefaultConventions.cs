@@ -42,6 +42,7 @@ namespace FubuMVC.Core
             Policies.Add<ContinuationHandlerConvention>();
 
             _systemPolicies.Add(new StringOutputPolicy());
+            _systemPolicies.Add(new MissingRouteInputPolicy());
 
             _conventions.Add(_viewAttacher);
             Policies.Add<JsonMessageInputConvention>();

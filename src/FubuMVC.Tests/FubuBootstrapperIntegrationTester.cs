@@ -25,19 +25,19 @@ namespace FubuMVC.Tests
             {
                 
 
-                x.Route<InputModel>("area/sub/{Name}/{Age}")
+                x.Route("area/sub/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-                x.Route<InputModel>("area/sub2/prop")
+                x.Route("area/sub2/prop")
                     .Calls<TestController>(c => c.SomeAction(null)).OutputToJson();
 
-                x.Route<InputModel>("area/sub2/{Name}/{Age}")
+                x.Route("area/sub2/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-                x.Route<InputModel>("area/sub2/{Name}")
+                x.Route("area/sub2/{Name}")
                     .Calls<TestController>(c => c.ThirdAction(null)).OutputToJson();
 
-                x.Route<InputModel>("area/sub3/{Name}/{Age}")
+                x.Route("area/sub3/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
                 x.Route("area/sub4/some_pattern")

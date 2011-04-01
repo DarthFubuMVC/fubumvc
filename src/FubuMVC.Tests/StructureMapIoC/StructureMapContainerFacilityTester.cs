@@ -35,13 +35,13 @@ namespace FubuMVC.Tests.StructureMapIoC
 
             graph = new FubuRegistry(x =>
             {
-                x.Route<InputModel>("/area/sub/{Name}/{Age}")
+                x.Route("/area/sub/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-                x.Route<InputModel>("/area/sub2/{Name}/{Age}")
+                x.Route("/area/sub2/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
-                x.Route<InputModel>("/area/sub3/{Name}/{Age}")
+                x.Route("/area/sub3/{Name}/{Age}")
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
 
                 x.Models.ConvertUsing<ExampleConverter>().ConvertUsing<ExampleConverter2>();

@@ -46,10 +46,10 @@ namespace FubuTestApplication
             Actions.IncludeType<ScriptsHandler>();
 
             Route("cases").Calls<CaseController>(x => x.AllCases());
-            Route<Case>("case/{Id}").Calls<CaseController>(x => x.Show(null));
-            Route<CaseRequest>("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
+            Route("case/{Id}").Calls<CaseController>(x => x.Show(null));
+            Route("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
             Route("loadcases").Calls<CaseController>(x => x.LoadCases(null));
-            Route<Person>("person/{Id}").Calls<CaseController>(x => x.Person(null));
+            Route("person/{Id}").Calls<CaseController>(x => x.Person(null));
 
             this.ApplySmartGridConventions(x => { x.ToThisAssembly(); });
         }

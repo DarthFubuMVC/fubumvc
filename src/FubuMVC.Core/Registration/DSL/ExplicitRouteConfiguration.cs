@@ -35,12 +35,4 @@ namespace FubuMVC.Core.Registration.DSL
         }
     }
 
-
-    public class ExplicitRouteConfiguration<T> : ExplicitRouteConfiguration
-    {
-        public ExplicitRouteConfiguration(string pattern)
-            : base(RouteBuilder.Build<T>(pattern))
-        {
-        }
-    }
 }

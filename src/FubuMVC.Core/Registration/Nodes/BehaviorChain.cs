@@ -73,6 +73,9 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public bool IsPartialOnly { get; set; }
 
+        /// <summary>
+        /// Models how the Route for this BehaviorChain will be generated
+        /// </summary>
         public IRouteDefinition Route { get; set; }
 
         /// <summary>
@@ -254,5 +257,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             return this.Where(x => x is Wrapper).Cast<Wrapper>().Any(x => x.BehaviorType == behaviorType);
         }
+
+
     }
 }

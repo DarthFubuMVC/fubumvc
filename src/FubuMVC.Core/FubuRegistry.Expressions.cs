@@ -87,16 +87,6 @@ namespace FubuMVC.Core
             return expression.Chain();
         }
 
-        public ChainedBehaviorExpression Route<T>(string pattern)
-        {
-            // TODO:  Throw exception in the chained expression if the input types
-            // do not match
-            var expression = new ExplicitRouteConfiguration<T>(pattern);
-            _explicits.Add(expression);
-
-            return expression.Chain();
-        }
-
         public void Import<T>(string prefix) where T : FubuRegistry, new()
         {
             if (_imports.Any(x => x.Registry is T)) return;
