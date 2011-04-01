@@ -65,15 +65,13 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return this.OfType<OutputNode>(); }
         }
 
-        public void PartialOnly()
-        {
-            Route = new NulloRouteDefinition();
-        }
-
-        public bool IsPartialOnly()
-        {
-            return Route is NulloRouteDefinition;
-        }
+        /// <summary>
+        /// Marking a BehaviorChain as "PartialOnly" means that no
+        /// Route will be generated and registered for this BehaviorChain.  
+        /// Set this property to true if you only want this BehaviorChain
+        /// to apply to partial requests.
+        /// </summary>
+        public bool IsPartialOnly { get; set; }
 
         public IRouteDefinition Route { get; set; }
 
@@ -89,7 +87,13 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public AuthorizationNode Authorization { get; private set; }
 
-
+        public int Rank
+        {
+            get
+            {
+                return IsPartialOnly || Route == null ? 0 : Route.Rank;
+            }
+        }
 
 
         public IEnumerator<BehaviorNode> GetEnumerator()

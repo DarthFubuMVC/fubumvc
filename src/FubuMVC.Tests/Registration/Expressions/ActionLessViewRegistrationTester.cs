@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             var registry = new FubuRegistry();
 
 
-            registry.Views.RegisterActionLessViews(WebFormViewFacility.IsWebFormControl, chain => chain.PartialOnly());
+            registry.Views.RegisterActionLessViews(WebFormViewFacility.IsWebFormControl, chain => chain.IsPartialOnly = true);
 
             theBehaviorGraph = registry.BuildGraph();
         }
@@ -36,10 +36,10 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void all_behavior_chains_for_the_action_less_views_should_be_marked_as_partial_only()
         {
-            theBehaviorGraph.BehaviorFor(typeof(InputModel)).IsPartialOnly().ShouldBeTrue();
-            theBehaviorGraph.BehaviorFor(typeof(TestInputModel)).IsPartialOnly().ShouldBeTrue();
-            theBehaviorGraph.BehaviorFor(typeof(Model1)).IsPartialOnly().ShouldBeTrue();
-            theBehaviorGraph.BehaviorFor(typeof(Model3)).IsPartialOnly().ShouldBeTrue();
+            theBehaviorGraph.BehaviorFor(typeof(InputModel)).IsPartialOnly.ShouldBeTrue();
+            theBehaviorGraph.BehaviorFor(typeof(TestInputModel)).IsPartialOnly.ShouldBeTrue();
+            theBehaviorGraph.BehaviorFor(typeof(Model1)).IsPartialOnly.ShouldBeTrue();
+            theBehaviorGraph.BehaviorFor(typeof(Model3)).IsPartialOnly.ShouldBeTrue();
         }
     }
 

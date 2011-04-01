@@ -89,7 +89,7 @@ namespace FubuMVC.Core
         public Type ViewType { get { return _viewType; } }
     }
 
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class FubuPartialAttribute : Attribute
     {
     }

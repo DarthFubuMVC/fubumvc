@@ -33,17 +33,19 @@ namespace FubuMVC.Tests.Registration.Conventions
         private RecordingConfigurationObserver observer;
         private ActionCall lastCall;
 
-        private IRouteDefinition buildRoute(Expression<Action<RouteResolverController>> expression)
+        private IRouteDefinition buildRoute(Expression<Action<RouteResolverController>> expression, Action<BehaviorChain> modifyChain)
         {
-            return buildRoute<RouteResolverController>(expression);
+            return buildRoute<RouteResolverController>(expression, modifyChain);
         }
 
-        private IRouteDefinition buildRoute<T>(Expression<Action<T>> expression)
+        private IRouteDefinition buildRoute<T>(Expression<Action<T>> expression, Action<BehaviorChain> modifyChain)
         {
             MethodInfo method = ReflectionHelper.GetMethod(expression);
             lastCall = new ActionCall(typeof(T), method);
 
             chain.AddToEnd(lastCall);
+            modifyChain(chain);
+
             resolver.Apply(graph, chain);
 
             return chain.Route;
@@ -136,14 +138,14 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void build_route_for_partial_action()
         {
-            buildRoute(x => x.PartialAction(null)).ShouldBeOfType<NulloRouteDefinition>();
+            buildRoute(x => x.PartialAction(null), c => c.IsPartialOnly = true).ShouldBeNull();
         }
 
         [Test]
         public void build_route_when_ignoring_the_controller_namespace()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
 
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
             route.Pattern.ShouldEqual("fubumvc/tests/registration/routeresolver/somemethod/{Name}/{Age}");
@@ -153,7 +155,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_when_ignoring_controller_names_entirely()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerNamesEntirely = true;
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
             route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/somemethod/{Name}/{Age}");
@@ -163,7 +165,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_when_ignoring_the_controller_namespace_entirely()
         {
             resolver.DefaultUrlPolicy.IgnoreControllerNamespaceEntirely = true;
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
 
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
@@ -175,7 +177,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             resolver.DefaultUrlPolicy.IgnoreControllerFolderName = true;
             resolver.DefaultUrlPolicy.RegisterRouteModification(x => true, r => r.Prepend("prepend-something"));
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
 
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
@@ -186,7 +188,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_with_a_namespace_ignore()
         {
             resolver.DefaultUrlPolicy.IgnoreNamespace(GetType().Namespace);
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
 
             route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
@@ -200,7 +202,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void build_route_with_an_appended_class_suffix()
         {
             resolver.DefaultUrlPolicy.AppendClassesWith(x=>true,".aspx");
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
             route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver.aspx/somemethod/{Name}/{Age}");
 
             route.Input.RouteParameters.Count.ShouldEqual(2);
@@ -210,7 +212,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void build_route_with_all_simple_inputs_and_default_conventions()
         {
-            var route = buildRoute(x => x.SomeMethod(null));
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
             route.Pattern.ShouldEqual(
                 "fubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}");
 
@@ -221,7 +223,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void build_route_with_no_inputs_and_default_conventions()
         {
-            var route = buildRoute(x => x.NoArgMethod()).ShouldBeOfType<RouteDefinition>();
+            var route = buildRoute(x => x.NoArgMethod(), c => { }).ShouldBeOfType<RouteDefinition>();
 
             route.Pattern.ShouldEqual("FubuMVC/Tests/Registration/Conventions/RouteResolver/NoArgMethod".ToLower());
         }
@@ -230,7 +232,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void pick_up_default_value_on_the_RouteInputAttribute()
         {
             resolver.DefaultUrlPolicy.IgnoreNamespace(GetType().Namespace);
-            var route = buildRoute(x => x.SomeMethod(null)).Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+            var route = buildRoute(x => x.SomeMethod(null), c => { }).Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
 
             route.RouteInputFor("Name").DefaultValue.ShouldEqual("Jeremy");
         }
@@ -238,7 +240,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_querystrings()
         {
-            var route = buildRoute(x => x.Querystring(null));
+            var route = buildRoute(x => x.Querystring(null), c => { });
             route.Input.ShouldBeOfType<RouteInput<ModelWithQueryStrings>>();
             route.Input.QueryParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("Name", "Age");
         }
@@ -246,7 +248,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void pick_up_UrlFolder_attribute_for_class_name()
         {
-            var route = buildRoute<OverridenResolverController>(x => x.NoArgMethod()).ShouldBeOfType<RouteDefinition>();
+            var route = buildRoute<OverridenResolverController>(x => x.NoArgMethod(), c => { }).ShouldBeOfType<RouteDefinition>();
 
             route.Pattern.ShouldEqual("FubuMVC/Tests/Registration/Conventions/contracts/NoArgMethod".ToLower());
         }
@@ -254,7 +256,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void use_the_override_url_pattern_from_the_UrlPattern_attribute()
         {
-            var route = buildRoute(x => x.OverrideMethod(null));
+            var route = buildRoute(x => x.OverrideMethod(null), c => { });
 
             route.Pattern.ShouldEqual("special/{From}/to/{To}");
             route.Input.RouteParameters.Select(x => x.Name).ShouldHaveTheSameElementsAs("From", "To");
@@ -263,7 +265,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void use_the_override_url_pattern_from_the_UrlPattern_on_a_method_with_no_input_type()
         {
-            var route = buildRoute(x => x.OverrideWithNoArgs()).ShouldBeOfType<IRouteDefinition>();
+            var route = buildRoute(x => x.OverrideWithNoArgs(), c => { }).ShouldBeOfType<IRouteDefinition>();
 
             route.Pattern.ShouldEqual("override/noargs");
         }
@@ -271,7 +273,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_log_the_first_url_policy_that_matches()
         {
-            buildRoute(x => x.SomeMethod(null));
+            buildRoute(x => x.SomeMethod(null), c => { });
 
             var log = observer.GetLog(lastCall);
 
@@ -281,7 +283,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_log_the_defined_route_pattern()
         {
-            buildRoute(x => x.SomeMethod(null));
+            buildRoute(x => x.SomeMethod(null), c => { });
 
             var log = observer.GetLog(lastCall);
 
@@ -291,7 +293,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void should_log_policy_decision_if_url_policy_is_loggable()
         {
-            buildRoute(x => x.SomeMethod(null));
+            buildRoute(x => x.SomeMethod(null), c => { });
             var log = observer.GetLog(lastCall);
         }
     }

@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void by_default_input_type_returns_null()
         {
-            var routeDefinition = new FakeRouteDefinition("");
+            var routeDefinition = new RouteDefinition("");
             routeDefinition.Input.ShouldBeNull();
         }
 
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Registration
         public void to_string_by_default_gets_pattern()
         {
             const string pattern = "some/pattern";
-            var routeDefinition = new FakeRouteDefinition(pattern);
+            var routeDefinition = new RouteDefinition(pattern);
             routeDefinition.ToString().ShouldEqual(pattern);
         }
 
@@ -496,9 +496,5 @@ namespace FubuMVC.Tests.Registration
 
     }
 
-    public class FakeRouteDefinition : RouteDefinition{
-        public FakeRouteDefinition(string pattern) : base(pattern)
-        {
-        }
-    }
+
 }

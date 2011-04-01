@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         public void WriteBody(BehaviorChain chain, HtmlTag row, HtmlTag cell)
         {
             var text = Text(chain);
-            if (shouldBeClickable(chain.Route))
+            if (shouldBeClickable(chain))
             {
                 cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
             }
@@ -32,11 +32,14 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             }
         }
 
-        private bool shouldBeClickable(IRouteDefinition routeDefinition)
+        private bool shouldBeClickable(BehaviorChain chain)
         {
-            if (routeDefinition == null || routeDefinition.Rank > 0) return false;
-            if (routeDefinition is NulloRouteDefinition) return false;
-            var httpConstraint = routeDefinition.Constraints.Select(c => c.Value).OfType<HttpMethodConstraint>().FirstOrDefault();
+            if (chain.IsPartialOnly) return false;
+
+            if (chain == null || chain.Rank > 0) return false;
+            if (chain.Route == null) return false;
+
+            var httpConstraint = chain.Route.Constraints.Select(c => c.Value).OfType<HttpMethodConstraint>().FirstOrDefault();
             if (httpConstraint != null && !httpConstraint.AllowedMethods.Any(m => m.Equals("GET", StringComparison.OrdinalIgnoreCase))) return false;
             return true;
         }

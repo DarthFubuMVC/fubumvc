@@ -149,6 +149,7 @@
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\PackageFiles.cs" />
+    <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
     <Compile Include="Registration\Routes\IRouteInput.cs" />
@@ -233,7 +234,6 @@
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
-    <Compile Include="Registration\Conventions\FubuPartialRequestUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\JsonMessageInputConvention.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicy.cs" />
     <Compile Include="Registration\Conventions\RouteConstraintPolicy.cs" />
@@ -286,7 +286,6 @@
     <Compile Include="Registration\Querying\ChainResolver.cs" />
     <Compile Include="Registration\Querying\ChainForwarder.cs" />
     <Compile Include="Registration\Querying\IChainResolver.cs" />
-    <Compile Include="Registration\Routes\NulloRouteDefinition.cs" />
     <Compile Include="Registration\RouteVisitor.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />

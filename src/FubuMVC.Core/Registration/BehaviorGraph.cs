@@ -271,7 +271,7 @@ namespace FubuMVC.Core.Registration
     {
         public IEnumerable<BehaviorChain> Over(IEnumerable<BehaviorChain> behaviors)
         {
-            return behaviors.OrderBy(b => b.Route.Rank);
+            return behaviors.OrderBy(b => b.Rank);
         }
     }
 

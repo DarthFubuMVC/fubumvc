@@ -28,7 +28,6 @@ namespace FubuMVC.Core.Registration.Conventions
             _inputPolicy.PropertyAlterations.Register(prop => prop.HasAttribute<QueryStringAttribute>(),
                                                       (route, prop) => route.Input.AddQueryInput(prop));
 
-            _policies.Add(new FubuPartialRequestUrlPolicy());
             _policies.Add(new UrlPatternAttributePolicy());
         }
 
@@ -40,6 +39,12 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             // Don't override the route if it already exists
             if (chain.Route != null)
+            {
+                return;
+            }
+
+            // Don't override the route if the chain is a partial
+            if (chain.IsPartialOnly)
             {
                 return;
             }

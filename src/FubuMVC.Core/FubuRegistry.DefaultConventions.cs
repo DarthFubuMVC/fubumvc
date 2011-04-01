@@ -19,6 +19,10 @@ namespace FubuMVC.Core
             // Add Behaviors First
             addConvention(graph => _behaviorMatcher.BuildBehaviors(_types, graph));
             addConvention(graph => _actionSourceMatcher.BuildBehaviors(_types, graph));
+
+            // need to find partials *before* the route resolver hits
+            ApplyConvention<PartialRequestConvention>();
+
             addConvention(graph => _routeResolver.ApplyToAll(graph));
             _conventions.Add(new WrapWithAttributeConvention());
 
