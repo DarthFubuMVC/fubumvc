@@ -1,3 +1,4 @@
+using System.IO;
 using Fubu;
 using FubuCore;
 using FubuMVC.Core.Packaging;
@@ -34,6 +35,11 @@ namespace FubuMVC.Tests.Commands
             MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.FILE)).Return(appManifest);
         }
 
+        private string oneFolderUp(string path)
+        {
+            return "..{0}{1}".ToFormat(Path.DirectorySeparatorChar, path);
+        }
+
         private void execute()
         {
             ClassUnderTest.Execute(theInput, MockFor<IFileSystem>());
@@ -42,7 +48,7 @@ namespace FubuMVC.Tests.Commands
         [Test]
         public void should_link_app_to_package()
         {
-            var expectedFolder = "..\\" + theInput.PackageFolder;
+            var expectedFolder = oneFolderUp(theInput.PackageFolder);
             theManifestFileExists();
 
             execute();
@@ -53,8 +59,8 @@ namespace FubuMVC.Tests.Commands
         [Test]
         public void should_link_app_to_package_with_trailing_slash_for_app()
         {
-            var expectedFolder = "..\\" + theInput.PackageFolder;
-            theInput.AppFolder += "\\";
+            var expectedFolder = oneFolderUp(theInput.PackageFolder);
+            theInput.AppFolder += Path.DirectorySeparatorChar;
             theManifestFileExists();
 
             execute();
