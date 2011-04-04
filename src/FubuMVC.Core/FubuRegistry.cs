@@ -14,7 +14,7 @@ namespace FubuMVC.Core
     public partial class FubuRegistry
     {
         private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
-        private readonly BehaviorMatcher _behaviorMatcher = new BehaviorMatcher();
+        private readonly BehaviorMatcher _behaviorMatcher;
 
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
@@ -26,9 +26,11 @@ namespace FubuMVC.Core
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacher _viewAttacher;
         private IConfigurationObserver _observer;
+        private Func<Type, MethodInfo, ActionCall> _actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
 
         public FubuRegistry()
         {
+            _behaviorMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
             _observer = new NulloConfigurationObserver();
             _viewAttacher = new ViewAttacher(_types);
 
@@ -39,6 +41,11 @@ namespace FubuMVC.Core
         public FubuRegistry(Action<FubuRegistry> configure) : this()
         {
             configure(this);
+        }
+
+        public void ActionCallProvider(Func<Type, MethodInfo, ActionCall> actionCallProvider)
+        {
+            _actionCallProvider = actionCallProvider;
         }
 
         public virtual string Name

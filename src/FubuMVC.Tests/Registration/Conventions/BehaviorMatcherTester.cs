@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using FubuCore;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions
@@ -19,7 +22,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void SetUp()
         {
             graph = new BehaviorGraph(null);
-            matcher = new BehaviorMatcher();
+            matcher = new BehaviorMatcher((type, methodInfo) => actionCallProvider(type, methodInfo));
 
             pool = new TypePool(null);
             pool.IgnoreCallingAssembly();
@@ -34,6 +37,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         #endregion
 
+        private Func<Type, MethodInfo, ActionCall> actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
         private BehaviorGraph graph;
         private BehaviorMatcher matcher;
         private TypePool pool;
@@ -105,8 +109,19 @@ namespace FubuMVC.Tests.Registration.Conventions
             calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(3);
             calls.Count(x => x.HandlerType == typeof (ThreeController)).ShouldEqual(3);
         }
-    }
 
+        [Test]
+        public void can_set_a_different_action_call_provider()
+        {
+            actionCallProvider = (type, methodInfo) => new TestActionCall(type, methodInfo);
+
+            matcher.BuildBehaviors(pool, graph);
+
+            graph.Behaviors
+                .Select(x => x.FirstCall()).All(x => x.GetType() == typeof (TestActionCall))
+                .ShouldBeTrue();
+        }
+    }
 
     public class SimpleInputModel
     {
@@ -203,6 +218,29 @@ namespace FubuMVC.Tests.Registration.Conventions
         public SimpleOutputModel Query(SimpleInputModel model)
         {
             return new SimpleOutputModel();
+        }
+    }
+
+    public class TestActionCall : ActionCall
+    {
+        public TestActionCall(Type handlerType, MethodInfo method) : base(handlerType, method)
+        {
+        }
+
+        protected override Core.Registration.ObjectGraph.ObjectDef buildObjectDef()
+        {
+            //replace IActionBehavior with something other than one/zero in/out action invoker
+            return new ObjectDef
+            {
+                Type = typeof(TestActionBehavior)
+            };
+        }
+    }
+
+    public class TestActionBehavior : BasicBehavior
+    {
+        public TestActionBehavior(PartialBehavior partialBehavior) : base(partialBehavior)
+        {
         }
     }
 }
