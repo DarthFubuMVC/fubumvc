@@ -8,11 +8,11 @@ namespace FubuFastPack.Binding
 {
     public class DomainEntityConverterFamily : IObjectConverterFamily
     {
-        private readonly IRepository _repository;
+        private readonly Lazy<IRepository> _repository;
 
-        public DomainEntityConverterFamily(IRepository repository)
+        public DomainEntityConverterFamily(Func<IRepository> source)
         {
-            _repository = repository;
+            _repository = new Lazy<IRepository>(source);
         }
 
         // Matches any type deriving from DomainEntity
@@ -31,7 +31,7 @@ namespace FubuFastPack.Binding
                 if (text.IsEmpty()) return null;
 
                 var guid = new Guid(text);
-                return _repository.Find(type, guid);
+                return _repository.Value.Find(type, guid);
             };
         }
     }

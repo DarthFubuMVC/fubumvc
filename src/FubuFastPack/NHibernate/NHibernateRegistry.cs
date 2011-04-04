@@ -12,7 +12,7 @@ using NHibernate.Event;
 
 namespace FubuFastPack.NHibernate
 {
-    public class NHibernateRegistry : IConfigurationModifier
+    public abstract class NHibernateRegistry : IConfigurationModifier
     {
         private readonly IList<Action<Configuration>> _configurationModifications = new List<Action<Configuration>>();
         private readonly IList<Action<PersistenceModel>> _modelModifications = new List<Action<PersistenceModel>>();

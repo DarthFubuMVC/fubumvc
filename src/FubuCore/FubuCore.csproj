@@ -178,7 +178,6 @@
     <Compile Include="Util\CompositeFilter.cs" />
     <Compile Include="Util\CompositePredicate.cs" />
     <Compile Include="Util\Indexer.cs" />
-    <Compile Include="Util\Lazy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Validation\" />

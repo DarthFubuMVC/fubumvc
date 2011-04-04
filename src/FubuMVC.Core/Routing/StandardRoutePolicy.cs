@@ -12,6 +12,7 @@ namespace FubuMVC.Core.Routing
             var routes = new List<RouteBase>();
             graph.VisitRoutes(x =>
             {
+                x.BehaviorFilters += chain => !chain.IsPartialOnly;
                 x.Actions += (routeDef, chain) =>
                 {
                     var route = routeDef.ToRoute();

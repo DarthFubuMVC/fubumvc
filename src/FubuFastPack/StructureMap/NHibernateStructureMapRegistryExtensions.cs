@@ -28,8 +28,10 @@ namespace FubuFastPack.StructureMap
 
             registry.For<ISchemaWriter>().Use<SchemaWriter>();
 
-            registry.ForSingletonOf<ISessionFactory>().Use(
-                c => c.GetInstance<IConfigurationSource>().Configuration().BuildSessionFactory());
+            registry.ForSingletonOf<ISessionFactory>().Use(c =>
+            {
+                return c.GetInstance<IConfigurationSource>().Configuration().BuildSessionFactory();
+            });
 
             registry.For<ISession>().Use(c => c.GetInstance<ISessionFactory>().OpenSession());
         }
