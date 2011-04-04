@@ -8,5 +8,10 @@ namespace FubuMVC.Diagnostics.Grids.Columns.Requests
 			: base(r => r.ExecutionTime)
 		{
 		}
+
+		public override int Rank()
+		{
+			return 2;
+		}
 	}
 }

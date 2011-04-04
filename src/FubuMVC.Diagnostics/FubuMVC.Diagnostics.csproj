@@ -194,7 +194,7 @@
     <Compile Include="Grids\Columns\Routes\OriginColumn.cs" />
     <Compile Include="Grids\Columns\Routes\OutputModelColumn.cs" />
     <Compile Include="Grids\Columns\Routes\RouteColumn.cs" />
-    <Compile Include="Grids\Columns\Routes\RouteUrlColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\ChainUrlColumn.cs" />
     <Compile Include="Grids\Columns\Routes\UrlCategoryColumn.cs" />
     <Compile Include="Grids\Columns\Routes\ViewColumn.cs" />
     <Compile Include="Grids\Filters\Requests\UrlFilter.cs" />

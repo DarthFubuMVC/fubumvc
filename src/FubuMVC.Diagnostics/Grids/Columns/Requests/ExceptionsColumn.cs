@@ -9,6 +9,11 @@ namespace FubuMVC.Diagnostics.Grids.Columns.Requests
 		{
 		}
 
+		public override int Rank()
+		{
+			return 1;
+		}
+
 		public override string ValueFor(RecordedRequestModel target)
 		{
 			return target.Exceptions();

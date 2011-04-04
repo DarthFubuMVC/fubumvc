@@ -24,6 +24,11 @@ namespace FubuMVC.Diagnostics.Grids.Columns.Routes
 			return true;
 		}
 
+		public override bool HideFilter(BehaviorChain target)
+		{
+			return true;
+		}
+
 		public override bool IsIdentifier()
 		{
 			return true;

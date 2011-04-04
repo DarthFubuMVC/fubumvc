@@ -16,14 +16,16 @@ namespace FubuMVC.Diagnostics.Grids
 
 		public IEnumerable<JsonGridColumn> ColumnsFor(T target)
 		{
-			return _columns.Select(col => new JsonGridColumn
-			                              	{
-			                              		Name = col.Name(),
-			                              		Value = col.ValueFor(target),
-			                              		IsHidden = col.IsHidden(target),
-			                              		HideFilter = col.HideFilter(target),
-			                              		IsIdentifier = col.IsIdentifier()
-			                              	});
+			return _columns
+				.OrderByDescending(c => c.Rank())
+				.Select(col => new JsonGridColumn
+				               	{
+				               		Name = col.Name(),
+				               		Value = col.ValueFor(target),
+				               		IsHidden = col.IsHidden(target),
+				               		HideFilter = col.HideFilter(target),
+				               		IsIdentifier = col.IsIdentifier()
+				               	});
 		}
 	}
 }

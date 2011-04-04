@@ -13,6 +13,11 @@ namespace FubuMVC.Diagnostics.Grids.Columns.Routes
 			_resolver = resolver;
 		}
 
+		public override int Rank()
+		{
+			return 4;
+		}
+
 		public override string ValueFor(BehaviorChain chain)
 		{
 			return _resolver.Resolve(chain);

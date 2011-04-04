@@ -9,6 +9,11 @@ namespace FubuMVC.Diagnostics.Grids.Columns.Routes
 		{
 		}
 
+		public override int Rank()
+		{
+			return 2;
+		}
+
 		public override string ValueFor(BehaviorChain chain)
 		{
 			return chain.InputType() == null ? string.Empty : chain.InputType().FullName;

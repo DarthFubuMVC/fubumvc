@@ -2,6 +2,7 @@
 {
 	public interface IGridColumn<T>
 	{
+		int Rank();
 		string Name();
 		string ValueFor(T target);
 		bool IsIdentifier();

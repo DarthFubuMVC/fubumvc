@@ -21,6 +21,11 @@ namespace FubuMVC.Diagnostics.Grids.Columns
 			_accessor = expression.ToAccessor();
 		}
 
+		public virtual int Rank()
+		{
+			return 0;
+		}
+
 		public virtual string Name()
 		{
 			return _name;

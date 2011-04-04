@@ -10,6 +10,11 @@ namespace FubuMVC.Diagnostics.Grids.Columns.Routes
 		{
 		}
 
+		public override int Rank()
+		{
+			return 5;
+		}
+
 		public override string ValueFor(BehaviorChain chain)
 		{
 			var route = chain.RoutePattern;
