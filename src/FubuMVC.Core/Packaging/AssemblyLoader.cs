@@ -40,8 +40,7 @@ namespace FubuMVC.Core.Packaging
 
         private static bool shouldUpdateFile(string source, string destination)
         {
-            if (!File.Exists(destination)) return true;
-            return File.GetLastWriteTimeUtc(source) != File.GetLastWriteTimeUtc(destination);
+            return !File.Exists(destination) || File.GetLastWriteTimeUtc(source) > File.GetLastWriteTimeUtc(destination);
         }
 
         private bool hasAssemblyByName(string assemblyName)
