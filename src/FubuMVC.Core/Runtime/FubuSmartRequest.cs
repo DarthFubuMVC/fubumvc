@@ -28,9 +28,5 @@ namespace FubuMVC.Core.Runtime
             return value;
         }
 
-        public override ISmartRequest PrefixedWith(string prefix)
-        {
-            return new FubuSmartRequest(new PrefixedRequestData(_data, prefix), _converter, _request);
-        }
     }
 }

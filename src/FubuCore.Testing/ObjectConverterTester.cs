@@ -111,6 +111,12 @@ namespace FubuCore.Testing
 
 
         [Test]
+        public void blank_string_for_nullable_is_null()
+        {
+            finder.FromString<int?>("").ShouldBeNull();
+        }
+
+        [Test]
         public void datetimes_can_be_parsed()
         {
             finder.CanBeParsed(typeof(DateTime)).ShouldBeTrue();
@@ -293,13 +299,6 @@ namespace FubuCore.Testing
             finder.FromString(null, typeof (int?)).ShouldBeNull();
         }
 
-        [Test]
-        public void empty_string_not_allowed_for_nullable_value_types()
-        {
-            //NOTE: We may want to change this in the future to have empty string = null, or default(T)
-            typeof (Exception)
-                .ShouldBeThrownBy(() => finder.FromString("", typeof (int?)));
-        }
 
         [Test]
         public void parse_date()

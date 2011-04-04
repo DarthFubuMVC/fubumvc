@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuCore.Util;
@@ -26,7 +27,6 @@ namespace FubuMVC.Tests.Runtime
             locator = MockRepository.GenerateMock<IServiceLocator>();
 
             var smartRequest = MockRepository.GenerateMock<ISmartRequest>();
-            smartRequest.Stub(x => x.PrefixedWith(null)).Return(smartRequest).IgnoreArguments();
             locator.Stub(x => x.GetInstance<ISmartRequest>()).Return(smartRequest);
 
             context = new BindingContext(request, locator);
@@ -284,16 +284,14 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class value_of_scenarios : InteractionContext<BindingContext>
     {
-        private StubSmartRequest theSmartRequest;
         private InMemoryRequestData theRawRequest;
 
         protected override void beforeEach()
         {
             theRawRequest = new InMemoryRequestData();
             Services.Inject<IRequestData>(theRawRequest);
+            Services.Inject<IObjectConverter>(new ObjectConverter());
 
-            theSmartRequest = new StubSmartRequest();
-            Services.Inject<ISmartRequest>(theSmartRequest);
             Services.Inject<IServiceLocator>(new StructureMapServiceLocator(Services.Container));
         }
 
@@ -302,7 +300,7 @@ namespace FubuMVC.Tests.Runtime
         {
             var theValue = Guid.NewGuid();
             var theKey = "some key";
-            theSmartRequest[theKey] = theValue;
+            theRawRequest[theKey] = theValue;
 
             ClassUnderTest.As<IBindingContext>().ValueAs<Guid>(theKey).ShouldEqual(theValue);
         }
@@ -312,7 +310,7 @@ namespace FubuMVC.Tests.Runtime
         {
             var theValue = Guid.NewGuid();
             var theKey = "some key";
-            theSmartRequest["[" + theKey + "]"] = theValue;
+            theRawRequest["[" + theKey + "]"] = theValue;
 
             ClassUnderTest.As<IBindingContext>().ValueAs<Guid>(theKey).ShouldEqual(theValue);
         }
@@ -325,7 +323,7 @@ namespace FubuMVC.Tests.Runtime
             var theKey = "some key";
             var theValue = Guid.NewGuid();
 
-            theSmartRequest[theKey] = theValue;
+            theRawRequest[theKey] = theValue;
 
             ClassUnderTest.As<IBindingContext>().ValueAs(theKey, action).ShouldBeTrue();
         
@@ -338,7 +336,7 @@ namespace FubuMVC.Tests.Runtime
             var property = ReflectionHelper.GetProperty<ClassThatIsHeld>(x => x.Name);
 
             var theValue = Guid.NewGuid();
-            theSmartRequest["Name"] = theValue;
+            theRawRequest["Name"] = theValue;
 
 
             ClassUnderTest.ForProperty(property, context =>
@@ -353,7 +351,7 @@ namespace FubuMVC.Tests.Runtime
             var property = ReflectionHelper.GetProperty<ClassThatIsHeld>(x => x.Name);
 
             var theValue = Guid.NewGuid();
-            theSmartRequest["[Name]"] = theValue;
+            theRawRequest["[Name]"] = theValue;
 
 
             ClassUnderTest.ForProperty(property, context =>
@@ -368,7 +366,7 @@ namespace FubuMVC.Tests.Runtime
             var property = ReflectionHelper.GetProperty<ClassThatIsHeld>(x => x.Name);
 
             var theValue = Guid.NewGuid().ToString();
-            theSmartRequest["[Name]"] = theValue;
+            theRawRequest["[Name]"] = theValue;
             theRawRequest["[Name]"] = theValue;
 
             var action = MockRepository.GenerateMock<Action<string>>();
@@ -423,11 +421,6 @@ namespace FubuMVC.Tests.Runtime
             callback((T) _values[key]);
 
             return true;
-        }
-
-        public ISmartRequest PrefixedWith(string prefix)
-        {
-            throw new NotImplementedException();
         }
     }
 

@@ -31,14 +31,7 @@ namespace FubuCore.Binding
             _requestData = requestData;
             _locator = locator;
 
-            _request = new Lazy<ISmartRequest>(() => _locator.GetInstance<ISmartRequest>());
-        }
-
-        private BindingContext(IRequestData requestData, IServiceLocator locator, ISmartRequest prefixedSmartRequest)
-        {
-            _requestData = requestData;
-            _locator = locator;
-            _request = new Lazy<ISmartRequest>(() => prefixedSmartRequest);
+            _request = new Lazy<ISmartRequest>(() => new SmartRequest(_requestData, _locator.GetInstance<IObjectConverter>()));
         }
 
         public IList<ConvertProblem> Problems
@@ -70,7 +63,7 @@ namespace FubuCore.Binding
         {
             return _namingStrategies.Any(naming =>
             {
-                string n = naming(Property.Name);
+                string n = naming(name);
                 return _request.Value.Value(type, n, continuation);
             });
         }
@@ -193,8 +186,7 @@ namespace FubuCore.Binding
         private BindingContext prefixWith(string prefix, IEnumerable<PropertyInfo> properties)
         {
             var prefixedData = new PrefixedRequestData(_requestData, prefix);
-            var prefixedSmartRequest = _request.Value.PrefixedWith(prefix);
-            var child = new BindingContext(prefixedData, _locator, prefixedSmartRequest);
+            var child = new BindingContext(prefixedData, _locator);
             
                 
             properties.Each(p => child._propertyStack.Push(p));

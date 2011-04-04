@@ -241,6 +241,8 @@ namespace FubuCore
             return stringValue =>
             {
                 if (stringValue == ObjectConverter.NULL || stringValue == null) return null;
+                if (stringValue == string.Empty && type != typeof(string)) return null;
+
                 return inner(stringValue);
             };
         }
