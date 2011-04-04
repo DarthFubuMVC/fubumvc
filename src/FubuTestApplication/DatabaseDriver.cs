@@ -81,6 +81,8 @@ namespace FubuTestApplication
                 x.For<DatabaseSettings>().Use(_settings);
                 x.BootstrapNHibernate<FakeDomainNHIbernateRegistry>(ConfigurationBehavior.AlwaysUseNewConfiguration);
                 x.UseExplicitNHibernateTransactionBoundary();
+
+                x.FubuValidationWith(IncludePackageAssemblies.No);
             });
         }
 

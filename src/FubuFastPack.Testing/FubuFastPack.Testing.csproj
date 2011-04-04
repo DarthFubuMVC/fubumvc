@@ -69,6 +69,7 @@
     <Compile Include="Crud\EditEntityModelTester.cs" />
     <Compile Include="Crud\EditPropertyResultTester.cs" />
     <Compile Include="Crud\EnsureEntityExistsBehaviorTester.cs" />
+    <Compile Include="Crud\EnsureEntityExistsConventionTester.cs" />
     <Compile Include="Crud\EntityModelBinderTester.cs" />
     <Compile Include="Crud\FakeControllers.cs" />
     <Compile Include="Crud\Property Updating Contexts.cs" />

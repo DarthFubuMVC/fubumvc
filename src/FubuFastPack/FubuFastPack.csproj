@@ -68,7 +68,6 @@
     <Compile Include="AjaxContinuation.cs" />
     <Compile Include="Binding\DomainEntityConverterFamily.cs" />
     <Compile Include="Binding\FastPackObjectConverter.cs" />
-    <Compile Include="Crud\ActionCallSet.cs" />
     <Compile Include="Crud\BlankEditModel.cs" />
     <Compile Include="Crud\CreationRequest.cs" />
     <Compile Include="Crud\CrudActionModifier.cs" />

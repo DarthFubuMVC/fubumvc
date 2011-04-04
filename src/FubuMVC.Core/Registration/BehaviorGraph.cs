@@ -265,6 +265,26 @@ namespace FubuMVC.Core.Registration
 
             return chain.UniqueId;
         }
+
+
+        public HandlerActionsSet ActionsForHandler<T>()
+        {
+            return ActionsForHandler(typeof (T));
+        }
+
+        public HandlerActionsSet ActionsForHandler(Type handlerType)
+        {
+            var actions = FirstActions().Where(x => x.HandlerType == handlerType);
+            return new HandlerActionsSet(actions, handlerType);
+        }
+
+        public IEnumerable<HandlerActionsSet> HandlerSetsFor(Func<Type, bool> handlerFilter)
+        {
+            return FirstActions()
+                .Where(call => handlerFilter(call.HandlerType))
+                .GroupBy(x => x.HandlerType)
+                .Select(group => new HandlerActionsSet(group, group.Key));
+        }
     }
 
     public class SortByRouteRankIterator : IRouteIterator

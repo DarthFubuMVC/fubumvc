@@ -19,6 +19,9 @@ namespace FubuMVC.Core.Registration.Nodes
         ObjectDef ToObjectDef();
     }
 
+    /// <summary>
+    /// BehaviorNode models a single Behavior in the FubuMVC configuration model
+    /// </summary>
     public abstract class BehaviorNode : IContainerModel, IEnumerable<BehaviorNode>
     {
         private readonly Guid _uniqueId = Guid.NewGuid();
@@ -215,9 +218,17 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         /// <param name="behaviorType"></param>
         /// <returns></returns>
-        public Wrapper WrapWith(Type behaviorType)
+        public Wrapper WrapWith(Type behaviorType, params Type[] parameterTypes)
         {
-            // TODO -- blow up if behaviorType is not an IActionBehavior
+            if (behaviorType.IsOpenGeneric())
+            {
+                behaviorType = behaviorType.MakeGenericType(parameterTypes);
+            }
+
+            if (!behaviorType.CanBeCastTo<IActionBehavior>())
+            {
+                throw new FubuException(1010, "Type {0} does not implement IActionBehavior and cannot be used here");
+            }
 
             var wrapper = new Wrapper(behaviorType);
             AddBefore(wrapper);

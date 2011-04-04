@@ -151,6 +151,7 @@
     <Compile Include="Packaging\PackageFiles.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
+    <Compile Include="Registration\HandlerActionsSet.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
     <Compile Include="Registration\Routes\IRouteInput.cs" />

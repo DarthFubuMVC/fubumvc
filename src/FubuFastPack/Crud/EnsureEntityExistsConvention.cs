@@ -2,7 +2,6 @@
 using FubuCore;
 using FubuFastPack.Domain;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using System.Collections.Generic;
 
 namespace FubuFastPack.Crud
@@ -11,11 +10,9 @@ namespace FubuFastPack.Crud
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.Where(x => x.InputType().CanBeCastTo<DomainEntity>()).Each(endpoint =>
+            graph.FirstActions().Where(x => x.InputType().CanBeCastTo<DomainEntity>()).Each(call =>
             {
-                var actionCall = endpoint.FirstCall();
-                var entityExistsType = typeof(EnsureEntityExistsBehavior<>).MakeGenericType(actionCall.InputType());
-                actionCall.AddBefore(new Wrapper(entityExistsType));
+                call.WrapWith(typeof(EnsureEntityExistsBehavior<>), call.InputType());
             });
         }
     }

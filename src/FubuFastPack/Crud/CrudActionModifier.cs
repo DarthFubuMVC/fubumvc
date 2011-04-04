@@ -18,15 +18,15 @@ namespace FubuFastPack.Crud
         private readonly Type _editModelType;
         private readonly string _routeName;
 
-        public CrudActionModifier(Type entityType, Type editModelType)
+        public CrudActionModifier(Type handlerType)
         {
-            _entityType = entityType;
-            _editModelType = editModelType;
+            _entityType = handlerType.GetEntityType();
+            _editModelType = handlerType.GetEditEntityModelType();
 
-            _routeName = entityType.Name.ToLower();
+            _routeName = _entityType.Name.ToLower();
         }
 
-        public void ModifyChains(ActionCallSet actions, BehaviorGraph graph)
+        public void ModifyChains(HandlerActionsSet actions, BehaviorGraph graph)
         {
             // Attach the creation handlers
             actions.ForOutput(x => x.Closes(typeof(CreationRequest<>))).Each(addCreatorCall);
@@ -87,7 +87,7 @@ namespace FubuFastPack.Crud
             lastAction.AddAfter(Wrapper.For<CrudUrlBehavior>());
         }
 
-        private void modifyNewAction(ActionCallSet actions)
+        private void modifyNewAction(HandlerActionsSet actions)
         {
             var newAction = actions.ByName("New");
             if (newAction == null) return;
@@ -107,17 +107,18 @@ namespace FubuFastPack.Crud
             }
         }
 
-        // TODO: Find a way to make this easier in Fubu")]
         private static void addEndpointsFor(Type entityType, BehaviorGraph graph)
         {
-            graph.AddActionFor("{0}/find/{{Id}}".ToFormat(entityType.Name.ToLower()), typeof(DomainEntityFinder<>), entityType)
+            var findUrlPattern = "{0}/find/{{Id}}".ToFormat(entityType.Name.ToLower());
+            graph.AddActionFor(findUrlPattern, typeof(DomainEntityFinder<>), entityType)
                 .UrlCategory.Category = Categories.FIND;
 
             var finderForwarder = typeof(EntityFinderForwarder<>).CloseAndBuildAs<IChainForwarder>(entityType);
             graph.AddForwarder(finderForwarder);
 
 
-            graph.AddActionFor("{0}/editproperty".ToFormat(entityType.Name).ToLower(), typeof(IPropertyUpdater<>), entityType)
+            var editPropertyUrlPattern = "{0}/editproperty".ToFormat(entityType.Name).ToLower();
+            graph.AddActionFor(editPropertyUrlPattern, typeof(IPropertyUpdater<>), entityType)
                 .UrlCategory.Category = Categories.PROPERTY_EDIT;
 
             var propertyForwarder = typeof(PropertyUpdaterForwarder<>).CloseAndBuildAs<IChainForwarder>(entityType);

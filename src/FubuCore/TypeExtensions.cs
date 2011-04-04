@@ -37,6 +37,7 @@ namespace FubuCore
 
         public static bool CanBeCastTo<T>(this Type type)
         {
+            if (type == null) return false;
             Type destinationType = typeof(T);
 
             return CanBeCastTo(type, destinationType);
