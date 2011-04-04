@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -17,8 +18,8 @@ namespace FubuCore
 
         public static string PathRelativeTo(this string path, string root)
         {
-            var pathParts = path.Split(Path.DirectorySeparatorChar).ToList();
-            var rootParts = root.Split(Path.DirectorySeparatorChar).ToList();
+            var pathParts = path.getPathParts();
+            var rootParts = root.getPathParts();
 
             var length = pathParts.Count > rootParts.Count ? rootParts.Count : pathParts.Count;
             for (int i = 0; i < length; i++)
@@ -160,6 +161,11 @@ namespace FubuCore
             @"\d+)?$";
 
             return new Regex(_validNumberPattern, RegexOptions.ECMAScript).IsMatch(number);
+        }
+
+        public static IList<string> getPathParts(this string path)
+        {
+            return path.Split(new[] {Path.DirectorySeparatorChar}, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
     }
 }
