@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;

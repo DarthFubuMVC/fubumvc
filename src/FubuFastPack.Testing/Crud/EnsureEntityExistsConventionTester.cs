@@ -3,8 +3,8 @@ using FubuFastPack.Testing.Security;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuTestingSupport;
 using NUnit.Framework;
-using FubuMVC.Tests;
 using System.Linq;
 
 namespace FubuFastPack.Testing.Crud

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore;
 using FubuFastPack.Crud;
 using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;

@@ -1,5 +1,6 @@
 using System.Security.Principal;
 using System.Threading;
+using FubuCore;
 using FubuLocalization;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Forms;

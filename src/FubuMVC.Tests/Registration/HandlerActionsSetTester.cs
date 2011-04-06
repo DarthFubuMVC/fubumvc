@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;

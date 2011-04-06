@@ -173,12 +173,6 @@ namespace FubuTestingSupport
             return (T)actual;
         }
 
-        public static T As<T>(this object actual)
-        {
-            actual.ShouldNotBeNull();
-            actual.ShouldBeOfType(typeof(T));
-            return (T)actual;
-        }
 
         public static object ShouldBeOfType(this object actual, Type expected)
         {

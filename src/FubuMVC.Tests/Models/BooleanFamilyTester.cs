@@ -1,4 +1,5 @@
 using System.Reflection;
+using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;

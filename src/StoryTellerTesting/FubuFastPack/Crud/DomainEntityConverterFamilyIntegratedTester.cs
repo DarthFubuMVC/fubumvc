@@ -4,6 +4,7 @@ using FubuFastPack.StructureMap;
 using FubuMVC.Tests;
 using FubuTestApplication;
 using FubuTestApplication.Domain;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 

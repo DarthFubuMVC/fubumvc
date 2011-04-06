@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;

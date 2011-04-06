@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Util;
 using Microsoft.Practices.ServiceLocation;
 using Rhino.Mocks;
