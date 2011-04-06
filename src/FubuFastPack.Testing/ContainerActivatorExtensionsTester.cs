@@ -1,5 +1,5 @@
 using FubuMVC.Core.Packaging;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;

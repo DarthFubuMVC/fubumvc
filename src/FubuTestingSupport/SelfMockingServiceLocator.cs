@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using FubuCore;
 using FubuCore.Util;
 using Microsoft.Practices.ServiceLocation;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests
+namespace FubuTestingSupport
 {
     public class SelfMockingServiceLocator : IServiceLocator
     {

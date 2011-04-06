@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FubuFastPack.Querying;
 using FubuFastPack.Testing.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing.Querying
 {

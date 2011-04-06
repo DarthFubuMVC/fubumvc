@@ -1,5 +1,4 @@
 using FubuFastPack.JqGrid;
-using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core;
@@ -9,9 +8,8 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.Behaviors;
+using FubuTestingSupport;
 using NUnit.Framework;
-using FubuMVC.Tests;
 using System.Linq;
 using StructureMap;
 using FubuFastPack.StructureMap;

@@ -1,6 +1,7 @@
 using System.Web.Routing;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

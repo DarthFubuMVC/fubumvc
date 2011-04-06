@@ -6,7 +6,7 @@ using FubuFastPack.Querying;
 using FubuFastPack.Security;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

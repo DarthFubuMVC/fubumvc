@@ -5,9 +5,9 @@ using FubuFastPack.JqGrid;
 using FubuFastPack.Testing.Security;
 using FubuLocalization;
 using FubuMVC.Core.Registration.Routes;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
-using FubuMVC.Tests;
 using Rhino.Mocks;
 
 namespace FubuFastPack.Testing.jqGrid

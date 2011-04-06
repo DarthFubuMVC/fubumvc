@@ -11,6 +11,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.FakeControllers;
 using FubuMVC.Tests.Behaviors;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Conventions

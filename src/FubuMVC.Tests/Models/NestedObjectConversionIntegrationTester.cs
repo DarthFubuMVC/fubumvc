@@ -2,6 +2,7 @@ using System;
 using FubuCore.Binding;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;

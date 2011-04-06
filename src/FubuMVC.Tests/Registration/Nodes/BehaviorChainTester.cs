@@ -11,6 +11,7 @@ using FubuMVC.FakeControllers;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.StructureMapIoC;
 using FubuMVC.Tests.View;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 using FubuValidation;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap.AutoMocking;
 

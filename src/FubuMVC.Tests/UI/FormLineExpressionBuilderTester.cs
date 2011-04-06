@@ -4,6 +4,7 @@ using FubuMVC.Core.UI.Forms;
 using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Is = Rhino.Mocks.Constraints.Is;

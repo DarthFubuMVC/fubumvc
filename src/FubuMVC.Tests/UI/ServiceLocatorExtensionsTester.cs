@@ -1,6 +1,7 @@
 using FubuCore;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Tags;
+using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;

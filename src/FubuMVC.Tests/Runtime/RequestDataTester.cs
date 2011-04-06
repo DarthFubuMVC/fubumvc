@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Runtime

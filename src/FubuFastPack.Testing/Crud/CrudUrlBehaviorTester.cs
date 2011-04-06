@@ -1,11 +1,9 @@
 using System;
 using FubuFastPack.Crud;
-using FubuFastPack.Domain;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Tests;
-using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -24,7 +22,7 @@ namespace FubuFastPack.Testing.Crud
 
 
             MockFor<IFubuRequest>().Stub(x => x.Find<EditEntityModel>()).Return(new EditEntityModel[] { theInput });
-            theUrls = UseStubUrlRegistry();
+            theUrls = this.UseStubUrlRegistry();
 
             ClassUnderTest.Invoke();
         }
@@ -50,7 +48,7 @@ namespace FubuFastPack.Testing.Crud
 
 
             MockFor<IFubuRequest>().Stub(x => x.Find<EditEntityModel>()).Return(new EditEntityModel[] { theInput });
-            theUrls = UseStubUrlRegistry();
+            theUrls = this.UseStubUrlRegistry();
 
             ClassUnderTest.Invoke();
         }

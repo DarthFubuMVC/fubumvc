@@ -2,6 +2,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 

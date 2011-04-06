@@ -2,6 +2,7 @@
 using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core.Packaging;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

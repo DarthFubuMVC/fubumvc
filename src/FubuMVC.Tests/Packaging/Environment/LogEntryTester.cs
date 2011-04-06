@@ -1,5 +1,6 @@
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Packaging.Environment;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Packaging.Environment

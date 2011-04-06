@@ -2,8 +2,8 @@ using FubuCore;
 using FubuCore.Reflection.Expressions;
 using FubuFastPack.Querying;
 using FubuFastPack.Testing.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
-using FubuMVC.Tests;
 
 namespace FubuFastPack.Testing.jqGrid
 {

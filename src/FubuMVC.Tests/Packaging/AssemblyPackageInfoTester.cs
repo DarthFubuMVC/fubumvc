@@ -3,6 +3,7 @@ using System.Reflection;
 using AssemblyPackage;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;

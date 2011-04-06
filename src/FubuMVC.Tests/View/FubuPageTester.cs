@@ -4,6 +4,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
+using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;

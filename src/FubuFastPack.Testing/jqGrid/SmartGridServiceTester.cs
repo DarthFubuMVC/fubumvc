@@ -4,7 +4,7 @@ using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core.Urls;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;

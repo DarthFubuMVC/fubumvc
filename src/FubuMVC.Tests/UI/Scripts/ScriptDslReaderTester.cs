@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using FubuTestingSupport;
 using FubuMVC.Core.UI.Scripts;
 using NUnit.Framework;
 using Rhino.Mocks;

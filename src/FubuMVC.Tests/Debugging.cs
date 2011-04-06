@@ -6,6 +6,7 @@ using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using System.Collections.Generic;

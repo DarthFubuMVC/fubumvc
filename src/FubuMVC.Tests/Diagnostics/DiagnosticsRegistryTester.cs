@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;

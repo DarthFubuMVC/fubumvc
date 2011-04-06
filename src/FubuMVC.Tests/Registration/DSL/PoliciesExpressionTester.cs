@@ -4,6 +4,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 

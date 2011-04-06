@@ -53,11 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="debugging.cs" />
-    <Compile Include="InteractionContext.cs" />
     <Compile Include="IValidatedRuleSourceTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleInputModel.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="ValidationContextTester.cs" />
     <Compile Include="when_handling_validation_failure.cs" />
     <Compile Include="when_validating_an_input_model.cs" />
@@ -78,6 +76,10 @@
     <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">
       <Project>{1D14C442-9F90-4B28-B4F9-79CD6E1B6E40}</Project>
       <Name>FubuMVC.Validation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>

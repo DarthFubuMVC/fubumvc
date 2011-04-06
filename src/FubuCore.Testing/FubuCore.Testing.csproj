@@ -106,7 +106,6 @@
     <Compile Include="Reflection\ReflectionExtensionsTester.cs" />
     <Compile Include="Reflection\ReflectionHelperTester.cs" />
     <Compile Include="Reflection\SinglePropertyTester.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="StringExtensionsTester.cs" />
     <Compile Include="StringifierTester.cs" />
     <Compile Include="TestObject.cs" />
@@ -125,6 +124,10 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

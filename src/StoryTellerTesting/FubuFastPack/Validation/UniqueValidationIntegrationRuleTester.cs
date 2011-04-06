@@ -1,19 +1,17 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore;
-using FubuFastPack.NHibernate;
-using FubuFastPack.Persistence;
 using FubuFastPack.StructureMap;
 using FubuFastPack.Validation;
 using FubuTestApplication;
 using FubuTestApplication.Domain;
+using FubuTestingSupport;
 using FubuValidation;
 using NHibernate;
 using NUnit.Framework;
 using StructureMap;
 using System.Linq;
 using FubuCore.Reflection;
-using FubuMVC.Tests;
 
 namespace IntegrationTesting.FubuFastPack.Validation
 {

@@ -1,4 +1,5 @@
 using FubuMVC.Core.Web.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Web.Security

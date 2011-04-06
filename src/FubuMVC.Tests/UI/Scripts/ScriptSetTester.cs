@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FubuMVC.Core.UI.Scripts;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI.Scripts

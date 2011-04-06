@@ -3,6 +3,7 @@ using System.Reflection;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 

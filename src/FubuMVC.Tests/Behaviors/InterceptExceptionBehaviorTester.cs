@@ -2,6 +2,7 @@
 using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Behaviors

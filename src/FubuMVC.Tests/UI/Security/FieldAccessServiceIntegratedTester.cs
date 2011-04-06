@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.UI.Security

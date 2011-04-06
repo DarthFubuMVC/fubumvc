@@ -3,6 +3,7 @@ using System.Net.Mime;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;

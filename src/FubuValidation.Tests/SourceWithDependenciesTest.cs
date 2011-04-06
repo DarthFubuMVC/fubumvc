@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;

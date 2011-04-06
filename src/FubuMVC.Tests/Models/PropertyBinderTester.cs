@@ -4,6 +4,7 @@ using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 
 namespace FubuMVC.Tests.Models
 {

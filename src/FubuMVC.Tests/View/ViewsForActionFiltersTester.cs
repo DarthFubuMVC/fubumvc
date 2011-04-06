@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
 using FubuMVC.Tests.View.FakeViews;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View

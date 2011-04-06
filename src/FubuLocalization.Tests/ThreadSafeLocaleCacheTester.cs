@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuLocalization.Tests

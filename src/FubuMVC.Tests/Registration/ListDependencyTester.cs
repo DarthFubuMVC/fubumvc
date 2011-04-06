@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

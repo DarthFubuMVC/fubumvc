@@ -1,6 +1,7 @@
 using System.Security.Principal;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Security;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

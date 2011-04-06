@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Tests.UI;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

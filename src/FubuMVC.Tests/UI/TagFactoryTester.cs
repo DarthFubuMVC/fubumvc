@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 

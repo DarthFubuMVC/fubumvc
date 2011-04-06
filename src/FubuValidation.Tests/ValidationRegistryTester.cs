@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
-using FubuValidation.Tests.Fields;
+using FubuTestingSupport;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using System.Linq;
@@ -25,8 +25,8 @@ namespace FubuValidation.Tests
 
         private IEnumerable<IFieldValidationRule> rulesFor(Expression<Func<ValidationRegistryTarget, object>> expression)
         {
-            var registry = new FieldRulesRegistry(theRegistry.As<IValidationRegistration>().FieldSources(), new TypeDescriptorCache());
-            theRegistry.As<IValidationRegistration>().RegisterFieldRules(registry);
+            var registry = new FieldRulesRegistry(TypeExtensions.As<IValidationRegistration>(theRegistry).FieldSources(), new TypeDescriptorCache());
+            TypeExtensions.As<IValidationRegistration>(theRegistry).RegisterFieldRules(registry);
             
             return registry.RulesFor<ValidationRegistryTarget>(expression);
         }
@@ -35,7 +35,7 @@ namespace FubuValidation.Tests
         public void register_an_explicit_source()
         {
             theRegistry.FieldSource<StubFieldSource>();
-            theRegistry.As<IValidationRegistration>().FieldSources().Single().ShouldBeOfType<StubFieldSource>();
+            TypeExtensions.As<IValidationRegistration>(theRegistry).FieldSources().Single().ShouldBeOfType<StubFieldSource>();
         }
 
         [Test]

@@ -1,6 +1,6 @@
 ﻿using FubuFastPack.Crud;
 using FubuFastPack.Testing.Security;
-using FubuMVC.Tests;
+using FubuTestingSupport;
 using FubuValidation;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Core.UI.Tags;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 

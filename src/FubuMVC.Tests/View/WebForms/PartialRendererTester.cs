@@ -3,6 +3,7 @@ using System.Web.UI;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 

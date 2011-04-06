@@ -1,5 +1,6 @@
 using System.Threading;
 using FubuMVC.Core.Diagnostics;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Diagnostics

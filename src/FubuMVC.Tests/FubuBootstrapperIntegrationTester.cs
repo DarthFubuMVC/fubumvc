@@ -8,6 +8,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Registration;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 

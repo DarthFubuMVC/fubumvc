@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core.Runtime;
+using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Spark.FileSystem;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Web;
 using FubuMVC.Core.SessionState;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.SessionState

@@ -6,6 +6,7 @@ using FubuMVC.Core.UI.Partials;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;
+using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Rhino.Mocks;

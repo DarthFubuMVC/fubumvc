@@ -1,12 +1,11 @@
 using System;
-using FubuFastPack.NHibernate;
 using FubuFastPack.Persistence;
 using FubuFastPack.StructureMap;
 using FubuTestApplication;
 using FubuTestApplication.Domain;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using FubuMVC.Tests;
 using System.Linq;
 
 namespace IntegrationTesting.FubuFastPack.Persistence
