@@ -61,7 +61,7 @@ namespace Bottles.Zipping
             using (var zipFile = new ZipFile(fileName))
             {
 
-                var entry = zipFile.Entries.SingleOrDefault(x => x.FileName == FubuMvcPackages.VersionFile);
+                var entry = zipFile.Entries.SingleOrDefault(x => x.FileName == BottleFiles.VersionFile);
                 if (entry == null) return Guid.Empty.ToString();
 
                 var stream = new MemoryStream();

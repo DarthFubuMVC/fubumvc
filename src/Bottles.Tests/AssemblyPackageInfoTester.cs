@@ -68,12 +68,12 @@ namespace Bottles.Tests
         public void can_retrieve_web_content_folder_from_package()
         {
             var expected = "not this";
-            thePackage.ForFolder(FubuMvcPackages.WebContentFolder, folder =>
+            thePackage.ForFolder(BottleFiles.WebContentFolder, folder =>
             {
                 expected = folder;
             });
 
-            expected.ShouldEqual(FileSystem.Combine("fubu-content", "AssemblyPackage", "WebContent").ToFullPath());
+            expected.ShouldEqual(FileSystem.Combine("content", "AssemblyPackage", "WebContent").ToFullPath());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Bottles.Tests
             }
 
             thePackage = new PackageInfo("something");
-            thePackage.RegisterFolder(FubuMvcPackages.DataFolder, Path.GetFullPath(theDataFolder));
+            thePackage.RegisterFolder(BottleFiles.DataFolder, Path.GetFullPath(theDataFolder));
         }
 
         private string join(params string[] paths)

@@ -14,6 +14,9 @@ namespace FubuMVC.Core.Packaging
 {
     public class FubuMvcPackageFacility : PackageFacility
     {
+        public static readonly string FubuPackagesFolder = "fubu-packages";
+        public static readonly string FubuContentFolder = "fubu-content";
+
         private readonly IContentFolderService _contentFolderService = new ContentFolderService(new FileSystem());
         private readonly IMimeTypeProvider _mimeTypeProvider = new DefaultMimeTypeProvider();
 

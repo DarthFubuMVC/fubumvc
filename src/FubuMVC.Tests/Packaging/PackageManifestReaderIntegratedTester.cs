@@ -67,8 +67,8 @@ namespace FubuMVC.Tests.Packaging
             var packageDirectory = "../../../TestPackage1".ToFullPath();
             var package = reader.LoadFromFolder(packageDirectory);
             var directoryContinuation = MockRepository.GenerateMock<Action<string>>();
-        
-            package.ForFolder(FubuMvcPackages.WebContentFolder, directoryContinuation);
+
+            package.ForFolder(BottleFiles.WebContentFolder, directoryContinuation);
         
             directoryContinuation.AssertWasCalled(x => x.Invoke(packageDirectory));
         }

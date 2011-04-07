@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Packaging
 
         public static string GetContentFolderForPackage(string packageFolder)
         {
-            return FileSystem.Combine(packageFolder, FubuMvcPackages.WebContentFolder);
+            return FileSystem.Combine(packageFolder, BottleFiles.WebContentFolder);
         }
     }
 }

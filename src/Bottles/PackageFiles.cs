@@ -32,7 +32,7 @@ namespace Bottles
         {
             var dirParts = searchPattern.Split(Path.DirectorySeparatorChar);
 
-            var folderPath = _directories[FubuMvcPackages.DataFolder].ToFullPath();
+            var folderPath = _directories[BottleFiles.DataFolder].ToFullPath();
             var filePattern = searchPattern;
 
             if (dirParts.Count() > 1)

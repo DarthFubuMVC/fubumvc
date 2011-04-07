@@ -75,7 +75,7 @@ namespace Fubu.Packages.Creation
 
         public Guid WriteVersion(IZipFile zipFile)
         {
-            var versionFile = Path.Combine(Path.GetTempPath(), FubuMvcPackages.VersionFile);
+            var versionFile = Path.Combine(Path.GetTempPath(), BottleFiles.VersionFile);
             var guid = Guid.NewGuid();
             _fileSystem.WriteStringToFile(versionFile, guid.ToString());
             zipFile.AddFile(versionFile);
@@ -90,7 +90,7 @@ namespace Fubu.Packages.Creation
             zipFile.AddFiles(new ZipFolderRequest()
                              {
                                  FileSet = manifest.ContentFileSet,
-                                 ZipDirectory = FubuMvcPackages.WebContentFolder,
+                                 ZipDirectory = BottleFiles.WebContentFolder,
                                  RootDirectory = input.PackageFolder
                              });
         }
@@ -100,8 +100,8 @@ namespace Fubu.Packages.Creation
             zipFile.AddFiles(new ZipFolderRequest()
                              {
                                  FileSet = manifest.DataFileSet,
-                                 ZipDirectory = FubuMvcPackages.DataFolder,
-                                 RootDirectory = Path.Combine(input.PackageFolder, FubuMvcPackages.DataFolder)
+                                 ZipDirectory = BottleFiles.DataFolder,
+                                 RootDirectory = Path.Combine(input.PackageFolder, BottleFiles.DataFolder)
                              });
         }
 

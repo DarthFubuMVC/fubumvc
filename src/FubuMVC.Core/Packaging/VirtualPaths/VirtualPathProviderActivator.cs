@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Packaging.VirtualPaths
 
             HostingEnvironment.RegisterVirtualPathProvider(provider);
 
-            packages.Each(x => x.ForFolder(FubuMvcPackages.WebContentFolder, provider.RegisterContentDirectory));
+            packages.Each(x => x.ForFolder(BottleFiles.WebContentFolder, provider.RegisterContentDirectory));
         }
 
         public override string ToString()

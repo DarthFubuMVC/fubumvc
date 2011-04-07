@@ -88,7 +88,12 @@ namespace FubuMVC.Core
             }
 
             _fubuFacility = new FubuMvcPackageFacility();
+
+            // TODO -- I think Bottles probably needs to enforce a "tell me the paths"
+            // step maybe
             PackageRegistry.GetApplicationDirectory = FubuMvcPackageFacility.GetApplicationPath;
+            BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
+            BottleFiles.PackagesFolder = FubuMvcPackageFacility.FubuPackagesFolder;
 
             // TODO -- would be nice if this little monster also logged 
             PackageRegistry.LoadPackages(x =>

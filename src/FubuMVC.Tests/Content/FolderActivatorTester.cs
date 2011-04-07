@@ -25,8 +25,8 @@ namespace FubuMVC.Tests.Content
             package2 = new StubPackage("2");
             package3 = new StubPackage("3");
 
-            package1.RegisterFolder(FubuMvcPackages.WebContentFolder, "folder1");
-            package3.RegisterFolder(FubuMvcPackages.WebContentFolder, "folder3");
+            package1.RegisterFolder(BottleFiles.WebContentFolder, "folder1");
+            package3.RegisterFolder(BottleFiles.WebContentFolder, "folder3");
 
             theLog = MockFor<IPackageLog>();
 

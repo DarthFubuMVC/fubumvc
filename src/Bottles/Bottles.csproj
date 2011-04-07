@@ -53,7 +53,7 @@
     <Compile Include="Environment\IEnvironmentGateway.cs" />
     <Compile Include="Environment\IInstaller.cs" />
     <Compile Include="Environment\LogEntry.cs" />
-    <Compile Include="FubuMvcPackages.cs" />
+    <Compile Include="BottleFiles.cs" />
     <Compile Include="IActivator.cs" />
     <Compile Include="Assemblies\IAssemblyFileFinder.cs" />
     <Compile Include="Assemblies\IAssemblyLoader.cs" />

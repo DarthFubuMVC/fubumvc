@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -5,13 +6,20 @@ using FubuCore;
 namespace Bottles
 {
     // TODO -- Remove the fubu-isms.  Make this stuff alterable?
-    public static class FubuMvcPackages
+    public static class BottleFiles
     {
+        static BottleFiles()
+        {
+            ContentFolder = "content";
+            PackagesFolder = "packages";
+        }
+
         public static readonly string WebContentFolder = "WebContent";
         public static readonly string VersionFile = ".version";
-        public static readonly string FubuPackagesFolder = "fubu-packages";
         public static readonly string DataFolder = "Data";
-        public static readonly string FubuContentFolder = "fubu-content";
+
+        public static string ContentFolder { get; set; }
+        public static string PackagesFolder { get; set; }
 
 
 
@@ -43,17 +51,17 @@ namespace Bottles
 
         public static string GetDirectoryForExplodedPackage(string applicationDirectory, string packageName)
         {
-            return FileSystem.Combine(applicationDirectory, FubuContentFolder, packageName);
+            return FileSystem.Combine(applicationDirectory, ContentFolder, packageName);
         }
 
         public static string GetApplicationPackagesDirectory(string applicationDirectory)
         {
-            return FileSystem.Combine(applicationDirectory, "bin", FubuMvcPackages.FubuPackagesFolder);
+            return FileSystem.Combine(applicationDirectory, "bin", PackagesFolder);
         }
 
         public static string GetExplodedPackagesDirectory(string applicationDirectory)
         {
-            return FileSystem.Combine(applicationDirectory, FubuContentFolder);
+            return FileSystem.Combine(applicationDirectory, ContentFolder);
         }
     }
 }

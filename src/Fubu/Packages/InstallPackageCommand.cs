@@ -15,7 +15,7 @@ namespace Fubu.Packages
         public override bool Execute(InstallPackageInput input)
         {
             var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
-            var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
+            var packageFolder = FileSystem.Combine(applicationFolder, "bin", BottleFiles.PackagesFolder);
 
             var destinationFileName = FileSystem.Combine(packageFolder, Path.GetFileName(input.PackageFile));
             if (input.UninstallFlag)

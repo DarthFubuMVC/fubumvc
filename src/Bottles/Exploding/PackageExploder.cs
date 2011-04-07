@@ -38,7 +38,7 @@ namespace Bottles.Exploding
 
         public void Explode(string applicationDirectory, string zipFile)
         {
-            var directoryName = FubuMvcPackages.DirectoryForPackageZipFile(applicationDirectory, zipFile);
+            var directoryName = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, zipFile);
 
             _fileSystem.DeleteDirectory(directoryName);
 
@@ -48,11 +48,11 @@ namespace Bottles.Exploding
 
         public void CleanAll(string applicationDirectory)
         {
-            var directory = FubuMvcPackages.GetExplodedPackagesDirectory(applicationDirectory);
+            var directory = BottleFiles.GetExplodedPackagesDirectory(applicationDirectory);
             clearExplodedDirectories(directory);
 
             // This is here for legacy installations that may have old exploded packages in bin/fubu-packages
-            clearExplodedDirectories(FubuMvcPackages.GetApplicationPackagesDirectory(applicationDirectory));
+            clearExplodedDirectories(BottleFiles.GetApplicationPackagesDirectory(applicationDirectory));
         }
 
         private void clearExplodedDirectories(string directory)
@@ -68,7 +68,7 @@ namespace Bottles.Exploding
         {
             var parts = new[]{
                 directoryName,
-                FubuMvcPackages.VersionFile
+                BottleFiles.VersionFile
             };
 
             // TODO -- harden?
@@ -89,7 +89,7 @@ namespace Bottles.Exploding
 
         private string explodeZipAndReturnDirectory(string file, string applicationDirectory)
         {
-            var directory = FubuMvcPackages.DirectoryForPackageZipFile(applicationDirectory, file);
+            var directory = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file);
             var request = new ExplodeRequest{
                 Directory = directory,
                 ExplodeAction = () => Explode(applicationDirectory, file),
@@ -105,7 +105,7 @@ namespace Bottles.Exploding
 
         public void ExplodeAssembly(string applicationDirectory, Assembly assembly, IPackageFiles files)
         {
-            var directory = FubuMvcPackages.GetDirectoryForExplodedPackage(applicationDirectory, assembly.GetName().Name);
+            var directory = BottleFiles.GetDirectoryForExplodedPackage(applicationDirectory, assembly.GetName().Name);
 
             var request = new ExplodeRequest{
                 Directory = directory,
@@ -132,9 +132,9 @@ namespace Bottles.Exploding
             _fileSystem.DeleteDirectory(directory);
             _fileSystem.CreateDirectory(directory);
 
-            assembly.GetManifestResourceNames().Where(FubuMvcPackages.IsEmbeddedPackageZipFile).Each(name =>
+            assembly.GetManifestResourceNames().Where(BottleFiles.IsEmbeddedPackageZipFile).Each(name =>
             {
-                var folderName = FubuMvcPackages.EmbeddedPackageFolderName(name);
+                var folderName = BottleFiles.EmbeddedPackageFolderName(name);
                 var stream = assembly.GetManifestResourceStream(name);
 
                 var description = "Resource {0} in Assembly {1}".ToFormat(name, assembly.GetName().FullName);
@@ -143,7 +143,7 @@ namespace Bottles.Exploding
                 _service.ExtractTo(description, stream, destinationFolder);
 
                 var version = assembly.GetName().Version.ToString();
-                _fileSystem.WriteStringToFile(FileSystem.Combine(directory, FubuMvcPackages.VersionFile), version);
+                _fileSystem.WriteStringToFile(FileSystem.Combine(directory, BottleFiles.VersionFile), version);
             });
         }
 
@@ -174,7 +174,7 @@ namespace Bottles.Exploding
                 Include = "*.zip"
             };
 
-            var packageFolder = FubuMvcPackages.GetApplicationPackagesDirectory(applicationDirectory);
+            var packageFolder = BottleFiles.GetApplicationPackagesDirectory(applicationDirectory);
 
             return _fileSystem.FileNamesFor(fileSet, packageFolder);
         }
@@ -187,7 +187,7 @@ namespace Bottles.Exploding
 
         private void logExplodedDirectories(string applicationDirectory)
         {
-            var explodedDirectory = FubuMvcPackages.GetExplodedPackagesDirectory(applicationDirectory);
+            var explodedDirectory = BottleFiles.GetExplodedPackagesDirectory(applicationDirectory);
             var existingDirectories = _fileSystem.ChildDirectoriesFor(explodedDirectory);
             _logger.WriteExistingDirectories(applicationDirectory, existingDirectories);
         }
