@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Fubu.Packages;
+using Bottles;
+using Bottles.Assemblies;
+using Bottles.Zipping;
+using Fubu.Packages.Creation;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;

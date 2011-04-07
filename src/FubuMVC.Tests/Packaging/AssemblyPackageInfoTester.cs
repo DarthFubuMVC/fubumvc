@@ -1,6 +1,8 @@
 using System.IO;
 using System.Reflection;
 using AssemblyPackage;
+using Bottles;
+using Bottles.Assemblies;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;

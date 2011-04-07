@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Bottles;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging

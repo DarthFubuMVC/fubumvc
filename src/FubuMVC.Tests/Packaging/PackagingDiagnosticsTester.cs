@@ -1,6 +1,8 @@
 using System;
 using System.Reflection;
 using System.Threading;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;

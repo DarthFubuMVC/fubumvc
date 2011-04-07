@@ -1,4 +1,7 @@
 using System;
+using Bottles;
+using Bottles.Exploding;
+using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;

@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using AssemblyPackage;
+using Bottles;
+using Bottles.Exploding;
+using Bottles.Zipping;
 using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core;

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Bottles;
+using Bottles.Environment;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Packaging.Environment;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 

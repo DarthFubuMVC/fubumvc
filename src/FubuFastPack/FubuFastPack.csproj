@@ -226,6 +226,10 @@
     <Compile Include="Validation\UniqueValidationSource.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bottles\Bottles.csproj">
+      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
+      <Name>Bottles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>

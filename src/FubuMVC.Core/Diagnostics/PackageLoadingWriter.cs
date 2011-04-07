@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using System.Reflection;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Urls;
 using HtmlTags;

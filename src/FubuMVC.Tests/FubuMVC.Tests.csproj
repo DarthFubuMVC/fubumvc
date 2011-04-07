@@ -88,7 +88,6 @@
     <Compile Include="Commands\InstallCommandTester.cs" />
     <Compile Include="Commands\LinkCommandTester.cs" />
     <Compile Include="Commands\ManifestCommandTester.cs" />
-    <Compile Include="Commands\Packages\AssemblyFileFinderTester.cs" />
     <Compile Include="Commands\Packages\CreatePackageCommandTester.cs" />
     <Compile Include="Commands\Packages\PackageCreatorTester.cs" />
     <Compile Include="Commands\Packages\PackageExploderTester.cs" />
@@ -355,6 +354,10 @@
     <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bottles\Bottles.csproj">
+      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
+      <Name>Bottles</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>

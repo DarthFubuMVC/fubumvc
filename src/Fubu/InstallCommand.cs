@@ -1,9 +1,9 @@
 using System;
 using System.IO;
+using Bottles.Environment;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Packaging.Environment;
 
 namespace Fubu
 {

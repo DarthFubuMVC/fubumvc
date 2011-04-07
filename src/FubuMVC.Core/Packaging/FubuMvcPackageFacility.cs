@@ -1,10 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 using System.Web.Routing;
+using Bottles;
+using Bottles.Exploding;
 using FubuCore;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Packaging.VirtualPaths;
 using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Packaging
@@ -47,14 +50,11 @@ namespace FubuMVC.Core.Packaging
         public static ZipFilePackageReader BuildZipFilePackageReader(string applicationPath, FileSystem fileSystem)
         {
             var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, ZipFilePackageReader.GetContentFolderForPackage);
-            PackageExploder packageExploder = GetPackageExploder(fileSystem);
+            PackageExploder packageExploder = PackageExploder.GetPackageExploder(fileSystem);
             return new ZipFilePackageReader(zipFileManifestReader, packageExploder);
         }
 
-        public static PackageExploder GetPackageExploder(FileSystem fileSystem)
-        {
-            return new PackageExploder(new ZipFileService(), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
-        }
+
 
         public static string GetApplicationPath()
         {

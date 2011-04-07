@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
 using FubuTestingSupport;

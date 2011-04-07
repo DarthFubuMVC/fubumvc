@@ -1,5 +1,6 @@
+using Bottles.Diagnostics;
+using Bottles.Environment;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Packaging.Environment;
 using FubuTestingSupport;
 using NUnit.Framework;
 

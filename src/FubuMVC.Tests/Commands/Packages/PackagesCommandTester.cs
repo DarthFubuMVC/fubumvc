@@ -1,4 +1,5 @@
 using System;
+using Bottles.Exploding;
 using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core.Packaging;

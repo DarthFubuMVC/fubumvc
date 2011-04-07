@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using Bottles;
+using Bottles.Exploding;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging

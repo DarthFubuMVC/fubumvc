@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
+using Bottles;
 using FubuCore;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
@@ -87,6 +88,7 @@ namespace FubuMVC.Core
             }
 
             _fubuFacility = new FubuMvcPackageFacility();
+            PackageRegistry.GetApplicationDirectory = FubuMvcPackageFacility.GetApplicationPath;
 
             // TODO -- would be nice if this little monster also logged 
             PackageRegistry.LoadPackages(x =>

@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using Bottles.Environment;
 using FubuCore;
-using FubuMVC.Core.Packaging.Environment;
 
 namespace Fubu
 {

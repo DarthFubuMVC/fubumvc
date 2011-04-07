@@ -1,6 +1,6 @@
-﻿using System;
+using System;
+using Bottles.Environment;
 using Fubu;
-using FubuMVC.Core.Packaging.Environment;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Collections.Generic;

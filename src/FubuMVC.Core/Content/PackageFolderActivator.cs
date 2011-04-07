@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Bottles.Zipping;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;

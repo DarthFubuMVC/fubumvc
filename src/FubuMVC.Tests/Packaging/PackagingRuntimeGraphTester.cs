@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;

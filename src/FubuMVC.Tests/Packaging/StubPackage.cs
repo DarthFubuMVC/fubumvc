@@ -1,5 +1,7 @@
-﻿using System;
+using System;
 using System.IO;
+using Bottles;
+using Bottles.Assemblies;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
 

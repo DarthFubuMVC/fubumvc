@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bottles;
+using Bottles.Assemblies;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
