@@ -5,7 +5,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Commands.Packages
+namespace Bottles.Tests
 {
     [TestFixture]
     public class AssemblyFileFinderTester : InteractionContext<AssemblyFileFinder>

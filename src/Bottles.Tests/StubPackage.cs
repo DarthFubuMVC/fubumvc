@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using Bottles;
 using Bottles.Assemblies;
 using FubuCore.Util;
-using FubuMVC.Core.Packaging;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     public class StubPackage : IPackageInfo
     {

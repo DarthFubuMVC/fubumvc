@@ -1,10 +1,8 @@
-using Bottles;
 using Bottles.Diagnostics;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class PackagingRegistryLogTester

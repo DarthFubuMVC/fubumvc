@@ -47,9 +47,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyFileFinderTester.cs" />
+    <Compile Include="AssemblyLoaderTester.cs" />
+    <Compile Include="AssemblyPackageInfoTester.cs" />
+    <Compile Include="Environment\EnvironmentRunTester.cs" />
+    <Compile Include="Environment\FakeEnvironment.cs" />
+    <Compile Include="Environment\LogEntryTester.cs" />
+    <Compile Include="LambdaActivatorTester.cs" />
+    <Compile Include="PackageInfoTester.cs" />
+    <Compile Include="PackageRegistryTester.cs" />
+    <Compile Include="PackagingDiagnosticsTester.cs" />
+    <Compile Include="PackagingRegistryLogTester.cs" />
+    <Compile Include="PackagingRuntimeGraphTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StubPackage.cs" />
+    <Compile Include="ZipFileServiceTester.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
+      <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
+      <Name>AssemblyPackage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>

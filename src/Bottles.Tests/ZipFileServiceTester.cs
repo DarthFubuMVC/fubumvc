@@ -1,12 +1,10 @@
 using System.IO;
-using System.Reflection;
 using AssemblyPackage;
 using Bottles.Zipping;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class ZipFileServiceTester

@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using Bottles;
 using FubuCore;
-using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class PackageInfoTester

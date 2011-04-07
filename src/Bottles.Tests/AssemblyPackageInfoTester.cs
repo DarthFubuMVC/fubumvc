@@ -1,16 +1,13 @@
 using System.IO;
 using System.Reflection;
 using AssemblyPackage;
-using Bottles;
 using Bottles.Assemblies;
-using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuCore;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class AssemblyPackageInfoTester

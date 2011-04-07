@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Bottles;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class PackageRegistryTester

@@ -22,8 +22,6 @@ using StructureMap;
 
 namespace FubuMVC.Tests.StructureMapIoC
 {
-    
-
     [TestFixture]
     public class StructureMapContainerFacilityTester
     {

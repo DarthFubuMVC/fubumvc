@@ -1,10 +1,9 @@
 using Bottles.Diagnostics;
 using Bottles.Environment;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Packaging.Environment
+namespace Bottles.Tests.Environment
 {
     [TestFixture]
     public class LogEntryTester

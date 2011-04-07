@@ -1,15 +1,13 @@
 using System;
 using System.Reflection;
 using System.Threading;
-using Bottles;
 using Bottles.Diagnostics;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class PackagingDiagnosticsTester

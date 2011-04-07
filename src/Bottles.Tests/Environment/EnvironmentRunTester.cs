@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 
-namespace FubuMVC.Tests.Packaging.Environment
+namespace Bottles.Tests.Environment
 {
     [TestFixture]
     public class EnvironmentRunTester 

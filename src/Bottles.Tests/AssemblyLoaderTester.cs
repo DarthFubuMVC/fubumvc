@@ -1,14 +1,12 @@
 using System;
 using System.Reflection;
-using Bottles;
 using Bottles.Assemblies;
 using Bottles.Diagnostics;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Packaging
+namespace Bottles.Tests
 {
     [TestFixture]
     public class when_loading_a_single_package : InteractionContext<AssemblyLoader>
