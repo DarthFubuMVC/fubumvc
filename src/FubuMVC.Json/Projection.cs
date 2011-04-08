@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public class Projection<T> : IProjection
     {

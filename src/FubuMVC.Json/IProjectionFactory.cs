@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public interface IProjectionFactory
     {

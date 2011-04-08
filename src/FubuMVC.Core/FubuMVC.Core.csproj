@@ -161,14 +161,6 @@
     <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Registration\Routes\RouteInput.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
-    <Compile Include="Json\ProjectionService.cs" />
-    <Compile Include="Json\IProjection.cs" />
-    <Compile Include="Json\IProjectionFactory.cs" />
-    <Compile Include="Json\IProjectionSource.cs" />
-    <Compile Include="Json\IValueProjection.cs" />
-    <Compile Include="Json\Projection.cs" />
-    <Compile Include="Json\ProjectionFactory.cs" />
-    <Compile Include="Json\ValueProjection.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\AssemblyFileFinder.cs" />
     <Compile Include="Packaging\AssemblyFiles.cs" />

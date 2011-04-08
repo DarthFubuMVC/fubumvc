@@ -1,7 +1,7 @@
 using FubuCore;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public class ProjectionService
     {

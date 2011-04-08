@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public interface IProjectionSource
     {

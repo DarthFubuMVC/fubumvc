@@ -1,6 +1,6 @@
 ﻿using FubuCore.Util;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public interface IProjection
     {

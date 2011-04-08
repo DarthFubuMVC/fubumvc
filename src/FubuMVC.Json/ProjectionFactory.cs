@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public class ProjectionFactory : IProjectionFactory
     {

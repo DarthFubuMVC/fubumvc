@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.Json
+namespace FubuMVC.Json
 {
     public class ValueProjection<T> : IValueProjection<T>
     {
