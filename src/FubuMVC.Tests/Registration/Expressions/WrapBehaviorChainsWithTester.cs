@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             BehaviorGraph graph = registry.BuildGraph();
 
-            graph.BehaviorChainCount.ShouldEqual(3);
+            graph.Behaviors.Count().ShouldEqual(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Actions += chain =>
             {

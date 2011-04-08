@@ -164,7 +164,7 @@ namespace FubuMVC.Core
             public string Prefix { get; set; }
             public FubuRegistry Registry { get; set; }
 
-            public void ImportInto(BehaviorGraph graph)
+            public void ImportInto(IChainImporter graph)
             {
                 graph.Import(Registry.BuildGraph(), b =>
                 {

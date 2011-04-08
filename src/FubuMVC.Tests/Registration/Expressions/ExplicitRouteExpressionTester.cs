@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             }).BuildGraph();
 
 
-            route = graph.RoutesFor<Registration.InputModel>().First();
+            route = graph.Behaviors.Where(x => x.InputType() == typeof (Registration.InputModel)).First().Route;
         }
 
         #endregion
@@ -56,11 +56,6 @@ namespace FubuMVC.Tests.Registration.Expressions
             route.ShouldNotBeNull();
         }
 
-        [Test]
-        public void should_only_be_one_route()
-        {
-            graph.RoutesFor<Registration.InputModel>().Count().ShouldEqual(1);
-        }
 
         [Test]
         public void the_constructed_behavior_chain_should_be_a_call_to_the_action_and_then_to_json()

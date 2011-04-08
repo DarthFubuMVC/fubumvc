@@ -93,48 +93,48 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void
             each_route_with_the_input_type_matching_the_policy_should_have_the_route_inputs_specified_in_the_convention()
         {
-            graph.RouteFor<SpecialController>(x => x.Go1(null)).Input.As<RouteInput<InputModel>>().RouteParameters.Count.
+            graph.BehaviorFor<SpecialController>(x => x.Go1(null)).Route.Input.As<RouteInput<InputModel>>().RouteParameters.Count.
                 ShouldEqual(0);
-            graph.RouteFor<SpecialController>(x => x.Go2(null)).Input.As<RouteInput<SpecialMessage1>>().RouteParameters.
+            graph.BehaviorFor<SpecialController>(x => x.Go2(null)).Route.Input.As<RouteInput<SpecialMessage1>>().RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
-            graph.RouteFor<SpecialController>(x => x.Go3(null)).Input.As<RouteInput<SpecialMessage2>>().RouteParameters.
+            graph.BehaviorFor<SpecialController>(x => x.Go3(null)).Route.Input.As<RouteInput<SpecialMessage2>>().RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
-            graph.RouteFor<SpecialController>(x => x.Go4(null)).Input.As<RouteInput<SpecialMessage3>>().RouteParameters.
+            graph.BehaviorFor<SpecialController>(x => x.Go4(null)).Route.Input.As<RouteInput<SpecialMessage3>>().RouteParameters.
                 Select(x => x.Name).ShouldHaveTheSameElementsAs("Id");
         }
 
         [Test]
         public void the_url_pattern_should_include_ExtraParam_for_NeedsId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NeedsId(null)).Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
+            graph.BehaviorFor<SpecialController>(x => x.NeedsId(null)).Route.Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
         }
 
         [Test]
         public void the_url_pattern_should_include_ExtraParam_for_NoId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NoId(null)).
+            graph.BehaviorFor<SpecialController>(x => x.NoId(null)).Route.
                 Pattern.ShouldEqual("special/noid/{ExtraParam}");
         }
 
         [Test]
         public void the_url_pattern_should_include_id_for_NeedsId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NeedsId(null)).Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
+            graph.BehaviorFor<SpecialController>(x => x.NeedsId(null)).Route.Pattern.ShouldEqual("special/needsid/{Id}/{ExtraParam}");
         }
 
         [Test]
         public void the_url_pattern_should_include_the_route_input()
         {
-            graph.RouteFor<SpecialController>(x => x.Go1(null)).Pattern.ShouldEqual(
+            graph.BehaviorFor<SpecialController>(x => x.Go1(null)).Route.Pattern.ShouldEqual(
                 "special/go1");
-            graph.RouteFor<SpecialController>(x => x.Go2(null)).Pattern.
+            graph.BehaviorFor<SpecialController>(x => x.Go2(null)).Route.Pattern.
                 ShouldEqual("special/go2/{Id}");
         }
 
         [Test]
         public void the_url_pattern_should_not_include_id_for_NoId_action()
         {
-            graph.RouteFor<SpecialController>(x => x.NoId(null)).
+            graph.BehaviorFor<SpecialController>(x => x.NoId(null)).Route.
                 Pattern.ShouldEqual("special/noid/{ExtraParam}");
         }
     }
@@ -204,19 +204,19 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void home_route_definition_pattern_should_be_empty()
         {
-            var homeDefinition1 = graphWithMethodHome.RouteFor<OneController>(c => c.Home());
-            var homeDefinition2 = graphWithModelHome.RouteFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
-            var notHomeDefinition = graphWithoutHome.RouteFor<OneController>(c => c.Home());
-            homeDefinition1.Pattern.ShouldEqual("");
-            homeDefinition2.Pattern.ShouldEqual("");
-            notHomeDefinition.Pattern.ShouldNotBeEmpty();
+            var homeDefinition1 = graphWithMethodHome.BehaviorFor<OneController>(c => c.Home());
+            var homeDefinition2 = graphWithModelHome.BehaviorFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
+            var notHomeDefinition = graphWithoutHome.BehaviorFor<OneController>(c => c.Home());
+            homeDefinition1.Route.Pattern.ShouldEqual("");
+            homeDefinition2.Route.Pattern.ShouldEqual("");
+            notHomeDefinition.Route.Pattern.ShouldNotBeEmpty();
         }
 
         [Test]
         public void home_url_policy_registration_should_be_higher_priority()
         {
-            var homeDefinition = graphWithHomeAndUrlPolicy.RouteFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
-            homeDefinition.Pattern.ShouldEqual("");
+            var homeDefinition = graphWithHomeAndUrlPolicy.BehaviorFor<OneController>(c => c.HomeWithInputOutput(new SimpleInputModel()));
+            homeDefinition.Route.Pattern.ShouldEqual("");
         }
     }
 

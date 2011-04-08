@@ -87,21 +87,6 @@ namespace FubuMVC.Tests.Registration
                 l => l.WriteLine(b.FirstCall().Description.PadRight(70) + b.Route.Pattern)));
         }
 
-        [Test]
-        public void routes_for_should_get_all_route_definitions_for_declared_type()
-        {
-            var graph = new FubuRegistry(x =>
-            {
-                x.Applies.ToAssemblyContainingType<FakeInputModel>();
-                x.Actions.IncludeClassesSuffixedWithController();
-            }).BuildGraph();
-
-            const string expectedPattern = "fubumvc/tests/registration/fake/query";
-            graph.RoutesFor<FakeInputModel>().ShouldHaveCount(1)
-                .ShouldContain(routeDef => routeDef.Pattern == expectedPattern);
-        }
-
-
 
         public class FakeController
         {
@@ -214,7 +199,7 @@ namespace FubuMVC.Tests.Registration
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             }).BuildGraph();
 
-            graph2.Import(graph1, b => b.PrependToUrl("area1"));
+            graph2.As<IChainImporter>().Import(graph1, b => b.PrependToUrl("area1"));
         }
 
         #endregion
@@ -256,7 +241,7 @@ namespace FubuMVC.Tests.Registration
             graph1.Services.AddService(foo1);
             graph2.Services.AddService(foo2);
 
-            graph1.Import(graph2, b => b.PrependToUrl(string.Empty));
+            graph1.As<IChainImporter>().Import(graph2, b => b.PrependToUrl(string.Empty));
         }
 
         #endregion
@@ -331,7 +316,7 @@ namespace FubuMVC.Tests.Registration
                 Id = 5
             }).ShouldEqual("go/5");
 
-            graph.BehaviorChainCount.ShouldEqual(1);
+            graph.Behaviors.Count().ShouldEqual(1);
         }
 
         [Test]
@@ -349,7 +334,7 @@ namespace FubuMVC.Tests.Registration
                 Id = 5
             }).ShouldEqual("go/5");
 
-            graph.BehaviorChainCount.ShouldEqual(1);            
+            graph.Behaviors.Count().ShouldEqual(1);            
         }
     }
 

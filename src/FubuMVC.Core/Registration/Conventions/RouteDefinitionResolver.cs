@@ -61,7 +61,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _constraintPolicy.Apply(call, route, log);
             
             log.RecordCallStatus(call, "Route definition determined by url policy: [{0}]".ToFormat(route.ToRoute().Url));
-            graph.RegisterRoute(chain, route);
+            chain.Route = route;
         }
 
         public void ApplyToAll(BehaviorGraph graph)

@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             setFilters(() => { matcher.TypeFilters.Includes += t => t.IsConcreteTypeOf<IPattern>(); });
 
-            graph.BehaviorChainCount.ShouldEqual(6);
+            graph.Behaviors.Count().ShouldEqual(6);
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(3);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph.Behaviors.Each(chain => Debug.WriteLine(chain.Calls.First()));
 
-            graph.BehaviorChainCount.ShouldEqual(9);
+            graph.Behaviors.Count().ShouldEqual(9);
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(0);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 matcher.MethodFilters.Excludes += call => call.Method.Name.Contains("Go");
             });
 
-            graph.BehaviorChainCount.ShouldEqual(8);
+            graph.Behaviors.Count().ShouldEqual(8);
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(2);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(2);
@@ -102,7 +102,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             setFilters(() => { matcher.TypeFilters.Includes += type => type.IsConcrete(); });
 
 
-            graph.BehaviorChainCount.ShouldEqual(12);
+            graph.Behaviors.Count().ShouldEqual(12);
             calls.Any(x => x.HandlerType == typeof (IPattern)).ShouldBeFalse();
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(3);

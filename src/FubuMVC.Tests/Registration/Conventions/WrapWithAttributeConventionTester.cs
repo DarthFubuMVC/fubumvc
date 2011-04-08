@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph = registry.BuildGraph();
 
-            graph.BehaviorChainCount.ShouldBeGreaterThan(0);
+            graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
             graph.Behaviors.SelectMany(x => x.Calls).Each(x => Debug.WriteLine(x.Description));
         }
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void should_have_a_call_in_each_behavior_chain()
         {
             int callCount = graph.Behaviors.SelectMany(x => x.Calls).Count();
-            callCount.ShouldEqual(graph.BehaviorChainCount);
+            callCount.ShouldEqual(graph.Behaviors.Count());
         }
 
         [Test]

@@ -54,7 +54,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
             ()
         {
-            graph.BehaviorChainCount.ShouldEqual(20);
+            graph.Behaviors.Count().ShouldEqual(20);
             graph.Behaviors.Where(chain => chain.Top.Any(x => x is RenderJsonNode)).Select(x => x.Calls.First().Method.Name)
                 .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
         }
