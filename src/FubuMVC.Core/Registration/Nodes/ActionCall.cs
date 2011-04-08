@@ -94,14 +94,10 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             Validate();
 
-            return new ObjectDef
-            {
-                Dependencies = new List<IDependency>
-                {
-                    createLambda()
-                },
-                Type = determineHandlerType()
-            };
+            var objectDef = new ObjectDef(determineHandlerType());
+            objectDef.Dependency(createLambda());
+
+            return objectDef;
         }
 
         public void Validate()

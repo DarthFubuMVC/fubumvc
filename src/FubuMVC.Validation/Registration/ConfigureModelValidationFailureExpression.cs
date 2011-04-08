@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.ObjectGraph;
 
@@ -40,8 +40,8 @@ namespace FubuMVC.Validation.Registration
         private void buildPolicy(FubuContinuation continuation)
         {
             var policy = _policies.AddType(typeof (FubuContinuationFailurePolicy));
-            policy.Child(typeof (Func<Type, bool>), _predicate);
-            policy.Child(typeof(FubuContinuation), continuation);
+            policy.DependencyByValue(typeof (Func<Type, bool>), _predicate);
+            policy.DependencyByValue(typeof(FubuContinuation), continuation);
         }
     }
 }

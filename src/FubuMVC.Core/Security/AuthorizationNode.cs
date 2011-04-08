@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Security
 
     public class AuthorizationNode : BehaviorNode, IAuthorizationRegistration
     {
-        private readonly ListDependency _policies = new ListDependency(typeof(IEnumerable<IAuthorizationPolicy>));
+        private readonly IList<ObjectDef> _policies = new List<ObjectDef>();
 
         public override BehaviorCategory Category
         {
@@ -24,10 +24,17 @@ namespace FubuMVC.Core.Security
 
         protected override ObjectDef buildObjectDef()
         {
-            var objectDef = new ObjectDef(typeof(AuthorizationBehavior));
-            objectDef.Dependencies.Add(_policies);
+            return ObjectDef.ForType<AuthorizationBehavior>(x =>
+            {
+                x.EnumerableDependenciesOf<IAuthorizationPolicy>().AddRange(_policies);
+            });
+            
+            //var objectDef = new ObjectDef(typeof(AuthorizationBehavior));
 
-            return objectDef;
+
+            //objectDef.Dependencies.Add(_policies);
+
+            //return objectDef;
         }
 
         /// <summary>
@@ -42,8 +49,7 @@ namespace FubuMVC.Core.Security
 
             var allow = new AllowRole(roleName);
 
-            _policies.AddValue(allow);
-
+            _policies.Add(ObjectDef.ForValue(allow));
 
             return allow;
         }
@@ -56,13 +62,17 @@ namespace FubuMVC.Core.Security
         /// <returns></returns>
         public ObjectDef AddPolicy<TModel, TRule>() where TRule : IAuthorizationRule<TModel> where TModel : class
         {
-            var topDef = _policies.AddType(typeof (AuthorizationPolicy<TModel>));
+            var topDef = ObjectDef.ForType<AuthorizationPolicy<TModel>>();
+            _policies.Add(topDef);
 
-            var ruleObjectDef = new ObjectDef(typeof (TRule));
-            topDef.Dependencies.Add(new ConfiguredDependency(){
-                DependencyType = typeof (IAuthorizationRule<TModel>),
-                Definition = ruleObjectDef
-            });
+            var ruleObjectDef = ObjectDef.ForType<TRule>();
+            topDef.DependencyByType<IAuthorizationRule<TModel>>(ruleObjectDef);
+
+            //var ruleObjectDef = new ObjectDef(typeof (TRule));
+            //topDef.Dependencies.Add(new ConfiguredDependency(){
+            //    DependencyType = typeof (IAuthorizationRule<TModel>),
+            //    Definition = ruleObjectDef
+            //});
 
             return ruleObjectDef;
         }
@@ -75,7 +85,10 @@ namespace FubuMVC.Core.Security
         public ObjectDef AddPolicy(Type policyType)
         {
             // TODO -- blow up if this isn't IAuthorizationPolicy
-            return _policies.AddType(policyType);
+            var objectDef = new ObjectDef(policyType);
+            _policies.Add(objectDef);
+
+            return objectDef;
         }
 
         /// <summary>
@@ -84,7 +97,8 @@ namespace FubuMVC.Core.Security
         /// <param name="policy"></param>
         public void AddPolicy(IAuthorizationPolicy policy)
         {
-            _policies.AddValue(policy);
+            // TODO -- defensive programming check
+            _policies.Add(ObjectDef.ForValue(policy));
         }
 
         /// <summary>
@@ -93,7 +107,7 @@ namespace FubuMVC.Core.Security
         /// <returns></returns>
         public IEnumerable<string> AllowedRoles()
         {
-            return _policies.Items.Where(x => x.Value is AllowRole).Select(x => x.Value.As<AllowRole>().Role);
+            return _policies.Where(x => x.Value is AllowRole).Select(x => x.Value.As<AllowRole>().Role);
         }
 
         /// <summary>
@@ -103,7 +117,7 @@ namespace FubuMVC.Core.Security
         /// <returns></returns>
         public bool HasRules()
         {
-            return _policies.Items.Any();
+            return _policies.Any();
         }
 
         ObjectDef IAuthorizationRegistration.ToEndpointAuthorizorObjectDef()
@@ -117,7 +131,7 @@ namespace FubuMVC.Core.Security
                 Name = ParentChain().UniqueId.ToString()
             };
 
-            objectDef.Dependencies.Add(_policies);
+            objectDef.EnumerableDependenciesOf<IAuthorizationPolicy>().AddRange(_policies);
 
             return objectDef;
         }
@@ -140,7 +154,7 @@ namespace FubuMVC.Core.Security
         {
             get
             {
-                return _policies.Items;
+                return _policies;
             }
         }
 

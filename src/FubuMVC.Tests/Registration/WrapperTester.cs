@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration
         public void build_an_object_def_for_the_type()
         {
             ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef();
-            def.Dependencies.Count.ShouldEqual(0);
+            def.Dependencies.Count().ShouldEqual(0);
 
             def.Type.ShouldEqual(typeof (NulloBehavior));
         }
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Registration
             _wrapper.AddAfter(new RenderJsonNode(typeof (Output)));
             ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef();
 
-            def.Dependencies.Count.ShouldEqual(1);
+            def.Dependencies.Count().ShouldEqual(1);
 
             var dependency = def.Dependencies.First().ShouldBeOfType<ConfiguredDependency>();
             dependency.DependencyType.ShouldEqual(typeof (IActionBehavior));

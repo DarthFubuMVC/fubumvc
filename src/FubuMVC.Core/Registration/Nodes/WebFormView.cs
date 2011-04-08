@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected override void configureObject(ObjectDef def)
         {
-            def.Child(new ViewPath
+            def.DependencyByValue(new ViewPath
             {
                 ViewName = _viewName
             });

@@ -55,7 +55,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigureValidationExpression.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
     <Compile Include="IValidationFailureHandler.cs" />
     <Compile Include="IValidationFailurePolicy.cs" />

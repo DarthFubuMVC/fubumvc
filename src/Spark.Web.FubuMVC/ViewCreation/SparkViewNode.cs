@@ -30,8 +30,8 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
         protected override void configureObject(ObjectDef def)
         {
-            def.Child(_viewToken);
-            def.Child(_actionCall);
+            def.DependencyByValue(_viewToken);
+            def.DependencyByValue(_actionCall);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -38,9 +39,9 @@ namespace FubuMVC.Tests.Registration
             var dependency = new ListDependency(typeof (ISomethingDoer[]));
             dependency.AddValue(doer);
 
-            dependency.Items.Count.ShouldEqual(1);
+            dependency.Items.Count().ShouldEqual(1);
 
-            dependency.Items[0].Value.ShouldBeTheSameAs(doer);
+            dependency.Items.First().Value.ShouldBeTheSameAs(doer);
         }
 
         [Test]
@@ -49,7 +50,7 @@ namespace FubuMVC.Tests.Registration
             var dependency = new ListDependency(typeof(ISomethingDoer[]));
             dependency.AddType(typeof (ASomethingDoer)).Type.ShouldEqual(typeof (ASomethingDoer));
 
-            dependency.Items.Count.ShouldEqual(1);
+            dependency.Items.Count().ShouldEqual(1);
         }
     }
 

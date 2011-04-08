@@ -7,13 +7,17 @@ namespace FubuMVC.Core.Registration.ObjectGraph
     {
         public ListDependency(Type dependencyType)
         {
-            Items = new List<ObjectDef>();
+            _items = new List<ObjectDef>();
             DependencyType = dependencyType;
         }
 
         public Type DependencyType { get; private set; }
 
-        public IList<ObjectDef> Items { get; private set; }
+        private readonly IList<ObjectDef> _items;
+        public IEnumerable<ObjectDef> Items
+        {
+            get { return _items; }
+        }
 
         public Type ElementType
         {
@@ -28,17 +32,24 @@ namespace FubuMVC.Core.Registration.ObjectGraph
 
         public void AddValue(object value)
         {
-            Items.Add(new ObjectDef(){
+            _items.Add(new ObjectDef(){
                 Value = value
             });
         }
 
+        // TODO -- defensive programming check
         public ObjectDef AddType(Type type)
         {
             var objectDef = new ObjectDef(type);
-            Items.Add(objectDef);
+            _items.Add(objectDef);
 
             return objectDef;
+        }
+
+        public void Add(ObjectDef objectDef)
+        {
+            // TODO -- defensive programming check
+            _items.Add(objectDef);
         }
 
 
@@ -47,6 +58,9 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             visitor.List(this);
         }
 
-
+        public void AddRange(IEnumerable<ObjectDef> items)
+        {
+            _items.AddRange(items);
+        }
     }
 }

@@ -303,7 +303,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_have_a_dependency_for_the_function()
         {
-            theObjectDef.Dependencies.Count.ShouldEqual(1);
+            theObjectDef.Dependencies.Count().ShouldEqual(1);
             IDependency dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Model2>));
@@ -340,7 +340,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_have_a_dependency_for_the_function()
         {
-            theObjectDef.Dependencies.Count.ShouldEqual(1);
+            theObjectDef.Dependencies.Count().ShouldEqual(1);
             IDependency dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Action<ControllerTarget, Model1>));
@@ -379,7 +379,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_have_a_dependency_for_the_function()
         {
-            theObjectDef.Dependencies.Count.ShouldEqual(1);
+            theObjectDef.Dependencies.Count().ShouldEqual(1);
             IDependency dependency = theObjectDef.Dependencies.First();
 
             dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1>));

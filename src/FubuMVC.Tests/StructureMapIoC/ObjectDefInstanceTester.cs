@@ -47,11 +47,11 @@ namespace FubuMVC.Tests.StructureMapIoC
 
 
             var def = new ObjectDef(typeof (FakeJsonBehavior));
-            def.Child(typeof (IFubuRequest), request);
-            var jsonWriter = def.Child(typeof (IJsonWriter), typeof (AjaxAwareJsonWriter));
-            jsonWriter.Child(typeof (IOutputWriter), typeof (HttpResponseOutputWriter));
-            jsonWriter.Child(typeof(IRequestData), typeof(InMemoryRequestData));
-            def.Child(typeof (IRequestData), typeof (InMemoryRequestData));
+            def.DependencyByValue(typeof (IFubuRequest), request);
+            var jsonWriter = def.DependencyByType(typeof (IJsonWriter), typeof (AjaxAwareJsonWriter));
+            jsonWriter.DependencyByType(typeof (IOutputWriter), typeof (HttpResponseOutputWriter));
+            jsonWriter.DependencyByType(typeof(IRequestData), typeof(InMemoryRequestData));
+            def.DependencyByType(typeof (IRequestData), typeof (InMemoryRequestData));
 
             var container =
                 new Container(x => { x.For<IActionBehavior>().Use(new ObjectDefInstance(def)); });
@@ -89,12 +89,13 @@ namespace FubuMVC.Tests.StructureMapIoC
         public void build_an_object_with_a_list_dependency()
         {
             var def = new ObjectDef(typeof (ClassWithSomethings));
-            var listDependency = new ListDependency(typeof(IList<ISomething>));
+
+
+            var listDependency = def.ListDependenciesOf<ISomething>();
+                
             listDependency.AddType(typeof (SomethingA));
             listDependency.AddType(typeof (SomethingB));
             listDependency.AddValue(new SomethingC());
-
-            def.Dependencies.Add(listDependency);
 
             var instance = new ObjectDefInstance(def);
 

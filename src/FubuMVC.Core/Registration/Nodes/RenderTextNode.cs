@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected override void configureObject(ObjectDef def)
         {
-            def.Child(MimeType);
+            def.DependencyByValue(MimeType);
         }
 
         public bool Equals(RenderTextNode<T> other)
