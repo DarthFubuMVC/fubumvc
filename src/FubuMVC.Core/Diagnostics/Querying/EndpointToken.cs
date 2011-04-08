@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Diagnostics.Querying

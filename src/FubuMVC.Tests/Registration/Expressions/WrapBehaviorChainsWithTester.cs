@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             var container = new Container();
 
-            new StructureMapBootstrapper(container, registry).Bootstrap(new RouteCollection());
+            FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
             container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
 

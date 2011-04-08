@@ -1,0 +1,38 @@
+﻿<use namespace="FubuMVC.Diagnostics.Models.Requests" />
+<viewdata model="RequestDetailsModel" />
+<content:title>Request ${Model.Report.Id.ToString()}</content:title>
+<content:head>
+  <Stylesheet href="requests/view.css" />
+  <Script src="requests/view.js" />
+</content:head>
+<content:main>
+  <h2 class="request">
+    <span>Request: ${Model.Report.Url}</span>
+  </h2>
+  <h4 class="request-identifier">(Request ${Model.Report.Id.ToString()})</h4>
+  <ul class="request-details">
+    <li if="Model.Report.FormData.Count != 0">
+      <table class="grid">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr each="var pair in Model.Report.FormData">
+            <td>${pair.Key}</td>
+            <td>${pair.Value}</td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+  </ul>
+  <h3>Nodes:</h3>
+  <ul id="nodes">
+    <li>
+      #this.PartialFor(Model.Root);
+    </li>
+    <li>&nbsp;</li>
+  </ul>
+</content:main>

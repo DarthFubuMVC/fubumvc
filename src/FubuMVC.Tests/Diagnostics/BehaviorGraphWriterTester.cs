@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
 using HtmlTags;

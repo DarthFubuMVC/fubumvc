@@ -1,0 +1,17 @@
+﻿<use master="" />
+<use namespace="FubuMVC.Diagnostics.Models.Requests" />
+<viewdata model="BehaviorDetailsModel" />
+<div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only hitarea">
+  <span class="ui-button-text">${Model.BehaviorType.FullName}</span>
+</div>
+<ul class="children">
+  <li class="behavior-details" each="var detail in Model.Before">
+    <BehaviorDetails details="detail"/>
+  </li>
+  <li if="Model.Inner != null">
+    #this.PartialFor(Model.Inner);
+  </li>
+  <li class="behavior-details" each="var detail in Model.After">
+    <BehaviorDetails details="detail"/>
+  </li>
+</ul>

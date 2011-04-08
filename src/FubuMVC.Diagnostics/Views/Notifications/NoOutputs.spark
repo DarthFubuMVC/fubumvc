@@ -1,0 +1,12 @@
+﻿<use master="Notifications" />
+<viewdata model="NoOutputsNotification" />
+<content:main>
+  <div class="ui-widget dashboard-notice">
+    <div class="ui-state-highlight ui-corner-all">
+      <p>
+        <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+        <strong>WARNING:</strong> You have ${Model.BehaviorCount.ToString()} behaviors chains without output nodes. <FilterLink column="${Model.Filter.ColumnName}" value="${Model.Filter.Value}" text="Click here" /> to view them.
+      </p>
+    </div>
+  </div>
+</content:main>

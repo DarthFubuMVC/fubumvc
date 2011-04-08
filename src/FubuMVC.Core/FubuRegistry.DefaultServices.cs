@@ -87,7 +87,9 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
 
             graph.Services.SetServiceIfNone(new DiagnosticsIndicator());
-            
+
+            graph.Services.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
+
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

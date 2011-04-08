@@ -11,6 +11,8 @@ namespace FubuMVC.Core
 {
     public partial class FubuRegistry
     {
+        private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
+
         public RouteConventionExpression Routes
         {
             get { return new RouteConventionExpression(_routeResolver, this); }
@@ -104,14 +106,14 @@ namespace FubuMVC.Core
 
         public void IncludeDiagnostics(bool shouldInclude)
         {
+            _diagnosticLevel = shouldInclude ? DiagnosticLevel.FullRequestTracing : DiagnosticLevel.None;
+
             if (shouldInclude)
             {
                 UsingObserver(new RecordingConfigurationObserver());
 
-                // TODO -- DiagnosticsPackage gets rolled up into DiagnosticsRegistry
                 Import<DiagnosticsRegistry>(string.Empty);
-                new DiagnosticsPackage().Configure(this);
-                _systemPolicies.Add(new DiagnosticBehaviorPrepender());
+
                 Services(graph => graph.AddService(new DiagnosticsIndicator().SetEnabled()));
             }
             else
@@ -119,6 +121,14 @@ namespace FubuMVC.Core
                 Actions
                     .ExcludeTypes(t => t.HasAttribute<FubuDiagnosticsAttribute>())
                     .ExcludeMethods(call => call.Method.HasAttribute<FubuDiagnosticsAttribute>());
+            }
+        }
+
+        public DiagnosticLevel DiagnosticLevel
+        {
+            get
+            {
+                return _diagnosticLevel;
             }
         }
 

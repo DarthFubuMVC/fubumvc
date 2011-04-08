@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Diagnostics</RootNamespace>
+    <AssemblyName>FubuMVC.Diagnostics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlTags">
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\StoryTeller\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Images\down-arrow.png" />
+    <Content Include="Content\Images\filter_wrap_left.gif" />
+    <Content Include="Content\Images\filter_wrap_right.gif" />
+    <Content Include="Content\Images\pre_code_bg_blk.gif" />
+    <Content Include="Content\Scripts\jquery\jquery.treeview.js" />
+    <Content Include="Content\Scripts\prettyprint.js" />
+    <Content Include="Content\Scripts\requests.js" />
+    <Content Include="Content\Scripts\core.js" />
+    <Content Include="Content\Scripts\jquery\jquery-1.4.4.js" />
+    <Content Include="Content\Scripts\jquery\jquery.hotkeys.js" />
+    <Content Include="Content\Scripts\jquery\jquery.tmpl.js" />
+    <Content Include="Content\Scripts\json2.js" />
+    <Content Include="Content\Scripts\knockout-1.1.2.js" />
+    <Content Include="Content\Scripts\requests\view.js" />
+    <Content Include="Content\Styles\chains\view.css" />
+    <Content Include="Content\Styles\requests\view.css" />
+    <Content Include="diagnostics.script.config" />
+    <None Include="Views\Chains\Unknown.spark" />
+    <None Include="Views\Chains\View.spark" />
+    <None Include="Views\Dashboard.spark" />
+    <None Include="Views\Requests.spark" />
+    <None Include="Views\Notifications\NoOutputs.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Packaging\Log.spark" />
+    <None Include="Views\Requests\View.spark" />
+    <None Include="Views\Routes.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Routes\Authorization.spark" />
+    <None Include="Views\Shared\Application.spark" />
+    <Content Include="Content\Images\block.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-bg.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-bg1251.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-cat.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-cn.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-cs.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-da.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-de.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-el.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-en.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-es.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-fa.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-fi.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-fr.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-gl.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-he.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-hu.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-is.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-it.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ja.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-nl.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-no.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-pl.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-pt-br.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-pt.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ro.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ru.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-sk.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-sr.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-sv.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-tr.js" />
+    <Content Include="Content\Scripts\jquery\i18n\grid.locale-ua.js" />
+    <Content Include="Content\Scripts\jquery\jquery-1.4.4.min.js" />
+    <Content Include="Content\Scripts\jquery\jquery-ui-1.8.10.custom.min.js" />
+    <Content Include="Content\Scripts\jquery\jquery.jqGrid.min.js" />
+    <Content Include="Content\Scripts\jquery\jquery.metadata.js" />
+    <Content Include="Content\Scripts\routes.js" />
+    <Content Include="Content\Styles\blueprint\ie.css" />
+    <Content Include="Content\Styles\blueprint\print.css" />
+    <Content Include="Content\Styles\blueprint\screen.css" />
+    <Content Include="Content\Styles\default.css" />
+    <Content Include="Content\Styles\jquery\images\bg_fallback.png" />
+    <Content Include="Content\Styles\jquery\images\icon_sprite.png" />
+    <Content Include="Content\Styles\jquery\images\progress_bar.gif" />
+    <Content Include="Content\Styles\jquery\images\slider_handles.png" />
+    <Content Include="Content\Styles\jquery\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Styles\jquery\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Styles\jquery\jquery-ui-1.8.7.custom.css" />
+    <Content Include="Content\Styles\jquery\ui.jqgrid.css" />
+    <Content Include="Content\Styles\master.css" />
+    <Content Include="Content\Styles\snapdragon\common.css" />
+    <Content Include="Content\Styles\snapdragon\forms.css" />
+    <Content Include="Views\Bindings.xml" />
+    <None Include="Views\Shared\AuthorizationReport.spark" />
+    <None Include="Views\Shared\FileOutputReport.spark" />
+    <None Include="Views\Shared\ExceptionReport.spark" />
+    <None Include="Views\Shared\SetValueReport.spark" />
+    <None Include="Views\Shared\OutputReport.spark" />
+    <None Include="Views\Shared\ModelBindingReport.spark" />
+    <None Include="Views\Shared\Notifications.spark" />
+    <None Include="Views\Shared\NavigationMenu.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Shared\BehaviorDetails.spark" />
+    <None Include="Views\Shared\_global.spark" />
+    <Content Include="web.config" />
+    <Content Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+    <Content Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyScanner.cs" />
+    <Compile Include="Behaviors\UnknownObjectBehavior.cs" />
+    <Compile Include="BindFromAttribute.cs" />
+    <Compile Include="Configuration\SparkPolicies\NotificationActionSparkPolicy.cs" />
+    <Compile Include="Endpoints\RequestsEndpoint.cs" />
+    <Compile Include="Endpoints\Requests\AutocompleteEndpoint.cs" />
+    <Compile Include="Endpoints\Requests\FilterEndpoint.cs" />
+    <Compile Include="Endpoints\Requests\ViewEndpoint.cs" />
+    <Compile Include="Endpoints\Routes\AutocompleteEndpoint.cs" />
+    <Compile Include="Extensions\JsonExtensions.cs" />
+    <Compile Include="Grids\BehaviorGraphRowProvider.cs" />
+    <Compile Include="Grids\Columns\GridColumnBase.cs" />
+    <Compile Include="Grids\Columns\IGridColumn.cs" />
+    <Compile Include="Grids\Columns\Requests\ExceptionsColumn.cs" />
+    <Compile Include="Grids\Columns\Requests\ExecutionTimeColumn.cs" />
+    <Compile Include="Grids\Columns\Requests\RequestUrlColumn.cs" />
+    <Compile Include="Grids\Columns\Requests\StatusColumn.cs" />
+    <Compile Include="Grids\Columns\Requests\TimeColumn.cs" />
+    <Compile Include="Grids\Columns\Requests\UrlColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\ActionColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\AuthorizationColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\ConstraintsColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\InputModelColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\OriginColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\OutputModelColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\RouteColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\ChainUrlColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\UrlCategoryColumn.cs" />
+    <Compile Include="Grids\Columns\Routes\ViewColumn.cs" />
+    <Compile Include="Grids\Filters\Requests\UrlFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\ActionFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\AuthorizationFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\ConstraintsFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\InputModelFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\OriginFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\OutputModelFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\RouteFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\UrlCategoryFilter.cs" />
+    <Compile Include="Grids\Filters\Routes\ViewFilter.cs" />
+    <Compile Include="Grids\GridColumnBuilder.cs" />
+    <Compile Include="Grids\RequestCacheRowProvider.cs" />
+    <Compile Include="Grids\GridRowBuilder.cs" />
+    <Compile Include="Grids\Filters\GridFilterBase.cs" />
+    <Compile Include="Grids\GridExtensions.cs" />
+    <Compile Include="Grids\GridService.cs" />
+    <Compile Include="Grids\IGridColumnBuilder.cs" />
+    <Compile Include="Grids\IGridFilter.cs" />
+    <Compile Include="Grids\IGridRowBuilder.cs" />
+    <Compile Include="Grids\IGridRowProvider.cs" />
+    <Compile Include="Grids\IGridService.cs" />
+    <Compile Include="Grids\RowComparer.cs" />
+    <Compile Include="IAssemblyScanner.cs" />
+    <Compile Include="Infrastructure\JsonService.cs" />
+    <Compile Include="Configuration\PartialActionSource.cs" />
+    <Compile Include="Configuration\SparkPolicies\PartialActionSparkPolicy.cs" />
+    <Compile Include="CoreExtensions.cs" />
+    <Compile Include="Endpoints\Routes\AuthorizationEndpoint.cs" />
+    <Compile Include="Endpoints\Chains\UnknownEndpoint.cs" />
+    <Compile Include="Endpoints\Chains\ViewEndpoint.cs" />
+    <Compile Include="Endpoints\Packaging\LogEndpoint.cs" />
+    <Compile Include="Endpoints\Routes\FilterEndpoint.cs" />
+    <Compile Include="Extensions\TagExtensions.cs" />
+    <Compile Include="FubuDiagnosticsRegistry.cs" />
+    <Compile Include="Configuration\FubuExtensions.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicy.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsUrls.cs" />
+    <Compile Include="Configuration\SparkPolicies\DiagnosticsEndpointSparkPolicy.cs" />
+    <Compile Include="Endpoints\DiagnosticsEndpointMarker.cs" />
+    <Compile Include="Endpoints\DashboardEndpoint.cs" />
+    <Compile Include="Endpoints\RoutesEndpoint.cs" />
+    <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
+    <Compile Include="DiagnosticsException.cs" />
+    <Compile Include="Infrastructure\HttpConstraintResolver.cs" />
+    <Compile Include="Infrastructure\HttpRequest.cs" />
+    <Compile Include="Infrastructure\IAuthorizationDescriptor.cs" />
+    <Compile Include="Infrastructure\IHttpConstraintResolver.cs" />
+    <Compile Include="Infrastructure\IHttpRequest.cs" />
+    <Compile Include="IServiceRegistrationConvention.cs" />
+    <Compile Include="Models\AutocompleteRequestModel.cs" />
+    <Compile Include="Models\Grids\IGridModel.cs" />
+    <Compile Include="Models\IRequestCacheModelBuilder.cs" />
+    <Compile Include="Models\JqGridColumn.cs" />
+    <Compile Include="Models\JqGridColumnModel.cs" />
+    <Compile Include="Models\JqGridColumnModelRequest.cs" />
+    <Compile Include="Models\JsonAutocompleteResultModel.cs" />
+    <Compile Include="Models\BehaviorModel.cs" />
+    <Compile Include="Models\ChainModel.cs" />
+    <Compile Include="Models\ChainRequest.cs" />
+    <Compile Include="Models\DashboardRequestModel.cs" />
+    <Compile Include="Models\Grids\JsonGridColumn.cs" />
+    <Compile Include="Models\Grids\JsonGridFilter.cs" />
+    <Compile Include="Models\Grids\JsonGridQuery.cs" />
+    <Compile Include="Models\Grids\RouteQuery.cs" />
+    <Compile Include="Models\PackageDiagnosticsLogModel.cs" />
+    <Compile Include="Models\PackageDiagnosticsModel.cs" />
+    <Compile Include="Models\PackageDiagnosticsRequestModel.cs" />
+    <Compile Include="Models\Requests\RecordedRequestBehaviorVisitor.cs" />
+    <Compile Include="Models\Requests\RecordedRequestModel.cs" />
+    <Compile Include="Models\Requests\RequestCacheModel.cs" />
+    <Compile Include="Models\Requests\RecordedRequestRequestModel.cs" />
+    <Compile Include="Models\Requests\RequestDetailsModel.cs" />
+    <Compile Include="Models\Requests\RequestExplorerModel.cs" />
+    <Compile Include="Models\Requests\RequestExplorerRequestModel.cs" />
+    <Compile Include="Models\Routes\AuthorizationModel.cs" />
+    <Compile Include="Models\Routes\AuthorizationRequestModel.cs" />
+    <Compile Include="Models\Routes\AuthorizationRuleModel.cs" />
+    <Compile Include="Models\Routes\AuthorizedRouteModel.cs" />
+    <Compile Include="Models\Routes\RouteRequestModel.cs" />
+    <Compile Include="Models\Routes\RoutesModel.cs" />
+    <Compile Include="Models\UnknownChainRequest.cs" />
+    <Compile Include="Navigation\DashboardAction.cs" />
+    <Compile Include="Navigation\INavigationItemAction.cs" />
+    <Compile Include="Models\DashboardModel.cs" />
+    <Compile Include="Models\Grids\JsonGridModel.cs" />
+    <Compile Include="Models\Grids\JsonGridRow.cs" />
+    <Compile Include="Navigation\INavigationMenuBuilder.cs" />
+    <Compile Include="Navigation\NavigationItemCaseBase.cs" />
+    <Compile Include="Navigation\NavigationMenu.cs" />
+    <Compile Include="Navigation\NavigationMenuBuilder.cs" />
+    <Compile Include="Navigation\NavigationMenuItem.cs" />
+    <Compile Include="Navigation\PackageDiagnosticsAction.cs" />
+    <Compile Include="Navigation\RequestExplorerAction.cs" />
+    <Compile Include="Navigation\RouteAuthorizationAction.cs" />
+    <Compile Include="Navigation\RouteExplorerAction.cs" />
+    <Compile Include="Notifications\FilterLink.cs" />
+    <Compile Include="Notifications\INotificationModel.cs" />
+    <Compile Include="Notifications\INotificationPolicy.cs" />
+    <Compile Include="Notifications\NoOutputsNotification.cs" />
+    <Compile Include="Notifications\NoOutputsNotificationPolicy.cs" />
+    <Compile Include="Notifications\NotificationAction.cs" />
+    <Compile Include="Partials\IPartialDecorator.cs" />
+    <Compile Include="Partials\NavigationMenuDecorator.cs" />
+    <Compile Include="Partials\PartialAction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceRegistryExtensions.cs" />
+    <Compile Include="UnknownObjectException.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
+      <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
+      <Name>Spark.Web.FubuMVC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50535</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

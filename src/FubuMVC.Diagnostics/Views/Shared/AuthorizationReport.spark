@@ -1,0 +1,27 @@
+﻿<use master="" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="System.Linq" />
+<viewdata model="AuthorizationReport" />
+<div class="authorization-report" if="Model.Details.Any()">
+  <h4>Authorization</h4>
+  <table class="grid">
+    <thead>
+      <tr>
+        <th>Policy</th>
+        <th>Vote</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td>Decision</td>
+        <td>Model.Decision</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr each="var binding in Model.Details">
+        <td>${binding.PolicyDescription}</td>
+        <td>${binding.Vote}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

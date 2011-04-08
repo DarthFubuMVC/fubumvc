@@ -21,6 +21,11 @@ namespace FubuMVC.StructureMap
             });
         }
 
+        public static FubuApplication StructureMap(this IContainerFacilityExpression expression, IContainer container)
+        {
+            return expression.StructureMap(() => container);
+        }
+
         public static FubuApplication StructureMap(this IContainerFacilityExpression expression, Func<IContainer> createContainer)
         {
             return expression.ContainerFacility(() =>

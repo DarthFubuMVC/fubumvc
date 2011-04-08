@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<bindings>
+  <element name="Stylesheet">this.CSS('@href')</element>
+  <element name="Script">#this.Script('@src');</element>
+  <element name="Scripts">this.WriteScriptTags()</element>
+  <element name="Image">this.ImageFor('@src')</element>
+  <element name="Navigation">#this.Partial&lt;FubuMVC.Diagnostics.Navigation.NavigationMenu&gt;();</element>
+  <element name="FilterLink">this.LinkTo(new FubuMVC.Diagnostics.Models.Routes.RouteRequestModel { Column = '@column', Value = '@value' }).Text('@text')</element>
+  <element name="BehaviorDetails">#this.PartialFor(@details);</element>
+</bindings>

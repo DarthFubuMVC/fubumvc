@@ -134,6 +134,10 @@
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
       <Name>FubuValidation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
+      <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
+      <Name>Spark.Web.FubuMVC</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\IntegrationTests\RunView.aspx" />

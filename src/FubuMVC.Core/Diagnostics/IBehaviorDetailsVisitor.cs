@@ -1,4 +1,5 @@
 using System.Data;
+using FubuMVC.Core.Diagnostics.Tracing;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -12,5 +13,6 @@ namespace FubuMVC.Core.Diagnostics
         void SetValue(SetValueReport report);
         void Authorization(AuthorizationReport report);
         void CustomTable(DataTable report);
+    	void HttpStatus(HttpStatusReport report);
     }
 }

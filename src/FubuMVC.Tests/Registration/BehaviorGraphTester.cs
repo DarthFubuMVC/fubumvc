@@ -7,6 +7,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
@@ -99,6 +100,8 @@ namespace FubuMVC.Tests.Registration
             graph.RoutesFor<FakeInputModel>().ShouldHaveCount(1)
                 .ShouldContain(routeDef => routeDef.Pattern == expectedPattern);
         }
+
+
 
         public class FakeController
         {

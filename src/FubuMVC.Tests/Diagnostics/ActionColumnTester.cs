@@ -1,5 +1,6 @@
 using System;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
