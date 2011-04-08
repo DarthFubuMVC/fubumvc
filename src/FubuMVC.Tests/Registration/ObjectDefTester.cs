@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void configured_dependency_accept_visitor()
         {
-            var dependency = new ConfiguredDependency();
+            var dependency = new ConfiguredDependency(GetType(), this);
             dependency.AcceptVisitor(visitor);
 
             visitor.AssertWasCalled(x => x.Configured(dependency));
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void value_dependency_accept_visitor()
         {
-            var dependency = new ValueDependency();
+            var dependency = new ValueDependency(GetType(), this);
             dependency.AcceptVisitor(visitor);
 
             visitor.AssertWasCalled(x => x.Value(dependency));

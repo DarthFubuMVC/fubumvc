@@ -161,11 +161,7 @@ namespace FubuMVC.Core.Registration.Nodes
             object lambda = HasOutput
                                 ? FuncBuilder.ToFunc(HandlerType, Method)
                                 : FuncBuilder.ToAction(HandlerType, Method);
-            return new ValueDependency
-            {
-                DependencyType = lambda.GetType(),
-                Value = lambda
-            };
+            return new ValueDependency(lambda.GetType(), lambda);
         }
 
         public Type OutputType()

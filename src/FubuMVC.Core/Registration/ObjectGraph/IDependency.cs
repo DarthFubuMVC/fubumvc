@@ -6,5 +6,6 @@ namespace FubuMVC.Core.Registration.ObjectGraph
     {
         Type DependencyType { get; }
         void AcceptVisitor(IDependencyVisitor visitor);
+        void AssertValid();
     }
 }

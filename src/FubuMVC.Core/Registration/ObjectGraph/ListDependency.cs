@@ -37,18 +37,31 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             });
         }
 
-        // TODO -- defensive programming check
+        /// <summary>
+        /// Adds a concrete type to the list or enumeration
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public ObjectDef AddType(Type type)
         {
             var objectDef = new ObjectDef(type);
+            
+            objectDef.ValidatePluggabilityTo(ElementType);
+            
             _items.Add(objectDef);
+
+
 
             return objectDef;
         }
 
+        /// <summary>
+        /// Add a separately configured ObjectDef to the list or enumeration
+        /// </summary>
+        /// <param name="objectDef"></param>
         public void Add(ObjectDef objectDef)
         {
-            // TODO -- defensive programming check
+            objectDef.ValidatePluggabilityTo(ElementType);
             _items.Add(objectDef);
         }
 
@@ -58,9 +71,14 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             visitor.List(this);
         }
 
+        public void AssertValid()
+        {
+            _items.Each(x => x.ValidatePluggabilityTo(DependencyType));
+        }
+
         public void AddRange(IEnumerable<ObjectDef> items)
         {
-            _items.AddRange(items);
+            items.Each(Add);
         }
     }
 }

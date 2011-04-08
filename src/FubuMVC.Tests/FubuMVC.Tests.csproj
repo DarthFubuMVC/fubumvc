@@ -142,6 +142,7 @@
     <Compile Include="Registration\Nodes\WebFormViewTester.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Registration\ObjectGraph\ConfiguredDependencyTester.cs" />
     <Compile Include="Registration\Querying\ChainForwarderTester.cs" />
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
