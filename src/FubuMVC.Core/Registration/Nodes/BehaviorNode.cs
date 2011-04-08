@@ -122,15 +122,6 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 var nextObjectDef = Next.As<IContainerModel>().ToObjectDef();
                 objectDef.DependencyByType<IActionBehavior>(nextObjectDef);
-
-                
-                //var dependency = new ConfiguredDependency
-                //{
-                //    Definition = nextObjectDef,
-                //    DependencyType = typeof (IActionBehavior)
-                //};
-
-                //objectDef.Dependencies.Add(dependency);
             }
 
             return objectDef;

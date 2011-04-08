@@ -20,11 +20,6 @@ namespace FubuMVC.Core.Security.AntiForgery
         protected override ObjectDef buildObjectDef()
         {
             return ObjectDef.ForType<AntiForgeryBehavior>(x => x.DependencyByValue(_salt));
-
-            //return new ObjectDef(typeof (AntiForgeryBehavior))
-            //{
-            //    Dependencies = {new ValueDependency {DependencyType = typeof (string), Value = _salt}}
-            //};
         }
     }
 }

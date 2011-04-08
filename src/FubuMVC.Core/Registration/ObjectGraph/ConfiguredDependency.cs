@@ -19,5 +19,4 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         }
     }
     
-    // TODO -- put some defensive programming checks here?
 }

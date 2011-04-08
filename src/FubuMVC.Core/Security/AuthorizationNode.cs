@@ -28,13 +28,6 @@ namespace FubuMVC.Core.Security
             {
                 x.EnumerableDependenciesOf<IAuthorizationPolicy>().AddRange(_policies);
             });
-            
-            //var objectDef = new ObjectDef(typeof(AuthorizationBehavior));
-
-
-            //objectDef.Dependencies.Add(_policies);
-
-            //return objectDef;
         }
 
         /// <summary>
@@ -67,12 +60,6 @@ namespace FubuMVC.Core.Security
 
             var ruleObjectDef = ObjectDef.ForType<TRule>();
             topDef.DependencyByType<IAuthorizationRule<TModel>>(ruleObjectDef);
-
-            //var ruleObjectDef = new ObjectDef(typeof (TRule));
-            //topDef.Dependencies.Add(new ConfiguredDependency(){
-            //    DependencyType = typeof (IAuthorizationRule<TModel>),
-            //    Definition = ruleObjectDef
-            //});
 
             return ruleObjectDef;
         }

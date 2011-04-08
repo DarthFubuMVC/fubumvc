@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.ObjectGraph
 {
+    /// <summary>
+    /// IoC container-agnostic model of a service or configured object.  The
+    /// equivalent of a StructureMap "Instance" or a Windsor "Component" 
+    /// </summary>
     public class ObjectDef
     {
         private readonly IList<IDependency> _dependencies;
@@ -21,9 +24,16 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             Type = type;
         }
 
-
+        /// <summary>
+        /// The name for this configured object when it is registered into the underlying IoC 
+        /// container
+        /// </summary>
         public string Name { get; set; }
+
+        // TODO -- Setting the type should clear the Value, and vice versa
         public Type Type { get; set; }
+
+        // TODO -- have a different type of ObjectDef for Value's like StructureMap?
         public object Value { get; set; }
 
         public IEnumerable<IDependency> Dependencies
@@ -59,20 +69,23 @@ namespace FubuMVC.Core.Registration.ObjectGraph
 
         public void Dependency(Type dependencyType, ObjectDef dependency)
         {
-            _dependencies.Add(new ConfiguredDependency{
+            var configuredDependency = new ConfiguredDependency{
                 DependencyType = dependencyType,
                 Definition = dependency
-            });
+            };
+
+            Dependency(configuredDependency);
         }
 
         public void Dependency(IDependency dependency)
         {
+            // TODO -- validate that this little monkey is valid
             _dependencies.Add(dependency);
         }
 
         public void DependencyByValue(Type dependencyType, object value)
         {
-            _dependencies.Add(new ValueDependency{
+            Dependency(new ValueDependency{
                 DependencyType = dependencyType,
                 Value = value
             });
@@ -92,7 +105,8 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         private ListDependency findListDependency<T>(Type openType)
         {
             var dependencyType = openType.MakeGenericType(typeof (T));
-            var dependency = _dependencies.OfType<ListDependency>().FirstOrDefault(x => x.DependencyType == typeof(IEnumerable<T>));
+            var dependency =
+                _dependencies.OfType<ListDependency>().FirstOrDefault(x => x.DependencyType == typeof (IEnumerable<T>));
             if (dependency == null)
             {
                 dependency = new ListDependency(dependencyType);
@@ -119,7 +133,7 @@ namespace FubuMVC.Core.Registration.ObjectGraph
 
         public static ObjectDef ForValue(object value)
         {
-            return new ObjectDef(){
+            return new ObjectDef{
                 Value = value
             };
         }

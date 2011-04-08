@@ -40,7 +40,12 @@ namespace FubuFastPack.Crud.Properties
         public static bool IsChanged(Type targetType, object newValue, object oldValue)
         {
             if (newValue == null) return oldValue != null;
-            if (oldValue == null) return true;
+            if (oldValue == null)
+            {
+                if (string.Empty.Equals(newValue)) return false;
+
+                return true;
+            }
 
             if (targetType == typeof(TimeZoneInfo))
             {
