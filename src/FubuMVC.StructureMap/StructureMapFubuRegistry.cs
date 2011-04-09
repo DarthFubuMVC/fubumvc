@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using FubuCore.Binding;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.WebForms;

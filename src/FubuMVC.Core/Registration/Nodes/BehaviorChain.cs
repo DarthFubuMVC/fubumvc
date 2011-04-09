@@ -223,6 +223,16 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
+        /// Returns the *last* ActionCall in this
+        /// BehaviorChain.  May be null.
+        /// </summary>
+        /// <returns></returns>
+        public ActionCall LastCall()
+        {
+            return Calls.LastOrDefault();
+        }
+
+        /// <summary>
         /// Returns the InputType of the very first 
         /// </summary>
         /// <returns></returns>
