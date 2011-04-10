@@ -6,6 +6,7 @@ using FubuFastPack.NHibernate;
 using FubuFastPack.StructureMap;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
+using FubuTestApplication.ConnegActions;
 using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
 
@@ -50,6 +51,11 @@ namespace FubuTestApplication
             Route("viewcase/{Identifier}").Calls<CaseController>(x => x.Case(null));
             Route("loadcases").Calls<CaseController>(x => x.LoadCases(null));
             Route("person/{Id}").Calls<CaseController>(x => x.Person(null));
+
+            Route("conneg/mirror").Calls<MirrorAction>(x => x.Return(null));
+            Route("conneg/buckrogers").Calls<MirrorAction>(x => x.BuckRogers());
+
+            Media.ApplyContentNegotiationToActions(call => call.HandlerType == typeof (MirrorAction));
 
             this.ApplySmartGridConventions(x => { x.ToThisAssembly(); });
         }

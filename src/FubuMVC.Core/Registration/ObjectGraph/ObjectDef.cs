@@ -32,10 +32,25 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             Name = Guid.NewGuid().ToString();
         }
 
-        public ObjectDef(Type type)
+        /// <summary>
+        /// Optional parameterTypes can be used to close type
+        /// if it is an open generic type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="parameterTypes"></param>
+        public ObjectDef(Type type, params Type[] parameterTypes)
             : this()
         {
-            Type = type;
+
+            if (type == null)
+            {
+                throw new ObjectDefException("type cannot be null in this usage");
+            }
+
+            Type = type.IsOpenGeneric() && parameterTypes.Any()
+                       ? type.MakeGenericType(parameterTypes)
+                       : type;
+
         }
 
         /// <summary>
@@ -263,6 +278,16 @@ namespace FubuMVC.Core.Registration.ObjectGraph
                     throw new ObjectDefException("{0} cannot be cast to {1}", Type.FullName, dependencyType.FullName);
                 }
             }
+        }
+
+        /// <summary>
+        /// Locates any explicitly registered dependency of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IDependency DependencyFor<T>()
+        {
+            return Dependencies.FirstOrDefault(x => x.DependencyType == typeof (T));
         }
     }
 }

@@ -4,6 +4,7 @@ using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Configuration;
+using FubuMVC.Core.Conneg;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
@@ -87,7 +88,11 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISmartRequest, FubuSmartRequest>();
 
             graph.Services.SetServiceIfNone(new DiagnosticsIndicator());
-            
+
+            graph.Services.AddService<IFormatter, JsonFormatter>();
+            graph.Services.AddService<IFormatter, XmlFormatter>();
+            graph.Services.SetServiceIfNone(typeof (IMediaProcessor<>), typeof (MediaProcessor<>));
+
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

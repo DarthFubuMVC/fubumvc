@@ -235,5 +235,6 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<ISmartRequest, FubuSmartRequest>();
         }
+
     }
 }

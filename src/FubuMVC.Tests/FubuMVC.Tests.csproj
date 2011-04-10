@@ -96,6 +96,11 @@
     <Compile Include="Commands\Packages\ZipFileServiceTester.cs" />
     <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
+    <Compile Include="Conneg\ConnegBehaviorConventionTester.cs" />
+    <Compile Include="Conneg\ConnegNodeTester.cs" />
+    <Compile Include="Conneg\Conneg_Services_Registration_Tester.cs" />
+    <Compile Include="Conneg\MediaProcessorTester.cs" />
+    <Compile Include="Conneg\XmlFormatterTester.cs" />
     <Compile Include="Content\ContentFolderServiceTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />

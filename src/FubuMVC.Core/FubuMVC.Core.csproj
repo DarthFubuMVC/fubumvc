@@ -70,7 +70,15 @@
     <Compile Include="Behaviors\JavaScriptJsonReader.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
-    <Compile Include="Conneg\ConnegClasses.cs" />
+    <Compile Include="Conneg\ConnegBehavior.cs" />
+    <Compile Include="Conneg\ConnegBehaviorConvention.cs" />
+    <Compile Include="Conneg\ConnegNode.cs" />
+    <Compile Include="Conneg\IFormatter.cs" />
+    <Compile Include="Conneg\IMediaProcessor.cs" />
+    <Compile Include="Conneg\JsonFormatter.cs" />
+    <Compile Include="Conneg\MediaProcessingException.cs" />
+    <Compile Include="Conneg\MediaProcessor.cs" />
+    <Compile Include="Conneg\XmlFormatter.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
     <Compile Include="Content\DefaultMimeTypeProvider.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
@@ -156,6 +164,7 @@
     <Compile Include="Packaging\PackageFiles.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
+    <Compile Include="Registration\DSL\MediaExpression.cs" />
     <Compile Include="Registration\HandlerActionsSet.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />

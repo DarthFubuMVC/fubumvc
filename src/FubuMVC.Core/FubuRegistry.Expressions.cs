@@ -46,6 +46,14 @@ namespace FubuMVC.Core
             get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSourceMatcher); }
         }
 
+        public MediaExpression Media
+        {
+            get
+            {
+                return new MediaExpression(this);
+            }
+        }
+
         public void ResolveTypes(Action<TypeResolver> configure)
         {
             Services(x =>
@@ -166,4 +174,6 @@ namespace FubuMVC.Core
 
         #endregion
     }
+
+
 }

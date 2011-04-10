@@ -53,7 +53,7 @@ namespace FubuMVC.Tests.Registration.ObjectGraph
             Exception<ObjectDefException>.ShouldBeThrownBy(() =>
             {
                 new ConfiguredDependency(typeof(IService), concreteTypeThatIsNull).AssertValid();
-            }).Message.ShouldEqual("No value or concrete type was specified for the dependency");
+            });
         }
 
         [Test]

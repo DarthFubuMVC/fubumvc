@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using System.Xml.Serialization;
 using HtmlTags;
 
 namespace FubuMVC.Core.Runtime
@@ -17,6 +18,21 @@ namespace FubuMVC.Core.Runtime
         public void RewindOutput()
         {
             _output.Position = 0;
+        }
+
+        public void CopyOutputToInputForTesting()
+        {
+            _input = _output;
+        }
+
+        public void XmlInputIs(object target)
+        {
+            var serializer = new XmlSerializer(target.GetType());
+            MemoryStream stream = new MemoryStream();
+            serializer.Serialize(stream, target);
+            stream.Position = 0;
+
+            _input = stream;
         }
 
         public void JsonInputIs(object target)

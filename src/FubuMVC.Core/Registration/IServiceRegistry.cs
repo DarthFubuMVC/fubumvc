@@ -81,6 +81,15 @@ namespace FubuMVC.Core.Registration
         /// <returns></returns>
         ObjectDef DefaultServiceFor<TService>();
 
+
+        /// <summary>
+        /// Returns the currently registered default registration for
+        /// the given TService
+        /// </summary>
+        /// <returns></returns>
+        ObjectDef DefaultServiceFor(Type serviceType);
+
+
         void Each(Action<Type, ObjectDef> action);
 
         /// <summary>

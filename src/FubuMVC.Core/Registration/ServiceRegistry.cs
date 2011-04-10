@@ -76,6 +76,11 @@ namespace FubuMVC.Core.Registration
             return _services[typeof (TService)].FirstOrDefault();
         }
 
+        public ObjectDef DefaultServiceFor(Type serviceType)
+        {
+            return _services[serviceType].FirstOrDefault();
+        }
+
         public IEnumerable<ObjectDef> ServicesFor<TService>()
         {
             return _services[typeof (TService)];
