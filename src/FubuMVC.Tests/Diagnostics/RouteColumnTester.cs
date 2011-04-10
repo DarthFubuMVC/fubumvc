@@ -1,5 +1,7 @@
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
+using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuTestingSupport;

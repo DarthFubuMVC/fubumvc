@@ -4,6 +4,7 @@ using FubuFastPack.Persistence;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;

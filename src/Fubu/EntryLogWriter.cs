@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bottles.Environment;
 using FubuCore;
-using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using HtmlTags;
 
 namespace Fubu

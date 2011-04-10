@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;

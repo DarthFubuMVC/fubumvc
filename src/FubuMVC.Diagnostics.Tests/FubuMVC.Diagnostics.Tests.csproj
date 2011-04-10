@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99A53042-2455-464F-A68E-00C401B177C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuMVC.Diagnostics.Tests</RootNamespace>
+    <AssemblyName>FubuMVC.Diagnostics.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\FubuExtensionsTester.cs" />
+    <Compile Include="DiagnosticsCallWithAttribute.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
+    <Compile Include="Configuration\Spark\DiagnosticsEndpointSparkPolicyTester.cs" />
+    <Compile Include="Endpoints\Chains\when_viewing_an_endpoint.cs" />
+    <Compile Include="Endpoints\DiagnosticsTestEndpointMarker.cs" />
+    <Compile Include="Endpoints\Nested\AnotherEndpoint.cs" />
+    <Compile Include="Endpoints\TestEndpoint.cs" />
+    <Compile Include="Endpoints\when_filtering_requests.cs" />
+    <Compile Include="Endpoints\when_filtering_routes.cs" />
+    <Compile Include="Infrastructure\GridServiceTester.cs" />
+    <Compile Include="Infrastructure\RowComparerTester.cs" />
+    <Compile Include="Models\SampleGridModel.cs" />
+    <Compile Include="ObjectMother.cs" />
+    <Compile Include="Partials\when_executing_a_partial_action.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
+      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
+      <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
+      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
+      <Name>FubuMVC.Diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests\FubuMVC.Tests.csproj">
+      <Project>{FEB91F9F-ECE2-480C-B39C-A44BBF1F7B01}</Project>
+      <Name>FubuMVC.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
+      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
+      <Name>FubuTestingSupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
+      <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
+      <Name>Spark.Web.FubuMVC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

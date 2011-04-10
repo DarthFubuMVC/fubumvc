@@ -21,8 +21,12 @@ namespace FubuMVC.Core.Diagnostics
         private readonly IList<BehaviorStep> _steps = new List<BehaviorStep>();
         private ModelBindingReport _currentModelBinding;
 
+        public Guid Id { get; private set; }
+
         public DebugReport()
         {
+            Id = Guid.NewGuid();
+
             FormData = new Dictionary<string, object>();
             Time = DateTime.Now;
 

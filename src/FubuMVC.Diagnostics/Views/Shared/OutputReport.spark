@@ -1,0 +1,8 @@
+﻿<use master="" />
+<use namespace="FubuCore" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<viewdata model="OutputReport" />
+<h4>Wrote Output (${Model.ContentType})</h4>
+<pre class="output blk {type: '${Model.ContentType}'}">
+  <code>${Model.Contents.HtmlEncode()}</code>
+</pre>

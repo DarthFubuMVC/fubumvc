@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Bootstrapping
 {
     public interface IContainerFacility
     {
-        IBehaviorFactory BuildFactory();
+        IBehaviorFactory BuildFactory(DiagnosticLevel diagnosticLevel);
         void Register(Type serviceType, ObjectDef def);
         IEnumerable<IActivator> GetAllActivators();
         IEnumerable<IInstaller> GetAllInstallers();

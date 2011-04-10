@@ -1,5 +1,6 @@
 using FubuCore.Binding;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Runtime;
 using FubuTestingSupport;

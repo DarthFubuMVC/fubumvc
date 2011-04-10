@@ -6,6 +6,7 @@ namespace FubuMVC.Core.Diagnostics
 {
     public interface IDebugReport
     {
+		Guid Id { get; }
         BehaviorReport StartBehavior(IActionBehavior behavior);
         void EndBehavior();
         void AddDetails(IBehaviorDetails details);

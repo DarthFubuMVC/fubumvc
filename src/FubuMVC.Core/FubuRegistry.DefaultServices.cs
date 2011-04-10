@@ -90,9 +90,13 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone(new DiagnosticsIndicator());
 
+
             graph.Services.AddService<IFormatter, JsonFormatter>();
             graph.Services.AddService<IFormatter, XmlFormatter>();
             graph.Services.SetServiceIfNone(typeof (IMediaProcessor<>), typeof (MediaProcessor<>));
+
+            graph.Services.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
+
 
             registerActivators(graph);
             registerHtmlConventions(graph);

@@ -107,6 +107,7 @@
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
+    <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Models\CollectionPropertyBinderTester.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
     <Compile Include="StructureMapIoC\StubActivator.cs" />
+    <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\DotNotationNamingConventionTester.cs" />
@@ -209,7 +211,6 @@
     <Compile Include="Diagnostics\BehaviorGraphWriterTester.cs" />
     <Compile Include="Diagnostics\BehaviorTracerTester.cs" />
     <Compile Include="Diagnostics\DebugDetectorTester.cs" />
-    <Compile Include="Diagnostics\DebuggingOutputWriterTester.cs" />
     <Compile Include="Diagnostics\DebugReportTester.cs" />
     <Compile Include="Diagnostics\DiagnosticsPackageTester.cs" />
     <Compile Include="Diagnostics\DiagnosticsRegistryTester.cs" />
@@ -412,6 +413,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Core\" />
     <Folder Include="DSL\" />
     <Folder Include="Results\" />
     <Folder Include="View\FakeViews\Folder1\Folder2\Folder3\" />

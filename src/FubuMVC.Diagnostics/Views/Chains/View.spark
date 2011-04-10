@@ -1,0 +1,37 @@
+﻿<viewdata model="ChainModel" />
+<content:title>Chain ${Model.Chain.UniqueId.ToString()}</content:title>
+<content:head>
+  <Stylesheet href="chains/view.css" />
+</content:head>
+<content:main>
+  <h2 class="route">
+    <span>Route: ${Model.Chain.RoutePattern}</span>
+    <if condition="Model.HasConstraints()">
+      <span>(${Model.Constraints})</span>
+    </if>
+  </h2>
+  <h4 class="chain-identifier">(Chain ${Model.Chain.UniqueId.ToString()})</h4>
+  <h3>Nodes:</h3>
+  <ul id="nodes">
+    <li each="var behavior in Model.Behaviors">
+      <div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <span class="ui-button-text">${behavior.BehaviorType}</span>
+      </div>
+      <ul if="behavior.Logs.Any()">
+        <li each="var log in behavior.Logs">${log}</li>
+      </ul>  
+    </li>
+  </ul>
+  <div id="arrow" style="display:none">
+    <Image src="down-arrow.png" />
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var arrow = $('#arrow').html();
+      $('#nodes > li:not(:last)').each(function() {
+        $(this).append('<li class="arrow">' + arrow  + '</li>');
+      });
+    });
+  </script>
+</content:main>

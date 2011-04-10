@@ -16,7 +16,11 @@ namespace FubuMVC.Core.Registration
         void Register(Action<Type, ObjectDef> action);
     }
 
-    public class BehaviorGraph : IRegisterable
+    public interface IChainImporter{
+        void Import(BehaviorGraph graph, Action<BehaviorChain> alternation);
+    }
+
+    public class BehaviorGraph : IRegisterable, IChainImporter
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
@@ -49,43 +53,59 @@ namespace FubuMVC.Core.Registration
             get { return _behaviors.Select(x => x.Route).Where(x => x != null); }
         }
 
-
-        public int BehaviorChainCount
-        {
-            get { return _behaviors.Count; }
-        }
-
+        /// <summary>
+        /// All the BehaviorChain's
+        /// </summary>
         public IEnumerable<BehaviorChain> Behaviors
         {
             get { return _behaviors; }
         }
 
+        /// <summary>
+        /// RouteIterator is used to order Routes within the Routing table
+        /// </summary>
         public IRouteIterator RouteIterator { get; set; }
 
+        /// <summary>
+        /// Register a ChainForwarder that forwards UrlFor requests
+        /// for T to something else
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="converter"></param>
         public void Forward<T>(Func<T, object> converter)
         {
             var forwarder = new ChainForwarder<T>(converter);
             _forwarders.Add(forwarder);
         }
 
+        /// <summary>
+        /// Register a ChainForwarder that forwards UrlFor(category) requests
+        /// for T to something else
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="converter"></param>
+        /// <param name="category"></param>
         public void Forward<T>(Func<T, object> converter, string category)
         {
             var forwarder = new ChainForwarder<T>(converter, category);
             _forwarders.Add(forwarder);
         }
 
+        /// <summary>
+        /// Register a ChainForwarder
+        /// </summary>
+        /// <param name="forwarder"></param>
         public void AddForwarder(IChainForwarder forwarder)
         {
             _forwarders.Add(forwarder);
         }
 
-
-        public void RegisterRoute(BehaviorChain chain, IRouteDefinition route)
-        {
-            _behaviors.Fill(chain);
-            chain.Route = route;
-        }
-
+        /// <summary>
+        /// Finds the matching BehaviorChain for the given IRouteDefinition.  If no
+        /// BehaviorChain exists, one is created and added to the BehaviorGraph
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
         public BehaviorChain BehaviorFor(IRouteDefinition route)
         {
             var chain = _behaviors.FirstOrDefault(x => x.Route == route);
@@ -100,10 +120,6 @@ namespace FubuMVC.Core.Registration
             return chain;
         }
 
-        public IEnumerable<IRouteDefinition> RoutesFor<T>()
-        {
-            return _behaviors.Select(x => x.Route).Where(x => x != null && x.Input != null && x.Input.InputType == typeof(T));
-        }
 
         void IRegisterable.Register(Action<Type, ObjectDef> action)
         {
@@ -123,11 +139,20 @@ namespace FubuMVC.Core.Registration
             });
         }
 
+        /// <summary>
+        /// All of the actions in all of the BehaviorChains
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ActionCall> Actions()
         {
             return allActions().ToList();
         }
 
+        /// <summary>
+        /// An enumeration of all the "FirstCall's" in the
+        /// BehaviorGraph across all BehaviorChains
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ActionCall> FirstActions()
         {
             foreach (BehaviorChain chain in _behaviors)
@@ -151,34 +176,53 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-        public IRouteDefinition RouteFor<T>(Expression<Action<T>> expression)
-        {
-            var chain = BehaviorFor(expression);
-            return chain == null ? null : chain.Route;
-        }
-
+        /// <summary>
+        /// Finds the *first* BehaviorChain that contains an
+        /// ActionCall for the Method designated by the expression
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public BehaviorChain BehaviorFor<T>(Expression<Action<T>> expression)
         {
             var call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Finds the *first* BehaviorChain that contains an
+        /// ActionCall for the Method designated by the expression
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public BehaviorChain BehaviorFor<T>(Expression<Func<T, object>> expression)
         {
             var call = ActionCall.For(expression);
             return _behaviors.Where(x => x.Calls.Contains(call)).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Applies the giving IRouteVisitor to each IRouteDefinition
+        /// </summary>
+        /// <param name="visitor"></param>
         public void VisitRoutes(IRouteVisitor visitor)
         {
             RouteIterator.Over(_behaviors).Each(x => visitor.VisitRoute(x.Route, x));
         }
 
+        /// <summary>
+        /// Writes a summary of the BehaviorGraph to Trace
+        /// </summary>
         public void Describe()
         {
             _behaviors.Each(x => { Trace.WriteLine(x.FirstCall().Description.PadRight(70) + x.Route.Pattern); });
         }
 
+        /// <summary>
+        /// Applies the giving IRouteVisitor to each IRouteDefinition
+        /// </summary>
+        /// <param name="configure"></param>
         public void VisitRoutes(Action<RouteVisitor> configure)
         {
             var visitor = new RouteVisitor();
@@ -186,6 +230,10 @@ namespace FubuMVC.Core.Registration
             VisitRoutes(visitor);
         }
 
+        /// <summary>
+        /// Applies the given IBehaviorVisitor to each BehaviorChain
+        /// </summary>
+        /// <param name="visitor"></param>
         public void VisitBehaviors(IBehaviorVisitor visitor)
         {
             _behaviors.Each(visitor.VisitBehavior);
@@ -196,6 +244,15 @@ namespace FubuMVC.Core.Registration
             _behaviors.Add(chain);
         }
 
+        /// <summary>
+        /// Adds a BehaviorChain for the given url pattern and action type.
+        /// Specify the "arguments" parameters if actionType is an open
+        /// generic type
+        /// </summary>
+        /// <param name="urlPattern"></param>
+        /// <param name="actionType"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
         public BehaviorChain AddActionFor(string urlPattern, Type actionType, params Type[] arguments)
         {
             if (arguments.Any())
@@ -213,7 +270,10 @@ namespace FubuMVC.Core.Registration
             return chain;
         }
 
-
+        /// <summary>
+        /// Adds a new blank BehaviorChain to the BehaviorGraph
+        /// </summary>
+        /// <returns></returns>
         public BehaviorChain AddChain()
         {
             var chain = new BehaviorChain();
@@ -222,7 +282,7 @@ namespace FubuMVC.Core.Registration
             return chain;
         }
 
-        public void Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
+        void IChainImporter.Import(BehaviorGraph graph, Action<BehaviorChain> alternation)
         {
             graph.Behaviors.Each(b =>
             {
@@ -231,6 +291,12 @@ namespace FubuMVC.Core.Registration
             });
         }
 
+        /// <summary>
+        /// Finds the single BehaviorChain with the designated inputType.
+        /// Behaviors.Single(x => x.InputType() == inputType)
+        /// </summary>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
         public BehaviorChain BehaviorFor(Type inputType)
         {
             var chains = Behaviors.Where(x => x.InputType() == inputType);
@@ -249,11 +315,23 @@ namespace FubuMVC.Core.Registration
                                     inputType.AssemblyQualifiedName);
         }
 
+        /// <summary>
+        /// Finds the Id of the single BehaviorChain
+        /// that matches the inputType
+        /// </summary>
+        /// <param name="inputType"></param>
+        /// <returns></returns>
         public Guid IdForType(Type inputType)
         {
             return BehaviorFor(inputType).UniqueId;
         }
 
+        /// <summary>
+        /// Finds the Id of the BehaviorChain containing
+        /// the ActionCall
+        /// </summary>
+        /// <param name="call"></param>
+        /// <returns></returns>
         public Guid IdForCall(ActionCall call)
         {
             var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
@@ -266,18 +344,32 @@ namespace FubuMVC.Core.Registration
             return chain.UniqueId;
         }
 
-
+        /// <summary>
+        /// Finds all the BehaviorChain's for the designated handler T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public HandlerActionsSet ActionsForHandler<T>()
         {
             return ActionsForHandler(typeof (T));
         }
 
+        /// <summary>
+        /// Finds all the BehaviorChain's for the designated handlerType
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public HandlerActionsSet ActionsForHandler(Type handlerType)
         {
             var actions = FirstActions().Where(x => x.HandlerType == handlerType);
             return new HandlerActionsSet(actions, handlerType);
         }
 
+        /// <summary>
+        /// Finds HandlerActionSet's for all the handlers that match handlerFilter
+        /// </summary>
+        /// <param name="handlerFilter"></param>
+        /// <returns></returns>
         public IEnumerable<HandlerActionsSet> HandlerSetsFor(Func<Type, bool> handlerFilter)
         {
             return FirstActions()

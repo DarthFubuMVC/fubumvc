@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title><use content="title"/> | FubuMVC Diagnostics</title>
+	<Stylesheet href="default.css" />
+	<Script src="diagnostics" />
+	<use content="head"/>
+</head>
+<body>
+<div id="Header">
+	<div class="container">
+		<div id="Logo">
+			<h2>
+				<a href="${this.Urls.UrlFor(new DashboardRequestModel())}">
+					<Image src="logo.png" />
+				</a>
+			</h2>
+		</div>
+		<Navigation />
+		<use content="navigation"/>
+		<div class="clear"></div>
+	</div>
+</div>
+<div id="Content">
+    <div class="container">
+	    <use content="main" />
+    </div>
+</div>
+<div id="Footer">
+	<div class="container">
+		<h4>${this.FubuVersion()}</h4>
+	</div>
+</div>
+<Scripts />
+</body>
+</html>

@@ -63,7 +63,6 @@
     <Compile Include="Bootstrap\FubuStructureMapApplication.cs" />
     <Compile Include="Bootstrap\BasicFubuStructureMapRegistry.cs" />
     <Compile Include="SettingsScanner.cs" />
-    <Compile Include="StructureMapBootstrapper.cs" />
     <Compile Include="StructureMapContainerFacility.cs" />
     <Compile Include="StructureMapFubuRegistry.cs" />
     <Compile Include="StructureMapPageHarness.cs" />

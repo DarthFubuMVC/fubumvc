@@ -1,0 +1,143 @@
+body
+{
+	color: #504E4E;
+    font-family: arial,myriad pro,sans-serif;
+    font-size: 78%;
+	font-size: 9pt;
+	width:100%;
+	font-weight: normal;
+	background-color:#333333;
+}
+
+h1, h2, h3, h4 
+{
+	color: #504E4E;
+}
+
+#Header
+{
+	background-color:#fff;
+	padding:10px 0 0 0;
+	border-bottom:1px solid #7096AB;
+}
+
+#Header .container
+{
+    padding: 0 0 0 15px;
+}
+
+#Header #Logo
+{
+	float:left;
+}
+
+#Header #Logo h2
+{
+	font-size: 3.5em;
+    font-weight: 700;
+    height: 27px;
+    line-height: 27px;
+}
+
+#Header #Menu
+{
+	padding-top:5px;
+	float:right;
+	list-style: none;
+	margin-right:.5em;
+}
+
+#Header #Menu li
+{
+	float:left;
+	margin-right: 10px;
+}
+
+#Content
+{
+	padding-top:20px;
+	padding-bottom:20px;
+	background: #fff url("../Images/block.png") repeat-x scroll 0 0;
+	min-height:500px;
+}
+
+#Footer {
+    background-color:#333;
+    border-top: 1px solid #111111;
+    color: #EEEEEE;
+    padding: 40px 0 50px;
+    text-shadow: 0 -1px 0 #000000;
+}
+
+#Footer h4 {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+	color:#fff;
+}
+
+.clear
+{
+	clear:both;
+}
+
+.jqgrow:hover
+{
+    cursor:pointer;
+}
+
+.filter-container h4, .filter-container .filter
+{
+    float:left;
+    margin-right: 10px;
+}
+
+.filter-container h4, .filter-container .ui-button-text
+{
+    font-weight:bold;
+    font-size:12px;
+    line-height:1;
+}
+
+.filter-container
+{
+    margin-bottom:10px;
+}
+
+#filter-dialog button
+{
+    width:100%;
+}
+
+#filter-dialog select, #filter-dialog input[type="text"]
+{
+    font-size: 12px;
+    padding: 5px;
+    line-height:1.4em;
+    float:left;
+    margin-top:0;
+    margin-right:5px;
+    color:#333;
+}
+
+#filter-dialog input[type="text"]
+{
+    width:345px;
+    margin-right:0px;
+}
+
+.ui-widget p
+{
+    margin:0;
+}
+
+.dashboard-notice
+{
+    margin-bottom:10px;
+}
+
+.dashboard-notice .ui-state-highlight
+{
+    padding:10px;
+}

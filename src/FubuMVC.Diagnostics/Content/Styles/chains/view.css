@@ -1,0 +1,26 @@
+#Constraints
+{
+    padding: 0pt 0.7em;
+}
+
+#nodes
+{
+    width:600px;
+}
+
+#nodes li
+{
+    list-style-type: none;
+    margin-top:10px;
+    text-align:center;
+}
+
+h2.route
+{
+    margin-bottom:0;
+}
+
+h4.chain-identifier
+{
+    font-style:italic;
+}

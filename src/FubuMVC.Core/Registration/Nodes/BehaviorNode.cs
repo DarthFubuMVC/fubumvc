@@ -207,6 +207,7 @@ namespace FubuMVC.Core.Registration.Nodes
             return WrapWith(typeof (T));
         }
 
+
         /// <summary>
         /// Shortcut to put a "wrapping" behavior immediately in front of 
         /// this BehaviorNode.  Equivalent to AddBefore(new Wrapper(behaviorType))

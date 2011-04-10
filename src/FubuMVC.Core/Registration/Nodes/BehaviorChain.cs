@@ -268,6 +268,5 @@ namespace FubuMVC.Core.Registration.Nodes
             return this.Where(x => x is Wrapper).Cast<Wrapper>().Any(x => x.BehaviorType == behaviorType);
         }
 
-
     }
 }

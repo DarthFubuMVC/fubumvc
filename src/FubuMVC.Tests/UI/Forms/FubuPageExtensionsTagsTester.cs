@@ -197,9 +197,8 @@ namespace FubuMVC.Tests.UI.Forms
             var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
 
-            var facility = new StructureMapContainerFacility(container);
-            
-            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+
+            FubuApplication.For(registry).StructureMap(container).Bootstrap();
             
             var generator = container.GetInstance<TagGenerator<ViewModel>>();
             
@@ -244,8 +243,8 @@ namespace FubuMVC.Tests.UI.Forms
                 x.HtmlConvention<TestHtmlConventions>();
             });
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
-            var facility = new StructureMapContainerFacility(container);
-            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+
+            FubuApplication.For(registry).StructureMap(container).Bootstrap();
             
             var generator = container.GetInstance<TagGenerator<ArbitraryModel>>();
             _page = MockRepository.GenerateMock<IFubuPage>();
@@ -294,8 +293,9 @@ namespace FubuMVC.Tests.UI.Forms
         {
             var registry = new FubuRegistry(x => x.HtmlConvention<TestHtmlConventions>());
             var container = new Container(x => x.For<IFubuRequest>().Singleton());
-            var facility = new StructureMapContainerFacility(container);
-            new FubuBootstrapper(facility, registry).Bootstrap(new List<RouteBase>());
+
+
+            FubuApplication.For(registry).StructureMap(container).Bootstrap();
 
             var generator = container.GetInstance<TagGenerator<ArbitraryModel>>();
             _page = MockRepository.GenerateMock<IFubuPage>();

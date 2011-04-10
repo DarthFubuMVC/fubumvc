@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
             }).BuildGraph();
 
-            graph.BehaviorChainCount.ShouldBeGreaterThan(0);
+            graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
             graph.Behaviors.Each(x =>
             {
@@ -72,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.IncludeTypesNamed(name => name.EndsWith("Controller"));
             }).BuildGraph();
 
-            graph.BehaviorChainCount.ShouldBeGreaterThan(0);
+            graph.Behaviors.Count().ShouldBeGreaterThan(0);
             graph.Behaviors.Each(x => x.Calls.First().HandlerType.Name.EndsWith("Controller"));
 
             graph.Routes.Each(x => Debug.WriteLine(x.Pattern));

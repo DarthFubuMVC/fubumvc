@@ -1,0 +1,201 @@
+/* -----------------------------------------------------------------------
+
+   SpecialFormula CSS Framework 0.0.1
+   Better CSS Forms + More
+   
+   Provides some basic styling and sense for semantic, simple CSS forms.
+   This framework compliments Blueprint CSS & JQuery/JQuery UI
+   
+   * Copyright (c) 2008-2009 Dustin Ground.
+   License revisions coming soon....
+
+----------------------------------------------------------------------- */
+/* FORMS
+ *
+ * Forms are based on tableless layout techniques, built around "rows" containing
+ * labels and inputs.
+ *
+ * Documentation coming soon...
+*/
+fieldset {
+	width:92%;
+	padding:2% 4%;
+	margin:0 0 1em 0;
+	border:1px solid #f3f3f3;
+	}
+legend {
+	padding:4px 4px 4px 0;
+	font-size:1.2em;
+	font-weight:bold;
+	}
+/* Rows */
+.row {
+	float:left;
+	clear:left;
+	width:100%;
+	margin:0 0 .8em 0;
+	}
+.row-submit {
+	margin-top:15px;
+	}
+/* Buttons (TODO:handled at applcation level for now) */
+input.submit {
+	}
+/* Labels */
+label, label.error {
+	float:left;
+	width:10em;
+	margin:0 .5em 0 0;
+	text-align:left;
+	}
+label, .label, .tabs li.label {
+	font-weight:bold;
+	}
+.row .divider {
+	float:left;
+	padding:.25em;
+	}
+/* Inputs */
+.row input, .row button, .row img {
+	float:left;
+	margin:0 4px 0 0;
+	}
+input.inline {
+	float:left;
+	clear:none;
+	}
+textarea {
+	float:left;
+	margin:0;
+	padding:0;
+	height:auto;
+	}
+/* Radio Buttons */
+input.radio {
+	margin-top:.25em;
+	}
+label.radio {
+	width:auto;
+	font-weight:normal;
+	}
+/* Checkboxes */
+input.checkbox {
+	float:left;
+	margin:0 6px 0 0;
+	}
+label.checkbox {
+	width:auto;
+	text-align:left;
+	font-weight:normal;
+	}
+label.remember {
+	font-size:.9em;
+	}
+/* Drop Downs */
+select {
+	float:left;
+	margin:0 8px 0 0;
+	}
+select option.first {
+	border-bottom:1px dashed #ccc;
+	}
+/* Helpers */
+.row .hint {
+	font-style:italic;
+	}
+.row .divider {
+	float:left;
+	clear:none;
+	margin:0 8px 0 0;
+	}
+.field-hint {
+	float:left;
+	clear:left;
+	margin:0 0 0 11.5em;
+	padding:4px 0 0 0;
+	font-size:.9em;
+	text-align:right;
+	}
+input.skip-label, .no-label {
+	margin-left:12.5em;
+	}
+.watermark {
+	color:#666;
+	}
+.row .static-val 
+{
+	float:left;
+	padding:.2em 0 0 0;
+}
+/* Common Fields */
+.day {
+	width:2em;
+	}
+.year {
+	width:4em;
+	}
+.zip {
+	width:5em;
+	}
+.title {
+	width:30em;
+	}
+.datepicker {
+	width:9em;
+	}
+/*
+ *	Alternate Layouts
+ */
+/* Label Sizes */
+/* TODO: Change to 'labels-short' */
+.labels-sm label {
+	width:7em;
+	}
+.labels-sm .field-hint {
+	margin-left:8.4em;
+	}
+.labels-sm label.checkbox {
+	width:auto;
+	}
+.labels-long label 
+{
+	width:12em;
+}
+.labels-left label 
+{
+	text-align:left;
+}	
+.labels-right label {
+	text-align:right;
+	}
+/* Stacked */
+.stacked .row {
+	margin:0 0 .6em 0;
+	}
+.stacked input, .stacked textarea, .stacked table.radio {
+	float:left;
+	clear:left;
+	}
+.stacked input.inline {
+	clear:none;
+	}
+.stacked label, .stacked .row label {
+	margin:0 0 .3em 0;
+	width:100%;
+	text-align:left;
+	}
+.stacked table.radio {
+	float:none;
+	width:auto;
+	white-space:nowrap;
+	}
+.stacked .hint {
+	float:left;
+	clear:left;
+	width:100%;
+	}
+.stacked .row-submit {
+	width:100%;
+	text-align:left;
+	margin:.6em 0 0 0;
+	}
