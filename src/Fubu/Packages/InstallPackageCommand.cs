@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.IO;
+using Bottles;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 
 namespace Fubu.Packages
 {
@@ -14,7 +15,7 @@ namespace Fubu.Packages
         public override bool Execute(InstallPackageInput input)
         {
             var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
-            var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
+            var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
             var destinationFileName = FileSystem.Combine(packageFolder, Path.GetFileName(input.PackageFile));
             if (input.UninstallFlag)

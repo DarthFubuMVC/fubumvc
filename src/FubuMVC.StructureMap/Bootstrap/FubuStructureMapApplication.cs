@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Routing;
+using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using StructureMap;

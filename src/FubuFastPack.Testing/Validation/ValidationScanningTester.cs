@@ -1,3 +1,5 @@
+using Bottles;
+using Bottles.Diagnostics;
 using FubuFastPack.Testing.Security;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;

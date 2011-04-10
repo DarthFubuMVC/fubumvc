@@ -1,4 +1,7 @@
 using System;
+using Bottles;
+using Bottles.Exploding;
+using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
@@ -38,7 +41,7 @@ namespace Fubu.Packages
             if (input.RemoveAllFlag)
             {
                 Console.WriteLine("Removing all package files and directories from the application at " + input.AppFolder);
-                new FileSystem().DeleteDirectory(input.AppFolder, "bin", FubuMvcPackages.FubuPackagesFolder);
+                new FileSystem().DeleteDirectory(input.AppFolder, "bin", BottleFiles.PackagesFolder);
             }
 
             exploder.LogPackageState(input.AppFolder);

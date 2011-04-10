@@ -1,5 +1,7 @@
 ﻿using System;
+using Bottles;
 using FubuCore.CommandLine;
+using FubuMVC.Core.Packaging;
 
 namespace Fubu
 {
@@ -9,6 +11,9 @@ namespace Fubu
 
         private static int Main(string[] args)
         {
+            BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
+            BottleFiles.PackagesFolder = FubuMvcPackageFacility.FubuPackagesFolder;
+
             try
             {
                 var factory = new CommandFactory();

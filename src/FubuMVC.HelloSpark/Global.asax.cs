@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;

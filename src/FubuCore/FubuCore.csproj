@@ -167,6 +167,8 @@
     <Compile Include="DisplayConversionRegistry.cs" />
     <Compile Include="ScopingSpike.cs" />
     <Compile Include="ServiceEnabledObjectConverter.cs" />
+    <Compile Include="StackFrameExtensions.cs" />
+    <Compile Include="StreamExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Stringifier.cs" />
     <Compile Include="TypeExtensions.cs" />

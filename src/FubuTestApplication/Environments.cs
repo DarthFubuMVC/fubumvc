@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Bottles.Diagnostics;
+using Bottles.Environment;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Packaging.Environment;
 
 namespace FubuTestApplication
 {

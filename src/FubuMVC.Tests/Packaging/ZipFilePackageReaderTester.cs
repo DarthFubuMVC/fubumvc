@@ -1,3 +1,4 @@
+using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
@@ -13,7 +14,7 @@ namespace FubuMVC.Tests.Packaging
         public void zip_packages_should_store_content_in_WebContent_subfolder()
         {
             const string packageFolder = @"c:\packageFolder";
-            var webContentSubFolder = FileSystem.Combine(packageFolder, FubuMvcPackages.WebContentFolder);
+            var webContentSubFolder = FileSystem.Combine(packageFolder, BottleFiles.WebContentFolder);
             ZipFilePackageReader.GetContentFolderForPackage(packageFolder).ShouldEqual(webContentSubFolder);
         }
     }

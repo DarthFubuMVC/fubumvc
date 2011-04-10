@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Bottles;
+using Bottles.Zipping;
 using Fubu.Packages;
 using FubuCore;
 using FubuMVC.Core;
@@ -16,7 +18,7 @@ namespace FubuMVC.Tests.Commands.Packages
         [Test]
         public void read_version_out_of_a_zip_file()
         {
-            var versionFile = Path.Combine(Path.GetTempPath(), FubuMvcPackages.VersionFile);
+            var versionFile = Path.Combine(Path.GetTempPath(), BottleFiles.VersionFile);
             var guid = Guid.NewGuid();
             new FileSystem().WriteStringToFile(versionFile, guid.ToString());
 

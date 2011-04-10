@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging;

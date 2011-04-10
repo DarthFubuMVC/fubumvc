@@ -88,7 +88,6 @@
     <Compile Include="Commands\InstallCommandTester.cs" />
     <Compile Include="Commands\LinkCommandTester.cs" />
     <Compile Include="Commands\ManifestCommandTester.cs" />
-    <Compile Include="Commands\Packages\AssemblyFileFinderTester.cs" />
     <Compile Include="Commands\Packages\CreatePackageCommandTester.cs" />
     <Compile Include="Commands\Packages\PackageCreatorTester.cs" />
     <Compile Include="Commands\Packages\PackageExploderTester.cs" />
@@ -106,27 +105,15 @@
     <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
+    <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Models\CollectionPropertyBinderTester.cs" />
     <Compile Include="Models\PropertyBinderTester.cs" />
-    <Compile Include="Packaging\AssemblyLoaderTester.cs" />
-    <Compile Include="Packaging\AssemblyPackageInfoTester.cs" />
-    <Compile Include="Packaging\Environment\EnvironmentRunTester.cs" />
-    <Compile Include="Packaging\Environment\FakeEnvironment.cs" />
-    <Compile Include="Packaging\Environment\LogEntryTester.cs" />
-    <Compile Include="Packaging\LambdaActivatorTester.cs" />
-    <Compile Include="Packaging\PackageInfoTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
-    <Compile Include="Packaging\PackageRegistryTester.cs" />
-    <Compile Include="Packaging\PackagingDiagnosticsTester.cs" />
-    <Compile Include="Packaging\PackagingRegistryLogTester.cs" />
-    <Compile Include="Packaging\PackagingRuntimeGraphTester.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />
-    <Compile Include="Packaging\StubPackage.cs" />
     <Compile Include="Packaging\ZipFilePackageReaderTester.cs" />
-    <Compile Include="Packaging\ZipFileServiceTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
@@ -175,6 +162,7 @@
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
+    <Compile Include="StructureMapIoC\StubActivator.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\DotNotationNamingConventionTester.cs" />
@@ -362,6 +350,10 @@
     <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bottles\Bottles.csproj">
+      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
+      <Name>Bottles</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>

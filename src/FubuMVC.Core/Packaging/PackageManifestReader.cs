@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bottles;
+using Bottles.Assemblies;
 using FubuCore;
 
 namespace FubuMVC.Core.Packaging
@@ -53,8 +55,8 @@ namespace FubuMVC.Core.Packaging
 
 
             // Right here, this needs to be different
-            package.RegisterFolder(FubuMvcPackages.WebContentFolder, _getContentFolderFromPackageFolder(folder));
-            package.RegisterFolder(FubuMvcPackages.DataFolder, Path.Combine(folder, FubuMvcPackages.DataFolder));
+            package.RegisterFolder(BottleFiles.WebContentFolder, _getContentFolderFromPackageFolder(folder));
+            package.RegisterFolder(BottleFiles.DataFolder, Path.Combine(folder, BottleFiles.DataFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
         	var debugPath = FileSystem.Combine(binPath, "debug");

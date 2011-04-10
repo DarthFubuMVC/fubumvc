@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
@@ -62,8 +63,8 @@ namespace Spark.Web.FubuMVC
 
 	    private static ConfigureSparkSettingsExpression registerViewFolder(ConfigureSparkExpression expression, IPackageInfo package)
 	    {
-	        var virtualFolderRoot = "~/{0}/{1}/{2}/views/".ToFormat(FubuMvcPackages.FubuContentFolder, 
-	                                                                    package.Name, FubuMvcPackages.WebContentFolder);
+            var virtualFolderRoot = "~/{0}/{1}/{2}/views/".ToFormat(BottleFiles.ContentFolder,
+                                                                        package.Name, BottleFiles.WebContentFolder);
 	        return expression.Settings.AddViewFolder(virtualFolderRoot);
 	    }
 	}

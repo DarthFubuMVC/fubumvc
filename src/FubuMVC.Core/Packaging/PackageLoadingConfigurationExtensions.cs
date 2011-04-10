@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.Packaging
+using Bottles;
+
+namespace FubuMVC.Core.Packaging
 {
     public static class PackageLoadingConfigurationExtensions
     {

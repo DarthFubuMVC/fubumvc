@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using Bottles.Environment;
 using FubuCore;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Packaging.Environment;
 using HtmlTags;
 
 namespace Fubu

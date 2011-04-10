@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Content
 {
@@ -15,7 +16,7 @@ namespace FubuMVC.Core.Content
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            packages.Each(p => p.ForFolder(FubuMvcPackages.WebContentFolder, topFolder =>
+            packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, topFolder =>
             {
                 var contentFolder = FileSystem.Combine(topFolder, "content");
 

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Fubu.Packages;
+using Bottles;
+using Bottles.Assemblies;
+using Bottles.Zipping;
+using Fubu.Packages.Creation;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
@@ -108,7 +111,7 @@ namespace FubuMVC.Tests.Commands.Packages
         {
             _theZipFileService.ZipRequests.ShouldContain(new ZipFolderRequest(){
                 FileSet = theManifest.ContentFileSet,
-                ZipDirectory = FubuMvcPackages.WebContentFolder,
+                ZipDirectory = BottleFiles.WebContentFolder,
                 RootDirectory = theInput.PackageFolder
             });
         }
@@ -119,8 +122,8 @@ namespace FubuMVC.Tests.Commands.Packages
             _theZipFileService.ZipRequests.ShouldContain(new ZipFolderRequest()
             {
                 FileSet = theManifest.DataFileSet,
-                ZipDirectory = FubuMvcPackages.DataFolder,
-                RootDirectory = Path.Combine(theInput.PackageFolder, FubuMvcPackages.DataFolder)
+                ZipDirectory = BottleFiles.DataFolder,
+                RootDirectory = Path.Combine(theInput.PackageFolder, BottleFiles.DataFolder)
             });
         }
     }

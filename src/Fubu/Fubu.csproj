@@ -71,6 +71,10 @@
     <Compile Include="Packages\AssemblyPackageCommand.cs" />
     <Compile Include="Packages\AssemblyPackageInput.cs" />
     <Compile Include="Packages\CreatePackageCommand.cs" />
+    <Compile Include="Packages\Creation\CreatePackageInput.cs" />
+    <Compile Include="Packages\Creation\IPackageLogger.cs" />
+    <Compile Include="Packages\Creation\PackageCreator.cs" />
+    <Compile Include="Packages\Creation\PackageLogger.cs" />
     <Compile Include="Packages\InstallPackageCommand.cs" />
     <Compile Include="Packages\InstallPackageInput.cs" />
     <Compile Include="Packages\PackagesCommand.cs" />
@@ -81,6 +85,10 @@
     <Compile Include="VdirCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bottles\Bottles.csproj">
+      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
+      <Name>Bottles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>

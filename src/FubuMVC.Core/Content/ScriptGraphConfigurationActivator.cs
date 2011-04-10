@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
@@ -21,7 +23,7 @@ namespace FubuMVC.Core.Content
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             ReadScriptConfig(FubuMvcPackageFacility.GetApplicationPath(), log);
-            packages.Each(p => p.ForFolder(FubuMvcPackages.WebContentFolder, folder => ReadScriptConfig(folder, log)));
+            packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadScriptConfig(folder, log)));
 
             _scripts.CompileDependencies(log);
         }

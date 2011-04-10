@@ -1,4 +1,5 @@
 using Fubu.Packages;
+using Fubu.Packages.Creation;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
