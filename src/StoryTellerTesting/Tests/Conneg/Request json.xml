@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Test name="Request json" lifecycle="Acceptance">
+  <Conneg>
+    <RequestNameWithMimeType isStep="True" contentType="application/json" />
+    <TheResponseText isStep="True" response="{Name=&quot;Buck Rogers&quot;}" />
+    <TheResponseContentTypeIs isStep="True" responseType="application/json" />
+    <SendToMirror isStep="True" content="{FirstName=&quot;Jeremy&quot; LastName=&quot;Miller&quot;}" contentType="application/json" />
+    <TheResponseContentTypeIs isStep="True" responseType="application/json" />
+    <TheResponseText isStep="True" response="{FullName=&quot;Jeremy Miller&quot;}" />
+  </Conneg>
+</Test>

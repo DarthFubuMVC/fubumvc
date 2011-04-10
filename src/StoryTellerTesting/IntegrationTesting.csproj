@@ -85,6 +85,7 @@
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
     <Compile Include="debugging.cs" />
+    <Compile Include="Fixtures\ConnegFixture.cs" />
     <Compile Include="Fixtures\FubuFastPack\GridsFixture.cs" />
     <Compile Include="Fixtures\FubuFastPack\QueryServiceFixture.cs" />
     <Compile Include="Fixtures\FubuFastPack\SmartGridFixture.cs" />

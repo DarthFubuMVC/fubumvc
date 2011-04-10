@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using GenericEnumerableExtensions = System.Collections.Generic.GenericEnumerableExtensions;
 
 namespace FubuMVC.Core.Conneg
 {
@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Conneg
 
         public void Configure(BehaviorGraph graph)
         {
-            GenericEnumerableExtensions.Each<BehaviorChain>(graph.Behaviors.Where(_filter), chain => attachMediaHandling(chain, graph.Observer));
+            graph.Behaviors.Where(_filter).Each(chain => attachMediaHandling(chain, graph.Observer));
         }
 
         private void attachMediaHandling(BehaviorChain chain, IConfigurationObserver observer)
