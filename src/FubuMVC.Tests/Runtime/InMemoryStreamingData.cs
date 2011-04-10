@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
@@ -62,5 +63,7 @@ namespace FubuMVC.Core.Runtime
         public Stream Output
         {
             get { return _output; } }
+
+        public string OutputContentType { get; set; }
     }
 }

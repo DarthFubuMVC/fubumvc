@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public MediaExpression ApplyContentNegotiationTo(Expression<Func<BehaviorChain, bool>> filter)
         {
-            _fubuRegistry.ApplyConvention(new ConnegBehaviorConvention(filter.Compile(), "BehaviorChain meets criteria:  " + filter.ToString()));
+            _fubuRegistry.Policies.Add(new ConnegBehaviorConvention(filter.Compile(), "BehaviorChain meets criteria:  " + filter.ToString()));
             return this;
         }
 
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             var callPredicate = filter.Compile();
             Func<BehaviorChain, bool> chainFilter = chain => chain.Calls.Any(callPredicate);
-            _fubuRegistry.ApplyConvention(new ConnegBehaviorConvention(chainFilter, "Any action meets " + filter.ToString()));
+            _fubuRegistry.Policies.Add(new ConnegBehaviorConvention(chainFilter, "Any action meets " + filter.ToString()));
             return this;
         }
 

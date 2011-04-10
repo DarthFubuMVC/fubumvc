@@ -18,6 +18,11 @@ namespace IntegrationTesting.Fixtures.Packages
             _runner.RunFubu("packages fubu-testing -removeall");
         }
 
+        public override void TearDown()
+        {
+            _runner.RunFubu("restart fubu-testing");
+        }
+
         [FormatAs("Install package {zipFile}")]
         public void InstallPackage(string zipFile)
         {
@@ -36,10 +41,7 @@ namespace IntegrationTesting.Fixtures.Packages
             _runner.RunFubu(commandLine);
         }
 
-        public override void TearDown()
-        {
-            _runner.RunFubu("restart fubu-testing");
-        }
+
 
         
     }

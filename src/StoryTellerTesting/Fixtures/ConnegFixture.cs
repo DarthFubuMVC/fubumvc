@@ -5,14 +5,16 @@ namespace IntegrationTesting.Fixtures
 {
     public class ConnegFixture : Fixture
     {
-        private readonly ApplicationDriver _application;
         private string _lastResponse;
         private string _lastResponseContentType;
 
-        public ConnegFixture(ApplicationDriver application)
+        public override void SetUp(ITestContext context)
         {
-            _application = application;
+            var runner = context.Retrieve<CommandRunner>();
+            runner.RunFubu("packages fubu-testing -removeall");
+            runner.RunFubu("restart fubu-testing");
         }
+
 
         [FormatAs("Request 'name' with {contentType}")]
         public void RequestNameWithMimeType(string contentType)

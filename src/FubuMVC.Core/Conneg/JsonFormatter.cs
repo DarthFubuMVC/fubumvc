@@ -15,12 +15,12 @@ namespace FubuMVC.Core.Conneg
             _reader = reader;
         }
 
-        public T Read<T>()
+        public T Read<T>(CurrentRequest currentRequest)
         {
             return _reader.Read<T>();
         }
 
-        public void Write<T>(T target)
+        public void Write<T>(T target, CurrentRequest request)
         {
             _writer.Write(target);
         }

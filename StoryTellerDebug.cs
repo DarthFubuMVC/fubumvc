@@ -15,9 +15,9 @@ namespace StoryTellerTestHarness
         }
 
         [Test]
-        public void Query_options_for_a_grid_with_strings_and_numbers()
+        public void Request_json()
         {
-            runner.RunAndAssertTest("FastPack/Grids/Query options for a grid with strings and numbers");
+            runner.RunAndAssertTest("Conneg/Request json");
         }
 
         [TestFixtureTearDown]

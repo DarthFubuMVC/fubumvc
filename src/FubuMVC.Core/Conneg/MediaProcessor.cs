@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Conneg
 
         public T Retrieve(CurrentRequest request)
         {
-            return findFormatter(request).Read<T>();
+            return findFormatter(request).Read<T>(request);
         }
 
         private IFormatter findFormatter(CurrentRequest request)
@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Conneg
 
         public void Write(T target, CurrentRequest request)
         {
-            findFormatter(request).Write(target);
+            findFormatter(request).Write(target, request);
         }
     }
 }

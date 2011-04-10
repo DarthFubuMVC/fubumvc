@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Conneg
         {
             theFormatters[0].Stub(x => x.Matches(theCurrentRequest)).Return(true);
             var theExpectedValue = new MediaProcessorInput();
-            theFormatters[0].Stub(x => x.Read<MediaProcessorInput>()).Return(theExpectedValue);
+            theFormatters[0].Stub(x => x.Read<MediaProcessorInput>(theCurrentRequest)).Return(theExpectedValue);
 
             ClassUnderTest.Retrieve(theCurrentRequest).ShouldBeTheSameAs(theExpectedValue);
         }
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Conneg
         {
             theFormatters[2].Stub(x => x.Matches(theCurrentRequest)).Return(true);
             var theExpectedValue = new MediaProcessorInput();
-            theFormatters[2].Stub(x => x.Read<MediaProcessorInput>()).Return(theExpectedValue);
+            theFormatters[2].Stub(x => x.Read<MediaProcessorInput>(theCurrentRequest)).Return(theExpectedValue);
 
             ClassUnderTest.Retrieve(theCurrentRequest).ShouldBeTheSameAs(theExpectedValue);
         }
@@ -47,9 +47,9 @@ namespace FubuMVC.Tests.Conneg
 
             ClassUnderTest.Write(theExpectedValue, theCurrentRequest);
 
-            theFormatters[0].AssertWasCalled(x => x.Write(theExpectedValue));
-            theFormatters[1].AssertWasNotCalled(x => x.Write(theExpectedValue));
-            theFormatters[2].AssertWasNotCalled(x => x.Write(theExpectedValue));
+            theFormatters[0].AssertWasCalled(x => x.Write(theExpectedValue, theCurrentRequest));
+            theFormatters[1].AssertWasNotCalled(x => x.Write(theExpectedValue, theCurrentRequest));
+            theFormatters[2].AssertWasNotCalled(x => x.Write(theExpectedValue, theCurrentRequest));
         }
 
 
@@ -61,9 +61,9 @@ namespace FubuMVC.Tests.Conneg
 
             ClassUnderTest.Write(theExpectedValue, theCurrentRequest);
 
-            theFormatters[0].AssertWasNotCalled(x => x.Write(theExpectedValue));
-            theFormatters[1].AssertWasNotCalled(x => x.Write(theExpectedValue));
-            theFormatters[2].AssertWasCalled(x => x.Write(theExpectedValue));
+            theFormatters[0].AssertWasNotCalled(x => x.Write(theExpectedValue, theCurrentRequest));
+            theFormatters[1].AssertWasNotCalled(x => x.Write(theExpectedValue, theCurrentRequest));
+            theFormatters[2].AssertWasCalled(x => x.Write(theExpectedValue, theCurrentRequest));
         }
     }
 
