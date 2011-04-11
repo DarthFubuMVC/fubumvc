@@ -1,0 +1,28 @@
+﻿Goal is to create a new Spark behavior that has:
+
+- Func<Stream> -- i.e., "knows" how to get the raw contents of a spark view.  We don't want it to knowing view name, file location, or anything about where it comes from.
+- InputType -- if any, should be a RenderSpark<T> where T is the input type.
+- Change BehaviorNode ToBehavioralNode() in IViewToken to take in the ActionCall (or input type most likely).
+
+- No usage of SparkSettings on DSL and view location should completely go away from runtime.
+- No global SparkSettings, ActionContext & ViewContext.
+
+- Scanning for Spark files:
+
+ - Do a deep search for files in one pass, then untangle the namespaces and folders by rooting the file path at the top.
+ - Discover *all* possible Spark view tokens by scanning the file system first.
+ - Derive the "namespace" from its location from the root.  
+
+Mate up ActionCall's and ViewTokens:
+
+- Use attachment scanning like the WebForms model.
+- The ViewAttacher business needs to work as is.
+
+Reducing contextual information in the new Spark behavior:
+
+   Utilize closures in order to provide necessary contextual information for each SparkViewToken to the Spark ViewEngine 
+   during configuration time rather than runtime. Result should be a Spark behavior with the proper Func<Stream> for each SparkViewToken.
+
+Activators:
+
+We might use an IActivator approach to "fuse" Func<Stream>'s on SparkViewTokens (unclear), and check if output type in spark file, if present, is correct (possible by using spark parser).
