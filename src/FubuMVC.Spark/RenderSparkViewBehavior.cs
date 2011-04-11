@@ -1,18 +1,31 @@
-﻿using System;
+﻿using System.IO;
 using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Spark
 {
     public class RenderSparkViewBehavior : IActionBehavior
     {
+        private readonly SparkViewOutput _output;
+
+        public RenderSparkViewBehavior(SparkViewOutput output)
+        {
+            _output = output;
+        }
+
         public void Invoke()
         {
-            throw new NotImplementedException();
+            renderStream(_output.Render());
         }
 
         public void InvokePartial()
         {
-            throw new NotImplementedException();
+            renderStream(_output.RenderPartial());
         }
+
+        private void renderStream(Stream stream)
+        {
+            //TBD
+        }
+
     }
 }

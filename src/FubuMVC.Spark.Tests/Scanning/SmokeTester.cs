@@ -32,9 +32,7 @@ namespace FubuMVC.Spark.Tests.Scanning
                 // IN THE END, EACH ONE OF THOSE (OR ANY OTHER) IDEALLY SHOULD BECOME AN STRATEGY
                 Path.Combine("Scanning", "Templates", "Shared", "application.spark")
             };
-
             engine.ViewFolder = new FileSystemViewFolder(file.Root);
-
             foreach (var template in templates)
             {
                 descriptor.AddTemplate(template);

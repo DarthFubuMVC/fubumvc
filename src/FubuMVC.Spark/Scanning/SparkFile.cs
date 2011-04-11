@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace FubuMVC.Spark.Scanning
 {
@@ -16,11 +14,7 @@ namespace FubuMVC.Spark.Scanning
         public string Root { get; private set; }
     }
 
-    public class SparkFiles : Collection<SparkFile>, IVisitable<SparkFile>
+    public class SparkFiles : Collection<SparkFile>
     {
-        public void AcceptVisitor(IVisitor<SparkFile> visitor)
-        {
-            this.Each(visitor.Visit);
-        }
     }
 }

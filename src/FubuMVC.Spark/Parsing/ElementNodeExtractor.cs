@@ -10,6 +10,8 @@ namespace FubuMVC.Spark.Parsing
     public interface IElementNodeExtractor
     {
         IEnumerable<ElementNode> Extract(string content);
+        IEnumerable<ElementNode> ExtractBy(string content, Func<ElementNode, bool> predicate);
+        IEnumerable<ElementNode> ExtractByName(string content, string name);
     }
 
     public class ElementNodeExtractor : IElementNodeExtractor

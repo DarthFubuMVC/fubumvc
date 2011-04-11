@@ -1,5 +1,8 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Spark.Parsing;
 using FubuMVC.Spark.Scanning;
 
 namespace FubuMVC.Spark
@@ -15,9 +18,16 @@ namespace FubuMVC.Spark
             _call = call;
         }
 
+        protected override void configureObject(ObjectDef def)
+        {
+            var extractor = new ElementNodeExtractor();
+            var output = new SparkViewOutput(_file, extractor, new FileSystem());
+            def.DependencyByValue(output);
+        }
+        
         public Type InputType()
         {
-            throw new NotImplementedException();
+            return _call.HasInput ? _call.InputType() : null;
         }
     }
 }

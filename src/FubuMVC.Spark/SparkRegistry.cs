@@ -70,7 +70,6 @@ namespace FubuMVC.Spark
 
         public void Configure(BehaviorGraph graph)
         {
-
         }
     }
 }
