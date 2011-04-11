@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Parsing\ElementNodeExtensionsTester.cs" />
     <Compile Include="Parsing\ElementNodeExtractorTester.cs" />
+    <Compile Include="Scanning\SmokeTester.cs" />
     <Compile Include="Scanning\SparkScannerTester.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,7 +107,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Scanning\Templates\Shared\_footer.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scanning\Templates\_header.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scanning\Templates\Shared\application.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

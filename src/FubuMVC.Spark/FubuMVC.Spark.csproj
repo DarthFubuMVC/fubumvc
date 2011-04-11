@@ -49,12 +49,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Classes.cs" />
+    <Compile Include="RenderSparkViewBehavior.cs" />
     <Compile Include="Scanning\IScanSource.cs" />
     <Compile Include="Scanning\SparkScanner.cs" />
     <Compile Include="Scanning\SparkFile.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkRegistry.cs" />
     <Compile Include="SparkViewFacility.cs" />
+    <Compile Include="SparkViewNode.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Parsing\ElementNodeExtensions.cs" />
     <Compile Include="Parsing\ElementNodeExtractor.cs" />

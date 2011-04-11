@@ -1,1 +1,4 @@
-﻿
+﻿<use master="application" />
+<header/>
+hello world
+<footer/>
