@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Bottles;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Spark.Scanning;
 
@@ -30,12 +27,7 @@ namespace FubuMVC.Spark
 
         public void Configure(FubuRegistry registry)
         {
-            // Note: We could have just one entry configuration 
-            //       and have our own policies that we put into that.
-            
-            registry.Policies.Add<SparkScannerConfiguration>();
-            registry.Policies.Add(new SparkFilesConfiguration(_sparkFiles));
-
+            registry.Policies.Add(new SparkConfiguration(_sparkFiles));
             registry.Import(this, string.Empty);
         }
 
@@ -45,7 +37,7 @@ namespace FubuMVC.Spark
             {
                 s.SetServiceIfNone(_sparkFiles);
 
-                //_viewFacility = new SparkViewFacility();
+                //_viewFacility = new SparkViewFacility(...);
                 s.AddService(_viewFacility);
             });
         }
@@ -68,28 +60,17 @@ namespace FubuMVC.Spark
         }
     }
 
-    // NOTE: I think we could only use one IConfigurationAction to put on the parent registry.
-
-    public class SparkScannerConfiguration : IConfigurationAction
-    {
-        public void Configure(BehaviorGraph graph)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SparkFilesConfiguration : IConfigurationAction
+    public class SparkConfiguration : IConfigurationAction
     {
         private readonly SparkFiles _sparkFiles;
-
-        public SparkFilesConfiguration(SparkFiles sparkFiles)
+        public SparkConfiguration(SparkFiles sparkFiles)
         {
             _sparkFiles = sparkFiles;
         }
 
         public void Configure(BehaviorGraph graph)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
