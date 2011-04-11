@@ -14,22 +14,16 @@ namespace FubuMVC.Spark
     public class SparkRegistry : FubuRegistry, IFubuRegistryExtension
     {
         private IViewFacility _viewFacility;
+
         private readonly SparkFiles _sparkFiles;
         private readonly IList<IScanSource> _sources;
-
         private readonly ISparkScanner _scanner;
-
-        // NOTE: not so sure about this
-        // NOTE: Remember that we will need to support different policies on the "matching" from each package
-        ///      not saying that this will not allow for it, but let us give this an extra thought.
-        private readonly Builder<ActionCall, SparkFile> _matcher;
 
         public SparkRegistry()
         {
             _sources = new List<IScanSource>();
             _sparkFiles = new SparkFiles();
             _scanner = new SparkScanner(new FileSystem());
-            _matcher = new Builder<ActionCall, SparkFile>(call => null);
 
             services();
         }
@@ -51,22 +45,23 @@ namespace FubuMVC.Spark
             {
                 s.SetServiceIfNone(_sparkFiles);
 
-                _viewFacility = new SparkViewFacility(_matcher.Build);
+                //_viewFacility = new SparkViewFacility();
                 s.AddService(_viewFacility);
             });
         }
 
-
+        // TBD
         public void UsingDefaultSources()
         {
             AddSource<WebRootSource>();
             AddSource(new PackagesSource(PackageRegistry.Packages));
         }
-
+        // TBD
         public void AddSource<T>() where T : IScanSource, new()
         {
             _sources.Add(new T());
         }
+        // TBD
         public void AddSource(IScanSource source)
         {
             _sources.Add(source);

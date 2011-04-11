@@ -58,6 +58,7 @@
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Parsing\ElementNodeExtensions.cs" />
     <Compile Include="Parsing\ElementNodeExtractor.cs" />
+    <Compile Include="ViewTokenSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

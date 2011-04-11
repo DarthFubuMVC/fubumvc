@@ -8,7 +8,7 @@ namespace FubuMVC.Spark.Scanning
 {
     public interface ISparkScanner
     {
-        IEnumerable<SparkFile> Scan(IEnumerable<string> paths);
+        IEnumerable<SparkFile> Scan(IEnumerable<string> roots);
     }
 
     public class SparkScanner : ISparkScanner
@@ -21,9 +21,9 @@ namespace FubuMVC.Spark.Scanning
             _fileSystem = fileSystem;
         }
         
-        public IEnumerable<SparkFile> Scan(IEnumerable<string> paths)
+        public IEnumerable<SparkFile> Scan(IEnumerable<string> roots)
         {
-            var sources = sortPaths(paths);
+            var sources = sortRoots(roots);
             var fileSet = createFileSet();
 
             _scannedDirectories = new List<string>();
@@ -56,7 +56,7 @@ namespace FubuMVC.Spark.Scanning
             return _scannedDirectories.Contains(path) || !_fileSystem.DirectoryExists(path);
         }
 
-        private IEnumerable<string> sortPaths(IEnumerable<string> paths)
+        private IEnumerable<string> sortRoots(IEnumerable<string> paths)
         {
             return paths
                 .Select(p => new { Path = p, Depth = p.Split(Path.DirectorySeparatorChar).Count() })
@@ -69,6 +69,7 @@ namespace FubuMVC.Spark.Scanning
         {
             return new FileSet
             {
+                // TODO: Make this configurable, but let's stay with this for now
                 Include = "*.spark",
                 DeepSearch = false
             };

@@ -4,6 +4,8 @@ using FubuCore;
 
 namespace FubuMVC.Spark.Scanning
 {
+    // TODO : Perhaps just a basic source that you can register against.
+
     public interface IScanSource
     {
         IEnumerable<string> Paths();
