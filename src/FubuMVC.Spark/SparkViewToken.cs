@@ -19,7 +19,7 @@ namespace FubuMVC.Spark
 
         public BehaviorNode ToBehavioralNode()
         {
-            return new SparkViewNode(_file, _call);
+            return null;
         }
 
         public Type ViewType

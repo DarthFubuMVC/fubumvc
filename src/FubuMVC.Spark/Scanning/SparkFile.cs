@@ -24,7 +24,7 @@ namespace FubuMVC.Spark.Scanning
 
     public static class SparkFileHelper
     {
-        public static string Ns(this SparkFile file)
+        public static string Namespace(this SparkFile file)
         {
             return Path.GetDirectoryName(file.Path).PathRelativeTo(file.Root).Replace(Path.DirectorySeparatorChar, '.');
         }

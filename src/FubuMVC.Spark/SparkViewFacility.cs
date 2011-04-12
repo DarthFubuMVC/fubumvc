@@ -8,15 +8,15 @@ namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly IViewTokenSource _tokenSource;
-        public SparkViewFacility(IViewTokenSource tokenSource)
+        private readonly IViewTokenizer _tokenizer;
+        public SparkViewFacility(IViewTokenizer tokenizer)
         {
-            _tokenSource = tokenSource;
+            _tokenizer = tokenizer;
         }
 
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            return _tokenSource.FindFrom(graph.Actions());
+            return _tokenizer.Tokenize(graph.Actions());
         }
 
         public BehaviorNode CreateViewNode(Type type)

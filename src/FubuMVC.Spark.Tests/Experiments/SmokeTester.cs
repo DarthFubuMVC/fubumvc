@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Spark;
 using Spark.FileSystem;
 
-namespace FubuMVC.Spark.Tests.Scanning
+namespace FubuMVC.Spark.Tests.Experiments
 {
     public class SmokeTester
     {

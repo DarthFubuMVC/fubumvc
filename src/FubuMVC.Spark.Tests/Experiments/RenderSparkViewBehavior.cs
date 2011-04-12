@@ -1,7 +1,8 @@
 ﻿using System.IO;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 
-namespace FubuMVC.Spark
+namespace FubuMVC.Spark.Tests.Experiments
 {
     public class RenderSparkViewBehavior : IActionBehavior
     {

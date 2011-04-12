@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.Scanning
         [Test]
         public void correct_root_is_assigned_to_found_files()
         {
-            Func<string, string> pathFor = root => _testSource.Paths().Select(p => p.Path).Single(p => p.EndsWith(root));
+            Func<string, string> pathFor = root => _testSource.Paths().Single(p => p.Path.EndsWith(root)).Path;
 
             _scanResult.Where(s => s.Root == pathFor("Templates")).ShouldHaveCount(8);
             _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(6);
@@ -42,26 +42,7 @@ namespace FubuMVC.Spark.Tests.Scanning
         [Test]
         public void deepest_roots_are_searched_first()
         {
-            // Design needs to be changed a bit.
-        }
-
-        [Test]
-        public void temporary()
-        {
-            _scanResult
-                .Select(f => new
-                {
-                    f.Path, 
-                    f.Root, 
-                    Ns = Path.GetDirectoryName(f.Path).PathRelativeTo(f.Root).Replace(Path.DirectorySeparatorChar, '.')
-                })
-                .Each(f =>
-                {
-                    Console.WriteLine("Path: " + f.Path);
-                    Console.WriteLine("Root: " + f.Root);
-                    Console.WriteLine("Ns: " + f.Ns);
-                    Console.WriteLine();
-                });
+            // Design needs to be changed.
         }
 
         // TODO: Add more coverage
@@ -71,10 +52,10 @@ namespace FubuMVC.Spark.Tests.Scanning
     {
         public IEnumerable<SourcePath> Paths()
         {
-            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Scanning", "Templates");
-            yield return new SourcePath { Path = templatePath };
-            yield return new SourcePath { Path = FileSystem.Combine(templatePath, "Pak1") };
-            yield return new SourcePath { Path = FileSystem.Combine(templatePath, "Pak2") };
+            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Scanning", "Templates");             
+            yield return new SourcePath{Category = SourceCategory.Host, Origin ="", Path = templatePath};
+            yield return new SourcePath{Category = SourceCategory.Package, Origin ="", Path = FileSystem.Combine(templatePath, "Pak1")};
+            yield return new SourcePath{Category = SourceCategory.Package, Origin ="", Path = FileSystem.Combine(templatePath, "Pak2")};
         }
     }
 }

@@ -6,21 +6,21 @@ using FubuMVC.Spark.Scanning;
 
 namespace FubuMVC.Spark
 {
-    public interface IViewTokenSource
+    public interface IViewTokenizer
     {
-        IEnumerable<SparkViewToken> FindFrom(IEnumerable<ActionCall> actionCalls);
+        IEnumerable<SparkViewToken> Tokenize(IEnumerable<ActionCall> actionCalls);
     }
 
-    public class ViewTokenSource : IViewTokenSource
+    public class ViewTokenizer : IViewTokenizer
     {
         private readonly IEnumerable<IViewTokenStrategy> _strategies;
 
-        public ViewTokenSource(IEnumerable<IViewTokenStrategy> strategies)
+        public ViewTokenizer(IEnumerable<IViewTokenStrategy> strategies)
         {
             _strategies = strategies;
         }
 
-        public IEnumerable<SparkViewToken> FindFrom(IEnumerable<ActionCall> actionCalls)
+        public IEnumerable<SparkViewToken> Tokenize(IEnumerable<ActionCall> actionCalls)
         {
             foreach (var call in actionCalls)
             {
@@ -35,12 +35,12 @@ namespace FubuMVC.Spark
             }
         }
     }
+
     public interface IViewTokenStrategy
     {
         bool Applies(ActionCall call);
         SparkFile Get(ActionCall call);
     }
-
 
     public class ByNamespaceStrategy : IViewTokenStrategy
     {
@@ -49,22 +49,21 @@ namespace FubuMVC.Spark
 
         public ByNamespaceStrategy(IEnumerable<SparkFile> files)
         {
-            _cache = new Cache<ActionCall, SparkFile>();
+            _cache = new Cache<ActionCall, SparkFile>(locator);
             _files = files;
+        }
+
+        private SparkFile locator(ActionCall actionCall)
+        {
+            return _files.FirstOrDefault(f => 
+                actionCall.Method.Name == f.Name() && 
+                actionCall.HandlerType.Namespace == f.Namespace());
         }
 
         public bool Applies(ActionCall call)
         {
-            var ns = call.HandlerType.Namespace;
-            var methodName = call.Method.Name;
-            foreach (var file in _files.Where(file => ns == file.Ns() && methodName == file.Name()))
-            {
-                _cache.Fill(call, file);
-                return true;
-            }
-            return false;
+            return _cache[call] != null;
         }
-
 
         public SparkFile Get(ActionCall call)
         {

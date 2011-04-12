@@ -5,7 +5,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Spark.Parsing;
 using FubuMVC.Spark.Scanning;
 
-namespace FubuMVC.Spark
+namespace FubuMVC.Spark.Tests.Experiments
 {
     public class SparkViewNode : OutputNode<RenderSparkViewBehavior>, IMayHaveInputType
     {

@@ -4,8 +4,6 @@ using FubuCore;
 
 namespace FubuMVC.Spark.Scanning
 {
-    // TODO : Perhaps just a basic source that you can register against.
-
     public enum SourceCategory
     {
         Host,
@@ -31,8 +29,8 @@ namespace FubuMVC.Spark.Scanning
             yield return new SourcePath
             {
                 Path = "~/".ToPhysicalPath(), 
-                Category = SourceCategory.Host, 
-                Origin = ""
+                Category = SourceCategory.Host,
+                Origin = SourceCategory.Host.ToString()
             };
         }
     }
@@ -59,7 +57,7 @@ namespace FubuMVC.Spark.Scanning
                     continue;
                 }
                 sourcePath.Category = SourceCategory.Package;
-                sourcePath.Origin = package.Name;
+                sourcePath.Origin = package.Name;                
                 yield return sourcePath;
             }
         }

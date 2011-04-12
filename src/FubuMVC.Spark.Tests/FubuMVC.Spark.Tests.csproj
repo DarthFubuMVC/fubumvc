@@ -62,15 +62,22 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Experiments\Classes.cs" />
+    <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
+    <Compile Include="Experiments\SparkViewNode.cs" />
     <Compile Include="Parsing\ElementNodeExtensionsTester.cs" />
     <Compile Include="Parsing\ElementNodeExtractorTester.cs" />
-    <Compile Include="Scanning\SmokeTester.cs" />
+    <Compile Include="Experiments\SmokeTester.cs" />
     <Compile Include="Scanning\SparkScannerTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
       <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>

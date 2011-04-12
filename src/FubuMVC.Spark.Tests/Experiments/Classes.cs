@@ -7,10 +7,8 @@ using FubuMVC.Spark.Scanning;
 using Spark;
 using Spark.FileSystem;
 
-namespace FubuMVC.Spark
+namespace FubuMVC.Spark.Tests.Experiments
 {
-
-    // TODO: NOT THE FINAL CLASS, SUBJECT OF FURTHER REFACTORING AND REFINEMENT
     public class SparkViewOutput
     {
         private readonly SparkFile _file;
@@ -33,7 +31,6 @@ namespace FubuMVC.Spark
         {
             return getStream(true);
         }
-
 
         private Stream getStream(bool isPartial)
         {
