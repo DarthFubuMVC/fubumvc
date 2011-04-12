@@ -83,6 +83,8 @@
     <Compile Include="CommandLine\InputParserTester.cs" />
     <Compile Include="CommandLine\StringTokenizerTester.cs" />
     <Compile Include="CommandLine\UsageGraphTester.cs" />
+    <Compile Include="Configuration\XmlSettingsDataTester.cs" />
+    <Compile Include="Configuration\XmlSettingsIntegratedTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
     <Compile Include="FileSetTester.cs" />
     <Compile Include="FileSystemTester.cs" />
@@ -129,6 +131,20 @@
       <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
       <Name>FubuTestingSupport</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Configuration\Environment.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\One.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\Three.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\Two.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -100,6 +100,8 @@
     <Compile Include="Binding\ServiceArguments.cs" />
     <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
+    <Compile Include="Configuration\AppSettingClasses.cs" />
+    <Compile Include="Configuration\XmlSettingsData.cs" />
     <Compile Include="Reflection\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />
     <Compile Include="Binding\ValueConverterRegistry.cs" />
