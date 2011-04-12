@@ -101,6 +101,8 @@
     <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
     <Compile Include="Configuration\AppSettingClasses.cs" />
+    <Compile Include="Configuration\InMemorySettingsData.cs" />
+    <Compile Include="Configuration\SettingsRequestData.cs" />
     <Compile Include="Configuration\XmlSettingsData.cs" />
     <Compile Include="Reflection\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />
