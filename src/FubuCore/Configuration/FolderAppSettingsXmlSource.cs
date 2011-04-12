@@ -1,35 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
 using System.Linq;
+using System.Xml;
+
 
 namespace FubuCore.Configuration
 {
-    public enum SettingCategory
-    {
-        environment,
-        package,
-        core
-    }
-
-    public interface ISettingsData
-    {
-        string Description { get; }
-        SettingCategory Category { get; }
-
-        bool Has(string key);
-        string Get(string key);
-        IEnumerable<string> AllKeys { get; }
-    }
-
-
-    public interface ISettingsSource
-    {
-        IEnumerable<ISettingsData> FindSettingData();
-    }
-
-    // Assume the same file structure as an appSettings file,
-    // with the caveat that the first node can have a "category" attribute
     public class FolderAppSettingsXmlSource : ISettingsSource
     {
         private readonly string _folder;

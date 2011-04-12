@@ -53,7 +53,7 @@ namespace FubuCore.Testing.Configuration
 
     public class ThreeSettings
     {
-        public int Threshhold { get; set; }
+        public int Threshold { get; set; }
         public string Direction { get; set; }
     }
 }

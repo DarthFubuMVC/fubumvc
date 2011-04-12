@@ -100,8 +100,12 @@
     <Compile Include="Binding\ServiceArguments.cs" />
     <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
-    <Compile Include="Configuration\AppSettingClasses.cs" />
+    <Compile Include="Configuration\SettingsProvider.cs" />
+    <Compile Include="Configuration\FolderAppSettingsXmlSource.cs" />
     <Compile Include="Configuration\InMemorySettingsData.cs" />
+    <Compile Include="Configuration\ISettingsData.cs" />
+    <Compile Include="Configuration\ISettingsSource.cs" />
+    <Compile Include="Configuration\SettingCategory.cs" />
     <Compile Include="Configuration\SettingsRequestData.cs" />
     <Compile Include="Configuration\XmlSettingsData.cs" />
     <Compile Include="Reflection\TypeDescriptorCache.cs" />

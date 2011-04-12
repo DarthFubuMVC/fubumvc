@@ -1,4 +1,5 @@
 using System;
+using FubuCore.Reflection;
 using FubuMVC.Core;
 using Microsoft.Practices.ServiceLocation;
 
@@ -66,6 +67,11 @@ namespace FubuCore.Binding
                 throw new FubuException(2201, e, "Fatal error while binding model of type {0}.  See inner exception",
                                         type.AssemblyQualifiedName);
             }
+        }
+
+        public static ObjectResolver Basic()
+        {
+            return new ObjectResolver(null, ModelBinderCache.Basic());
         }
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="CommandLine\InputParserTester.cs" />
     <Compile Include="CommandLine\StringTokenizerTester.cs" />
     <Compile Include="CommandLine\UsageGraphTester.cs" />
+    <Compile Include="Configuration\SettingsProviderIntegratedTester.cs" />
     <Compile Include="Configuration\SettingsRequestDataTester.cs" />
     <Compile Include="Configuration\XmlSettingsDataTester.cs" />
     <Compile Include="Configuration\XmlSettingsIntegratedTester.cs" />
