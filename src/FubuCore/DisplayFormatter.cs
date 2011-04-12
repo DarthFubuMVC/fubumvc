@@ -16,6 +16,8 @@ namespace FubuCore
         private readonly IServiceLocator _locator;
         private readonly Stringifier _stringifier;
 
+        // IServiceLocator should be injected into the constructor as
+        // a dependency
         public DisplayFormatter(IServiceLocator locator, Stringifier stringifier)
         {
             _locator = locator;

@@ -1,11 +1,8 @@
 using System;
-using System.Linq.Expressions;
-using FubuCore.Configuration;
 using FubuCore.Binding;
 using Microsoft.Practices.ServiceLocation;
-using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Configuration
+namespace FubuCore.Configuration
 {
     public class AppSettingsProvider : ISettingsProvider
     {

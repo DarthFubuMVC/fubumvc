@@ -70,4 +70,14 @@ namespace FubuMVC.Tests.Registration.ObjectGraph
     public abstract class AbstractService : IService{}
     public class ConcreteService : IService{}
     public class NotAService{}
+
+    public class ArbitraryConcreteClass
+    {
+        // I should be able to resolve or "get" this from 
+        // the IoC container, with the IService dependency resolved,
+        // without having to explicitly register ArbitraryConcreteClass
+        public ArbitraryConcreteClass(IService dependency)
+        {
+        }
+    }
 }

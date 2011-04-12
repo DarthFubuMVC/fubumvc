@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
@@ -10,7 +10,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core
 {
-    public partial class FubuRegistry
+    public partial class FubuRegistry : IFubuRegistry
     {
         private void setupDefaultConventionsAndPolicies()
         {

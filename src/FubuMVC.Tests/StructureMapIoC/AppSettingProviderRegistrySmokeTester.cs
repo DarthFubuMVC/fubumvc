@@ -1,4 +1,4 @@
-using FubuMVC.Core.Configuration;
+using FubuCore.Configuration;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;

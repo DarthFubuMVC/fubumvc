@@ -9,7 +9,7 @@ using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core
 {
-    public partial class FubuRegistry
+    public partial class FubuRegistry : IFubuRegistry
     {
         private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
 

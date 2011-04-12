@@ -165,7 +165,6 @@
     <Compile Include="Reflection\SingleProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DisplayConversionRegistry.cs" />
-    <Compile Include="ScopingSpike.cs" />
     <Compile Include="ServiceEnabledObjectConverter.cs" />
     <Compile Include="StackFrameExtensions.cs" />
     <Compile Include="StreamExtensions.cs" />
@@ -181,9 +180,7 @@
     <Compile Include="Util\CompositePredicate.cs" />
     <Compile Include="Util\Indexer.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

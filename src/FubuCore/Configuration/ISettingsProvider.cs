@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Core.Configuration
+namespace FubuCore.Configuration
 {
     public interface ISettingsProvider
     {

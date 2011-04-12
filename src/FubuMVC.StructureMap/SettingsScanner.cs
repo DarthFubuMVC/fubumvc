@@ -1,5 +1,5 @@
 using System;
-using FubuMVC.Core.Configuration;
+using FubuCore.Configuration;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;

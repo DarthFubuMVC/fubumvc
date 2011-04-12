@@ -1,15 +1,19 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Configuration;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Configuration;
 using FubuMVC.Core.Conneg;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
@@ -28,6 +32,50 @@ using FubuMVC.Core.Web.Security;
 
 namespace FubuMVC.Core
 {
+    public interface IFubuRegistry
+    {
+        RouteConventionExpression Routes { get; }
+        OutputDeterminationExpression Output { get; }
+        ViewExpression Views { get; }
+        PoliciesExpression Policies { get; }
+        ModelsExpression Models { get; }
+        AppliesToExpression Applies { get; }
+        ActionCallCandidateExpression Actions { get; }
+        MediaExpression Media { get; }
+        DiagnosticLevel DiagnosticLevel { get; }
+        string Name { get; }
+        void ResolveTypes(Action<TypeResolver> configure);
+        void UsingObserver(IConfigurationObserver observer);
+        void Services(Action<IServiceRegistry> configure);
+
+        void ApplyConvention<TConvention>()
+            where TConvention : IConfigurationAction, new();
+
+        void ApplyConvention<TConvention>(TConvention convention)
+            where TConvention : IConfigurationAction;
+
+        ChainedBehaviorExpression Route(string pattern);
+        void Import<T>(string prefix) where T : FubuRegistry, new();
+        void Import(FubuRegistry registry, string prefix);
+        void IncludeDiagnostics(bool shouldInclude);
+        void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration);
+
+        /// <summary>
+        ///   This allows you to drop down to direct manipulation of the BehaviorGraph
+        ///   produced by this FubuRegistry
+        /// </summary>
+        /// <param name = "alteration"></param>
+        void Configure(Action<BehaviorGraph> alteration);
+
+        void HtmlConvention<T>() where T : HtmlConventionRegistry, new();
+        void HtmlConvention(HtmlConventionRegistry conventions);
+        void HtmlConvention(Action<HtmlConventionRegistry> configure);
+        void StringConversions<T>() where T : DisplayConversionRegistry, new();
+        void StringConversions(Action<DisplayConversionRegistry> configure);
+        void ActionCallProvider(Func<Type, MethodInfo, ActionCall> actionCallProvider);
+        BehaviorGraph BuildGraph();
+    }
+
     public partial class FubuRegistry
     {
         private void setupServices(BehaviorGraph graph)

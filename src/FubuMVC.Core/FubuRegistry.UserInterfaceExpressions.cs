@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core
 {
-    public partial class FubuRegistry
+    public partial class FubuRegistry : IFubuRegistry
     {
         public void HtmlConvention<T>() where T : HtmlConventionRegistry, new()
         {
