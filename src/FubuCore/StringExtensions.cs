@@ -52,9 +52,9 @@ namespace FubuCore
             for (int i = 0; i < rootParts.Count; i++)
             {
                 pathParts.Insert(0, "..");
-            }
+            }            
 
-            return FileSystem.Combine(pathParts.ToArray());
+            return pathParts.Count > 0 ? FileSystem.Combine(pathParts.ToArray()) : string.Empty;
         }
 
         public static bool IsEmpty(this string stringValue)

@@ -37,6 +37,9 @@ namespace FubuCore.Testing
 
             fullPath("A", "b", "1.bat").PathRelativeTo(fullPath("A", "b"))
                 .ShouldEqual("1.bat");
+
+            fullPath("A", "b").PathRelativeTo(fullPath("A", "b"))
+                .ShouldBeEmpty();
         }
 
         [Test]
