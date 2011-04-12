@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Tests.Scanning
         [Test]
         public void all_spark_files_in_sources_are_found()
         {
-            _scanResult.ShouldHaveCount(7);
+            _scanResult.ShouldHaveCount(15);
         }
 
         [Test]
@@ -34,17 +34,35 @@ namespace FubuMVC.Spark.Tests.Scanning
         {
             Func<string, string> pathFor = root => _testSource.Paths().Single(p => p.EndsWith(root));
 
-            _scanResult.Where(s => s.Root == pathFor("Templates")).ShouldHaveCount(4);
-            _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(2);
+            _scanResult.Where(s => s.Root == pathFor("Templates")).ShouldHaveCount(8);
+            _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(6);
             _scanResult.Where(s => s.Root == pathFor("Pak2")).ShouldHaveCount(1);
         }        
 
         [Test]
         public void deepest_roots_are_searched_first()
         {
-            
+            // Design needs to be changed a bit.
         }
 
+        [Test]
+        public void temporary()
+        {
+            _scanResult
+                .Select(f => new
+                {
+                    f.Path, 
+                    f.Root, 
+                    Ns = Path.GetDirectoryName(f.Path).PathRelativeTo(f.Root).Replace(Path.DirectorySeparatorChar, '.')
+                })
+                .Each(f =>
+                {
+                    Console.WriteLine("Path: " + f.Path);
+                    Console.WriteLine("Root: " + f.Root);
+                    Console.WriteLine("Ns: " + f.Ns);
+                    Console.WriteLine();
+                });
+        }
 
         // TODO: Add more coverage
     }

@@ -88,6 +88,18 @@
     <Content Include="Scanning\Templates\A4.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scanning\Templates\Pak1\Alpha\Hotel.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scanning\Templates\Pak1\Alpha\Bravo\Bar.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scanning\Templates\Pak1\Alpha\Bravo\Charlie\Delta.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scanning\Templates\Pak1\Alpha\Foxtrot\Golf.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scanning\Templates\Pak1\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -113,6 +125,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scanning\Templates\Views\F1\G1.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scanning\Templates\_header.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
