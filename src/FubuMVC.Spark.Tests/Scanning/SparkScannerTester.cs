@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.Scanning
         [Test]
         public void correct_root_is_assigned_to_found_files()
         {
-            Func<string, string> pathFor = root => _testSource.Paths().Single(p => p.EndsWith(root));
+            Func<string, string> pathFor = root => _testSource.Paths().Select(p => p.Path).Single(p => p.EndsWith(root));
 
             _scanResult.Where(s => s.Root == pathFor("Templates")).ShouldHaveCount(8);
             _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(6);
@@ -69,13 +69,12 @@ namespace FubuMVC.Spark.Tests.Scanning
 
     public class TestSource : IScanSource
     {
-        public IEnumerable<string> Paths()
+        public IEnumerable<SourcePath> Paths()
         {
-            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Scanning", "Templates"); 
-            
-            yield return templatePath;
-            yield return FileSystem.Combine(templatePath, "Pak1");
-            yield return FileSystem.Combine(templatePath, "Pak2");
+            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Scanning", "Templates");
+            yield return new SourcePath { Path = templatePath };
+            yield return new SourcePath { Path = FileSystem.Combine(templatePath, "Pak1") };
+            yield return new SourcePath { Path = FileSystem.Combine(templatePath, "Pak2") };
         }
     }
 }

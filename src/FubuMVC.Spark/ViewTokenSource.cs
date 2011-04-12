@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Spark.Scanning;
 
@@ -26,51 +26,49 @@ namespace FubuMVC.Spark
             {
                 var local = call;
                 var strategy = _strategies.FirstOrDefault(x => x.Applies(local));
-                if(strategy!=null)
+                if (strategy == null)
                 {
-                    var result = strategy.Get(call);
-                    yield return result;
+                    continue;
                 }
+                var file = strategy.Get(local);
+                yield return new SparkViewToken(file, local);
             }
         }
     }
     public interface IViewTokenStrategy
     {
         bool Applies(ActionCall call);
-        SparkViewToken Get(ActionCall call);
+        SparkFile Get(ActionCall call);
     }
 
 
     public class ByNamespaceStrategy : IViewTokenStrategy
     {
         private readonly IEnumerable<SparkFile> _files;
-        private SparkFile _found;
+        private readonly Cache<ActionCall, SparkFile> _cache;
+
         public ByNamespaceStrategy(IEnumerable<SparkFile> files)
         {
+            _cache = new Cache<ActionCall, SparkFile>();
             _files = files;
         }
 
         public bool Applies(ActionCall call)
         {
-            var methodNamespace = string.Format("{0}{1}{2}.spark", call.HandlerType.Namespace.Split('.').Join(Path.DirectorySeparatorChar.ToString()),
-                                                Path.DirectorySeparatorChar, call.Method.Name);
-            foreach (var file in _files)
+            var ns = call.HandlerType.Namespace;
+            var methodName = call.Method.Name;
+            foreach (var file in _files.Where(file => ns == file.Ns() && methodName == file.Name()))
             {
-                var fileVirtualPath = file.Path.Replace(file.Root, "").TrimStart(Path.AltDirectorySeparatorChar);
-                if (fileVirtualPath != methodNamespace)
-                {
-                    continue;
-                }
-                _found = file;
+                _cache.Fill(call, file);
                 return true;
             }
             return false;
         }
 
 
-        public SparkViewToken Get(ActionCall call)
+        public SparkFile Get(ActionCall call)
         {
-            return new SparkViewToken(_found, call);
+            return _cache[call];
         }
     }
 }

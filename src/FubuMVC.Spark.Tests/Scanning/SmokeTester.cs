@@ -16,14 +16,14 @@ namespace FubuMVC.Spark.Tests.Scanning
 
             var filePath = Path.Combine(outputPath, "Scanning", "Templates", "A3.spark");
 
-            var file = new SparkFile(filePath, outputPath);
+            var file = new SparkFile(filePath, outputPath, "");
 
             var engine = new SparkViewEngine();
             var descriptor = new SparkViewDescriptor();
             var templates = new[]
             {
                 // view path
-                file.Path.Replace(outputPath, "").TrimStart(Path.DirectorySeparatorChar),
+                file.RelativePath(),
                 // master page
                 // NOT NECESSARILY THIS WAY
                 // WE COULD PARSE FOR <use master="application.spark|something.spark"/> AND SET THIS IN THE DESCRIPTOR

@@ -8,7 +8,7 @@ namespace FubuMVC.Spark.Scanning
 {
     public interface ISparkScanner
     {
-        IEnumerable<SparkFile> Scan(IEnumerable<string> roots);
+        IEnumerable<SparkFile> Scan(IEnumerable<SourcePath> roots);
     }
 
     public class SparkScanner : ISparkScanner
@@ -21,7 +21,7 @@ namespace FubuMVC.Spark.Scanning
             _fileSystem = fileSystem;
         }
         
-        public IEnumerable<SparkFile> Scan(IEnumerable<string> roots)
+        public IEnumerable<SparkFile> Scan(IEnumerable<SourcePath> roots)
         {
             var sources = sortRoots(roots);
             var fileSet = createFileSet();
@@ -31,8 +31,8 @@ namespace FubuMVC.Spark.Scanning
             var scanResult = new List<SparkFile>();            
             sources.Each(root =>
             {
-                Action<string> onFound = path => scanResult.Add(new SparkFile(path, root));
-                scanDirectory(root, fileSet, onFound);
+                Action<string> onFound = path => scanResult.Add(new SparkFile(path, root.Path, root.Origin));
+                scanDirectory(root.Path, fileSet, onFound);
             });
 
             return scanResult;
@@ -56,16 +56,16 @@ namespace FubuMVC.Spark.Scanning
             return _scannedDirectories.Contains(path) || !_fileSystem.DirectoryExists(path);
         }
 
-        private IEnumerable<string> sortRoots(IEnumerable<string> paths)
+        private static IEnumerable<SourcePath> sortRoots(IEnumerable<SourcePath> sources)
         {
-            return paths
-                .Select(p => new { Path = p, Depth = p.Split(Path.DirectorySeparatorChar).Count() })
+            return sources
+                .Select(p => new { Path = p, Depth = p.Path.Split(Path.DirectorySeparatorChar).Count() })
                 .OrderByDescending(o => o.Depth)
                 .Select(p => p.Path)
                 .ToList();
         }
 
-        private FileSet createFileSet()
+        private static FileSet createFileSet()
         {
             return new FileSet
             {
