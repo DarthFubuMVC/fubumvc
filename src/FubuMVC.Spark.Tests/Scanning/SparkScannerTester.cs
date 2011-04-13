@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.Tests.Scanning
         public SparkScannerTester()
         {
             _testSource = new TestSource();
-            _scanner = new SparkScanner(new FileSystem());
+            _scanner = new SparkScanner(new FileSystem(), new SparkFileComposer(Enumerable.Empty<ISparkFileAlteration>()));
 
             _scanResult = _scanner.Scan(_testSource.Paths());
         }

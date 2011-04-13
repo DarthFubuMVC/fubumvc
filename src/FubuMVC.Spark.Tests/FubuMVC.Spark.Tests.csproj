@@ -70,6 +70,7 @@
     <Compile Include="Experiments\SmokeTester.cs" />
     <Compile Include="Parsing\Templates.cs" />
     <Compile Include="Parsing\ViewModelTypeParserTester.cs" />
+    <Compile Include="Scanning\NamespaceAlterationTester.cs" />
     <Compile Include="Scanning\SparkScannerTester.cs" />
   </ItemGroup>
   <ItemGroup>

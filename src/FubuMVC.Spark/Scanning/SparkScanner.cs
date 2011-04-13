@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Spark.Parsing;
 
 namespace FubuMVC.Spark.Scanning
 {
@@ -14,13 +15,15 @@ namespace FubuMVC.Spark.Scanning
     public class SparkScanner : ISparkScanner
     {
         private readonly IFileSystem _fileSystem;
+        private readonly ISparkFileComposer _composer;
         private IList<string> _scannedDirectories;
 
-        public SparkScanner(IFileSystem fileSystem)
+        public SparkScanner(IFileSystem fileSystem, ISparkFileComposer composer)
         {
             _fileSystem = fileSystem;
+            _composer = composer;
         }
-        
+
         public IEnumerable<SparkFile> Scan(IEnumerable<SourcePath> roots)
         {
             var sources = sortRoots(roots);
@@ -28,31 +31,22 @@ namespace FubuMVC.Spark.Scanning
 
             _scannedDirectories = new List<string>();
 
-            var scanResult = new List<SparkFile>();            
+            var scanResult = new List<SparkFile>();
             sources.Each(root =>
             {
-                Action<string> onFound = path => scanResult.Add(getSparkFile(root, path));
+                Action<string> onFound = path => scanResult.Add(_composer.Compose(root, path));
                 scanDirectory(root.Path, fileSet, onFound);
             });
 
             return scanResult;
         }
 
-        private static SparkFile getSparkFile(SourcePath source,string path)
-        {
-            return new SparkFile(path, source.Path, source.Origin)
-            {
-                Namespace = "" /*FIX*/,
-                ViewModel = null /*FIX*/
-            };
-        }
-
         private void scanDirectory(string path, FileSet fileSet, Action<string> onFound)
         {
             if (alreadyScannedOrNonexistent(path)) { return; }
 
-            _scannedDirectories.Add(path);            
-            
+            _scannedDirectories.Add(path);
+
             _fileSystem.ChildDirectoriesFor(path)
                 .Each(dir => scanDirectory(dir, fileSet, onFound));
 
@@ -82,6 +76,85 @@ namespace FubuMVC.Spark.Scanning
                 Include = "*.spark",
                 DeepSearch = false
             };
+        }
+    }
+
+    public interface ISparkFileComposer
+    {
+        SparkFile Compose(SourcePath source, string filePath);
+    }
+
+    public interface ISparkFileAlteration
+    {
+        void Alter(SparkFile file);
+    }
+
+    public class SparkFileComposer : ISparkFileComposer
+    {
+        private readonly IEnumerable<ISparkFileAlteration> _alterations;
+
+        public SparkFileComposer(IEnumerable<ISparkFileAlteration> alterations)
+        {
+            _alterations = alterations;
+        }
+
+        public SparkFile Compose(SourcePath source, string filePath)
+        {
+            var file = new SparkFile(filePath, source.Path, source.Origin);
+
+            _alterations.Each(x => x.Alter(file));
+
+            return file;
+        }
+    }
+
+    public class ViewModelAlteration : ISparkFileAlteration
+    {
+        private readonly IFileSystem _fileSystem;
+        private readonly IViewModelTypeParser _parser;
+
+        public ViewModelAlteration(IFileSystem fileSystem, IViewModelTypeParser parser)
+        {
+            _fileSystem = fileSystem;
+            _parser = parser;
+        }
+
+        public void Alter(SparkFile file)
+        {
+            var content = _fileSystem.ReadStringFromFile(file.Path);
+            var type = _parser.Parse(content);
+            file.ViewModel = type;
+        }
+    }
+
+    public class NamespaceAlteration : ISparkFileAlteration
+    {
+        public void Alter(SparkFile file)
+        {
+            //TODO: FIX THIS, INTRODUCE PROPER ALGORITHM
+            if (file.ViewModel != null)
+            {
+                var assemblyName = file.ViewModel.Assembly.GetName().Name;
+
+                var relativePath = file.Path.Replace(file.Root, "").TrimStart(Path.DirectorySeparatorChar);
+                var parts = relativePath
+                    .Split(Path.DirectorySeparatorChar)
+                    .Reverse().Skip(1) // exclude file name [something.spark]
+                    .Reverse();// swap back to the original order
+
+                var relativeNamespace = string.Empty; 
+                
+                if(parts.Any())
+                {
+                    // joining each part with '.'
+                    relativeNamespace = parts
+                    .Aggregate((a, b) => a + "." + b);
+                    relativeNamespace = "." + relativeNamespace;
+                }
+
+                var ns = assemblyName + relativeNamespace;
+                file.Namespace = ns;
+            }
         }
     }
 }

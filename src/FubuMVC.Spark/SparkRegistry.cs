@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Bottles;
 using FubuCore;
 using FubuMVC.Core;
@@ -20,7 +21,7 @@ namespace FubuMVC.Spark
         {
             _sources = new List<IScanSource>();
             _sparkFiles = new SparkFiles();
-            _scanner = new SparkScanner(new FileSystem());
+            _scanner = new SparkScanner(new FileSystem(), new SparkFileComposer(Enumerable.Empty<ISparkFileAlteration>()));
 
             services();
         }
