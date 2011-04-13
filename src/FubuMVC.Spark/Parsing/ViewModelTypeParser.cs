@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
 
@@ -38,9 +39,7 @@ namespace FubuMVC.Spark.Parsing
         {
             return _nodeExtractor
                 .ExtractByName(content, "viewdata")
-                .Select(n => n.AttributeByName("model"))
-                .Where(v => v != null)
-                .FirstOrDefault();
+                .FirstValue(n => n.AttributeByName("model"));
         }
     }
 }
