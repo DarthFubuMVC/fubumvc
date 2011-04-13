@@ -4,7 +4,6 @@ using System.Reflection;
 using Bottles;
 using Bottles.Assemblies;
 using Bottles.Diagnostics;
-using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -18,7 +17,7 @@ namespace FubuMVC.Tests.Packaging
     public class PackageManifestReaderIntegratedTester
     {
         private string packageFolder;
-        private PackageManifestReader reader;
+        private DebugPackageManifestReader reader;
 
         [SetUp]
         public void SetUp()
@@ -33,7 +32,7 @@ namespace FubuMVC.Tests.Packaging
 
             fileSystem.PersistToFile(manifest, packageFolder, PackageManifest.FILE);
 
-            reader = new PackageManifestReader("../../".ToFullPath(), fileSystem, folder => folder);
+            reader = new DebugPackageManifestReader("../../".ToFullPath(), fileSystem, folder => folder);
         }
 
 

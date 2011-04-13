@@ -9,13 +9,13 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    public class PackageManifestReader : IPackageLoader, IPackageManifestReader
+    public class DebugPackageManifestReader : IPackageLoader, IPackageManifestReader
     {
         private readonly string _applicationFolder;
         private readonly IFileSystem _fileSystem;
         private readonly Func<string, string> _getContentFolderFromPackageFolder;
 
-        public PackageManifestReader(string applicationFolder, IFileSystem fileSystem, Func<string, string> getContentFolderFromPackageFolder)
+        public DebugPackageManifestReader(string applicationFolder, IFileSystem fileSystem, Func<string, string> getContentFolderFromPackageFolder)
         {
             if (!Path.IsPathRooted(applicationFolder))
             {

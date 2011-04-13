@@ -165,7 +165,7 @@
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
-    <Compile Include="Packaging\ZipFilePackageReader.cs" />
+    <Compile Include="Packaging\ZipFilePackageLoader.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\DSL\MediaExpression.cs" />
@@ -188,7 +188,7 @@
     <Compile Include="Packaging\ApplicationManifest.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Packaging\PackageManifest.cs" />
-    <Compile Include="Packaging\PackageManifestReader.cs" />
+    <Compile Include="Packaging\DebugPackageManifestReader.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
