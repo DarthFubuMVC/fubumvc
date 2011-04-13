@@ -1,5 +1,4 @@
 using FubuMVC.Core;
-using FubuMVC.Core.View;
 using FubuMVC.HelloFubuSpark.Controllers.Products;
 
 namespace FubuMVC.HelloFubuSpark.Controllers.UrlTemplate
@@ -60,7 +59,4 @@ namespace FubuMVC.HelloFubuSpark.Controllers.UrlTemplate
     public class UrlTemplateRequest
     {
     }
-
-    public class Query : FubuPage<UrlTemplateViewModel> { }
-    public class Find : FubuPage<ViewProductViewModel> { }
 }

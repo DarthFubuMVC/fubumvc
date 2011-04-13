@@ -80,18 +80,12 @@
     <None Include="Shared\Application.spark" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Home\HomeController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Login\LoggedInStatusController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
-    <Compile Include="Controllers\Products\ProductsController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\Products\ProductsController.cs" />
     <Compile Include="Controllers\Security\SecretController.cs" />
-    <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

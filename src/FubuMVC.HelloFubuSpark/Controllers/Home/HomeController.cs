@@ -1,5 +1,4 @@
 using System.Web;
-using FubuMVC.Core.View;
 
 namespace FubuMVC.HelloFubuSpark.Controllers.Home
 {
@@ -41,9 +40,5 @@ namespace FubuMVC.HelloFubuSpark.Controllers.Home
     public class HomeInputModel
     {
         public string Url { get; set; }
-    }
-    
-    public class Home : FubuPage<HomeViewModel>
-    {
     }
 }

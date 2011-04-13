@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using FubuMVC.Core.View;
 
 namespace FubuMVC.HelloFubuSpark.Controllers.Products
 {
@@ -73,29 +72,5 @@ namespace FubuMVC.HelloFubuSpark.Controllers.Products
         }
 
         public string PartNum { get; set; }
-    }
-
-    public class ProductsView : FubuPage<ProductsViewModel>
-    {
-    }
-
-    public class ProductsDisplayView : FubuPage<ProductsDisplayViewModel>
-    {
-    }
-
-    public class ProductPartial : FubuControl<Product>
-    {
-    }
-
-    public class ProductDisplayPartial : FubuControl<Product>
-    {
-    }
-
-    public class PartPartial : FubuControl<ProductPart>
-    {
-    }
-
-    public class PartDisplayPartial : FubuControl<ProductPart>
-    {
     }
 }
