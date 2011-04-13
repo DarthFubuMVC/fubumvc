@@ -68,6 +68,8 @@
     <Compile Include="Parsing\ElementNodeExtensionsTester.cs" />
     <Compile Include="Parsing\ElementNodeExtractorTester.cs" />
     <Compile Include="Experiments\SmokeTester.cs" />
+    <Compile Include="Parsing\Templates.cs" />
+    <Compile Include="Parsing\ViewModelTypeParserTester.cs" />
     <Compile Include="Scanning\SparkScannerTester.cs" />
   </ItemGroup>
   <ItemGroup>

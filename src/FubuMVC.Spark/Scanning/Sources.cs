@@ -4,6 +4,15 @@ using FubuCore;
 
 namespace FubuMVC.Spark.Scanning
 {
+    // NOTE: Later on, we could do this a bit more elegant by having a ScanRequest on Scanner instead that would have
+    //  - Filter
+    //  - ScanResult<T> -> being able to do projection of result.
+    //  - Possibly OnFound
+
+    //    Then go by a CompositeScanRequest with a Register(Action<ScanRequest> configure):
+    //  - if no Filter being set, the get parent's.
+    //  - ScanResult of composite would get results from children.
+
     public enum SourceCategory
     {
         Host,

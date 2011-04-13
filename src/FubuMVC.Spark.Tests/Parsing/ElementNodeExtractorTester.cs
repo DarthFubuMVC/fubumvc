@@ -8,10 +8,6 @@ namespace FubuMVC.Spark.Tests.Parsing
 {
     public class ElementNodeExtractorTester : InteractionContext<ElementNodeExtractor>
     {
-        private const string MasterTemplate = @"<use master=""{0}"" />";
-        private const string ViewdataTemplate = @"<viewdata model=""{0}"" />";
-        private const string ContentTemplate = "<div>{0}</div>";
-
         private readonly StringBuilder _builder = new StringBuilder();
         protected override void beforeEach()
         {
@@ -21,8 +17,8 @@ namespace FubuMVC.Spark.Tests.Parsing
         [Test]
         public void it_can_extract_use_statement()
         {
-            _builder.AppendLine(MasterTemplate.ToFormat("fubu"));
-            _builder.AppendLine(ContentTemplate.ToFormat("FubuMVC rules"));
+            _builder.AppendLine(Templates.UseMaster.ToFormat("fubu"));
+            _builder.AppendLine(Templates.Content.ToFormat("FubuMVC rules"));
 
             ClassUnderTest.ExtractByName(_builder.ToString(), "use")
                 .ShouldHaveCount(1)
@@ -32,9 +28,9 @@ namespace FubuMVC.Spark.Tests.Parsing
         [Test]
         public void it_can_extract_viewdata_statement()
         {
-            _builder.AppendLine(MasterTemplate.ToFormat("fubu"));
-            _builder.AppendLine(ViewdataTemplate.ToFormat("a.b.c"));
-            _builder.AppendLine(ContentTemplate.ToFormat("content"));
+            _builder.AppendLine(Templates.UseMaster.ToFormat("fubu"));
+            _builder.AppendLine(Templates.ViewdataModel.ToFormat("a.b.c"));
+            _builder.AppendLine(Templates.Content.ToFormat("content"));
 
             ClassUnderTest.ExtractByName(_builder.ToString(), "viewdata")
                 .ShouldHaveCount(1)
