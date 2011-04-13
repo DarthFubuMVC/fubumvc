@@ -21,6 +21,8 @@ namespace FubuMVC.Core.Packaging
         {
             var applicationDirectory = FubuMvcPackageFacility.GetApplicationPath();
 
+            //this finds all of the bottles in <applicationDirectory>/bin/packages
+            //then calls load from folder on each exploded zip
             return _exploder.ExplodeAllZipsAndReturnPackageDirectories(applicationDirectory)
                 .Select(dir => _reader.LoadFromFolder(dir));
         }

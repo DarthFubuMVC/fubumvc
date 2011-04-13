@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Packaging
                 var fileSystem = new FileSystem();
 
                 // Development mode
-                Loader(new DebugPackageManifestReader(applicationPath, fileSystem, folder => folder));
+                Loader(new PackageManifestReader(applicationPath, fileSystem, folder => folder));
                 
                 // Production mode with zip files and standalone assemblies (e.g., Spark.Web.FubuMVC)
                 var zipFilePackageReader = BuildZipFilePackageLoader(applicationPath, fileSystem);
@@ -52,7 +52,7 @@ namespace FubuMVC.Core.Packaging
 
         public static ZipFilePackageLoader BuildZipFilePackageLoader(string applicationPath, FileSystem fileSystem)
         {
-            var zipFileManifestReader = new DebugPackageManifestReader(applicationPath, fileSystem, ZipFilePackageLoader.GetContentFolderForPackage);
+            var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, ZipFilePackageLoader.GetContentFolderForPackage);
             PackageExploder packageExploder = PackageExploder.GetPackageExploder(fileSystem);
             return new ZipFilePackageLoader(zipFileManifestReader, packageExploder);
         }

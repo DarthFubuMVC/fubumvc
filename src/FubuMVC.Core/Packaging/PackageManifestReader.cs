@@ -9,13 +9,13 @@ using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
-    public class DebugPackageManifestReader : IPackageLoader, IPackageManifestReader
+    public class PackageManifestReader : IPackageLoader, IPackageManifestReader
     {
         private readonly string _applicationFolder;
         private readonly IFileSystem _fileSystem;
         private readonly Func<string, string> _getContentFolderFromPackageFolder;
 
-        public DebugPackageManifestReader(string applicationFolder, IFileSystem fileSystem, Func<string, string> getContentFolderFromPackageFolder)
+        public PackageManifestReader(string applicationFolder, IFileSystem fileSystem, Func<string, string> getContentFolderFromPackageFolder)
         {
             if (!Path.IsPathRooted(applicationFolder))
             {
@@ -33,17 +33,15 @@ namespace FubuMVC.Core.Packaging
             var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.FILE);
 
         	packages.AddRange(includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f))));
-        	packages.AddRange(includes.Assemblies.Select(LoadFromAssembly));
+        	packages.AddRange(includes.Assemblies.Select(assemblyName=>
+        	                                                 {
+        	                                                     var assembly = Assembly.Load(assemblyName);
+        	                                                     return AssemblyPackageInfo.CreateFor(assembly);
+        	                                                 }));
 
         	return packages;
         }
-
-		public IPackageInfo LoadFromAssembly(string assemblyName)
-		{
-			var assembly = Assembly.Load(assemblyName);
-			return AssemblyPackageInfo.CreateFor(assembly);
-		}
-
+        
         public IPackageInfo LoadFromFolder(string folder)
         {
             folder = Path.GetFullPath(folder);
@@ -60,7 +58,7 @@ namespace FubuMVC.Core.Packaging
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
         	var debugPath = FileSystem.Combine(binPath, "debug");
-			if(new FileSystem().DirectoryExists(debugPath))
+			if(_fileSystem.DirectoryExists(debugPath))
 			{
 				binPath = debugPath;
 			}

@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Packaging
     public class PackageManifestReaderIntegratedTester
     {
         private string packageFolder;
-        private DebugPackageManifestReader reader;
+        private PackageManifestReader reader;
 
         [SetUp]
         public void SetUp()
@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Packaging
 
             fileSystem.PersistToFile(manifest, packageFolder, PackageManifest.FILE);
 
-            reader = new DebugPackageManifestReader("../../".ToFullPath(), fileSystem, folder => folder);
+            reader = new PackageManifestReader("../../".ToFullPath(), fileSystem, folder => folder);
         }
 
 
