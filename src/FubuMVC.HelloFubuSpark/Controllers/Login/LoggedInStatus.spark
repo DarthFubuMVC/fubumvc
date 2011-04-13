@@ -1,0 +1,10 @@
+<test condition="Model.IsLoggedIn">
+Welcome <b>${ Model.UserName }</b>!
+        [ ${ this.LinkTo<LogoffRequestModel>().Text("Log Off")} ]
+</test>
+<else>
+    <form method="post" action="${Urls.UrlFor(new LoginRequestModel())}">
+		${ this.AntiForgeryToken("Login") }
+		<input type="submit" value="Log On!" />
+	</form>
+</else>

@@ -1,0 +1,28 @@
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.Home" />
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.Login" />
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate" />
+<use:MainContent>
+    <div id="login-status">
+        # this.Partial<LoggedInStatusRequest>();
+    </div>
+
+    ${Model.Text}
+    <br />
+    The current URL is: ${ Model.CurrentUrl }
+    <br />
+     View url template example: ${this.LinkTo(new UrlTemplateRequest()).Text("url template") }
+     <br />
+    Number of files attached: ${ Model.NumberOfFiles }
+    <br />
+    <form method="post" enctype="multipart/form-data" action="${ Urls.UrlFor(new HomeFilesModel()) }">
+    <br />
+    File 1:  <input type="file" name="homefiles" />
+    <br />
+    File 2:  <input type="file" name="homefiles" />
+    <br />
+    File 3:  <input type="file" name="homefiles" />
+    <br />
+    File 4:  <input type="file" name="homefiles" />
+    <input type="submit" />
+    </form>
+    </use:MainContent>
