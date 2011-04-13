@@ -5,17 +5,17 @@ using FubuMVC.Spark.Scanning;
 
 namespace FubuMVC.Spark
 {
-    public interface IViewTokenizerV2
+    public interface IViewTokenizer
     {
         IEnumerable<SparkViewToken> Tokenize(IEnumerable<ActionCall> actionCalls);
     }
 
-    public class ViewTokenizerV2 : IViewTokenizerV2
+    public class ViewTokenizer : IViewTokenizer
     {
         private readonly IEnumerable<ISparkMatcher> _matchers;
         private readonly IEnumerable<SparkFile> _sparkFiles;
 
-        public ViewTokenizerV2(IEnumerable<ISparkMatcher> matchers, IEnumerable<SparkFile> sparkFiles)
+        public ViewTokenizer(IEnumerable<ISparkMatcher> matchers, IEnumerable<SparkFile> sparkFiles)
         {
             _matchers = matchers;
             _sparkFiles = sparkFiles;
@@ -28,7 +28,7 @@ namespace FubuMVC.Spark
                 var call = actionCall;
                 foreach (var file in _sparkFiles.Where(file => _matchers.Any(m => m.Match(file, call))))
                 {
-                    yield return new SparkViewToken(file, actionCall);
+                    yield return new SparkViewToken(file);
                 }
             }
         }
@@ -37,14 +37,5 @@ namespace FubuMVC.Spark
     public interface ISparkMatcher
     {
         bool Match(SparkFile file, ActionCall call);
-    }
-
-    public class ByNamespaceMatcher : ISparkMatcher
-    {
-        public bool Match(SparkFile file, ActionCall call)
-        {
-            return file.Name() == call.Method.Name
-                && file.Namespace() == call.HandlerType.Namespace;
-        }
     }
 }

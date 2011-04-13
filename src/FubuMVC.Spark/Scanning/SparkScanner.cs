@@ -31,11 +31,20 @@ namespace FubuMVC.Spark.Scanning
             var scanResult = new List<SparkFile>();            
             sources.Each(root =>
             {
-                Action<string> onFound = path => scanResult.Add(new SparkFile(path, root.Path, root.Origin));
+                Action<string> onFound = path => scanResult.Add(getSparkFile(root, path));
                 scanDirectory(root.Path, fileSet, onFound);
             });
 
             return scanResult;
+        }
+
+        private static SparkFile getSparkFile(SourcePath source,string path)
+        {
+            return new SparkFile(path, source.Path, source.Origin)
+            {
+                Namespace = "" /*FIX*/,
+                ViewModel = null /*FIX*/
+            };
         }
 
         private void scanDirectory(string path, FileSet fileSet, Action<string> onFound)

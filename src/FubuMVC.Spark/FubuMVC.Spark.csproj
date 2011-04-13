@@ -51,7 +51,7 @@
     </Compile>
     <Compile Include="Parsing\ViewModelTypeParser.cs" />
     <Compile Include="ViewModelTypeResolver.cs" />
-    <Compile Include="ViewTokenizerV2.cs" />
+    <Compile Include="IViewTokenizer.cs" />
     <Compile Include="Scanning\Sources.cs" />
     <Compile Include="Scanning\SparkScanner.cs" />
     <Compile Include="Scanning\SparkFile.cs" />
@@ -61,7 +61,6 @@
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Parsing\ElementNodeExtensions.cs" />
     <Compile Include="Parsing\ElementNodeExtractor.cs" />
-    <Compile Include="ViewTokenizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

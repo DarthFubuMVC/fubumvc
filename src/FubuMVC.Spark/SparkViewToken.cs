@@ -9,12 +9,10 @@ namespace FubuMVC.Spark
     public class SparkViewToken : IViewToken
     {
         private readonly SparkFile _file;
-        private readonly ActionCall _call;
 
-        public SparkViewToken(SparkFile file, ActionCall call)
+        public SparkViewToken(SparkFile file)
         {
             _file = file;
-            _call = call;
         }
 
         public BehaviorNode ToBehavioralNode()
@@ -29,17 +27,17 @@ namespace FubuMVC.Spark
 
         public Type ViewModelType
         {
-            get { return _call.OutputType(); }
+            get { return _file.ViewModel; }
         }
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
+            get { return _file.Name(); }
         }
 
         public string Folder
         {
-            get { throw new NotImplementedException(); }
+            get { return _file.Namespace; }
         }
     }
 }
