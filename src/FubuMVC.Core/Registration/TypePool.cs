@@ -92,6 +92,11 @@ namespace FubuMVC.Core.Registration
             return types.Where(filter).Distinct();
         }
 
+        public IEnumerable<Type> TypesWithFullName(string fullName)
+        {
+            return TypesMatching(t => t.FullName == fullName);
+        }
+
         public bool HasAssembly(Assembly assembly)
         {
             return _assemblies.Contains(assembly);
