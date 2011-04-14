@@ -23,7 +23,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         {
             var path = Path.Combine(_root, "controllers", "home", "home.spark");
             var file = new SparkFile(path, _root, "") { ViewModelType = typeof(FooViewModel) };
-            _enricher.Alter(file);
+            _enricher.Enrich(file);
             Assert.AreEqual("FubuMVC.Spark.Tests.controllers.home", file.Namespace);
         }
 
@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         {
             var path = Path.Combine(_root, "home.spark");
             var file = new SparkFile(path, _root, "") { ViewModelType = typeof(FooViewModel) };
-            _enricher.Alter(file);
+            _enricher.Enrich(file);
             Assert.AreEqual("FubuMVC.Spark.Tests", file.Namespace);
         }
 

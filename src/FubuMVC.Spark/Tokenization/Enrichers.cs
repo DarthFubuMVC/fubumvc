@@ -10,12 +10,12 @@ namespace FubuMVC.Spark.Tokenization
 {
     public interface ISparkFileEnricher
     {
-        void Alter(SparkFile file);
+        void Enrich(SparkFile file);
     }
 
     public class NamespaceEnricher : ISparkFileEnricher
     {
-        public void Alter(SparkFile file)
+        public void Enrich(SparkFile file)
         {
             var ns = resolveNamespace(file.ViewModelType, file.Root, file.Path);
             file.Namespace = ns;
@@ -54,7 +54,7 @@ namespace FubuMVC.Spark.Tokenization
             _typePool = typePool;
         }
 
-        public void Alter(SparkFile file)
+        public void Enrich(SparkFile file)
         {
             var viewModel = resolveViewModel(file.Path);
             file.ViewModelType = viewModel;
