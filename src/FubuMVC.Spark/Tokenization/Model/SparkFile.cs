@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.Tokenization.Model
         public string Root { get; private set; }
         public string Origin { get; private set; }
 
-        public string MasterPath { get; set; }
+        public SparkFile Master { get; set; }
         public Type ViewModelType { get; set; }
         public string Namespace { get; set; }
     }
@@ -33,6 +33,11 @@ namespace FubuMVC.Spark.Tokenization.Model
         public static string Name(this SparkFile file)
         {
             return Path.GetFileNameWithoutExtension(file.Path);
+        }
+
+        public static string DirectoryPath(this SparkFile file)
+        {
+            return Path.GetDirectoryName(file.Path);
         }
     }
 

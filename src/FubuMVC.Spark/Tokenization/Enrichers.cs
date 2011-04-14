@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -20,9 +21,15 @@ namespace FubuMVC.Spark.Tokenization
         void Enrich(SparkFile file, EnrichmentContext context);
     }
 
+    // TODO : Read up on 
+    // http://sparkviewengine.com/documentation/master-layouts
+    // http://sparkviewengine.com/documentation/viewlocations
+
     public class MasterPageEnricher : ISparkFileEnricher
     {
+        private const string SharedFolder = "Shared";
         private readonly ISparkParser _sparkParser;
+
         public MasterPageEnricher(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;
@@ -31,18 +38,37 @@ namespace FubuMVC.Spark.Tokenization
         public void Enrich(SparkFile file, EnrichmentContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent);
-            var masterPath = masterName.IsNotEmpty() 
-                ? findMaster(masterName, file, context.SparkFiles) 
-                : null;
 
-            file.MasterPath = masterPath;
+            if(masterName.IsNotEmpty())
+            {
+                file.Master = findClosestMaster(masterName, file, context.SparkFiles) ??
+                              findInHost(masterName, context.SparkFiles);
+            }
+
+            if (file.Master == null && masterName.IsNotEmpty())
+            {
+                // Log -> will result in Spark compiler blowing up.
+            }
         }
 
-        // Extract later // Get Shared folder names injected
-        private string findMaster(string masterName, SparkFile file, SparkFiles sparkFiles)
+        private SparkFile findClosestMaster(string masterName, SparkFile file, IEnumerable<SparkFile> files)
         {
-            // closest reachable ancestor "shared" directory with a file named masterName
-            return null;
+            return files
+                .Where(x => x.Origin == file.Origin)
+                .Where(x => x.Root == file.Root)
+                .Where(x => x.Name() == masterName)
+                .Where(x => x.DirectoryPath().EndsWith(SharedFolder))
+                .OrderByDescending(x => x.Path)
+                .FirstOrDefault();
+        }
+
+        private SparkFile findInHost(string masterName, IEnumerable<SparkFile> files)
+        {
+            return files
+                .Where(x => x.Origin == "Host")
+                .Where(x => x.Name() == masterName)
+                .Where(x => x.RelativePath() == Path.Combine(x.Root, SharedFolder).PathRelativeTo(x.Root))
+                .FirstOrDefault();
         }
     }
 
@@ -73,7 +99,6 @@ namespace FubuMVC.Spark.Tokenization
             return ns;
         }
     }
-
     public class ViewModelEnricher : ISparkFileEnricher
     {
         private readonly ISparkParser _sparkParser;
