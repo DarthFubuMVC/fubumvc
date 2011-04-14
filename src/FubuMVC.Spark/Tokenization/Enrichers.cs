@@ -8,18 +8,51 @@ using FubuMVC.Spark.Tokenization.Parsing;
 
 namespace FubuMVC.Spark.Tokenization
 {
+    public class EnrichmentContext
+    {
+        public string FileContent { get; set; }
+        public TypePool TypePool { get; set; }
+        public SparkFiles SparkFiles { get; set; }
+    }
+
     public interface ISparkFileEnricher
     {
-        void Enrich(SparkFile file);
+        void Enrich(SparkFile file, EnrichmentContext context);
+    }
+
+    public class MasterPageEnricher : ISparkFileEnricher
+    {
+        private readonly ISparkParser _sparkParser;
+        public MasterPageEnricher(ISparkParser sparkParser)
+        {
+            _sparkParser = sparkParser;
+        }
+
+        public void Enrich(SparkFile file, EnrichmentContext context)
+        {
+            var masterName = _sparkParser.ParseMasterName(context.FileContent);
+            var masterPath = masterName.IsNotEmpty() 
+                ? findMaster(masterName, file, context.SparkFiles) 
+                : null;
+
+            file.MasterPath = masterPath;
+        }
+
+        // Extract later // Get Shared folder names injected
+        private string findMaster(string masterName, SparkFile file, SparkFiles sparkFiles)
+        {
+            // closest reachable ancestor "shared" directory with a file named masterName
+            return null;
+        }
     }
 
     public class NamespaceEnricher : ISparkFileEnricher
     {
-        public void Enrich(SparkFile file)
+        public void Enrich(SparkFile file, EnrichmentContext context)
         {
-            var ns = resolveNamespace(file.ViewModelType, file.Root, file.Path);
-            file.Namespace = ns;
+            file.Namespace = resolveNamespace(file.ViewModelType, file.Root, file.Path);            
         }
+
         private static string resolveNamespace(Type viewModelType, string root, string path)
         {
             //TODO: FIX THIS, INTRODUCE PROPER ALGORITHM
@@ -27,8 +60,8 @@ namespace FubuMVC.Spark.Tokenization
             {
                 return null;
             }
-            var ns = viewModelType.Assembly.GetName().Name;
 
+            var ns = viewModelType.Assembly.GetName().Name;
             var relativePath = path.PathRelativeTo(root);
             var relativeNamespace = Path.GetDirectoryName(relativePath).Replace(Path.DirectorySeparatorChar, '.');
 
@@ -43,31 +76,20 @@ namespace FubuMVC.Spark.Tokenization
 
     public class ViewModelEnricher : ISparkFileEnricher
     {
-        private readonly IFileSystem _fileSystem;
         private readonly ISparkParser _sparkParser;
-        private readonly TypePool _typePool;
-
-        public ViewModelEnricher(IFileSystem fileSystem, ISparkParser sparkParser, TypePool typePool)
+        public ViewModelEnricher(ISparkParser sparkParser)
         {
-            _fileSystem = fileSystem;
             _sparkParser = sparkParser;
-            _typePool = typePool;
         }
 
-        public void Enrich(SparkFile file)
+        // Log ambiguity or return "potential types" ?
+        public void Enrich(SparkFile file, EnrichmentContext context)
         {
-            var viewModel = resolveViewModel(file.Path);
-            file.ViewModelType = viewModel;
-        }
+            var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
+            var matchingTypes = context.TypePool.TypesWithFullName(fullTypeName);
+            var type = matchingTypes.Count() == 1 ? matchingTypes.First() : null;
 
-        private Type resolveViewModel(string path)
-        {
-            var fileContent = _fileSystem.ReadStringFromFile(path);
-            var fullTypeName = _sparkParser.ParseViewModelTypeName(fileContent);
-
-            // Log ambiguity or return "potential types" ?
-            var matchingTypes = _typePool.TypesWithFullName(fullTypeName);
-            return matchingTypes.Count() == 1 ? matchingTypes.First() : null;
+            file.ViewModelType = type;
         }
     }
 }

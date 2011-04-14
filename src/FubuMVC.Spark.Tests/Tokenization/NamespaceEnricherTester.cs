@@ -9,13 +9,16 @@ namespace FubuMVC.Spark.Tests.Tokenization
     {
         private string _root;
         private NamespaceEnricher _enricher;
+        private EnrichmentContext _context;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            var vol = "c" + Path.VolumeSeparatorChar + Path.DirectorySeparatorChar;
+            var vol = Directory.GetDirectoryRoot(Directory.GetCurrentDirectory());
             _root = Path.Combine(vol, "inetput", "www", "web");
+
             _enricher = new NamespaceEnricher();
+            _context = new EnrichmentContext();
         }
 
         [Test]
@@ -23,7 +26,8 @@ namespace FubuMVC.Spark.Tests.Tokenization
         {
             var path = Path.Combine(_root, "controllers", "home", "home.spark");
             var file = new SparkFile(path, _root, "") { ViewModelType = typeof(FooViewModel) };
-            _enricher.Enrich(file);
+            
+            _enricher.Enrich(file, _context);
             Assert.AreEqual("FubuMVC.Spark.Tests.controllers.home", file.Namespace);
         }
 
@@ -32,7 +36,8 @@ namespace FubuMVC.Spark.Tests.Tokenization
         {
             var path = Path.Combine(_root, "home.spark");
             var file = new SparkFile(path, _root, "") { ViewModelType = typeof(FooViewModel) };
-            _enricher.Enrich(file);
+            
+            _enricher.Enrich(file, _context);
             Assert.AreEqual("FubuMVC.Spark.Tests", file.Namespace);
         }
 

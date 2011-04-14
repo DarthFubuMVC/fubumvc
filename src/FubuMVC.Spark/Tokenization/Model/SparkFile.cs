@@ -17,7 +17,8 @@ namespace FubuMVC.Spark.Tokenization.Model
         public string Path { get; private set; }
         public string Root { get; private set; }
         public string Origin { get; private set; }
-        
+
+        public string MasterPath { get; set; }
         public Type ViewModelType { get; set; }
         public string Namespace { get; set; }
     }
