@@ -17,7 +17,7 @@ namespace FubuMVC.Spark.Tokenization
     {
         public void Alter(SparkFile file)
         {
-            var ns = resolveNamespace(file.ViewModel, file.Root, file.Path);
+            var ns = resolveNamespace(file.ViewModelType, file.Root, file.Path);
             file.Namespace = ns;
         }
         private static string resolveNamespace(Type viewModelType, string root, string path)
@@ -56,10 +56,11 @@ namespace FubuMVC.Spark.Tokenization
 
         public void Alter(SparkFile file)
         {
-            file.ViewModel = resolve(file.Path);
+            var viewModel = resolveViewModel(file.Path);
+            file.ViewModelType = viewModel;
         }
 
-        private Type resolve(string path)
+        private Type resolveViewModel(string path)
         {
             var fileContent = _fileSystem.ReadStringFromFile(path);
             var fullTypeName = _sparkParser.ParseViewModelTypeName(fileContent);

@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Tokenization.Model
 
         public Type ViewModelType
         {
-            get { return _file.ViewModel; }
+            get { return _file.ViewModelType; }
         }
 
         public string Name
