@@ -38,5 +38,9 @@ namespace FubuMVC.Spark.Tokenization.Model
         {
             get { return _file.Namespace; }
         }
+        public override string ToString()
+        {
+            return _file.RelativePath();
+        }
     }
 }

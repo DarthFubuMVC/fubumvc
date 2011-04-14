@@ -54,7 +54,6 @@
     <Compile Include="Tokenization\Scanning\ScanRequest.cs" />
     <Compile Include="Tokenization\SparkFileSource.cs" />
     <Compile Include="Tokenization\Alterations.cs" />
-    <Compile Include="Tokenization\Resolvers.cs" />
     <Compile Include="Tokenization\ViewTokenizer.cs" />
     <Compile Include="Tokenization\Scanning\FileScanner.cs" />
     <Compile Include="Tokenization\Model\SparkFile.cs" />

@@ -5,17 +5,17 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
-    public class NamespaceAlterationTester
+    public class NamespaceEnricherTester
     {
         private string _root;
-        private NamespaceAlteration _alteration;
+        private NamespaceEnricher _enricher;
 
         [TestFixtureSetUp]
         public void Setup()
         {
             var vol = "c" + Path.VolumeSeparatorChar + Path.DirectorySeparatorChar;
             _root = Path.Combine(vol, "inetput", "www", "web");
-            _alteration = new NamespaceAlteration(new NamespaceResolver());
+            _enricher = new NamespaceEnricher();
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         {
             var path = Path.Combine(_root, "controllers", "home", "home.spark");
             var file = new SparkFile(path, _root, "") { ViewModel = typeof(FooViewModel) };
-            _alteration.Alter(file);
+            _enricher.Alter(file);
             Assert.AreEqual("FubuMVC.Spark.Tests.controllers.home", file.Namespace);
         }
 
@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         {
             var path = Path.Combine(_root, "home.spark");
             var file = new SparkFile(path, _root, "") { ViewModel = typeof(FooViewModel) };
-            _alteration.Alter(file);
+            _enricher.Alter(file);
             Assert.AreEqual("FubuMVC.Spark.Tests", file.Namespace);
         }
 
