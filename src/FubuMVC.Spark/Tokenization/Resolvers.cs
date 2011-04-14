@@ -49,7 +49,7 @@ namespace FubuMVC.Spark.Tokenization
 
     public interface INamespaceResolver
     {
-        string Resolve(SparkFile sparkSparkFile);
+        string Resolve(SparkFile sparkFile);
     }
     public class NamespaceResolver : INamespaceResolver
     {

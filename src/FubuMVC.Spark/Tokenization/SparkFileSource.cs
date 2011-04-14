@@ -15,13 +15,11 @@ namespace FubuMVC.Spark.Tokenization
     public class SparkFileSource : ISparkFileSource
     {
         private readonly IFileScanner _fileScanner;
-        private readonly IEnumerable<ISparkFileAlteration> _alterations;
         private readonly IEnumerable<IPackageInfo> _packages;
 
-        public SparkFileSource(IFileScanner fileScanner, IEnumerable<ISparkFileAlteration> alterations, IEnumerable<IPackageInfo> packages)
+        public SparkFileSource(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
         {
             _fileScanner = fileScanner;
-            _alterations = alterations;
             _packages = packages;
         }
 
@@ -31,7 +29,6 @@ namespace FubuMVC.Spark.Tokenization
 
             var request = buildRequest(files);
             _fileScanner.Scan(request);
-            files.Each(x => _alterations.Each(a => a.Alter(x)));
 
             return files;
         }
