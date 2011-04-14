@@ -11,16 +11,18 @@ namespace FubuMVC.Spark.Tests.Scanning
 {
     public class SparkScannerTester
     {
-        private readonly ISparkScanner _scanner;
-        private readonly IEnumerable<SparkFile> _scanResult;
-        private readonly TestSource _testSource;
+        private readonly IFileScanner _scanner;
+        private readonly IList<SparkFile> _scanResult;
 
         public SparkScannerTester()
         {
-            _testSource = new TestSource();
-            _scanner = new SparkScanner(new FileSystem(), new SparkFileComposer(Enumerable.Empty<ISparkFileAlteration>()));
-
-            _scanResult = _scanner.Scan(_testSource.Paths());
+            _scanner = new FileScanner(new FileSystem());
+            _scanResult=new List<SparkFile>();
+            var request = new ScanRequest();
+            TestSource.Paths().Each(request.AddRoot);
+            request.AddFileFilter("*.spark");
+            request.AddHandler(file => _scanResult.Add(new SparkFile(file.Path, file.Root, "")));
+            _scanner.Scan(request);
         }
 
         [Test]
@@ -32,12 +34,12 @@ namespace FubuMVC.Spark.Tests.Scanning
         [Test]
         public void correct_root_is_assigned_to_found_files()
         {
-            Func<string, string> pathFor = root => _testSource.Paths().Single(p => p.Path.EndsWith(root)).Path;
+            Func<string, string> pathFor = root => TestSource.Paths().Single(p => p.EndsWith(root));
 
             _scanResult.Where(s => s.Root == pathFor("Templates")).ShouldHaveCount(8);
             _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(6);
             _scanResult.Where(s => s.Root == pathFor("Pak2")).ShouldHaveCount(1);
-        }        
+        }
 
         [Test]
         public void deepest_roots_are_searched_first()
@@ -48,14 +50,14 @@ namespace FubuMVC.Spark.Tests.Scanning
         // TODO: Add more coverage
     }
 
-    public class TestSource : IScanSource
+    public static class TestSource 
     {
-        public IEnumerable<SourcePath> Paths()
+        public static IEnumerable<string> Paths()
         {
-            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Scanning", "Templates");             
-            yield return new SourcePath{Category = SourceCategory.Host, Origin ="", Path = templatePath};
-            yield return new SourcePath{Category = SourceCategory.Package, Origin ="", Path = FileSystem.Combine(templatePath, "Pak1")};
-            yield return new SourcePath{Category = SourceCategory.Package, Origin ="", Path = FileSystem.Combine(templatePath, "Pak2")};
+            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Scanning", "Templates");
+            yield return templatePath;
+            yield return FileSystem.Combine(templatePath, "Pak1");
+            yield return FileSystem.Combine(templatePath, "Pak2");
         }
     }
 }

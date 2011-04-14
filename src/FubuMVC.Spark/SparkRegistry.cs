@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Bottles;
-using FubuCore;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
 using FubuMVC.Spark.Scanning;
@@ -14,14 +10,12 @@ namespace FubuMVC.Spark
         private IViewFacility _viewFacility;
 
         private readonly SparkFiles _sparkFiles;
-        private readonly IList<IScanSource> _sources;
-        private readonly ISparkScanner _scanner;
+        private readonly IFileScanner _scanner;
 
         public SparkRegistry()
         {
-            _sources = new List<IScanSource>();
             _sparkFiles = new SparkFiles();
-            _scanner = new SparkScanner(new FileSystem(), new SparkFileComposer(Enumerable.Empty<ISparkFileAlteration>()));
+            _scanner = null;
 
             services();
         }
@@ -41,23 +35,6 @@ namespace FubuMVC.Spark
                 //_viewFacility = new SparkViewFacility(...);
                 s.AddService(_viewFacility);
             });
-        }
-
-        // TBD
-        public void UsingDefaultSources()
-        {
-            AddSource<WebRootSource>();
-            AddSource(new PackagesSource(PackageRegistry.Packages));
-        }
-        // TBD
-        public void AddSource<T>() where T : IScanSource, new()
-        {
-            _sources.Add(new T());
-        }
-        // TBD
-        public void AddSource(IScanSource source)
-        {
-            _sources.Add(source);
         }
     }
 

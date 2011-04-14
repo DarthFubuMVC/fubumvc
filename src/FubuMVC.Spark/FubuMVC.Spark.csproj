@@ -49,11 +49,11 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="INamespaceResolver.cs" />
     <Compile Include="Parsing\ViewModelTypeParser.cs" />
     <Compile Include="ViewModelTypeResolver.cs" />
     <Compile Include="IViewTokenizer.cs" />
-    <Compile Include="Scanning\Sources.cs" />
-    <Compile Include="Scanning\SparkScanner.cs" />
+    <Compile Include="Scanning\FileScanner.cs" />
     <Compile Include="Scanning\SparkFile.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkRegistry.cs" />
