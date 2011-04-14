@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C6CE4324-3E5A-48C8-900E-10833AC01BDC}</ProjectGuid>
+    <ProjectGuid>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bottles.Tests</RootNamespace>
-    <AssemblyName>Bottles.Tests</AssemblyName>
+    <RootNamespace>Bottles.Deployment</RootNamespace>
+    <AssemblyName>Bottles.Deployment</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,32 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFileFinderTester.cs" />
-    <Compile Include="AssemblyLoaderTester.cs" />
-    <Compile Include="AssemblyPackageInfoTester.cs" />
-    <Compile Include="Deployment\Parsing\SettingsParserTester.cs" />
-    <Compile Include="Environment\EnvironmentRunTester.cs" />
-    <Compile Include="Environment\FakeEnvironment.cs" />
-    <Compile Include="Environment\LogEntryTester.cs" />
-    <Compile Include="LambdaActivatorTester.cs" />
-    <Compile Include="PackageInfoTester.cs" />
-    <Compile Include="PackageRegistryTester.cs" />
-    <Compile Include="PackagingDiagnosticsTester.cs" />
-    <Compile Include="PackagingRegistryLogTester.cs" />
-    <Compile Include="PackagingRuntimeGraphTester.cs" />
+    <Compile Include="BottleReference.cs" />
+    <Compile Include="Parsing\ParsingClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StubPackage.cs" />
-    <Compile Include="ZipFileServiceTester.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
-      <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
-      <Name>AssemblyPackage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
-      <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
-      <Name>Bottles.Deployment</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>
@@ -80,12 +53,7 @@
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
-      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
-      <Name>FubuTestingSupport</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
