@@ -1,10 +1,11 @@
 ﻿using System;
+using Bottle.Host;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
 using Topshelf;
 
-namespace Bottle.Host
+namespace Bottles.Host
 {
     class Program
     {

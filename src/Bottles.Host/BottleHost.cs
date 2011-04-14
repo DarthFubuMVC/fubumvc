@@ -24,7 +24,7 @@ namespace Bottle.Host
             //sets bottles to look for things in '~/packages'
             BottleFiles.PackagesFolder = "packages";
 
-            var manifest = _fileSystem.LoadFromFile<HostManifest>(HostManifest.FILE);
+            var manifest = _fileSystem.LoadFromFile<HostManifest>("svc", HostManifest.FILE);
 
             var type = Type.GetType(manifest.Bootstrapper, true, true);
 

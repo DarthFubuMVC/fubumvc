@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Bottles;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Diagnostics.Models;
 

@@ -38,7 +38,6 @@ namespace Bottles.Services
         {
             var folder = _fileSystem.GetFullPath(directory);
 
-            //REVIEW: Path.Combine of CONTROL, FILE <- icky?
             var manifest = _fileSystem.LoadFromFile<HostManifest>(folder, HostManifest.CONTROL, HostManifest.FILE);
 
             var package = new PackageInfo(manifest.Name)
