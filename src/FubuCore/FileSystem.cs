@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,6 +13,8 @@ namespace FubuCore
         bool FileExists(string filename);
         void DeleteFile(string filename);
         void MoveFile(string from, string to);
+
+        string GetFullPath(string path);
 
 
         void WriteStreamToFile(string filename, Stream stream);
@@ -224,6 +227,20 @@ namespace FubuCore
                     callback(line);
                 }
             }
+        }
+
+        public string GetFullPath(string path)
+        {
+            return Path.GetFullPath(path);
+        }
+
+        public static IEnumerable<string> GetChildDirectories(string directory)
+        {
+            if (!Directory.Exists(directory))
+                return new string[0];
+
+
+            return Directory.GetDirectories(directory);
         }
     }
 }

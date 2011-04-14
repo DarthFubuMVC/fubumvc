@@ -59,6 +59,7 @@
     <Compile Include="PackagingRegistryLogTester.cs" />
     <Compile Include="PackagingRuntimeGraphTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BottleLoaderTester.cs" />
     <Compile Include="StubPackage.cs" />
     <Compile Include="ZipFileServiceTester.cs" />
   </ItemGroup>

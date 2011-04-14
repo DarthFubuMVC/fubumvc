@@ -11,7 +11,7 @@ namespace Bottles
         static BottleFiles()
         {
             ContentFolder = "content";
-            PackagesFolder = "packages";
+            PackagesFolder = FileSystem.Combine("bin","packages");
         }
 
         public static readonly string WebContentFolder = "WebContent";
@@ -56,7 +56,7 @@ namespace Bottles
 
         public static string GetApplicationPackagesDirectory(string applicationDirectory)
         {
-            return FileSystem.Combine(applicationDirectory, "bin", PackagesFolder);
+            return FileSystem.Combine(applicationDirectory, PackagesFolder);
         }
 
         public static string GetExplodedPackagesDirectory(string applicationDirectory)
