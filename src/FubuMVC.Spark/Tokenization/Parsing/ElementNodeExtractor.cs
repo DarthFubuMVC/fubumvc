@@ -5,7 +5,7 @@ using FubuCore;
 using Spark.Parser;
 using Spark.Parser.Markup;
 
-namespace FubuMVC.Spark.Parsing
+namespace FubuMVC.Spark.Tokenization.Parsing
 {
     public interface IElementNodeExtractor
     {
@@ -25,7 +25,7 @@ namespace FubuMVC.Spark.Parsing
             return parseResult.Value.OfType<ElementNode>();
         }
 
-        // TODO: Rip out
+        // TODO: Rip outr
         public IEnumerable<ElementNode> ExtractBy(string content, Func<ElementNode, bool> predicate)
         {
             return Extract(content).Where(predicate);

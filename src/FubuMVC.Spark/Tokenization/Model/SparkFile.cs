@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using FubuCore;
 
-namespace FubuMVC.Spark.Scanning
+namespace FubuMVC.Spark.Tokenization.Model
 {
     public class SparkFile
     {
@@ -17,12 +17,9 @@ namespace FubuMVC.Spark.Scanning
         public string Path { get; private set; }
         public string Root { get; private set; }
         public string Origin { get; private set; }
+        
         public Type ViewModel { get; set; }
         public string Namespace { get; set; }
-    }
-
-    public class SparkFiles : Collection<SparkFile>
-    {
     }
 
     public static class SparkFileHelper
@@ -37,4 +34,6 @@ namespace FubuMVC.Spark.Scanning
             return Path.GetFileNameWithoutExtension(file.Path);
         }
     }
+
+    public class SparkFiles : Collection<SparkFile> { }
 }

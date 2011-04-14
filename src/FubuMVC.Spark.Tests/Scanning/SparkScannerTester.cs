@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Spark.Scanning;
+using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization.Scanning;
 using FubuTestingSupport;
 using NUnit.Framework;
 

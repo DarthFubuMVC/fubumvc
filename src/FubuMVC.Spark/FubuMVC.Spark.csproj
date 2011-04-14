@@ -49,18 +49,21 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="INamespaceResolver.cs" />
-    <Compile Include="Parsing\ViewModelTypeParser.cs" />
-    <Compile Include="ViewModelTypeResolver.cs" />
-    <Compile Include="IViewTokenizer.cs" />
-    <Compile Include="Scanning\FileScanner.cs" />
-    <Compile Include="Scanning\SparkFile.cs" />
+    <Compile Include="Tokenization\Parsing\ViewModelTypeParser.cs" />
+    <Compile Include="Tokenization\Scanning\FileFound.cs" />
+    <Compile Include="Tokenization\Scanning\ScanRequest.cs" />
+    <Compile Include="Tokenization\SparkFileSource.cs" />
+    <Compile Include="Tokenization\Alterations.cs" />
+    <Compile Include="Tokenization\Resolvers.cs" />
+    <Compile Include="Tokenization\ViewTokenizer.cs" />
+    <Compile Include="Tokenization\Scanning\FileScanner.cs" />
+    <Compile Include="Tokenization\Model\SparkFile.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkRegistry.cs" />
     <Compile Include="SparkViewFacility.cs" />
-    <Compile Include="SparkViewToken.cs" />
-    <Compile Include="Parsing\ElementNodeExtensions.cs" />
-    <Compile Include="Parsing\ElementNodeExtractor.cs" />
+    <Compile Include="Tokenization\Model\SparkViewToken.cs" />
+    <Compile Include="Tokenization\Parsing\ElementNodeExtensions.cs" />
+    <Compile Include="Tokenization\Parsing\ElementNodeExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

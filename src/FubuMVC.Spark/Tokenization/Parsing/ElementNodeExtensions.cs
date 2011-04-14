@@ -2,7 +2,7 @@
 using FubuCore;
 using Spark.Parser.Markup;
 
-namespace FubuMVC.Spark.Parsing
+namespace FubuMVC.Spark.Tokenization.Parsing
 {
     public static class ElementNodeExtensions
     {

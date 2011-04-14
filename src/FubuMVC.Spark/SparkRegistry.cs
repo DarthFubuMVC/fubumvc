@@ -1,7 +1,8 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
-using FubuMVC.Spark.Scanning;
+using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization.Scanning;
 
 namespace FubuMVC.Spark
 {

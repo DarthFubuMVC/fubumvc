@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using FubuCore;
-using FubuMVC.Spark.Parsing;
+using FubuMVC.Spark.Tokenization.Parsing;
 using FubuTestingSupport;
 using NUnit.Framework;
 

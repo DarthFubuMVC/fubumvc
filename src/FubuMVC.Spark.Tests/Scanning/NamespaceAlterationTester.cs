@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using FubuMVC.Spark.Scanning;
+using FubuMVC.Spark.Tokenization;
+using FubuMVC.Spark.Tokenization.Model;
 using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Scanning
