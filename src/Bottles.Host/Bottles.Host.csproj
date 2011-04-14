@@ -8,8 +8,8 @@
     <ProjectGuid>{0008611A-8192-4A00-B6A2-BD34E946C55D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bottle.Host</RootNamespace>
-    <AssemblyName>Bottle.Host</AssemblyName>
+    <RootNamespace>Bottles.Host</RootNamespace>
+    <AssemblyName>Bottles.Host</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

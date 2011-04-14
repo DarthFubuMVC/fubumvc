@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bottles", "Bottles\Bottles.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bottles.Tests", "Bottles.Tests\Bottles.Tests.csproj", "{C6CE4324-3E5A-48C8-900E-10833AC01BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bottle.Host", "Bottle.Host\Bottle.Host.csproj", "{0008611A-8192-4A00-B6A2-BD34E946C55D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bottles.Host", "Bottles.Host\Bottles.Host.csproj", "{0008611A-8192-4A00-B6A2-BD34E946C55D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuTestingSupport", "FubuTestingSupport\FubuTestingSupport.csproj", "{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}"
 EndProject
