@@ -41,6 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottleReference.cs" />
+    <Compile Include="Deployers\TopshelfDeployer.cs" />
+    <Compile Include="Deployers\TopshelfService.cs" />
+    <Compile Include="IBottleRepository.cs" />
+    <Compile Include="IDeployer.cs" />
+    <Compile Include="IDirective.cs" />
     <Compile Include="Parsing\ParsingClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,6 +59,7 @@
       <Name>FubuCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
