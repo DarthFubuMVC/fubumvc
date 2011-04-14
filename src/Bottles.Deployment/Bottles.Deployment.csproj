@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottleReference.cs" />
+    <Compile Include="BottleRepository.cs" />
     <Compile Include="Deployers\TopshelfDeployer.cs" />
     <Compile Include="Deployers\TopshelfService.cs" />
     <Compile Include="IBottleRepository.cs" />
     <Compile Include="IDeployer.cs" />
     <Compile Include="IDirective.cs" />
+    <Compile Include="IProfile.cs" />
     <Compile Include="Parsing\ParsingClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

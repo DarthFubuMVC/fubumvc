@@ -12,7 +12,7 @@ namespace FubuCore
         bool FileExists(string filename);
         void DeleteFile(string filename);
         void MoveFile(string from, string to);
-
+        void Copy(string source, string destination);
 
         void WriteStreamToFile(string filename, Stream stream);
         void WriteStringToFile(string filename, string text);
@@ -80,6 +80,14 @@ namespace FubuCore
             }
 
             Directory.CreateDirectory(path);
+        }
+
+        public void Copy(string source, string destination)
+        {
+            //guard source
+            //guard dest?
+
+            Directory.Move(source, destination);
         }
 
         public static string Combine(params string[] paths)

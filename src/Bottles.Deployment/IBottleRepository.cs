@@ -2,7 +2,7 @@
 {
     public interface IBottleRepository
     {
-        void CopyTo(string botttleName, string destination);
+        void CopyTo(string bottleName, string destination);
         void ExplodeTo(string bottleName, string destination);
     }
 }
