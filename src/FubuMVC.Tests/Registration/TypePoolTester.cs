@@ -1,10 +1,7 @@
 using System;
 using System.CodeDom.Compiler;
-using System.Dynamic;
-using System.Reflection;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
-using Microsoft.CSharp;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration
@@ -32,13 +29,14 @@ namespace FubuMVC.Tests.Registration
         public void should_return_all_types_with_full_name()
         {
             var pool = new TypePool(GetType().Assembly) {ShouldScanAssemblies = true };
+            
             pool.AddType(generateType("namespace FubuMVC.Core{public class Endpoint{}}", "FubuMVC.Core.Endpoint"));
             pool.AddType(typeof(Core.Endpoint));
 
             pool.TypesWithFullName(typeof(Core.Endpoint).FullName).ShouldHaveCount(2);
         }
 
-        public static Type generateType(string source, string fullName)
+        private static Type generateType(string source, string fullName)
         {
             var parms = new CompilerParameters {
                 GenerateExecutable = false,
