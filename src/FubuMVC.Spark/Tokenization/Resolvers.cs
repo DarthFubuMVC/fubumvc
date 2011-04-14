@@ -18,14 +18,14 @@ namespace FubuMVC.Spark.Tokenization
     public class ViewModelTypeResolver : IViewModelTypeResolver
     {
         private readonly IFileSystem _fileSystem;
-        private readonly IViewModelTypeParser _viewModelTypeParser;
+        private readonly ISparkParser _sparkParser;
         private readonly TypePool _typePool;
         private readonly Cache<string, Type> _cache;
 
-        public ViewModelTypeResolver(IFileSystem fileSystem, IViewModelTypeParser viewModelTypeParser, TypePool typePool)
+        public ViewModelTypeResolver(IFileSystem fileSystem, ISparkParser sparkParser, TypePool typePool)
         {
             _fileSystem = fileSystem;
-            _viewModelTypeParser = viewModelTypeParser;
+            _sparkParser = sparkParser;
             _typePool = typePool;
 
             _cache = new Cache<string, Type>(resolve);
@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.Tokenization
         private Type resolve(string path)
         {
             var fileContent = _fileSystem.ReadStringFromFile(path);
-            var fullTypeName = _viewModelTypeParser.Parse(fileContent);
+            var fullTypeName = _sparkParser.ParseViewModelTypeName(fileContent);
 
             // Log ambiguity or return "potential types" ?
             var matchingTypes = _typePool.TypesWithFullName(fullTypeName);

@@ -5,14 +5,18 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization.Parsing
 {
-    public class ViewModelTypeParserTester
+    public class SparkParserTester
     {
-        private readonly IViewModelTypeParser _parser;
-        public ViewModelTypeParserTester()
+        
+    }
+
+    public class SparkParserExtensionsTester
+    {
+        private readonly ISparkParser _parser;
+        public SparkParserExtensionsTester()
         {
             var extractor = new ElementNodeExtractor();
-
-            _parser = new ViewModelTypeParser(extractor);
+            _parser = new SparkParser(extractor);
         }
 
         [Test]
@@ -23,7 +27,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Parsing
                 Templates.UseNamespace.ToFormat("A.B.C") +
                 Templates.Content.ToFormat("parsing");
             
-            _parser.Parse(content).ShouldBeNull();
+            _parser.ParseViewModelTypeName(content).ShouldBeNull();
         }
 
         [Test]
@@ -33,7 +37,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Parsing
                 Templates.UseMaster.ToFormat("Spark") +
                 Templates.ViewdataModel.ToFormat(GetType().FullName);
 
-            _parser.Parse(content).ShouldEqual(GetType());
+            _parser.ParseViewModelTypeName(content).ShouldEqual(GetType().FullName);
         }   
       
         [Test]

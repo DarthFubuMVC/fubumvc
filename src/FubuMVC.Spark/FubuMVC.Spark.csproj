@@ -49,7 +49,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Tokenization\Parsing\ViewModelTypeParser.cs" />
+    <Compile Include="Tokenization\Parsing\SparkParser.cs" />
     <Compile Include="Tokenization\Scanning\FileFound.cs" />
     <Compile Include="Tokenization\Scanning\ScanRequest.cs" />
     <Compile Include="Tokenization\SparkFileSource.cs" />
