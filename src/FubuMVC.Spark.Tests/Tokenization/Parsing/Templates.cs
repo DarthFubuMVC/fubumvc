@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Spark.Tests.Parsing
+﻿namespace FubuMVC.Spark.Tests.Tokenization.Parsing
 {
     public static class Templates
     {

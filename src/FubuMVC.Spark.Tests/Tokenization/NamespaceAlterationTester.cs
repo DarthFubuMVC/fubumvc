@@ -3,7 +3,7 @@ using FubuMVC.Spark.Tokenization;
 using FubuMVC.Spark.Tokenization.Model;
 using NUnit.Framework;
 
-namespace FubuMVC.Spark.Tests.Scanning
+namespace FubuMVC.Spark.Tests.Tokenization
 {
     public class NamespaceAlterationTester
     {

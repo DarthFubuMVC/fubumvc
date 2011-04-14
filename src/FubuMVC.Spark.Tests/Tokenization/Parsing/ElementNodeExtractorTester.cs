@@ -4,7 +4,7 @@ using FubuMVC.Spark.Tokenization.Parsing;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Spark.Tests.Parsing
+namespace FubuMVC.Spark.Tests.Tokenization.Parsing
 {
     public class ElementNodeExtractorTester : InteractionContext<ElementNodeExtractor>
     {

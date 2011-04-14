@@ -14,7 +14,7 @@ namespace FubuMVC.Spark.Tests.Experiments
         {
             var outputPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            var filePath = Path.Combine(outputPath, "Scanning", "Templates", "A3.spark");
+            var filePath = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "A3.spark");
 
             var file = new SparkFile(filePath, outputPath, "");
 
@@ -30,7 +30,7 @@ namespace FubuMVC.Spark.Tests.Experiments
                 // WE COULD USE A CONVENTION TO SET THE MASTER PAGE BY ACTION CALL
                 // OR SIMPLY NO MASTER PAGE (partials)
                 // IN THE END, EACH ONE OF THOSE (OR ANY OTHER) IDEALLY SHOULD BECOME AN STRATEGY
-                Path.Combine("Scanning", "Templates", "Shared", "application.spark")
+                Path.Combine("Tokenization", "Scanning", "Templates", "Shared", "application.spark")
             };
             engine.ViewFolder = new FileSystemViewFolder(file.Root);
             foreach (var template in templates)
