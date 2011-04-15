@@ -62,7 +62,6 @@
     <Compile Include="Writing\RecipeDefinition.cs" />
     <Compile Include="Writing\RecipeWriter.cs" />
     <Compile Include="SelfExtractingZipBuilder.cs" />
-    <Compile Include="Writing\WritingClasses.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
