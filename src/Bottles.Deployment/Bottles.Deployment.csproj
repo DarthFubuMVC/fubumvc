@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +61,8 @@
     <Compile Include="Writing\PropertyValue.cs" />
     <Compile Include="Writing\RecipeDefinition.cs" />
     <Compile Include="Writing\RecipeWriter.cs" />
+    <Compile Include="SelfExtractingZipBuilder.cs" />
+    <Compile Include="Writing\WritingClasses.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
