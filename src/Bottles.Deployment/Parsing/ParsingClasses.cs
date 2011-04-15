@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
 using FubuCore.CommandLine;
 using FubuCore.Configuration;
@@ -8,11 +9,7 @@ using FubuCore;
 
 namespace Bottles.Deployment.Parsing
 {
-    public class Host
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-    }
+
 
     [Serializable]
     public class SettingsParserException : Exception
@@ -36,6 +33,49 @@ namespace Bottles.Deployment.Parsing
         public void AppendText(string text)
         {
             _message += "\n" + text;
+        }
+    }
+
+
+
+
+    public class ProfileReader
+    {
+        private readonly IFileSystem _fileSystem = new FileSystem();
+
+        public IEnumerable<HostManifest> ReadHosts(string directory)
+        {
+            throw new NotImplementedException();
+            //Directory.GetDirectories(ProfileFiles.RecipesFolder).Each()   
+        }
+    }
+
+    public class RecipeReader
+    {
+        private readonly string _directory;
+        private readonly IFileSystem _fileSystem = new FileSystem();
+
+        public RecipeReader(string directory)
+        {
+            _directory = directory;
+        }
+
+        public Recipe Read()
+        {
+            var recipe = new Recipe();
+
+            // need to read the recipe control file
+            // need to read each host file
+
+
+            _fileSystem.FindFiles(_directory, new FileSet(){
+                Include = "*.host"
+            }).Each(file =>
+            {
+
+            });
+
+            throw new NotImplementedException();
         }
     }
 

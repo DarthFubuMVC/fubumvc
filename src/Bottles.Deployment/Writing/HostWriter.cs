@@ -5,15 +5,26 @@ using FubuCore.Reflection;
 
 namespace Bottles.Deployment.Writing
 {
-    public class RecipeWriter
+    public class HostWriter
     {
-        
         private readonly ITypeDescriptorCache _types;
         private readonly TextWriter _writer = new StringWriter();
 
-        public RecipeWriter(ITypeDescriptorCache types)
+        public HostWriter(ITypeDescriptorCache types)
         {
             _types = types;
+        }
+
+        public void WriteTo(HostDefinition host, string recipeDirectory)
+        {
+            var fileName = "{0}.host".ToFormat(host.Name);
+            fileName = FileSystem.Combine(recipeDirectory, fileName);
+
+            host.References.Each(WriteReference);
+            host.Values.Each(WritePropertyValue);
+            host.Directives.Each(WriteDirective);
+
+            new FileSystem().WriteStringToFile(fileName, ToText());
         }
 
         public void WriteReference(BottleReference reference)

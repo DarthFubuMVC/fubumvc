@@ -55,8 +55,8 @@
     <Compile Include="Writing\DirectiveWriter.cs" />
     <Compile Include="Writing\ProfileWriter.cs" />
     <Compile Include="Writing\PropertyValue.cs" />
-    <Compile Include="Writing\RecipeDefinition.cs" />
-    <Compile Include="Writing\RecipeWriter.cs" />
+    <Compile Include="Writing\HostDefinition.cs" />
+    <Compile Include="Writing\HostWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

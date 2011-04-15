@@ -7,14 +7,14 @@ using FubuTestingSupport;
 namespace Bottles.Tests.Deployment.Writing
 {
     [TestFixture]
-    public class RecipeWriterTester
+    public class HostWriterTester
     {
-        private RecipeWriter theWriter;
+        private HostWriter theWriter;
 
         [SetUp]
         public void SetUp()
         {
-            theWriter = new RecipeWriter(new TypeDescriptorCache());    
+            theWriter = new HostWriter(new TypeDescriptorCache());    
         }
 
         [Test]

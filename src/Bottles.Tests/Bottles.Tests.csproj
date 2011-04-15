@@ -50,8 +50,10 @@
     <Compile Include="AssemblyLoaderTester.cs" />
     <Compile Include="AssemblyPackageInfoTester.cs" />
     <Compile Include="Deployment\Parsing\FakeSettings.cs" />
+    <Compile Include="Deployment\Parsing\RecipeReaderTester.cs" />
     <Compile Include="Deployment\Parsing\SettingsParserTester.cs" />
-    <Compile Include="Deployment\Writing\RecipeWriterTester.cs" />
+    <Compile Include="Deployment\Parsing\WritingReadingIntegratedTester.cs" />
+    <Compile Include="Deployment\Writing\HostWriterTester.cs" />
     <Compile Include="Environment\EnvironmentRunTester.cs" />
     <Compile Include="Environment\FakeEnvironment.cs" />
     <Compile Include="Environment\LogEntryTester.cs" />

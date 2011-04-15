@@ -7,11 +7,13 @@ using FubuCore.Util;
 
 namespace Bottles.Deployment.Writing
 {
+    // RecipeDefinition really needs to be HostDefinition
+
     public class ProfileWriter
     {
         private readonly string _destination;
         private readonly IFileSystem _system;
-        private readonly Cache<string, RecipeDefinition> _recipes = new Cache<string, RecipeDefinition>(name => new RecipeDefinition());
+        private readonly Cache<string, RecipeDefinition> _recipes = new Cache<string, RecipeDefinition>(name => new RecipeDefinition(name));
         private readonly IList<PropertyValue> _profileValues = new List<PropertyValue>();
 
         public ProfileWriter(string destination) : this(destination, new FileSystem())
@@ -24,13 +26,33 @@ namespace Bottles.Deployment.Writing
             _system = system;
         }
 
+        public RecipeDefinition RecipeFor(string name)
+        {
+            return _recipes[name];
+        }
+
         public void Flush()
         {
-            _system.CleanDirectory(_destination);
             _system.DeleteDirectory(_destination);
 
             _system.CreateDirectory(_destination);
             _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesFolder));
+
+            var types = new TypeDescriptorCache();
+
+            _recipes.Each(recipe =>
+            {
+                var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesFolder, recipe.Name);
+                _system.CreateDirectory(recipeDirectory);
+
+
+                // TODO -- need to write recipe control file
+                recipe.Hosts().Each(host =>
+                {
+                    new HostWriter(types).WriteTo(host, recipeDirectory);
+                });
+
+            });
         }
 
 
@@ -51,19 +73,7 @@ namespace Bottles.Deployment.Writing
             });
         }
 
-        public void AddToRecipe(string recipeName, params IDirective[] directives)
-        {
-            _recipes[recipeName].AddDirectives(directives);
-        }
 
-        public void AddValueToRecipe<T>(string recipeName, Expression<Func<T, object>> expression, object value)
-        {
-            _recipes[recipeName].AddProperty(expression, value);
-        }
 
-        public void RegisterBottle(string recipeName, BottleReference reference)
-        {
-            _recipes[recipeName].AddReference(reference);
-        }
     }
 }
