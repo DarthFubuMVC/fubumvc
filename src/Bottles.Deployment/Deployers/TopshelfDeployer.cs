@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -22,9 +23,9 @@ namespace Bottles.Deployment.Deployers
             _toolRepo = toolRepo;
         }
 
-        public void Deploy()
+        public void Deploy(IDirective directive)
         {
-            var ts = new TopshelfService();
+            var ts = (TopshelfService) directive;
 
             //copy out TS host
             var pathToBottleHost = _toolRepo.PathTo("bottlehost");
