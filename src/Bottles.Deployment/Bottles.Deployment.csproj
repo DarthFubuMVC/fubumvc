@@ -49,7 +49,10 @@
     <Compile Include="IDeployer.cs" />
     <Compile Include="IDirective.cs" />
     <Compile Include="IProfile.cs" />
-    <Compile Include="Parsing\ParsingClasses.cs" />
+    <Compile Include="Parsing\SettingsParserException.cs" />
+    <Compile Include="Parsing\ProfileReader.cs" />
+    <Compile Include="Parsing\RecipeReader.cs" />
+    <Compile Include="Parsing\SettingsParser.cs" />
     <Compile Include="ProfileFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Writing\DirectiveWriter.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="Writing\PropertyValue.cs" />
     <Compile Include="Writing\HostDefinition.cs" />
     <Compile Include="Writing\HostWriter.cs" />
+    <Compile Include="Writing\RecipeDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

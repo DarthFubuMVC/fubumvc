@@ -7,14 +7,14 @@ using FubuCore.Util;
 
 namespace Bottles.Deployment.Writing
 {
-    // RecipeDefinition really needs to be HostDefinition
-
     public class ProfileWriter
     {
         private readonly string _destination;
         private readonly IFileSystem _system;
         private readonly Cache<string, RecipeDefinition> _recipes = new Cache<string, RecipeDefinition>(name => new RecipeDefinition(name));
         private readonly IList<PropertyValue> _profileValues = new List<PropertyValue>();
+        private readonly TypeDescriptorCache _types = new TypeDescriptorCache();
+
 
         public ProfileWriter(string destination) : this(destination, new FileSystem())
         {
@@ -38,21 +38,23 @@ namespace Bottles.Deployment.Writing
             _system.CreateDirectory(_destination);
             _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesFolder));
 
-            var types = new TypeDescriptorCache();
+            _recipes.Each(writeRecipe);
+        }
 
-            _recipes.Each(recipe =>
-            {
-                var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesFolder, recipe.Name);
-                _system.CreateDirectory(recipeDirectory);
+        private void writeRecipe(RecipeDefinition recipe)
+        {
+            var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesFolder, recipe.Name);
+            _system.CreateDirectory(recipeDirectory);
 
 
-                // TODO -- need to write recipe control file
-                recipe.Hosts().Each(host =>
-                {
-                    new HostWriter(types).WriteTo(host, recipeDirectory);
-                });
+            // TODO -- need to write recipe control file
 
-            });
+            recipe.Hosts().Each(host => writeHost(host, recipeDirectory));
+        }
+
+        private void writeHost(HostDefinition host, string recipeDirectory)
+        {
+            new HostWriter(_types).WriteTo(host, recipeDirectory);
         }
 
 
