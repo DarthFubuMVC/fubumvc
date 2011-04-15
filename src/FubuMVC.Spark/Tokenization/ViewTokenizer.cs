@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Bottles;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization.Parsing;
+using FubuMVC.Spark.Tokenization.Scanning;
 
 namespace FubuMVC.Spark.Tokenization
 {
@@ -10,53 +13,36 @@ namespace FubuMVC.Spark.Tokenization
     {
         IEnumerable<SparkViewToken> Tokenize(TypePool types, BehaviorGraph graph);
     }
+    
     public class ViewTokenizer : IViewTokenizer
-    {
-        private readonly ISparkFilesProvider _sparkFilesProvider;
-
-        public ViewTokenizer(ISparkFilesProvider sparkFilesProvider)
-        {
-            _sparkFilesProvider = sparkFilesProvider;
-        }
-
-        public IEnumerable<SparkViewToken> Tokenize(TypePool types, BehaviorGraph graph)
-        {
-            var validFiles = _sparkFilesProvider.GetFilesWithModel(types);            
-            var validActions = graph.Actions().Where(x => x.HasOutput).ToLookup(x => x.OutputType());
-
-            foreach (var sparkFile in validFiles)
-            {
-                foreach (var action in validActions[sparkFile.ViewModelType])
-                {
-                    yield return new SparkViewToken(sparkFile, action);
-                }
-            }
-        }
-    }
-
-    // The name is a bit "cheesy"
-    public interface ISparkFilesProvider
-    {
-        IEnumerable<SparkFile> GetFilesWithModel(TypePool types);
-    }
-
-    public class SparkFileProvider : ISparkFilesProvider
     {
         private readonly ISparkFileSource _source;
         private readonly IFileSystem _fileSystem;
         private readonly IEnumerable<ISparkFileEnricher> _enrichers;
 
-        public SparkFileProvider(ISparkFileSource source, IFileSystem fileSystem, IEnumerable<ISparkFileEnricher> enrichers)
+        public ViewTokenizer()
+            : this(DefaultDependencies.SparkFileSource(), new FileSystem(), DefaultDependencies.Enrichers())
         {
-            _source = source;
-            _fileSystem = fileSystem;
-            _enrichers = enrichers;
         }
 
-        public IEnumerable<SparkFile> GetFilesWithModel(TypePool types)
+        public ViewTokenizer(ISparkFileSource source, IFileSystem fileSystem, IEnumerable<ISparkFileEnricher> enrichers)
         {
-            var files = new SparkFiles();            
-            
+            _enrichers = enrichers;
+            _fileSystem = fileSystem;
+            _source = source;
+        }
+
+        public IEnumerable<SparkViewToken> Tokenize(TypePool types, BehaviorGraph graph)
+        {
+            var sparkFiles = getFilesWithModel(types);
+
+            return sparkFiles.Select(sparkFile => new SparkViewToken(sparkFile));
+        }
+
+        private IEnumerable<SparkFile> getFilesWithModel(TypePool types)
+        {
+            var files = new SparkFiles();
+
             files.AddRange(_source.GetFiles());
             files.Each(file => _enrichers.Each(enricher =>
             {
@@ -70,8 +56,24 @@ namespace FubuMVC.Spark.Tokenization
 
                 enricher.Enrich(file, context);
             }));
-            
+
             return files.Where(f => f.HasViewModel());
         }
     }
+
+    // NOTE:TEMP
+    public static class DefaultDependencies
+    {
+        public static ISparkFileSource SparkFileSource()
+        {
+            return new SparkFileSource(new FileScanner(new FileSystem()), PackageRegistry.Packages);
+        }
+        public static IEnumerable<ISparkFileEnricher> Enrichers()
+        {
+            yield return new MasterPageEnricher(new SparkParser(new ElementNodeExtractor()));
+            yield return new ViewModelEnricher(new SparkParser(new ElementNodeExtractor()));
+            yield return new NamespaceEnricher();
+        }
+    }
+
 }

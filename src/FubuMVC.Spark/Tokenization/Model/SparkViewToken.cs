@@ -8,12 +8,10 @@ namespace FubuMVC.Spark.Tokenization.Model
     public class SparkViewToken : IViewToken
     {
         private readonly SparkFile _file;
-        private readonly ActionCall _action;
 
-        public SparkViewToken(SparkFile file, ActionCall action)
+        public SparkViewToken(SparkFile file)
         {
             _file = file;
-            _action = action;
         }
 
         public BehaviorNode ToBehavioralNode()
