@@ -55,6 +55,7 @@
     <Compile Include="Environment\EnvironmentRunTester.cs" />
     <Compile Include="Environment\FakeEnvironment.cs" />
     <Compile Include="Environment\LogEntryTester.cs" />
+    <Compile Include="FileSystemTester.cs" />
     <Compile Include="LambdaActivatorTester.cs" />
     <Compile Include="PackageInfoTester.cs" />
     <Compile Include="PackageRegistryTester.cs" />

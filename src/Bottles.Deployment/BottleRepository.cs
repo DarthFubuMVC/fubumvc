@@ -25,11 +25,8 @@ namespace Bottles.Deployment
 
         public void ExplodeTo(string bottleName, string destination)
         {
-            throw new NotImplementedException();
-            
             var path = _root.GetPathForBottle(bottleName);
-            //_exploder.Explode("appDir", "zipFile");
-            //exploding?
+            _exploder.Explode("appDir", "zipFile", destination, ExplodeOptions.PreserveDestination);
         }
     }
 }
