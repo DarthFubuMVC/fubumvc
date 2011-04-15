@@ -8,6 +8,12 @@ using FubuCore;
 
 namespace Bottles.Exploding
 {
+    public enum ExplodeOptions
+    {
+        DeleteDestination,
+        PreserveDestination
+    }
+
     public class PackageExploder : IPackageExploder
     {
         // TODO -- better logging?
@@ -36,14 +42,14 @@ namespace Bottles.Exploding
             return packageFileNames.Select(file => explodeZipAndReturnDirectory(file, applicationDirectory)).ToList();
         }
 
-        public void Explode(string applicationDirectory, string zipFile)
+        //destinationDirectory = var directoryName = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, sourceZipFile);
+        public void Explode(string applicationDirectory, string sourceZipFile, string destinationDirectory, ExplodeOptions options)
         {
-            var directoryName = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, zipFile);
+            if(options == ExplodeOptions.DeleteDestination)
+                _fileSystem.DeleteDirectory(destinationDirectory);
 
-            _fileSystem.DeleteDirectory(directoryName);
-
-            _logger.WritePackageZipFileExploded(zipFile, directoryName);
-            _service.ExtractTo(zipFile, directoryName);
+            _logger.WritePackageZipFileExploded(sourceZipFile, destinationDirectory);
+            _service.ExtractTo(sourceZipFile, destinationDirectory);
         }
 
         public void CleanAll(string applicationDirectory)
@@ -92,7 +98,7 @@ namespace Bottles.Exploding
             var directory = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file);
             var request = new ExplodeRequest{
                 Directory = directory,
-                ExplodeAction = () => Explode(applicationDirectory, file),
+                ExplodeAction = () => Explode(applicationDirectory, file, BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file), ExplodeOptions.DeleteDestination),
                 GetVersion = () => _service.GetVersion(file),
                 LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
             };

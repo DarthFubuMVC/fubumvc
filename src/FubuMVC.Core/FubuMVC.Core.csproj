@@ -165,7 +165,7 @@
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
-    <Compile Include="Packaging\ZipFilePackageReader.cs" />
+    <Compile Include="Packaging\ZipFilePackageLoader.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\DSL\MediaExpression.cs" />

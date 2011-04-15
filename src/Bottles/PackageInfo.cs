@@ -52,12 +52,12 @@ namespace Bottles
             _assemblies.Each(a => a.Load(loader));
         }
 
-        public void ForFolder(string folderName, Action<string> onFound)
+        void IPackageInfo.ForFolder(string folderName, Action<string> onFound)
         {
             _files.ForFolder(folderName, onFound);
         }
 
-        public void ForData(string searchPattern, Action<string, Stream> dataCallback)
+        void IPackageInfo.ForData(string searchPattern, Action<string, Stream> dataCallback)
         {
             _files.ForData(searchPattern, dataCallback);
         }

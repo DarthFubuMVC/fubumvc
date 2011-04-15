@@ -4,7 +4,6 @@ using System.Reflection;
 using Bottles;
 using Bottles.Assemblies;
 using Bottles.Diagnostics;
-using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;

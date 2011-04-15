@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assemblies\AssemblyFileFinder.cs" />
@@ -80,6 +81,9 @@
     <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
     <Compile Include="PackagingRuntimeGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BottleHostLoader.cs" />
+    <Compile Include="Services\HostManifest.cs" />
+    <Compile Include="Services\IBottleAwareService.cs" />
     <Compile Include="SkipOverForProvenanceAttribute.cs" />
     <Compile Include="Zipping\IZipFile.cs" />
     <Compile Include="Zipping\IZipFileService.cs" />

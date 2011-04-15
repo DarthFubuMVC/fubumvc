@@ -50,7 +50,7 @@ namespace Bottles.Tests
         public IEnumerable<string> readFiles(string searchString)
         {
             var list = new List<string>();
-            thePackage.ForData(searchString, (name, stream) => list.Add(stream.ReadAllText()));
+            ((IPackageInfo)thePackage).ForData(searchString, (name, stream) => list.Add(stream.ReadAllText()));
 
             list.Sort();
 
@@ -60,7 +60,7 @@ namespace Bottles.Tests
         [Test]
         public void happily_do_nothing_if_caller_requests_a_folder_That_does_not_exist()
         {
-            thePackage.ForData(join("nonexistent", "*.xml"), (x, y) => Assert.Fail("Not supposed to call this"));
+            ((IPackageInfo)thePackage).ForData(join("nonexistent", "*.xml"), (x, y) => Assert.Fail("Not supposed to call this"));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Bottles.Tests
             writeText(FileSystem.Combine(theDataFolder, "e.t2"), "e");
 
             var list = new List<string>();
-            thePackage.ForData("*.*", (name, stream) => list.Add(name));
+            ((IPackageInfo)thePackage).ForData("*.*", (name, stream) => list.Add(name));
 
             list.Sort();
             list.ShouldHaveTheSameElementsAs("c.txt", "e.t2", join("st", "a.txt"), join("st",  "b.txt"), join("st", "d.t2"));

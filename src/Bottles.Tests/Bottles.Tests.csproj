@@ -87,11 +87,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Deployment\Parsing\Profile1\recipes\air.host" />
-    <None Include="Deployment\Parsing\Profile1\recipes\fire.host" />
-    <None Include="Deployment\Parsing\Profile1\recipes\water.host" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
