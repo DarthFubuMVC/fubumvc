@@ -21,6 +21,13 @@ namespace FubuMVC.Spark.Tokenization.Model
         public SparkFile Master { get; set; }
         public Type ViewModelType { get; set; }
         public string Namespace { get; set; }
+
+
+        public override string ToString()
+        {
+            return Path;
+        }
+
     }
 
     public static class SparkFileHelper
@@ -38,6 +45,10 @@ namespace FubuMVC.Spark.Tokenization.Model
         public static string DirectoryPath(this SparkFile file)
         {
             return Path.GetDirectoryName(file.Path);
+        }
+        public static bool HasViewModel(this SparkFile file)
+        {
+            return file.ViewModelType != null;
         }
     }
 
