@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -13,7 +12,7 @@ namespace FubuMVC.Spark.Tokenization
     {
         public string FileContent { get; set; }
         public TypePool TypePool { get; set; }
-        public SparkFiles SparkFiles { get; set; }
+        public SparkFiles SparkFiles { get; set; }        
     }
 
     // TODO: Order of execution matters for these enrichers - see if we can break away from that.
@@ -42,7 +41,7 @@ namespace FubuMVC.Spark.Tokenization
             file.Master = findClosestMaster(masterName, file, context.SparkFiles);
             if (file.Master == null)
             {
-                // Log -> Spark compiler is about to blow up.
+                // Log -> Spark compiler is about to blow up. // context.Graph.Observer.??
             }
         }
 
@@ -78,6 +77,7 @@ namespace FubuMVC.Spark.Tokenization
         }
 
         // Log ambiguity or return "potential types" ?
+        // context.Graph.Observer.??
         public void Enrich(SparkFile file, EnrichmentContext context)
         {
             var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);

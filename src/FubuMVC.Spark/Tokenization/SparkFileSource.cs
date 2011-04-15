@@ -55,6 +55,7 @@ namespace FubuMVC.Spark.Tokenization
         private IEnumerable<RootSource> rootSources()
         {
             var roots = new List<RootSource>();
+            
             foreach (var package in _packages)
             {
                 var pck = package;
@@ -71,6 +72,7 @@ namespace FubuMVC.Spark.Tokenization
             }
 
             roots.Add(new RootSource { Origin = Constants.HostOrigin, Path = "~/".ToPhysicalPath() });
+            
             return roots;
         }
 

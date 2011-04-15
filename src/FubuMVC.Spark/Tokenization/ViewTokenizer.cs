@@ -21,9 +21,10 @@ namespace FubuMVC.Spark.Tokenization
 
         public IEnumerable<SparkViewToken> Tokenize(TypePool types, BehaviorGraph graph)
         {
-            var sparkFiles = _sparkFilesProvider.GetFiles(types);
+            var validFiles = _sparkFilesProvider.GetFilesWithModel(types);            
             var validActions = graph.Actions().Where(x => x.HasOutput).ToLookup(x => x.OutputType());
-            foreach (var sparkFile in sparkFiles)
+
+            foreach (var sparkFile in validFiles)
             {
                 foreach (var action in validActions[sparkFile.ViewModelType])
                 {
@@ -33,9 +34,10 @@ namespace FubuMVC.Spark.Tokenization
         }
     }
 
+    // The name is a bit "cheesy"
     public interface ISparkFilesProvider
     {
-        IEnumerable<SparkFile> GetFiles(TypePool typePool);
+        IEnumerable<SparkFile> GetFilesWithModel(TypePool types);
     }
 
     public class SparkFileProvider : ISparkFilesProvider
@@ -51,37 +53,25 @@ namespace FubuMVC.Spark.Tokenization
             _enrichers = enrichers;
         }
 
-        public IEnumerable<SparkFile> GetFiles(TypePool typePool)
+        public IEnumerable<SparkFile> GetFilesWithModel(TypePool types)
         {
-            var sparkFiles = new SparkFiles();
-
-            sparkFiles.AddRange(_source.GetFiles());
-
-            foreach (var sparkFile in sparkFiles)
+            var files = new SparkFiles();            
+            
+            files.AddRange(_source.GetFiles());
+            files.Each(file => _enrichers.Each(enricher =>
             {
-                applyEnrichers(sparkFiles, typePool, sparkFile);
-            }
+                var fileContent = _fileSystem.ReadStringFromFile(file.Path);
+                var context = new EnrichmentContext
+                {
+                    TypePool = types,
+                    SparkFiles = files,
+                    FileContent = fileContent
+                };
 
-            return sparkFiles.Where(x => x.HasViewModel());
-        }
-
-        private void applyEnrichers(SparkFiles sparkFiles, TypePool typePool, SparkFile sparkFile)
-        {
-            foreach (var enricher in _enrichers)
-            {
-                var context = getContext(sparkFiles, typePool, sparkFile);
-                enricher.Enrich(sparkFile, context);
-            }
-        }
-
-        private EnrichmentContext getContext(SparkFiles sparkFiles, TypePool typePool, SparkFile sparkFile)
-        {
-            return new EnrichmentContext
-            {
-                SparkFiles = sparkFiles,
-                TypePool = typePool,
-                FileContent = _fileSystem.ReadStringFromFile(sparkFile.Path)
-            };
+                enricher.Enrich(file, context);
+            }));
+            
+            return files.Where(f => f.HasViewModel());
         }
     }
 }
