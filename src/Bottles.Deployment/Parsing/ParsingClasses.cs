@@ -8,6 +8,12 @@ using FubuCore;
 
 namespace Bottles.Deployment.Parsing
 {
+    public class Host
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
+
     [Serializable]
     public class SettingsParserException : Exception
     {
