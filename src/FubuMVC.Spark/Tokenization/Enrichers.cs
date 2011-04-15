@@ -40,34 +40,23 @@ namespace FubuMVC.Spark.Tokenization
         public void Enrich(SparkFile file, EnrichmentContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent);
-
-            if(masterName.IsNotEmpty())
+            if (masterName.IsEmpty()) return;            
+            
+            file.Master = findClosestMaster(masterName, file, context.SparkFiles);
+            if (file.Master == null)
             {
-                file.Master = findClosestMaster(masterName, file, context.SparkFiles) ??
-                              findInHost(masterName, context.SparkFiles);
-            }
-
-            if (file.Master == null && masterName.IsNotEmpty())
-            {
-                // Log -> will result in Spark compiler blowing up.
+                // Log -> Spark compiler is about to blow up.
             }
         }
 
         private SparkFile findClosestMaster(string masterName, SparkFile file, IEnumerable<SparkFile> files)
         {
-            var masterLocations = possibleMasterLocations(file.Path, file.Root);
+            var root =  files.Min(x => x.Root);
+            var masterLocations = possibleMasterLocations(file.Path, root);
             
             return files
-                .Where(x => x.Origin == file.Origin && x.Root == file.Root && x.Name() == masterName)
+                .Where(x => x.Name() == masterName)
                 .Where(x => masterLocations.Contains(x.DirectoryPath()))
-                .FirstOrDefault();
-        }
-
-        private SparkFile findInHost(string masterName, IEnumerable<SparkFile> files)
-        {
-            return files
-                .Where(x => x.Origin == Constants.HostOrigin && x.Name() == masterName)
-                .Where(x => x.RelativePath() == Path.Combine(x.Root, SharedFolder).PathRelativeTo(x.Root))
                 .FirstOrDefault();
         }
 
@@ -76,6 +65,7 @@ namespace FubuMVC.Spark.Tokenization
             do
             {
                 path = Path.GetDirectoryName(path);
+                if (path == null) break;                
                 yield return Path.Combine(path, SharedFolder);
 
             } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
