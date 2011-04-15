@@ -54,6 +54,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Tokenization\Nodes\SparkViewOutput.cs" />
+    <Compile Include="Tokenization\Nodes\SparkViewRenderer.cs" />
     <Compile Include="Tokenization\Parsing\SparkParser.cs" />
     <Compile Include="Tokenization\Scanning\FileFound.cs" />
     <Compile Include="Tokenization\Scanning\ScanRequest.cs" />
@@ -65,7 +67,7 @@
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkRegistry.cs" />
     <Compile Include="SparkViewFacility.cs" />
-    <Compile Include="Tokenization\Model\SparkViewToken.cs" />
+    <Compile Include="Tokenization\SparkViewToken.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensions.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtractor.cs" />
     <Compile Include="Views\FubuSparkView.cs" />
