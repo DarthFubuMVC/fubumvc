@@ -96,6 +96,24 @@ namespace Bottles.Tests.Deployment.Writing
                 "ComplexSettings.Simple.Two="
                 );
         }
+
+        [Test]
+        public void write_simple_property_value()
+        {
+            var value = PropertyValue.For<SimpleSettings>(x => x.One, "one");
+            theWriter.WritePropertyValue(value);
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one");
+        }
+
+        [Test]
+        public void write_complex_property_value()
+        {
+            var value = PropertyValue.For<ComplexSettings>(x => x.Simple.One, "one");
+            theWriter.WritePropertyValue(value);
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs("ComplexSettings.Simple.One=one");
+        }
     }
 
     public class SimpleSettings : IDirective

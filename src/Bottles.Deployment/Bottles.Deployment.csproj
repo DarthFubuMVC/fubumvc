@@ -52,6 +52,10 @@
     <Compile Include="Parsing\ParsingClasses.cs" />
     <Compile Include="ProfileFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Writing\DirectiveWriter.cs" />
+    <Compile Include="Writing\PropertyValue.cs" />
+    <Compile Include="Writing\RecipeDefinition.cs" />
+    <Compile Include="Writing\RecipeWriter.cs" />
     <Compile Include="Writing\WritingClasses.cs" />
   </ItemGroup>
   <ItemGroup>
