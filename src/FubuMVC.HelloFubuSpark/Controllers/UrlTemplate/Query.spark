@@ -1,4 +1,5 @@
-﻿<use namespace="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate" />
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate.UrlTemplateViewModel" />
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate" />
 <use namespace="HtmlTags" />
 <use:MainContent>
     <script type="text/html" id="myTemplate">

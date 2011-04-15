@@ -1,3 +1,4 @@
+<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Login.LoggedInStatusViewModel" />
 <test condition="Model.IsLoggedIn">
 Welcome <b>${ Model.UserName }</b>!
         [ ${ this.LinkTo<LogoffRequestModel>().Text("Log Off")} ]
