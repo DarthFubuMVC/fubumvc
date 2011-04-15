@@ -52,7 +52,9 @@
     <Compile Include="IBottleRepository.cs" />
     <Compile Include="IDeployer.cs" />
     <Compile Include="IDirective.cs" />
+    <Compile Include="IProcessRunner.cs" />
     <Compile Include="IProfile.cs" />
+    <Compile Include="IToolRepository.cs" />
     <Compile Include="Parsing\ParsingClasses.cs" />
     <Compile Include="ProfileFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,6 +3,8 @@
     public class TopshelfService : IDirective
     {
         public string InstallLocation { get; set; }
+        public string[] Bottles { get; set; }
+
 
         //optional
         public string Username { get; set; }

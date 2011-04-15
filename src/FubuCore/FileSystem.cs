@@ -93,20 +93,30 @@ namespace FubuCore
         public void Copy(string source, string destination)
         {
             if(IsFile(source))
-            {
                 internalFileCopy(source, destination);
-            }
-            internalDirectoryCopy(source, destination);
+            else
+                internalDirectoryCopy(source, destination);
         }
 
         void internalFileCopy(string source, string destination)
         {
+            var fileName = Path.GetFileName(source);
+
             var fullSourcePath = Path.GetFullPath(source);
             var fullDestPath = Path.GetFullPath(destination);
 
-            var destinationDirectory = Path.GetDirectoryName(fullDestPath);
-            if (!Directory.Exists(destinationDirectory))
-                Directory.CreateDirectory(destinationDirectory);
+
+            var isFile = destinationIsFile(source, destination);
+
+            string destinationDir = fullDestPath;
+            if(isFile)
+                destinationDir = Path.GetDirectoryName(fullDestPath);
+
+            if (!Directory.Exists(destinationDir))
+                Directory.CreateDirectory(destinationDir);
+
+            if(!isFile) //aka its a directory
+                fullDestPath = Combine(fullDestPath, fileName);
 
             try
             {
@@ -121,8 +131,6 @@ namespace FubuCore
 
         void internalDirectoryCopy(string source, string destination)
         {
-            //should destination be rooted?
-
             var files = Directory.GetFiles(source, "*.*", SearchOption.AllDirectories);
             files.Each(f =>
                 {
@@ -132,10 +140,36 @@ namespace FubuCore
                 });
         }
 
+        //need to look for trailing slash
+        bool destinationIsFile(string source, string destination)
+        {
+            if(File.Exists(destination) || Directory.Exists(destination))
+            {
+                //it exists 
+                return IsFile(destination);
+            }
+
+            //crap it doesn't exist
+            if(destination.Last() == Path.DirectorySeparatorChar)
+            {
+                //last char is a '/' so its a directory
+                return false;
+            }
+
+            //last char is not a '/' so its a file
+            return true;
+        }
+
         public bool IsFile(string path)
         {
-            FileAttributes attr = File.GetAttributes(path);
-            if((attr & FileAttributes.Directory)==FileAttributes.Directory)
+            //resolve the path
+            path = Path.GetFullPath(path);
+
+            if (!File.Exists(path) && !Directory.Exists(path))
+                throw new IOException("This path '{0}' doesn't exist!".ToFormat(path));
+
+            var attr = File.GetAttributes(path);
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
             {
                 return false;
             }

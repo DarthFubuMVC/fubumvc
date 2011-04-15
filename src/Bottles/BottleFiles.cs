@@ -14,6 +14,8 @@ namespace Bottles
             PackagesFolder = FileSystem.Combine("bin","packages");
         }
 
+        public static readonly string Extension = "zip";
+
         public static readonly string WebContentFolder = "WebContent";
         public static readonly string VersionFile = ".version";
         public static readonly string DataFolder = "Data";

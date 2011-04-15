@@ -1,4 +1,3 @@
-using System;
 using Bottles.Exploding;
 using FubuCore;
 
@@ -26,7 +25,12 @@ namespace Bottles.Deployment
         public void ExplodeTo(string bottleName, string destination)
         {
             var path = _root.GetPathForBottle(bottleName);
-            _exploder.Explode("appDir", "zipFile", destination, ExplodeOptions.PreserveDestination);
+
+            //REVIEW: Yuck!
+            var zipFileName = bottleName +"." + BottleFiles.Extension;
+
+            //REVIEW: get_app_dir, zip-filename == path???
+            _exploder.Explode(PackageRegistry.GetApplicationDirectory(), zipFileName, destination, ExplodeOptions.PreserveDestination);
         }
     }
 }
