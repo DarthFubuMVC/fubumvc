@@ -1,0 +1,113 @@
+using Bottles.Deployment;
+using Bottles.Deployment.Writing;
+using FubuCore.Reflection;
+using NUnit.Framework;
+using FubuTestingSupport;
+
+namespace Bottles.Tests.Deployment.Writing
+{
+    [TestFixture]
+    public class RecipeWriterTester
+    {
+        private RecipeWriter theWriter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theWriter = new RecipeWriter(new TypeDescriptorCache());    
+        }
+
+        [Test]
+        public void write_bottle_reference_with_no_relationship()
+        {
+            theWriter.WriteReference(new BottleReference(){
+                Name = "Bottle1"
+            });
+
+            theWriter.ToText().Trim().ShouldEqual("bottle:Bottle1");
+        }
+
+        [Test]
+        public void write_bottle_reference_with_a_relationship()
+        {
+            theWriter.WriteReference(new BottleReference(){
+                Name = "webcore",
+                Relationship = "binaries"
+            });
+
+            theWriter.ToText().Trim().ShouldEqual("bottle:webcore binaries");
+        }
+
+        [Test]
+        public void write_simple_settings_with_values_for_everything()
+        {
+            var settings = new SimpleSettings(){
+                One = "one",
+                Two = "two"
+            };
+
+            theWriter.WriteDirective(settings);
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one", "SimpleSettings.Two=two");
+        }
+
+        [Test]
+        public void write_simple_settings_with_a_null_value()
+        {
+            var settings = new SimpleSettings()
+            {
+                One = "one",
+                Two = null
+            };
+
+            theWriter.WriteDirective(settings);
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one", "SimpleSettings.Two=");
+        }
+
+        [Test]
+        public void do_not_write_complex_setting_if_the_prop_is_null()
+        {
+            var settings = new ComplexSettings();
+
+            theWriter.WriteDirective(settings);
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs(
+                "ComplexSettings.Name=",
+                "ComplexSettings.Flag=False"
+                );
+        }
+
+        [Test]
+        public void do_write_complex_setting_when_the_prop_is_not_null()
+        {
+            var settings = new ComplexSettings(){
+                Simple = new SimpleSettings(){
+                    One = "one"
+                }
+            };
+
+            theWriter.WriteDirective(settings);
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs(
+                "ComplexSettings.Name=",
+                "ComplexSettings.Flag=False",
+                "ComplexSettings.Simple.One=one",
+                "ComplexSettings.Simple.Two="
+                );
+        }
+    }
+
+    public class SimpleSettings : IDirective
+    {
+        public string One { get; set; }
+        public string Two { get; set; }
+    }
+
+    public class ComplexSettings : IDirective
+    {
+        public string Name { get; set; }
+        public bool Flag { get; set; }
+        public SimpleSettings Simple { get; set; }
+    }
+}

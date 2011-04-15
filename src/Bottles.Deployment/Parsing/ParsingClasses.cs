@@ -55,7 +55,7 @@ namespace Bottles.Deployment.Parsing
             text = text.Trim();
             try
             {
-                if (text.StartsWith("bottle:"))
+                if (text.StartsWith(ProfileFiles.BottlePrefix))
                 {
                     parseBottle(text);
                 }
@@ -90,7 +90,7 @@ namespace Bottles.Deployment.Parsing
 
         private void parseBottle(string text)
         {
-            var bottleText = text.Substring(7).Trim();
+            var bottleText = text.Substring(ProfileFiles.BottlePrefix.Length).Trim();
             var values = StringTokenizer.Tokenize(bottleText);
             var reference = new BottleReference(){
                 Name = values.First()

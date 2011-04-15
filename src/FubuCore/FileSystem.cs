@@ -21,6 +21,8 @@ namespace FubuCore
 
         void WriteStreamToFile(string filename, Stream stream);
         void WriteStringToFile(string filename, string text);
+
+
         string ReadStringFromFile(string filename);
         void WriteObjectToFile(string filename, object target);
         T LoadFromFile<T>(string filename) where T : new();
@@ -135,6 +137,7 @@ namespace FubuCore
         {
             File.WriteAllText(filename, text);
         }
+
 
         public string ReadStringFromFile(string filename)
         {

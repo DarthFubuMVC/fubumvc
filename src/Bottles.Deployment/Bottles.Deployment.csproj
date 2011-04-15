@@ -50,6 +50,7 @@
     <Compile Include="IDirective.cs" />
     <Compile Include="IProfile.cs" />
     <Compile Include="Parsing\ParsingClasses.cs" />
+    <Compile Include="ProfileFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Writing\WritingClasses.cs" />
   </ItemGroup>
