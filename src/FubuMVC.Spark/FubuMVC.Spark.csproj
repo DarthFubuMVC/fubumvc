@@ -34,11 +34,16 @@
     <Reference Include="HtmlTags">
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Spark">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +68,7 @@
     <Compile Include="Tokenization\Model\SparkViewToken.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensions.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtractor.cs" />
+    <Compile Include="Views\FubuSparkView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
