@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using FubuCore;
 
 namespace Bottles.Deployment.Deployers
@@ -9,14 +7,12 @@ namespace Bottles.Deployment.Deployers
     //assumes its on the same server
     public class TopshelfDeployer : IDeployer<TopshelfService>
     {
-        private readonly IFileSystem _fileSystem;
         private readonly IBottleRepository _repository;
         private readonly IProcessRunner _runner;
         private readonly IToolRepository _toolRepo;
 
-        public TopshelfDeployer(IFileSystem fileSystem, IBottleRepository repository, IProcessRunner runner, IToolRepository toolRepo)
+        public TopshelfDeployer(IBottleRepository repository, IProcessRunner runner, IToolRepository toolRepo)
         {
-            _fileSystem = fileSystem;
             _repository = repository;
             _runner = runner;
             _toolRepo = toolRepo;
