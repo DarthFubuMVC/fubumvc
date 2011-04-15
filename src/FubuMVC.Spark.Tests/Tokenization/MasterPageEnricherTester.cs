@@ -49,15 +49,16 @@ namespace FubuMVC.Spark.Tests.Tokenization
                 newSpark(_pak1Root, Pak1, "Actions", "Controllers", "Home", "Home.spark"),
                 newSpark(_pak1Root, Pak1, "Actions", "Handlers", "Products", "list.spark"),
                 newSpark(_pak1Root, Pak1, "Actions", "Shared", "application.spark"),
-
                 newSpark(_pak2Root, Pak2, "Features", "Controllers", "Home", "Home.spark"),
                 newSpark(_pak2Root, Pak2, "Features", "Handlers", "Products", "list.spark"),
                 newSpark(_pak2Root, Pak2, "Shared", "application.spark"),
-
+                
                 newSpark(_pak3Root, Pak3, "Features", "Controllers", "Home", "Home.spark"),
 
                 newSpark(_hostRoot, Host, "Actions", "Shared", "application.spark"),
-                newSpark(_hostRoot, Host, "Features", "Mixer", "Shared", "application.spark"),
+                newSpark(_hostRoot, Host, "Features", "Mixer", "chuck.spark"),
+                newSpark(_hostRoot, Host, "Features", "Mixer", "Shared", "application.spark"),                
+                newSpark(_hostRoot, Host, "Features", "roundkick.spark"),
                 newSpark(_hostRoot, Host, "Handlers", "Products", "details.spark"),
                 newSpark(_hostRoot, Host, "Shared", "application.spark")
             };
@@ -70,7 +71,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         }
 
         [Test]
-        public void master_is_the_closest_ancestor_with_the_specified_name_in_shared()
+        public void master_is_the_closest_ancestor_with_the_specified_name_in_shared_1()
         {
             var sparkFile = _sparkFiles.First();
             ClassUnderTest.Enrich(sparkFile, _context);
@@ -78,11 +79,37 @@ namespace FubuMVC.Spark.Tests.Tokenization
         }
 
         [Test]
+        public void master_is_the_closest_ancestor_with_the_specified_name_in_shared_2()
+        {
+            var sparkFile = _sparkFiles.ElementAt(3);
+            ClassUnderTest.Enrich(sparkFile, _context);
+            _sparkFiles.ElementAt(5).ShouldEqual(sparkFile.Master);
+        }
+
+        [Test]
         public void fallback_to_master_in_shared_host_when_no_local_ancestor_exists()
         {
-            var sparkFile = _sparkFiles.Where(x => x.Origin == "pak3").First();
+            var sparkFile = _sparkFiles.ElementAt(6);
             ClassUnderTest.Enrich(sparkFile, _context);
-            _sparkFiles.ElementAt(10).ShouldEqual(sparkFile.Master);
+            _sparkFiles.Last().ShouldEqual(sparkFile.Master);
         }
+
+        [Test]
+        public void fallback_to_master_in_host_1()
+        {
+            var sparkFile = _sparkFiles.ElementAt(8);
+            ClassUnderTest.Enrich(sparkFile, _context);
+            _sparkFiles.ElementAt(9).ShouldEqual(sparkFile.Master);
+        }
+
+        [Test]
+        public void fallback_to_master_in_host_2()
+        {
+            var sparkFile = _sparkFiles.ElementAt(10);
+            ClassUnderTest.Enrich(sparkFile, _context);
+            _sparkFiles.Last().ShouldEqual(sparkFile.Master);
+        }
+
+        // TODO : Edge cases, boundaries, more tests for expected behaviors
     }
 }

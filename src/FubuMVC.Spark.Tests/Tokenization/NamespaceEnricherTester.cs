@@ -41,6 +41,8 @@ namespace FubuMVC.Spark.Tests.Tokenization
             Assert.AreEqual("FubuMVC.Spark.Tests", file.Namespace);
         }
 
+        // TODO : Edge cases, boundaries
+
     }
 
     public class FooViewModel

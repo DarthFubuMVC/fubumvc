@@ -16,17 +16,16 @@ namespace FubuMVC.Spark.Tokenization
         public SparkFiles SparkFiles { get; set; }
     }
 
+    // TODO: Order of execution matters for these enrichers - see if we can break away from that.
+
     public interface ISparkFileEnricher
     {
         void Enrich(SparkFile file, EnrichmentContext context);
     }
 
-    // TODO : Read up on 
-    // http://sparkviewengine.com/documentation/master-layouts
-    // http://sparkviewengine.com/documentation/viewlocations
-
     public class MasterPageEnricher : ISparkFileEnricher
     {
+        // Allow for convention on this - consider possibility for other "shared" folders
         private const string SharedFolder = "Shared";
         private readonly ISparkParser _sparkParser;
 
@@ -34,8 +33,6 @@ namespace FubuMVC.Spark.Tokenization
         {
             _sparkParser = sparkParser;
         }
-
-        // TODO : UT
 
         public void Enrich(SparkFile file, EnrichmentContext context)
         {
@@ -52,53 +49,26 @@ namespace FubuMVC.Spark.Tokenization
         private SparkFile findClosestMaster(string masterName, SparkFile file, IEnumerable<SparkFile> files)
         {
             var root =  files.Min(x => x.Root);
-            var masterLocations = possibleMasterLocations(file.Path, root);
+            var masterLocations = reachableMasterLocations(file.Path, root);
             
             return files
                 .Where(x => x.Name() == masterName)
                 .Where(x => masterLocations.Contains(x.DirectoryPath()))
                 .FirstOrDefault();
         }
-
-        private IEnumerable<string> possibleMasterLocations(string path, string root)
+        private IEnumerable<string> reachableMasterLocations(string path, string root)
         {
             do
             {
                 path = Path.GetDirectoryName(path);
-                if (path == null) break;                
+                if (path == null) break;      
+                // TODO : Consider yield return path - if we should look in each ancestor folder
                 yield return Path.Combine(path, SharedFolder);
 
             } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
         }
     }
 
-    public class NamespaceEnricher : ISparkFileEnricher
-    {
-        public void Enrich(SparkFile file, EnrichmentContext context)
-        {
-            file.Namespace = resolveNamespace(file.ViewModelType, file.Root, file.Path);            
-        }
-
-        private static string resolveNamespace(Type viewModelType, string root, string path)
-        {
-            //TODO: FIX THIS, INTRODUCE PROPER ALGORITHM
-            if (viewModelType == null)
-            {
-                return null;
-            }
-
-            var ns = viewModelType.Assembly.GetName().Name;
-            var relativePath = path.PathRelativeTo(root);
-            var relativeNamespace = Path.GetDirectoryName(relativePath).Replace(Path.DirectorySeparatorChar, '.');
-
-            if (relativeNamespace.Length > 0)
-            {
-                ns += "." + relativeNamespace;
-            }
-
-            return ns;
-        }
-    }
     public class ViewModelEnricher : ISparkFileEnricher
     {
         private readonly ISparkParser _sparkParser;
@@ -115,6 +85,31 @@ namespace FubuMVC.Spark.Tokenization
             var type = matchingTypes.Count() == 1 ? matchingTypes.First() : null;
 
             file.ViewModelType = type;
+        }
+    }
+
+    public class NamespaceEnricher : ISparkFileEnricher
+    {
+        public void Enrich(SparkFile file, EnrichmentContext context)
+        {
+            if (!file.HasViewModel()) return;
+            
+            file.Namespace = resolveNamespace(file);            
+        }
+
+        // TODO : Get opinions on this.
+        private static string resolveNamespace(SparkFile file)
+        {
+            var relativePath = file.RelativePath();
+            var relativeNamespace = Path.GetDirectoryName(relativePath);
+
+            var nspace = file.ViewModelType.Assembly.GetName().Name;
+            if (relativeNamespace.IsNotEmpty())
+            {
+                nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
+            }
+
+            return nspace;
         }
     }
 }
