@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuCore.Util;
 
 namespace Bottles.Deployment.Writing
@@ -10,7 +12,7 @@ namespace Bottles.Deployment.Writing
         private readonly string _destination;
         private readonly IFileSystem _system;
         private readonly Cache<string, RecipeDefinition> _recipes = new Cache<string, RecipeDefinition>(name => new RecipeDefinition());
-        
+        private readonly IList<PropertyValue> _profileValues = new List<PropertyValue>();
 
         public ProfileWriter(string destination) : this(destination, new FileSystem())
         {
@@ -34,12 +36,19 @@ namespace Bottles.Deployment.Writing
 
         public void AddProfileManifestProperty<T>(Expression<Func<T, object>> property, string host, object value)
         {
-            throw new NotImplementedException();
+            _profileValues.Add(new PropertyValue(){
+                Accessor = property.ToAccessor(),
+                HostName = host,
+                Value = value
+            });
         }
 
         public void AddProfileManifestProperty<T>(Expression<Func<T, object>> property, object value)
         {
-            throw new NotImplementedException();
+            _profileValues.Add(new PropertyValue(){
+                Accessor = property.ToAccessor(),
+                Value = value
+            });
         }
 
         public void AddToRecipe(string recipeName, params IDirective[] directives)

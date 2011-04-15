@@ -56,10 +56,7 @@ namespace Bottles.Deployment.Writing
 
         public void WritePropertyValue(PropertyValue value)
         {
-            _writer.WriteLine("{0}.{1}={2}"
-                              , value.Accessor.DeclaringType.Name
-                              , value.Accessor.PropertyNames.Join(".")
-                              , value.Value == null ? string.Empty : value.Value.ToString());
+            _writer.WriteLine(value.ToString());
         }
     }
 }
