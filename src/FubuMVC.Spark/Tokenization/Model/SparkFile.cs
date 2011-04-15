@@ -5,6 +5,11 @@ using FubuCore;
 
 namespace FubuMVC.Spark.Tokenization.Model
 {
+    public static class Constants
+    {
+        public const string HostOrigin = "Host";
+    }
+
     public class SparkFile
     {
         public SparkFile(string path, string root, string origin)

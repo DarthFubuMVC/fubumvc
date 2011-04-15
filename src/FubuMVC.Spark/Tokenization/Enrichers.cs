@@ -35,6 +35,8 @@ namespace FubuMVC.Spark.Tokenization
             _sparkParser = sparkParser;
         }
 
+        // TODO : UT
+
         public void Enrich(SparkFile file, EnrichmentContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent);
@@ -53,22 +55,30 @@ namespace FubuMVC.Spark.Tokenization
 
         private SparkFile findClosestMaster(string masterName, SparkFile file, IEnumerable<SparkFile> files)
         {
+            var masterLocations = possibleMasterLocations(file.Path, file.Root);
+            
             return files
-                .Where(x => x.Origin == file.Origin)
-                .Where(x => x.Root == file.Root)
-                .Where(x => x.Name() == masterName)
-                .Where(x => x.DirectoryPath().EndsWith(SharedFolder))
-                .OrderByDescending(x => x.Path)
+                .Where(x => x.Origin == file.Origin && x.Root == file.Root && x.Name() == masterName)
+                .Where(x => masterLocations.Contains(x.DirectoryPath()))
                 .FirstOrDefault();
         }
 
         private SparkFile findInHost(string masterName, IEnumerable<SparkFile> files)
         {
             return files
-                .Where(x => x.Origin == "Host")
-                .Where(x => x.Name() == masterName)
+                .Where(x => x.Origin == Constants.HostOrigin && x.Name() == masterName)
                 .Where(x => x.RelativePath() == Path.Combine(x.Root, SharedFolder).PathRelativeTo(x.Root))
                 .FirstOrDefault();
+        }
+
+        private IEnumerable<string> possibleMasterLocations(string path, string root)
+        {
+            do
+            {
+                path = Path.GetDirectoryName(path);
+                yield return Path.Combine(path, SharedFolder);
+
+            } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
         }
     }
 

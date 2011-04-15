@@ -70,7 +70,7 @@ namespace FubuMVC.Spark.Tokenization
                 });
             }
 
-            roots.Add(new RootSource { Origin = "Host", Path = "~/".ToPhysicalPath() });
+            roots.Add(new RootSource { Origin = Constants.HostOrigin, Path = "~/".ToPhysicalPath() });
             return roots;
         }
 
