@@ -9,7 +9,6 @@ namespace Bottles.Deployment.Deployers
     //assumes its on the same server
     public class TopshelfDeployer : IDeployer<TopshelfService>
     {
-        //how am I going to get the TopshelfService?
         private readonly IFileSystem _fileSystem;
         private readonly IBottleRepository _repository;
         private readonly IProcessRunner _runner;
@@ -28,12 +27,11 @@ namespace Bottles.Deployment.Deployers
             var ts = (TopshelfService) directive;
 
             //copy out TS host
-            var pathToBottleHost = _toolRepo.PathTo("bottlehost");
-            _fileSystem.Copy(pathToBottleHost, ts.InstallLocation);
+            _toolRepo.CopyTo("bottlehost", ts.InstallLocation);
             
             //copy out service bottle exploded
             var location = FileSystem.Combine(ts.InstallLocation, "svc");
-            _repository.ExplodeTo("bottleToDeploy", location);
+            _repository.ExplodeTo(ts.MainBottle, location);
 
             var bottleDest = FileSystem.Combine(ts.InstallLocation, BottleFiles.PackagesFolder);
             ts.Bottles.Each(b =>
@@ -41,11 +39,11 @@ namespace Bottles.Deployment.Deployers
                     _repository.CopyTo(b, bottleDest);
                 });
             
-            var psi = new ProcessStartInfo("Bottles.Host.exe");
-            psi.Arguments = "install"; //add args as needed
-            psi.WorkingDirectory = "hmm"; //need to tell it where to run from
-            psi.UseShellExecute = false; //don't start from cmd.exe
-            psi.CreateNoWindow = true; //don't use a window
+            var psi = new ProcessStartInfo("Bottles.Host.exe")
+            {
+                Arguments = "install",
+                WorkingDirectory = ts.InstallLocation
+            };
 
             _runner.Run(psi);
         }

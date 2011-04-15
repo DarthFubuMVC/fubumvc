@@ -2,6 +2,6 @@
 {
     public interface IToolRepository
     {
-        string PathTo(string toolName);
+        void CopyTo(string toolName, string destination);
     }
 }

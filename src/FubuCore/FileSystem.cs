@@ -112,8 +112,7 @@ namespace FubuCore
             if(isFile)
                 destinationDir = Path.GetDirectoryName(fullDestPath);
 
-            if (!Directory.Exists(destinationDir))
-                Directory.CreateDirectory(destinationDir);
+            CreateDirectory(destinationDir);
 
             if(!isFile) //aka its a directory
                 fullDestPath = Combine(fullDestPath, fileName);
@@ -140,16 +139,14 @@ namespace FubuCore
                 });
         }
 
-        //need to look for trailing slash
         bool destinationIsFile(string source, string destination)
         {
-            if(File.Exists(destination) || Directory.Exists(destination))
+            if(FileExists(destination) || DirectoryExists(destination))
             {
                 //it exists 
                 return IsFile(destination);
             }
 
-            //crap it doesn't exist
             if(destination.Last() == Path.DirectorySeparatorChar)
             {
                 //last char is a '/' so its a directory
