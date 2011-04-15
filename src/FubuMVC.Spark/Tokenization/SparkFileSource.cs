@@ -17,6 +17,7 @@ namespace FubuMVC.Spark.Tokenization
         private readonly IFileScanner _fileScanner;
         private readonly IEnumerable<IPackageInfo> _packages;
 
+        public SparkFileSource() : this(new FileScanner(), PackageRegistry.Packages) {}
         public SparkFileSource(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
         {
             _fileScanner = fileScanner;

@@ -1,6 +1,8 @@
-﻿using FubuMVC.Core;
+﻿using System.Collections.Generic;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
+using FubuMVC.Spark.Tokenization;
 using FubuMVC.Spark.Tokenization.Model;
 using FubuMVC.Spark.Tokenization.Scanning;
 
@@ -49,6 +51,17 @@ namespace FubuMVC.Spark
 
         public void Configure(BehaviorGraph graph)
         {
+        }
+    }
+
+    // TODO: AAh.. Improve by a RegisterEnricher<> on tokenizer, and put it as default 
+    public static class DefaultDependencies
+    {
+        public static IEnumerable<ISparkFileEnricher> Enrichers()
+        {
+            yield return new MasterPageEnricher();
+            yield return new ViewModelEnricher();
+            yield return new NamespaceEnricher();
         }
     }
 }

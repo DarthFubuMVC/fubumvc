@@ -28,6 +28,7 @@ namespace FubuMVC.Spark.Tokenization
         private const string SharedFolder = "Shared";
         private readonly ISparkParser _sparkParser;
 
+        public MasterPageEnricher() : this(new SparkParser()) {}
         public MasterPageEnricher(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;
@@ -71,6 +72,8 @@ namespace FubuMVC.Spark.Tokenization
     public class ViewModelEnricher : ISparkFileEnricher
     {
         private readonly ISparkParser _sparkParser;
+
+        public ViewModelEnricher() : this(new SparkParser()) {}
         public ViewModelEnricher(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;

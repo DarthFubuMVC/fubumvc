@@ -16,6 +16,7 @@ namespace FubuMVC.Spark.Tokenization.Scanning
         private readonly IFileSystem _fileSystem;
         private IList<string> _scannedDirectories;
 
+        public FileScanner() : this(new FileSystem()) {}
         public FileScanner(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;

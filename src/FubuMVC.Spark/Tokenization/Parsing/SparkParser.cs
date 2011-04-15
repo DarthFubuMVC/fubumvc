@@ -10,6 +10,8 @@ namespace FubuMVC.Spark.Tokenization.Parsing
     public class SparkParser : ISparkParser
     {
         private readonly IElementNodeExtractor _nodeExtractor;
+
+        public SparkParser() : this(new ElementNodeExtractor()) {}
         public SparkParser(IElementNodeExtractor nodeExtractor)
         {
             _nodeExtractor = nodeExtractor;
