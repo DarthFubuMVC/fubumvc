@@ -1,8 +1,8 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.Tokenization.Model;
-using FubuMVC.Spark.Tokenization.Nodes;
 using Spark;
 
 namespace FubuMVC.Spark.Tokenization

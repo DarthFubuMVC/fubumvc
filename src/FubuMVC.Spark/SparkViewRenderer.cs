@@ -1,14 +1,15 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 
-namespace FubuMVC.Spark.Tokenization.Nodes
+namespace FubuMVC.Spark
 {
     public class SparkViewRenderer : BasicBehavior
     {
-        public SparkViewRenderer()
-            : base(PartialBehavior.Executes)
+        public SparkViewRenderer() : base(PartialBehavior.Executes)
         {
+
         }
+
         protected override DoNext performInvoke()
         {
             return DoNext.Continue;

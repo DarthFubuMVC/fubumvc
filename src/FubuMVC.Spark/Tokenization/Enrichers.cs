@@ -15,8 +15,6 @@ namespace FubuMVC.Spark.Tokenization
         public SparkFiles SparkFiles { get; set; }        
     }
 
-    // TODO: Order of execution matters for these enrichers - see if we can break away from that.
-
     public interface ISparkFileEnricher
     {
         void Enrich(SparkFile file, EnrichmentContext context);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -17,31 +18,32 @@ namespace FubuMVC.Spark.Tokenization
         private readonly ISparkFileSource _source;
         private readonly IFileSystem _fileSystem;
 
-        public ViewTokenizer() : this(new SparkFileSource(), new FileSystem())
-        {
-            // Remove when we can get the tokenizer from the spark registry.
-            _enrichers.AddRange(DefaultDependencies.Enrichers());
-        }
-
+        public ViewTokenizer() : this(new SparkFileSource(), new FileSystem()) {}
         public ViewTokenizer(ISparkFileSource source, IFileSystem fileSystem)
         {
             _source = source;
             _fileSystem = fileSystem;
         }
 
-        public IViewTokenizer AddEnricher<T>() where T :  ISparkFileEnricher, new()
+        public ViewTokenizer AddEnricher<T>() where T : ISparkFileEnricher, new()
+        {
+            return AddEnricher<T>(c => { });
+        }
+
+        public ViewTokenizer AddEnricher<T>(Action<T> configure) where T : ISparkFileEnricher, new()
         {
             var enricher = new T();
+            configure(enricher);
             _enrichers.Add(enricher);
             return this;
         }
 
         public IEnumerable<SparkViewToken> Tokenize(TypePool types, BehaviorGraph graph)
         {
-            return GetFilesWithModel(types).Select(file => new SparkViewToken(file));
+            return getFilesWithModel(types).Select(file => new SparkViewToken(file));
         }
 
-        public IEnumerable<SparkFile> GetFilesWithModel(TypePool types)
+        private IEnumerable<SparkFile> getFilesWithModel(TypePool types)
         {
             var files = new SparkFiles();
 

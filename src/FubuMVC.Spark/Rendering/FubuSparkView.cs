@@ -7,7 +7,7 @@ using Microsoft.Practices.ServiceLocation;
 using Spark;
 using FubuCore.Util;
 
-namespace FubuMVC.Spark.Views
+namespace FubuMVC.Spark.Rendering
 {
     public abstract class FubuSparkView : SparkViewBase, IFubuPage
     {
