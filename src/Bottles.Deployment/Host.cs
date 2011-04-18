@@ -62,5 +62,19 @@ namespace Bottles.Deployment
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// This is only used for testing
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ISettingsData> AllSettingsData()
+        {
+            return _data;
+        }
+
+        public void RegisterBottles(IEnumerable<BottleReference> references)
+        {
+            _bottles.AddRange(references);
+        }
     }
 }
