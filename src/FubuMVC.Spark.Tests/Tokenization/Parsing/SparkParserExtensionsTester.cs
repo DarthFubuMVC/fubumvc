@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Spark.Tokenization.Parsing;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -43,12 +44,40 @@ namespace FubuMVC.Spark.Tests.Tokenization.Parsing
         [Test]
         public void when_multiple_viewdata_is_present_model_is_parsed()
         {
-            var content =
-                Templates.ViewdataModel.ToFormat(GetType().FullName);
+            const string viewdata = "<viewdata {0} />";
+            const string arg = @"""{0}""=""{1}""";
+            var arguments = new List<string>
+            {
+                arg.ToFormat("Caption", "string"),
+                arg.ToFormat("Products", "System.Collections.Generic.IList[[MyApp.Models.Product]]")
+            };
 
-            // Add template for viewdata
+            var content = Templates.ViewdataModel.ToFormat(GetType().FullName) +
+                          viewdata.ToFormat(arguments.Join(" ")) +
+                          Templates.Content.ToFormat("FubuMVC.Spark");
 
-            // check that model is found.
+            _parser.ParseViewModelTypeName(content).ShouldEqual(GetType().FullName);
+        }
+
+        [Test]
+        public void when_master_is_present_it_is_parsed()
+        {
+            _parser.ParseMasterName(Templates.UseMaster.ToFormat("Universe"))
+                .ShouldEqual("Universe");
+        }
+
+        [Test]
+        public void when_master_is_present_and_empty_it_is_parsed_as_empty()
+        {
+            _parser.ParseMasterName(Templates.UseMaster.ToFormat(""))
+                .ShouldBeEmpty();
+        }
+
+        [Test]
+        public void when_master_is_absent_null_is_returned()
+        {
+            _parser.ParseMasterName(Templates.Content.ToFormat("FubuMVC"))
+                .ShouldBeNull();
         }
     }
 }

@@ -34,7 +34,9 @@ namespace FubuMVC.Spark.Tokenization
         public void Modify(SparkItem item, EnrichmentContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent);
-            if (masterName.IsEmpty()) return;            
+            if (masterName.IsEmpty()) return;
+            
+            // Deal with <use master=""/> and absence, e.g. fallback on Application.spark
             
             item.Master = findClosestMaster(masterName, item, context.SparkItems);
             if (item.Master == null)
@@ -76,13 +78,14 @@ namespace FubuMVC.Spark.Tokenization
             _sparkParser = sparkParser;
         }
 
-        // Log ambiguity or return "potential types" ?
-        // context.Graph.Observer.??
         public void Modify(SparkItem item, EnrichmentContext context)
         {
             var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
             var matchingTypes = context.TypePool.TypesWithFullName(fullTypeName);
             var type = matchingTypes.Count() == 1 ? matchingTypes.First() : null;
+
+            // Log ambiguity or return "potential types" ?
+            // context.Graph.Observer.??
 
             item.ViewModelType = type;
         }
