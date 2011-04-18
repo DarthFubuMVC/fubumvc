@@ -23,6 +23,8 @@ namespace FubuMVC.Spark.Tokenization
     {
         // Allow for convention on this - consider possibility for other "shared" folders
         private const string SharedFolder = "Shared";
+        private const string DefaultMaster = "Application";
+
         private readonly ISparkParser _sparkParser;
 
         public MasterPageModifier() : this(new SparkParser()) {}
@@ -33,12 +35,11 @@ namespace FubuMVC.Spark.Tokenization
 
         public void Modify(SparkItem item, EnrichmentContext context)
         {
-            var masterName = _sparkParser.ParseMasterName(context.FileContent);
+            var masterName = _sparkParser.ParseMasterName(context.FileContent) ?? DefaultMaster;
             if (masterName.IsEmpty()) return;
-            
-            // Deal with <use master=""/> and absence, e.g. fallback on Application.spark
-            
+                        
             item.Master = findClosestMaster(masterName, item, context.SparkItems);
+
             if (item.Master == null)
             {
                 // Log -> Spark compiler is about to blow up. // context.Graph.Observer.??
@@ -55,6 +56,7 @@ namespace FubuMVC.Spark.Tokenization
                 .Where(x => masterLocations.Contains(x.DirectoryPath()))
                 .FirstOrDefault();
         }
+
         private IEnumerable<string> reachableMasterLocations(string path, string root)
         {
             do
