@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -80,12 +82,33 @@ namespace FubuMVC.Tests.View
 
             _observer.LastLogEntry.ShouldContain(_fromFindsOne.Name);
         }
+
+        [Test]
+        public void should_not_add_same_type_of_facility_more_than_once()
+        {
+            _viewAttacher.AddFacility(new TestViewFacility());
+            _viewAttacher.AddFacility(new TestViewFacility());
+
+            _viewAttacher.Facilities
+                .ShouldHaveCount(2)
+                .ShouldContain(f => f.GetType() == typeof(WebFormViewFacility));
+        }
         
         private static IViewsForActionFilter createFilterThatReturns(params IViewToken[] viewTokens)
         {
             var filter = MockRepository.GenerateMock<IViewsForActionFilter>();
             filter.Stub(x => x.Apply(null, null)).IgnoreArguments().Return(viewTokens);
             return filter;
+        }
+
+        public class TestViewFacility : IViewFacility
+        {
+            public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
+            {
+                return Enumerable.Empty<IViewToken>();
+            }
+
+            public BehaviorNode CreateViewNode(Type type) { return null; }
         }
     }
 }

@@ -50,6 +50,8 @@ namespace FubuMVC.Core.View.Attachment
 
         public void AddFacility(IViewFacility facility)
         {
+            var typeOfFacility = facility.GetType();
+            if(_facilities.Any(f => f.GetType() == typeOfFacility)) return;
             _facilities.Add(facility);
         }
 
