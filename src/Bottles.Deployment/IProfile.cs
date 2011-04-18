@@ -6,5 +6,6 @@
     public interface IProfile
     {
         string GetPathForBottle(string bottleName);
+        string GetPathForTool(string toolName);
     }
 }

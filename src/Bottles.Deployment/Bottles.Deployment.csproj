@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,19 +52,24 @@
     <Compile Include="IBottleRepository.cs" />
     <Compile Include="IDeployer.cs" />
     <Compile Include="IDirective.cs" />
+    <Compile Include="IProcessRunner.cs" />
     <Compile Include="IProfile.cs" />
     <Compile Include="Parsing\SettingsParserException.cs" />
     <Compile Include="Parsing\ProfileReader.cs" />
     <Compile Include="Parsing\RecipeReader.cs" />
     <Compile Include="Parsing\SettingsParser.cs" />
+    <Compile Include="IToolRepository.cs" />
+    <Compile Include="ProcessRunner.cs" />
     <Compile Include="ProfileFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolRepository.cs" />
     <Compile Include="Writing\DirectiveWriter.cs" />
     <Compile Include="Writing\ProfileWriter.cs" />
     <Compile Include="Writing\PropertyValue.cs" />
     <Compile Include="Writing\HostDefinition.cs" />
     <Compile Include="Writing\HostWriter.cs" />
     <Compile Include="Writing\RecipeDefinition.cs" />
+    <Compile Include="SelfExtractingZipBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

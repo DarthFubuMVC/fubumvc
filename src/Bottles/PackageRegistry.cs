@@ -27,6 +27,7 @@ namespace Bottles
             GetApplicationDirectory = () => AppDomain.CurrentDomain.BaseDirectory;
         }
 
+        //REVIEW: This really feels wrong - if its required can we make it an argument of LoadPackages("app dir", cfg=>{});
         public static Func<string> GetApplicationDirectory { get; set; }
 
         public static IEnumerable<Assembly> PackageAssemblies

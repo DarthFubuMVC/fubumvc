@@ -13,6 +13,7 @@ namespace FubuCore
         bool FileExists(string filename);
         void DeleteFile(string filename);
         void MoveFile(string from, string to);
+        bool IsFile(string path);
 
         string GetFullPath(string path);
 
@@ -91,10 +92,85 @@ namespace FubuCore
 
         public void Copy(string source, string destination)
         {
-            //guard source
-            //guard dest?
+            if(IsFile(source))
+                internalFileCopy(source, destination);
+            else
+                internalDirectoryCopy(source, destination);
+        }
 
-            Directory.Move(source, destination);
+        void internalFileCopy(string source, string destination)
+        {
+            var fileName = Path.GetFileName(source);
+
+            var fullSourcePath = Path.GetFullPath(source);
+            var fullDestPath = Path.GetFullPath(destination);
+
+
+            var isFile = destinationIsFile(source, destination);
+
+            string destinationDir = fullDestPath;
+            if(isFile)
+                destinationDir = Path.GetDirectoryName(fullDestPath);
+
+            CreateDirectory(destinationDir);
+
+            if(!isFile) //aka its a directory
+                fullDestPath = Combine(fullDestPath, fileName);
+
+            try
+            {
+                File.Copy(fullSourcePath, fullDestPath, true);
+            }
+            catch (Exception ex)
+            {
+                var msg = "Was trying to copy '{0}' to '{1}' and encountered an error. :(".ToFormat(fullSourcePath, fullDestPath);
+                throw new Exception(msg, ex);
+            }
+        }
+
+        void internalDirectoryCopy(string source, string destination)
+        {
+            var files = Directory.GetFiles(source, "*.*", SearchOption.AllDirectories);
+            files.Each(f =>
+                {
+                    //need to test this for name correctness
+                    var destName = Combine(destination, Path.GetFileName(f));
+                    internalFileCopy(f, destName);
+                });
+        }
+
+        bool destinationIsFile(string source, string destination)
+        {
+            if(FileExists(destination) || DirectoryExists(destination))
+            {
+                //it exists 
+                return IsFile(destination);
+            }
+
+            if(destination.Last() == Path.DirectorySeparatorChar)
+            {
+                //last char is a '/' so its a directory
+                return false;
+            }
+
+            //last char is not a '/' so its a file
+            return true;
+        }
+
+        public bool IsFile(string path)
+        {
+            //resolve the path
+            path = Path.GetFullPath(path);
+
+            if (!File.Exists(path) && !Directory.Exists(path))
+                throw new IOException("This path '{0}' doesn't exist!".ToFormat(path));
+
+            var attr = File.GetAttributes(path);
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                return false;
+            }
+            return true;
         }
 
         public static string Combine(params string[] paths)

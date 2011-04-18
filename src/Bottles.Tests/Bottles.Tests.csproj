@@ -49,6 +49,7 @@
     <Compile Include="AssemblyFileFinderTester.cs" />
     <Compile Include="AssemblyLoaderTester.cs" />
     <Compile Include="AssemblyPackageInfoTester.cs" />
+    <Compile Include="Deployment\FakeDepolyer.cs" />
     <Compile Include="Deployment\Parsing\FakeSettings.cs" />
     <Compile Include="Deployment\Parsing\RecipeReaderTester.cs" />
     <Compile Include="Deployment\Parsing\SettingsParserTester.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Environment\EnvironmentRunTester.cs" />
     <Compile Include="Environment\FakeEnvironment.cs" />
     <Compile Include="Environment\LogEntryTester.cs" />
+    <Compile Include="FileSystemTester.cs" />
     <Compile Include="LambdaActivatorTester.cs" />
     <Compile Include="PackageInfoTester.cs" />
     <Compile Include="PackageRegistryTester.cs" />
