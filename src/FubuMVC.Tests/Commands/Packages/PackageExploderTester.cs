@@ -24,8 +24,9 @@ namespace FubuMVC.Tests.Commands.Packages
         [SetUp]
         public void SetUp()
         {
-            var exploder = new PackageExploder(new ZipFileService(),
-                                               new PackageExploderLogger(s => Console.WriteLine(s)), new FileSystem());
+            var fileSystem = new FileSystem();
+            var exploder = new PackageExploder(new ZipFileService(fileSystem),
+                                               new PackageExploderLogger(s => Console.WriteLine(s)), fileSystem);
 
             theFiles = new PackageFiles();
             exploder.ExplodeAssembly("app1", typeof(AssemblyPackageMarker).Assembly, theFiles);
@@ -260,7 +261,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
             var directoryName = BottleFiles.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
-            MockFor<IZipFileService>().AssertWasCalled(x => x.ExtractTo(fileName, directoryName));
+            MockFor<IZipFileService>().AssertWasCalled(x => x.ExtractTo(fileName, directoryName, ExplodeOptions.DeleteDestination));
             
         }
 
@@ -271,7 +272,7 @@ namespace FubuMVC.Tests.Commands.Packages
 
             var directoryName = BottleFiles.GetDirectoryForExplodedPackage(theApplicationDirectory, packageName);
 
-            MockFor<IZipFileService>().AssertWasNotCalled(x => x.ExtractTo(fileName, directoryName));
+            MockFor<IZipFileService>().AssertWasNotCalled(x => x.ExtractTo(fileName, directoryName, ExplodeOptions.DeleteDestination));
 
         }
 

@@ -17,7 +17,7 @@ namespace Fubu.Packages
         {
             input.RootFolder = AliasCommand.AliasFolder(input.RootFolder);
 
-            var zipService = new ZipFileService();
+            var zipService = new ZipFileService(new FileSystem());
 
 
             createZipFile(input, "WebContent", zipService);

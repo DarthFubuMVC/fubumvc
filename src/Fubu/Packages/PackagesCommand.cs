@@ -49,7 +49,7 @@ namespace Fubu.Packages
 
         public virtual IPackageExploder BuildExploder()
         {
-            return new PackageExploder(new ZipFileService(), new PackageExploderLogger(s => Console.WriteLine(s)), new FileSystem());
+            return new PackageExploder(new ZipFileService(new FileSystem()), new PackageExploderLogger(s => Console.WriteLine(s)), new FileSystem());
         }
     }
 }

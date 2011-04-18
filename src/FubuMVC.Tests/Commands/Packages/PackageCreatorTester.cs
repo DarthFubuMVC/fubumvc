@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Bottles;
 using Bottles.Assemblies;
+using Bottles.Exploding;
 using Bottles.Zipping;
 using Fubu.Packages.Creation;
 using FubuCore;
@@ -218,7 +219,7 @@ namespace FubuMVC.Tests.Commands.Packages
             throw new NotImplementedException();
         }
 
-        public void ExtractTo(string fileName, string folder)
+        public void ExtractTo(string fileName, string folder, ExplodeOptions options)
         {
             throw new NotImplementedException();
         }

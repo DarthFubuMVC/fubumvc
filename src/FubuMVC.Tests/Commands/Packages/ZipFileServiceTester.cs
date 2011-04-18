@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Commands.Packages
                 zip1.Save();
             }
 
-            var service = new ZipFileService();
+            var service = new ZipFileService(new FileSystem());
 
             service.GetVersion("zip1.zip").ShouldEqual(guid);
         }
