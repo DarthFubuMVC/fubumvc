@@ -2,8 +2,6 @@
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Urls;
 using FubuMVC.HelloFubuSpark.Controllers.Home;
-using FubuMVC.Spark;
-using FubuMVC.Spark.Tokenization;
 
 namespace FubuMVC.HelloFubuSpark
 {
@@ -31,9 +29,6 @@ namespace FubuMVC.HelloFubuSpark
             HtmlConvention<SampleHtmlConventions>();
 
             Services(s => s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>());
-
-            //NOTE:TEMP
-            Views.Facility(new SparkViewFacility(new ViewTokenizer()));
         }
     }
 }

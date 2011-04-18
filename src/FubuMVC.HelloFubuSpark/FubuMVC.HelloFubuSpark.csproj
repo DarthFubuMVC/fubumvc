@@ -61,6 +61,7 @@
   <ItemGroup>
     <None Include="Controllers\Home\Home.spark" />
     <None Include="Controllers\Login\LoggedInStatus.spark" />
+    <Content Include=".fubu-manifest.txt" />
     <Content Include="Controllers\UrlTemplate\QueryTemplate.htm" />
     <None Include="Controllers\UrlTemplate\Find.spark" />
     <None Include="Controllers\UrlTemplate\Query.spark" />
