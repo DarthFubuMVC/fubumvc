@@ -42,12 +42,13 @@ namespace FubuMVC.Spark.Tokenization
 
             if (item.Master == null)
             {
-                // Log -> Spark compiler is about to blow up. // context.Graph.Observer.??
+                // Log -> Spark compiler is about to blow up. // context.Observer.??
             }
         }
 
         private SparkItem findClosestMaster(string masterName, SparkItem item, IEnumerable<SparkItem> items)
         {
+            // reconsider this, as a package can be in development mode.
             var root =  items.Min(x => x.Root);
             var masterLocations = reachableMasterLocations(item.Path, root);
             
@@ -87,7 +88,7 @@ namespace FubuMVC.Spark.Tokenization
             var type = matchingTypes.Count() == 1 ? matchingTypes.First() : null;
 
             // Log ambiguity or return "potential types" ?
-            // context.Graph.Observer.??
+            // context.Observer.??
 
             item.ViewModelType = type;
         }

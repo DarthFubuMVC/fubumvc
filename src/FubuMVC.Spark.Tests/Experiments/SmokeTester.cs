@@ -13,32 +13,34 @@ namespace FubuMVC.Spark.Tests.Experiments
         public void smoke()
         {
             var outputPath = AppDomain.CurrentDomain.BaseDirectory;
+            var view = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "A3.spark");
+            var master = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "Shared", "application.spark");
 
-            var filePath = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "A3.spark");
-
-            var file = new SparkItem(filePath, outputPath, "");
-
-            var engine = new SparkViewEngine();
-            var descriptor = new SparkViewDescriptor();
-            var templates = new[]
+            var item = new SparkItem(view, outputPath, "")
             {
-                // view path
-                file.RelativePath(),
-                // master page
-                // NOT NECESSARILY THIS WAY
-                // WE COULD PARSE FOR <use master="application.spark|something.spark"/> AND SET THIS IN THE DESCRIPTOR
-                // WE COULD USE A CONVENTION TO SET THE MASTER PAGE BY ACTION CALL
-                // OR SIMPLY NO MASTER PAGE (partials)
-                // IN THE END, EACH ONE OF THOSE (OR ANY OTHER) IDEALLY SHOULD BECOME AN STRATEGY
-                Path.Combine("Tokenization", "Scanning", "Templates", "Shared", "application.spark")
+                Master = new SparkItem(master, outputPath, "")
             };
-            engine.ViewFolder = new FileSystemViewFolder(file.Root);
-            foreach (var template in templates)
-            {
-                descriptor.AddTemplate(template);
+
+            // We could do an extension method, ToDescriptor() - however, a bit tricky if master is from host and package is outside, dev mode.. 
+            // Seems that we need to handle registrations differently (combined view folders for packages + host)
+            // Each package gets a virtual path set in a activator by fubu, VirtualPathProviderActivator.
+            // Perhas we can utilize this, we have the origin (package names)..
+            
+            var descriptor = new SparkViewDescriptor();
+            descriptor.AddTemplate(item.RelativePath());
+            if(item.Master != null)
+            {                
+                descriptor.AddTemplate(item.Master.RelativePath());                
             }
+
+            var engine = new SparkViewEngine
+            {
+                ViewFolder = new FileSystemViewFolder(item.Root)
+            };
+
             var entry = engine.CreateEntry(descriptor);
             var instance = entry.CreateInstance();
+
             var writer = new StringWriter();
             instance.RenderView(writer);
             var expected = string.Format("<div>this is the header{0}hello world{0}this is the footer{0}</div>", Environment.NewLine);

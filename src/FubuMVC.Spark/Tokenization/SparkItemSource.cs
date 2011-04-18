@@ -59,12 +59,12 @@ namespace FubuMVC.Spark.Tokenization
             foreach (var package in _packages)
             {
                 var pack = package;
-                package.ForFolder(BottleFiles.WebContentFolder, file =>
+                package.ForFolder(BottleFiles.WebContentFolder, path =>
                 {
                     var root = new RootSource
                     {
                         Origin = pack.Name, 
-                        Path = file
+                        Path = path
                     };
 
                     roots.Add(root);
