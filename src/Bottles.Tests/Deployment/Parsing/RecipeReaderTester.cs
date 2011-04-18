@@ -3,10 +3,10 @@ using Bottles.Deployment;
 using Bottles.Deployment.Parsing;
 using Bottles.Deployment.Writing;
 using Bottles.Tests.Deployment.Writing;
-using FubuCore.Configuration;
 using NUnit.Framework;
-using System.Linq;
 using FubuTestingSupport;
+using System.Linq;
+using FubuCore;
 
 namespace Bottles.Tests.Deployment.Parsing
 {
@@ -30,18 +30,20 @@ namespace Bottles.Tests.Deployment.Parsing
     }
 
     [TestFixture]
-    public class when_reading_a_single_host_file
+    public class when_reading_a_recipe_with_multiple_hosts
     {
-        private HostManifest theHost;
+        private Recipe theRecipe;
 
         [SetUp]
         public void SetUp()
         {
-            var writer = new ProfileWriter("profile2");
+            var writer = new ProfileWriter("profile3");
 
-            var host = writer.RecipeFor("r1").HostFor("h1");
-            
-            host.AddDirective(new SimpleSettings{
+            var recipeDefinition = writer.RecipeFor("r1");
+            var host = recipeDefinition.HostFor("h1");
+
+            host.AddDirective(new SimpleSettings
+            {
                 One = "one",
                 Two = "two"
             });
@@ -63,47 +65,33 @@ namespace Bottles.Tests.Deployment.Parsing
                 Relationship = "binaries"
             });
 
+            recipeDefinition.HostFor("h2").AddProperty<ThreeSettings>(x => x.Direction, "North");
+            recipeDefinition.HostFor("h3").AddProperty<TwoSettings>(x => x.City, "Austin");
+
+
             writer.Flush();
 
-            var reader = new HostReader();
-            theHost = reader.ReadFrom("profile2/recipes/r1/h1.host");
+
+            theRecipe = RecipeReader.ReadFrom("profile3/recipes/r1");
         }
 
         [Test]
-        public void the_category_for_settings_data_on_the_host_must_be_core()
+        public void should_read_the_recipe_name_from_the_folder_name()
         {
-            var settingsData = theHost.AllSettingsData().Single();
-            settingsData.Category.ShouldEqual(SettingCategory.core);
+            theRecipe.Name.ShouldEqual("r1");
         }
 
         [Test]
-        public void should_have_all_the_settings_data_from_the_file()
+        public void should_have_all_three_hosts()
         {
-            var settingsData = theHost.AllSettingsData().Single();
-
-            settingsData.AllKeys.ShouldHaveTheSameElementsAs(
-                "SimpleSettings.One",
-                "SimpleSettings.Two",
-                "OneSettings.Name",
-                "OneSettings.Age"
-                );
-
-            settingsData.Get("SimpleSettings.One").ShouldEqual("one");
+            theRecipe.Hosts.Select(x => x.Name).ShouldHaveTheSameElementsAs("h1", "h2", "h3");
         }
 
         [Test]
-        public void has_all_the_bottle_references_from_the_file()
+        public void spot_check_that_the_host_has_the_settings_data()
         {
-            theHost.BottleReferences.ShouldHaveTheSameElementsAs(
-                new BottleReference("bottle1", null),
-                new BottleReference("bottle2", "binaries")
-                );
-        }
-
-        [Test]
-        public void has_the_name_from_the_file()
-        {
-            theHost.Name.ShouldEqual("h1");
+            theRecipe.HostFor("h1").As<HostManifest>().AllSettingsData().Single()
+                .Get("OneSettings.Name").ShouldEqual("Jeremy");
         }
     }
 }

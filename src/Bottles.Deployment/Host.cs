@@ -8,21 +8,46 @@ namespace Bottles.Deployment
     public interface IHostManifest
     {
         T GetSettings<T>();
+        string Name { get; }
     }
 
     public class Recipe
     {
-        private readonly Cache<string, HostManifest> _hosts = new Cache<string, HostManifest>(name => new HostManifest(name));
+        private readonly string _name;
+        private readonly Cache<string, IHostManifest> _hosts = new Cache<string, IHostManifest>(name => new HostManifest(name));
         private readonly List<string> _dependencies = new List<string>();
 
-        public HostManifest HostFor(string name)
+        public Recipe(string name)
+        {
+            _name = name;
+        }
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public IHostManifest HostFor(string name)
         {
             return _hosts[name];
+        }
+
+        public IEnumerable<IHostManifest> Hosts
+        {
+            get
+            {
+                return _hosts.GetAll();
+            }
         }
 
         public void RegisterDependency(string recipeName)
         {
             _dependencies.Add(recipeName);
+        }
+
+        public void RegisterHost(IHostManifest host)
+        {
+            _hosts[host.Name] = host;
         }
     }
 

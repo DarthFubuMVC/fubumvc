@@ -7,6 +7,11 @@ namespace Bottles.Deployment.Parsing
 {
     public class RecipeReader
     {
+        public static Recipe ReadFrom(string directory)
+        {
+            return new RecipeReader(directory).Read();
+        }
+
         private readonly string _directory;
         private readonly IFileSystem _fileSystem = new FileSystem();
 
@@ -17,7 +22,8 @@ namespace Bottles.Deployment.Parsing
 
         public Recipe Read()
         {
-            var recipe = new Recipe();
+            var recipeName = Path.GetFileName(_directory);
+            var recipe = new Recipe(recipeName);
 
             // need to read the recipe control file
             // need to read each host file
@@ -27,16 +33,17 @@ namespace Bottles.Deployment.Parsing
                 Include = "*.host"
             }).Each(file =>
             {
-                throw new NotImplementedException();
+                var host = HostReader.ReadFrom(file);
+                recipe.RegisterHost(host);
             });
-            
-            throw new NotImplementedException();
+
+            return recipe;
         }
     }
 
-    public class HostReader
+    public static class HostReader
     {
-        public HostManifest ReadFrom(string fileName)
+        public static HostManifest ReadFrom(string fileName)
         {
             var parser = new SettingsParser(fileName);
             new FileSystem().ReadTextFile(fileName, parser.ParseText);
