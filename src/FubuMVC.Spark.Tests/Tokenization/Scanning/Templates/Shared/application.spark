@@ -1,3 +1,1 @@
-﻿<div>
-<use:view/>
-</div>
+﻿<div>Host Application: <use:view/></div>

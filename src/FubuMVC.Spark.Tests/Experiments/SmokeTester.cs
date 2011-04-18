@@ -43,7 +43,7 @@ namespace FubuMVC.Spark.Tests.Experiments
 
             var writer = new StringWriter();
             instance.RenderView(writer);
-            var expected = string.Format("<div>this is the header{0}hello world{0}this is the footer{0}</div>", Environment.NewLine);
+            var expected = string.Format("<div>Host Application: this is the header{0}hello world{0}this is the footer</div>", Environment.NewLine);
             Assert.AreEqual(expected, writer.ToString());
         }
     }

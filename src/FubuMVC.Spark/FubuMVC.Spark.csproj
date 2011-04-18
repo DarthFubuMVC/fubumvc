@@ -55,6 +55,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Registration\Nodes\SparkViewOutput.cs" />
+    <Compile Include="Rendering\SparkEngineFactory.cs" />
     <Compile Include="SparkViewBehavior.cs" />
     <Compile Include="Tokenization\Parsing\SparkParser.cs" />
     <Compile Include="Tokenization\Scanning\FileFound.cs" />
