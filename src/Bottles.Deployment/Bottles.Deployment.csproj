@@ -53,7 +53,6 @@
     <Compile Include="IBottleRepository.cs" />
     <Compile Include="IDeployer.cs" />
     <Compile Include="IDirective.cs" />
-    <Compile Include="IHostManifest.cs" />
     <Compile Include="IProcessRunner.cs" />
     <Compile Include="IProfile.cs" />
     <Compile Include="Parsing\SettingsParserException.cs" />

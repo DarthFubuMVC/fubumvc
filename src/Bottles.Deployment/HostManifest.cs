@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using FubuCore.Binding;
 using FubuCore.Configuration;
 using System.Linq;
+using FubuCore;
+using FubuCore.Reflection;
 
 namespace Bottles.Deployment
 {
-    public class HostManifest : IHostManifest
+    public class HostManifest
     {
         private static readonly IObjectResolver _resolver = ObjectResolver.Basic();
 
@@ -45,6 +48,14 @@ namespace Bottles.Deployment
         public void RegisterSettings(ISettingsData data)
         {
             _data.Add(data);
+        }
+
+        public void RegisterValue<T>(Expression<Func<T, object>> expression, object value) where T : IDirective
+        {
+            var key = "{0}.{1}".ToFormat(typeof (T).Name, expression.ToAccessor().PropertyNames.Join("."));
+            var data = new InMemorySettingsData(SettingCategory.core).With(key, value.ToString());
+            
+            RegisterSettings(data);
         }
 
         public void Append(HostManifest otherHost)
