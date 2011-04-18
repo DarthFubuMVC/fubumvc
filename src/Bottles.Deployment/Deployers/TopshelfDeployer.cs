@@ -28,7 +28,7 @@ namespace Bottles.Deployment.Deployers
             _bottles.ExplodeTo(ts.MainBottle, location);
 
             //REVIEW: A - not going to work
-            var bottleDest = FileSystem.Combine(ts.InstallLocation, BottleFiles.PackagesFolder);
+            var bottleDest = FileSystem.Combine(ts.InstallLocation, "packages");
             ts.Bottles.Each(b =>
                 {
                     _bottles.CopyTo(b, bottleDest);

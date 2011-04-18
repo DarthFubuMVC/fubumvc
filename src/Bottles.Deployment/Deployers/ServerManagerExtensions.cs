@@ -41,6 +41,43 @@ namespace Bottles.Deployment.Deployers
             cfg(pool);
         }
 
+        public static void MapAspNetToEverything(this Application app)
+        {
+            var webCfg = app.GetWebConfiguration();
+            var handlers = webCfg.GetSection("system.webServer/handlers");
+            var handlersCollection = handlers.GetCollection();
+            var addElement = handlersCollection.CreateElement("add");
+            addElement["name"] = "HungryHungryDotNetHippo";
+            addElement["path"] = "*";
+            addElement["verb"] = "*";
+            addElement["type"] = "System.Web.UI.PageHandlerFactory";
 
+            handlersCollection.AddAt(0, addElement);
+
+        }
+
+        public static void DirectoryBrowsing(this Application app, Activation activation)
+        {
+            ConfigurationSection directoryBrowseSection = app.GetWebConfiguration().GetSection("system.webServer/directoryBrowse");
+            directoryBrowseSection["enabled"] = activation == Activation.Enable;
+        }
+
+        public static void AnonAuthentication(this Application app, Activation activation)
+        {
+            var config = app.GetWebConfiguration().GetSection("system.webServer/security/authentication/anonymousAuthentication");
+            config["enabled"] = activation == Activation.Enable;
+        }
+
+        public static void BasicAuthentication(this Application app, Activation activation)
+        {
+            var config = app.GetWebConfiguration().GetSection("system.webServer/security/authentication/basicAuthentication");
+            config["enabled"] = activation == Activation.Enable;
+        }
+
+        public static void WindowsAuthentication(this Application app, Activation activation)
+        {
+            var config = app.GetWebConfiguration().GetSection("system.webServer/security/authentication/windowsAuthentication");
+            config["enabled"] = activation == Activation.Enable;
+        }
     }
 }

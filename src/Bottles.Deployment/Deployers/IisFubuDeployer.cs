@@ -21,22 +21,16 @@ namespace Bottles.Deployment.Deployers
 
             _fileSystem.CreateDirectory(direc.AppDirectory);
 
-            //host bottle
-            _bottles.ExplodeTo(direc.MainBottle, direc.AppDirectory);
+            //REVIEW: currently this is grouped per site touched - now its one by one
+            var appOfflineFile = FileSystem.Combine(direc.AppDirectory, "app_offline.htm");
 
-            //REVIEW: A - not going to work
-            var bottleDest = FileSystem.Combine(direc.AppDirectory, BottleFiles.PackagesFolder);
-            direc.Bottles.Each(b =>
-                {
-                    _bottles.CopyTo(b, bottleDest);
-                });
-
+            _fileSystem.WriteStringToFile(appOfflineFile, "&lt;html&gt;&lt;body&gt;Application is being rebuilt&lt;/body&gt;&lt;/html&gt;");
+            
 
             //currenly only IIS 7
             using(var iisManager = ServerManager.OpenRemote("."))
             {
                 var site = iisManager.CreateSite(direc.WebsiteName, direc.WebsitePath, direc.Port);
-                var app = site.CreateApplication(direc.VDir, direc.AppDirectory);
 
                 iisManager.CreateAppPool(direc.AppPool, pool =>
                     {
@@ -52,12 +46,35 @@ namespace Bottles.Deployment.Deployers
                         
                     });
 
+                var app = site.CreateApplication(direc.VDir, direc.AppDirectory);
+                
                 app.ApplicationPoolName = direc.AppPool;
+                app.DirectoryBrowsing(direc.DirectoryBrowsing);
 
+                app.AnonAuthentication(direc.AnonAuth);
+                app.BasicAuthentication(direc.BasicAuth);
+                app.WindowsAuthentication(direc.WindowsAuth);
+                
+                app.MapAspNetToEverything();
+
+                //icacls
 
                 iisManager.CommitChanges();
             }
-                       
+
+
+            //host bottle
+            _bottles.ExplodeTo(direc.HostBottle, direc.AppDirectory);
+
+            //REVIEW: A - not going to work
+            var bottleDest = FileSystem.Combine(direc.AppDirectory, "packages");
+            direc.Bottles.Each(b =>
+            {
+                _bottles.CopyTo(b, bottleDest);
+            });
+            
+
+            _fileSystem.DeleteFile(appOfflineFile);
         }
     }
 }
