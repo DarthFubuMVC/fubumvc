@@ -52,6 +52,7 @@
     <Compile Include="Deployment\FakeDepolyer.cs" />
     <Compile Include="Deployment\HostManifestTester.cs" />
     <Compile Include="Deployment\Parsing\FakeSettings.cs" />
+    <Compile Include="Deployment\Parsing\ProfileReaderIntegratedTester.cs" />
     <Compile Include="Deployment\Parsing\RecipeReaderTester.cs" />
     <Compile Include="Deployment\Parsing\SettingsParserTester.cs" />
     <Compile Include="Deployment\Parsing\when_reading_a_single_host_file.cs" />

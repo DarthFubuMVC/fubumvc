@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottleReference.cs" />
+    <Compile Include="Parsing\HostReader.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="BottleRepository.cs" />
     <Compile Include="Deployers\TopshelfDeployer.cs" />

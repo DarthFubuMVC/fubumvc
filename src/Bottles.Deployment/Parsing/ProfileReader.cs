@@ -1,17 +1,16 @@
-using System;
 using System.Collections.Generic;
+using System.IO;
 using FubuCore;
+using System.Linq;
 
 namespace Bottles.Deployment.Parsing
 {
-    public class ProfileReader
+    public static class ProfileReader
     {
-        private readonly IFileSystem _fileSystem = new FileSystem();
-
-        public IEnumerable<HostManifest> ReadHosts(string directory)
+        public static IEnumerable<Recipe> ReadRecipes(string profileDirectory)
         {
-            throw new NotImplementedException();
-            //Directory.GetDirectories(ProfileFiles.RecipesFolder).Each()   
+            var recipesDir = FileSystem.Combine(profileDirectory, ProfileFiles.RecipesFolder);
+            return Directory.GetDirectories(recipesDir).Select(RecipeReader.ReadFrom);
         }
     }
 }
