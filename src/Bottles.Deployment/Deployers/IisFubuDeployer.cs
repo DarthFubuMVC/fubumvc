@@ -19,10 +19,10 @@ namespace Bottles.Deployment.Deployers
         {
             var direc = (IisFubuWebsite) directive;
 
-            _fileSystem.CreateDirectory(direc.AppDirectory);
+            _fileSystem.CreateDirectory(direc.VDirPhysicalPath);
 
             //REVIEW: currently this is grouped per site touched - now its one by one
-            var appOfflineFile = FileSystem.Combine(direc.AppDirectory, "app_offline.htm");
+            var appOfflineFile = FileSystem.Combine(direc.VDirPhysicalPath, "app_offline.htm");
 
             _fileSystem.WriteStringToFile(appOfflineFile, "&lt;html&gt;&lt;body&gt;Application is being rebuilt&lt;/body&gt;&lt;/html&gt;");
             
@@ -30,7 +30,7 @@ namespace Bottles.Deployment.Deployers
             //currenly only IIS 7
             using(var iisManager = ServerManager.OpenRemote("."))
             {
-                var site = iisManager.CreateSite(direc.WebsiteName, direc.WebsitePath, direc.Port);
+                var site = iisManager.CreateSite(direc.WebsiteName, direc.WebsitePhysicalPath, direc.Port);
 
                 iisManager.CreateAppPool(direc.AppPool, pool =>
                     {
@@ -46,7 +46,7 @@ namespace Bottles.Deployment.Deployers
                         
                     });
 
-                var app = site.CreateApplication(direc.VDir, direc.AppDirectory);
+                var app = site.CreateApplication(direc.VDir, direc.VDirPhysicalPath);
                 
                 app.ApplicationPoolName = direc.AppPool;
                 app.DirectoryBrowsing(direc.DirectoryBrowsing);
@@ -64,10 +64,10 @@ namespace Bottles.Deployment.Deployers
 
 
             //host bottle
-            _bottles.ExplodeTo(direc.HostBottle, direc.AppDirectory);
+            _bottles.ExplodeTo(direc.HostBottle, direc.VDirPhysicalPath);
 
             //REVIEW: A - not going to work
-            var bottleDest = FileSystem.Combine(direc.AppDirectory, "packages");
+            var bottleDest = FileSystem.Combine(direc.VDirPhysicalPath, "packages");
             direc.Bottles.Each(b =>
             {
                 _bottles.CopyTo(b, bottleDest);
