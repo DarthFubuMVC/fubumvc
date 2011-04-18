@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Microsoft.Web.Administration\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottleReference.cs" />
+    <Compile Include="Deployers\IisFubuDeployer.cs" />
+    <Compile Include="Deployers\IisFubuWebsite.cs" />
+    <Compile Include="Deployers\ServerManagerExtensions.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="BottleRepository.cs" />
     <Compile Include="Deployers\TopshelfDeployer.cs" />
