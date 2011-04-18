@@ -20,7 +20,7 @@ namespace Bottles.Tests.Deployment.Parsing
     public class TwoSettings : IDirective
     {
         public string City { get; set; }
-        public bool IsLocal { get; set; }
+        public bool IsDomestic { get; set; }
     }
 
     public class ThreeSettings : IDirective

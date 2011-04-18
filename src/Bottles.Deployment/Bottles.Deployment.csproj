@@ -45,13 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BottleReference.cs" />
-    <Compile Include="Host.cs" />
+    <Compile Include="Recipe.cs" />
     <Compile Include="BottleRepository.cs" />
     <Compile Include="Deployers\TopshelfDeployer.cs" />
     <Compile Include="Deployers\TopshelfService.cs" />
+    <Compile Include="HostManifest.cs" />
     <Compile Include="IBottleRepository.cs" />
     <Compile Include="IDeployer.cs" />
     <Compile Include="IDirective.cs" />
+    <Compile Include="IHostManifest.cs" />
     <Compile Include="IProcessRunner.cs" />
     <Compile Include="IProfile.cs" />
     <Compile Include="Parsing\SettingsParserException.cs" />

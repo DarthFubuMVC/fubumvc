@@ -1,0 +1,210 @@
+using Bottles.Deployment;
+using FubuCore.Configuration;
+using NUnit.Framework;
+using FubuTestingSupport;
+using System.Linq;
+
+namespace Bottles.Tests.Deployment
+{
+    [TestFixture]
+    public class HostManifestTester
+    {
+        private InMemorySettingsData data1;
+        private InMemorySettingsData data2;
+        private InMemorySettingsData data3;
+        private InMemorySettingsData data4;
+        private InMemorySettingsData data5;
+
+        [SetUp]
+        public void SetUp()
+        {
+            data1 = new InMemorySettingsData(SettingCategory.core)
+                .With("OneDirective.Name", "Max");
+
+
+            data2 = new InMemorySettingsData(SettingCategory.core)
+                .With("ThreeDirective.Threshold", "3");
+
+            data3 = new InMemorySettingsData(SettingCategory.core)
+                .With("TwoDirective.City", "Austin")
+                .With("TwoDirective.IsDomestic", "true");
+
+            data4 = new InMemorySettingsData(SettingCategory.core)
+                .With("OneDirective.Age", "7");
+
+            data5 = new InMemorySettingsData(SettingCategory.core)
+                .With("OneDirective.Age", "8");
+
+        }
+
+        [Test]
+        public void append_host_respects_setting_order()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterSettings(data4);
+
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterSettings(data5);
+
+
+            host1.Append(host2);
+
+            host1.GetDirective<OneDirective>().Age.ShouldEqual(7);
+        }
+
+        [Test]
+        public void prepend_host_respects_setting_order()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterSettings(data4);
+
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterSettings(data5);
+
+
+            host1.Prepend(host2);
+
+            host1.GetDirective<OneDirective>().Age.ShouldEqual(8);
+        }
+
+        [Test]
+        public void prepend_host_imports_bottle_references()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterBottle(new BottleReference("b1", null));
+
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterBottle(new BottleReference("b2", null));
+
+
+            host1.Prepend(host2);
+
+            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null), new BottleReference("b2", null));
+        }
+
+        [Test]
+        public void prepend_host_imports_bottle_references_but_does_not_duplicate()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterBottle(new BottleReference("b1", null));
+
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterBottle(new BottleReference("b1", null));
+
+
+            host1.Prepend(host2);
+
+            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null));
+        }
+
+        [Test]
+        public void append_host_imports_bottle_references()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterBottle(new BottleReference("b1", null));
+
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterBottle(new BottleReference("b2", null));
+
+
+            host1.Append(host2);
+
+            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null), new BottleReference("b2", null));
+        }
+
+        [Test]
+        public void append_host_imports_bottle_references_but_does_not_duplicate()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterBottle(new BottleReference("b1", null));
+
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterBottle(new BottleReference("b1", null));
+
+
+            host1.Append(host2);
+
+            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null));
+        }
+
+
+        [Test]
+        public void does_not_set_a_property_that_is_not_explicitly_configured()
+        {
+            var host = new HostManifest("h1");
+            host.RegisterSettings(data4);
+
+            // the default value for Name is "somebody"
+            host.GetDirective<OneDirective>().Name.ShouldEqual("somebody");
+        }
+
+        [Test]
+        public void respects_ordering_of_setting_data()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterSettings(data4);
+            host1.RegisterSettings(data5);
+
+            host1.GetDirective<OneDirective>().Age.ShouldEqual(7);
+
+            var host2 = new HostManifest("h2");
+            host2.RegisterSettings(data5);
+            host2.RegisterSettings(data4);
+
+            host2.GetDirective<OneDirective>().Age.ShouldEqual(8);
+        }
+
+        [Test]
+        public void can_pull_setting_class_out_of_request_data()
+        {
+            var host = new HostManifest("host1");
+            host.RegisterSettings(data3);
+
+            var directive = host.GetDirective<TwoDirective>();
+            directive.City.ShouldEqual("Austin");
+            directive.IsDomestic.ShouldBeTrue();
+        }
+
+        [Test]
+        public void can_pull_setting_class_out_of_multiple_data_settings_with_no_conflict()
+        {
+            var host = new HostManifest("host1");
+            host.RegisterSettings(data1);
+            host.RegisterSettings(data4);
+
+            var directive = host.GetDirective<OneDirective>();
+            directive.Name.ShouldEqual("Max");
+            directive.Age.ShouldEqual(7);
+        
+        }
+    }
+
+    public class OneDirective : IDirective
+    {
+        public OneDirective()
+        {
+            Name = "somebody";
+        }
+
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+    
+    public class TwoDirective : IDirective
+    {
+        public string City { get; set; }
+        public bool IsDomestic { get; set; }
+    }
+
+    public class ThreeDirective : IDirective
+    {
+        public int Threshold { get; set; }
+        public string Direction { get; set; }
+    }
+}
