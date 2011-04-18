@@ -2,39 +2,38 @@
 using System.Linq;
 using Bottles;
 using FubuCore;
-using FubuMVC.Spark.Tokenization.Model;
 using FubuMVC.Spark.Tokenization.Scanning;
 
 namespace FubuMVC.Spark.Tokenization
 {
-    public interface ISparkFileSource
+    public interface ISparkItemSource
     {
-        IEnumerable<SparkFile> GetFiles();
+        IEnumerable<SparkItem> SparkItems();
     }
 
-    public class SparkFileSource : ISparkFileSource
+    public class SparkItemSource : ISparkItemSource
     {
         private readonly IFileScanner _fileScanner;
         private readonly IEnumerable<IPackageInfo> _packages;
 
-        public SparkFileSource() : this(new FileScanner(), PackageRegistry.Packages) {}
-        public SparkFileSource(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
+        public SparkItemSource() : this(new FileScanner(), PackageRegistry.Packages) {}
+        public SparkItemSource(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
         {
             _fileScanner = fileScanner;
             _packages = packages;
         }
 
-        public IEnumerable<SparkFile> GetFiles()
+        public IEnumerable<SparkItem> SparkItems()
         {
-            var files = new List<SparkFile>();
+            var items = new List<SparkItem>();
 
-            var request = buildRequest(files);
+            var request = buildRequest(items);
             _fileScanner.Scan(request);
 
-            return files;
+            return items;
         }
 
-        private ScanRequest buildRequest(ICollection<SparkFile> files)
+        private ScanRequest buildRequest(ICollection<SparkItem> files)
         {
             var request = new ScanRequest();
             request.AddFileFilter("*.spark");
@@ -45,7 +44,7 @@ namespace FubuMVC.Spark.Tokenization
             request.AddHandler(fileFound =>
             {
                 var origin = roots.First(x => x.Path == fileFound.Root).Origin;
-                var sparkFile = new SparkFile(fileFound.Path, fileFound.Root, origin);
+                var sparkFile = new SparkItem(fileFound.Path, fileFound.Root, origin);
                 
                 files.Add(sparkFile);
             });
@@ -59,12 +58,12 @@ namespace FubuMVC.Spark.Tokenization
             
             foreach (var package in _packages)
             {
-                var pck = package;
+                var pack = package;
                 package.ForFolder(BottleFiles.WebContentFolder, file =>
                 {
                     var root = new RootSource
                     {
-                        Origin = pck.Name, 
+                        Origin = pack.Name, 
                         Path = file
                     };
 
@@ -72,7 +71,11 @@ namespace FubuMVC.Spark.Tokenization
                 });
             }
 
-            roots.Add(new RootSource { Origin = Constants.HostOrigin, Path = "~/".ToPhysicalPath() });
+            roots.Add(new RootSource
+            {
+                Origin = Constants.HostOrigin, 
+                Path = "~/".ToPhysicalPath()
+            });
             
             return roots;
         }

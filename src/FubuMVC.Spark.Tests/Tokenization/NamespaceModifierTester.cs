@@ -1,14 +1,13 @@
 ﻿using System.IO;
 using FubuMVC.Spark.Tokenization;
-using FubuMVC.Spark.Tokenization.Model;
 using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
-    public class NamespaceEnricherTester
+    public class NamespaceModifierTester
     {
         private string _root;
-        private NamespaceEnricher _enricher;
+        private NamespaceModifier _modifier;
         private EnrichmentContext _context;
 
         [TestFixtureSetUp]
@@ -17,7 +16,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
             var vol = Directory.GetDirectoryRoot(Directory.GetCurrentDirectory());
             _root = Path.Combine(vol, "inetput", "www", "web");
 
-            _enricher = new NamespaceEnricher();
+            _modifier = new NamespaceModifier();
             _context = new EnrichmentContext();
         }
 
@@ -25,20 +24,20 @@ namespace FubuMVC.Spark.Tests.Tokenization
         public void namespace_is_set_correctly()
         {
             var path = Path.Combine(_root, "controllers", "home", "home.spark");
-            var file = new SparkFile(path, _root, "") { ViewModelType = typeof(FooViewModel) };
+            var item = new SparkItem(path, _root, "") { ViewModelType = typeof(FooViewModel) };
             
-            _enricher.Enrich(file, _context);
-            Assert.AreEqual("FubuMVC.Spark.Tests.controllers.home", file.Namespace);
+            _modifier.Modify(item, _context);
+            Assert.AreEqual("FubuMVC.Spark.Tests.controllers.home", item.Namespace);
         }
 
         [Test]
         public void namespace_of_files_in_root_is_set_correctly()
         {
             var path = Path.Combine(_root, "home.spark");
-            var file = new SparkFile(path, _root, "") { ViewModelType = typeof(FooViewModel) };
+            var item = new SparkItem(path, _root, "") { ViewModelType = typeof(FooViewModel) };
             
-            _enricher.Enrich(file, _context);
-            Assert.AreEqual("FubuMVC.Spark.Tests", file.Namespace);
+            _modifier.Modify(item, _context);
+            Assert.AreEqual("FubuMVC.Spark.Tests", item.Namespace);
         }
 
         // TODO : Edge cases, boundaries

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization;
 using FubuMVC.Spark.Tokenization.Scanning;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,16 +13,16 @@ namespace FubuMVC.Spark.Tests.Tokenization.Scanning
     public class SparkScannerTester
     {
         private readonly IFileScanner _scanner;
-        private readonly IList<SparkFile> _scanResult;
+        private readonly IList<SparkItem> _scanResult;
 
         public SparkScannerTester()
         {
             _scanner = new FileScanner(new FileSystem());
-            _scanResult=new List<SparkFile>();
+            _scanResult=new List<SparkItem>();
             var request = new ScanRequest();
             TestSource.Paths().Each(request.AddRoot);
             request.AddFileFilter("*.spark");
-            request.AddHandler(file => _scanResult.Add(new SparkFile(file.Path, file.Root, "")));
+            request.AddHandler(file => _scanResult.Add(new SparkItem(file.Path, file.Root, "")));
             _scanner.Scan(request);
         }
 

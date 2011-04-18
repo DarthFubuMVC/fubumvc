@@ -2,26 +2,26 @@
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization;
 using FubuMVC.Spark.Tokenization.Parsing;
 
 namespace FubuMVC.Spark.Tests.Experiments
 {
     public class SparkViewNode : OutputNode<RenderSparkViewBehavior>, IMayHaveInputType
     {
-        private readonly SparkFile _file;
+        private readonly SparkItem _item;
         private readonly ActionCall _call;
 
-        public SparkViewNode(SparkFile file, ActionCall call)
+        public SparkViewNode(SparkItem item, ActionCall call)
         {
-            _file = file;
+            _item = item;
             _call = call;
         }
 
         protected override void configureObject(ObjectDef def)
         {
             var extractor = new ElementNodeExtractor();
-            var output = new SparkViewOutput(_file, extractor, new FileSystem());
+            var output = new SparkViewOutput(_item, extractor, new FileSystem());
             def.DependencyByValue(output);
         }
         

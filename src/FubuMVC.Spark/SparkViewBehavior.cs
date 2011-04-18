@@ -3,9 +3,9 @@ using FubuMVC.Core.Behaviors;
 
 namespace FubuMVC.Spark
 {
-    public class SparkViewRenderer : BasicBehavior
+    public class SparkViewBehavior : BasicBehavior
     {
-        public SparkViewRenderer() : base(PartialBehavior.Executes)
+        public SparkViewBehavior() : base(PartialBehavior.Executes)
         {
 
         }

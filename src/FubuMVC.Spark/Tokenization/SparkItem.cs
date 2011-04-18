@@ -3,16 +3,16 @@ using System.Collections.ObjectModel;
 using System.IO;
 using FubuCore;
 
-namespace FubuMVC.Spark.Tokenization.Model
+namespace FubuMVC.Spark.Tokenization
 {
     public static class Constants
     {
         public const string HostOrigin = "Host";
     }
 
-    public class SparkFile
+    public class SparkItem
     {
-        public SparkFile(string path, string root, string origin)
+        public SparkItem(string path, string root, string origin)
         {
             Path = path;
             Root = root;
@@ -23,7 +23,7 @@ namespace FubuMVC.Spark.Tokenization.Model
         public string Root { get; private set; }
         public string Origin { get; private set; }
 
-        public SparkFile Master { get; set; }
+        public SparkItem Master { get; set; }
         public Type ViewModelType { get; set; }
         public string Namespace { get; set; }
 
@@ -35,27 +35,27 @@ namespace FubuMVC.Spark.Tokenization.Model
 
     }
 
-    public static class SparkFileHelper
+    public static class SparkItemHelper
     {
-        public static string RelativePath(this SparkFile file)
+        public static string RelativePath(this SparkItem item)
         {
-            return file.Path.PathRelativeTo(file.Root);
+            return item.Path.PathRelativeTo(item.Root);
         }
 
-        public static string Name(this SparkFile file)
+        public static string Name(this SparkItem item)
         {
-            return Path.GetFileNameWithoutExtension(file.Path);
+            return Path.GetFileNameWithoutExtension(item.Path);
         }
 
-        public static string DirectoryPath(this SparkFile file)
+        public static string DirectoryPath(this SparkItem item)
         {
-            return Path.GetDirectoryName(file.Path);
+            return Path.GetDirectoryName(item.Path);
         }
-        public static bool HasViewModel(this SparkFile file)
+        public static bool HasViewModel(this SparkItem item)
         {
-            return file.ViewModelType != null;
+            return item.ViewModelType != null;
         }
     }
 
-    public class SparkFiles : Collection<SparkFile> { }
+    public class SparkItems : Collection<SparkItem> { }
 }

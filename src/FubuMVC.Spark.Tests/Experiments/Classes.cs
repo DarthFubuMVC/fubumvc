@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization;
 using FubuMVC.Spark.Tokenization.Parsing;
 using Spark;
 using Spark.FileSystem;
@@ -11,13 +11,13 @@ namespace FubuMVC.Spark.Tests.Experiments
 {
     public class SparkViewOutput
     {
-        private readonly SparkFile _file;
+        private readonly SparkItem _item;
         private readonly IElementNodeExtractor _extractor;
         private readonly IFileSystem _fileSystem;
 
-        public SparkViewOutput(SparkFile file,IElementNodeExtractor extractor,IFileSystem fileSystem)
+        public SparkViewOutput(SparkItem item,IElementNodeExtractor extractor,IFileSystem fileSystem)
         {
-            _file = file;
+            _item = item;
             _extractor = extractor;
             _fileSystem = fileSystem;
         }
@@ -38,12 +38,12 @@ namespace FubuMVC.Spark.Tests.Experiments
             var descriptor = new SparkViewDescriptor();
          
             var templates = new List<string>();
-            var viewTemplate = _file.Path.Replace(_file.Root, "").TrimStart(Path.DirectorySeparatorChar);
+            var viewTemplate = _item.Path.Replace(_item.Root, "").TrimStart(Path.DirectorySeparatorChar);
             templates.Add(viewTemplate);
             if (!isPartial)
             {
 
-                var master = _extractor.ExtractByName(_fileSystem.ReadStringFromFile(_file.Path), "use")
+                var master = _extractor.ExtractByName(_fileSystem.ReadStringFromFile(_item.Path), "use")
                     .Select(x => x.AttributeByName("master")).FirstOrDefault();
                 if (master != null)
                 {
@@ -51,7 +51,7 @@ namespace FubuMVC.Spark.Tests.Experiments
                 }
             }
 
-            engine.ViewFolder = new FileSystemViewFolder(_file.Root);
+            engine.ViewFolder = new FileSystemViewFolder(_item.Root);
             foreach (var template in templates)
             {
                 descriptor.AddTemplate(template);

@@ -2,23 +2,22 @@
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Spark.Registration.Nodes;
-using FubuMVC.Spark.Tokenization.Model;
 using Spark;
 
 namespace FubuMVC.Spark.Tokenization
 {
     public class SparkViewToken : IViewToken
     {
-        private readonly SparkFile _file;
+        private readonly SparkItem _item;
 
-        public SparkViewToken(SparkFile file)
+        public SparkViewToken(SparkItem item)
         {
-            _file = file;
+            _item = item;
         }
 
         public BehaviorNode ToBehavioralNode()
         {
-            return new SparkViewOutput(_file);
+            return new SparkViewOutput(_item);
         }
 
         public Type ViewType
@@ -28,21 +27,21 @@ namespace FubuMVC.Spark.Tokenization
 
         public Type ViewModelType
         {
-            get { return _file.ViewModelType; }
+            get { return _item.ViewModelType; }
         }
 
         public string Name
         {
-            get { return _file.Name(); }
+            get { return _item.Name(); }
         }
 
         public string Folder
         {
-            get { return _file.Namespace; }
+            get { return _item.Namespace; }
         }
         public override string ToString()
         {
-            return _file.RelativePath();
+            return _item.RelativePath();
         }
     }
 }

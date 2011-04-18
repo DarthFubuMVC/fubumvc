@@ -8,9 +8,9 @@ namespace FubuMVC.Spark
         public void Configure(FubuRegistry registry)
         {
             var tokenizer = new ViewTokenizer()
-                .AddEnricher<MasterPageEnricher>()
-                .AddEnricher<ViewModelEnricher>()
-                .AddEnricher<NamespaceEnricher>();
+                .AddModifier<MasterPageModifier>()
+                .AddModifier<ViewModelModifier>()
+                .AddModifier<NamespaceModifier>();
 
             registry.Views.Facility(new SparkViewFacility(tokenizer));
         }

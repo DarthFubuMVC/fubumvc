@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Spark.Tokenization.Model;
 using FubuMVC.Spark.Tokenization.Parsing;
 
 namespace FubuMVC.Spark.Tokenization
@@ -12,44 +11,44 @@ namespace FubuMVC.Spark.Tokenization
     {
         public string FileContent { get; set; }
         public TypePool TypePool { get; set; }
-        public SparkFiles SparkFiles { get; set; }        
+        public SparkItems SparkItems { get; set; }        
     }
 
-    public interface ISparkFileEnricher
+    public interface ISparkItemModifier
     {
-        void Enrich(SparkFile file, EnrichmentContext context);
+        void Modify(SparkItem item, EnrichmentContext context);
     }
 
-    public class MasterPageEnricher : ISparkFileEnricher
+    public class MasterPageModifier : ISparkItemModifier
     {
         // Allow for convention on this - consider possibility for other "shared" folders
         private const string SharedFolder = "Shared";
         private readonly ISparkParser _sparkParser;
 
-        public MasterPageEnricher() : this(new SparkParser()) {}
-        public MasterPageEnricher(ISparkParser sparkParser)
+        public MasterPageModifier() : this(new SparkParser()) {}
+        public MasterPageModifier(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;
         }
 
-        public void Enrich(SparkFile file, EnrichmentContext context)
+        public void Modify(SparkItem item, EnrichmentContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent);
             if (masterName.IsEmpty()) return;            
             
-            file.Master = findClosestMaster(masterName, file, context.SparkFiles);
-            if (file.Master == null)
+            item.Master = findClosestMaster(masterName, item, context.SparkItems);
+            if (item.Master == null)
             {
                 // Log -> Spark compiler is about to blow up. // context.Graph.Observer.??
             }
         }
 
-        private SparkFile findClosestMaster(string masterName, SparkFile file, IEnumerable<SparkFile> files)
+        private SparkItem findClosestMaster(string masterName, SparkItem item, IEnumerable<SparkItem> items)
         {
-            var root =  files.Min(x => x.Root);
-            var masterLocations = reachableMasterLocations(file.Path, root);
+            var root =  items.Min(x => x.Root);
+            var masterLocations = reachableMasterLocations(item.Path, root);
             
-            return files
+            return items
                 .Where(x => x.Name() == masterName)
                 .Where(x => masterLocations.Contains(x.DirectoryPath()))
                 .FirstOrDefault();
@@ -67,44 +66,44 @@ namespace FubuMVC.Spark.Tokenization
         }
     }
 
-    public class ViewModelEnricher : ISparkFileEnricher
+    public class ViewModelModifier : ISparkItemModifier
     {
         private readonly ISparkParser _sparkParser;
 
-        public ViewModelEnricher() : this(new SparkParser()) {}
-        public ViewModelEnricher(ISparkParser sparkParser)
+        public ViewModelModifier() : this(new SparkParser()) {}
+        public ViewModelModifier(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;
         }
 
         // Log ambiguity or return "potential types" ?
         // context.Graph.Observer.??
-        public void Enrich(SparkFile file, EnrichmentContext context)
+        public void Modify(SparkItem item, EnrichmentContext context)
         {
             var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
             var matchingTypes = context.TypePool.TypesWithFullName(fullTypeName);
             var type = matchingTypes.Count() == 1 ? matchingTypes.First() : null;
 
-            file.ViewModelType = type;
+            item.ViewModelType = type;
         }
     }
 
-    public class NamespaceEnricher : ISparkFileEnricher
+    public class NamespaceModifier : ISparkItemModifier
     {
-        public void Enrich(SparkFile file, EnrichmentContext context)
+        public void Modify(SparkItem item, EnrichmentContext context)
         {
-            if (!file.HasViewModel()) return;
+            if (!item.HasViewModel()) return;
             
-            file.Namespace = resolveNamespace(file);            
+            item.Namespace = resolveNamespace(item);            
         }
 
         // TODO : Get opinions on this.
-        private static string resolveNamespace(SparkFile file)
+        private static string resolveNamespace(SparkItem item)
         {
-            var relativePath = file.RelativePath();
+            var relativePath = item.RelativePath();
             var relativeNamespace = Path.GetDirectoryName(relativePath);
 
-            var nspace = file.ViewModelType.Assembly.GetName().Name;
+            var nspace = item.ViewModelType.Assembly.GetName().Name;
             if (relativeNamespace.IsNotEmpty())
             {
                 nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');

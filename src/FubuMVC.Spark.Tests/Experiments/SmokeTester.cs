@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using FubuMVC.Spark.Tokenization.Model;
+using FubuMVC.Spark.Tokenization;
 using NUnit.Framework;
 using Spark;
 using Spark.FileSystem;
@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Tests.Experiments
 
             var filePath = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "A3.spark");
 
-            var file = new SparkFile(filePath, outputPath, "");
+            var file = new SparkItem(filePath, outputPath, "");
 
             var engine = new SparkViewEngine();
             var descriptor = new SparkViewDescriptor();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Spark.Tokenization.Model;
 
 namespace FubuMVC.Spark.Tokenization
 {
@@ -14,54 +13,54 @@ namespace FubuMVC.Spark.Tokenization
 
     public class ViewTokenizer : IViewTokenizer
     {
-        private readonly IList<ISparkFileEnricher> _enrichers = new List<ISparkFileEnricher>();
-        private readonly ISparkFileSource _source;
+        private readonly IList<ISparkItemModifier> _itemModifiers = new List<ISparkItemModifier>();
+        private readonly ISparkItemSource _source;
         private readonly IFileSystem _fileSystem;
 
-        public ViewTokenizer() : this(new SparkFileSource(), new FileSystem()) {}
-        public ViewTokenizer(ISparkFileSource source, IFileSystem fileSystem)
+        public ViewTokenizer() : this(new SparkItemSource(), new FileSystem()) {}
+        public ViewTokenizer(ISparkItemSource source, IFileSystem fileSystem)
         {
             _source = source;
             _fileSystem = fileSystem;
         }
 
-        public ViewTokenizer AddEnricher<T>() where T : ISparkFileEnricher, new()
+        public ViewTokenizer AddModifier<T>() where T : ISparkItemModifier, new()
         {
-            return AddEnricher<T>(c => { });
+            return AddModifier<T>(c => { });
         }
 
-        public ViewTokenizer AddEnricher<T>(Action<T> configure) where T : ISparkFileEnricher, new()
+        public ViewTokenizer AddModifier<T>(Action<T> configure) where T : ISparkItemModifier, new()
         {
-            var enricher = new T();
-            configure(enricher);
-            _enrichers.Add(enricher);
+            var modifier = new T();
+            configure(modifier);
+            _itemModifiers.Add(modifier);
             return this;
         }
 
         public IEnumerable<SparkViewToken> Tokenize(TypePool types, BehaviorGraph graph)
         {
-            return getFilesWithModel(types).Select(file => new SparkViewToken(file));
+            return getItemsWithModel(types).Select(item => new SparkViewToken(item));
         }
 
-        private IEnumerable<SparkFile> getFilesWithModel(TypePool types)
+        private IEnumerable<SparkItem> getItemsWithModel(TypePool types)
         {
-            var files = new SparkFiles();
+            var items = new SparkItems();
 
-            files.AddRange(_source.GetFiles());
-            files.Each(file => _enrichers.Each(enricher =>
+            items.AddRange(_source.SparkItems());
+            items.Each(item => _itemModifiers.Each(modifier =>
             {
-                var fileContent = _fileSystem.ReadStringFromFile(file.Path);
+                var fileContent = _fileSystem.ReadStringFromFile(item.Path);
                 var context = new EnrichmentContext
                 {
                     TypePool = types,
-                    SparkFiles = files,
+                    SparkItems = items,
                     FileContent = fileContent
                 };
 
-                enricher.Enrich(file, context);
+                modifier.Modify(item, context);
             }));
 
-            return files.Where(f => f.HasViewModel());
+            return items.Where(f => f.HasViewModel());
         }
     }
 }

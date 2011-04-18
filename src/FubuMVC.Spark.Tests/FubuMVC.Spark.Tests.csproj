@@ -65,13 +65,13 @@
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
     <Compile Include="Experiments\SparkViewNode.cs" />
-    <Compile Include="Tokenization\MasterPageEnricherTester.cs" />
+    <Compile Include="Tokenization\MasterPageModifierTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensionsTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtractorTester.cs" />
     <Compile Include="Experiments\SmokeTester.cs" />
     <Compile Include="Tokenization\Parsing\Templates.cs" />
     <Compile Include="Tokenization\Parsing\SparkParserExtensionsTester.cs" />
-    <Compile Include="Tokenization\NamespaceEnricherTester.cs" />
+    <Compile Include="Tokenization\NamespaceModifierTester.cs" />
     <Compile Include="Tokenization\Scanning\SparkScannerTester.cs" />
   </ItemGroup>
   <ItemGroup>

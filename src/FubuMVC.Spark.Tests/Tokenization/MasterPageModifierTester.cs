@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Spark.Tokenization;
-using FubuMVC.Spark.Tokenization.Model;
 using FubuMVC.Spark.Tokenization.Parsing;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,10 +10,10 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
-    public class MasterPageEnricherTester : InteractionContext<MasterPageEnricher>
+    public class MasterPageModifierTester : InteractionContext<MasterPageModifier>
     {
         private EnrichmentContext _context;
-        private SparkFiles _sparkFiles;
+        private SparkItems _sparkItems;
 
         const string Host = "host";
         const string Pak1 = "pak1";
@@ -26,7 +25,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         private readonly string _pak2Root;
         private readonly string _pak3Root;
 
-        public MasterPageEnricherTester()
+        public MasterPageModifierTester()
         {
             _hostRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "inetpub", "www", "web");
             _pak1Root = Path.Combine(_hostRoot, Pak1);
@@ -36,15 +35,15 @@ namespace FubuMVC.Spark.Tests.Tokenization
 
         protected override void beforeEach()
         {
-            _context = new EnrichmentContext {SparkFiles = _sparkFiles = createFiles()};
+            _context = new EnrichmentContext {SparkItems = _sparkItems = createItems()};
 
             MockFor<ISparkParser>()
                 .Stub(x => x.Parse(_context.FileContent, "use", "master")).Return("application");
         }
 
-        private SparkFiles createFiles()
+        private SparkItems createItems()
         {
-            return new SparkFiles
+            return new SparkItems
             {
                 newSpark(_pak1Root, Pak1, "Actions", "Controllers", "Home", "Home.spark"),
                 newSpark(_pak1Root, Pak1, "Actions", "Handlers", "Products", "list.spark"),
@@ -64,50 +63,50 @@ namespace FubuMVC.Spark.Tests.Tokenization
             };
         }
 
-        private SparkFile newSpark(string root, string origin, params string[] relativePaths)
+        private SparkItem newSpark(string root, string origin, params string[] relativePaths)
         {
             var paths = new[]{root}.Union(relativePaths).ToArray();
-            return new SparkFile(FileSystem.Combine(paths), root, origin);
+            return new SparkItem(FileSystem.Combine(paths), root, origin);
         }
 
         [Test]
         public void master_is_the_closest_ancestor_with_the_specified_name_in_shared_1()
         {
-            var sparkFile = _sparkFiles.First();
-            ClassUnderTest.Enrich(sparkFile, _context);
-            _sparkFiles.ElementAt(2).ShouldEqual(sparkFile.Master);
+            var sparkItem = _sparkItems.First();
+            ClassUnderTest.Modify(sparkItem, _context);
+            _sparkItems.ElementAt(2).ShouldEqual(sparkItem.Master);
         }
 
         [Test]
         public void master_is_the_closest_ancestor_with_the_specified_name_in_shared_2()
         {
-            var sparkFile = _sparkFiles.ElementAt(3);
-            ClassUnderTest.Enrich(sparkFile, _context);
-            _sparkFiles.ElementAt(5).ShouldEqual(sparkFile.Master);
+            var sparkItem = _sparkItems.ElementAt(3);
+            ClassUnderTest.Modify(sparkItem, _context);
+            _sparkItems.ElementAt(5).ShouldEqual(sparkItem.Master);
         }
 
         [Test]
         public void fallback_to_master_in_shared_host_when_no_local_ancestor_exists()
         {
-            var sparkFile = _sparkFiles.ElementAt(6);
-            ClassUnderTest.Enrich(sparkFile, _context);
-            _sparkFiles.Last().ShouldEqual(sparkFile.Master);
+            var sparkItem = _sparkItems.ElementAt(6);
+            ClassUnderTest.Modify(sparkItem, _context);
+            _sparkItems.Last().ShouldEqual(sparkItem.Master);
         }
 
         [Test]
         public void fallback_to_master_in_host_1()
         {
-            var sparkFile = _sparkFiles.ElementAt(8);
-            ClassUnderTest.Enrich(sparkFile, _context);
-            _sparkFiles.ElementAt(9).ShouldEqual(sparkFile.Master);
+            var sparkItem = _sparkItems.ElementAt(8);
+            ClassUnderTest.Modify(sparkItem, _context);
+            _sparkItems.ElementAt(9).ShouldEqual(sparkItem.Master);
         }
 
         [Test]
         public void fallback_to_master_in_host_2()
         {
-            var sparkFile = _sparkFiles.ElementAt(10);
-            ClassUnderTest.Enrich(sparkFile, _context);
-            _sparkFiles.Last().ShouldEqual(sparkFile.Master);
+            var sparkItem = _sparkItems.ElementAt(10);
+            ClassUnderTest.Modify(sparkItem, _context);
+            _sparkItems.Last().ShouldEqual(sparkItem.Master);
         }
 
         // TODO : Edge cases, boundaries, more tests for expected behaviors
