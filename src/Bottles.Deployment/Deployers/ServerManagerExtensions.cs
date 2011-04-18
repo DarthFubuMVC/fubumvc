@@ -30,15 +30,14 @@ namespace Bottles.Deployment.Deployers
 
         }
 
-        public static void CreateAppPool(this ServerManager iisManager, string name, Action<ApplicationPool> cfg)
+        public static ApplicationPool CreateAppPool(this ServerManager iisManager, string name)
         {
             if (!iisManager.ApplicationPools.Any(p => p.Name.Equals(name)))
             {
-                iisManager.ApplicationPools.Add(name);
+                return iisManager.ApplicationPools.Add(name);
             }
 
-            var pool = iisManager.ApplicationPools[name];
-            cfg(pool);
+            return iisManager.ApplicationPools[name];
         }
 
         public static void MapAspNetToEverything(this Application app)

@@ -25,9 +25,8 @@ namespace Bottles.Deployment.Deployers
 
             //copy out service bottle exploded
             var location = FileSystem.Combine(ts.InstallLocation, "svc");
-            _bottles.ExplodeTo(ts.MainBottle, location);
+            _bottles.ExplodeTo(ts.HostBottle, location);
 
-            //REVIEW: A - not going to work
             var bottleDest = FileSystem.Combine(ts.InstallLocation, "packages");
             ts.Bottles.Each(b =>
                 {
