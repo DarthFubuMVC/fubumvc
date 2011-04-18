@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using FubuCore;
 using Microsoft.Web.Administration;
 
@@ -20,6 +21,7 @@ namespace Bottles.Deployment.Deployers
         {
             var direc = (IisFubuWebsite) directive;
 
+            _fileSystem.CreateDirectory(direc.WebsitePhysicalPath);
             _fileSystem.CreateDirectory(direc.VDirPhysicalPath);
 
             //REVIEW: currently this is grouped and done once per deployment
@@ -31,7 +33,7 @@ namespace Bottles.Deployment.Deployers
             
 
             //currenly only IIS 7
-            using (var iisManager = ServerManager.OpenRemote("."))
+            using (var iisManager = new ServerManager())
             {
                 var pool = iisManager.CreateAppPool(direc.AppPool);
                 pool.ManagedRuntimeVersion = "v4.0";
@@ -49,28 +51,37 @@ namespace Bottles.Deployment.Deployers
 
                 var app = site.CreateApplication(direc.VDir, direc.VDirPhysicalPath);
                 app.ApplicationPoolName = direc.AppPool;
+
+                //flush the changes so that we can now tweak them.
+                iisManager.CommitChanges();
+
                 app.DirectoryBrowsing(direc.DirectoryBrowsing);
-                app.AnonAuthentication(direc.AnonAuth);
-                app.BasicAuthentication(direc.BasicAuth);
-                app.WindowsAuthentication(direc.WindowsAuth);
+
+                //app.AnonAuthentication(direc.AnonAuth);
+                //app.BasicAuthentication(direc.BasicAuth);
+                //app.WindowsAuthentication(direc.WindowsAuth);
+
                 app.MapAspNetToEverything();
-
-
                 iisManager.CommitChanges();
             }
 
 
             //host bottle
             _bottles.ExplodeTo(direc.HostBottle, direc.VDirPhysicalPath);
-
-            var bottleDest = FileSystem.Combine(direc.VDirPhysicalPath, "packages");
-            direc.Bottles.Each(b =>
-            {
-                _bottles.CopyTo(b, bottleDest);
-            });
-            
-
-            _fileSystem.DeleteFile(appOfflineFile);
+//
+//            var webContent = FileSystem.Combine(direc.VDirPhysicalPath, "WebContent");
+//            _fileSystem.MoveFiles(webContent, direc.VDirPhysicalPath);
+//
+//            _fileSystem.DeleteDirectory(webContent);
+//
+//            var bottleDest = FileSystem.Combine(direc.VDirPhysicalPath, "packages");
+//            direc.Bottles.Each(b =>
+//            {
+//                _bottles.CopyTo(b, bottleDest);
+//            });
+//            
+//
+//            _fileSystem.DeleteFile(appOfflineFile);
         }
     }
 }

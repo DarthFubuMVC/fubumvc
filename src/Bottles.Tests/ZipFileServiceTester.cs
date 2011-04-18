@@ -1,6 +1,7 @@
 using System.IO;
 using AssemblyPackage;
 using Bottles.Zipping;
+using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Bottles.Tests
             var assembly = typeof (AssemblyPackageMarker).Assembly;
             var stream = assembly.GetManifestResourceStream(typeof (AssemblyPackageMarker), "pak-data.zip");
 
-            var service = new ZipFileService();
+            var service = new ZipFileService(new FileSystem());
             service.ExtractTo("description of this", stream, "package-data");
 
             // These 3 files should be in the zip file embedded within the AssemblyPackage assembly

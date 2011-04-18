@@ -27,11 +27,8 @@ namespace Bottles.Deployment
         {
             var path = _root.GetPathForBottle(bottleName);
 
-            //REVIEW: Yuck!
-            var zipFileName = bottleName +"." + BottleFiles.Extension;
-
             //REVIEW: get_app_dir, zip-filename == path???
-            _exploder.Explode(PackageRegistry.GetApplicationDirectory(), zipFileName, destination, ExplodeOptions.PreserveDestination);
+            _exploder.Explode(PackageRegistry.GetApplicationDirectory(), path, destination, ExplodeOptions.PreserveDestination);
         }
     }
 }

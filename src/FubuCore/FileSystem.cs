@@ -13,6 +13,7 @@ namespace FubuCore
         bool FileExists(string filename);
         void DeleteFile(string filename);
         void MoveFile(string from, string to);
+        void MoveDirectory(string from, string to);
         bool IsFile(string path);
 
         string GetFullPath(string path);
@@ -38,6 +39,7 @@ namespace FubuCore
         IEnumerable<string> FindFiles(string directory, FileSet searchSpecification);
 
         void ReadTextFile(string path, Action<string> reader);
+        void MoveFiles(string from, string to);
     }
 
     public static class FileSystemExtensions
@@ -288,6 +290,23 @@ namespace FubuCore
             CreateDirectory(Path.GetDirectoryName(to));
 
             File.Move(from, to);
+        }
+
+        public void MoveFiles(string from, string to)
+        {
+            var files = Directory.GetFiles(from, "*.*", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                var partialPath = file.Replace(from, "");
+                if (partialPath.StartsWith(@"\")) partialPath = partialPath.Substring(1);
+                var newPath = FileSystem.Combine(to, partialPath);
+                MoveFile(file, newPath);
+            }
+        }
+
+        public void MoveDirectory(string from, string to)
+        {
+            Directory.Move(from, to);
         }
 
         public IEnumerable<string> ChildDirectoriesFor(string directory)

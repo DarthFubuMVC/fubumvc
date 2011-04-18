@@ -8,6 +8,8 @@ namespace Bottles.Deployment.Deployers
     {
         public static Site CreateSite(this ServerManager iisManager, string name, string directory, int port)
         {
+            //add a guard clause for any sites already listening on this port?
+
             if (iisManager.Sites.Any(s => s.Name.Equals(name)))
             {
                 return iisManager.Sites[name];
@@ -45,6 +47,9 @@ namespace Bottles.Deployment.Deployers
             var webCfg = app.GetWebConfiguration();
             var handlers = webCfg.GetSection("system.webServer/handlers");
             var handlersCollection = handlers.GetCollection();
+            if (handlersCollection.Any(h => h["name"].Equals("HungryHungryDotNetHippo")))
+                return;
+
             var addElement = handlersCollection.CreateElement("add");
             addElement["name"] = "HungryHungryDotNetHippo";
             addElement["path"] = "*";
@@ -58,7 +63,9 @@ namespace Bottles.Deployment.Deployers
         public static void DirectoryBrowsing(this Application app, Activation activation)
         {
             ConfigurationSection directoryBrowseSection = app.GetWebConfiguration().GetSection("system.webServer/directoryBrowse");
-            directoryBrowseSection["enabled"] = activation == Activation.Enable;
+            var b = activation == Activation.Enable;
+            directoryBrowseSection["enabled"] = b;
+            directoryBrowseSection["showFlags"] = @"Date, Time, Size, Extension";
         }
 
         public static void AnonAuthentication(this Application app, Activation activation)

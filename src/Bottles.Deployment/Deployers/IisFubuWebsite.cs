@@ -10,6 +10,7 @@
             AnonAuth = Activation.Enable;
             BasicAuth = Activation.Disable;
             WindowsAuth = Activation.Disable;
+            Bottles = new string[0];
         }
 
         public string WebsiteName { get; set; }
