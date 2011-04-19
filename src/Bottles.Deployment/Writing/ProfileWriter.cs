@@ -47,6 +47,7 @@ namespace Bottles.Deployment.Writing
             _system.CreateDirectory(recipeDirectory);
 
             var controlFilePath = FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile);
+            _system.WriteStringToFile(controlFilePath,"");
             recipe.Dependencies.Each(d =>
                 {
                     var line = "Dependency:{0}\n".ToFormat(d);

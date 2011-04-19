@@ -44,9 +44,8 @@ namespace Bottles.Deployment.Parsing
             return recipe;
         }
 
-        public static IEnumerable<Recipe> ReadRecipes(string profileDirectory)
+        public static IEnumerable<Recipe> ReadRecipes(string recipesDir)
         {
-            var recipesDir = FileSystem.Combine(profileDirectory, ProfileFiles.RecipesFolder);
             return Directory.GetDirectories(recipesDir).Select(ReadFrom);
         }
     }
