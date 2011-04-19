@@ -54,6 +54,9 @@
     <Compile Include="Bootstrapping\BootstrappingClasses.cs" />
     <Compile Include="BottleReference.cs" />
     <Compile Include="Parsing\HostReader.cs" />
+    <Compile Include="Parsing\IProfileReader.cs" />
+    <Compile Include="Parsing\IRecipeSorter.cs" />
+    <Compile Include="Parsing\RecipeSorter.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="Deployers\Activation.cs" />
     <Compile Include="Deployers\IisFubuDeployer.cs" />

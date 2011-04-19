@@ -1,10 +1,17 @@
+using Bottles.Deployment.Runtime;
+using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace Bottles.Deployment.Bootstrapping
 {
-    public class DeploymentBootstrapper
+    public static class DeploymentBootstrapper
     {
-        
+        private static readonly IContainer _container = new Container(new DeploymentRegistry());
+
+        public static IContainer Container
+        {
+            get { return _container; }
+        }
     }
 
     public class DeploymentRegistry : Registry
