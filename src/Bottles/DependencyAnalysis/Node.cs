@@ -5,17 +5,13 @@ namespace Bottles.DependencyAnalysis
     [DebuggerDisplay("Node:{Name}")]
     public class Node
     {
-        public Node(string name) : this(new Urn(name))
-        {
-        }
-
-        public Node(Urn name)
+        public Node(string name)
         {
             Index = -1;
             Name = name;
         }
 
-        public Urn Name { get; private set; }
+        public string Name { get; private set; }
 
         public bool Equals(Node other)
         {
