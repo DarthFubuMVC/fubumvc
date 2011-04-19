@@ -23,7 +23,7 @@ namespace FubuCore
 
         void WriteStreamToFile(string filename, Stream stream);
         void WriteStringToFile(string filename, string text);
-
+        void AppendStringToFile(string filename, string text);
 
         string ReadStringFromFile(string filename);
         void WriteObjectToFile(string filename, object target);
@@ -40,6 +40,7 @@ namespace FubuCore
 
         void ReadTextFile(string path, Action<string> reader);
         void MoveFiles(string from, string to);
+        
     }
 
     public static class FileSystemExtensions
@@ -214,6 +215,11 @@ namespace FubuCore
         public void WriteStringToFile(string filename, string text)
         {
             File.WriteAllText(filename, text);
+        }
+
+        public void AppendStringToFile(string filename, string text)
+        {
+            File.AppendAllText(filename, text);
         }
 
 

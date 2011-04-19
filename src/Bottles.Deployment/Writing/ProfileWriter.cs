@@ -46,8 +46,13 @@ namespace Bottles.Deployment.Writing
             var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesFolder, recipe.Name);
             _system.CreateDirectory(recipeDirectory);
 
-
-            // TODO -- need to write recipe control file
+            var controlFilePath = FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile);
+            _system.WriteStringToFile(controlFilePath,"");
+            recipe.Dependencies.Each(d =>
+                {
+                    var line = "Dependency:{0}\n".ToFormat(d);
+                    _system.AppendStringToFile(controlFilePath, line);
+                });
 
             recipe.Hosts().Each(host => writeHost(host, recipeDirectory));
         }
