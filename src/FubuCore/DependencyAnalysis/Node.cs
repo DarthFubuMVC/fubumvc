@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Bottles.DependencyAnalysis
+namespace FubuCore.DependencyAnalysis
 {
     [DebuggerDisplay("Node:{Name}")]
     public class Node

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bottles.DependencyAnalysis
+namespace FubuCore.DependencyAnalysis
 {
     /// <summary>
     /// http://en.wikipedia.org/wiki/Directed_graph

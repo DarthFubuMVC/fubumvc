@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bottles.DependencyAnalysis
+namespace FubuCore.DependencyAnalysis
 {
     public class DependencyGraph<T>
     {
@@ -59,6 +59,9 @@ namespace Bottles.DependencyAnalysis
 
         public IEnumerable<string> GetLoadOrder()
         {
+            if(HasCycles())
+                throw new InvalidOperationException("This graph has dependency cycles and cannot be ordered!");
+
             foreach (var node in _cycleDetector.Order())
             {
                 yield return node.Name;

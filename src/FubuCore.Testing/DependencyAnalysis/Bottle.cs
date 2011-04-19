@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bottles.DependencyAnalysis
+namespace FubuCore.Testing.DependencyAnalysis
 {
     public class Bottle
     {

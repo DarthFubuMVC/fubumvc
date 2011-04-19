@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Bottles.DependencyAnalysis
+namespace FubuCore.DependencyAnalysis
 {
     [DebuggerDisplay("{Source}->{Target}")]
     public class Edge
