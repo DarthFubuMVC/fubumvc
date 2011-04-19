@@ -21,7 +21,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Scanning
             _scanResult=new List<SparkItem>();
             var request = new ScanRequest();
             TestSource.Paths().Each(request.AddRoot);
-            request.AddFileFilter("*.spark");
+            request.Include("*.spark");
             request.AddHandler(file => _scanResult.Add(new SparkItem(file.Path, file.Root, "")));
             _scanner.Scan(request);
         }

@@ -25,7 +25,7 @@ namespace FubuMVC.Spark.Tokenization.Scanning
             _roots.Add(root);
         }
 
-        public void AddFileFilter(string filter)
+        public void Include(string filter)
         {
             _filter.Add(filter);
         }

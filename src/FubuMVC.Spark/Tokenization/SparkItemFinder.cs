@@ -32,7 +32,10 @@ namespace FubuMVC.Spark.Tokenization
         private ScanRequest buildRequest(ICollection<SparkItem> files)
         {
             var request = new ScanRequest();
-            request.AddFileFilter("*.spark");
+            request.Include("*.spark");
+            // TODO : Allow for convention on this.
+            request.Include("bindings.xml");
+
             _sparkRoots.Each(r => request.AddRoot(r.Path));
 
             request.AddHandler(fileFound =>
