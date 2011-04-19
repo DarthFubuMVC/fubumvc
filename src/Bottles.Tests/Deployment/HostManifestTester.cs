@@ -38,6 +38,27 @@ namespace Bottles.Tests.Deployment
         }
 
         [Test]
+        public void get_all_unique_directive_names()
+        {
+            var host = new HostManifest("h1");
+            
+            host.RegisterSettings(data1);
+            host.UniqueDirectiveNames().ShouldHaveTheSameElementsAs("OneDirective");
+
+            host.RegisterSettings(data2);
+            host.UniqueDirectiveNames().ShouldHaveTheSameElementsAs("OneDirective", "ThreeDirective");
+
+            host.RegisterSettings(data3);
+            host.UniqueDirectiveNames().ShouldHaveTheSameElementsAs("OneDirective", "ThreeDirective", "TwoDirective");
+
+            host.RegisterSettings(data4);
+            host.UniqueDirectiveNames().ShouldHaveTheSameElementsAs("OneDirective", "ThreeDirective", "TwoDirective");
+
+            host.RegisterSettings(data5);
+            host.UniqueDirectiveNames().ShouldHaveTheSameElementsAs("OneDirective", "ThreeDirective", "TwoDirective");
+        }
+
+        [Test]
         public void append_host_respects_setting_order()
         {
             var host1 = new HostManifest("h1");

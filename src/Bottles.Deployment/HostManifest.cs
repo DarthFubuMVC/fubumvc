@@ -88,5 +88,12 @@ namespace Bottles.Deployment
         }
 
 
+        public IEnumerable<string> UniqueDirectiveNames()
+        {
+            return _data.SelectMany(x => x.AllKeys)
+                .Select(x => x.Split('.')
+                .First())
+                .Distinct();
+        }
     }
 }
