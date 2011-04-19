@@ -10,7 +10,7 @@ using FubuTestingSupport;
 namespace Bottles.Tests.Deployment.Parsing
 {
     [TestFixture]
-    public class ProfileReaderIntegratedTester
+    public class RecipeReaderIntegratedTester
     {
         private IEnumerable<Recipe> theRecipes;
 
@@ -57,7 +57,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             writer.Flush();
 
-            theRecipes = ProfileReader.ReadRecipes("starwars");
+            theRecipes = RecipeReader.ReadRecipes("starwars");
         }
 
         [Test]

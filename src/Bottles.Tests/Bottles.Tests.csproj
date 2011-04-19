@@ -54,7 +54,7 @@
     <Compile Include="Deployment\IntegrationIisFubuDeploymentTester.cs" />
     <Compile Include="Deployment\IntegrationTopshelfDeploymentTester.cs" />
     <Compile Include="Deployment\Parsing\FakeSettings.cs" />
-    <Compile Include="Deployment\Parsing\ProfileReaderIntegratedTester.cs" />
+    <Compile Include="Deployment\Parsing\RecipeReaderIntegratedTester.cs" />
     <Compile Include="Deployment\Parsing\RecipeReaderTester.cs" />
     <Compile Include="Deployment\Parsing\SettingsParserTester.cs" />
     <Compile Include="Deployment\Parsing\when_reading_a_single_host_file.cs" />
@@ -80,6 +80,14 @@
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BottleDeployers1\BottleDeployers1.csproj">
+      <Project>{A1BFF74B-3E5C-4342-B065-99D0C08664D5}</Project>
+      <Name>BottleDeployers1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BottleDeployers2\BottleDeployers2.csproj">
+      <Project>{0FFD21CA-4B9B-4C72-91B2-91A3F44D4151}</Project>
+      <Name>BottleDeployers2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
       <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
       <Name>Bottles.Deployment</Name>
@@ -99,6 +107,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
