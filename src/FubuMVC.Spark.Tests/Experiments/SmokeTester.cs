@@ -35,7 +35,7 @@ namespace FubuMVC.Spark.Tests.Experiments
 
             var engine = new SparkViewEngine
             {
-                ViewFolder = new FileSystemViewFolder(item.Root)
+                ViewFolder = new FileSystemViewFolder(item.RootPath)
             };
 
             var entry = engine.CreateEntry(descriptor);

@@ -64,7 +64,7 @@ namespace FubuMVC.Spark.Tests.Experiments
 
         public ISparkViewEngine GetEngine(SparkItem sparkItem)
         {
-            var engine = _cache[new Tuple<string, string>(sparkItem.Root, sparkItem.Origin)];
+            var engine = _cache[new Tuple<string, string>(sparkItem.RootPath, sparkItem.Origin)];
             return engine;
         }
     }

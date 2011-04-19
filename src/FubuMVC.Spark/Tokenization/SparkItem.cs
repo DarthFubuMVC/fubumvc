@@ -12,27 +12,45 @@ namespace FubuMVC.Spark.Tokenization
 
     public class SparkItem
     {
-        public SparkItem(string path, string root, string origin)
+        public SparkItem(string filePath, string rootPath, string origin)
         {
-            Path = path;
-            Root = root;
+            FilePath = filePath;
+            RootPath = rootPath;
             Origin = origin;
         }
 
-        public string Path { get; private set; }
-        public string Root { get; private set; }
+        public string FilePath { get; private set; }
+        public string RootPath { get; private set; }
         public string Origin { get; private set; }
 
         public SparkItem Master { get; set; }
         public Type ViewModelType { get; set; }
         public string Namespace { get; set; }
 
+        public string RelativePath()
+        {
+            return FilePath.PathRelativeTo(RootPath);
+        }
+
+        public string DirectoryPath()
+        {
+            return Path.GetDirectoryName(FilePath);
+        }
+
+        public string Name()
+        {
+            return Path.GetFileNameWithoutExtension(FilePath);
+        }
+
+        public bool HasViewModel()
+        {
+            return ViewModelType != null;
+        }
 
         public override string ToString()
         {
-            return Path;
+            return FilePath;
         }
-
     }
 
     public static class SparkItemHelper
@@ -52,26 +70,7 @@ namespace FubuMVC.Spark.Tokenization
         // NOTE:TEMP
         public static string VirtualDirectoryPath(this SparkItem item)
         {
-            return item.DirectoryPath().PathRelativeTo(item.Root);
-        }
-
-        public static string RelativePath(this SparkItem item)
-        {
-            return item.Path.PathRelativeTo(item.Root);
-        }
-
-        public static string Name(this SparkItem item)
-        {
-            return Path.GetFileNameWithoutExtension(item.Path);
-        }
-
-        public static string DirectoryPath(this SparkItem item)
-        {
-            return Path.GetDirectoryName(item.Path);
-        }
-        public static bool HasViewModel(this SparkItem item)
-        {
-            return item.ViewModelType != null;
+            return item.DirectoryPath().PathRelativeTo(item.RootPath);
         }
     }
 

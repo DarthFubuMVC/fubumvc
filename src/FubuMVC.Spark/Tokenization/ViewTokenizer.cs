@@ -49,8 +49,8 @@ namespace FubuMVC.Spark.Tokenization
             items.AddRange(_finder.FindItems());
             items.Each(item => _itemModifiers.Each(modifier =>
             {
-                var fileContent = _fileSystem.ReadStringFromFile(item.Path);
-                var context = new EnrichmentContext
+                var fileContent = _fileSystem.ReadStringFromFile(item.FilePath);
+                var context = new ModificationContext
                 {
                     TypePool = types,
                     SparkItems = items,

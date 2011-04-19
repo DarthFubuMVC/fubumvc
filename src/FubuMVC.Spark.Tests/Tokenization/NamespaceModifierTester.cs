@@ -8,7 +8,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
     {
         private string _root;
         private NamespaceModifier _modifier;
-        private EnrichmentContext _context;
+        private ModificationContext _context;
 
         [TestFixtureSetUp]
         public void Setup()
@@ -17,7 +17,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
             _root = Path.Combine(vol, "inetput", "www", "web");
 
             _modifier = new NamespaceModifier();
-            _context = new EnrichmentContext();
+            _context = new ModificationContext();
         }
 
         [Test]

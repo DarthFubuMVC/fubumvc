@@ -38,12 +38,12 @@ namespace FubuMVC.Spark.Tests.Experiments
             var descriptor = new SparkViewDescriptor();
          
             var templates = new List<string>();
-            var viewTemplate = _item.Path.Replace(_item.Root, "").TrimStart(Path.DirectorySeparatorChar);
+            var viewTemplate = _item.FilePath.Replace(_item.RootPath, "").TrimStart(Path.DirectorySeparatorChar);
             templates.Add(viewTemplate);
             if (!isPartial)
             {
 
-                var master = _extractor.ExtractByName(_fileSystem.ReadStringFromFile(_item.Path), "use")
+                var master = _extractor.ExtractByName(_fileSystem.ReadStringFromFile(_item.FilePath), "use")
                     .Select(x => x.AttributeByName("master")).FirstOrDefault();
                 if (master != null)
                 {
@@ -51,7 +51,7 @@ namespace FubuMVC.Spark.Tests.Experiments
                 }
             }
 
-            engine.ViewFolder = new FileSystemViewFolder(_item.Root);
+            engine.ViewFolder = new FileSystemViewFolder(_item.RootPath);
             foreach (var template in templates)
             {
                 descriptor.AddTemplate(template);

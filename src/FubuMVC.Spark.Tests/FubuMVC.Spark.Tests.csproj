@@ -76,6 +76,7 @@
     <Compile Include="Tokenization\Parsing\SparkParserExtensionsTester.cs" />
     <Compile Include="Tokenization\NamespaceModifierTester.cs" />
     <Compile Include="Tokenization\Scanning\SparkScannerTester.cs" />
+    <Compile Include="Tokenization\SparkItemTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">

@@ -12,7 +12,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
 {
     public class MasterPageModifierTester : InteractionContext<MasterPageModifier>
     {
-        private EnrichmentContext _context;
+        private ModificationContext _context;
         private SparkItems _sparkItems;
 
         const string Host = "host";
@@ -35,7 +35,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
 
         protected override void beforeEach()
         {
-            _context = new EnrichmentContext {SparkItems = _sparkItems = createItems()};
+            _context = new ModificationContext {SparkItems = _sparkItems = createItems()};
 
             MockFor<ISparkParser>()
                 .Stub(x => x.Parse(_context.FileContent, "use", "master")).Return("application");

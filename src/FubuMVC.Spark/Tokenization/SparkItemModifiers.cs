@@ -7,7 +7,7 @@ using FubuMVC.Spark.Tokenization.Parsing;
 
 namespace FubuMVC.Spark.Tokenization
 {
-    public class EnrichmentContext
+    public class ModificationContext
     {
         public string FileContent { get; set; }
         public TypePool TypePool { get; set; }
@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Tokenization
 
     public interface ISparkItemModifier
     {
-        void Modify(SparkItem item, EnrichmentContext context);
+        void Modify(SparkItem item, ModificationContext context);
     }
 
     public class MasterPageModifier : ISparkItemModifier
@@ -33,7 +33,7 @@ namespace FubuMVC.Spark.Tokenization
             _sparkParser = sparkParser;
         }
 
-        public void Modify(SparkItem item, EnrichmentContext context)
+        public void Modify(SparkItem item, ModificationContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent) ?? DefaultMaster;
             if (masterName.IsEmpty()) return;
@@ -49,8 +49,8 @@ namespace FubuMVC.Spark.Tokenization
         private SparkItem findClosestMaster(string masterName, SparkItem item, IEnumerable<SparkItem> items)
         {
             // reconsider this, as a package can be in development mode.
-            var root =  items.Min(x => x.Root);
-            var masterLocations = reachableMasterLocations(item.Path, root);
+            var root =  items.Min(x => x.RootPath);
+            var masterLocations = reachableMasterLocations(item.FilePath, root);
             
             return items
                 .Where(x => x.Name() == masterName)
@@ -81,7 +81,7 @@ namespace FubuMVC.Spark.Tokenization
             _sparkParser = sparkParser;
         }
 
-        public void Modify(SparkItem item, EnrichmentContext context)
+        public void Modify(SparkItem item, ModificationContext context)
         {
             var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
             var matchingTypes = context.TypePool.TypesWithFullName(fullTypeName);
@@ -96,7 +96,7 @@ namespace FubuMVC.Spark.Tokenization
 
     public class NamespaceModifier : ISparkItemModifier
     {
-        public void Modify(SparkItem item, EnrichmentContext context)
+        public void Modify(SparkItem item, ModificationContext context)
         {
             if (!item.HasViewModel()) return;
             

@@ -29,7 +29,7 @@ namespace FubuMVC.Spark
         public IViewFile GetViewSource(string path)
         {
             var item = _items.Where(x => x.PrefixedRelativePath() == path).First();
-            return new FileSystemViewFile(item.Path);
+            return new FileSystemViewFile(item.FilePath);
         }
     }
 }
