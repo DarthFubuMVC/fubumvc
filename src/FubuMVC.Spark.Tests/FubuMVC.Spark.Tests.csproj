@@ -76,6 +76,7 @@
     <Compile Include="Tokenization\Parsing\SparkParserExtensionsTester.cs" />
     <Compile Include="Tokenization\NamespaceModifierTester.cs" />
     <Compile Include="Tokenization\Scanning\SparkScannerTester.cs" />
+    <Compile Include="Tokenization\SparkItemFinderTester.cs" />
     <Compile Include="Tokenization\SparkItemTester.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +126,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Pak1\Baz.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Shared\bindings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Views\A1.spark">
