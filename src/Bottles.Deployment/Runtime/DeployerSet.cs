@@ -18,6 +18,7 @@ namespace Bottles.Deployment.Runtime
 
         public void Deploy()
         {
+            //TODO: ordering
             foreach (var deployer in _deployers)
             {
                 var name = deployer.GetType().Name;

@@ -18,6 +18,7 @@ namespace Bottles.Deployment.Runtime
 
         public void Finish()
         {
+            //TODO: Ordering
             foreach (var finalizer in _finalizers)
             {
                 var name = finalizer.GetType().Name;

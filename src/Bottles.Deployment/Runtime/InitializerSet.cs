@@ -18,6 +18,7 @@ namespace Bottles.Deployment.Runtime
 
         public void Initialize()
         {
+            //TODO: ordering
             foreach (var initializer in _initializers)
             {
                 var name = initializer.GetType().Name;
