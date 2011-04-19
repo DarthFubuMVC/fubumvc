@@ -17,3 +17,24 @@ Mate up ActionCall's and ViewTokens:
 
 - Use attachment scanning like the WebForms model.
 - The ViewAttacher business needs to work as is.
+
+Isolation of Spark files:
+
+Exploded Packages in development mode - not reachable from host and other packages:
+
+~/fubu-content/pak1/WebContent/*
+~/fubu-content/pak2/WebContent/*
+~/fubu-content/pak3/WebContent/*
+
+Linked Package Projects via .fubu-manifest - not reachable from host and other packages:
+
+~/../Pak4/*
+~/../Pak5/*
+
+Everything under Host - not reachable from packages:
+
+~/*
+
+Shared by everyone - reachable from packages (both modes) and host.
+
+~/ReservedName1
