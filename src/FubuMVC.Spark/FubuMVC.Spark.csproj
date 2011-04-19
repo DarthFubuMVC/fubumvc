@@ -60,8 +60,9 @@
     <Compile Include="Tokenization\Parsing\SparkParser.cs" />
     <Compile Include="Tokenization\Scanning\FileFound.cs" />
     <Compile Include="Tokenization\Scanning\ScanRequest.cs" />
-    <Compile Include="Tokenization\SparkItemSource.cs" />
+    <Compile Include="Tokenization\SparkItemFinder.cs" />
     <Compile Include="Tokenization\SparkItemModifiers.cs" />
+    <Compile Include="Tokenization\SparkRoots.cs" />
     <Compile Include="Tokenization\ViewTokenizer.cs" />
     <Compile Include="Tokenization\Scanning\FileScanner.cs" />
     <Compile Include="Tokenization\SparkItem.cs" />

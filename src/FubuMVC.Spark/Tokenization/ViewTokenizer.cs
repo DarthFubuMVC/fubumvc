@@ -14,13 +14,13 @@ namespace FubuMVC.Spark.Tokenization
     public class ViewTokenizer : IViewTokenizer
     {
         private readonly IList<ISparkItemModifier> _itemModifiers = new List<ISparkItemModifier>();
-        private readonly ISparkItemSource _source;
+        private readonly ISparkItemFinder _finder;
         private readonly IFileSystem _fileSystem;
 
-        public ViewTokenizer() : this(new SparkItemSource(), new FileSystem()) {}
-        public ViewTokenizer(ISparkItemSource source, IFileSystem fileSystem)
+        public ViewTokenizer() : this(new SparkItemFinder(), new FileSystem()) {}
+        public ViewTokenizer(ISparkItemFinder finder, IFileSystem fileSystem)
         {
-            _source = source;
+            _finder = finder;
             _fileSystem = fileSystem;
         }
 
@@ -46,7 +46,7 @@ namespace FubuMVC.Spark.Tokenization
         {
             var items = new SparkItems();
 
-            items.AddRange(_source.SparkItems());
+            items.AddRange(_finder.FindItems());
             items.Each(item => _itemModifiers.Each(modifier =>
             {
                 var fileContent = _fileSystem.ReadStringFromFile(item.Path);
