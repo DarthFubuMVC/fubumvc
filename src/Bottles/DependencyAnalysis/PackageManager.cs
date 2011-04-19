@@ -16,12 +16,12 @@ namespace Bottles.DependencyAnalysis
 {
     public class PackageManager
     {
-        DependencyGraph _dependencies;
+        DependencyGraph<Bottle> _dependencies;
 
         public PackageManager()
         {
             //load existing state from file?
-            _dependencies = new DependencyGraph();
+            _dependencies = new DependencyGraph<Bottle>(b=>b.Name, b=>b.Dependencies);
         }
 
         public void Install(Action<InstallContext> cxtAction)
@@ -31,7 +31,7 @@ namespace Bottles.DependencyAnalysis
 
             foreach (var bottle in cxt.Bottles)
             {
-                _dependencies.AddBottle(bottle);
+                _dependencies.RegisterItem(bottle);
             }
 
             //assert no holes

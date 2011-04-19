@@ -23,7 +23,7 @@ namespace Bottles.DependencyAnalysis
             get { return _nodes; }
         }
 
-        public void Connect(Urn source, Urn target)
+        public void Connect(string source, string target)
         {
             Connect(new Node(source), new Node(target));
         }

@@ -4,25 +4,17 @@ namespace Bottles.DependencyAnalysis
 {
     public class Bottle
     {
-        IList<Urn> _dependencies;
-        public Bottle(string name) : this(new Urn(name))
-        {
-            
-        }
-        public Bottle(Urn name)
+        IList<string> _dependencies;
+        public Bottle(string name) 
         {
             Name = name;
-            _dependencies = new List<Urn>();
+            _dependencies = new List<string>();
         }
 
-        public Urn Name { get; private set; }
-        public ICollection<Urn> Dependencies { get { return _dependencies; } }
+        public string Name { get; private set; }
+        public ICollection<string> Dependencies { get { return _dependencies; } }
 
         public void AddDependency(string name)
-        {
-            AddDependency(new Urn(name));
-        }
-        public void AddDependency(Urn name)
         {
             _dependencies.Add(name);
         }

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading;
-using Bottles;
 using Bottles.Exploding;
 using Bottles.Services;
 using FubuCore;
 
-namespace Bottle.Host
+namespace Bottles.Host
 {
     class BottleHost
     {

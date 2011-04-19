@@ -1,27 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bottles.DependencyAnalysis
 {
-    public class DependencyGraph
+    public class DependencyGraph<T>
     {
         readonly DirectedGraph _cycleDetector;
-        readonly IDictionary<Urn, Bottle> _bottles;
+        readonly IDictionary<string, T> _items;
+        readonly Func<T, string> _getName;
+        readonly Func<T, IEnumerable<string>> _getDependencies;
 
-        public DependencyGraph()
+
+        public DependencyGraph(Func<T, string> getName, Func<T, IEnumerable<string>> getDependencies)
         {
             _cycleDetector = new DirectedGraph();
-            _bottles = new Dictionary<Urn, Bottle>();
+            _items = new Dictionary<string, T>();
+            _getName = getName;
+            _getDependencies = getDependencies;
         }
 
-        public void AddBottle(Bottle bottle)
+        public void RegisterItem(T item)
         {
-            _bottles.Add(bottle.Name, bottle);
-            _cycleDetector.AddNode(new Node(bottle.Name));
-            foreach (var dep in bottle.Dependencies)
+            var name = _getName(item);
+            _items.Add(name, item);
+            _cycleDetector.AddNode(new Node(name));
+            foreach (var dep in _getDependencies(item))
             {
                 //bottle X needs bottle Y
-                _cycleDetector.Connect(bottle.Name, dep);
+                _cycleDetector.Connect(_getName(item), dep);
             }
         }
 
@@ -30,9 +37,10 @@ namespace Bottles.DependencyAnalysis
             var cycles = _cycleDetector.FindCycles().ToList();
             return cycles.Count() > 0;
         }
-        public IEnumerable<Urn> MissingDependencies()
+
+        public IEnumerable<string> MissingDependencies()
         {
-            var registeredNames = _bottles.Keys.ToList();
+            var registeredNames = _items.Keys.ToList();
             var neededNames = _cycleDetector.Nodes.Select(n=>n.Name).ToList();
             var missing = neededNames.Except(registeredNames);
             return missing;
@@ -44,7 +52,12 @@ namespace Bottles.DependencyAnalysis
             return missing.Count() > 0;
         }
 
-        public IEnumerable<Urn> GetLoadOrder()
+        public IEnumerable<T> Ordered()
+        {
+            return GetLoadOrder().Select(name => _items[name]);
+        }
+
+        public IEnumerable<string> GetLoadOrder()
         {
             foreach (var node in _cycleDetector.Order())
             {

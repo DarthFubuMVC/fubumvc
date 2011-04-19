@@ -7,7 +7,7 @@ namespace Bottles.Tests.Deployment
     {
         public void Bob()
         {
-            var tree = new DependencyGraph();
+            var tree = new DependencyGraph<Bottle>(bot=>bot.Name, bot=>bot.Dependencies);
             
 
             var a = new Bottle("urn:bottle:a");
@@ -22,10 +22,10 @@ namespace Bottles.Tests.Deployment
 
             var d = new Bottle("urn:bottle:d");
                         
-            tree.AddBottle(b);
-            tree.AddBottle(c);
-            tree.AddBottle(a);
-            tree.AddBottle(d);
+            tree.RegisterItem(b);
+            tree.RegisterItem(c);
+            tree.RegisterItem(a);
+            tree.RegisterItem(d);
 
             if(tree.HasCycles())
                 Console.WriteLine("Found Cycles");
