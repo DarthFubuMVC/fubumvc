@@ -27,7 +27,10 @@ namespace Bottles.Deployment.Runtime
             _runner = runner;
         }
 
-
+        public void Deploy()
+        {
+            _runner.Deploy(_reader.Read());
+        }
     }
 
     public class DeployerFactory
