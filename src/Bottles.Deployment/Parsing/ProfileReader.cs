@@ -7,15 +7,17 @@ namespace Bottles.Deployment.Parsing
     public class ProfileReader : IProfileReader
     {
         private readonly IRecipeSorter _sorter;
+        private readonly DeploymentSettings _settings;
 
-        public ProfileReader(IRecipeSorter sorter)
+        public ProfileReader(IRecipeSorter sorter, DeploymentSettings settings)
         {
             _sorter = sorter;
+            _settings = settings;
         }
 
-        public IEnumerable<HostManifest> Read(string profileDirectory)
+        public IEnumerable<HostManifest> Read()
         {
-            var recipes = RecipeReader.ReadRecipes(profileDirectory);
+            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory);
             recipes = _sorter.Order(recipes);
 
             // TODO -- harden.  Must be at least 1 recipe

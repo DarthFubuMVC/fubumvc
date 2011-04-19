@@ -57,8 +57,10 @@ namespace Bottles.Tests.Deployment.Parsing
 
             writer.Flush();
 
-            var reader = new ProfileReader(new RecipeSorter());
-            theHosts = reader.Read("clonewars");
+            var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings(){
+                RecipesDirectory = "clonewars\\recipes"
+            });
+            theHosts = reader.Read();
         }
 
         [Test]
@@ -116,7 +118,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             writer.Flush();
 
-            theRecipes = RecipeReader.ReadRecipes("starwars");
+            theRecipes = RecipeReader.ReadRecipes("starwars\\recipes");
         }
 
         [Test]

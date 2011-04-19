@@ -17,7 +17,7 @@ namespace Bottles.Tests.Deployment.Bootstrapping
         [SetUp]
         public void SetUp()
         {
-            theContainer = DeploymentBootstrapper.Container;
+            theContainer = DeploymentBootstrapper.Bootstrap(new DeploymentSettings());
         }
 
         [Test]

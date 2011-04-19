@@ -54,6 +54,7 @@
     <Compile Include="Bootstrapping\DeploymentBootstrapper.cs" />
     <Compile Include="Bootstrapping\DeploymentRegistry.cs" />
     <Compile Include="BottleReference.cs" />
+    <Compile Include="DeploymentSettings.cs" />
     <Compile Include="Parsing\HostReader.cs" />
     <Compile Include="Parsing\IProfileReader.cs" />
     <Compile Include="Parsing\IRecipeSorter.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="ProfileFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\DeploymentController.cs" />
+    <Compile Include="Runtime\DirectiveTypeRegistry.cs" />
+    <Compile Include="Runtime\IDirectiveTypeRegistry.cs" />
     <Compile Include="ToolRepository.cs" />
     <Compile Include="Writing\DirectiveWriter.cs" />
     <Compile Include="Writing\ProfileWriter.cs" />

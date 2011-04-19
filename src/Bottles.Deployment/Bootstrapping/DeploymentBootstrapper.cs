@@ -4,11 +4,13 @@ namespace Bottles.Deployment.Bootstrapping
 {
     public static class DeploymentBootstrapper
     {
-        private static readonly IContainer _container = new Container(new DeploymentRegistry());
-
-        public static IContainer Container
+        public static IContainer Bootstrap(DeploymentSettings settings)
         {
-            get { return _container; }
+            return new Container(x =>
+            {
+                x.AddRegistry<DeploymentRegistry>();
+                x.For<DeploymentSettings>().Use(settings);
+            });
         }
     }
 }

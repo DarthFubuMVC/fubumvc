@@ -4,6 +4,6 @@ namespace Bottles.Deployment.Parsing
 {
     public interface IProfileReader
     {
-        IEnumerable<HostManifest> Read(string profileDirectory);
+        IEnumerable<HostManifest> Read();
     }
 }
