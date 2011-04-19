@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using FubuCore.Util;
 using FubuMVC.Spark.Tokenization;
 using Spark;
 using Spark.FileSystem;
-using Constants = Spark.Constants;
 
 namespace FubuMVC.Spark.Rendering
 {
@@ -15,6 +16,38 @@ namespace FubuMVC.Spark.Rendering
     {
         private string _rootPath;
         private IEnumerable<string> _packagesRoots;
+        private readonly Cache<Tuple<string, string>, ISparkViewEngine> _cache;
+
+        public SparkEngineFactory()
+        {
+            _cache = new Cache<Tuple<string, string>, ISparkViewEngine>(getEngine);
+        }
+
+        private ISparkViewEngine getEngine(Tuple<string, string> key)
+        {
+            var root = key.Item1;
+            var origin = key.Item2;
+
+            // fetch this from somewhere else
+            var settings = new SparkSettings();
+            var engine = new SparkViewEngine(settings)
+            {
+                ViewFolder = new FileSystemViewFolder(root)
+            };
+            if (origin == Tokenization.Constants.HostOrigin)
+            {
+                foreach (var packageRoot in _packagesRoots)
+                {
+                    engine.ViewFolder = engine.ViewFolder.Append(new FileSystemViewFolder(packageRoot));
+                }
+            }
+            else
+            {
+                engine.ViewFolder = engine.ViewFolder.Append(new FileSystemViewFolder(_rootPath));
+            }
+            return engine;
+        }
+
 
         // NOTE:TEMP
         public void SetRoot(string rootPath)
@@ -30,24 +63,7 @@ namespace FubuMVC.Spark.Rendering
 
         public ISparkViewEngine GetEngine(SparkItem sparkItem)
         {
-            // fetch this from somewhere else
-            var settings = new SparkSettings();
-            var engine = new SparkViewEngine(settings)
-            {
-                ViewFolder = new FileSystemViewFolder(sparkItem.Root)
-            };
-            if (sparkItem.Origin == Tokenization.Constants.HostOrigin)
-            {
-                foreach (var root in _packagesRoots)
-                {
-                    engine.ViewFolder = engine.ViewFolder.Append(new FileSystemViewFolder(root));
-                }
-            }
-            else
-            {
-                engine.ViewFolder = engine.ViewFolder.Append(new FileSystemViewFolder(_rootPath));
-            }
-            // not final code, ideally, the engine should be cached by sparkItem.Root (string)
+            var engine = _cache[new Tuple<string, string>(sparkItem.Root, sparkItem.Origin)];
             return engine;
         }
     }

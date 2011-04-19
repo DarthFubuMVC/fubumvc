@@ -9,7 +9,7 @@ using Constants = FubuMVC.Spark.Tokenization.Constants;
 
 namespace FubuMVC.Spark.Tests.Experiments
 {
-    public class SparkEngineFactoryTester : InteractionContext< SparkEngineFactory>
+    public class SparkEngineFactoryTester : InteractionContext<SparkEngineFactory>
     {
         private readonly string _hostRoot;
         private readonly string _pak1;
