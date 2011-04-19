@@ -16,19 +16,19 @@ namespace FubuMVC.Spark
         public IList<string> ListViews(string path)
         {
             return _items
-                .Where(x => x.PrefixedVirtualDirectoryPath() == path)
-                .Select(x => x.PrefixedRelativePath())
+                .Where(x => x.RelativeDirectoryPath() == path)
+                .Select(x => x.RelativePath())
                 .ToList();
         }
 
         public bool HasView(string path)
         {
-            return _items.Any(x => x.PrefixedRelativePath() == path);
+            return _items.Any(x => x.RelativePath() == path);
         }
 
         public IViewFile GetViewSource(string path)
         {
-            var item = _items.Where(x => x.PrefixedRelativePath() == path).First();
+            var item = _items.Where(x => x.RelativePath() == path).First();
             return new FileSystemViewFile(item.FilePath);
         }
     }

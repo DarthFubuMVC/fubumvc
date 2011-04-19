@@ -56,35 +56,35 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void can_resolve_view_from_host()
         {
-            _viewFolder.HasView(_hostHomeView.PrefixedRelativePath())
+            _viewFolder.HasView(_hostHomeView.RelativePath())
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_master_from_host()
         {
-            _viewFolder.HasView(_hostApplicationView.PrefixedRelativePath())
+            _viewFolder.HasView(_hostApplicationView.RelativePath())
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_view_from_package()
         {
-            _viewFolder.HasView(_pak1HomeView.PrefixedRelativePath())
+            _viewFolder.HasView(_pak1HomeView.RelativePath())
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_master_from_package()
         {
-            _viewFolder.HasView(_pak2ApplicationView.PrefixedRelativePath())
+            _viewFolder.HasView(_pak2ApplicationView.RelativePath())
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_partial_from_package()
         {
-            _viewFolder.HasView(_pak1NamePartialView.PrefixedRelativePath())
+            _viewFolder.HasView(_pak1NamePartialView.RelativePath())
                 .ShouldBeTrue();
         }
 
@@ -93,44 +93,43 @@ namespace FubuMVC.Spark.Tests
         {
             // ListViews is used by FindPartialFiles in Spark.Parser.ViewLoader when it
             // tries to locate partials files in ancestor path.
-            // ?? PrefixedVirtualDirectoryPath ?? 
             _viewFolder.ListViews(_hostHomeView.Origin)
-                .ShouldHaveTheSameElementsAs(_hostHomeView.PrefixedRelativePath(), 
-                                             _hostApplicationView.PrefixedRelativePath());
+                .ShouldHaveTheSameElementsAs(_hostHomeView.RelativePath(),
+                                             _hostApplicationView.RelativePath());
         }
 
         [Test]
         public void returns_viewsource_for_partial_from_package()
         {
-            readfromStream(_pak1NamePartialView.PrefixedRelativePath())
+            readfromStream(_pak1NamePartialView.RelativePath())
                 .ShouldEqual("Pak1");
         }
 
         [Test]
         public void returns_viewsource_for_view_from_package()
         {
-            readfromStream(_pak1HomeView.PrefixedRelativePath())
+            readfromStream(_pak1HomeView.RelativePath())
                 .ShouldEqual(@"home from <name />");
         }
 
         [Test]
         public void returns_viewsource_for_master_from_package()
         {
-            readfromStream(_pak2ApplicationView.PrefixedRelativePath())
+            readfromStream(_pak2ApplicationView.RelativePath())
                 .ShouldEqual(@"<div>Pak2 Application: <use:view/></div>");
         }
 
         [Test]
         public void returns_viewsource_for_view_from_host()
         {
-            readfromStream(_hostHomeView.PrefixedRelativePath())
+            readfromStream(_hostHomeView.RelativePath())
                 .ShouldEqual(@"home from Root");
         }
 
         [Test]
         public void returns_viewsource_for_master_from_host()
         {
-            readfromStream(_hostApplicationView.PrefixedRelativePath())
+            readfromStream(_hostApplicationView.RelativePath())
                 .ShouldEqual(@"<div>Host Application: <use:view/></div>");
         }
 
