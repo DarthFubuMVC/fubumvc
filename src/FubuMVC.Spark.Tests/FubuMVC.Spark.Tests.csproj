@@ -78,6 +78,7 @@
     <Compile Include="Tokenization\Scanning\SparkScannerTester.cs" />
     <Compile Include="Tokenization\SparkItemFinderTester.cs" />
     <Compile Include="Tokenization\SparkItemTester.cs" />
+    <Compile Include="Tokenization\ViewModelModifierTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
