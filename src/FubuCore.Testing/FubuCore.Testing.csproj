@@ -87,6 +87,8 @@
     <Compile Include="Configuration\SettingsRequestDataTester.cs" />
     <Compile Include="Configuration\XmlSettingsDataTester.cs" />
     <Compile Include="Configuration\XmlSettingsIntegratedTester.cs" />
+    <Compile Include="DependencyAnalysis\Bottle.cs" />
+    <Compile Include="DependencyAnalysis\DependencyGraphTester.cs" />
     <Compile Include="DictionaryExtensionsTester.cs" />
     <Compile Include="FileSetTester.cs" />
     <Compile Include="FileSystemTester.cs" />

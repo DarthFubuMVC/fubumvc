@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Bottles.DependencyAnalysis;
+using FubuCore.DependencyAnalysis;
 
 namespace Bottles.Deployment.Parsing
 {

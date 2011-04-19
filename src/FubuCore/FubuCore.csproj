@@ -108,6 +108,11 @@
     <Compile Include="Configuration\SettingCategory.cs" />
     <Compile Include="Configuration\SettingsRequestData.cs" />
     <Compile Include="Configuration\XmlSettingsData.cs" />
+    <Compile Include="DependencyAnalysis\Cycle.cs" />
+    <Compile Include="DependencyAnalysis\DependencyGraph.cs" />
+    <Compile Include="DependencyAnalysis\DirectedGraph.cs" />
+    <Compile Include="DependencyAnalysis\Edge.cs" />
+    <Compile Include="DependencyAnalysis\Node.cs" />
     <Compile Include="Reflection\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />
     <Compile Include="Binding\ValueConverterRegistry.cs" />
