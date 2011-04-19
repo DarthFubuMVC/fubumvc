@@ -44,6 +44,16 @@
     <Compile Include="Assemblies\AssemblyLoader.cs" />
     <Compile Include="Assemblies\AssemblyPackageInfo.cs" />
     <Compile Include="Assemblies\AssemblyPackageLoader.cs" />
+    <Compile Include="DependencyAnalysis\Bottle.cs" />
+    <Compile Include="DependencyAnalysis\InstallContext.cs" />
+    <Compile Include="DependencyAnalysis\PackageManager.cs" />
+    <Compile Include="DependencyAnalysis\Cycle.cs" />
+    <Compile Include="DependencyAnalysis\DependencyGraph.cs" />
+    <Compile Include="DependencyAnalysis\DirectedGraph.cs" />
+    <Compile Include="DependencyAnalysis\Edge.cs" />
+    <Compile Include="DependencyAnalysis\Node.cs" />
+    <Compile Include="DependencyAnalysis\UninstallContext.cs" />
+    <Compile Include="DependencyAnalysis\Urn.cs" />
     <Compile Include="Environment\EnvironmentGateway.cs" />
     <Compile Include="Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Environment\EnvironmentProxy.cs" />

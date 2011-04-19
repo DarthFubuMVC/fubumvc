@@ -174,12 +174,6 @@ namespace FubuMVC.Tests.Commands.Packages
         }
 
         [Test]
-        public void should_delete_the_old_contents()
-        {
-            assertPackageFolderWasDeleted("pak1");
-        }
-
-        [Test]
         public void should_extract_the_zip_file()
         {
             assertZipFileWasExploded("pak1");
@@ -206,12 +200,6 @@ namespace FubuMVC.Tests.Commands.Packages
         }
 
         [Test]
-        public void should_delete_the_old_contents()
-        {
-            assertPackageFolderWasDeleted("pak1");
-        }
-
-        [Test]
         public void should_extract_the_zip_file()
         {
             assertZipFileWasExploded("pak1");
@@ -234,12 +222,6 @@ namespace FubuMVC.Tests.Commands.Packages
             theZipVersionIs("pak1", theSameGuid);
 
             ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
-        }
-
-        [Test]
-        public void should_NOT_delete_the_old_contents()
-        {
-            assertPackageFolderWasNotDeleted("pak1");
         }
 
         [Test]

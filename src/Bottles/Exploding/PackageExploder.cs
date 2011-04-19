@@ -93,9 +93,10 @@ namespace Bottles.Exploding
         private string explodeZipAndReturnDirectory(string file, string applicationDirectory)
         {
             var directory = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file);
+            
             var request = new ExplodeRequest{
                 Directory = directory,
-                ExplodeAction = () => Explode(applicationDirectory, file, BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file), ExplodeOptions.DeleteDestination),
+                ExplodeAction = () => Explode(applicationDirectory, file, directory, ExplodeOptions.DeleteDestination),
                 GetVersion = () => _service.GetVersion(file),
                 LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
             };
