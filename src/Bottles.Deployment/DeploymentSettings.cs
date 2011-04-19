@@ -6,7 +6,7 @@ namespace Bottles.Deployment
         {
             BottlesDirectory = "bottles";
             RecipesDirectory = ProfileFiles.RecipesFolder;
-            ProfileFile = ProfileFiles.ProfileManifestFileName;
+            ProfileFile = ProfileFiles.EnvironmentSettingsFileName;
         }
 
         public string BottlesDirectory { get; set;}
