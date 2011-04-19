@@ -55,7 +55,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Scanning
     {
         public static IEnumerable<string> Paths()
         {
-            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Tokenization", "Scanning", "Templates");
+            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Templates");
             yield return templatePath;
             yield return FileSystem.Combine(templatePath, "Pak1");
             yield return FileSystem.Combine(templatePath, "Pak2");

@@ -64,8 +64,10 @@
     </Compile>
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
-    <Compile Include="Experiments\SparkItemsViewFolderTester.cs" />
+    <Compile Include="Experiments\SparkEngineFactory.cs" />
+    <Compile Include="Experiments\SparkItemsViewFolderExperiments.cs" />
     <Compile Include="Experiments\SparkViewNode.cs" />
+    <Compile Include="SparkItemViewFolderTester.cs" />
     <Compile Include="Tokenization\MasterPageModifierTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensionsTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtractorTester.cs" />
@@ -94,88 +96,88 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\A3.spark">
+    <Content Include="Templates\A3.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\A4.spark">
+    <Content Include="Templates\A4.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Alpha\Hotel.spark">
+    <Content Include="Templates\Pak1\Alpha\Hotel.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Alpha\Bravo\Bar.spark">
+    <Content Include="Templates\Pak1\Alpha\Bravo\Bar.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Alpha\Bravo\Charlie\Delta.spark">
+    <Content Include="Templates\Pak1\Alpha\Bravo\Charlie\Delta.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Alpha\Foxtrot\Golf.spark">
+    <Content Include="Templates\Pak1\Alpha\Foxtrot\Golf.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\data.txt">
+    <Content Include="Templates\Pak1\data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Foo\Bar.spark">
+    <Content Include="Templates\Pak1\Foo\Bar.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak2\Buzz.spark">
+    <Content Include="Templates\Pak2\Buzz.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Baz.spark">
+    <Content Include="Templates\Pak1\Baz.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Views\A1.spark">
+    <Content Include="Templates\Views\A1.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tokenization\Scanning\Templates\Views\A2.spark">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Shared\_footer.spark">
+    <Content Include="Templates\Views\A2.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Views\F1\G1.spark">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tokenization\Scanning\Templates\_header.spark">
+    <Content Include="Templates\Shared\_footer.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Shared\application.spark">
+    <Content Include="Templates\Views\F1\G1.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\_header.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Pak2\Shared\application.spark">
+    <Content Include="Templates\Shared\application.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Home\Home.spark">
+    <Content Include="Templates\Pak2\Shared\application.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Home\Home.spark">
+    <Content Include="Templates\Home\Home.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Pak2\Home\Home.spark">
+    <Content Include="Templates\Pak1\Home\Home.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Pak2\Shared\theme.spark">
+    <Content Include="Templates\Pak2\Home\Home.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tokenization\Scanning\Templates\Pak1\Home\_name.spark">
+    <Content Include="Templates\Pak2\Shared\theme.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\Pak1\Home\_name.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

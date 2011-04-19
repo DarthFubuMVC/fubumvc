@@ -1,18 +1,18 @@
 using System;
 using System.IO;
 using System.Linq;
-using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.Tokenization;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Spark;
+using Spark.Parser;
 using Constants = FubuMVC.Spark.Tokenization.Constants;
 using Spark.FileSystem;
 using System.Collections.Generic;
 
 namespace FubuMVC.Spark.Tests.Experiments
 {
-    public class SparkItemsViewFolderTester
+    public class SparkItemsViewFolderExperiments
     {
         private readonly string _hostRoot;
         private readonly string _pak1;
@@ -29,21 +29,21 @@ namespace FubuMVC.Spark.Tests.Experiments
 
         private readonly ISparkViewEngine _engine;
 
-        public SparkItemsViewFolderTester()
+        public SparkItemsViewFolderExperiments()
         {
-            _hostRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tokenization", "Scanning", "Templates");
+            _hostRoot = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
             _pak1 = Path.Combine(_hostRoot, "Pak1");
             _pak2 = Path.Combine(_hostRoot, "Pak2");
 
             _hostHomeView = new SparkItem(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, Constants.HostOrigin);
             _hostApplicationView = new SparkItem(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, Constants.HostOrigin);
            
-            _pak1HomeView = new SparkItem(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "Pak1");
-            _pak1NamePartialView = new SparkItem(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "Pak1");
+            _pak1HomeView = new SparkItem(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "P1");
+            _pak1NamePartialView = new SparkItem(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "P1");
             
-            _pak2HomeView = new SparkItem(Path.Combine(_pak2, "Home", "Home.spark"), _hostRoot, "Pak2");
-            _pak2ApplicationView = new SparkItem(Path.Combine(_pak2, "Shared", "application.spark"), _hostRoot, "Pak2");
-            _pak2ThemeView = new SparkItem(Path.Combine(_pak2, "Shared", "theme.spark"), _hostRoot, "Pak2");
+            _pak2HomeView = new SparkItem(Path.Combine(_pak2, "Home", "Home.spark"), _hostRoot, "P2");
+            _pak2ApplicationView = new SparkItem(Path.Combine(_pak2, "Shared", "application.spark"), _hostRoot, "P2");
+            _pak2ThemeView = new SparkItem(Path.Combine(_pak2, "Shared", "theme.spark"), _hostRoot, "P2");
 
             var sparkItems = new List<SparkItem>
             {
@@ -58,11 +58,18 @@ namespace FubuMVC.Spark.Tests.Experiments
 
             var settings = new SparkSettings();
             _engine = new SparkViewEngine(settings);
-            _engine.ViewFolder = _engine.ViewFolder.Append(new SparkItemsViewFolder(sparkItems.Where(x => x.Origin == "Pak1").ToList()));
-            _engine.ViewFolder = _engine.ViewFolder.Append(new SparkItemsViewFolder(sparkItems.Where(x => x.Origin == "Pak2").ToList()));
-            _engine.ViewFolder = _engine.ViewFolder.Append(new SparkItemsViewFolder(sparkItems.Where(x => x.Origin == Constants.HostOrigin).ToList()));
+            _engine.ViewFolder = _engine.ViewFolder.Append(new SparkItemViewFolder(sparkItems.Where(x => x.Origin == "P1").ToList()));
+            _engine.ViewFolder = _engine.ViewFolder.Append(new SparkItemViewFolder(sparkItems.Where(x => x.Origin == "P2").ToList()));
+            _engine.ViewFolder = _engine.ViewFolder.Append(new SparkItemViewFolder(sparkItems.Where(x => x.Origin == Constants.HostOrigin).ToList()));
         }
 
+        [Test]
+        public void list_views_returns_correct_paths()
+        {
+            new ViewLoader {ViewFolder = new SparkItemViewFolder(new []{_pak1HomeView, _pak1NamePartialView})}
+                .FindPartialFiles(_pak1HomeView.PrefixedRelativePath())
+                .ShouldContain("name");
+        }
 
         [Test]
         public void can_resolve_entries_from_host()

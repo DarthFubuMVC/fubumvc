@@ -3,13 +3,12 @@ using System.Linq;
 using FubuMVC.Spark.Tokenization;
 using Spark.FileSystem;
 
-namespace FubuMVC.Spark.Rendering
+namespace FubuMVC.Spark
 {
-    public class SparkItemsViewFolder : IViewFolder
+    public class SparkItemViewFolder : IViewFolder
     {
         private readonly IEnumerable<SparkItem> _items;
-
-        public SparkItemsViewFolder(IEnumerable<SparkItem> items)
+        public SparkItemViewFolder(IEnumerable<SparkItem> items)
         {
             _items = items;
         }

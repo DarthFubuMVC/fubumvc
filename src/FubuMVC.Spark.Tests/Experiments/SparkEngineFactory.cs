@@ -4,8 +4,9 @@ using FubuCore.Util;
 using FubuMVC.Spark.Tokenization;
 using Spark;
 using Spark.FileSystem;
+using Constants = FubuMVC.Spark.Tokenization.Constants;
 
-namespace FubuMVC.Spark.Rendering
+namespace FubuMVC.Spark.Tests.Experiments
 {
     public interface ISparkEngineFactory
     {
@@ -34,7 +35,7 @@ namespace FubuMVC.Spark.Rendering
             {
                 ViewFolder = new FileSystemViewFolder(root)
             };
-            if (origin == Tokenization.Constants.HostOrigin)
+            if (origin == Constants.HostOrigin)
             {
                 foreach (var packageRoot in _packagesRoots)
                 {

@@ -13,8 +13,8 @@ namespace FubuMVC.Spark.Tests.Experiments
         public void smoke()
         {
             var outputPath = AppDomain.CurrentDomain.BaseDirectory;
-            var view = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "A3.spark");
-            var master = Path.Combine(outputPath, "Tokenization", "Scanning", "Templates", "Shared", "application.spark");
+            var view = Path.Combine(outputPath, "Templates", "A3.spark");
+            var master = Path.Combine(outputPath, "Templates", "Shared", "application.spark");
 
             var item = new SparkItem(view, outputPath, "")
             {
