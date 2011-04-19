@@ -67,7 +67,7 @@
     <Compile Include="Tokenization\Scanning\FileScanner.cs" />
     <Compile Include="Tokenization\SparkItem.cs" />
     <Compile Include="SparkActivator.cs" />
-    <Compile Include="SparkRegistry.cs" />
+    <Compile Include="SparkExtension.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="Tokenization\SparkViewToken.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensions.cs" />
