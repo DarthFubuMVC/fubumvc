@@ -1,13 +1,15 @@
 using System.Collections.Generic;
+using Bottles.DependencyAnalysis;
 
 namespace Bottles.Deployment.Parsing
 {
     public class RecipeSorter : IRecipeSorter
     {
-        // TODO -- make this do something real with dependency graphs
         public IEnumerable<Recipe> Order(IEnumerable<Recipe> recipes)
         {
-            return recipes;
+            var graph = new DependencyGraph<Recipe>(r => r.Name, r => r.Dependencies);
+            recipes.Each(graph.RegisterItem);
+            return graph.Ordered();
         }
     }
 }

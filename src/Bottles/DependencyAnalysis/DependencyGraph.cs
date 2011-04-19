@@ -52,6 +52,11 @@ namespace Bottles.DependencyAnalysis
             return missing.Count() > 0;
         }
 
+        public IEnumerable<T> Ordered()
+        {
+            return GetLoadOrder().Select(name => _items[name]);
+        }
+
         public IEnumerable<string> GetLoadOrder()
         {
             foreach (var node in _cycleDetector.Order())

@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using FubuCore.Util;
 
 namespace Bottles.Deployment
 {
+    [DebuggerDisplay("Recipe:{_name}")]
     public class Recipe
     {
         private readonly string _name;
@@ -32,6 +35,11 @@ namespace Bottles.Deployment
             }
         }
 
+        public IEnumerable<string> Dependencies
+        {
+            get { return _dependencies; }
+        }
+
         public void RegisterDependency(string recipeName)
         {
             _dependencies.Add(recipeName);
@@ -45,6 +53,31 @@ namespace Bottles.Deployment
         public void AppendBehind(Recipe recipe)
         {
             recipe.Hosts.Each(other => _hosts[other.Name].Append(other));
+        }
+
+        public bool Equals(Recipe other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._name, _name);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Recipe)) return false;
+            return Equals((Recipe) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_name != null ? _name.GetHashCode() : 0);
+        }
+
+        public override string ToString()
+        {
+            return _name;
         }
     }
 }
