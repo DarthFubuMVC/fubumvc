@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
+    [TestFixture]
     public class NamespaceModifierTester
     {
         private string _root;

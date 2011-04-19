@@ -10,6 +10,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
+    [TestFixture]
     public class MasterPageModifierTester : InteractionContext<MasterPageModifier>
     {
         private ModificationContext _context;

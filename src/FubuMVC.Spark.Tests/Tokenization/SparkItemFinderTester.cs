@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
+    [TestFixture]
     public class SparkItemFinderTester
     {
         private readonly ISparkItemFinder _itemFinder;

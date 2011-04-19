@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests
 {
+    [TestFixture]
     public class SparkItemViewFolderTester
     {
         private readonly string _hostRoot;

@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization.Parsing
 {
+    [TestFixture]
     public class ElementNodeExtractorTester : InteractionContext<ElementNodeExtractor>
     {
         private readonly StringBuilder _builder = new StringBuilder();

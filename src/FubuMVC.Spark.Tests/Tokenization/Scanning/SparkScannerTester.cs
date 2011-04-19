@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization.Scanning
 {
+    [TestFixture]
     public class SparkScannerTester
     {
         private readonly IFileScanner _scanner;

@@ -11,6 +11,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Parsing
         
     }
 
+    [TestFixture]
     public class SparkParserExtensionsTester
     {
         private readonly ISparkParser _parser;

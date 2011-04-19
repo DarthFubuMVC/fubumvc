@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.Tokenization
 {
+    [TestFixture]
     public class SparkItemTester
     {
         private readonly SparkItem _bottomItem;
