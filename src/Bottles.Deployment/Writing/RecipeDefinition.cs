@@ -29,6 +29,11 @@ namespace Bottles.Deployment.Writing
             _dependencies.Add(recipeName);
         }
 
+        public IEnumerable<string> Dependencies
+        {
+            get { return _dependencies; }
+        }
+
         public IEnumerable<HostDefinition> Hosts()
         {
             return _hosts;

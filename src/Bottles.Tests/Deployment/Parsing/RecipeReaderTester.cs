@@ -40,6 +40,9 @@ namespace Bottles.Tests.Deployment.Parsing
             var writer = new ProfileWriter("profile3");
 
             var recipeDefinition = writer.RecipeFor("r1");
+            recipeDefinition.RegisterDependency("the-pig");
+            recipeDefinition.RegisterDependency("freestate");
+
             var host = recipeDefinition.HostFor("h1");
 
             host.AddDirective(new SimpleSettings
@@ -79,6 +82,12 @@ namespace Bottles.Tests.Deployment.Parsing
         public void should_read_the_recipe_name_from_the_folder_name()
         {
             theRecipe.Name.ShouldEqual("r1");
+        }
+
+        [Test]
+        public void should_have_both_dependencies()
+        {
+            theRecipe.Dependencies.ShouldHaveTheSameElementsAs("the-pig","freestate");
         }
 
         [Test]

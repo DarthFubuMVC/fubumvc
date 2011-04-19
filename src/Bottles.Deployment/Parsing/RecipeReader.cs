@@ -7,6 +7,11 @@ namespace Bottles.Deployment.Parsing
 {
     public class RecipeReader
     {
+        public static Recipe ReadFrom(string directory)
+        {
+            return new RecipeReader(directory).Read();
+        }
+
         private readonly string _directory;
         private readonly IFileSystem _fileSystem = new FileSystem();
 
@@ -15,18 +20,20 @@ namespace Bottles.Deployment.Parsing
             _directory = directory;
         }
 
-        public static Recipe ReadFrom(string directory)
-        {
-            return new RecipeReader(directory).Read();
-        }
-
         public Recipe Read()
         {
             var recipeName = Path.GetFileName(_directory);
             var recipe = new Recipe(recipeName);
 
-            // TODO -- need to read the recipe control file            
-            _fileSystem.FindFiles(_directory, new FileSet{
+            _fileSystem.ReadTextFile(FileSystem.Combine(_directory, ProfileFiles.RecipesControlFile),s =>
+                {
+                    //TODO: Harden this for bad syntax
+                    var parts = s.Split(':');
+                    recipe.RegisterDependency(parts[1]);
+                });
+
+
+            _fileSystem.FindFiles(_directory, new FileSet(){
                 Include = "*.host"
             }).Each(file =>
             {
@@ -37,8 +44,9 @@ namespace Bottles.Deployment.Parsing
             return recipe;
         }
 
-        public static IEnumerable<Recipe> ReadRecipes(string recipesDir)
+        public static IEnumerable<Recipe> ReadRecipes(string profileDirectory)
         {
+            var recipesDir = FileSystem.Combine(profileDirectory, ProfileFiles.RecipesFolder);
             return Directory.GetDirectories(recipesDir).Select(ReadFrom);
         }
     }
