@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Bottles.Deployment.Runtime;
 using FubuCore.Binding;
 using FubuCore.Configuration;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Bottles.Deployment
     public class HostManifest
     {
         private static readonly IObjectResolver _resolver = ObjectResolver.Basic();
-
+        private readonly IList<IDirective> _directives = new List<IDirective>();
         private readonly IList<BottleReference> _bottles = new List<BottleReference>();
         private readonly IList<ISettingsData> _data = new List<ISettingsData>();
 
@@ -43,6 +44,11 @@ namespace Bottles.Deployment
         public IEnumerable<BottleReference> BottleReferences
         {
             get { return _bottles; }
+        }
+
+        public IEnumerable<IDirective> AllDirectives
+        {
+            get { return _directives; }
         }
 
         public void RegisterSettings(ISettingsData data)
@@ -94,6 +100,18 @@ namespace Bottles.Deployment
                 .Select(x => x.Split('.')
                 .First())
                 .Distinct();
+        }
+
+        public void BuildDirectives(IDirectiveTypeRegistry typeRegistry)
+        {
+            _directives.Clear();
+            var directives = UniqueDirectiveNames().Select(name =>
+            {
+                var type = typeRegistry.DirectiveTypeFor(name);
+                return GetDirective(type);
+            });
+
+            _directives.AddRange(directives);
         }
     }
 }

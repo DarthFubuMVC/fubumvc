@@ -22,15 +22,18 @@ namespace Bottles.Deployment.Runtime
         
     }
 
-    public class DirectiveBuilder
+    public interface IDirectiveTypeRegistry
     {
-        private readonly IContainer _container;
+        Type DirectiveTypeFor(string name);
+    }
+
+    public class DirectiveTypeRegistry : IDirectiveTypeRegistry
+    {
         private readonly Cache<string, Type> _directiveTypes = new Cache<string, Type>();
 
-        public DirectiveBuilder(IContainer container)
+        public DirectiveTypeRegistry(IContainer container)
         {
-            _container = container;
-            _container.Model.PluginTypes
+            container.Model.PluginTypes
                 .Select(x => x.PluginType.FindInterfaceThatCloses(typeof (IDeployer<>)))
                 .Where(x => x != null)
                 .Each(type =>
@@ -43,6 +46,7 @@ namespace Bottles.Deployment.Runtime
 
         public Type DirectiveTypeFor(string name)
         {
+            // TODO -- blow up if the directive type cannot be found!
             return _directiveTypes[name];
         }
 
@@ -51,13 +55,6 @@ namespace Bottles.Deployment.Runtime
             return _directiveTypes.GetAll();
         }
 
-        public IEnumerable<IDirective> BuildDirectives(HostManifest host)
-        {
-            return host.UniqueDirectiveNames().Select(name =>
-            {
-                var directiveType = _directiveTypes[name];
-                return host.GetDirective(directiveType);
-            });
-        }
+
     }
 }

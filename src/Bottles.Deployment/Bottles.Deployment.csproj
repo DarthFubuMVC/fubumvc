@@ -51,7 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapping\BootstrappingClasses.cs" />
+    <Compile Include="Bootstrapping\DeploymentBootstrapper.cs" />
+    <Compile Include="Bootstrapping\DeploymentRegistry.cs" />
     <Compile Include="BottleReference.cs" />
     <Compile Include="Parsing\HostReader.cs" />
     <Compile Include="Parsing\IProfileReader.cs" />
