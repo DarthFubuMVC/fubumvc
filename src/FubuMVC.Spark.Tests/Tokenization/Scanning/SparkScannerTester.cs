@@ -29,7 +29,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Scanning
         [Test]
         public void all_spark_files_in_sources_are_found()
         {
-            _scanResult.ShouldHaveCount(20);
+            _scanResult.ShouldHaveCount(21);
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace FubuMVC.Spark.Tests.Tokenization.Scanning
             Func<string, string> pathFor = root => TestSource.Paths().Single(p => p.EndsWith(root));
 
             _scanResult.Where(s => s.Root == pathFor("Templates")).ShouldHaveCount(9);
-            _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(7);
+            _scanResult.Where(s => s.Root == pathFor("Pak1")).ShouldHaveCount(8);
             _scanResult.Where(s => s.Root == pathFor("Pak2")).ShouldHaveCount(4);
         }
 

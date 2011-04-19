@@ -56,7 +56,7 @@
     </Compile>
     <Compile Include="Registration\Nodes\SparkViewOutput.cs" />
     <Compile Include="Rendering\SparkEngineFactory.cs" />
-    <Compile Include="Rendering\PackageViewFolder.cs" />
+    <Compile Include="Rendering\SparkItemsViewFolder.cs" />
     <Compile Include="SparkViewBehavior.cs" />
     <Compile Include="Tokenization\Parsing\SparkParser.cs" />
     <Compile Include="Tokenization\Scanning\FileFound.cs" />

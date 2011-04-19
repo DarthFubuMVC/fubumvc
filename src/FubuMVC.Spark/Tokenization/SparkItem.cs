@@ -37,6 +37,24 @@ namespace FubuMVC.Spark.Tokenization
 
     public static class SparkItemHelper
     {
+        // NOTE:TEMP
+        public static string PrefixedRelativePath(this SparkItem item)
+        {
+            return FileSystem.Combine(item.Origin, item.RelativePath());
+        }
+
+        // NOTE:TEMP
+        public static string PrefixedVirtualDirectoryPath(this SparkItem item)
+        {
+            return FileSystem.Combine(item.Origin, item.VirtualDirectoryPath());
+        }
+
+        // NOTE:TEMP
+        public static string VirtualDirectoryPath(this SparkItem item)
+        {
+            return item.DirectoryPath().PathRelativeTo(item.Root);
+        }
+
         public static string RelativePath(this SparkItem item)
         {
             return item.Path.PathRelativeTo(item.Root);

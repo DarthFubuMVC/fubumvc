@@ -64,7 +64,7 @@
     </Compile>
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
-    <Compile Include="Experiments\SparkEngineFactoryTester.cs" />
+    <Compile Include="Experiments\SparkItemsViewFolderTester.cs" />
     <Compile Include="Experiments\SparkViewNode.cs" />
     <Compile Include="Tokenization\MasterPageModifierTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensionsTester.cs" />
@@ -171,6 +171,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tokenization\Scanning\Templates\Pak2\Shared\theme.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tokenization\Scanning\Templates\Pak1\Home\_name.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
