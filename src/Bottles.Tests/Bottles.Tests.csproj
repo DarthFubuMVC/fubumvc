@@ -54,6 +54,7 @@
     <Compile Include="AssemblyLoaderTester.cs" />
     <Compile Include="AssemblyPackageInfoTester.cs" />
     <Compile Include="Deployment\Bootstrapping\DeploymentBootstrapperIntegratedTester.cs" />
+    <Compile Include="Deployment\EnvironmentSettingsTester.cs" />
     <Compile Include="Deployment\FakeDepolyer.cs" />
     <Compile Include="Deployment\HostManifestTester.cs" />
     <Compile Include="Deployment\IntegrationIisFubuDeploymentTester.cs" />

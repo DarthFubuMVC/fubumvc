@@ -24,6 +24,8 @@ namespace Bottles.Deployment.Parsing
             var firstRecipe = recipes.First();
             recipes.Skip(1).Each(firstRecipe.AppendBehind);
 
+            // read in the environment file here
+
             return firstRecipe.Hosts;
         }
     }
