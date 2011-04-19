@@ -26,10 +26,7 @@ namespace Bottles.Deployment.Parsing
             var recipeName = Path.GetFileName(_directory);
             var recipe = new Recipe(recipeName);
 
-            // need to read the recipe control file
-            // need to read each host file
-
-            
+            // TODO -- need to read the recipe control file            
             _fileSystem.FindFiles(_directory, new FileSet(){
                 Include = "*.host"
             }).Each(file =>

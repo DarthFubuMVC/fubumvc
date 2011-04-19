@@ -13,8 +13,14 @@ namespace Bottles.Deployment.Bootstrapping
         {
             Scan(x =>
             {
-                x.AssembliesFromPath("deployers");
+                x.AssembliesFromApplicationBaseDirectory(a => a.GetName().Name.Contains("Deployers"));
                 x.ConnectImplementationsToTypesClosing(typeof (IDeployer<>));
+            });
+
+            Scan(x =>
+            {
+                x.TheCallingAssembly();
+                x.WithDefaultConventions();
             });
         }
     }
