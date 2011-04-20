@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuMVC.Spark.SparkModel;
+using Spark;
 
 namespace FubuMVC.Spark
 {
-    public class SparkActivator : IActivator 
+    public class SparkActivator : IActivator
     {
-        // Inject ISparkViewEngine and assign viewfolder?
-        public SparkActivator(/* */)
+        private readonly IEnumerable<SparkItem> _sparkItems;
+        private readonly ISparkViewEngine _engine;
+        public SparkActivator(IEnumerable<SparkItem> sparkItems, ISparkViewEngine engine)
         {
-            
+            _sparkItems = sparkItems;
+            _engine = engine;
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            throw new NotImplementedException();
+            _engine.ViewFolder = new SparkItemViewFolder(_sparkItems);
         }
     }
 }
