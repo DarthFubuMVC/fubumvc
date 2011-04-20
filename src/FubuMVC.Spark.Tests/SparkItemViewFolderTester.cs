@@ -3,6 +3,7 @@ using System.IO;
 using FubuMVC.Spark.Tokenization;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Constants = FubuMVC.Spark.Tokenization.Constants;
 
 namespace FubuMVC.Spark.Tests
 {
@@ -15,6 +16,7 @@ namespace FubuMVC.Spark.Tests
 
         private readonly SparkItem _hostHomeView;
         private readonly SparkItem _hostApplicationView;
+        private readonly SparkItem _hostFooterPartialView;
         private readonly SparkItem _pak1HomeView;
         private readonly SparkItem _pak1NamePartialView;
         private readonly SparkItem _pak2HomeView;
@@ -31,6 +33,7 @@ namespace FubuMVC.Spark.Tests
 
             _hostHomeView = new SparkItem(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, Constants.HostOrigin);
             _hostApplicationView = new SparkItem(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, Constants.HostOrigin);
+            _hostFooterPartialView = new SparkItem(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, Constants.HostOrigin);
 
             _pak1HomeView = new SparkItem(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "Pak1");
             _pak1NamePartialView = new SparkItem(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "Pak1");
@@ -41,13 +44,9 @@ namespace FubuMVC.Spark.Tests
 
             var sparkItems = new List<SparkItem>
             {
-                _hostHomeView,
-                _hostApplicationView,
-                _pak1HomeView,
-                _pak1NamePartialView,
-                _pak2HomeView,
-                _pak2ApplicationView,
-                _pak2ThemeView
+                _hostHomeView, _hostApplicationView, _hostFooterPartialView,
+                _pak1HomeView, _pak1NamePartialView,
+                _pak2HomeView, _pak2ApplicationView, _pak2ThemeView
             };
 
             _viewFolder = new SparkItemViewFolder(sparkItems);
@@ -70,21 +69,21 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void can_resolve_view_from_package()
         {
-            _viewFolder.HasView(_pak1HomeView.RelativePath())
+            _viewFolder.HasView(_pak1HomeView.PrefixedRelativePath())
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_master_from_package()
         {
-            _viewFolder.HasView(_pak2ApplicationView.RelativePath())
+            _viewFolder.HasView(_pak2ApplicationView.PrefixedRelativePath())
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_partial_from_package()
         {
-            _viewFolder.HasView(_pak1NamePartialView.RelativePath())
+            _viewFolder.HasView(_pak1NamePartialView.PrefixedRelativePath())
                 .ShouldBeTrue();
         }
 
@@ -94,28 +93,28 @@ namespace FubuMVC.Spark.Tests
             // ListViews is used by FindPartialFiles in Spark.Parser.ViewLoader when it
             // tries to locate partials files in ancestor path.
             _viewFolder.ListViews(_hostHomeView.Origin)
-                .ShouldHaveTheSameElementsAs(_hostHomeView.RelativePath(),
-                                             _hostApplicationView.RelativePath());
+                .ShouldHaveTheSameElementsAs(_hostHomeView.PrefixedRelativePath(),
+                                             _hostApplicationView.PrefixedRelativePath());
         }
 
         [Test]
         public void returns_viewsource_for_partial_from_package()
         {
-            readfromStream(_pak1NamePartialView.RelativePath())
+            readfromStream(_pak1NamePartialView.PrefixedRelativePath())
                 .ShouldEqual("Pak1");
         }
 
         [Test]
         public void returns_viewsource_for_view_from_package()
         {
-            readfromStream(_pak1HomeView.RelativePath())
-                .ShouldEqual(@"home from <name />");
+            readfromStream(_pak1HomeView.PrefixedRelativePath())
+                .ShouldEqual(@"home from <name /><footer />");
         }
 
         [Test]
         public void returns_viewsource_for_master_from_package()
         {
-            readfromStream(_pak2ApplicationView.RelativePath())
+            readfromStream(_pak2ApplicationView.PrefixedRelativePath())
                 .ShouldEqual(@"<div>Pak2 Application: <use:view/></div>");
         }
 
@@ -135,7 +134,7 @@ namespace FubuMVC.Spark.Tests
 
         private string readfromStream(string path)
         {
-            var stream =_viewFolder.GetViewSource(path).OpenViewStream();
+            var stream = _viewFolder.GetViewSource(path).OpenViewStream();
             return new StreamReader(stream).ReadToEnd();
         }
     }

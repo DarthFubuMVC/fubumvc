@@ -25,7 +25,7 @@ namespace FubuMVC.Spark.Tests.Tokenization
         [Test]
         public void finder_locates_all_relevant_spark_items()
         {
-            _items.ShouldHaveCount(22);
+            _items.ShouldHaveCount(45);
         }
 
         [Test]

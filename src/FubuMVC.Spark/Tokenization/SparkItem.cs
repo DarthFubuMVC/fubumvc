@@ -42,7 +42,6 @@ namespace FubuMVC.Spark.Tokenization
             return DirectoryPath().PathRelativeTo(RootPath);
         }
 
-
         public string Name()
         {
             return Path.GetFileNameWithoutExtension(FilePath);
@@ -58,5 +57,23 @@ namespace FubuMVC.Spark.Tokenization
             return FilePath;
         }
     }
+
+    public static class SparkItemHelper
+    {
+        // NOTE:TEMP
+        public static string PrefixedRelativePath(this SparkItem item)
+        {
+            var prefix = item.Origin == Constants.HostOrigin ? string.Empty : item.Origin;
+            return FileSystem.Combine(prefix, item.RelativePath());
+        }
+
+        // NOTE:TEMP
+        public static string PrefixedRelativeDirectoryPath(this SparkItem item)
+        {
+            var prefix = item.Origin == Constants.HostOrigin ? string.Empty : item.Origin;
+            return FileSystem.Combine(prefix, item.RelativeDirectoryPath());
+        }
+    }
+
     public class SparkItems : Collection<SparkItem> { }
 }
