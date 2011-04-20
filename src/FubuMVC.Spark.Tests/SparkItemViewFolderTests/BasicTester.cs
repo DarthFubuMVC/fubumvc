@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using FubuCore;
 using FubuMVC.Spark.Tokenization;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Constants = FubuMVC.Spark.Tokenization.Constants;
 
-namespace FubuMVC.Spark.Tests
+namespace FubuMVC.Spark.Tests.SparkItemViewFolderTests
 {
     [TestFixture]
-    public class SparkItemViewFolderTester
+    public class BasicTester
     {
         private readonly string _hostRoot;
         private readonly string _pak1;
@@ -25,7 +26,7 @@ namespace FubuMVC.Spark.Tests
 
         private readonly SparkItemViewFolder _viewFolder;
 
-        public SparkItemViewFolderTester()
+        public BasicTester()
         {
             _hostRoot = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
             _pak1 = Path.Combine(_hostRoot, "Pak1");
@@ -87,14 +88,20 @@ namespace FubuMVC.Spark.Tests
                 .ShouldBeTrue();
         }
 
-        [Test, Ignore("Shouldn't we rather return by origin?")]
-        public void listviews_returns_views_by_origin()
+        [Test]
+        public void listviews_returns_views_in_prefixed_relative_path()
         {
-            // ListViews is used by FindPartialFiles in Spark.Parser.ViewLoader when it
-            // tries to locate partials files in ancestor path.
-            _viewFolder.ListViews(_hostHomeView.Origin)
-                .ShouldHaveTheSameElementsAs(_hostHomeView.PrefixedRelativePath(),
-                                             _hostApplicationView.PrefixedRelativePath());
+            var foundViews = new List<string>();
+            
+            _hostHomeView
+                .PrefixedRelativePath().getPathParts()
+                .Union(new[] { Constants.SharedSpark })
+                .Each(path => foundViews.AddRange(_viewFolder.ListViews(path)));
+                
+            foundViews.ShouldHaveTheSameElementsAs(
+                _hostHomeView.PrefixedRelativePath(),
+                _hostApplicationView.PrefixedRelativePath(),
+                _hostFooterPartialView.PrefixedRelativePath());
         }
 
         [Test]

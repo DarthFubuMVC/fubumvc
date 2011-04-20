@@ -62,13 +62,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DevAndDeploymentModeViewFolderTester.cs" />
+    <Compile Include="SparkItemViewFolderTests\ExtendedTester.cs" />
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
     <Compile Include="Experiments\SparkEngineFactory.cs" />
     <Compile Include="Experiments\SparkItemsViewFolderExperiments.cs" />
     <Compile Include="Experiments\SparkViewNode.cs" />
-    <Compile Include="SparkItemViewFolderTester.cs" />
+    <Compile Include="SparkItemViewFolderTests\BasicTester.cs" />
     <Compile Include="Tokenization\MasterPageModifierTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtensionsTester.cs" />
     <Compile Include="Tokenization\Parsing\ElementNodeExtractorTester.cs" />

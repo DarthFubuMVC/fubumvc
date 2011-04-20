@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using Spark;
 using Constants = FubuMVC.Spark.Tokenization.Constants;
 
-namespace FubuMVC.Spark.Tests
+namespace FubuMVC.Spark.Tests.SparkItemViewFolderTests
 {
     [TestFixture]
-    public class DevAndDeploymentModeViewFolderTester
+    public class ExtendedTester
     {
         private const string Package1 = "Package1";
         private const string Package2 = "Package2";
@@ -25,7 +25,7 @@ namespace FubuMVC.Spark.Tests
         private readonly SparkItems _pak2Items;
         private readonly SparkItems _appItems;
 
-        public DevAndDeploymentModeViewFolderTester()
+        public ExtendedTester()
         {
             var testRoot = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
 

@@ -9,6 +9,7 @@ namespace FubuMVC.Spark.Tokenization
     public static class Constants
     {
         public const string HostOrigin = "Host";
+        public const string SharedSpark = "Shared";
     }
 
     public class SparkItem
