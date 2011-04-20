@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuValidation.Tests
+namespace FubuCore.Testing
 {
     [TestFixture]
     public class TemplateParserTester
@@ -20,6 +20,30 @@ namespace FubuValidation.Tests
 				.Parse(template, substitutions)
 				.ShouldEqual("this is a replaced template");
 		}
+
+        [Test]
+        public void template_is_one_from_the_end()
+        {
+            var template = "*{db}*";
+            var substitutions = new Dictionary<string, string>
+                                    {
+                                        {"db", "blue"},
+                                    };
+
+            TemplateParser.Parse(template, substitutions).ShouldEqual("*blue*");
+        }
+
+        [Test]
+        public void template_is_at_the_end()
+        {
+            var template = "**{db}";
+            var substitutions = new Dictionary<string, string>
+                                    {
+                                        {"db", "blue"},
+                                    };
+
+            TemplateParser.Parse(template, substitutions).ShouldEqual("**blue");
+        }
 
     	[Test]
         public void should_replace_multiple_variables()

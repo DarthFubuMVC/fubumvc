@@ -45,7 +45,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             writer.Flush();
 
-            theHost = HostReader.ReadFrom("profile2/recipes/r1/h1.host");
+            theHost = HostReader.ReadFrom("profile2/recipes/r1/h1.host", new EnvironmentSettings());
         }
 
         [Test]

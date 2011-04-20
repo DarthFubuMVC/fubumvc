@@ -7,25 +7,13 @@ namespace Bottles.Deployment.Parsing
 {
     public class RecipeReader
     {
-        public static Recipe ReadFrom(string directory)
+        public static Recipe ReadFrom(string recipeDirectory, EnvironmentSettings environment)
         {
-            return new RecipeReader(directory).Read();
-        }
-
-        private readonly string _directory;
-        private readonly IFileSystem _fileSystem = new FileSystem();
-
-        public RecipeReader(string directory)
-        {
-            _directory = directory;
-        }
-
-        public Recipe Read()
-        {
-            var recipeName = Path.GetFileName(_directory);
+            var recipeName = Path.GetFileName(recipeDirectory);
             var recipe = new Recipe(recipeName);
+            var fileSystem = new FileSystem();
 
-            _fileSystem.ReadTextFile(FileSystem.Combine(_directory, ProfileFiles.RecipesControlFile),s =>
+            fileSystem.ReadTextFile(FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile),s =>
                 {
                     //TODO: Harden this for bad syntax
                     var parts = s.Split(':');
@@ -33,20 +21,20 @@ namespace Bottles.Deployment.Parsing
                 });
 
 
-            _fileSystem.FindFiles(_directory, new FileSet(){
+            fileSystem.FindFiles(recipeDirectory, new FileSet(){
                 Include = "*.host"
             }).Each(file =>
             {
-                var host = HostReader.ReadFrom(file);
+                var host = HostReader.ReadFrom(file, environment);
                 recipe.RegisterHost(host);
             });
 
             return recipe;
         }
 
-        public static IEnumerable<Recipe> ReadRecipes(string recipesDir)
+        public static IEnumerable<Recipe> ReadRecipes(string recipesDir, EnvironmentSettings environment)
         {
-            return Directory.GetDirectories(recipesDir).Select(ReadFrom);
+            return Directory.GetDirectories(recipesDir).Select(dir => ReadFrom(dir, environment));
         }
     }
 }

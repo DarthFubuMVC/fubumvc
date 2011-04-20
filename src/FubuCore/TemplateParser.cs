@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace FubuValidation
+namespace FubuCore
 {
     public static class TemplateParser
     {
@@ -18,6 +18,7 @@ namespace FubuValidation
         public static string Parse(string template, IDictionary<string, string> substitutions)
         {
             var matches = TemplateExpression.Matches(template);
+            if (matches.Count == 0) return template;
 
             var lastIndex = 0;
             var builder = new StringBuilder();
@@ -33,7 +34,7 @@ namespace FubuValidation
                 lastIndex = match.Index + match.Length;
             }
 
-            if (lastIndex < template.Length - 1)
+            if (lastIndex < template.Length)
             {
                 builder.Append(template.Substring(lastIndex, template.Length - lastIndex));
             }

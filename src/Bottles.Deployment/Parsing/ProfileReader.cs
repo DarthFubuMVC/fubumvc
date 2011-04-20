@@ -20,7 +20,7 @@ namespace Bottles.Deployment.Parsing
             var environment = new EnvironmentSettings();
             new FileSystem().ReadTextFile(_settings.EnvironmentFile, environment.ReadText);
 
-            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory);
+            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
             recipes = _sorter.Order(recipes);
 
             // TODO -- harden.  Must be at least 1 recipe

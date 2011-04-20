@@ -75,7 +75,7 @@ namespace Bottles.Tests.Deployment.Parsing
             writer.Flush();
 
 
-            theRecipe = RecipeReader.ReadFrom("profile3/recipes/r1");
+            theRecipe = RecipeReader.ReadFrom("profile3/recipes/r1", new EnvironmentSettings());
         }
 
         [Test]

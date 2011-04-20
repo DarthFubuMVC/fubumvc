@@ -114,6 +114,7 @@
     <Compile Include="Reflection\SinglePropertyTester.cs" />
     <Compile Include="StringExtensionsTester.cs" />
     <Compile Include="StringifierTester.cs" />
+    <Compile Include="TemplateParserTester.cs" />
     <Compile Include="TestObject.cs" />
     <Compile Include="TypeExtensionsTester.cs" />
     <Compile Include="TypeResolverTester.cs" />

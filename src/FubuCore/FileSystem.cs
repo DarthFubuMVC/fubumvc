@@ -333,6 +333,8 @@ namespace FubuCore
 
         public void ReadTextFile(string path, Action<string> callback)
         {
+            if (!FileExists(path)) return;
+
             using (var reader = new StreamReader(path))
             {
                 string line;

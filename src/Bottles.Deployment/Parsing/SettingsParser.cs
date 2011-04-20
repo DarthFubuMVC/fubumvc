@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -8,12 +9,14 @@ namespace Bottles.Deployment.Parsing
 {
     public class SettingsParser
     {
+        private readonly IDictionary<string, string> _substitutions;
         public static readonly string INVALID_SYNTAX = "Configuration line must be in the form of 'Class.Prop=Value' or 'bottle:<bottle name> <relationship>'";
         private readonly InMemorySettingsData _settings = new InMemorySettingsData();
         private readonly IList<BottleReference> _references = new List<BottleReference>();
 
-        public SettingsParser(string description)
+        public SettingsParser(string description, IDictionary<string, string> substitutions)
         {
+            _substitutions = substitutions;
             _settings.Description = description;
         }
 
@@ -44,15 +47,22 @@ namespace Bottles.Deployment.Parsing
 
         private void parseProperty(string text)
         {
-            var parts = text.Split('=');
-            var propertyName = parts[0].Trim();
+            var index = text.IndexOf('=');
+            if (index <= 0)
+            {
+                throw new SettingsParserException("Missing property name");
+            }
+            
+            var propertyName = text.Substring(0, index).Trim();
+            var value = text.Substring(index + 1, text.Length - index - 1).Trim();
+            value = TemplateParser.Parse(value, _substitutions);
 
             if (propertyName.IsEmpty())
             {
                 throw new SettingsParserException("Missing property name");
             }
 
-            _settings[propertyName] = parts[1].Trim();
+            _settings[propertyName] = value;
         }
 
         private void parseBottle(string text)
