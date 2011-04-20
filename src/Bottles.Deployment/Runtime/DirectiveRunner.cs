@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Bottles.Deployment.Diagnostics;
 
@@ -6,9 +7,9 @@ namespace Bottles.Deployment.Runtime
     public class DirectiveRunner : IDirectiveRunner
     {
         private readonly ILogger _logger;
-        private readonly ICommandFactory _factory;
+        private readonly IDirectiveCoordinator _factory;
 
-        public DirectiveRunner(ILogger logger, ICommandFactory factory)
+        public DirectiveRunner(ILogger logger, IDirectiveCoordinator factory)
         {
             _logger = logger;
             _factory = factory;
@@ -16,25 +17,24 @@ namespace Bottles.Deployment.Runtime
 
         public void Deploy(IEnumerable<HostManifest> hosts)
         {
-            foreach (var hostManifest in hosts)
+            //assuming hosts are sorted
+            _logger.Log("runner:init", () =>
             {
-                _logger.LogHost(hostManifest, h =>
-                    {
-                        foreach (var directive in h.AllDirectives)
-                        {
-                            _factory.InitializersFor(directive)
-                                .Initialize();
-                            
-                            _factory.DeployersFor(directive)
-                                .Deploy();
+                _factory.Initialize(hosts);
+            });
 
-                            _factory.FinalizersFor(directive)
-                                .Finish();
-                        }
-                    });
 
-            }
-            
+            _logger.Log("runner:deploy", () =>
+            {
+                _factory.Deploy(hosts);
+            });
+
+            //reverse sorting order?
+            _logger.Log("runner:finish", () =>
+            {
+                _factory.Finish(hosts);
+            });
+
         }
     }
 }

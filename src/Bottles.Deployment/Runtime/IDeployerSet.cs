@@ -2,6 +2,6 @@
 {
     public interface IDeployerSet
     {
-        void Deploy();
+        void Deploy(IDirective directive);
     }
 }

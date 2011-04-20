@@ -66,6 +66,9 @@
     <Compile Include="Deployment\Parsing\when_reading_a_single_host_file.cs" />
     <Compile Include="Deployment\Parsing\WritingReadingIntegratedTester.cs" />
     <Compile Include="Deployment\RecipeSorterTester.cs" />
+    <Compile Include="Deployment\Runtime\CommandFactoryTester.cs" />
+    <Compile Include="Deployment\Runtime\FakeDirective.cs" />
+    <Compile Include="Deployment\Runtime\FakeLogger.cs" />
     <Compile Include="Deployment\Writing\HostWriterTester.cs" />
     <Compile Include="Deployment\Writing\PropertyValueTester.cs" />
     <Compile Include="Environment\EnvironmentRunTester.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="RecipeTester.cs" />
     <Compile Include="Runtime\BootstrappingIntegratedTester.cs" />
     <Compile Include="Runtime\DirectiveBuilderTester.cs" />
+    <Compile Include="Runtime\DirectiveCoordinatorTester.cs" />
     <Compile Include="StubPackage.cs" />
     <Compile Include="ZipFileServiceTester.cs" />
   </ItemGroup>

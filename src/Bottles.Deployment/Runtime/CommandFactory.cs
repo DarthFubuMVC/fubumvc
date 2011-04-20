@@ -1,4 +1,5 @@
-﻿using StructureMap;
+﻿using System;
+using StructureMap;
 
 namespace Bottles.Deployment.Runtime
 {
@@ -11,28 +12,28 @@ namespace Bottles.Deployment.Runtime
             _container = container;
         }
 
-        public IDeployerSet DeployersFor(IDirective directive)
-        {
-            return _container
-                .ForObject(directive)
-                .GetClosedTypeOf(typeof (DeployerSet<>))
-                .As<IDeployerSet>();
-        }
-
-        public IInitializerSet InitializersFor(IDirective directive)
+        public IDeploymentActionSet InitializersFor(IDirective directive)
         {
             return _container
                 .ForObject(directive)
                 .GetClosedTypeOf(typeof (InitializerSet<>))
-                .As<IInitializerSet>();
+                .As<IDeploymentActionSet>();
         }
 
-        public IFinalizerSet FinalizersFor(IDirective directive)
+        public IDeploymentActionSet DeployersFor(IDirective directive)
+        {
+            return _container
+                .ForObject(directive)
+                .GetClosedTypeOf(typeof (DeployerSet<>))
+                .As<IDeploymentActionSet>();
+        }
+
+        public IDeploymentActionSet FinalizersFor(IDirective directive)
         {
             return _container
                 .ForObject(directive)
                 .GetClosedTypeOf(typeof (FinalizerSet<>))
-                .As<IFinalizerSet>();
+                .As<IDeploymentActionSet>();
         }
     }
 }

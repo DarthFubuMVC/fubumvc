@@ -2,6 +2,6 @@
 {
     public interface IFinalizerSet
     {
-        void Finish();
+        void Finish(IDirective directive);
     }
 }

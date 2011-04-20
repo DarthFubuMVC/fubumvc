@@ -2,6 +2,6 @@
 {
     public interface IInitializerSet
     {
-        void Initialize();
+        void Initialize(IDirective directive);
     }
 }

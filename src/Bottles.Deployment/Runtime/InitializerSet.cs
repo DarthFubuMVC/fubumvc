@@ -3,27 +3,27 @@ using Bottles.Deployment.Diagnostics;
 
 namespace Bottles.Deployment.Runtime
 {
-    public class InitializerSet<T> : IInitializerSet where T : IDirective
+    public class InitializerSet<T> : IDeploymentActionSet where T : IDirective
     {
-        private readonly IDirective _directive;
+        
         private readonly ILogger _logger;
         private readonly IEnumerable<IInitializer<T>> _initializers;
 
-        public InitializerSet(IDirective directive, ILogger logger, IEnumerable<IInitializer<T>> initializers)
+        public InitializerSet(ILogger logger, IEnumerable<IInitializer<T>> initializers)
         {
-            _directive = directive;
             _logger = logger;
             _initializers = initializers;
         }
 
-        public void Initialize()
+        public void DeployWith(IDirective directive)
         {
             //TODO: ordering
             foreach (var initializer in _initializers)
             {
-                var name = initializer.GetType().Name;
-                var init = initializer;
-                _logger.Log(name, ()=>init.Initialize(_directive));
+                _logger.LogInitializer(initializer, i =>
+                {
+                    i.Initialize(directive);
+                });
             }
         }
     }

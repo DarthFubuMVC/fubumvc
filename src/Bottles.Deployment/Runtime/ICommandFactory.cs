@@ -2,8 +2,8 @@
 {
     public interface ICommandFactory
     {
-        IDeployerSet DeployersFor(IDirective directive);
-        IInitializerSet InitializersFor(IDirective directive);
-        IFinalizerSet FinalizersFor(IDirective directive);
+        IDeploymentActionSet InitializersFor(IDirective directive);
+        IDeploymentActionSet DeployersFor(IDirective directive);
+        IDeploymentActionSet FinalizersFor(IDirective directive);
     }
 }

@@ -3,27 +3,26 @@ using Bottles.Deployment.Diagnostics;
 
 namespace Bottles.Deployment.Runtime
 {
-    public class FinalizerSet<T> : IFinalizerSet where T : IDirective
+    public class FinalizerSet<T> : IDeploymentActionSet where T : IDirective
     {
-        private readonly IDirective _directive;
         private readonly ILogger _logger;
         private readonly IEnumerable<IFinalizer<T>> _finalizers;
 
-        public FinalizerSet(IDirective directive, ILogger logger, IEnumerable<IFinalizer<T>> finalizers)
+        public FinalizerSet(ILogger logger, IEnumerable<IFinalizer<T>> finalizers)
         {
-            _directive = directive;
             _logger = logger;
             _finalizers = finalizers;
         }
 
-        public void Finish()
+        public void DeployWith(IDirective directive)
         {
-            //TODO: Ordering
+            //TODO: Ordering of deployers
             foreach (var finalizer in _finalizers)
             {
-                var name = finalizer.GetType().Name;
-                var fin = finalizer;
-                _logger.Log(name, ()=> fin.Finish(_directive));
+                _logger.LogFinalizer(finalizer, f =>
+                {
+                    f.Finish(directive);
+                });
             }
         }
     }
