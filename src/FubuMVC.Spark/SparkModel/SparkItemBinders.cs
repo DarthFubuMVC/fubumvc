@@ -159,30 +159,4 @@ namespace FubuMVC.Spark.SparkModel
             return origin == Constants.HostOrigin ? string.Empty : "__" + origin + "__";
         }
     }
-
-    public class PrefixedRelativePathBinder : ISparkItemBinder
-    {
-        public bool Applies(SparkItem item)
-        {
-            return true;
-        }
-
-        public void Bind(SparkItem item, BindContext context)
-        {
-            item.PrefixedRelativePath = FileSystem.Combine(item.PathPrefix, item.RelativePath());
-        }
-    }
-
-    public class PrefixedRelativeDirectoryPathBinder : ISparkItemBinder
-    {
-        public bool Applies(SparkItem item)
-        {
-            return true;
-        }
-
-        public void Bind(SparkItem item, BindContext context)
-        {
-            item.PrefixedRelativeDirectoryPath = FileSystem.Combine(item.PathPrefix, item.RelativeDirectoryPath());
-        }
-    }
 }

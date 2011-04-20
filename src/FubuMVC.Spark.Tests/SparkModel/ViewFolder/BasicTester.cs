@@ -49,8 +49,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
                 _pak1HomeView, _pak1NamePartialView,
                 _pak2HomeView, _pak2ApplicationView, _pak2ThemeView
             };
-            var binders = new ISparkItemBinder[] { new PathPrefixBinder(), new PrefixedRelativePathBinder(), new PrefixedRelativeDirectoryPathBinder() };
-            sparkItems.Each(x => binders.Each(binder => binder.Bind(x, null)));
+            var binder = new PathPrefixBinder();
+            sparkItems.Each(x =>  binder.Bind(x, null));
 
             _viewFolder = new SparkItemViewFolder(sparkItems);
         }

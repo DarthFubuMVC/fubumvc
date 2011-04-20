@@ -43,8 +43,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             var scanner = new SparkItemFinder(new FileScanner(), roots);
             var allItems = new SparkItems(scanner.FindItems());
 
-            var binders = new ISparkItemBinder[] { new PathPrefixBinder(), new PrefixedRelativePathBinder(), new PrefixedRelativeDirectoryPathBinder() };
-            allItems.Each(x => binders.Each(binder => binder.Bind(x, null)));
+            var binder = new PathPrefixBinder();
+            allItems.Each(x => binder.Bind(x, null));
 
             _viewFolder = new SparkItemViewFolder(allItems);
             _engine = new SparkViewEngine { ViewFolder = _viewFolder };

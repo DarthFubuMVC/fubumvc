@@ -63,8 +63,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="SparkModel\Binders\PathPrefixBinderTester.cs" />
-    <Compile Include="SparkModel\Binders\PrefixedRelativeDirectoryPathBinderTester.cs" />
-    <Compile Include="SparkModel\Binders\PrefixedRelativePathBinderTester.cs" />
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />

@@ -55,15 +55,8 @@ namespace FubuMVC.Spark.Tests.Experiments
                 _pak2ApplicationView,
                 _pak2ThemeView
             };
-
-            sparkItems.Each(x =>
-            {
-                new PathPrefixBinder().Bind(x, null);
-                new PrefixedRelativePathBinder().Bind(x, null);
-                new PrefixedRelativeDirectoryPathBinder().Bind(x, null);
-            });
-            var binders = new ISparkItemBinder[] { new PathPrefixBinder(), new PrefixedRelativePathBinder(), new PrefixedRelativeDirectoryPathBinder() };
-            sparkItems.Each(x => binders.Each(binder => binder.Bind(x, null)));
+            var binder = new PathPrefixBinder();
+            sparkItems.Each(x => binder.Bind(x, null));
 
             var settings = new SparkSettings();
             _engine = new SparkViewEngine(settings);

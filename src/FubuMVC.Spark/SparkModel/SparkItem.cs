@@ -52,8 +52,8 @@ namespace FubuMVC.Spark.SparkModel
         }
 
         public string PathPrefix { get; set; }
-        public string PrefixedRelativePath { get; set; }
-        public string PrefixedRelativeDirectoryPath { get; set; }
+        public string PrefixedRelativePath { get { return FileSystem.Combine(PathPrefix, RelativePath()); } }
+        public string PrefixedRelativeDirectoryPath { get { return FileSystem.Combine(PathPrefix, RelativeDirectoryPath()); } }
 
         public bool HasViewModel()
         {

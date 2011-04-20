@@ -8,9 +8,9 @@ namespace FubuMVC.Spark
 {
     public class SparkActivator : IActivator
     {
-        private readonly IEnumerable<SparkItem> _sparkItems;
+        private readonly SparkItems _sparkItems;
         private readonly ISparkViewEngine _engine;
-        public SparkActivator(IEnumerable<SparkItem> sparkItems, ISparkViewEngine engine)
+        public SparkActivator(SparkItems sparkItems, ISparkViewEngine engine)
         {
             _sparkItems = sparkItems;
             _engine = engine;
