@@ -13,9 +13,9 @@ namespace FubuMVC.Spark
         {
             // TODO: move onto conventions
             var tokenizer = new ViewTokenizer()
-                .AddModifier<MasterPageModifier>()
-                .AddModifier<ViewModelModifier>()
-                .AddModifier<NamespaceModifier>();
+                .Apply<MasterPageModifier>()
+                .Apply<ViewModelModifier>()
+                .Apply<NamespaceModifier>();
             
             _facility = new SparkViewFacility(tokenizer);
         }

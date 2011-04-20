@@ -13,6 +13,7 @@ namespace FubuMVC.Spark.Tokenization
         public string Origin { get; set; }
     }
 
+    // Improve this: It is just too odd.
     public class SparkRoots : IEnumerable<SparkRoot>
     {
         private readonly IEnumerable<IPackageInfo> _packages;

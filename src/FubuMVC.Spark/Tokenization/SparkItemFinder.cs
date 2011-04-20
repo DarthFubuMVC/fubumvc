@@ -29,12 +29,14 @@ namespace FubuMVC.Spark.Tokenization
             return items;
         }
 
+        // Later : Take the variable part of this into a search object
         private ScanRequest buildRequest(ICollection<SparkItem> files)
         {
+            //// TODO: Extract and allow for configuration / convention
             var request = new ScanRequest();
             request.Include("*.spark");
-            // TODO : Allow for convention on this.
             request.Include("bindings.xml");
+            ////
 
             _sparkRoots.Each(r => request.AddRoot(r.Path));
 

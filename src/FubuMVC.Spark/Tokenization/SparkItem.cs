@@ -8,7 +8,9 @@ namespace FubuMVC.Spark.Tokenization
 {
     public static class Constants
     {
+        // Meh.
         public const string HostOrigin = "Host";
+        // Should come from Spark Constants.Shared (in v1.5)
         public const string SharedSpark = "Shared";
     }
 
@@ -60,6 +62,7 @@ namespace FubuMVC.Spark.Tokenization
         }
     }
 
+    // Seems like we should solve this, earlier, in _one_ place - Package views get prefix "_pakname_" and host views get nothing.    
     public static class SparkItemHelper
     {
         // NOTE:TEMP
@@ -78,6 +81,7 @@ namespace FubuMVC.Spark.Tokenization
     }
 
     // We need to get this populated once and then pass around an interface.
+    // Or kill it.
     public class SparkItems : List<SparkItem> // TODO: Create lookup registry interface from this
     {
         public SparkItems(){}

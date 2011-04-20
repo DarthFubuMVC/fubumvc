@@ -19,6 +19,7 @@ namespace FubuMVC.Spark.Tokenization
         void Modify(SparkItem item, ModificationContext context);
     }
 
+    // Extract logic into something less if else smelly.
     public class MasterPageModifier : ISparkItemModifier
     {
         // Allow for convention on this - consider possibility for other "shared" folders

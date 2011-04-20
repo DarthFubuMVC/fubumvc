@@ -24,12 +24,12 @@ namespace FubuMVC.Spark.Tokenization
             _fileSystem = fileSystem;
         }
 
-        public ViewTokenizer AddModifier<T>() where T : ISparkItemModifier, new()
+        public ViewTokenizer Apply<T>() where T : ISparkItemModifier, new()
         {
-            return AddModifier<T>(c => { });
+            return Apply<T>(c => { });
         }
 
-        public ViewTokenizer AddModifier<T>(Action<T> configure) where T : ISparkItemModifier, new()
+        public ViewTokenizer Apply<T>(Action<T> configure) where T : ISparkItemModifier, new()
         {
             var modifier = new T();
             configure(modifier);
