@@ -6,11 +6,11 @@ namespace Bottles.Deployment
         {
             BottlesDirectory = "bottles";
             RecipesDirectory = ProfileFiles.RecipesFolder;
-            ProfileFile = ProfileFiles.EnvironmentSettingsFileName;
+            EnvironmentFile = ProfileFiles.EnvironmentSettingsFileName;
         }
 
         public string BottlesDirectory { get; set;}
         public string RecipesDirectory { get; set;}
-        public string ProfileFile { get; set;}
+        public string EnvironmentFile { get; set;}
     }
 }

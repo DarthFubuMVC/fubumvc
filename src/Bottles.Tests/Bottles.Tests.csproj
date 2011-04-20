@@ -67,6 +67,7 @@
     <Compile Include="Deployment\Parsing\WritingReadingIntegratedTester.cs" />
     <Compile Include="Deployment\RecipeSorterTester.cs" />
     <Compile Include="Deployment\Writing\HostWriterTester.cs" />
+    <Compile Include="Deployment\Writing\PropertyValueTester.cs" />
     <Compile Include="Environment\EnvironmentRunTester.cs" />
     <Compile Include="Environment\FakeEnvironment.cs" />
     <Compile Include="Environment\LogEntryTester.cs" />

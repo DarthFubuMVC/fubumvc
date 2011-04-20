@@ -204,6 +204,49 @@ namespace Bottles.Tests.Deployment
             directive.Age.ShouldEqual(7);
         
         }
+
+        [Test]
+        public void can_pull_complex_settings()
+        {
+            var host = new HostManifest("host1");
+
+            var data = new InMemorySettingsData()
+                .With("ComplexDirective.One.Name", "Thurgood")
+                .With("ComplexDirective.One.Age", "57")
+                .With("ComplexDirective.Two.City", "Joplin");
+
+            host.RegisterSettings(data);
+
+            var complex = host.GetDirective<ComplexDirective>();
+
+            complex.One.Name.ShouldEqual("Thurgood");
+            complex.One.Age.ShouldEqual(57);
+            complex.Two.City.ShouldEqual("Joplin");
+        }
+
+        [Test]
+        public void do_not_bind_complex_child_if_no_data_exists()
+        {
+            var host = new HostManifest("host1");
+
+            var data = new InMemorySettingsData()
+                .With("ComplexDirective.One.Name", "Thurgood")
+                .With("ComplexDirective.One.Age", "57");
+
+            host.RegisterSettings(data);
+
+            var complex = host.GetDirective<ComplexDirective>();
+            complex.One.ShouldNotBeNull();
+            complex.Two.ShouldBeNull();
+        
+        }
+        
+    }
+
+    public class ComplexDirective : IDirective
+    {
+        public OneDirective One { get; set; }
+        public TwoDirective Two { get; set; }
     }
 
     public class OneDirective : IDirective

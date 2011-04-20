@@ -237,7 +237,7 @@ namespace FubuCore.Binding
             }
             _propertyStack.Push(property);
 
-            var resolver = Service<IObjectResolver>();
+            var resolver = _locator == null ? ObjectResolver.Basic() : Service<IObjectResolver>();
             var context = prefixWith(prefix, _propertyStack.Reverse());
 
             try
@@ -260,7 +260,21 @@ namespace FubuCore.Binding
 
         public void BindChild(PropertyInfo property)
         {
-            BindChild(property, property.PropertyType, property.Name);
+            if (!tryBindChild(property, property.Name + "."))
+            {
+                tryBindChild(property, property.Name);
+            }
+        }
+
+        private bool tryBindChild(PropertyInfo property, string prefix)
+        {
+            if (_requestData.HasAnyValuePrefixedWith(prefix))
+            {
+                BindChild(property, property.PropertyType, prefix);
+                return true;
+            }
+
+            return false;
         }
     }
 }

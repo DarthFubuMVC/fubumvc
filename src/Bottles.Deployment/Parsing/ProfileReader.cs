@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace Bottles.Deployment.Parsing
 {
@@ -16,6 +17,9 @@ namespace Bottles.Deployment.Parsing
 
         public IEnumerable<HostManifest> Read()
         {
+            var environment = new EnvironmentSettings();
+            new FileSystem().ReadTextFile(_settings.EnvironmentFile, environment.ReadText);
+
             var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory);
             recipes = _sorter.Order(recipes);
 
@@ -23,9 +27,16 @@ namespace Bottles.Deployment.Parsing
             var firstRecipe = recipes.First();
             recipes.Skip(1).Each(firstRecipe.AppendBehind);
 
-            // read in the environment file here
+            var hosts = firstRecipe.Hosts;
 
-            return firstRecipe.Hosts;
+            addEnvironmentSettingsToHosts(environment, hosts);
+
+            return hosts;
+        }
+
+        private static void addEnvironmentSettingsToHosts(EnvironmentSettings environment, IEnumerable<HostManifest> hosts)
+        {
+            hosts.Each(host => host.RegisterSettings(environment.DataForHost(host.Name)));
         }
     }
 }

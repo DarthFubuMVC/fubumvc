@@ -54,12 +54,15 @@ namespace Bottles.Tests.Deployment.Parsing
             writer.RecipeFor("r4").HostFor("h4").AddProperty<SimpleSettings>(x => x.Two, "ten");
             writer.RecipeFor("r4").HostFor("h5").AddProperty<SimpleSettings>(x => x.Two, "ten");
 
+            writer.AddEnvironmentSetting<SimpleSettings>(x => x.Two, "h4", "env-value");
 
             writer.Flush();
 
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings(){
-                RecipesDirectory = "clonewars\\recipes"
+                RecipesDirectory = "clonewars\\recipes",
+                EnvironmentFile = "clonewars\\" + ProfileFiles.EnvironmentSettingsFileName
             });
+
             theHosts = reader.Read();
         }
 
@@ -67,6 +70,12 @@ namespace Bottles.Tests.Deployment.Parsing
         public void got_all_the_unique_hosts()
         {
             theHosts.Select(x => x.Name).ShouldHaveTheSameElementsAs("h1", "h2", "h3", "h4", "h5");
+        }
+
+        [Test]
+        public void environment_settings_are_applied_to_a_host()
+        {
+            theHosts.First(x => x.Name == "h4").GetDirective<SimpleSettings>().Two.ShouldEqual("env-value");
         }
     }
 

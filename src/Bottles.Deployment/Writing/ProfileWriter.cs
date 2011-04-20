@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
@@ -38,7 +39,18 @@ namespace Bottles.Deployment.Writing
             _system.CreateDirectory(_destination);
             _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesFolder));
 
+            writeEnvironmentSettings();
+
             _recipes.Each(writeRecipe);
+        }
+
+        private void writeEnvironmentSettings()
+        {
+            var writer = new StringWriter();
+            _profileValues.Each(v => writer.WriteLine(v.ToString()));
+
+            var environmentFile = FileSystem.Combine(_destination, ProfileFiles.EnvironmentSettingsFileName);
+            _system.WriteStringToFile(environmentFile, writer.ToString());
         }
 
         private void writeRecipe(RecipeDefinition recipe)
@@ -63,7 +75,7 @@ namespace Bottles.Deployment.Writing
         }
 
 
-        public void AddProfileManifestProperty<T>(Expression<Func<T, object>> property, string host, object value)
+        public void AddEnvironmentSetting<T>(Expression<Func<T, object>> property, string host, object value)
         {
             _profileValues.Add(new PropertyValue(){
                 Accessor = property.ToAccessor(),
@@ -72,14 +84,13 @@ namespace Bottles.Deployment.Writing
             });
         }
 
-        public void AddProfileManifestProperty<T>(Expression<Func<T, object>> property, object value)
+        public void AddEnvironmentSetting(string name, object value)
         {
             _profileValues.Add(new PropertyValue(){
-                Accessor = property.ToAccessor(),
+                Name = name,
                 Value = value
             });
         }
-
 
 
     }

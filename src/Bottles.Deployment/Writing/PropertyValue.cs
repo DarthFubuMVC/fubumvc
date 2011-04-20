@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
@@ -10,6 +11,7 @@ namespace Bottles.Deployment.Writing
     {
         public Accessor Accessor { get; set; }
         public object Value { get; set; }
+        public string Name { get; set; }
 
         public string HostName { get; set; }
         
@@ -23,6 +25,11 @@ namespace Bottles.Deployment.Writing
 
         public override string ToString()
         {
+            if (Name.IsNotEmpty())
+            {
+                return "{0}={1}".ToFormat(Name, Value.ToString());
+            }
+
             var description = "{0}.{1}={2}".ToFormat(
                 Accessor.DeclaringType.Name, 
                 Accessor.PropertyNames.Join("."), 
@@ -30,5 +37,6 @@ namespace Bottles.Deployment.Writing
 
             return HostName.IsEmpty() ? description : "{0}.{1}".ToFormat(HostName, description);
         }
+
     }
 }
