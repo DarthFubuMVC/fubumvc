@@ -7,28 +7,39 @@ namespace FubuMVC.Core.UI.Scripts
     public class ScriptRequirements
     {
         private readonly IContentFolderService _folders;
-        private readonly List<string> _requirements = new List<string>();
+        private readonly List<string> _configuredScripts = new List<string>();
+        private readonly List<string> _pageScripts = new List<string>();
 
         public ScriptRequirements(IContentFolderService folders)
         {
             _folders = folders;
         }
 
-        public void Require(string name)
+        public void ConfiguredScript(string name)
         {
-            _requirements.Fill(name);
+            _configuredScripts.Fill(name);
         }
 
-        public IEnumerable<string> AllScriptNames()
+        public void PageScript(string name)
         {
-            return _requirements;
+            _pageScripts.Fill(name);
+        }
+
+        public IEnumerable<string> AllConfiguredScriptNames()
+        {
+            return _configuredScripts;
+        }
+
+        public IEnumerable<string> AllPageScriptNames()
+        {
+            return _pageScripts;
         }
 
         public void UseFileIfExists(string name)
         {
             if (_folders.FileExists(ContentType.scripts, name))
             {
-                Require(name);
+                ConfiguredScript(name);
             }
         }
     }
