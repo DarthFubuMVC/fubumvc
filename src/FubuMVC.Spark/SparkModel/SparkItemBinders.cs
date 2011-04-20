@@ -8,6 +8,9 @@ using FubuMVC.Spark.SparkModel.Parsing;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    // Not so happy about this whole "binding", but it somewhat allows for 
+    // reversibility because of its central usage. Ask JDM for advice/feedback.
+
     public class BindContext
     {
         public string FileContent { get; set; }
@@ -140,11 +143,11 @@ namespace FubuMVC.Spark.SparkModel
     public class PathPrefixBinder : ISparkItemBinder
     {
         private readonly Cache<string, string> _cache;
-
         public PathPrefixBinder()
         {
             _cache = new Cache<string, string>(getPrefix);
         }
+
         public bool Applies(SparkItem item)
         {
             return true;
@@ -154,6 +157,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             item.PathPrefix = _cache[item.Origin];
         }
+
         private static string getPrefix(string origin)
         {
             return origin == Constants.HostOrigin ? string.Empty : "__" + origin + "__";

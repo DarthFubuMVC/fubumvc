@@ -6,6 +6,9 @@ using Spark;
 
 namespace FubuMVC.Spark
 {
+    // NOTE: Nice thing about activation is that we get IoC - 
+    //       So we can move tasks that not necessarily need to happen
+    //       during bootstrap to activators.
     public class SparkActivator : IActivator
     {
         private readonly SparkItems _sparkItems;
