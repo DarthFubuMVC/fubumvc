@@ -16,10 +16,11 @@ namespace FubuMVC.Spark.Tokenization
 
     public interface ISparkItemModifier
     {
+        bool Applies(SparkItem item);
         void Modify(SparkItem item, ModificationContext context);
     }
 
-    // Extract logic into something less if else smelly.
+    // Extract logic into something less if else smelly - introduce two modifiers to deal with packages and host, respectively.
     public class MasterPageModifier : ISparkItemModifier
     {
         // Allow for convention on this - consider possibility for other "shared" folders
@@ -34,11 +35,17 @@ namespace FubuMVC.Spark.Tokenization
             _sparkParser = sparkParser;
         }
 
+        public bool Applies(SparkItem item)
+        {
+            return true;
+        }
+
         public void Modify(SparkItem item, ModificationContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent) ?? DefaultMaster;
             if (masterName.IsEmpty()) return;
-                        
+
+            // Extract into something similar to https://gist.github.com/929869
             item.Master = findClosestMaster(masterName, item, context.SparkItems);
 
             if (item.Master == null)
@@ -82,6 +89,11 @@ namespace FubuMVC.Spark.Tokenization
             _sparkParser = sparkParser;
         }
 
+        public bool Applies(SparkItem item)
+        {
+            return true;
+        }
+
         public void Modify(SparkItem item, ModificationContext context)
         {
             var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
@@ -97,10 +109,13 @@ namespace FubuMVC.Spark.Tokenization
 
     public class NamespaceModifier : ISparkItemModifier
     {
-        public void Modify(SparkItem item, ModificationContext context)
+        public bool Applies(SparkItem item)
         {
-            if (!item.HasViewModel()) return;
-            
+            return item.HasViewModel();
+        }
+
+        public void Modify(SparkItem item, ModificationContext context)
+        {            
             item.Namespace = resolveNamespace(item);            
         }
 
