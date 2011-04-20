@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Bottles.Tests.Runtime
+namespace Bottles.Tests.Deployment.Runtime
 {
     [TestFixture]
     public class DirectiveBuilderTester
