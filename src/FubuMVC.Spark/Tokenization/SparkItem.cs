@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FubuCore;
 
 namespace FubuMVC.Spark.Tokenization
@@ -75,5 +76,16 @@ namespace FubuMVC.Spark.Tokenization
         }
     }
 
-    public class SparkItems : Collection<SparkItem> { }
+    // We need to get this populated once and then pass around an interface.
+    public class SparkItems : List<SparkItem> // TODO: Create lookup registry interface from this
+    {
+        public SparkItems(){}
+        public SparkItems(IEnumerable<SparkItem> items) : base(items) {}
+
+        // Temporary : probably ends up as extension method on IEnumerable...
+        public SparkItem FirstByName(string name)
+        {
+            return this.FirstOrDefault(x => x.Name() == name);
+        }
+    }
 }

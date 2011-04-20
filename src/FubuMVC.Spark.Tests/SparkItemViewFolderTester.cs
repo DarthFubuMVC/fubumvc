@@ -134,8 +134,9 @@ namespace FubuMVC.Spark.Tests
 
         private string readfromStream(string path)
         {
-            var stream = _viewFolder.GetViewSource(path).OpenViewStream();
-            return new StreamReader(stream).ReadToEnd();
+            using (var stream = _viewFolder.GetViewSource(path).OpenViewStream())
+            using (var reader = new StreamReader(stream))
+                return reader.ReadToEnd();
         }
     }
 }
