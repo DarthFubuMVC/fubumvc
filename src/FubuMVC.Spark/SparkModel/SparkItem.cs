@@ -51,6 +51,10 @@ namespace FubuMVC.Spark.SparkModel
             return Path.GetFileNameWithoutExtension(FilePath);
         }
 
+        public string PathPrefix { get; set; }
+        public string PrefixedRelativePath { get; set; }
+        public string PrefixedRelativeDirectoryPath { get; set; }
+
         public bool HasViewModel()
         {
             return ViewModelType != null;
@@ -59,24 +63,6 @@ namespace FubuMVC.Spark.SparkModel
         public override string ToString()
         {
             return FilePath;
-        }
-    }
-
-    // Seems like we should solve this, earlier, in _one_ place - Package views get prefix "_pakname_" and host views get nothing.    
-    public static class SparkItemHelper
-    {
-        // NOTE:TEMP
-        public static string PrefixedRelativePath(this SparkItem item)
-        {
-            var prefix = item.Origin == Constants.HostOrigin ? string.Empty : item.Origin;
-            return FileSystem.Combine(prefix, item.RelativePath());
-        }
-
-        // NOTE:TEMP
-        public static string PrefixedRelativeDirectoryPath(this SparkItem item)
-        {
-            var prefix = item.Origin == Constants.HostOrigin ? string.Empty : item.Origin;
-            return FileSystem.Combine(prefix, item.RelativeDirectoryPath());
         }
     }
 

@@ -39,19 +39,19 @@ namespace FubuMVC.Spark.SparkModel
         private IList<string> listViews(string path)
         {
             return _items
-               .Where(x => x.PrefixedRelativeDirectoryPath() == path)
-               .Select(x => x.PrefixedRelativePath())
+               .Where(x => x.PrefixedRelativeDirectoryPath == path)
+               .Select(x => x.PrefixedRelativePath)
                .ToList();
         }
 
         private bool hasView(string path)
         {
-            return _items.Any(x => x.PrefixedRelativePath() == path);
+            return _items.Any(x => x.PrefixedRelativePath == path);
         }
 
         private string getViewPath(string path)
         {
-            var item = _items.Where(x => x.PrefixedRelativePath() == path).First();
+            var item = _items.Where(x => x.PrefixedRelativePath == path).First();
             return item.FilePath;
         }
     }

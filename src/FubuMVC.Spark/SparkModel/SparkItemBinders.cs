@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel.Parsing;
 
@@ -12,7 +12,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         public string FileContent { get; set; }
         public TypePool TypePool { get; set; }
-        public SparkItems SparkItems { get; set; }        
+        public SparkItems SparkItems { get; set; }
     }
 
     // Take a good look at binders in Fubu. Would be nice to use IPropertyBinder etc. But it assumes IoC :/
@@ -31,7 +31,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private readonly ISparkParser _sparkParser;
 
-        public MasterPageBinder() : this(new SparkParser()) {}
+        public MasterPageBinder() : this(new SparkParser()) { }
         public MasterPageBinder(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;
@@ -59,21 +59,21 @@ namespace FubuMVC.Spark.SparkModel
         private SparkItem findClosestMaster(string masterName, SparkItem item, IEnumerable<SparkItem> items)
         {
             // reconsider this, as a package can be in development mode.
-            var root =  items.Min(x => x.RootPath);
+            var root = items.Min(x => x.RootPath);
             var masterLocations = reachableMasterLocations(item.FilePath, root);
-            
+
             return items
                 .Where(x => x.Name() == masterName)
                 .Where(x => masterLocations.Contains(x.DirectoryPath()))
                 .FirstOrDefault();
         }
 
-        private IEnumerable<string> reachableMasterLocations(string path, string root)
+        private static IEnumerable<string> reachableMasterLocations(string path, string root)
         {
             do
             {
                 path = Path.GetDirectoryName(path);
-                if (path == null) break;      
+                if (path == null) break;
                 // TODO : Consider yield return path - if we should look in each ancestor folder
                 yield return Path.Combine(path, SharedFolder);
 
@@ -85,7 +85,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         private readonly ISparkParser _sparkParser;
 
-        public ViewModelBinder() : this(new SparkParser()) {}
+        public ViewModelBinder() : this(new SparkParser()) { }
         public ViewModelBinder(ISparkParser sparkParser)
         {
             _sparkParser = sparkParser;
@@ -117,8 +117,8 @@ namespace FubuMVC.Spark.SparkModel
         }
 
         public void Bind(SparkItem item, BindContext context)
-        {            
-            item.Namespace = resolveNamespace(item);            
+        {
+            item.Namespace = resolveNamespace(item);
         }
 
         // TODO : Get opinions on this.
@@ -134,6 +134,55 @@ namespace FubuMVC.Spark.SparkModel
             }
 
             return nspace;
+        }
+    }
+
+    public class PathPrefixBinder : ISparkItemBinder
+    {
+        private readonly Cache<string, string> _cache;
+
+        public PathPrefixBinder()
+        {
+            _cache = new Cache<string, string>(getPrefix);
+        }
+        public bool Applies(SparkItem item)
+        {
+            return true;
+        }
+
+        public void Bind(SparkItem item, BindContext context)
+        {
+            item.PathPrefix = _cache[item.Origin];
+        }
+        private static string getPrefix(string origin)
+        {
+            return origin == Constants.HostOrigin ? string.Empty : "__" + origin + "__";
+        }
+    }
+
+    public class PrefixedRelativePathBinder : ISparkItemBinder
+    {
+        public bool Applies(SparkItem item)
+        {
+            return true;
+        }
+
+        public void Bind(SparkItem item, BindContext context)
+        {
+            item.PrefixedRelativePath = FileSystem.Combine(item.PathPrefix, item.RelativePath());
+        }
+    }
+
+    public class PrefixedRelativeDirectoryPathBinder : ISparkItemBinder
+    {
+        public bool Applies(SparkItem item)
+        {
+            return true;
+        }
+
+        public void Bind(SparkItem item, BindContext context)
+        {
+            item.PrefixedRelativeDirectoryPath = FileSystem.Combine(item.PathPrefix, item.RelativeDirectoryPath());
         }
     }
 }
