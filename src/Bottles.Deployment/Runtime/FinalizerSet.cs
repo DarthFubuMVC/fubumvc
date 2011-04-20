@@ -5,12 +5,12 @@ namespace Bottles.Deployment.Runtime
 {
     public class FinalizerSet<T> : IDeploymentActionSet where T : IDirective
     {
-        private readonly ILogger _logger;
+        private readonly IDeploymentDiagnostics _deploymentDiagnostics;
         private readonly IEnumerable<IFinalizer<T>> _finalizers;
 
-        public FinalizerSet(ILogger logger, IEnumerable<IFinalizer<T>> finalizers)
+        public FinalizerSet(IDeploymentDiagnostics deploymentDiagnostics, IEnumerable<IFinalizer<T>> finalizers)
         {
-            _logger = logger;
+            _deploymentDiagnostics = deploymentDiagnostics;
             _finalizers = finalizers;
         }
 
@@ -19,7 +19,7 @@ namespace Bottles.Deployment.Runtime
             //TODO: Ordering of deployers
             foreach (var finalizer in _finalizers)
             {
-                _logger.LogFinalizer(finalizer, f =>
+                _deploymentDiagnostics.LogFinalizer(finalizer, f =>
                 {
                     f.Finish(directive);
                 });

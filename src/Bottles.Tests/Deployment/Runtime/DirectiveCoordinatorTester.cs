@@ -13,7 +13,7 @@ namespace Bottles.Tests.Deployment.Runtime
     {
         private IEnumerable<HostManifest> _hosts;
         private FakeDirective _directive;
-        private ILogger _logger;
+        private IDeploymentDiagnostics _deploymentDiagnostics;
         private IEnumerable<IInitializer<FakeDirective>> _initializers;
         private FakeInitializer<FakeDirective> _init;
         private FakeFinalizer<FakeDirective> _fin;
@@ -29,7 +29,7 @@ namespace Bottles.Tests.Deployment.Runtime
             
             _hosts = new List<HostManifest>{a};
 
-            _logger = new FakeLogger();
+            _deploymentDiagnostics = new FakeDeploymentDiagnostics();
             _init = new FakeInitializer<FakeDirective>();
             _fin = new FakeFinalizer<FakeDirective>();
             _dep = new FakeDeployer<FakeDirective>();
@@ -41,15 +41,15 @@ namespace Bottles.Tests.Deployment.Runtime
 
             MockFor<ICommandFactory>()
                 .Stub(f=>f.InitializersFor(_directive))
-                .Return(new InitializerSet<FakeDirective>(_logger, _initializers));
+                .Return(new InitializerSet<FakeDirective>(_deploymentDiagnostics, _initializers));
 
             MockFor<ICommandFactory>()
                 .Stub(f => f.DeployersFor(_directive))
-                .Return(new DeployerSet<FakeDirective>(_logger, _deployers));
+                .Return(new DeployerSet<FakeDirective>(_deploymentDiagnostics, _deployers));
 
             MockFor<ICommandFactory>()
                 .Stub(f => f.FinalizersFor(_directive))
-                .Return(new FinalizerSet<FakeDirective>(_logger, _finalizers));
+                .Return(new FinalizerSet<FakeDirective>(_deploymentDiagnostics, _finalizers));
             
         }
 

@@ -6,12 +6,12 @@ namespace Bottles.Deployment.Runtime
     public class InitializerSet<T> : IDeploymentActionSet where T : IDirective
     {
         
-        private readonly ILogger _logger;
+        private readonly IDeploymentDiagnostics _deploymentDiagnostics;
         private readonly IEnumerable<IInitializer<T>> _initializers;
 
-        public InitializerSet(ILogger logger, IEnumerable<IInitializer<T>> initializers)
+        public InitializerSet(IDeploymentDiagnostics deploymentDiagnostics, IEnumerable<IInitializer<T>> initializers)
         {
-            _logger = logger;
+            _deploymentDiagnostics = deploymentDiagnostics;
             _initializers = initializers;
         }
 
@@ -20,7 +20,7 @@ namespace Bottles.Deployment.Runtime
             //TODO: ordering
             foreach (var initializer in _initializers)
             {
-                _logger.LogInitializer(initializer, i =>
+                _deploymentDiagnostics.LogInitializer(initializer, i =>
                 {
                     i.Initialize(directive);
                 });

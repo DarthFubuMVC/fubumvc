@@ -5,12 +5,12 @@ namespace Bottles.Deployment.Runtime
 {
     public class DeployerSet<T> : IDeploymentActionSet where T : IDirective
     {
-        private readonly ILogger _logger;
+        private readonly IDeploymentDiagnostics _deploymentDiagnostics;
         private readonly IEnumerable<IDeployer<T>> _deployers;
 
-        public DeployerSet(ILogger logger, IEnumerable<IDeployer<T>> deployers)
+        public DeployerSet(IDeploymentDiagnostics deploymentDiagnostics, IEnumerable<IDeployer<T>> deployers)
         {
-            _logger = logger;
+            _deploymentDiagnostics = deploymentDiagnostics;
             _deployers = deployers;
         }
 
@@ -19,7 +19,7 @@ namespace Bottles.Deployment.Runtime
             //TODO: ordering of deployers?
             foreach (var deployer in _deployers)
             {
-                _logger.LogDeployer(deployer, d=>
+                _deploymentDiagnostics.LogDeployer(deployer, d=>
                 {
                     d.Deploy(directive);
                 });

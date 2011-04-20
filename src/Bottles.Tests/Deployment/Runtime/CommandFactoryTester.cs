@@ -33,7 +33,7 @@ namespace Bottles.Tests.Deployment.Runtime
                                                      cfg.For<IFinalizer<FakeDirective>>()
                                                          .Use<FakeFinalizer<FakeDirective>>();
 
-                                                     cfg.For<ILogger>().Use<FakeLogger>();
+                                                     cfg.For<IDeploymentDiagnostics>().Use<FakeDeploymentDiagnostics>();
                                                  });
 
             _commandFactory = new CommandFactory(container);

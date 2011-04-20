@@ -4,7 +4,7 @@ using Bottles.Deployment.Diagnostics;
 
 namespace Bottles.Tests.Deployment.Runtime
 {
-    public class FakeLogger : ILogger
+    public class FakeDeploymentDiagnostics : IDeploymentDiagnostics
     {
         public void Log(string providence, Action action)
         {

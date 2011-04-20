@@ -68,7 +68,7 @@
     <Compile Include="Deployment\RecipeSorterTester.cs" />
     <Compile Include="Deployment\Runtime\CommandFactoryTester.cs" />
     <Compile Include="Deployment\Runtime\FakeDirective.cs" />
-    <Compile Include="Deployment\Runtime\FakeLogger.cs" />
+    <Compile Include="Deployment\Runtime\FakeDeploymentDiagnostics.cs" />
     <Compile Include="Deployment\Writing\HostWriterTester.cs" />
     <Compile Include="Deployment\Writing\PropertyValueTester.cs" />
     <Compile Include="Environment\EnvironmentRunTester.cs" />

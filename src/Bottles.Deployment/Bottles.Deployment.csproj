@@ -59,8 +59,11 @@
     <Compile Include="Deployers\ScheduledTask.cs" />
     <Compile Include="Deployers\ScheduleType.cs" />
     <Compile Include="Deployers\WindowsSchedulerDeployer.cs" />
+    <Compile Include="Diagnostics\DeploymentDiagnostics.cs" />
+    <Compile Include="Diagnostics\IPackageDeploymentLog.cs" />
+    <Compile Include="Diagnostics\PackageDeploymentLog.cs" />
     <Compile Include="EnvironmentSettings.cs" />
-    <Compile Include="Diagnostics\ILogger.cs" />
+    <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
     <Compile Include="IFinalizer.cs" />
     <Compile Include="IInitializer.cs" />
     <Compile Include="Parsing\HostReader.cs" />
