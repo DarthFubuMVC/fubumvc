@@ -40,12 +40,4 @@ namespace Fubu
             return success ? 0 : 1;
         }
     }
-
-    [Serializable]
-    public class CommandFailureException : Exception
-    {
-        public CommandFailureException(string message) : base(message)
-        {
-        }
-    }
 }
