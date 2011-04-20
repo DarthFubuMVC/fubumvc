@@ -110,7 +110,7 @@ namespace FubuMVC.Spark.Tests.SparkItemViewFolderTests
 
 
         [Test]
-        public void views_from_host_can_refer_to_other_views_from_the_same_host()
+        public void views_from_host_can_refer_to_other_views_from_the_host()
         {
             var threeView = _appItems.FirstByName("MacPro");
 
@@ -119,7 +119,15 @@ namespace FubuMVC.Spark.Tests.SparkItemViewFolderTests
         }
 
         [Test]
-        public void views_from_packages_are_isolated()
+        public void host_views_are_isolated_from_packages()
+        {
+            var noLuck = _appItems.FirstByName("NoLuck");
+            getViewSource(noLuck).ShouldEqual("Will <fail/>");
+            renderSparkItem(noLuck).ShouldEqual("Will <fail/>");
+        }
+
+        [Test]
+        public void views_from_packages_are_isolated_among_packages()
         {
             var dosView = _pak1Items.FirstByName("SerieT");
             var dueView = _pak2Items.FirstByName("Inspiron");

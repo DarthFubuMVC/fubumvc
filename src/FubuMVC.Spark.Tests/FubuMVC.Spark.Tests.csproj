@@ -106,6 +106,15 @@
     <Content Include="Templates\A4.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Templates\App\Handlers\Models\NoLuck.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\App\Content\Package1\WebContent\Handlers\Shared\_fail.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\Package2\Handlers\Shared\_fail.spark">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Templates\Pak1\Alpha\Hotel.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
