@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Bottles.Deployment.Parsing;
 
 namespace Bottles.Deployment.Runtime
@@ -7,13 +6,6 @@ namespace Bottles.Deployment.Runtime
     {
         
     }
-
-    public interface IDirectiveRunner
-    {
-        void Deploy(IEnumerable<HostManifest> hosts);
-    }
-
-
 
 
     public class DeploymentController : IDeploymentController
@@ -31,10 +23,5 @@ namespace Bottles.Deployment.Runtime
         {
             _runner.Deploy(_reader.Read());
         }
-    }
-
-    public class DeployerFactory
-    {
-        
     }
 }

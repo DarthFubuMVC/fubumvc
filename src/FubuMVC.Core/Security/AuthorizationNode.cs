@@ -13,6 +13,7 @@ namespace FubuMVC.Core.Security
         void Register(Guid uniqueId, Action<Type, ObjectDef> callback);
     }
 
+    // TODO -- add ability to specify the authorization failure handling
     public class AuthorizationNode : BehaviorNode, IAuthorizationRegistration
     {
         private readonly IList<ObjectDef> _policies = new List<ObjectDef>();

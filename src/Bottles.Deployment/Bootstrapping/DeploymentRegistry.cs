@@ -9,7 +9,9 @@ namespace Bottles.Deployment.Bootstrapping
             Scan(x =>
             {
                 x.AssembliesFromApplicationBaseDirectory(a => a.GetName().Name.Contains("Deployers"));
+                x.ConnectImplementationsToTypesClosing(typeof (IInitializer<>));
                 x.ConnectImplementationsToTypesClosing(typeof (IDeployer<>));
+                x.ConnectImplementationsToTypesClosing(typeof (IFinalizer<>));
             });
 
             Scan(x =>
