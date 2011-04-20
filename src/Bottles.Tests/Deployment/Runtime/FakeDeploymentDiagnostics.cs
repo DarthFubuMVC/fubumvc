@@ -16,7 +16,7 @@ namespace Bottles.Tests.Deployment.Runtime
             action(hostManifest);
         }
 
-        public void LogDeployer(IDeployer deployer, Action<IDeployer> action)
+        public void LogDeployer(IDeployer deployer, HostManifest host,  Action<IDeployer> action)
         {
             action(deployer);
         }
@@ -24,6 +24,21 @@ namespace Bottles.Tests.Deployment.Runtime
         public void LogFinalizer(IFinalizer finalizer, Action<IFinalizer> action)
         {
             action(finalizer);
+        }
+
+        public void LogDeployment(IDeployer deployer, IDirective directive)
+        {
+            
+        }
+
+        public void LogHost(HostManifest hostManifest)
+        {
+            
+        }
+
+        public void LogDirective(IDirective directive, HostManifest host)
+        {
+            
         }
 
         public void LogInitializer(IInitializer initializer, Action<IInitializer> action)

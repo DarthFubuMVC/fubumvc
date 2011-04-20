@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
+using Bottles.Deployment.Diagnostics;
 using FubuCore;
 using Microsoft.Web.Administration;
 
@@ -9,6 +8,7 @@ namespace Bottles.Deployment.Deployers
     {
         private readonly IFileSystem _fileSystem;
         private readonly IBottleRepository _bottles;
+        private readonly IDeploymentDiagnostics _diagnostics;
 
         public IisFubuDeployer(IFileSystem fileSystem, IBottleRepository bottles)
         {
@@ -19,6 +19,8 @@ namespace Bottles.Deployment.Deployers
         //http://www.iis.net/ConfigReference/
         public void Deploy(IDirective directive)
         {
+            _diagnostics.LogDeployment(this, directive);
+
             var direc = (IisFubuWebsite) directive;
 
             _fileSystem.CreateDirectory(direc.WebsitePhysicalPath);

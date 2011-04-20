@@ -1,4 +1,5 @@
 using System;
+using FubuCore;
 using FubuCore.Util;
 
 namespace Bottles.Deployment.Diagnostics
@@ -21,24 +22,40 @@ namespace Bottles.Deployment.Diagnostics
 
         public void Log(string providence, Action action)
         {
-            //do something
+            try
+            {
+                action();
+            }
+            catch (Exception)
+            {
+                //what should I do here
+                throw;
+            }
+            
         }
 
-        public void LogHost(HostManifest hostManifest, Action<HostManifest> action)
+        public void LogDeployment(IDeployer deployer, IDirective directive)
         {
-            LogObject(hostManifest, "Host Manifest");
-            LogFor(hostManifest).Description = "Host Found";
+            LogObject(deployer, "Running with directive '{0}'".ToFormat(directive));
+            LogFor(directive).AddChild(deployer);
         }
 
-        public void LogDirective(IDirective directive)
+        public void LogHost(HostManifest hostManifest)
         {
-            LogObject(directive, "prov");
+            LogObject(hostManifest, "Deployment");
+            LogFor(hostManifest).Description = hostManifest.Name;
         }
 
-        public void LogDeployer(IDeployer deployer, Action<IDeployer> action)
+        public void LogDirective(IDirective directive, HostManifest host)
         {
-            LogObject(deployer, "Deployer");
-            LogFor("host|directive").AddChild(deployer);
+            LogObject(directive, "Found in '{0}'".ToFormat(host));
+            LogFor(host).AddChild(directive);
+        }
+
+        public void LogDeployer(IDeployer deployer, HostManifest host,  Action<IDeployer> action)
+        {
+            LogObject(deployer, "Running for host '{0}'".ToFormat(host));
+            LogFor(host).AddChild(deployer);
         }
 
         public void LogFinalizer(IFinalizer finalizer, Action<IFinalizer> action)

@@ -1,60 +1,49 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using Bottles.Deployment.Diagnostics;
 
 namespace Bottles.Deployment.Runtime
 {
     public class DirectiveCoordinator : IDirectiveCoordinator
     {
         private readonly ICommandFactory _factory;
+        private IDeploymentDiagnostics _diagnostics;
 
-        public DirectiveCoordinator(ICommandFactory factory)
+        public DirectiveCoordinator(ICommandFactory factory, IDeploymentDiagnostics diagnostics)
         {
             _factory = factory;
+            _diagnostics = diagnostics;
         }
 
         public void Initialize(IEnumerable<HostManifest> hosts)
         {
-            var directives = from h in hosts
-                             from d in h.AllDirectives
-                             select d;
-
-            //sorting?
-
-            directives.Each(d =>
-                            {
-                                var set = _factory.InitializersFor(d);
-                                set.DeployWith(d);
-                            });
+            applyProcessToEachDirective(hosts, _factory.InitializersFor);
         }
 
         public void Deploy(IEnumerable<HostManifest> hosts)
         {
-            var directives = from h in hosts
-                             from d in h.AllDirectives
-                             select d;
-
-            //sorting?
-
-            directives.Each(d =>
-                            {
-                                var set = _factory.DeployersFor(d);
-                                set.DeployWith(d);
-                            });
+            applyProcessToEachDirective(hosts, _factory.DeployersFor);
         }
 
         public void Finish(IEnumerable<HostManifest> hosts)
         {
-            var directives = from h in hosts
-                             from d in h.AllDirectives
-                             select d;
+            applyProcessToEachDirective(hosts, _factory.FinalizersFor);
+        }
 
-            //sorting?
+        private void applyProcessToEachDirective(IEnumerable<HostManifest> hosts, Func<IDirective, IDeploymentActionSet> action)
+        {
+            foreach (var host in hosts)
+            {
+                _diagnostics.LogHost(host);
 
-            directives.Each(d =>
-                            {
-                                var set = _factory.FinalizersFor(d);
-                                set.DeployWith(d);
-                            });
+                foreach (var directive in host.AllDirectives)
+                {
+                    _diagnostics.LogDirective(directive, host);
+
+                    var set = action(directive);
+                    set.Process(host, directive);
+                }
+            }
         }
     }
 }

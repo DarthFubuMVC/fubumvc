@@ -17,19 +17,19 @@ namespace Bottles.Deployment.Runtime
         public void Deploy(IEnumerable<HostManifest> hosts)
         {
             //assuming hosts are sorted
-            _diagnostics.Log("runner:init", () =>
+            _diagnostics.Log("Deployment Initialization", () =>
             {
                 _factory.Initialize(hosts);
             });
 
 
-            _diagnostics.Log("runner:deploy", () =>
+            _diagnostics.Log("Main Deployment", () =>
             {
                 _factory.Deploy(hosts);
             });
 
             //reverse sorting order?
-            _diagnostics.Log("runner:finish", () =>
+            _diagnostics.Log("Finalizing Deployment", () =>
             {
                 _factory.Finish(hosts);
             });

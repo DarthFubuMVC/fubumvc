@@ -44,7 +44,7 @@ namespace Bottles.Tests.Deployment.Runtime
         {
             var fakeDirective = new FakeDirective();
             var output = _commandFactory.InitializersFor(fakeDirective);
-            output.DeployWith(fakeDirective);
+            output.Process(null, fakeDirective);
 
             fakeDirective.Hits.ShouldEqual(2);
         }
@@ -54,7 +54,7 @@ namespace Bottles.Tests.Deployment.Runtime
         {
             var fakeDirective = new FakeDirective();
             var output = _commandFactory.DeployersFor(fakeDirective);
-            output.DeployWith(fakeDirective);
+            output.Process(null, fakeDirective);
 
             fakeDirective.Hits.ShouldEqual(3);
         }
@@ -64,7 +64,7 @@ namespace Bottles.Tests.Deployment.Runtime
         {
             var fakeDirective = new FakeDirective();
             var output = _commandFactory.FinalizersFor(fakeDirective);
-            output.DeployWith(fakeDirective);
+            output.Process(null, fakeDirective);
 
             fakeDirective.Hits.ShouldEqual(1);
         }

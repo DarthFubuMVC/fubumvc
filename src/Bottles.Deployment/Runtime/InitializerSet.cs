@@ -15,7 +15,7 @@ namespace Bottles.Deployment.Runtime
             _initializers = initializers;
         }
 
-        public void DeployWith(IDirective directive)
+        public void Process(HostManifest hostManifest, IDirective directive)
         {
             //TODO: ordering
             foreach (var initializer in _initializers)

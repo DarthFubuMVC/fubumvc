@@ -14,7 +14,7 @@ namespace Bottles.Deployment.Runtime
             _finalizers = finalizers;
         }
 
-        public void DeployWith(IDirective directive)
+        public void Process(HostManifest hostManifest, IDirective directive)
         {
             //TODO: Ordering of deployers
             foreach (var finalizer in _finalizers)

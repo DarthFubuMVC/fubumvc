@@ -14,12 +14,12 @@ namespace Bottles.Deployment.Runtime
             _deployers = deployers;
         }
 
-        public void DeployWith(IDirective directive)
+        public void Process(HostManifest hostManifest, IDirective directive)
         {
             //TODO: ordering of deployers?
             foreach (var deployer in _deployers)
             {
-                _deploymentDiagnostics.LogDeployer(deployer, d=>
+                _deploymentDiagnostics.LogDeployer(deployer, hostManifest, d=>
                 {
                     d.Deploy(directive);
                 });

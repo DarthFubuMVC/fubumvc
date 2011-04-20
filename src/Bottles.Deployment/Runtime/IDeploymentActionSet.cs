@@ -2,6 +2,6 @@
 {
     public interface IDeploymentActionSet
     {
-        void DeployWith(IDirective directive);
+        void Process(HostManifest hostManifest, IDirective directive);
     }
 }
