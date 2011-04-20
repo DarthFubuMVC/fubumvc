@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore.Util;
-using FubuMVC.Spark.Tokenization;
+using FubuMVC.Spark.SparkModel;
 using Spark;
 using Spark.FileSystem;
-using Constants = FubuMVC.Spark.Tokenization.Constants;
+using Constants = FubuMVC.Spark.SparkModel.Constants;
 
 namespace FubuMVC.Spark.Tests.Experiments
 {

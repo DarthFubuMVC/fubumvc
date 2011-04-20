@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using FubuMVC.Spark.Tokenization;
+using FubuMVC.Spark.SparkModel;
 using NUnit.Framework;
 using Spark;
 using Spark.FileSystem;

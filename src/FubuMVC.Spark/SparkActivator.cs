@@ -7,6 +7,7 @@ namespace FubuMVC.Spark
 {
     public class SparkActivator : IActivator 
     {
+        // Inject ISparkViewEngine and assign viewfolder?
         public SparkActivator(/* */)
         {
             

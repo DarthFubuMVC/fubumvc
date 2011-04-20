@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Spark.Tokenization;
-using FubuMVC.Spark.Tokenization.Parsing;
+using FubuMVC.Spark.SparkModel;
+using FubuMVC.Spark.SparkModel.Parsing;
 using Spark;
 using Spark.FileSystem;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using FubuMVC.Core;
-using FubuMVC.Spark.Tokenization;
+using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark
 {
@@ -12,10 +12,10 @@ namespace FubuMVC.Spark
         public SparkExtension()
         {
             // TODO: move onto conventions
-            var tokenizer = new ViewTokenizer()
-                .Apply<MasterPageModifier>()
-                .Apply<ViewModelModifier>()
-                .Apply<NamespaceModifier>();
+            var tokenizer = new SparkItemBuilder()
+                .Apply<MasterPageBinder>()
+                .Apply<ViewModelBinder>()
+                .Apply<NamespaceBinder>();
             
             _facility = new SparkViewFacility(tokenizer);
         }

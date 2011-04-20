@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Spark.Tokenization;
+using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark.Registration.Nodes
 {

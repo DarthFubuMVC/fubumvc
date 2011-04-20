@@ -62,24 +62,24 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="SparkItemViewFolderTests\ExtendedTester.cs" />
+    <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
     <Compile Include="Experiments\SparkEngineFactory.cs" />
     <Compile Include="Experiments\SparkItemsViewFolderExperiments.cs" />
     <Compile Include="Experiments\SparkViewNode.cs" />
-    <Compile Include="SparkItemViewFolderTests\BasicTester.cs" />
-    <Compile Include="Tokenization\MasterPageModifierTester.cs" />
-    <Compile Include="Tokenization\Parsing\ElementNodeExtensionsTester.cs" />
-    <Compile Include="Tokenization\Parsing\ElementNodeExtractorTester.cs" />
+    <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
+    <Compile Include="SparkModel\Binders\MasterPageBinderTester.cs" />
+    <Compile Include="SparkModel\Parsing\ElementNodeExtensionsTester.cs" />
+    <Compile Include="SparkModel\Parsing\ElementNodeExtractorTester.cs" />
     <Compile Include="Experiments\SmokeTester.cs" />
-    <Compile Include="Tokenization\Parsing\Templates.cs" />
-    <Compile Include="Tokenization\Parsing\SparkParserExtensionsTester.cs" />
-    <Compile Include="Tokenization\NamespaceModifierTester.cs" />
-    <Compile Include="Tokenization\Scanning\SparkScannerTester.cs" />
-    <Compile Include="Tokenization\SparkItemFinderTester.cs" />
-    <Compile Include="Tokenization\SparkItemTester.cs" />
-    <Compile Include="Tokenization\ViewModelModifierTester.cs" />
+    <Compile Include="SparkModel\Parsing\Templates.cs" />
+    <Compile Include="SparkModel\Parsing\SparkParserExtensionsTester.cs" />
+    <Compile Include="SparkModel\Binders\NamespaceBinderTester.cs" />
+    <Compile Include="SparkModel\Scanning\SparkScannerTester.cs" />
+    <Compile Include="SparkModel\SparkItemFinderTester.cs" />
+    <Compile Include="SparkModel\SparkItemTester.cs" />
+    <Compile Include="SparkModel\Binders\ViewModelBinderTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">

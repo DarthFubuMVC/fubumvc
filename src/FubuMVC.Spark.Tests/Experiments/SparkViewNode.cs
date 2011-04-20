@@ -2,8 +2,8 @@
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuMVC.Spark.Tokenization;
-using FubuMVC.Spark.Tokenization.Parsing;
+using FubuMVC.Spark.SparkModel;
+using FubuMVC.Spark.SparkModel.Parsing;
 
 namespace FubuMVC.Spark.Tests.Experiments
 {

@@ -1,12 +1,12 @@
 using System;
 using System.IO;
 using System.Linq;
-using FubuMVC.Spark.Tokenization;
+using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Spark;
 using Spark.Parser;
-using Constants = FubuMVC.Spark.Tokenization.Constants;
+using Constants = FubuMVC.Spark.SparkModel.Constants;
 using Spark.FileSystem;
 using System.Collections.Generic;
 
