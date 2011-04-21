@@ -72,16 +72,6 @@ namespace Bottles.Deployment
             _data.AddRange(otherHost._data);
         }
 
-        //REVIEW: is this really needed?
-        public void Prepend(HostManifest otherHost)
-        {
-            _bottles.Fill(otherHost._bottles);
-            var ours = _data.ToArray();
-            _data.Clear();
-            _data.AddRange(otherHost._data);
-            _data.AddRange(ours);
-        }
-
         /// <summary>
         /// This is only used for testing
         /// </summary>

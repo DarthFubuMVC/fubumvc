@@ -2,7 +2,6 @@ using Bottles.Deployment;
 using FubuCore.Configuration;
 using NUnit.Framework;
 using FubuTestingSupport;
-using System.Linq;
 
 namespace Bottles.Tests.Deployment
 {
@@ -74,54 +73,7 @@ namespace Bottles.Tests.Deployment
             host1.GetDirective<OneDirective>().Age.ShouldEqual(7);
         }
 
-        [Test]
-        public void prepend_host_respects_setting_order()
-        {
-            var host1 = new HostManifest("h1");
-            host1.RegisterSettings(data4);
-
-
-            var host2 = new HostManifest("h2");
-            host2.RegisterSettings(data5);
-
-
-            host1.Prepend(host2);
-
-            host1.GetDirective<OneDirective>().Age.ShouldEqual(8);
-        }
-
-        [Test]
-        public void prepend_host_imports_bottle_references()
-        {
-            var host1 = new HostManifest("h1");
-            host1.RegisterBottle(new BottleReference("b1", null));
-
-
-            var host2 = new HostManifest("h2");
-            host2.RegisterBottle(new BottleReference("b2", null));
-
-
-            host1.Prepend(host2);
-
-            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null), new BottleReference("b2", null));
-        }
-
-        [Test]
-        public void prepend_host_imports_bottle_references_but_does_not_duplicate()
-        {
-            var host1 = new HostManifest("h1");
-            host1.RegisterBottle(new BottleReference("b1", null));
-
-
-            var host2 = new HostManifest("h2");
-            host2.RegisterBottle(new BottleReference("b1", null));
-
-
-            host1.Prepend(host2);
-
-            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null));
-        }
-
+        
         [Test]
         public void append_host_imports_bottle_references()
         {
