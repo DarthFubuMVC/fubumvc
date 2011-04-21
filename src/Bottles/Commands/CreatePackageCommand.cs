@@ -1,6 +1,7 @@
 using System;
 using Bottles.Assemblies;
 using Bottles.Creation;
+using Bottles.Parsing;
 using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -51,7 +52,12 @@ namespace Bottles.Commands
 
         public virtual void CreatePackage(CreatePackageInput input, IFileSystem fileSystem)
         {
-            var manifest = fileSystem.LoadPackageManifestFrom(input.PackageFolder);
+            // TODO -- override this in the input
+            var fileName = FileSystem.Combine(input.PackageFolder, PackageManifest.FILE);
+            var reader = new PackageManifestXmlReader();
+            var manifest = reader.ReadFrom(fileName);
+
+            //var manifest = fileSystem.LoadPackageManifestFrom(input.PackageFolder);
 
             var creator = new PackageCreator(fileSystem, new ZipFileService(fileSystem), new PackageLogger(), new AssemblyFileFinder(new FileSystem()));
             creator.CreatePackage(input, manifest);
