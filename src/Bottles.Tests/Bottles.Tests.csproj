@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap.AutoMocking, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,8 +71,11 @@
     <Compile Include="Deployment\Parsing\WritingReadingIntegratedTester.cs" />
     <Compile Include="Deployment\RecipeSorterTester.cs" />
     <Compile Include="Deployment\Runtime\CommandFactoryTester.cs" />
+    <Compile Include="Deployment\Runtime\DeployerSetTests.cs" />
     <Compile Include="Deployment\Runtime\FakeDirective.cs" />
     <Compile Include="Deployment\Runtime\FakeDeploymentDiagnostics.cs" />
+    <Compile Include="Deployment\Runtime\FinalizerSetTests.cs" />
+    <Compile Include="Deployment\Runtime\InitializerSetTests.cs" />
     <Compile Include="Deployment\Writing\HostWriterTester.cs" />
     <Compile Include="Deployment\Writing\PropertyValueTester.cs" />
     <Compile Include="Environment\EnvironmentRunTester.cs" />
