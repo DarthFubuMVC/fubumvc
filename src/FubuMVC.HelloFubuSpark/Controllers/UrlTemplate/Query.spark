@@ -1,16 +1,16 @@
 ﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate.UrlTemplateViewModel" />
 <use namespace="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate" />
 <use namespace="HtmlTags" />
-<use:MainContent>
+<content:MainContent>
     <script type="text/html" id="myTemplate">
         <li>
-            <a href='${Urls.TemplateFor<ViewProductRequest>() }'> ${ Code } </a>
+            <a href='${Urls.TemplateFor<ViewProductRequest>() }'> ${'$'}{ Code } </a>
         </li>
     </script>
     <ul id="templatedList">
     </ul>
-</use:MainContent>
-<use:Scripts>
+</content:MainContent>
+<content:Scripts>
 	<script src='${ VirtualPathUtility.ToAbsolute("~/Shared/jquery-1.4.2.js") }' type="text/javascript"></script>
 	<script src='${ VirtualPathUtility.ToAbsolute("~/Shared/jquery.tmpl.js") }' type="text/javascript"></script>
     <script type="text/javascript">
@@ -20,4 +20,4 @@
         });
     </script>
 
-</use:Scripts>
+</content:Scripts>

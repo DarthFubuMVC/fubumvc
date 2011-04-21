@@ -3,6 +3,7 @@ using System.Web.Routing;
 using Bottles;
 using FubuMVC.Core;
 using FubuMVC.HelloFubuSpark.Services;
+using FubuMVC.Spark;
 using StructureMap;
 using FubuMVC.StructureMap;
 
@@ -15,6 +16,7 @@ namespace FubuMVC.HelloFubuSpark
             FubuApplication
                 .For<HelloWorldFubuRegistry>()
                 .StructureMap(() => new Container(SetupContainer))
+                .ModifyRegistry(x => x.UseSpark(spark => spark.Include("QueryTemplate.htm")))
                 .Bootstrap(RouteTable.Routes);
 
             // If there is an error during bootstrapping, it will not automatically be considered

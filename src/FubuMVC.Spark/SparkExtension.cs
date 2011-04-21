@@ -1,28 +1,45 @@
 ﻿using System;
+using Bottles;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Spark.SparkModel;
+using Spark;
 
 namespace FubuMVC.Spark
 {
     // This approach uses default conventions.
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
-        private readonly SparkViewFacility _facility;
-
+        private readonly SparkItems _sparkItems;
+        private readonly ISparkViewEngine _sparkViewEngine;
+        private readonly SparkItemBuilder _tokenizer;
+        private readonly SparkItemFinder _sparkItemFinder;
         public SparkExtension()
         {
+            _sparkItemFinder = new SparkItemFinder();
             // TODO: move onto conventions
-            var tokenizer = new SparkItemBuilder()
+            _tokenizer = new SparkItemBuilder(_sparkItemFinder, new FileSystem())
                 .Apply<MasterPageBinder>()
                 .Apply<ViewModelBinder>()
-                .Apply<NamespaceBinder>();
-            
-            _facility = new SparkViewFacility(tokenizer);
+                .Apply<NamespaceBinder>()
+                .Apply<PathPrefixBinder>();
+
+            _sparkItems = new SparkItems();
+            _sparkViewEngine = new SparkViewEngine();
+        }
+
+        public void Include(string filter)
+        {
+            _sparkItemFinder.Include(filter);
         }
 
         public void Configure(FubuRegistry registry)
         {
-            registry.Views.Facility(_facility);            
+            var facility = new SparkViewFacility(_tokenizer, _sparkItems);
+            registry.Services(x => x.SetServiceIfNone(_sparkItems));
+            registry.Services(x => x.SetServiceIfNone(_sparkViewEngine));
+            registry.Services(x => x.AddService<IActivator, SparkActivator>());
+            registry.Views.Facility(facility);            
         }
 
         // DSL 
@@ -31,6 +48,8 @@ namespace FubuMVC.Spark
 
     public interface ISparkExtension
     {
+        // NOTE:TEMP
+        void Include(string filter);
     }
 
     // TODO: Ask JDM & JA about this.

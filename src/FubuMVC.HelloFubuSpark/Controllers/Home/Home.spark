@@ -2,7 +2,7 @@
 <use namespace="FubuMVC.HelloFubuSpark.Controllers.Login" />
 <use namespace="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate" />
 <viewdata model="FubuMVC.HelloFubuSpark.Controllers.Home.HomeViewModel" />
-<use:MainContent>
+<content:MainContent>
     <div id="login-status">
         # this.Partial<LoggedInStatusRequest>();
     </div>
@@ -26,4 +26,4 @@
     File 4:  <input type="file" name="homefiles" />
     <input type="submit" />
     </form>
-    </use:MainContent>
+</content:MainContent>

@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuMVC.Core.UI;
+using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
+using HtmlTags;
 using Spark;
 
 namespace FubuMVC.Spark
@@ -21,7 +25,16 @@ namespace FubuMVC.Spark
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
+            var settings = (SparkSettings) _engine.Settings;
+            settings.AddAssembly(typeof(HtmlTag).Assembly)
+				.AddAssembly(typeof(FubuPageExtensions).Assembly)
+                .AddNamespace(typeof(VirtualPathUtility).Namespace) // System.Web
+				.AddNamespace(typeof(FubuRegistryExtensions).Namespace) // FubuMVC.Spark
+				.AddNamespace(typeof(FubuPageExtensions).Namespace) // FubuMVC.Core.UI
+				.AddNamespace(typeof(HtmlTag).Namespace); // HtmlTags
             _engine.ViewFolder = new SparkItemViewFolder(_sparkItems);
+            _engine.DefaultPageBaseType = typeof (FubuSparkView).FullName;
+
         }
     }
 }
