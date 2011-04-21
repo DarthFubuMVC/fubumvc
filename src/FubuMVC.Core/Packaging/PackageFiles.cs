@@ -32,6 +32,10 @@ namespace FubuMVC.Core.Packaging
         {
             var dirParts = searchPattern.Split(Path.DirectorySeparatorChar);
 
+            if(!_directories.Has(FubuMvcPackages.DataFolder))
+            {
+                return;
+            }
             var folderPath = _directories[FubuMvcPackages.DataFolder].ToFullPath();
             var filePattern = searchPattern;
 
