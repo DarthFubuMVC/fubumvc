@@ -2,12 +2,6 @@ using Bottles.Deployment.Parsing;
 
 namespace Bottles.Deployment.Runtime
 {
-    public interface IDeploymentController
-    {
-        
-    }
-
-
     public class DeploymentController : IDeploymentController
     {
         private readonly IProfileReader _reader;

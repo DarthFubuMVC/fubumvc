@@ -19,7 +19,7 @@ namespace Bottles.Deployment.Runtime
             //TODO: Ordering of deployers
             foreach (var finalizer in _finalizers)
             {
-                _deploymentDiagnostics.LogFinalizer(finalizer, f =>
+                _deploymentDiagnostics.LogFinalizer(finalizer, hostManifest, f =>
                 {
                     f.Finish(directive);
                 });

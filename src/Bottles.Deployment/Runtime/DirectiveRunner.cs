@@ -6,32 +6,32 @@ namespace Bottles.Deployment.Runtime
     public class DirectiveRunner : IDirectiveRunner
     {
         private readonly IDeploymentDiagnostics _diagnostics;
-        private readonly IDirectiveCoordinator _factory;
+        private readonly IDirectiveCoordinator _coordinator;
 
-        public DirectiveRunner(IDeploymentDiagnostics diagnostics, IDirectiveCoordinator factory)
+        public DirectiveRunner(IDeploymentDiagnostics diagnostics, IDirectiveCoordinator coordinator)
         {
             _diagnostics = diagnostics;
-            _factory = factory;
+            _coordinator = coordinator;
         }
 
         public void Deploy(IEnumerable<HostManifest> hosts)
         {
             //assuming hosts are sorted
-            _diagnostics.Log("Deployment Initialization", () =>
+            _diagnostics.LogExecution(_coordinator, "Initializing the hosts.", () =>
             {
-                _factory.Initialize(hosts);
+                _coordinator.Initialize(hosts);
             });
 
 
-            _diagnostics.Log("Main Deployment", () =>
+            _diagnostics.LogExecution(_coordinator,"Deploying to the hosts", () =>
             {
-                _factory.Deploy(hosts);
+                _coordinator.Deploy(hosts);
             });
 
             //reverse sorting order?
-            _diagnostics.Log("Finalizing Deployment", () =>
+            _diagnostics.LogExecution(_coordinator,"Finalizing the hosts" ,() =>
             {
-                _factory.Finish(hosts);
+                _coordinator.Finish(hosts);
             });
 
         }

@@ -26,8 +26,10 @@ namespace Bottles.Deployment.Runtime
 
         public Type DirectiveTypeFor(string name)
         {
-            // TODO -- blow up if the directive type cannot be found!
-            return _directiveTypes[name];
+            if(_directiveTypes.Has(name))
+                return _directiveTypes[name];
+
+            throw new ArgumentException("Couldn't find type '{0}'".ToFormat(name));
         }
 
         public IEnumerable<Type> DirectiveTypes()

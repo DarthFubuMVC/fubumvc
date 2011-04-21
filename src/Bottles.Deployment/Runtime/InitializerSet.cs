@@ -20,7 +20,7 @@ namespace Bottles.Deployment.Runtime
             //TODO: ordering
             foreach (var initializer in _initializers)
             {
-                _deploymentDiagnostics.LogInitializer(initializer, i =>
+                _deploymentDiagnostics.LogInitializer(initializer, hostManifest, i =>
                 {
                     i.Initialize(directive);
                 });

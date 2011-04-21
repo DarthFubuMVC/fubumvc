@@ -6,11 +6,6 @@ namespace Bottles.Tests.Deployment.Runtime
 {
     public class FakeDeploymentDiagnostics : IDeploymentDiagnostics
     {
-        public void Log(string providence, Action action)
-        {
-            action();
-        }
-
         public void LogHost(HostManifest hostManifest, Action<HostManifest> action)
         {
             action(hostManifest);
@@ -21,7 +16,7 @@ namespace Bottles.Tests.Deployment.Runtime
             action(deployer);
         }
 
-        public void LogFinalizer(IFinalizer finalizer, Action<IFinalizer> action)
+        public void LogFinalizer(IFinalizer finalizer, HostManifest host, Action<IFinalizer> action)
         {
             action(finalizer);
         }
@@ -41,9 +36,14 @@ namespace Bottles.Tests.Deployment.Runtime
             
         }
 
-        public void LogInitializer(IInitializer initializer, Action<IInitializer> action)
+        public void LogInitializer(IInitializer initializer, HostManifest host, Action<IInitializer> action)
         {
             action(initializer);
+        }
+
+        public void LogExecution(object target, string description, Action continuation)
+        {
+            continuation();
         }
     }
 }

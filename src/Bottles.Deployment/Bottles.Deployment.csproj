@@ -100,14 +100,12 @@
     <Compile Include="Runtime\DirectiveRunner.cs" />
     <Compile Include="Runtime\DirectiveTypeRegistry.cs" />
     <Compile Include="Runtime\FinalizerSet.cs" />
+    <Compile Include="Runtime\IDeploymentController.cs" />
     <Compile Include="Runtime\IDirectiveCoordinator.cs" />
     <Compile Include="Runtime\ICommandFactory.cs" />
-    <Compile Include="Runtime\IDeployerSet.cs" />
     <Compile Include="Runtime\IDeploymentActionSet.cs" />
     <Compile Include="Runtime\IDirectiveRunner.cs" />
     <Compile Include="Runtime\IDirectiveTypeRegistry.cs" />
-    <Compile Include="Runtime\IFinalizerSet.cs" />
-    <Compile Include="Runtime\IInitializerSet.cs" />
     <Compile Include="Runtime\InitializerSet.cs" />
     <Compile Include="ToolRepository.cs" />
     <Compile Include="Writing\DirectiveWriter.cs" />

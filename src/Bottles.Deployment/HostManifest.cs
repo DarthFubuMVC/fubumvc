@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using Bottles.Deployment.Runtime;
 using FubuCore.Binding;
@@ -10,6 +11,7 @@ using FubuCore.Reflection;
 
 namespace Bottles.Deployment
 {
+    [DebuggerDisplay("{debuggerDisplay()}")]
     public class HostManifest
     {
         private static readonly IObjectResolver _resolver = ObjectResolver.Basic();
@@ -112,6 +114,15 @@ namespace Bottles.Deployment
             });
 
             _directives.AddRange(directives);
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+        string debuggerDisplay()
+        {
+            return "{0} Directives: {1}".ToFormat(Name, _directives.Count);
         }
     }
 }
