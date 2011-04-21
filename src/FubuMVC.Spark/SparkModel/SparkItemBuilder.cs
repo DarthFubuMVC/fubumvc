@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.SparkModel
             var items = new SparkItems();
 
             items.AddRange(_finder.FindItems());
-            items.Each(item => _itemBinders.Where(m => m.Applies(item)).Each(modifier =>
+            items.Each(item => _itemBinders.Where(m => m.Applies(item)).Each(binder =>
             {
                 var fileContent = _fileSystem.ReadStringFromFile(item.FilePath);
                 var context = new BindContext
@@ -52,7 +52,7 @@ namespace FubuMVC.Spark.SparkModel
                     FileContent = fileContent
                 };
 
-                modifier.Bind(item, context);
+                binder.Bind(item, context);
             }));
 
             return items;

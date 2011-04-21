@@ -74,9 +74,15 @@ namespace FubuMVC.Spark.SparkModel
         public SparkItems(IEnumerable<SparkItem> items) : base(items) {}
 
         // Temporary : probably ends up as extension method on IEnumerable...
+
+        public IEnumerable<SparkItem> ByName(string name)
+        {
+            return this.Where(x => x.Name() == name);
+        }
+
         public SparkItem FirstByName(string name)
         {
-            return this.FirstOrDefault(x => x.Name() == name);
+            return ByName(name).FirstOrDefault();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         private BindContext _context;
         private SparkItems _sparkItems;
 
-        const string Host = "host";
+        const string Host = Constants.HostOrigin;
         const string Pak1 = "pak1";
         const string Pak2 = "pak2";
         const string Pak3 = "pak3";

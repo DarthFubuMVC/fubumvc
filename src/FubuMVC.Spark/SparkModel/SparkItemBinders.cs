@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
@@ -29,9 +28,7 @@ namespace FubuMVC.Spark.SparkModel
     public class MasterPageBinder : ISparkItemBinder
     {
         // Allow for convention on this - consider possibility for other "shared" folders
-        private const string SharedFolder = "Shared";
         private const string DefaultMaster = "Application";
-
         private readonly ISparkParser _sparkParser;
 
         public MasterPageBinder() : this(new SparkParser()) { }
@@ -49,38 +46,14 @@ namespace FubuMVC.Spark.SparkModel
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent) ?? DefaultMaster;
             if (masterName.IsEmpty()) return;
-
-            // Extract into something similar to https://gist.github.com/929869
-            item.Master = findClosestMaster(masterName, item, context.SparkItems);
+            // No IoC is a bit hard :)
+            var locator = new SharedItemLocator(context.SparkItems, new[] {Constants.SharedSpark});
+            item.Master = locator.LocateSpark(masterName, item);
 
             if (item.Master == null)
             {
                 // Log -> Spark compiler is about to blow up. // context.Observer.??
             }
-        }
-
-        private SparkItem findClosestMaster(string masterName, SparkItem item, IEnumerable<SparkItem> items)
-        {
-            // reconsider this, as a package can be in development mode.
-            var root = items.Min(x => x.RootPath);
-            var masterLocations = reachableMasterLocations(item.FilePath, root);
-
-            return items
-                .Where(x => x.Name() == masterName)
-                .Where(x => masterLocations.Contains(x.DirectoryPath()))
-                .FirstOrDefault();
-        }
-
-        private static IEnumerable<string> reachableMasterLocations(string path, string root)
-        {
-            do
-            {
-                path = Path.GetDirectoryName(path);
-                if (path == null) break;
-                // TODO : Consider yield return path - if we should look in each ancestor folder
-                yield return Path.Combine(path, SharedFolder);
-
-            } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
         }
     }
 
