@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -28,7 +28,7 @@ namespace Fubu
 
         public string ManifestFileName
         {
-            get { return Path.GetFullPath(FileSystem.Combine(AppFolder, ApplicationManifest.FILE)); }
+            get { return Path.GetFullPath(FileSystem.Combine(AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE)); }
         }
 
         public string Title()

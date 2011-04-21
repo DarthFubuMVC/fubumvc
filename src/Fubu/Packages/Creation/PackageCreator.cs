@@ -5,7 +5,6 @@ using Bottles;
 using Bottles.Assemblies;
 using Bottles.Zipping;
 using FubuCore;
-using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 
 namespace Fubu.Packages.Creation
@@ -35,7 +34,7 @@ namespace Fubu.Packages.Creation
 			}
 
 
-            var assemblies = _assemblyFinder.FindAssemblies(binFolder, manifest.AssemblyNames);
+            var assemblies = _assemblyFinder.FindAssemblies(binFolder, manifest.Assemblies);
             if (assemblies.Success)
             {
                 writeZipFile(input, manifest, assemblies);

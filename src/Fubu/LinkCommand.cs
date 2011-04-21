@@ -61,7 +61,7 @@ namespace Fubu
         {
             var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
 
-            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, ApplicationManifest.FILE))
+            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE))
             {
                 manifest.RemoveAllLinkedFolders();
 
@@ -127,7 +127,7 @@ namespace Fubu
 
         private void persist(LinkInput input, ApplicationManifest manifest, IFileSystem fileSystem)
         {
-            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
         }
 
         private void remove(LinkInput input, ApplicationManifest manifest)

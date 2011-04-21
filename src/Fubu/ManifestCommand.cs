@@ -73,7 +73,7 @@ namespace Fubu
 
                 if (input.OpenFlag)
                 {
-                    fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.FILE);
+                    fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
                 }
             }
             else
@@ -124,22 +124,22 @@ namespace Fubu
 
             if (input.OpenFlag)
             {
-                fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.FILE);
+                fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
             }
         }
 
         private void persist(IFileSystem fileSystem, ManifestInput input, ApplicationManifest manifest)
         {
             Console.WriteLine("");
-            Console.WriteLine("Persisted changes to " + FileSystem.Combine(input.AppFolder, ApplicationManifest.FILE));
+            Console.WriteLine("Persisted changes to " + FileSystem.Combine(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE));
             Console.WriteLine("");
 
-            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
         }
 
         public virtual void WriteManifest(ManifestInput input, ApplicationManifest manifest)
         {
-            var title = "Application Manifest for " + FileSystem.Combine(input.AppFolder, ApplicationManifest.FILE);
+            var title = "Application Manifest for " + FileSystem.Combine(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
             var report = new TwoColumnReport(title);
             report.Add<ApplicationManifest>(x => x.EnvironmentAssembly, manifest);
             report.Add<ApplicationManifest>(x => x.EnvironmentClassName, manifest);
@@ -155,13 +155,13 @@ namespace Fubu
 
         public virtual void WriteManifestCannotBeFound(string folder)
         {
-            var file = FileSystem.Combine(folder, ApplicationManifest.FILE);
+            var file = FileSystem.Combine(folder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
             Console.WriteLine("Application Manifest file at {0} does not exist", file);
         }
 
         public virtual void WriteCannotOverwriteFileWithoutForce(string folder)
         {
-            var file = FileSystem.Combine(folder, ApplicationManifest.FILE);
+            var file = FileSystem.Combine(folder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
             Console.WriteLine("File {0} already exists, use the '-f' flag to overwrite the existing file", file);
         }
     }

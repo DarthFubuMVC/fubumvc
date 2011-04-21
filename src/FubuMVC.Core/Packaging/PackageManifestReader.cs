@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,14 +30,14 @@ namespace FubuMVC.Core.Packaging
         public IEnumerable<IPackageInfo> Load()
         {
         	var packages = new List<IPackageInfo>();
-            var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.FILE);
+            var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
 
         	packages.AddRange(includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f))));
-        	packages.AddRange(includes.Assemblies.Select(assemblyName=>
-        	                                                 {
-        	                                                     var assembly = Assembly.Load(assemblyName);
-        	                                                     return AssemblyPackageInfo.CreateFor(assembly);
-        	                                                 }));
+            packages.AddRange(includes.Assemblies.Select(assemblyName =>
+                                                             {
+                                                                 var assembly = Assembly.Load(assemblyName);
+                                                                 return AssemblyPackageInfo.CreateFor(assembly);
+                                                             }));
 
         	return packages;
         }
@@ -68,7 +68,7 @@ namespace FubuMVC.Core.Packaging
             assemblyPaths.Each(path =>
             {
                 var assemblyName = Path.GetFileNameWithoutExtension(path);
-                if (manifest.AssemblyNames.Contains(assemblyName))
+                if (manifest.Assemblies.Contains(assemblyName))
                 {
                     package.RegisterAssemblyLocation(assemblyName, path);
                 }

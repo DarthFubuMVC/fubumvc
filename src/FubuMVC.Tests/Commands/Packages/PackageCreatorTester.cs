@@ -33,10 +33,13 @@ namespace FubuMVC.Tests.Commands.Packages
 			
             theManifest = new PackageManifest
             {
-                Assemblies = "A;B;C",
                 DataFileSet = new FileSet(),
                 ContentFileSet = new FileSet()
             };
+
+            theManifest.AddAssembly("A");
+            theManifest.AddAssembly("B");
+            theManifest.AddAssembly("C");
 
             theInput = new CreatePackageInput()
             {
@@ -62,7 +65,7 @@ namespace FubuMVC.Tests.Commands.Packages
             };
 
             MockFor<IAssemblyFileFinder>()
-                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.AssemblyNames))
+                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.Assemblies))
                 .Return(theAssemblyFiles);
 
             _theZipFileService = new StubZipFileService();
@@ -148,10 +151,13 @@ namespace FubuMVC.Tests.Commands.Packages
 			
             theManifest = new PackageManifest
             {
-                Assemblies = "A;B;C",
                 DataFileSet = new FileSet(),
                 ContentFileSet = new FileSet()
             };
+
+            theManifest.AddAssembly("A");
+            theManifest.AddAssembly("B");
+            theManifest.AddAssembly("C");
 
             theInput = new CreatePackageInput()
             {
@@ -177,7 +183,7 @@ namespace FubuMVC.Tests.Commands.Packages
             };
 
             MockFor<IAssemblyFileFinder>()
-                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.AssemblyNames))
+                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.Assemblies))
                 .Return(theAssemblyFiles);
 
             _theZipFileService = new StubZipFileService();
@@ -263,10 +269,13 @@ namespace FubuMVC.Tests.Commands.Packages
 			theBinFolder = Path.Combine(theBaseFolder, "bin");	
 			
             theManifest = new PackageManifest{
-                Assemblies = "A;B;C",
                 DataFileSet = new FileSet(),
                 ContentFileSet = new FileSet()
             };
+
+            theManifest.AddAssembly("A");
+            theManifest.AddAssembly("B");
+            theManifest.AddAssembly("C");
 
             theInput = new CreatePackageInput(){
                 PackageFolder = theBaseFolder
@@ -281,7 +290,7 @@ namespace FubuMVC.Tests.Commands.Packages
             };
 
             MockFor<IAssemblyFileFinder>()
-                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.AssemblyNames))
+                .Stub(x => x.FindAssemblies(theBinFolder, theManifest.Assemblies))
                 .Return(theAssemblyFiles);
         
             ClassUnderTest.CreatePackage(theInput, theManifest);

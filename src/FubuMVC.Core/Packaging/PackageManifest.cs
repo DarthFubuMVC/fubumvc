@@ -15,35 +15,39 @@ namespace FubuMVC.Core.Packaging
         {
             DataFileSet = new FileSet();
             ContentFileSet = new FileSet(){
-                Include = "*.as*x;*.master;Content{0}*.*".ToFormat(Path.DirectorySeparatorChar)
+                Include = "*.as*x;*.master;Content{0}*.*;*.config".ToFormat(Path.DirectorySeparatorChar)
             };
         }
 
-        private readonly IList<string> _assemblyNames = new List<string>();
+        private readonly IList<string> _assemblies = new List<string>();
 
         public string Name { get; set; }
 
-        public string Assemblies 
+        [XmlElement("assembly")]
+        public string[] Assemblies 
         {
             get
             {
-                return _assemblyNames.Join(";");
+                return _assemblies.ToArray();
             }
             set
             {
-                var names = value.Split(';').Select(x => x.Trim());
-                _assemblyNames.Clear();
-                _assemblyNames.AddRange(names);
+                _assemblies.Clear();
+
+                if (value == null) return;
+                _assemblies.AddRange(value);
             }
         }
-		
-		[XmlIgnore]
-        public IEnumerable<string> AssemblyNames
+
+        public bool AddAssembly(string assemblyName)
         {
-            get
+            if (_assemblies.Contains(assemblyName))
             {
-                return _assemblyNames;
+                return false;
             }
+
+            _assemblies.Add(assemblyName);
+            return true;
         }
 
         public FileSet DataFileSet

@@ -29,13 +29,13 @@ namespace FubuMVC.Tests.Commands
 
         private void theManifestFileDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(false);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE)).Return(false);
         }
 
         private void theManifestFileExists()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.FILE)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE)).Return(theManifest);
         }
 
 

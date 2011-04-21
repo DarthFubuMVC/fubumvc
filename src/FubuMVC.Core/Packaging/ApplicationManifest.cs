@@ -6,11 +6,10 @@ using System.Xml.Serialization;
 namespace FubuMVC.Core.Packaging
 {
 	[XmlType("application")]
-	public class ApplicationManifest
+	public class ApplicationManifest : PackageManifest
 	{
-		public static readonly string FILE = ".fubu-manifest";
+		public static readonly string APPLICATION_MANIFEST_FILE = ".fubu-manifest";
 		private readonly IList<string> _folders = new List<string>();
-		private readonly IList<string> _assemblies = new List<string>();
 
 		[XmlElement("include")]
 		public string[] LinkedFolders
@@ -23,17 +22,6 @@ namespace FubuMVC.Core.Packaging
 			{
 				_folders.Clear();
 				if (value != null) _folders.AddRange(value);
-			}
-		}
-
-		[XmlElement("assembly")]
-		public string[] Assemblies
-		{
-			get { return _assemblies.ToArray(); }
-			set
-			{
-				_assemblies.Clear();
-				if (value != null) _assemblies.AddRange(value);
 			}
 		}
 
@@ -52,16 +40,7 @@ namespace FubuMVC.Core.Packaging
 			return true;
 		}
 
-		public bool AddAssembly(string assemblyName)
-		{
-			if(_assemblies.Contains(assemblyName))
-			{
-				return false;
-			}
 
-			_assemblies.Add(assemblyName);
-			return true;
-		}
 
 		public void RemoveLink(string folder)
 		{

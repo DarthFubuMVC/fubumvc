@@ -11,7 +11,7 @@ namespace Fubu.Packages.Creation
         {
             Console.WriteLine("Did not locate all designated assemblies at {0}", input.PackageFolder);
             Console.WriteLine("Looking for these assemblies in the package manifest file:");
-            manifest.AssemblyNames.Each(name => Console.WriteLine("  " + name));
+            manifest.Assemblies.Each(name => Console.WriteLine("  " + name));
             Console.WriteLine("But only found");
             theAssemblyFiles.Files.Each(file => Console.WriteLine("  " + file));
         }

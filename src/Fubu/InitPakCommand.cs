@@ -40,9 +40,10 @@ namespace Fubu
             var assemblyName = Path.GetFileName(input.Folder);
 
             var manifest = new PackageManifest{
-                Name = input.Name,
-                Assemblies = assemblyName
+                Name = input.Name
             };
+
+            manifest.AddAssembly(assemblyName);
 
 			if(!fileSystem.FileExists(FileSystem.Combine(input.Folder, PackageManifest.FILE)))
 			{
