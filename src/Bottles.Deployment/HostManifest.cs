@@ -72,6 +72,7 @@ namespace Bottles.Deployment
             _data.AddRange(otherHost._data);
         }
 
+        //REVIEW: is this really needed?
         public void Prepend(HostManifest otherHost)
         {
             _bottles.Fill(otherHost._bottles);

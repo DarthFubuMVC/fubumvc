@@ -17,6 +17,7 @@ namespace Bottles.Deployment.Runtime
 
         public void Initialize(IEnumerable<HostManifest> hosts)
         {
+            //we need a host/directive sorter
             applyProcessToEachDirective(hosts, _factory.InitializersFor);
         }
 

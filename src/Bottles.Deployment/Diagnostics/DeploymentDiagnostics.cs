@@ -21,6 +21,18 @@ namespace Bottles.Deployment.Diagnostics
             return _logs[target];
         }
 
+        public void LogInitialization(IInitializer initializer, IDirective directive)
+        {
+            LogObject(initializer, "Running initializer for directive '{0}'".ToFormat(directive));
+            LogFor(directive).AddChild(initializer);
+        }
+
+        public void LogFinalization(IFinalizer finalizer, IDirective directive)
+        {
+            LogObject(finalizer, "Running finalizer for directive '{0}'".ToFormat(directive));
+            LogFor(directive).AddChild(finalizer);
+        }
+
         public void LogDeployment(IDeployer deployer, IDirective directive)
         {
             LogObject(deployer, "Running with directive '{0}'".ToFormat(directive));

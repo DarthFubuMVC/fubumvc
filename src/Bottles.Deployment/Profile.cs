@@ -13,8 +13,8 @@ namespace Bottles.Deployment
 
         public string GetPathForBottle(string bottleName)
         {
-            //REVIEW: hmmmm
-            if (!bottleName.EndsWith("zip")) bottleName = bottleName + ".zip";
+            if (!bottleName.EndsWith(BottleFiles.Extension))
+                bottleName = bottleName + "." + BottleFiles.Extension;
 
             //this should be a file
             return FileSystem.Combine(_basePath, "bottles", bottleName);

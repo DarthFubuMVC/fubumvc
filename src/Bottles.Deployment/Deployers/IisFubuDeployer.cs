@@ -1,3 +1,4 @@
+using System;
 using Bottles.Deployment.Diagnostics;
 using FubuCore;
 using Microsoft.Web.Administration;
@@ -10,9 +11,10 @@ namespace Bottles.Deployment.Deployers
         private readonly IBottleRepository _bottles;
         private readonly IDeploymentDiagnostics _diagnostics;
 
-        public IisFubuDeployer(IFileSystem fileSystem, IBottleRepository bottles)
+        public IisFubuDeployer(IFileSystem fileSystem, IBottleRepository bottles, IDeploymentDiagnostics diagnostics)
         {
             _fileSystem = fileSystem;
+            _diagnostics = diagnostics;
             _bottles = bottles;
         }
 
@@ -22,17 +24,6 @@ namespace Bottles.Deployment.Deployers
             _diagnostics.LogDeployment(this, directive);
 
             var direc = (IisFubuWebsite) directive;
-
-            _fileSystem.CreateDirectory(direc.WebsitePhysicalPath);
-            _fileSystem.CreateDirectory(direc.VDirPhysicalPath);
-
-            //REVIEW: currently this is grouped and done once per deployment
-            //REVIEW: so if you have N sites you get this happening N times, one by one
-            //REVIEW: we may want to make this step occur outside of the actual deploy???? - surround via StructureMap and AOP'esque stuff
-            var appOfflineFile = FileSystem.Combine(direc.VDirPhysicalPath, "app_offline.htm");
-
-            _fileSystem.WriteStringToFile(appOfflineFile, "&lt;html&gt;&lt;body&gt;Application is being rebuilt&lt;/body&gt;&lt;/html&gt;");
-            
 
             //currenly only IIS 7
             using (var iisManager = new ServerManager())

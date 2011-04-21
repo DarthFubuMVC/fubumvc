@@ -36,6 +36,16 @@ namespace Bottles.Tests.Deployment.Runtime
             
         }
 
+        public void LogInitialization(IInitializer initializer, IDirective directive)
+        {
+            
+        }
+
+        public void LogFinalization(IFinalizer finalizer, IDirective directive)
+        {
+            
+        }
+
         public void LogInitializer(IInitializer initializer, HostManifest host, Action<IInitializer> action)
         {
             action(initializer);

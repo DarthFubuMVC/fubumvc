@@ -55,6 +55,7 @@
     <Compile Include="Bootstrapping\DeploymentRegistry.cs" />
     <Compile Include="BottleReference.cs" />
     <Compile Include="DependsOnAttribute.cs" />
+    <Compile Include="Deployers\IisFubuInitializer.cs" />
     <Compile Include="DeploymentSettings.cs" />
     <Compile Include="Deployers\ScheduledTask.cs" />
     <Compile Include="Deployers\ScheduleType.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Runtime\IDeploymentActionSet.cs" />
     <Compile Include="Runtime\IDirectiveRunner.cs" />
     <Compile Include="Runtime\IDirectiveTypeRegistry.cs" />
+    <Compile Include="Runtime\IHostSorter.cs" />
     <Compile Include="Runtime\InitializerSet.cs" />
     <Compile Include="ToolRepository.cs" />
     <Compile Include="Writing\DirectiveWriter.cs" />

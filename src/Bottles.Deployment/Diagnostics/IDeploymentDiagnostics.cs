@@ -12,8 +12,13 @@ namespace Bottles.Deployment.Diagnostics
         
 
         void LogDirective(IDirective directive, HostManifest host);
+
+        //inside of the action
         void LogDeployment(IDeployer deployer, IDirective directive);
+        void LogInitialization(IInitializer initializer, IDirective directive);
+        void LogFinalization(IFinalizer finalizer, IDirective directive);
 
         void LogExecution(object target, string description, Action continuation);
+        
     }
 }
