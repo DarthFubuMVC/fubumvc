@@ -1,13 +1,12 @@
 using System;
 using System.IO;
-using Bottles;
 using Bottles.Zipping;
 using FubuCore;
 using FubuTestingSupport;
 using Ionic.Zip;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Commands.Packages
+namespace Bottles.Tests.Zipping
 {
     [TestFixture]
     public class ZipFileServiceTester

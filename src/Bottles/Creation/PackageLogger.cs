@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Bottles.Assemblies;
-using FubuMVC.Core.Packaging;
 
-namespace Fubu.Packages.Creation
+namespace Bottles.Creation
 {
     public class PackageLogger : IPackageLogger
     {

@@ -1,13 +1,13 @@
 using System.ComponentModel;
 using FubuCore.CommandLine;
 
-namespace Fubu.Packages.Creation
+namespace Bottles.Creation
 {
     public class CreatePackageInput
     {
         [Description("The root physical folder (or valid alias) of the package")]
         public string PackageFolder { get; set; }
-        
+
         [Description("The location where the zip file for the package will be written")]
         public string ZipFile { get; set; }
 

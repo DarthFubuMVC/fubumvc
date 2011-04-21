@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using Bottles.Zipping;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Commands.Packages
+namespace Bottles.Tests.Zipping
 {
     [TestFixture]
     public class ZipFolderRequestTester

@@ -83,17 +83,11 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
-    <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
     <Compile Include="Commands\LinkCommandTester.cs" />
     <Compile Include="Commands\ManifestCommandTester.cs" />
-    <Compile Include="Commands\Packages\CreatePackageCommandTester.cs" />
-    <Compile Include="Commands\Packages\PackageCreatorTester.cs" />
-    <Compile Include="Commands\Packages\PackageExploderTester.cs" />
     <Compile Include="Commands\Packages\PackagesCommandTester.cs" />
-    <Compile Include="Commands\Packages\ZipFileServiceTester.cs" />
-    <Compile Include="Commands\Packages\ZipFolderRequestTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="Conneg\ConnegBehaviorConventionTester.cs" />
     <Compile Include="Conneg\ConnegNodeTester.cs" />

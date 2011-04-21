@@ -8,6 +8,7 @@ using FubuFastPack.Querying;
 using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using System.Collections.Generic;
+using FubuTestingSupport;
 
 namespace IntegrationTesting
 {
@@ -35,20 +36,6 @@ namespace IntegrationTesting
             Debug.WriteLine(i.FileName);
         }
 
-        [Test]
-        public void serialize_a_package_manifest()
-        {
-            var manifest = new PackageManifest();
-            manifest.Name = "something";
-            manifest.AddAssembly("A");
-            manifest.AddAssembly("B");
 
-            var serializer = new XmlSerializer(typeof (PackageManifest));
-            var writer = new StringWriter();
-            
-            serializer.Serialize(writer, manifest);
-
-            Debug.WriteLine(writer.ToString());
-        }
     }
 }

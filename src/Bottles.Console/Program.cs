@@ -1,5 +1,6 @@
 ﻿using System;
 using Bottles.Deployment;
+using Bottles.Exploding;
 using FubuCore.CommandLine;
 
 namespace Bottles
@@ -15,6 +16,7 @@ namespace Bottles
                 var factory = new CommandFactory();
                 factory.RegisterCommands(typeof(IFubuCommand).Assembly);
                 factory.RegisterCommands(typeof(Recipe).Assembly);
+                factory.RegisterCommands(typeof(PackageExploder).Assembly);
 
                 var executor = new CommandExecutor(factory);
                 success = executor.Execute(args);

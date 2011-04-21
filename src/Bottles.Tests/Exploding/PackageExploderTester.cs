@@ -1,20 +1,16 @@
 using System;
 using System.IO;
 using AssemblyPackage;
-using Bottles;
 using Bottles.Exploding;
 using Bottles.Zipping;
-using Fubu.Packages;
 using FubuCore;
-using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace FubuMVC.Tests.Commands.Packages
+namespace Bottles.Tests.Exploding
 {
     [TestFixture]
     public class integration_test_of_exploding_an_assembly_package

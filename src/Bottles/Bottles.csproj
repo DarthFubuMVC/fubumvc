@@ -39,11 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AliasCommand.cs" />
     <Compile Include="Assemblies\AssemblyFileFinder.cs" />
     <Compile Include="Assemblies\AssemblyFiles.cs" />
     <Compile Include="Assemblies\AssemblyLoader.cs" />
     <Compile Include="Assemblies\AssemblyPackageInfo.cs" />
     <Compile Include="Assemblies\AssemblyPackageLoader.cs" />
+    <Compile Include="Commands\CreatePackageCommand.cs" />
+    <Compile Include="Creation\CreatePackageInput.cs" />
+    <Compile Include="Creation\IPackageLogger.cs" />
+    <Compile Include="Creation\PackageLogger.cs" />
     <Compile Include="Environment\EnvironmentGateway.cs" />
     <Compile Include="Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Environment\EnvironmentProxy.cs" />
@@ -55,6 +60,7 @@
     <Compile Include="Environment\IInstaller.cs" />
     <Compile Include="Environment\LogEntry.cs" />
     <Compile Include="BottleFiles.cs" />
+    <Compile Include="FileSystemExtensions.cs" />
     <Compile Include="IActivator.cs" />
     <Compile Include="Assemblies\IAssemblyFileFinder.cs" />
     <Compile Include="Assemblies\IAssemblyLoader.cs" />
@@ -72,14 +78,17 @@
     <Compile Include="LambdaBootstrapper.cs" />
     <Compile Include="Exploding\PackageExploder.cs" />
     <Compile Include="Exploding\PackageExploderLogger.cs" />
+    <Compile Include="Creation\PackageCreator.cs" />
     <Compile Include="PackageFacility.cs" />
     <Compile Include="PackageFiles.cs" />
     <Compile Include="PackageInfo.cs" />
+    <Compile Include="PackageManifest.cs" />
     <Compile Include="PackageRegistry.cs" />
     <Compile Include="Diagnostics\PackageLog.cs" />
     <Compile Include="Diagnostics\PackagingDiagnostics.cs" />
     <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
     <Compile Include="PackagingRuntimeGraph.cs" />
+    <Compile Include="Parsing\PackageManifestXmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BottleHostLoader.cs" />
     <Compile Include="Services\HostManifest.cs" />

@@ -1,5 +1,6 @@
 using System;
 using Bottles;
+using Bottles.Commands;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;

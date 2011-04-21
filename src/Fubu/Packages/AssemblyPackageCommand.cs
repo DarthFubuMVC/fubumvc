@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Xml;
+using Bottles;
+using Bottles.Commands;
 using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;

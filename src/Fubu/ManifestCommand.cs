@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using Bottles;
+using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;

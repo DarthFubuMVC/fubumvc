@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace Fubu
+namespace Bottles.Commands
 {
     public class AliasInput
     {

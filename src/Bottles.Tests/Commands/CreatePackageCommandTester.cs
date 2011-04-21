@@ -1,12 +1,11 @@
-using Fubu.Packages;
-using Fubu.Packages.Creation;
+using Bottles.Commands;
+using Bottles.Creation;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Commands.Packages
+namespace Bottles.Tests.Commands
 {
     [TestFixture]
     public class CreatePackageCommandTester : InteractionContext<CreatePackageCommand>

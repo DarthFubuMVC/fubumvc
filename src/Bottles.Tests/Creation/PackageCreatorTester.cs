@@ -1,19 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Bottles;
 using Bottles.Assemblies;
+using Bottles.Creation;
 using Bottles.Exploding;
+using Bottles.Tests.Zipping;
 using Bottles.Zipping;
-using Fubu.Packages.Creation;
 using FubuCore;
-using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Commands.Packages
+namespace Bottles.Tests.Creation
 {
     [TestFixture]
     public class when_creating_a_package_for_all_assemblies_found_and_including_pdbs : InteractionContext<PackageCreator>
@@ -139,7 +137,6 @@ namespace FubuMVC.Tests.Commands.Packages
         private AssemblyFiles theAssemblyFiles;
         private CreatePackageInput theInput;
         private StubZipFileService _theZipFileService;
-        private string thePackageManifestFileName;
 		
 		private string theBaseFolder;
 		private string theBinFolder;
@@ -188,8 +185,6 @@ namespace FubuMVC.Tests.Commands.Packages
 
             _theZipFileService = new StubZipFileService();
             Services.Inject<IZipFileService>(_theZipFileService);
-
-            thePackageManifestFileName = FileSystem.Combine(theBaseFolder, PackageManifest.FILE);
 
             ClassUnderTest.CreatePackage(theInput, theManifest);
         }

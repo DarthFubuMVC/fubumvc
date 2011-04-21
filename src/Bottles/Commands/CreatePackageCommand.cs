@@ -1,12 +1,11 @@
 using System;
 using Bottles.Assemblies;
+using Bottles.Creation;
 using Bottles.Zipping;
-using Fubu.Packages.Creation;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuMVC.Core.Packaging;
 
-namespace Fubu.Packages
+namespace Bottles.Commands
 {
     [CommandDescription("Create a package file from a package directory", Name = "create-pak")]
     public class CreatePackageCommand : FubuCommand<CreatePackageInput>

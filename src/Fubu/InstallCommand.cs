@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Bottles;
+using Bottles.Commands;
 using Bottles.Environment;
 using FubuCore;
 using FubuCore.CommandLine;

@@ -57,7 +57,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AliasCommand.cs" />
     <Compile Include="EntryLogWriter.cs" />
     <Compile Include="IInstallationLogger.cs" />
     <Compile Include="InitPakCommand.cs" />
@@ -70,11 +69,6 @@
     <Compile Include="ManifestCommand.cs" />
     <Compile Include="Packages\AssemblyPackageCommand.cs" />
     <Compile Include="Packages\AssemblyPackageInput.cs" />
-    <Compile Include="Packages\CreatePackageCommand.cs" />
-    <Compile Include="Packages\Creation\CreatePackageInput.cs" />
-    <Compile Include="Packages\Creation\IPackageLogger.cs" />
-    <Compile Include="Packages\Creation\PackageCreator.cs" />
-    <Compile Include="Packages\Creation\PackageLogger.cs" />
     <Compile Include="Packages\InstallPackageCommand.cs" />
     <Compile Include="Packages\InstallPackageInput.cs" />
     <Compile Include="Packages\PackagesCommand.cs" />
@@ -97,6 +91,9 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Packages\Creation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
