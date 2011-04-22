@@ -7,6 +7,36 @@ using FubuMVC.Spark.SparkModel;
 using Microsoft.Practices.ServiceLocation;
 using Spark;
 
+/*
+ * Generally, I think this is a _really_ good first stab. :)
+ * 
+ *   It gives a good idea on which parts are needed in the rendering, thus a good starting point for further work.
+ *   
+ *   However, there are some things I would like to note on design. 
+ * 
+ * - Some parts of that "pipe" are overhead. When we go from config to runtime some parts can and should be _locked_ down.
+ * 
+ * - Too much of contexts. Let's not forget initial goals, Func<Stream>.
+ * 
+ * - RenderContext, there must already be something in Fubu that we can use.
+ *   Why is it needed on the interface IRenderAction? Nested container gives you a singleton, btw.
+ * 
+ * - Output/PartialOutput contexts. Why are we asking a OutputContext if it is partial, when we have a PartialOutputContext etc?
+ *   (because we try to handle partial + normal in one long pipe run)
+ * 
+ * - I really would like to see SparkItem not being so dominant - Seems like everything is very dependant on this 
+ *   (it was really just intended to establish enough context to be able to establish a "build recipe" for ISparkViewEntry. 
+ *   Was the idea not to hide away the particulars by establishing Func<>s during config time?
+ *   
+ * - Not sure what to think of the IRenderAction - Seems like too much stuff moved over to runtime.
+ *   For instance, why do we need to create descriptors _explicitly_ on each request? We are interested in instances of ISparkView, 
+ *   why not inject Func<> ? The runtime seems overly busy.
+ *   
+ *   What is really interesting is to utilize callbacks and _inject_ Func<ISparkViewEntry> - partial renderer + normal renderer, separate things no if checks.
+ *   We need to hide away particulars about SparkItem/Descriptors. We are more interested in Func that gives us sparkview instances on runtime.
+ */
+
+
 namespace FubuMVC.Spark.Rendering
 {
     public interface IRenderAction

@@ -18,6 +18,10 @@ namespace FubuMVC.Spark
 
         protected override DoNext performInvoke()
         {
+            // Do we really wish the runtime model to know about all of this? What happened to usage of Func?
+            // Does our runtime model need to be that coupled to our spark model? 
+            // Makes it harder to make changes in one place without causing ripples.
+
             var renderContext = new RenderContext();
             _actions.Each(pipe => pipe.Invoke(renderContext));
             return DoNext.Continue;
