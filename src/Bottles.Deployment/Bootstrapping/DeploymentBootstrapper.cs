@@ -1,3 +1,4 @@
+using FubuCore;
 using StructureMap;
 
 namespace Bottles.Deployment.Bootstrapping
@@ -8,6 +9,8 @@ namespace Bottles.Deployment.Bootstrapping
         {
             return new Container(x =>
             {
+                x.For<IFileSystem>().Use<FileSystem>();
+
                 x.AddRegistry<DeploymentRegistry>();
                 x.For<DeploymentSettings>().Use(settings);
             });

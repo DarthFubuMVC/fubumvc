@@ -13,7 +13,7 @@ namespace Bottles.Deployment.Parsing
             var recipe = new Recipe(recipeName);
             var fileSystem = new FileSystem();
 
-            fileSystem.ReadTextFile(FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile),s =>
+            fileSystem.ReadTextFile(FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile), s =>
                 {
                     //TODO: Harden this for bad syntax
                     var parts = s.Split(':');

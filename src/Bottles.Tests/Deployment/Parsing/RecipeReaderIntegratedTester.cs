@@ -3,6 +3,7 @@ using Bottles.Deployment;
 using Bottles.Deployment.Parsing;
 using Bottles.Deployment.Writing;
 using Bottles.Tests.Deployment.Writing;
+using FubuCore;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -63,7 +64,7 @@ namespace Bottles.Tests.Deployment.Parsing
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings(){
                 RecipesDirectory = "clonewars\\recipes",
                 EnvironmentFile = "clonewars\\" + ProfileFiles.EnvironmentSettingsFileName
-            });
+            }, new FileSystem());
 
             theHosts = reader.Read();
         }

@@ -9,6 +9,7 @@ namespace Bottles.Deployment.Writing
     {
         private readonly ITypeDescriptorCache _types;
         private readonly TextWriter _writer = new StringWriter();
+        private readonly IFileSystem _fileSystem = new FileSystem();
 
         public HostWriter(ITypeDescriptorCache types)
         {
@@ -24,7 +25,7 @@ namespace Bottles.Deployment.Writing
             host.Values.Each(WritePropertyValue);
             host.Directives.Each(WriteDirective);
 
-            new FileSystem().WriteStringToFile(fileName, ToText());
+            _fileSystem.WriteStringToFile(fileName, ToText());
         }
 
         public void WriteReference(BottleReference reference)

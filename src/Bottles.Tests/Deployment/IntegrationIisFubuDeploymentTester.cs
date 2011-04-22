@@ -15,8 +15,8 @@ namespace Bottles.Tests.Deployment
         public void DeployHelloWorld()
         {
             IFileSystem fileSystem = new FileSystem();
-            IProfile profile = new Profile(@"C:\dev\test-profile\");
-            IBottleRepository bottles = new BottleRepository(fileSystem, profile, new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(s=>{ }), fileSystem ));
+            var settings = new DeploymentSettings(@"C:\dev\test-profile\");
+            IBottleRepository bottles = new BottleRepository(fileSystem, new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(s=>{ }), fileSystem ), settings);
 
             var fakeDeploymentDiagnostics = new FakeDeploymentDiagnostics();
 

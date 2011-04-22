@@ -55,5 +55,10 @@ namespace Bottles.Tests.Deployment.Runtime
         {
             continuation();
         }
+
+        public void ForEach(Action<IPackageDeploymentLog> action)
+        {
+            
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using Microsoft.Web.Administration;
+using ConfigurationSection = Microsoft.Web.Administration.ConfigurationSection;
 
 namespace Bottles.Deployment.Deployers
 {
@@ -44,20 +47,28 @@ namespace Bottles.Deployment.Deployers
 
         public static void MapAspNetToEverything(this Application app)
         {
-            var webCfg = app.GetWebConfiguration();
-            var handlers = webCfg.GetSection("system.webServer/handlers");
-            var handlersCollection = handlers.GetCollection();
-            if (handlersCollection.Any(h => h["name"].Equals("HungryHungryDotNetHippo")))
-                return;
+            try
+            {
 
-            var addElement = handlersCollection.CreateElement("add");
-            addElement["name"] = "HungryHungryDotNetHippo";
-            addElement["path"] = "*";
-            addElement["verb"] = "*";
-            addElement["type"] = "System.Web.UI.PageHandlerFactory";
+                var webCfg = app.GetWebConfiguration();
+                var handlers = webCfg.GetSection("system.webServer/handlers");
+                var handlersCollection = handlers.GetCollection();
+                if (handlersCollection.Any(h => h["name"].Equals("HungryHungryDotNetHippo")))
+                    return;
 
-            handlersCollection.AddAt(0, addElement);
+                var addElement = handlersCollection.CreateElement("add");
+                addElement["name"] = "HungryHungryDotNetHippo";
+                addElement["path"] = "*";
+                addElement["verb"] = "*";
+                addElement["type"] = "System.Web.UI.PageHandlerFactory";
 
+                handlersCollection.AddAt(0, addElement);
+            }
+            catch (IOException ex)
+            {
+                //this might be because handlers are locked
+                throw new ConfigurationErrorsException("IIS may not allow delegation of handlers after Win7 SP1 - please allow delegation", ex);
+            }
         }
 
         public static void DirectoryBrowsing(this Application app, Activation activation)

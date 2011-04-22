@@ -55,18 +55,21 @@ namespace Bottles.Deployment.Diagnostics
         {
             LogObject(deployer, "Running for host '{0}'".ToFormat(host.Name));
             LogFor(host).AddChild(deployer);
+            action(deployer);
         }
 
         public void LogFinalizer(IFinalizer finalizer, HostManifest host, Action<IFinalizer> action)
         {
             LogObject(finalizer, "Running for host '{0}'".ToFormat(host.Name));
             LogFor(host).AddChild(finalizer);
+            action(finalizer);
         }
 
         public void LogInitializer(IInitializer initializer, HostManifest host, Action<IInitializer> action)
         {
             LogObject(initializer, "Running for host '{0}'".ToFormat(host.Name));
             LogFor(host).AddChild(initializer);
+            action(initializer);
         }
 
         public void LogExecution(object target, string description, Action continuation)
@@ -87,6 +90,14 @@ namespace Bottles.Deployment.Diagnostics
             {
                 stopwatch.Stop();
                 log.TimeInMilliseconds = stopwatch.ElapsedMilliseconds;
+            }
+        }
+
+        public void ForEach(Action<IPackageDeploymentLog> action)
+        {
+            foreach (var packageDeploymentLog in _logs)
+            {
+                action(packageDeploymentLog);
             }
         }
     }

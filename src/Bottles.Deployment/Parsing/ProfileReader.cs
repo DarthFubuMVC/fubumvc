@@ -8,22 +8,28 @@ namespace Bottles.Deployment.Parsing
     {
         private readonly IRecipeSorter _sorter;
         private readonly DeploymentSettings _settings;
+        private readonly IFileSystem _fileSystem;
 
-        public ProfileReader(IRecipeSorter sorter, DeploymentSettings settings)
+        public ProfileReader(IRecipeSorter sorter, DeploymentSettings settings, IFileSystem fileSystem)
         {
             _sorter = sorter;
+            _fileSystem = fileSystem;
             _settings = settings;
         }
 
         public IEnumerable<HostManifest> Read()
         {
             var environment = new EnvironmentSettings();
-            new FileSystem().ReadTextFile(_settings.EnvironmentFile, environment.ReadText);
+            _fileSystem.ReadTextFile(_settings.EnvironmentFile, environment.ReadText);
 
             var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
             recipes = _sorter.Order(recipes);
 
-            // TODO -- harden.  Must be at least 1 recipe
+            //REVIEW: hardening
+            if (recipes == null || !recipes.Any())
+                return new HostManifest[0];
+            //hardening
+
             var firstRecipe = recipes.First();
             recipes.Skip(1).Each(firstRecipe.AppendBehind);
 
@@ -31,6 +37,7 @@ namespace Bottles.Deployment.Parsing
 
             addEnvironmentSettingsToHosts(environment, hosts);
 
+            
             return hosts;
         }
 

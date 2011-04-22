@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Bottles.Deployment.Diagnostics;
 using FubuCore;
 using Microsoft.Web.Administration;
@@ -58,23 +59,19 @@ namespace Bottles.Deployment.Deployers
                 iisManager.CommitChanges();
             }
 
-
-            //host bottle
             _bottles.ExplodeTo(direc.HostBottle, direc.VDirPhysicalPath);
-//
-//            var webContent = FileSystem.Combine(direc.VDirPhysicalPath, "WebContent");
-//            _fileSystem.MoveFiles(webContent, direc.VDirPhysicalPath);
-//
-//            _fileSystem.DeleteDirectory(webContent);
-//
-//            var bottleDest = FileSystem.Combine(direc.VDirPhysicalPath, "packages");
-//            direc.Bottles.Each(b =>
-//            {
-//                _bottles.CopyTo(b, bottleDest);
-//            });
-//            
-//
-//            _fileSystem.DeleteFile(appOfflineFile);
+
+            var webContent = FileSystem.Combine(direc.VDirPhysicalPath, "WebContent");
+            _fileSystem.MoveFiles(webContent, direc.VDirPhysicalPath);
+
+            _fileSystem.DeleteDirectory(webContent);
+
+            var bottleDest = FileSystem.Combine(direc.VDirPhysicalPath, "packages");
+            direc.Bottles.Each(b =>
+            {
+                _bottles.CopyTo(b, bottleDest);
+            });
+
         }
     }
 }

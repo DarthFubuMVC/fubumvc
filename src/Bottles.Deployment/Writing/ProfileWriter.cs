@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
+using System.Threading;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuCore.Util;
@@ -35,9 +36,10 @@ namespace Bottles.Deployment.Writing
         public void Flush()
         {
             _system.DeleteDirectory(_destination);
+            Thread.Sleep(10); //file system is async
 
             _system.CreateDirectory(_destination);
-            _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesFolder));
+            _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesDirectory));
 
             writeEnvironmentSettings();
 
@@ -55,7 +57,7 @@ namespace Bottles.Deployment.Writing
 
         private void writeRecipe(RecipeDefinition recipe)
         {
-            var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesFolder, recipe.Name);
+            var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesDirectory, recipe.Name);
             _system.CreateDirectory(recipeDirectory);
 
             var controlFilePath = FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile);

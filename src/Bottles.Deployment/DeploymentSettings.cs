@@ -1,11 +1,19 @@
+using FubuCore;
+
 namespace Bottles.Deployment
 {
     public class DeploymentSettings
     {
+        public DeploymentSettings(string path)
+        {
+            BottlesDirectory = FileSystem.Combine(path, ProfileFiles.BottlesDirectory);
+            RecipesDirectory = FileSystem.Combine(path, ProfileFiles.RecipesDirectory);
+            EnvironmentFile = FileSystem.Combine(ProfileFiles.EnvironmentSettingsFileName);
+        }
         public DeploymentSettings()
         {
-            BottlesDirectory = "bottles";
-            RecipesDirectory = ProfileFiles.RecipesFolder;
+            BottlesDirectory = ProfileFiles.BottlesDirectory;
+            RecipesDirectory = ProfileFiles.RecipesDirectory;
             EnvironmentFile = ProfileFiles.EnvironmentSettingsFileName;
         }
 

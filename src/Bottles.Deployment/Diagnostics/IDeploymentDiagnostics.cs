@@ -19,6 +19,9 @@ namespace Bottles.Deployment.Diagnostics
         void LogFinalization(IFinalizer finalizer, IDirective directive);
 
         void LogExecution(object target, string description, Action continuation);
-        
+
+
+
+        void ForEach(Action<IPackageDeploymentLog> action);
     }
 }
