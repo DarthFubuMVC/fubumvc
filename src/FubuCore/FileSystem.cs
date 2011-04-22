@@ -44,22 +44,31 @@ namespace FubuCore
 
     public static class FileSystemExtensions
     {
+        public static bool DirectoryExists(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            return fileSystem.DirectoryExists(FileSystem.Combine(pathParts));
+        }
+
         public static void LaunchEditor(this IFileSystem fileSystem, params string[] pathParts)
         {
             fileSystem.LaunchEditor(FileSystem.Combine(pathParts));
         }
+
         public static bool FileExists(this IFileSystem fileSystem, params string[] pathParts)
         {
             return fileSystem.FileExists(FileSystem.Combine(pathParts));
         }
+
         public static T LoadFromFile<T>(this IFileSystem fileSystem, params string[] pathParts) where T : new()
         {
             return fileSystem.LoadFromFile<T>(FileSystem.Combine(pathParts));
         }
+
         public static IEnumerable<string> ChildDirectoriesFor(this IFileSystem fileSystem, params string[] pathParts)
         {
             return fileSystem.ChildDirectoriesFor(FileSystem.Combine(pathParts));
         }
+
         public static IEnumerable<string> FileNamesFor(this IFileSystem fileSystem, FileSet set, params string[] pathParts)
         {
             return fileSystem.FindFiles(FileSystem.Combine(pathParts), set);
@@ -74,9 +83,15 @@ namespace FubuCore
         {
             fileSystem.WriteObjectToFile(FileSystem.Combine(pathParts), target);
         }
+
         public static void DeleteDirectory(this IFileSystem fileSystem, params string[] pathParts)
         {
             fileSystem.DeleteDirectory(FileSystem.Combine(pathParts));
+        }
+
+        public static void CreateDirectory(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            fileSystem.CreateDirectory(FileSystem.Combine(pathParts));
         }
     }
 

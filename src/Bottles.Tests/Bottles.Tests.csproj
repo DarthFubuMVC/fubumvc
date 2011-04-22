@@ -65,6 +65,7 @@
     <Compile Include="Commands\CreatePackageCommandTester.cs" />
     <Compile Include="Creation\PackageCreatorTester.cs" />
     <Compile Include="Deployment\Bootstrapping\DeploymentBootstrapperIntegratedTester.cs" />
+    <Compile Include="Deployment\Commands\InitializeCommandTester.cs" />
     <Compile Include="Deployment\EnvironmentSettingsTester.cs" />
     <Compile Include="Deployment\FakeDepolyer.cs" />
     <Compile Include="Deployment\FubuTestApplicationDeploymentIntegrationTester.cs" />
