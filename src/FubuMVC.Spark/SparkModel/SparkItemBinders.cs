@@ -10,6 +10,9 @@ namespace FubuMVC.Spark.SparkModel
     // Not so happy about this whole "binding", but it somewhat allows for 
     // reversibility because of its central usage. Ask JDM for advice/feedback.
 
+    // TODO: Separate parts that parse information (introduce parseobject for master, namespace, type, etc) 
+    // from those that apply policy, and run these before policies in the builder.
+
     public class BindContext
     {
         public string FileContent { get; set; }
