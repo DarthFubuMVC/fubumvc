@@ -1,6 +1,7 @@
 using BottleDeployers2;
 using Bottles.Deployment;
 using Bottles.Deployment.Bootstrapping;
+using Bottles.Deployment.Deployers;
 using Bottles.Deployment.Runtime;
 using NUnit.Framework;
 using StructureMap;
@@ -25,13 +26,17 @@ namespace Bottles.Tests.Deployment.Bootstrapping
         {
             var builder = theContainer.GetInstance<DirectiveTypeRegistry>();
 
-            builder.DirectiveTypes().ShouldHaveTheSameElementsAs(
+            var x = builder.DirectiveTypes();
+            x.ShouldHaveTheSameElementsAs(
                 typeof(BottleDeployers1.OneDirective),
                 typeof(BottleDeployers1.TwoDirective),
                 typeof(BottleDeployers1.ThreeDirective),
                 typeof(BottleDeployers2.FourDirective),
                 typeof(BottleDeployers2.FiveDirective),
-                typeof(BottleDeployers2.SixDirective)
+                typeof(BottleDeployers2.SixDirective),
+                typeof(ScheduledTask),
+                typeof(IisFubuWebsite),
+                typeof(TopshelfService)
                 );
         }
 
