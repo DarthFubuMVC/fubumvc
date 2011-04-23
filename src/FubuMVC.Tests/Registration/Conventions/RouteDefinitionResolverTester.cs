@@ -297,5 +297,15 @@ namespace FubuMVC.Tests.Registration.Conventions
             buildRoute(x => x.SomeMethod(null), c => { });
             var log = observer.GetLog(lastCall);
         }
+
+        [Test]
+        public void build_route_when_ignoring_suffix_of_controller_name()
+        {
+            resolver.DefaultUrlPolicy.IgnoreClassSuffix("Tester");
+            var route = buildRoute(x => x.SomeMethod(null), c => { });
+            route.Input.ShouldBeOfType<RouteInput<RouteInputModel>>();
+
+            route.Pattern.ShouldEqual("fubumvc/tests/registration/conventions/routeresolver/somemethod/{Name}/{Age}");
+        }
     }
 }
