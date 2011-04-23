@@ -176,7 +176,11 @@ namespace FubuMVC.Spark.Rendering
         // Methods
         public void Invoke(RenderContext context)
         {
-            context.Get<SparkViewDescriptor>().AddTemplate(context.Get<SparkItem>().Master.PrefixedRelativePath);
+            var item = context.Get<SparkItem>();
+            if (item.Master != null)
+            {
+                context.Get<SparkViewDescriptor>().AddTemplate(item.Master.PrefixedRelativePath);
+            }
         }
     }
 
