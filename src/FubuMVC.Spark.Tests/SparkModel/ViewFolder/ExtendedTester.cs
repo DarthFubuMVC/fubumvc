@@ -43,7 +43,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             var scanner = new SparkItemFinder(new FileScanner(), roots);
             var allItems = new SparkItems(scanner.FindItems());
 
-            var binder = new PathPrefixBinder();
+            var binder = new ViewPathBinder();
             allItems.Each(x => binder.Bind(x, null));
 
             _viewFolder = new SparkItemViewFolder(allItems);
@@ -168,7 +168,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
         private string getViewSource(SparkItem item)
         {
-            var content = _viewFolder.GetViewSource(item.PrefixedRelativePath);
+            var content = _viewFolder.GetViewSource(item.ViewPath);
             using (var stream = content.OpenViewStream())
             {
                 using (var reader = new StreamReader(stream))
@@ -182,8 +182,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         {
             templates = templates ?? Enumerable.Empty<SparkItem>().ToArray();
             var descriptor = new SparkViewDescriptor();
-            descriptor.AddTemplate(item.PrefixedRelativePath);
-            templates.Each(x => descriptor.AddTemplate(x.PrefixedRelativePath));
+            descriptor.AddTemplate(item.ViewPath);
+            templates.Each(x => descriptor.AddTemplate(x.ViewPath));
 
             var instance = _engine.CreateInstance(descriptor);
             var writer = new StringWriter();

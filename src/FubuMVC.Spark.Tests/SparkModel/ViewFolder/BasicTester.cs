@@ -49,7 +49,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
                 _pak1HomeView, _pak1NamePartialView,
                 _pak2HomeView, _pak2ApplicationView, _pak2ThemeView
             };
-            var binder = new PathPrefixBinder();
+            var binder = new ViewPathBinder();
             sparkItems.Each(x =>  binder.Bind(x, null));
 
             _viewFolder = new SparkItemViewFolder(sparkItems);
@@ -72,21 +72,21 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         [Test]
         public void can_resolve_view_from_package()
         {
-            _viewFolder.HasView(_pak1HomeView.PrefixedRelativePath)
+            _viewFolder.HasView(_pak1HomeView.ViewPath)
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_master_from_package()
         {
-            _viewFolder.HasView(_pak2ApplicationView.PrefixedRelativePath)
+            _viewFolder.HasView(_pak2ApplicationView.ViewPath)
                 .ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_partial_from_package()
         {
-            _viewFolder.HasView(_pak1NamePartialView.PrefixedRelativePath)
+            _viewFolder.HasView(_pak1NamePartialView.ViewPath)
                 .ShouldBeTrue();
         }
 
@@ -94,35 +94,35 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         public void listviews_returns_views_in_prefixed_relative_path()
         {
             var foundViews = new List<string>();
-            
-            _hostHomeView.PrefixedRelativePath.getPathParts()
+
+            _hostHomeView.ViewPath.getPathParts()
                 .Union(new[] { Constants.SharedSpark })
                 .Each(path => foundViews.AddRange(_viewFolder.ListViews(path)));
                 
             foundViews.ShouldHaveTheSameElementsAs(
-                _hostHomeView.PrefixedRelativePath,
-                _hostApplicationView.PrefixedRelativePath,
-                _hostFooterPartialView.PrefixedRelativePath);
+                _hostHomeView.ViewPath,
+                _hostApplicationView.ViewPath,
+                _hostFooterPartialView.ViewPath);
         }
 
         [Test]
         public void returns_viewsource_for_partial_from_package()
         {
-            readfromStream(_pak1NamePartialView.PrefixedRelativePath)
+            readfromStream(_pak1NamePartialView.ViewPath)
                 .ShouldEqual("Pak1");
         }
 
         [Test]
         public void returns_viewsource_for_view_from_package()
         {
-            readfromStream(_pak1HomeView.PrefixedRelativePath)
+            readfromStream(_pak1HomeView.ViewPath)
                 .ShouldEqual(@"home from <name /><footer />");
         }
 
         [Test]
         public void returns_viewsource_for_master_from_package()
         {
-            readfromStream(_pak2ApplicationView.PrefixedRelativePath)
+            readfromStream(_pak2ApplicationView.ViewPath)
                 .ShouldEqual(@"<div>Pak2 Application: <use:view/></div>");
         }
 

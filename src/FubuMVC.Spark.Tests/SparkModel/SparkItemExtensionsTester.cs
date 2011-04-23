@@ -7,13 +7,13 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class SparkItemTester
+    public class SparkItemExtensionsTester
     {
         private readonly SparkItem _bottomItem;
         private readonly SparkItem _middleItem;
         private readonly SparkItem _topItem;
 
-        public SparkItemTester()
+        public SparkItemExtensionsTester()
         {
             var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
 

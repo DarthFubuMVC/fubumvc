@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore.Util;
 using Spark.FileSystem;
@@ -10,14 +11,14 @@ namespace FubuMVC.Spark.SparkModel
         private readonly IEnumerable<SparkItem> _items;
         private readonly Cache<string, IList<string>> _listViews;
         private readonly Cache<string, bool> _hasView;
-        private readonly Cache<string, string> _getViewPath;
+        private readonly Cache<string, string> _getFilePath;
 
         public SparkItemViewFolder(IEnumerable<SparkItem> items)
         {
             _items = items;
             _listViews = new Cache<string, IList<string>>(listViews);
             _hasView = new Cache<string, bool>(hasView);
-            _getViewPath = new Cache<string, string>(getViewPath);
+            _getFilePath = new Cache<string, string>(getFilePath);
         }
 
         public IList<string> ListViews(string path)
@@ -32,27 +33,26 @@ namespace FubuMVC.Spark.SparkModel
 
         public IViewFile GetViewSource(string path)
         {
-            var filePath = _getViewPath[path];
-            return new FileSystemViewFile(filePath);
+            return new FileSystemViewFile(_getFilePath[path]);
         }
 
         private IList<string> listViews(string path)
         {
             return _items
-               .Where(x => x.PrefixedRelativeDirectoryPath == path)
-               .Select(x => x.PrefixedRelativePath)
+               .Where(x => Path.GetDirectoryName(x.ViewPath) == path)
+               .Select(x => x.ViewPath)
                .ToList();
         }
 
         private bool hasView(string path)
         {
-            return _items.Any(x => x.PrefixedRelativePath == path);
+            return _items.Any(x => x.ViewPath == path);
         }
 
-        private string getViewPath(string path)
+        private string getFilePath(string path)
         {
-            var item = _items.Where(x => x.PrefixedRelativePath == path).First();
-            return item.FilePath;
+            return _items.Where(x => x.ViewPath == path).First().FilePath;
+
         }
     }
 }

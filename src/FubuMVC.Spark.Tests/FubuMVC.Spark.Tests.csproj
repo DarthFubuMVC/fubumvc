@@ -62,7 +62,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="SparkModel\Binders\PathPrefixBinderTester.cs" />
+    <Compile Include="SparkModel\Binders\ViewPathBinderTester.cs" />
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="Experiments\Classes.cs" />
     <Compile Include="Experiments\RenderSparkViewBehavior.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="SparkModel\Binders\NamespaceBinderTester.cs" />
     <Compile Include="SparkModel\Scanning\SparkScannerTester.cs" />
     <Compile Include="SparkModel\SparkItemFinderTester.cs" />
-    <Compile Include="SparkModel\SparkItemTester.cs" />
+    <Compile Include="SparkModel\SparkItemExtensionsTester.cs" />
     <Compile Include="SparkModel\Binders\ViewModelBinderTester.cs" />
   </ItemGroup>
   <ItemGroup>

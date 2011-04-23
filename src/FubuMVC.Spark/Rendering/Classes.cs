@@ -166,7 +166,7 @@ namespace FubuMVC.Spark.Rendering
         public void Invoke(RenderContext context)
         {
             var descriptor = new SparkViewDescriptor();
-            descriptor.AddTemplate(context.Get<SparkItem>().PrefixedRelativePath);
+            descriptor.AddTemplate(context.Get<SparkItem>().ViewPath);
             context.Set(descriptor);
         }
     }
@@ -179,7 +179,7 @@ namespace FubuMVC.Spark.Rendering
             var item = context.Get<SparkItem>();
             if (item.Master != null)
             {
-                context.Get<SparkViewDescriptor>().AddTemplate(item.Master.PrefixedRelativePath);
+                context.Get<SparkViewDescriptor>().AddTemplate(item.Master.ViewPath);
             }
         }
     }

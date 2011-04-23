@@ -6,14 +6,14 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
     [TestFixture]
-    public class PathPrefixBinderTester : InteractionContext<PathPrefixBinder>
+    public class ViewPathBinderTester : InteractionContext<ViewPathBinder>
     {
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()
         {
             var item = new SparkItem("", "", Constants.HostOrigin);
             ClassUnderTest.Bind(item, null);
-            item.PathPrefix.ShouldBeEmpty();
+            item.ViewPath.ShouldBeEmpty();
         }
 
         [Test]
@@ -21,7 +21,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         {
             var item = new SparkItem("", "", "Foo");
             ClassUnderTest.Bind(item, null);
-            item.PathPrefix.ShouldNotBeEmpty();
+            item.ViewPath.ShouldNotBeEmpty();
         }
 
         [Test]
@@ -34,9 +34,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 
             new[] { baz1, baz2, bar1, bar2 }.Each(x => ClassUnderTest.Bind(x, null));
 
-            baz1.PathPrefix.ShouldEqual(baz2.PathPrefix);
-            bar1.PathPrefix.ShouldEqual(bar2.PathPrefix);
-            baz1.PathPrefix.ShouldNotEqual(bar1.PathPrefix);
+            baz1.ViewPath.ShouldEqual(baz2.ViewPath);
+            bar1.ViewPath.ShouldEqual(bar2.ViewPath);
+            baz1.ViewPath.ShouldNotEqual(bar1.ViewPath);
         }
     }
 }

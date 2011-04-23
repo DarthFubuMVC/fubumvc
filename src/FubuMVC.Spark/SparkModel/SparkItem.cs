@@ -1,19 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public static class Constants
-    {
-        // Meh.
-        public const string HostOrigin = "Host";
-        // Should come from Spark Constants.Shared (in v1.5)
-        public const string SharedSpark = "Shared";
-    }
-
     public class SparkItem
     {
         public SparkItem(string filePath, string rootPath, string origin)
@@ -29,36 +19,9 @@ namespace FubuMVC.Spark.SparkModel
 
         public SparkItem Master { get; set; }
         public Type ViewModelType { get; set; }
+        
         public string Namespace { get; set; }
-
-        public string RelativePath()
-        {
-            return FilePath.PathRelativeTo(RootPath);
-        }
-
-        public string DirectoryPath()
-        {
-            return Path.GetDirectoryName(FilePath);
-        }
-
-        public string RelativeDirectoryPath()
-        {
-            return DirectoryPath().PathRelativeTo(RootPath);
-        }
-
-        public string Name()
-        {
-            return Path.GetFileNameWithoutExtension(FilePath);
-        }
-
-        public string PathPrefix { get; set; }
-        public string PrefixedRelativePath { get { return FileSystem.Combine(PathPrefix, RelativePath()); } }
-        public string PrefixedRelativeDirectoryPath { get { return FileSystem.Combine(PathPrefix, RelativeDirectoryPath()); } }
-
-        public bool HasViewModel()
-        {
-            return ViewModelType != null;
-        }
+        public string ViewPath { get; set; }
 
         public override string ToString()
         {

@@ -5,14 +5,10 @@ using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel.Parsing;
 
+// Below needs some serious fix up.
+
 namespace FubuMVC.Spark.SparkModel
 {
-    // Not so happy about this whole "binding", but it somewhat allows for 
-    // reversibility because of its central usage. Ask JDM for advice/feedback.
-
-    // TODO: Separate parts that parse information (introduce parseobject for master, namespace, type, etc) 
-    // from those that apply policy, and run these before policies in the builder.
-
     public class BindContext
     {
         public string FileContent { get; set; }
@@ -20,14 +16,11 @@ namespace FubuMVC.Spark.SparkModel
         public SparkItems SparkItems { get; set; }
     }
 
-    // Take a good look at binders in Fubu. Would be nice to use IPropertyBinder etc. But it assumes IoC :/
     public interface ISparkItemBinder
     {
-        bool Applies(SparkItem item);
         void Bind(SparkItem item, BindContext context);
     }
 
-    // Extract logic into something less if else smelly - introduce two modifiers to deal with packages and host, respectively.
     public class MasterPageBinder : ISparkItemBinder
     {
         // Allow for convention on this - consider possibility for other "shared" folders
@@ -40,16 +33,11 @@ namespace FubuMVC.Spark.SparkModel
             _sparkParser = sparkParser;
         }
 
-        public bool Applies(SparkItem item)
-        {
-            return true;
-        }
-
         public void Bind(SparkItem item, BindContext context)
         {
             var masterName = _sparkParser.ParseMasterName(context.FileContent) ?? DefaultMaster;
             if (masterName.IsEmpty()) return;
-            // No IoC is a bit hard :)
+
             var locator = new SharedItemLocator(context.SparkItems, new[] {Constants.SharedSpark});
             item.Master = locator.LocateSpark(masterName, item);
 
@@ -70,11 +58,6 @@ namespace FubuMVC.Spark.SparkModel
             _sparkParser = sparkParser;
         }
 
-        public bool Applies(SparkItem item)
-        {
-            return true;
-        }
-
         public void Bind(SparkItem item, BindContext context)
         {
             var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
@@ -90,19 +73,10 @@ namespace FubuMVC.Spark.SparkModel
 
     public class NamespaceBinder : ISparkItemBinder
     {
-        public bool Applies(SparkItem item)
-        {
-            return item.HasViewModel();
-        }
-
         public void Bind(SparkItem item, BindContext context)
         {
-            item.Namespace = resolveNamespace(item);
-        }
-
-        // TODO : Get opinions on this.
-        private static string resolveNamespace(SparkItem item)
-        {
+            if (!item.HasViewModel()) return;
+            
             var relativePath = item.RelativePath();
             var relativeNamespace = Path.GetDirectoryName(relativePath);
 
@@ -111,32 +85,27 @@ namespace FubuMVC.Spark.SparkModel
             {
                 nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
             }
-
-            return nspace;
+            
+            item.Namespace = nspace;
         }
     }
 
-    public class PathPrefixBinder : ISparkItemBinder
+    public class ViewPathBinder : ISparkItemBinder
     {
         private readonly Cache<string, string> _cache;
-        public PathPrefixBinder()
+        public ViewPathBinder()
         {
             _cache = new Cache<string, string>(getPrefix);
         }
 
-        public bool Applies(SparkItem item)
-        {
-            return true;
-        }
-
         public void Bind(SparkItem item, BindContext context)
         {
-            item.PathPrefix = _cache[item.Origin];
+            item.ViewPath = FileSystem.Combine(_cache[item.Origin], item.RelativePath());
         }
 
         private static string getPrefix(string origin)
         {
-            return origin == Constants.HostOrigin ? string.Empty : "__" + origin + "__";
+            return origin == Constants.HostOrigin ? string.Empty : "__" + origin;
         }
     }
 }

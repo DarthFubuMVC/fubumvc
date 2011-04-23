@@ -55,7 +55,7 @@ namespace FubuMVC.Spark.Tests.Experiments
                 _pak2ApplicationView,
                 _pak2ThemeView
             };
-            var binder = new PathPrefixBinder();
+            var binder = new ViewPathBinder();
             sparkItems.Each(x => binder.Bind(x, null));
 
             var settings = new SparkSettings();
@@ -71,20 +71,20 @@ namespace FubuMVC.Spark.Tests.Experiments
         public void list_views_returns_correct_paths()
         {
             new ViewLoader {ViewFolder = new SparkItemViewFolder(new []{_pak1HomeView, _pak1NamePartialView})}
-                .FindPartialFiles(_pak1HomeView.PrefixedRelativePath)
+                .FindPartialFiles(_pak1HomeView.ViewPath)
                 .ShouldContain("name");
         }
 
         [Test]
         public void can_resolve_entries_from_host()
         {
-            _engine.ViewFolder.HasView(_hostHomeView.PrefixedRelativePath).ShouldBeTrue();
+            _engine.ViewFolder.HasView(_hostHomeView.ViewPath).ShouldBeTrue();
         }
 
         [Test]
         public void can_resolve_entries_from_package()
         {
-            _engine.ViewFolder.HasView(_pak1HomeView.PrefixedRelativePath).ShouldBeTrue();
+            _engine.ViewFolder.HasView(_pak1HomeView.ViewPath).ShouldBeTrue();
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace FubuMVC.Spark.Tests.Experiments
             ISparkView instance;
             string content;
 
-            descriptor.AddTemplate(_pak1HomeView.PrefixedRelativePath);
+            descriptor.AddTemplate(_pak1HomeView.ViewPath);
            
             instance = _engine.CreateInstance(descriptor);
             instance.RenderView(writer);
@@ -112,7 +112,7 @@ namespace FubuMVC.Spark.Tests.Experiments
             ISparkView instance;
             string content;
 
-            descriptor.AddTemplate(_hostHomeView.PrefixedRelativePath);
+            descriptor.AddTemplate(_hostHomeView.ViewPath);
 
             instance = _engine.CreateInstance(descriptor);
             instance.RenderView(writer);
@@ -129,8 +129,8 @@ namespace FubuMVC.Spark.Tests.Experiments
             ISparkView instance;
             string content;
 
-            descriptor.AddTemplate(_pak2HomeView.PrefixedRelativePath); // view
-            descriptor.AddTemplate(_hostApplicationView.PrefixedRelativePath); // master, or, pak2HomeView.Master.PrefixedRelativePath()
+            descriptor.AddTemplate(_pak2HomeView.ViewPath); // view
+            descriptor.AddTemplate(_hostApplicationView.ViewPath); // master, or, pak2HomeView.Master.PrefixedRelativePath()
 
             instance = _engine.CreateInstance(descriptor);
             instance.RenderView(writer);
@@ -148,8 +148,8 @@ namespace FubuMVC.Spark.Tests.Experiments
             ISparkView instance;
             string content;
 
-            descriptor.AddTemplate(_pak2HomeView.PrefixedRelativePath); // view
-            descriptor.AddTemplate(_pak2ApplicationView.PrefixedRelativePath); // master, or, pak2HomeView.Master.PrefixedRelativePath()
+            descriptor.AddTemplate(_pak2HomeView.ViewPath); // view
+            descriptor.AddTemplate(_pak2ApplicationView.ViewPath); // master, or, pak2HomeView.Master.PrefixedRelativePath()
 
             instance = _engine.CreateInstance(descriptor);
             instance.RenderView(writer);
@@ -166,8 +166,8 @@ namespace FubuMVC.Spark.Tests.Experiments
             ISparkView instance;
             string content;
 
-            descriptor.AddTemplate(_hostHomeView.PrefixedRelativePath); // view
-            descriptor.AddTemplate(_pak2ThemeView.PrefixedRelativePath); // master, or, _hostHomeView.Master.PrefixedRelativePath()
+            descriptor.AddTemplate(_hostHomeView.ViewPath); // view
+            descriptor.AddTemplate(_pak2ThemeView.ViewPath); // master, or, _hostHomeView.Master.PrefixedRelativePath()
 
             instance = _engine.CreateInstance(descriptor);
             instance.RenderView(writer);

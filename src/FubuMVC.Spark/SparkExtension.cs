@@ -22,7 +22,7 @@ namespace FubuMVC.Spark
                 .Apply<MasterPageBinder>()
                 .Apply<ViewModelBinder>()
                 .Apply<NamespaceBinder>()
-                .Apply<PathPrefixBinder>();
+                .Apply<ViewPathBinder>();
 
             _sparkItems = new SparkItems();
             _sparkViewEngine = new SparkViewEngine();
