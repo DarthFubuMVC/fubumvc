@@ -10,10 +10,10 @@ namespace Bottles.Deployment.Commands
 
     public class AddDirectiveInput
     {
-        [Description("The recipie to add the directive to.")]
+        [Description("The recipe to add the directive to.")]
         public string Recipe { get; set; }
 
-        [Description("The host in the recipie to add the directive to.")]
+        [Description("The host in the recipe to add the directive to.")]
         public string Host { get; set; }
 
         [Description("The directive to add.")]
@@ -28,7 +28,7 @@ namespace Bottles.Deployment.Commands
         }
     }
 
-    [CommandDescription("Adds a directive to an existing /deployment/recipie/host ")]
+    [CommandDescription("Adds a directive to an existing /deployment/recipe/host ", Name="add-directive")]
     public class AddDirectiveCommand : FubuCommand<AddDirectiveInput>
     {
         public override bool Execute(AddDirectiveInput input)

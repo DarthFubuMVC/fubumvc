@@ -1,6 +1,4 @@
-using System;
 using System.ComponentModel;
-using System.IO;
 using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -21,7 +19,7 @@ namespace Bottles.Deployment.Commands
         }
     }
 
-    [CommandDescription("Seeds the /deployment folder structure underneath the root directory of a codebase")]
+    [CommandDescription("Seeds the /deployment folder structure underneath the root directory of a codebase", Name="init")]
     public class InitializeCommand : FubuCommand<InitializeInput>
     {
         public static readonly string DIRECTORY_ALREADY_EXISTS = "Directory {0} already exists. Use the -f flag to overwrite the existing structure";
