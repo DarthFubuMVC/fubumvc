@@ -47,6 +47,8 @@
     <Compile Include="Bootstrapping\DeploymentBootstrapper.cs" />
     <Compile Include="Bootstrapping\DeploymentRegistry.cs" />
     <Compile Include="BottleReference.cs" />
+    <Compile Include="Commands\AddDirectiveCommand.cs" />
+    <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\ISimpleLogger.cs" />
     <Compile Include="DependsOnAttribute.cs" />

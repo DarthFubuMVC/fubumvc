@@ -61,6 +61,7 @@
     <Compile Include="AssemblyFileFinderTester.cs" />
     <Compile Include="AssemblyLoaderTester.cs" />
     <Compile Include="AssemblyPackageInfoTester.cs" />
+    <Compile Include="Commands\AddDirectiveCommandTester.cs" />
     <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="Commands\AssembliesInputTester.cs" />
     <Compile Include="Commands\CreatePackageCommandTester.cs" />

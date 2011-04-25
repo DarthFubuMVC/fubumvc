@@ -17,11 +17,14 @@ namespace Bottles.Deployment
             EnvironmentFile = ProfileFiles.EnvironmentSettingsFileName;
         }
 
+
         public string BottlesDirectory { get; set;}
         public string RecipesDirectory { get; set;}
         public string EnvironmentFile { get; set;}
 
-        // user has typed '-f' at the command line
+        /// <summary>
+        /// user has typed '-f' at the command line
+        /// </summary>
         public bool UserForced { get; set; }
     }
 }
