@@ -121,20 +121,21 @@ namespace FubuMVC.Spark.Rendering
 
         public ISparkView GetView()
         {
-            var view = getView(_engine, _descriptor);
+            var view = getView();
             _activator.Activate(view);
             return view;
         }
-        private ISparkView getView(ISparkViewEngine engine, SparkViewDescriptor descriptor)
+
+        private ISparkView getView()
         {
             ISparkViewEntry entry;
-            var key = descriptor.GetHashCode();
+            var key = _descriptor.GetHashCode();
             _cache.TryGetValue(key, out entry);
             if (entry == null || !entry.IsCurrent())
             {
+                entry = _engine.CreateEntry(_descriptor);
                 lock (_cache)
                 {
-                    entry = engine.CreateEntry(descriptor);
                     _cache[key] = entry;
                 }
             }
