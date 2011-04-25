@@ -1,9 +1,9 @@
 ﻿namespace Bottles.Deployment.Directives
 {
-    public class IisFubuWebsite : IDirective
+    public class FubuWebsite : IDirective
     {
 
-        public IisFubuWebsite()
+        public FubuWebsite()
         {
             Port = 80;
             DirectoryBrowsing = Activation.Disable;

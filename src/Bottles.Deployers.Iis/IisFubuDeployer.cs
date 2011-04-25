@@ -7,7 +7,7 @@ using Microsoft.Web.Administration;
 
 namespace Bottles.Deployers.Iis
 {
-    public class IisFubuDeployer : IDeployer<IisFubuWebsite>
+    public class IisFubuDeployer : IDeployer<FubuWebsite>
     {
         private readonly IFileSystem _fileSystem;
         private readonly IBottleRepository _bottles;
@@ -25,7 +25,7 @@ namespace Bottles.Deployers.Iis
         {
             _diagnostics.LogDeployment(this, directive);
 
-            var direc = (IisFubuWebsite) directive;
+            var direc = (FubuWebsite) directive;
 
             //currenly only IIS 7
             using (var iisManager = new ServerManager())
@@ -71,7 +71,7 @@ namespace Bottles.Deployers.Iis
            
         }
 
-        private void MoveWebContentOut(IisFubuWebsite direc)
+        private void MoveWebContentOut(FubuWebsite direc)
         {
             _bottles.ExplodeTo(direc.HostBottle, direc.VDirPhysicalPath);
 

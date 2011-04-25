@@ -25,7 +25,7 @@ namespace Bottles.Tests.Deployment
             
             var h = r.HostFor("web");
 
-            var d = new IisFubuWebsite();
+            var d = new FubuWebsite();
 
             d.WebsiteName = "test";
             d.WebsitePhysicalPath = @"C:\dev\test-web";

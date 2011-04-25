@@ -69,7 +69,7 @@
     <Compile Include="Parsing\RecipeSorter.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="Directives\Activation.cs" />
-    <Compile Include="Directives\IisFubuWebsite.cs" />
+    <Compile Include="Directives\FubuWebsite.cs" />
     <Compile Include="BottleRepository.cs" />
     <Compile Include="Directives\TopshelfService.cs" />
     <Compile Include="HostManifest.cs" />

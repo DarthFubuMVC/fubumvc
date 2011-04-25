@@ -26,7 +26,7 @@ namespace Bottles.Tests.Deployment
             var deployer = new IisFubuDeployer(fileSystem, bottles, fakeDeploymentDiagnostics);
             
 
-            var directive = new IisFubuWebsite();
+            var directive = new FubuWebsite();
             directive.HostBottle = "test";
             directive.WebsiteName = "fubu";
             directive.WebsitePhysicalPath = @"C:\dev\test-web";

@@ -4,7 +4,7 @@ using FubuCore;
 
 namespace Bottles.Deployers.Iis
 {
-    public class IisFubuFinalizer : IFinalizer<IisFubuWebsite>
+    public class IisFubuFinalizer : IFinalizer<FubuWebsite>
     {
         private IFileSystem _fileSystem;
 
@@ -15,7 +15,7 @@ namespace Bottles.Deployers.Iis
 
         public void Finish(IDirective directive)
         {
-            var d = (IisFubuWebsite) directive;
+            var d = (FubuWebsite) directive;
 
             _fileSystem.DeleteFile(FileSystem.Combine(d.VDirPhysicalPath, "app_offline.htm"));
         }

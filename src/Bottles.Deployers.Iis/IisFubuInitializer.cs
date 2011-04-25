@@ -5,7 +5,7 @@ using FubuCore;
 
 namespace Bottles.Deployers.Iis
 {
-    public class IisFubuInitializer : IInitializer<IisFubuWebsite>
+    public class IisFubuInitializer : IInitializer<FubuWebsite>
     {
 
         private readonly IFileSystem _fileSystem;
@@ -23,7 +23,7 @@ namespace Bottles.Deployers.Iis
         {
             _diagnostics.LogInitialization(this, directive);
 
-            var direc = (IisFubuWebsite)directive;
+            var direc = (FubuWebsite)directive;
 
             if(_settings.UserForced)
             {

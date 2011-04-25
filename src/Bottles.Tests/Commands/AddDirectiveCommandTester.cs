@@ -16,7 +16,7 @@ namespace Bottles.Tests.Commands
         {
             theInput = new AddDirectiveInput()
                        {
-                           Directive = "IisFubuWebsite",
+                           Directive = "FubuWebsite",
                            Host = "midge",
                            Recipe = "brownies",
                            DeploymentFlag = @".\iisfubu"
@@ -26,7 +26,7 @@ namespace Bottles.Tests.Commands
 
         private void finds_directive()
         {
-            MockFor<IDirectiveTypeRegistry>().Stub(x => x.DirectiveTypeFor("IisFubuWebsite")).Return(typeof (IisFubuWebsite));
+            MockFor<IDirectiveTypeRegistry>().Stub(x => x.DirectiveTypeFor("FubuWebsite")).Return(typeof (FubuWebsite));
         }
         private void execute()
         {
@@ -40,7 +40,7 @@ namespace Bottles.Tests.Commands
 
             execute();
 
-            MockFor<IDirectiveTypeRegistry>().AssertWasCalled(x=>x.DirectiveTypeFor("IisFubuWebsite"));
+            MockFor<IDirectiveTypeRegistry>().AssertWasCalled(x=>x.DirectiveTypeFor("FubuWebsite"));
         }
 
 
