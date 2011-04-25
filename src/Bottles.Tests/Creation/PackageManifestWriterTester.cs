@@ -9,7 +9,7 @@ using Is = Rhino.Mocks.Constraints.Is;
 namespace Bottles.Tests.Creation
 {
     [TestFixture]
-    public class PackageManifestWriterTester : InteractionContext<PackageManifestWriter<PackageManifest>>
+    public class PackageManifestWriterTester : InteractionContext<PackageManifestWriter>
     {
         private const string theFileName = ".manifest";
 

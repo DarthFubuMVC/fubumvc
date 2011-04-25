@@ -185,7 +185,6 @@
     <Compile Include="Packaging\IPackageManifestReader.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
-    <Compile Include="Packaging\ApplicationManifest.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
     <Compile Include="Packaging\PackageManifestReader.cs" />
     <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />

@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Commands
     public class LinkCommandTester : InteractionContext<LinkCommand>
     {
         private LinkInput theInput;
-        private ApplicationManifest appManifest;
+        private PackageManifest appManifest;
         private PackageManifest pakManifest;
 
         protected override void beforeEach()
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Commands
                 AppFolder = "app",
             };
 
-            appManifest = new ApplicationManifest();
+            appManifest = new PackageManifest();
             pakManifest = new PackageManifest();
             Services.PartialMockTheClassUnderTest();
         }
@@ -33,8 +33,8 @@ namespace FubuMVC.Tests.Commands
         {
             MockFor<IFileSystem>().Stub(x => x.PackageManifestExists(theInput.PackageFolder)).Return(true);
             MockFor<IFileSystem>().Stub(x => x.LoadPackageManifestFrom(theInput.PackageFolder)).Return(pakManifest);
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE)).Return(appManifest);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(appManifest);
         }
 
         private string oneFolderUp(string path)

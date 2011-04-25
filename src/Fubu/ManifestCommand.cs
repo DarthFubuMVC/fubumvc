@@ -41,7 +41,7 @@ namespace Fubu
         }
 
 
-        public virtual bool ApplyChanges(ManifestInput input, ApplicationManifest manifest)
+        public virtual bool ApplyChanges(ManifestInput input, PackageManifest manifest)
         {
             var didChange = false;
 
@@ -75,7 +75,7 @@ namespace Fubu
 
                 if (input.OpenFlag)
                 {
-                    fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+                    fileSystem.LaunchEditor(input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
                 }
             }
             else
@@ -118,7 +118,7 @@ namespace Fubu
 
         public virtual void CreateManifest(IFileSystem fileSystem, ManifestInput input)
         {
-            var manifest = new ApplicationManifest();
+            var manifest = new PackageManifest();
             ApplyChanges(input, manifest);
             persist(fileSystem, input, manifest);
 
@@ -126,26 +126,26 @@ namespace Fubu
 
             if (input.OpenFlag)
             {
-                fileSystem.LaunchEditor(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+                fileSystem.LaunchEditor(input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
             }
         }
 
-        private void persist(IFileSystem fileSystem, ManifestInput input, ApplicationManifest manifest)
+        private void persist(IFileSystem fileSystem, ManifestInput input, PackageManifest manifest)
         {
             Console.WriteLine("");
-            Console.WriteLine("Persisted changes to " + FileSystem.Combine(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE));
+            Console.WriteLine("Persisted changes to " + FileSystem.Combine(input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE));
             Console.WriteLine("");
 
-            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
         }
 
-        public virtual void WriteManifest(ManifestInput input, ApplicationManifest manifest)
+        public virtual void WriteManifest(ManifestInput input, PackageManifest manifest)
         {
-            var title = "Application Manifest for " + FileSystem.Combine(input.AppFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+            var title = "Application Manifest for " + FileSystem.Combine(input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
             var report = new TwoColumnReport(title);
-            report.Add<ApplicationManifest>(x => x.EnvironmentAssembly, manifest);
-            report.Add<ApplicationManifest>(x => x.EnvironmentClassName, manifest);
-            report.Add<ApplicationManifest>(x => x.ConfigurationFile, manifest);
+            report.Add<PackageManifest>(x => x.EnvironmentAssembly, manifest);
+            report.Add<PackageManifest>(x => x.EnvironmentClassName, manifest);
+            report.Add<PackageManifest>(x => x.ConfigurationFile, manifest);
 
             report.Write();
 
@@ -157,13 +157,13 @@ namespace Fubu
 
         public virtual void WriteManifestCannotBeFound(string folder)
         {
-            var file = FileSystem.Combine(folder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+            var file = FileSystem.Combine(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
             Console.WriteLine("Application Manifest file at {0} does not exist", file);
         }
 
         public virtual void WriteCannotOverwriteFileWithoutForce(string folder)
         {
-            var file = FileSystem.Combine(folder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+            var file = FileSystem.Combine(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
             Console.WriteLine("File {0} already exists, use the '-f' flag to overwrite the existing file", file);
         }
     }

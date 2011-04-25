@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Packaging
         public IEnumerable<IPackageInfo> Load()
         {
         	var packages = new List<IPackageInfo>();
-            var includes = _fileSystem.LoadFromFile<ApplicationManifest>(_applicationFolder, ApplicationManifest.APPLICATION_MANIFEST_FILE);
+            var includes = _fileSystem.LoadFromFile<PackageManifest>(_applicationFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
 
         	packages.AddRange(includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f))));
             packages.AddRange(includes.Assemblies.Select(assemblyName =>

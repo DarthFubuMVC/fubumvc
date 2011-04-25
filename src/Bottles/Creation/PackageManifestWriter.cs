@@ -3,30 +3,30 @@ using FubuCore;
 
 namespace Bottles.Creation
 {
-    public class PackageManifestWriter<T> where T : PackageManifest, new()
+    public class PackageManifestWriter
     {
         private readonly IFileSystem _fileSystem;
-        private T _manifest;
+        private PackageManifest _manifest;
 
         public PackageManifestWriter(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
         }
 
-        public void ReadFrom(string fileName, Action<T> onCreation)
+        public void ReadFrom(string fileName, Action<PackageManifest> onCreation)
         {
             if (_fileSystem.FileExists(fileName))
             {
-                _manifest = _fileSystem.LoadFromFile<T>(fileName);
+                _manifest = _fileSystem.LoadFromFile<PackageManifest>(fileName);
             }
             else
             {
-                _manifest = new T();
+                _manifest = new PackageManifest();
                 onCreation(_manifest);
             }
         }
 
-        public T Manifest
+        public PackageManifest Manifest
         {
             get { return _manifest; }
         }
