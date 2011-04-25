@@ -101,5 +101,10 @@ namespace Bottles
         {
             _folders.Clear();
         }
+
+        public override string ToString()
+        {
+            return string.Format("Package: {0}", Name);
+        }
     }
 }
