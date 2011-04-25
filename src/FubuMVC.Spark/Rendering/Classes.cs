@@ -38,20 +38,6 @@ using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public class RenderContext
-    {
-        private bool _isPartial;
-
-        public void SetAsPartial()
-        {
-            _isPartial = true;
-        }
-        public bool IsPartial()
-        {
-            return _isPartial;
-        }
-    }
-
     public class PartialOutput
     {
         private Func<TextWriter> _writer;
@@ -67,6 +53,11 @@ namespace FubuMVC.Spark.Rendering
             {
                 return _writer();
             }
+        }
+
+        public bool IsActive()
+        {
+            return _writer != null;
         }
     }
 
@@ -156,7 +147,6 @@ namespace FubuMVC.Spark.Rendering
         public PartialRenderAction(ISparkViewProvider provider, PartialOutput partialOutput )
         {
             _provider = provider;
-            _provider = provider;
             _partialOutput = partialOutput;
         }
 
@@ -207,24 +197,23 @@ namespace FubuMVC.Spark.Rendering
     {
         private readonly IPartialRenderAction _partialAction;
         private readonly IRenderAction _renderAction;
-        private readonly RenderContext _renderContext;
+        private readonly PartialOutput _partialOutput;
 
-        public SparkViewRenderer(IPartialRenderAction partialAction, IRenderAction renderAction, RenderContext renderContext)
+        public SparkViewRenderer(IPartialRenderAction partialAction, IRenderAction renderAction,PartialOutput partialOutput)
         {
             _partialAction = partialAction;
             _renderAction = renderAction;
-            _renderContext = renderContext;
+            _partialOutput = partialOutput;
         }
 
         public void Render()
         {
-            if (_renderContext.IsPartial())
+            if (_partialOutput.IsActive())
             {
                 _partialAction.Execute();
             }
             else
             {
-                _renderContext.SetAsPartial();
                 _renderAction.Execute();
             }
         }
