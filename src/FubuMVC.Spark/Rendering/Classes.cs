@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
-using FubuMVC.Spark.SparkModel;
 using Microsoft.Practices.ServiceLocation;
 using Spark;
 
@@ -21,7 +20,7 @@ using Spark;
  * - RenderContext, there must already be something in Fubu that we can use.
  *   Why is it needed on the interface IRenderAction? Nested container gives you a singleton, btw.
  * 
- * - Output/PartialOutput contexts. Why are we asking a OutputContext if it is partial, when we have a PartialOutputContext etc?
+ * - Output/PartialOutput contexts. Why are we asking a SparkOutput if it is partial, when we have a PartialOutput etc?
  *   (because we try to handle partial + normal in one long pipe run)
  * 
  * - I really would like to see SparkItem not being so dominant - Seems like everything is very dependant on this 
@@ -39,52 +38,21 @@ using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public interface IRenderAction
-    {
-        void Invoke(RenderContext context);
-    }
-
     public class RenderContext
     {
-        private readonly IDictionary<Type, object> _items = new Dictionary<Type, object>();
+        private bool _isPartial;
 
-        public T Get<T>()
+        public void SetAsPartial()
         {
-            return (T)_items[typeof(T)];
+            _isPartial = true;
         }
-
-        public void Set<T>(T value)
+        public bool IsPartial()
         {
-            _items[typeof(T)] = value;
-        }
-    }
-
-    public class OutputContext
-    {
-        private SparkItem _item;
-
-        public OutputContext()
-        {
-            Writer = new StringWriter();
-        }
-
-        public TextWriter Writer { get; private set; }
-
-        public void SetSparkItem(SparkItem sparkItem)
-        {
-            if (_item == null)
-            {
-                _item = sparkItem;
-            }
-        }
-
-        public bool IsPartial(SparkItem sparkItem)
-        {
-            return sparkItem != _item;
+            return _isPartial;
         }
     }
 
-    public class PartialOutputContext
+    public class PartialOutput
     {
         private Func<TextWriter> _writer;
 
@@ -102,212 +70,162 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class InvokeRenderAction : IRenderAction
+    public interface ISparkViewActivator
     {
-        private readonly IRenderAction _inner;
-        private readonly OutputContext _outputContext;
-
-        public InvokeRenderAction(IRenderAction inner, OutputContext outputContext)
-        {
-            _inner = inner;
-            _outputContext = outputContext;
-        }
-
-        public void Invoke(RenderContext context)
-        {
-            var item = context.Get<SparkItem>();
-            if (!_outputContext.IsPartial(item))
-            {
-                _inner.Invoke(context);
-            }
-        }
+        void Activate(ISparkView sparkView);
     }
 
-    public class InvokePartialRenderAction : IRenderAction
+    public class SparkViewActivator : ISparkViewActivator
     {
-        private readonly IRenderAction _inner;
-        private readonly OutputContext _outputContext;
-
-        public InvokePartialRenderAction(IRenderAction inner, OutputContext outputContext)
-        {
-            _inner = inner;
-            _outputContext = outputContext;
-        }
-
-        public void Invoke(RenderContext context)
-        {
-            if (_outputContext.IsPartial(context.Get<SparkItem>()))
-            {
-                _inner.Invoke(context);
-            }
-        }
-    }
-
-    public class SetSparkItemAction : IRenderAction
-    {
-        private readonly SparkItem _item;
-        private readonly OutputContext _outputContext;
-
-        public SetSparkItemAction(SparkItem item, OutputContext outputContext)
-        {
-            _item = item;
-            _outputContext = outputContext;
-        }
-
-        public void Invoke(RenderContext context)
-        {
-            context.Set(_item);
-            _outputContext.SetSparkItem(_item);
-        }
-    }
-
-    public class SetDescriptorAction : IRenderAction
-    {
-        public void Invoke(RenderContext context)
-        {
-            var descriptor = new SparkViewDescriptor();
-            descriptor.AddTemplate(context.Get<SparkItem>().ViewPath);
-            context.Set(descriptor);
-        }
-    }
-
-    public class SetMasterAction : IRenderAction
-    {
-        // Methods
-        public void Invoke(RenderContext context)
-        {
-            var item = context.Get<SparkItem>();
-            if (item.Master != null)
-            {
-                context.Get<SparkViewDescriptor>().AddTemplate(item.Master.ViewPath);
-            }
-        }
-    }
-
-    public class SetEntryAction : IRenderAction
-    {
-        // Fields
-        private readonly IDictionary<int, ISparkViewEntry> _cache;
-        private readonly ISparkViewEngine _engine;
-
-        // Methods
-        public SetEntryAction(IDictionary<int, ISparkViewEntry> cache, ISparkViewEngine engine)
-        {
-            _cache = cache;
-            _engine = engine;
-        }
-
-        public void Invoke(RenderContext context)
-        {
-            ISparkViewEntry entry;
-            var descriptor = context.Get<SparkViewDescriptor>();
-            var hashCode = descriptor.GetHashCode();
-            lock (_cache)
-            {
-                _cache.TryGetValue(hashCode, out entry);
-                if (!((entry != null) && entry.IsCurrent()))
-                {
-                    entry = this._engine.CreateEntry(descriptor);
-                    _cache[hashCode] = entry;
-                }
-            }
-            context.Set(entry);
-        }
-    }
-
-    public class SetSparkViewInstanceAction : IRenderAction
-    {
-        // Methods
-        public void Invoke(RenderContext context)
-        {
-            context.Set(context.Get<ISparkViewEntry>().CreateInstance());
-        }
-    }
-
-    public class ActivateSparkViewAction : IRenderAction
-    {
-        // Fields
         private readonly IServiceLocator _locator;
         private readonly IFubuRequest _request;
 
-        // Methods
-        public ActivateSparkViewAction(IFubuRequest request, IServiceLocator locator)
+        public SparkViewActivator(IServiceLocator locator, IFubuRequest request)
         {
-            _request = request;
             _locator = locator;
+            _request = request;
         }
 
-        public void Invoke(RenderContext context)
+        public void Activate(ISparkView sparkView)
         {
-            var page = (IFubuPage)context.Get<ISparkView>();
-            page.ServiceLocator = _locator;
-            if (page is IFubuViewWithModel)
+            if (sparkView is IFubuPage)
             {
-                ((IFubuViewWithModel)page).SetModel(this._request);
+                ((IFubuPage)sparkView).ServiceLocator = _locator;
+            }
+            if (sparkView is IFubuViewWithModel)
+            {
+                ((IFubuViewWithModel)sparkView).SetModel(_request);
             }
         }
     }
 
-    public class SetPartialOutputWriterAction : IRenderAction
+    public interface ISparkViewProvider
     {
-        private readonly PartialOutputContext _partialOutputContext;
+        ISparkView GetView();
+    }
 
-        public SetPartialOutputWriterAction(PartialOutputContext partialOutputContext)
+    public class SparkViewProvider : ISparkViewProvider
+    {
+        private readonly SparkViewDescriptor _descriptor;
+        private readonly IDictionary<int, ISparkViewEntry> _cache;
+        private readonly ISparkViewActivator _activator;
+        private readonly ISparkViewEngine _engine;
+
+        public SparkViewProvider(IDictionary<int, ISparkViewEntry> cache, SparkViewDescriptor descriptor, ISparkViewActivator activator, ISparkViewEngine engine)
         {
-            _partialOutputContext = partialOutputContext;
+            _descriptor = descriptor;
+            _cache = cache;
+            _activator = activator;
+            _engine = engine;
         }
 
-        public void Invoke(RenderContext context)
+        public ISparkView GetView()
         {
-            var view = (SparkViewBase)context.Get<ISparkView>();
-            _partialOutputContext.SetWriter(() => view.Output);
+            var view = getView(_engine, _descriptor);
+            _activator.Activate(view);
+            return view;
+        }
+        private ISparkView getView(ISparkViewEngine engine, SparkViewDescriptor descriptor)
+        {
+            ISparkViewEntry entry;
+            var key = descriptor.GetHashCode();
+            _cache.TryGetValue(key, out entry);
+            if (entry == null || !entry.IsCurrent())
+            {
+                lock (_cache)
+                {
+                    entry = engine.CreateEntry(descriptor);
+                    _cache[key] = entry;
+                }
+            }
+            return entry.CreateInstance();
         }
     }
 
-    public class RenderPartialViewAction : IRenderAction
+    public interface IPartialRenderAction
     {
-        private readonly PartialOutputContext _partialOutputContext;
+        void Execute();
+    }
 
-        public RenderPartialViewAction(PartialOutputContext partialOutputContext)
+    public class PartialRenderAction : IPartialRenderAction
+    {
+        private readonly ISparkViewProvider _provider;
+        private readonly PartialOutput _partialOutput;
+
+        public PartialRenderAction(ISparkViewProvider provider, PartialOutput partialOutput )
         {
-            _partialOutputContext = partialOutputContext;
+            _provider = provider;
+            _provider = provider;
+            _partialOutput = partialOutput;
         }
 
-        public void Invoke(RenderContext context)
+        public void Execute()
         {
-            context.Get<ISparkView>().RenderView(this._partialOutputContext.Writer);
+            var view = _provider.GetView();
+            view.RenderView(_partialOutput.Writer);
         }
     }
 
-    public class RenderViewAction : IRenderAction
+    public interface IRenderAction
     {
-        private readonly OutputContext _outputContext;
+        void Execute();
+    }
 
-        public RenderViewAction(OutputContext outputContext)
+    public class RenderAction : IRenderAction
+    {
+        private readonly ISparkViewProvider _provider;
+        private readonly IOutputWriter _outputWriter;
+        private readonly PartialOutput _partialOutput;
+
+        public RenderAction(ISparkViewProvider provider, IOutputWriter outputWriter, PartialOutput partialOutput)
         {
-            _outputContext = outputContext;
+            _provider = provider;
+            _partialOutput = partialOutput;
+            _outputWriter = outputWriter;
         }
 
-        public void Invoke(RenderContext context)
+        public void Execute()
         {
-            context.Get<ISparkView>().RenderView(_outputContext.Writer);
+            var writer = new StringWriter();
+            var view = (SparkViewBase)_provider.GetView();
+
+            _partialOutput.SetWriter(() => view.Output);
+            view.Output = writer;
+            view.RenderView(writer);
+
+            _outputWriter.WriteHtml(writer);
         }
     }
 
-    public class WriteViewOutputAction : IRenderAction
+    public interface ISparkViewRenderer
     {
-        private readonly OutputContext _outputContext;
-        private readonly IOutputWriter _writer;
+        void Render();
+    }
 
-        public WriteViewOutputAction(IOutputWriter writer, OutputContext outputContext)
+    public class SparkViewRenderer : ISparkViewRenderer
+    {
+        private readonly IPartialRenderAction _partialAction;
+        private readonly IRenderAction _renderAction;
+        private readonly RenderContext _renderContext;
+
+        public SparkViewRenderer(IPartialRenderAction partialAction, IRenderAction renderAction, RenderContext renderContext)
         {
-            _writer = writer;
-            _outputContext = outputContext;
+            _partialAction = partialAction;
+            _renderAction = renderAction;
+            _renderContext = renderContext;
         }
 
-        public void Invoke(RenderContext context)
+        public void Render()
         {
-            _writer.WriteHtml(_outputContext.Writer.ToString());
+            if (_renderContext.IsPartial())
+            {
+                _partialAction.Execute();
+            }
+            else
+            {
+                _renderContext.SetAsPartial();
+                _renderAction.Execute();
+            }
         }
     }
 }

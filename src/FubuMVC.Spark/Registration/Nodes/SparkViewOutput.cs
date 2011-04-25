@@ -7,7 +7,7 @@ using Spark;
 
 namespace FubuMVC.Spark.Registration.Nodes
 {
-    public class SparkViewOutput : OutputNode<SparkViewBehavior>
+    public class SparkViewOutput : OutputNode<RenderSparkViewBehavior>
     {
         private static readonly IDictionary<int, ISparkViewEntry> _cache;
         private readonly SparkItem _item;
@@ -16,22 +16,34 @@ namespace FubuMVC.Spark.Registration.Nodes
         {
             _cache = new Dictionary<int, ISparkViewEntry>();
         }
+
         public SparkViewOutput(SparkItem item) { _item = item; }
 
 
         protected override void configureObject(ObjectDef def)
         {
-            var dependency = def.EnumerableDependenciesOf<IRenderAction>();
-            dependency.AddType(typeof(SetSparkItemAction)).DependencyByValue(_item);
-            dependency.AddType(typeof(SetDescriptorAction));
-            dependency.AddType(typeof(InvokeRenderAction)).DependencyByType(typeof(IRenderAction), typeof(SetMasterAction));
-            dependency.AddType(typeof(SetEntryAction)).DependencyByValue(_cache);
-            dependency.AddType(typeof(SetSparkViewInstanceAction));
-            dependency.AddType(typeof(ActivateSparkViewAction));
-            dependency.AddType(typeof(InvokeRenderAction)).DependencyByType(typeof(IRenderAction), typeof(SetPartialOutputWriterAction));
-            dependency.AddType(typeof(InvokePartialRenderAction)).DependencyByType(typeof(IRenderAction), typeof(RenderPartialViewAction));
-            dependency.AddType(typeof(InvokeRenderAction)).DependencyByType(typeof(IRenderAction), typeof(RenderViewAction));
-            dependency.AddType(typeof(InvokeRenderAction)).DependencyByType(typeof(IRenderAction), typeof(WriteViewOutputAction));
+            var descriptor = new SparkViewDescriptor();
+            var partialDescriptor = new SparkViewDescriptor();
+
+            descriptor.AddTemplate(_item.ViewPath);
+            if (_item.Master != null)
+            {
+                descriptor.AddTemplate(_item.Master.ViewPath);
+            }
+            partialDescriptor.AddTemplate(_item.ViewPath);
+
+            var renderer = def.DependencyByType(typeof(ISparkViewRenderer), typeof(SparkViewRenderer));
+            var action = renderer.DependencyByType(typeof(IRenderAction), typeof(RenderAction));
+            var partialAction = renderer.DependencyByType(typeof(IPartialRenderAction), typeof(PartialRenderAction));
+
+            var provider = action.DependencyByType(typeof (ISparkViewProvider), typeof (SparkViewProvider));
+            var partialProvider = partialAction.DependencyByType(typeof (ISparkViewProvider), typeof (SparkViewProvider));
+
+            provider.DependencyByValue(descriptor);
+            provider.DependencyByValue(_cache);
+
+            partialProvider.DependencyByValue(partialDescriptor);
+            partialProvider.DependencyByValue(_cache);
         }
 
         public override string Description

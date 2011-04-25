@@ -2,6 +2,7 @@
 using Bottles;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -39,6 +40,7 @@ namespace FubuMVC.Spark
             registry.Services(x => x.SetServiceIfNone(_sparkItems));
             registry.Services(x => x.SetServiceIfNone(_sparkViewEngine));
             registry.Services(x => x.AddService<IActivator, SparkActivator>());
+            registry.Services(x => x.SetServiceIfNone<ISparkViewActivator, SparkViewActivator>());
             registry.Views.Facility(facility);            
         }
 
