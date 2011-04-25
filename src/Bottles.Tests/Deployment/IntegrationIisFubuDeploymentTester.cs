@@ -1,5 +1,6 @@
-﻿using Bottles.Deployment;
-using Bottles.Deployment.Deployers;
+﻿using Bottles.Deployers.Iis;
+using Bottles.Deployment;
+using Bottles.Deployment.Directives;
 using Bottles.Exploding;
 using Bottles.Tests.Deployment.Runtime;
 using Bottles.Zipping;

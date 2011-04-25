@@ -1,4 +1,4 @@
-﻿namespace Bottles.Deployment.Deployers
+﻿namespace Bottles.Deployment.Directives
 {
     public class IisFubuWebsite : IDirective
     {

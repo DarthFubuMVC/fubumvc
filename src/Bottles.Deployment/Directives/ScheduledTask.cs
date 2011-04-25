@@ -1,4 +1,4 @@
-﻿namespace Bottles.Deployment.Deployers
+﻿namespace Bottles.Deployment.Directives
 {
     /// <summary>
     /// //http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/schtasks.mspx?mfr=true

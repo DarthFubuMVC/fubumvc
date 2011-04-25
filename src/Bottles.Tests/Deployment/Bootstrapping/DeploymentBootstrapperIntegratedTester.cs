@@ -1,7 +1,7 @@
 using BottleDeployers2;
 using Bottles.Deployment;
 using Bottles.Deployment.Bootstrapping;
-using Bottles.Deployment.Deployers;
+using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
 using NUnit.Framework;
 using StructureMap;

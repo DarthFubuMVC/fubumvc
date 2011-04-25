@@ -1,4 +1,4 @@
-using Bottles.Deployment.Deployers;
+using Bottles.Deployment.Directives;
 using StructureMap.Configuration.DSL;
 
 namespace Bottles.Deployment.Bootstrapping

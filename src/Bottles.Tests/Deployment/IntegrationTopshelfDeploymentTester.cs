@@ -1,5 +1,6 @@
+using Bottles.Deployers.Topshelf;
 using Bottles.Deployment;
-using Bottles.Deployment.Deployers;
+using Bottles.Deployment.Directives;
 using NUnit.Framework;
 
 namespace Bottles.Tests.Deployment

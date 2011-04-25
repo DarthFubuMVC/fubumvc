@@ -1,6 +1,8 @@
-﻿using FubuCore;
+﻿using Bottles.Deployment;
+using Bottles.Deployment.Directives;
+using FubuCore;
 
-namespace Bottles.Deployment.Deployers
+namespace Bottles.Deployers.Iis
 {
     public class IisFubuFinalizer : IFinalizer<IisFubuWebsite>
     {

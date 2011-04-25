@@ -1,7 +1,9 @@
-﻿using Bottles.Deployment.Diagnostics;
+﻿using Bottles.Deployment;
+using Bottles.Deployment.Diagnostics;
+using Bottles.Deployment.Directives;
 using FubuCore;
 
-namespace Bottles.Deployment.Deployers
+namespace Bottles.Deployers.Iis
 {
     public class IisFubuInitializer : IInitializer<IisFubuWebsite>
     {

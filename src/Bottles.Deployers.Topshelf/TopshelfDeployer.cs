@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using Bottles.Deployment;
+using Bottles.Deployment.Directives;
 using FubuCore;
 
-namespace Bottles.Deployment.Deployers
+namespace Bottles.Deployers.Topshelf
 {
     //assumes its on the same server
     public class TopshelfDeployer : IDeployer<TopshelfService>

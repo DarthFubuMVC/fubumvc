@@ -1,7 +1,7 @@
 using System.IO;
 using Bottles.Deployment;
 using Bottles.Deployment.Bootstrapping;
-using Bottles.Deployment.Deployers;
+using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
 using Bottles.Deployment.Writing;
 using FubuCore;

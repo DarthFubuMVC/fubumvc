@@ -1,12 +1,13 @@
 using System;
 using System.Diagnostics;
+using Bottles.Deployment.Directives;
 using FubuCore;
 
 namespace Bottles.Deployment.Deployers
 {
     public class WindowsSchedulerDeployer : IDeployer<ScheduledTask>
     {
-        private IProcessRunner _runner;
+        private readonly IProcessRunner _runner;
 
         public WindowsSchedulerDeployer(IProcessRunner runner)
         {

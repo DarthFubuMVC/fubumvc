@@ -1,10 +1,11 @@
-using System;
 using System.Collections.Generic;
+using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
+using Bottles.Deployment.Directives;
 using FubuCore;
 using Microsoft.Web.Administration;
 
-namespace Bottles.Deployment.Deployers
+namespace Bottles.Deployers.Iis
 {
     public class IisFubuDeployer : IDeployer<IisFubuWebsite>
     {

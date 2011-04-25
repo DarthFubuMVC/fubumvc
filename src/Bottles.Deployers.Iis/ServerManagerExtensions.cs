@@ -1,11 +1,11 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Linq;
+using Bottles.Deployment.Directives;
 using Microsoft.Web.Administration;
 using ConfigurationSection = Microsoft.Web.Administration.ConfigurationSection;
 
-namespace Bottles.Deployment.Deployers
+namespace Bottles.Deployers.Iis
 {
     public static class ServerManagerExtensions
     {

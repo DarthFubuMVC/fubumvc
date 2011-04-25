@@ -35,21 +35,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Microsoft.Web.Administration\Microsoft.Web.Administration.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\DeploymentBootstrapper.cs" />
@@ -58,11 +50,9 @@
     <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\ISimpleLogger.cs" />
     <Compile Include="DependsOnAttribute.cs" />
-    <Compile Include="Deployers\IisFubuFinalizer.cs" />
-    <Compile Include="Deployers\IisFubuInitializer.cs" />
     <Compile Include="DeploymentSettings.cs" />
-    <Compile Include="Deployers\ScheduledTask.cs" />
-    <Compile Include="Deployers\ScheduleType.cs" />
+    <Compile Include="Directives\ScheduledTask.cs" />
+    <Compile Include="Directives\ScheduleType.cs" />
     <Compile Include="Deployers\WindowsSchedulerDeployer.cs" />
     <Compile Include="Diagnostics\DeploymentDiagnostics.cs" />
     <Compile Include="Diagnostics\IPackageDeploymentLog.cs" />
@@ -75,13 +65,10 @@
     <Compile Include="Parsing\IRecipeSorter.cs" />
     <Compile Include="Parsing\RecipeSorter.cs" />
     <Compile Include="Recipe.cs" />
-    <Compile Include="Deployers\Activation.cs" />
-    <Compile Include="Deployers\IisFubuDeployer.cs" />
-    <Compile Include="Deployers\IisFubuWebsite.cs" />
-    <Compile Include="Deployers\ServerManagerExtensions.cs" />
+    <Compile Include="Directives\Activation.cs" />
+    <Compile Include="Directives\IisFubuWebsite.cs" />
     <Compile Include="BottleRepository.cs" />
-    <Compile Include="Deployers\TopshelfDeployer.cs" />
-    <Compile Include="Deployers\TopshelfService.cs" />
+    <Compile Include="Directives\TopshelfService.cs" />
     <Compile Include="HostManifest.cs" />
     <Compile Include="IBottleRepository.cs" />
     <Compile Include="IDeployer.cs" />
