@@ -1,6 +1,7 @@
 ﻿using System;
 using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
+using Bottles.Diagnostics;
 
 namespace Bottles.Tests.Deployment.Runtime
 {
@@ -56,7 +57,7 @@ namespace Bottles.Tests.Deployment.Runtime
             continuation();
         }
 
-        public void ForEach(Action<IPackageDeploymentLog> action)
+        public void ForEach(Action<IPackageLog> action)
         {
             
         }

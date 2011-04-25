@@ -5,7 +5,7 @@ namespace Bottles.Environment
 {
     public static class EnvironmentListExtensions
     {
-        public static void Add(this IList<LogEntry> list, object target, PackageRegistryLog log)
+        public static void Add(this IList<LogEntry> list, object target, PackageLog log)
         {
             list.Add(LogEntry.FromPackageLog(target, log));
         }

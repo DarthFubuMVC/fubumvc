@@ -64,7 +64,6 @@
     <Compile Include="Deployers\WindowsSchedulerDeployer.cs" />
     <Compile Include="Diagnostics\DeploymentDiagnostics.cs" />
     <Compile Include="Diagnostics\IPackageDeploymentLog.cs" />
-    <Compile Include="Diagnostics\PackageDeploymentLog.cs" />
     <Compile Include="EnvironmentSettings.cs" />
     <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
     <Compile Include="IFinalizer.cs" />

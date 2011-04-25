@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Util;
 
@@ -7,7 +8,7 @@ namespace Bottles.Deployment.Diagnostics
 {
     public class DeploymentDiagnostics : IDeploymentDiagnostics
     {
-        private readonly Cache<object, PackageDeploymentLog> _logs = new Cache<object, PackageDeploymentLog>(o => new PackageDeploymentLog()
+        private readonly Cache<object, PackageLog> _logs = new Cache<object, PackageLog>(o => new PackageLog()
         {
             Description = o.ToString()
         });
@@ -16,7 +17,7 @@ namespace Bottles.Deployment.Diagnostics
         {
             _logs[target].Provenance = provenance;
         }
-        public PackageDeploymentLog LogFor(object target)
+        public PackageLog LogFor(object target)
         {
             return _logs[target];
         }
@@ -93,7 +94,7 @@ namespace Bottles.Deployment.Diagnostics
             }
         }
 
-        public void ForEach(Action<IPackageDeploymentLog> action)
+        public void ForEach(Action<IPackageLog> action)
         {
             foreach (var packageDeploymentLog in _logs)
             {

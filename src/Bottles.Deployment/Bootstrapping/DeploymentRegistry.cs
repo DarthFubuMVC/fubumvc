@@ -1,7 +1,4 @@
-using System;
 using Bottles.Deployment.Deployers;
-using Bottles.Exploding;
-using Bottles.Zipping;
 using StructureMap.Configuration.DSL;
 
 namespace Bottles.Deployment.Bootstrapping
@@ -12,7 +9,7 @@ namespace Bottles.Deployment.Bootstrapping
         {
             Scan(x =>
             {
-                //REVIEW: what does this map to? it may not be 'profile/delpoyers'
+                //TODO: Add diagnostics to the scanning
                 x.AssembliesFromApplicationBaseDirectory(a => a.GetName().Name.Contains("Deployers"));
 
                 //REVIEW: Ugly?
@@ -22,10 +19,6 @@ namespace Bottles.Deployment.Bootstrapping
                 x.ConnectImplementationsToTypesClosing(typeof (IDeployer<>));
                 x.ConnectImplementationsToTypesClosing(typeof (IFinalizer<>));
             });
-
-            For<IPackageExploder>().Use<PackageExploder>();
-            For<IZipFileService>().Use<ZipFileService>();
-            For<IPackageExploderLogger>().Use(new PackageExploderLogger(Console.WriteLine));
 
             Scan(x =>
             {

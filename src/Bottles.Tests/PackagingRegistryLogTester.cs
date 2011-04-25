@@ -10,7 +10,7 @@ namespace Bottles.Tests
         [Test]
         public void write_trace()
         {
-            var log = new PackageRegistryLog();
+            var log = new PackageLog();
             log.FullTraceText().ShouldBeEmpty();
 
             log.Trace("stuff");
@@ -25,7 +25,7 @@ namespace Bottles.Tests
         [Test]
         public void find_children()
         {
-            var log = new PackageRegistryLog();
+            var log = new PackageLog();
 
             var loader1 = new StubPackageLoader();
             var loader2 = new StubPackageLoader();

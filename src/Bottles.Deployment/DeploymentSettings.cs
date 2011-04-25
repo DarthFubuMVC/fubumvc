@@ -20,5 +20,8 @@ namespace Bottles.Deployment
         public string BottlesDirectory { get; set;}
         public string RecipesDirectory { get; set;}
         public string EnvironmentFile { get; set;}
+
+        // user has typed '-f' at the command line
+        public bool UserForced { get; set; }
     }
 }

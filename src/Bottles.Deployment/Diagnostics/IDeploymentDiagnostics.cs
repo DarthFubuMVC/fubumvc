@@ -1,4 +1,5 @@
 ﻿using System;
+using Bottles.Diagnostics;
 
 namespace Bottles.Deployment.Diagnostics
 {
@@ -22,6 +23,6 @@ namespace Bottles.Deployment.Diagnostics
 
 
 
-        void ForEach(Action<IPackageDeploymentLog> action);
+        void ForEach(Action<IPackageLog> action);
     }
 }

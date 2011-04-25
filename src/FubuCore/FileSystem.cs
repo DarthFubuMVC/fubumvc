@@ -294,7 +294,15 @@ namespace FubuCore
         {
             CreateDirectory(Path.GetDirectoryName(to));
 
-            File.Move(from, to);
+            try
+            {
+                File.Move(from, to);
+            }
+            catch (IOException ex)
+            {
+                var msg = "Trying to move '{0}' to '{1}'".ToFormat(from, to);
+                throw new Exception(msg, ex);
+            }
         }
 
         public void MoveFiles(string from, string to)

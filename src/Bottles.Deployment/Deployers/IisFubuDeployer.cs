@@ -49,6 +49,14 @@ namespace Bottles.Deployment.Deployers
                 //flush the changes so that we can now tweak them.
                 iisManager.CommitChanges();
 
+
+
+                MoveWebContentOut(direc);
+
+
+
+
+
                 app.DirectoryBrowsing(direc.DirectoryBrowsing);
 
                 //app.AnonAuthentication(direc.AnonAuth);
@@ -59,6 +67,11 @@ namespace Bottles.Deployment.Deployers
                 iisManager.CommitChanges();
             }
 
+           
+        }
+
+        private void MoveWebContentOut(IisFubuWebsite direc)
+        {
             _bottles.ExplodeTo(direc.HostBottle, direc.VDirPhysicalPath);
 
             var webContent = FileSystem.Combine(direc.VDirPhysicalPath, "WebContent");
@@ -71,7 +84,6 @@ namespace Bottles.Deployment.Deployers
             {
                 _bottles.CopyTo(b, bottleDest);
             });
-
         }
     }
 }

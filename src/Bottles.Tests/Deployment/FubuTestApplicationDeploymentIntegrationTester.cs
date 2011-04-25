@@ -1,3 +1,4 @@
+using System.IO;
 using Bottles.Deployment;
 using Bottles.Deployment.Bootstrapping;
 using Bottles.Deployment.Deployers;
@@ -12,11 +13,14 @@ namespace Bottles.Tests.Deployment
     public class FubuTestApplicationDeploymentIntegrationTester
     {
         [Test][Explicit]
-        public void bob()
+        public void DeployWebsite()
         {
-            var writer = new ProfileWriter(@"C:\Users\dsellers.fcs\Desktop\ProfileScratch\x", new FileSystem());
-            writer.AddEnvironmentSetting("name","dru");
+            var testRoot = Path.GetFullPath(@".\integration");
 
+            var writer = new ProfileWriter(testRoot, new FileSystem());
+            writer.AddEnvironmentSetting("name","dru");
+            
+            
             var r = writer.RecipeFor("FubuTestApplication");
             
             var h = r.HostFor("web");
@@ -34,10 +38,15 @@ namespace Bottles.Tests.Deployment
             
             writer.Flush();
 
+            //copy over bottles
+            var fileName = "FubuTestApplication.zip";
+            var destination = @".\integration\bottles\";
+            Directory.CreateDirectory(destination);
+            File.Copy(@"C:\Users\dsellers.fcs\Desktop\ProfileScratch\FubuTestApplication.zip", Path.Combine(destination, fileName), true);
+            //<stop>
 
 
-
-            var settings = new DeploymentSettings(@"C:\Users\dsellers.fcs\Desktop\ProfileScratch\x\");
+            var settings = new DeploymentSettings(testRoot);
             var container = DeploymentBootstrapper.Bootstrap(settings);
             var deploymentController = container.GetInstance<IDeploymentController>();
             deploymentController.Deploy();

@@ -76,7 +76,7 @@
     <Compile Include="PackageFiles.cs" />
     <Compile Include="PackageInfo.cs" />
     <Compile Include="PackageRegistry.cs" />
-    <Compile Include="Diagnostics\PackageRegistryLog.cs" />
+    <Compile Include="Diagnostics\PackageLog.cs" />
     <Compile Include="Diagnostics\PackagingDiagnostics.cs" />
     <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
     <Compile Include="PackagingRuntimeGraph.cs" />

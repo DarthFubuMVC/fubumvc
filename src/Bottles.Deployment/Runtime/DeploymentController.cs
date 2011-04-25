@@ -35,6 +35,7 @@ namespace Bottles.Deployment.Runtime
         private void WriteToFile(IDeploymentDiagnostics diagnostics)
         {
             var path = Path.GetFullPath("run.log");
+            File.Delete(path);
 
             Console.WriteLine(path);
             diagnostics.ForEach(log=>

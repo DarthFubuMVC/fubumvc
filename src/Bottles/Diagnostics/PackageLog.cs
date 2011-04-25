@@ -4,15 +4,15 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 
-namespace Bottles.Deployment.Diagnostics
+namespace Bottles.Diagnostics
 {
     [Serializable]
-    public class PackageDeploymentLog : IPackageDeploymentLog
+    public class PackageLog : IPackageLog
     {
-         private readonly StringWriter _text = new StringWriter();
+        private readonly StringWriter _text = new StringWriter();
         private readonly IList<object> _children = new List<object>();
 
-        public PackageDeploymentLog()
+        public PackageLog()
         {
             Success = true;
             Id = Guid.NewGuid();
