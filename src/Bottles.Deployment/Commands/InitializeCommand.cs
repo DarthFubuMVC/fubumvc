@@ -54,8 +54,8 @@ namespace Bottles.Deployment.Commands
             }
 
             createDirectory(fileSystem, logger, deploymentDirectory);
-            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.BottlesFolder);
-            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.RecipesFolder);
+            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.BottlesDirectory);
+            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.RecipesDirectory);
             createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.EnvironmentsFolder);
             createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.ProfilesFolder);
 
