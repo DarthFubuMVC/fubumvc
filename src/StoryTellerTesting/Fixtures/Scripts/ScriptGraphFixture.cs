@@ -99,7 +99,7 @@ namespace IntegrationTesting.Fixtures.Scripts
 
         public override void TearDown()
         {
-            _graph.CompileDependencies(new PackageRegistryLog());
+            _graph.CompileDependencies(new PackageLog());
         }
 
         [FormatAs("{name} extends {baseName}")]

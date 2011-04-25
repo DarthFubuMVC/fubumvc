@@ -28,7 +28,7 @@ namespace FubuFastPack.Testing.Validation
             
             theContainer = new Container(registry);
             theContainer.GetAllInstances<IActivator>().Each(
-                x => x.Activate(new IPackageInfo[0], new PackageRegistryLog()));
+                x => x.Activate(new IPackageInfo[0], new PackageLog()));
         }
 
         [Test]
