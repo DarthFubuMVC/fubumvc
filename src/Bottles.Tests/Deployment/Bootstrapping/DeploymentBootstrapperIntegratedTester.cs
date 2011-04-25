@@ -34,9 +34,9 @@ namespace Bottles.Tests.Deployment.Bootstrapping
                 typeof(BottleDeployers2.FourDirective),
                 typeof(BottleDeployers2.FiveDirective),
                 typeof(BottleDeployers2.SixDirective),
-                typeof(ScheduledTask),
                 typeof(IisFubuWebsite),
-                typeof(TopshelfService)
+                typeof(TopshelfService),
+                typeof(ScheduledTask)
                 );
         }
 
