@@ -1,5 +1,6 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Bottles.Creation;
 using FubuCore;
 
@@ -7,19 +8,36 @@ namespace Bottles
 {
     public static class FileSystemExtensions
     {
-        public static bool PackageManifestExists(this IFileSystem fileSystem, string folder)
+        public static bool PackageManifestExists(this IFileSystem fileSystem, string directory)
         {
-            return fileSystem.FileExists(folder, PackageManifest.FILE);
+            return fileSystem.FileExists(directory, PackageManifest.FILE);
         }
 
-        public static PackageManifest LoadPackageManifestFrom(this IFileSystem fileSystem, string folder)
+        public static PackageManifest LoadPackageManifestFrom(this IFileSystem fileSystem, string directory)
         {
-            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
+            return fileSystem.TryFindManifest(directory, PackageManifest.FILE)
+                   ?? fileSystem.TryFindManifest(directory, PackageManifest.APPLICATION_MANIFEST_FILE);
         }
 
-        public static string FindBinaryDirectory(this IFileSystem fileSystem, string folder, CompileTargetEnum target)
+        public static PackageManifest TryFindManifest(this IFileSystem system, string directory, string fileName)
         {
-            var binFolder = FileSystem.Combine(folder, "bin");
+            if (fileName.IsEmpty()) return null;
+
+            var path = FileSystem.Combine(directory, fileName);
+            if (system.FileExists(path))
+            {
+                var manifest = system.LoadFromFile<PackageManifest>(path);
+                manifest.ManifestFileName = path;
+
+                return manifest;
+            }
+
+            return null;
+        }
+
+        public static string FindBinaryDirectory(this IFileSystem fileSystem, string directory, CompileTargetEnum target)
+        {
+            var binFolder = FileSystem.Combine(directory, "bin");
             var debugFolder = FileSystem.Combine(binFolder, target.ToString());
             if (fileSystem.DirectoryExists(debugFolder))
             {
@@ -27,6 +45,16 @@ namespace Bottles
             }
 
             return binFolder;
+        }
+
+        public static IEnumerable<string> FindAssemblyNames(this IFileSystem fileSystem, string directory)
+        {
+            var fileSet = new FileSet{
+                DeepSearch = false,
+                Include = "*.dll;*.exe"
+            };
+
+            return fileSystem.FindFiles(directory, fileSet).Select(Path.GetFileNameWithoutExtension);
         }
     }
 }

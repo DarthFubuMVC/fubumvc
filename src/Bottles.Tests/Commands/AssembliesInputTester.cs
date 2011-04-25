@@ -21,7 +21,7 @@ namespace Bottles.Tests.Commands
             theFileSystem = MockRepository.GenerateMock<IFileSystem>();
             theInput = new AssembliesInput{
                 Directory = "directory1",
-                File = null
+                FileNameFlag = null
             };
 
             thePackageManifest = new PackageManifest(){
@@ -64,7 +64,7 @@ namespace Bottles.Tests.Commands
 
             theInput.Manifest.ShouldBeTheSameAs(thePackageManifest);
 
-            theInput.File.ShouldEqual(FileSystem.Combine(theInput.Directory, PackageManifest.FILE));
+            theInput.Manifest.ManifestFileName.ShouldEqual(FileSystem.Combine(theInput.Directory, PackageManifest.FILE));
         }
 
 
@@ -76,7 +76,7 @@ namespace Bottles.Tests.Commands
 
             theInput.Manifest.ShouldBeTheSameAs(theApplicationManifest);
 
-            theInput.File.ShouldEqual(FileSystem.Combine(theInput.Directory, PackageManifest.APPLICATION_MANIFEST_FILE));
+            theInput.Manifest.ManifestFileName.ShouldEqual(FileSystem.Combine(theInput.Directory, PackageManifest.APPLICATION_MANIFEST_FILE));
         }
 
         [Test]
@@ -86,17 +86,16 @@ namespace Bottles.Tests.Commands
                 Name = "special"
             };
 
-            theInput.File = "special.xml";
+            theInput.FileNameFlag = "special.xml";
 
-            theFileSystem.Stub(x => x.FileExists(theInput.Directory, theInput.File))
+            theFileSystem.Stub(x => x.FileExists(theInput.Directory, theInput.FileNameFlag))
                 .Return(true);
 
-            theFileSystem.Stub(x => x.LoadFromFile<PackageManifest>(theInput.Directory, theInput.File))
+            theFileSystem.Stub(x => x.LoadFromFile<PackageManifest>(theInput.Directory, theInput.FileNameFlag))
                 .Return(manifest);
 
             theInput.FindManifestAndBinaryFolders(theFileSystem);
 
-            theInput.File.ShouldEqual(FileSystem.Combine(theInput.Directory, "special.xml"));
             theInput.Manifest.ShouldBeTheSameAs(manifest);
         }
     }

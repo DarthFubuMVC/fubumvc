@@ -31,8 +31,11 @@ namespace FubuMVC.Tests.Commands
         
         private void theManifestFileExists()
         {
+            var packageManifestFileName = FileSystem.Combine(theInput.PackageFolder, PackageManifest.FILE);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(packageManifestFileName)).Return(true);
+
             MockFor<IFileSystem>().Stub(x => x.PackageManifestExists(theInput.PackageFolder)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadPackageManifestFrom(theInput.PackageFolder)).Return(pakManifest);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(packageManifestFileName)).Return(pakManifest);
             MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
             MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(appManifest);
         }

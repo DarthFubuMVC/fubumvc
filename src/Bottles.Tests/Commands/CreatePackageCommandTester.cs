@@ -33,8 +33,9 @@ namespace Bottles.Tests.Commands
 
         private void theManifestFileExists()
         {
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.PackageFolder, PackageManifest.FILE)).Return(true);
             MockFor<IFileSystem>().Stub(x => x.PackageManifestExists(theInput.PackageFolder)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadPackageManifestFrom(theInput.PackageFolder)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.PackageFolder, PackageManifest.FILE)).Return(theManifest);
         }
 
         private void theZipFileAlreadyExists()

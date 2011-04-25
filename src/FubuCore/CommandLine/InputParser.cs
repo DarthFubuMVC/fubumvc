@@ -23,6 +23,11 @@ namespace FubuCore.CommandLine
 
         public static ITokenHandler BuildHandler(PropertyInfo property)
         {
+            if (property.PropertyType != typeof(string) && property.PropertyType.Closes(typeof(IEnumerable<>)))
+            {
+                return new EnumerableArgument(property, _converter);
+            }
+
             if (!property.Name.EndsWith(FLAG_SUFFIX))
             {
                 return new Argument(property, _converter);
@@ -32,6 +37,8 @@ namespace FubuCore.CommandLine
             {
                 return new BooleanFlag(property);
             }
+
+
 
             return new Flag(property, _converter);
         }

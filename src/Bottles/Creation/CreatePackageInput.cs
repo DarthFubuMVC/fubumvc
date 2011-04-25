@@ -32,5 +32,9 @@ namespace Bottles.Creation
 
         [Description("Choose the compilation target for any assemblies")]
         public CompileTargetEnum TargetFlag { get; set; }
+
+        [Description("Overrides the name of the manifest file")]
+        [FlagAlias("file")]
+        public string ManifestFileNameFlag { get; set; }
     }
 }

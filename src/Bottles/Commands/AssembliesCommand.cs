@@ -4,6 +4,8 @@ using Bottles.Creation;
 using FubuCore;
 using FubuCore.CommandLine;
 using Bottles;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bottles.Commands
 {
@@ -16,49 +18,81 @@ namespace Bottles.Commands
 
     public class AssembliesInput
     {
-        public string Directory { get; set; }
-        public string File { get; set; }
+        [Description("Add, remove, or list the assemblies for this manifest")]
+        [RequiredUsage("all", "single")]
         public AssembliesCommandMode Mode { get; set; }
-        public bool AllFlag { get; set; }
-        public string AssemblyFlag { get; set; }
+
+        [Description("The package or application directory")]
+        [RequiredUsage("all", "single")]
+        public string Directory { get; set; }
+
+        [Description("Overrides the name of the manifest file if it's not the default .package-manifest or .fubu-manifest")]
+        [FlagAlias("file")]
+        public string FileNameFlag { get; set; }
+
+
+        [RequiredUsage("single")]
+        [Description("Add or removes the named assembly")]
+        public string AssemblyName { get; set; }
+
+        [Description("Opens the manifest file in your editor")]
         public bool OpenFlag { get; set; }
 
-        [IgnoreOnCommandLine]
-        public PackageManifest Manifest { get; private set;}
-
-        public string BinariesFolder { get; private set;}
-
-        [Description("Choose the compilation target for any assemblies")]
+        [Description("Choose the compilation target for any assemblies.  Default is debug")]
         public CompileTargetEnum TargetFlag { get; set; }
+
+        [IgnoreOnCommandLine]
+        public PackageManifest Manifest { get; set;}
+
+        [IgnoreOnCommandLine]
+        public string BinariesFolder { get; set;}
+
 
 
         public void FindManifestAndBinaryFolders(IFileSystem fileSystem)
         {
             BinariesFolder = fileSystem.FindBinaryDirectory(Directory, TargetFlag);
 
-            if (File.IsNotEmpty())
-            {
-                File = FileSystem.Combine(Directory, File);
-                Manifest = fileSystem.LoadFromFile<PackageManifest>(File);
-            }
-
-            tryFindManifest(fileSystem, PackageManifest.FILE);
-            tryFindManifest(fileSystem, PackageManifest.APPLICATION_MANIFEST_FILE);
+            Manifest = fileSystem.TryFindManifest(Directory, FileNameFlag) ??
+                       fileSystem.LoadPackageManifestFrom(Directory);
         }
 
-        private void tryFindManifest(IFileSystem system, string fileName)
+        public void Save(IFileSystem fileSystem)
         {
-            if (Manifest != null) return;
+            fileSystem.PersistToFile(Manifest, Manifest.ManifestFileName);
+        }
 
-            var path = FileSystem.Combine(Directory, fileName);
-            if (system.FileExists(path))
+        public void RemoveAssemblies(IFileSystem fileSystem)
+        {
+            if (AssemblyName.IsNotEmpty())
             {
-                File = path;
-                Manifest = system.LoadFromFile<PackageManifest>(path);
+                Manifest.RemoveAssembly(AssemblyName);
             }
+            else
+            {
+                Manifest.RemoveAllAssemblies();
+            }
+            
+            Save(fileSystem);
+        }
+
+        public void AddAssemblies(IFileSystem fileSystem)
+        {
+            if (AssemblyName.IsNotEmpty())
+            {
+                Manifest.AddAssembly(AssemblyName);
+            }
+            else
+            {
+                fileSystem.FindAssemblyNames(BinariesFolder).Each(name => Manifest.AddAssembly(name));
+            }
+            
+            Save(fileSystem);
         }
     }
 
+    [Usage("all", "Remove or adds all assemblies to the manifest file")]
+    [Usage("single", "Removes or adds a single assembly name to the manifest file")]
     public class AssembliesCommand : FubuCommand<AssembliesInput>
     {
         public override bool Execute(AssembliesInput input)
@@ -68,18 +102,56 @@ namespace Bottles.Commands
             var fileSystem = new FileSystem();
             input.FindManifestAndBinaryFolders(fileSystem);
             
-            Execute(fileSystem, input);
+            
+
+            return Execute(fileSystem, input);
+        }
+
+        private bool Execute(IFileSystem fileSystem, AssembliesInput input)
+        {
+            // return false if manifest does not exist
+            if (input.Manifest == null)
+            {
+                throw new CommandFailureException("Could not find a PackageManifest in the directory " + input.Directory);
+            }
+
+
+            switch (input.Mode)
+            {
+                case AssembliesCommandMode.add:
+                    input.AddAssemblies(fileSystem);
+                    break;
+
+                case AssembliesCommandMode.remove:
+                    input.RemoveAssemblies(fileSystem);
+                    break;
+
+                case AssembliesCommandMode.list:
+                    ListAssemblies(fileSystem, input);
+                    break;
+            }
+
+            if (input.OpenFlag)
+            {
+                fileSystem.LaunchEditor(input.Manifest.ManifestFileName);
+            }
 
             return true;
         }
 
-        private void Execute(IFileSystem fileSystem, AssembliesInput input)
+        public static void ListAssemblies(IFileSystem fileSystem, AssembliesInput input)
         {
-            // need binary folder
-            // need PackageManifest and file name
+            Console.WriteLine("Assemblies referenced in {0} are:", input.Manifest.ManifestFileName);
 
+            input.Manifest.Assemblies.Each(name => Console.WriteLine(" * " + name));
 
-            throw new NotImplementedException();
+            Console.WriteLine("");
+            Console.WriteLine("Assemblies at {0} not referenced in the manifest:");
+
+            fileSystem
+                .FindAssemblyNames(input.BinariesFolder)
+                .Where(x => !input.Manifest.Assemblies.Contains(x))
+                .Each(x => Console.WriteLine(" * " + x));
         }
     }
 }

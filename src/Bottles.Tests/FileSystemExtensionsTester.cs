@@ -1,8 +1,10 @@
+using System.Diagnostics;
 using Bottles.Creation;
 using FubuCore;
 using NUnit.Framework;
 using Rhino.Mocks;
 using FubuTestingSupport;
+using System.Collections.Generic;
 
 namespace Bottles.Tests
 {
@@ -40,6 +42,17 @@ namespace Bottles.Tests
 
             theFileSystem.FindBinaryDirectory(theFolder, CompileTargetEnum.release)
                 .ShouldEqual(FileSystem.Combine(theFolder, "bin", "release")); 
+        }
+
+        [Test]
+        public void find_assembly_names_smoke_tester()
+        {
+            var names = new FileSystem().FindAssemblyNames(".".ToFullPath());
+        
+            names.ShouldContain("StructureMap");
+            names.ShouldContain("Bottles");
+            names.ShouldContain("Bottles.Tests");
+            names.ShouldContain("FubuCore");
         }
     }
 }   

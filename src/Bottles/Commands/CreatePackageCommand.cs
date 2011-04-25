@@ -52,12 +52,9 @@ namespace Bottles.Commands
 
         public virtual void CreatePackage(CreatePackageInput input, IFileSystem fileSystem)
         {
-            // TODO -- override this in the input
-            var fileName = FileSystem.Combine(input.PackageFolder, PackageManifest.FILE);
+            var fileName = FileSystem.Combine(input.PackageFolder, input.ManifestFileNameFlag ?? PackageManifest.FILE);
             var reader = new PackageManifestXmlReader();
             var manifest = reader.ReadFrom(fileName);
-
-            //var manifest = fileSystem.LoadPackageManifestFrom(input.PackageFolder);
 
             var creator = new PackageCreator(fileSystem, new ZipFileService(fileSystem), new PackageLogger(), new AssemblyFileFinder(new FileSystem()));
             creator.CreatePackage(input, manifest);

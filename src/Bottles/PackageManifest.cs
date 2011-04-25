@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -18,6 +19,9 @@ namespace Bottles
                 Include = "*.as*x;*.master;Content{0}*.*;*.config".ToFormat(Path.DirectorySeparatorChar)
             };
         }
+
+        [XmlIgnore]
+        public string ManifestFileName { get; set; }
 
         private readonly IList<string> _assemblies = new List<string>();
         public static readonly string APPLICATION_MANIFEST_FILE = ".fubu-manifest";
@@ -105,6 +109,16 @@ namespace Bottles
         public override string ToString()
         {
             return string.Format("Package: {0}", Name);
+        }
+
+        public void RemoveAllAssemblies()
+        {
+            _assemblies.Clear();
+        }
+
+        public void RemoveAssembly(string assemblyName)
+        {
+            _assemblies.Remove(assemblyName);
         }
     }
 }
