@@ -18,10 +18,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         protected override void beforeEach()
         {
             _sparkItem = new SparkItem("", "", "");
-            _context = new BindContext();
-            
-            MockFor<ISparkParser>()
-                .Stub(x => x.Parse(_context.FileContent, "viewdata", "model")).Return("FubuMVC.Spark.Tests.SparkModel.Binders.Bar");
+            _context = new BindContext
+            {
+                ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binders.Bar"
+            };
         }
 
         [Test]

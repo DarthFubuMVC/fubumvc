@@ -1,17 +1,18 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
-using FubuMVC.Spark.SparkModel.Parsing;
-
-// Below needs some serious fix up.
 
 namespace FubuMVC.Spark.SparkModel
 {
     public class BindContext
     {
-        public string FileContent { get; set; }
+        public IEnumerable<string> Namespaces { get; set; }
+        public string Master { get; set; }
+        public string ViewModelType { get; set; }
+
         public TypePool TypePool { get; set; }
         public SparkItems SparkItems { get; set; }
     }
@@ -25,17 +26,10 @@ namespace FubuMVC.Spark.SparkModel
     {
         // Allow for convention on this - consider possibility for other "shared" folders
         private const string DefaultMaster = "Application";
-        private readonly ISparkParser _sparkParser;
-
-        public MasterPageBinder() : this(new SparkParser()) { }
-        public MasterPageBinder(ISparkParser sparkParser)
-        {
-            _sparkParser = sparkParser;
-        }
 
         public void Bind(SparkItem item, BindContext context)
         {
-            var masterName = _sparkParser.ParseMasterName(context.FileContent) ?? DefaultMaster;
+            var masterName = context.Master ?? DefaultMaster;                        
             if (masterName.IsEmpty()) return;
 
             var locator = new SharedItemLocator(context.SparkItems, new[] {Constants.SharedSpark});
@@ -47,29 +41,19 @@ namespace FubuMVC.Spark.SparkModel
             }
         }
     }
-
     public class ViewModelBinder : ISparkItemBinder
     {
-        private readonly ISparkParser _sparkParser;
-
-        public ViewModelBinder() : this(new SparkParser()) { }
-        public ViewModelBinder(ISparkParser sparkParser)
-        {
-            _sparkParser = sparkParser;
-        }
-
         public void Bind(SparkItem item, BindContext context)
         {
-            var fullTypeName = _sparkParser.ParseViewModelTypeName(context.FileContent);
+            var fullTypeName = context.ViewModelType;                        
             var matchingTypes = context.TypePool.TypesWithFullName(fullTypeName);
             var type = matchingTypes.Count() == 1 ? matchingTypes.First() : null;
 
             // Log ambiguity or return "potential types" ?
-            // context.Observer.??
-
             item.ViewModelType = type;
         }
     }
+
 
     public class NamespaceBinder : ISparkItemBinder
     {
@@ -89,7 +73,6 @@ namespace FubuMVC.Spark.SparkModel
             item.Namespace = nspace;
         }
     }
-
     public class ViewPathBinder : ISparkItemBinder
     {
         private readonly Cache<string, string> _cache;

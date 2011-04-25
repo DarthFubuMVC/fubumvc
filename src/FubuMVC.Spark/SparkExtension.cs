@@ -18,7 +18,7 @@ namespace FubuMVC.Spark
         {
             _sparkItemFinder = new SparkItemFinder();
             // TODO: move onto conventions
-            _tokenizer = new SparkItemBuilder(_sparkItemFinder, new FileSystem())
+            _tokenizer = new SparkItemBuilder(_sparkItemFinder, new ChunkLoader())
                 .Apply<MasterPageBinder>()
                 .Apply<ViewModelBinder>()
                 .Apply<NamespaceBinder>()

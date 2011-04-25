@@ -3,10 +3,8 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.SparkModel.Parsing;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
@@ -36,10 +34,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 
         protected override void beforeEach()
         {
-            _context = new BindContext {SparkItems = _sparkItems = createItems()};
-
-            MockFor<ISparkParser>()
-                .Stub(x => x.Parse(_context.FileContent, "use", "master")).Return("application");
+            _context = new BindContext {SparkItems = _sparkItems = createItems(), Master = "application"};
         }
 
         private SparkItems createItems()

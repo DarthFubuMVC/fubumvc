@@ -21,14 +21,16 @@ namespace FubuMVC.Spark
 
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            _sparkItems.AddRange(_itemBuilder.BuildItems(types, graph));
-            return _sparkItems.Where(x => x.HasViewModel())
+            _sparkItems.AddRange(_itemBuilder.BuildItems(types));
+
+            return _sparkItems
+                .Where(x => x.HasViewModel())
                 .Select(item => new SparkViewToken(item));
         }
 
         public BehaviorNode CreateViewNode(Type type)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
