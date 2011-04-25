@@ -21,6 +21,9 @@ namespace Fubu
 
         [Description("Opens the package manifest file in notepad")]
         public bool NotepadFlag { get; set; }
+
+        [Description("Overrides the of the package manifest file")]
+        public string FileFlag { get; set; }
     }
 
     [CommandDescription("Initialize a package manifest", Name = "init-pak")]
@@ -47,7 +50,8 @@ namespace Fubu
 
             manifest.AddAssembly(assemblyName);
 
-			if(!fileSystem.FileExists(FileSystem.Combine(input.Folder, PackageManifest.FILE)))
+            var manifestFile = FileSystem.Combine(input.Folder, input.FileFlag ?? PackageManifest.FILE);
+            if(!fileSystem.FileExists(manifestFile))
 			{
 				fileSystem.PersistToFile(manifest, input.Folder, PackageManifest.FILE);
 			}
@@ -55,7 +59,7 @@ namespace Fubu
 
             if (input.NotepadFlag)
             {
-                fileSystem.LaunchEditor(input.Folder, PackageManifest.FILE);
+                fileSystem.LaunchEditor(manifestFile);
             }
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using FubuCore;
 using FubuCore.CommandLine;
 
 namespace Bottles.Creation
@@ -23,6 +24,9 @@ namespace Bottles.Creation
         [Description("The location where the zip file for the package will be written")]
         public string ZipFile { get; set; }
 
+        [IgnoreOnCommandLine]
+        public string BottlesDirectory { get; set;}
+
         [Description("Includes any matching .pdb files for the package assemblies")]
         public bool PdbFlag { get; set; }
 
@@ -36,5 +40,10 @@ namespace Bottles.Creation
         [Description("Overrides the name of the manifest file")]
         [FlagAlias("file")]
         public string ManifestFileNameFlag { get; set; }
+
+        public string GetZipFileName(PackageManifest manifest)
+        {
+            return ZipFile ?? FileSystem.Combine(BottlesDirectory, manifest.Name + ".zip");
+        }
     }
 }

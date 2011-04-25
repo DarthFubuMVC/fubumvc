@@ -11,5 +11,7 @@ namespace Bottles.Deployment
         public static readonly string DeploymentFolder = "deployment";
         public static readonly string EnvironmentsFolder = "environments";
         public static readonly string ProfilesFolder = "profiles";
+
+        public static readonly string BottlesManifestFile = "bottles.manifest";
     }
 }

@@ -43,7 +43,7 @@ namespace Bottles.Creation
 
         private void writeZipFile(CreatePackageInput input, PackageManifest manifest, AssemblyFiles assemblies)
         {
-            _zipFileService.CreateZipFile(input.ZipFile, zipFile =>
+            _zipFileService.CreateZipFile(input.GetZipFileName(manifest), zipFile =>
             {
                 assemblies.Files.Each(file =>
                 {
