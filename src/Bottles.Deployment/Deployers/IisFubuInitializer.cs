@@ -8,11 +8,13 @@ namespace Bottles.Deployment.Deployers
 
         private readonly IFileSystem _fileSystem;
         private readonly IDeploymentDiagnostics _diagnostics;
+        private readonly DeploymentSettings _settings;
 
-        public IisFubuInitializer(IFileSystem fileSystem, IDeploymentDiagnostics diagnostics)
+        public IisFubuInitializer(IFileSystem fileSystem, IDeploymentDiagnostics diagnostics, DeploymentSettings settings)
         {
             _fileSystem = fileSystem;
             _diagnostics = diagnostics;
+            _settings = settings;
         }
 
         public void Initialize(IDirective directive)
@@ -20,6 +22,13 @@ namespace Bottles.Deployment.Deployers
             _diagnostics.LogInitialization(this, directive);
 
             var direc = (IisFubuWebsite)directive;
+
+            if(_settings.UserForced)
+            {
+                _diagnostics.LogFor(this).Trace("UserForced: deleting directories");
+                _fileSystem.DeleteDirectory(direc.WebsitePhysicalPath);
+                _fileSystem.DeleteDirectory(direc.VDirPhysicalPath);
+            }
 
             _fileSystem.CreateDirectory(direc.WebsitePhysicalPath);
             _fileSystem.CreateDirectory(direc.VDirPhysicalPath);

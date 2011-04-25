@@ -5,6 +5,8 @@ namespace Bottles.Deployment.Diagnostics
 {
     public interface IDeploymentDiagnostics
     {
+        PackageLog LogFor(object target);
+
         void LogHost(HostManifest hostManifest);
 
         void LogInitializer(IInitializer initializer, HostManifest host, Action<IInitializer> action);

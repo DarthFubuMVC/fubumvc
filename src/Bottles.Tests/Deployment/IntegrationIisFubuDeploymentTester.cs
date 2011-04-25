@@ -20,7 +20,7 @@ namespace Bottles.Tests.Deployment
 
             var fakeDeploymentDiagnostics = new FakeDeploymentDiagnostics();
 
-            var initializer = new IisFubuInitializer(fileSystem, fakeDeploymentDiagnostics);
+            var initializer = new IisFubuInitializer(fileSystem, fakeDeploymentDiagnostics, new DeploymentSettings());
             
             var deployer = new IisFubuDeployer(fileSystem, bottles, fakeDeploymentDiagnostics);
             

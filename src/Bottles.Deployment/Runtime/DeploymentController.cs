@@ -40,7 +40,9 @@ namespace Bottles.Deployment.Runtime
             Console.WriteLine(path);
             diagnostics.ForEach(log=>
             {
+                File.AppendAllText(path, log.Description);
                 File.AppendAllText(path, log.FullTraceText());
+                File.AppendAllText(path, System.Environment.NewLine);
             });
         }
     }

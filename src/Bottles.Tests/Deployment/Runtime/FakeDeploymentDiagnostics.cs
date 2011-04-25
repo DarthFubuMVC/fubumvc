@@ -7,6 +7,11 @@ namespace Bottles.Tests.Deployment.Runtime
 {
     public class FakeDeploymentDiagnostics : IDeploymentDiagnostics
     {
+        public PackageLog LogFor(object target)
+        {
+            return null;
+        }
+
         public void LogHost(HostManifest hostManifest, Action<HostManifest> action)
         {
             action(hostManifest);

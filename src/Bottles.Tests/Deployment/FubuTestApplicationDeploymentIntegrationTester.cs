@@ -46,7 +46,11 @@ namespace Bottles.Tests.Deployment
             //<stop>
 
 
-            var settings = new DeploymentSettings(testRoot);
+            var settings = new DeploymentSettings(testRoot)
+                           {
+                               UserForced = true
+                           };
+
             var container = DeploymentBootstrapper.Bootstrap(settings);
             var deploymentController = container.GetInstance<IDeploymentController>();
             deploymentController.Deploy();
