@@ -4,6 +4,7 @@ using System.IO;
 using Bottles.Assemblies;
 using Bottles.Zipping;
 using FubuCore;
+using Bottles;
 
 namespace Bottles.Creation
 {
@@ -26,12 +27,7 @@ namespace Bottles.Creation
 
         public void CreatePackage(CreatePackageInput input, PackageManifest manifest)
         {
-            var binFolder = Path.Combine(input.PackageFolder, "bin");
-        	var debugFolder = Path.Combine(binFolder, "debug");
-			if(Directory.Exists(debugFolder))
-			{
-				binFolder = debugFolder;
-			}
+            var binFolder = _fileSystem.FindBinaryDirectory(input.PackageFolder, input.TargetFlag);
 
 
             var assemblies = _assemblyFinder.FindAssemblies(binFolder, manifest.Assemblies);

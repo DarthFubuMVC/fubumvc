@@ -45,6 +45,7 @@
     <Compile Include="Assemblies\AssemblyLoader.cs" />
     <Compile Include="Assemblies\AssemblyPackageInfo.cs" />
     <Compile Include="Assemblies\AssemblyPackageLoader.cs" />
+    <Compile Include="Commands\AssembliesCommand.cs" />
     <Compile Include="Commands\CreatePackageCommand.cs" />
     <Compile Include="Creation\CreatePackageInput.cs" />
     <Compile Include="Creation\IPackageLogger.cs" />

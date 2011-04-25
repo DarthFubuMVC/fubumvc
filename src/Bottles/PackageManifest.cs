@@ -24,6 +24,7 @@ namespace Bottles
         private readonly IList<string> _folders = new List<string>();
 
         public string Name { get; set; }
+        public string BinPath { get; set; }
 
         [XmlElement("assembly")]
         public string[] Assemblies 
