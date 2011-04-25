@@ -49,6 +49,7 @@
     <Compile Include="Creation\CreatePackageInput.cs" />
     <Compile Include="Creation\IPackageLogger.cs" />
     <Compile Include="Creation\PackageLogger.cs" />
+    <Compile Include="Creation\PackageManifestWriter.cs" />
     <Compile Include="Environment\EnvironmentGateway.cs" />
     <Compile Include="Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Environment\EnvironmentProxy.cs" />

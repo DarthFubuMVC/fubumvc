@@ -64,6 +64,7 @@
     <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="Commands\CreatePackageCommandTester.cs" />
     <Compile Include="Creation\PackageCreatorTester.cs" />
+    <Compile Include="Creation\PackageManifestWriterTester.cs" />
     <Compile Include="Deployment\Bootstrapping\DeploymentBootstrapperIntegratedTester.cs" />
     <Compile Include="Deployment\Commands\InitializeCommandTester.cs" />
     <Compile Include="Deployment\EnvironmentSettingsTester.cs" />
