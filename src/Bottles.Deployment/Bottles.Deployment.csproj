@@ -52,6 +52,7 @@
     <Compile Include="Bootstrapping\DeploymentBootstrapper.cs" />
     <Compile Include="Bootstrapping\DeploymentRegistry.cs" />
     <Compile Include="BottleReference.cs" />
+    <Compile Include="Commands\AddBottleInput.cs" />
     <Compile Include="Commands\AddDirectiveCommand.cs" />
     <Compile Include="Commands\AddRecipeCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Commands\ISimpleLogger.cs" />
     <Compile Include="Commands\VdirCommand.cs" />
     <Compile Include="DependsOnAttribute.cs" />
+    <Compile Include="DeploymentFolderFinder.cs" />
     <Compile Include="DeploymentSettings.cs" />
     <Compile Include="Directives\ScheduledTask.cs" />
     <Compile Include="Directives\ScheduleType.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Writing\HostWriter.cs" />
     <Compile Include="Writing\RecipeDefinition.cs" />
     <Compile Include="SelfExtractingZipBuilder.cs" />
+    <Compile Include="Writing\RecipeWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">

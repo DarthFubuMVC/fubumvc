@@ -39,7 +39,8 @@ namespace FubuCore
 
         void ReadTextFile(string path, Action<string> reader);
         void MoveFiles(string from, string to);
-        
+
+        string GetDirectory(string path);
     }
 
     public static class FileSystemExtensions
@@ -379,6 +380,11 @@ namespace FubuCore
 
 
             return Directory.GetDirectories(directory);
+        }
+
+        public string GetDirectory(string path)
+        {
+            return Path.GetDirectoryName(path);
         }
     }
 }

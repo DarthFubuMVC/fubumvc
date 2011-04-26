@@ -33,13 +33,18 @@ namespace Bottles.Deployment.Writing
             return _recipes[name];
         }
 
-        public void Flush()
+        public void Flush(FlushOptions options)
         {
-            _system.DeleteDirectory(_destination);
-            Thread.Sleep(10); //file system is async
-
-            _system.CreateDirectory(_destination);
+            if(options == FlushOptions.Wipeout)
+            {
+                _system.DeleteDirectory(_destination);
+                Thread.Sleep(10); //file system is async
+                _system.CreateDirectory(_destination);    
+            }
+            
             _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesDirectory));
+
+            _system.WriteStringToFile(FileSystem.Combine(_destination, ProfileFiles.BottlesManifestFile), "");
 
             writeEnvironmentSettings();
 
@@ -57,23 +62,7 @@ namespace Bottles.Deployment.Writing
 
         private void writeRecipe(RecipeDefinition recipe)
         {
-            var recipeDirectory = FileSystem.Combine(_destination, ProfileFiles.RecipesDirectory, recipe.Name);
-            _system.CreateDirectory(recipeDirectory);
-
-            var controlFilePath = FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile);
-            _system.WriteStringToFile(controlFilePath,"");
-            recipe.Dependencies.Each(d =>
-                {
-                    var line = "Dependency:{0}\n".ToFormat(d);
-                    _system.AppendStringToFile(controlFilePath, line);
-                });
-
-            recipe.Hosts().Each(host => writeHost(host, recipeDirectory));
-        }
-
-        private void writeHost(HostDefinition host, string recipeDirectory)
-        {
-            new HostWriter(_types).WriteTo(host, recipeDirectory);
+            new RecipeWriter(_types).WriteTo(recipe, _destination);
         }
 
 
@@ -95,5 +84,11 @@ namespace Bottles.Deployment.Writing
         }
 
 
+    }
+
+    public enum FlushOptions
+    {
+        Preserve,
+        Wipeout
     }
 }

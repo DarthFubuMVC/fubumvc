@@ -102,6 +102,7 @@ namespace FubuCore.CommandLine
         private CommandUsage buildUsage(UsageAttribute att)
         {
             return new CommandUsage(){
+                AppName = _appName,
                 CommandName = _commandName,
                 UsageKey = att.Name,
                 Description = att.Description,

@@ -43,7 +43,7 @@ namespace Bottles.Tests.Deployment.Parsing
                                   Relationship = "binaries"
                               });
 
-            writer.Flush();
+            writer.Flush(FlushOptions.Wipeout);
 
             theHost = HostReader.ReadFrom("profile2/recipes/r1/h1.host", new EnvironmentSettings());
         }

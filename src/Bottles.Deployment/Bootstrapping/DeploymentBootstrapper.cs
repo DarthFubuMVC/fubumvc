@@ -14,6 +14,7 @@ namespace Bottles.Deployment.Bootstrapping
             {
                 x.For<IFileSystem>().Use<FileSystem>();
 
+                x.For<IDeploymentFolderFinder>().Use<DeploymentFolderFinder>();
                 x.For<IPackageExploder>().Use<PackageExploder>();
                 x.For<IZipFileService>().Use<ZipFileService>();
                 x.For<IPackageExploderLogger>().Use(new PackageExploderLogger(Console.WriteLine));
@@ -26,3 +27,5 @@ namespace Bottles.Deployment.Bootstrapping
         }
     }
 }
+
+//512 574 8193

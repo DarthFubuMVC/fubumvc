@@ -11,7 +11,7 @@ namespace Bottles.Tests.Deployment.Parsing
         {
             var writer = new ProfileWriter("profile1");
             defineTheProfile(writer);
-            writer.Flush();
+            writer.Flush(FlushOptions.Wipeout);
         }
 
         protected abstract void defineTheProfile(ProfileWriter writer);

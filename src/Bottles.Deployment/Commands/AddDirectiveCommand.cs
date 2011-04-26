@@ -1,9 +1,11 @@
 using System.ComponentModel;
+using System.IO;
 using Bottles.Deployment.Bootstrapping;
 using Bottles.Deployment.Runtime;
 using Bottles.Deployment.Writing;
 using FubuCore;
 using FubuCore.CommandLine;
+using FubuCore.Reflection;
 
 namespace Bottles.Deployment.Commands
 {
@@ -22,38 +24,46 @@ namespace Bottles.Deployment.Commands
         [Description("The directory where ")]
         public string DeploymentFlag { get; set; }
 
+        [Description("Open the directive file when done.")]
+        public bool OpenFlag { get; set; }
+
         public string DeploymentLocation()
         {
-            return DeploymentFlag ?? ".".ToFullPath();
+            return DeploymentFlag ?? @".".ToFullPath();
         }
     }
 
     [CommandDescription("Adds a directive to an existing /deployment/recipe/host ", Name="add-directive")]
     public class AddDirectiveCommand : FubuCommand<AddDirectiveInput>
     {
+        IFileSystem _fileSystem = new FileSystem();
+
         public override bool Execute(AddDirectiveInput input)
         {
             var settings = new DeploymentSettings(input.DeploymentLocation());
 
             var c = DeploymentBootstrapper.Bootstrap(settings);
             var directiveTypeRegistry = c.GetInstance<IDirectiveTypeRegistry>();
-            return Initialize(directiveTypeRegistry, input);
+            var finder = c.GetInstance<IDeploymentFolderFinder>();
+            return Initialize(finder, directiveTypeRegistry, input);
         }
 
-        public bool Initialize(IDirectiveTypeRegistry registry, AddDirectiveInput input)
+        public bool Initialize(IDeploymentFolderFinder finder, IDirectiveTypeRegistry registry, AddDirectiveInput input)
         {
-            var pw = new ProfileWriter(input.DeploymentLocation());
+            var path = finder.FindDeploymentFolder(input.DeploymentLocation());
+            var p2 = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, input.Recipe);
 
-            var recipe = pw.RecipeFor(input.Recipe);
-            var host = recipe.HostFor(input.Host);
-
-
+            var host = new HostDefinition(input.Host);
             var type = registry.DirectiveTypeFor(input.Directive);
             var directive = type.Create<IDirective>();
 
             host.AddDirective(directive);
 
-            pw.Flush();
+            var hw = new HostWriter(new TypeDescriptorCache());
+            hw.WriteTo(host, p2);
+
+            if(input.OpenFlag)
+                _fileSystem.LaunchEditor(p2, host.FileName);
 
             return true;
         }

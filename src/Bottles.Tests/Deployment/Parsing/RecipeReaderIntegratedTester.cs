@@ -59,7 +59,7 @@ namespace Bottles.Tests.Deployment.Parsing
             writer.AddEnvironmentSetting<SimpleSettings>(x => x.Two, "h4", "env-value");
             writer.AddEnvironmentSetting("dbName", "blue");
 
-            writer.Flush();
+            writer.Flush(FlushOptions.Wipeout);
 
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings(){
                 RecipesDirectory = "clonewars\\recipes",
@@ -136,7 +136,7 @@ namespace Bottles.Tests.Deployment.Parsing
             writer.RecipeFor("r4").HostFor("h5").AddProperty<SimpleSettings>(x => x.One, "setting is {setting}");
 
 
-            writer.Flush();
+            writer.Flush(FlushOptions.Wipeout);
 
             var environmentSettings = new EnvironmentSettings();
             environmentSettings.Overrides["setting"] = "environment setting";

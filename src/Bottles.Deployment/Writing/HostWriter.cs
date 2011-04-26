@@ -18,8 +18,10 @@ namespace Bottles.Deployment.Writing
 
         public void WriteTo(HostDefinition host, string recipeDirectory)
         {
-            var fileName = "{0}.host".ToFormat(host.Name);
+            var fileName = host.FileName;
             fileName = FileSystem.Combine(recipeDirectory, fileName);
+
+            _fileSystem.CreateDirectory(recipeDirectory);
 
             host.References.Each(WriteReference);
             host.Values.Each(WritePropertyValue);

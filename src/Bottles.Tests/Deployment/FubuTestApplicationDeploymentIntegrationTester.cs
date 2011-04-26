@@ -36,7 +36,7 @@ namespace Bottles.Tests.Deployment
             
             h.AddDirective(d);
             
-            writer.Flush();
+            writer.Flush(FlushOptions.Wipeout);
 
             //copy over bottles
             var fileName = "FubuTestApplication.zip";

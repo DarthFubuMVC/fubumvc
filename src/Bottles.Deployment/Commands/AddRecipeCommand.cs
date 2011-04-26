@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Bottles.Deployment.Writing;
 using FubuCore.CommandLine;
 using FubuCore;
+using FubuCore.Reflection;
 
 namespace Bottles.Deployment.Commands
 {
@@ -9,7 +9,6 @@ namespace Bottles.Deployment.Commands
     {
         public string Name { get; set; }
         public string ProfileFlag { get; set; }
-        public IEnumerable<string> Hosts { get; set; }
 
         public string Profile()
         {
@@ -22,12 +21,13 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddRecipeInput input)
         {
-            var p = new ProfileWriter(input.Profile());
-            var r = p.RecipeFor(input.Name);
+            var path = new DeploymentFolderFinder(new FileSystem()).FindDeploymentFolder(input.Profile());
 
-            input.Hosts.Each(h => r.HostFor(h));
+            var recipe = new RecipeDefinition(input.Name);
+            
+            var rw = new RecipeWriter(new TypeDescriptorCache());
+            rw.WriteTo(recipe, path);
 
-            p.Flush();
 
             return true;
         }

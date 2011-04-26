@@ -1,4 +1,5 @@
-﻿using Bottles.Deployment.Commands;
+﻿using Bottles.Deployment;
+using Bottles.Deployment.Commands;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
 using FubuTestingSupport;
@@ -26,11 +27,12 @@ namespace Bottles.Tests.Commands
 
         private void finds_directive()
         {
+            MockFor<IDeploymentFolderFinder>().Stub(x => x.FindDeploymentFolder(@".\iisfubu")).Return(@".\iisfubu");
             MockFor<IDirectiveTypeRegistry>().Stub(x => x.DirectiveTypeFor("FubuWebsite")).Return(typeof (FubuWebsite));
         }
         private void execute()
         {
-            ClassUnderTest.Initialize(MockFor<IDirectiveTypeRegistry>(), theInput);
+            ClassUnderTest.Initialize(MockFor<IDeploymentFolderFinder>(), MockFor<IDirectiveTypeRegistry>(), theInput);
         }
 
         [Test]

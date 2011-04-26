@@ -72,7 +72,7 @@ namespace Bottles.Tests.Deployment.Parsing
             recipeDefinition.HostFor("h3").AddProperty<TwoSettings>(x => x.City, "Austin");
 
 
-            writer.Flush();
+            writer.Flush(FlushOptions.Wipeout);
 
 
             theRecipe = RecipeReader.ReadFrom("profile3/recipes/r1", new EnvironmentSettings());

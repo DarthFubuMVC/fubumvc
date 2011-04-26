@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
+using FubuCore;
 
 namespace Bottles.Deployment.Writing
 {
@@ -58,6 +59,11 @@ namespace Bottles.Deployment.Writing
         public IEnumerable<PropertyValue> Values
         {
             get { return _values; }
+        }
+
+        public string FileName
+        {
+            get { return "{0}.host".ToFormat(Name); }
         }
     }
 }
