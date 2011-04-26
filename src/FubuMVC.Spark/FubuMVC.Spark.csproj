@@ -61,6 +61,7 @@
     <Compile Include="Rendering\SparkViewProvider.cs" />
     <Compile Include="Rendering\SparkViewRenderer.cs" />
     <Compile Include="SparkModel\Constants.cs" />
+    <Compile Include="SparkModel\SparkItemPolicies.cs" />
     <Compile Include="SparkModel\SharedItemLocator.cs" />
     <Compile Include="SparkModel\SparkItemExtensions.cs" />
     <Compile Include="SparkModel\SparkItemViewFolder.cs" />

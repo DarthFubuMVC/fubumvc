@@ -1,8 +1,6 @@
 ﻿using System;
 using Bottles;
-using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -12,21 +10,19 @@ namespace FubuMVC.Spark
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
         private readonly SparkItems _sparkItems;
-        private readonly ISparkViewEngine _sparkViewEngine;
-        private readonly SparkItemBuilder _tokenizer;
+        private readonly SparkItemBuilder _itemBuilder;
         private readonly SparkItemFinder _sparkItemFinder;
+        
         public SparkExtension()
         {
-            _sparkItemFinder = new SparkItemFinder();
-            // TODO: move onto conventions
-            _tokenizer = new SparkItemBuilder(_sparkItemFinder, new ChunkLoader())
-                .Apply<MasterPageBinder>()
-                .Apply<ViewModelBinder>()
-                .Apply<NamespaceBinder>()
-                .Apply<ViewPathBinder>();
-
             _sparkItems = new SparkItems();
-            _sparkViewEngine = new SparkViewEngine();
+            _sparkItemFinder = new SparkItemFinder();
+            
+            _itemBuilder = new SparkItemBuilder(_sparkItems)
+                .AddBinder<MasterPageBinder>()
+                .AddBinder<ViewModelBinder>()
+                .Apply<NamespacePolicy>()
+                .Apply<ViewPathPolicy>();
         }
 
         public void Include(string filter)
@@ -36,11 +32,24 @@ namespace FubuMVC.Spark
 
         public void Configure(FubuRegistry registry)
         {
-            var facility = new SparkViewFacility(_tokenizer, _sparkItems);
+            populateAndBuildItems();
+            registry.Views.Facility(new SparkViewFacility(_sparkItems));
+            
+            services(registry);
+        }
+        
+        private void populateAndBuildItems()
+        {
+            _sparkItems.Clear();
+            _sparkItems.AddRange(_sparkItemFinder.FindItems());
+            _itemBuilder.BuildItems();
+        }
+
+        private void services(IFubuRegistry registry)
+        {
             registry.Services(x => x.SetServiceIfNone(_sparkItems));
-            registry.Services(x => x.SetServiceIfNone(_sparkViewEngine));
-            registry.Services(x => x.AddService<IActivator, SparkActivator>());
-            registry.Views.Facility(facility);            
+            registry.Services(x => x.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine()));
+            registry.Services(x => x.AddService<IActivator, SparkActivator>());            
         }
 
         // DSL 
@@ -53,8 +62,6 @@ namespace FubuMVC.Spark
         void Include(string filter);
     }
 
-    // TODO: Ask JDM & JA about this.
-    // This approach allows for configuration.
     public static class FubuRegistryExtensions
     {
         public static void UseSpark(this FubuRegistry fubuRegistry)

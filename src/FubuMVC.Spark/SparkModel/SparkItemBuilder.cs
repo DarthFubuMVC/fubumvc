@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
-using FubuMVC.Core.Registration;
 using Spark;
 using Spark.Compiler;
 using Spark.FileSystem;
@@ -13,59 +12,71 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISparkItemBuilder
     {
-        IEnumerable<SparkItem> BuildItems(TypePool types);
+        void BuildItems();
     }
 
     public class SparkItemBuilder : ISparkItemBuilder
     {
         private readonly IList<ISparkItemBinder> _itemBinders = new List<ISparkItemBinder>();
-        private readonly ISparkItemFinder _finder;
+        private readonly IList<ISparkItemPolicy> _policies = new List<ISparkItemPolicy>();
+        private readonly SparkItems _sparkItems;
         private readonly IChunkLoader _chunkLoader;
 
-        public SparkItemBuilder() : this(new SparkItemFinder(), new ChunkLoader()) {}
-        public SparkItemBuilder(ISparkItemFinder finder, IChunkLoader chunkLoader)
+        public SparkItemBuilder(SparkItems sparkItems) : this(sparkItems, new ChunkLoader()) {}
+        public SparkItemBuilder(SparkItems sparkItems, IChunkLoader chunkLoader)
         {
-            _finder = finder;
+            _sparkItems = sparkItems;
             _chunkLoader = chunkLoader;
         }
 
-        public SparkItemBuilder Apply<T>() where T : ISparkItemBinder, new()
-        {
-            return Apply<T>(c => { });
-        }
-
-        public SparkItemBuilder Apply<T>(Action<T> configure) where T : ISparkItemBinder, new()
+        public SparkItemBuilder AddBinder<T>() where T : ISparkItemBinder, new()
         {
             var binder = new T();
-            configure(binder);
+            return AddBinder(binder);
+        }
+
+        public SparkItemBuilder AddBinder(ISparkItemBinder binder)
+        {
             _itemBinders.Add(binder);
             return this;
         }
 
-        public IEnumerable<SparkItem> BuildItems(TypePool types)
+        public SparkItemBuilder Apply<T>() where T : ISparkItemPolicy, new()
         {
-            var items = new SparkItems();
-
-            items.AddRange(_finder.FindItems());
-            items.Each(item => _itemBinders.Each(binder =>
-            {
-                var chunks = _chunkLoader.Load(item);
-                var context = createContext(chunks, types, items);
-                binder.Bind(item, context);
-            }));
-
-            return items;
+            return Apply<T>(c => { });
         }
 
-        private BindContext createContext(IEnumerable<Chunk> chunks, TypePool types, SparkItems items)
+        public SparkItemBuilder Apply<T>(Action<T> configure) where T : ISparkItemPolicy, new()
+        {
+            var policy = new T();
+            configure(policy);
+            _policies.Add(policy);
+            return this;
+        }
+
+        public void BuildItems()
+        {
+            _sparkItems.Each(item => _itemBinders.Each(binder =>
+            {
+                var chunks = _chunkLoader.Load(item);
+                var context = createContext(chunks);
+
+                binder.Bind(item, context);
+                
+                _policies.Where(p => p.Matches(item))
+                    .Each(p => p.Apply(item));
+            }));
+        }
+
+        // Get away from this
+        private BindContext createContext(IEnumerable<Chunk> chunks)
         {
             var context = new BindContext
             {
+                AvailableItems = _sparkItems,
                 Master = chunks.OfType<UseMasterChunk>().FirstValue(x => x.Name),
                 ViewModelType = chunks.OfType<ViewDataModelChunk>().FirstValue(x => x.TModel.ToString()),
-                Namespaces = chunks.OfType<UseNamespaceChunk>().Select(x => x.Namespace.ToString()),
-                TypePool = types,
-                SparkItems = items
+                Namespaces = chunks.OfType<UseNamespaceChunk>().Select(x => x.Namespace.ToString())                
             };
 
             return context;

@@ -1,24 +1,20 @@
 ﻿using System.IO;
 using FubuMVC.Spark.SparkModel;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
     [TestFixture]
-    public class NamespaceBinderTester
+    public class NamespacePolicyTester : InteractionContext<NamespacePolicy>
     {
         private string _root;
-        private NamespaceBinder _binder;
-        private BindContext _context;
 
         [TestFixtureSetUp]
         public void Setup()
         {
             var vol = Directory.GetDirectoryRoot(Directory.GetCurrentDirectory());
             _root = Path.Combine(vol, "inetput", "www", "web");
-
-            _binder = new NamespaceBinder();
-            _context = new BindContext();
         }
 
         [Test]
@@ -27,8 +23,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             var path = Path.Combine(_root, "controllers", "home", "home.spark");
             var item = new SparkItem(path, _root, "") { ViewModelType = typeof(FooViewModel) };
             
-            _binder.Bind(item, _context);
-            Assert.AreEqual("FubuMVC.Spark.Tests.controllers.home", item.Namespace);
+            ClassUnderTest.Apply(item);
+            item.Namespace.ShouldEqual("FubuMVC.Spark.Tests.controllers.home");
         }
 
         [Test]
@@ -37,8 +33,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             var path = Path.Combine(_root, "home.spark");
             var item = new SparkItem(path, _root, "") { ViewModelType = typeof(FooViewModel) };
             
-            _binder.Bind(item, _context);
-            Assert.AreEqual("FubuMVC.Spark.Tests", item.Namespace);
+            ClassUnderTest.Apply(item);
+            item.Namespace.ShouldEqual("FubuMVC.Spark.Tests");
         }
 
         // TODO : Edge cases, boundaries

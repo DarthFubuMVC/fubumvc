@@ -6,13 +6,13 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
     [TestFixture]
-    public class ViewPathBinderTester : InteractionContext<ViewPathBinder>
+    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy>
     {
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()
         {
             var item = new SparkItem("", "", Constants.HostOrigin);
-            ClassUnderTest.Bind(item, null);
+            ClassUnderTest.Apply(item);
             item.ViewPath.ShouldBeEmpty();
         }
 
@@ -20,7 +20,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         public void when_origin_is_not_host_prefix_is_not_emtpy()
         {
             var item = new SparkItem("", "", "Foo");
-            ClassUnderTest.Bind(item, null);
+            ClassUnderTest.Apply(item);
             item.ViewPath.ShouldNotBeEmpty();
         }
 
@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             var bar1 = new SparkItem("", "", "Bar");
             var bar2 = new SparkItem("", "", "Bar");
 
-            new[] { baz1, baz2, bar1, bar2 }.Each(x => ClassUnderTest.Bind(x, null));
+            new[] { baz1, baz2, bar1, bar2 }.Each(x => ClassUnderTest.Apply(x));
 
             baz1.ViewPath.ShouldEqual(baz2.ViewPath);
             bar1.ViewPath.ShouldEqual(bar2.ViewPath);

@@ -10,21 +10,17 @@ namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly ISparkItemBuilder _itemBuilder;
         private readonly SparkItems _sparkItems;
 
-        public SparkViewFacility(ISparkItemBuilder itemBuilder, SparkItems sparkItems)
+        public SparkViewFacility(SparkItems sparkItems)
         {
-            _itemBuilder = itemBuilder;
             _sparkItems = sparkItems;
         }
 
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            _sparkItems.AddRange(_itemBuilder.BuildItems(types));
-
             return _sparkItems
-                .Where(x => x.HasViewModel())
+                .Where(x => x.HasViewModel() && types.TypesMatching(t => t == x.ViewModelType).Count() > 0)
                 .Select(item => new SparkViewToken(item));
         }
 

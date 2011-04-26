@@ -34,7 +34,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 
         protected override void beforeEach()
         {
-            _context = new BindContext {SparkItems = _sparkItems = createItems(), Master = "application"};
+            _context = new BindContext {AvailableItems = _sparkItems = createItems(), Master = "application"};
         }
 
         private SparkItems createItems()
