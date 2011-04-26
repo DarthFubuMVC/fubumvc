@@ -41,7 +41,11 @@ namespace FubuMVC.Spark.Registration.Nodes
         {
             var provider = actionDef
                 .DependencyByType(typeof(ISparkViewProvider), typeof(SparkViewProvider));
-            
+
+            var modifications = provider.EnumerableDependenciesOf<ISparkViewModification>();
+            modifications.AddType(typeof(ServiceLocatorAttacher));
+            modifications.AddType(typeof (ModelAttacher));
+
             provider.DependencyByValue(descriptor);
             provider.DependencyByValue(_cache);            
         }

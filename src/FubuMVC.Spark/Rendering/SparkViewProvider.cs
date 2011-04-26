@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
@@ -12,14 +13,14 @@ namespace FubuMVC.Spark.Rendering
     {
         private readonly SparkViewDescriptor _descriptor;
         private readonly IDictionary<int, ISparkViewEntry> _cache;
-        private readonly ISparkViewActivator _activator;
+        private readonly IEnumerable<ISparkViewModification> _modifications;
         private readonly ISparkViewEngine _engine;
 
-        public SparkViewProvider(IDictionary<int, ISparkViewEntry> cache, SparkViewDescriptor descriptor, ISparkViewActivator activator, ISparkViewEngine engine)
+        public SparkViewProvider(IDictionary<int, ISparkViewEntry> cache, SparkViewDescriptor descriptor, IEnumerable<ISparkViewModification> modifications, ISparkViewEngine engine)
         {
             _descriptor = descriptor;
+            _modifications = modifications;
             _cache = cache;
-            _activator = activator;
             _engine = engine;
         }
 
@@ -27,7 +28,10 @@ namespace FubuMVC.Spark.Rendering
         {
             var viewEntry = getViewEntry();
             var view = viewEntry.CreateInstance();
-            _activator.Activate(view);
+            
+            _modifications
+                .Where(m => m.Applies(view))
+                .Each(m => m.Modify(view));
 
             return view;
         }
