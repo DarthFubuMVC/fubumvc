@@ -67,6 +67,12 @@ namespace FubuCore.Testing.CommandLine
         }
 
         [Test]
+        public void handler_for_an_array()
+        {
+            handlerFor(x => x.Ages).ShouldBeOfType<EnumerableArgument>();
+        }
+
+        [Test]
         public void get_the_flag_name_for_a_property()
         {
             var property = ReflectionHelper.GetProperty<InputModel>(x => x.OrderFlag);
@@ -108,6 +114,13 @@ namespace FubuCore.Testing.CommandLine
         {
             handle(x => x.TrueFalseFlag, "-trueFalse").ShouldBeTrue();
             theInput.TrueFalseFlag.ShouldBeTrue();
+        }
+
+        [Test]
+        public void enumerable_argument()
+        {
+            handle(x => x.Ages, "1", "2", "3").ShouldBeTrue();
+            theInput.Ages.ShouldHaveTheSameElementsAs(1, 2, 3);
         }
 
         [Test]
@@ -213,6 +226,8 @@ namespace FubuCore.Testing.CommandLine
         public Color Color { get; set; }
         public int OrderFlag { get; set; }
         public bool TrueFalseFlag { get; set; }
+
+        public IEnumerable<int> Ages { get; set; }
 
         [FlagAlias("a")]
         public string AliasedFlag { get; set; }

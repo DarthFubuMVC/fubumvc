@@ -19,7 +19,7 @@ namespace Bottles.Exploding
         // TODO -- better logging?
         public static PackageExploder GetPackageExploder(FileSystem fileSystem)
         {
-            return new PackageExploder(new ZipFileService(), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
+            return new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
         }
 
         private readonly IFileSystem _fileSystem;
@@ -45,11 +45,8 @@ namespace Bottles.Exploding
         //destinationDirectory = var directoryName = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, sourceZipFile);
         public void Explode(string applicationDirectory, string sourceZipFile, string destinationDirectory, ExplodeOptions options)
         {
-            if(options == ExplodeOptions.DeleteDestination)
-                _fileSystem.DeleteDirectory(destinationDirectory);
-
             _logger.WritePackageZipFileExploded(sourceZipFile, destinationDirectory);
-            _service.ExtractTo(sourceZipFile, destinationDirectory);
+            _service.ExtractTo(sourceZipFile, destinationDirectory, options);
         }
 
         public void CleanAll(string applicationDirectory)
@@ -96,9 +93,10 @@ namespace Bottles.Exploding
         private string explodeZipAndReturnDirectory(string file, string applicationDirectory)
         {
             var directory = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file);
+            
             var request = new ExplodeRequest{
                 Directory = directory,
-                ExplodeAction = () => Explode(applicationDirectory, file, BottleFiles.DirectoryForPackageZipFile(applicationDirectory, file), ExplodeOptions.DeleteDestination),
+                ExplodeAction = () => Explode(applicationDirectory, file, directory, ExplodeOptions.DeleteDestination),
                 GetVersion = () => _service.GetVersion(file),
                 LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
             };

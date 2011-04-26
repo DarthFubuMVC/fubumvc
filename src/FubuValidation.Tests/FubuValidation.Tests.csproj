@@ -78,7 +78,6 @@
     <Compile Include="Fields\when_validating_maximum_length.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TemplateParserTester.cs" />
     <Compile Include="ValidationRegistryTester.cs" />
   </ItemGroup>
   <ItemGroup>

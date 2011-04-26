@@ -1,4 +1,5 @@
 using System;
+using Bottles;
 using Fubu;
 using FubuCore;
 using FubuMVC.Core.Packaging;
@@ -12,7 +13,7 @@ namespace FubuMVC.Tests.Commands
     public class ManifestCommandTester : InteractionContext<ManifestCommand>
     {
         private ManifestInput theInput;
-        private ApplicationManifest theManifest;
+        private PackageManifest theManifest;
 
         protected override void beforeEach()
         {
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.Commands
                 AppFolder = "some folder"
             };
 
-            theManifest = new ApplicationManifest();
+            theManifest = new PackageManifest();
 
         }
 
@@ -88,13 +89,13 @@ namespace FubuMVC.Tests.Commands
 
         private void theManifestFileDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(false);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(false);
         }
 
         private void theManifestFileExists()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.FILE)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(theManifest);
         }
 
         [Test]
@@ -157,7 +158,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IFileSystem>().AssertWasCalled(x => x.LaunchEditor(theInput.AppFolder, ApplicationManifest.FILE));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.LaunchEditor(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE));
         }
     }
 }

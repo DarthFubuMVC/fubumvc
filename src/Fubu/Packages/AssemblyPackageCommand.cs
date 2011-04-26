@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Xml;
+using Bottles;
+using Bottles.Commands;
 using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -17,7 +19,7 @@ namespace Fubu.Packages
         {
             input.RootFolder = AliasCommand.AliasFolder(input.RootFolder);
 
-            var zipService = new ZipFileService();
+            var zipService = new ZipFileService(new FileSystem());
 
 
             createZipFile(input, "WebContent", zipService);

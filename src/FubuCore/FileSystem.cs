@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,12 +12,18 @@ namespace FubuCore
         bool FileExists(string filename);
         void DeleteFile(string filename);
         void MoveFile(string from, string to);
+        void MoveDirectory(string from, string to);
+        bool IsFile(string path);
 
         string GetFullPath(string path);
 
 
+        void Copy(string source, string destination);
+
         void WriteStreamToFile(string filename, Stream stream);
         void WriteStringToFile(string filename, string text);
+        void AppendStringToFile(string filename, string text);
+
         string ReadStringFromFile(string filename);
         void WriteObjectToFile(string filename, object target);
         T LoadFromFile<T>(string filename) where T : new();
@@ -33,26 +38,37 @@ namespace FubuCore
         IEnumerable<string> FindFiles(string directory, FileSet searchSpecification);
 
         void ReadTextFile(string path, Action<string> reader);
+        void MoveFiles(string from, string to);
+        
     }
 
     public static class FileSystemExtensions
     {
+        public static bool DirectoryExists(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            return fileSystem.DirectoryExists(FileSystem.Combine(pathParts));
+        }
+
         public static void LaunchEditor(this IFileSystem fileSystem, params string[] pathParts)
         {
             fileSystem.LaunchEditor(FileSystem.Combine(pathParts));
         }
+
         public static bool FileExists(this IFileSystem fileSystem, params string[] pathParts)
         {
             return fileSystem.FileExists(FileSystem.Combine(pathParts));
         }
+
         public static T LoadFromFile<T>(this IFileSystem fileSystem, params string[] pathParts) where T : new()
         {
             return fileSystem.LoadFromFile<T>(FileSystem.Combine(pathParts));
         }
+
         public static IEnumerable<string> ChildDirectoriesFor(this IFileSystem fileSystem, params string[] pathParts)
         {
             return fileSystem.ChildDirectoriesFor(FileSystem.Combine(pathParts));
         }
+
         public static IEnumerable<string> FileNamesFor(this IFileSystem fileSystem, FileSet set, params string[] pathParts)
         {
             return fileSystem.FindFiles(FileSystem.Combine(pathParts), set);
@@ -67,9 +83,15 @@ namespace FubuCore
         {
             fileSystem.WriteObjectToFile(FileSystem.Combine(pathParts), target);
         }
+
         public static void DeleteDirectory(this IFileSystem fileSystem, params string[] pathParts)
         {
             fileSystem.DeleteDirectory(FileSystem.Combine(pathParts));
+        }
+
+        public static void CreateDirectory(this IFileSystem fileSystem, params string[] pathParts)
+        {
+            fileSystem.CreateDirectory(FileSystem.Combine(pathParts));
         }
     }
 
@@ -83,6 +105,89 @@ namespace FubuCore
             }
 
             Directory.CreateDirectory(path);
+        }
+
+        public void Copy(string source, string destination)
+        {
+            if(IsFile(source))
+                internalFileCopy(source, destination);
+            else
+                internalDirectoryCopy(source, destination);
+        }
+
+        void internalFileCopy(string source, string destination)
+        {
+            var fileName = Path.GetFileName(source);
+
+            var fullSourcePath = Path.GetFullPath(source);
+            var fullDestPath = Path.GetFullPath(destination);
+
+
+            var isFile = destinationIsFile(source, destination);
+
+            string destinationDir = fullDestPath;
+            if(isFile)
+                destinationDir = Path.GetDirectoryName(fullDestPath);
+
+            CreateDirectory(destinationDir);
+
+            if(!isFile) //aka its a directory
+                fullDestPath = Combine(fullDestPath, fileName);
+
+            try
+            {
+                File.Copy(fullSourcePath, fullDestPath, true);
+            }
+            catch (Exception ex)
+            {
+                var msg = "Was trying to copy '{0}' to '{1}' and encountered an error. :(".ToFormat(fullSourcePath, fullDestPath);
+                throw new Exception(msg, ex);
+            }
+        }
+
+        void internalDirectoryCopy(string source, string destination)
+        {
+            var files = Directory.GetFiles(source, "*.*", SearchOption.AllDirectories);
+            files.Each(f =>
+                {
+                    //need to test this for name correctness
+                    var destName = Combine(destination, Path.GetFileName(f));
+                    internalFileCopy(f, destName);
+                });
+        }
+
+        bool destinationIsFile(string source, string destination)
+        {
+            if(FileExists(destination) || DirectoryExists(destination))
+            {
+                //it exists 
+                return IsFile(destination);
+            }
+
+            if(destination.Last() == Path.DirectorySeparatorChar)
+            {
+                //last char is a '/' so its a directory
+                return false;
+            }
+
+            //last char is not a '/' so its a file
+            return true;
+        }
+
+        public bool IsFile(string path)
+        {
+            //resolve the path
+            path = Path.GetFullPath(path);
+
+            if (!File.Exists(path) && !Directory.Exists(path))
+                throw new IOException("This path '{0}' doesn't exist!".ToFormat(path));
+
+            var attr = File.GetAttributes(path);
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                return false;
+            }
+            return true;
         }
 
         public static string Combine(params string[] paths)
@@ -125,6 +230,12 @@ namespace FubuCore
         {
             File.WriteAllText(filename, text);
         }
+
+        public void AppendStringToFile(string filename, string text)
+        {
+            File.AppendAllText(filename, text);
+        }
+
 
         public string ReadStringFromFile(string filename)
         {
@@ -198,7 +309,32 @@ namespace FubuCore
         {
             CreateDirectory(Path.GetDirectoryName(to));
 
-            File.Move(from, to);
+            try
+            {
+                File.Move(from, to);
+            }
+            catch (IOException ex)
+            {
+                var msg = "Trying to move '{0}' to '{1}'".ToFormat(from, to);
+                throw new Exception(msg, ex);
+            }
+        }
+
+        public void MoveFiles(string from, string to)
+        {
+            var files = Directory.GetFiles(from, "*.*", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                var partialPath = file.Replace(from, "");
+                if (partialPath.StartsWith(@"\")) partialPath = partialPath.Substring(1);
+                var newPath = FileSystem.Combine(to, partialPath);
+                MoveFile(file, newPath);
+            }
+        }
+
+        public void MoveDirectory(string from, string to)
+        {
+            Directory.Move(from, to);
         }
 
         public IEnumerable<string> ChildDirectoriesFor(string directory)
@@ -219,6 +355,8 @@ namespace FubuCore
 
         public void ReadTextFile(string path, Action<string> callback)
         {
+            if (!FileExists(path)) return;
+
             using (var reader = new StreamReader(path))
             {
                 string line;

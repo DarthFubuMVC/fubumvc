@@ -90,7 +90,7 @@ namespace FubuCore
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.Include, Include) && Equals(other.Exclude, Exclude);
+            return Equals(other.Include, Include) && Equals(other.Exclude, Exclude) && other.DeepSearch.Equals(DeepSearch);
         }
 
         public override bool Equals(object obj)
@@ -105,7 +105,10 @@ namespace FubuCore
         {
             unchecked
             {
-                return ((Include != null ? Include.GetHashCode() : 0)*397) ^ (Exclude != null ? Exclude.GetHashCode() : 0);
+                int result = (Include != null ? Include.GetHashCode() : 0);
+                result = (result*397) ^ (Exclude != null ? Exclude.GetHashCode() : 0);
+                result = (result*397) ^ DeepSearch.GetHashCode();
+                return result;
             }
         }
 

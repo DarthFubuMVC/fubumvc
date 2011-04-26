@@ -1,5 +1,4 @@
 ﻿using System;
-using Bottle.Host;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
@@ -22,7 +21,7 @@ namespace Bottles.Host
                                                                   c.ConstructUsing(n =>
                                                                                        {
                                                                                            var fileSystem = new FileSystem();
-                                                                                           var packageExploder = new PackageExploder(new ZipFileService(), new PackageExploderLogger(Console.WriteLine), fileSystem);
+                                                                                           var packageExploder = new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(Console.WriteLine), fileSystem);
                                                                                            return new BottleHost(packageExploder, fileSystem);
                                                                                        });
                                                                   c.WhenStarted(s => s.Start());

@@ -1,4 +1,6 @@
 using System;
+using Bottles;
+using Bottles.Commands;
 using Fubu;
 using FubuCore.CommandLine;
 using NUnit.Framework;

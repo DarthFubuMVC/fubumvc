@@ -308,5 +308,15 @@ namespace FubuCore
         {
             return prop1.DeclaringType == prop2.DeclaringType && prop1.Name == prop2.Name;
         }
+
+
+        public static T Create<T>(this Type type)
+        {
+            return (T) type.Create();
+        }
+        public static object Create(this Type type)
+        {
+            return Activator.CreateInstance(type);
+        }
     }
 }

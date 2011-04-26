@@ -2,10 +2,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Serialization;
 using FubuFastPack.JqGrid;
 using FubuFastPack.Querying;
+using FubuMVC.Core.Packaging;
 using NUnit.Framework;
 using System.Collections.Generic;
+using FubuTestingSupport;
 
 namespace IntegrationTesting
 {
@@ -32,5 +35,7 @@ namespace IntegrationTesting
             var i = assembly.GetManifestResourceInfo("JScript1.js");
             Debug.WriteLine(i.FileName);
         }
+
+
     }
 }

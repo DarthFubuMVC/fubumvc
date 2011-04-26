@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.DirectoryServices;
 using System.IO;
+using Bottles;
+using Bottles.Commands;
 using FubuCore.CommandLine;
 
 namespace Fubu

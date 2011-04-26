@@ -11,7 +11,7 @@ namespace Bottles.Tests.Environment
         [Test]
         public void from_package_log_successful()
         {
-            var packageLog = new PackageRegistryLog();
+            var packageLog = new PackageLog();
             packageLog.Trace("some stuff");
             packageLog.Success.ShouldBeTrue();
 
@@ -24,7 +24,7 @@ namespace Bottles.Tests.Environment
         [Test]
         public void from_package_log_failure()
         {
-            var packageLog = new PackageRegistryLog();
+            var packageLog = new PackageLog();
             packageLog.Trace("some stuff");
             packageLog.MarkFailure("it broke");
             packageLog.Success.ShouldBeFalse();

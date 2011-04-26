@@ -1,4 +1,5 @@
 using System;
+using Bottles;
 using Fubu;
 using FubuCore;
 using FubuMVC.Core.Packaging;
@@ -13,7 +14,7 @@ namespace FubuMVC.Tests.Commands
     public class InstallCommandTester : InteractionContext<InstallCommand>
     {
         private InstallInput theInput;
-        private ApplicationManifest theManifest;
+        private PackageManifest theManifest;
 
         protected override void beforeEach()
         {
@@ -22,20 +23,20 @@ namespace FubuMVC.Tests.Commands
                 AppFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "folder1")
             };
 
-            theManifest = new ApplicationManifest();
+            theManifest = new PackageManifest();
             Services.PartialMockTheClassUnderTest();
         }
 
 
         private void theManifestFileDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(false);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(false);
         }
 
         private void theManifestFileExists()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, ApplicationManifest.FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ApplicationManifest>(theInput.AppFolder, ApplicationManifest.FILE)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(theManifest);
         }
 
 
@@ -49,7 +50,7 @@ namespace FubuMVC.Tests.Commands
         {
             theManifestFileDoesNotExist();
 
-            ClassUnderTest.Expect(x => x.WriteApplicationManifestDoesNotExist(theInput.AppFolder));
+            ClassUnderTest.Expect(x => x.WritePackageManifestDoesNotExist(theInput.AppFolder));
 
             execute();
 

@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Content
     {
         private ScriptGraph scripts;
         private ScriptGraphConfigurationActivator activator;
-        private PackageRegistryLog log;
+        private PackageLog log;
 
         [SetUp]
         public void SetUp()
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Content
             scripts = new ScriptGraph();
             activator = new ScriptGraphConfigurationActivator(scripts, new FileSystem());
 
-            log = new PackageRegistryLog();
+            log = new PackageLog();
         }
 
         [Test]

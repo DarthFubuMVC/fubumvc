@@ -13,6 +13,6 @@ namespace Bottles.Diagnostics
         void LogDuplicateAssembly(IPackageInfo package, string assemblyName);
         void LogAssemblyFailure(IPackageInfo package, string fileName, Exception exception);
         void LogExecution(object target, Action continuation);
-        PackageRegistryLog LogFor(object target);
+        PackageLog LogFor(object target);
     }
 }

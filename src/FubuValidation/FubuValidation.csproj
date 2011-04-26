@@ -96,7 +96,6 @@
     <Compile Include="ValidationContext.cs" />
     <Compile Include="RequiredAttribute.cs" />
     <Compile Include="ValidationKeys.cs" />
-    <Compile Include="TemplateParser.cs" />
     <Compile Include="ValidationAttribute.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="ValidationRegistry.cs" />

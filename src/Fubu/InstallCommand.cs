@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Bottles;
+using Bottles.Commands;
 using Bottles.Environment;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -21,14 +23,14 @@ namespace Fubu
         {
             if (!fileSystem.FileExists(input.ManifestFileName))
             {
-                WriteApplicationManifestDoesNotExist(input.AppFolder);
+                WritePackageManifestDoesNotExist(input.AppFolder);
                 return;
             }
 
             InstallManifest(input, fileSystem);
         }
 
-        public virtual void WriteApplicationManifestDoesNotExist(string appFolder)
+        public virtual void WritePackageManifestDoesNotExist(string appFolder)
         {
             Console.WriteLine("No Application Manifest file at {0}. Run 'fubu manifest [folder] -create' first",
                               appFolder);
@@ -38,7 +40,7 @@ namespace Fubu
         {
             Console.WriteLine("Executing the installers for the FubuMVC application at {0}", input.AppFolder);
 
-            var manifest = fileSystem.LoadFromFile<ApplicationManifest>(input.ManifestFileName);
+            var manifest = fileSystem.LoadFromFile<PackageManifest>(input.ManifestFileName);
             var run = CreateEnvironmentRun(input, manifest);
 
             try
@@ -69,7 +71,7 @@ namespace Fubu
             Console.WriteLine(message);
         }
 
-        public static EnvironmentRun CreateEnvironmentRun(InstallInput input, ApplicationManifest manifest)
+        public static EnvironmentRun CreateEnvironmentRun(InstallInput input, PackageManifest manifest)
         {
             var binFolder = FileSystem.Combine(input.AppFolder, "bin").ToFullPath();
             var configFile = manifest.ConfigurationFile ?? "web.config";

@@ -8,6 +8,8 @@ namespace Bottles.Diagnostics
         void Trace(string format, params object[] parameters);
         void MarkFailure(Exception exception);
         void MarkFailure(string text);
+        string FullTraceText();
+        string Description { get; }
     }
 
     public static class IPackageLogExtensions

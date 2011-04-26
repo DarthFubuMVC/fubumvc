@@ -1,5 +1,6 @@
 ﻿using System;
 using Bottles;
+using Bottles.Commands;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
 
@@ -17,6 +18,7 @@ namespace Fubu
             try
             {
                 var factory = new CommandFactory();
+                factory.RegisterCommands(typeof(AliasCommand).Assembly);
                 factory.RegisterCommands(typeof(IFubuCommand).Assembly);
                 factory.RegisterCommands(typeof(Program).Assembly);
 
@@ -38,14 +40,6 @@ namespace Fubu
                 return 1;
             }
             return success ? 0 : 1;
-        }
-    }
-
-    [Serializable]
-    public class CommandFailureException : Exception
-    {
-        public CommandFailureException(string message) : base(message)
-        {
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FubuCore;
+using Bottles;
+using FubuCore;
 
 namespace FubuMVC.Core.Packaging
 {
@@ -6,27 +7,17 @@ namespace FubuMVC.Core.Packaging
     {
         public static bool ApplicationManifestExists(this IFileSystem fileSystem, string appFolder)
         {
-            return fileSystem.FileExists(appFolder, ApplicationManifest.FILE);
+            return fileSystem.FileExists(appFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
         }
 
-        public static bool PackageManifestExists(this IFileSystem fileSystem, string folder)
+        public static PackageManifest LoadApplicationManifestFrom(this IFileSystem fileSystem, string folder)
         {
-            return fileSystem.FileExists(folder, PackageManifest.FILE);
-        }
-
-        public static PackageManifest LoadPackageManifestFrom(this IFileSystem fileSystem, string folder)
-        {
-            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
-        }
-
-        public static ApplicationManifest LoadApplicationManifestFrom(this IFileSystem fileSystem, string folder)
-        {
-            return fileSystem.LoadFromFile<ApplicationManifest>(folder, ApplicationManifest.FILE);
+            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
         }
 
         public static string ApplicationManifestPathFor(this IFileSystem fileSystem, string folder)
         {
-            return FileSystem.Combine(folder, ApplicationManifest.FILE);
+            return FileSystem.Combine(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
         }
     }
 }

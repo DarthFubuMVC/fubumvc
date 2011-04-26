@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Bottles.Environment;
 using FubuCore;
+using FubuCore.CommandLine;
 
 namespace Fubu
 {

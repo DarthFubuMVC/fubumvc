@@ -10,11 +10,11 @@ namespace Bottles.Diagnostics
 {
     public class PackagingDiagnostics : IPackagingDiagnostics
     {
-        private readonly Cache<object, PackageRegistryLog> _logs = new Cache<object, PackageRegistryLog>(o => new PackageRegistryLog(){
+        private readonly Cache<object, PackageLog> _logs = new Cache<object, PackageLog>(o => new PackageLog(){
             Description = o.ToString()
         });
     
-        public void EachLog(Action<object, PackageRegistryLog> action)
+        public void EachLog(Action<object, PackageLog> action)
         {
             _logs.Each(action);
         }
@@ -24,7 +24,7 @@ namespace Bottles.Diagnostics
             _logs[target].Provenance = provenance;
         }
 
-        public PackageRegistryLog LogFor(object target)
+        public PackageLog LogFor(object target)
         {
             return _logs[target];
         }

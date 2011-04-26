@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using System.IO;
+using Bottles;
+using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
@@ -19,6 +21,9 @@ namespace Fubu
 
         [Description("Opens the package manifest file in notepad")]
         public bool NotepadFlag { get; set; }
+
+        [Description("Overrides the of the package manifest file")]
+        public string FileFlag { get; set; }
     }
 
     [CommandDescription("Initialize a package manifest", Name = "init-pak")]
@@ -40,11 +45,13 @@ namespace Fubu
             var assemblyName = Path.GetFileName(input.Folder);
 
             var manifest = new PackageManifest{
-                Name = input.Name,
-                Assemblies = assemblyName
+                Name = input.Name
             };
 
-			if(!fileSystem.FileExists(FileSystem.Combine(input.Folder, PackageManifest.FILE)))
+            manifest.AddAssembly(assemblyName);
+
+            var manifestFile = FileSystem.Combine(input.Folder, input.FileFlag ?? PackageManifest.FILE);
+            if(!fileSystem.FileExists(manifestFile))
 			{
 				fileSystem.PersistToFile(manifest, input.Folder, PackageManifest.FILE);
 			}
@@ -52,7 +59,7 @@ namespace Fubu
 
             if (input.NotepadFlag)
             {
-                fileSystem.LaunchEditor(input.Folder, PackageManifest.FILE);
+                fileSystem.LaunchEditor(manifestFile);
             }
         }
     }

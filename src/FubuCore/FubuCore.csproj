@@ -43,8 +43,6 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -100,6 +98,8 @@
     <Compile Include="Binding\ServiceArguments.cs" />
     <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
+    <Compile Include="CommandLine\CommandFailureException.cs" />
+    <Compile Include="CommandLine\EnumerableArgument.cs" />
     <Compile Include="Configuration\SettingsProvider.cs" />
     <Compile Include="Configuration\FolderAppSettingsXmlSource.cs" />
     <Compile Include="Configuration\InMemorySettingsData.cs" />
@@ -108,6 +108,11 @@
     <Compile Include="Configuration\SettingCategory.cs" />
     <Compile Include="Configuration\SettingsRequestData.cs" />
     <Compile Include="Configuration\XmlSettingsData.cs" />
+    <Compile Include="DependencyAnalysis\Cycle.cs" />
+    <Compile Include="DependencyAnalysis\DependencyGraph.cs" />
+    <Compile Include="DependencyAnalysis\DirectedGraph.cs" />
+    <Compile Include="DependencyAnalysis\Edge.cs" />
+    <Compile Include="DependencyAnalysis\Node.cs" />
     <Compile Include="Reflection\TypeDescriptorCache.cs" />
     <Compile Include="Binding\ValueConverter.cs" />
     <Compile Include="Binding\ValueConverterRegistry.cs" />
@@ -178,6 +183,7 @@
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Stringifier.cs" />
+    <Compile Include="TemplateParser.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="TypeResolver.cs" />
     <Compile Include="UrlContext.cs" />

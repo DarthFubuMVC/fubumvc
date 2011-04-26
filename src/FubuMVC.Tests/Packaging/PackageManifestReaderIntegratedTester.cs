@@ -26,9 +26,10 @@ namespace FubuMVC.Tests.Packaging
 
             var fileSystem = new FileSystem();
             var manifest = new PackageManifest(){
-                Assemblies = "TestPackage1",
                 Name = "pak1"
             };
+
+            manifest.AddAssembly("TestPackage1");
 
             fileSystem.PersistToFile(manifest, packageFolder, PackageManifest.FILE);
 
@@ -40,7 +41,7 @@ namespace FubuMVC.Tests.Packaging
         [TearDown]
         public void TearDown()
         {
-            new FileSystem().DeleteFile(FileSystem.Combine("../../".ToFullPath(), ApplicationManifest.FILE));
+            new FileSystem().DeleteFile(FileSystem.Combine("../../".ToFullPath(), PackageManifest.APPLICATION_MANIFEST_FILE));
         }
 
 
@@ -75,10 +76,10 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void load_all_packages_by_reading_the_include_folder()
         {
-            var includes = new ApplicationManifest();
+            var includes = new PackageManifest();
             includes.AddLink("../TestPackage1");
 
-            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), ApplicationManifest.FILE);
+            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.APPLICATION_MANIFEST_FILE);
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
@@ -92,10 +93,10 @@ namespace FubuMVC.Tests.Packaging
 		[Test]
 		public void load_packages_by_assembly()
 		{
-			var includes = new ApplicationManifest();
+			var includes = new PackageManifest();
 			includes.AddAssembly("TestPackage1");
 
-			new FileSystem().PersistToFile(includes, "../../".ToFullPath(), ApplicationManifest.FILE);
+			new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.APPLICATION_MANIFEST_FILE);
 
 			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));

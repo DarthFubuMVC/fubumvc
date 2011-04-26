@@ -57,10 +57,6 @@
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fubu\Fubu.csproj">
-      <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
-      <Name>Fubu</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

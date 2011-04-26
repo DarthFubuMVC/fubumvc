@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Bottles;
+using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
@@ -61,7 +63,7 @@ namespace Fubu
         {
             var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
 
-            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, ApplicationManifest.FILE))
+            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE))
             {
                 manifest.RemoveAllLinkedFolders();
 
@@ -91,14 +93,14 @@ namespace Fubu
             }
         }
 
-        private void listCurrentLinks(LinkInput input, ApplicationManifest manifest)
+        private void listCurrentLinks(LinkInput input, PackageManifest manifest)
         {
             var appFolder = input.AppFolder;
 
             ListCurrentLinks(appFolder, manifest);
         }
 
-        public static void ListCurrentLinks(string appFolder, ApplicationManifest manifest)
+        public static void ListCurrentLinks(string appFolder, PackageManifest manifest)
         {
             if (manifest.LinkedFolders.Any())
             {
@@ -111,7 +113,7 @@ namespace Fubu
             }
         }
 
-        private void updateManifest(LinkInput input, IFileSystem fileSystem, ApplicationManifest manifest)
+        private void updateManifest(LinkInput input, IFileSystem fileSystem, PackageManifest manifest)
         {
             if (input.RemoveFlag)
             {
@@ -125,18 +127,18 @@ namespace Fubu
             persist(input, manifest, fileSystem);
         }
 
-        private void persist(LinkInput input, ApplicationManifest manifest, IFileSystem fileSystem)
+        private void persist(LinkInput input, PackageManifest manifest, IFileSystem fileSystem)
         {
-            fileSystem.PersistToFile(manifest, input.AppFolder, ApplicationManifest.FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
         }
 
-        private void remove(LinkInput input, ApplicationManifest manifest)
+        private void remove(LinkInput input, PackageManifest manifest)
         {
             manifest.RemoveLink(input.RelativePathOfPackage());
             Console.WriteLine("Folder {0} was removed from the application at {1}", input.PackageFolder, input.AppFolder);
         }
 
-        private void add(IFileSystem system, LinkInput input, ApplicationManifest manifest)
+        private void add(IFileSystem system, LinkInput input, PackageManifest manifest)
         {
             var exists = system.FileExists(input.PackageFolder, PackageManifest.FILE);
             if (!exists)

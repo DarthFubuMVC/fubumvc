@@ -30,7 +30,7 @@ namespace Bottles.Environment
 
         private static void startTheEnvironment(IList<LogEntry> list, IEnvironment environment, params Action<IInstaller, IPackageLog>[] actions)
         {
-            var log = new PackageRegistryLog();
+            var log = new PackageLog();
             
             try
             {
@@ -61,7 +61,7 @@ namespace Bottles.Environment
             {
                 foreach (var installer in installers)
                 {
-                    var log = new PackageRegistryLog();
+                    var log = new PackageLog();
                     try
                     {
                         action(installer, log);

@@ -10,6 +10,12 @@ namespace FubuCore.Configuration
         private readonly IObjectResolver _resolver;
         private readonly IEnumerable<ISettingsSource> _sources;
 
+        public SettingsProvider(IObjectResolver resolver, IEnumerable<ISettingsData> settings)
+            : this(resolver, new ISettingsSource[]{new SettingsSource(settings)})
+        {
+            
+        }
+
         public SettingsProvider(IObjectResolver resolver, IEnumerable<ISettingsSource> sources)
         {
             _resolver = resolver;
