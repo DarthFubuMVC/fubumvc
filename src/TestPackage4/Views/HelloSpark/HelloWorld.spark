@@ -1,11 +1,8 @@
 ﻿<viewdata model="TestPackage4.HelloWorld"/>
-<html>
-  <head>
-    <title>Hello, Spark!</title>
-  </head>
-  <body>
-    <div id="main">
-      <h1 id="message">$!{Model.Message}</h1>
-    </div>
-  </body>
-</html>
+
+<content:MainContent>
+<div id="main">
+Hello from Test Package 4
+<h1 id="message">$!{Model.Message}</h1>
+</div>
+</content:MainContent>
