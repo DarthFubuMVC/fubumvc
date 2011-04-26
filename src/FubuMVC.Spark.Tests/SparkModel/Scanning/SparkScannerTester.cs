@@ -19,7 +19,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
         public SparkScannerTester()
         {
             _scanner = new FileScanner(new FileSystem());
-            _scanResult=new List<SparkItem>();
+            _scanResult = new List<SparkItem>();
             var request = new ScanRequest();
             TestSource.Paths().Each(request.AddRoot);
             request.Include("*.spark");
@@ -43,12 +43,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
             _scanResult.Where(s => s.RootPath == pathFor("Pak2")).ShouldHaveCount(4);
         }
 
-        [Test]
-        public void deepest_roots_are_searched_first()
-        {
-            // Design needs to be changed.
-        }
-
         // TODO: Add more coverage
     }
 
@@ -57,9 +51,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
         public static IEnumerable<string> Paths()
         {
             var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Templates");
-            yield return templatePath;
             yield return FileSystem.Combine(templatePath, "Pak1");
             yield return FileSystem.Combine(templatePath, "Pak2");
+            yield return templatePath;
         }
     }
 }

@@ -107,11 +107,12 @@ namespace FubuMVC.Spark.SparkModel
 
         private ViewLoader viewLoaderByRoot(string root)
         {
-            return new ViewLoader
+            var loader = new ViewLoader
             {
                 SyntaxProvider = _syntaxProvider,
-                ViewFolder = new FileSystemViewFolder(root)
-            };            
+                ViewFolder = new FileSystemViewFolder(root),
+            };
+            return loader;
         }
     }
 }

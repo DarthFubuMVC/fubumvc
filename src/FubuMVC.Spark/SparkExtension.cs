@@ -41,7 +41,8 @@ namespace FubuMVC.Spark
         private void populateAndBuildItems()
         {
             _sparkItems.Clear();
-            _sparkItems.AddRange(_sparkItemFinder.FindItems());
+            _sparkItems.AddRange(_sparkItemFinder.FindInHost());
+            _sparkItems.AddRange(_sparkItemFinder.FindInPackages());
             _itemBuilder.BuildItems();
         }
 

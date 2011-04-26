@@ -1,58 +1,98 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Bottles;
+using FubuCore;
+using FubuCore.Util;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Spark.SparkModel.Scanning;
 
 namespace FubuMVC.Spark.SparkModel
 {
     public interface ISparkItemFinder
     {
-        IEnumerable<SparkItem> FindItems();
+        IEnumerable<SparkItem> FindInHost();
+        IEnumerable<SparkItem> FindInPackages();
     }
 
     public class SparkItemFinder : ISparkItemFinder
     {
         private readonly IFileScanner _fileScanner;
-        private readonly IEnumerable<SparkRoot> _sparkRoots;
-        private readonly ScanRequest _request;
-
-        public SparkItemFinder() : this(new FileScanner(), new SparkRoots()) {}
-        public SparkItemFinder(IFileScanner fileScanner, IEnumerable<SparkRoot> sparkRoots)
+        private readonly IEnumerable<IPackageInfo> _packages;
+        private CompositeAction<ScanRequest> _requestConfig;
+        private string _hostPath;
+        public SparkItemFinder() : this(new FileScanner(), PackageRegistry.Packages) { }
+        public SparkItemFinder(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
         {
             _fileScanner = fileScanner;
-            _sparkRoots = sparkRoots;
-            _request = new ScanRequest();
-            _request.Include("*.spark");
-            _request.Include("bindings.xml");
+            _packages = packages;
+            _requestConfig = new CompositeAction<ScanRequest>();
+            Include("*spark");
+            Include("bindings.xml");
         }
 
-        public IEnumerable<SparkItem> FindItems()
+        public string HostPath { get { return _hostPath ?? "~/".ToPhysicalPath(); } set { _hostPath = value; } }
+
+        public IEnumerable<SparkItem> FindInHost()
         {
             var items = new List<SparkItem>();
-            var request = buildRequest(items);
+            var root = new SparkRoot {Origin = Constants.HostOrigin, Path = HostPath};
+            var request = buildRequest(items, root);
+            request.ExcludeDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
+            _fileScanner.Scan(request);
+            return items;
+        }
+
+        public IEnumerable<SparkItem> FindInPackages()
+        {
+            var items = new List<SparkItem>();
+            var roots = packageRoots(_packages).ToArray();
+            var request = buildRequest(items, roots);
             _fileScanner.Scan(request);
             return items;
         }
 
         public void Include(string filter)
         {
-            _request.Include(filter);
+            _requestConfig += r => r.Include(filter);
+        }
+
+        private static IEnumerable<SparkRoot> packageRoots(IEnumerable<IPackageInfo> packages)
+        {
+            var packageRoots = new List<SparkRoot>();
+            foreach (var package in packages)
+            {
+                var pack = package;
+                package.ForFolder(BottleFiles.WebContentFolder, path =>
+                {
+                    var root = new SparkRoot
+                    {
+                        Origin = pack.Name,
+                        Path = path
+                    };
+
+                    packageRoots.Add(root);
+                });
+            }
+            return packageRoots;
         }
 
 
-        // Later : Take the variable part of this into a search object
-        private ScanRequest buildRequest(ICollection<SparkItem> files)
+        private ScanRequest buildRequest(ICollection<SparkItem> files, params  SparkRoot[] sparkRoots)
         {
-            _sparkRoots.Each(r => _request.AddRoot(r.Path));
+            var request = new ScanRequest();
+            _requestConfig.Do(request);
+            sparkRoots.Each(r => request.AddRoot(r.Path));
 
-            _request.AddHandler(fileFound =>
+            request.AddHandler(fileFound =>
             {
-                var origin = _sparkRoots.First(x => x.Path == fileFound.Root).Origin;
+                var origin = sparkRoots.First(x => x.Path == fileFound.Root).Origin;
                 var sparkFile = new SparkItem(fileFound.Path, fileFound.Root, origin);
                 
                 files.Add(sparkFile);
             });
 
-            return _request;
+            return request;
         }
+
     }      
 }

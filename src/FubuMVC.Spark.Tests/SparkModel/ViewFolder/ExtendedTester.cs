@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Bottles;
 using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
@@ -30,18 +31,21 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             var testRoot = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
 
             var pathApp = Path.Combine(testRoot, "App");
-            var pathPackage1 = Path.Combine(pathApp, "Content", "Package1", "WebContent");
+            var pathPackage1 = Path.Combine(pathApp, "fubu-packages", "Package1", "WebContent");
             var pathPackage2 = Path.Combine(testRoot, "Package2");
 
-            var roots = new List<SparkRoot>
-            {
-                new SparkRoot {Origin = Package1, Path = pathPackage1},
-                new SparkRoot {Origin = Package2, Path = pathPackage2},
-                new SparkRoot {Origin = Constants.HostOrigin, Path = pathApp}
-            };
-            
-            var scanner = new SparkItemFinder(new FileScanner(), roots);
-            var allItems = new SparkItems(scanner.FindItems());
+            var packages = new List<IPackageInfo>();
+            var pack1 = new PackageInfo(Package1);
+            var pack2 = new PackageInfo(Package2);
+            pack1.RegisterFolder(BottleFiles.WebContentFolder, pathPackage1);
+            pack2.RegisterFolder(BottleFiles.WebContentFolder, pathPackage2);
+            packages.Add(pack1);
+            packages.Add(pack2);
+
+            var scanner = new SparkItemFinder(new FileScanner(), packages) {HostPath = pathApp};
+            var allItems = new SparkItems();
+            allItems.AddRange(scanner.FindInPackages());
+            allItems.AddRange(scanner.FindInHost());
 
             var viewPathPolicy = new ViewPathPolicy();
             allItems.Each(viewPathPolicy.Apply);
@@ -84,6 +88,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             getViewSource(uno).ShouldEqual("<appname/> Vostro");
             getViewSource(header).ShouldEqual("Dell footer");
+        }
+
+        [Test]
+        public void the_correct_number_of_items_are_resolved()
+        {
+            _appItems.ShouldHaveCount(9);
+            _pak1Items.ShouldHaveCount(9);
+            _pak2Items.ShouldHaveCount(8);
         }
 
         [Test]

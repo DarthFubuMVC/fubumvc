@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore;
-
+using System.Linq;
 namespace FubuMVC.Spark.SparkModel.Scanning
 {
     public interface IFileScanner
@@ -22,22 +22,26 @@ namespace FubuMVC.Spark.SparkModel.Scanning
 
         public void Scan(ScanRequest request)
         {
-            var fileSet = new FileSet { Include = request.Filters, DeepSearch = false };            
+            var fileSet = new FileSet { Include = request.Filters,  DeepSearch = false };
             _scannedDirectories = new List<string>();
-            request.Roots.Each(root => scan(root, root, fileSet, request.OnFound));
+            request.Roots.Each(root => scan(root, root, fileSet, request.OnFound, request.ExcludedDirectories));
         }
 
-        private void scan(string root, string directory, FileSet fileSet, Action<FileFound> onFound)
+        private void scan(string root, string directory, FileSet fileSet, Action<FileFound> onFound, IEnumerable<string> excludes)
         {
             if (alreadyScannedOrNonexistent(directory)) { return; }
 
             _scannedDirectories.Add(directory);
 
             _fileSystem.ChildDirectoriesFor(directory)
-                .Each(dir => scan(root, dir, fileSet, onFound));
+                .Each(dir => scan(root, dir, fileSet, onFound, excludes));
 
-            _fileSystem.FindFiles(directory, fileSet)
-                .Each(file => onFound(new FileFound(file, root, directory)));
+            var included = fileSet.IncludedFilesFor(directory).ToList();
+            var excluded = included.Where(x => excludes.Any(x.Contains));
+
+            var files = included.Except(excluded).ToList();
+
+            files.Each(file => onFound(new FileFound(file, root, directory)));
         }
 
         private bool alreadyScannedOrNonexistent(string path)

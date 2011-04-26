@@ -71,7 +71,7 @@
     <Compile Include="SparkModel\Scanning\ScanRequest.cs" />
     <Compile Include="SparkModel\SparkItemFinder.cs" />
     <Compile Include="SparkModel\SparkItemBinders.cs" />
-    <Compile Include="SparkModel\SparkRoots.cs" />
+    <Compile Include="SparkModel\SparkRoot.cs" />
     <Compile Include="SparkModel\SparkItemBuilder.cs" />
     <Compile Include="SparkModel\Scanning\FileScanner.cs" />
     <Compile Include="SparkModel\SparkItem.cs" />
