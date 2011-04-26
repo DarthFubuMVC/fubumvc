@@ -18,6 +18,10 @@ namespace Bottles.Commands
 
         [Description("Opens the package manifest file in notepad")]
         public bool NotepadFlag { get; set; }
+
+        [Description("There is no web content to include")]
+        [FlagAlias("noweb")]
+        public bool NoWebContentFlag { get; set; }
     }
 
     [CommandDescription("Initialize a package manifest", Name = "init-pak")]
@@ -41,6 +45,9 @@ namespace Bottles.Commands
             var manifest = new PackageManifest{
                 Name = input.Name
             };
+
+            if (input.NoWebContentFlag)
+                manifest.ContentFileSet = new FileSet();
 
             manifest.AddAssembly(assemblyName);
 
