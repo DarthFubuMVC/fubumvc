@@ -29,11 +29,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             _hostRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "inetpub", "www", "web");
             _pak1Root = Path.Combine(_hostRoot, Pak1);
             _pak2Root = Path.Combine(_hostRoot, Pak2);
-            _pak3Root = Path.Combine(_hostRoot, Pak3);            
+            _pak3Root = Path.Combine(_hostRoot, Pak3);
         }
 
         protected override void beforeEach()
-        {
+        {           
+            Services.Inject<ISharedItemLocator>(new SharedItemLocator(new[] {Constants.SharedSpark}));
             _context = new BindContext {AvailableItems = _sparkItems = createItems(), Master = "application"};
         }
 

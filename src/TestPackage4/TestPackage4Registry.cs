@@ -2,17 +2,21 @@
 
 namespace TestPackage4
 {
-	public class TestPackage4Registry : IFubuRegistryExtension
+	public class TestPackage4Registry : FubuRegistry, IFubuRegistryExtension
 	{
+	    public TestPackage4Registry()
+	    {
+            Applies
+                .ToAssemblyContainingType<HelloSparkController>();
+
+            Actions
+                .IncludeClassesSuffixedWithController();
+	        
+	    }
+
 		public void Configure(FubuRegistry registry)
 		{
-			registry
-				.Applies
-				.ToAssemblyContainingType<HelloSparkController>();
-
-			registry
-				.Actions
-				.IncludeClassesSuffixedWithController();
+            registry.Import(this, "testpak4");
 		}
 	}
 }
