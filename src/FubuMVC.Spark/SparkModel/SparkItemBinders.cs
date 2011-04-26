@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bottles;
 using FubuCore;
 using FubuMVC.Core.Registration;
 
@@ -145,22 +145,6 @@ namespace FubuMVC.Spark.SparkModel
                 "Bottles"
             }
             .Contains(assemblyName);
-        }
-
-    }
-
-    // TODO : Remove again when Bottles work gets into master.
-    public static class FileSystemExtensions
-    {
-        public static IEnumerable<string> FindAssemblyNames(this IFileSystem fileSystem, string directory)
-        {
-            var fileSet = new FileSet
-            {
-                DeepSearch = false,
-                Include = "*.dll;*.exe"
-            };
-
-            return fileSystem.FindFiles(directory, fileSet).Select(Path.GetFileNameWithoutExtension);
         }
     }
 }
