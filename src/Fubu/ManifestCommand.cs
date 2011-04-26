@@ -1,8 +1,10 @@
 ﻿using System;
+using Bottles;
+using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace Bottles.Commands
+namespace Fubu
 {
     [CommandDescription("Access and modify an application manifest file")]
     public class ManifestCommand : FubuCommand<ManifestInput>

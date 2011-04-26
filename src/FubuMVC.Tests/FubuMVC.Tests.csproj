@@ -83,6 +83,8 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
+    <Compile Include="Commands\LinkCommandTester.cs" />
+    <Compile Include="Commands\ManifestCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="Conneg\ConnegBehaviorConventionTester.cs" />
     <Compile Include="Conneg\ConnegNodeTester.cs" />

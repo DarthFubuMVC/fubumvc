@@ -67,8 +67,6 @@
     <Compile Include="Commands\CreatePackageCommandTester.cs" />
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
-    <Compile Include="Commands\LinkCommandTester.cs" />
-    <Compile Include="Commands\ManifestCommandTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Creation\PackageCreatorTester.cs" />
     <Compile Include="Creation\PackageManifestWriterTester.cs" />

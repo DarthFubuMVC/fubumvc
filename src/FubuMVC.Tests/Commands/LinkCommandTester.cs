@@ -1,11 +1,13 @@
 ﻿using System.IO;
-using Bottles.Commands;
+using Bottles;
+using Fubu;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using FileSystemExtensions = Bottles.FileSystemExtensions;
 
-namespace Bottles.Tests.Commands
+namespace FubuMVC.Tests.Commands
 {
     [TestFixture]
     public class LinkCommandTester : InteractionContext<LinkCommand>

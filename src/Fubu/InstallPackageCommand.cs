@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
+using FubuMVC.Core.Packaging;
 
-namespace Bottles.Commands
+namespace Fubu
 {
     [Usage("install", "Install a package zip file to an application")]
     [Usage("uninstall", "Remove a package zip file from an application")]
@@ -14,7 +16,7 @@ namespace Bottles.Commands
         {
             var applicationFolder = AliasCommand.AliasFolder(input.AppFolder);
 
-            var packageFolder = FileSystem.Combine(applicationFolder, "bin", BottleFiles.PackagesFolder); //FubuMvcPackageFacility.FubuPackagesFolder);
+            var packageFolder = FileSystem.Combine(applicationFolder, "bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
             var destinationFileName = FileSystem.Combine(packageFolder, Path.GetFileName(input.PackageFile));
             if (input.UninstallFlag)

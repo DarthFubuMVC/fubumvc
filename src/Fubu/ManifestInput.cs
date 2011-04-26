@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using FubuCore.CommandLine;
 
-namespace Bottles.Commands
+namespace Fubu
 {
     public class ManifestInput
     {
