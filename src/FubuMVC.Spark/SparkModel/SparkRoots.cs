@@ -38,7 +38,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private IEnumerable<SparkRoot> allRoots()
         {
-            return packages().Concat(host());
+            return packages().Concat(host()).ToList();
         }
 
         private IEnumerable<SparkRoot> packages()
