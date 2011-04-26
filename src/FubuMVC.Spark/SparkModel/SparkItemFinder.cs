@@ -20,25 +20,39 @@ namespace FubuMVC.Spark.SparkModel
         private readonly IEnumerable<IPackageInfo> _packages;
         private CompositeAction<ScanRequest> _requestConfig;
         private string _hostPath;
+        
         public SparkItemFinder() : this(new FileScanner(), PackageRegistry.Packages) { }
         public SparkItemFinder(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
         {
             _fileScanner = fileScanner;
             _packages = packages;
             _requestConfig = new CompositeAction<ScanRequest>();
+            
             Include("*spark");
             Include("bindings.xml");
         }
 
-        public string HostPath { get { return _hostPath ?? "~/".ToPhysicalPath(); } set { _hostPath = value; } }
+        public string HostPath
+        {
+            get { return _hostPath ?? "~/".ToPhysicalPath(); } 
+            set { _hostPath = value; }
+        }
 
         public IEnumerable<SparkItem> FindInHost()
         {
             var items = new List<SparkItem>();
-            var root = new SparkRoot {Origin = Constants.HostOrigin, Path = HostPath};
+            var root = new SparkRoot
+            {
+                Origin = Constants.HostOrigin, 
+                Path = HostPath
+            };
+
             var request = buildRequest(items, root);
             request.ExcludeDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
+            request.ExcludeDirectory(FubuMvcPackageFacility.FubuContentFolder);
+            
             _fileScanner.Scan(request);
+            
             return items;
         }
 
@@ -47,7 +61,9 @@ namespace FubuMVC.Spark.SparkModel
             var items = new List<SparkItem>();
             var roots = packageRoots(_packages).ToArray();
             var request = buildRequest(items, roots);
+            
             _fileScanner.Scan(request);
+            
             return items;
         }
 
@@ -81,8 +97,8 @@ namespace FubuMVC.Spark.SparkModel
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);
+            
             sparkRoots.Each(r => request.AddRoot(r.Path));
-
             request.AddHandler(fileFound =>
             {
                 var origin = sparkRoots.First(x => x.Path == fileFound.Root).Origin;
@@ -93,6 +109,5 @@ namespace FubuMVC.Spark.SparkModel
 
             return request;
         }
-
     }      
 }
