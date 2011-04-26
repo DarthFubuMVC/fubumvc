@@ -4,12 +4,9 @@ using System.IO;
 using Bottles.Assemblies;
 using Bottles.Zipping;
 using FubuCore;
-using Bottles;
 
 namespace Bottles.Creation
 {
-
-
     public class PackageCreator
     {
         private readonly IFileSystem _fileSystem;

@@ -53,6 +53,7 @@
     <Compile Include="Bootstrapping\DeploymentRegistry.cs" />
     <Compile Include="BottleReference.cs" />
     <Compile Include="Commands\AddDirectiveCommand.cs" />
+    <Compile Include="Commands\AddRecipeCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\CreateAllCommand.cs" />
     <Compile Include="Commands\IInstallationLogger.cs" />
