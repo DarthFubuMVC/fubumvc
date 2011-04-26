@@ -28,9 +28,15 @@ namespace FubuCore.CommandLine
         private string _description;
         private readonly Type _inputType;
         private readonly List<ITokenHandler> _handlers;
+        private string _appName;
 
-        public UsageGraph(Type commandType)
+        public UsageGraph(Type commandType) : this("fubu", commandType)
         {
+        }
+
+        public UsageGraph(string appName, Type commandType)
+        {
+            _appName = appName;
             _commandType = commandType;
             _inputType = commandType.FindInterfaceThatCloses(typeof (IFubuCommand<>)).GetGenericArguments().First();
 
@@ -48,7 +54,9 @@ namespace FubuCore.CommandLine
 
             if (!_usages.Any())
             {
-                var usage = new CommandUsage(){
+                var usage = new CommandUsage()
+                {
+                    AppName = _appName,
                     CommandName = _commandName,
                     UsageKey = "default",
                     Description = _description,

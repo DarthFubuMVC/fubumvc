@@ -175,7 +175,7 @@ namespace FubuCore.Testing.CommandLine
         private InputModel build(params string[] tokens)
         {
             var queue = new Queue<string>(tokens);
-            var graph = new UsageGraph(typeof (InputCommand));
+            var graph = new UsageGraph("fubu",typeof (InputCommand));
 
             return (InputModel) graph.BuildInput(queue);
         }

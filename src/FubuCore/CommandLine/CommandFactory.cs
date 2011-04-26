@@ -76,6 +76,7 @@ namespace FubuCore.CommandLine
     {
         private static readonly string[] _helpCommands = new string[]{"help", "?"}; 
         private readonly Cache<string, Type> _commandTypes = new Cache<string, Type>();
+        private string _appName;
 
         // TODO -- deal with the Help thing
         public CommandRun BuildRun(string commandLine)
@@ -130,7 +131,7 @@ namespace FubuCore.CommandLine
             // this is where we'll call into UsageGraph?
             try
             {
-                var usageGraph = new UsageGraph(_commandTypes[commandName]);
+                var usageGraph = new UsageGraph(_appName, _commandTypes[commandName]);
                 var input = usageGraph.BuildInput(queue);
 
                 return new CommandRun
@@ -192,7 +193,7 @@ namespace FubuCore.CommandLine
 
         public virtual CommandRun HelpRun(Queue<string> queue)
         {
-            var input = (HelpInput) (new UsageGraph(typeof (HelpCommand)).BuildInput(queue));
+            var input = (HelpInput) (new UsageGraph(_appName, typeof (HelpCommand)).BuildInput(queue));
             input.CommandTypes = _commandTypes.GetAll();
 
 
@@ -203,7 +204,7 @@ namespace FubuCore.CommandLine
                 _commandTypes.WithValue(input.Name, type =>
                 {
                     input.InvalidCommandName = false;
-                    input.Usage = new UsageGraph(type);
+                    input.Usage = new UsageGraph(_appName, type);
                 });
             }
 
@@ -227,6 +228,11 @@ namespace FubuCore.CommandLine
             type.ForAttribute<CommandDescriptionAttribute>(att => description = att.Description);
 
             return description;
+        }
+
+        public void SetAppName(string appName)
+        {
+            _appName = appName;
         }
     }
 }

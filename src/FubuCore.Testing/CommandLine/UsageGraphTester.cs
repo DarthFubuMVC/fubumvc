@@ -16,7 +16,7 @@ namespace FubuCore.Testing.CommandLine
         [SetUp]
         public void SetUp()
         {
-            theUsageGraph = new UsageGraph(typeof (FakeLinkCommand));
+            theUsageGraph = new UsageGraph("fubu",typeof (FakeLinkCommand));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace FubuCore.Testing.CommandLine
         [Test]
         public void derive_a_single_usage_for_any_command_that_has_no_specific_usages()
         {
-            var graph = new UsageGraph(typeof (SimpleCommand));
+            var graph = new UsageGraph("fubu", typeof (SimpleCommand));
             var usage = graph.Usages.Single();
             usage.Description.ShouldEqual(typeof (SimpleCommand).GetAttribute<CommandDescriptionAttribute>().Description);
             usage.Arguments.Select(x => x.PropertyName).ShouldHaveTheSameElementsAs("Arg1", "Arg2");
@@ -116,7 +116,7 @@ namespace FubuCore.Testing.CommandLine
         [SetUp]
         public void SetUp()
         {
-            theUsageGraph = new UsageGraph(typeof (FakeLinkCommand));
+            theUsageGraph = new UsageGraph("fubu", typeof (FakeLinkCommand));
         }
 
         private bool isValidUsage(params string[] args)

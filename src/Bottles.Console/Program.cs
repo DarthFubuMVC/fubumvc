@@ -14,6 +14,7 @@ namespace Bottles
             try
             {
                 var factory = new CommandFactory();
+                factory.SetAppName("bottles");
                 factory.RegisterCommands(typeof(IFubuCommand).Assembly);
                 factory.RegisterCommands(typeof(Recipe).Assembly);
                 factory.RegisterCommands(typeof(PackageExploder).Assembly);
