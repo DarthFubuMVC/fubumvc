@@ -11,6 +11,10 @@ namespace FubuMVC.HelloFubuSpark
         {
             IncludeDiagnostics(true);
 
+            Applies
+                .ToThisAssembly()
+                .ToAllPackageAssemblies();
+
             Actions
                 .IncludeClassesSuffixedWithController();
 
