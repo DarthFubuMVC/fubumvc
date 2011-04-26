@@ -1,13 +1,10 @@
-using System;
-using Bottles;
-using Fubu;
+﻿using Bottles.Commands;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Commands
+namespace Bottles.Tests.Commands
 {
     [TestFixture]
     public class ManifestCommandTester : InteractionContext<ManifestCommand>

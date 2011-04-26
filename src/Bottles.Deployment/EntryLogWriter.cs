@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Bottles.Environment;
 using FubuCore;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using HtmlTags;
 
-namespace Fubu
+namespace Bottles.Deployment
 {
     public static class EntryLogWriter
     {

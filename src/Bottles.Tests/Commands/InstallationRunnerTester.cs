@@ -1,12 +1,11 @@
-using System;
+﻿using System.Collections.Generic;
+using Bottles.Deployment.Commands;
 using Bottles.Environment;
-using Fubu;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Collections.Generic;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Commands
+namespace Bottles.Tests.Commands
 {
     [TestFixture]
     public class InstallationRunnerTester : InteractionContext<InstallationRunner>

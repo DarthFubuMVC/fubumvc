@@ -48,6 +48,10 @@
     <Compile Include="Commands\AssembliesCommand.cs" />
     <Compile Include="Commands\CreatePackageCommand.cs" />
     <Compile Include="Commands\InitPakCommand.cs" />
+    <Compile Include="Commands\LinkCommand.cs" />
+    <Compile Include="Commands\ManifestCommand.cs" />
+    <Compile Include="Commands\ManifestInput.cs" />
+    <Compile Include="Commands\RestartCommand.cs" />
     <Compile Include="Creation\CreatePackageInput.cs" />
     <Compile Include="Creation\IPackageLogger.cs" />
     <Compile Include="Creation\PackageLogger.cs" />

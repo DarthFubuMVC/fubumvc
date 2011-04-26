@@ -1,11 +1,9 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
-using Bottles;
-using Bottles.Commands;
 using FubuCore.CommandLine;
 
-namespace Fubu
+namespace Bottles.Commands
 {
     public class FolderInput
     {

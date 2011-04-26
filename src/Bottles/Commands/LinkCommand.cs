@@ -1,15 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using Bottles;
-using Bottles.Commands;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuMVC.Core.Packaging;
 
-namespace Fubu
+namespace Bottles.Commands
 {
     public class LinkInput
     {

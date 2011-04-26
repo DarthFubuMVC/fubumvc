@@ -180,7 +180,6 @@
     <Compile Include="Registration\Routes\RouteInput.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
-    <Compile Include="Packaging\FileSystemExtensions.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
     <Compile Include="Packaging\IPackageManifestReader.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualFile.cs" />

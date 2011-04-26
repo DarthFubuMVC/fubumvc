@@ -1,14 +1,12 @@
-using System;
-using Bottles;
-using Fubu;
+﻿using System;
+using System.IO;
+using Bottles.Deployment.Commands;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.IO;
 
-namespace FubuMVC.Tests.Commands
+namespace Bottles.Tests.Commands
 {
     [TestFixture]
     public class InstallCommandTester : InteractionContext<InstallCommand>
@@ -30,13 +28,13 @@ namespace FubuMVC.Tests.Commands
 
         private void theManifestFileDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(false);
+            MockFor<IFileSystem>().Stub(x => FubuCore.FileSystemExtensions.FileExists(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(false);
         }
 
         private void theManifestFileExists()
         {
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => FubuCore.FileSystemExtensions.FileExists(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => FubuCore.FileSystemExtensions.LoadFromFile<PackageManifest>(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(theManifest);
         }
 
 

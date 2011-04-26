@@ -1,13 +1,11 @@
-using System;
+﻿using System;
 using System.IO;
-using Bottles;
 using Bottles.Commands;
 using Bottles.Environment;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuMVC.Core.Packaging;
 
-namespace Fubu
+namespace Bottles.Deployment.Commands
 {
     [CommandDescription("Runs installer actions and/or environment checks for an application")]
     public class InstallCommand : FubuCommand<InstallInput>

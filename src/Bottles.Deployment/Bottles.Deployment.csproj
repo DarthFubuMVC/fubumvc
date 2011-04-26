@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlTags">
+      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
@@ -42,6 +45,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapping\DeploymentBootstrapper.cs" />
@@ -50,8 +55,15 @@
     <Compile Include="Commands\AddDirectiveCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\CreateAllCommand.cs" />
+    <Compile Include="Commands\IInstallationLogger.cs" />
     <Compile Include="Commands\InitializeCommand.cs" />
+    <Compile Include="Commands\InstallationLogger.cs" />
+    <Compile Include="Commands\InstallationRunner.cs" />
+    <Compile Include="Commands\InstallCommand.cs" />
+    <Compile Include="Commands\InstallInput.cs" />
+    <Compile Include="Commands\InstallMode.cs" />
     <Compile Include="Commands\ISimpleLogger.cs" />
+    <Compile Include="Commands\VdirCommand.cs" />
     <Compile Include="DependsOnAttribute.cs" />
     <Compile Include="DeploymentSettings.cs" />
     <Compile Include="Directives\ScheduledTask.cs" />
@@ -59,6 +71,7 @@
     <Compile Include="Deployers\WindowsSchedulerDeployer.cs" />
     <Compile Include="Diagnostics\DeploymentDiagnostics.cs" />
     <Compile Include="Diagnostics\IPackageDeploymentLog.cs" />
+    <Compile Include="EntryLogWriter.cs" />
     <Compile Include="EnvironmentSettings.cs" />
     <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
     <Compile Include="IFinalizer.cs" />
@@ -115,6 +128,10 @@
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

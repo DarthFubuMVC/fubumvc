@@ -41,5 +41,14 @@ namespace FubuMVC.Tests.Commands
         {
             new UsageGraph(typeof(CreateVdirCommand)).WriteUsages();
         }
+
+        public class FakeInput{}
+        class CreateVdirCommand : FubuCommand<FakeInput>
+        {
+            public override bool Execute(FakeInput input)
+            {
+                return true;
+            }
+        }
     }
 }

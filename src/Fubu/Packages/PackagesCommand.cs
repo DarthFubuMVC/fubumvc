@@ -5,8 +5,6 @@ using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 
 namespace Fubu.Packages
 {

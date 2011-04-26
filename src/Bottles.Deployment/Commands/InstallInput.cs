@@ -1,11 +1,8 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using Bottles;
 using FubuCore;
-using FubuCore.CommandLine;
-using FubuMVC.Core.Packaging;
 
-namespace Fubu
+namespace Bottles.Deployment.Commands
 {
     public class InstallInput
     {

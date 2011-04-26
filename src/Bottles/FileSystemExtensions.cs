@@ -47,7 +47,22 @@ namespace Bottles
             return binFolder;
         }
 
-        public static IEnumerable<string> FindAssemblyNames(this IFileSystem fileSystem, string directory)
+        public static bool ApplicationManifestExists(this IFileSystem fileSystem, string appFolder)
+        {
+            return fileSystem.FileExists(appFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
+        }
+
+        public static PackageManifest LoadApplicationManifestFrom(this IFileSystem fileSystem, string folder)
+        {
+            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
+        }
+
+        public static string ApplicationManifestPathFor(this IFileSystem fileSystem, string folder)
+        {
+            return FileSystem.Combine(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
+        }
+
+		public static IEnumerable<string> FindAssemblyNames(this IFileSystem fileSystem, string directory)
         {
             var fileSet = new FileSet{
                 DeepSearch = false,
@@ -56,5 +71,6 @@ namespace Bottles
 
             return fileSystem.FindFiles(directory, fileSet).Select(Path.GetFileNameWithoutExtension);
         }
+		
     }
 }

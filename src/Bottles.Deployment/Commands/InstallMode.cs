@@ -1,4 +1,4 @@
-﻿namespace Fubu
+﻿namespace Bottles.Deployment.Commands
 {
     public enum InstallMode
     {

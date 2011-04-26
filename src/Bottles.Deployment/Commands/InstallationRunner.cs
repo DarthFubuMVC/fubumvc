@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Environment;
 
-namespace Fubu
+namespace Bottles.Deployment.Commands
 {
     public class InstallationRunner
     {

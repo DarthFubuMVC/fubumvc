@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Bottles.Environment;
 
-namespace Fubu
+namespace Bottles.Deployment.Commands
 {
     public interface IInstallationLogger
     {
