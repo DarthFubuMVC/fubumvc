@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using FubuCore.CommandLine;
 
-namespace Fubu.Packages
+namespace Bottles.Commands
 {
     public class InstallPackageInput
     {

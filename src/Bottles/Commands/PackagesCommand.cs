@@ -1,12 +1,10 @@
-using System;
-using Bottles;
-using Bottles.Commands;
+﻿using System;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace Fubu.Packages
+namespace Bottles.Commands
 {
     [CommandDescription("Display and modify the state of package zip files in an application folder")]
     public class PackagesCommand : FubuCommand<PackagesInput>

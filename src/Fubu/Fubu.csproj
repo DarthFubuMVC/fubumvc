@@ -57,12 +57,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Packages\AssemblyPackageCommand.cs" />
-    <Compile Include="Packages\AssemblyPackageInput.cs" />
-    <Compile Include="Packages\InstallPackageCommand.cs" />
-    <Compile Include="Packages\InstallPackageInput.cs" />
-    <Compile Include="Packages\PackagesCommand.cs" />
-    <Compile Include="Packages\PackagesInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,9 +74,7 @@
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packages\Creation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Fubu.Packages
+namespace Bottles.Commands
 {
     public class PackagesInput
     {
