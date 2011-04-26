@@ -7,7 +7,7 @@ using Spark;
 
 namespace FubuMVC.Spark.Registration.Nodes
 {
-    public class SparkViewOutput : OutputNode<RenderSparkViewBehavior>
+    public class SparkViewOutput : OutputNode<RenderSparkBehavior>
     {
         private static readonly IDictionary<int, ISparkViewEntry> _cache;
         private readonly SparkItem _item;
@@ -17,41 +17,49 @@ namespace FubuMVC.Spark.Registration.Nodes
             _cache = new Dictionary<int, ISparkViewEntry>();
         }
 
-        public SparkViewOutput(SparkItem item) { _item = item; }
-
+        public SparkViewOutput(SparkItem item)
+        {
+            _item = item;
+        }
 
         protected override void configureObject(ObjectDef def)
         {
-            var descriptor = new SparkViewDescriptor();
-            var partialDescriptor = new SparkViewDescriptor();
+            var renderer = def
+                .DependencyByType(typeof(ISparkViewRenderer), typeof(SparkViewRenderer));
+            
+            var action = renderer
+                .DependencyByType(typeof(IRenderAction), typeof(RenderAction));
+            
+            var partialAction = renderer
+                .DependencyByType(typeof(IPartialRenderAction), typeof(PartialRenderAction));
 
-            descriptor.AddTemplate(_item.ViewPath);
-            if (_item.Master != null)
+            configureProvider(action, createDescriptor(true));
+            configureProvider(partialAction, createDescriptor(false));
+        }
+
+        private void configureProvider(ObjectDef actionDef, SparkViewDescriptor descriptor)
+        {
+            var provider = actionDef
+                .DependencyByType(typeof(ISparkViewProvider), typeof(SparkViewProvider));
+            
+            provider.DependencyByValue(descriptor);
+            provider.DependencyByValue(_cache);            
+        }
+
+        private SparkViewDescriptor createDescriptor(bool useMaster)
+        {
+            var descriptor = new SparkViewDescriptor().AddTemplate(_item.ViewPath);
+            if(useMaster && _item.Master != null)
             {
                 descriptor.AddTemplate(_item.Master.ViewPath);
             }
-            partialDescriptor.AddTemplate(_item.ViewPath);
 
-            var renderer = def.DependencyByType(typeof(ISparkViewRenderer), typeof(SparkViewRenderer));
-            var action = renderer.DependencyByType(typeof(IRenderAction), typeof(RenderAction));
-            var partialAction = renderer.DependencyByType(typeof(IPartialRenderAction), typeof(PartialRenderAction));
-
-            var provider = action.DependencyByType(typeof (ISparkViewProvider), typeof (SparkViewProvider));
-            var partialProvider = partialAction.DependencyByType(typeof (ISparkViewProvider), typeof (SparkViewProvider));
-
-            provider.DependencyByValue(descriptor);
-            provider.DependencyByValue(_cache);
-
-            partialProvider.DependencyByValue(partialDescriptor);
-            partialProvider.DependencyByValue(_cache);
+            return descriptor;
         }
 
         public override string Description
         {
-            get
-            {
-                return string.Format("Spark View [{0}]", _item.RelativePath());
-            }
+            get { return string.Format("Spark View [{0}]", _item.RelativePath()); }
         }
     }
 }
