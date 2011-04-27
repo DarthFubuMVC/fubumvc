@@ -1,10 +1,9 @@
 using Bottles.Configuration;
-using Bottles.Deployment;
 using FubuCore.Configuration;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace Bottles.Tests.Deployment
+namespace Bottles.Tests
 {
     [TestFixture]
     public class EnvironmentSettingsTester
@@ -40,10 +39,14 @@ namespace Bottles.Tests.Deployment
         [Test]
         public void read_text_with_equals_and_only_one_dot()
         {
-            Exception<EnvironmentSettingsException>.ShouldBeThrownBy(() =>
-            {
-                theEnvironmentSettings.ReadText("arg.1=value");
-            });
+            theEnvironmentSettings.ReadText("arg.1=value");
+            theEnvironmentSettings.EnvironmentSettingsData()["arg.1"].ShouldEqual("value");
+        }
+
+        [Test]
+        public void environment_settings_must_be_categorized_as_environment()
+        {
+            theEnvironmentSettings.EnvironmentSettingsData().Category.ShouldEqual(SettingCategory.environment);
         }
 
         [Test]

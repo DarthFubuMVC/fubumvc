@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore;
 using FubuCore.Configuration;
 using FubuCore.Util;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace Bottles.Configuration
 
         private readonly Cache<string, string> _overrides = new Cache<string, string>();
         private readonly Cache<string, SettingsData> _settings = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment));
-
+        private readonly SettingsData _environmentSettings = new SettingsData(SettingCategory.environment){
+            Description = "Environment settings"
+        };
 
         public void ReadText(string text)
         {
@@ -29,10 +32,15 @@ namespace Bottles.Configuration
             }
 
             var value = parts.Last();
+            
             var directiveParts = parts.First().Split('.');
             if (directiveParts.Length == 1)
             {
                 _overrides[parts.First()] = value;
+            }
+            else if (directiveParts.Length == 2)
+            {
+                _environmentSettings[parts.First()] = value;
             }
             else if (directiveParts.Length >= 3)
             {
@@ -61,8 +69,15 @@ namespace Bottles.Configuration
 
         public SettingsData EnvironmentSettingsData()
         {
-            throw new NotImplementedException();
+            return _environmentSettings;
         }
 
+        public static EnvironmentSettings ReadFrom(string environmentFile)
+        {
+            var environment = new EnvironmentSettings();
+            new FileSystem().ReadTextFile(environmentFile, environment.ReadText);
+
+            return environment;
+        }
     }
 }

@@ -18,19 +18,18 @@ namespace Bottles.Configuration
 
         public IEnumerable<SettingsData> FindSettingData()
         {
-            //var settings = new EnvironmentSettings(_folder);
-            //var substitutions = settings.Overrides.ToDictionary();
+            var environmentFile = FileSystem.Combine(_folder, EnvironmentSettings.EnvironmentSettingsFileName);
+            var settings = EnvironmentSettings.ReadFrom(environmentFile);
 
-            //yield return settings.EnvironmentSettingsData();
+            var substitutions = settings.Overrides.ToDictionary();
 
-            //foreach (var file in Directory.GetFiles(_folder, "*.config"))
-            //{
-            //    var document = new XmlDocument();
-            //    document.Load(file);
+            yield return settings.EnvironmentSettingsData();
 
+            foreach (var file in Directory.GetFiles(_folder, "*.config"))
+            {
+                yield return XmlSettingsParser.Parse(file, substitutions);
+            }
 
-            //}
-            throw new NotImplementedException();
         }
     }
 }

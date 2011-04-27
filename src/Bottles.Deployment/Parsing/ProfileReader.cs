@@ -21,8 +21,9 @@ namespace Bottles.Deployment.Parsing
         // TODO -- recipe selection / filtering
         public IEnumerable<HostManifest> Read()
         {
-            var environment = new EnvironmentSettings();
-            _fileSystem.ReadTextFile(_settings.EnvironmentFile, environment.ReadText);
+            var environment = EnvironmentSettings.ReadFrom(_settings.EnvironmentFile);
+
+
 
             var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
             recipes = _sorter.Order(recipes);
