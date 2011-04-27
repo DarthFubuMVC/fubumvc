@@ -55,10 +55,8 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Registration\Nodes\SparkViewOutput.cs" />
-    <Compile Include="Rendering\RenderActions.cs" />
-    <Compile Include="Rendering\PartialOutput.cs" />
+    <Compile Include="Rendering\Classes.cs" />
     <Compile Include="Rendering\SparkViewModifications.cs" />
-    <Compile Include="Rendering\SparkViewProvider.cs" />
     <Compile Include="Rendering\SparkViewRenderer.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Constants.cs" />

@@ -1,4 +1,7 @@
-﻿namespace FubuMVC.Spark.Rendering
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace FubuMVC.Spark.Rendering
 {
     public interface ISparkViewRenderer
     {
@@ -7,27 +10,17 @@
 
     public class SparkViewRenderer : ISparkViewRenderer
     {
-        private readonly IPartialRenderAction _partialAction;
-        private readonly IRenderAction _renderAction;
-        private readonly PartialOutput _partialOutput;
+        private readonly IEnumerable<IRenderStrategy> _strategies;
 
-        public SparkViewRenderer(IPartialRenderAction partialAction, IRenderAction renderAction, PartialOutput partialOutput)
+        public SparkViewRenderer(IEnumerable<IRenderStrategy> strategies)
         {
-            _partialAction = partialAction;
-            _renderAction = renderAction;
-            _partialOutput = partialOutput;
+            _strategies = strategies;
         }
 
         public void Render()
         {
-            if (_partialOutput.IsActive())
-            {
-                _partialAction.Execute();
-            }
-            else
-            {
-                _renderAction.Execute();
-            }
+            var strategy = _strategies.Where(x => x.Applies()).First();
+            strategy.Invoke();
         }
     }
 }

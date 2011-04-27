@@ -24,26 +24,18 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         protected override void configureObject(ObjectDef def)
         {
-            var renderer = def
-                .DependencyByType(typeof(ISparkViewRenderer), typeof(SparkViewRenderer));
-            
-            var action = renderer
-                .DependencyByType(typeof(IRenderAction), typeof(RenderAction));
-            
-            var partialAction = renderer
-                .DependencyByType(typeof(IPartialRenderAction), typeof(PartialRenderAction));
+            var renderer = def.DependencyByType(typeof(ISparkViewRenderer), typeof(SparkViewRenderer));
 
-            configureProvider(action, createDescriptor(true));
-            configureProvider(partialAction, createDescriptor(false));
-        }
+            var descriptors = new SparkItemDescriptors(createDescriptor(true), createDescriptor(false));
+            var factory = new ObjectDef {Type = typeof (ViewFactory)};
+            factory.DependencyByValue(descriptors);
+            factory.DependencyByValue(_cache);
 
-        private static void configureProvider(ObjectDef actionDef, SparkViewDescriptor descriptor)
-        {
-            var provider = actionDef
-                .DependencyByType(typeof(ISparkViewProvider), typeof(SparkViewProvider));
-
-            provider.DependencyByValue(descriptor);
-            provider.DependencyByValue(_cache);            
+            var strategies = renderer.EnumerableDependenciesOf<IRenderStrategy>();
+            strategies.AddType(typeof(NestedRenderStrategy)).DependencyByType<IViewFactory>(factory);
+            strategies.AddType(typeof(AjaxRenderStrategy)).DependencyByType<IViewFactory>(factory);
+            strategies.AddType(typeof(PartialRenderStrategy)).DependencyByType<IViewFactory>(factory);
+            strategies.AddType(typeof(DefaultRenderStrategy)).DependencyByType<IViewFactory>(factory);
         }
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
