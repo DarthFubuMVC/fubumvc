@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -11,6 +12,18 @@ namespace FubuCore.Testing
         [SetUp]
         public void SetUp()
         {
+        }
+
+        [Test]
+        public void combine_to_path_when_rooted()
+        {
+            "C:\\here".CombineToPath("there").ShouldEqual("C:\\here");
+        }
+
+        [Test]
+        public void combine_to_path_when_not_rooted()
+        {
+            "here".CombineToPath("there").ShouldEqual(Path.Combine("there", "here"));
         }
 
         [Test]

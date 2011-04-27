@@ -19,6 +19,7 @@ namespace Bottles
         public static readonly string WebContentFolder = "WebContent";
         public static readonly string VersionFile = ".version";
         public static readonly string DataFolder = "Data";
+        public static readonly string ConfigFolder = "Config";
 
         public static string ContentFolder { get; set; }
         public static string PackagesFolder { get; set; }

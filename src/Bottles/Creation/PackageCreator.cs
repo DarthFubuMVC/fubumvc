@@ -59,9 +59,10 @@ namespace Bottles.Creation
 
                 zipFile.AddFile(FileSystem.Combine(input.PackageFolder, PackageManifest.FILE), "");
 
+                // TODO -- there's an opportunity to generalize this
                 AddDataFiles(input, zipFile, manifest);
-
                 AddContentFiles(input, zipFile, manifest);
+                AddConfigFiles(input, zipFile, manifest);
             });
         }
 
@@ -95,6 +96,15 @@ namespace Bottles.Creation
                                  ZipDirectory = BottleFiles.DataFolder,
                                  RootDirectory = Path.Combine(input.PackageFolder, BottleFiles.DataFolder)
                              });
+        }
+
+        public void AddConfigFiles(CreatePackageInput input, IZipFile zipFile, PackageManifest manifest)
+        {
+            zipFile.AddFiles(new ZipFolderRequest(){
+                FileSet = manifest.ConfigFileSet,
+                RootDirectory = input.PackageFolder,
+                ZipDirectory = BottleFiles.ConfigFolder
+            });
         }
 
     }

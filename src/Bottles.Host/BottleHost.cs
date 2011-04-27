@@ -23,14 +23,14 @@ namespace Bottles.Host
             //sets bottles to look for things in '~/packages'
             BottleFiles.PackagesFolder = "packages";
 
-            var manifest = _fileSystem.LoadFromFile<HostManifest>("svc", HostManifest.FILE);
+            var manifest = _fileSystem.LoadFromFile<ServiceHostManifest>("svc", ServiceHostManifest.FILE);
 
             var type = Type.GetType(manifest.Bootstrapper, true, true);
 
             //guard clauses here
 
             _svc = (IBottleAwareService)Activator.CreateInstance(type);
-
+            
             //this is done so that start can return, as 'LoadPackages' may take some time.
             ThreadPool.QueueUserWorkItem(cb =>
                                              {

@@ -55,8 +55,6 @@
     <Compile Include="Commands\AddPakInput.cs" />
     <Compile Include="Commands\AddDirectiveCommand.cs" />
     <Compile Include="Commands\AddRecipeCommand.cs" />
-    <Compile Include="Commands\DeployCommand.cs" />
-    <Compile Include="Commands\CreateAllCommand.cs" />
     <Compile Include="Commands\IInstallationLogger.cs" />
     <Compile Include="Commands\InstallationLogger.cs" />
     <Compile Include="Commands\InstallationRunner.cs" />
@@ -64,12 +62,8 @@
     <Compile Include="Commands\InstallInput.cs" />
     <Compile Include="Commands\InstallMode.cs" />
     <Compile Include="Commands\VdirCommand.cs" />
-    <Compile Include="Commands\AddDirectiveCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\CreateAllCommand.cs" />
-    <Compile Include="Commands\InitializeCommand.cs" />
-    <Compile Include="Commands\ISimpleLogger.cs" />
-    <Compile Include="Commands\ISimpleLogger.cs" />
     <Compile Include="Configuration\ConfigurationDeployer.cs" />
     <Compile Include="DependsOnAttribute.cs" />
     <Compile Include="DeploymentSettings.cs" />
@@ -79,7 +73,6 @@
     <Compile Include="Diagnostics\DeploymentDiagnostics.cs" />
     <Compile Include="Diagnostics\IPackageDeploymentLog.cs" />
     <Compile Include="EntryLogWriter.cs" />
-    <Compile Include="EnvironmentSettings.cs" />
     <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
     <Compile Include="IFinalizer.cs" />
     <Compile Include="IInitializer.cs" />

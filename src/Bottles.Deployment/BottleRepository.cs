@@ -1,3 +1,4 @@
+using System;
 using Bottles.Exploding;
 using FubuCore;
 
@@ -18,19 +19,24 @@ namespace Bottles.Deployment
 
         public void CopyTo(string bottleName, string destination)
         {
-            var path = GetPathForBottle(bottleName);
+            var path = pathForBottle(bottleName);
             _fileSystem.Copy(path, destination);
         }
 
         public void ExplodeTo(string bottleName, string destination)
         {
-            var path = GetPathForBottle(bottleName);
+            var bottleFile = pathForBottle(bottleName);
 
             //REVIEW: get_app_dir, zip-filename == path???
-            _exploder.Explode(PackageRegistry.GetApplicationDirectory(), path, destination, ExplodeOptions.PreserveDestination);
+            _exploder.Explode(bottleFile, destination, ExplodeOptions.PreserveDestination);
         }
 
-        string GetPathForBottle(string bottleName)
+        public void ExplodeFiles(BottleExplosionRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        string pathForBottle(string bottleName)
         {
             if (!bottleName.EndsWith(BottleFiles.Extension))
                 bottleName = bottleName + "." + BottleFiles.Extension;

@@ -38,15 +38,15 @@ namespace Bottles.Services
         {
             var folder = _fileSystem.GetFullPath(directory);
 
-            var manifest = _fileSystem.LoadFromFile<HostManifest>(folder, HostManifest.CONTROL, HostManifest.FILE);
+            var manifest = _fileSystem.LoadFromFile<ServiceHostManifest>(folder, ServiceHostManifest.CONTROL, ServiceHostManifest.FILE);
 
             var package = new PackageInfo(manifest.Name)
             {
                 Description = "{0} ({1})".ToFormat(manifest.Name, folder)
             };
 
-            package.RegisterFolder("data", FileSystem.Combine(folder, HostManifest.DATA));
-            package.RegisterFolder("control", FileSystem.Combine(folder, HostManifest.CONTROL));
+            package.RegisterFolder("data", FileSystem.Combine(folder, ServiceHostManifest.DATA));
+            package.RegisterFolder("control", FileSystem.Combine(folder, ServiceHostManifest.CONTROL));
             
             return package;
         }

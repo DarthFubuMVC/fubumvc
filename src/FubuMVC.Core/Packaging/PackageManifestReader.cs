@@ -55,6 +55,7 @@ namespace FubuMVC.Core.Packaging
             // Right here, this needs to be different
             package.RegisterFolder(BottleFiles.WebContentFolder, _getContentFolderFromPackageFolder(folder));
             package.RegisterFolder(BottleFiles.DataFolder, Path.Combine(folder, BottleFiles.DataFolder));
+            package.RegisterFolder(BottleFiles.ConfigFolder, Path.Combine(folder, BottleFiles.ConfigFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
         	var debugPath = FileSystem.Combine(binPath, "debug");

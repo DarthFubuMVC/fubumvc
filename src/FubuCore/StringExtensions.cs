@@ -11,6 +11,20 @@ namespace FubuCore
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// If the path is rooted, just returns the path.  Otherwise,
+        /// combines root & path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static string CombineToPath(this string path, string root)
+        {
+            if (Path.IsPathRooted(path)) return path;
+
+            return Path.Combine(root, path);
+        }
+
         public static string ToFullPath(this string path)
         {
             return Path.GetFullPath(path);

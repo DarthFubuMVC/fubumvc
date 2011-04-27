@@ -67,6 +67,11 @@ namespace Bottles
             get; set;
         }
 
+        public FileSet ConfigFileSet
+        {
+            get; set;
+        }
+
         [XmlElement("include")]
         public string[] LinkedFolders
         {

@@ -10,7 +10,7 @@ namespace Bottles.Services
     ///         [stuff]
     /// </summary>
     [XmlType("manifest")]
-    public class HostManifest
+    public class ServiceHostManifest
     {
         public static string FILE = ".manifest";
 

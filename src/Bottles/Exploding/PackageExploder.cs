@@ -43,7 +43,7 @@ namespace Bottles.Exploding
         }
 
         //destinationDirectory = var directoryName = BottleFiles.DirectoryForPackageZipFile(applicationDirectory, sourceZipFile);
-        public void Explode(string applicationDirectory, string sourceZipFile, string destinationDirectory, ExplodeOptions options)
+        public void Explode(string sourceZipFile, string destinationDirectory, ExplodeOptions options)
         {
             _logger.WritePackageZipFileExploded(sourceZipFile, destinationDirectory);
             _service.ExtractTo(sourceZipFile, destinationDirectory, options);
@@ -96,7 +96,7 @@ namespace Bottles.Exploding
             
             var request = new ExplodeRequest{
                 Directory = directory,
-                ExplodeAction = () => Explode(applicationDirectory, file, directory, ExplodeOptions.DeleteDestination),
+                ExplodeAction = () => Explode(file, directory, ExplodeOptions.DeleteDestination),
                 GetVersion = () => _service.GetVersion(file),
                 LogSameVersion = () => _logger.WritePackageZipFileWasSameVersionAsExploded(file)
             };

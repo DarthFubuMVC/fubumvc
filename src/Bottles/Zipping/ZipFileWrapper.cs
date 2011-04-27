@@ -27,6 +27,7 @@ namespace Bottles.Zipping
         public void AddFiles(ZipFolderRequest request)
         {
             if (!Directory.Exists(request.RootDirectory)) return;
+            if (request.FileSet == null) return;
 
             request.WriteToZipFile(this);
         }
