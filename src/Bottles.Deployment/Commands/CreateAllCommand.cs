@@ -44,10 +44,11 @@ namespace Bottles.Deployment.Commands
             var bottlesDirectory = FileSystem.Combine(deploymentDirectory, ProfileFiles.BottlesDirectory);
            
 
-            Console.WriteLine("Creating all packages");
-            Console.WriteLine("  Removing all previous package files");
+            ConsoleWriter.Write("Creating all packages");
+            ConsoleWriter.Write("  Removing all previous package files");
             system.CleanDirectory(bottlesDirectory);
 
+            //profile.GetBottleManifest();
             var bottleManifestFile = FileSystem.Combine(deploymentDirectory, ProfileFiles.BottlesManifestFile);
             system.ReadTextFile(bottleManifestFile, dir => createPackage(dir, bottlesDirectory, input));
 
@@ -57,8 +58,6 @@ namespace Bottles.Deployment.Commands
         private static void createPackage(string packageFolder, string bottlesDirectory, CreateAllInput input)
         {
             if (packageFolder.IsEmpty()) return;
-
-            Console.WriteLine("  Creating package at " + packageFolder);
 
             var createInput = new CreatePackageInput(){
                 PackageFolder = packageFolder,

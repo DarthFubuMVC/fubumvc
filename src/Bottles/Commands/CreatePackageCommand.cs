@@ -13,13 +13,18 @@ namespace Bottles.Commands
     {
         public override bool Execute(CreatePackageInput input)
         {
+            ConsoleWriter.Write("  Creating package at " + input.PackageFolder);
+
+            //TODO: could have been off of IProfile
             input.PackageFolder = AliasCommand.AliasFolder(input.PackageFolder);
+
             Execute(input, new FileSystem());
             return true;
         }
 
         public void Execute(CreatePackageInput input, IFileSystem fileSystem)
         {
+            //TODO: harden
             if (fileSystem.FileExists(input.ZipFile) && !input.ForceFlag)
             {
                 WriteZipFileAlreadyExists(input.ZipFile);

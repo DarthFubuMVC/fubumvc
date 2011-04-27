@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AliasRegistry.cs" />
     <Compile Include="Commands\AliasCommand.cs" />
     <Compile Include="Assemblies\AssemblyFileFinder.cs" />
     <Compile Include="Assemblies\AssemblyFiles.cs" />
@@ -58,7 +59,7 @@
     <Compile Include="Creation\IPackageLogger.cs" />
     <Compile Include="Creation\PackageLogger.cs" />
     <Compile Include="Creation\PackageManifestWriter.cs" />
-    <Compile Include="DeploymentFolderFinder.cs" />
+    <Compile Include="ProfileFinder.cs" />
     <Compile Include="Environment\EnvironmentGateway.cs" />
     <Compile Include="Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Environment\EnvironmentProxy.cs" />

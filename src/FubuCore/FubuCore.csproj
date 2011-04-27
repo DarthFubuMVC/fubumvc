@@ -99,7 +99,10 @@
     <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
     <Compile Include="CommandLine\CommandFailureException.cs" />
+    <Compile Include="CommandLine\ConsoleWriter.cs" />
     <Compile Include="CommandLine\EnumerableArgument.cs" />
+    <Compile Include="CommandLine\HelpCommand.cs" />
+    <Compile Include="CommandLine\HelpInput.cs" />
     <Compile Include="Configuration\SettingsProvider.cs" />
     <Compile Include="Configuration\FolderAppSettingsXmlSource.cs" />
     <Compile Include="Configuration\InMemorySettingsData.cs" />

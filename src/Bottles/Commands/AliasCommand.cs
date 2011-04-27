@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Xml.Serialization;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -32,6 +30,7 @@ namespace Bottles.Commands
     {
         public static string AliasFolder(string folder)
         {
+            //TODO: harden
             var alias = new FileSystem()
                 .LoadFromFile<AliasRegistry>(AliasRegistry.ALIAS_FILE)
                 .AliasFor(folder);
@@ -58,12 +57,12 @@ namespace Bottles.Commands
             if (input.RemoveFlag)
             {
                 registry.RemoveAlias(input.Name);
-                Console.WriteLine("Alias {0} removed", input.Name);
+                ConsoleWriter.Write("Alias {0} removed", input.Name);
             }
             else
             {
                 registry.CreateAlias(input.Name, input.Folder);
-                Console.WriteLine("Alias {0} created for folder {1}", input.Name, input.Folder);
+                ConsoleWriter.Write("Alias {0} created for folder {1}", input.Name, input.Folder);
             }
 
             persist(system, registry);
@@ -73,23 +72,21 @@ namespace Bottles.Commands
         {
             if (!registry.Aliases.Any())
             {
-                Console.WriteLine(" No aliases are registered");
+                ConsoleWriter.Write(" No aliases are registered");
                 return;
             }
 
             var maximumLength = registry.Aliases.Select(x => x.Name.Length).Max();
             var format = "  {0," + maximumLength + "} -> {1}";
 
-            Console.WriteLine();
-            Console.WriteLine(
-                "----------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine(" Aliases:");
-            Console.WriteLine(
-                "----------------------------------------------------------------------------------------------------------------------");
+            ConsoleWriter.Line();
+            ConsoleWriter.PrintHorizontalLine();
+            ConsoleWriter.Write(" Aliases:");
+            ConsoleWriter.PrintHorizontalLine();
 
-            registry.Aliases.OrderBy(x => x.Name).Each(x => { Console.WriteLine(format, x.Name, x.Folder); });
-            Console.WriteLine(
-                "----------------------------------------------------------------------------------------------------------------------");
+            registry.Aliases.OrderBy(x => x.Name).Each(x => { ConsoleWriter.Write(format, x.Name, x.Folder); });
+
+            ConsoleWriter.PrintHorizontalLine();
         }
 
         private void persist(IFileSystem system, AliasRegistry registry)
@@ -98,59 +95,4 @@ namespace Bottles.Commands
         }
     }
 
-    [XmlType("aliases")]
-    public class AliasRegistry
-    {
-        public static readonly string ALIAS_FILE = ".fubu-alias";
-
-        private readonly IList<AliasToken> _aliases = new List<AliasToken>();
-
-        public AliasToken[] Aliases
-        {
-            get { return _aliases.ToArray(); }
-            set
-            {
-                _aliases.Clear();
-                _aliases.AddRange(value);
-            }
-        }
-
-        public void CreateAlias(string alias, string folder)
-        {
-            var token = AliasFor(alias);
-            if (token == null)
-            {
-                token = new AliasToken{
-                    Folder = folder,
-                    Name = alias
-                };
-
-                _aliases.Add(token);
-            }
-            else
-            {
-                token.Folder = folder;
-            }
-        }
-
-        public AliasToken AliasFor(string alias)
-        {
-            return _aliases.SingleOrDefault(x => x.Name == alias);
-        }
-
-        public void RemoveAlias(string alias)
-        {
-            _aliases.RemoveAll(x => x.Name == alias);
-        }
-    }
-
-    [XmlType("alias")]
-    public class AliasToken
-    {
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
-        [XmlAttribute("folder")]
-        public string Folder { get; set; }
-    }
 }

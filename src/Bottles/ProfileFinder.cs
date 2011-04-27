@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Bottles.Commands;
 using FubuCore;
 
 namespace Bottles
@@ -45,6 +46,26 @@ namespace Bottles
             
 
             throw new Exception(msg.ToString());
+        }
+    }
+
+    public class Profile
+    {
+        private IFileSystem _fileSystem;
+        private string _pathToProfile;
+
+        public Profile(IFileSystem fileSystem, string pathToProfile)
+        {
+            _fileSystem = fileSystem;
+            _pathToProfile = pathToProfile;
+        }
+
+        public AliasRegistry Aliases()
+        {
+            var reg = _fileSystem
+                .LoadFromFile<AliasRegistry>(AliasRegistry.ALIAS_FILE);
+
+            return reg;
         }
     }
 }
