@@ -66,10 +66,6 @@
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
     <Compile Include="SparkModel\Binders\MasterPageBinderTester.cs" />
-    <Compile Include="SparkModel\Parsing\ElementNodeExtensionsTester.cs" />
-    <Compile Include="SparkModel\Parsing\ElementNodeExtractorTester.cs" />
-    <Compile Include="SparkModel\Parsing\Templates.cs" />
-    <Compile Include="SparkModel\Parsing\SparkParserExtensionsTester.cs" />
     <Compile Include="SparkModel\Policies\NamespacePolicyTester.cs" />
     <Compile Include="SparkModel\Scanning\SparkScannerTester.cs" />
     <Compile Include="SparkModel\SparkItemFinderTester.cs" />

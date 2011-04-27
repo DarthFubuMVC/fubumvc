@@ -92,8 +92,7 @@ namespace FubuMVC.Spark.SparkModel
             return packageRoots;
         }
 
-
-        private ScanRequest buildRequest(ICollection<SparkItem> files, params  SparkRoot[] sparkRoots)
+        private ScanRequest buildRequest(ICollection<SparkItem> files, params SparkRoot[] sparkRoots)
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);
@@ -102,8 +101,7 @@ namespace FubuMVC.Spark.SparkModel
             request.AddHandler(fileFound =>
             {
                 var origin = sparkRoots.First(x => x.Path == fileFound.Root).Origin;
-                var sparkFile = new SparkItem(fileFound.Path, fileFound.Root, origin);
-                
+                var sparkFile = new SparkItem(fileFound.Path, fileFound.Root, origin);                
                 files.Add(sparkFile);
             });
 

@@ -60,13 +60,13 @@
     <Compile Include="Rendering\SparkViewModifications.cs" />
     <Compile Include="Rendering\SparkViewProvider.cs" />
     <Compile Include="Rendering\SparkViewRenderer.cs" />
+    <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Constants.cs" />
     <Compile Include="SparkModel\SparkItemPolicies.cs" />
     <Compile Include="SparkModel\SharedItemLocator.cs" />
     <Compile Include="SparkModel\SparkItemExtensions.cs" />
     <Compile Include="SparkModel\SparkItemViewFolder.cs" />
     <Compile Include="RenderSparkBehavior.cs" />
-    <Compile Include="SparkModel\Parsing\SparkParser.cs" />
     <Compile Include="SparkModel\Scanning\FileFound.cs" />
     <Compile Include="SparkModel\Scanning\ScanRequest.cs" />
     <Compile Include="SparkModel\SparkItemFinder.cs" />
@@ -79,8 +79,6 @@
     <Compile Include="SparkExtension.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
-    <Compile Include="SparkModel\Parsing\ElementNodeExtensions.cs" />
-    <Compile Include="SparkModel\Parsing\ElementNodeExtractor.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />
   </ItemGroup>
   <ItemGroup>
