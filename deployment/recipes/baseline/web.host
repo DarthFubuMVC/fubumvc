@@ -1,0 +1,13 @@
+FubuWebsite.WebsiteName=FubuTest
+FubuWebsite.WebsitePhysicalPath=C:\dev\test-web
+FubuWebsite.VDir=fubutest
+FubuWebsite.VDirPhysicalPath=C:\dev\test-app
+FubuWebsite.AppPool=fubu
+FubuWebsite.Port=80
+FubuWebsite.Username=
+FubuWebsite.Password=
+FubuWebsite.HostBottle=test
+FubuWebsite.DirectoryBrowsing=Disable
+FubuWebsite.AnonAuth=Enable
+FubuWebsite.BasicAuth=Disable
+FubuWebsite.WindowsAuth=Disable
