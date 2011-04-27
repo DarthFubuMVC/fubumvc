@@ -10,7 +10,6 @@
             AnonAuth = Activation.Enable;
             BasicAuth = Activation.Disable;
             WindowsAuth = Activation.Disable;
-            Bottles = new string[0];
         }
 
         public string WebsiteName { get; set; }
@@ -32,7 +31,6 @@
 
         //host bottle?
         public string HostBottle { get; set; }
-        public string[] Bottles { get; set; }
 
 
         //iis options

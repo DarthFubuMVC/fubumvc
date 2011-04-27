@@ -79,12 +79,6 @@ namespace Bottles.Deployers.Iis
             _fileSystem.MoveFiles(webContent, direc.VDirPhysicalPath);
 
             _fileSystem.DeleteDirectory(webContent);
-
-            var bottleDest = FileSystem.Combine(direc.VDirPhysicalPath, "packages");
-            direc.Bottles.Each(b =>
-            {
-                _bottles.CopyTo(b, bottleDest);
-            });
         }
     }
 }

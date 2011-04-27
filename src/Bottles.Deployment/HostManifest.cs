@@ -115,5 +115,10 @@ namespace Bottles.Deployment
         {
             return "{0} Directives: {1}".ToFormat(Name, _directives.Count);
         }
+
+        public bool HasBottle(string bottle)
+        {
+            return _bottles.Any(br => br.Name.Equals(bottle));
+        }
     }
 }

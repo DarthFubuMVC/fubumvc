@@ -52,6 +52,21 @@ namespace Bottles.Tests.Deployment.Writing
         }
 
         [Test]
+        public void write_simple_settings_with_values_for_everything_and_bottle_ref()
+        {
+            var settings = new SimpleSettings()
+            {
+                One = "one",
+                Two = "two"
+            };
+
+            theWriter.WriteDirective(settings);
+            theWriter.WriteReference(new BottleReference("bob", "binaries"));
+
+            theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one", "SimpleSettings.Two=two", "bottle:bob binaries");
+        }
+
+        [Test]
         public void write_simple_settings_with_a_null_value()
         {
             var settings = new SimpleSettings()
@@ -61,7 +76,6 @@ namespace Bottles.Tests.Deployment.Writing
             };
 
             theWriter.WriteDirective(settings);
-
             theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one", "SimpleSettings.Two=");
         }
 
