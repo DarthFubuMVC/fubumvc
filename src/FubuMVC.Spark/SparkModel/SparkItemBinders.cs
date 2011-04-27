@@ -68,6 +68,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    // TODO : kill this frankenstein cookie monster.
     public class FullTypeNameStrategy : ITypeResolverStrategy
     {
         private readonly string _binPath;
@@ -75,6 +76,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private readonly Lazy<TypePool> _typePool;
 
+        // Rip this apart, split out, find a more simple way. Ask JDM.
         public FullTypeNameStrategy() : this(AppDomain.CurrentDomain.RelativeSearchPath, excludedAssembly) {}
         public FullTypeNameStrategy(string binPath, Func<string, bool> assemblyFilter)
         {
