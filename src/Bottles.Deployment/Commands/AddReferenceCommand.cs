@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using System.ComponentModel;
+using Bottles.Configuration;
 using Bottles.Deployment.Parsing;
-using Bottles.Deployment.Runtime;
-using Bottles.Deployment.Writing;
 using FubuCore;
 using FubuCore.CommandLine;
-using FubuCore.Reflection;
 
 namespace Bottles.Deployment.Commands
 {

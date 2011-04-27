@@ -78,6 +78,7 @@
     <Compile Include="Creation\PackageCreatorTester.cs" />
     <Compile Include="Creation\PackageManifestWriterTester.cs" />
     <Compile Include="Deployment\Bootstrapping\DeploymentBootstrapperIntegratedTester.cs" />
+    <Compile Include="Deployment\BottleRepositoryTester.cs" />
     <Compile Include="Deployment\Commands\InitializeCommandTester.cs" />
     <Compile Include="Deployment\DeploymentSettingsTester.cs" />
     <Compile Include="Deployment\Commands\AddReferenceCommandTester.cs" />

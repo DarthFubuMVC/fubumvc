@@ -1,4 +1,4 @@
-using Bottles.Deployment;
+using Bottles.Configuration;
 using Bottles.Deployment.Commands;
 using Bottles.Deployment.Writing;
 using Bottles.Tests.Deployment.Writing;
