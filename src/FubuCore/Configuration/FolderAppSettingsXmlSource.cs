@@ -15,7 +15,7 @@ namespace FubuCore.Configuration
             _folder = folder;
         }
 
-        public IEnumerable<ISettingsData> FindSettingData()
+        public IEnumerable<SettingsData> FindSettingData()
         {
             return Directory.GetFiles(_folder, "*.config").Select(XmlSettingsParser.Parse);
         }

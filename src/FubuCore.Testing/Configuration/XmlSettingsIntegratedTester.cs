@@ -9,7 +9,7 @@ namespace FubuCore.Testing.Configuration
     [TestFixture]
     public class XmlSettingsIntegratedTester
     {
-        private IEnumerable<ISettingsData> theData;
+        private IEnumerable<SettingsData> theData;
 
         [SetUp]
         public void SetUp()

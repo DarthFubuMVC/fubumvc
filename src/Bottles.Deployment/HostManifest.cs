@@ -17,7 +17,7 @@ namespace Bottles.Deployment
         private static readonly IObjectResolver _resolver = ObjectResolver.Basic();
         private readonly IList<IDirective> _directives = new List<IDirective>();
         private readonly IList<BottleReference> _bottles = new List<BottleReference>();
-        private readonly IList<ISettingsData> _data = new List<ISettingsData>();
+        private readonly IList<SettingsData> _data = new List<SettingsData>();
 
         public HostManifest(string name)
         {
@@ -53,7 +53,7 @@ namespace Bottles.Deployment
             get { return _directives; }
         }
 
-        public void RegisterSettings(ISettingsData data)
+        public void RegisterSettings(SettingsData data)
         {
             _data.Add(data);
         }
@@ -76,7 +76,7 @@ namespace Bottles.Deployment
         /// This is only used for testing
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ISettingsData> AllSettingsData()
+        public IEnumerable<SettingsData> AllSettingsData()
         {
             return _data;
         }

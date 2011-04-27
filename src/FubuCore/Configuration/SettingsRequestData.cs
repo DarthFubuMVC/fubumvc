@@ -13,7 +13,7 @@ namespace FubuCore.Configuration
         private readonly SettingsStep[] _steps;
 
 
-        public SettingsRequestData(IEnumerable<ISettingsData> settingData)
+        public SettingsRequestData(IEnumerable<SettingsData> settingData)
         {
             _environmentStep = new SettingsStep(settingData.Where(x => x.Category == SettingCategory.environment));
             _packageStep = new SettingsStep(settingData.Where(x => x.Category == SettingCategory.package));
@@ -41,16 +41,16 @@ namespace FubuCore.Configuration
             return _steps.Any(x => x.HasAnyValuePrefixedWith(key));
         }
 
-        public static SettingsRequestData For(params ISettingsData[] data)
+        public static SettingsRequestData For(params SettingsData[] data)
         {
             return new SettingsRequestData(data);
         }
 
         public class SettingsStep
         {
-            private readonly IEnumerable<ISettingsData> _settingData;
+            private readonly IEnumerable<SettingsData> _settingData;
 
-            public SettingsStep(IEnumerable<ISettingsData> settingData)
+            public SettingsStep(IEnumerable<SettingsData> settingData)
             {
                 _settingData = settingData;
             }

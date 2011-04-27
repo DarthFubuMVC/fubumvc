@@ -106,7 +106,6 @@
     <Compile Include="Configuration\SettingsProvider.cs" />
     <Compile Include="Configuration\FolderAppSettingsXmlSource.cs" />
     <Compile Include="Configuration\SettingsData.cs" />
-    <Compile Include="Configuration\ISettingsData.cs" />
     <Compile Include="Configuration\ISettingsSource.cs" />
     <Compile Include="Configuration\SettingCategory.cs" />
     <Compile Include="Configuration\SettingsRequestData.cs" />

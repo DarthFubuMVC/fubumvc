@@ -16,7 +16,7 @@ namespace Bottles.Configuration
             _folder = folder;
         }
 
-        public IEnumerable<ISettingsData> FindSettingData()
+        public IEnumerable<SettingsData> FindSettingData()
         {
             //var settings = new EnvironmentSettings(_folder);
             //var substitutions = settings.Overrides.ToDictionary();

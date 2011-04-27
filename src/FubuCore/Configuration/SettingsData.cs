@@ -4,7 +4,7 @@ using FubuCore.Util;
 
 namespace FubuCore.Configuration
 {
-    public class SettingsData : ISettingsData
+    public class SettingsData
     {
         private readonly IDictionary<string, string> _substitutions;
         private readonly Cache<string, string> _values = new Cache<string, string>();

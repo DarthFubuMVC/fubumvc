@@ -4,29 +4,29 @@ namespace FubuCore.Configuration
 {
     public interface ISettingsSource
     {
-        IEnumerable<ISettingsData> FindSettingData();
+        IEnumerable<SettingsData> FindSettingData();
     }
 
     public class SettingsSource : ISettingsSource
     {
-        private readonly IList<ISettingsData> _settings = new List<ISettingsData>();
+        private readonly IList<SettingsData> _settings = new List<SettingsData>();
 
-        public SettingsSource(IEnumerable<ISettingsData> settings)
+        public SettingsSource(IEnumerable<SettingsData> settings)
         {
             _settings.AddRange(settings);
         }
 
-        public IEnumerable<ISettingsData> FindSettingData()
+        public IEnumerable<SettingsData> FindSettingData()
         {
             return _settings;
         }
 
-        public void Add(ISettingsData data)
+        public void Add(SettingsData data)
         {
             _settings.Add(data);
         }
 
-        public static SettingsSource For(params ISettingsData[] data)
+        public static SettingsSource For(params SettingsData[] data)
         {
             return new SettingsSource(data);
         }

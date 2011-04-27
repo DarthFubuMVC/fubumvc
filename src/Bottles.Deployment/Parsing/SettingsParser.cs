@@ -79,7 +79,7 @@ namespace Bottles.Deployment.Parsing
             _references.Add(reference);
         }
 
-        public ISettingsData Settings
+        public SettingsData Settings
         {
             get { return _settings; }
         }
