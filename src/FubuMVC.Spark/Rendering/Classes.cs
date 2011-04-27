@@ -25,46 +25,28 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class SparkItemDescriptors
-    {
-        public SparkItemDescriptors(SparkViewDescriptor viewDescriptor, SparkViewDescriptor partialDescriptor)
-        {
-            ViewDescriptor = viewDescriptor;
-            PartialDescriptor = partialDescriptor;
-        }
-
-        public SparkViewDescriptor ViewDescriptor { get; private set; }
-        public SparkViewDescriptor PartialDescriptor { get; private set; }
-    }
-
     public interface IViewEngine
     {
         ISparkViewEntry GetViewEntry();
-        ISparkViewEntry GetPartialViewEntry();
     }
 
     public class ViewEngine : IViewEngine
     {
         private readonly IDictionary<int, ISparkViewEntry> _cache;
-        private readonly SparkItemDescriptors _descriptors;
         private readonly ISparkViewEngine _engine;
+        private readonly SparkViewDescriptor _descriptor;
 
-        public ViewEngine(IDictionary<int, ISparkViewEntry> cache, SparkItemDescriptors descriptors, ISparkViewEngine engine)
+        public ViewEngine(IDictionary<int, ISparkViewEntry> cache, ISparkViewEngine engine, SparkViewDescriptor descriptor)
         {
             _cache = cache;
             _engine = engine;
-            _descriptors = descriptors;
+            _descriptor = descriptor;
         }
 
         public ISparkViewEntry GetViewEntry()
         {
-            var entry = getEntry(_descriptors.ViewDescriptor);
+            var entry = getEntry(_descriptor);
             return entry;
-        }
-        public ISparkViewEntry GetPartialViewEntry()
-        {
-            var entry = getEntry(_descriptors.PartialDescriptor);
-            return entry;   
         }
 
         private ISparkViewEntry getEntry(SparkViewDescriptor descriptor)
@@ -89,7 +71,6 @@ namespace FubuMVC.Spark.Rendering
     public interface IViewFactory
     {
         ISparkView GetView();
-        ISparkView GetPartialView();
     }
     public class ViewFactory : IViewFactory
     {
@@ -109,13 +90,6 @@ namespace FubuMVC.Spark.Rendering
             return view;
         }
 
-        public ISparkView GetPartialView()
-        {
-            var view = _viewEngine.GetPartialViewEntry().CreateInstance();
-            applyModifications(view);
-            return view;
-        }
-
         private void applyModifications(ISparkView view)
         {
             _modifications
@@ -127,29 +101,6 @@ namespace FubuMVC.Spark.Rendering
     public interface IViewRenderer
     {
         void Render();
-    }
-    public class PartialViewRenderer : IViewRenderer
-    {
-        private readonly IViewFactory _viewFactory;
-        private readonly NestedOutput _nestedOutput;
-        private readonly IOutputWriter _outputWriter;
-
-        public PartialViewRenderer(IViewFactory viewFactory, NestedOutput nestedOutput, IOutputWriter outputWriter)
-        {
-            _viewFactory = viewFactory;
-            _outputWriter = outputWriter;
-            _nestedOutput = nestedOutput;
-        }
-
-        public void Render()
-        {
-            var partial = (SparkViewBase)_viewFactory.GetPartialView();
-            var writer = new StringWriter();
-            partial.Output = writer;
-            _nestedOutput.SetWriter(() => partial.Output);
-            partial.RenderView(writer);
-            _outputWriter.WriteHtml(writer);
-        }
     }
     public class NestedViewRenderer : IViewRenderer
     {
@@ -164,7 +115,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void Render()
         {
-            var partial = _viewFactory.GetPartialView();
+            var partial = _viewFactory.GetView();
             partial.RenderView(_nestedOutput.Writer);
         }
     }

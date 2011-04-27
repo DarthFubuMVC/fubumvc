@@ -24,19 +24,12 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         protected override void configureObject(ObjectDef def)
         {
-            var renderer = def.DependencyByType(typeof(ISparkViewRenderer), typeof(SparkViewRenderer));
-
-            var descriptors = new SparkItemDescriptors(createDescriptor(true), createDescriptor(false));
-            var factory = new ObjectDef {Type = typeof (ViewFactory)};
-            var engine = factory.DependencyByType(typeof (IViewEngine), typeof (ViewEngine));
-            engine.DependencyByValue(descriptors);
-            engine.DependencyByValue(_cache);
-
+            var renderer = def.DependencyByType(typeof (ISparkViewRenderer), typeof (SparkViewRenderer));
             var strategies = renderer.EnumerableDependenciesOf<IRenderStrategy>();
 
-            configureStrategy<NestedRenderStrategy, NestedViewRenderer>(strategies, factory);
-            configureStrategy<AjaxRenderStrategy, PartialViewRenderer>(strategies, factory);
-            configureStrategy<DefaultRenderStrategy, DefaultViewRenderer>(strategies, factory);
+            configureStrategy<NestedRenderStrategy, NestedViewRenderer>(strategies, createDescriptor(false));
+            configureStrategy<AjaxRenderStrategy, DefaultViewRenderer>(strategies, createDescriptor(false));
+            configureStrategy<DefaultRenderStrategy, DefaultViewRenderer>(strategies, createDescriptor(true));
         }
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
@@ -49,10 +42,16 @@ namespace FubuMVC.Spark.Registration.Nodes
             return descriptor;
         }
 
-        private static void configureStrategy<TStrategy, TViewRenderer>(ListDependency strategies, ObjectDef factory)
+        private static void configureStrategy<TStrategy, TViewRenderer>(ListDependency strategies, SparkViewDescriptor descriptor)
             where TStrategy : IRenderStrategy
             where TViewRenderer : IViewRenderer
         {
+            var factory = new ObjectDef { Type = typeof(ViewFactory) };
+            var engine = factory.DependencyByType(typeof(IViewEngine), typeof(ViewEngine));
+            engine.DependencyByValue(_cache);
+            engine.DependencyByValue(descriptor);
+
+
             strategies.AddType(typeof (TStrategy))
                 .DependencyByType(typeof (IViewRenderer), typeof (TViewRenderer))
                 .DependencyByType<IViewFactory>(factory);
