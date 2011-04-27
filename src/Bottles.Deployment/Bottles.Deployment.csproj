@@ -69,6 +69,8 @@
     <Compile Include="Commands\CreateAllCommand.cs" />
     <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\ISimpleLogger.cs" />
+    <Compile Include="Commands\ISimpleLogger.cs" />
+    <Compile Include="Configuration\ConfigurationDeployer.cs" />
     <Compile Include="DependsOnAttribute.cs" />
     <Compile Include="DeploymentSettings.cs" />
     <Compile Include="Directives\ScheduledTask.cs" />
