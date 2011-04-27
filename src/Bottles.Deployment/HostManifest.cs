@@ -61,7 +61,7 @@ namespace Bottles.Deployment
         public void RegisterValue<T>(Expression<Func<T, object>> expression, object value) where T : IDirective
         {
             var key = "{0}.{1}".ToFormat(typeof (T).Name, expression.ToAccessor().PropertyNames.Join("."));
-            var data = new InMemorySettingsData(SettingCategory.core).With(key, value.ToString());
+            var data = new SettingsData(SettingCategory.core).With(key, value.ToString());
             
             RegisterSettings(data);
         }

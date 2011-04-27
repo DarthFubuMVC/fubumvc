@@ -8,16 +8,15 @@ namespace Bottles.Deployment
         {
             BottlesDirectory = FileSystem.Combine(path, ProfileFiles.BottlesDirectory);
             RecipesDirectory = FileSystem.Combine(path, ProfileFiles.RecipesDirectory);
-            EnvironmentFile = FileSystem.Combine(ProfileFiles.EnvironmentSettingsFileName);
+            EnvironmentFile = FileSystem.Combine(path, ProfileFiles.EnvironmentSettingsFileName);
+
+            TargetDirectory = FileSystem.Combine(path, ProfileFiles.TargetDirectory);
         }
-        public DeploymentSettings()
+        public DeploymentSettings() : this(".".ToFullPath())
         {
-            BottlesDirectory = ProfileFiles.BottlesDirectory;
-            RecipesDirectory = ProfileFiles.RecipesDirectory;
-            EnvironmentFile = ProfileFiles.EnvironmentSettingsFileName;
         }
 
-
+        public string TargetDirectory { get; set; }
         public string BottlesDirectory { get; set;}
         public string RecipesDirectory { get; set;}
         public string EnvironmentFile { get; set;}

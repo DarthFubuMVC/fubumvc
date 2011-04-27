@@ -8,30 +8,30 @@ namespace Bottles.Tests.Deployment
     [TestFixture]
     public class HostManifestTester
     {
-        private InMemorySettingsData data1;
-        private InMemorySettingsData data2;
-        private InMemorySettingsData data3;
-        private InMemorySettingsData data4;
-        private InMemorySettingsData data5;
+        private SettingsData data1;
+        private SettingsData data2;
+        private SettingsData data3;
+        private SettingsData data4;
+        private SettingsData data5;
 
         [SetUp]
         public void SetUp()
         {
-            data1 = new InMemorySettingsData(SettingCategory.core)
+            data1 = new SettingsData(SettingCategory.core)
                 .With("OneDirective.Name", "Max");
 
 
-            data2 = new InMemorySettingsData(SettingCategory.core)
+            data2 = new SettingsData(SettingCategory.core)
                 .With("ThreeDirective.Threshold", "3");
 
-            data3 = new InMemorySettingsData(SettingCategory.core)
+            data3 = new SettingsData(SettingCategory.core)
                 .With("TwoDirective.City", "Austin")
                 .With("TwoDirective.IsDomestic", "true");
 
-            data4 = new InMemorySettingsData(SettingCategory.core)
+            data4 = new SettingsData(SettingCategory.core)
                 .With("OneDirective.Age", "7");
 
-            data5 = new InMemorySettingsData(SettingCategory.core)
+            data5 = new SettingsData(SettingCategory.core)
                 .With("OneDirective.Age", "8");
 
         }
@@ -162,7 +162,7 @@ namespace Bottles.Tests.Deployment
         {
             var host = new HostManifest("host1");
 
-            var data = new InMemorySettingsData()
+            var data = new SettingsData()
                 .With("ComplexDirective.One.Name", "Thurgood")
                 .With("ComplexDirective.One.Age", "57")
                 .With("ComplexDirective.Two.City", "Joplin");
@@ -181,7 +181,7 @@ namespace Bottles.Tests.Deployment
         {
             var host = new HostManifest("host1");
 
-            var data = new InMemorySettingsData()
+            var data = new SettingsData()
                 .With("ComplexDirective.One.Name", "Thurgood")
                 .With("ComplexDirective.One.Age", "57");
 

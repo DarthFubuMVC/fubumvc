@@ -1,18 +1,25 @@
+using System;
 using System.Collections.Generic;
 using FubuCore.Util;
 
 namespace FubuCore.Configuration
 {
-    public class InMemorySettingsData : ISettingsData
+    public class SettingsData : ISettingsData
     {
+        private readonly IDictionary<string, string> _substitutions;
         private readonly Cache<string, string> _values = new Cache<string, string>();
 
-        public InMemorySettingsData() : this(SettingCategory.core)
+        public SettingsData() : this(SettingCategory.core)
         {
         }
 
-        public InMemorySettingsData(SettingCategory category)
+        public SettingsData(SettingCategory category) : this(category, new Dictionary<string, string>())
         {
+        }
+
+        public SettingsData(SettingCategory category, IDictionary<string, string> substitutions)
+        {
+            _substitutions = substitutions;
             Category = category;
         }
 
@@ -24,11 +31,11 @@ namespace FubuCore.Configuration
             }
             set
             {
-                _values[key] = value;
+                _values[key] = TemplateParser.Parse(value, _substitutions);
             }
         }
 
-        public InMemorySettingsData With(string key, string value)
+        public SettingsData With(string key, string value)
         {
             _values[key] = value;
             return this;

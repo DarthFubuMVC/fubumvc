@@ -9,7 +9,7 @@ namespace FubuCore.Testing.Configuration
     [TestFixture]
     public class XmlSettingsDataTester
     {
-        private XmlSettingsData theSettings;
+        private SettingsData theSettings;
 
         [SetUp]
         public void SetUp()
@@ -74,7 +74,7 @@ namespace FubuCore.Testing.Configuration
             var document = new XmlDocument();
             document.LoadXml(xml);
 
-            theSettings = new XmlSettingsData(document.DocumentElement);
+            theSettings =XmlSettingsParser.Parse(document.DocumentElement);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace FubuCore.Testing.Configuration
             document.AppendChild(document.CreateElement("appSettings"));
             document.DocumentElement.SetAttribute("category", SettingCategory.package.ToString());
 
-            var settings = new XmlSettingsData(document.DocumentElement);
+            var settings = XmlSettingsParser.Parse(document.DocumentElement);
             settings.Category.ShouldEqual(SettingCategory.package);
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Bottles.Configuration;
 using FubuCore;
 
 namespace Bottles.Deployment.Parsing
@@ -17,6 +18,7 @@ namespace Bottles.Deployment.Parsing
             _settings = settings;
         }
 
+        // TODO -- recipe selection / filtering
         public IEnumerable<HostManifest> Read()
         {
             var environment = new EnvironmentSettings();
@@ -25,6 +27,7 @@ namespace Bottles.Deployment.Parsing
             var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
             recipes = _sorter.Order(recipes);
 
+            // TODO -- throw up if no recipes
             //REVIEW: hardening
             if (recipes == null || !recipes.Any())
                 return new HostManifest[0];

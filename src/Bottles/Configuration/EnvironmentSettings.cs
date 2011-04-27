@@ -1,33 +1,18 @@
 using System;
 using System.Linq;
-using System.Runtime.Serialization;
-using FubuCore;
 using FubuCore.Configuration;
 using FubuCore.Util;
 using System.Collections.Generic;
 
-namespace Bottles.Deployment
+namespace Bottles.Configuration
 {
-    [Serializable]
-    public class EnvironmentSettingsException : Exception
-    {
-        private static readonly string _validUsage =
-            "Environment settings must be in the form '[Prop]=[Value]' or '[Host].[Directive].[Property]=[Value], but was\n{0}";
-
-
-        public EnvironmentSettingsException(string actual) : base(_validUsage.ToFormat(actual))
-        {
-        }
-
-        protected EnvironmentSettingsException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-    }
-
     public class EnvironmentSettings
     {
+        public static readonly string EnvironmentSettingsFileName = "environment.settings";
+        public static readonly string ROOT = "root";
+
         private readonly Cache<string, string> _overrides = new Cache<string, string>();
-        private readonly Cache<string, InMemorySettingsData> _settings = new Cache<string, InMemorySettingsData>(name => new InMemorySettingsData(SettingCategory.environment));
+        private readonly Cache<string, SettingsData> _settings = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment));
 
 
         public void ReadText(string text)
@@ -69,9 +54,14 @@ namespace Bottles.Deployment
             get { return _overrides; }
         }
 
-        public InMemorySettingsData DataForHost(string hostName)
+        public SettingsData DataForHost(string hostName)
         {
             return _settings[hostName];
+        }
+
+        public SettingsData EnvironmentSettingsData()
+        {
+            throw new NotImplementedException();
         }
 
     }

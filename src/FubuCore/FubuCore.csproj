@@ -105,12 +105,12 @@
     <Compile Include="CommandLine\HelpInput.cs" />
     <Compile Include="Configuration\SettingsProvider.cs" />
     <Compile Include="Configuration\FolderAppSettingsXmlSource.cs" />
-    <Compile Include="Configuration\InMemorySettingsData.cs" />
+    <Compile Include="Configuration\SettingsData.cs" />
     <Compile Include="Configuration\ISettingsData.cs" />
     <Compile Include="Configuration\ISettingsSource.cs" />
     <Compile Include="Configuration\SettingCategory.cs" />
     <Compile Include="Configuration\SettingsRequestData.cs" />
-    <Compile Include="Configuration\XmlSettingsData.cs" />
+    <Compile Include="Configuration\XmlSettingsParser.cs" />
     <Compile Include="DependencyAnalysis\Cycle.cs" />
     <Compile Include="DependencyAnalysis\DependencyGraph.cs" />
     <Compile Include="DependencyAnalysis\DirectedGraph.cs" />

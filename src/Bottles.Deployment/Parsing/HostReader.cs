@@ -1,4 +1,5 @@
 using System.IO;
+using Bottles.Configuration;
 using FubuCore;
 
 namespace Bottles.Deployment.Parsing
@@ -13,7 +14,10 @@ namespace Bottles.Deployment.Parsing
             var hostName = Path.GetFileNameWithoutExtension(fileName);
             var host = new HostManifest(hostName);
 
-            host.RegisterSettings(parser.Settings);
+
+            var settings = parser.Settings;
+
+            host.RegisterSettings(settings);
             host.RegisterBottles(parser.References);
 
             return host;

@@ -17,15 +17,7 @@ namespace FubuCore.Configuration
 
         public IEnumerable<ISettingsData> FindSettingData()
         {
-            return Directory.GetFiles(_folder, "*.config").Select(file =>
-            {
-                var document = new XmlDocument();
-                document.Load(file);
-
-                return new XmlSettingsData(document.DocumentElement){
-                    Description = file
-                };
-            });
+            return Directory.GetFiles(_folder, "*.config").Select(XmlSettingsParser.Parse);
         }
     }
 }

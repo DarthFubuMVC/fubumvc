@@ -1,3 +1,4 @@
+using Bottles.Configuration;
 using Bottles.Deployment;
 using FubuCore.Configuration;
 using NUnit.Framework;

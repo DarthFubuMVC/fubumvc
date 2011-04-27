@@ -55,11 +55,14 @@
     <Compile Include="Commands\ISimpleLogger.cs" />
     <Compile Include="Commands\PackagesCommand.cs" />
     <Compile Include="Commands\PackagesInput.cs" />
+    <Compile Include="Configuration\CentralizedSettingsSource.cs" />
     <Compile Include="Creation\CreatePackageInput.cs" />
     <Compile Include="Creation\IPackageLogger.cs" />
     <Compile Include="Creation\PackageLogger.cs" />
     <Compile Include="Creation\PackageManifestWriter.cs" />
     <Compile Include="ProfileFinder.cs" />
+    <Compile Include="Configuration\EnvironmentSettings.cs" />
+    <Compile Include="Configuration\EnvironmentSettingsException.cs" />
     <Compile Include="Environment\EnvironmentGateway.cs" />
     <Compile Include="Environment\EnvironmentListExtensions.cs" />
     <Compile Include="Environment\EnvironmentProxy.cs" />
