@@ -7,7 +7,7 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISharedItemLocator
     {
-        SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> itemPool);
+        SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> items);
     }
 
     public class SharedItemLocator : ISharedItemLocator
@@ -18,35 +18,34 @@ namespace FubuMVC.Spark.SparkModel
             _sharedFolderNames = sharedFolderNames;
         }
 
-        public SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> itemPool)
+        public SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> items)
         {
-            var spark = locateSpark(sparkName, fromItem.FilePath, fromItem.RootPath, itemPool);
+            var spark = locateSpark(sparkName, fromItem.FilePath, fromItem.RootPath, items);
             if (spark == null && fromItem.Origin != Constants.HostOrigin)
             {
-                spark = locateInHostFromPackage(sparkName, itemPool);
+                spark = locateInHostFromPackage(sparkName, items);
             }
 
             return spark;
         }
 
-        private SparkItem locateSpark(string sparkName, string startPath, string stopPath, IEnumerable<SparkItem> itemPool)
+        private SparkItem locateSpark(string sparkName, string startPath, string stopPath, IEnumerable<SparkItem> items)
         {
             var reachables = reachableLocations(startPath, stopPath).ToList();
-            return itemPool.ByName(sparkName)
+            return items.ByName(sparkName)
                 .Where(x => reachables.Contains(x.DirectoryPath()))
                 .FirstOrDefault();            
         }
 
         private SparkItem locateInHostFromPackage(string sparkName, IEnumerable<SparkItem> itemPool)
         {
-            var rootItem = itemPool.FirstOrDefault(x => x.Origin == Constants.HostOrigin);
-            if (rootItem == null) return null;
+            var hostRoot = itemPool.ByOrigin(Constants.HostOrigin).FirstValue(x => x.RootPath);
+            if (hostRoot.IsEmpty()) return null;
 
             var sharedFolder = _sharedFolderNames.FirstValue(p => p);
-            var stopPath = rootItem.RootPath;
-            var startPath = Path.Combine(stopPath, sharedFolder);
+            var startPath = Path.Combine(hostRoot, sharedFolder);
 
-            return locateSpark(sparkName, startPath, stopPath, itemPool);
+            return locateSpark(sparkName, startPath, hostRoot, itemPool);
         }
 
         private IEnumerable<string> reachableLocations(string path, string root)

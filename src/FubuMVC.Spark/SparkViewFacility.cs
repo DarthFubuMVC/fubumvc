@@ -19,7 +19,7 @@ namespace FubuMVC.Spark
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
             return _sparkItems
-                .Where(x => x.HasViewModel() && types.TypesMatching(t => t == x.ViewModelType).Count() > 0)
+                .Where(x => x.HasViewModel())
                 .Select(item => new SparkViewToken(item));
         }
 
