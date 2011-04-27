@@ -11,7 +11,7 @@ namespace FubuMVC.Spark.Rendering
         void Modify(ISparkView view);
     }
 
-    class ModelAttacher : ISparkViewModification
+    public class ModelAttacher : ISparkViewModification
     {
         private readonly IFubuRequest _fubuRequest;
         public ModelAttacher(IFubuRequest fubuRequest)
