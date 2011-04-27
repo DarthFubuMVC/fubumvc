@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -42,8 +43,9 @@ namespace FubuMVC.Spark
 
         private void configureServices(IServiceRegistry services)
         {
-            services.SetServiceIfNone(_sparkItems);
+            services.SetServiceIfNone<ISparkItems>(_sparkItems);
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
+            
             services.AddService<IActivator, SparkActivator>();
             services.AddService<ISparkViewModification, ServiceLocatorAttacher>();
             services.AddService<ISparkViewModification, ModelAttacher>();

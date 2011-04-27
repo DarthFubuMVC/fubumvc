@@ -10,9 +10,8 @@ namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly SparkItems _sparkItems;
-
-        public SparkViewFacility(SparkItems sparkItems)
+        private readonly IEnumerable<SparkItem> _sparkItems;
+        public SparkViewFacility(IEnumerable<SparkItem> sparkItems)
         {
             _sparkItems = sparkItems;
         }

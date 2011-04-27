@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -29,23 +29,11 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    // We need to get this populated once and then pass around an interface.
-    // Or kill it.
-    public class SparkItems : List<SparkItem> // TODO: Create lookup registry interface from this
+    public class SparkItems : List<SparkItem>, ISparkItems
     {
-        public SparkItems(){}
+        public SparkItems() {}
         public SparkItems(IEnumerable<SparkItem> items) : base(items) {}
-
-        // Temporary : probably ends up as extension method on IEnumerable...
-
-        public IEnumerable<SparkItem> ByName(string name)
-        {
-            return this.Where(x => x.Name() == name);
-        }
-
-        public SparkItem FirstByName(string name)
-        {
-            return ByName(name).FirstOrDefault();
-        }
     }
+
+    public interface ISparkItems : IEnumerable<SparkItem> {}
 }

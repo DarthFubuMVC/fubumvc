@@ -13,7 +13,7 @@ namespace FubuMVC.Spark.SparkModel
         public IEnumerable<string> Namespaces { get; set; }
         public string Master { get; set; }
         public string ViewModelType { get; set; }
-        public SparkItems AvailableItems {get;set; }
+        public IEnumerable<SparkItem> AvailableItems { get; set; }
     }
 
     public interface ISparkItemBinder

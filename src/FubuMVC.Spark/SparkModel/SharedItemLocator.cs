@@ -7,7 +7,7 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISharedItemLocator
     {
-        SparkItem LocateSpark(string sparkName, SparkItem fromItem, SparkItems itemPool);
+        SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> itemPool);
     }
 
     public class SharedItemLocator : ISharedItemLocator
@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.SparkModel
             _sharedFolderNames = sharedFolderNames;
         }
 
-        public SparkItem LocateSpark(string sparkName, SparkItem fromItem, SparkItems itemPool)
+        public SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> itemPool)
         {
             var spark = locateSpark(sparkName, fromItem.FilePath, fromItem.RootPath, itemPool);
             if (spark == null && fromItem.Origin != Constants.HostOrigin)
@@ -29,7 +29,7 @@ namespace FubuMVC.Spark.SparkModel
             return spark;
         }
 
-        private SparkItem locateSpark(string sparkName, string startPath, string stopPath, SparkItems itemPool)
+        private SparkItem locateSpark(string sparkName, string startPath, string stopPath, IEnumerable<SparkItem> itemPool)
         {
             var reachables = reachableLocations(startPath, stopPath).ToList();
             return itemPool.ByName(sparkName)
@@ -37,7 +37,7 @@ namespace FubuMVC.Spark.SparkModel
                 .FirstOrDefault();            
         }
 
-        private SparkItem locateInHostFromPackage(string sparkName, SparkItems itemPool)
+        private SparkItem locateInHostFromPackage(string sparkName, IEnumerable<SparkItem> itemPool)
         {
             var rootItem = itemPool.FirstOrDefault(x => x.Origin == Constants.HostOrigin);
             if (rootItem == null) return null;

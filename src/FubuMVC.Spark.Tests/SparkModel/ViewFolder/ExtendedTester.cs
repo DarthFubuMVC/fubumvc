@@ -22,9 +22,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly SparkItemViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
-        private readonly SparkItems _pak1Items;
-        private readonly SparkItems _pak2Items;
-        private readonly SparkItems _appItems;
+        private readonly IEnumerable<SparkItem> _pak1Items;
+        private readonly IEnumerable<SparkItem> _pak2Items;
+        private readonly IEnumerable<SparkItem> _appItems;
 
         public ExtendedTester()
         {
@@ -43,7 +43,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             packages.Add(pack2);
 
             var scanner = new SparkItemFinder(new FileScanner(), packages) {HostPath = pathApp};
-            var allItems = new SparkItems();
+            
+            var allItems = new List<SparkItem>();
             allItems.AddRange(scanner.FindInPackages());
             allItems.AddRange(scanner.FindInHost());
 
@@ -53,9 +54,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _viewFolder = new SparkItemViewFolder(allItems);
             _engine = new SparkViewEngine { ViewFolder = _viewFolder };
 
-            _pak1Items = new SparkItems(allItems.Where(x => x.Origin == Package1));
-            _pak2Items = new SparkItems(allItems.Where(x => x.Origin == Package2));
-            _appItems = new SparkItems(allItems.Where(x => x.Origin == Constants.HostOrigin));
+            _pak1Items = new List<SparkItem>(allItems.ByOrigin(Package1));
+            _pak2Items = new List<SparkItem>(allItems.ByOrigin(Package2));
+            _appItems = new List<SparkItem>(allItems.ByOrigin(Constants.HostOrigin));
         }
 
         [Test]

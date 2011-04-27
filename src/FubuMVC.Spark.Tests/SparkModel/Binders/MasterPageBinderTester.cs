@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -12,7 +13,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>
     {
         private BindContext _context;
-        private SparkItems _sparkItems;
+        private IEnumerable<SparkItem> _sparkItems;
 
         const string Host = Constants.HostOrigin;
         const string Pak1 = "pak1";
@@ -38,9 +39,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             _context = new BindContext {AvailableItems = _sparkItems = createItems(), Master = "application"};
         }
 
-        private SparkItems createItems()
+        private IEnumerable<SparkItem> createItems()
         {
-            return new SparkItems
+            return new List<SparkItem>
             {
                 newSpark(_pak1Root, Pak1, "Actions", "Controllers", "Home", "Home.spark"),
                 newSpark(_pak1Root, Pak1, "Actions", "Handlers", "Products", "list.spark"),

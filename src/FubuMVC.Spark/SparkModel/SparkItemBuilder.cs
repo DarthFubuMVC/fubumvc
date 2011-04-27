@@ -14,11 +14,11 @@ namespace FubuMVC.Spark.SparkModel
     {
         private readonly IList<ISparkItemBinder> _itemBinders = new List<ISparkItemBinder>();
         private readonly IList<ISparkItemPolicy> _policies = new List<ISparkItemPolicy>();
-        private readonly SparkItems _sparkItems;
+        private readonly IEnumerable<SparkItem> _sparkItems;
         private readonly IChunkLoader _chunkLoader;
 
-        public SparkItemBuilder(SparkItems sparkItems) : this(sparkItems, new ChunkLoader()) {}
-        public SparkItemBuilder(SparkItems sparkItems, IChunkLoader chunkLoader)
+        public SparkItemBuilder(IEnumerable<SparkItem> sparkItems) : this(sparkItems, new ChunkLoader()) { }
+        public SparkItemBuilder(IEnumerable<SparkItem> sparkItems, IChunkLoader chunkLoader)
         {
             _sparkItems = sparkItems;
             _chunkLoader = chunkLoader;
