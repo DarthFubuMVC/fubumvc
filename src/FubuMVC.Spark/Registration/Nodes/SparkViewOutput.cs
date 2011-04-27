@@ -37,14 +37,10 @@ namespace FubuMVC.Spark.Registration.Nodes
             configureProvider(partialAction, createDescriptor(false));
         }
 
-        private void configureProvider(ObjectDef actionDef, SparkViewDescriptor descriptor)
+        private static void configureProvider(ObjectDef actionDef, SparkViewDescriptor descriptor)
         {
             var provider = actionDef
                 .DependencyByType(typeof(ISparkViewProvider), typeof(SparkViewProvider));
-
-            var modifications = provider.EnumerableDependenciesOf<ISparkViewModification>();
-            modifications.AddType(typeof(ServiceLocatorAttacher));
-            modifications.AddType(typeof (ModelAttacher));
 
             provider.DependencyByValue(descriptor);
             provider.DependencyByValue(_cache);            

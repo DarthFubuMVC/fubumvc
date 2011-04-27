@@ -1,6 +1,8 @@
 ﻿using System;
 using Bottles;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
+using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
 
@@ -34,10 +36,19 @@ namespace FubuMVC.Spark
         {
             populateAndBuildItems();
             registry.Views.Facility(new SparkViewFacility(_sparkItems));
-            
-            services(registry);
+
+            registry.Services(configureServices);
         }
-        
+
+        private void configureServices(IServiceRegistry services)
+        {
+            services.SetServiceIfNone(_sparkItems);
+            services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
+            services.AddService<IActivator, SparkActivator>();
+            services.AddService<ISparkViewModification, ServiceLocatorAttacher>();
+            services.AddService<ISparkViewModification, ModelAttacher>();
+        }
+
         private void populateAndBuildItems()
         {
             _sparkItems.Clear();
@@ -46,12 +57,6 @@ namespace FubuMVC.Spark
             _itemBuilder.BuildItems();
         }
 
-        private void services(IFubuRegistry registry)
-        {
-            registry.Services(x => x.SetServiceIfNone(_sparkItems));
-            registry.Services(x => x.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine()));
-            registry.Services(x => x.AddService<IActivator, SparkActivator>());            
-        }
 
         // DSL 
         // ConfigureSparkExpression...
