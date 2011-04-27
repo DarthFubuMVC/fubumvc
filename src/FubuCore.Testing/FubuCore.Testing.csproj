@@ -79,6 +79,7 @@
     <Compile Include="CommandLine\BooleanFlagTester.cs" />
     <Compile Include="CommandLine\CommandExecutorTester.cs" />
     <Compile Include="CommandLine\CommandFactoryTester.cs" />
+    <Compile Include="CommandLine\ConsoleWriterTester.cs" />
     <Compile Include="CommandLine\EnumerableArgumentTester.cs" />
     <Compile Include="CommandLine\FlagTester.cs" />
     <Compile Include="CommandLine\InputParserTester.cs" />

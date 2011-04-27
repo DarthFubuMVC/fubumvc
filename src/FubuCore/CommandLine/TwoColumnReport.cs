@@ -32,6 +32,8 @@ namespace FubuCore.CommandLine
 
         public void Write()
         {
+            //this needs to take into account that the default console is only 80 char wide
+
             var firstLength = _data.GetAllKeys().Max(x => x.Length);
             var secondLength = _data.GetAll().Max(x => x.Length);
 

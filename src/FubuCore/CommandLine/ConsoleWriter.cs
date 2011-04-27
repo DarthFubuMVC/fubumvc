@@ -46,5 +46,12 @@ namespace FubuCore.CommandLine
 
             return lines.ToArray();
         }
+
+        public static void Write(ConsoleColor color, Action action)
+        {
+            Console.ForegroundColor = color;
+            action();
+            Console.ResetColor();
+        }
     }
 }
