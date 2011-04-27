@@ -8,7 +8,6 @@ using FubuFastPack.StructureMap;
 using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuTestApplication.ConnegActions;
-using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
 
 namespace FubuTestApplication
@@ -22,7 +21,7 @@ namespace FubuTestApplication
                 .ContainerFacility(() =>
                 {
                     var databaseFile =
-                        FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), @"test.db").ToFullPath();
+                        FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), @"..\..\test.db").ToFullPath();
                     var container = DatabaseDriver.BootstrapContainer(databaseFile, false);
 
                     container.Configure(
