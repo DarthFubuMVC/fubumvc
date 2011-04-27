@@ -4,7 +4,7 @@ using FubuCore.CommandLine;
 
 namespace Bottles.Deployment.Commands
 {
-    public class AddBottleInput
+    public class AddPakInput
     {
         [Description("Name of the bottle")]
         public string Bottle { get; set; }
@@ -19,11 +19,11 @@ namespace Bottles.Deployment.Commands
     }
 
 
-    [CommandDescription("Adds the bottle (alias) to the bottles.manifest", Name="add-bottle")]
-    public class AddBottleCommand : FubuCommand<AddBottleInput>
+    [CommandDescription("Adds the pak (alias) to the bottles.manifest", Name="add-pak")]
+    public class AddPakCommand : FubuCommand<AddPakInput>
     {
 
-        public override bool Execute(AddBottleInput input)
+        public override bool Execute(AddPakInput input)
         {
             var fs = new FileSystem();
 
@@ -33,7 +33,7 @@ namespace Bottles.Deployment.Commands
 
             var bottleManifestFile = FileSystem.Combine(deploymentDirectory, ProfileFiles.BottlesManifestFile);
 
-            fs.AppendStringToFile(bottleManifestFile, input.Bottle);
+            fs.AppendStringToFile(bottleManifestFile, "{0}\n".ToFormat(input.Bottle));
 
             return true;
         }

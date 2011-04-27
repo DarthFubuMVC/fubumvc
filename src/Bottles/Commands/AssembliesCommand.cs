@@ -93,6 +93,7 @@ namespace Bottles.Commands
 
     [Usage("all", "Remove or adds all assemblies to the manifest file")]
     [Usage("single", "Removes or adds a single assembly name to the manifest file")]
+    [CommandDescription("Adds assemblies to a given manifest")]
     public class AssembliesCommand : FubuCommand<AssembliesInput>
     {
         public override bool Execute(AssembliesInput input)

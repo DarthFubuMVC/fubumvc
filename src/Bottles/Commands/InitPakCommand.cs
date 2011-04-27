@@ -47,7 +47,7 @@ namespace Bottles.Commands
             };
 
             if (input.NoWebContentFlag)
-                manifest.ContentFileSet = new FileSet();
+                manifest.ContentFileSet = new FileSet(){DeepSearch = false, Include="*.config"};
 
             manifest.AddAssembly(assemblyName);
 

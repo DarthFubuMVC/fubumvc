@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.IO;
 using Bottles.Deployment.Bootstrapping;
 using Bottles.Deployment.Runtime;
 using Bottles.Deployment.Writing;

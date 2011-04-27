@@ -24,7 +24,7 @@ namespace Bottles.Deployment.Commands
         public CompileTargetEnum TargetFlag { get; set; }
     }
 
-    [CommandDescription("Creates all the packages for the directories / manifests listed in the bottles.manifest file and puts the new packages into the deployment/bottles directory")]
+    [CommandDescription("Creates all the packages for the directories / manifests listed in the bottles.manifest file and puts the new packages into the deployment/bottles directory", Name="create-all")]
     public class CreateAllCommand : FubuCommand<CreateAllInput>
     {
         public override bool Execute(CreateAllInput input)
@@ -35,9 +35,14 @@ namespace Bottles.Deployment.Commands
 
         public bool Execute(IFileSystem system, CreateAllInput input)
         {
-            string deploymentDirectory = input.DeploymentDirFlag ?? ProfileFiles.DeploymentFolder;
+            var finder = new DeploymentFolderFinder(system);
 
+            string deploymentDirectory = input.DeploymentDirFlag ?? ProfileFiles.DeploymentFolder;
+            deploymentDirectory = finder.FindDeploymentFolder(deploymentDirectory);
+
+            
             var bottlesDirectory = FileSystem.Combine(deploymentDirectory, ProfileFiles.BottlesDirectory);
+           
 
             Console.WriteLine("Creating all packages");
             Console.WriteLine("  Removing all previous package files");
