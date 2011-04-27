@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Bottles.Commands;
 using FubuCore;
+using FubuCore.CommandLine;
 
 namespace Bottles
 {
@@ -26,14 +26,21 @@ namespace Bottles
         {
             var path = FileSystem.Combine(startPath, ProfileFiles.BottlesManifestFile);
             if (_fileSystem.FileExists(path))
+            {
+                ConsoleWriter.Write("Found deployment folder at {0}", path);
                 return _fileSystem.GetDirectory(path);
+            }
+                
 
             _pathsChecked.Add(path);
 
 
             path = FileSystem.Combine(startPath, ProfileFiles.DeploymentFolder, ProfileFiles.BottlesManifestFile);
             if (_fileSystem.FileExists(path))
+            {
+                ConsoleWriter.Write("Found deployment folder at {0}", path);
                 return _fileSystem.GetDirectory(path);
+            }
 
             _pathsChecked.Add(path);
 
