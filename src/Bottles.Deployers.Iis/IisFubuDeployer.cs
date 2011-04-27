@@ -21,7 +21,7 @@ namespace Bottles.Deployers.Iis
         }
 
         //http://www.iis.net/ConfigReference/
-        public void Deploy(IDirective directive)
+        public void Deploy(HostManifest host, IDirective directive)
         {
             _diagnostics.LogDeployment(this, directive);
 

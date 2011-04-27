@@ -11,7 +11,7 @@ namespace BottleDeployers1
 
     public abstract class StubDeployer<T> : IDeployer<T> where T : IDirective
     {
-        public void Deploy(IDirective directive)
+        public void Deploy(HostManifest host, IDirective directive)
         {
             DeploymentRecorder.Directives.Add(directive);
         }

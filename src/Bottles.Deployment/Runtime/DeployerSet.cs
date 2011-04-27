@@ -21,7 +21,7 @@ namespace Bottles.Deployment.Runtime
             {
                 _deploymentDiagnostics.LogDeployer(deployer, hostManifest, d=>
                 {
-                    d.Deploy(directive);
+                    d.Deploy(hostManifest, directive);
                 });
             }
         }

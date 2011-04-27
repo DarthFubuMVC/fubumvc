@@ -18,7 +18,7 @@ namespace Bottles.Deployers.Topshelf
             _runner = runner;
         }
 
-        public void Deploy(IDirective directive)
+        public void Deploy(HostManifest host, IDirective directive)
         {
             var ts = (TopshelfService) directive;
 

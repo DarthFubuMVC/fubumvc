@@ -18,7 +18,7 @@ namespace Bottles.Tests.Deployment
 
             var directive = new TopshelfService();
 
-            deployer.Deploy(directive);
+            deployer.Deploy(new HostManifest("a"), directive);
         }
     }
 }

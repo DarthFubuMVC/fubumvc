@@ -27,5 +27,3 @@ namespace Bottles.Deployment.Bootstrapping
         }
     }
 }
-
-//512 574 8193

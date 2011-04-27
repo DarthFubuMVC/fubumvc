@@ -85,7 +85,7 @@ namespace Bottles.Tests.Deployment.Runtime
 
         public class FakeDeployer<T> : IDeployer<T> where T : IDirective
         {
-            public void Deploy(IDirective directive)
+            public void Deploy(HostManifest host, IDirective directive)
             {
                 var d = (FakeDirective)directive;
                 d.HitIt();

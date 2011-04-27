@@ -24,7 +24,7 @@ namespace Bottles.Tests.Deployment.Runtime
             MockFor<IDeploymentDiagnostics>()
                 .Expect(d => d.LogDeployer(null, hostManifest, null)).IgnoreArguments();
 
-            MockFor<IDeployer<FakeDirective>>().Expect(i => i.Deploy(_directive));
+            MockFor<IDeployer<FakeDirective>>().Expect(i => i.Deploy(hostManifest, _directive));
 
         }
     }

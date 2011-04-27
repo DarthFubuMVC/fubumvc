@@ -26,7 +26,10 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(DeployInput input)
         {
-            var settings = new DeploymentSettings(input.RootDirectory())
+            var df = new ProfileFinder(new FileSystem());
+            var deploy = df.FindDeploymentFolder(input.RootDirectory());
+
+            var settings = new DeploymentSettings(deploy)
             {
                 UserForced = input.ForceFlag
             };

@@ -51,7 +51,7 @@ namespace Bottles.Deployment.Commands
             //profile.GetBottleManifest();
             var bottleManifestFile = FileSystem.Combine(deploymentDirectory, ProfileFiles.BottlesManifestFile);
             system.ReadTextFile(bottleManifestFile, dir => createPackage(dir, bottlesDirectory, input));
-
+            
             return true;
         }
 

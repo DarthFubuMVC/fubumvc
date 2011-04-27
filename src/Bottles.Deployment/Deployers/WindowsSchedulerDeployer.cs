@@ -14,7 +14,7 @@ namespace Bottles.Deployment.Deployers
             _runner = runner;
         }
 
-        public void Deploy(IDirective directive)
+        public void Deploy(HostManifest manifest, IDirective directive)
         {
             var d = (ScheduledTask) directive;
 

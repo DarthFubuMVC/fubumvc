@@ -38,7 +38,10 @@ namespace Bottles.Tests.Deployment
 
 
             initializer.Initialize(directive);
-            deployer.Deploy(directive);
+
+            var host = new HostManifest("a");
+
+            deployer.Deploy(host, directive);
         }
         
     }
