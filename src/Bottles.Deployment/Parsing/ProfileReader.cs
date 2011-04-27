@@ -22,8 +22,7 @@ namespace Bottles.Deployment.Parsing
         public IEnumerable<HostManifest> Read()
         {
             var environment = EnvironmentSettings.ReadFrom(_settings.EnvironmentFile);
-
-
+            environment.SetRoot(_settings.TargetDirectory);
 
             var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
             recipes = _sorter.Order(recipes);

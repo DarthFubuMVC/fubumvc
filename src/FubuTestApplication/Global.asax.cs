@@ -22,7 +22,7 @@ namespace FubuTestApplication
                 .ContainerFacility(() =>
                 {
                     var databaseFile =
-                        FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), @"..\..\test.db").ToFullPath();
+                        FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), @"test.db").ToFullPath();
                     var container = DatabaseDriver.BootstrapContainer(databaseFile, false);
 
                     container.Configure(

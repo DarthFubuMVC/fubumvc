@@ -79,5 +79,10 @@ namespace Bottles.Configuration
 
             return environment;
         }
+
+        public void SetRoot(string targetDirectory)
+        {
+            _overrides[ROOT] = targetDirectory;
+        }
     }
 }
