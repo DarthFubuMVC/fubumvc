@@ -1,21 +1,21 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using FubuCore;
 
-namespace Bottles.Deployment
+namespace Bottles
 {
-    public interface IDeploymentFolderFinder
+    public interface IProfileFinder
     {
         string FindDeploymentFolder(string startPath);
     }
 
-    public class DeploymentFolderFinder : IDeploymentFolderFinder
+    public class ProfileFinder : IProfileFinder
     {
         private readonly IFileSystem _fileSystem;
         private readonly IList<string> _pathsChecked;
 
-        public DeploymentFolderFinder(IFileSystem fileSystem)
+        public ProfileFinder(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
             _pathsChecked = new List<string>();

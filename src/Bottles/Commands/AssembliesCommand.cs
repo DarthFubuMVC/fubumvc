@@ -3,7 +3,6 @@ using System.ComponentModel;
 using Bottles.Creation;
 using FubuCore;
 using FubuCore.CommandLine;
-using Bottles;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -27,7 +27,7 @@ namespace Bottles.Deployment.Commands
         {
             var fs = new FileSystem();
 
-            var finder = new DeploymentFolderFinder(fs);
+            var finder = new ProfileFinder(fs);
 
             var deploymentDirectory = finder.FindDeploymentFolder(input.ProfileLocation());
 

@@ -43,11 +43,11 @@ namespace Bottles.Deployment.Commands
 
             var c = DeploymentBootstrapper.Bootstrap(settings);
             var directiveTypeRegistry = c.GetInstance<IDirectiveTypeRegistry>();
-            var finder = c.GetInstance<IDeploymentFolderFinder>();
+            var finder = c.GetInstance<IProfileFinder>();
             return Initialize(finder, directiveTypeRegistry, input);
         }
 
-        public bool Initialize(IDeploymentFolderFinder finder, IDirectiveTypeRegistry registry, AddDirectiveInput input)
+        public bool Initialize(IProfileFinder finder, IDirectiveTypeRegistry registry, AddDirectiveInput input)
         {
             var path = finder.FindDeploymentFolder(input.DeploymentLocation());
             var p2 = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, input.Recipe);

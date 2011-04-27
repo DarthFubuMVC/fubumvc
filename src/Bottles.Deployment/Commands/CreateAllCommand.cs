@@ -35,7 +35,7 @@ namespace Bottles.Deployment.Commands
 
         public bool Execute(IFileSystem system, CreateAllInput input)
         {
-            var finder = new DeploymentFolderFinder(system);
+            var finder = new ProfileFinder(system);
 
             string deploymentDirectory = input.DeploymentDirFlag ?? ProfileFiles.DeploymentFolder;
             deploymentDirectory = finder.FindDeploymentFolder(deploymentDirectory);

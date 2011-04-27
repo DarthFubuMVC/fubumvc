@@ -1,4 +1,4 @@
-namespace Bottles.Deployment
+﻿namespace Bottles
 {
     public static class ProfileFiles
     {

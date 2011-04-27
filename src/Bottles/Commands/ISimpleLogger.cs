@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace Bottles.Deployment.Commands
+namespace Bottles.Commands
 {
     public interface ISimpleLogger
     {

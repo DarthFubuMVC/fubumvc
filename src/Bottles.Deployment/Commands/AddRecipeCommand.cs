@@ -21,7 +21,7 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddRecipeInput input)
         {
-            var path = new DeploymentFolderFinder(new FileSystem()).FindDeploymentFolder(input.Profile());
+            var path = new ProfileFinder(new FileSystem()).FindDeploymentFolder(input.Profile());
 
             var recipe = new RecipeDefinition(input.Name);
             

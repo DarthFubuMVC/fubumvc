@@ -1,9 +1,8 @@
-using System.ComponentModel;
-using Bottles.Commands;
+﻿using System.ComponentModel;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace Bottles.Deployment.Commands
+namespace Bottles.Commands
 {
     public class InitializeInput
     {
