@@ -37,50 +37,34 @@ namespace FubuMVC.Spark.Rendering
         public SparkViewDescriptor PartialDescriptor { get; private set; }
     }
 
-    public interface IViewFactory
+    public interface IViewEngine
     {
-        ISparkView GetView();
-        ISparkView GetPartialView();
+        ISparkViewEntry GetViewEntry();
+        ISparkViewEntry GetPartialViewEntry();
     }
-    public class ViewFactory : IViewFactory
-    {
-        private readonly SparkItemDescriptors _descriptors;
-        private readonly IDictionary<int, ISparkViewEntry> _cache;
-        private readonly ISparkViewEngine _engine;
-        private readonly IEnumerable<ISparkViewModification> _modifications;
 
-        public ViewFactory(SparkItemDescriptors descriptors, IDictionary<int, ISparkViewEntry> cache, ISparkViewEngine engine, IEnumerable<ISparkViewModification> modifications)
+    public class ViewEngine : IViewEngine
+    {
+        private readonly IDictionary<int, ISparkViewEntry> _cache;
+        private readonly SparkItemDescriptors _descriptors;
+        private readonly ISparkViewEngine _engine;
+
+        public ViewEngine(IDictionary<int, ISparkViewEntry> cache, SparkItemDescriptors descriptors, ISparkViewEngine engine)
         {
-            _descriptors = descriptors;
-            _modifications = modifications;
             _cache = cache;
             _engine = engine;
+            _descriptors = descriptors;
         }
 
-        public ISparkView GetView()
+        public ISparkViewEntry GetViewEntry()
         {
-            var view = getView(_descriptors.ViewDescriptor);
-
-            return view;
+            var entry = getEntry(_descriptors.ViewDescriptor);
+            return entry;
         }
-
-        public ISparkView GetPartialView()
+        public ISparkViewEntry GetPartialViewEntry()
         {
-            var view = getView(_descriptors.PartialDescriptor);
-
-            return view;
-        }
-
-        private ISparkView getView(SparkViewDescriptor descriptor)
-        {
-            var entry = getEntry(descriptor);
-            var instance = entry.CreateInstance();
-
-            _modifications
-               .Where(m => m.Applies(instance))
-               .Each(m => m.Modify(instance));
-
-            return instance;
+            var entry = getEntry(_descriptors.PartialDescriptor);
+            return entry;   
         }
 
         private ISparkViewEntry getEntry(SparkViewDescriptor descriptor)
@@ -98,6 +82,45 @@ namespace FubuMVC.Spark.Rendering
                 }
             }
             return entry;
+        }
+
+    }
+
+    public interface IViewFactory
+    {
+        ISparkView GetView();
+        ISparkView GetPartialView();
+    }
+    public class ViewFactory : IViewFactory
+    {
+        private readonly IViewEngine _viewEngine;
+        private readonly IEnumerable<ISparkViewModification> _modifications;
+
+        public ViewFactory(IViewEngine viewEngine, IEnumerable<ISparkViewModification> modifications)
+        {
+            _modifications = modifications;
+            _viewEngine = viewEngine;
+        }
+
+        public ISparkView GetView()
+        {
+            var view = _viewEngine.GetViewEntry().CreateInstance();
+            applyModifications(view);
+            return view;
+        }
+
+        public ISparkView GetPartialView()
+        {
+            var view = _viewEngine.GetPartialViewEntry().CreateInstance();
+            applyModifications(view);
+            return view;
+        }
+
+        private void applyModifications(ISparkView view)
+        {
+            _modifications
+               .Where(m => m.Applies(view))
+               .Each(m => m.Modify(view));
         }
     }
 

@@ -28,8 +28,9 @@ namespace FubuMVC.Spark.Registration.Nodes
 
             var descriptors = new SparkItemDescriptors(createDescriptor(true), createDescriptor(false));
             var factory = new ObjectDef {Type = typeof (ViewFactory)};
-            factory.DependencyByValue(descriptors);
-            factory.DependencyByValue(_cache);
+            var engine = factory.DependencyByType(typeof (IViewEngine), typeof (ViewEngine));
+            engine.DependencyByValue(descriptors);
+            engine.DependencyByValue(_cache);
 
             var strategies = renderer.EnumerableDependenciesOf<IRenderStrategy>();
 
