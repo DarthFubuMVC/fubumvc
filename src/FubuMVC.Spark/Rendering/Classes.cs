@@ -1,76 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using FubuCore.Binding;
-using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.UI;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public interface IRenderInfo
-    {
-        bool IsNested();
-        bool IsPartial();
-        bool IsAjax();
-    }
-
-    public class RenderInfo : IRenderInfo
-    {
-        private readonly IRequestData _requestData;
-
-        public RenderInfo(IRequestData requestData)
-        {
-            _requestData = requestData;
-        }
-
-        public bool IsNested()
-        {
-            var stack = new StackTrace();
-            var frames = stack.GetFrames();
-            if (frames == null || frames.Length == 0)
-            {
-                return false;
-            }
-            var methods = frames.Select(x => x.GetMethod());
-            var type = typeof(IRenderStrategy);
-            var name = ReflectionHelper.GetMethod<IRenderStrategy>(z => z.Invoke()).Name;
-            return methods
-                .Where(x => x.Name == name)
-                .Where(x => type.IsAssignableFrom(x.DeclaringType))
-                .Any();
-        }
-
-
-        public bool IsPartial()
-        {
-            var stack = new StackTrace();
-            var frames = stack.GetFrames();
-            if (frames == null || frames.Length == 0)
-            {
-                return false;
-            }
-            var methods = frames.Select(x => x.GetMethod());
-            var type = typeof(IPartialInvoker);
-            var invokeName = ReflectionHelper.GetMethod<IPartialInvoker>(z => z.Invoke<string>()).Name;
-            var invokeObjectName = ReflectionHelper.GetMethod<IPartialInvoker>(z => z.InvokeObject(null)).Name;
-
-            return methods
-                .Where(x => x.Name == invokeName || x.Name == invokeObjectName)
-                .Where(x => type.IsAssignableFrom(x.DeclaringType))
-                .Any();
-        }
-
-        public bool IsAjax()
-        {
-            return _requestData.IsAjaxRequest();
-        }
-    }
-
     public class NestedOutput
     {
         private Func<TextWriter> _writer;
@@ -80,6 +18,11 @@ namespace FubuMVC.Spark.Rendering
             _writer = writer;
         }
         public TextWriter Writer { get { return _writer(); } }
+
+        public bool IsActive()
+        {
+            return _writer != null;
+        }
     }
 
     public class SparkItemDescriptors
@@ -99,7 +42,6 @@ namespace FubuMVC.Spark.Rendering
         ISparkView GetView();
         ISparkView GetPartialView();
     }
-
     public class ViewFactory : IViewFactory
     {
         private readonly SparkItemDescriptors _descriptors;
@@ -131,6 +73,18 @@ namespace FubuMVC.Spark.Rendering
 
         private ISparkView getView(SparkViewDescriptor descriptor)
         {
+            var entry = getEntry(descriptor);
+            var instance = entry.CreateInstance();
+
+            _modifications
+               .Where(m => m.Applies(instance))
+               .Each(m => m.Modify(instance));
+
+            return instance;
+        }
+
+        private ISparkViewEntry getEntry(SparkViewDescriptor descriptor)
+        {
             ISparkViewEntry entry;
             var key = descriptor.GetHashCode();
 
@@ -143,122 +97,132 @@ namespace FubuMVC.Spark.Rendering
                     _cache[key] = entry;
                 }
             }
-            var instance = entry.CreateInstance();
-
-            _modifications
-               .Where(m => m.Applies(instance))
-               .Each(m => m.Modify(instance));
-
-            return instance;
+            return entry;
         }
     }
 
+    public interface IViewRenderer
+    {
+        void Render();
+    }
+    public class PartialViewRenderer : IViewRenderer
+    {
+        private readonly IViewFactory _viewFactory;
+        private readonly NestedOutput _nestedOutput;
+        private readonly IOutputWriter _outputWriter;
+
+        public PartialViewRenderer(IViewFactory viewFactory, NestedOutput nestedOutput, IOutputWriter outputWriter)
+        {
+            _viewFactory = viewFactory;
+            _outputWriter = outputWriter;
+            _nestedOutput = nestedOutput;
+        }
+
+        public void Render()
+        {
+            var partial = (SparkViewBase)_viewFactory.GetPartialView();
+            var writer = new StringWriter();
+            partial.Output = writer;
+            _nestedOutput.SetWriter(() => partial.Output);
+            partial.RenderView(writer);
+            _outputWriter.WriteHtml(writer);
+        }
+    }
+    public class NestedViewRenderer : IViewRenderer
+    {
+        private readonly IViewFactory _viewFactory;
+        private readonly NestedOutput _nestedOutput;
+
+        public NestedViewRenderer(IViewFactory viewFactory, NestedOutput nestedOutput)
+        {
+            _viewFactory = viewFactory;
+            _nestedOutput = nestedOutput;
+        }
+
+        public void Render()
+        {
+            var partial = _viewFactory.GetPartialView();
+            partial.RenderView(_nestedOutput.Writer);
+        }
+    }
+    public class DefaultViewRenderer : IViewRenderer
+    {
+        private readonly IViewFactory _viewFactory;
+        private readonly NestedOutput _nestedOutput;
+        private readonly IOutputWriter _outputWriter;
+
+        public DefaultViewRenderer(IViewFactory viewFactory, NestedOutput nestedOutput, IOutputWriter outputWriter)
+        {
+            _viewFactory = viewFactory;
+            _outputWriter = outputWriter;
+            _nestedOutput = nestedOutput;
+        }
+
+        public void Render()
+        {
+            var view = (SparkViewBase)_viewFactory.GetView();
+            var writer = new StringWriter();
+            view.Output = writer;
+            _nestedOutput.SetWriter(() => view.Output);
+            view.RenderView(writer);
+            _outputWriter.WriteHtml(writer);
+        }
+    }
 
     public interface IRenderStrategy
     {
         bool Applies();
         void Invoke();
     }
-
     public class NestedRenderStrategy : IRenderStrategy
     {
-        private readonly IRenderInfo _renderInfo;
-        private readonly IViewFactory _viewFactory;
         private readonly NestedOutput _nestedOutput;
+        private readonly IViewRenderer _viewRenderer;
 
-        public NestedRenderStrategy(IRenderInfo renderInfo, IViewFactory viewFactory, NestedOutput nestedOutput)
+        public NestedRenderStrategy(NestedOutput nestedOutput, IViewRenderer viewRenderer)
         {
-            _renderInfo = renderInfo;
-            _viewFactory = viewFactory;
+            _viewRenderer = viewRenderer;
             _nestedOutput = nestedOutput;
         }
 
         public bool Applies()
         {
-            return _renderInfo.IsNested();
+            return _nestedOutput.IsActive();
         }
 
         public void Invoke()
         {
-            var partial = _viewFactory.GetPartialView();
-            partial.RenderView(_nestedOutput.Writer);
+            _viewRenderer.Render();
         }
     }
-
     public class AjaxRenderStrategy : IRenderStrategy
     {
-        private readonly IRenderInfo _renderInfo;
-        private readonly IViewFactory _viewFactory;
-        private readonly NestedOutput _nestedOutput;
-        private readonly IOutputWriter _outputWriter;
+        private readonly IViewRenderer _viewRenderer;
+        private readonly IRequestData _requestData;
 
-        public AjaxRenderStrategy(IRenderInfo renderInfo, IViewFactory viewFactory, NestedOutput nestedOutput, IOutputWriter outputWriter)
+        public AjaxRenderStrategy(IViewRenderer viewRenderer, IRequestData requestData)
         {
-            _renderInfo = renderInfo;
-            _nestedOutput = nestedOutput;
-            _outputWriter = outputWriter;
-            _viewFactory = viewFactory;
+            _viewRenderer = viewRenderer;
+            _requestData = requestData;
         }
 
         public bool Applies()
         {
-            return _renderInfo.IsAjax();
+            return _requestData.IsAjaxRequest();
         }
 
         public void Invoke()
         {
-            var partial = (SparkViewBase)_viewFactory.GetPartialView();
-            var writer = new StringWriter();
-            partial.Output = writer;
-            _nestedOutput.SetWriter(() => partial.Output);
-            partial.RenderView(writer);
-            _outputWriter.WriteHtml(writer);
+            _viewRenderer.Render();
         }
     }
-
-    public class PartialRenderStrategy : IRenderStrategy
-    {
-        private readonly IRenderInfo _renderInfo;
-        private readonly IViewFactory _viewFactory;
-        private readonly NestedOutput _nestedOutput;
-        private readonly IOutputWriter _outputWriter;
-
-
-        public PartialRenderStrategy(IRenderInfo renderInfo, IViewFactory viewFactory, NestedOutput nestedOutput, IOutputWriter outputWriter)
-        {
-            _renderInfo = renderInfo;
-            _outputWriter = outputWriter;
-            _nestedOutput = nestedOutput;
-            _viewFactory = viewFactory;
-        }
-
-        public bool Applies()
-        {
-            return _renderInfo.IsPartial();
-        }
-
-        public void Invoke()
-        {
-            var partial = (SparkViewBase)_viewFactory.GetPartialView();
-            var writer = new StringWriter();
-            partial.Output = writer;
-            _nestedOutput.SetWriter(() => partial.Output);
-            partial.RenderView(writer);
-            _outputWriter.WriteHtml(writer);
-        }
-    }
-
     public class DefaultRenderStrategy : IRenderStrategy
     {
-        private readonly IViewFactory _viewFactory;
-        private readonly NestedOutput _nestedOutput;
-        private readonly IOutputWriter _outputWriter;
+        private readonly IViewRenderer _viewRenderer;
 
-        public DefaultRenderStrategy(IViewFactory viewFactory, NestedOutput nestedOutput, IOutputWriter outputWriter)
+        public DefaultRenderStrategy(IViewRenderer viewRenderer)
         {
-            _viewFactory = viewFactory;
-            _outputWriter = outputWriter;
-            _nestedOutput = nestedOutput;
+            _viewRenderer = viewRenderer;
         }
 
         public bool Applies()
@@ -268,12 +232,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void Invoke()
         {
-            var view = (SparkViewBase)_viewFactory.GetView();
-            var writer = new StringWriter();
-            view.Output = writer;
-            _nestedOutput.SetWriter(() => view.Output);
-            view.RenderView(writer);
-            _outputWriter.WriteHtml(writer);
+            _viewRenderer.Render();
         }
     }
 }

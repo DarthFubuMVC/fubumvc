@@ -32,10 +32,10 @@ namespace FubuMVC.Spark.Registration.Nodes
             factory.DependencyByValue(_cache);
 
             var strategies = renderer.EnumerableDependenciesOf<IRenderStrategy>();
-            strategies.AddType(typeof(NestedRenderStrategy)).DependencyByType<IViewFactory>(factory);
-            strategies.AddType(typeof(AjaxRenderStrategy)).DependencyByType<IViewFactory>(factory);
-            strategies.AddType(typeof(PartialRenderStrategy)).DependencyByType<IViewFactory>(factory);
-            strategies.AddType(typeof(DefaultRenderStrategy)).DependencyByType<IViewFactory>(factory);
+
+            configureStrategy<NestedRenderStrategy, NestedViewRenderer>(strategies, factory);
+            configureStrategy<AjaxRenderStrategy, PartialViewRenderer>(strategies, factory);
+            configureStrategy<DefaultRenderStrategy, DefaultViewRenderer>(strategies, factory);
         }
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
@@ -45,8 +45,16 @@ namespace FubuMVC.Spark.Registration.Nodes
             {
                 descriptor.AddTemplate(_item.Master.ViewPath);
             }
-
             return descriptor;
+        }
+
+        private static void configureStrategy<TStrategy, TViewRenderer>(ListDependency strategies, ObjectDef factory)
+            where TStrategy : IRenderStrategy
+            where TViewRenderer : IViewRenderer
+        {
+            strategies.AddType(typeof (TStrategy))
+                .DependencyByType(typeof (IViewRenderer), typeof (TViewRenderer))
+                .DependencyByType<IViewFactory>(factory);
         }
 
         public override string Description
