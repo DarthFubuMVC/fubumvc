@@ -7,8 +7,9 @@ namespace Bottles.Deployment
         //path points to ~/deployment
         public DeploymentSettings(string path)
         {
-            var finder = new DeploymentFolderFinder(new FileSystem());
-            path = finder.FindDeploymentFolder(path);
+            // TODO -- come back to this.
+            //var finder = new DeploymentFolderFinder(new FileSystem());
+            //path = finder.FindDeploymentFolder(path);
 
 
             BottlesDirectory = FileSystem.Combine(path, ProfileFiles.BottlesDirectory);
