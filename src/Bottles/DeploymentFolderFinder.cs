@@ -11,12 +11,12 @@ namespace Bottles
         string FindDeploymentFolder(string startPath);
     }
 
-    public class ProfileFinder : IProfileFinder
+    public class DeploymentFolderFinder : IProfileFinder
     {
         private readonly IFileSystem _fileSystem;
         private readonly IList<string> _pathsChecked;
 
-        public ProfileFinder(IFileSystem fileSystem)
+        public DeploymentFolderFinder(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
             _pathsChecked = new List<string>();
@@ -27,8 +27,9 @@ namespace Bottles
             var path = FileSystem.Combine(startPath, ProfileFiles.BottlesManifestFile);
             if (_fileSystem.FileExists(path))
             {
+                path = _fileSystem.GetDirectory(path);
                 ConsoleWriter.Write("Found deployment folder at {0}", path);
-                return _fileSystem.GetDirectory(path);
+                return path;
             }
                 
 
@@ -38,8 +39,9 @@ namespace Bottles
             path = FileSystem.Combine(startPath, ProfileFiles.DeploymentFolder, ProfileFiles.BottlesManifestFile);
             if (_fileSystem.FileExists(path))
             {
+                path = _fileSystem.GetDirectory(path);
                 ConsoleWriter.Write("Found deployment folder at {0}", path);
-                return _fileSystem.GetDirectory(path);
+                return path;
             }
 
             _pathsChecked.Add(path);
@@ -53,26 +55,6 @@ namespace Bottles
             
 
             throw new Exception(msg.ToString());
-        }
-    }
-
-    public class Profile
-    {
-        private IFileSystem _fileSystem;
-        private string _pathToProfile;
-
-        public Profile(IFileSystem fileSystem, string pathToProfile)
-        {
-            _fileSystem = fileSystem;
-            _pathToProfile = pathToProfile;
-        }
-
-        public AliasRegistry Aliases()
-        {
-            var reg = _fileSystem
-                .LoadFromFile<AliasRegistry>(AliasRegistry.ALIAS_FILE);
-
-            return reg;
         }
     }
 }

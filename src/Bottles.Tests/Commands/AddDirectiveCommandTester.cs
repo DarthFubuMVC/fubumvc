@@ -2,6 +2,7 @@
 using Bottles.Deployment.Commands;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Deployment.Writing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -12,9 +13,11 @@ namespace Bottles.Tests.Commands
     public class AddDirectiveCommandTester : InteractionContext<AddDirectiveCommand>
     {
         private AddDirectiveInput theInput;
-        
+        private DeploymentSettings theSettings;
+
         protected override void beforeEach()
         {
+
             theInput = new AddDirectiveInput()
                        {
                            Directive = "FubuWebsite",
@@ -24,7 +27,13 @@ namespace Bottles.Tests.Commands
                        };
         }
 
+        private void setup_profile()
+        {
+            var pw = new DeploymentWriter(@".\iisfubu");
+            var r = pw.RecipeFor("brownies");
 
+            pw.Flush(FlushOptions.Wipeout);
+        }
         private void finds_directive()
         {
             MockFor<IProfileFinder>().Stub(x => x.FindDeploymentFolder(@".\iisfubu")).Return(@".\iisfubu");
@@ -32,12 +41,15 @@ namespace Bottles.Tests.Commands
         }
         private void execute()
         {
-            ClassUnderTest.Initialize(MockFor<IProfileFinder>(), MockFor<IDirectiveTypeRegistry>(), theInput);
+            theSettings = new DeploymentSettings(@".\iisfubu");
+            ClassUnderTest.Initialize(MockFor<IDirectiveTypeRegistry>(), theInput, theSettings);
         }
 
         [Test]
         public void should_select_the_correct_directive()
         {
+            setup_profile();
+
             finds_directive();
 
             execute();

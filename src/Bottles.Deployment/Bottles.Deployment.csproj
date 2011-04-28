@@ -113,7 +113,7 @@
     <Compile Include="Runtime\IHostSorter.cs" />
     <Compile Include="Runtime\InitializerSet.cs" />
     <Compile Include="Writing\DirectiveWriter.cs" />
-    <Compile Include="Writing\ProfileWriter.cs" />
+    <Compile Include="Writing\DeploymentWriter.cs" />
     <Compile Include="Writing\PropertyValue.cs" />
     <Compile Include="Writing\HostDefinition.cs" />
     <Compile Include="Writing\HostWriter.cs" />

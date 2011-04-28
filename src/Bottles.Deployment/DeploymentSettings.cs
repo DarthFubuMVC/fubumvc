@@ -1,15 +1,19 @@
+using System;
 using FubuCore;
 
 namespace Bottles.Deployment
 {
     public class DeploymentSettings
     {
+        //path points to ~/deployment
         public DeploymentSettings(string path)
         {
+            var finder = new DeploymentFolderFinder(new FileSystem());
+            path = finder.FindDeploymentFolder(path);
+
             BottlesDirectory = FileSystem.Combine(path, ProfileFiles.BottlesDirectory);
             RecipesDirectory = FileSystem.Combine(path, ProfileFiles.RecipesDirectory);
             EnvironmentFile = FileSystem.Combine(path, ProfileFiles.EnvironmentSettingsFileName);
-
             TargetDirectory = FileSystem.Combine(path, ProfileFiles.TargetDirectory);
         }
         public DeploymentSettings() : this(".".ToFullPath())
@@ -25,5 +29,10 @@ namespace Bottles.Deployment
         /// user has typed '-f' at the command line
         /// </summary>
         public bool UserForced { get; set; }
+
+        public string GetRecipe(string recipe)
+        {
+            return FileSystem.Combine(RecipesDirectory, recipe);
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Bottles.Tests.Deployment.Parsing
         [SetUp]
         public void SetUp()
         {
-            var writer = new ProfileWriter("profile2");
+            var writer = new DeploymentWriter("profile2");
 
             var host = writer.RecipeFor("r1").HostFor("h1");
             

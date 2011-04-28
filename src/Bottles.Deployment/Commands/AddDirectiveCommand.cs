@@ -40,17 +40,15 @@ namespace Bottles.Deployment.Commands
         public override bool Execute(AddDirectiveInput input)
         {
             var settings = new DeploymentSettings(input.DeploymentLocation());
-
+            
             var c = DeploymentBootstrapper.Bootstrap(settings);
             var directiveTypeRegistry = c.GetInstance<IDirectiveTypeRegistry>();
-            var finder = c.GetInstance<IProfileFinder>();
-            return Initialize(finder, directiveTypeRegistry, input);
+            return Initialize(directiveTypeRegistry, input, settings);
         }
 
-        public bool Initialize(IProfileFinder finder, IDirectiveTypeRegistry registry, AddDirectiveInput input)
+        public bool Initialize(IDirectiveTypeRegistry registry, AddDirectiveInput input, DeploymentSettings settings)
         {
-            var path = finder.FindDeploymentFolder(input.DeploymentLocation());
-            var p2 = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, input.Recipe);
+            var rec = settings.GetRecipe(input.Recipe);
 
             var host = new HostDefinition(input.Host);
             var type = registry.DirectiveTypeFor(input.Directive);
@@ -59,10 +57,10 @@ namespace Bottles.Deployment.Commands
             host.AddDirective(directive);
 
             var hw = new HostWriter(new TypeDescriptorCache());
-            hw.WriteTo(host, p2);
+            hw.WriteTo(host, rec);
 
             if(input.OpenFlag)
-                _fileSystem.LaunchEditor(p2, host.FileName);
+                _fileSystem.LaunchEditor(rec, host.FileName);
 
             return true;
         }

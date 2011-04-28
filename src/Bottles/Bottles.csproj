@@ -60,7 +60,7 @@
     <Compile Include="Creation\IPackageLogger.cs" />
     <Compile Include="Creation\PackageLogger.cs" />
     <Compile Include="Creation\PackageManifestWriter.cs" />
-    <Compile Include="ProfileFinder.cs" />
+    <Compile Include="DeploymentFolderFinder.cs" />
     <Compile Include="Configuration\EnvironmentSettings.cs" />
     <Compile Include="Configuration\EnvironmentSettingsException.cs" />
     <Compile Include="Environment\EnvironmentGateway.cs" />

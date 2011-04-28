@@ -38,7 +38,7 @@ namespace Bottles.Deployment.Commands
             var settings = new EnvironmentSettings();
             IFileSystem fileSystem = new FileSystem();
 
-            Exe(input, settings, fileSystem, new ProfileFinder(fileSystem));
+            Exe(input, settings, fileSystem, new DeploymentFolderFinder(fileSystem));
 
             return true;
         }

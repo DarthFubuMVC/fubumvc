@@ -17,7 +17,7 @@ namespace Bottles.Tests.Deployment
         {
             var testRoot = Path.GetFullPath(@".\integration");
 
-            var writer = new ProfileWriter(testRoot, new FileSystem());
+            var writer = new DeploymentWriter(testRoot, new FileSystem());
             writer.AddEnvironmentSetting("name","dru");
             
             

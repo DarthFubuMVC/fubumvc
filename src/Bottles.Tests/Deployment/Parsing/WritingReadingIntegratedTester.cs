@@ -9,12 +9,12 @@ namespace Bottles.Tests.Deployment.Parsing
         [SetUp]
         public void SetUp()
         {
-            var writer = new ProfileWriter("profile1");
+            var writer = new DeploymentWriter("profile1");
             defineTheProfile(writer);
             writer.Flush(FlushOptions.Wipeout);
         }
 
-        protected abstract void defineTheProfile(ProfileWriter writer);
+        protected abstract void defineTheProfile(DeploymentWriter writer);
 
 
     }

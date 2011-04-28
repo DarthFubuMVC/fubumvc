@@ -19,7 +19,7 @@ namespace Bottles.Tests.Deployment.Commands
 
         private void setupHostManifest()
         {
-            var profileWriter = new ProfileWriter(profile);
+            var profileWriter = new DeploymentWriter(profile);
             profileWriter.RecipeFor(recipe).HostFor(hostName).AddDirective(new SimpleSettings());
             profileWriter.Flush(FlushOptions.Wipeout);
         }

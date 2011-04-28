@@ -19,7 +19,7 @@ namespace Bottles.Tests.Deployment.Parsing
         [SetUp]
         public void SetUp()
         {
-            var writer = new ProfileWriter("clonewars");
+            var writer = new DeploymentWriter("clonewars");
 
             var recipeDefinition = writer.RecipeFor("r1");
             var host = recipeDefinition.HostFor("h1");
@@ -98,7 +98,7 @@ namespace Bottles.Tests.Deployment.Parsing
         [SetUp]
         public void SetUp()
         {
-            var writer = new ProfileWriter("starwars");
+            var writer = new DeploymentWriter("starwars");
 
             var recipeDefinition = writer.RecipeFor("r1");
             var host = recipeDefinition.HostFor("h1");

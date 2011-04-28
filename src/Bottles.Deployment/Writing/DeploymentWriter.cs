@@ -9,7 +9,7 @@ using FubuCore.Util;
 
 namespace Bottles.Deployment.Writing
 {
-    public class ProfileWriter
+    public class DeploymentWriter
     {
         private readonly string _destination;
         private readonly IFileSystem _system;
@@ -18,11 +18,11 @@ namespace Bottles.Deployment.Writing
         private readonly TypeDescriptorCache _types = new TypeDescriptorCache();
 
 
-        public ProfileWriter(string destination) : this(destination, new FileSystem())
+        public DeploymentWriter(string destination) : this(destination, new FileSystem())
         {
         }
 
-        public ProfileWriter(string destination, IFileSystem system)
+        public DeploymentWriter(string destination, IFileSystem system)
         {
             _destination = destination;
             _system = system;
@@ -42,13 +42,28 @@ namespace Bottles.Deployment.Writing
                 _system.CreateDirectory(_destination);    
             }
             
-            _system.CreateDirectory(FileSystem.Combine(_destination, ProfileFiles.RecipesDirectory));
+            writeBottleManifest();
+
+            writeDirectories();
 
             _system.WriteStringToFile(FileSystem.Combine(_destination, ProfileFiles.BottlesManifestFile), "");
 
             writeEnvironmentSettings();
 
             _recipes.Each(writeRecipe);
+        }
+
+        private void writeDirectories()
+        {
+            createDirectory(_destination, ProfileFiles.BottlesDirectory);
+            createDirectory(_destination, ProfileFiles.RecipesDirectory);
+            createDirectory(_destination, ProfileFiles.EnvironmentsFolder);
+            createDirectory(_destination, ProfileFiles.ProfilesFolder);
+        }
+
+        private void writeBottleManifest()
+        {
+            _system.WriteStringToFile(FileSystem.Combine(_destination, ProfileFiles.BottlesManifestFile), "");
         }
 
         private void writeEnvironmentSettings()
@@ -83,7 +98,12 @@ namespace Bottles.Deployment.Writing
             });
         }
 
+        private void createDirectory(params string[] pathParts)
+        {
+            string directory = FileSystem.Combine(pathParts);
 
+            _system.CreateDirectory(directory);
+        }
     }
 
     public enum FlushOptions

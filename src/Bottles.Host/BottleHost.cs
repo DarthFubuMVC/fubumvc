@@ -29,20 +29,20 @@ namespace Bottles.Host
 
             //guard clauses here
 
-            _svc = (IBottleAwareService)Activator.CreateInstance(type);
-            
+            _svc = (IBottleAwareService) Activator.CreateInstance(type);
+
             //this is done so that start can return, as 'LoadPackages' may take some time.
             ThreadPool.QueueUserWorkItem(cb =>
-                                             {
-                                                 int shutUpResharper = 0;
+            {
+                int shutUpResharper = 0;
 
-                                                 PackageRegistry.LoadPackages(pkg =>
-                                                 {
-                                                     pkg.Loader(new BottleHostLoader(_fileSystem, _exploder));
+                PackageRegistry.LoadPackages(pkg =>
+                {
+                    pkg.Loader(new BottleHostLoader(_fileSystem, _exploder));
 
-                                                     pkg.Bootstrapper(_svc);
-                                                 });
-                                             });
+                    pkg.Bootstrapper(_svc);
+                });
+            });
 
         }
 

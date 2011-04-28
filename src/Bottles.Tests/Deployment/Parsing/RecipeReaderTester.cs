@@ -38,7 +38,7 @@ namespace Bottles.Tests.Deployment.Parsing
         [SetUp]
         public void SetUp()
         {
-            var writer = new ProfileWriter("profile3");
+            var writer = new DeploymentWriter("profile3");
 
             var recipeDefinition = writer.RecipeFor("r1");
             recipeDefinition.RegisterDependency("the-pig");

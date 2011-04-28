@@ -16,7 +16,7 @@ namespace Bottles.Deployment.Writing
 
         public void WriteTo(RecipeDefinition recipe, string profileDirectory)
         {
-            var df = new ProfileFinder(_fileSystem);
+            var df = new DeploymentFolderFinder(_fileSystem);
             var path = df.FindDeploymentFolder(profileDirectory);
 
             var recipepath = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, recipe.Name);

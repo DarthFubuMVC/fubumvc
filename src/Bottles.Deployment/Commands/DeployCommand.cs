@@ -26,7 +26,7 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(DeployInput input)
         {
-            var df = new ProfileFinder(new FileSystem());
+            var df = new DeploymentFolderFinder(new FileSystem());
             var deploy = df.FindDeploymentFolder(input.RootDirectory());
 
             var settings = new DeploymentSettings(deploy)
