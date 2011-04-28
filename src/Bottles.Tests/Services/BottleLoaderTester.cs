@@ -21,11 +21,12 @@ namespace Bottles.Tests.Services
         {
             MockFor<IPackageExploder>().Stub(
                 x => x.ExplodeAllZipsAndReturnPackageDirectories(AppDomain.CurrentDomain.BaseDirectory)).Return(bottles);
+
             foreach (var bottle in bottles)
             {
                 MockFor<IFileSystem>().Stub(x => x.GetFullPath(bottle)).Return(bottle);
-                MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ServiceHostManifest>(bottle, ServiceHostManifest.CONTROL, ServiceHostManifest.FILE))
-                    .Return(new ServiceHostManifest() { Name = bottle });    
+                MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ServicePackageManifest>(bottle, ServicePackageManifest.CONTROL, ServicePackageManifest.FILE))
+                    .Return(new ServicePackageManifest() { Name = bottle });    
             }
         }
 
