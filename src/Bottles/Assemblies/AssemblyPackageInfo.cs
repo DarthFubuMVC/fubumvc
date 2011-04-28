@@ -31,6 +31,8 @@ namespace Bottles.Assemblies
             get { return _files; }
         }
 
+        public string Role { get; set; }
+
         public string Name
         {
             get { return "Assembly:  " + _assembly.FullName; }

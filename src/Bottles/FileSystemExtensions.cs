@@ -16,7 +16,7 @@ namespace Bottles
         public static PackageManifest LoadPackageManifestFrom(this IFileSystem fileSystem, string directory)
         {
             return fileSystem.TryFindManifest(directory, PackageManifest.FILE)
-                   ?? fileSystem.TryFindManifest(directory, PackageManifest.APPLICATION_MANIFEST_FILE);
+                   ?? fileSystem.TryFindManifest(directory, PackageManifest.FILE);
         }
 
         public static PackageManifest TryFindManifest(this IFileSystem system, string directory, string fileName)
@@ -49,17 +49,17 @@ namespace Bottles
 
         public static bool ApplicationManifestExists(this IFileSystem fileSystem, string appFolder)
         {
-            return fileSystem.FileExists(appFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
+            return fileSystem.FileExists(appFolder, PackageManifest.FILE);
         }
 
         public static PackageManifest LoadApplicationManifestFrom(this IFileSystem fileSystem, string folder)
         {
-            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
+            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
         }
 
         public static string ApplicationManifestPathFor(this IFileSystem fileSystem, string folder)
         {
-            return FileSystem.Combine(folder, PackageManifest.APPLICATION_MANIFEST_FILE);
+            return FileSystem.Combine(folder, PackageManifest.FILE);
         }
 
 		public static IEnumerable<string> FindAssemblyNames(this IFileSystem fileSystem, string directory)

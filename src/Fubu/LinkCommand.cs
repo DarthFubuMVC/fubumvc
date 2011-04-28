@@ -62,13 +62,13 @@ namespace Fubu
         {
             var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
 
-            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE))
+            if (input.CleanAllFlag && fileSystem.FileExists(input.AppFolder, PackageManifest.FILE))
             {
                 manifest.RemoveAllLinkedFolders();
 
                 persist(input, manifest, fileSystem);
 
-                Console.WriteLine("Removed all package links from the manifest file for " + input.AppFolder);
+                ConsoleWriter.Write("Removed all package links from the manifest file for " + input.AppFolder);
 
                 listCurrentLinks(input, manifest);
                 
@@ -128,7 +128,7 @@ namespace Fubu
 
         private void persist(LinkInput input, PackageManifest manifest, IFileSystem fileSystem)
         {
-            fileSystem.PersistToFile(manifest, input.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
+            fileSystem.PersistToFile(manifest, input.AppFolder, PackageManifest.FILE);
         }
 
         private void remove(LinkInput input, PackageManifest manifest)

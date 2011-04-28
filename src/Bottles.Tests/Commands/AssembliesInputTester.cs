@@ -1,5 +1,4 @@
 using Bottles.Commands;
-using Bottles.Tests.Parsing;
 using FubuCore;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -47,12 +46,12 @@ namespace Bottles.Tests.Commands
         private void theApplicationManifestFileExists()
         {
             theFileSystem.Stub(
-                x => x.FileExists(theInput.Directory, PackageManifest.APPLICATION_MANIFEST_FILE))
+                x => x.FileExists(theInput.Directory, PackageManifest.FILE))
                 .Return(true);
 
             theFileSystem.Stub(
                 x =>
-                x.LoadFromFile<PackageManifest>(theInput.Directory, PackageManifest.APPLICATION_MANIFEST_FILE))
+                x.LoadFromFile<PackageManifest>(theInput.Directory, PackageManifest.FILE))
                 .Return(theApplicationManifest);
         }
 
@@ -76,7 +75,7 @@ namespace Bottles.Tests.Commands
 
             theInput.Manifest.ShouldBeTheSameAs(theApplicationManifest);
 
-            theInput.Manifest.ManifestFileName.ShouldEqual(FileSystem.Combine(theInput.Directory, PackageManifest.APPLICATION_MANIFEST_FILE));
+            theInput.Manifest.ManifestFileName.ShouldEqual(FileSystem.Combine(theInput.Directory, PackageManifest.FILE));
         }
 
         [Test]

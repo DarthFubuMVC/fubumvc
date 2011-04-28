@@ -1,14 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bottles;
 using Bottles.Assemblies;
 using FubuCore;
 
-namespace FubuMVC.Core.Packaging
+namespace Bottles
 {
+    //development mode reader
+    //already exploded thing
     public class PackageManifestReader : IPackageLoader, IPackageManifestReader
     {
         private readonly string _applicationFolder;
@@ -30,7 +31,8 @@ namespace FubuMVC.Core.Packaging
         public IEnumerable<IPackageInfo> Load()
         {
         	var packages = new List<IPackageInfo>();
-            var includes = _fileSystem.LoadFromFile<PackageManifest>(_applicationFolder, PackageManifest.APPLICATION_MANIFEST_FILE);
+            //issue??
+            var includes = _fileSystem.LoadFromFile<PackageManifest>(_applicationFolder, PackageManifest.FILE);
 
         	packages.AddRange(includes.LinkedFolders.Select(f => LoadFromFolder(Path.Combine(_applicationFolder, f))));
             packages.AddRange(includes.Assemblies.Select(assemblyName =>
@@ -48,14 +50,14 @@ namespace FubuMVC.Core.Packaging
 
             var manifest = _fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
             var package = new PackageInfo(manifest.Name){
-                Description = "{0} ({1})".ToFormat(manifest.Name, folder)
+                Description = "{0} ({1})".ToFormat(manifest.Name, folder),
             };
 
 
             // Right here, this needs to be different
             package.RegisterFolder(BottleFiles.WebContentFolder, _getContentFolderFromPackageFolder(folder));
-            package.RegisterFolder(BottleFiles.DataFolder, Path.Combine(folder, BottleFiles.DataFolder));
-            package.RegisterFolder(BottleFiles.ConfigFolder, Path.Combine(folder, BottleFiles.ConfigFolder));
+            package.RegisterFolder(BottleFiles.DataFolder, FileSystem.Combine(folder, BottleFiles.DataFolder));
+            package.RegisterFolder(BottleFiles.ConfigFolder, FileSystem.Combine(folder, BottleFiles.ConfigFolder));
 
             var binPath = FileSystem.Combine(_applicationFolder, folder, "bin");
         	var debugPath = FileSystem.Combine(binPath, "debug");
@@ -64,6 +66,8 @@ namespace FubuMVC.Core.Packaging
 				binPath = debugPath;
 			}
 
+            //REVIEW: I feel this whole section is left-hand / right-hand code
+            package.Role = manifest.Role;
 
             var assemblyPaths = findCandidateAssemblyFiles(binPath);
             assemblyPaths.Each(path =>

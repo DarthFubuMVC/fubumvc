@@ -88,13 +88,13 @@ namespace FubuMVC.Tests.Commands
 
         private void theManifestFileDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => FileSystemExtensions.FileExists(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(false);
+            MockFor<IFileSystem>().Stub(x => FileSystemExtensions.FileExists(x, theInput.AppFolder, PackageManifest.FILE)).Return(false);
         }
 
         private void theManifestFileExists()
         {
-            MockFor<IFileSystem>().Stub(x => FileSystemExtensions.FileExists(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => FileSystemExtensions.LoadFromFile<PackageManifest>(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(theManifest);
+            MockFor<IFileSystem>().Stub(x => FileSystemExtensions.FileExists(x, theInput.AppFolder, PackageManifest.FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => FileSystemExtensions.LoadFromFile<PackageManifest>(x, theInput.AppFolder, PackageManifest.FILE)).Return(theManifest);
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace FubuMVC.Tests.Commands
 
             execute();
 
-            MockFor<IFileSystem>().AssertWasCalled(x => FileSystemExtensions.LaunchEditor(x, theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE));
+            MockFor<IFileSystem>().AssertWasCalled(x => FileSystemExtensions.LaunchEditor(x, theInput.AppFolder, PackageManifest.FILE));
         }
     }
 }

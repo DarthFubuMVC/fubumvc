@@ -47,6 +47,8 @@ namespace Bottles
 
         public string Name { get; private set; }
 
+        public string Role { get; set; }
+
         public void LoadAssemblies(IAssemblyRegistration loader)
         {
             _assemblies.Each(a => a.Load(loader));

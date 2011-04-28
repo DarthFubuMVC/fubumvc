@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Packaging
         [TearDown]
         public void TearDown()
         {
-            new FileSystem().DeleteFile(FileSystem.Combine("../../".ToFullPath(), PackageManifest.APPLICATION_MANIFEST_FILE));
+            new FileSystem().DeleteFile(FileSystem.Combine("../../".ToFullPath(), PackageManifest.FILE));
         }
 
 
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Packaging
             var includes = new PackageManifest();
             includes.AddLink("../TestPackage1");
 
-            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.APPLICATION_MANIFEST_FILE);
+            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.FILE);
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.Packaging
 			var includes = new PackageManifest();
 			includes.AddAssembly("TestPackage1");
 
-			new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.APPLICATION_MANIFEST_FILE);
+            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.FILE);
 
 			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));

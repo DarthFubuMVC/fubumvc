@@ -14,6 +14,8 @@ namespace Bottles
 
         public PackageManifest()
         {
+            Role = PackageRole.Module;
+
             DataFileSet = new FileSet();
             ContentFileSet = new FileSet(){
                 Include = "*.as*x;*.master;Content{0}*.*;*.config".ToFormat(Path.DirectorySeparatorChar)
@@ -24,9 +26,14 @@ namespace Bottles
         public string ManifestFileName { get; set; }
 
         private readonly IList<string> _assemblies = new List<string>();
+
+        [Obsolete]
         public static readonly string APPLICATION_MANIFEST_FILE = ".fubu-manifest";
+
         private readonly IList<string> _folders = new List<string>();
 
+
+        public string Role { get; set; }
         public string Name { get; set; }
         public string BinPath { get; set; }
 

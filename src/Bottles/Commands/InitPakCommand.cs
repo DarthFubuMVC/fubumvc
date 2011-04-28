@@ -13,6 +13,9 @@ namespace Bottles.Commands
         [Description("The name of the new package")]
         public string Name { get; set; }
 
+        [Description("What role should this pak play [Default: Module]")]
+        public string RoleFlag { get; set; }
+
         [Description("Creates a folder alias for the package folder.  Equivalent to fubu alias <folder> <alias>")]
         public string AliasFlag { get; set; }
 
@@ -22,6 +25,7 @@ namespace Bottles.Commands
         [Description("There is no web content to include")]
         [FlagAlias("noweb")]
         public bool NoWebContentFlag { get; set; }
+
     }
 
     [CommandDescription("Initialize a package manifest", Name = "init-pak")]
@@ -44,7 +48,8 @@ namespace Bottles.Commands
             var assemblyName = Path.GetFileName(input.Path);
 
             var manifest = new PackageManifest{
-                Name = input.Name
+                Name = input.Name,
+                Role = input.RoleFlag ?? PackageRole.Module
             };
 
             if (input.NoWebContentFlag)

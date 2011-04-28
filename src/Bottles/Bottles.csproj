@@ -87,6 +87,7 @@
     <Compile Include="IPackageLoader.cs" />
     <Compile Include="Diagnostics\IPackageLog.cs" />
     <Compile Include="Diagnostics\IPackagingDiagnostics.cs" />
+    <Compile Include="IPackageManifestReader.cs" />
     <Compile Include="IPackagingRuntimeGraphConfigurer.cs" />
     <Compile Include="LambdaActivator.cs" />
     <Compile Include="LambdaBootstrapper.cs" />
@@ -97,10 +98,12 @@
     <Compile Include="PackageFiles.cs" />
     <Compile Include="PackageInfo.cs" />
     <Compile Include="PackageManifest.cs" />
+    <Compile Include="PackageManifestReader.cs" />
     <Compile Include="PackageRegistry.cs" />
     <Compile Include="Diagnostics\PackageLog.cs" />
     <Compile Include="Diagnostics\PackagingDiagnostics.cs" />
     <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
+    <Compile Include="PackageRole.cs" />
     <Compile Include="PackagingRuntimeGraph.cs" />
     <Compile Include="Parsing\PackageManifestXmlReader.cs" />
     <Compile Include="ProfileFiles.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Services\ServicePackageManifest.cs" />
     <Compile Include="Services\IBottleAwareService.cs" />
     <Compile Include="SkipOverForProvenanceAttribute.cs" />
+    <Compile Include="SolutionDirectoryPackageLoader.cs" />
     <Compile Include="Zipping\IZipFile.cs" />
     <Compile Include="Zipping\IZipFileService.cs" />
     <Compile Include="Zipping\ZipFileService.cs" />

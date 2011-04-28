@@ -5,7 +5,6 @@ using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FileSystemExtensions = Bottles.FileSystemExtensions;
 
 namespace FubuMVC.Tests.Commands
 {
@@ -36,8 +35,8 @@ namespace FubuMVC.Tests.Commands
 
             MockFor<IFileSystem>().Stub(x => x.PackageManifestExists(theInput.PackageFolder)).Return(true);
             MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(packageManifestFileName)).Return(pakManifest);
-            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(true);
-            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)).Return(appManifest);
+            MockFor<IFileSystem>().Stub(x => x.FileExists(theInput.AppFolder, PackageManifest.FILE)).Return(true);
+            MockFor<IFileSystem>().Stub(x => x.LoadFromFile<PackageManifest>(theInput.AppFolder, PackageManifest.FILE)).Return(appManifest);
         }
 
         private string oneFolderUp(string path)

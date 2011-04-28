@@ -1,6 +1,4 @@
-﻿using Bottles;
-
-namespace FubuMVC.Core.Packaging
+﻿namespace Bottles
 {
     public interface IPackageManifestReader
     {

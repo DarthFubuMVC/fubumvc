@@ -21,6 +21,8 @@ namespace FubuMVC.Tests.Content
             get { return _name; }
         }
 
+        public string Role { get; set; }
+
         public void LoadAssemblies(IAssemblyRegistration loader)
         {
             LoadingAssemblies(loader);
