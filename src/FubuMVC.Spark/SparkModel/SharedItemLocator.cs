@@ -37,15 +37,15 @@ namespace FubuMVC.Spark.SparkModel
                 .FirstOrDefault();            
         }
 
-        private SparkItem locateInHostFromPackage(string sparkName, IEnumerable<SparkItem> itemPool)
+        private SparkItem locateInHostFromPackage(string sparkName, IEnumerable<SparkItem> items)
         {
-            var hostRoot = itemPool.ByOrigin(Constants.HostOrigin).FirstValue(x => x.RootPath);
+            var hostRoot = items.ByOrigin(Constants.HostOrigin).FirstValue(x => x.RootPath);
             if (hostRoot.IsEmpty()) return null;
 
             var sharedFolder = _sharedFolderNames.FirstValue(p => p);
             var startPath = Path.Combine(hostRoot, sharedFolder);
 
-            return locateSpark(sparkName, startPath, hostRoot, itemPool);
+            return locateSpark(sparkName, startPath, hostRoot, items);
         }
 
         private IEnumerable<string> reachableLocations(string path, string root)

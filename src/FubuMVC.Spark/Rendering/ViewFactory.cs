@@ -11,26 +11,29 @@ namespace FubuMVC.Spark.Rendering
 
     public class ViewFactory : IViewFactory
     {
-        private readonly IViewEngine _viewEngine;
+        private readonly IViewEntrySource _viewEntrySource;
         private readonly IEnumerable<ISparkViewModification> _modifications;
 
-        public ViewFactory(IViewEngine viewEngine, IEnumerable<ISparkViewModification> modifications)
+        public ViewFactory(IViewEntrySource viewEntrySource, IEnumerable<ISparkViewModification> modifications)
         {
             _modifications = modifications;
-            _viewEngine = viewEngine;
+            _viewEntrySource = viewEntrySource;
         }
 
         public ISparkView GetView()
         {
-            var view = _viewEngine.GetViewEntry().CreateInstance();
+            var entry = _viewEntrySource.GetViewEntry();
+            var view = entry.CreateInstance();
             applyModifications(view);
+            
             return view;
         }
 
         private void applyModifications(ISparkView view)
         {
             _modifications
-                .Where(m => m.Applies(view)).Each(m => m.Modify(view));
+                .Where(m => m.Applies(view))
+                .Each(m => m.Modify(view));
         }
     }
 }

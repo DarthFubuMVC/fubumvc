@@ -16,7 +16,14 @@ namespace FubuMVC.Spark
         protected override DoNext performInvoke()
         {
             _renderer.Render();
+            // Get Func<Stream>?
             return DoNext.Continue;
+        }
+
+        protected override void afterInsideBehavior()
+        {
+            // Flush stream?
+            // Or avoid this and perhaps a _renderer.Render(Callback when ready to flush?)
         }
     }
 }

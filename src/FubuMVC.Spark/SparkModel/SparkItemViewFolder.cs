@@ -52,7 +52,6 @@ namespace FubuMVC.Spark.SparkModel
         private string getFilePath(string path)
         {
             return _items.Where(x => x.ViewPath == path).First().FilePath;
-
         }
     }
 }

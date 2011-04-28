@@ -8,14 +8,15 @@ namespace FubuMVC.Spark.Rendering
         bool Applies();
         void Invoke();
     }
+
     public class NestedRenderStrategy : IRenderStrategy
     {
         private readonly NestedOutput _nestedOutput;
-        private readonly IViewRenderer _viewRenderer;
+        private readonly IRenderAction _renderAction;
 
-        public NestedRenderStrategy(NestedOutput nestedOutput, IViewRenderer viewRenderer)
+        public NestedRenderStrategy(NestedOutput nestedOutput, IRenderAction renderAction)
         {
-            _viewRenderer = viewRenderer;
+            _renderAction = renderAction;
             _nestedOutput = nestedOutput;
         }
 
@@ -26,17 +27,18 @@ namespace FubuMVC.Spark.Rendering
 
         public void Invoke()
         {
-            _viewRenderer.Render();
+            _renderAction.Render();
         }
     }
+
     public class AjaxRenderStrategy : IRenderStrategy
     {
-        private readonly IViewRenderer _viewRenderer;
+        private readonly IRenderAction _renderAction;
         private readonly IRequestData _requestData;
 
-        public AjaxRenderStrategy(IViewRenderer viewRenderer, IRequestData requestData)
+        public AjaxRenderStrategy(IRenderAction renderAction, IRequestData requestData)
         {
-            _viewRenderer = viewRenderer;
+            _renderAction = renderAction;
             _requestData = requestData;
         }
 
@@ -47,16 +49,17 @@ namespace FubuMVC.Spark.Rendering
 
         public void Invoke()
         {
-            _viewRenderer.Render();
+            _renderAction.Render();
         }
     }
+
     public class DefaultRenderStrategy : IRenderStrategy
     {
-        private readonly IViewRenderer _viewRenderer;
+        private readonly IRenderAction _renderAction;
 
-        public DefaultRenderStrategy(IViewRenderer viewRenderer)
+        public DefaultRenderStrategy(IRenderAction renderAction)
         {
-            _viewRenderer = viewRenderer;
+            _renderAction = renderAction;
         }
 
         public bool Applies()
@@ -66,7 +69,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void Invoke()
         {
-            _viewRenderer.Render();
+            _renderAction.Render();
         }
     }
 }

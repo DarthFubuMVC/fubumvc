@@ -27,9 +27,9 @@ namespace FubuMVC.Spark.Registration.Nodes
             var renderer = def.DependencyByType(typeof (ISparkViewRenderer), typeof (SparkViewRenderer));
             var strategies = renderer.EnumerableDependenciesOf<IRenderStrategy>();
 
-            configureStrategy<NestedRenderStrategy, NestedViewRenderer>(strategies, createDescriptor(false));
-            configureStrategy<AjaxRenderStrategy, DefaultViewRenderer>(strategies, createDescriptor(false));
-            configureStrategy<DefaultRenderStrategy, DefaultViewRenderer>(strategies, createDescriptor(true));
+            configureStrategy<NestedRenderStrategy, NestedRenderAction>(strategies, createDescriptor(false));
+            configureStrategy<AjaxRenderStrategy, DefaultRenderAction>(strategies, createDescriptor(false));
+            configureStrategy<DefaultRenderStrategy, DefaultRenderAction>(strategies, createDescriptor(true));
         }
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
@@ -44,22 +44,22 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         private static void configureStrategy<TStrategy, TViewRenderer>(ListDependency strategies, SparkViewDescriptor descriptor)
             where TStrategy : IRenderStrategy
-            where TViewRenderer : IViewRenderer
+            where TViewRenderer : IRenderAction
         {
             var factory = new ObjectDef { Type = typeof(ViewFactory) };
-            var engine = factory.DependencyByType(typeof(IViewEngine), typeof(ViewEngine));
+            var engine = factory.DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
             engine.DependencyByValue(_cache);
             engine.DependencyByValue(descriptor);
 
 
             strategies.AddType(typeof (TStrategy))
-                .DependencyByType(typeof (IViewRenderer), typeof (TViewRenderer))
+                .DependencyByType(typeof (IRenderAction), typeof (TViewRenderer))
                 .DependencyByType<IViewFactory>(factory);
         }
 
         public override string Description
         {
-            get { return string.Format("Spark View [{0}]", _item.RelativePath()); }
+            get { return string.Format("Spark [{0}]", _item.RelativePath()); }
         }
     }
 }

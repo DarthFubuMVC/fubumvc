@@ -56,11 +56,11 @@
     </Compile>
     <Compile Include="Registration\Nodes\SparkViewOutput.cs" />
     <Compile Include="Rendering\RenderStrategies.cs" />
-    <Compile Include="Rendering\ViewRenderers.cs" />
+    <Compile Include="Rendering\RenderActions.cs" />
     <Compile Include="Rendering\NestedOutput.cs" />
     <Compile Include="Rendering\SparkViewModifications.cs" />
     <Compile Include="Rendering\SparkViewRenderer.cs" />
-    <Compile Include="Rendering\ViewEngine.cs" />
+    <Compile Include="Rendering\ViewEntrySource.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Constants.cs" />

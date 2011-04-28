@@ -11,7 +11,6 @@ namespace FubuMVC.Spark.Rendering
     public class SparkViewRenderer : ISparkViewRenderer
     {
         private readonly IEnumerable<IRenderStrategy> _strategies;
-
         public SparkViewRenderer(IEnumerable<IRenderStrategy> strategies)
         {
             _strategies = strategies;
@@ -19,7 +18,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void Render()
         {
-            var strategy = _strategies.Where(x => x.Applies()).First();
+            var strategy = _strategies.First(x => x.Applies());
             strategy.Invoke();
         }
     }
