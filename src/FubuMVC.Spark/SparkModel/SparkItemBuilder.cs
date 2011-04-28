@@ -35,17 +35,22 @@ namespace FubuMVC.Spark.SparkModel
             _itemBinders.Add(binder);
             return this;
         }
+        public SparkItemBuilder Apply(ISparkItemPolicy policy)
+        {
+            _policies.Add(policy);
+            return this;
+        }
 
         public SparkItemBuilder Apply<T>() where T : ISparkItemPolicy, new()
         {
-            return Apply<T>(c => { });
+            return Apply(new T());
         }
 
         public SparkItemBuilder Apply<T>(Action<T> configure) where T : ISparkItemPolicy, new()
         {
             var policy = new T();
             configure(policy);
-            _policies.Add(policy);
+            Apply(policy);
             return this;
         }
 
@@ -57,9 +62,8 @@ namespace FubuMVC.Spark.SparkModel
                 var context = createContext(chunks);
 
                 binder.Bind(item, context);
-                
-                _policies.Where(p => p.Matches(item))
-                    .Each(p => p.Apply(item));
+
+                _policies.Where(p => p.Matches(item)).Each(p => p.Apply(item));
             }));
         }
 
