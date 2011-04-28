@@ -7,8 +7,8 @@ namespace FubuMVC.Spark
     public class RenderSparkBehavior : BasicBehavior
     {
         private readonly ISparkViewRenderer _renderer;
-        public RenderSparkBehavior(ISparkViewRenderer renderer) : 
-            base(PartialBehavior.Executes)
+        public RenderSparkBehavior(ISparkViewRenderer renderer)
+            : base(PartialBehavior.Executes)
         {
             _renderer = renderer;
         }
