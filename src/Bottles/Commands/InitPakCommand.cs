@@ -7,8 +7,8 @@ namespace Bottles.Commands
 {
     public class InitPakInput
     {
-        [Description("The physical folder of the new package")]
-        public string Folder { get; set; }
+        [Description("The physical path to the new package")]
+        public string Path { get; set; }
 
         [Description("The name of the new package")]
         public string Name { get; set; }
@@ -30,7 +30,7 @@ namespace Bottles.Commands
         public override bool Execute(InitPakInput input)
         {
             new AliasCommand().Execute(new AliasInput{
-                Folder = input.Folder,
+                Folder = input.Path,
                 Name = input.AliasFlag ?? input.Name.ToLower()
             });
 
@@ -41,7 +41,7 @@ namespace Bottles.Commands
 
         public void Execute(InitPakInput input, IFileSystem fileSystem)
         {
-            var assemblyName = Path.GetFileName(input.Folder);
+            var assemblyName = Path.GetFileName(input.Path);
 
             var manifest = new PackageManifest{
                 Name = input.Name
@@ -52,15 +52,15 @@ namespace Bottles.Commands
 
             manifest.AddAssembly(assemblyName);
 
-			if(!fileSystem.FileExists(FileSystem.Combine(input.Folder, PackageManifest.FILE)))
+			if(!fileSystem.FileExists(FileSystem.Combine(input.Path, PackageManifest.FILE)))
 			{
-				fileSystem.PersistToFile(manifest, input.Folder, PackageManifest.FILE);
+				fileSystem.PersistToFile(manifest, input.Path, PackageManifest.FILE);
 			}
             
 
             if (input.NotepadFlag)
             {
-                fileSystem.LaunchEditor(input.Folder, PackageManifest.FILE);
+                fileSystem.LaunchEditor(input.Path, PackageManifest.FILE);
             }
         }
     }

@@ -62,10 +62,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             writer.Flush(FlushOptions.Wipeout);
 
-            var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings(){
-                RecipesDirectory = "clonewars\\recipes",
-                EnvironmentFile = "clonewars\\" + ProfileFiles.EnvironmentSettingsFileName
-            }, new FileSystem());
+            var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
 
             theHosts = reader.Read();
         }

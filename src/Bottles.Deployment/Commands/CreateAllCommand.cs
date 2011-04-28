@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using Bottles.Commands;
 using Bottles.Creation;
@@ -23,7 +22,7 @@ namespace Bottles.Deployment.Commands
         [Description("Overrides the compilation target.  The default is debug")]
         public CompileTargetEnum TargetFlag { get; set; }
 
-        public string GetRoot()
+        public string DeploymentRoot()
         {
             string deploymentDirectory = DeploymentFlag ?? ProfileFiles.DeploymentFolder;
             return deploymentDirectory;
@@ -40,7 +39,7 @@ namespace Bottles.Deployment.Commands
 
         public bool Execute(IFileSystem system, CreateAllInput input)
         {
-            var settings = new DeploymentSettings(input.GetRoot());
+            var settings = new DeploymentSettings(input.DeploymentRoot());
             var bottlesDirectory = settings.BottlesDirectory;
 
             ConsoleWriter.Write("Creating all packages");

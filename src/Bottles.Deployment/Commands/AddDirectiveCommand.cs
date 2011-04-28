@@ -26,7 +26,7 @@ namespace Bottles.Deployment.Commands
         [Description("Open the directive file when done.")]
         public bool OpenFlag { get; set; }
 
-        public string DeploymentLocation()
+        public string DeploymentRoot()
         {
             return DeploymentFlag ?? @".".ToFullPath();
         }
@@ -39,7 +39,7 @@ namespace Bottles.Deployment.Commands
 
         public override bool Execute(AddDirectiveInput input)
         {
-            var settings = new DeploymentSettings(input.DeploymentLocation());
+            var settings = new DeploymentSettings(input.DeploymentRoot());
             
             var c = DeploymentBootstrapper.Bootstrap(settings);
             var directiveTypeRegistry = c.GetInstance<IDirectiveTypeRegistry>();

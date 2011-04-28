@@ -7,14 +7,14 @@ namespace Bottles.Commands
     public class InitializeInput
     {
         [Description("Physical folder (or valid alias) of the application")]
-        public string DirectoryFlag { get; set; }
+        public string DeploymentFlag { get; set; }
 
         [FlagAlias("f")]
         public bool ForceFlag { get; set; }
 
-        public string RootDirectory()
+        public string DeploymentRoot()
         {
-            return DirectoryFlag ?? ".".ToFullPath();
+            return DeploymentFlag ?? ".".ToFullPath();
         }
     }
 
@@ -26,14 +26,15 @@ namespace Bottles.Commands
 
         public override bool Execute(InitializeInput input)
         {
-            if (input.DirectoryFlag != null) input.DirectoryFlag = AliasCommand.AliasFolder(input.DirectoryFlag);
+            //REVIEW: does this need to be here? should this be here?
+            if (input.DeploymentFlag != null) input.DeploymentFlag = AliasCommand.AliasFolder(input.DeploymentFlag);
 
             return Initialize(input, new FileSystem(), new SimpleLogger());
         }
 
         public bool Initialize(InitializeInput input, IFileSystem fileSystem, ISimpleLogger logger)
         {
-            var deploymentDirectory = FileSystem.Combine(input.RootDirectory(), ProfileFiles.DeploymentFolder);
+            var deploymentDirectory = FileSystem.Combine(input.DeploymentRoot(), ProfileFiles.DeploymentFolder);
             logger.Log("Trying to initialize Bottles deployment folders at {0}", deploymentDirectory);
 
             if (fileSystem.DirectoryExists(deploymentDirectory))

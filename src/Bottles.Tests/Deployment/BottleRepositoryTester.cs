@@ -1,4 +1,5 @@
 using Bottles.Deployment;
+using Bottles.Deployment.Writing;
 using Bottles.Exploding;
 using FubuCore;
 using FubuTestingSupport;
@@ -15,7 +16,8 @@ namespace Bottles.Tests.Deployment
 
         protected override void beforeEach()
         {
-            theSettings = new DeploymentSettings(".");
+            new DeploymentWriter(".\\brt").Flush(FlushOptions.Wipeout);
+            theSettings = new DeploymentSettings(".\\brt");
             repo = new BottleRepository(MockFor<IFileSystem>(), MockFor<IPackageExploder>(), theSettings);
         }
 

@@ -14,7 +14,7 @@ namespace Bottles.Deployment.Commands
         [FlagAlias("f")]
         public bool ForceFlag { get; set; }
 
-        public string RootDirectory()
+        public string DeploymentRoot()
         {
             return DeploymentFlag ?? ".".ToFullPath();
         }
@@ -26,7 +26,7 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(DeployInput input)
         {
-            var settings = new DeploymentSettings(input.RootDirectory())
+            var settings = new DeploymentSettings(input.DeploymentRoot())
             {
                 UserForced = input.ForceFlag
             };

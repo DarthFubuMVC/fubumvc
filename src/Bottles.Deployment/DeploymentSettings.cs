@@ -16,6 +16,8 @@ namespace Bottles.Deployment
             EnvironmentFile = FileSystem.Combine(path, ProfileFiles.EnvironmentSettingsFileName);
             TargetDirectory = FileSystem.Combine(path, ProfileFiles.TargetDirectory);
             BottleManifestFile = FileSystem.Combine(path, ProfileFiles.BottlesManifestFile);
+
+            DeploymentDirectory = path;
         }
 
         public DeploymentSettings() : this(".".ToFullPath())

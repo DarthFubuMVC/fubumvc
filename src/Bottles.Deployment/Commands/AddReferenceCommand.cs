@@ -23,7 +23,7 @@ namespace Bottles.Deployment.Commands
         [Description("Path to the deployment folder")]
         public string DeploymentFlag { get; set; }
 
-        public string DeployRoot()
+        public string DeploymentRoot()
         {
             return DeploymentFlag ?? ".".ToFullPath();
         }
@@ -35,7 +35,7 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddReferenceCommandInput input)
         {
-            var sett = new DeploymentSettings(input.DeployRoot());
+            var sett = new DeploymentSettings(input.DeploymentRoot());
 
             var settings = new EnvironmentSettings();
 

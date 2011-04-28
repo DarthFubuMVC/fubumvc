@@ -1,6 +1,4 @@
 using Bottles.Commands;
-using Bottles.Deployment;
-using Bottles.Deployment.Commands;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -126,7 +124,7 @@ namespace Bottles.Tests.Deployment.Commands
         [Test]
         public void command_should_not_have_deleted_the_deployment_directory()
         {
-            MockFor<IFileSystem>().AssertWasNotCalled(x => x.DeleteDirectory(theInput.RootDirectory(), ProfileFiles.DeploymentFolder));
+            MockFor<IFileSystem>().AssertWasNotCalled(x => x.DeleteDirectory(theInput.DeploymentRoot(), ProfileFiles.DeploymentFolder));
         }
 
         [Test]
@@ -158,10 +156,10 @@ namespace Bottles.Tests.Deployment.Commands
         protected sealed override void beforeEach()
         {
             theInput = new InitializeInput(){
-                DirectoryFlag = "Application1"
+                DeploymentFlag = "Application1"
             };
 
-            TheDeploymentDirectory = FileSystem.Combine(theInput.RootDirectory(), ProfileFiles.DeploymentFolder);
+            TheDeploymentDirectory = FileSystem.Combine(theInput.DeploymentRoot(), ProfileFiles.DeploymentFolder);
 
             theContextIs();
 
@@ -174,13 +172,13 @@ namespace Bottles.Tests.Deployment.Commands
 
         protected void theDeploymentDirectoryExists()
         {
-            MockFor<IFileSystem>().Stub(x => x.DirectoryExists(theInput.RootDirectory(), ProfileFiles.DeploymentFolder))
+            MockFor<IFileSystem>().Stub(x => x.DirectoryExists(theInput.DeploymentRoot(), ProfileFiles.DeploymentFolder))
                 .Return(true);
         }
 
         protected void theDeploymentDirectoryDoesNotExist()
         {
-            MockFor<IFileSystem>().Stub(x => x.DirectoryExists(theInput.RootDirectory(), ProfileFiles.DeploymentFolder))
+            MockFor<IFileSystem>().Stub(x => x.DirectoryExists(theInput.DeploymentRoot(), ProfileFiles.DeploymentFolder))
                 .Return(false);
         }
     }

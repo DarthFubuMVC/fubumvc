@@ -2,8 +2,8 @@ using BottleDeployers2;
 using Bottles.Deployment;
 using Bottles.Deployment.Bootstrapping;
 using Bottles.Deployment.Configuration;
-using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Deployment.Writing;
 using NUnit.Framework;
 using StructureMap;
 using FubuTestingSupport;
@@ -19,7 +19,8 @@ namespace Bottles.Tests.Deployment.Bootstrapping
         [SetUp]
         public void SetUp()
         {
-            theContainer = DeploymentBootstrapper.Bootstrap(new DeploymentSettings());
+            new DeploymentWriter(".\\dbit").Flush(FlushOptions.Wipeout);
+            theContainer = DeploymentBootstrapper.Bootstrap(new DeploymentSettings(".\\dbit"));
         }
 
         [Test]
