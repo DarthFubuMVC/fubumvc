@@ -10,6 +10,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void SetWriter(Func<TextWriter> writer)
         {
+            _isActive = true;
             _writerSource = writer;
         }
 
@@ -18,7 +19,6 @@ namespace FubuMVC.Spark.Rendering
             get
             {
                 var writer = _writerSource();
-                _isActive = true;
                 return writer;
             }
         }
