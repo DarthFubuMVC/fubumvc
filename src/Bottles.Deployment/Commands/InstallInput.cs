@@ -26,7 +26,7 @@ namespace Bottles.Deployment.Commands
 
         public string ManifestFileName
         {
-            get { return Path.GetFullPath(FileSystem.Combine(AppFolder, PackageManifest.APPLICATION_MANIFEST_FILE)); }
+            get { return Path.GetFullPath(FileSystem.Combine(AppFolder, PackageManifest.FILE)); }
         }
 
         public string Title()

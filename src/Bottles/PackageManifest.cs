@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -26,9 +25,6 @@ namespace Bottles
         public string ManifestFileName { get; set; }
 
         private readonly IList<string> _assemblies = new List<string>();
-
-        [Obsolete]
-        public static readonly string APPLICATION_MANIFEST_FILE = ".fubu-manifest";
 
         private readonly IList<string> _folders = new List<string>();
 
