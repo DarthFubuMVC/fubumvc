@@ -1,4 +1,5 @@
 using Bottles.Configuration;
+using Bottles.Deployment;
 using Bottles.Deployment.Commands;
 using Bottles.Deployment.Writing;
 using Bottles.Tests.Deployment.Writing;
@@ -13,15 +14,16 @@ namespace Bottles.Tests.Deployment.Commands
     public class AddReferenceCommandTester : InteractionContext<AddReferenceCommand>
     {
         private string hostName = "web";
-        private string profile = @".\refCommand";
+        private string deployment = @".\refCommand";
         private string bottleToAdd = "bob";
         private string recipe = "recipe2";
 
         private void setupHostManifest()
         {
-            var profileWriter = new DeploymentWriter(profile);
-            profileWriter.RecipeFor(recipe).HostFor(hostName).AddDirective(new SimpleSettings());
-            profileWriter.Flush(FlushOptions.Wipeout);
+            var deploymentWriter = new DeploymentWriter(deployment);
+            deploymentWriter.RecipeFor(recipe).HostFor(hostName).AddDirective(new SimpleSettings());
+
+            deploymentWriter.Flush(FlushOptions.Wipeout);
         }
 
         [Test]
@@ -35,12 +37,12 @@ namespace Bottles.Tests.Deployment.Commands
                             Host = hostName,
                             Bottle = bottleToAdd,
                             RelationshipFlag = null,
-                            DeploymentFlag = profile
+                            DeploymentFlag = deployment
                         };
 
             MockFor<IProfileFinder>().Stub(pf => pf.FindDeploymentFolder(@".\refCommand")).Return(@".\refCommand");
 
-            ClassUnderTest.Exe(input, new EnvironmentSettings(), MockFor<IFileSystem>(), MockFor<IProfileFinder>());
+            ClassUnderTest.Exe(input, new EnvironmentSettings(), MockFor<IFileSystem>(), new DeploymentSettings(@".\refCommand"));
             
             MockFor<IFileSystem>().AssertWasCalled(fs=>fs.AppendStringToFile(@".\refCommand\recipes\recipe2\web.host","bottle:bob "));
         }

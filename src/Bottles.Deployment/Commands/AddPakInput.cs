@@ -9,12 +9,12 @@ namespace Bottles.Deployment.Commands
         [Description("Name of the bottle")]
         public string Bottle { get; set; }
 
-        [Description("Where the /deployment folder is")]
-        public string ProfileFlag { get; set; }
+        [Description("Where the ~/deployment folder is")]
+        public string DeploymentFlag { get; set; }
 
-        public string ProfileLocation()
+        public string DeploymentRoot()
         {
-            return ProfileFlag ?? ".".ToFullPath();
+            return DeploymentFlag ?? ".".ToFullPath();
         }
     }
 
@@ -27,11 +27,9 @@ namespace Bottles.Deployment.Commands
         {
             var fs = new FileSystem();
 
-            var finder = new DeploymentFolderFinder(fs);
+            var deploy = new DeploymentSettings(input.DeploymentRoot());
 
-            var deploymentDirectory = finder.FindDeploymentFolder(input.ProfileLocation());
-
-            var bottleManifestFile = FileSystem.Combine(deploymentDirectory, ProfileFiles.BottlesManifestFile);
+            var bottleManifestFile = deploy.BottleManifestFile;
 
             fs.AppendStringToFile(bottleManifestFile, "{0}\n".ToFormat(input.Bottle));
 

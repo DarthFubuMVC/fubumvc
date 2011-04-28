@@ -9,7 +9,5 @@ namespace Bottles.Commands
         
         [Description("Name of the csproj file.  If set, this command attempts to add the zip files as embedded resources")]
         public string ProjFileFlag { get; set; }
-
-
     }
 }

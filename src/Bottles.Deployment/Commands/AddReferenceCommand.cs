@@ -35,23 +35,20 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddReferenceCommandInput input)
         {
+            var sett = new DeploymentSettings(input.DeployRoot());
+
             var settings = new EnvironmentSettings();
+
             IFileSystem fileSystem = new FileSystem();
 
-            Exe(input, settings, fileSystem, new DeploymentFolderFinder(fileSystem));
+            Exe(input, settings, fileSystem, sett);
 
             return true;
         }
 
-        public void Exe(AddReferenceCommandInput input, EnvironmentSettings settings, IFileSystem fileSystem, IProfileFinder deployFinder)
+        public void Exe(AddReferenceCommandInput input, EnvironmentSettings settings, IFileSystem fileSystem, DeploymentSettings sett)
         {
-            var path = deployFinder.FindDeploymentFolder(input.DeployRoot());
-
-            var recipeDirectory = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, input.Recipe);
-
-
-            //YUCK -> host + ".host"
-            var hostPath = FileSystem.Combine(recipeDirectory, input.Host + ".host");
+            var hostPath = sett.GetHost(input.Recipe, input.Host);
 
             var hostManifest = HostReader.ReadFrom(hostPath, settings);
 

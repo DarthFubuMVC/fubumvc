@@ -15,7 +15,6 @@ namespace Bottles.Commands
         {
             ConsoleWriter.Write("  Creating package at " + input.PackageFolder);
 
-            //TODO: could have been off of IProfile
             input.PackageFolder = AliasCommand.AliasFolder(input.PackageFolder);
 
             Execute(input, new FileSystem());
@@ -45,13 +44,13 @@ namespace Bottles.Commands
 
         public virtual void WriteZipFileAlreadyExists(string zipFileName)
         {
-            Console.WriteLine("Package Zip file already exists at {0}.  Use the -force flag to overwrite the existing flag", zipFileName);
+            ConsoleWriter.Write("Package Zip file already exists at '{0}'.  Use the -force flag to overwrite the existing flag", zipFileName);
         }
 
         public virtual void WritePackageManifestDoesNotExist(string packageFolder)
         {
-            Console.WriteLine(
-                "The requested package folder at {0} does not have a package manifest.  Run 'fubu init-pak \"{0}\"' first.",
+            ConsoleWriter.Write(
+                "The requested package folder at '{0}' does not have a package manifest.  Run 'fubu init-pak \"{0}\"' first.",
                 packageFolder);
         }
 

@@ -8,15 +8,15 @@ namespace Bottles.Deployment.Commands
 {
     public class DeployInput
     {
-        [Description("Physical path to where the deployment is")]
-        public string DirectoryFlag { get; set; }
+        [Description("Path to where the deployment folder is ~/deployment")]
+        public string DeploymentFlag { get; set; }
 
         [FlagAlias("f")]
         public bool ForceFlag { get; set; }
 
         public string RootDirectory()
         {
-            return DirectoryFlag ?? ".".ToFullPath();
+            return DeploymentFlag ?? ".".ToFullPath();
         }
 
     }
@@ -26,10 +26,7 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(DeployInput input)
         {
-            var df = new DeploymentFolderFinder(new FileSystem());
-            var deploy = df.FindDeploymentFolder(input.RootDirectory());
-
-            var settings = new DeploymentSettings(deploy)
+            var settings = new DeploymentSettings(input.RootDirectory())
             {
                 UserForced = input.ForceFlag
             };

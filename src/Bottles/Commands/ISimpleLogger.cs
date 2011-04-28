@@ -1,4 +1,4 @@
-﻿using System;
+﻿using FubuCore.CommandLine;
 
 namespace Bottles.Commands
 {
@@ -11,7 +11,7 @@ namespace Bottles.Commands
     {
         public void Log(string text, params object[] parameters)
         {
-            Console.WriteLine(text, parameters);
+            ConsoleWriter.Write(text, parameters);
         }
     }
 }

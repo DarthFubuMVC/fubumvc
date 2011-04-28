@@ -8,11 +8,11 @@ namespace Bottles.Deployment.Commands
     public class AddRecipeInput
     {
         public string Name { get; set; }
-        public string ProfileFlag { get; set; }
+        public string DeploymentFlag { get; set; }
 
-        public string Profile()
+        public string DeploymentRoot()
         {
-            return ProfileFlag ?? ".".ToFullPath();
+            return DeploymentFlag ?? ".".ToFullPath();
         }
     }
 
@@ -21,12 +21,12 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddRecipeInput input)
         {
-            var path = new DeploymentFolderFinder(new FileSystem()).FindDeploymentFolder(input.Profile());
+            var settings = new DeploymentSettings(input.DeploymentRoot());
 
             var recipe = new RecipeDefinition(input.Name);
             
             var rw = new RecipeWriter(new TypeDescriptorCache());
-            rw.WriteTo(recipe, path);
+            rw.WriteTo(recipe, settings.DeploymentDirectory);
 
 
             return true;

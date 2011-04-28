@@ -35,6 +35,7 @@ namespace Bottles.Commands
             });
 
             Execute(input, new FileSystem());
+
             return true;
         }
 

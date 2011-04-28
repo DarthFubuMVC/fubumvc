@@ -14,12 +14,14 @@ namespace Bottles.Deployment.Writing
             _types = types;
         }
 
+        //REVIEW: consider making this take a deployment settings
         public void WriteTo(RecipeDefinition recipe, string profileDirectory)
         {
             var df = new DeploymentFolderFinder(_fileSystem);
             var path = df.FindDeploymentFolder(profileDirectory);
-
             var recipepath = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, recipe.Name);
+
+
             _fileSystem.CreateDirectory(recipepath);
 
             var controlFilePath = FileSystem.Combine(recipepath, ProfileFiles.RecipesControlFile);
