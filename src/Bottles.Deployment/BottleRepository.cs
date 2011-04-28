@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using Bottles.Exploding;
 using FubuCore;
+using System.Collections.Generic;
 
 namespace Bottles.Deployment
 {
@@ -33,7 +35,32 @@ namespace Bottles.Deployment
 
         public void ExplodeFiles(BottleExplosionRequest request)
         {
-            throw new NotImplementedException();
+            var bottleFile = pathForBottle(request.BottleName);
+            
+            _fileSystem.CreateDirectory(_settings.StagingDirectory);
+
+            var tempDirectory = FileSystem.Combine(_settings.StagingDirectory, request.BottleName);
+
+            request.Log.Trace("Exploding bottle {0} to {1}");
+            _exploder.Explode(bottleFile, tempDirectory, ExplodeOptions.DeleteDestination);
+
+            var sourceDirectory = FileSystem.Combine(tempDirectory, request.BottleDirectory);
+
+            _fileSystem.CreateDirectory(request.DestinationDirectory);
+
+            _fileSystem.FindFiles(sourceDirectory, new FileSet(){
+                DeepSearch = true,
+                Include = "*.*"
+            }).Each(file =>
+            {
+                var destinationFile = FileSystem.Combine(request.DestinationDirectory, file.PathRelativeTo(sourceDirectory));
+                request.Log.Trace("Copying {0} to {1}", file, destinationFile);
+                
+                _fileSystem.Copy(file, destinationFile);
+            });
+
+            
+
         }
 
         string pathForBottle(string bottleName)

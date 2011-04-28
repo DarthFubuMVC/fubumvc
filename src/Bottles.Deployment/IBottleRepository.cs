@@ -1,11 +1,24 @@
-﻿namespace Bottles.Deployment
+﻿using Bottles.Diagnostics;
+
+namespace Bottles.Deployment
 {
 
     public class BottleExplosionRequest
     {
+        public BottleExplosionRequest(IPackageLog log)
+        {
+            Log = log;
+        }
+
         public string BottleName { get; set; }
+
+        /// <summary>
+        /// This is the directory within the bottle
+        /// </summary>
         public string BottleDirectory { get; set; }
         public string DestinationDirectory { get; set;}
+
+        public IPackageLog Log { get; private set; }
 
         public bool Equals(BottleExplosionRequest other)
         {

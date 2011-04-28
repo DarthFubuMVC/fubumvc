@@ -31,6 +31,14 @@ namespace Bottles.Deployment
         public string EnvironmentFile { get; set;}
         public string BottleManifestFile { get; set; }
 
+        public string StagingDirectory
+        {
+            get
+            {
+                return FileSystem.Combine(TargetDirectory, ProfileFiles.StagingDirectory);
+            }
+        }
+
         /// <summary>
         /// user has typed '-f' at the command line
         /// </summary>

@@ -122,6 +122,7 @@
     <Compile Include="Deployment\Runtime\DataMother.cs" />
     <Compile Include="Deployment\Runtime\DirectiveBuilderTester.cs" />
     <Compile Include="Deployment\Runtime\DirectiveCoordinatorTester.cs" />
+    <Compile Include="Services\BottleLoaderTester.cs" />
     <Compile Include="StubPackage.cs" />
     <Compile Include="ZipFileServiceTester.cs" />
     <Compile Include="Zipping\ZipFileServiceTester.cs" />
@@ -178,6 +179,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Configuration\Two.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployment\bottles\Fake.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -367,7 +367,7 @@ namespace FubuCore
                 }
             }
         }
-
+        
         public string GetFullPath(string path)
         {
             return Path.GetFullPath(path);
@@ -386,5 +386,6 @@ namespace FubuCore
         {
             return Path.GetDirectoryName(path);
         }
+
     }
 }

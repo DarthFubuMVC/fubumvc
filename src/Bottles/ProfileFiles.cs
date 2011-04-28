@@ -19,5 +19,7 @@ namespace Bottles
         public static readonly string TargetDirectory = "target";
 
         public static readonly string ConfigDirectory = "config";
+
+        public static readonly string StagingDirectory = "staging";
     }
 }

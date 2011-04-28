@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Bottles.Deployment;
 using Bottles.Exploding;
 using Bottles.Services;
 using FubuCore;
@@ -23,8 +24,8 @@ namespace Bottles.Tests.Services
             foreach (var bottle in bottles)
             {
                 MockFor<IFileSystem>().Stub(x => x.GetFullPath(bottle)).Return(bottle);
-                MockFor<IFileSystem>().Stub(x => x.LoadFromFile<HostManifest>(bottle, HostManifest.CONTROL, HostManifest.FILE))
-                    .Return(new HostManifest() { Name = bottle });    
+                MockFor<IFileSystem>().Stub(x => x.LoadFromFile<ServiceHostManifest>(bottle, ServiceHostManifest.CONTROL, ServiceHostManifest.FILE))
+                    .Return(new ServiceHostManifest() { Name = bottle });    
             }
         }
 
