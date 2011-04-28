@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using Bottles.Diagnostics;
 using FubuCore;
+using System.Collections.Generic;
 
 namespace Bottles.Deployment.Configuration
 {
@@ -38,11 +40,23 @@ namespace Bottles.Deployment.Configuration
 
             var configDirectory = configDirective.ConfigDirectory.CombineToPath(_deploymentSettings.TargetDirectory);
             _fileSystem.Copy(_deploymentSettings.EnvironmentFile, configDirectory);
-                
+
+            var destinationDirectory = FileSystem.Combine(_deploymentSettings.TargetDirectory,
+                                                          configDirective.ConfigDirectory);
+            
+            // TODO -- diagnostics?
+            manifest.BottleReferences.Each(x =>
+            {
+                var request = new BottleExplosionRequest(new PackageLog()){
+                    BottleDirectory = BottleFiles.ConfigFolder,
+                    BottleName = x.Name,
+                    DestinationDirectory = destinationDirectory
+                };
+
+                _repository.ExplodeFiles(request);
+            });
             
 
-
-            throw new NotImplementedException();
         }
     }
 }
