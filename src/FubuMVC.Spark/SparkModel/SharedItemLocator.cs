@@ -21,7 +21,7 @@ namespace FubuMVC.Spark.SparkModel
         public SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> items)
         {
             var spark = locateSpark(sparkName, fromItem.FilePath, fromItem.RootPath, items);
-            if (spark == null && fromItem.Origin != Constants.HostOrigin)
+            if (spark == null && fromItem.Origin != FubuSparkConstants.HostOrigin)
             {
                 spark = locateInHostFromPackage(sparkName, items);
             }
@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private SparkItem locateInHostFromPackage(string sparkName, IEnumerable<SparkItem> items)
         {
-            var hostRoot = items.ByOrigin(Constants.HostOrigin).FirstValue(x => x.RootPath);
+            var hostRoot = items.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
             if (hostRoot.IsEmpty()) return null;
 
             var sharedFolder = _sharedFolderNames.FirstValue(p => p);

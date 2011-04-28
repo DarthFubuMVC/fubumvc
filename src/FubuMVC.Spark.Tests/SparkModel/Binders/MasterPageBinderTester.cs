@@ -6,6 +6,7 @@ using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
@@ -15,7 +16,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         private BindContext _context;
         private IEnumerable<SparkItem> _sparkItems;
 
-        const string Host = Constants.HostOrigin;
+        const string Host = FubuSparkConstants.HostOrigin;
         const string Pak1 = "pak1";
         const string Pak2 = "pak2";
         const string Pak3 = "pak3";
@@ -35,7 +36,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 
         protected override void beforeEach()
         {           
-            Services.Inject<ISharedItemLocator>(new SharedItemLocator(new[] {Constants.SharedSpark}));
+            Services.Inject<ISharedItemLocator>(new SharedItemLocator(new[] {Constants.Shared}));
             _context = new BindContext {AvailableItems = _sparkItems = createItems(), Master = "application"};
         }
 

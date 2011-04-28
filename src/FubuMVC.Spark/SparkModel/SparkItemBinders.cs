@@ -5,6 +5,7 @@ using System.Reflection;
 using Bottles;
 using FubuCore;
 using FubuMVC.Core.Registration;
+using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -27,7 +28,7 @@ namespace FubuMVC.Spark.SparkModel
         private const string FallbackMaster = "Application";
         public string MasterName { get; set; }
 
-        public MasterPageBinder() : this(new SharedItemLocator(new[] {Constants.SharedSpark})){}
+        public MasterPageBinder() : this(new SharedItemLocator(new[] {Constants.Shared})){}
         public MasterPageBinder(ISharedItemLocator sharedItemLocator)
         {
             _sharedItemLocator = sharedItemLocator;

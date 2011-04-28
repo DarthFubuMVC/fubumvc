@@ -1,10 +1,4 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using FubuMVC.Core.Registration;
-using FubuMVC.Spark.SparkModel;
-using FubuTestingSupport;
-using NUnit.Framework;
-
+﻿
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
     // TODO : NEXT UP FIXING THIS.

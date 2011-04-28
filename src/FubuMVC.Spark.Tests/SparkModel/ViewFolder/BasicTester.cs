@@ -5,6 +5,7 @@ using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 {
@@ -32,9 +33,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _pak1 = Path.Combine(_hostRoot, "Pak1");
             _pak2 = Path.Combine(_hostRoot, "Pak2");
 
-            _hostHomeView = new SparkItem(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, Constants.HostOrigin);
-            _hostApplicationView = new SparkItem(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, Constants.HostOrigin);
-            _hostFooterPartialView = new SparkItem(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, Constants.HostOrigin);
+            _hostHomeView = new SparkItem(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
+            _hostApplicationView = new SparkItem(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
+            _hostFooterPartialView = new SparkItem(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
 
             _pak1HomeView = new SparkItem(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "Pak1");
             _pak1NamePartialView = new SparkItem(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "Pak1");
@@ -97,7 +98,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             var foundViews = new List<string>();
 
             _hostHomeView.ViewPath.getPathParts()
-                .Union(new[] { Constants.SharedSpark })
+                .Union(new[] { Constants.Shared })
                 .Each(path => foundViews.AddRange(_viewFolder.ListViews(path)));
                 
             foundViews.ShouldHaveTheSameElementsAs(

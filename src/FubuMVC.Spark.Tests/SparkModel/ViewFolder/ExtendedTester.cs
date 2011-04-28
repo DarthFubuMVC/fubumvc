@@ -1,15 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Bottles;
-using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Collections.Generic;
 using Spark;
-using Constants = FubuMVC.Spark.SparkModel.Constants;
 
 namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 {
@@ -56,7 +53,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             _pak1Items = new List<SparkItem>(allItems.ByOrigin(Package1));
             _pak2Items = new List<SparkItem>(allItems.ByOrigin(Package2));
-            _appItems = new List<SparkItem>(allItems.ByOrigin(Constants.HostOrigin));
+            _appItems = new List<SparkItem>(allItems.ByOrigin(FubuSparkConstants.HostOrigin));
         }
 
         [Test]

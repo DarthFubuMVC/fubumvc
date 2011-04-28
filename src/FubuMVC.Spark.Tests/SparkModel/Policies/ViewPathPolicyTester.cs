@@ -11,7 +11,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()
         {
-            var item = new SparkItem("", "", Constants.HostOrigin);
+            var item = new SparkItem("", "", FubuSparkConstants.HostOrigin);
             ClassUnderTest.Apply(item);
             item.ViewPath.ShouldBeEmpty();
         }

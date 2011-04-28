@@ -52,7 +52,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private static string getPrefix(string origin)
         {
-            return origin == Constants.HostOrigin ? string.Empty : "_{0}".ToFormat(origin);
+            return origin == FubuSparkConstants.HostOrigin ? string.Empty : "_{0}".ToFormat(origin);
         }
     }
 }

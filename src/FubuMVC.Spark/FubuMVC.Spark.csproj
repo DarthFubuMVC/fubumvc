@@ -64,7 +64,7 @@
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
-    <Compile Include="SparkModel\Constants.cs" />
+    <Compile Include="SparkModel\FubuSparkConstants.cs" />
     <Compile Include="SparkModel\SparkItemPolicies.cs" />
     <Compile Include="SparkModel\SharedItemLocator.cs" />
     <Compile Include="SparkModel\SparkItemExtensions.cs" />

@@ -43,7 +43,7 @@ namespace FubuMVC.Spark.SparkModel
             var items = new List<SparkItem>();
             var root = new SparkRoot
             {
-                Origin = Constants.HostOrigin, 
+                Origin = FubuSparkConstants.HostOrigin, 
                 Path = HostPath
             };
 
