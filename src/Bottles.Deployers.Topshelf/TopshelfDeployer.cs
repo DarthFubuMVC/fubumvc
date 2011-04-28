@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
 using FubuCore;
@@ -29,19 +31,33 @@ namespace Bottles.Deployers.Topshelf
             var location = FileSystem.Combine(ts.InstallLocation, "svc");
             _bottles.ExplodeTo(ts.HostBottle, location);
 
-            var bottleDest = FileSystem.Combine(ts.InstallLocation, "packages");
-            ts.Bottles.Each(b =>
-                {
-                    _bottles.CopyTo(b, bottleDest);
-                });
-            
+            var args = buildInstallArgs(ts);
             var psi = new ProcessStartInfo("Bottles.Host.exe")
             {
-                Arguments = "install",
+                Arguments = args,
                 WorkingDirectory = ts.InstallLocation
             };
 
             _runner.Run(psi);
         }
+
+        private static string buildInstallArgs(TopshelfService directive)
+        {
+            var sb = new StringBuilder();
+            sb.Append("install");
+
+            directive.DisplayName.IsNotEmpty(s => sb.AppendFormat(" -displayname:{0}", s));
+            directive.Description.IsNotEmpty(s => sb.AppendFormat(" -description:{0}", s));
+            directive.ServiceName.IsNotEmpty(s => sb.AppendFormat(" -servicename:{0}", s));
+            
+            
+            directive.Username.IsNotEmpty(s => sb.AppendFormat(" -username:{0}", s));
+            directive.Password.IsNotEmpty(s => sb.AppendFormat(" -password:{0}", s));
+
+            
+            return sb.ToString();
+        }
+        
     }
+    
 }

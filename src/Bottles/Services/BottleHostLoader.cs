@@ -10,9 +10,10 @@ namespace Bottles.Services
     /// Packages look like
     /// ~/
     ///     data/
+    ///     bin/
     ///         [assemblies]
-    ///     control/
-    ///         .manifest
+    ///     config/
+    ///         [config files]
     /// </summary>
     public class BottleHostLoader : 
         IPackageLoader
@@ -38,15 +39,15 @@ namespace Bottles.Services
         {
             var folder = _fileSystem.GetFullPath(directory);
 
-            var manifest = _fileSystem.LoadFromFile<ServiceHostManifest>(folder, ServiceHostManifest.CONTROL, ServiceHostManifest.FILE);
+            var manifest = _fileSystem.LoadFromFile<ServicePackageManifest>(folder, ServicePackageManifest.CONTROL, ServicePackageManifest.FILE);
 
             var package = new PackageInfo(manifest.Name)
             {
                 Description = "{0} ({1})".ToFormat(manifest.Name, folder)
             };
 
-            package.RegisterFolder("data", FileSystem.Combine(folder, ServiceHostManifest.DATA));
-            package.RegisterFolder("control", FileSystem.Combine(folder, ServiceHostManifest.CONTROL));
+            package.RegisterFolder("data", FileSystem.Combine(folder, ServicePackageManifest.DATA));
+            package.RegisterFolder("control", FileSystem.Combine(folder, ServicePackageManifest.CONTROL));
             
             return package;
         }

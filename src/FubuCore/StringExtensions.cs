@@ -67,6 +67,12 @@ namespace FubuCore
             return !string.IsNullOrEmpty(stringValue);
         }
 
+        public static void IsNotEmpty(this string stringValue, Action<string> action)
+        {
+            if (stringValue.IsNotEmpty())
+                action(stringValue);
+        }
+
         public static bool ToBool(this string stringValue)
         {
             if (string.IsNullOrEmpty(stringValue)) return false;

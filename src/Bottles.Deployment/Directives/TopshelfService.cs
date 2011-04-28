@@ -4,7 +4,6 @@
     {
         public string InstallLocation { get; set; }
         public string HostBottle { get; set; }
-        public string[] Bottles { get; set; }
 
 
         //optional
