@@ -171,12 +171,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         [Test]
         public void views_from_packages_can_use_masters_from_the_same_package()
         {
-            var nl = Environment.NewLine;
             var cuatroView = _pak1Items.FirstByName("SerieX");
             var master = _pak1Items.FirstByName("Maker");
 
-            getViewSource(cuatroView).ShouldEqual("<use master=\"Maker\"/>{0}SerieX".ToFormat(nl));           
-            renderSparkItem(cuatroView, master).ShouldEqual("Lenovo{0}SerieX".ToFormat(nl));
+            getViewSource(cuatroView).ShouldEqual("<use master=\"Maker\"/> SerieX");           
+            renderSparkItem(cuatroView, master).ShouldEqual("Lenovo SerieX");
         }
 
         private string getViewSource(SparkItem item)
