@@ -62,6 +62,7 @@
     <Compile Include="Rendering\SparkViewRenderer.cs" />
     <Compile Include="Rendering\ViewEntrySource.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />
+    <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Constants.cs" />
     <Compile Include="SparkModel\SparkItemPolicies.cs" />

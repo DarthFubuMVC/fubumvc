@@ -1,15 +1,16 @@
 using System;
+using System.IO;
+using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using Spark;
-using FubuCore.Util;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public abstract class FubuSparkView : SparkViewBase, IFubuPage
+    public abstract class FubuSparkView : SparkViewBase, IFubuPage, IFubuSparkView
     {
         private readonly Cache<Type, object> _services = new Cache<Type, object>();
 
@@ -62,4 +63,11 @@ namespace FubuMVC.Spark.Rendering
 
         public TViewModel Model { get; private set; }
     }
+
+
+    public interface IFubuSparkView : ISparkView
+    {
+        TextWriter Output { get; set; }
+    }
+
 }

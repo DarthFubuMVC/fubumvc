@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuCore;
 using System.Linq;
+using FubuCore;
 namespace FubuMVC.Spark.SparkModel.Scanning
 {
     public interface IFileScanner
