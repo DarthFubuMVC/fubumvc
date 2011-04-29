@@ -93,6 +93,9 @@
     <Compile Include="Parsing\SettingsParser.cs" />
     <Compile Include="ProcessRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\DirectiveRunner.cs" />
+    <Compile Include="Runtime\DirectiveRunnerFactory.cs" />
+    <Compile Include="Runtime\IDirectiveRunnerFactory.cs" />
     <Compile Include="Runtime\RuntimeClasses.cs" />
     <Compile Include="Runtime\DeploymentController.cs" />
     <Compile Include="Runtime\DirectiveTypeRegistry.cs" />

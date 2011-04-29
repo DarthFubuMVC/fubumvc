@@ -3,6 +3,7 @@ using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Runtime;
 using Bottles.Diagnostics;
+using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using FubuCore;
@@ -10,7 +11,7 @@ using FubuCore;
 namespace Bottles.Tests.Deployment.Runtime
 {
     [TestFixture]
-    public class CommandFactoryTester
+    public class DirectiveRunnerFactoryTester
     {
         #region Setup/Teardown
 
@@ -38,48 +39,31 @@ namespace Bottles.Tests.Deployment.Runtime
                 cfg.For<IDeploymentDiagnostics>().Use<FakeDeploymentDiagnostics>();
             });
 
-            _commandFactory = new CommandFactory(container);
+            var factory = new DirectiveRunnerFactory(container);
+            theRunner = (DirectiveRunner<FakeDirective>)factory.Build(new FakeDirective());
         }
 
         #endregion
 
-        private ICommandFactory _commandFactory;
+        private DirectiveRunner<FakeDirective> theRunner;
 
         [Test]
-        public void TESTNAME()
+        public void should_have_2_initializers()
         {
-            Assert.Fail("NWO");
+            theRunner.Initializers.ShouldHaveCount(2);
         }
 
-        //[Test]
-        //public void should_have_2_initializers()
-        //{
-        //    var fakeDirective = new FakeDirective();
-        //    var output = _commandFactory.InitializersFor(fakeDirective);
-        //    output.Process(null, fakeDirective);
+        [Test]
+        public void should_have_3_deployers()
+        {
+            theRunner.Deployers.ShouldHaveCount(3);
+        }
 
-        //    fakeDirective.Hits.ShouldEqual(2);
-        //}
-
-        //[Test]
-        //public void should_have_3_deployers()
-        //{
-        //    var fakeDirective = new FakeDirective();
-        //    var output = _commandFactory.DeployersFor(fakeDirective);
-        //    output.Process(null, fakeDirective);
-
-        //    fakeDirective.Hits.ShouldEqual(3);
-        //}
-
-        //[Test]
-        //public void should_have_1_finalizer()
-        //{
-        //    var fakeDirective = new FakeDirective();
-        //    var output = _commandFactory.FinalizersFor(fakeDirective);
-        //    output.Process(null, fakeDirective);
-
-        //    fakeDirective.Hits.ShouldEqual(1);
-        //}
+        [Test]
+        public void should_have_1_finalizer()
+        {
+            theRunner.Finalizers.ShouldHaveCount(1);
+        }
     }
 
     public class FakeInitializer<T> : IInitializer<T> where T : IDirective

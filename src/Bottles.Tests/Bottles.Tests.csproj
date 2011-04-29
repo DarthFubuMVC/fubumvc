@@ -100,7 +100,7 @@
     <Compile Include="Deployment\Parsing\when_reading_a_single_host_file.cs" />
     <Compile Include="Deployment\Parsing\WritingReadingIntegratedTester.cs" />
     <Compile Include="Deployment\RecipeSorterTester.cs" />
-    <Compile Include="Deployment\Runtime\CommandFactoryTester.cs" />
+    <Compile Include="Deployment\Runtime\DirectiveRunnerFactoryTester.cs" />
     <Compile Include="Deployment\Runtime\FakeDirective.cs" />
     <Compile Include="Deployment\Runtime\FakeDeploymentDiagnostics.cs" />
     <Compile Include="Deployment\Writing\HostWriterTester.cs" />
