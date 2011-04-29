@@ -18,6 +18,9 @@ namespace FubuMVC.Spark
         public SparkExtension()
         {
 			_items = new SparkItems();
+			_itemFinder = new SparkItemFinder();
+            _itemBuilder = new SparkItemBuilder(_items);
+			
 			defaults();
         }
 
@@ -53,8 +56,7 @@ namespace FubuMVC.Spark
 		
 		private void defaults()
 		{			
-            _itemFinder = new SparkItemFinder();
-            _itemBuilder = new SparkItemBuilder(_items)
+			_itemBuilder
                 .AddBinder<MasterPageBinder>()
                 .AddBinder<ViewModelBinder>()
                 .Apply<NamespacePolicy>()
