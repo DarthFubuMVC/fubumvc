@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Bottles;
@@ -15,7 +16,7 @@ namespace FubuMVC.Spark.SparkModel
         public string Master { get; set; }
         public string ViewModelType { get; set; }
         public IEnumerable<SparkItem> AvailableItems { get; set; }
-        public SparkPackageTracer Tracer { get; set; }
+        public ISparkPackageTracer Tracer { get; set; }
     }
 
     public interface ISparkItemBinder
@@ -38,6 +39,11 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(SparkItem item, BindContext context)
         {
+            if (new DirectoryInfo(item.DirectoryPath()).Name == Constants.Shared)
+            {
+                context.Tracer.Trace(item, "This is a shared view, no master page will be set.");
+                return;
+            }
             var masterName = context.Master;
             if (masterName == null)
             {

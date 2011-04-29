@@ -37,7 +37,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         protected override void beforeEach()
         {           
             Services.Inject<ISharedItemLocator>(new SharedItemLocator(new[] {Constants.Shared}));
-            _context = new BindContext {AvailableItems = _sparkItems = createItems(), Master = "application"};
+            _context = new BindContext { AvailableItems = _sparkItems = createItems(), Master = "application", Tracer = MockFor<ISparkPackageTracer>() };
         }
 
         private IEnumerable<SparkItem> createItems()
@@ -106,6 +106,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             var sparkItem = _sparkItems.ElementAt(10);
             ClassUnderTest.Bind(sparkItem, _context);
             _sparkItems.Last().ShouldEqual(sparkItem.Master);
+        }
+
+        [Test]
+        public void if_item_is_under_shared_no_master_page_is_set()
+        {
+            var sparkItem = _sparkItems.ElementAt(5);
+            ClassUnderTest.Bind(sparkItem, _context);
+            sparkItem.Master.ShouldBeNull();
         }
 
         // TODO : Edge cases, boundaries, more tests for expected behaviors

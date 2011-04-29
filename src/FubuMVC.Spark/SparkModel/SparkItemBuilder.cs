@@ -82,7 +82,13 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class SparkPackageTracer
+    public interface ISparkPackageTracer
+    {
+        void Trace(SparkItem item, string format, params object [] args);
+        void Trace(SparkItem item, string text);
+    }
+
+    public class SparkPackageTracer : ISparkPackageTracer
     {
         private readonly Action<SparkItem, string, object[]> _format;
         private readonly Action<SparkItem ,string> _trace;
