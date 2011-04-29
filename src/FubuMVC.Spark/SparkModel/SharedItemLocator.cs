@@ -9,7 +9,9 @@ namespace FubuMVC.Spark.SparkModel
     {
         SparkItem LocateSpark(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> items);
     }
-
+	
+	// REVIEW: This class is too busy. Let's see if we can take parts out of it into classes.
+	
     public class SharedItemLocator : ISharedItemLocator
     {
         private readonly IEnumerable<string> _sharedFolderNames;

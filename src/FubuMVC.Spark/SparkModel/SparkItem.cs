@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public class SparkItem
+	// Consider if we should introduce Enum or interface for non-model spark files that need to be in viewfolder,
+	// e.g. spark included via <include href="template.htm/data.txt" parse="html/text" />.. etc
+
+	public class SparkItem
     {
         public SparkItem(string filePath, string rootPath, string origin)
         {

@@ -68,7 +68,12 @@ namespace FubuMVC.Spark.SparkModel
             item.ViewModelType = _typeResolver.ResolveType(context.ViewModelType);
         }
     }
-
+	
+	// REVIEW: I think we are not gaining much from ITypeResolver and ITypeResolverStrategy in our usage.
+	//         All the type hookey pokey in here needs simplification and belongs in some other place..	
+    //         A better and cleaner way of getting relevant types from fubu itself would be desirable. 
+	//         TypePool via IViewFacility is only available via FindViews and too late.
+	
     // TODO : kill this frankenstein cookie monster.
     public class FullTypeNameStrategy : ITypeResolverStrategy
     {
@@ -103,9 +108,6 @@ namespace FubuMVC.Spark.SparkModel
             var types = TypesWithFullName(typeName);
             return types.Count() == 1 ? types.First() : null;
         }
-
-        // This only works on *currently* loaded types. 
-        // A better and cleaner way of getting relevant types from fubu itself would be desirable. ( TypePool via IViewFacility is only available via FindViews and too late)
         
         private TypePool defaultTypePool()
         {

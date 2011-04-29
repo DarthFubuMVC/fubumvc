@@ -1,0 +1,28 @@
+
+Tests for Rendering.
+
+Tests needed in SparkModel:
+
+ First:
+ 
+ - SharedItemLocator (Rework needed)
+ - SparkItemBuilder
+ - ChunkLoader
+ 
+ Then:
+ 
+ - SparkActivator
+ - SparkViewFacility
+ - SparkViewToken
+
+More coverage needed for:
+
+ - MasterPageBinder
+ - NamespacePolicy 
+ - SparkScanner
+ - SparkItemFinder
+ 
+ 
+ Rework needed for:
+ 
+  - ViewModelBinder

@@ -48,7 +48,9 @@ namespace FubuMVC.Spark.SparkModel
             };
 
             var request = buildRequest(items, root);
-            // NOTE : Brittle? Would be better if we could get the full path from fubu.
+            
+			// REVIEW: Consider alternative.
+			// NOTE : Brittle? Would be better if we could get the full path from fubu.
             request.ExcludeDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
             request.ExcludeDirectory(FubuMvcPackageFacility.FubuContentFolder);
             

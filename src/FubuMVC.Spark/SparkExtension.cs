@@ -11,40 +11,33 @@ namespace FubuMVC.Spark
     // This approach uses default conventions.
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
-        private readonly SparkItems _sparkItems;
-        private readonly SparkItemBuilder _itemBuilder;
-        private readonly SparkItemFinder _sparkItemFinder;
+        private readonly SparkItems _items;
+        private SparkItemBuilder _itemBuilder;
+        private SparkItemFinder _itemFinder;
         
         public SparkExtension()
         {
-            _sparkItems = new SparkItems();
-            _sparkItemFinder = new SparkItemFinder();
-            
-            _itemBuilder = new SparkItemBuilder(_sparkItems)
-                .AddBinder<MasterPageBinder>()
-                .AddBinder<ViewModelBinder>()
-                .Apply<NamespacePolicy>()
-                .Apply<ViewPathPolicy>();
+			_items = new SparkItems();
+			defaults();
         }
 
         public void Include(string filter)
         {
-            _sparkItemFinder.Include(filter);
+            _itemFinder.Include(filter);
         }
 
         public void Configure(FubuRegistry registry)
         {
             populateAndBuildItems();
-            registry.Views.Facility(new SparkViewFacility(_sparkItems));
-
+			
+            registry.Views.Facility(new SparkViewFacility(_items));
             registry.Services(configureServices);
         }
 
         private void configureServices(IServiceRegistry services)
         {
-            services.SetServiceIfNone<ISparkItems>(_sparkItems);
-            services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
-            
+            services.SetServiceIfNone<ISparkItems>(_items);
+            services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
             services.AddService<IActivator, SparkActivator>();
             services.AddService<ISparkViewModification, ServiceLocatorAttacher>();
             services.AddService<ISparkViewModification, ModelAttacher>();
@@ -52,11 +45,21 @@ namespace FubuMVC.Spark
 
         private void populateAndBuildItems()
         {
-            _sparkItems.Clear();
-            _sparkItems.AddRange(_sparkItemFinder.FindInHost());
-            _sparkItems.AddRange(_sparkItemFinder.FindInPackages());
+            _items.Clear();
+            _items.AddRange(_itemFinder.FindInHost());
+            _items.AddRange(_itemFinder.FindInPackages());
             _itemBuilder.BuildItems();
         }
+		
+		private void defaults()
+		{			
+            _itemFinder = new SparkItemFinder();
+            _itemBuilder = new SparkItemBuilder(_items)
+                .AddBinder<MasterPageBinder>()
+                .AddBinder<ViewModelBinder>()
+                .Apply<NamespacePolicy>()
+                .Apply<ViewPathPolicy>();			
+		}
 
 
         // DSL 
