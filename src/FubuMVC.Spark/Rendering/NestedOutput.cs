@@ -16,11 +16,7 @@ namespace FubuMVC.Spark.Rendering
 
         public TextWriter Writer
         {
-            get
-            {
-                var writer = _writerSource();
-                return writer;
-            }
+            get { return _writerSource(); }
         }
 
         public bool IsActive()

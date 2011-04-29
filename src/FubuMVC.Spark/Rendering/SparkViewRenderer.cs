@@ -18,8 +18,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void Render()
         {
-            var strategy = _strategies.First(x => x.Applies());
-            strategy.Invoke();
+            _strategies.First(x => x.Applies()).Invoke();
         }
     }
 }

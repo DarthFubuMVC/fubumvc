@@ -46,10 +46,11 @@ namespace FubuMVC.Spark.Registration.Nodes
             where TStrategy : IRenderStrategy
             where TViewRenderer : IRenderAction
         {
-            var factory = new ObjectDef { Type = typeof(ViewFactory) };
-            var engine = factory.DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
-            engine.DependencyByValue(_cache);
-            engine.DependencyByValue(descriptor);
+            var factory = new ObjectDef { Type = typeof(ViewFactory) };            
+			var viewEntrySource = factory.DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
+            
+			viewEntrySource.DependencyByValue(_cache);
+            viewEntrySource.DependencyByValue(descriptor);
 
 
             strategies.AddType(typeof (TStrategy))

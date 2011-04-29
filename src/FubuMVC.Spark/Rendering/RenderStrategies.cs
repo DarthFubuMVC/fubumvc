@@ -13,8 +13,8 @@ namespace FubuMVC.Spark.Rendering
     {
         private readonly NestedOutput _nestedOutput;
         private readonly IRenderAction _renderAction;
-
-        public NestedRenderStrategy(NestedOutput nestedOutput, IRenderAction renderAction)
+        
+		public NestedRenderStrategy(IRenderAction renderAction, NestedOutput nestedOutput)
         {
             _renderAction = renderAction;
             _nestedOutput = nestedOutput;
@@ -35,7 +35,7 @@ namespace FubuMVC.Spark.Rendering
     {
         private readonly IRenderAction _renderAction;
         private readonly IRequestData _requestData;
-
+		
         public AjaxRenderStrategy(IRenderAction renderAction, IRequestData requestData)
         {
             _renderAction = renderAction;
@@ -56,7 +56,6 @@ namespace FubuMVC.Spark.Rendering
     public class DefaultRenderStrategy : IRenderStrategy
     {
         private readonly IRenderAction _renderAction;
-
         public DefaultRenderStrategy(IRenderAction renderAction)
         {
             _renderAction = renderAction;
