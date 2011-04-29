@@ -55,10 +55,12 @@ namespace FubuMVC.Spark.SparkModel
 
     public class SharedDirectoryProvider
     {
+        private readonly IEnumerable<string> _sharedFolderNames;
         private readonly SharedFolderFinder _sharedFolderFinder;
 
         public SharedDirectoryProvider(IEnumerable<string> sharedFolderNames)
         {
+            _sharedFolderNames = sharedFolderNames;
             _sharedFolderFinder = new SharedFolderFinder(sharedFolderNames);
         }
 
@@ -82,9 +84,9 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-            foreach (var directory in _sharedFolderFinder.Find(hostRoot, hostRoot))
+            foreach (var sharedFolder in _sharedFolderNames)
             {
-                yield return directory;
+                yield return Path.Combine(hostRoot, sharedFolder);
             }
         }
     }
