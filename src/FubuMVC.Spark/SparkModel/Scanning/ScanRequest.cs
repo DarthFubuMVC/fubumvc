@@ -33,9 +33,9 @@ namespace FubuMVC.Spark.SparkModel.Scanning
         {
             _filter.Add(filter);
         }
-        public void ExcludeDirectory(string directoryName)
+        public void ExcludeDirectory(string directoryPath)
         {
-            _excludes.Add(string.Format("{0}{1}{0}", Path.DirectorySeparatorChar, directoryName));
+            _excludes.Add(directoryPath);
         }
 
         public void AddHandler(Action<FileFound> handler)

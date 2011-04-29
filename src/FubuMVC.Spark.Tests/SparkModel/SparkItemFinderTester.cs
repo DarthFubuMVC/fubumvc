@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Bottles;
 using FubuCore;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
@@ -13,7 +14,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class SparkItemFinderTester
     {
-        private readonly ISparkItemFinder _itemFinder;
+        private readonly SparkItemFinder _itemFinder;
         private readonly IEnumerable<SparkItem> _items;
         private readonly string _templatePath;
 
@@ -21,6 +22,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
             _itemFinder = new SparkItemFinder(new FileScanner(), Enumerable.Empty<IPackageInfo>()) { HostPath = _templatePath };
+            _itemFinder.ExcludeHostDirectory("App", FubuMvcPackageFacility.FubuPackagesFolder);
             _items = _itemFinder.FindInHost();
         }
 

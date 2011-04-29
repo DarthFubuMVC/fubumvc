@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Bottles;
 using FubuCore;
@@ -19,6 +20,7 @@ namespace FubuMVC.Spark.SparkModel
         private readonly IFileScanner _fileScanner;
         private readonly IEnumerable<IPackageInfo> _packages;
         private CompositeAction<ScanRequest> _requestConfig;
+        private CompositeAction<ScanRequest> _hostExcludes;
         private string _hostPath;
         
         public SparkItemFinder() : this(new FileScanner(), PackageRegistry.Packages) { }
@@ -27,9 +29,14 @@ namespace FubuMVC.Spark.SparkModel
             _fileScanner = fileScanner;
             _packages = packages;
             _requestConfig = new CompositeAction<ScanRequest>();
-            
-            Include("*spark");
-            Include("bindings.xml");
+            _hostExcludes = new CompositeAction<ScanRequest>();
+
+            IncludeFile("*spark");
+            IncludeFile("bindings.xml");
+
+            ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
+            ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder, FubuMvcPackageFacility.FubuContentFolder);
+            ExcludeHostDirectory(FubuMvcPackageFacility.FubuContentFolder);
         }
 
         public string HostPath
@@ -48,11 +55,7 @@ namespace FubuMVC.Spark.SparkModel
             };
 
             var request = buildRequest(items, root);
-            
-			// REVIEW: Consider alternative.
-			// NOTE : Brittle? Would be better if we could get the full path from fubu.
-            request.ExcludeDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
-            request.ExcludeDirectory(FubuMvcPackageFacility.FubuContentFolder);
+            _hostExcludes.Do(request);
             
             _fileScanner.Scan(request);
             
@@ -70,9 +73,18 @@ namespace FubuMVC.Spark.SparkModel
             return items;
         }
 
-        public void Include(string filter)
+        public void IncludeFile(string filter)
         {
             _requestConfig += r => r.Include(filter);
+        }
+
+        public void ExcludeHostDirectory(string path)
+        {
+            _hostExcludes += r => r.ExcludeDirectory(Path.Combine(HostPath, path));
+        }
+        public void ExcludeHostDirectory(params string[] parts)
+        {
+            _hostExcludes += r => r.ExcludeDirectory(Path.Combine(HostPath, Path.Combine(parts)));
         }
 
         private static IEnumerable<SparkRoot> packageRoots(IEnumerable<IPackageInfo> packages)

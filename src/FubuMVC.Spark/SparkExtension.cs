@@ -26,7 +26,7 @@ namespace FubuMVC.Spark
 
         public void Include(string filter)
         {
-            _itemFinder.Include(filter);
+            _itemFinder.IncludeFile(filter);
         }
 
         public void Configure(FubuRegistry registry)
