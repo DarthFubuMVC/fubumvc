@@ -1,43 +1,49 @@
+using System;
 using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Runtime;
+using Bottles.Diagnostics;
 using NUnit.Framework;
 using StructureMap;
-using FubuTestingSupport;
+using FubuCore;
 
 namespace Bottles.Tests.Deployment.Runtime
 {
     [TestFixture]
     public class CommandFactoryTester
     {
-        private ICommandFactory _commandFactory;
+        #region Setup/Teardown
 
         [SetUp]
         public void GivenAContainerWith()
         {
-            IContainer container = new Container(cfg=>
-                                                 {
-                                                     cfg.For<IInitializer<FakeDirective>>()
-                                                         .Use<FakeInitializer<FakeDirective>>();
-                                                    cfg.For<IInitializer<FakeDirective>>()
-                                                        .Use<FakeInitializer2<FakeDirective>>();
+            IContainer container = new Container(cfg =>
+            {
+                cfg.For<IInitializer<FakeDirective>>()
+                    .Use<FakeInitializer<FakeDirective>>();
+                cfg.For<IInitializer<FakeDirective>>()
+                    .Use<FakeInitializer2<FakeDirective>>();
 
 
-                                                    cfg.For<IDeployer<FakeDirective>>()
-                                                        .Use<FakeDeployer<FakeDirective>>(); 
-                                                     cfg.For<IDeployer<FakeDirective>>()
-                                                          .Use<FakeDeployer2<FakeDirective>>();
-                                                     cfg.For<IDeployer<FakeDirective>>()
-                                                          .Use<FakeDeployer2<FakeDirective>>();
+                cfg.For<IDeployer<FakeDirective>>()
+                    .Use<FakeDeployer<FakeDirective>>();
+                cfg.For<IDeployer<FakeDirective>>()
+                    .Use<FakeDeployer2<FakeDirective>>();
+                cfg.For<IDeployer<FakeDirective>>()
+                    .Use<FakeDeployer2<FakeDirective>>();
 
-                                                     cfg.For<IFinalizer<FakeDirective>>()
-                                                         .Use<FakeFinalizer<FakeDirective>>();
+                cfg.For<IFinalizer<FakeDirective>>()
+                    .Use<FakeFinalizer<FakeDirective>>();
 
-                                                     cfg.For<IDeploymentDiagnostics>().Use<FakeDeploymentDiagnostics>();
-                                                 });
+                cfg.For<IDeploymentDiagnostics>().Use<FakeDeploymentDiagnostics>();
+            });
 
             _commandFactory = new CommandFactory(container);
         }
+
+        #endregion
+
+        private ICommandFactory _commandFactory;
 
         [Test]
         public void TESTNAME()
@@ -74,38 +80,41 @@ namespace Bottles.Tests.Deployment.Runtime
 
         //    fakeDirective.Hits.ShouldEqual(1);
         //}
+    }
 
-
- 
-    }       
-    
     public class FakeInitializer<T> : IInitializer<T> where T : IDirective
+    {
+        public void Execute(T directive, HostManifest host, IPackageLog log)
         {
-            public void Initialize(IDirective directive)
-            {
-                var d = (FakeDirective)directive;
-                d.HitIt();
-            }
+            directive.As<FakeDirective>().HitIt();
         }
-        public class FakeInitializer2<T> : FakeInitializer<T> where T : IDirective { }
+    }
 
-        public class FakeDeployer<T> : IDeployer<T> where T : IDirective
-        {
-            public void Deploy(HostManifest host, IDirective directive)
-            {
-                var d = (FakeDirective)directive;
-                d.HitIt();
-            }
-        }
-        public class FakeDeployer2<T> : FakeDeployer<T> where T : IDirective { }
-        public class FakeDeployer3<T> : FakeDeployer<T> where T : IDirective { }
+    public class FakeInitializer2<T> : FakeInitializer<T> where T : IDirective
+    {
+    }
 
-        public class FakeFinalizer<T> : IFinalizer<T> where T : IDirective
+    public class FakeDeployer<T> : IDeployer<T> where T : IDirective
+    {
+        public void Execute(T directive, HostManifest host, IPackageLog log)
         {
-            public void Finish(IDirective directive)
-            {
-                var d = (FakeDirective)directive;
-                d.HitIt();
-            }
+            directive.As<FakeDirective>().HitIt();
         }
+    }
+
+    public class FakeDeployer2<T> : FakeDeployer<T> where T : IDirective
+    {
+    }
+
+    public class FakeDeployer3<T> : FakeDeployer<T> where T : IDirective
+    {
+    }
+
+    public class FakeFinalizer<T> : IFinalizer<T> where T : IDirective
+    {
+        public void Execute(T directive, HostManifest host, IPackageLog log)
+        {
+            directive.As<FakeDirective>().HitIt();
+        }
+    }
 }

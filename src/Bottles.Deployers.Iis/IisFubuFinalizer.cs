@@ -1,6 +1,8 @@
-﻿using Bottles.Deployment;
+﻿using System;
+using Bottles.Deployment;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Diagnostics;
 using FubuCore;
 
 namespace Bottles.Deployers.Iis
@@ -19,6 +21,11 @@ namespace Bottles.Deployers.Iis
             var d = (FubuWebsite) directive;
 
             _fileSystem.DeleteFile(FileSystem.Combine(d.VDirPhysicalPath, "app_offline.htm"));
+        }
+
+        public void Execute(FubuWebsite directive, HostManifest host, IPackageLog log)
+        {
+            throw new NotImplementedException();
         }
     }
 }

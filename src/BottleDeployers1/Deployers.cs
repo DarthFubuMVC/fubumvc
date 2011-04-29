@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Bottles.Deployment;
 using Bottles.Deployment.Runtime;
+using Bottles.Diagnostics;
 
 namespace BottleDeployers1
 {
@@ -12,7 +13,7 @@ namespace BottleDeployers1
 
     public abstract class StubDeployer<T> : IDeployer<T> where T : IDirective
     {
-        public void Deploy(HostManifest host, IDirective directive)
+        public void Execute(T directive, HostManifest host, IPackageLog log)
         {
             DeploymentRecorder.Directives.Add(directive);
         }

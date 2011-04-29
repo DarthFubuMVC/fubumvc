@@ -4,6 +4,7 @@ using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Diagnostics;
 using FubuCore;
 using Microsoft.Web.Administration;
 
@@ -82,6 +83,11 @@ namespace Bottles.Deployers.Iis
             _fileSystem.MoveFiles(webContent, direc.VDirPhysicalPath);
 
             _fileSystem.DeleteDirectory(webContent);
+        }
+
+        public void Execute(FubuWebsite directive, HostManifest host, IPackageLog log)
+        {
+            throw new NotImplementedException();
         }
     }
 }

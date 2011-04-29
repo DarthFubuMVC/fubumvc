@@ -5,6 +5,7 @@ using System.Text;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Diagnostics;
 using FubuCore;
 
 namespace Bottles.Deployers.Topshelf
@@ -58,7 +59,11 @@ namespace Bottles.Deployers.Topshelf
             
             return sb.ToString();
         }
-        
+
+        public void Execute(TopshelfService directive, HostManifest host, IPackageLog log)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

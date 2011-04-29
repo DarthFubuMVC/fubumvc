@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Diagnostics;
 using FubuCore;
 
 namespace Bottles.Deployment.Deployers
@@ -15,18 +16,17 @@ namespace Bottles.Deployment.Deployers
             _runner = runner;
         }
 
-        public void Deploy(HostManifest manifest, IDirective directive)
+        public void Execute(ScheduledTask directive, HostManifest host, IPackageLog log)
         {
-            var d = (ScheduledTask) directive;
-
             var psi = new ProcessStartInfo("schtasks");
 
-            var args = @"/create /tn {0} /sc {1} /mo {2} /ru {3} /tr {4};".ToFormat(d.Name, d.ScheduleType, d.Modifier, d.UserAccount, d.TaskToRun);
+            var args = @"/create /tn {0} /sc {1} /mo {2} /ru {3} /tr {4};".ToFormat(directive.Name, directive.ScheduleType, directive.Modifier, directive.UserAccount, directive.TaskToRun);
             psi.Arguments = args;
 
-            //log this here
+            log.Trace(args);
 
             _runner.Run(psi, new TimeSpan(0, 0, 1, 0));
         }
+
     }
 }

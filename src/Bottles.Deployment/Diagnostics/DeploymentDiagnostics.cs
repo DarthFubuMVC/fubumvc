@@ -9,23 +9,23 @@ namespace Bottles.Deployment.Diagnostics
 {
     public class DeploymentDiagnostics : LoggingSession, IDeploymentDiagnostics
     {
-        public void LogInitialization(IInitializer initializer, IDirective directive)
-        {
-            LogObject(initializer, "Running initializer for directive '{0}'".ToFormat(directive));
-            LogFor(directive).AddChild(initializer);
-        }
+        //public void LogInitialization(IInitializer initializer, IDirective directive)
+        //{
+        //    LogObject(initializer, "Running initializer for directive '{0}'".ToFormat(directive));
+        //    LogFor(directive).AddChild(initializer);
+        //}
 
-        public void LogFinalization(IFinalizer finalizer, IDirective directive)
-        {
-            LogObject(finalizer, "Running finalizer for directive '{0}'".ToFormat(directive));
-            LogFor(directive).AddChild(finalizer);
-        }
+        //public void LogFinalization(IFinalizer finalizer, IDirective directive)
+        //{
+        //    LogObject(finalizer, "Running finalizer for directive '{0}'".ToFormat(directive));
+        //    LogFor(directive).AddChild(finalizer);
+        //}
 
-        public void LogDeployment(IDeployer deployer, IDirective directive)
-        {
-            LogObject(deployer, "Running with directive '{0}'".ToFormat(directive));
-            LogFor(directive).AddChild(deployer);
-        }
+        //public void LogDeployment(IDeployer deployer, IDirective directive)
+        //{
+        //    LogObject(deployer, "Running with directive '{0}'".ToFormat(directive));
+        //    LogFor(directive).AddChild(deployer);
+        //}
 
         public void LogHost(HostManifest hostManifest)
         {
@@ -33,11 +33,15 @@ namespace Bottles.Deployment.Diagnostics
             LogFor("deploymentname").AddChild(hostManifest);
         }
 
-        public void LogDirective(IDirective directive, HostManifest host)
+        public void LogDirective(HostManifest host, IDirective directive)
         {
             LogObject(directive, "Found in '{0}'".ToFormat(host));
             LogFor(host).AddChild(directive);
         }
 
+        public PackageLog LogAction(HostManifest host, IDirective directive, object action)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

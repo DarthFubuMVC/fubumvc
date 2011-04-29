@@ -8,11 +8,9 @@ namespace Bottles.Deployment.Diagnostics
         PackageLog LogFor(object target);
 
         void LogHost(HostManifest hostManifest);
-        void LogDirective(IDirective directive, HostManifest host);
+        void LogDirective(HostManifest host, IDirective directive);
 
 
-        
-
-
+        PackageLog LogAction(HostManifest host, IDirective directive, object action);
     }
 }
