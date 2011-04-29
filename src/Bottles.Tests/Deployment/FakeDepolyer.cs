@@ -1,4 +1,5 @@
 using Bottles.Deployment;
+using Bottles.Deployment.Runtime;
 
 namespace Bottles.Tests.Deployment
 {

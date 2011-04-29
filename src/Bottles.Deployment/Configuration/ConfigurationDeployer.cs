@@ -1,14 +1,15 @@
 using System;
 using System.IO;
+using Bottles.Deployment.Runtime;
 using Bottles.Diagnostics;
 using FubuCore;
 using System.Collections.Generic;
 
 namespace Bottles.Deployment.Configuration
 {
-    public class ConfigurationDirective : IDirective
+    public class ConfigurationDirectory : IDirective
     {
-        public ConfigurationDirective()
+        public ConfigurationDirectory()
         {
             ConfigDirectory = "config";
         }
@@ -16,7 +17,7 @@ namespace Bottles.Deployment.Configuration
         public string ConfigDirectory { get; set;}
     }
 
-    public class ConfigurationDeployer : IDeployer<ConfigurationDirective>
+    public class ConfigurationDeployer : IDeployer<ConfigurationDirectory>
     {
         private readonly DeploymentSettings _deploymentSettings;
         private readonly IFileSystem _fileSystem;
@@ -31,7 +32,7 @@ namespace Bottles.Deployment.Configuration
 
         public void Deploy(HostManifest manifest, IDirective directive)
         {
-            var configDirective = (ConfigurationDirective)directive;
+            var configDirective = (ConfigurationDirectory)directive;
 
             // copy the environment settings there
             // explode the bottles out to there

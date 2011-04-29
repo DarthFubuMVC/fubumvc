@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -21,6 +22,25 @@ namespace Bottles.Diagnostics
         public long TimeInMilliseconds { get; set; }
         public string Provenance { get; set; }
         public string Description { get; set; }
+
+        public void Execute(Action continuation)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            try
+            {
+                continuation();
+            }
+            catch (Exception e)
+            {
+                MarkFailure(e);
+            }
+            finally
+            {
+                stopwatch.Stop();
+                TimeInMilliseconds = stopwatch.ElapsedMilliseconds;
+            }
+        }
 
         public void Trace(string text)
         {

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Directives;
+using Bottles.Deployment.Runtime;
 using FubuCore;
 using Microsoft.Web.Administration;
 
@@ -23,7 +25,8 @@ namespace Bottles.Deployers.Iis
         //http://www.iis.net/ConfigReference/
         public void Deploy(HostManifest host, IDirective directive)
         {
-            _diagnostics.LogDeployment(this, directive);
+            throw new NotImplementedException();
+            //_diagnostics.LogDeployment(this, directive);
 
             var direc = (FubuWebsite) directive;
 

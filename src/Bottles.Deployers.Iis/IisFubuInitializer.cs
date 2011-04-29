@@ -1,6 +1,8 @@
-﻿using Bottles.Deployment;
+﻿using System;
+using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Directives;
+using Bottles.Deployment.Runtime;
 using FubuCore;
 
 namespace Bottles.Deployers.Iis
@@ -21,7 +23,8 @@ namespace Bottles.Deployers.Iis
 
         public void Initialize(IDirective directive)
         {
-            _diagnostics.LogInitialization(this, directive);
+            throw new NotImplementedException();
+            //_diagnostics.LogInitialization(this, directive);
 
             var direc = (FubuWebsite)directive;
 

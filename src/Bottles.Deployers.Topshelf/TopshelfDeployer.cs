@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
+using Bottles.Deployment.Runtime;
 using FubuCore;
 
 namespace Bottles.Deployers.Topshelf

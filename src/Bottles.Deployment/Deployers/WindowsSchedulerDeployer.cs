@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Bottles.Deployment.Directives;
+using Bottles.Deployment.Runtime;
 using FubuCore;
 
 namespace Bottles.Deployment.Deployers

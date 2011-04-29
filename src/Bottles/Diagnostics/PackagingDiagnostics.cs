@@ -1,23 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
-using System.Linq;
 
 namespace Bottles.Diagnostics
 {
-    public class PackagingDiagnostics : IPackagingDiagnostics
+    public class LoggingSession
     {
-        private readonly Cache<object, PackageLog> _logs = new Cache<object, PackageLog>(o => new PackageLog(){
+        private readonly Cache<object, PackageLog> _logs = new Cache<object, PackageLog>(o => new PackageLog{
             Description = o.ToString()
         });
-    
-        public void EachLog(Action<object, PackageLog> action)
-        {
-            _logs.Each(action);
-        }
 
         public void LogObject(object target, string provenance)
         {
@@ -31,25 +25,22 @@ namespace Bottles.Diagnostics
 
         public void LogExecution(object target, Action continuation)
         {
-            var log = _logs[target];
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            try
-            {
-                continuation();
-            }
-            catch (Exception e)
-            {
-                log.MarkFailure(e);
-            }
-            finally
-            {
-                stopwatch.Stop();
-                log.TimeInMilliseconds = stopwatch.ElapsedMilliseconds;
-            }
-            
+            _logs[target].Execute(continuation);
         }
 
+        public void EachLog(Action<object, PackageLog> action)
+        {
+            _logs.Each(action);
+        }
+
+        public bool HasErrors()
+        {
+            return _logs.GetAll().Any(x => !x.Success);
+        }
+    }
+
+    public class PackagingDiagnostics : LoggingSession, IPackagingDiagnostics
+    {
         public void LogPackage(IPackageInfo package, IPackageLoader loader)
         {
             LogObject(package, "Loaded by " + loader);
@@ -60,7 +51,7 @@ namespace Bottles.Diagnostics
         {
             var provenance = "Loaded by Bootstrapper:  " + bootstrapper;
             var bootstrapperLog = LogFor(bootstrapper);
-            
+
             activators.Each(a =>
             {
                 LogObject(a, provenance);
@@ -90,22 +81,17 @@ namespace Bottles.Diagnostics
             log.Trace("Failed to load assembly at '{0}'".ToFormat(fileName));
         }
 
-        public bool HasErrors()
-        {
-            return _logs.GetAll().Any(x => !x.Success);
-        }
-
+        // TODO -- think about this little puppy
         public static string GetTypeName(object target)
         {
-            if (target is IBootstrapper) return typeof(IBootstrapper).Name;
-            if (target is IActivator) return typeof(IActivator).Name;
-            if (target is IPackageLoader) return typeof(IPackageLoader).Name;
-            if (target is IPackageFacility) return typeof(IPackageFacility).Name;
-            if (target is IPackageInfo) return typeof(IPackageInfo).Name;
-            if (target is Assembly) return typeof(Assembly).Name;
+            if (target is IBootstrapper) return typeof (IBootstrapper).Name;
+            if (target is IActivator) return typeof (IActivator).Name;
+            if (target is IPackageLoader) return typeof (IPackageLoader).Name;
+            if (target is IPackageFacility) return typeof (IPackageFacility).Name;
+            if (target is IPackageInfo) return typeof (IPackageInfo).Name;
+            if (target is Assembly) return typeof (Assembly).Name;
 
             return target.GetType().Name;
         }
-
     }
 }

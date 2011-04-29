@@ -9,16 +9,14 @@ namespace Bottles.Deployment.Runtime
     public class DeploymentController : IDeploymentController
     {
         private readonly IProfileReader _reader;
-        private readonly IDirectiveRunner _runner;
         private readonly IDirectiveTypeRegistry _registry;
         private readonly IDeploymentDiagnostics _diagnostics;
 
-        public DeploymentController(IProfileReader reader, IDirectiveRunner runner, IDirectiveTypeRegistry registry, IDeploymentDiagnostics diagnostics)
+        public DeploymentController(IProfileReader reader, IDirectiveTypeRegistry registry, IDeploymentDiagnostics diagnostics)
         {
             _reader = reader;
             _diagnostics = diagnostics;
             _registry = registry;
-            _runner = runner;
         }
 
         public void Deploy()
@@ -27,7 +25,7 @@ namespace Bottles.Deployment.Runtime
 
             hosts.Each(h => h.BuildDirectives(_registry));
 
-            _runner.Deploy(hosts);
+            throw new NotImplementedException();
 
             WriteToFile(_diagnostics);
         }
@@ -38,12 +36,12 @@ namespace Bottles.Deployment.Runtime
             File.Delete(path);
 
             Console.WriteLine(path);
-            diagnostics.ForEach(log=>
-            {
-                File.AppendAllText(path, log.Description);
-                File.AppendAllText(path, log.FullTraceText());
-                File.AppendAllText(path, System.Environment.NewLine);
-            });
+            //diagnostics.ForEach(log=>
+            //{
+            //    File.AppendAllText(path, log.Description);
+            //    File.AppendAllText(path, log.FullTraceText());
+            //    File.AppendAllText(path, System.Environment.NewLine);
+            //});
         }
     }
 }

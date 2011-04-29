@@ -40,34 +40,40 @@ namespace Bottles.Tests.Deployment.Runtime
         }
 
         [Test]
-        public void should_have_2_initializers()
+        public void TESTNAME()
         {
-            var fakeDirective = new FakeDirective();
-            var output = _commandFactory.InitializersFor(fakeDirective);
-            output.Process(null, fakeDirective);
-
-            fakeDirective.Hits.ShouldEqual(2);
+            Assert.Fail("NWO");
         }
 
-        [Test]
-        public void should_have_3_deployers()
-        {
-            var fakeDirective = new FakeDirective();
-            var output = _commandFactory.DeployersFor(fakeDirective);
-            output.Process(null, fakeDirective);
+        //[Test]
+        //public void should_have_2_initializers()
+        //{
+        //    var fakeDirective = new FakeDirective();
+        //    var output = _commandFactory.InitializersFor(fakeDirective);
+        //    output.Process(null, fakeDirective);
 
-            fakeDirective.Hits.ShouldEqual(3);
-        }
+        //    fakeDirective.Hits.ShouldEqual(2);
+        //}
 
-        [Test]
-        public void should_have_1_finalizer()
-        {
-            var fakeDirective = new FakeDirective();
-            var output = _commandFactory.FinalizersFor(fakeDirective);
-            output.Process(null, fakeDirective);
+        //[Test]
+        //public void should_have_3_deployers()
+        //{
+        //    var fakeDirective = new FakeDirective();
+        //    var output = _commandFactory.DeployersFor(fakeDirective);
+        //    output.Process(null, fakeDirective);
 
-            fakeDirective.Hits.ShouldEqual(1);
-        }
+        //    fakeDirective.Hits.ShouldEqual(3);
+        //}
+
+        //[Test]
+        //public void should_have_1_finalizer()
+        //{
+        //    var fakeDirective = new FakeDirective();
+        //    var output = _commandFactory.FinalizersFor(fakeDirective);
+        //    output.Process(null, fakeDirective);
+
+        //    fakeDirective.Hits.ShouldEqual(1);
+        //}
 
 
  

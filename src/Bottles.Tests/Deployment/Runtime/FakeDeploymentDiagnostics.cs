@@ -1,6 +1,7 @@
 ﻿using System;
 using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
+using Bottles.Deployment.Runtime;
 using Bottles.Diagnostics;
 
 namespace Bottles.Tests.Deployment.Runtime

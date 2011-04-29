@@ -84,6 +84,7 @@
     <Compile Include="Deployment\Commands\InitializeCommandTester.cs" />
     <Compile Include="Deployment\DeploymentSettingsTester.cs" />
     <Compile Include="Deployment\Commands\AddReferenceCommandTester.cs" />
+    <Compile Include="Diagnostics\PackageLogTester.cs" />
     <Compile Include="EnvironmentSettingsTester.cs" />
     <Compile Include="Deployment\FakeDepolyer.cs" />
     <Compile Include="Deployment\FubuTestApplicationDeploymentIntegrationTester.cs" />
@@ -98,11 +99,8 @@
     <Compile Include="Deployment\Parsing\WritingReadingIntegratedTester.cs" />
     <Compile Include="Deployment\RecipeSorterTester.cs" />
     <Compile Include="Deployment\Runtime\CommandFactoryTester.cs" />
-    <Compile Include="Deployment\Runtime\DeployerSetTests.cs" />
     <Compile Include="Deployment\Runtime\FakeDirective.cs" />
     <Compile Include="Deployment\Runtime\FakeDeploymentDiagnostics.cs" />
-    <Compile Include="Deployment\Runtime\FinalizerSetTests.cs" />
-    <Compile Include="Deployment\Runtime\InitializerSetTests.cs" />
     <Compile Include="Deployment\Writing\HostWriterTester.cs" />
     <Compile Include="Deployment\Writing\PropertyValueTester.cs" />
     <Compile Include="Environment\EnvironmentRunTester.cs" />
@@ -123,7 +121,6 @@
     <Compile Include="Runtime\BootstrappingIntegratedTester.cs" />
     <Compile Include="Deployment\Runtime\DataMother.cs" />
     <Compile Include="Deployment\Runtime\DirectiveBuilderTester.cs" />
-    <Compile Include="Deployment\Runtime\DirectiveCoordinatorTester.cs" />
     <Compile Include="Services\BottleLoaderTester.cs" />
     <Compile Include="SolutionDirectoryPackageLoaderTester.cs" />
     <Compile Include="StubPackage.cs" />
