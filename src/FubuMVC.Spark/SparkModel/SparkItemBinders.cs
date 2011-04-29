@@ -15,6 +15,7 @@ namespace FubuMVC.Spark.SparkModel
         public string Master { get; set; }
         public string ViewModelType { get; set; }
         public IEnumerable<SparkItem> AvailableItems { get; set; }
+        public SparkPackageTracer Tracer { get; set; }
     }
 
     public interface ISparkItemBinder
@@ -37,13 +38,27 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(SparkItem item, BindContext context)
         {
-            var masterName = context.Master ?? MasterName;                        
-            if (masterName.IsEmpty()) return;
+            var masterName = context.Master;
+            if (masterName == null)
+            {
+                masterName = FallbackMaster;
+                context.Tracer.Trace(item, "Master Page is null, using Fallback master [{0}].", masterName);
+            }
+            if (masterName.IsEmpty())
+            {
+                context.Tracer.Trace(item, "Master Page is empty.");
+                return;
+            }
 
             item.Master = _sharedItemLocator.LocateSpark(masterName, item, context.AvailableItems);
             if (item.Master == null)
             {
+                context.Tracer.Trace(item, "Master Page [{0}] not found.", masterName);
                 // Log -> Spark compiler is about to blow up. // context.Observer.??
+            }
+            else
+            {
+                context.Tracer.Trace(item, "Master Page [{0}] found at {1}", masterName, item.Master.FilePath);
             }
         }
     }
@@ -66,6 +81,14 @@ namespace FubuMVC.Spark.SparkModel
         public void Bind(SparkItem item, BindContext context)
         {
             item.ViewModelType = _typeResolver.ResolveType(context.ViewModelType);
+            if (item.ViewModelType == null)
+            {
+                context.Tracer.Trace(item, "No view model type.");
+            }
+            else
+            {
+                context.Tracer.Trace(item, "View model type is : [{0}]", item.ViewModelType);
+            }
         }
     }
 	

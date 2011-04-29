@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bottles;
+using Bottles.Diagnostics;
 using Spark.Compiler;
 
 namespace FubuMVC.Spark.SparkModel
@@ -74,8 +76,52 @@ namespace FubuMVC.Spark.SparkModel
                 AvailableItems = _sparkItems,
                 Master = chunks.Master(),
                 ViewModelType = chunks.ViewModel(),
-                Namespaces = chunks.Namespaces()                
+                Namespaces = chunks.Namespaces(),
+                Tracer = SparkPackageTracer.Default()
             };
         }
     }
+
+    public class SparkPackageTracer
+    {
+        private readonly Action<SparkItem, string, object[]> _format;
+        private readonly Action<SparkItem ,string> _trace;
+
+        public SparkPackageTracer(Action<SparkItem, string, object[]> format, Action<SparkItem, string> trace)
+        {
+            _format = format;
+            _trace = trace;
+        }
+
+        public void Trace(SparkItem item, string format, params object [] args)
+        {
+            _format(item,format, args);
+        }
+
+        public void Trace(SparkItem item, string text)
+        {
+            _trace(item, text);
+        }
+
+        public static SparkPackageTracer Default()
+        {
+            return new SparkPackageTracer(formatTrace, trace);
+        }
+
+        private static PackageLog getPackageLogger(SparkItem item)
+        {
+            return PackageRegistry.Diagnostics.LogFor(item);
+        }
+
+        private static void formatTrace(SparkItem item, string format, object[] args)
+        {
+            getPackageLogger(item).Trace(format, args);
+        }
+
+        private static void trace(SparkItem item, string text)
+        {
+            getPackageLogger(item).Trace(text);
+        }
+    }
+
 }
