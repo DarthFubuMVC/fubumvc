@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -9,11 +10,11 @@ namespace Bottles.Tests
     {
 
         [Test]
-        public void NAME()
+        public void there_are_7_manifests_that_are_modules_in_fubu()
         {
             // setup in a random directory
-
-            var sdpl = new SolutionDirectoryPackageLoader(@"C:\dev\fubumvc\src\");
+            var p = Path.GetFullPath(@"..\..\..");
+            var sdpl = new SolutionDirectoryPackageLoader(p);
             var pis = sdpl.Load();
 
             

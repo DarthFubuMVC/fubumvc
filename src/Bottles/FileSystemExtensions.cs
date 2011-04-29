@@ -8,6 +8,7 @@ namespace Bottles
 {
     public static class FileSystemExtensions
     {
+        //REVIEW: do we need these
         public static bool PackageManifestExists(this IFileSystem fileSystem, string directory)
         {
             return fileSystem.FileExists(directory, PackageManifest.FILE);
@@ -35,6 +36,27 @@ namespace Bottles
             return null;
         }
 
+        public static bool ApplicationManifestExists(this IFileSystem fileSystem, string appFolder)
+        {
+            return fileSystem.FileExists(appFolder, PackageManifest.FILE);
+        }
+
+
+        public static PackageManifest LoadApplicationManifestFrom(this IFileSystem fileSystem, string folder)
+        {
+            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
+        }
+
+        public static string ApplicationManifestPathFor(this IFileSystem fileSystem, string folder)
+        {
+            return FileSystem.Combine(folder, PackageManifest.FILE);
+        }
+        //REVIEW: END REVIEW
+
+
+
+
+
         public static string FindBinaryDirectory(this IFileSystem fileSystem, string directory, CompileTargetEnum target)
         {
             var binFolder = FileSystem.Combine(directory, "bin");
@@ -45,21 +67,6 @@ namespace Bottles
             }
 
             return binFolder;
-        }
-
-        public static bool ApplicationManifestExists(this IFileSystem fileSystem, string appFolder)
-        {
-            return fileSystem.FileExists(appFolder, PackageManifest.FILE);
-        }
-
-        public static PackageManifest LoadApplicationManifestFrom(this IFileSystem fileSystem, string folder)
-        {
-            return fileSystem.LoadFromFile<PackageManifest>(folder, PackageManifest.FILE);
-        }
-
-        public static string ApplicationManifestPathFor(this IFileSystem fileSystem, string folder)
-        {
-            return FileSystem.Combine(folder, PackageManifest.FILE);
         }
 
 		public static IEnumerable<string> FindAssemblyNames(this IFileSystem fileSystem, string directory)

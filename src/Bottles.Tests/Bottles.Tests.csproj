@@ -65,6 +65,7 @@
     <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="Commands\AssembliesInputTester.cs" />
     <Compile Include="Commands\CreatePackageCommandTester.cs" />
+    <Compile Include="Commands\InitPakCommandTester.cs" />
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
     <Compile Include="Commands\ListCommandTester.cs" />

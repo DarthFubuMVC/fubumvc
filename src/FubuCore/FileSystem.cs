@@ -100,6 +100,8 @@ namespace FubuCore
     {
         public void CreateDirectory(string path)
         {
+            if (path.IsEmpty()) return;
+
             if (Directory.Exists(path))
             {
                 return;
@@ -268,6 +270,8 @@ namespace FubuCore
         {
             Debug.WriteLine("Saving to " + filename);
             var serializer = new XmlSerializer(target.GetType());
+
+            CreateDirectory(GetDirectory(filename));
 
             using (var stream = new FileStream(filename, FileMode.Create, FileAccess.Write))
             {
