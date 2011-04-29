@@ -121,7 +121,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecipeTester.cs" />
     <Compile Include="Runtime\BootstrappingIntegratedTester.cs" />
-    <Compile Include="Deployment\Runtime\DataMother.cs" />
     <Compile Include="Deployment\Runtime\DirectiveBuilderTester.cs" />
     <Compile Include="Services\BottleLoaderTester.cs" />
     <Compile Include="SolutionDirectoryPackageLoaderTester.cs" />

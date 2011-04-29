@@ -2,6 +2,7 @@ using System;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
+using FubuCore.Binding;
 using StructureMap;
 
 namespace Bottles.Deployment.Bootstrapping
@@ -12,6 +13,9 @@ namespace Bottles.Deployment.Bootstrapping
         {
             return new Container(x =>
             {
+                // TODO -- might come back to this and make it smarter
+                x.For<IObjectResolver>().Use(ObjectResolver.Basic());
+
                 x.For<IFileSystem>().Use<FileSystem>();
 
                 x.For<IProfileFinder>().Use<DeploymentFolderFinder>();

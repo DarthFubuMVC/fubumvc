@@ -60,14 +60,14 @@ namespace Bottles.Tests.Deployment.Bootstrapping
             host.RegisterValue<BottleDeployers2.SixDirective>(x => x.Threshold, 5);
 
             var registry = theContainer.GetInstance<DirectiveTypeRegistry>();
-            host.BuildDirectives(registry);
+            var directives = host.BuildDirectives(registry);
 
-            host.AllDirectives.Count().ShouldEqual(2);
-            var directiveOne = host.AllDirectives.OfType<BottleDeployers1.OneDirective>().Single();
+            directives.Count().ShouldEqual(2);
+            var directiveOne = directives.OfType<BottleDeployers1.OneDirective>().Single();
             directiveOne.Age.ShouldEqual(11);
             directiveOne.Name.ShouldEqual("Robert");
 
-            var directiveSix = host.AllDirectives.OfType<SixDirective>().Single();
+            var directiveSix = directives.OfType<SixDirective>().Single();
             directiveSix.Direction.ShouldEqual("North");
             directiveSix.Threshold.ShouldEqual(5);
 

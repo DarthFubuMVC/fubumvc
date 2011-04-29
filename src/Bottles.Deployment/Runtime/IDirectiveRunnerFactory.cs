@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace Bottles.Deployment.Runtime
 {
     public interface IDirectiveRunnerFactory
     {
-        IDirectiveRunner Build(IDirective directive);
+        IEnumerable<IDirectiveRunner> BuildRunners(IEnumerable<HostManifest> hosts);
     }
 }

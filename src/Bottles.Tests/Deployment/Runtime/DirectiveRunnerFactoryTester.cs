@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Runtime;
@@ -39,13 +40,16 @@ namespace Bottles.Tests.Deployment.Runtime
                 cfg.For<IDeploymentDiagnostics>().Use<FakeDeploymentDiagnostics>();
             });
 
-            var factory = new DirectiveRunnerFactory(container);
-            theRunner = (DirectiveRunner<FakeDirective>)factory.Build(new FakeDirective());
+            
+
+            theFactory = new DirectiveRunnerFactory(container, new DirectiveTypeRegistry(container));
+            theRunner = (DirectiveRunner<FakeDirective>)theFactory.Build(new FakeDirective());
         }
 
         #endregion
 
         private DirectiveRunner<FakeDirective> theRunner;
+        private DirectiveRunnerFactory theFactory;
 
         [Test]
         public void should_have_2_initializers()
@@ -63,6 +67,35 @@ namespace Bottles.Tests.Deployment.Runtime
         public void should_have_1_finalizer()
         {
             theRunner.Finalizers.ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void build_runners_for_smoke_test()
+        {
+            var host = new StubHostManifest("something");
+            host.Directives.Add(new OneDirective());
+            host.Directives.Add(new OneDirective());
+
+            var runners = theFactory.BuildRunnersFor(host);
+            runners.ShouldHaveCount(2);
+
+
+        }
+    }
+
+
+
+    public class StubHostManifest : HostManifest
+    {
+        public StubHostManifest(string name) : base(name)
+        {
+        }
+
+        public IList<IDirective> Directives = new List<IDirective>();
+
+        public override IEnumerable<IDirective> BuildDirectives(IDirectiveTypeRegistry typeRegistry)
+        {
+            return Directives;
         }
     }
 

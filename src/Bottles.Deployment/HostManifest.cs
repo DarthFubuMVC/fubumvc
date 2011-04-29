@@ -11,13 +11,12 @@ using FubuCore.Reflection;
 
 namespace Bottles.Deployment
 {
-    [DebuggerDisplay("{debuggerDisplay()}")]
     public class HostManifest
     {
         private static readonly IObjectResolver _resolver = ObjectResolver.Basic();
-        private readonly IList<IDirective> _directives = new List<IDirective>();
         private readonly IList<BottleReference> _bottles = new List<BottleReference>();
         private readonly IList<SettingsData> _data = new List<SettingsData>();
+
 
         public HostManifest(string name)
         {
@@ -46,11 +45,6 @@ namespace Bottles.Deployment
         public IEnumerable<BottleReference> BottleReferences
         {
             get { return _bottles; }
-        }
-
-        public IEnumerable<IDirective> AllDirectives
-        {
-            get { return _directives; }
         }
 
         public void RegisterSettings(SettingsData data)
@@ -95,30 +89,25 @@ namespace Bottles.Deployment
                 .Distinct();
         }
 
-        public void BuildDirectives(IDirectiveTypeRegistry typeRegistry)
+        // overridden in testing classes
+        public virtual IEnumerable<IDirective> BuildDirectives(IDirectiveTypeRegistry typeRegistry)
         {
-            _directives.Clear();
-            var directives = UniqueDirectiveNames().Select(name =>
+            return UniqueDirectiveNames().Select(name =>
             {
                 var type = typeRegistry.DirectiveTypeFor(name);
                 return GetDirective(type);
             });
-
-            _directives.AddRange(directives);
         }
 
         public override string ToString()
         {
             return Name;
         }
-        string debuggerDisplay()
-        {
-            return "{0} Directives: {1}".ToFormat(Name, _directives.Count);
-        }
 
         public bool HasBottle(string bottle)
         {
             return _bottles.Any(br => br.Name.Equals(bottle));
         }
+
     }
 }

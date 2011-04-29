@@ -3,29 +3,37 @@ using System.Collections.Generic;
 using System.IO;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Parsing;
+using System.Linq;
 
 namespace Bottles.Deployment.Runtime
 {
     public class DeploymentController : IDeploymentController
     {
         private readonly IProfileReader _reader;
-        private readonly IDirectiveTypeRegistry _registry;
         private readonly IDeploymentDiagnostics _diagnostics;
+        private readonly IDirectiveRunnerFactory _factory;
 
-        public DeploymentController(IProfileReader reader, IDirectiveTypeRegistry registry, IDeploymentDiagnostics diagnostics)
+        public DeploymentController(IProfileReader reader, IDeploymentDiagnostics diagnostics, IDirectiveRunnerFactory factory)
         {
             _reader = reader;
             _diagnostics = diagnostics;
-            _registry = registry;
+            _factory = factory;
         }
 
         public void Deploy()
         {
+            // need to log inside of reader
             var hosts = _reader.Read();
 
-            hosts.Each(h => h.BuildDirectives(_registry));
+            var runners = _factory.BuildRunners(hosts);
 
-            throw new NotImplementedException();
+            runners.Each(x => x.InitializeDeployment());
+            runners.Each(x => x.Deploy());
+            runners.Each(x => x.FinalizeDeployment());
+
+            // TODO -- write more to the console.
+            // TODO -- 
+
 
             WriteToFile(_diagnostics);
         }
