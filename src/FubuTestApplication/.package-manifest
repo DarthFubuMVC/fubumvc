@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>test</Name>
+  <Role>application</Role>
   <Assemblies>FubuTestApplication</Assemblies>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>

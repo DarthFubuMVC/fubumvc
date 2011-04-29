@@ -6,7 +6,7 @@ using FubuCore.CommandLine;
 
 namespace Fubu
 {
-    [CommandDescription("Access and modify an application manifest file")]
+    [CommandDescription("Access and modify a .package-manifest file. The role for the manifest is 'application'")]
     public class ManifestCommand : FubuCommand<ManifestInput>
     {
         public override bool Execute(ManifestInput input)
@@ -19,6 +19,8 @@ namespace Fubu
         public virtual bool ApplyChanges(ManifestInput input, PackageManifest manifest)
         {
             var didChange = false;
+
+            //manifest.Name = input.AppFolder;
 
             if (input.AssemblyFlag.IsNotEmpty())
             {
@@ -93,7 +95,10 @@ namespace Fubu
 
         public virtual void CreateManifest(IFileSystem fileSystem, ManifestInput input)
         {
-            var manifest = new PackageManifest();
+            var manifest = new PackageManifest
+                           {
+                               Role = PackageRole.Application
+                           };
             ApplyChanges(input, manifest);
             persist(fileSystem, input, manifest);
 

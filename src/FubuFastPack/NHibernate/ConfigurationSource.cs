@@ -45,10 +45,5 @@ namespace FubuFastPack.NHibernate
         {
             return _model.Value;
         }
-
-
-
     }
-
-
 }

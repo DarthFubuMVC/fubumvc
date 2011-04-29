@@ -18,7 +18,10 @@ namespace Bottles.Zipping
 
         public void CreateZipFile(string fileName, Action<IZipFile> configure)
         {
-            Console.WriteLine("Starting to write contents to new Zip file at " + fileName);
+            Console.WriteLine("    Starting to write contents to new Zip file at " + fileName);
+
+            _fileSystem.CreateDirectory(Path.GetDirectoryName(fileName));
+
             using (var zipFile = new ZipFile(fileName))
             {
                 configure(new ZipFileWrapper(zipFile));

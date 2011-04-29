@@ -20,7 +20,6 @@ namespace Bottles.Zipping
 
         public void AddFile(string fileName, string zipFolder)
         {
-            Console.WriteLine("  Adding {0} to zip folder '{1}'", fileName, zipFolder);
             _file.AddFile(fileName, zipFolder);
         }
 

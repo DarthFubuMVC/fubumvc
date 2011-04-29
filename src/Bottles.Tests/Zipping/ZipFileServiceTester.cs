@@ -33,5 +33,23 @@ namespace Bottles.Tests.Zipping
 
             service.GetVersion("zip1.zip").ShouldEqual(guid);
         }
+
+        [Test]
+        public void create_test_zip_to_a_nonexistent_path()
+        {
+            var fileSystem = new FileSystem();
+            fileSystem.DeleteDirectory(".\\nonexist");
+
+            fileSystem.FileExists(".\\nonexist\\silly.zip").ShouldBeFalse();
+
+            fileSystem.WriteStringToFile(".\\bob.txt","hi");
+            var service = new ZipFileService(fileSystem);
+            service.CreateZipFile(".\\nonexist\\silly.zip", f=>
+            {
+                f.AddFile(".\\bob.txt","");
+            });
+
+            fileSystem.FileExists(".\\nonexist\\silly.zip").ShouldBeTrue();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuCore.CommandLine;
 
 namespace Bottles
 {
@@ -22,10 +23,19 @@ namespace Bottles
             
             //how can i 'where' the manifests
                
-            return fileSystem.FileNamesFor(manifestFileSpec, _sourceRoot)
+
+            var pis = fileSystem.FileNamesFor(manifestFileSpec, _sourceRoot)
                 .Select(Path.GetDirectoryName)
-                .Select(manifestReader.LoadFromFolder)
-                .Where(pi=>PackageRole.Module.Equals(pi.Role));     
+                .Select(manifestReader.LoadFromFolder);
+
+            var filtered = pis.Where(pi=>PackageRole.Module.Equals(pi.Role));
+
+            ConsoleWriter.PrintHorizontalLine();
+            ConsoleWriter.Write("Solution Package Loader found:");
+            filtered.Each(p=>ConsoleWriter.Write("  {0}", p.Name));
+            ConsoleWriter.PrintHorizontalLine();
+
+            return filtered;
         }
     }
 }

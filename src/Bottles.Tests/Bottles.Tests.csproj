@@ -67,6 +67,7 @@
     <Compile Include="Commands\CreatePackageCommandTester.cs" />
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
+    <Compile Include="Commands\ListCommandTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Configuration\CentralizedSettingsSourceTester.cs" />
     <Compile Include="Configuration\environment.Designer.cs">
@@ -123,6 +124,7 @@
     <Compile Include="Deployment\Runtime\DirectiveBuilderTester.cs" />
     <Compile Include="Deployment\Runtime\DirectiveCoordinatorTester.cs" />
     <Compile Include="Services\BottleLoaderTester.cs" />
+    <Compile Include="SolutionDirectoryPackageLoaderTester.cs" />
     <Compile Include="StubPackage.cs" />
     <Compile Include="ZipFileServiceTester.cs" />
     <Compile Include="Zipping\ZipFileServiceTester.cs" />

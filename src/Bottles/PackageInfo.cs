@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Bottles.Assemblies;
 
 namespace Bottles
 {
+    [DebuggerDisplay("{Name}:{Role}")]
     public class PackageInfo : IPackageInfo
     {
         

@@ -253,8 +253,10 @@ namespace FubuCore
 
         public void CleanDirectory(string directory)
         {
-            Directory.GetDirectories(directory).Each(Directory.Delete);
-            Directory.GetFiles(directory).Each(File.Delete);
+            if (directory.IsEmpty()) return;
+
+            if(Directory.Exists(directory))
+                Directory.Delete(directory, true);
         }
 
         public bool DirectoryExists(string directory)
