@@ -56,7 +56,7 @@ namespace FubuMVC.Spark.SparkModel
                 return;
             }
 
-            item.Master = _sharedItemLocator.LocateSpark(masterName, item, context.AvailableItems);
+            item.Master = _sharedItemLocator.LocateItem(masterName, item, context.AvailableItems);
             if (item.Master == null)
             {
                 context.Tracer.Trace(item, "Master Page [{0}] not found.", masterName);

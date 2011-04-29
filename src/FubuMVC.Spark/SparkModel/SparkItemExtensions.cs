@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuCore.Util;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -44,7 +45,13 @@ namespace FubuMVC.Spark.SparkModel
         {
             return items.Where(x => x.Origin == origin);
         }
-
+        
+        public static IEnumerable<SparkItem> InDirectories(this IEnumerable<SparkItem> items,IEnumerable<string> directories)
+        {
+            var predicate = new CompositePredicate<SparkItem>();
+            predicate = directories.Aggregate(predicate, (current, local) => current + (x => x.DirectoryPath() == local));
+            return items.Where(predicate.MatchesAny);
+        }
         public static SparkItem FirstByName(this IEnumerable<SparkItem> items, string name)
         {
             return items.ByName(name).FirstOrDefault();
