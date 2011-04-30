@@ -46,23 +46,24 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(SparkItem item, BindContext context)
         {
+			var tracer = context.Tracer;
             var masterName = context.Master;
 
 			if (masterName == null)
             {
                 masterName = FallbackMaster;
-                context.Tracer.Trace(item, "Master Page is null, using Fallback master [{0}].", masterName);
+                tracer.Trace(item, "Using default master page [{0}].", masterName);
             }
 
             item.Master = _sharedItemLocator.LocateItem(masterName, item, context.AvailableItems);
 
 			if (item.Master == null)
             {
-                context.Tracer.Trace(item, "Expected Master Page [{0}] not found.", masterName);
+                tracer.Trace(item, "Expected master page [{0}] not found.", masterName);
             }
             else
             {
-                context.Tracer.Trace(item, "Master Page [{0}] found at {1}", masterName, item.Master.FilePath);
+                tracer.Trace(item, "Master page [{0}] found at {1}", masterName, item.Master.FilePath);
             }
         }
     }
