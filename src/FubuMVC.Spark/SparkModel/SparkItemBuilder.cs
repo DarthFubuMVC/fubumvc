@@ -58,7 +58,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public void BuildItems()
         {
-            _sparkItems.Each(item => _itemBinders.Each(binder =>
+            _sparkItems.Each(item => _itemBinders.All(b => b.CanBind(item)).Each(binder =>
             {
                 var chunks = _chunkLoader.Load(item);
                 var context = createContext(chunks);

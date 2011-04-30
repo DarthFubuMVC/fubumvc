@@ -21,6 +21,7 @@ namespace FubuMVC.Spark.SparkModel
 
     public interface ISparkItemBinder
     {
+		bool CanBind(SparkItem item, BindContext context);
         void Bind(SparkItem item, BindContext context);
     }
 
@@ -37,30 +38,27 @@ namespace FubuMVC.Spark.SparkModel
             MasterName = FallbackMaster;
         }
 
+		bool CanBind(SparkItem item, BindContext context)
+		{
+			return Path.GetDirectoryName(item.DirectoryPath()) != Constants.Shared 
+				|| context.Master != string.Empty;
+		}
+
         public void Bind(SparkItem item, BindContext context)
         {
-            if (new DirectoryInfo(item.DirectoryPath()).Name == Constants.Shared)
-            {
-                context.Tracer.Trace(item, "This is a shared view, no master page will be set.");
-                return;
-            }
             var masterName = context.Master;
-            if (masterName == null)
+
+			if (masterName == null)
             {
                 masterName = FallbackMaster;
                 context.Tracer.Trace(item, "Master Page is null, using Fallback master [{0}].", masterName);
             }
-            if (masterName.IsEmpty())
-            {
-                context.Tracer.Trace(item, "Master Page is empty.");
-                return;
-            }
 
             item.Master = _sharedItemLocator.LocateItem(masterName, item, context.AvailableItems);
-            if (item.Master == null)
+
+			if (item.Master == null)
             {
-                context.Tracer.Trace(item, "Master Page [{0}] not found.", masterName);
-                // Log -> Spark compiler is about to blow up. // context.Observer.??
+                context.Tracer.Trace(item, "Expected Master Page [{0}] not found.", masterName);
             }
             else
             {
@@ -84,17 +82,15 @@ namespace FubuMVC.Spark.SparkModel
             _typeResolver = typeResolver;
         }
 
+		bool CanBind(SparkItem item, BindContext context)
+		{
+			return context.ViewModelType.IsNotEmpty();
+		}
+
         public void Bind(SparkItem item, BindContext context)
         {
             item.ViewModelType = _typeResolver.ResolveType(context.ViewModelType);
-            if (item.ViewModelType == null)
-            {
-                context.Tracer.Trace(item, "No view model type.");
-            }
-            else
-            {
-                context.Tracer.Trace(item, "View model type is : [{0}]", item.ViewModelType);
-            }
+            context.Tracer.Trace(item, "View model type is : [{0}]", item.ViewModelType);
         }
     }
 	
