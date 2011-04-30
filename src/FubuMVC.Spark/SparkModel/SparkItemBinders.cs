@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Bottles;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using Spark;
 
@@ -43,7 +44,9 @@ namespace FubuMVC.Spark.SparkModel
 			var sharedFolder = "{0}{1}".ToFormat(Path.DirectorySeparatorChar, Constants.Shared);
 			var itemDirectory = item.DirectoryPath();
 			
-			return !itemDirectory.EndsWith(sharedFolder) && context.Master != string.Empty;
+			return !itemDirectory.EndsWith(sharedFolder) && 
+				 	context.Master != string.Empty && 
+					Path.GetExtension(item.FilePath) == Constants.DotSpark;
 		}
 
         public void Bind(SparkItem item, BindContext context)
@@ -97,34 +100,18 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 	
-	// REVIEW: I think we are not gaining much from ITypeResolver and ITypeResolverStrategy in our usage.
-	//         All the type hookey pokey in here needs simplification and belongs in some other place..	
-    //         A better and cleaner way of getting relevant types from fubu itself would be desirable. 
-	//         TypePool via IViewFacility is only available via FindViews and too late.
-	
-    // TODO : kill this frankenstein cookie monster.
+	// Note: Would be much better to rely on something like AssemblyScanner
+	// (Diagnostics has a simple one, but we need SM like).
     public class FullTypeNameStrategy : ITypeResolverStrategy
     {
-        private readonly string _binPath;
-        private readonly Func<string, bool> _assemblyFilter;
-
-        private readonly Lazy<TypePool> _typePool;
-
-        // Rip this apart, split out, find a more simple way. Ask JDM.
-        public FullTypeNameStrategy() : this(AppDomain.CurrentDomain.RelativeSearchPath, excludedAssembly) {}
-        public FullTypeNameStrategy(string binPath, Func<string, bool> assemblyFilter)
-        {
-            _binPath = binPath;
-            _assemblyFilter = assemblyFilter;
-            
-            _typePool = new Lazy<TypePool>(defaultTypePool);
-        }
-
-        public IEnumerable<Type> TypesWithFullName(string fullTypeName)
-        {
-            return _typePool.Value.TypesWithFullName(fullTypeName);
-        }
-
+        private readonly TypePool _typePool;
+		
+		public FullTypeNameStrategy() : this(DefaultTypePool()){}
+		public FullTypeNameStrategy(TypePool typePool)
+		{
+			_typePool = typePool;
+		}		
+						
         public bool Matches(object model)
         {
             return model is string;
@@ -132,52 +119,30 @@ namespace FubuMVC.Spark.SparkModel
 
         public Type ResolveType(object model)
         {
-            var typeName = (string)model;
-            var types = TypesWithFullName(typeName);
-            return types.Count() == 1 ? types.First() : null;
-        }
-        
-        private TypePool defaultTypePool()
-        {
-            var typePool = new TypePool(Assembly.GetCallingAssembly())
-            {
-                ShouldScanAssemblies = true
-            };
-
-            typePool.AddAssemblies(relevantAssemblies());
-            
-            return typePool;
+            var types = _typePool.TypesWithFullName((string)model);            
+			return types.Count() == 1 ? types.First() : null;
         }
 
-        private IEnumerable<Assembly> relevantAssemblies()
-        {
-            var relevantAssemblies = findAssemblyNames()
-                .Where(x => !_assemblyFilter(x)).Distinct().ToList();
+        public static TypePool DefaultTypePool()
+        {			
+			var binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;			
+			var candiateNames = new FileSystem().FindAssemblyNames(binPath).ToList();			
+			
+			var assemblyFilters = new CompositeFilter<Assembly>();						
+			assemblyFilters.Includes += a => candiateNames.Contains(a.GetName().Name);
+			assemblyFilters.Excludes += a => a.IsDynamic;
 
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => !x.IsDynamic && relevantAssemblies.Contains(x.GetName().Name));
-        }
-
-        private IEnumerable<string> findAssemblyNames()
-        {
-            return new FileSystem().FindAssemblyNames(_binPath);
-        }
-
-        private static bool excludedAssembly(string assemblyName)
-        {
-            return new[]
-            {
-                "Ionic.Zip",
-                "StructureMap",
-                "Microsoft.Practices.ServiceLocation",
-                "Spark",
-                "HtmlTags",
-                "FubuMVC.StructureMap",
-                "FubuMVC.Spark",
-                "FubuCore",
-                "Bottles"
-            }
-            .Contains(assemblyName);
-        }
+			var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+				.Where(assemblyFilters.MatchesAll);
+		
+			var typePool = new TypePool(Assembly.GetCallingAssembly()) 
+			{ 
+				ShouldScanAssemblies = true 
+			};
+			
+            typePool.AddAssemblies(assemblies.ToList());
+			
+			return typePool;
+        }		
     }
 }
