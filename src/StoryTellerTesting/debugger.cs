@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace IntegrationTesting
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class debugger
     {
         [Test]

@@ -1,3 +1,4 @@
+using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
 using StructureMap.Configuration.DSL;
@@ -26,6 +27,9 @@ namespace Bottles.Deployment.Bootstrapping
                 x.TheCallingAssembly();
                 x.WithDefaultConventions();
             });
+
+            // Just need this to be a singleton
+            ForSingletonOf<IDeploymentDiagnostics>();
         }
     }
 }
