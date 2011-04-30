@@ -114,6 +114,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
             ClassUnderTest.CanBind(_sparkItems.ElementAt(5), _context).ShouldBeFalse();
         }
 
-        // TODO : Edge cases, boundaries, more tests for expected behaviors
+        [Test]
+		public void	if_explicit_empty_master_then_binder_is_not_applied()
+		{
+			ClassUnderTest.CanBind(_sparkItems.ElementAt(3), new BindContext{Master = string.Empty}).ShouldBeFalse();	
+		}
     }
 }
