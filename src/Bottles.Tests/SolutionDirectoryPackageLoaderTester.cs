@@ -9,7 +9,7 @@ namespace Bottles.Tests
     public class SolutionDirectoryPackageLoaderTester
     {
 
-        [Test]
+        [Test, Ignore("Dru is going to look at this one just a little bit")]
         public void there_are_7_manifests_that_are_modules_in_fubu()
         {
             // setup in a random directory
