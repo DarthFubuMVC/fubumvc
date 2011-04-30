@@ -1,6 +1,7 @@
-﻿using Bottles.Deployers.Iis;
+using Bottles.Deployers.Iis;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
+using Bottles.Diagnostics;
 using Bottles.Exploding;
 using Bottles.Tests.Deployment.Runtime;
 using Bottles.Zipping;
@@ -9,6 +10,7 @@ using NUnit.Framework;
 
 namespace Bottles.Tests.Deployment
 {
+    // TODO -- what is this accomplishing?
     [TestFixture]
     public class IntegrationIisFubuDeploymentTester
     {
@@ -19,11 +21,9 @@ namespace Bottles.Tests.Deployment
             var settings = new DeploymentSettings(@"C:\dev\test-profile\");
             IBottleRepository bottles = new BottleRepository(fileSystem, new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(s=>{ }), fileSystem ), settings);
 
-            var fakeDeploymentDiagnostics = new FakeDeploymentDiagnostics();
-
-            var initializer = new IisFubuInitializer(fileSystem, fakeDeploymentDiagnostics, new DeploymentSettings());
+            var initializer = new IisFubuInitializer(fileSystem, new DeploymentSettings());
             
-            var deployer = new IisFubuDeployer(fileSystem, bottles, fakeDeploymentDiagnostics);
+            var deployer = new IisFubuDeployer(fileSystem, bottles);
             
 
             var directive = new FubuWebsite();
@@ -37,11 +37,11 @@ namespace Bottles.Tests.Deployment
             directive.DirectoryBrowsing = Activation.Enable;
 
 
-            initializer.Initialize(directive);
+            initializer.Execute(directive, new HostManifest("something"), new PackageLog());
 
             var host = new HostManifest("a");
 
-            deployer.Deploy(host, directive);
+            deployer.Execute(directive, host, new PackageLog());
         }
         
     }

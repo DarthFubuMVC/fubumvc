@@ -22,22 +22,20 @@ namespace Bottles.Deployers.Topshelf
             _runner = runner;
         }
 
-        public void Deploy(HostManifest host, IDirective directive)
+        public void Execute(TopshelfService directive, HostManifest host, IPackageLog log)
         {
-            var ts = (TopshelfService) directive;
-
             //copy out TS host
-            _bottles.ExplodeTo("bottlehost", ts.InstallLocation);
+            _bottles.ExplodeTo("bottlehost", directive.InstallLocation);
 
             //copy out service bottle exploded
-            var location = FileSystem.Combine(ts.InstallLocation, "svc");
-            _bottles.ExplodeTo(ts.HostBottle, location);
+            var location = FileSystem.Combine(directive.InstallLocation, "svc");
+            _bottles.ExplodeTo(directive.HostBottle, location);
 
-            var args = buildInstallArgs(ts);
+            var args = buildInstallArgs(directive);
             var psi = new ProcessStartInfo("Bottles.Host.exe")
             {
                 Arguments = args,
-                WorkingDirectory = ts.InstallLocation
+                WorkingDirectory = directive.InstallLocation
             };
 
             _runner.Run(psi);
@@ -60,10 +58,7 @@ namespace Bottles.Deployers.Topshelf
             return sb.ToString();
         }
 
-        public void Execute(TopshelfService directive, HostManifest host, IPackageLog log)
-        {
-            throw new NotImplementedException();
-        }
+
     }
     
 }

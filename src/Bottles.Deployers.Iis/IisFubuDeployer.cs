@@ -14,55 +14,42 @@ namespace Bottles.Deployers.Iis
     {
         private readonly IFileSystem _fileSystem;
         private readonly IBottleRepository _bottles;
-        private readonly IDeploymentDiagnostics _diagnostics;
 
-        public IisFubuDeployer(IFileSystem fileSystem, IBottleRepository bottles, IDeploymentDiagnostics diagnostics)
+        public IisFubuDeployer(IFileSystem fileSystem, IBottleRepository bottles)
         {
             _fileSystem = fileSystem;
-            _diagnostics = diagnostics;
             _bottles = bottles;
         }
 
-        //http://www.iis.net/ConfigReference/
-        public void Deploy(HostManifest host, IDirective directive)
+        public void Execute(FubuWebsite directive, HostManifest host, IPackageLog log)
         {
-            throw new NotImplementedException();
-            //_diagnostics.LogDeployment(this, directive);
-
-            var direc = (FubuWebsite) directive;
-
             //currenly only IIS 7
             using (var iisManager = new ServerManager())
             {
-                var pool = iisManager.CreateAppPool(direc.AppPool);
+                var pool = iisManager.CreateAppPool(directive.AppPool);
                 pool.ManagedRuntimeVersion = "v4.0";
                 pool.ManagedPipelineMode = ManagedPipelineMode.Integrated;
                 pool.Enable32BitAppOnWin64 = false;
 
-                if (direc.HasCredentials())
+                if (directive.HasCredentials())
                 {
-                    pool.ProcessModel.UserName = direc.Username;
-                    pool.ProcessModel.Password = direc.Password;
+                    pool.ProcessModel.UserName = directive.Username;
+                    pool.ProcessModel.Password = directive.Password;
                 }
 
-                var site = iisManager.CreateSite(direc.WebsiteName, direc.WebsitePhysicalPath, direc.Port);
+                var site = iisManager.CreateSite(directive.WebsiteName, directive.WebsitePhysicalPath, directive.Port);
 
 
-                var app = site.CreateApplication(direc.VDir, direc.VDirPhysicalPath);
-                app.ApplicationPoolName = direc.AppPool;
+                var app = site.CreateApplication(directive.VDir, directive.VDirPhysicalPath);
+                app.ApplicationPoolName = directive.AppPool;
 
                 //flush the changes so that we can now tweak them.
                 iisManager.CommitChanges();
 
+                moveWebContentOut(directive);
 
 
-                MoveWebContentOut(direc);
-
-
-
-
-
-                app.DirectoryBrowsing(direc.DirectoryBrowsing);
+                app.DirectoryBrowsing(directive.DirectoryBrowsing);
 
                 //app.AnonAuthentication(direc.AnonAuth);
                 //app.BasicAuthentication(direc.BasicAuth);
@@ -71,23 +58,18 @@ namespace Bottles.Deployers.Iis
                 app.MapAspNetToEverything();
                 iisManager.CommitChanges();
             }
-
-           
         }
 
-        private void MoveWebContentOut(FubuWebsite direc)
+        private void moveWebContentOut(FubuWebsite directive)
         {
-            _bottles.ExplodeTo(direc.HostBottle, direc.VDirPhysicalPath);
+            _bottles.ExplodeTo(directive.HostBottle, directive.VDirPhysicalPath);
 
-            var webContent = FileSystem.Combine(direc.VDirPhysicalPath, "WebContent");
-            _fileSystem.MoveFiles(webContent, direc.VDirPhysicalPath);
+            var webContent = FileSystem.Combine(directive.VDirPhysicalPath, "WebContent");
+            _fileSystem.MoveFiles(webContent, directive.VDirPhysicalPath);
 
             _fileSystem.DeleteDirectory(webContent);
         }
 
-        public void Execute(FubuWebsite directive, HostManifest host, IPackageLog log)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

@@ -1,6 +1,7 @@
 using Bottles.Deployers.Topshelf;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
+using Bottles.Diagnostics;
 using NUnit.Framework;
 
 namespace Bottles.Tests.Deployment
@@ -18,7 +19,7 @@ namespace Bottles.Tests.Deployment
 
             var directive = new TopshelfService();
 
-            deployer.Deploy(new HostManifest("a"), directive);
+            deployer.Execute(directive, new HostManifest("a"), new PackageLog());
         }
     }
 }
