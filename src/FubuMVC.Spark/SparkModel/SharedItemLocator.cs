@@ -21,35 +21,7 @@ namespace FubuMVC.Spark.SparkModel
         public SparkItem LocateItem(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> items)
         {
             var reachables = _sharedDirectoryProvider.GetDirectories(fromItem, items);
-            var item = items.ByName(sparkName).InDirectories(reachables).FirstOrDefault();
-            return item;
-        }
-    }
-
-    public class SharedFolderFinder
-    {
-        private readonly IEnumerable<string> _sharedFolderNames;
-        public SharedFolderFinder(IEnumerable<string> sharedFolderNames)
-        {
-            _sharedFolderNames = sharedFolderNames;
-        }
-
-        public IEnumerable<string> Find(string root, string path)
-        {
-            return reachableLocations(root, path);
-        }
-        private IEnumerable<string> reachableLocations(string root, string path)
-        {
-            do
-            {
-                path = Path.GetDirectoryName(path);
-                if (path == null) break;
-                foreach (var sharedFolder in _sharedFolderNames)
-                {
-                    yield return Path.Combine(path, sharedFolder);
-                }
-
-            } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
+            return items.ByName(sparkName).InDirectories(reachables).FirstOrDefault();
         }
     }
 
@@ -66,28 +38,54 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items)
         {
-            var candidates = getCandidateDirectories(item, items);
-            return candidates;
-        }
-        private IEnumerable<string> getCandidateDirectories(SparkItem item, IEnumerable<SparkItem> items)
-        {
             foreach (var directory in _sharedFolderFinder.Find(item.RootPath, item.FilePath))
             {
                 yield return directory;
             }
+			
             if (item.Origin == FubuSparkConstants.HostOrigin)
             {
                 yield break;
             }
-            var hostRoot = items.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
+			
+            var hostRoot = hostRoot(items);
             if (hostRoot.IsEmpty())
             {
                 yield break;
             }
+			
             foreach (var sharedFolder in _sharedFolderNames)
             {
                 yield return Path.Combine(hostRoot, sharedFolder);
             }
+        }
+		
+		private string findHostRoot(IEnumerable<SparkItem> items)
+		{
+			return items.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
+		}
+    }
+	
+	public class SharedFolderFinder
+    {
+        private readonly IEnumerable<string> _sharedFolderNames;
+        public SharedFolderFinder(IEnumerable<string> sharedFolderNames)
+        {
+            _sharedFolderNames = sharedFolderNames;
+        }
+
+        public IEnumerable<string> Find(string root, string path)
+        {
+            do
+            {
+                path = Path.GetDirectoryName(path);
+                if (path == null) break;
+                foreach (var sharedFolder in _sharedFolderNames)
+                {
+                    yield return Path.Combine(path, sharedFolder);
+                }
+
+            } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
         }
     }
 }
