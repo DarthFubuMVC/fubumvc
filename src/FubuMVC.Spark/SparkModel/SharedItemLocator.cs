@@ -48,7 +48,7 @@ namespace FubuMVC.Spark.SparkModel
                 yield break;
             }
 			
-            var hostRoot = hostRoot(items);
+            var hostRoot = findHostRoot(items);
             if (hostRoot.IsEmpty())
             {
                 yield break;

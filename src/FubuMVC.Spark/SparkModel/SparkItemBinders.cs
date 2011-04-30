@@ -38,10 +38,12 @@ namespace FubuMVC.Spark.SparkModel
             MasterName = FallbackMaster;
         }
 
-		bool CanBind(SparkItem item, BindContext context)
+		public bool CanBind(SparkItem item, BindContext context)
 		{
-			return Path.GetDirectoryName(item.DirectoryPath()) != Constants.Shared 
-				|| context.Master != string.Empty;
+			var sharedFolder = "{0}{1}".ToFormat(Path.DirectorySeparatorChar, Constants.Shared);
+			var itemDirectory = item.DirectoryPath();
+			
+			return !itemDirectory.EndsWith(sharedFolder) && context.Master != string.Empty;
 		}
 
         public void Bind(SparkItem item, BindContext context)
@@ -83,7 +85,7 @@ namespace FubuMVC.Spark.SparkModel
             _typeResolver = typeResolver;
         }
 
-		bool CanBind(SparkItem item, BindContext context)
+		public bool CanBind(SparkItem item, BindContext context)
 		{
 			return context.ViewModelType.IsNotEmpty();
 		}

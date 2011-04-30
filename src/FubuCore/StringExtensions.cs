@@ -187,5 +187,10 @@ namespace FubuCore
         {
             return path.Split(new[] {Path.DirectorySeparatorChar}, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
+		
+		public static string DirectoryPath(this string path)
+		{
+			return Path.GetDirectoryName(path);
+		}
     }
 }

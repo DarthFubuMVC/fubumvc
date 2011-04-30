@@ -109,11 +109,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         }
 
         [Test]
-        public void if_item_is_under_shared_no_master_page_is_set()
+        public void if_item_is_under_shared_binder_is_not_applied()
         {
-            var sparkItem = _sparkItems.ElementAt(5);
-            ClassUnderTest.Bind(sparkItem, _context);
-            sparkItem.Master.ShouldBeNull();
+            ClassUnderTest.CanBind(_sparkItems.ElementAt(5), _context).ShouldBeFalse();
         }
 
         // TODO : Edge cases, boundaries, more tests for expected behaviors

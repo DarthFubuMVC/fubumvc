@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using FubuCore.Util;
 using Spark.FileSystem;
+using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -39,9 +40,9 @@ namespace FubuMVC.Spark.SparkModel
         private IList<string> listViews(string path)
         {
             return _items
-               .Where(x => Path.GetDirectoryName(x.ViewPath) == path)
-               .Select(x => x.ViewPath)
-               .ToList();
+				.Where(x => x.ViewPath.DirectoryPath() == path)
+				.Select(x => x.ViewPath)
+				.ToList();
         }
 
         private bool hasView(string path)
@@ -51,9 +52,10 @@ namespace FubuMVC.Spark.SparkModel
 
         private FileSystemViewFile getViewSource(string path)
         {
-            return _items.Where(x => x.ViewPath == path)
-                .Select(x => new FileSystemViewFile(x.FilePath))
-                .First();
+            return _items
+				.Where(x => x.ViewPath == path)
+				.Select(x => new FileSystemViewFile(x.FilePath))
+				.First();
         }
     }
 }
