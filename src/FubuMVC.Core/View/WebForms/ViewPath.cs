@@ -1,4 +1,4 @@
-namespace FubuMVC.Core.View
+namespace FubuMVC.Core.View.WebForms
 {
     public class ViewPath
     {

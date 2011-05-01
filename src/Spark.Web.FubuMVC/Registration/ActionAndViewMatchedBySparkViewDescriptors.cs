@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.ViewCreation;
 

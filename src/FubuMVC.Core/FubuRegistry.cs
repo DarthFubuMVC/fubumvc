@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {

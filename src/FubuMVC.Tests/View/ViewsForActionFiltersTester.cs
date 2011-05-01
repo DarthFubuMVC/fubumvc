@@ -4,6 +4,7 @@ using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Attachment;
 using FubuMVC.Tests.View.FakeViews;
 using FubuTestingSupport;
 using NUnit.Framework;

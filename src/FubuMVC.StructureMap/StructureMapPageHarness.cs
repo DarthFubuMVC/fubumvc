@@ -4,6 +4,10 @@ using StructureMap;
 
 namespace FubuMVC.StructureMap
 {
+    /// <summary>
+    /// Used for automated testing
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class StructureMapPageHarness<T> : PageHarness<T> where T : class, new()
     {
         public StructureMapPageHarness(IContainer container)

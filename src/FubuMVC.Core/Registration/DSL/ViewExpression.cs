@@ -3,6 +3,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using System.Collections.Generic;
 using FubuMVC.Core.View.Activation;
+using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core.Registration.DSL
 {

@@ -6,7 +6,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View.WebForms;
 
-namespace FubuMVC.Core.View
+namespace FubuMVC.Core.View.Attachment
 {
     public class ViewAttacher : IConfigurationAction
     {

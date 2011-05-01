@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 
-namespace FubuMVC.Core.View
+namespace FubuMVC.Core.View.Attachment
 {
     public class ActionReturnsViewModelType : IViewsForActionFilter
     {

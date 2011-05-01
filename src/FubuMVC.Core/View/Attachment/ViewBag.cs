@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.View
+namespace FubuMVC.Core.View.Attachment
 {
     public class ViewBag
     {

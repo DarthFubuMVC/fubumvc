@@ -393,7 +393,7 @@
     <Compile Include="Urls\IUrlRegistry.cs" />
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
-    <Compile Include="View\ActionReturnsViewModelType.cs" />
+    <Compile Include="View\Attachment\ActionReturnsViewModelType.cs" />
     <Compile Include="View\Activation\IPageActivationAction.cs" />
     <Compile Include="View\Activation\IPageActivationSource.cs" />
     <Compile Include="View\Activation\LambdaPageActivationAction.cs" />
@@ -416,15 +416,15 @@
     </Compile>
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\Activation\IPageActivator.cs" />
-    <Compile Include="View\IViewsForActionFilter.cs" />
+    <Compile Include="View\Attachment\IViewsForActionFilter.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
     <Compile Include="View\PageHarness.cs" />
-    <Compile Include="View\ActionInSameFolderAsViewReturnsViewModelType.cs" />
-    <Compile Include="View\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
-    <Compile Include="View\ViewAttacher.cs" />
-    <Compile Include="View\ViewBag.cs" />
-    <Compile Include="View\ViewPath.cs" />
+    <Compile Include="View\Attachment\ActionInSameFolderAsViewReturnsViewModelType.cs" />
+    <Compile Include="View\Attachment\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
+    <Compile Include="View\Attachment\ViewAttacher.cs" />
+    <Compile Include="View\Attachment\ViewBag.cs" />
+    <Compile Include="View\WebForms\ViewPath.cs" />
     <Compile Include="View\WebForms\INeedToKnowAboutParentPage.cs" />
     <Compile Include="View\WebForms\IPartialRenderer.cs" />
     <Compile Include="View\WebForms\IPartialViewTypeBindingExpression.cs" />

@@ -1,5 +1,9 @@
 namespace FubuMVC.Core.View
 {
+    /// <summary>
+    /// Used strictly for supporting automated testing scenarios
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PageHarness<T> where T : class
     {
         public PageHarness(T model, FubuPage<T> page)

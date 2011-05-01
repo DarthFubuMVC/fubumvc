@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 
-namespace FubuMVC.Core.View
+namespace FubuMVC.Core.View.Attachment
 {
     public class ActionWithSameNameAndFolderAsViewReturnsViewModelType : IViewsForActionFilter
     {
