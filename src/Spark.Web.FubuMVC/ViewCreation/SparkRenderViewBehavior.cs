@@ -12,12 +12,12 @@ namespace Spark.Web.FubuMVC.ViewCreation
         private readonly ActionCall _actionCall;
         private readonly IFubuRequest _request;
         private readonly IServiceLocator _serviceLocator;
-        private readonly ISparkViewRenderer<IFubuView> _viewRenderder;
+        private readonly ISparkViewRenderer<IFubuPage> _viewRenderder;
         private readonly SparkViewToken _viewToken;
         private readonly IOutputWriter _writer;
 
         public SparkRenderViewBehavior(
-            ISparkViewRenderer<IFubuView> viewRenderder,
+            ISparkViewRenderer<IFubuPage> viewRenderder,
             IServiceLocator serviceLocator,
             IFubuRequest request,
             SparkViewToken viewToken,
@@ -44,7 +44,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
                                                      if (page != null)
                                                          page.ServiceLocator = _serviceLocator;
 
-                                                     var viewWithModel = view as IFubuViewWithModel;
+                                                     var viewWithModel = view as IFubuPageWithModel;
                                                      if (viewWithModel != null)
                                                          viewWithModel.SetModel(_request);
                                                  });

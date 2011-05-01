@@ -67,7 +67,7 @@ namespace FubuMVC.Tests.View
             Services.Inject(view);
 
             engine = new StubViewEngine();
-            Services.Inject<IViewEngine<IFubuView>>(engine);
+            Services.Inject<IViewEngine<IFubuPage>>(engine);
 
             ClassUnderTest.Invoke();
         }
@@ -81,22 +81,22 @@ namespace FubuMVC.Tests.View
         [Test]
         public void should_configure_the_fubu_view_returned()
         {
-            engine.View.AssertWasCalled(x => x.SetModel(MockFor<IFubuRequest>()));
+            engine.Page.AssertWasCalled(x => x.SetModel(MockFor<IFubuRequest>()));
         }
     }
 
-    public class StubViewEngine : IViewEngine<IFubuView>
+    public class StubViewEngine : IViewEngine<IFubuPage>
     {
-        private readonly IFubuViewWithModel _view = MockRepository.GenerateMock<IFubuViewWithModel>();
+        private readonly IFubuPageWithModel _page = MockRepository.GenerateMock<IFubuPageWithModel>();
         private ViewPath _viewPath;
 
-        public IFubuViewWithModel View { get { return _view; } }
+        public IFubuPageWithModel Page { get { return _page; } }
         public ViewPath ViewPath { get { return _viewPath; } }
 
-        public void RenderView(ViewPath viewPath, Action<IFubuView> configureView)
+        public void RenderView(ViewPath viewPath, Action<IFubuPage> configureView)
         {
             _viewPath = viewPath;
-            configureView(_view);
+            configureView(_page);
         }
     }
 }

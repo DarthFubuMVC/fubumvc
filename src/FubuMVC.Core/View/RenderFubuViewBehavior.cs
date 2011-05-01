@@ -7,14 +7,15 @@ using FubuMVC.Core;
 
 namespace FubuMVC.Core.View
 {
+    [Obsolete]
     public class RenderFubuViewBehavior : BasicBehavior
     {
-        private readonly IViewEngine<IFubuView> _engine;
+        private readonly IViewEngine<IFubuPage> _engine;
         private readonly IFubuRequest _request;
         private readonly ViewPath _path;
         private readonly IViewActivator _activator;
 
-        public RenderFubuViewBehavior(IViewEngine<IFubuView> engine, IFubuRequest request, ViewPath view, IViewActivator activator)
+        public RenderFubuViewBehavior(IViewEngine<IFubuPage> engine, IFubuRequest request, ViewPath view, IViewActivator activator)
             : base(PartialBehavior.Executes)
         {
             _engine = engine;
@@ -29,7 +30,7 @@ namespace FubuMVC.Core.View
         {
             _engine.RenderView(_path, v =>
             {
-                var withModel = v as IFubuViewWithModel;
+                var withModel = v as IFubuPageWithModel;
 
                 if (withModel != null)
                 {
@@ -42,7 +43,7 @@ namespace FubuMVC.Core.View
             return DoNext.Continue;
         }
 
-        public static void ActivateView(IViewActivator activator, IFubuView view )
+        public static void ActivateView(IViewActivator activator, IFubuPage view )
         {
             var closedInterface = view.GetType().FindInterfaceThatCloses(typeof (IFubuPage<>));
             if (closedInterface != null)
@@ -62,12 +63,12 @@ namespace FubuMVC.Core.View
 
         public interface IActivator
         {
-            void Activate(IViewActivator activator, IFubuView view);
+            void Activate(IViewActivator activator, IFubuPage view);
         }
 
         public class TemplatedActivator<T> : IActivator where T : class
         {
-            public void Activate(IViewActivator activator, IFubuView view)
+            public void Activate(IViewActivator activator, IFubuPage view)
             {
                 activator.Activate((IFubuPage<T>)view);
             }

@@ -62,7 +62,7 @@ namespace FubuMVC.Core.View.WebForms
             var page = new Page();
             page.Controls.Add(view as Control);
 
-            var fubuView = view as IFubuViewWithModel;
+            var fubuView = view as IFubuPageWithModel;
             if (fubuView != null)
             {
                 fubuView.SetModel(viewModel);

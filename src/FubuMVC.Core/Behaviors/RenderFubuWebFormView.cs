@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Behaviors
 {
     public class RenderFubuWebFormView : RenderFubuViewBehavior
     {
-        public RenderFubuWebFormView(WebFormViewEngine<IFubuView> engine, IFubuRequest request, ViewPath view, IViewActivator activator)
+        public RenderFubuWebFormView(WebFormViewEngine<IFubuPage> engine, IFubuRequest request, ViewPath view, IViewActivator activator)
             : base(engine, request, view, activator)
         {
         }

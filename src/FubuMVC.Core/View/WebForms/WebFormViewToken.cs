@@ -13,7 +13,7 @@ namespace FubuMVC.Core.View.WebForms
         {
             _viewType = viewType;
 
-            Type closedType = _viewType.FindInterfaceThatCloses(typeof (IFubuView<>));
+            Type closedType = _viewType.FindInterfaceThatCloses(typeof (IFubuPage<>));
             _modelType = closedType == null ? null : closedType.GetGenericArguments()[0];
         }
 

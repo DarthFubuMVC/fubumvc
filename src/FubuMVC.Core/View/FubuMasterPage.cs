@@ -7,7 +7,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
 {
-    public class FubuMasterPage<TMasterPageViewModel> : FubuMasterPage, IFubuView<TMasterPageViewModel>
+    public class FubuMasterPage<TMasterPageViewModel> : FubuMasterPage, IFubuPage<TMasterPageViewModel>
         where TMasterPageViewModel : class
     {
         private TMasterPageViewModel _model;

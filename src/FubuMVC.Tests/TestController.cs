@@ -2,7 +2,9 @@ using System;
 using System.Web.UI;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Tests
 {
@@ -81,11 +83,38 @@ namespace FubuMVC.Tests
         public string PartialModelProp1 { get; set; }
     }
 
-    public class TestView : IFubuView<TestOutputModel>
+    public class TestView : IFubuPage<TestOutputModel>
     {
         public void SetModel(IFubuRequest model)
         {
             throw new NotImplementedException();
+        }
+
+        public string ElementPrefix
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IServiceLocator ServiceLocator
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public T Get<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetNew<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUrlRegistry Urls
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public void SetModel(object model)
@@ -96,7 +125,7 @@ namespace FubuMVC.Tests
         public TestOutputModel Model { get { throw new NotImplementedException(); } }
     }
 
-    public class TestUserControl : UserControl, IFubuView<TestPartialModel>
+    public class TestUserControl : UserControl, IFubuPage<TestPartialModel>
     {
         public void SetModel(IFubuRequest model)
         {
@@ -109,6 +138,33 @@ namespace FubuMVC.Tests
         }
 
         public TestPartialModel Model { get { throw new NotImplementedException(); } }
+
+        public string ElementPrefix
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IServiceLocator ServiceLocator
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public T Get<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetNew<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUrlRegistry Urls
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
     public class TestBehavior2 : IActionBehavior
