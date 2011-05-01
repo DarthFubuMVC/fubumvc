@@ -65,6 +65,7 @@ namespace FubuMVC.Core.UI
         public T Model
         {
             get { return _model; }
+            set { _model = value; }
         }
 
         public void ShowProp(Expression<Func<T, object>> property)

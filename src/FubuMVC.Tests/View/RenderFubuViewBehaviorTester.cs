@@ -1,6 +1,8 @@
 using System;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -12,13 +14,13 @@ namespace FubuMVC.Tests.View
     [TestFixture]
     public class when_activating_a_page_with_a_model
     {
-        private IViewActivator activator;
+        private IPageActivator activator;
         private FubuPage<AddressViewModel> page;
 
         [SetUp]
         public void SetUp()
         {
-            activator = MockRepository.GenerateMock<IViewActivator>();
+            activator = MockRepository.GenerateMock<IPageActivator>();
             page = new FubuPage<AddressViewModel>();
 
             RenderFubuViewBehavior.ActivateView(activator, page);
@@ -27,7 +29,8 @@ namespace FubuMVC.Tests.View
         [Test]
         public void should_activate_the_page_by_the_closed_model_type()
         {
-            activator.AssertWasCalled(x => x.Activate<AddressViewModel>(page));
+            Assert.Fail("NWO");
+            //activator.AssertWasCalled(x => x.Activate<AddressViewModel>(page));
         }
     }
 
@@ -35,13 +38,13 @@ namespace FubuMVC.Tests.View
     [TestFixture]
     public class when_activating_a_page_without_a_model
     {
-        private IViewActivator activator;
+        private IPageActivator activator;
         private FubuPage page;
 
         [SetUp]
         public void SetUp()
         {
-            activator = MockRepository.GenerateMock<IViewActivator>();
+            activator = MockRepository.GenerateMock<IPageActivator>();
             page = new FubuPage();
 
             RenderFubuViewBehavior.ActivateView(activator, page);

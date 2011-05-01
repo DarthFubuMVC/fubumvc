@@ -27,6 +27,7 @@ using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
 
@@ -100,7 +101,6 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
             graph.Services.SetServiceIfNone<IObjectResolver, ObjectResolver>();
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
-            graph.Services.SetServiceIfNone<IViewActivator, NulloViewActivator>();
             graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
             graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();

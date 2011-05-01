@@ -113,6 +113,12 @@ namespace FubuCore
                        : type.BaseType.FindInterfaceThatCloses(openType);
         }
 
+        public static Type FindParameterTypeTo(this Type type, Type openType)
+        {
+            var interfaceType = type.FindInterfaceThatCloses(openType);
+            return interfaceType == null ? null : interfaceType.GetGenericArguments().FirstOrDefault();
+        }
+
         public static bool IsNullable(this Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>);
@@ -302,6 +308,12 @@ namespace FubuCore
         {
             var closedType = openType.MakeGenericType(parameterTypes);
             return (T) Activator.CreateInstance(closedType);
+        }
+
+        public static T CloseAndBuildAs<T>(this Type openType, object ctorArgument, params Type[] parameterTypes)
+        {
+            var closedType = openType.MakeGenericType(parameterTypes);
+            return (T)Activator.CreateInstance(closedType, ctorArgument);
         }
 
         public static bool PropertyMatches(this PropertyInfo prop1, PropertyInfo prop2)

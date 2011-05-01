@@ -25,7 +25,7 @@ namespace FubuMVC.Core.View
             Model = model;
         }
 
-        public TViewModel Model { get; private set; }
+        public TViewModel Model { get; set; }
     }
 
     public class FubuPage : Page, IFubuPage

@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.View.FakeViews.Folder1
             throw new NotImplementedException();
         }
 
-        public ViewModel3 Model { get { throw new NotImplementedException(); } }
+        public ViewModel3 Model { get; set; }
 
         public string ElementPrefix
         {

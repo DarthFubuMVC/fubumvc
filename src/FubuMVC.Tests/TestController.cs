@@ -122,7 +122,7 @@ namespace FubuMVC.Tests
             throw new NotImplementedException();
         }
 
-        public TestOutputModel Model { get { throw new NotImplementedException(); } }
+        public TestOutputModel Model { get; set;  }
     }
 
     public class TestUserControl : UserControl, IFubuPage<TestPartialModel>
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests
             throw new NotImplementedException();
         }
 
-        public TestPartialModel Model { get { throw new NotImplementedException(); } }
+        public TestPartialModel Model { get; set; }
 
         public string ElementPrefix
         {

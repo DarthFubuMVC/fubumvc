@@ -3,6 +3,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
@@ -32,7 +33,6 @@ namespace FubuMVC.Tests.Registration.Nodes
                 x.For<IWebFormRenderer>().Use<WebFormRenderer>();
                 x.For<IOutputWriter>().Use<HttpResponseOutputWriter>();
                 x.For<IFubuRequest>().Use<InMemoryFubuRequest>();
-                x.For<IViewActivator>().Use<NulloViewActivator>();
             });
 
             behavior = container.GetInstance<IActionBehavior>();

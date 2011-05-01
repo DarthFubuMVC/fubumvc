@@ -394,6 +394,16 @@
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
     <Compile Include="View\ActionReturnsViewModelType.cs" />
+    <Compile Include="View\Activation\IPageActivationAction.cs" />
+    <Compile Include="View\Activation\IPageActivationSource.cs" />
+    <Compile Include="View\Activation\LambdaPageActivationAction.cs" />
+    <Compile Include="View\Activation\LambdaPageActivationSource.cs" />
+    <Compile Include="View\Activation\PageActivationRules.cs" />
+    <Compile Include="View\Activation\PageActivator.cs" />
+    <Compile Include="View\Activation\SetPageModelActivationAction.cs" />
+    <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
+    <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
+    <Compile Include="View\Activation\ViewTypeExtensions.cs" />
     <Compile Include="View\FubuControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -404,14 +414,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\IFubuView.cs" />
-    <Compile Include="View\IViewActivator.cs" />
+    <Compile Include="View\Activation\IPageActivator.cs" />
     <Compile Include="View\IViewsForActionFilter.cs" />
     <Compile Include="View\IViewEngine.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
-    <Compile Include="View\NulloViewActivator.cs" />
     <Compile Include="View\PageHarness.cs" />
-    <Compile Include="View\RenderFubuViewBehavior.cs" />
     <Compile Include="View\ActionInSameFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\ViewAttacher.cs" />

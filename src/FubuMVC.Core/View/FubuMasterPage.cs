@@ -27,6 +27,10 @@ namespace FubuMVC.Core.View
 
                 return _model;
             }
+            set
+            {
+                SetModel(value);
+            }
         }
 
         public void SetModel(IFubuRequest request)

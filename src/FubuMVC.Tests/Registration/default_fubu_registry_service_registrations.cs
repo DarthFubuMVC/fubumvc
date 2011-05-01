@@ -17,6 +17,7 @@ using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
 using FubuTestingSupport;
@@ -103,12 +104,6 @@ namespace FubuMVC.Tests.Registration
         public void ValueConverterRegistry_is_registered()
         {
             registeredTypeIs<IValueConverterRegistry, ValueConverterRegistry>();
-        }
-
-        [Test]
-        public void NulloViewActivator_is_registered()
-        {
-            registeredTypeIs<IViewActivator, NulloViewActivator>();
         }
 
         [Test]

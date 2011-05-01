@@ -319,6 +319,7 @@
     <Compile Include="View\FubuPageTester.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="View\PageActivatorTester.cs" />
     <Compile Include="View\RenderFubuViewBehaviorTester.cs" />
     <Compile Include="View\View4.aspx.cs">
       <DependentUpon>View4.aspx</DependentUpon>

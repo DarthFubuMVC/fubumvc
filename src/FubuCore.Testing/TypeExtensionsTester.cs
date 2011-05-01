@@ -75,6 +75,15 @@ namespace FubuCore.Testing
         }
 
         [Test]
+        public void find_parameter_type_to()
+        {
+            typeof (Service1).FindParameterTypeTo(typeof (IService<>)).ShouldEqual(typeof (string));
+            typeof (Service2).FindParameterTypeTo(typeof (IService<>)).ShouldBeNull();
+
+
+        }
+
+        [Test]
         public void find_interface_that_closes_open_interface_from_another_interface()
         {
             typeof (TestHandler).FindInterfaceThatCloses(typeof (IMessageHandler<>)).ShouldEqual(

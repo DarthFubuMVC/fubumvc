@@ -46,6 +46,6 @@ namespace FubuMVC.Tests.View.FakeViews
             throw new NotImplementedException();
         }
 
-        public ViewModel1 Model { get { throw new NotImplementedException(); } }
+        public ViewModel1 Model { get; set; }
     }
 }

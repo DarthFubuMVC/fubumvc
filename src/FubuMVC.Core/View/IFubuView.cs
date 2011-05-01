@@ -5,6 +5,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
 {
+    [Obsolete]
     public interface IFubuPageWithModel : IFubuPage
     {
         void SetModel(IFubuRequest request);
@@ -20,8 +21,8 @@ namespace FubuMVC.Core.View
         IUrlRegistry Urls { get; }
     }
 
-    public interface IFubuPage<out TViewModel> : IFubuPage, IFubuPageWithModel where TViewModel : class
+    public interface IFubuPage<TViewModel> : IFubuPageWithModel where TViewModel : class
     {
-        TViewModel Model { get; }
+        TViewModel Model { get; set; }
     }
 }
