@@ -66,7 +66,7 @@ namespace Spark.Web.FubuMVC.Tests
             {
                 var request = MockRepository.GenerateStub<IFubuRequest>();
                 request.Expect(x => x.Get<T>()).Return(viewModel);
-                sparkView.SetModel(request);
+                sparkView.Model = viewModel;
             }
             viewEngineResult.View.RenderView(_output);
         }

@@ -1,5 +1,6 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.WebForms;
 using StructureMap;
 
 namespace FubuMVC.StructureMap
@@ -21,7 +22,7 @@ namespace FubuMVC.StructureMap
 
             container.BuildUp(Page);
 
-            Page.SetModel(Request);
+            Page.Model = Model;
         }
 
         public IFubuRequest Request { get; private set; }

@@ -1,11 +1,10 @@
-using System;
-using System.Linq;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
+using System.Linq;
 
-namespace FubuMVC.Core.View
+namespace FubuMVC.Core.View.WebForms
 {
     public class FubuMasterPage<TMasterPageViewModel> : FubuMasterPage, IFubuPage<TMasterPageViewModel>
         where TMasterPageViewModel : class
@@ -17,30 +16,30 @@ namespace FubuMVC.Core.View
             get
             {
                 if (_model != null) return _model;
-
-                var fubuPage = Page as IFubuPage;
+                
+                var fubuPage = Page as IFubuPageWithModel;
 
                 if (fubuPage != null)
                 {
-                    SetModel(fubuPage.ServiceLocator.GetInstance<IFubuRequest>());
+                    Model = fubuPage.GetModel() as TMasterPageViewModel;
+                }
+
+                if (_model == null)
+                {
+                    _model = Get<IFubuRequest>().Find<TMasterPageViewModel>().FirstOrDefault();
                 }
 
                 return _model;
             }
             set
             {
-                SetModel(value);
+                _model = value;
             }
         }
 
-        public void SetModel(IFubuRequest request)
+        public object GetModel()
         {
-            _model = request.Find<TMasterPageViewModel>().FirstOrDefault();
-        }
-
-        public void SetModel(object model)
-        {
-            _model = model as TMasterPageViewModel;
+            return Model;
         }
     }
 

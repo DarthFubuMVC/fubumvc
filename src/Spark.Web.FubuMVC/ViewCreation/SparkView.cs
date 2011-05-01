@@ -119,13 +119,9 @@ namespace Spark.Web.FubuMVC.ViewCreation
     {
         public TModel Model { get; set; }
 
-        public void SetModel(IFubuRequest request)
+        object IFubuPageWithModel.GetModel()
         {
-            Model = request.Get<TModel>();
-        }
-        public void SetModel(object model)
-        {
-            Model = (TModel)model;
+            return Model;
         }
     }
 }

@@ -1,3 +1,5 @@
+using FubuMVC.Core.View.WebForms;
+
 namespace FubuMVC.Core.View
 {
     /// <summary>

@@ -150,7 +150,7 @@ namespace FubuTestApplication.Grids
 
         private HtmlDocument showCase(Case @case)
         {
-            _document.SetModel(@case);
+            _document.Model = @case;
             _document.Title = "Cases";
 
             _document.Title = "Case:  " + @case.Identifier;

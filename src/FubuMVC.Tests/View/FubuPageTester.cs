@@ -3,6 +3,7 @@ using System.Linq;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.WebForms;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.View
             var fubuRequest = MockFor<IFubuRequest>();
             fubuRequest.Stub(x => x.Get<TestFubuPageViewModel>()).Return(_model);
 
-            ClassUnderTest.SetModel(fubuRequest);
+            ClassUnderTest.Model = _model;
         }
 
         [Test]
@@ -61,7 +62,10 @@ namespace FubuMVC.Tests.View
             {
                 new TestFubuPageViewModel()
             };
-            var page = new TestFubuPage();
+            var page = new TestFubuPage{
+                Model = _models.Single()
+            };
+
             var serviceLocator = MockFor<IServiceLocator>();
             var fubuRequest = MockFor<IFubuRequest>();
             fubuRequest.Stub(x => x.Find<TestFubuPageViewModel>()).Return(_models);

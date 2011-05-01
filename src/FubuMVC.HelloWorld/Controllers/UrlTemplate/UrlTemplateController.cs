@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.WebForms;
 using FubuMVC.HelloWorld.Controllers.Products;
 
 namespace FubuMVC.HelloWorld.Controllers.UrlTemplate

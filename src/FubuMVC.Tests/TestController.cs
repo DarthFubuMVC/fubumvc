@@ -85,10 +85,6 @@ namespace FubuMVC.Tests
 
     public class TestView : IFubuPage<TestOutputModel>
     {
-        public void SetModel(IFubuRequest model)
-        {
-            throw new NotImplementedException();
-        }
 
         public string ElementPrefix
         {
@@ -112,14 +108,14 @@ namespace FubuMVC.Tests
             throw new NotImplementedException();
         }
 
+        public object GetModel()
+        {
+            throw new NotImplementedException();
+        }
+
         public IUrlRegistry Urls
         {
             get { throw new NotImplementedException(); }
-        }
-
-        public void SetModel(object model)
-        {
-            throw new NotImplementedException();
         }
 
         public TestOutputModel Model { get; set;  }
@@ -127,15 +123,6 @@ namespace FubuMVC.Tests
 
     public class TestUserControl : UserControl, IFubuPage<TestPartialModel>
     {
-        public void SetModel(IFubuRequest model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetModel(object model)
-        {
-            throw new NotImplementedException();
-        }
 
         public TestPartialModel Model { get; set; }
 
@@ -157,6 +144,11 @@ namespace FubuMVC.Tests
         }
 
         public T GetNew<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object GetModel()
         {
             throw new NotImplementedException();
         }

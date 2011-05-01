@@ -10,11 +10,6 @@ namespace FubuMVC.Tests.View
 {
     public class View4 : Page, IFubuPage<ViewModel4>
     {
-        public void SetModel(IFubuRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
         public string ElementPrefix
         {
             get { throw new NotImplementedException(); }
@@ -37,16 +32,17 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
-        public IUrlRegistry Urls
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public void SetModel(object model)
+        public object GetModel()
         {
             throw new NotImplementedException();
         }
 
+        public IUrlRegistry Urls
+        {
+            get { throw new NotImplementedException(); }
+        }
         public ViewModel4 Model { get; set; }
     }
+
+
 }

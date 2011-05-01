@@ -51,15 +51,9 @@ namespace FubuMVC.Core.UI
         {
         }
 
-
-        public void SetModel(IFubuRequest request)
+        object IFubuPageWithModel.GetModel()
         {
-            _model = request.Get<T>();
-        }
-
-        public void SetModel(object model)
-        {
-            _model = (T) model;
+            return Model;
         }
 
         public T Model

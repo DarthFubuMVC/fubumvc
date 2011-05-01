@@ -405,13 +405,13 @@
     <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
     <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
     <Compile Include="View\Activation\ViewTypeExtensions.cs" />
-    <Compile Include="View\FubuControl.cs">
+    <Compile Include="View\WebForms\FubuControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="View\FubuMasterPage.cs">
+    <Compile Include="View\WebForms\FubuMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="View\FubuPage.cs">
+    <Compile Include="View\WebForms\FubuPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\IFubuView.cs" />

@@ -1,24 +1,20 @@
-using System;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
 {
-    [Obsolete]
-    public interface IFubuPageWithModel : IFubuPage
-    {
-        void SetModel(IFubuRequest request);
-        void SetModel(object model);
-    }
-
     public interface IFubuPage
     {
         string ElementPrefix { get; set; }
         IServiceLocator ServiceLocator { get; set; }
+        IUrlRegistry Urls { get; }
         T Get<T>();
         T GetNew<T>();
-        IUrlRegistry Urls { get; }
+    }
+
+    public interface IFubuPageWithModel : IFubuPage
+    {
+        object GetModel();
     }
 
     public interface IFubuPage<TViewModel> : IFubuPageWithModel where TViewModel : class

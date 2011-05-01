@@ -9,16 +9,7 @@ namespace FubuMVC.Tests.View.FakeViews.Folder1
 {
     public class A : Page, IFubuPage<ViewModel1>
     {
-        public void SetModel(IFubuRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetModel(object model)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public ViewModel1 Model { get; set; }
 
         public string ElementPrefix
@@ -39,6 +30,11 @@ namespace FubuMVC.Tests.View.FakeViews.Folder1
         }
 
         public T GetNew<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object GetModel()
         {
             throw new NotImplementedException();
         }

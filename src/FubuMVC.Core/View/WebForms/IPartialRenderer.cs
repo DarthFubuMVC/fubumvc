@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Web.UI;
 using FubuCore;
+using FubuMVC.Core.View.Activation;
 
 namespace FubuMVC.Core.View.WebForms
 {
@@ -62,11 +63,7 @@ namespace FubuMVC.Core.View.WebForms
             var page = new Page();
             page.Controls.Add(view as Control);
 
-            var fubuView = view as IFubuPageWithModel;
-            if (fubuView != null)
-            {
-                fubuView.SetModel(viewModel);
-            }
+            view.As<IFubuPage<T>>().Model = viewModel;
 
             setParentPageIfNotAlreadySet(view, page);
 

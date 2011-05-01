@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.WebForms;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Packaging;
 using FubuMVC.Tests.Registration;

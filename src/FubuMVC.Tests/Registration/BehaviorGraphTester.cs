@@ -275,14 +275,14 @@ namespace FubuMVC.Tests.Registration
             _partialViewTypeRegistries.ShouldHaveCount(1);
         }
 
-        public class PartialView : Core.View.FubuPage { }
+        public class PartialView : FubuPage { }
         public class PartialModel { }
-        public class PartialView1 : Core.View.FubuPage{}
+        public class PartialView1 : FubuPage{}
         public class PartialModel1 { }
-        public class PartialView2 : Core.View.FubuPage { }
+        public class PartialView2 : FubuPage { }
         public class PartialModel2 { }
         public class UnregisteredPartialModel {}
-        public class UnregisteredPartialView : Core.View.FubuPage {}
+        public class UnregisteredPartialView : FubuPage {}
 
         [Test]
         public void registry_should_contain_registered_types()
