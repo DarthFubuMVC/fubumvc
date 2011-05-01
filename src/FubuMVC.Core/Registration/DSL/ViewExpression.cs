@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using System.Collections.Generic;
+using FubuMVC.Core.View.Activation;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -49,6 +50,33 @@ namespace FubuMVC.Core.Registration.DSL
                 x.by_ViewModel_and_Namespace();
                 x.by_ViewModel();
             });
+        }
+
+        /// <summary>
+        /// Define a view activation policy
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public PageActivationExpression IfTheViewTypeMatches(Func<Type, bool> filter)
+        {
+            Action<IPageActivationSource> registration = source => _registry.Services(x => x.AddService<IPageActivationSource>(source));
+            return new PageActivationExpression(registration, filter);
+        }
+
+        /// <summary>
+        /// Define a view activation policy by matching on the input type of a view
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public PageActivationExpression IfTheInputModelOfTheViewMatches(Func<Type, bool> filter)
+        {
+            Func<Type, bool> combined = type =>
+            {
+                var inputType = type.InputModel();
+                return inputType == null ? false : filter(inputType);
+            };
+
+            return IfTheViewTypeMatches(combined);
         }
     }
 

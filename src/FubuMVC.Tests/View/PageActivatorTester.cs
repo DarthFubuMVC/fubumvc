@@ -1,20 +1,17 @@
-using System;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
-using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
-using FubuMVC.Core.UI;
 
 namespace FubuMVC.Tests.View
 {
     [TestFixture]
     public class PageActivatorTester 
     {
-        private PageActivationRules theRules;
+        private PageActivationRuleCache _theRuleCache;
         private IServiceLocator theServices;
         private PageActivator theActivator;
         private InMemoryFubuRequest theRequest;
@@ -22,13 +19,13 @@ namespace FubuMVC.Tests.View
         [SetUp]
         public void SetUp()
         {
-            theRules = new PageActivationRules();
+            _theRuleCache = new PageActivationRuleCache(new IPageActivationSource[0]);
             theServices = MockRepository.GenerateMock<IServiceLocator>();
 
             theRequest = new InMemoryFubuRequest();
             theServices.Stub(x => x.GetInstance<IFubuRequest>()).Return(theRequest);
 
-            theActivator = new PageActivator(theServices, theRules);
+            theActivator = new PageActivator(theServices, _theRuleCache);
         }
 
         [Test]
@@ -59,7 +56,7 @@ namespace FubuMVC.Tests.View
         [Test]
         public void activate_a_fubu_page_with_a_profile_rule()
         {
-            theRules.IfTheInputModelOfTheViewMatches(type => type == typeof(FubuPageTarget2))
+            _theRuleCache.IfTheInputModelOfTheViewMatches(type => type == typeof(FubuPageTarget2))
                 .SetTagProfileTo("the profile");
 
             var theModelPage = MockRepository.GenerateMock<IFubuPage<FubuPageTarget>>();

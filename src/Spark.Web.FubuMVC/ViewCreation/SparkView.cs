@@ -117,7 +117,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
 
     public abstract class SparkView<TModel> : SparkView, IFubuPage<TModel> where TModel : class
     {
-        public TModel Model { get; private set; }
+        public TModel Model { get; set; }
 
         public void SetModel(IFubuRequest request)
         {

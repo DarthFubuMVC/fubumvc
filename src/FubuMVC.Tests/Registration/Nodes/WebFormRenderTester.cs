@@ -7,6 +7,7 @@ using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.WebForms;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
+using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using StructureMap;
 
@@ -33,6 +34,9 @@ namespace FubuMVC.Tests.Registration.Nodes
                 x.For<IWebFormRenderer>().Use<WebFormRenderer>();
                 x.For<IOutputWriter>().Use<HttpResponseOutputWriter>();
                 x.For<IFubuRequest>().Use<InMemoryFubuRequest>();
+                x.For<IPageActivator>().Use<PageActivator>();
+                x.For<IPageActivationRules>().Use<PageActivationRuleCache>();
+                x.For<IServiceLocator>().Use<StructureMapServiceLocator>();
             });
 
             behavior = container.GetInstance<IActionBehavior>();

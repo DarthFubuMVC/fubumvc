@@ -3,55 +3,38 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
-using Microsoft.Practices.ServiceLocation;
+using FubuMVC.Core.View.Activation;
 
 namespace Spark.Web.FubuMVC.ViewCreation
 {
     public class SparkRenderViewBehavior : BasicBehavior
     {
         private readonly ActionCall _actionCall;
-        private readonly IFubuRequest _request;
-        private readonly IServiceLocator _serviceLocator;
         private readonly ISparkViewRenderer<IFubuPage> _viewRenderder;
         private readonly SparkViewToken _viewToken;
         private readonly IOutputWriter _writer;
+        private readonly IPageActivator _activator;
 
-        public SparkRenderViewBehavior(
-            ISparkViewRenderer<IFubuPage> viewRenderder,
-            IServiceLocator serviceLocator,
-            IFubuRequest request,
-            SparkViewToken viewToken,
-            ActionCall actionCall,
-            IOutputWriter writer)
+        public SparkRenderViewBehavior(ISparkViewRenderer<IFubuPage> viewRenderder, SparkViewToken viewToken, ActionCall actionCall, IOutputWriter writer, IPageActivator activator)
             : base(PartialBehavior.Executes)
         {
             _viewRenderder = viewRenderder;
-            _serviceLocator = serviceLocator;
-            _request = request;
             _viewToken = viewToken;
             _actionCall = actionCall;
             _writer = writer;
+            _activator = activator;
         }
 
         protected override DoNext performInvoke()
         {
             lock (_actionCall)
             {
-                string output = _viewRenderder.RenderSparkView(
-                    _viewToken, _actionCall, view =>
-                                                 {
-                                                     var page = view as IFubuPage;
-                                                     if (page != null)
-                                                         page.ServiceLocator = _serviceLocator;
+                var output = _viewRenderder.RenderSparkView(_viewToken, _actionCall, view => _activator.Activate(view));
 
-                                                     var viewWithModel = view as IFubuPageWithModel;
-                                                     if (viewWithModel != null)
-                                                         viewWithModel.SetModel(_request);
-                                                 });
+                var contentType = MimeType.Html.ToString();
 
-                string contentType = MimeType.Html.ToString();
-
-                if (_viewToken.MatchedDescriptor != null && _viewToken.MatchedDescriptor.Language == LanguageType.Javascript)
+                if (_viewToken.MatchedDescriptor != null &&
+                    _viewToken.MatchedDescriptor.Language == LanguageType.Javascript)
                     contentType = MimeType.Javascript.ToString();
 
                 _writer.Write(contentType, output);

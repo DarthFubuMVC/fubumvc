@@ -146,6 +146,9 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
 
+            graph.Services.SetServiceIfNone<IPageActivationRules, PageActivationRuleCache>();
+            graph.Services.SetServiceIfNone<IPageActivator, PageActivator>();
+
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

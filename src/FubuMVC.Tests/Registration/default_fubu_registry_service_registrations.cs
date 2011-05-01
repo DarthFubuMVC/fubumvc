@@ -240,5 +240,16 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IRequestHistoryCache, RequestHistoryCache>();
         }
 
+        [Test]
+        public void page_activation_rule_cache_is_registered()
+        {
+            registeredTypeIs<IPageActivationRules, PageActivationRuleCache>();
+        }
+
+        [Test]
+        public void page_activator_is_registered()
+        {
+            registeredTypeIs<IPageActivator, PageActivator>();
+        }
     }
 }

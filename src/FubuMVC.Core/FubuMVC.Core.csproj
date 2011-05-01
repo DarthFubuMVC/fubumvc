@@ -398,7 +398,8 @@
     <Compile Include="View\Activation\IPageActivationSource.cs" />
     <Compile Include="View\Activation\LambdaPageActivationAction.cs" />
     <Compile Include="View\Activation\LambdaPageActivationSource.cs" />
-    <Compile Include="View\Activation\PageActivationRules.cs" />
+    <Compile Include="View\Activation\PageActivationExpression.cs" />
+    <Compile Include="View\Activation\PageActivationRuleCache.cs" />
     <Compile Include="View\Activation\PageActivator.cs" />
     <Compile Include="View\Activation\SetPageModelActivationAction.cs" />
     <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
@@ -416,7 +417,6 @@
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\Activation\IPageActivator.cs" />
     <Compile Include="View\IViewsForActionFilter.cs" />
-    <Compile Include="View\IViewEngine.cs" />
     <Compile Include="View\IViewFacility.cs" />
     <Compile Include="View\IViewToken.cs" />
     <Compile Include="View\PageHarness.cs" />
@@ -431,17 +431,16 @@
     <Compile Include="View\WebForms\IPartialViewTypeRegistrationExpression.cs" />
     <Compile Include="View\WebForms\IPartialViewTypeRegistry.cs" />
     <Compile Include="View\WebForms\IWebFormRenderer.cs" />
-    <Compile Include="Behaviors\RenderFubuWebFormView.cs" />
     <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
     <Compile Include="View\WebForms\PartialViewTypeBindingExpression.cs" />
     <Compile Include="View\WebForms\PartialViewTypeRegistrationExpression.cs" />
     <Compile Include="View\WebForms\PartialViewTypeRegistry.cs" />
+    <Compile Include="View\WebForms\RenderFubuWebFormView.cs" />
     <Compile Include="View\WebForms\WebFormExtensions.cs" />
     <Compile Include="View\WebForms\WebFormRenderer.cs" />
     <Compile Include="View\WebForms\WebFormsEndpointPolicy.cs" />
-    <Compile Include="View\WebForms\WebFormViewEngine.cs" />
     <Compile Include="View\WebForms\WebFormViewToken.cs" />
     <Compile Include="View\WebForms\WebFormViewFacility.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />
