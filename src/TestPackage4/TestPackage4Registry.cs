@@ -2,7 +2,7 @@
 
 namespace TestPackage4
 {
-	public class TestPackage4Registry : FubuRegistry, IFubuRegistryExtension
+	public class TestPackage4Registry : FubuPackageRegistry, IFubuRegistryExtension
 	{
 		public void Configure(FubuRegistry registry)
 		{
