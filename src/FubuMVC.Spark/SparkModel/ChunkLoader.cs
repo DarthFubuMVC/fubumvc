@@ -15,8 +15,6 @@ namespace FubuMVC.Spark.SparkModel
         IEnumerable<Chunk> Load(SparkItem item);
     }
 
-    // TODO: UT
-
     public class ChunkLoader : IChunkLoader
     {
         private readonly Func<string, IViewFolder> _viewFolder;

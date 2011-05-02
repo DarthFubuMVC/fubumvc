@@ -1,13 +1,13 @@
-
-Tests for Rendering.
-
 Tests needed in SparkModel:
 
  First:
  
- - SharedItemLocator (Rework needed)
+ - SharedItemLocator
  - SparkItemBuilder
- - ChunkLoader
+
+ Then:
+
+ - Tests for Rendering.
  
  Then:
  
