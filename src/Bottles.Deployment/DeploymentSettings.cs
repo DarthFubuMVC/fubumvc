@@ -11,14 +11,20 @@ namespace Bottles.Deployment
             //var finder = new DeploymentFolderFinder(new FileSystem());
             //path = finder.FindDeploymentFolder(path);
 
-
+            DeploymentDirectory = path;
             BottlesDirectory = FileSystem.Combine(path, ProfileFiles.BottlesDirectory);
             RecipesDirectory = FileSystem.Combine(path, ProfileFiles.RecipesDirectory);
             EnvironmentFile = FileSystem.Combine(path, ProfileFiles.EnvironmentSettingsFileName);
             TargetDirectory = FileSystem.Combine(path, ProfileFiles.TargetDirectory);
             BottleManifestFile = FileSystem.Combine(path, ProfileFiles.BottlesManifestFile);
 
-            DeploymentDirectory = path;
+            
+        }
+
+        public static DeploymentSettings ForRootDirectory()
+        {
+            var path = FileSystem.Combine(".".ToFullPath(), ProfileFiles.DeploymentFolder);
+            return new DeploymentSettings(path);
         }
 
         public DeploymentSettings() : this(".".ToFullPath())
