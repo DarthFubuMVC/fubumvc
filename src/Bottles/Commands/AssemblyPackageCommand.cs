@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Xml;
 using Bottles.Zipping;
@@ -7,6 +8,15 @@ using FubuCore.CommandLine;
 
 namespace Bottles.Commands
 {
+    public class AssemblyPackageInput
+    {
+        [Description("The root folder for the project if different from the project file's folder")]
+        public string RootFolder { get; set; }
+
+        [Description("Name of the csproj file.  If set, this command attempts to add the zip files as embedded resources")]
+        public string ProjFileFlag { get; set; }
+    }
+
     // TODO -- make this mess with the csproj files
     // TODO -- do something that tests this
     [CommandDescription("Bundle up the content and data files for a self contained assembly package", Name = "assembly-pak")]

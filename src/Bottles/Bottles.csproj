@@ -48,14 +48,12 @@
     <Compile Include="Assemblies\AssemblyPackageLoader.cs" />
     <Compile Include="Commands\AssembliesCommand.cs" />
     <Compile Include="Commands\AssemblyPackageCommand.cs" />
-    <Compile Include="Commands\AssemblyPackageInput.cs" />
     <Compile Include="Commands\CreatePackageCommand.cs" />
     <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\InitPakCommand.cs" />
-    <Compile Include="Commands\ISimpleLogger.cs" />
+    <Compile Include="ISimpleLogger.cs" />
     <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\PackagesCommand.cs" />
-    <Compile Include="Commands\PackagesInput.cs" />
     <Compile Include="Configuration\CentralizedSettingsSource.cs" />
     <Compile Include="Creation\CreatePackageInput.cs" />
     <Compile Include="Creation\IPackageLogger.cs" />

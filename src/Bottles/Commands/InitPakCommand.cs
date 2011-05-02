@@ -33,6 +33,7 @@ namespace Bottles.Commands
     {
         public override bool Execute(InitPakInput input)
         {
+            //this will create an alias entry
             new AliasCommand().Execute(new AliasInput{
                 Folder = input.Path,
                 Name = input.AliasFlag ?? input.Name.ToLower()
@@ -45,7 +46,7 @@ namespace Bottles.Commands
 
         public void Execute(InitPakInput input, IFileSystem fileSystem)
         {
-            var assemblyName = Path.GetFileName(input.Path);
+            var assemblyName = fileSystem.GetFileName(input.Path);
 
             var manifest = new PackageManifest{
                 Name = input.Name,

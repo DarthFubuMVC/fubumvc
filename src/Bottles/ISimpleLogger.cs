@@ -1,6 +1,6 @@
 ﻿using FubuCore.CommandLine;
 
-namespace Bottles.Commands
+namespace Bottles
 {
     public interface ISimpleLogger
     {

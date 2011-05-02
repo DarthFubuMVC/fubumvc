@@ -14,8 +14,9 @@ namespace Bottles.Tests.Commands
         protected override void beforeEach()
         {
             theInput = new PackagesInput(){
-                AppFolder = "c:\\folder1"
+                AppFolder = ".\\packagesCommand"
             };
+
             Services.PartialMockTheClassUnderTest();
 
             ClassUnderTest.Stub(x => x.BuildExploder()).Return(MockFor<IPackageExploder>());
