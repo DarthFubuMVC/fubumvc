@@ -31,11 +31,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var expected = new List<string>();
             _folderNames.Each(s => expected.Add(FileSystem.Combine(_rootPath, s)));
+
             var path = FileSystem.Combine(_rootPath, "path1");
             
             _classUnderTest.BuildFrom(path, _rootPath)
                 .ShouldHaveTheSameElementsAs(expected);
         }
+
 
         [Test]
         public void path_two_level_returns_correct_shared_paths()
@@ -55,7 +57,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
 
         }
-
+		
         // TODO: More to come -> edge cases + expected behavior
     }
 }
