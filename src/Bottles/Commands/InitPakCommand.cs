@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -13,18 +12,30 @@ namespace Bottles.Commands
         [Description("The name of the new package")]
         public string Name { get; set; }
 
-        [Description("What role should this pak play [Default: Module]")]
+        [Description("What role should this pak play - Options: module (default), binaries, config, application")]
         public string RoleFlag { get; set; }
+
+        [Description("The main environment class name in assembly qualified form for usage with the 'install' command")]
+        [FlagAlias("class")]
+        public string EnvironmentClassNameFlag { get; set; }
+
+        [Description("Write the main application assembly to the manifest file for usage with the 'install command")]
+        [FlagAlias("assembly")]
+        public string EnvironmentAssemblyFlag { get; set; }
 
         [Description("Creates a folder alias for the package folder.  Equivalent to fubu alias <folder> <alias>")]
         public string AliasFlag { get; set; }
 
         [Description("Opens the package manifest file in notepad")]
-        public bool NotepadFlag { get; set; }
+        public bool OpenFlag { get; set; }
 
         [Description("There is no web content to include")]
         [FlagAlias("noweb")]
         public bool NoWebContentFlag { get; set; }
+
+        [Description("Force the command to overwrite any existing manifest file if using the -create flag")]
+        [FlagAlias("f")]
+        public bool ForceFlag { get; set; }
 
     }
 
@@ -58,13 +69,16 @@ namespace Bottles.Commands
 
             manifest.AddAssembly(assemblyName);
 
+            manifest.EnvironmentAssembly = input.EnvironmentAssemblyFlag;
+            manifest.EnvironmentClassName = input.EnvironmentClassNameFlag;
+
 			if(!fileSystem.FileExists(FileSystem.Combine(input.Path, PackageManifest.FILE)))
 			{
 				fileSystem.PersistToFile(manifest, input.Path, PackageManifest.FILE);
 			}
             
 
-            if (input.NotepadFlag)
+            if (input.OpenFlag)
             {
                 fileSystem.LaunchEditor(input.Path, PackageManifest.FILE);
             }
