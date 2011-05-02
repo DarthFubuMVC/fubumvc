@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="FubuMVC.HelloWorld.Controllers.Products.ProductDisplayPartial" %>
 <%@ Import Namespace="FubuMVC.HelloWorld.Controllers.Products" %>
+<%@ Import Namespace="FubuMVC.WebForms" %>
 <h3><u>Product</u></h3>
 <p>
     <%= this.LabelFor(m => m.Code) %>

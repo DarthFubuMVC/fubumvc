@@ -6,13 +6,13 @@ using System.Text;
 using System.Web;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 
-namespace FubuMVC.Core.UI.Partials
+namespace FubuMVC.WebForms.Partials
 {
     public class RenderPartialExpression<TViewModel> : IHtmlString where TViewModel : class
     {

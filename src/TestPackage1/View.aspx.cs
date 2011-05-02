@@ -1,6 +1,6 @@
 using System;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
+using FubuMVC.WebForms;
 
 namespace TestPackage1
 {

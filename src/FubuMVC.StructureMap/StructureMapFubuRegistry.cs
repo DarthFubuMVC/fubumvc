@@ -3,8 +3,6 @@ using System.Web;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap.Configuration.DSL;
 
@@ -51,15 +49,8 @@ namespace FubuMVC.StructureMap
             For<HttpContextBase>().Use<HttpContextWrapper>().Ctor<HttpContext>().Is(
                 x => x.ConstructedBy(BuildContextWrapper));
             For<IServiceLocator>().Use<StructureMapServiceLocator>();
-            For<IWebFormsControlBuilder>().Use<StructureMapWebFormsControlBuilder>();
 
             For<ISessionState>().Use<SimpleSessionState>();
-
-            SetAllProperties(x =>
-            {
-                x.Matching(p => p.DeclaringType == typeof(FubuPage));
-                x.OfType<IServiceLocator>();
-            });
 
             For<CurrentRequest>().Use(c => c.GetInstance<IFubuRequest>().Get<CurrentRequest>());
         }

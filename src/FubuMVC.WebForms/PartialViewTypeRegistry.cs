@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class PartialViewTypeRegistry : IPartialViewTypeRegistry
     {

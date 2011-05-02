@@ -5,8 +5,9 @@ using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.View;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class WebFormViewFacility : IViewFacility
     {

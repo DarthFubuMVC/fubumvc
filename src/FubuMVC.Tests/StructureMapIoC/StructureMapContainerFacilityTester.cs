@@ -12,10 +12,10 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Packaging;
 using FubuMVC.Tests.Registration;
+using FubuMVC.WebForms;
 using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
@@ -176,16 +176,6 @@ namespace FubuMVC.Tests.StructureMapIoC
             container.GetInstance<IServiceLocator>()
                 .ShouldBeOfType<StructureMapServiceLocator>()
                 .Container.ShouldBeTheSameAs(container);
-        }
-
-        [Test]
-        public void should_set_service_locator_on_fubu_page()
-        {
-            var serviceLocator = new StructureMapServiceLocator(container);
-            container.Inject<IServiceLocator>(serviceLocator);
-            var fubuPage = container.GetInstance<FubuPage>();
-
-            fubuPage.ServiceLocator.ShouldEqual(serviceLocator);
         }
 
         [Test]

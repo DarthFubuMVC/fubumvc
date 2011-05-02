@@ -1,8 +1,8 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 using FubuMVC.Tests.Urls;
+using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
 using FubuCore;
@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         public void SetUp()
         {
             var registry = new FubuRegistry();
-
+            registry.Import<WebFormsEngine>();
 
             registry.Views.RegisterActionLessViews(WebFormViewFacility.IsWebFormControl, chain => chain.IsPartialOnly = true);
 

@@ -18,8 +18,8 @@ using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
-using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
+using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -88,17 +88,6 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<ISecurityContext, WebSecurityContext>();
         }
 
-        [Test]
-        public void IWebFormsControlBuilder_is_registered()
-        {
-            registeredTypeIs<IWebFormsControlBuilder, WebFormsControlBuilder>();
-        }
-
-        [Test]
-        public void IWebRenderer_is_registered()
-        {
-            registeredTypeIs<IWebFormRenderer, WebFormRenderer>();
-        }
 
         [Test]
         public void ValueConverterRegistry_is_registered()

@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class WebFormRenderer : IWebFormRenderer
     {

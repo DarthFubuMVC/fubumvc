@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -32,15 +31,8 @@ namespace FubuMVC.Core.Registration.DSL
             return returnChain(new RenderJsonNode(_outputType));
         }
 
-        public ChainedBehaviorExpression RenderWebForm<TWebform>()
+        public ChainedBehaviorExpression OutputTo(OutputNode node)
         {
-            // TODO -- blow up if the web form T is strongly typed to something that 
-            // does not match the output type of the output type
-            // Do it in validation rules
-            
-
-            var node = new WebFormView(typeof(TWebform));
-
             return returnChain(node);
         }
 

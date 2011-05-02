@@ -134,6 +134,10 @@
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
+      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
+      <Name>FubuMVC.WebForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>
       <Name>FubuValidation</Name>

@@ -234,7 +234,6 @@
     <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
-    <Compile Include="Registration\Nodes\WebFormView.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
     <Compile Include="Registration\Querying\ChainResolver.cs" />
     <Compile Include="Registration\Querying\ChainForwarder.cs" />
@@ -320,7 +319,6 @@
     <Compile Include="UI\Navigation\MenuItemToken.cs" />
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
-    <Compile Include="UI\Partials\RenderPartialExpression.cs" />
     <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
     <Compile Include="UI\Scripts\BasicScriptTagWriter.cs" />
     <Compile Include="UI\Scripts\IScriptTagWriter.cs" />
@@ -405,15 +403,6 @@
     <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
     <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
     <Compile Include="View\Activation\ViewTypeExtensions.cs" />
-    <Compile Include="View\WebForms\FubuControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\WebForms\FubuMasterPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\WebForms\FubuPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\Activation\IPageActivator.cs" />
     <Compile Include="View\Attachment\IViewsForActionFilter.cs" />
@@ -424,25 +413,8 @@
     <Compile Include="View\Attachment\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ViewAttacher.cs" />
     <Compile Include="View\Attachment\ViewBag.cs" />
-    <Compile Include="View\WebForms\ViewPath.cs" />
-    <Compile Include="View\WebForms\INeedToKnowAboutParentPage.cs" />
-    <Compile Include="View\WebForms\IPartialRenderer.cs" />
-    <Compile Include="View\WebForms\IPartialViewTypeBindingExpression.cs" />
-    <Compile Include="View\WebForms\IPartialViewTypeRegistrationExpression.cs" />
-    <Compile Include="View\WebForms\IPartialViewTypeRegistry.cs" />
-    <Compile Include="View\WebForms\IWebFormRenderer.cs" />
-    <Compile Include="View\WebForms\IWebFormsControlBuilder.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />
-    <Compile Include="View\WebForms\PartialViewTypeBindingExpression.cs" />
-    <Compile Include="View\WebForms\PartialViewTypeRegistrationExpression.cs" />
-    <Compile Include="View\WebForms\PartialViewTypeRegistry.cs" />
-    <Compile Include="View\WebForms\RenderFubuWebFormView.cs" />
-    <Compile Include="View\WebForms\WebFormExtensions.cs" />
-    <Compile Include="View\WebForms\WebFormRenderer.cs" />
-    <Compile Include="View\WebForms\WebFormsEndpointPolicy.cs" />
-    <Compile Include="View\WebForms\WebFormViewToken.cs" />
-    <Compile Include="View\WebForms\WebFormViewFacility.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />
     <Compile Include="Web\Security\WebSecurityContext.cs" />
   </ItemGroup>

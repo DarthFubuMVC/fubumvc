@@ -1,5 +1,5 @@
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
+using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
 

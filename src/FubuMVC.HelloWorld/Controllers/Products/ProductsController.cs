@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
+using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld.Controllers.Products
 {

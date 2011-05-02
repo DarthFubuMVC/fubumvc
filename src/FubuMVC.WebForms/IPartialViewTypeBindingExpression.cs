@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Core.View.WebForms
+using FubuMVC.Core.View;
+
+namespace FubuMVC.WebForms
 {
     public interface IPartialViewTypeBindingExpression
     {

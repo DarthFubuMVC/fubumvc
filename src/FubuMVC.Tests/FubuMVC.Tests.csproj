@@ -367,6 +367,10 @@
       <Project>{E8128BAA-BAF7-4164-9786-B9B23E555B96}</Project>
       <Name>FubuMVC.FakeControllers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
+      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
+      <Name>FubuMVC.WebForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>

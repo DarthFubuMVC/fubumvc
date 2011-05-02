@@ -4,7 +4,6 @@ using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core.View.Attachment
 {
@@ -17,8 +16,6 @@ namespace FubuMVC.Core.View.Attachment
         public ViewAttacher(TypePool types)
         {
             _types = types;
-
-            AddFacility(new WebFormViewFacility());
         }
 
         public void Configure(BehaviorGraph graph)

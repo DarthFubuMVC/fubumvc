@@ -2,10 +2,11 @@ using System;
 using System.Web.UI;
 using FubuCore.Util;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class FubuPage<TViewModel> : FubuPage, IFubuPage<TViewModel> where TViewModel : class
     {

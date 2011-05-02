@@ -4,6 +4,7 @@ using FubuMVC.Core.Urls;
 using FubuMVC.HelloWorld.Controllers.Home;
 using FubuMVC.HelloWorld.Controllers.OutputModels;
 using FubuMVC.HelloWorld.Controllers.Products;
+using FubuMVC.WebForms;
 
 namespace FubuMVC.HelloWorld
 {
@@ -31,8 +32,8 @@ namespace FubuMVC.HelloWorld
 
             HtmlConvention<SampleHtmlConventions>();
 
-            RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
-            RegisterPartials(x => x.For<ProductPart>().Use<PartPartial>());
+            this.RegisterPartials(x => x.For<Product>().Use<ProductPartial>());
+            this.RegisterPartials(x => x.For<ProductPart>().Use<PartPartial>());
 
             Services(s => s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>());
         }

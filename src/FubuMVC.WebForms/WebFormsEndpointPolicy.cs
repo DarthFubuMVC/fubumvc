@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     // Find any action w/o an output, look for the WebFormEndpoint att
     public class WebFormsEndpointPolicy : IConfigurationAction

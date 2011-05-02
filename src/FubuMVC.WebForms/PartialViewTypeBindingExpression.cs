@@ -1,6 +1,7 @@
-﻿using System;
+using System;
+using FubuMVC.Core.View;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class PartialViewTypeBindingExpression : IPartialViewTypeBindingExpression
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Web.UI;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public static class WebFormExtensions
     {

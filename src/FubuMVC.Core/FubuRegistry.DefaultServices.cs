@@ -26,9 +26,7 @@ using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
-using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
-using FubuMVC.Core.View.WebForms;
 using FubuMVC.Core.Web.Security;
 
 namespace FubuMVC.Core
@@ -59,7 +57,7 @@ namespace FubuMVC.Core
         void Import<T>(string prefix) where T : FubuRegistry, new();
         void Import(FubuRegistry registry, string prefix);
         void IncludeDiagnostics(bool shouldInclude);
-        void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration);
+        
 
         /// <summary>
         ///   This allows you to drop down to direct manipulation of the BehaviorGraph
@@ -93,12 +91,11 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IAuthenticationContext, WebAuthenticationContext>();
             graph.Services.SetServiceIfNone<IFlash, FlashProvider>();
             graph.Services.SetServiceIfNone<IRequestDataProvider, RequestDataProvider>();
-            graph.Services.SetServiceIfNone<IWebFormRenderer, WebFormRenderer>();
-            graph.Services.SetServiceIfNone<IWebFormsControlBuilder, WebFormsControlBuilder>();
+
             graph.Services.SetServiceIfNone<IFubuRequest, FubuRequest>();
             graph.Services.SetServiceIfNone<IValueConverterRegistry, ValueConverterRegistry>();
             graph.Services.SetServiceIfNone<IPartialFactory, PartialFactory>();
-            graph.Services.SetServiceIfNone<IPartialRenderer, PartialRenderer>();
+
             graph.Services.SetServiceIfNone<IObjectResolver, ObjectResolver>();
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
             graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
@@ -114,7 +111,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ICollectionTypeProvider, DefaultCollectionTypeProvider>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
-            graph.Services.SetServiceIfNone<IPartialViewTypeRegistry>(new PartialViewTypeRegistry());
+
 
             graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
             graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();

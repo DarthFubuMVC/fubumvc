@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public interface IPartialViewTypeRegistrationExpression
     {

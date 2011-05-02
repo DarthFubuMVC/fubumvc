@@ -1,9 +1,9 @@
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
-using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Tests.Registration.Nodes
 {

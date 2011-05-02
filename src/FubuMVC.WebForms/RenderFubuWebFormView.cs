@@ -1,7 +1,9 @@
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class RenderFubuWebFormView : BasicBehavior
     {

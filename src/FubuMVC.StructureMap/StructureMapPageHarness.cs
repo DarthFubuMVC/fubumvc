@@ -1,6 +1,5 @@
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 using StructureMap;
 
 namespace FubuMVC.StructureMap
@@ -12,7 +11,7 @@ namespace FubuMVC.StructureMap
     public class StructureMapPageHarness<T> : PageHarness<T> where T : class, new()
     {
         public StructureMapPageHarness(IContainer container)
-            : base(new T(), new FubuPage<T>())
+            : base(new T(), new SimpleFubuPage<T>())
         {
             Container = container;
             Request = new InMemoryFubuRequest();

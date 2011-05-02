@@ -1,10 +1,11 @@
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuMVC.Core.View;
 using Microsoft.Practices.ServiceLocation;
 using System.Linq;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public class FubuMasterPage<TMasterPageViewModel> : FubuMasterPage, IFubuPage<TMasterPageViewModel>
         where TMasterPageViewModel : class

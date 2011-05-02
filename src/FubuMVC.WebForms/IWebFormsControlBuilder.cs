@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Compilation;
 using System.Web.UI;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public interface IWebFormsControlBuilder
     {

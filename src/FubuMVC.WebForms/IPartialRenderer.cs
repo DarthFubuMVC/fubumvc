@@ -3,9 +3,9 @@ using System.Globalization;
 using System.IO;
 using System.Web.UI;
 using FubuCore;
-using FubuMVC.Core.View.Activation;
+using FubuMVC.Core.View;
 
-namespace FubuMVC.Core.View.WebForms
+namespace FubuMVC.WebForms
 {
     public interface IPartialRenderer
     {

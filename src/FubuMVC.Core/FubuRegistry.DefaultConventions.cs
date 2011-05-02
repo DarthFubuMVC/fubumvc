@@ -5,7 +5,6 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.View.WebForms;
 using HtmlTags;
 
 namespace FubuMVC.Core
@@ -38,7 +37,7 @@ namespace FubuMVC.Core
 
             Output.ToBehavior<RenderStatusCodeBehavior>().WhenTheOutputModelIs<HttpStatusCode>();
 
-            Policies.Add<WebFormsEndpointPolicy>();
+            
             Policies.Add<ContinuationHandlerConvention>();
 
             _systemPolicies.Add(new StringOutputPolicy());

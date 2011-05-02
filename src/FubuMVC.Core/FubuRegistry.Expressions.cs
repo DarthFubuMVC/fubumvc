@@ -5,7 +5,6 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.View.WebForms;
 
 namespace FubuMVC.Core
 {
@@ -104,6 +103,15 @@ namespace FubuMVC.Core
             Import(new T(), prefix);
         }
 
+        /// <summary>
+        /// Imports the declarations of an IFubuRegistryExtension
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void Import<T>() where T : IFubuRegistryExtension, new()
+        {
+            new T().Configure(this);
+        }
+
         public void Import(FubuRegistry registry, string prefix)
         {
             _imports.Add(new RegistryImport{
@@ -139,21 +147,6 @@ namespace FubuMVC.Core
                 return _diagnosticLevel;
             }
         }
-
-        public void RegisterPartials(Action<IPartialViewTypeRegistrationExpression> registration)
-        {
-            Services(x =>
-            {
-                x.SetServiceIfNone<IPartialViewTypeRegistry>(new PartialViewTypeRegistry());
-                var registry = x.FindAllValues<IPartialViewTypeRegistry>().FirstOrDefault();
-
-                var expression = new PartialViewTypeRegistrationExpression(registry);
-                registration(expression);
-            });
-
-
-        }
-
 
         /// <summary>
         ///   This allows you to drop down to direct manipulation of the BehaviorGraph

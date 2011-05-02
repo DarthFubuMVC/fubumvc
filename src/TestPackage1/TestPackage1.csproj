@@ -54,7 +54,6 @@
     <Compile Include="StringController.cs" />
     <Compile Include="View.aspx.cs">
       <DependentUpon>View.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View.aspx.designer.cs">
       <DependentUpon>View.aspx</DependentUpon>
@@ -68,6 +67,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
+      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
+      <Name>FubuMVC.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

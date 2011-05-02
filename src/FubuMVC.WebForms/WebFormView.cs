@@ -1,12 +1,11 @@
 using System;
 using FubuCore;
-using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
-using FubuMVC.Core.View.WebForms;
 using System.Linq;
 
-namespace FubuMVC.Core.Registration.Nodes
+namespace FubuMVC.WebForms
 {
     public class WebFormView : OutputNode, IMayHaveInputType
     {
