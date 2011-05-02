@@ -104,7 +104,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing', 'FubuMVC.Validation.Tests', 'Bottles.Tests', 'FubuMVC.Diagnostics.Tests']
+  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing', 'FubuMVC.Validation.Tests', 'Bottles.Tests', 'FubuMVC.Diagnostics.Tests', 'FubuMVC.WebForms.Testing']
 end
 
 

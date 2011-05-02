@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Assemblies;
@@ -78,7 +78,8 @@ namespace Bottles
         {
             _diagnostics.LogExecutionOnEach(_loaders, loader =>
             {
-                var packageInfos = loader.Load().ToArray();
+                var log = _diagnostics.LogFor(loader);
+                var packageInfos = loader.Load(log).ToArray();
                 _diagnostics.LogPackages(loader, packageInfos);
                 _packages.AddRange(packageInfos);
             });

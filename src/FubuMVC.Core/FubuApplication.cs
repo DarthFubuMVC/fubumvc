@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
 using Bottles;
+using Bottles.Diagnostics;
 using Bottles.Environment;
 using FubuCore;
 using FubuMVC.Core.Bootstrapping;
@@ -90,7 +91,7 @@ namespace FubuMVC.Core
             // step maybe
             PackageRegistry.GetApplicationDirectory = FubuMvcPackageFacility.GetApplicationPath;
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
-            BottleFiles.PackagesFolder = FubuMvcPackageFacility.FubuPackagesFolder;
+            BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
             PackageRegistry.LoadPackages(x =>
             {
@@ -107,7 +108,7 @@ namespace FubuMVC.Core
 
                     applyRegistryModifications();
 
-                    applyFubuExtensionsFromPackages();
+                    applyFubuExtensionsFromPackages(log);
 
                     graph = buildBehaviorGraph();
 
@@ -162,9 +163,13 @@ namespace FubuMVC.Core
             return routes;
         }
 
-        private void applyFubuExtensionsFromPackages()
+        private void applyFubuExtensionsFromPackages(IPackageLog log)
         {
-            FubuExtensionFinder.FindAllExtensions().Each(x1 => x1.Configure(_registry.Value));
+            FubuExtensionFinder.FindAllExtensions().Each(x1 =>
+            {
+                log.Trace("Applying extension {0}", x1.GetType().FullName);
+                x1.Configure(_registry.Value);
+            });
         }
 
         public FubuApplication Packages(Action<IPackageFacility> configure)

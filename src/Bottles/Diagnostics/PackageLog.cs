@@ -84,5 +84,7 @@ namespace Bottles.Diagnostics
         {
             get; private set;
         }
+
+
     }
 }

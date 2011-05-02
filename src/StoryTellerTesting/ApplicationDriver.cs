@@ -12,6 +12,8 @@ namespace IntegrationTesting
     
         public void NavigateTo(string url)
         {
+            Debug.WriteLine("Navigating browser to " + url);
+
             if (_browser == null)
             {
                 _browser = new IE();

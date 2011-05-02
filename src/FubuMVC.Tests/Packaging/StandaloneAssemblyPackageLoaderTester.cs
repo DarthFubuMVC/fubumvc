@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Reflection;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace FubuMVC.Tests.Packaging
 			var assembly = Assembly.Load("TestPackage1");
 
 			ClassUnderTest
-				.Load()
+				.Load(new PackageLog())
 				.Single()
 				.Name
 				.ShouldEqual("Assembly:  " + assembly.GetName().FullName);

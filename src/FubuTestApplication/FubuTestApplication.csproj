@@ -158,6 +158,7 @@
     <Compile Include="DatabaseDriver.cs" />
     <Compile Include="Domain\Entities.cs" />
     <Compile Include="Environments.cs" />
+    <Compile Include="FubuTestApplicationRegistry.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -189,6 +190,10 @@
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
       <Name>FubuMVC.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
+      <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>
+      <Name>FubuMVC.WebForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

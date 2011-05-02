@@ -33,6 +33,7 @@ namespace IntegrationTesting.Fixtures.Packages
         public void NoPackages()
         {
             _runner.RunFubu("link fubu-testing -cleanall");
+            _runner.RunFubu("packages fubu-testing -cleanall -removeall");
         }
 
         [FormatAs("From the command line, run:  {commandLine}")]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bottles.Diagnostics;
 using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -34,11 +35,11 @@ namespace Bottles.Exploding
         }
 
 
-        public IEnumerable<string> ExplodeAllZipsAndReturnPackageDirectories(string applicationDirectory)
+        public IEnumerable<string> ExplodeAllZipsAndReturnPackageDirectories(string applicationDirectory, IPackageLog log)
         {
             ConsoleWriter.Write("Exploding all the package zip files for the application at " + applicationDirectory);
 
-            var packageFileNames = findPackageFileNames(applicationDirectory);
+            var packageFileNames = findPackageFileNames(applicationDirectory, log);
 
             // Needs to be evaluated right now.
             return packageFileNames.Select(file => explodeZipAndReturnDirectory(file, applicationDirectory)).ToList();
@@ -175,7 +176,7 @@ namespace Bottles.Exploding
         }
 
 
-        private IEnumerable<string> findPackageFileNames(string applicationDirectory)
+        private IEnumerable<string> findPackageFileNames(string applicationDirectory, IPackageLog log)
         {
             var fileSet = new FileSet{
                 Include = "*.zip"
@@ -183,12 +184,14 @@ namespace Bottles.Exploding
 
             var packageFolder = BottleFiles.GetApplicationPackagesDirectory(applicationDirectory);
 
+            log.Trace("Searching for zip files in package directory " + packageFolder);
+
             return _fileSystem.FileNamesFor(fileSet, packageFolder);
         }
 
         private void logZipFiles(string applicationDirectory)
         {
-            var packageFileNames = findPackageFileNames(applicationDirectory);
+            var packageFileNames = findPackageFileNames(applicationDirectory, new PackageLog());
             _logger.WritePackageZipsFound(applicationDirectory, packageFileNames);
         }
 

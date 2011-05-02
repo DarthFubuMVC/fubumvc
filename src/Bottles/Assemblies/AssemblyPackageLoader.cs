@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
+using Bottles.Diagnostics;
 
 namespace Bottles.Assemblies
 {
@@ -12,7 +13,7 @@ namespace Bottles.Assemblies
             _assembly = assembly;
         }
 
-        public IEnumerable<IPackageInfo> Load()
+        public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             yield return AssemblyPackageInfo.CreateFor(_assembly);
         }

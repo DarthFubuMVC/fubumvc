@@ -1,6 +1,8 @@
 ﻿using System;
 using Bottles;
 using Bottles.Commands;
+using Bottles.Deployment.Commands;
+using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core.Packaging;
 
@@ -13,7 +15,7 @@ namespace Fubu
         private static int Main(string[] args)
         {
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
-            BottleFiles.PackagesFolder = FubuMvcPackageFacility.FubuPackagesFolder;
+            BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
 
             try
             {
@@ -21,6 +23,9 @@ namespace Fubu
                 factory.RegisterCommands(typeof(AliasCommand).Assembly);
                 factory.RegisterCommands(typeof(IFubuCommand).Assembly);
                 factory.RegisterCommands(typeof(Program).Assembly);
+
+                // TODO -- don't think this should be permanent
+                factory.RegisterCommands(typeof(CreateVdirCommand).Assembly);
 
                 var executor = new CommandExecutor(factory);
                 success = executor.Execute(args);

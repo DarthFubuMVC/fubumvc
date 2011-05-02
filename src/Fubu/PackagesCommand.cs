@@ -1,25 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using Bottles;
+using Bottles.Commands;
+using Bottles.Diagnostics;
 using Bottles.Exploding;
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace Bottles.Commands
+namespace Fubu
 {
-    public class PackagesInput
-    {
-        [Description("Physical root folder (or valid alias) of the application")]
-        public string AppFolder { get; set; }
-
-        [Description("Removes all 'exploded' package folders out of the application folder")]
-        public bool CleanAllFlag { get; set; }
-
-        [Description("'Explodes' all the zip files underneath <appfolder>/bin/fubu-packages")]
-        public bool ExplodeFlag { get; set; }
-
-        [Description("Removes all package zip files and exploded directories from the application folder")]
-        public bool RemoveAllFlag { get; set; }
-    }
 
     [CommandDescription("Display and modify the state of package zip files in an application folder")]
     public class PackagesCommand : FubuCommand<PackagesInput>
@@ -45,13 +34,17 @@ namespace Bottles.Commands
             if (input.ExplodeFlag)
             {
                 // TODO -- will need to do this for assembly packages as well
-                exploder.ExplodeAllZipsAndReturnPackageDirectories(input.AppFolder);
+
+                Console.WriteLine("Exploding all the package zip files for the application at " + input.AppFolder);
+                exploder.ExplodeAllZipsAndReturnPackageDirectories(input.AppFolder, new PackageLog());
             }
 
+            // TODO -- this doesn't work for anything but fubu
             if (input.RemoveAllFlag)
             {
-                ConsoleWriter.Write("Removing all package files and directories from the application at " + input.AppFolder);
-                _system.DeleteDirectory(input.AppFolder, "bin", BottleFiles.PackagesFolder);
+                var packageFolder = BottleFiles.GetApplicationPackagesDirectory(input.AppFolder);
+                Console.WriteLine("Removing all package files and directories from the application at " + packageFolder);
+                new FileSystem().DeleteDirectory(packageFolder);
             }
 
             exploder.LogPackageState(input.AppFolder);

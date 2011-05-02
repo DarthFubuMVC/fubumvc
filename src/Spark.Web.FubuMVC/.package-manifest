@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>spark</Name>
-  <Assemblies>Spark;Spark.Web.FubuMVC</Assemblies>
+  <assembly>Spark.Web.FubuMVC</assembly>
+  <assembly>Spark</assembly>
 </package>

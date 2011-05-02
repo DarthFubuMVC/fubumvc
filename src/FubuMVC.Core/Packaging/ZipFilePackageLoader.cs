@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bottles;
+using Bottles.Diagnostics;
 using Bottles.Exploding;
 using FubuCore;
 
@@ -17,13 +18,13 @@ namespace FubuMVC.Core.Packaging
             _exploder = exploder;
         }
 
-        public IEnumerable<IPackageInfo> Load()
+        public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             var applicationDirectory = FubuMvcPackageFacility.GetApplicationPath();
 
             //this finds all of the bottles in <applicationDirectory>/bin/packages
             //then calls load from folder on each exploded zip
-            return _exploder.ExplodeAllZipsAndReturnPackageDirectories(applicationDirectory)
+            return _exploder.ExplodeAllZipsAndReturnPackageDirectories(applicationDirectory, log)
                 .Select(dir => _reader.LoadFromFolder(dir));
         }
 

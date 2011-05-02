@@ -1,5 +1,6 @@
 using System;
 using FubuMVC.Core;
+using FubuMVC.WebForms;
 
 namespace TestPackage1
 {
@@ -7,6 +8,8 @@ namespace TestPackage1
     {
         public TestPackage1Registry()
         {
+            Views.Facility(new WebFormViewFacility());
+
             Actions.IncludeClassesSuffixedWithController();
 
             Views.TryToAttachWithDefaultConventions();

@@ -84,7 +84,7 @@ namespace FubuMVC.Tests.Packaging
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
 
-            var package = reader.Load().Single();
+            var package = reader.Load(new PackageLog()).Single();
             assemblyLoader.LoadAssembliesFromPackage(package);
 
             assemblyLoader.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Packaging
 			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
 
-			var package = reader.Load().Single();
+			var package = reader.Load(new PackageLog()).Single();
 			assemblyLoader.LoadAssembliesFromPackage(package);
 
 			assemblyLoader

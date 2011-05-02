@@ -53,7 +53,6 @@
     <Compile Include="Commands\InitPakCommand.cs" />
     <Compile Include="ISimpleLogger.cs" />
     <Compile Include="Commands\ListCommand.cs" />
-    <Compile Include="Commands\PackagesCommand.cs" />
     <Compile Include="Configuration\CentralizedSettingsSource.cs" />
     <Compile Include="Creation\CreatePackageInput.cs" />
     <Compile Include="Creation\IPackageLogger.cs" />

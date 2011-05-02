@@ -199,7 +199,7 @@ namespace Bottles.Tests
             _packages = names.Select(x => new StubPackage(x) as IPackageInfo);
         }
 
-        public IEnumerable<IPackageInfo> Load()
+        public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             Thread.Sleep(101);
             return _packages;

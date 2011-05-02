@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using AssemblyPackage;
+using Bottles.Diagnostics;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
@@ -138,7 +139,7 @@ namespace Bottles.Tests.Exploding
             // No packages are already exploded
             thePackagesAlreadyExplodedAre();
 
-            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory, new PackageLog());
         }
 
         [Test]
@@ -166,7 +167,7 @@ namespace Bottles.Tests.Exploding
             theExistingVersionIs("pak1", folderGuid);
             theZipVersionIs("pak1", zipGuid);
 
-            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory, new PackageLog());
         }
 
         [Test]
@@ -192,7 +193,7 @@ namespace Bottles.Tests.Exploding
             theExistingVersionDoesNotExist("pak1");
             theZipVersionIs("pak1", zipGuid);
 
-            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory, new PackageLog());
         }
 
         [Test]
@@ -217,7 +218,7 @@ namespace Bottles.Tests.Exploding
             theExistingVersionIs("pak1", theSameGuid);
             theZipVersionIs("pak1", theSameGuid);
 
-            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory);
+            ClassUnderTest.ExplodeAllZipsAndReturnPackageDirectories(theApplicationDirectory, new PackageLog());
         }
 
         [Test]

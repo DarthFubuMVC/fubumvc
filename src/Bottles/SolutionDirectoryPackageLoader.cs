@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -15,7 +16,7 @@ namespace Bottles
             _sourceRoot = sourceRoot;
         }
 
-        public IEnumerable<IPackageInfo> Load()
+        public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             var fileSystem = new FileSystem();
             var manifestFileSpec = new FileSet { Include = PackageManifest.FILE, DeepSearch = true };

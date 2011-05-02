@@ -62,11 +62,17 @@
     <Compile Include="LinkCommand.cs" />
     <Compile Include="ManifestCommand.cs" />
     <Compile Include="ManifestInput.cs" />
+    <Compile Include="PackagesCommand.cs" />
+    <Compile Include="PackagesInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
+      <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
+      <Name>Bottles.Deployment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>

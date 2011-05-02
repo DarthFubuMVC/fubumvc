@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bottles.Diagnostics;
 using Bottles.Exploding;
 using FubuCore;
 
@@ -28,10 +29,10 @@ namespace Bottles.Services
             _exploder = exploder;
         }
 
-        public IEnumerable<IPackageInfo> Load()
+        public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
             //<basedir>/packages
-            return _exploder.ExplodeAllZipsAndReturnPackageDirectories(AppDomain.CurrentDomain.BaseDirectory)
+            return _exploder.ExplodeAllZipsAndReturnPackageDirectories(AppDomain.CurrentDomain.BaseDirectory, log)
                 .Select(convertToPackage);
         }
 

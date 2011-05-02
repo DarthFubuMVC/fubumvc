@@ -71,7 +71,6 @@
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />
     <Compile Include="Commands\ListCommandTester.cs" />
-    <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Configuration\CentralizedSettingsSourceTester.cs" />
     <Compile Include="Configuration\environment.Designer.cs">
       <AutoGen>True</AutoGen>

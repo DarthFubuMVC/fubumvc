@@ -5,7 +5,6 @@ using FubuMVC.Tests.Urls;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
-using FubuCore;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
@@ -48,4 +47,5 @@ namespace FubuMVC.Tests.Registration.Expressions
     public class FakeView2 : FubuControl<TestInputModel>{}
     public class FakeView3 : FubuControl<Model1>{}
     public class FakeView4 : FubuControl<Model3>{}
+
 }

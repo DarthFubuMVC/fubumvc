@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Bottles.Assemblies;
+using Bottles.Diagnostics;
 using FubuCore;
 
 namespace Bottles
@@ -28,7 +29,7 @@ namespace Bottles
             _getContentFolderFromPackageFolder = getContentFolderFromPackageFolder;
         }
 
-        public IEnumerable<IPackageInfo> Load()
+        public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
         	var packages = new List<IPackageInfo>();
             //issue??

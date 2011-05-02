@@ -1,11 +1,35 @@
-﻿using Bottles.Commands;
+using Bottles.Diagnostics;
 using Bottles.Exploding;
+using Fubu;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Bottles.Tests.Commands
+namespace FubuMVC.Tests.Commands
 {
+    public class FakePackageLog : PackageLog
+    {
+        public bool Equals(FakePackageLog other)
+        {
+            return !ReferenceEquals(null, other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is IPackageLog) return true;
+
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (FakePackageLog)) return false;
+            return Equals((FakePackageLog) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return 0;
+        }
+    }
+
     [TestFixture]
     public class PackagesCommandTester : InteractionContext<PackagesCommand>
     {
@@ -34,7 +58,7 @@ namespace Bottles.Tests.Commands
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder));
+            MockFor<IPackageExploder>().AssertWasCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder, new FakePackageLog()));
         }
 
         [Test]
@@ -44,7 +68,7 @@ namespace Bottles.Tests.Commands
 
             execute();
 
-            MockFor<IPackageExploder>().AssertWasNotCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder));
+            MockFor<IPackageExploder>().AssertWasNotCalled(x => x.ExplodeAllZipsAndReturnPackageDirectories(theInput.AppFolder, new FakePackageLog()));
         }
 
         [Test]

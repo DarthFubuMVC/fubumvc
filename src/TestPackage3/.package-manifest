@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>pak3</Name>
-  <Assemblies>TestPackage3</Assemblies>
   <Role>module</Role>
-  <DataFileSet Include="*.*">
+<assembly>TestPackage3</assembly>
+<DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>
   <ContentFileSet Include="*.as*x;*.master;Content\*.*">

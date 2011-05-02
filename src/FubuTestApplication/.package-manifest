@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Name>test</Name>
   <Role>application</Role>
-  <Assemblies>FubuTestApplication</Assemblies>
+  <Name>test</Name>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>
   <ContentFileSet Include="*.as*x;*.master;Content\*.*;*.config">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
+  <include>..\TestPackage1</include>
 </package>
