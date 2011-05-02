@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Bottles.Zipping;
 using FubuCore;
+using FubuCore.CommandLine;
 
 namespace Bottles.Exploding
 {
@@ -16,10 +17,9 @@ namespace Bottles.Exploding
 
     public class PackageExploder : IPackageExploder
     {
-        // TODO -- better logging?
-        public static PackageExploder GetPackageExploder(FileSystem fileSystem)
+        public static PackageExploder GetPackageExploder(IFileSystem fileSystem)
         {
-            return new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(x => Console.WriteLine(x)), fileSystem);
+            return new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(ConsoleWriter.Write), fileSystem);
         }
 
         private readonly IFileSystem _fileSystem;
@@ -36,6 +36,8 @@ namespace Bottles.Exploding
 
         public IEnumerable<string> ExplodeAllZipsAndReturnPackageDirectories(string applicationDirectory)
         {
+            ConsoleWriter.Write("Exploding all the package zip files for the application at " + applicationDirectory);
+
             var packageFileNames = findPackageFileNames(applicationDirectory);
 
             // Needs to be evaluated right now.
@@ -51,6 +53,7 @@ namespace Bottles.Exploding
 
         public void CleanAll(string applicationDirectory)
         {
+            ConsoleWriter.Write("Cleaning all exploded packages out of " + applicationDirectory);
             var directory = BottleFiles.GetExplodedPackagesDirectory(applicationDirectory);
             clearExplodedDirectories(directory);
 

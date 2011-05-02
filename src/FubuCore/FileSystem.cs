@@ -29,8 +29,19 @@ namespace FubuCore
         T LoadFromFile<T>(string filename) where T : new();
 
         void CreateDirectory(string directory);
+
+        /// <summary>
+        /// Deletes the directory
+        /// </summary>
         void DeleteDirectory(string directory);
+
+        /// <summary>
+        /// Deletes the directory to clear the content
+        /// Then recreates it. An empty clean, happy, directory.
+        /// </summary>
+        /// <param name="directory"></param>
         void CleanDirectory(string directory);
+
         bool DirectoryExists(string directory);
 
         void LaunchEditor(string filename);
@@ -41,6 +52,7 @@ namespace FubuCore
         void MoveFiles(string from, string to);
 
         string GetDirectory(string path);
+        string GetFileName(string path);
     }
 
     public static class FileSystemExtensions
@@ -245,6 +257,11 @@ namespace FubuCore
             return File.ReadAllText(filename);
         }
 
+        public string GetFileName(string path)
+        {
+            return Path.GetFileName(path);
+        }
+
         public void DeleteDirectory(string directory)
         {
             if (Directory.Exists(directory))
@@ -257,8 +274,9 @@ namespace FubuCore
         {
             if (directory.IsEmpty()) return;
 
-            if(Directory.Exists(directory))
-                Directory.Delete(directory, true);
+            DeleteDirectory(directory);
+
+            CreateDirectory(directory);
         }
 
         public bool DirectoryExists(string directory)
