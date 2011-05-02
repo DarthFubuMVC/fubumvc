@@ -45,8 +45,8 @@ namespace FubuMVC.Spark.SparkModel
         {
             return items.Where(x => x.Origin == origin);
         }
-        
-        public static IEnumerable<SparkItem> InDirectories(this IEnumerable<SparkItem> items,IEnumerable<string> directories)
+
+        public static IEnumerable<SparkItem> InDirectories(this IEnumerable<SparkItem> items, IEnumerable<string> directories)
         {
             var predicate = new CompositePredicate<SparkItem>();
             predicate = directories.Aggregate(predicate, (current, local) => current + (x => x.DirectoryPath() == local));

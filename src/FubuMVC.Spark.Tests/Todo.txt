@@ -2,7 +2,6 @@ Tests needed in SparkModel:
 
  First:
  
- - SharedItemLocator
  - SparkItemBuilder
 
  Then:
