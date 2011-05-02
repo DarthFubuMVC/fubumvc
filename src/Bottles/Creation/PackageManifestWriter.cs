@@ -13,6 +13,7 @@ namespace Bottles.Creation
             _fileSystem = fileSystem;
         }
 
+        //REVIEW: why is this reading?
         public void ReadFrom(string fileName, Action<PackageManifest> onCreation)
         {
             if (_fileSystem.FileExists(fileName))

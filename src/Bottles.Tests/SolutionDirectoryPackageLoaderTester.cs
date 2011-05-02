@@ -1,5 +1,5 @@
-using System.IO;
 using System.Linq;
+using FubuCore;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -8,17 +8,30 @@ namespace Bottles.Tests
     [TestFixture]
     public class SolutionDirectoryPackageLoaderTester
     {
+        private string thePathToScan = ".\\solDirPackLoad";
+        private SolutionDirectoryPackageLoader theLoader;
 
-        [Test, Ignore("Dru is going to look at this one just a little bit")]
+        [SetUp]
+        public void BeforeEach()
+        {
+            var fs = new FileSystem();
+            fs.DeleteDirectory(thePathToScan);
+            fs.CreateDirectory(thePathToScan);
+            fs.CreateDirectory(thePathToScan, "bin");
+
+            theLoader = new SolutionDirectoryPackageLoader(thePathToScan.ToFullPath());
+            var manifest = new PackageManifest();
+            manifest.Name = "test-mani";
+
+            fs.PersistToFile(manifest, thePathToScan, PackageManifest.FILE);
+        }
+
+        [Test]
         public void there_are_7_manifests_that_are_modules_in_fubu()
         {
-            // setup in a random directory
-            var p = Path.GetFullPath(@"..\..\..");
-            var sdpl = new SolutionDirectoryPackageLoader(p);
-            var pis = sdpl.Load();
-
-            
-            pis.Count().ShouldEqual(7);
+            var foundPackages = theLoader.Load();
+            foundPackages.Count().ShouldEqual(1);
+            foundPackages.First().Name.ShouldEqual("test-mani");
         }
     }
 }
