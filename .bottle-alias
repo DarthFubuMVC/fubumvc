@@ -2,5 +2,9 @@
 <aliases xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Aliases>
     <alias name="testapp" folder="src\FubuTestApplication" />
+    <alias name="pak1" folder="src\TestPackage1" />
+    <alias name="pak2" folder="src\TestPackage2" />
+    <alias name="pak3" folder="src\TestPackage3" />
+    <alias name="pak4" folder="src\TestPackage4" />
   </Aliases>
 </aliases>
