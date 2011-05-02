@@ -16,7 +16,7 @@ namespace FubuMVC.HelloFubuSpark
             FubuApplication
                 .For<HelloWorldFubuRegistry>()
                 .StructureMap(() => new Container(SetupContainer))
-                .ModifyRegistry(x => x.UseSpark(spark => spark.Include("QueryTemplate.htm")))
+                .ModifyRegistry(x => x.UseSpark(spark => { }))
                 .Bootstrap(RouteTable.Routes);
 
             // If there is an error during bootstrapping, it will not automatically be considered

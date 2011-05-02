@@ -23,12 +23,6 @@ namespace FubuMVC.Spark
 			
 			defaults();
         }
-
-        public void Include(string filter)
-        {
-            _itemFinder.IncludeFile(filter);
-        }
-
         public void Configure(FubuRegistry registry)
         {
             populateAndBuildItems();
@@ -70,8 +64,6 @@ namespace FubuMVC.Spark
 
     public interface ISparkExtension
     {
-        // NOTE:TEMP
-        void Include(string filter);
     }
 
     public static class FubuRegistryExtensions

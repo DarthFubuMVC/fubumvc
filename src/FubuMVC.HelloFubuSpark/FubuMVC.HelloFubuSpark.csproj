@@ -62,7 +62,7 @@
     <None Include=".fubu-manifest" />
     <None Include="Controllers\Home\Home.spark" />
     <None Include="Controllers\Login\LoggedInStatus.spark" />
-    <Content Include="Controllers\UrlTemplate\QueryTemplate.htm" />
+    <None Include="Controllers\UrlTemplate\QueryTemplate.spark" />
     <None Include="Controllers\UrlTemplate\Find.spark" />
     <None Include="Controllers\UrlTemplate\Query.spark" />
     <Content Include="Shared\jquery-1.4.2.js" />

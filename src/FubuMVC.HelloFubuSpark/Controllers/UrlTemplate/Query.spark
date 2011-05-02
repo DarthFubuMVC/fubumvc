@@ -16,7 +16,7 @@
     <script type="text/javascript">
         jQuery(function ($) {
             var products = ${JsonUtil.ToJson(Model.Products)};
-            <include href="QueryTemplate.htm" parse="html" />
+            <include href="QueryTemplate.spark" parse="html" />
         });
     </script>
 
