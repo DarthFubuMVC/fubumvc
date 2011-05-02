@@ -1,7 +1,7 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Urls;
-using FubuMVC.HelloFubuSpark.Controllers.Home;
+using FubuMVC.HelloFubuSpark.Controllers;
 
 namespace FubuMVC.HelloFubuSpark
 {
@@ -19,7 +19,7 @@ namespace FubuMVC.HelloFubuSpark
                 .IncludeClassesSuffixedWithController();
 
             Routes
-                .HomeIs<HomeInputModel>()
+                .HomeIs<AirController>(c => c.TakeABreath())
                 .IgnoreControllerNamespaceEntirely()
                 .IgnoreMethodSuffix("Command")
                 .IgnoreMethodSuffix("Query")

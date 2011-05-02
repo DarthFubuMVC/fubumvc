@@ -1,0 +1,34 @@
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.AirViewModel" />
+<content:head>
+    <script type="text/javascript" src="../../Scripts/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/Air/BreatheView"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var renderView = function (data) {
+                var viewContents = Spark.Air.Breathe.RenderView({ breatheResult: data.Model });
+                $("div#viewOutputArea").append(viewContents);
+            }
+
+            var takeABreath = function (breathIn) {
+                $.post("/Air/Breathe", { TakeABreath: breathIn }, renderView, "json");
+            }
+
+            $("#yesButton").click(function () { takeABreath(true); });
+            $("#noButton").click(function () { takeABreath(false); });
+        });
+    </script>
+</content:head>
+<content:title>Do we have lift-off?</content:title>
+<content:header>What do we wanna do?</content:header>
+<div>
+    ${Model.Text}</div>
+<div>
+    <input id="yesButton" type="button" value="Yes" />
+    <input id="noButton" type="button" value="No" />
+</div>
+<div id="viewOutputArea"></div>
+
+<content:footer>That's right baby!</content:footer>
+!{this.LinkTo<FireInputModel>().Text("Light her up!")}
+!{this.LinkTo<WaterInputModel>().Text("Cool her down!")} 
+!{this.LinkTo<EarthViewModel>().Text("Go to ground!")} 

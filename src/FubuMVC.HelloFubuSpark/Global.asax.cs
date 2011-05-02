@@ -2,7 +2,6 @@ using System.Web;
 using System.Web.Routing;
 using Bottles;
 using FubuMVC.Core;
-using FubuMVC.HelloFubuSpark.Services;
 using FubuMVC.Spark;
 using StructureMap;
 using FubuMVC.StructureMap;
@@ -28,7 +27,6 @@ namespace FubuMVC.HelloFubuSpark
 
         private static void SetupContainer(ConfigurationExpression x)
         {
-            x.For<IHttpSession>().Use<CurrentHttpContextSession>();
             x.Scan(i =>
             {
                 i.TheCallingAssembly();

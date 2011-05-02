@@ -1,4 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.UrlTemplate.ViewProductViewModel" />
-<content:MainContent>
-<h1> Hi from ${ Model.Product.Code}</h1>
-</content:MainContent>

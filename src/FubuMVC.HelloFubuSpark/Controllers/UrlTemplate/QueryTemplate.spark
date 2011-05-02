@@ -1,5 +1,0 @@
-﻿            $.each(products, function (i){
-                var temp = $("#myTemplate").tmpl(products[i]);
-
-                $('#templatedList').append(temp);
-            });
