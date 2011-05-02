@@ -53,6 +53,8 @@ namespace FubuCore
 
         string GetDirectory(string path);
         string GetFileName(string path);
+
+        void AlterFlatFile(string path, Action<List<string>> alteration);
     }
 
     public static class FileSystemExtensions
@@ -260,6 +262,18 @@ namespace FubuCore
         public string GetFileName(string path)
         {
             return Path.GetFileName(path);
+        }
+
+        public void AlterFlatFile(string path, Action<List<string>> alteration)
+        {
+            var list = new List<string>();
+            ReadTextFile(path, list.Add);
+            alteration(list);
+
+            using (var writer = new StreamWriter(path))
+            {
+                list.Each(x => writer.WriteLine(x));
+            }
         }
 
         public void DeleteDirectory(string directory)

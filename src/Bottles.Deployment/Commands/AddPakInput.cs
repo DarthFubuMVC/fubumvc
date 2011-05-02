@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -27,24 +26,17 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddPakInput input)
         {
-            var fileSystem = new FileSystem();
-
             var settings = DeploymentSettings.ForDirectory(input.DeploymentFlag);
 
-            var list = new List<string>();
-            fileSystem.ReadTextFile(settings.BottleManifestFile, list.Add);
-
-            list.Fill(input.PackageDirectory);
-            list.Sort();
-
-            Console.WriteLine("Adding directory {0} to the bottles manifest at {1}", input.PackageDirectory, settings.BottleManifestFile);
-            Console.WriteLine("The current bottles are:");
-            list.Each(x => Console.WriteLine("  " + x));
-
-            using (var writer = new StreamWriter(settings.BottleManifestFile))
+            new FileSystem().AlterFlatFile(settings.BottleManifestFile, list =>
             {
-                list.Each(x => writer.WriteLine(x));
-            }
+                list.Fill(input.PackageDirectory);
+                list.Sort();
+
+                Console.WriteLine("Adding directory {0} to the bottles manifest at {1}", input.PackageDirectory, settings.BottleManifestFile);
+                Console.WriteLine("The current bottles are:");
+                list.Each(x => Console.WriteLine("  " + x));
+            });
 
             return true;
         }

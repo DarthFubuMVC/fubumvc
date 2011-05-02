@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -78,6 +79,7 @@ namespace Bottles
 
             return fileSystem.FindFiles(directory, fileSet).Select(Path.GetFileNameWithoutExtension);
         }
+
 		
     }
 }

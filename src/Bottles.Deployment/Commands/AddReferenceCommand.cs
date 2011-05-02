@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Bottles.Configuration;
 using Bottles.Deployment.Parsing;
@@ -17,10 +19,7 @@ namespace Bottles.Deployment.Commands
         [Description("The name of the bottle to link")]
         public string Bottle { get; set; }
 
-        [Description("Set the relationship of the bottle")]
-        public string RelationshipFlag { get; set; }
-
-        [Description("Path to the deployment folder")]
+        [Description("Path to the deployment folder (~/deployment)")]
         public string DeploymentFlag { get; set; }
 
         public string DeploymentRoot()
@@ -35,25 +34,32 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddReferenceCommandInput input)
         {
-            var sett = new DeploymentSettings(input.DeploymentRoot());
+            var deploymentSettings = DeploymentSettings.ForDirectory(input.DeploymentFlag);
 
             var settings = new EnvironmentSettings();
 
             IFileSystem fileSystem = new FileSystem();
 
-            Exe(input, settings, fileSystem, sett);
+            Execute(input, settings, fileSystem, deploymentSettings);
 
             return true;
         }
 
-        public void Exe(AddReferenceCommandInput input, EnvironmentSettings settings, IFileSystem fileSystem, DeploymentSettings sett)
+        public void Execute(AddReferenceCommandInput input, EnvironmentSettings settings, IFileSystem fileSystem, DeploymentSettings deploymentSettings)
         {
-            var hostPath = sett.GetHost(input.Recipe, input.Host);
+            string bottleText = "bottle:{0}".ToFormat(input.Bottle);
 
-            var hostManifest = HostReader.ReadFrom(hostPath, settings);
+            
+            var hostPath = deploymentSettings.GetHost(input.Recipe, input.Host);
+            Console.WriteLine("Analyzing the host file at " + input.Host);
+            fileSystem.AlterFlatFile(hostPath, list =>
+            {
+                list.Fill(bottleText);
+                list.Sort();
 
-            if (!hostManifest.HasBottle(input.Bottle))
-                fileSystem.AppendStringToFile(hostPath, "bottle:{0} {1}".ToFormat(input.Bottle, input.RelationshipFlag));
+                Console.WriteLine("Contents of file " + hostPath);
+                list.Each(x => Console.WriteLine("  " + x));
+            });
         }
 
         
