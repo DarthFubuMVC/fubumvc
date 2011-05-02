@@ -2,7 +2,7 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Role>binaries</Role>
   <Name>FubuWebForms</Name>
-  <assembly>webforms</assembly>
+  <assembly>FubuMVC.WebForms</assembly>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>

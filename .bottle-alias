@@ -9,6 +9,6 @@
     <alias name="pak4" folder="src/TestPackage4" />
     <alias name="spark" folder="src/Spark.Web.FubuMVC" />
     <alias name="webforms" folder="source\FubuMVC.WebForms" />
-    <alias name="fubuwebforms" folder="webforms" />
+    <alias name="fubuwebforms" folder="src\FubuMVC.WebForms" />
   </Aliases>
 </aliases>
