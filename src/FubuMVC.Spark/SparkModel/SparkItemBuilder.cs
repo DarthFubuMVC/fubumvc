@@ -58,18 +58,19 @@ namespace FubuMVC.Spark.SparkModel
 
         public void BuildItems()
         {
-            _sparkItems.Each(item => _itemBinders.Each(binder =>
+            _sparkItems.Each(item =>
             {
-                var chunks = _chunkLoader.Load(item);
-                var context = createContext(chunks);
-				
-				if(binder.CanBind(item, context))
-				{
-	                binder.Bind(item, context);					
-				}
-
+                _itemBinders.Each(binder =>
+                {
+                    var chunks = _chunkLoader.Load(item);
+                    var context = createContext(chunks);
+                    if (binder.CanBind(item, context))
+                    {
+                        binder.Bind(item, context);
+                    }
+                });
                 _policies.Where(p => p.Matches(item)).Each(p => p.Apply(item));
-            }));
+            });
         }
 
         private BindContext createContext(IEnumerable<Chunk> chunks)
