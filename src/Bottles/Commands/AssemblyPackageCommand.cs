@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
+﻿using System.ComponentModel;
 using System.Xml;
 using Bottles.Zipping;
 using FubuCore;
@@ -22,11 +20,13 @@ namespace Bottles.Commands
     [CommandDescription("Bundle up the content and data files for a self contained assembly package", Name = "assembly-pak")]
     public class AssemblyPackageCommand : FubuCommand<AssemblyPackageInput>
     {
+        IFileSystem fileSystem = new FileSystem();
+
         public override bool Execute(AssemblyPackageInput input)
         {
             input.RootFolder = AliasCommand.AliasFolder(input.RootFolder);
 
-            var zipService = new ZipFileService(new FileSystem());
+            var zipService = new ZipFileService(fileSystem);
 
 
             createZipFile(input, "WebContent", zipService);
@@ -39,57 +39,56 @@ namespace Bottles.Commands
         private void createZipFile(AssemblyPackageInput input, string childFolderName, ZipFileService zipService)
         {
             var contentDirectory = FileSystem.Combine(input.RootFolder, childFolderName);
-            if (!Directory.Exists(contentDirectory)) return;
+            if (!fileSystem.DirectoryExists(contentDirectory)) return;
 
-            
+
             var zipFileName = "pak-{0}.zip".ToFormat(childFolderName);
-            
+
 
 
             var contentFile = FileSystem.Combine(input.RootFolder, zipFileName);
-            Console.WriteLine("Creating zip file " + contentFile);
+            ConsoleWriter.Write("Creating zip file " + contentFile);
 
-            if (File.Exists(contentFile))
-            {
-                File.Delete(contentFile);
-            }
-            
-            
+            fileSystem.DeleteFile(contentFile);
+
+
             zipService.CreateZipFile(contentFile, file =>
             {
-                
-                file.AddFiles(new ZipFolderRequest(){
-                    RootDirectory = contentDirectory,
-                    ZipDirectory = string.Empty
-                });
+
+                file.AddFiles(new ZipFolderRequest()
+                              {
+                                  RootDirectory = contentDirectory,
+                                  ZipDirectory = string.Empty
+                              });
             });
 
-            if (input.ProjFileFlag.IsNotEmpty())
+            if (!input.ProjFileFlag.IsNotEmpty())
+                return;
+
+            var document = new XmlDocument();
+            var projectFileName = FileSystem.Combine(input.RootFolder, input.ProjFileFlag);
+            document.Load(projectFileName);
+
+            //var search = "//ItemGroup/EmbeddedResource[@Include='{0}']".ToFormat(zipFileName);
+            //if (document.DocumentElement.SelectSingleNode(search, new XmlNamespaceManager(document.NameTable)) == null)
+            if (document.DocumentElement.OuterXml.Contains(zipFileName))
             {
-                var document = new XmlDocument();
-                var projectFileName = FileSystem.Combine(input.RootFolder, input.ProjFileFlag);
-                document.Load(projectFileName);
-
-                //var search = "//ItemGroup/EmbeddedResource[@Include='{0}']".ToFormat(zipFileName);
-                //if (document.DocumentElement.SelectSingleNode(search, new XmlNamespaceManager(document.NameTable)) == null)
-                if (!document.DocumentElement.OuterXml.Contains(zipFileName))
-                {
-                    Console.WriteLine("Adding the ItemGroup / Embedded Resource for {0} to {1}".ToFormat(zipFileName, projectFileName));
-                    var node = document.CreateNode(XmlNodeType.Element,"ItemGroup", document.DocumentElement.NamespaceURI);
-                    var element = document.CreateNode(XmlNodeType.Element, "EmbeddedResource", document.DocumentElement.NamespaceURI);
-                    var attribute = document.CreateAttribute("Include");
-                    attribute.Value = zipFileName;
-                    element.Attributes.Append(attribute);
-                    node.AppendChild(element);
-                    document.DocumentElement.AppendChild(node);
-
-                    document.Save(projectFileName);
-                }
-                else
-                {
-                    Console.WriteLine("The file {0} is already embedded in project {1}".ToFormat(zipFileName, projectFileName));
-                }
+                ConsoleWriter.Write("The file {0} is already embedded in project {1}".ToFormat(zipFileName, projectFileName));
+                return;
             }
+
+            ConsoleWriter.Write("Adding the ItemGroup / Embedded Resource for {0} to {1}".ToFormat(zipFileName,
+                                                                                                   projectFileName));
+            var node = document.CreateNode(XmlNodeType.Element, "ItemGroup", document.DocumentElement.NamespaceURI);
+            var element = document.CreateNode(XmlNodeType.Element, "EmbeddedResource", document.DocumentElement.NamespaceURI);
+            var attribute = document.CreateAttribute("Include");
+            attribute.Value = zipFileName;
+            element.Attributes.Append(attribute);
+            node.AppendChild(element);
+            document.DocumentElement.AppendChild(node);
+
+            document.Save(projectFileName);
+
         }
     }
 }
