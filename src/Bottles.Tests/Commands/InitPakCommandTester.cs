@@ -6,35 +6,68 @@ using FubuTestingSupport;
 namespace Bottles.Tests.Commands
 {
     [TestFixture]
-    public class InitPakCommandTester
+    public class InitPakCommandTester 
     {
-        [Test]
-        public void NAME()
+        IFileSystem fs = new FileSystem();
+        private string thePath = "initpath";
+        private string pakName = "init-test";
+        private InitPakInput theInput;
+
+        [SetUp]
+        public void BeforeEach()
         {
-            var fs = new FileSystem();
-            fs.DeleteDirectory("initpath");
+            fs.DeleteDirectory(thePath);
+            theInput = new InitPakInput
+                       {
+                           Name = pakName,
+                           Path = thePath
+                       };
+        }
 
+        string checkForAlias(string alias)
+        {
+            var a = new FileSystem()
+                  .LoadFromFile<AliasRegistry>(AliasRegistry.ALIAS_FILE);
 
-            var input = new InitPakInput()
-                        {
-                            Name="inittest",
-                            Path = "initpath"
-                        };
+            return a.AliasFor(alias).Folder;
+        }
+
+        void execute()
+        {
             
             var cmd = new InitPakCommand();
+            cmd.Execute(theInput);
+        }
 
-            cmd.Execute(input);
+        [Test]
+        public void the_pak_should_have_been_created()
+        {
+            execute();
 
-            fs.FileExists("initpath",PackageManifest.FILE).ShouldBeTrue();
+            fs.FileExists(thePath, PackageManifest.FILE).ShouldBeTrue();
 
-            //check entries in alias?
+            checkForAlias(pakName).ShouldEqual(thePath);
 
-            var pm = fs.LoadPackageManifestFrom("initpath");
+            var pm = fs.LoadPackageManifestFrom(thePath);
 
-            pm.Name.ShouldEqual("inittest");
+            pm.Name.ShouldEqual(pakName);
+        }
 
-            //clean up 
-            fs.DeleteDirectory("initpath");
+        [Test]
+        public void the_pak_should_have_been_created_with_alias()
+        {
+            var theAlias = "blue";
+            theInput.AliasFlag = theAlias;
+
+            execute();
+
+            fs.FileExists(thePath, PackageManifest.FILE).ShouldBeTrue();
+
+            checkForAlias(theAlias).ShouldEqual(thePath);
+
+            var pm = fs.LoadPackageManifestFrom(thePath);
+
+            pm.Name.ShouldEqual(pakName);
         }
     }
 }
