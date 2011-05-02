@@ -62,6 +62,7 @@
     <Compile Include="Commands\InstallInput.cs" />
     <Compile Include="Commands\InstallMode.cs" />
     <Compile Include="Commands\AddReferenceCommand.cs" />
+    <Compile Include="Commands\OpenBottleManifestCommand.cs" />
     <Compile Include="Commands\VdirCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\CreateAllCommand.cs" />

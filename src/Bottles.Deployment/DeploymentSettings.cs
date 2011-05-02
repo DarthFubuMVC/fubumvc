@@ -21,8 +21,13 @@ namespace Bottles.Deployment
             
         }
 
-        public static DeploymentSettings ForRootDirectory()
+        public static DeploymentSettings ForDirectory(string directory)
         {
+            if (directory.IsNotEmpty())
+            {
+                return new DeploymentSettings(directory);
+            }
+
             var path = FileSystem.Combine(".".ToFullPath(), ProfileFiles.DeploymentFolder);
             return new DeploymentSettings(path);
         }

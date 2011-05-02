@@ -39,15 +39,15 @@ namespace Bottles.Deployment.Commands
 
         public bool Execute(IFileSystem system, CreateAllInput input)
         {
-            var settings = new DeploymentSettings(input.DeploymentRoot());
-            var bottlesDirectory = settings.BottlesDirectory;
+            var settings = DeploymentSettings.ForDirectory(input.DeploymentFlag);
 
             ConsoleWriter.Write("Creating all packages");
             ConsoleWriter.Write("  Removing all previous package files");
-            system.CleanDirectory(bottlesDirectory);
+            system.CleanDirectory(settings.BottlesDirectory);
 
+            ConsoleWriter.Write("  Reading bottle manifest file at " + settings.BottleManifestFile);
             var bottleManifestFile = settings.BottleManifestFile;
-            system.ReadTextFile(bottleManifestFile, dir => createPackage(dir, bottlesDirectory, input));
+            system.ReadTextFile(bottleManifestFile, dir => createPackage(dir, settings.BottlesDirectory, input));
             
             return true;
         }

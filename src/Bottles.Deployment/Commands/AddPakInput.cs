@@ -27,7 +27,7 @@ namespace Bottles.Deployment.Commands
         {
             var fs = new FileSystem();
 
-            var deploy = input.DeploymentFlag.IsEmpty() ? DeploymentSettings.ForRootDirectory() : new DeploymentSettings(input.DeploymentFlag);
+            var deploy = DeploymentSettings.ForDirectory(input.DeploymentFlag);
 
             var bottleManifestFile = deploy.BottleManifestFile;
 
