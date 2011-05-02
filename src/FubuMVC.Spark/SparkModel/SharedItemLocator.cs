@@ -28,17 +28,17 @@ namespace FubuMVC.Spark.SparkModel
     public class SharedDirectoryProvider
     {
         private readonly IEnumerable<string> _sharedFolderNames;
-        private readonly SharedFolderFinder _sharedFolderFinder;
+        private readonly SharedPathBuilder _sharedPathBuilder;
 
         public SharedDirectoryProvider(IEnumerable<string> sharedFolderNames)
         {
             _sharedFolderNames = sharedFolderNames;
-            _sharedFolderFinder = new SharedFolderFinder(sharedFolderNames);
+            _sharedPathBuilder = new SharedPathBuilder(sharedFolderNames);
         }
 
         public IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items)
         {
-            foreach (var directory in _sharedFolderFinder.Find(item.RootPath, item.FilePath))
+            foreach (var directory in _sharedPathBuilder.BuildFrom(item.FilePath, item.RootPath))
             {
                 yield return directory;
             }
@@ -66,16 +66,18 @@ namespace FubuMVC.Spark.SparkModel
 		}
     }
 	
-	public class SharedFolderFinder
+	public class SharedPathBuilder
     {
         private readonly IEnumerable<string> _sharedFolderNames;
-        public SharedFolderFinder(IEnumerable<string> sharedFolderNames)
+        public SharedPathBuilder(IEnumerable<string> sharedFolderNames)
         {
             _sharedFolderNames = sharedFolderNames;
         }
 
-        public IEnumerable<string> Find(string root, string path)
+        public IEnumerable<string> BuildFrom(string path, string root)
         {
+            if (path == root) yield break;
+
             do
             {
                 path = Path.GetDirectoryName(path);
