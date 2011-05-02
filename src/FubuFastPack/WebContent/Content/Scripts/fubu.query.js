@@ -44,9 +44,9 @@
 
         $(options.runQuerySelector).click(queryRunner);
 
-        if (this.context == document) {
+        if (typeof this.context == 'undefined' || this.context == document) {
             // We cannot wire up the Enter key if a context was used in the selector
-            $("#" + div.id + "input[type=text]").live("keypress", function (keyEvent) {
+            $("#" + div.id + " input[type=text]").live("keypress", function (keyEvent) {
                 if (keyEvent.which == 13) {
                     queryRunner();
                 }
