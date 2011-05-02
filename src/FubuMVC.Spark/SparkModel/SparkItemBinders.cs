@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.SparkModel
         private const string FallbackMaster = "Application";
         public string MasterName { get; set; }
 
-        public MasterPageBinder() : this(new SharedItemLocator(new[] {Constants.Shared})){}
+        public MasterPageBinder() : this(new SharedItemLocator()){}
         public MasterPageBinder(ISharedItemLocator sharedItemLocator)
         {
             _sharedItemLocator = sharedItemLocator;

@@ -68,6 +68,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
+    <Compile Include="SparkModel\SharedItemLocatorTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
     <Compile Include="SparkModel\SparkItemBuilderTester.cs" />
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />

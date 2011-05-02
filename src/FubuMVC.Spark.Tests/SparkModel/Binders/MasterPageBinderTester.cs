@@ -6,7 +6,6 @@ using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binders
 {
@@ -36,7 +35,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 
         protected override void beforeEach()
         {           
-            Services.Inject<ISharedItemLocator>(new SharedItemLocator(new[] {Constants.Shared}));
+            Services.Inject<ISharedItemLocator>(new SharedItemLocator());
             _context = new BindContext { AvailableItems = _sparkItems = createItems(), Master = "application", Tracer = MockFor<ISparkPackageTracer>() };
         }
 

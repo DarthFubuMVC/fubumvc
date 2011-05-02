@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
+using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -12,10 +13,14 @@ namespace FubuMVC.Spark.SparkModel
 	
     public class SharedItemLocator : ISharedItemLocator
     {
-        private readonly SharedDirectoryProvider _sharedDirectoryProvider;
-        public SharedItemLocator(IEnumerable<string> sharedFolderNames)
+        private readonly ISharedDirectoryProvider _sharedDirectoryProvider;
+
+        public SharedItemLocator() : this(new SharedDirectoryProvider())
         {
-            _sharedDirectoryProvider = new SharedDirectoryProvider(sharedFolderNames);
+        }
+        public SharedItemLocator(ISharedDirectoryProvider sharedDirectoryProvider)
+        {
+            _sharedDirectoryProvider = sharedDirectoryProvider;
         }
 
         public SparkItem LocateItem(string sparkName, SparkItem fromItem, IEnumerable<SparkItem> items)
@@ -25,15 +30,23 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class SharedDirectoryProvider
+    public interface ISharedDirectoryProvider
     {
-        private readonly IEnumerable<string> _sharedFolderNames;
-        private readonly SharedPathBuilder _sharedPathBuilder;
+        IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items);
+    }
 
-        public SharedDirectoryProvider(IEnumerable<string> sharedFolderNames)
+    public class SharedDirectoryProvider : ISharedDirectoryProvider
+    {
+        private readonly ISharedPathBuilder _sharedPathBuilder;
+
+        public SharedDirectoryProvider()
+            : this(new SharedPathBuilder())
         {
-            _sharedFolderNames = sharedFolderNames;
-            _sharedPathBuilder = new SharedPathBuilder(sharedFolderNames);
+        }
+
+        public SharedDirectoryProvider(ISharedPathBuilder sharedPathBuilder)
+        {
+            _sharedPathBuilder = sharedPathBuilder;
         }
 
         public IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items)
@@ -53,22 +66,33 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-			
-            foreach (var sharedFolder in _sharedFolderNames)
+
+            foreach (var sharedFolder in _sharedPathBuilder.SharedFolderNames)
             {
                 yield return Path.Combine(hostRoot, sharedFolder);
             }
         }
 		
-		private string findHostRoot(IEnumerable<SparkItem> items)
+		private static string findHostRoot(IEnumerable<SparkItem> items)
 		{
 			return items.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
 		}
     }
-	
-	public class SharedPathBuilder
+
+    public interface ISharedPathBuilder
+    {
+        IEnumerable<string> BuildFrom(string path, string root);
+        IEnumerable<string> SharedFolderNames { get; }
+    }
+
+    public class SharedPathBuilder : ISharedPathBuilder
     {
         private readonly IEnumerable<string> _sharedFolderNames;
+
+        public SharedPathBuilder() : this(new[] { Constants.Shared })
+        {
+        }
+
         public SharedPathBuilder(IEnumerable<string> sharedFolderNames)
         {
             _sharedFolderNames = sharedFolderNames;
@@ -88,6 +112,11 @@ namespace FubuMVC.Spark.SparkModel
                 }
 
             } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());
+        }
+
+        public IEnumerable<string> SharedFolderNames
+        {
+            get { return _sharedFolderNames; }
         }
     }
 }
