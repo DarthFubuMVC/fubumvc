@@ -10,5 +10,6 @@
     <alias name="spark" folder="src/Spark.Web.FubuMVC" />
     <alias name="webforms" folder="source\FubuMVC.WebForms" />
     <alias name="fubuwebforms" folder="src\FubuMVC.WebForms" />
+    <alias name="fubumvc" folder="src\FubuMVC.Core" />
   </Aliases>
 </aliases>

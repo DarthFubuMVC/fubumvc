@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Role>binaries</Role>
+  <Name>FubuMVC</Name>
+  <assembly>FubuMVC.Core</assembly>
+  <assembly>Bottles</assembly>
+  <assembly>FubuCore</assembly>
+  <assembly>FubuLocalization</assembly>
+  <assembly>HtmlTags</assembly>
+  <assembly>Ionic.Zip</assembly>
+  <assembly>Microsoft.Practices.ServiceLocation</assembly>
+  <DataFileSet Include="*.*">
+    <DeepSearch>true</DeepSearch>
+  </DataFileSet>
+  <ContentFileSet Include="*.config">
+    <DeepSearch>false</DeepSearch>
+  </ContentFileSet>
+</package>
