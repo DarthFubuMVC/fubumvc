@@ -8,6 +8,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {
+    [TestFixture]
     public class SharedItemLocatorTester : InteractionContext<SharedItemLocator>
     {
         private SparkItem _applicationItem;

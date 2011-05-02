@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -9,21 +8,26 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class SharedPathBuilderTester
+    public class SharedPathBuilderTester : InteractionContext<SharedPathBuilder>
     {
-        private readonly SharedPathBuilder _classUnderTest;
-        private readonly IEnumerable<string> _folderNames = new[] { "Shared1", "Shared2" };
-        private readonly string _rootPath = AppDomain.CurrentDomain.BaseDirectory;
+        private readonly IEnumerable<string> _folderNames;
+        private readonly string _rootPath;
 
         public SharedPathBuilderTester()
         {
-            _classUnderTest = new SharedPathBuilder(_folderNames);
+            _folderNames = new[] { "Shared1", "Shared2" };
+            _rootPath = AppDomain.CurrentDomain.BaseDirectory;
+        }
+
+        protected override void beforeEach()
+        {
+            Services.Inject(new SharedPathBuilder(_folderNames));
         }
 
         [Test]
         public void path_zero_level_returns_empty()
         {
-            _classUnderTest.BuildFrom(_rootPath, _rootPath).ShouldHaveCount(0);
+            ClassUnderTest.BuildFrom(_rootPath, _rootPath).ShouldHaveCount(0);
         }
 
         [Test]
@@ -34,7 +38,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             var path = FileSystem.Combine(_rootPath, "path1");
             
-            _classUnderTest.BuildFrom(path, _rootPath)
+            ClassUnderTest.BuildFrom(path, _rootPath)
                 .ShouldHaveTheSameElementsAs(expected);
         }
 
@@ -49,7 +53,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var expected = new List<string>();
             paths.Each(p => _folderNames.Each(s => expected.Add(FileSystem.Combine(p, s))));
 
-            _classUnderTest.BuildFrom(p2, _rootPath).ShouldHaveTheSameElementsAs(expected);
+            ClassUnderTest.BuildFrom(p2, _rootPath).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
