@@ -5,6 +5,7 @@ using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
+using FubuCore;
 
 namespace FubuMVC.Core.Urls
 {
@@ -134,7 +135,7 @@ namespace FubuMVC.Core.Urls
             
             // TODO -- throw if no input
 
-            return model == null ? chain.Route.Pattern : chain.Route.Input.CreateUrlFromInput(model);
+            return model == null ? chain.Route.Pattern.ToAbsoluteUrl() : chain.Route.Input.CreateUrlFromInput(model);
         }
     }
 

@@ -18,12 +18,14 @@ namespace FubuMVC.Tests.Urls
     {
         private BehaviorGraph graph;
         private UrlRegistry urls;
+        private string _appBaseUrl;
 
         [SetUp]
         public void SetUp()
         {
             UrlContext.Reset();
-
+            _appBaseUrl = "Fubu";
+            UrlContext.Stub(_appBaseUrl);
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
@@ -51,13 +53,13 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_by_controller_action_even_if_it_has_an_input_model()
         {
-            urls.UrlFor<OneController>(x => x.M1(null)).ShouldEqual("one/m1");
+            urls.UrlFor<OneController>(x => x.M1(null)).ShouldEqual("Fubu/one/m1");
         }
 
         [Test]
         public void retrieve_a_url_for_a_model_simple_case()
         {
-            urls.UrlFor(new Model1()).ShouldEqual("one/m1");
+            urls.UrlFor(new Model1()).ShouldEqual("Fubu/one/m1");
         }
 
 
@@ -78,7 +80,7 @@ namespace FubuMVC.Tests.Urls
         {
             urls.UrlFor(new ModelWithInputs{
                 Name = "Jeremy"
-            }).ShouldEqual("find/Jeremy");
+            }).ShouldEqual("Fubu/find/Jeremy");
         }
 
         [Test]
@@ -87,13 +89,13 @@ namespace FubuMVC.Tests.Urls
             var parameters = new RouteParameters<ModelWithInputs>();
             parameters[x => x.Name] = "Max";
 
-            urls.UrlFor<ModelWithInputs>(parameters).ShouldEqual("find/Max");
+            urls.UrlFor<ModelWithInputs>(parameters).ShouldEqual("Fubu/find/Max");
         }
 
         [Test]
         public void retrieve_a_url_for_a_model_and_category()
         {
-            urls.UrlFor(new UrlModel(), "different").ShouldEqual("one/m4");
+            urls.UrlFor(new UrlModel(), "different").ShouldEqual("Fubu/one/m4");
         }
 
         [Test]
@@ -108,7 +110,7 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_by_action()
         {
-            urls.UrlFor<OneController>(x => x.M2()).ShouldEqual("one/m2");
+            urls.UrlFor<OneController>(x => x.M2()).ShouldEqual("Fubu/one/m2");
         }
 
         [Test]
@@ -125,7 +127,7 @@ namespace FubuMVC.Tests.Urls
         {
             var method = ReflectionHelper.GetMethod<OneController>(x => x.M3());
 
-            urls.UrlFor(typeof (OneController), method).ShouldEqual("one/m3");
+            urls.UrlFor(typeof(OneController), method).ShouldEqual("Fubu/one/m3");
         }
 
         [Test]
@@ -141,8 +143,8 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void url_for_new_positive_case()
         {
-            urls.UrlForNew<UrlModel>().ShouldEqual("two/m2");
-            urls.UrlForNew(typeof (UrlModel)).ShouldEqual("two/m2");
+            urls.UrlForNew<UrlModel>().ShouldEqual("Fubu/two/m2");
+            urls.UrlForNew(typeof(UrlModel)).ShouldEqual("Fubu/two/m2");
         }
 
         [Test]
@@ -169,14 +171,14 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_for_a_model_when_it_trips_off_type_resolver_rules()
         {
-            urls.UrlFor(new SubclassUrlModel()).ShouldEqual("two/m4");
+            urls.UrlFor(new SubclassUrlModel()).ShouldEqual("Fubu/two/m4");
         }
 
         [Test]
         public void forward_without_a_category()
         {
             graph.Forward<Model4>(m => new Model3());
-            urls.UrlFor(new Model4()).ShouldEqual("one/m5");
+            urls.UrlFor(new Model4()).ShouldEqual("Fubu/one/m5");
         }
 
         [Test]
@@ -185,22 +187,22 @@ namespace FubuMVC.Tests.Urls
             graph.Forward<Model4>(m => new Model6(), "A");
             graph.Forward<Model4>(m => new Model7(), "B");
 
-            urls.UrlFor(new Model4(), "A").ShouldEqual("one/a");
-            urls.UrlFor(new Model4(), "B").ShouldEqual("one/b");
+            urls.UrlFor(new Model4(), "A").ShouldEqual("Fubu/one/a");
+            urls.UrlFor(new Model4(), "B").ShouldEqual("Fubu/one/b");
         }
 
         [Test]
         public void forward_with_route_inputs()
         {
             graph.Forward<Model4>(m => new ModelWithInputs(){Name = "chiefs"});
-            urls.UrlFor(new Model4()).ShouldEqual("find/chiefs");
+            urls.UrlFor(new Model4()).ShouldEqual("Fubu/find/chiefs");
         }
 
         [Test]
         public void forward_respects_the_type_resolution()
         {
             graph.Forward<UrlModel>(m => new Model6(), "new");
-            urls.UrlFor(new SubclassUrlModel(), "new").ShouldEqual("one/a");
+            urls.UrlFor(new SubclassUrlModel(), "new").ShouldEqual("Fubu/one/a");
         }
     }
 
