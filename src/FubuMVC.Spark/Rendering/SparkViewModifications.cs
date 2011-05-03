@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Web;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuCore;
 using Microsoft.Practices.ServiceLocation;
 using Spark;
 
@@ -50,16 +50,17 @@ namespace FubuMVC.Spark.Rendering
             ((IFubuPage)view).ServiceLocator = _serviceLocator;
         }
     }
-
+	
+	// TODO: UT
     public class SiteResourceAttacher : ISparkViewModification
     {
         private readonly ISparkViewEngine _engine;
-        private readonly HttpContextBase _context;
-
-        public SiteResourceAttacher(ISparkViewEngine engine, HttpContextBase context)
+		private IFubuRequest _request;
+		
+        public SiteResourceAttacher(ISparkViewEngine engine, IFubuRequest request)
         {
             _engine = engine;
-            _context = context;
+			_request = request;
         }
 
         public bool Applies(ISparkView view)
@@ -69,29 +70,35 @@ namespace FubuMVC.Spark.Rendering
 
         public void Modify(ISparkView view)
         {
-            // TODO: REFACTOR/IMPROVE
             ((IFubuSparkView) view).SiteResource = SiteResource;
         }
+		
         public string SiteResource(string path)
         {
-            return _engine.ResourcePathManager.GetResourcePath(steRoot(), path);
+            return _engine.ResourcePathManager.GetResourcePath(siteRoot(), path);
         }
-        private string steRoot()
-        {
-            var context = _context;
-            string siteRoot;
-            var appPath = context.Request.ApplicationPath;
-            if (string.IsNullOrEmpty(appPath) || string.Equals(appPath, "/"))
+		
+        private string siteRoot()
+        {			
+			var appPath = _request.Get<AppPath>().ApplicationPath;
+			var siteRoot = string.Empty;
+            
+			if (appPath.IsNotEmpty() && !string.Equals(appPath, "/"))
             {
-                siteRoot = string.Empty;
+                siteRoot = "/{0}".ToFormat(appPath.Trim('/'));
             }
-            else
-            {
-                siteRoot = "/" + appPath.Trim('/');
-            }
+			
             return siteRoot;
         }
-
+		
+		#region Nested Class: AppPath
+		
+		public class AppPath
+		{
+			public string ApplicationPath {get;set;}
+        }
+		
+		#endregion
     }
 
 }
