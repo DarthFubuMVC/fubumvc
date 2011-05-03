@@ -38,6 +38,7 @@ namespace FubuMVC.Spark
             services.AddService<IActivator, SparkActivator>();
             services.AddService<ISparkViewModification, ServiceLocatorAttacher>();
             services.AddService<ISparkViewModification, ModelAttacher>();
+            services.AddService<ISparkViewModification, SiteResourceAttacher>();
         }
 
         private void populateAndBuildItems()

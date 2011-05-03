@@ -36,6 +36,8 @@ namespace FubuMVC.Spark.Rendering
             get { return Get<IUrlRegistry>(); }
         }
 
+        public Func<string, string> SiteResource { get; set; }
+
         string IFubuPage.ElementPrefix { get; set; }
 
         public HtmlTag Tag(string tagName)
@@ -68,6 +70,7 @@ namespace FubuMVC.Spark.Rendering
     public interface IFubuSparkView : ISparkView
     {
         TextWriter Output { get; set; }
+        Func<string, string> SiteResource { get; set; }
     }
 
 }
