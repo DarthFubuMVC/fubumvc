@@ -36,7 +36,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
         protected override void beforeEach()
         {           
             Services.Inject<ISharedItemLocator>(new SharedItemLocator());
-            _context = new BindContext { AvailableItems = _sparkItems = createItems(), Master = "application", Tracer = MockFor<ISparkPackageTracer>() };
+            _context = new BindContext 
+			{ 
+				AvailableItems = _sparkItems = createItems(), 
+				Master = "application", 
+				Tracer = MockFor<ISparkPackageTracer>() 
+			};
         }
 
         private IEnumerable<SparkItem> createItems()

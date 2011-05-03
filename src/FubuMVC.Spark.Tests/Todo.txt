@@ -1,26 +1,20 @@
 Tests needed in SparkModel:
-
- First:
  
- - SparkItemBuilder
-
- Then:
-
- - Tests for Rendering.
+ - SharedDirectoryProvider
  
- Then:
- 
+ - Tests for Rendering. 
  - SparkActivator
  - SparkViewFacility
  - SparkViewToken
 
+
 More coverage needed for:
 
+ - SparkItemBuilder
  - MasterPageBinder
  - NamespacePolicy 
  - SparkScanner
  - SparkItemFinder
- 
  
  Rework needed for:
  
