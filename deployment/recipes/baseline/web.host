@@ -1,9 +1,10 @@
 bottle:FubuMVC
+bottle:FubuWebForms
 FubuWebsite.AnonAuth=Enable
 FubuWebsite.AppPool=fubu
 FubuWebsite.BasicAuth=Disable
 FubuWebsite.DirectoryBrowsing=Disable
-FubuWebsite.HostBottle=test
+FubuWebsite.HostBottle=FubuTestApp
 FubuWebsite.Password=
 FubuWebsite.Port=80
 FubuWebsite.Username=

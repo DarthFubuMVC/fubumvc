@@ -1,4 +1,6 @@
-﻿namespace Bottles.Deployment.Directives
+﻿using FubuCore;
+
+namespace Bottles.Deployment.Directives
 {
     public class FubuWebsite : IDirective
     {
@@ -10,6 +12,7 @@
             AnonAuth = Activation.Enable;
             BasicAuth = Activation.Disable;
             WindowsAuth = Activation.Disable;
+            WebsitePhysicalPath = FileSystem.Combine("{root}", "web");
         }
 
         public string WebsiteName { get; set; }
