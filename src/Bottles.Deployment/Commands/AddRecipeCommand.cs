@@ -24,8 +24,8 @@ namespace Bottles.Deployment.Commands
 
             var recipe = new RecipeDefinition(input.Name);
             
-            var rw = new RecipeWriter(new TypeDescriptorCache());
-            rw.WriteTo(recipe, settings);
+            var writer = new RecipeWriter(new TypeDescriptorCache());
+            writer.WriteTo(recipe, settings);
 
 
             return true;

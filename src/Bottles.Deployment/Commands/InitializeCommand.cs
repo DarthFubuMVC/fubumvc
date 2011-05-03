@@ -58,6 +58,7 @@ namespace Bottles.Deployment.Commands
                 if (input.ForceFlag)
                 {
                     logger.Log(DELETING_EXISTING_DIRECTORY, deploymentDirectory);
+                    fileSystem.CleanDirectory(deploymentDirectory);
                     fileSystem.DeleteDirectory(deploymentDirectory);
                     Thread.Sleep(10); //file system is async
                 }
