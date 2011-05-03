@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using FubuCore;
 using Spark;
 
@@ -8,7 +7,7 @@ namespace FubuMVC.Spark.SparkModel
 {
 	public interface ISharedPathBuilder
     {
-        IEnumerable<string> BuildFrom(string path, string root);
+        IEnumerable<string> BuildFrom(string root, string path);
         IEnumerable<string> SharedFolderNames { get; }
     }
 	
@@ -25,7 +24,7 @@ namespace FubuMVC.Spark.SparkModel
             _sharedFolderNames = sharedFolderNames;
         }
 
-        public IEnumerable<string> BuildFrom(string path, string root)
+        public IEnumerable<string> BuildFrom(string root, string path)
         {
             if (path == root) yield break;
 

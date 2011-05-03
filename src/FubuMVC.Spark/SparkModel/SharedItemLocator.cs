@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using FubuCore;
-using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -31,53 +28,5 @@ namespace FubuMVC.Spark.SparkModel
             var reachables = _sharedDirectoryProvider.GetDirectories(fromItem, items);
             return items.ByName(sparkName).InDirectories(reachables).FirstOrDefault();
         }
-    }
-
-    public interface ISharedDirectoryProvider
-    {
-        IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items);
-    }
-
-    public class SharedDirectoryProvider : ISharedDirectoryProvider
-    {
-        private readonly ISharedPathBuilder _sharedPathBuilder;
-
-        public SharedDirectoryProvider() : this(new SharedPathBuilder())
-        {
-        }
-
-        public SharedDirectoryProvider(ISharedPathBuilder sharedPathBuilder)
-        {
-            _sharedPathBuilder = sharedPathBuilder;
-        }
-
-        public IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items)
-        {
-            foreach (var directory in _sharedPathBuilder.BuildFrom(item.FilePath, item.RootPath))
-            {
-                yield return directory;
-            }
-			
-            if (item.Origin == FubuSparkConstants.HostOrigin)
-            {
-                yield break;
-            }
-			
-            var hostRoot = findHostRoot(items);
-            if (hostRoot.IsEmpty())
-            {
-                yield break;
-            }
-
-            foreach (var sharedFolder in _sharedPathBuilder.SharedFolderNames)
-            {
-                yield return Path.Combine(hostRoot, sharedFolder);
-            }
-        }
-		
-		private static string findHostRoot(IEnumerable<SparkItem> items)
-		{
-			return items.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
-		}
     }
 }

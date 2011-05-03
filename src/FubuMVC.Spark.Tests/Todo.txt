@@ -1,11 +1,8 @@
 Tests needed in SparkModel:
  
- - SharedDirectoryProvider 
  - Tests for Rendering.
   
  - SparkActivator
- - SparkViewFacility
- - SparkViewToken
 
 More coverage needed for:
 
