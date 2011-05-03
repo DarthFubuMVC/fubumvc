@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System;
 
 namespace FubuCore.Testing
 {
@@ -17,7 +18,8 @@ namespace FubuCore.Testing
         [Test]
         public void combine_to_path_when_rooted()
         {
-            "C:\\here".CombineToPath("there").ShouldEqual("C:\\here");
+			var rooted = Path.Combine(Path.GetPathRoot(AppDomain.CurrentDomain.BaseDirectory), "here");
+            rooted.CombineToPath("there").ShouldEqual(rooted);
         }
 
         [Test]
