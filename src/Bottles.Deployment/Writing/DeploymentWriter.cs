@@ -15,7 +15,7 @@ namespace Bottles.Deployment.Writing
         private readonly Cache<string, RecipeDefinition> _recipes = new Cache<string, RecipeDefinition>(name => new RecipeDefinition(name));
         private readonly IList<PropertyValue> _profileValues = new List<PropertyValue>();
         private readonly TypeDescriptorCache _types = new TypeDescriptorCache();
-        private DeploymentSettings _settings;
+        private readonly DeploymentSettings _settings;
 
 
         public DeploymentWriter(string destination) : this(destination, new FileSystem())
@@ -68,10 +68,10 @@ namespace Bottles.Deployment.Writing
 
         private void writeEnvironmentSettings()
         {
-            var writer = new StringWriter();
-            _profileValues.Each(v => writer.WriteLine(v.ToString()));
-
-            _system.WriteStringToFile(_settings.EnvironmentFile, writer.ToString());
+            _system.WriteToFlatFile(_settings.EnvironmentFile, file =>
+            {
+                _profileValues.Each(value => value.Write(file));
+            });
         }
 
         private void writeRecipe(RecipeDefinition recipe)
