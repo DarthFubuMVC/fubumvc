@@ -32,13 +32,7 @@ namespace Bottles.Deployment.Writing
 
         public void WriteReference(BottleReference reference)
         {
-            var text = ProfileFiles.BottlePrefix + reference.Name;
-            if (reference.Relationship.IsNotEmpty())
-            {
-                text += " " + reference.Relationship;
-            }
-
-            _writer.WriteLine(text);
+            _writer.WriteLine(reference.ToString());
         }
 
         public void WriteDirective(IDirective directive)

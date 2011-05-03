@@ -40,8 +40,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             host.AddReference(new BottleReference()
                               {
-                                  Name = "bottle2",
-                                  Relationship = "binaries"
+                                  Name = "bottle2"
                               });
 
             writer.Flush(FlushOptions.Wipeout);
@@ -75,8 +74,8 @@ namespace Bottles.Tests.Deployment.Parsing
         public void has_all_the_bottle_references_from_the_file()
         {
             theHost.BottleReferences.ShouldHaveTheSameElementsAs(
-                new BottleReference("bottle1", null),
-                new BottleReference("bottle2", "binaries")
+                new BottleReference("bottle1"),
+                new BottleReference("bottle2")
                 );
         }
 

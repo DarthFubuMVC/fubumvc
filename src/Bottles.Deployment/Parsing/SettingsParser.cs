@@ -65,17 +65,7 @@ namespace Bottles.Deployment.Parsing
 
         private void parseBottle(string text)
         {
-            var bottleText = text.Substring(ProfileFiles.BottlePrefix.Length).Trim();
-            var values = StringTokenizer.Tokenize(bottleText);
-            var reference = new BottleReference(){
-                Name = values.First()
-            };
-
-            if (values.Count() == 2)
-            {
-                reference.Relationship = values.Skip(1).First();
-            }
-
+            var reference = BottleReference.ParseFrom(text);
             _references.Add(reference);
         }
 

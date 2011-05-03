@@ -96,17 +96,15 @@ namespace Bottles.Tests.Deployment.Parsing
 
             var reference = theParser.References.Single();
             reference.Name.ShouldEqual("webcore");
-            reference.Relationship.ShouldBeNull();
         }
 
         [Test]
         public void parse_a_bottle_reference_with_a_relationship()
         {
-            theParser.ParseText("bottle:webcore binaries");
+            theParser.ParseText("bottle:webcore");
 
             var reference = theParser.References.Single();
             reference.Name.ShouldEqual("webcore");
-            reference.Relationship.ShouldEqual("binaries");
         }
 
 

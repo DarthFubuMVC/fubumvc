@@ -43,8 +43,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             host.AddReference(new BottleReference()
             {
-                Name = "bottle2",
-                Relationship = "binaries"
+                Name = "bottle2"
             });
 
             recipeDefinition.HostFor("h2").AddProperty<ThreeSettings>(x => x.Direction, "North");
@@ -119,8 +118,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             host.AddReference(new BottleReference()
             {
-                Name = "bottle2",
-                Relationship = "binaries"
+                Name = "bottle2"
             });
 
             recipeDefinition.HostFor("h2").AddProperty<ThreeSettings>(x => x.Direction, "North");

@@ -78,32 +78,32 @@ namespace Bottles.Tests.Deployment
         public void append_host_imports_bottle_references()
         {
             var host1 = new HostManifest("h1");
-            host1.RegisterBottle(new BottleReference("b1", null));
+            host1.RegisterBottle(new BottleReference("b1"));
 
 
             var host2 = new HostManifest("h2");
-            host2.RegisterBottle(new BottleReference("b2", null));
+            host2.RegisterBottle(new BottleReference("b2"));
 
 
             host1.Append(host2);
 
-            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null), new BottleReference("b2", null));
+            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1"), new BottleReference("b2"));
         }
 
         [Test]
         public void append_host_imports_bottle_references_but_does_not_duplicate()
         {
             var host1 = new HostManifest("h1");
-            host1.RegisterBottle(new BottleReference("b1", null));
+            host1.RegisterBottle(new BottleReference("b1"));
 
 
             var host2 = new HostManifest("h2");
-            host2.RegisterBottle(new BottleReference("b1", null));
+            host2.RegisterBottle(new BottleReference("b1"));
 
 
             host1.Append(host2);
 
-            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1", null));
+            host1.BottleReferences.ShouldHaveTheSameElementsAs(new BottleReference("b1"));
         }
 
 

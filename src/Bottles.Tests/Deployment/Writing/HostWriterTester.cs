@@ -31,11 +31,10 @@ namespace Bottles.Tests.Deployment.Writing
         public void write_bottle_reference_with_a_relationship()
         {
             theWriter.WriteReference(new BottleReference(){
-                Name = "webcore",
-                Relationship = "binaries"
+                Name = "webcore"
             });
 
-            theWriter.ToText().Trim().ShouldEqual("bottle:webcore binaries");
+            theWriter.ToText().Trim().ShouldEqual("bottle:webcore");
         }
 
         [Test]
@@ -61,9 +60,9 @@ namespace Bottles.Tests.Deployment.Writing
             };
 
             theWriter.WriteDirective(settings);
-            theWriter.WriteReference(new BottleReference("bob", "binaries"));
+            theWriter.WriteReference(new BottleReference("bob"));
 
-            theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one", "SimpleSettings.Two=two", "bottle:bob binaries");
+            theWriter.AllLines().ShouldHaveTheSameElementsAs("SimpleSettings.One=one", "SimpleSettings.Two=two", "bottle:bob");
         }
 
         [Test]
