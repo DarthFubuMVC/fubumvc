@@ -42,6 +42,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
             configureBinders();
 
             registerBindersAndPolicies();
+
+            OtherSparkItemBinder.Reset();
+            OtherSparkItemPolicy.Reset();
         }
 
         private void configurePolicies()
@@ -98,6 +101,44 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _policy1Items.ShouldHaveCount(1).ShouldContain(_item1);
             _policy2Items.ShouldHaveCount(1).ShouldContain(_item2);
         }
+
+        [Test]
+        public void add_binder_register_the_binders_and_use_them_when_building_items()
+        {
+            var invoked = false;
+
+            var binder = new FakeSparkItemBinder();
+            binder.Action += x => invoked = true;
+
+            ClassUnderTest
+                .AddBinder(binder)
+                .AddBinder<OtherSparkItemBinder>();
+
+            ClassUnderTest.BuildItems();
+
+            invoked.ShouldBeTrue();
+            OtherSparkItemBinder.Invoked.ShouldBeTrue();
+        }
+
+        [Test]
+        public void apply_register_the_policies_and_use_them_when_building_items()
+        {
+            var invoked1 = false;
+            var invoked2 = false;
+
+            var policy = new FakeSparkItemPolicy();
+            policy.Action += x => invoked1 = true;
+
+            ClassUnderTest.Apply(policy);
+            ClassUnderTest.Apply<FakeSparkItemPolicy>(p => p.Action += x => invoked2 = true);
+            ClassUnderTest.Apply<OtherSparkItemPolicy>();
+
+            ClassUnderTest.BuildItems();
+
+            invoked1.ShouldBeTrue();
+            invoked2.ShouldBeTrue();
+            OtherSparkItemPolicy.Invoked.ShouldBeTrue();
+        }
     }
 
     public class FakeSparkItemBinder : ISparkItemBinder
@@ -123,6 +164,19 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
     }
 
+    public class OtherSparkItemBinder : FakeSparkItemBinder
+    {
+        public OtherSparkItemBinder()
+        {
+            Action += x => Invoked = true;
+        }
+        public static void Reset()
+        {
+            Invoked = false;
+        }
+        public static bool Invoked { get; private set; }
+    }
+
     public class FakeSparkItemPolicy : ISparkItemPolicy
     {
         public FakeSparkItemPolicy()
@@ -142,5 +196,18 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             Action.Do(item);
         }
+    }
+
+    public class OtherSparkItemPolicy : FakeSparkItemPolicy
+    {
+        public OtherSparkItemPolicy()
+        {
+            Action += x => Invoked = true;
+        }
+        public static void Reset()
+        {
+            Invoked = false;
+        }
+        public static bool Invoked { get; private set; }
     }
 }

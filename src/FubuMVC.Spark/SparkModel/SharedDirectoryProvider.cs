@@ -24,7 +24,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<string> GetDirectories(SparkItem item, IEnumerable<SparkItem> items)
         {
-            foreach (var directory in _builder.BuildFrom(item.RootPath, item.FilePath))
+            foreach (var directory in _builder.BuildFrom(item.FilePath, item.RootPath))
             {
                 yield return directory;
             }

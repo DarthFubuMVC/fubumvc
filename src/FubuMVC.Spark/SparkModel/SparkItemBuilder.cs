@@ -60,16 +60,13 @@ namespace FubuMVC.Spark.SparkModel
         {
             _sparkItems.Each(item =>
             {
-                _itemBinders.Each(binder =>
-                {
-                    var chunks = _chunkLoader.Load(item);
-                    var context = createContext(chunks);
-                    if (binder.CanBind(item, context))
-                    {
-                        binder.Bind(item, context);
-                    }
-                });
-                _policies.Where(p => p.Matches(item)).Each(p => p.Apply(item));
+                var chunks = _chunkLoader.Load(item);
+                var context = createContext(chunks);
+                var binders = _itemBinders.Where(x => x.CanBind(item, context));
+                var policies = _policies.Where(x => x.Matches(item));
+
+                binders.Each(binder => binder.Bind(item, context));
+                policies.Each(policy => policy.Apply(item));
             });
         }
 

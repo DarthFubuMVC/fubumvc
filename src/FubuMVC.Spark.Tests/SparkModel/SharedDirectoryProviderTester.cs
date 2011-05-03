@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var paths = Enumerable.Empty<string>();
             _builder
-                .Expect(x => x.BuildFrom(_item.RootPath, _item.FilePath))
+                .Expect(x => x.BuildFrom(_item.FilePath, _item.RootPath))
                 .Return(paths);
 
             ClassUnderTest.GetDirectories(_item, _items).ToList();
@@ -74,7 +74,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void when_the_item_origin_is_not_host_but_no_host_items_exists_output_equals_shared_path_builder()
+        public void when_the_item_origin_is_not_host_but_no_host_item_exists_output_equals_shared_path_builder()
         {
             var paths = new[] { getPath("Shared"), 
                 getPath("Views", "Shared"),
@@ -98,8 +98,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 getPath("Packages", "Package1", "Shared"), 
                 getPath("Packages", "Package1", "Actions", "Shared") };
             _builder
-                .Stub(x => x.BuildFrom(null, null)).IgnoreArguments()
-                .Return(paths);
+                .Stub(x => x.BuildFrom(null, null))
+                .IgnoreArguments().Return(paths);
 
             ClassUnderTest.GetDirectories(_packageItem, _items)
                 .SequenceEqual(paths.Union(new[] { rootShared }))
