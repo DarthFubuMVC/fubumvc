@@ -63,7 +63,12 @@ namespace FubuMVC.Spark.Rendering
             Model = model;
         }
 
-        public TViewModel Model { get; private set; }
+        public TViewModel Model { get; set; }
+        
+        public object GetModel()
+        {
+            return Model;
+        }
     }
 
 

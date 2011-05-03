@@ -36,8 +36,7 @@ namespace FubuMVC.Spark
             services.SetServiceIfNone<ISparkItems>(_items);
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
             services.AddService<IActivator, SparkActivator>();
-            services.AddService<ISparkViewModification, ServiceLocatorAttacher>();
-            services.AddService<ISparkViewModification, ModelAttacher>();
+            services.AddService<ISparkViewModification, PageActivation>();
             services.AddService<ISparkViewModification, SiteResourceAttacher>();
         }
 

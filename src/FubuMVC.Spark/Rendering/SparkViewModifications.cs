@@ -1,8 +1,7 @@
-﻿using System;
-using FubuMVC.Core.Runtime;
+﻿using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuCore;
-using Microsoft.Practices.ServiceLocation;
+using FubuMVC.Core.View.Activation;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
@@ -13,31 +12,12 @@ namespace FubuMVC.Spark.Rendering
         void Modify(ISparkView view);
     }
 
-    public class ModelAttacher : ISparkViewModification
+    public class PageActivation : ISparkViewModification
     {
-        private readonly IFubuRequest _fubuRequest;
-        public ModelAttacher(IFubuRequest fubuRequest)
+        private readonly IPageActivator _activator;
+        public PageActivation(IPageActivator activator)
         {
-            _fubuRequest = fubuRequest;
-        }
-
-        public bool Applies(ISparkView view)
-        {
-            return view is IFubuViewWithModel;
-        }
-
-        public void Modify(ISparkView view)
-        {
-            ((IFubuViewWithModel)view).SetModel(_fubuRequest);
-        }
-    }
-
-    public class ServiceLocatorAttacher : ISparkViewModification
-    {
-        private readonly IServiceLocator _serviceLocator;
-        public ServiceLocatorAttacher(IServiceLocator serviceLocator)
-        {
-            _serviceLocator = serviceLocator;
+            _activator = activator;
         }
 
         public bool Applies(ISparkView view)
@@ -47,7 +27,7 @@ namespace FubuMVC.Spark.Rendering
 
         public void Modify(ISparkView view)
         {
-            ((IFubuPage)view).ServiceLocator = _serviceLocator;
+            _activator.Activate((IFubuPage)view);
         }
     }
 	
@@ -55,7 +35,7 @@ namespace FubuMVC.Spark.Rendering
     public class SiteResourceAttacher : ISparkViewModification
     {
         private readonly ISparkViewEngine _engine;
-		private IFubuRequest _request;
+		private readonly IFubuRequest _request;
 		
         public SiteResourceAttacher(ISparkViewEngine engine, IFubuRequest request)
         {
