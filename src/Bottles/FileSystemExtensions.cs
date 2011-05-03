@@ -80,6 +80,6 @@ namespace Bottles
             return fileSystem.FindFiles(directory, fileSet).Select(Path.GetFileNameWithoutExtension);
         }
 
-		
+
     }
 }

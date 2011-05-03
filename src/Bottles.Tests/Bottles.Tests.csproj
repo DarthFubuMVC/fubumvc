@@ -86,6 +86,7 @@
     <Compile Include="Deployment\Deployers\WindowsSchedulerDeployerTester.cs" />
     <Compile Include="Deployment\DeploymentSettingsTester.cs" />
     <Compile Include="Deployment\Runtime\DirectiveRunnerTester.cs" />
+    <Compile Include="Deployment\Writing\FlatFileWriterTester.cs" />
     <Compile Include="Diagnostics\PackageLogTester.cs" />
     <Compile Include="EnvironmentSettingsTester.cs" />
     <Compile Include="Deployment\FakeDeployer.cs" />
