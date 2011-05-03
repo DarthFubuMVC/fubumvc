@@ -1,10 +1,12 @@
 using System;
 using System.ComponentModel;
 using Bottles.Deployment;
+using Bottles.Deployment.Commands;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Writing;
 using FubuCore.CommandLine;
 using FubuCore;
+using FubuCore.Reflection;
 
 namespace Fubu
 {
@@ -48,11 +50,31 @@ namespace Fubu
                 directive.VDir = input.VirtualDirFlag;
             }
 
-            // write the directive
-            // write the bottle reference
-            //var writer = new DirectiveWriter()
-        
-            throw new NotImplementedException();
+            var fileSystem = new FileSystem();
+
+            var hostFile = settings.GetHost(input.RecipeFlag, input.HostFlag);
+            Console.WriteLine("Adding a new FubuWebsite directive to " + hostFile);
+
+            fileSystem.WriteToFlatFile(hostFile, file =>
+            {
+                var writer = new DirectiveWriter(file, new TypeDescriptorCache());
+                writer.Write(directive);
+            });
+
+            Console.WriteLine("");
+
+            new AddReferenceCommand().Execute(new AddReferenceCommandInput(){
+                Bottle = input.ApplicationBottleName,
+                Host = input.HostFlag,
+                Recipe = input.RecipeFlag
+            });
+
+            if (input.OpenFlag)
+            {
+                fileSystem.LaunchEditor(hostFile);
+            }
+
+            return true;
         }
     }
 }

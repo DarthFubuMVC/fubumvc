@@ -15,4 +15,6 @@ bottles ref baseline web FubuMVC
 bottles ref baseline web FubuWebForms
 bottles ref baseline web FubuTestApp
 
+fubu create-deployment FubuTestApp -recipe baseline -host web
+
 bottles create-all -target debug
