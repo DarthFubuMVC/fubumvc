@@ -49,7 +49,6 @@
     <Compile Include="Commands\AssembliesCommand.cs" />
     <Compile Include="Commands\AssemblyPackageCommand.cs" />
     <Compile Include="Commands\CreatePackageCommand.cs" />
-    <Compile Include="Commands\InitializeCommand.cs" />
     <Compile Include="Commands\InitPakCommand.cs" />
     <Compile Include="ISimpleLogger.cs" />
     <Compile Include="Commands\ListCommand.cs" />

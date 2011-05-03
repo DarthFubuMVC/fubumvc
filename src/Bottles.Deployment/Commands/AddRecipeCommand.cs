@@ -13,11 +13,6 @@ namespace Bottles.Deployment.Commands
 
         [Description("Where the ~/deployment folder is")]
         public string DeploymentFlag { get; set; }
-
-        public string DeploymentRoot()
-        {
-            return DeploymentFlag ?? ".".ToFullPath();
-        }
     }
 
     [CommandDescription("Adds a recipe to a deployment", Name="add-recipe")]
