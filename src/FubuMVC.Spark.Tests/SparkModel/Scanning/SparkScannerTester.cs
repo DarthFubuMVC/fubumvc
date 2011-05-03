@@ -11,20 +11,20 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel.Scanning
 {
     [TestFixture]
-    public class SparkScannerTester
+    public class SparkScannerTester : InteractionContext<FileScanner>
     {
-        private readonly IFileScanner _scanner;
-        private readonly IList<SparkItem> _scanResult;
+        private IList<SparkItem> _scanResult;
 
-        public SparkScannerTester()
+        protected override void beforeEach()
         {
-            _scanner = new FileScanner(new FileSystem());
+            Services.Inject<IFileSystem>(new FileSystem());
             _scanResult = new List<SparkItem>();
             var request = new ScanRequest();
             TestSource.Paths().Each(request.AddRoot);
             request.Include("*.spark");
             request.AddHandler(file => _scanResult.Add(new SparkItem(file.Path, file.Root, "")));
-            _scanner.Scan(request);
+
+            ClassUnderTest.Scan(request);
         }
 
         [Test]

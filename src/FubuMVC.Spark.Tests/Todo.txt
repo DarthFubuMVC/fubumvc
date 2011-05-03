@@ -6,7 +6,6 @@ Tests needed in SparkModel:
 
 More coverage needed for:
 
- - SparkItemBuilder
  - SparkScanner
  - SparkItemFinder
 
