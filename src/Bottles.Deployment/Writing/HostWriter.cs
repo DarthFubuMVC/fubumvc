@@ -8,7 +8,7 @@ namespace Bottles.Deployment.Writing
     public class HostWriter
     {
         private readonly ITypeDescriptorCache _types;
-        private readonly TextWriter _writer = new StringWriter();
+        private readonly FlatFileWriter _writer = new FlatFileWriter(new List<string>());
         private readonly IFileSystem _fileSystem = new FileSystem();
 
         public HostWriter(ITypeDescriptorCache types)
@@ -48,18 +48,7 @@ namespace Bottles.Deployment.Writing
 
         public IEnumerable<string> AllLines()
         {
-            var lines = new List<string>();
-
-            using (var reader = new StringReader(ToText()))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    lines.Add(line);
-                }
-            }
-
-            return lines;
+            return _writer.List;
         }
 
         public void WritePropertyValue(PropertyValue value)

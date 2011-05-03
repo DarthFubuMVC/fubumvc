@@ -9,12 +9,12 @@ namespace Bottles.Deployment.Writing
 {
     public class DirectiveWriter
     {
-        private readonly TextWriter _writer;
+        private readonly IFlatFileWriter _writer;
         private readonly ITypeDescriptorCache _types;
         private readonly Stack<string> _names = new Stack<string>();
         private string _prefix;
 
-        public DirectiveWriter(TextWriter writer, ITypeDescriptorCache types)
+        public DirectiveWriter(IFlatFileWriter writer, ITypeDescriptorCache types)
         {
             _writer = writer;
             _types = types;
@@ -23,7 +23,7 @@ namespace Bottles.Deployment.Writing
         private void setPrefix(Action<Stack<string>> configure)
         {
             configure(_names);
-            _prefix = GenericEnumerableExtensions.Join((IEnumerable<string>) _names.Reverse(), ".") + ".";
+            _prefix =  _names.Reverse().Join(".") + ".";
         }
 
         public void Write(object directive)
@@ -45,7 +45,9 @@ namespace Bottles.Deployment.Writing
                 if (prop.PropertyType.IsSimple())
                 {
                     var stringValue = child == null ? string.Empty : child.ToString();
-                    _writer.WriteLine("{0}{1}={2}", _prefix, prop.Name, stringValue);
+                    var name = "{0}{1}".ToFormat(_prefix, prop.Name);
+
+                    _writer.WriteProperty(name, stringValue);
                 }
                 else
                 {

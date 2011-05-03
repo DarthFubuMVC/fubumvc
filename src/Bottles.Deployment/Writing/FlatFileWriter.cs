@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using FubuCore;
 
 namespace Bottles.Deployment.Writing
@@ -39,6 +40,14 @@ namespace Bottles.Deployment.Writing
         public List<string> List
         {
             get { return _list; }
+        }
+
+        public override string ToString()
+        {
+            var writer = new StringWriter();
+            _list.Each(x => writer.WriteLine(x));
+
+            return writer.ToString();
         }
     }
 
