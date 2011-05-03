@@ -7,7 +7,7 @@ using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Spark.Tests.SparkModel.Binders
+namespace FubuMVC.Spark.Tests.SparkModel.Binding
 {
     [TestFixture]
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>

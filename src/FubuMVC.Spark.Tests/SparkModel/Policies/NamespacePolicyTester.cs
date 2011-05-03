@@ -3,7 +3,7 @@ using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Spark.Tests.SparkModel.Binders
+namespace FubuMVC.Spark.Tests.SparkModel.Policies
 {
     [TestFixture]
     public class NamespacePolicyTester : InteractionContext<NamespacePolicy>

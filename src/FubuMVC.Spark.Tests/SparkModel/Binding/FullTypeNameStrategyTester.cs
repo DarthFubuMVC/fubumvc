@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 
-namespace FubuMVC.Spark.Tests.SparkModel.Binders
+namespace FubuMVC.Spark.Tests.SparkModel.Binding
 {
     [TestFixture]
 	public class FullTypeNameStrategyTester : InteractionContext<FullTypeNameStrategy>
@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 		
 		protected override void beforeEach()
 		{
-			_typeName = "FubuMVC.Spark.Tests.SparkModel.Binders.Baz";		    					
+			_typeName = "FubuMVC.Spark.Tests.SparkModel.Binding.Baz";		    					
 			Services.Inject<TypePool>(typePool());
 		}
 
@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binders
 		{
 			var pool = new TypePool (GetType().Assembly);
 			
-			pool.AddType (generateType ("namespace FubuMVC.Spark.Tests.SparkModel.Binders{public class Bar{}}", "FubuMVC.Spark.Tests.SparkModel.Binders.Bar"));
+			pool.AddType (generateType ("namespace FubuMVC.Spark.Tests.SparkModel.Binding{public class Bar{}}", "FubuMVC.Spark.Tests.SparkModel.Binding.Bar"));
 			pool.AddType<Bar>();
 			pool.AddType<Baz>();
 			
