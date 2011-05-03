@@ -267,7 +267,11 @@ namespace FubuCore
         public void AlterFlatFile(string path, Action<List<string>> alteration)
         {
             var list = new List<string>();
-            ReadTextFile(path, list.Add);
+
+            if (FileExists(path))
+            {
+                ReadTextFile(path, list.Add);
+            }
             alteration(list);
 
             using (var writer = new StreamWriter(path))
