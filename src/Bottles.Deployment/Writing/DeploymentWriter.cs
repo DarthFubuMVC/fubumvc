@@ -76,7 +76,6 @@ namespace Bottles.Deployment.Writing
 
         private void writeRecipe(RecipeDefinition recipe)
         {
-            
             new RecipeWriter(_types).WriteTo(recipe, _settings);
         }
 

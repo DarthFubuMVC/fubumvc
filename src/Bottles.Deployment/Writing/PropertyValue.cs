@@ -25,17 +25,33 @@ namespace Bottles.Deployment.Writing
 
         public override string ToString()
         {
-            if (Name.IsNotEmpty())
-            {
-                return "{0}={1}".ToFormat(Name, Value.ToString());
-            }
+            var name = Name.IsNotEmpty() ? Name : toPropertyName();
 
-            var description = "{0}.{1}={2}".ToFormat(
+            return "{0}={1}".ToFormat(name, Value.ToString());
+        }
+
+        private string toPropertyName()
+        {
+            var name = "{0}.{1}".ToFormat(
                 Accessor.DeclaringType.Name, 
                 Accessor.PropertyNames.Join("."), 
                 Value == null ? string.Empty : Value.ToString());
 
-            return HostName.IsEmpty() ? description : "{0}.{1}".ToFormat(HostName, description);
+            return HostName.IsEmpty() ? name : "{0}.{1}".ToFormat(HostName, name);
+        }
+
+        public void Write(IFlatFileWriter writer)
+        {
+            if (Name.IsNotEmpty())
+            {
+                writer.WriteProperty(Name, Value.ToString());
+            }
+            else
+            {
+                writer.WriteProperty(toPropertyName(), Value.ToString());
+            }
+
+            
         }
 
     }
