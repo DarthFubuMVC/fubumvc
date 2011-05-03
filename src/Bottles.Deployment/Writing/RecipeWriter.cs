@@ -31,7 +31,7 @@ namespace Bottles.Deployment.Writing
                 });
             });
 
-            recipe.Hosts().Each(host => new HostWriter(_types).WriteTo(host, recipeDirectory));
+            recipe.Hosts().Each(host => new HostWriter(_types).WriteTo(recipe.Name, host, settings));
         }
     }
 }

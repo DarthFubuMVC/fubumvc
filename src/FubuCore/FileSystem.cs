@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Xml.Serialization;
 using System.Linq;
 
@@ -272,6 +273,9 @@ namespace FubuCore
             {
                 ReadTextFile(path, list.Add);
             }
+
+            list.RemoveAll(x => x.Trim() == string.Empty);
+
             alteration(list);
 
             using (var writer = new StreamWriter(path))
@@ -292,7 +296,9 @@ namespace FubuCore
         {
             if (directory.IsEmpty()) return;
 
+
             DeleteDirectory(directory);
+            Thread.Sleep(10);
 
             CreateDirectory(directory);
         }

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using Bottles.Deployment.Bootstrapping;
 using Bottles.Deployment.Runtime;
@@ -11,6 +12,8 @@ namespace Bottles.Deployment.Commands
 
     public class AddDirectiveInput
     {
+        private readonly Lazy<DeploymentSettings> _settings;
+        
         [Description("The recipe to add the directive to.")]
         public string Recipe { get; set; }
 
@@ -26,41 +29,62 @@ namespace Bottles.Deployment.Commands
         [Description("Open the directive file when done.")]
         public bool OpenFlag { get; set; }
 
-        public string DeploymentRoot()
+        public AddDirectiveInput()
         {
-            return DeploymentFlag ?? @".".ToFullPath();
+            _settings = new Lazy<DeploymentSettings>(() => DeploymentSettings.ForDirectory(DeploymentFlag));
+        }
+        
+        public DeploymentSettings Settings
+        {
+            get { return _settings.Value; }
+        }
+
+        public string GetHostFileName()
+        {
+            return Settings.GetHost(Recipe, Host);
         }
     }
 
     [CommandDescription("Adds a directive to an existing /deployment/recipe/host ", Name="add-directive")]
     public class AddDirectiveCommand : FubuCommand<AddDirectiveInput>
     {
-        IFileSystem _fileSystem = new FileSystem();
+        private readonly IFileSystem _fileSystem;
+
+        public AddDirectiveCommand() : this(new FileSystem())
+        {
+        }
+
+        public AddDirectiveCommand(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
 
         public override bool Execute(AddDirectiveInput input)
         {
-            var settings = new DeploymentSettings(input.DeploymentRoot());
+            var settings = input.Settings;
             
-            var c = DeploymentBootstrapper.Bootstrap(settings);
-            var directiveTypeRegistry = c.GetInstance<IDirectiveTypeRegistry>();
-            return Initialize(directiveTypeRegistry, input, settings);
+            var container = DeploymentBootstrapper.Bootstrap(settings);
+            var directiveTypeRegistry = container.GetInstance<IDirectiveTypeRegistry>();
+            
+            return Initialize(directiveTypeRegistry, input);
         }
 
-        public bool Initialize(IDirectiveTypeRegistry registry, AddDirectiveInput input, DeploymentSettings settings)
+        public bool Initialize(IDirectiveTypeRegistry registry, AddDirectiveInput input)
         {
-            var rec = settings.GetRecipeDirectory(input.Recipe);
+            var directiveType = registry.DirectiveTypeFor(input.Directive);
+            var directive = directiveType.Create<IDirective>();
 
-            var host = new HostDefinition(input.Host);
-            var type = registry.DirectiveTypeFor(input.Directive);
-            var directive = type.Create<IDirective>();
-
-            host.AddDirective(directive);
-
-            var hw = new HostWriter(new TypeDescriptorCache());
-            hw.WriteTo(host, rec);
+            var hostFile = input.GetHostFileName();
+            _fileSystem.WriteToFlatFile(hostFile, file =>
+            {
+                var writer = new DirectiveWriter(file, new TypeDescriptorCache());
+                writer.Write(directive);
+            });
 
             if(input.OpenFlag)
-                _fileSystem.LaunchEditor(rec, host.FileName);
+            {
+                _fileSystem.LaunchEditor(hostFile);
+            }
 
             return true;
         }

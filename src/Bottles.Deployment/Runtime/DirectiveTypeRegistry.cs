@@ -19,7 +19,7 @@ namespace Bottles.Deployment.Runtime
                 .Where(x => x != null).Each(type =>
                 {
                     // TODO -- need to blow up if duplicate names are hit?
-                    var directiveType = Enumerable.First<Type>(type.GetGenericArguments());
+                    var directiveType = type.GetGenericArguments().First();
                     _directiveTypes[directiveType.Name] = directiveType;
                 });
         }
@@ -27,9 +27,13 @@ namespace Bottles.Deployment.Runtime
         public Type DirectiveTypeFor(string name)
         {
             if(_directiveTypes.Has(name))
+            {
                 return _directiveTypes[name];
+            }
 
-            throw new ArgumentException("Couldn't find type '{0}'".ToFormat(name));
+            var description = _directiveTypes.GetAllKeys().Join(", ");
+
+            throw new ArgumentException("Couldn't find type '{0}'\nAvailable directives are {1}".ToFormat(name, description));
         }
 
         public IEnumerable<Type> DirectiveTypes()

@@ -13,5 +13,6 @@ bottles add-pak testapp
 bottles add-recipe baseline
 bottles ref baseline web FubuMVC
 bottles ref baseline web FubuWebForms
+bottles ref baseline web FubuTestApp
 
 bottles create-all -target debug

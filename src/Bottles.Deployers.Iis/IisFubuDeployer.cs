@@ -46,9 +46,6 @@ namespace Bottles.Deployers.Iis
                 //flush the changes so that we can now tweak them.
                 iisManager.CommitChanges();
 
-                moveWebContentOut(directive);
-
-
                 app.DirectoryBrowsing(directive.DirectoryBrowsing);
 
                 //app.AnonAuthentication(direc.AnonAuth);
@@ -57,18 +54,13 @@ namespace Bottles.Deployers.Iis
 
                 app.MapAspNetToEverything();
                 iisManager.CommitChanges();
+
+                
             }
+
+            // TODO -- deal with bottle references
         }
 
-        private void moveWebContentOut(FubuWebsite directive)
-        {
-            _bottles.ExplodeTo(directive.HostBottle, directive.VDirPhysicalPath);
-
-            var webContent = FileSystem.Combine(directive.VDirPhysicalPath, "WebContent");
-            _fileSystem.MoveFiles(webContent, directive.VDirPhysicalPath);
-
-            _fileSystem.DeleteDirectory(webContent);
-        }
 
 
     }

@@ -16,12 +16,9 @@ namespace Bottles.Deployment.Writing
             _types = types;
         }
 
-        public void WriteTo(HostDefinition host, string recipeDirectory)
+        public void WriteTo(string recipeName, HostDefinition host, DeploymentSettings settings)
         {
-            var fileName = host.FileName;
-            fileName = FileSystem.Combine(recipeDirectory, fileName);
-
-            _fileSystem.CreateDirectory(recipeDirectory);
+            var fileName = settings.GetHost(recipeName, host.Name);
 
             host.References.Each(WriteReference);
             host.Values.Each(WritePropertyValue);

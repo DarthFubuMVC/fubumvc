@@ -47,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bottles.Deployers.Iis\Bottles.Deployers.Iis.csproj">
+      <Project>{607F7461-947C-42D7-A4CA-379199A74E6B}</Project>
+      <Name>Bottles.Deployers.Iis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
       <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
       <Name>Bottles.Deployment</Name>

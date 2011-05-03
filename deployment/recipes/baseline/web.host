@@ -1,2 +1,16 @@
 bottle:FubuMVC
+bottle:FubuTestApp
 bottle:FubuWebForms
+FubuWebsite.WebsiteName={website-name}
+FubuWebsite.WebsitePhysicalPath=root\web
+FubuWebsite.VDir={virtual-dir}
+FubuWebsite.VDirPhysicalPath=root\web\{virtual-dir}
+FubuWebsite.AppPool={app-pool}
+FubuWebsite.Port=80
+FubuWebsite.Username=
+FubuWebsite.Password=
+FubuWebsite.HostBottle=
+FubuWebsite.DirectoryBrowsing=Disable
+FubuWebsite.AnonAuth=Enable
+FubuWebsite.BasicAuth=Disable
+FubuWebsite.WindowsAuth=Disable
