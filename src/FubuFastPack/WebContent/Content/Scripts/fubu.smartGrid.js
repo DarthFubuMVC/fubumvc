@@ -29,7 +29,7 @@
             }
 
             return '<a href="' + url + '" target="_top" title="' + cellValue + '">' + displayValue + '</a>';
-        },
+        }
     });
 
     $.fn.smartGrid = function (userOptions) {
