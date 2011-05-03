@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
 
@@ -44,7 +45,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual Route ToRoute()
         {
-            var route = new Route(_pattern, null, getConstraints(), null);
+            var route = new Route(PatternWithoutDefaultValues, null, getConstraints(), null);
             if (Input != null)
             {
                 Input.AlterRoute(route);
@@ -62,6 +63,18 @@ namespace FubuMVC.Core.Registration.Routes
         public string Pattern
         {
             get { return _pattern; }
+        }
+
+        public string PatternWithoutDefaultValues
+        {
+            get
+            {
+                const string capture = @":\w+";
+                var pattern = _pattern;
+                return Regex.Matches(pattern, capture, RegexOptions.IgnorePatternWhitespace)
+                    .Cast<Match>()
+                    .Aggregate(pattern, (current, match) => current.Replace(match.Value, string.Empty));
+            }
         }
 
         public void RemoveLastPatternPart()
