@@ -17,8 +17,8 @@ namespace Bottles.Deployment
             EnvironmentFile = FileSystem.Combine(path, ProfileFiles.EnvironmentSettingsFileName);
             TargetDirectory = FileSystem.Combine(path, ProfileFiles.TargetDirectory);
             BottleManifestFile = FileSystem.Combine(path, ProfileFiles.BottlesManifestFile);
-
-            
+            EnvironmentsDirectory = FileSystem.Combine(path, ProfileFiles.EnvironmentsDirectory);
+            ProfilesDirectory = FileSystem.Combine(path, ProfileFiles.ProfilesDirectory);
         }
 
         public static DeploymentSettings ForDirectory(string directory)
@@ -42,6 +42,8 @@ namespace Bottles.Deployment
         public string RecipesDirectory { get; set;}
         public string EnvironmentFile { get; set;}
         public string BottleManifestFile { get; set; }
+        public string EnvironmentsDirectory { get; set; }
+        public string ProfilesDirectory { get; set; }
 
         public string StagingDirectory
         {
@@ -58,14 +60,14 @@ namespace Bottles.Deployment
 
         
 
-        public string GetRecipe(string recipe)
+        public string GetRecipeDirectory(string recipe)
         {
             return FileSystem.Combine(RecipesDirectory, recipe);
         }
 
         public string GetHost(string recipe, string host)
         {
-            var p = GetRecipe(recipe);
+            var p = GetRecipeDirectory(recipe);
 
             //TODO: harden
             p = FileSystem.Combine(p, host + ".host");

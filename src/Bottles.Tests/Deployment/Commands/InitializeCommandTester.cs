@@ -44,7 +44,7 @@ namespace Bottles.Tests.Deployment.Commands
         [Test]
         public void should_create_the_environments_directory()
         {
-            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.EnvironmentsFolder));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.EnvironmentsDirectory));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Bottles.Tests.Deployment.Commands
         [Test]
         public void should_create_the_profiles_directory()
         {
-            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.ProfilesFolder));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.ProfilesDirectory));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Bottles.Tests.Deployment.Commands
         [Test]
         public void should_create_the_environments_directory()
         {
-            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.EnvironmentsFolder));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.EnvironmentsDirectory));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace Bottles.Tests.Deployment.Commands
         [Test]
         public void should_create_the_profiles_directory()
         {
-            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.ProfilesFolder));
+            MockFor<IFileSystem>().AssertWasCalled(x => x.CreateDirectory(TheDeploymentDirectory, ProfileFiles.ProfilesDirectory));
         }
 
         [Test]

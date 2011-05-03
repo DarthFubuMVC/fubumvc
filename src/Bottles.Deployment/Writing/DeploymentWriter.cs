@@ -11,11 +11,11 @@ namespace Bottles.Deployment.Writing
 {
     public class DeploymentWriter
     {
-        private readonly string _destination;
         private readonly IFileSystem _system;
         private readonly Cache<string, RecipeDefinition> _recipes = new Cache<string, RecipeDefinition>(name => new RecipeDefinition(name));
         private readonly IList<PropertyValue> _profileValues = new List<PropertyValue>();
         private readonly TypeDescriptorCache _types = new TypeDescriptorCache();
+        private DeploymentSettings _settings;
 
 
         public DeploymentWriter(string destination) : this(destination, new FileSystem())
@@ -24,7 +24,7 @@ namespace Bottles.Deployment.Writing
 
         public DeploymentWriter(string destination, IFileSystem system)
         {
-            _destination = destination;
+            _settings = new DeploymentSettings(destination);
             _system = system;
         }
 
@@ -37,16 +37,16 @@ namespace Bottles.Deployment.Writing
         {
             if(options == FlushOptions.Wipeout)
             {
-                _system.DeleteDirectory(_destination);
+                _system.DeleteDirectory(_settings.DeploymentDirectory);
                 Thread.Sleep(10); //file system is async
-                _system.CreateDirectory(_destination);    
+                _system.CreateDirectory(_settings.DeploymentDirectory);    
             }
             
             writeBottleManifest();
 
             writeDirectories();
 
-            _system.WriteStringToFile(FileSystem.Combine(_destination, ProfileFiles.BottlesManifestFile), "");
+            _system.WriteStringToFile(_settings.BottleManifestFile, "");
 
             writeEnvironmentSettings();
 
@@ -55,15 +55,15 @@ namespace Bottles.Deployment.Writing
 
         private void writeDirectories()
         {
-            createDirectory(_destination, ProfileFiles.BottlesDirectory);
-            createDirectory(_destination, ProfileFiles.RecipesDirectory);
-            createDirectory(_destination, ProfileFiles.EnvironmentsFolder);
-            createDirectory(_destination, ProfileFiles.ProfilesFolder);
+            createDirectory(_settings.BottlesDirectory);
+            createDirectory(_settings.RecipesDirectory);
+            createDirectory(_settings.EnvironmentsDirectory);
+            createDirectory(_settings.ProfilesDirectory);
         }
 
         private void writeBottleManifest()
         {
-            _system.WriteStringToFile(FileSystem.Combine(_destination, ProfileFiles.BottlesManifestFile), "");
+            _system.WriteStringToFile(_settings.BottleManifestFile, "");
         }
 
         private void writeEnvironmentSettings()
@@ -71,13 +71,13 @@ namespace Bottles.Deployment.Writing
             var writer = new StringWriter();
             _profileValues.Each(v => writer.WriteLine(v.ToString()));
 
-            var environmentFile = FileSystem.Combine(_destination, ProfileFiles.EnvironmentSettingsFileName);
-            _system.WriteStringToFile(environmentFile, writer.ToString());
+            _system.WriteStringToFile(_settings.EnvironmentFile, writer.ToString());
         }
 
         private void writeRecipe(RecipeDefinition recipe)
         {
-            new RecipeWriter(_types).WriteTo(recipe, _destination);
+            
+            new RecipeWriter(_types).WriteTo(recipe, _settings);
         }
 
 

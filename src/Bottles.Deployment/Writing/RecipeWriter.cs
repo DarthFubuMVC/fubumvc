@@ -14,26 +14,24 @@ namespace Bottles.Deployment.Writing
             _types = types;
         }
 
-        //REVIEW: consider making this take a deployment settings
-        public void WriteTo(RecipeDefinition recipe, string profileDirectory)
+        public void WriteTo(RecipeDefinition recipe, DeploymentSettings settings)
         {
-            var df = new DeploymentFolderFinder(_fileSystem);
-            var path = df.FindDeploymentFolder(profileDirectory);
-            var recipepath = FileSystem.Combine(path, ProfileFiles.RecipesDirectory, recipe.Name);
+            var recipeDirectory = settings.GetRecipeDirectory(recipe.Name);
 
+            _fileSystem.CreateDirectory(recipeDirectory);
 
-            _fileSystem.CreateDirectory(recipepath);
+            var controlFilePath = FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile);
 
-            var controlFilePath = FileSystem.Combine(recipepath, ProfileFiles.RecipesControlFile);
-            _fileSystem.WriteStringToFile(controlFilePath, "");
-
-            recipe.Dependencies.Each(d =>
+            new FileSystem().WriteToFlatFile(controlFilePath, writer =>
             {
-                var line = "Dependency:{0}\n".ToFormat(d);
-                _fileSystem.AppendStringToFile(controlFilePath, line);
+                recipe.Dependencies.Each(d =>
+                {
+                    var line = "Dependency:{0}".ToFormat(d);
+                    writer.WriteLine(line);
+                });
             });
 
-            recipe.Hosts().Each(host => new HostWriter(_types).WriteTo(host, recipepath));
+            recipe.Hosts().Each(host => new HostWriter(_types).WriteTo(host, recipeDirectory));
         }
     }
 }

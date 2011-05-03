@@ -48,7 +48,7 @@ namespace Bottles.Deployment.Commands
 
         public bool Initialize(IDirectiveTypeRegistry registry, AddDirectiveInput input, DeploymentSettings settings)
         {
-            var rec = settings.GetRecipe(input.Recipe);
+            var rec = settings.GetRecipeDirectory(input.Recipe);
 
             var host = new HostDefinition(input.Host);
             var type = registry.DirectiveTypeFor(input.Directive);

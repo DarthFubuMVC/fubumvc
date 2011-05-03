@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -57,13 +57,13 @@ namespace Bottles.Commands
 
             createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.BottlesDirectory);
             createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.RecipesDirectory);
-            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.EnvironmentsFolder);
-            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.ProfilesFolder);
+            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.EnvironmentsDirectory);
+            createDirectory(fileSystem, logger, deploymentDirectory, ProfileFiles.ProfilesDirectory);
 
             return true;
         }
 
-        private void createDirectory(IFileSystem system, ISimpleLogger logger, params string[] pathParts)
+        private static void createDirectory(IFileSystem system, ISimpleLogger logger, params string[] pathParts)
         {
             string directory = FileSystem.Combine(pathParts);
 

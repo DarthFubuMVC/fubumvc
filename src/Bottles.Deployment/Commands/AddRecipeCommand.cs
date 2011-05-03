@@ -25,12 +25,12 @@ namespace Bottles.Deployment.Commands
     {
         public override bool Execute(AddRecipeInput input)
         {
-            var settings = new DeploymentSettings(input.DeploymentRoot());
+            var settings = DeploymentSettings.ForDirectory(input.DeploymentFlag);
 
             var recipe = new RecipeDefinition(input.Name);
             
             var rw = new RecipeWriter(new TypeDescriptorCache());
-            rw.WriteTo(recipe, settings.DeploymentDirectory);
+            rw.WriteTo(recipe, settings);
 
 
             return true;

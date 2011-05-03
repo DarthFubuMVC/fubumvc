@@ -1,5 +1,6 @@
 using Bottles.Deployment;
 using Bottles.Deployment.Writing;
+using FubuCore;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -23,9 +24,11 @@ namespace Bottles.Tests.Deployment
             settings.DeploymentDirectory.ShouldEqual("dir");
             settings.BottleManifestFile.ShouldEqual("dir\\bottles.manifest");
 
+            settings.ProfilesDirectory.ShouldEqual(FileSystem.Combine("dir", ProfileFiles.ProfilesDirectory));
+            settings.EnvironmentsDirectory.ShouldEqual(FileSystem.Combine("dir", ProfileFiles.EnvironmentsDirectory));
 
             settings.GetHost("x", "z").ShouldEqual("dir\\recipes\\x\\z.host");
-            settings.GetRecipe("a").ShouldEqual("dir\\recipes\\a");
+            settings.GetRecipeDirectory("a").ShouldEqual("dir\\recipes\\a");
         }
 
         private void setupValidDeploymentFolderAt(string name)
