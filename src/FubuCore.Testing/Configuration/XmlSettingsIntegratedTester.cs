@@ -3,6 +3,7 @@ using FubuCore.Configuration;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
+using System.IO;
 
 namespace FubuCore.Testing.Configuration
 {
@@ -25,10 +26,10 @@ namespace FubuCore.Testing.Configuration
         {
             theData.Select(x => x.Provenance).OrderBy(x => x)
                 .ShouldHaveTheSameElementsAs(
-                    "Configuration\\Environment.config", 
-                    "Configuration\\One.config", 
-                    "Configuration\\Three.config",
-                    "Configuration\\Two.config");    
+                    "Configuration{0}Environment.config".ToFormat(Path.DirectorySeparatorChar), 
+                    "Configuration{0}One.config".ToFormat(Path.DirectorySeparatorChar), 
+                    "Configuration{0}Three.config".ToFormat(Path.DirectorySeparatorChar),
+                    "Configuration{0}Two.config".ToFormat(Path.DirectorySeparatorChar));    
         }
 
         [Test]
