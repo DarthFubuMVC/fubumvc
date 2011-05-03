@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,13 +74,14 @@
     <Compile Include="SparkModel\SparkItemBuilderTester.cs" />
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
-    <Compile Include="SparkModel\Binders\MasterPageBinderTester.cs" />
     <Compile Include="SparkModel\Policies\NamespacePolicyTester.cs" />
     <Compile Include="SparkModel\Scanning\SparkScannerTester.cs" />
     <Compile Include="SparkModel\SparkItemFinderTester.cs" />
     <Compile Include="SparkModel\SparkItemExtensionsTester.cs" />
-    <Compile Include="SparkModel\Binders\ViewModelBinderTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
+    <Compile Include="SparkModel\Binding\MasterPageBinderTester.cs" />
+    <Compile Include="SparkModel\Binding\ViewModelBinderTester.cs" />
+    <Compile Include="SparkModel\Binding\FullTypeNameStrategyTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
