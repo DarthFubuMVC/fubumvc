@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using FubuMVC.Core.Registration.DSL;
 
-namespace FubuMVC.Diagnostics
+namespace FubuMVC.Core.Registration
 {
 	public interface IAssemblyScanner
 	{

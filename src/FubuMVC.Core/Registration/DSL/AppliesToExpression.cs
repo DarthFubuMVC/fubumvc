@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Bottles;
 using FubuMVC.Core.Packaging;
@@ -32,7 +33,12 @@ namespace FubuMVC.Core.Registration.DSL
 
         public AppliesToExpression ToAssemblyContainingType<T>()
         {
-            return ToAssembly(typeof (T).Assembly);
+            return ToAssemblyContainingType(typeof (T));
+        }
+
+        public AppliesToExpression ToAssemblyContainingType(Type type)
+        {
+            return ToAssembly(type.Assembly);
         }
 
         public AppliesToExpression ToAssembly(string assemblyName)

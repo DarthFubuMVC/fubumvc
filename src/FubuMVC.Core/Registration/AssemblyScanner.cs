@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 
-namespace FubuMVC.Diagnostics
+namespace FubuMVC.Core.Registration
 {
 	public class AssemblyScanner : IAssemblyScanner
 	{
@@ -18,7 +18,7 @@ namespace FubuMVC.Diagnostics
 			_types = new TypePool(GetType().Assembly) { ShouldScanAssemblies = true};
 			_typeFilters = new CompositeFilter<Type>();
 
-			IncludeTypes(t => t.Namespace.StartsWith(GetType().Namespace));
+			IncludeTypes(t => true);
 		}
 
 		public AppliesToExpression Applies

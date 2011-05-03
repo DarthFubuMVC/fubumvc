@@ -83,7 +83,12 @@ namespace FubuMVC.Core.Registration
 
         public IEnumerable<ObjectDef> ServicesFor<TService>()
         {
-            return _services[typeof (TService)];
+            return ServicesFor(typeof (TService));
+        }
+
+        public IEnumerable<ObjectDef> ServicesFor(Type serviceType)
+        {
+            return _services[serviceType];
         }
 
         public void Each(Action<Type, ObjectDef> action)

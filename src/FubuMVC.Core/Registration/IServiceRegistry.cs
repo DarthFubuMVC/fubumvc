@@ -114,6 +114,13 @@ namespace FubuMVC.Core.Registration
         IEnumerable<ObjectDef> ServicesFor<TService>();
 
         /// <summary>
+        /// Retrieves all the registered ObjectDef's for the specified type
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        IEnumerable<ObjectDef> ServicesFor(Type serviceType);
+
+        /// <summary>
         /// Registers the concreteType against the interfaceType
         /// if the registration does not already include the concreteType 
         /// </summary>

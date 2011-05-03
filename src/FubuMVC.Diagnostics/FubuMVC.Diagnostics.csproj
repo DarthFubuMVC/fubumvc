@@ -167,7 +167,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyScanner.cs" />
     <Compile Include="Behaviors\UnknownObjectBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
     <Compile Include="Configuration\SparkPolicies\NotificationActionSparkPolicy.cs" />
@@ -218,7 +217,6 @@
     <Compile Include="Grids\IGridRowProvider.cs" />
     <Compile Include="Grids\IGridService.cs" />
     <Compile Include="Grids\RowComparer.cs" />
-    <Compile Include="IAssemblyScanner.cs" />
     <Compile Include="Infrastructure\JsonService.cs" />
     <Compile Include="Configuration\PartialActionSource.cs" />
     <Compile Include="Configuration\SparkPolicies\PartialActionSparkPolicy.cs" />
@@ -245,7 +243,6 @@
     <Compile Include="Infrastructure\IAuthorizationDescriptor.cs" />
     <Compile Include="Infrastructure\IHttpConstraintResolver.cs" />
     <Compile Include="Infrastructure\IHttpRequest.cs" />
-    <Compile Include="IServiceRegistrationConvention.cs" />
     <Compile Include="Models\AutocompleteRequestModel.cs" />
     <Compile Include="Models\Grids\IGridModel.cs" />
     <Compile Include="Models\IRequestCacheModelBuilder.cs" />
@@ -302,7 +299,6 @@
     <Compile Include="Partials\NavigationMenuDecorator.cs" />
     <Compile Include="Partials\PartialAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceRegistryExtensions.cs" />
     <Compile Include="UnknownObjectException.cs" />
   </ItemGroup>
   <ItemGroup />

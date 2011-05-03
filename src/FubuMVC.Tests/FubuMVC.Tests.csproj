@@ -132,6 +132,7 @@
     <Compile Include="Registration\Querying\ChainForwarderTester.cs" />
     <Compile Include="Registration\Querying\ChainResolverTester.cs" />
     <Compile Include="Registration\RouteInputTester.cs" />
+    <Compile Include="Registration\Scanning\AssemblyScannerTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Registration\TypePoolTester.cs" />
     <Compile Include="Routing\RouteDefinitionExtensionsTester.cs" />
@@ -366,6 +367,10 @@
     <ProjectReference Include="..\FubuMVC.FakeControllers\FubuMVC.FakeControllers.csproj">
       <Project>{E8128BAA-BAF7-4164-9786-B9B23E555B96}</Project>
       <Name>FubuMVC.FakeControllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Tests.Widget1\FubuMVC.Tests.Widget1.csproj">
+      <Project>{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}</Project>
+      <Name>FubuMVC.Tests.Widget1</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.WebForms\FubuMVC.WebForms.csproj">
       <Project>{7A45A53A-10F3-47B4-BAA7-C4F325102F02}</Project>

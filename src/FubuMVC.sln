@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.WebForms", "FubuMVC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.WebForms.Testing", "FubuMVC.WebForms.Testing\FubuMVC.WebForms.Testing.csproj", "{B2BAE448-87B6-4C94-B3DD-81406E143B08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Tests.Widget1", "FubuMVC.Tests.Widget1\FubuMVC.Tests.Widget1.csproj", "{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -612,6 +614,21 @@ Global
 		{B2BAE448-87B6-4C94-B3DD-81406E143B08}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B2BAE448-87B6-4C94-B3DD-81406E143B08}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{B2BAE448-87B6-4C94-B3DD-81406E143B08}.Retail|x86.ActiveCfg = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

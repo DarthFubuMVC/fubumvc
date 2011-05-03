@@ -166,10 +166,16 @@
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
     <Compile Include="Packaging\ZipFilePackageLoader.cs" />
+    <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
+    <Compile Include="Registration\AssemblyScanner.cs" />
+    <Compile Include="Registration\AssemblyScanningExtensions.cs" />
+    <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\DSL\MediaExpression.cs" />
     <Compile Include="Registration\HandlerActionsSet.cs" />
+    <Compile Include="Registration\IAssemblyScanner.cs" />
+    <Compile Include="Registration\IServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
     <Compile Include="Registration\Routes\IRouteInput.cs" />
@@ -178,6 +184,7 @@
     <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Registration\Routes\RouteInput.cs" />
+    <Compile Include="Registration\ServiceRegistryExtensions.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
