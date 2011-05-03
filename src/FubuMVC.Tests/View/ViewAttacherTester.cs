@@ -89,9 +89,7 @@ namespace FubuMVC.Tests.View
             _viewAttacher.AddFacility(new TestViewFacility());
             _viewAttacher.AddFacility(new TestViewFacility());
 
-            _viewAttacher.Facilities
-                .ShouldHaveCount(2)
-                .ShouldContain(f => f.GetType() == typeof(WebFormViewFacility));
+            _viewAttacher.Facilities.ShouldHaveCount(1);
         }
         
         private static IViewsForActionFilter createFilterThatReturns(params IViewToken[] viewTokens)
