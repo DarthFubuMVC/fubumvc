@@ -1,4 +1,4 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Features.FifthElement.FifthElementViewModel" />
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.FifthElement.FifthElementViewModel" />
 
 <content:title>To Infinity...</content:title>
 <content:header>...and BEYOND!</content:header>

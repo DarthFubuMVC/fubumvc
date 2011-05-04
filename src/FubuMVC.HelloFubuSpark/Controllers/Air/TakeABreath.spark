@@ -1,4 +1,8 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.AirViewModel" />
+﻿<use namespace="FubuMVC.HelloFubuSpark.Controllers.Fire" />
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.Water" />
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.Earth" />
+
+<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Air.AirViewModel" />
 <content:head>
     <script type="text/javascript" src="../../Scripts/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/Air/BreatheView"></script>
@@ -29,6 +33,7 @@
 <div id="viewOutputArea"></div>
 
 <content:footer>That's right baby!</content:footer>
+
 !{this.LinkTo<FireInputModel>().Text("Light her up!")}
 !{this.LinkTo<WaterInputModel>().Text("Cool her down!")} 
 !{this.LinkTo<EarthViewModel>().Text("Go to ground!")} 

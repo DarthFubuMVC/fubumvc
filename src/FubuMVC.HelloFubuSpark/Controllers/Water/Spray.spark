@@ -1,4 +1,4 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.WaterViewModel" />
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Water.WaterViewModel" />
 
 <content:title>What the heck?!</content:title>
 <content:header>What are you gonna do?</content:header>

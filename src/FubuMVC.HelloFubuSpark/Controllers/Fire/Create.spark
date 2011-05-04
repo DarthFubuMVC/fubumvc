@@ -1,4 +1,5 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.FireViewModel" />
+﻿<use namespace="FubuMVC.HelloFubuSpark.Controllers.Water" />
+<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Fire.FireViewModel" />
 
 <content:title>Let the Sparks fly!</content:title>
 <content:header>What do we wanna do?</content:header>

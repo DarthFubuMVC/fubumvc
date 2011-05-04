@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.HelloFubuSpark.Controllers
+﻿namespace FubuMVC.HelloFubuSpark.Controllers.Earth
 {
     public class EarthController
     {

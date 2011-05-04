@@ -15,10 +15,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         private readonly IEnumerable<string> _sharedFolderNames;
 
-        public SharedPathBuilder() : this(new[] { Constants.Shared })
-        {
-        }
-
+        public SharedPathBuilder() : this(new[] { Constants.Shared }) {}
         public SharedPathBuilder(IEnumerable<string> sharedFolderNames)
         {
             _sharedFolderNames = sharedFolderNames;

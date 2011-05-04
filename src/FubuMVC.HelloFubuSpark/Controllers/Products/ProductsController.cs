@@ -2,7 +2,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuValidation;
 
-namespace FubuMVC.HelloFubuSpark.Controllers
+namespace FubuMVC.HelloFubuSpark.Controllers.Products
 {
     public class ProductsController
     {

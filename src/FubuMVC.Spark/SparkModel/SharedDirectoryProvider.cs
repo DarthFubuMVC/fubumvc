@@ -13,10 +13,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         private readonly ISharedPathBuilder _builder;
 
-        public SharedDirectoryProvider() : this(new SharedPathBuilder())
-        {
-        }
-
+        public SharedDirectoryProvider() : this(new SharedPathBuilder()) {}
         public SharedDirectoryProvider(ISharedPathBuilder builder)
         {
             _builder = builder;

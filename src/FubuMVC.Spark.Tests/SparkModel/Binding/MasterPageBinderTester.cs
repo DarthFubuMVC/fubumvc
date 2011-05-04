@@ -56,13 +56,15 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 newSpark(_pak2Root, Pak2, "Shared", "application.spark"),
                 
                 newSpark(_pak3Root, Pak3, "Features", "Controllers", "Home", "Home.spark"),
-
+				
                 newSpark(_hostRoot, Host, "Actions", "Shared", "application.spark"),
                 newSpark(_hostRoot, Host, "Features", "Mixer", "chuck.spark"),
                 newSpark(_hostRoot, Host, "Features", "Mixer", "Shared", "application.spark"),                
                 newSpark(_hostRoot, Host, "Features", "roundkick.spark"),
                 newSpark(_hostRoot, Host, "Handlers", "Products", "details.spark"),
-                newSpark(_hostRoot, Host, "Shared", "application.spark")
+				newSpark(_hostRoot, Host, "Shared", "bindings.xml"),				
+                newSpark(_hostRoot, Host, "Shared", "_Partial.spark"),
+				newSpark(_hostRoot, Host, "Shared", "application.spark")
             };
         }
 
@@ -113,15 +115,29 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-        public void if_item_is_under_shared_binder_is_not_applied()
+        public void if_item_is_a_master_page_it_is_not_bound_to_itself()
         {
-            ClassUnderTest.CanBind(_sparkItems.ElementAt(5), _context).ShouldBeFalse();
+			var item = _sparkItems.Last();
+            ClassUnderTest.Bind(item, _context);
+			item.Master.ShouldBeNull();
         }
 
         [Test]
 		public void	if_explicit_empty_master_then_binder_is_not_applied()
 		{
 			ClassUnderTest.CanBind(_sparkItems.ElementAt(3), new BindContext{Master = string.Empty}).ShouldBeFalse();	
+		}
+		
+		[Test]
+		public void	if_spark_item_is_not_normal_view_then_binder_is_not_applied()
+		{
+			ClassUnderTest.CanBind(_sparkItems.ElementAt(12), _context).ShouldBeFalse();	
+		}
+		
+		[Test]
+		public void	if_spark_item_is_partial_then_binder_is_not_applied()
+		{
+			ClassUnderTest.CanBind(_sparkItems.ElementAt(13), new BindContext{Master = null}).ShouldBeFalse();	
 		}
     }
 }

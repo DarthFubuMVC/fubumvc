@@ -25,7 +25,7 @@ namespace FubuMVC.Spark.SparkModel
 		bool CanBind(SparkItem item, BindContext context);
         void Bind(SparkItem item, BindContext context);
     }
-
+	
     public class MasterPageBinder : ISparkItemBinder
     {
         private readonly ISharedItemLocator _sharedItemLocator;
@@ -40,36 +40,33 @@ namespace FubuMVC.Spark.SparkModel
         }
 
 		public bool CanBind(SparkItem item, BindContext context)
-		{
-			var sharedFolder = "{0}{1}".ToFormat(Path.DirectorySeparatorChar, Constants.Shared);
-			var itemDirectory = item.DirectoryPath();
-			
-			return !itemDirectory.EndsWith(sharedFolder) && 
-				 	context.Master != string.Empty && 
-					Path.GetExtension(item.FilePath) == Constants.DotSpark;
+		{		
+			return context.Master != string.Empty 
+				&& Path.GetExtension(item.FilePath) == Constants.DotSpark
+				&& !Path.GetFileNameWithoutExtension(item.FilePath).StartsWith("_");
 		}
 
         public void Bind(SparkItem item, BindContext context)
         {
 			var tracer = context.Tracer;
-            var masterName = context.Master;
+            var masterName = context.Master ?? MasterName;
 
-			if (masterName == null)
-            {
-                masterName = FallbackMaster;
-                tracer.Trace(item, "Using default master page [{0}].", masterName);
-            }
-
-            item.Master = _sharedItemLocator.LocateItem(masterName, item, context.AvailableItems);
-
-			if (item.Master == null)
+            var master = _sharedItemLocator.LocateItem(masterName, item, context.AvailableItems);
+			
+			if (master == null)
             {
                 tracer.Trace(item, "Expected master page [{0}] not found.", masterName);
+				return;
             }
-            else
-            {
-                tracer.Trace(item, "Master page [{0}] found at {1}", masterName, item.Master.FilePath);
+
+			if(master.FilePath == item.FilePath)
+			{
+                tracer.Trace(item, "Master page skipped because it is the item.", masterName);
+				return;
             }
+			            
+			item.Master = master;
+			tracer.Trace(item, "Master page [{0}] found at {1}", masterName, master.FilePath);
         }
     }
 

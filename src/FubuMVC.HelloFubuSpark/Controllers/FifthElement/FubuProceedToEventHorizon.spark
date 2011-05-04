@@ -1,4 +1,4 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Features.FifthElement.FubuJourneyViewModel" />
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.FifthElement.FubuJourneyViewModel" />
 <var trajectory="Model.Trajectory" attempt="Model.Attempt" />
 
 <div>Attempt ${attempt}: Proceeding to Event Horizon. Trajectory: ${trajectory}</div>

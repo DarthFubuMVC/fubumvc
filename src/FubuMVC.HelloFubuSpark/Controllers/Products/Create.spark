@@ -1,4 +1,4 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.CreateProductModel" />
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Products.CreateProductModel" />
 <content:title>Create Product</content:title>
 <content:header>New Product</content:header>
 <Form model="CreateProductInput">

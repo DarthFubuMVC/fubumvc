@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.HelloFubuSpark.Features.FifthElement
+﻿namespace FubuMVC.HelloFubuSpark.Controllers.FifthElement
 {
     public class FifthElementController
     {

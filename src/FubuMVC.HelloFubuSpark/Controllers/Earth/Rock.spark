@@ -1,4 +1,6 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.EarthViewModel" />
+﻿<use namespace="FubuMVC.HelloFubuSpark.Controllers.Water" />
+<use namespace="FubuMVC.HelloFubuSpark.Controllers.Location" />
+<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Earth.EarthViewModel" />
 
 <content:title>Down to Earth!</content:title>
 <content:header>Where are we now?</content:header>
