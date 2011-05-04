@@ -7,6 +7,7 @@ using System.Web;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
@@ -115,6 +116,7 @@ namespace FubuMVC.WebForms.Partials
 
         public RenderPartialExpression<TViewModel> For<T>(T model) where T : class
         {
+            _parentPage.Get<IFubuRequest>().Set(model);
             _renderAction = () => _renderer.Render<T>(_parentPage, _partialView, model, _prefix);
             _prefix = string.Empty;
 

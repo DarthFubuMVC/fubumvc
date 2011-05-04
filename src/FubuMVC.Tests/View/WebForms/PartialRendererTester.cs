@@ -2,6 +2,7 @@ using System;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -26,14 +27,14 @@ namespace FubuMVC.Tests.View.WebForms
         public void should_throw_if_type_is_not_a_control()
         {
             typeof(InvalidOperationException).ShouldBeThrownBy(
-                () => new PartialRenderer(_builder).CreateControl(typeof(string)));
+                () => new PartialRenderer(_builder, null, null).CreateControl(typeof(string)));
         }
 
         [Test]
         public void should_throw_if_type_is_not_a_IFubuPage()
         {
             typeof(InvalidOperationException).ShouldBeThrownBy(
-                () => new PartialRenderer(_builder).CreateControl(typeof(Page)));
+                () => new PartialRenderer(_builder, null, null).CreateControl(typeof(Page)));
         }
 
 
@@ -43,29 +44,11 @@ namespace FubuMVC.Tests.View.WebForms
             _builder.Expect(b => b.LoadControlFromVirtualPath("~/View/WebForms/TestControl.ascx", typeof(TestControl))).Return(
                 new TestControl());
 
-            new PartialRenderer(_builder).CreateControl(typeof(TestControl));
+            new PartialRenderer(_builder, null, null).CreateControl(typeof(TestControl));
 
             _builder.VerifyAllExpectations();
         }
 
-        [Test]
-        public void should_set_the_view_model_when_rendering()
-        {
-            var userControl = new TestControl();
-
-            _builder.Stub(b => b.LoadControlFromVirtualPath(null, null))
-                .IgnoreArguments()
-                .Return(userControl);
-
-            var model = new TestControlViewModel(); // LogViewModel<NotesLog> { Log = new NotesLog { Notes = "model" } };
-            const string prefix = "prefix";
-
-            new PartialRenderer(_builder).Render(new TestView(), typeof(TestControl), model, prefix);
-
-            userControl.Model.ShouldBeTheSameAs(model);
-            ((IFubuPage) userControl).ElementPrefix.ShouldEqual(prefix);
-        }
-        
         [Test]
         public void should_execute_the_control_rendering_when_rendering()
         {
@@ -77,10 +60,17 @@ namespace FubuMVC.Tests.View.WebForms
 
             _request.Set(new TestViewModel());
 
-            new PartialRenderer(_builder)
+            new PartialRenderer(_builder, new StubActivator(), null)
                 .Render(new TestView(), typeof(TestControl), new TestControlViewModel(), "");
 
             _builder.VerifyAllExpectations();
+        }
+    }
+
+    public class StubActivator : IPageActivator
+    {
+        public void Activate(IFubuPage page)
+        {
         }
     }
 
@@ -106,7 +96,7 @@ namespace FubuMVC.Tests.View.WebForms
             _executeCatcher = _builder.CaptureArgumentsFor(b => b.ExecuteControl(null, null));
 
             _parentView = new TestView();
-            _renderer = new PartialRenderer(_builder);
+            _renderer = new PartialRenderer(_builder, new StubActivator(), null);
         }
 
         [Test]

@@ -3,7 +3,9 @@ using System.Globalization;
 using System.IO;
 using System.Web.UI;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Activation;
 
 namespace FubuMVC.WebForms
 {
@@ -23,10 +25,14 @@ namespace FubuMVC.WebForms
     public class PartialRenderer : IPartialRenderer
     {
         private readonly IWebFormsControlBuilder _builder;
+        private readonly IPageActivator _activator;
+        private readonly IFubuRequest _request;
 
-        public PartialRenderer(IWebFormsControlBuilder builder)
+        public PartialRenderer(IWebFormsControlBuilder builder, IPageActivator activator, IFubuRequest request)
         {
             _builder = builder;
+            _activator = activator;
+            _request = request;
         }
 
         public IFubuPage CreateControl<VIEW>() where VIEW : IFubuPage
@@ -63,7 +69,9 @@ namespace FubuMVC.WebForms
             var page = new Page();
             page.Controls.Add(view as Control);
 
-            view.As<IFubuPage<T>>().Model = viewModel;
+            // THIS IS PROBLEMATIC
+            _activator.Activate(view);
+//            view.As<IFubuPage<T>>().Model = viewModel;
 
             setParentPageIfNotAlreadySet(view, page);
 

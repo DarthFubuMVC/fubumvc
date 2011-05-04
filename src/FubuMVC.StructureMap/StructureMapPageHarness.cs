@@ -19,7 +19,7 @@ namespace FubuMVC.StructureMap
 
             Request.Set(Model);
 
-            container.BuildUp(Page);
+            Page.ServiceLocator = new StructureMapServiceLocator(Container);
 
             Page.Model = Model;
         }
