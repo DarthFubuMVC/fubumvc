@@ -367,6 +367,9 @@
     <Compile Include="UI\Partials\RenderPartialExpression.cs" />
     <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
     <Compile Include="UI\Scripts\BasicScriptTagWriter.cs" />
+    <Compile Include="UI\IContentFileCombiner.cs" />
+    <Compile Include="UI\ICssLinkTagWriter.cs" />
+    <Compile Include="UI\ContentFileCombinerPackage.cs" />
     <Compile Include="UI\Scripts\IScriptTagWriter.cs" />
     <Compile Include="UI\Scripts\ScriptDslReader.cs" />
     <Compile Include="UI\Scripts\ScriptGatherer.cs" />

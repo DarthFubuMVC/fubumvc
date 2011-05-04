@@ -8,6 +8,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Packaging;
 using FubuTestApplication.Domain;
 using FubuTestApplication.Grids;
+using FubuMVC.Core.UI;
 
 namespace FubuTestApplication
 {
@@ -52,6 +53,7 @@ namespace FubuTestApplication
             Route<Person>("person/{Id}").Calls<CaseController>(x => x.Person(null));
 
             this.ApplySmartGridConventions(x => { x.ToThisAssembly(); });
+            this.CombineScriptAndCssFiles(); // only here to test the combining - remove this line if its troublesome
         }
     }
 }

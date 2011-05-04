@@ -78,6 +78,8 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone(new ScriptGraph());
 
             graph.Services.SetServiceIfNone<IScriptTagWriter, BasicScriptTagWriter>();
+            graph.Services.SetServiceIfNone<ICssLinkTagWriter, CssLinkTagWriter>();
+
             graph.Services.SetServiceIfNone<IFileSystem, FileSystem>();
             
             graph.Services.SetServiceIfNone<IRoutePolicy, StandardRoutePolicy>();
