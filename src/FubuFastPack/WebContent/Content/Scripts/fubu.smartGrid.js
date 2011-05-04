@@ -29,7 +29,7 @@
             }
 
             return '<a href="' + url + '" target="_top" title="' + cellValue + '">' + displayValue + '</a>';
-        },
+        }
     });
 
     $.fn.smartGrid = function (userOptions) {
@@ -61,7 +61,7 @@
         {
             height: "auto",
             url: definition.url,
-            datatype: 'json',
+            datatype: 'local', //data for the grid will be not be loaded if the grid is disabled after initialization
             mtype: 'POST',
             altRows: true,
             autowidth: true,
@@ -111,6 +111,7 @@
 
         div.refresh = function () {
             if (!div.isGridDisabled) {
+                div.grid.setGridParam({ datatype: 'json' });
                 div.grid.trigger("reloadGrid");
             }
         }
