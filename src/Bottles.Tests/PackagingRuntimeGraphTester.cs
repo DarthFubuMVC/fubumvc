@@ -139,56 +139,6 @@ namespace Bottles.Tests
         }
     }
 
-    [TestFixture]
-    public class when_loading_and_logging_packages : InteractionContext<PackagingRuntimeGraph>
-    {
-        private StubPackageLoader loader1;
-        private StubPackageLoader loader2;
-        private StubPackageLoader loader3;
-
-        [SetUp]
-        public void SetUp()
-        { 
-            loader1 = new StubPackageLoader("1a", "1b", "1c");
-            loader2 = new StubPackageLoader("2a", "2b");
-            loader3 = new StubPackageLoader("3a", "3b", "3c");
-
-            ClassUnderTest.AddLoader(loader1);
-            ClassUnderTest.AddLoader(loader2);
-            ClassUnderTest.AddLoader(loader3);
-
-            ClassUnderTest.DiscoverAndLoadPackages(() => { });
-        }
-
-
-    }
-
-    //[TestFixture]
-    //public class end_to_end_PackageRuntimeGraph_compile_with_loaders : InteractionContext<PackagingRuntimeGraph>
-    //{
-    //    private StubPackageLoader loader1;
-    //    private StubPackageLoader loader2;
-    //    private StubPackageLoader loader3;
-
-    //    protected override void beforeEach()
-    //    {
-    //        loader1 = new StubPackageLoader("1a", "1b", "1c");
-    //        loader2 = new StubPackageLoader("2a", "2b", "2c");
-    //        loader3 = new StubPackageLoader("3a", "3b", "3c");
-
-    //        ClassUnderTest.AddLoader(loader1);
-    //        ClassUnderTest.AddLoader(loader2);
-    //        ClassUnderTest.AddLoader(loader3);
-
-
-    //        ClassUnderTest.DiscoverAndLoadPackages();
-
-
-    //    }
-
-
-    //}
-
 
     public class StubPackageLoader : IPackageLoader
     {

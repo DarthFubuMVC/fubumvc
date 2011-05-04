@@ -154,7 +154,6 @@
     <Compile Include="Security\EndPointAuthorizorTester.cs" />
     <Compile Include="Security\PrincipalRolesTester.cs" />
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
-    <Compile Include="StructureMapIoC\StructureMapFubuApplicationWithPackagesIntegratedTester.cs" />
     <Compile Include="StructureMapIoC\StubActivator.cs" />
     <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />

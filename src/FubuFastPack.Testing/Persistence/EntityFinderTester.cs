@@ -11,7 +11,7 @@ namespace FubuFastPack.Testing.Persistence
     [TestFixture]
     public class EntityFinderTester : InteractionContext<DomainEntityFinder<Case>>
     {
-        private Guid _id;
+        private Guid _id = Guid.NewGuid();
         private Case _theCase;
         private EntityFindViewModel _output;
         private object theFlattenedObject;
