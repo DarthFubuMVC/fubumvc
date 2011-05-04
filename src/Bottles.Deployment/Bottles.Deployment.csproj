@@ -64,6 +64,7 @@
     <Compile Include="Commands\InstallMode.cs" />
     <Compile Include="Commands\AddReferenceCommand.cs" />
     <Compile Include="Commands\OpenBottleManifestCommand.cs" />
+    <Compile Include="Commands\SetPropCommand.cs" />
     <Compile Include="Commands\VdirCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\CreateAllCommand.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Parsing\IProfileReader.cs" />
     <Compile Include="Parsing\IRecipeSorter.cs" />
     <Compile Include="Parsing\RecipeSorter.cs" />
+    <Compile Include="Profile.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="Directives\Activation.cs" />
     <Compile Include="Directives\FubuWebsite.cs" />

@@ -74,5 +74,10 @@ namespace Bottles.Deployment
 
             return p;
         }
+
+        public string GetProfile(string profileName)
+        {
+            return FileSystem.Combine(ProfilesDirectory, profileName + "." + ProfileFiles.ProfileSuffix);
+        }
     }
 }

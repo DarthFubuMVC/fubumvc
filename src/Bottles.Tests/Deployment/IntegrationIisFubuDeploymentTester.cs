@@ -27,7 +27,6 @@ namespace Bottles.Tests.Deployment
             
 
             var directive = new FubuWebsite();
-            directive.HostBottle = "test";
             directive.WebsiteName = "fubu";
             directive.WebsitePhysicalPath = @"C:\dev\test-web";
             directive.VDir = "bob";

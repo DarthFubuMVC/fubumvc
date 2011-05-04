@@ -19,7 +19,7 @@ namespace Bottles.Deployment.Directives
             BasicAuth = Activation.Disable;
             WindowsAuth = Activation.Disable;
 
-            WebsitePhysicalPath = FileSystem.Combine(EnvironmentSettings.ROOT, "web");
+            WebsitePhysicalPath = FileSystem.Combine(EnvironmentSettings.ROOT.ToSubstitution(), "web");
             VDir = VIRTUAL_DIR.ToSubstitution();
             VDirPhysicalPath = FileSystem.Combine(WebsitePhysicalPath, VDir);
 
@@ -60,11 +60,6 @@ namespace Bottles.Deployment.Directives
         {
             return !string.IsNullOrEmpty(Username);
         }
-
-
-        //host bottle?
-        public string HostBottle { get; set; }
-
 
         //iis options
         public Activation DirectoryBrowsing { get; set; }

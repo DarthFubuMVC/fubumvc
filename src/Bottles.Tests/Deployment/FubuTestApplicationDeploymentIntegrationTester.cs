@@ -31,7 +31,6 @@ namespace Bottles.Tests.Deployment
             d.WebsitePhysicalPath = @"C:\dev\test-web";
             d.VDir = "bob";
             d.VDirPhysicalPath = @"C:\dev\test-app";
-            d.HostBottle = "FubuTestApplication";
             d.AppPool = "fubu-test";
             
             h.AddDirective(d);

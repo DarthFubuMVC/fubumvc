@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FubuCore;
+using FubuCore.CommandLine;
 
 namespace Bottles.Deployment.Writing
 {
@@ -10,6 +12,7 @@ namespace Bottles.Deployment.Writing
         void WriteProperty(string name, string value);
         void WriteLine(string line);
         void Sort();
+        void Describe();
     }
 
     public class FlatFileWriter : IFlatFileWriter
@@ -37,6 +40,11 @@ namespace Bottles.Deployment.Writing
             _list.Sort();
         }
 
+        public void Describe()
+        {
+            _list.Each(ConsoleWriter.Write);
+        }
+
         public List<string> List
         {
             get { return _list; }
@@ -56,6 +64,23 @@ namespace Bottles.Deployment.Writing
         public static void WriteToFlatFile(this IFileSystem system, string path, Action<IFlatFileWriter> configuration)
         {
             system.AlterFlatFile(path, list => configuration(new FlatFileWriter(list)));
+        }
+
+        public static void WriteProperty(this IFileSystem system, string path, string propertyText)
+        {
+            ConsoleWriter.Write("Writing {0} to {1}", path, propertyText);
+            system.WriteToFlatFile(path, file =>
+            {
+                var parts = propertyText.Split('=');
+                file.WriteProperty(parts.First(), parts.Last());
+
+                Console.WriteLine("Contents of {0}", path);
+                file.Sort();
+
+                file.Describe();
+
+                ConsoleWriter.PrintHorizontalLine();
+            });
         }
     }
 }

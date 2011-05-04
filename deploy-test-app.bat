@@ -17,4 +17,8 @@ bottles ref baseline web FubuTestApp
 
 fubu create-deployment FubuTestApp -recipe baseline -host web
 
+bottles set-env-prop virtual-dir=FubuTestApp
+bottles set-profile-prop second virtual-dir=FubuDifferent
+bottles set-host-prop baseline web FubuWebsite.DirectoryBrowsing=Enable
+
 bottles create-all -target debug

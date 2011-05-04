@@ -21,5 +21,7 @@ namespace Bottles
         public static readonly string ConfigDirectory = "config";
 
         public static readonly string StagingDirectory = "staging";
+
+        public static readonly string ProfileSuffix = "profile";
     }
 }
