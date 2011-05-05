@@ -184,7 +184,6 @@
     <Compile Include="Packaging\StandaloneAssemblyFinder.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoader.cs" />
     <Compile Include="Registration\Routes\RouteInput.cs" />
-    <Compile Include="Registration\ServiceRegistryExtensions.cs" />
     <Compile Include="Routing\IRoutePolicy.cs" />
     <Compile Include="OutputDeterminationExpression.cs" />
     <Compile Include="Packaging\FubuMvcPackageFacility.cs" />
@@ -293,6 +292,7 @@
     <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Routing\StandardRoutePolicy.cs" />
+    <Compile Include="ServiceRegistryExtensions.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Configuration\AccessorDef.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />

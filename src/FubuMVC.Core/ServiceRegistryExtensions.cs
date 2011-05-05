@@ -1,6 +1,7 @@
 ﻿using System;
+using FubuMVC.Core.Registration;
 
-namespace FubuMVC.Core.Registration
+namespace FubuMVC.Core
 {
 	public static class ServiceRegistryExtensions
 	{
