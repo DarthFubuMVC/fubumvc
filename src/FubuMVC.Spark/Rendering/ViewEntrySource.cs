@@ -23,18 +23,13 @@ namespace FubuMVC.Spark.Rendering
 
         public ISparkViewEntry GetViewEntry()
         {
-            return getEntry(_descriptor);
-        }
-
-        private ISparkViewEntry getEntry(SparkViewDescriptor descriptor)
-        {
             ISparkViewEntry entry;
-            var key = descriptor.GetHashCode();
+            var key = _descriptor.GetHashCode();
 
             _cache.TryGetValue(key, out entry);
             if (entry == null || !entry.IsCurrent())
             {
-                entry = _engine.CreateEntry(descriptor);
+                entry = _engine.CreateEntry(_descriptor);
                 lock (_cache)
                 {
                     _cache[key] = entry;
@@ -42,6 +37,5 @@ namespace FubuMVC.Spark.Rendering
             }
             return entry;
         }
-
     }
 }
