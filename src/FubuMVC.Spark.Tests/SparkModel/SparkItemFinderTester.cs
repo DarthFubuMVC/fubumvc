@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Linq;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
@@ -56,6 +58,38 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.FindInHost().ShouldContain(si => si.FilePath == expected);
         }
+
+        [Test]
+        public void all_the_items_found_in_host_have_host_as_origin()
+        {
+            ClassUnderTest.HostPath = _templatePath;
+            ClassUnderTest.FindInHost()
+                .All(x => x.Origin == FubuSparkConstants.HostOrigin)
+                .ShouldBeTrue();
+        }
+
+
+        [Test]
+        public void all_the_items_found_in_host_have_root_as_host_path()
+        {
+            ClassUnderTest.HostPath = _templatePath;
+            ClassUnderTest.FindInHost()
+                .All(x => x.RootPath == _templatePath)
+                .ShouldBeTrue();
+        }
+
+
+        [Test]
+        public void items_found_in_host_have_set_their_filepath()
+        {
+            ClassUnderTest.HostPath = _templatePath;
+            var items = ClassUnderTest.FindInHost().ToList();
+            items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "A3.spark"));
+            items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "A4.spark"));
+            items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "Views", "F1", "G1.spark"));
+            items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "Pak1", "Alpha", "Foxtrot", "Golf.spark"));
+        }
+
 
         // TODO: TESTS FOR FindInPackages
     }
