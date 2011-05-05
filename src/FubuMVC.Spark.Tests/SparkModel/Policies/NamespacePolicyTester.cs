@@ -37,12 +37,43 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
             item.Namespace.ShouldEqual("FubuMVC.Spark.Tests");
         }
 
-        // TODO : Edge cases, boundaries
-
+        [Test]
+        public void it_matches_if_item_has_viewmodel_and_namespace_is_empty_positive()
+        {
+            var path = Path.Combine(_root, "home.spark");
+            var item = new SparkItem(path, _root, "") 
+			{ 
+				ViewModelType = typeof(FooViewModel) 
+			};
+			
+			ClassUnderTest.Matches(item).ShouldBeTrue();
+        }		
+		
+		[Test]
+        public void it_matches_if_item_has_viewmodel_and_namespace_is_empty_negative_1()
+        {
+			var path = Path.Combine(_root, "home.spark");
+            var item = new SparkItem(path, _root, "");
+			
+			ClassUnderTest.Matches(item).ShouldBeFalse();
+        }		
+		
+		[Test]
+        public void it_matches_if_item_has_viewmodel_and_namespace_is_empty_negative_2()
+        {
+			var path = Path.Combine(_root, "home.spark");
+            var item = new SparkItem(path, _root, "") 
+			{ 
+				ViewModelType = typeof(FooViewModel), 
+				Namespace = "Someone.Else.Did.This" 
+			};
+			
+			ClassUnderTest.Matches(item).ShouldBeFalse();
+        }		
+		
     }
 
     public class FooViewModel
     {
-    } 
-
+    }
 }

@@ -38,5 +38,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
             bar1.ViewPath.ShouldEqual(bar2.ViewPath);
             baz1.ViewPath.ShouldNotEqual(bar1.ViewPath);
         }
+		
+		[Test]
+        public void it_matches_when_viewpath_is_empty()
+        {
+            var item = new SparkItem("", "", "Foo");
+			ClassUnderTest.Matches(item).ShouldBeTrue();
+            ClassUnderTest.Apply(item);
+			ClassUnderTest.Matches(item).ShouldBeFalse();
+        }
     }
 }

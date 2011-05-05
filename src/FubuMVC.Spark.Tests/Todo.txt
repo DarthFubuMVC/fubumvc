@@ -8,5 +8,3 @@ More coverage needed for:
 
  - SparkScanner
  - SparkItemFinder
-
- - NamespacePolicy
