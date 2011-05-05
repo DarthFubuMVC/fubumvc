@@ -84,7 +84,12 @@ namespace FubuMVC.Spark.SparkModel
         }
         public void ExcludeHostDirectory(params string[] parts)
         {
-            _hostExcludes += r => r.ExcludeDirectory(Path.Combine(HostPath, Path.Combine(parts)));
+            excludeDirectory(Path.Combine(HostPath, Path.Combine(parts)));
+        }
+
+        private void excludeDirectory(string path)
+        {
+            _hostExcludes += r => r.ExcludeDirectory(path);
         }
 
         private static IEnumerable<SparkRoot> packageRoots(IEnumerable<IPackageInfo> packages)

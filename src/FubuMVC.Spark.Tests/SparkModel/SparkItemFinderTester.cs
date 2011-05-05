@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
+using Bottles;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
@@ -13,6 +13,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
     public class SparkItemFinderTester : InteractionContext<SparkItemFinder>
     {
         private readonly string _templatePath;
+        private PackageInfo _pak1;
+        private PackageInfo _pak2;
+        private string _pak1Path;
+        private string _pak2Path;
 
         public SparkItemFinderTester()
         {
@@ -22,19 +26,30 @@ namespace FubuMVC.Spark.Tests.SparkModel
         protected override void beforeEach()
         {
             Services.Inject<IFileScanner>(new FileScanner());
+
+            _pak1 = new PackageInfo("Pak1");
+            _pak2 = new PackageInfo("Pak2");
+
+            _pak1Path = Path.Combine("Templates", "Pak1");
+            _pak2Path = Path.Combine("Templates", "Package2");
+
+            Services.InjectArray<IPackageInfo>(new[] { _pak1, _pak2 });
+
+            _pak1.RegisterFolder(BottleFiles.WebContentFolder, _pak1Path);
+            _pak2.RegisterFolder(BottleFiles.WebContentFolder, _pak2Path);
+
+            ClassUnderTest.HostPath = _templatePath;
         }
 
         [Test]
         public void finder_locates_all_relevant_spark_items()
         {
-            ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.FindInHost().ShouldHaveCount(48);
         }
 
         [Test]
         public void exclude_directory_makes_the_finder_to_skip_completely_the_directory()
         {
-            ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.ExcludeHostDirectory("App");
             ClassUnderTest.ExcludeHostDirectory("Package2", "Handlers", "Shared");
             ClassUnderTest.ExcludeHostDirectory("Pak1", "Alpha", "Bravo");
@@ -44,25 +59,27 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void include_file_makes_the_matching_files_to_be_included_when_finding_items()
         {
-            ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.IncludeFile("file.*");
             ClassUnderTest.IncludeFile("baz.*");
             ClassUnderTest.IncludeFile("dog.zoo");
-            ClassUnderTest.FindInHost().ShouldHaveCount(52);
+
+            var items = ClassUnderTest.FindInHost().ToList();
+            items.ShouldContain(x => x.Name() == "file");
+            items.ShouldContain(x => x.Name() == "baz");
+            items.ShouldContain(x => x.Name() == "dog");
+            items.ShouldHaveCount(52);
         }
 
         [Test]
         public void finder_locates_all_bindings_xml()
         {
             var expected = FileSystem.Combine(_templatePath, "Shared", "bindings.xml");
-            ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.FindInHost().ShouldContain(si => si.FilePath == expected);
         }
 
         [Test]
         public void all_the_items_found_in_host_have_host_as_origin()
         {
-            ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.FindInHost()
                 .All(x => x.Origin == FubuSparkConstants.HostOrigin)
                 .ShouldBeTrue();
@@ -72,7 +89,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void all_the_items_found_in_host_have_root_as_host_path()
         {
-            ClassUnderTest.HostPath = _templatePath;
             ClassUnderTest.FindInHost()
                 .All(x => x.RootPath == _templatePath)
                 .ShouldBeTrue();
@@ -82,7 +98,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void items_found_in_host_have_set_their_filepath()
         {
-            ClassUnderTest.HostPath = _templatePath;
             var items = ClassUnderTest.FindInHost().ToList();
             items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "A3.spark"));
             items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "A4.spark"));
@@ -90,7 +105,42 @@ namespace FubuMVC.Spark.Tests.SparkModel
             items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "Pak1", "Alpha", "Foxtrot", "Golf.spark"));
         }
 
+        [Test]
+        public void find_in_packages_scan_the_packages_web_content_folder()
+        {
+            var items = ClassUnderTest.FindInPackages();
+            items.ShouldHaveCount(16);
+        }
 
-        // TODO: TESTS FOR FindInPackages
+        [Test]
+        public void the_items_found_in_packages_have_the_origin_as_the_package_name()
+        {
+            var items = ClassUnderTest.FindInPackages();
+
+            items.Where(x => x.Origin == _pak1.Name).ShouldHaveCount(8);
+            items.Where(x => x.Origin == _pak2.Name).ShouldHaveCount(8);
+        }
+
+        [Test]
+        public void the_items_found_in_packages_have_the_root_path_as_the_package_name_web_content_folder()
+        {
+            var items = ClassUnderTest.FindInPackages();
+
+            items.Where(x => x.RootPath == _pak1Path).ShouldHaveCount(8);
+            items.Where(x => x.RootPath == _pak2Path).ShouldHaveCount(8);
+        }
+
+        [Test]
+        public void find_in_packages_takes_into_account_file_filters()
+        {
+            ClassUnderTest.IncludeFile("*.txt");
+            ClassUnderTest.IncludeFile("sample.*");
+            var items = ClassUnderTest.FindInPackages();
+
+            items.Where(x => x.Origin == _pak1.Name).Where(x => x.Name() == "data").ShouldHaveCount(1);
+            items.Where(x => x.Origin == _pak2.Name).Where(x => x.Name() == "sample").ShouldHaveCount(1);
+
+            items.ShouldHaveCount(18);
+        }
     }
 }

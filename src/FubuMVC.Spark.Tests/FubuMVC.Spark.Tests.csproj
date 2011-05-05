@@ -131,6 +131,9 @@
     <None Include="Templates\Package2\Handlers\Shared\_fail.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\Package2\sample.123">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Templates\Pak1\Alpha\Hotel.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
