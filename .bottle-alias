@@ -11,5 +11,7 @@
     <alias name="webforms" folder="source\FubuMVC.WebForms" />
     <alias name="fubuwebforms" folder="src\FubuMVC.WebForms" />
     <alias name="fubumvc" folder="src\FubuMVC.Core" />
+    <alias name="helloworld" folder="C:\git\fubumvc\src\FubuMVC.HelloWorld" />
+    <alias name="hellospark" folder="C:\git\fubumvc\src\FubuMVC.HelloFubuSpark" />
   </Aliases>
 </aliases>

@@ -22,7 +22,7 @@ namespace FubuMVC.Core.View.Activation
         {
             _sources.AddRange(sources);
             _typeRules.OnMissing = type => _sources.SelectMany(x => x.ActionsFor(type));
-            _sources.Add(new SetPageModelActivationSource());
+            _sources.Insert(0, new SetPageModelActivationSource());
         }
 
         public IEnumerable<IPageActivationAction> ActivationsFor(Type type)

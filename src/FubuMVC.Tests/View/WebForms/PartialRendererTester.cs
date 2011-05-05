@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.View.WebForms
             _builder.Expect(b => b.LoadControlFromVirtualPath("~/View/WebForms/TestControl.ascx", typeof(TestControl))).Return(
                 new TestControl());
 
-            new PartialRenderer(_builder, null, null).CreateControl(typeof(TestControl));
+            new PartialRenderer(_builder, null, new InMemoryFubuRequest()).CreateControl(typeof(TestControl));
 
             _builder.VerifyAllExpectations();
         }
@@ -60,7 +60,7 @@ namespace FubuMVC.Tests.View.WebForms
 
             _request.Set(new TestViewModel());
 
-            new PartialRenderer(_builder, new StubActivator(), null)
+            new PartialRenderer(_builder, new StubActivator(), new InMemoryFubuRequest())
                 .Render(new TestView(), typeof(TestControl), new TestControlViewModel(), "");
 
             _builder.VerifyAllExpectations();
@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.View.WebForms
             _executeCatcher = _builder.CaptureArgumentsFor(b => b.ExecuteControl(null, null));
 
             _parentView = new TestView();
-            _renderer = new PartialRenderer(_builder, new StubActivator(), null);
+            _renderer = new PartialRenderer(_builder, new StubActivator(), _request);
         }
 
         [Test]

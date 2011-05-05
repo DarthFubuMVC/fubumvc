@@ -45,6 +45,9 @@ namespace FubuMVC.Tests.View
             theRequest.Set(input);
 
             var theModelPage = MockRepository.GenerateMock<IFubuPage<FubuPageTarget>>();
+            
+            // Gets around a defensive prog. check
+            theModelPage.Stub(x => x.Model).Return(input);
 
             theActivator.Activate(theModelPage);
 

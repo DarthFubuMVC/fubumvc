@@ -69,9 +69,8 @@ namespace FubuMVC.WebForms
             var page = new Page();
             page.Controls.Add(view as Control);
 
-            // THIS IS PROBLEMATIC
+            _request.Set(viewModel.GetType(), viewModel);
             _activator.Activate(view);
-//            view.As<IFubuPage<T>>().Model = viewModel;
 
             setParentPageIfNotAlreadySet(view, page);
 
