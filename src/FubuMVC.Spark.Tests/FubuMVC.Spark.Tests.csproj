@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -125,6 +125,9 @@
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_fail.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\Home\file.foo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\Package2\Handlers\Shared\_fail.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -161,6 +164,15 @@
     <Content Include="Templates\Views\A2.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Templates\Views\F1\baz.fub">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\Views\F1\dog.zoo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\Views\file.bar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
