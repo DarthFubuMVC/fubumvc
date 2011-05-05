@@ -1,8 +1,5 @@
 ﻿using System.IO;
-using System.Linq;
-using Bottles;
 using FubuCore;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
@@ -26,11 +23,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.HostPath = _templatePath;
         }
 
-
         [Test]
         public void finder_locates_all_relevant_spark_items()
         {
-            ClassUnderTest.FindInHost().ShouldHaveCount(39);
+            ClassUnderTest.FindInHost().ShouldHaveCount(48);
         }
 
         [Test]
