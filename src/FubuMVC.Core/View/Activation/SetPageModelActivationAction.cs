@@ -27,10 +27,10 @@ namespace FubuMVC.Core.View.Activation
             var request = services.GetInstance<IFubuRequest>();
             modelPage.Model = request.Get<T>() ?? request.Find<T>().FirstOrDefault();
 
-            if (modelPage.Model == null)
-            {
-                throw new PageActivationException("Could not find the requested view model of type {0} for page {1}".ToFormat(typeof(T).FullName, page.GetType().FullName));
-            }
+//            if (modelPage.Model == null)
+//            {
+//                throw new PageActivationException("Could not find the requested view model of type {0} for page {1}".ToFormat(typeof(T).FullName, page.GetType().FullName));
+//            }
         }
     }
 }

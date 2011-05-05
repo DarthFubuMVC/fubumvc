@@ -69,7 +69,10 @@ namespace FubuMVC.WebForms
             var page = new Page();
             page.Controls.Add(view as Control);
 
-            _request.Set(viewModel.GetType(), viewModel);
+            if (viewModel != null)
+            {
+                _request.Set(viewModel.GetType(), viewModel);
+            }
             _activator.Activate(view);
 
             setParentPageIfNotAlreadySet(view, page);
