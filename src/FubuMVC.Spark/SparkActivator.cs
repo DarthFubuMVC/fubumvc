@@ -63,7 +63,7 @@ namespace FubuMVC.Spark
 		{					
 			var bindings = new List<Binding> ();
 			
-			foreach (var binding in _sparkItems.ByName("bindings").All(i => i.IsXml())) {
+			foreach (var binding in _sparkItems.ByName("bindings").Where(i => i.IsXml())) {
 				var file = viewFolder.GetViewSource (binding.ViewPath);
 				using (var stream = file.OpenViewStream())
 				using (var reader = new StreamReader(stream)) {
