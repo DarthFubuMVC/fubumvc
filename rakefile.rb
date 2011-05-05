@@ -79,7 +79,7 @@ task :compile => [:clean, :version] do
   copyOutputFiles "src/FubuMVC.WebForms/bin/#{COMPILE_TARGET}", "FubuMVC.WebForms.{dll,pdb}", props[:stage]
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
-  copyOutputFiles "src/FubuFastPack/bin/#{COMPILE_TARGET}", "FubuFastPack.{dll,pdb}", props[:stage]
+
   
   copyOutputFiles "src/Bottles.Deployers.Iis/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
   copyOutputFiles "src/Bottles.Deployers.Topshelf/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
@@ -87,10 +87,6 @@ task :compile => [:clean, :version] do
   copyOutputFiles "src/Bottles.Console/bin/#{COMPILE_TARGET}", "*.{dll,pdb,exe,config}", props[:stage]
 end
 
-desc "Bundles up the packaged content in FubuFastPack"
-task :bundle_fast_pack => [:compile] do
-  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe assembly-pak src/FubuFastPack -projfile FubuFastPack.csproj"
-end
 
 
 def copyOutputFiles(fromDir, filePattern, outDir)
@@ -105,7 +101,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuFastPack.Testing', 'FubuMVC.Validation.Tests', 'Bottles.Tests', 'FubuMVC.Diagnostics.Tests', 'FubuMVC.WebForms.Testing']
+  runner.executeTests ['FubuMVC.Tests', 'FubuCore.Testing', 'FubuLocalization.Tests', 'Spark.Web.FubuMVC.Tests', 'FubuValidation.Tests', 'FubuMVC.Validation.Tests', 'Bottles.Tests', 'FubuMVC.Diagnostics.Tests', 'FubuMVC.WebForms.Testing']
 end
 
 

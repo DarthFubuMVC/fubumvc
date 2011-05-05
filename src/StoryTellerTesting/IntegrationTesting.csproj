@@ -84,11 +84,7 @@
     <Compile Include="ApplicationDriver.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
-    <Compile Include="debugging.cs" />
     <Compile Include="Fixtures\ConnegFixture.cs" />
-    <Compile Include="Fixtures\FubuFastPack\GridsFixture.cs" />
-    <Compile Include="Fixtures\FubuFastPack\QueryServiceFixture.cs" />
-    <Compile Include="Fixtures\FubuFastPack\SmartGridFixture.cs" />
     <Compile Include="Fixtures\Packages\Package4Fixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />
@@ -98,18 +94,6 @@
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
-    <Compile Include="FubuFastPack\Crud\DomainEntityConverterFamilyIntegratedTester.cs" />
-    <Compile Include="FubuFastPack\Crud\EntityConversionFamilyIntegrationTester.cs" />
-    <Compile Include="FubuFastPack\Crud\EntityModelBinderIntegrationTester.cs" />
-    <Compile Include="FubuFastPack\Crud\ModelWithEntity.cs" />
-    <Compile Include="FubuFastPack\JqGrid\GridSmokeTester.cs" />
-    <Compile Include="FubuFastPack\NHibernate\bootstrapping_a_database.cs" />
-    <Compile Include="FubuFastPack\NHibernate\ConfigurationSourceSmokeTester.cs" />
-    <Compile Include="FubuFastPack\NHibernate\configuration_file_caching_smoke_tester.cs" />
-    <Compile Include="FubuFastPack\NHibernate\find_type_by_persisted_class_name.cs" />
-    <Compile Include="FubuFastPack\NHibernate\SqlRunnerSmokeTester.cs" />
-    <Compile Include="FubuFastPack\Persistence\RepositorySmokeTester.cs" />
-    <Compile Include="FubuFastPack\Validation\UniqueValidationIntegrationRuleTester.cs" />
     <Compile Include="FubuSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoryTellerDebug.cs" />
@@ -123,10 +107,6 @@
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuFastPack\FubuFastPack.csproj">
-      <Project>{F274E0DD-F9B1-41FE-A3F6-89EE74FE3F56}</Project>
-      <Name>FubuFastPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>

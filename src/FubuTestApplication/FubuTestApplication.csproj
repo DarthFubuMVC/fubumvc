@@ -155,14 +155,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnegActions\MirrorAction.cs" />
-    <Compile Include="DatabaseDriver.cs" />
-    <Compile Include="Domain\Entities.cs" />
     <Compile Include="Environments.cs" />
     <Compile Include="FubuTestApplicationRegistry.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Grids\CaseGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptsHandler.cs" />
   </ItemGroup>
@@ -174,10 +171,6 @@
     <ProjectReference Include="..\FubuCore\FubuCore.csproj">
       <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
       <Name>FubuCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuFastPack\FubuFastPack.csproj">
-      <Project>{F274E0DD-F9B1-41FE-A3F6-89EE74FE3F56}</Project>
-      <Name>FubuFastPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
