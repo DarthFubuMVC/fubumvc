@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
+using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -32,6 +33,16 @@ namespace FubuMVC.Spark.SparkModel
         {
             return item.ViewModelType != null;
         }
+		
+		public static bool IsPartial(this SparkItem item)
+		{
+            return Path.GetFileName(item.FilePath).StartsWith("_") && item.IsSparkView();
+        }
+		
+		public static bool IsSparkView(this SparkItem item)
+		{
+            return Path.GetExtension(item.FilePath).Equals(Constants.DotSpark);
+        }			
     }
 
     public static class SparkItemEnumerableExtensions

@@ -9,5 +9,4 @@ More coverage needed for:
  - SparkScanner
  - SparkItemFinder
 
- - MasterPageBinder
- - NamespacePolicy 
+ - NamespacePolicy

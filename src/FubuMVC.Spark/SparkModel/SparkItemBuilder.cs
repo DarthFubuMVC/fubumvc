@@ -88,7 +88,13 @@ namespace FubuMVC.Spark.SparkModel
         void Trace(SparkItem item, string format, params object [] args);
         void Trace(SparkItem item, string text);
     }
-
+	
+	public class NulloTracer : ISparkPackageTracer
+	{
+		public void Trace (FubuMVC.Spark.SparkModel.SparkItem item, string format, params object[] args) {}
+		public void Trace (FubuMVC.Spark.SparkModel.SparkItem item, string text) {}		
+	}
+	
     public class SparkPackageTracer : ISparkPackageTracer
     {
         private readonly Action<SparkItem, string, object[]> _format;

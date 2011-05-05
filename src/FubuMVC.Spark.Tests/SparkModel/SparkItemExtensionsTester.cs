@@ -57,5 +57,19 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _topItem.DirectoryPath().ShouldEqual(_topItem.RootPath);
         }
+		
+		[Test]
+        public void is_partial_returns_true_if_file_starts_with_underscore_and_ends_with_dot_spark()
+        {
+			new SparkItem("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
+			new SparkItem("_Template.htm", "", "").IsPartial().ShouldBeFalse();
+        }
+		
+		[Test]
+        public void is_spark_view_returns_true_if_file_ends_with_dot_spark()
+        {
+			_bottomItem.IsSparkView().ShouldBeTrue();
+			new SparkItem("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
+        }
     }
 }
