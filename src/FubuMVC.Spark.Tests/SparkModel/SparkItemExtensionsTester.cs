@@ -71,5 +71,11 @@ namespace FubuMVC.Spark.Tests.SparkModel
 			_bottomItem.IsSparkView().ShouldBeTrue();
 			new SparkItem("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
         }
+		
+		[Test]
+        public void is_xml_returns_true_if_file_ends_with_xml()
+        {
+			new SparkItem("bindings.xml", "", "").IsXml().ShouldBeTrue();
+        }
     }
 }

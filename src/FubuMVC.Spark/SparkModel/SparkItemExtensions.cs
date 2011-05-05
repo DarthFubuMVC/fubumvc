@@ -42,7 +42,12 @@ namespace FubuMVC.Spark.SparkModel
 		public static bool IsSparkView(this SparkItem item)
 		{
             return Path.GetExtension(item.FilePath).Equals(Constants.DotSpark);
-        }			
+        }
+		
+		public static bool IsXml(this SparkItem item)
+		{
+            return Path.GetExtension(item.FilePath).Equals(".xml");
+        }
     }
 
     public static class SparkItemEnumerableExtensions
