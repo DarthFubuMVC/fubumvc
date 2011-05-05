@@ -67,6 +67,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Rendering\DefaultRenderActionTester.cs" />
+    <Compile Include="Rendering\NestedOutputTester.cs" />
+    <Compile Include="Rendering\NestedRenderActionTester.cs" />
+    <Compile Include="Rendering\ViewOutputTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
     <Compile Include="SparkModel\SharedDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\SharedItemLocatorTester.cs" />

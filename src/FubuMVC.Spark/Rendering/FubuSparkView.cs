@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Rendering
 
         protected FubuSparkView()
         {
-            _services.OnMissing = type => { return ServiceLocator.GetInstance(type); };
+            _services.OnMissing = ServiceLocator.GetInstance;
         }
 
         public IServiceLocator ServiceLocator { get; set; }
