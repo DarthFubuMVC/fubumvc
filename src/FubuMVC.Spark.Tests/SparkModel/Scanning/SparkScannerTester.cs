@@ -20,8 +20,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
             Services.Inject<IFileSystem>(new FileSystem());
             _scanResult = new List<SparkItem>();
             var request = new ScanRequest();
-            TestSource.Paths().Each(request.AddRoot);
-            request.Include("*.spark");
+            
+			request.AddRoots(TestSource.Paths());
+			request.IncludeSparkViews();
             request.AddHandler(file => _scanResult.Add(new SparkItem(file.Path, file.Root, "")));
 
             ClassUnderTest.Scan(request);
