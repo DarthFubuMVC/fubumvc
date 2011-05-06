@@ -23,20 +23,13 @@ namespace FubuMVC.Core.Security
             _request = request;
         }
 
-        protected override AuthorizationRight applyForwarder(object model, IChainForwarder forwarder)
-        {
-            var chain = forwarder.FindChain(resolver, model);
-            return rightsFor(chain);
-        }
-
-        protected override AuthorizationRight findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
+        protected override AuthorizationRight createResult(object model, BehaviorChain chain)
         {
             if (model != null)
             {
                 _request.Set(_types.ResolveType(model), model);
             }
 
-            BehaviorChain chain = finder(resolver);
             return rightsFor(chain);
         }
 

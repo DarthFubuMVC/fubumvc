@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Registration.Querying
             var forwarder = FindForwarder(model);
             if (forwarder != null)
             {
-                return forwarder.FindChain(this, model);
+                return forwarder.FindChain(this, model).Chain;
             }
             
             var modelType = _typeResolver.ResolveType(model);

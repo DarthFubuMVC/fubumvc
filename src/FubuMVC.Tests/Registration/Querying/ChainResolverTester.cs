@@ -200,8 +200,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
             var forwarder = resolver.FindForwarder(new ForwardedModel());
             forwarder.ShouldNotBeNull();
-
-            forwarder.FindChain(resolver, new ForwardedModel()).FirstCall().Method.Name.ShouldEqual("M9");
+            forwarder.FindChain(resolver, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
         }
 
         [Test]
@@ -219,8 +218,7 @@ namespace FubuMVC.Tests.Registration.Querying
 
             var forwarder = resolver.FindForwarder(new ForwardedModel());
             forwarder.ShouldNotBeNull();
-
-            forwarder.FindChain(resolver, new ForwardedModel()).FirstCall().Method.Name.ShouldEqual("M9");
+            forwarder.FindChain(resolver, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
         }
 
     }

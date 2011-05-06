@@ -18,21 +18,30 @@ namespace FubuMVC.Core.Registration.Querying
             get { return _resolver; }
         }
 
-        protected abstract T applyForwarder(object model, IChainForwarder forwarder);
-        protected abstract T findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder);
+        protected abstract T createResult(object model, BehaviorChain chain);
+        protected T findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
+        {
+            var chain = finder(resolver);
+            return createResult(model, chain);
+        }
 
+        private T processForwarder(object model, Func<IChainForwarder> forwarderSource, Func<IChainResolver, BehaviorChain> finder)
+        {
+            var forwarder = forwarderSource();
+            if (forwarder != null)
+            {
+                var result = forwarder.FindChain(resolver, model);
+                return createResult(result.RealInput, result.Chain);
+            }
+
+            return findAnswerFromResolver(model, finder);
+        }
 
         protected T For(object model)
         {
             if (model == null) return null;
 
-            var forwarder = resolver.FindForwarder(model);
-            if (forwarder != null)
-            {
-                return applyForwarder(model, forwarder);
-            }
-
-            return findAnswerFromResolver(model, r => r.FindUnique(model));
+            return processForwarder(model, () => resolver.FindForwarder(model), r => r.FindUnique(model));
         }
 
         protected T For(object model, string category)
@@ -42,13 +51,10 @@ namespace FubuMVC.Core.Registration.Querying
                 throw new ArgumentNullException("model");
             }
 
-            var forwarder = resolver.FindForwarder(model, category);
-            if (forwarder != null)
-            {
-                return applyForwarder(model, forwarder);
-            }
-
-            return findAnswerFromResolver(model, r => r.FindUnique(model, category));
+            return processForwarder(
+                model, 
+                () => resolver.FindForwarder(model, category),
+                r => r.FindUnique(model, category));
         }
 
         protected T For(Type handlerType, MethodInfo method)

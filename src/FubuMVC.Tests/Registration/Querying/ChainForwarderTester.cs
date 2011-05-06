@@ -22,7 +22,9 @@ namespace FubuMVC.Tests.Registration.Querying
             
             resolver.Expect(x => x.FindUnique(model2)).Return(chain);
 
-            forwarder.FindChain(resolver, new Model1()).ShouldBeTheSameAs(chain);
+            ForwardingResult result = forwarder.FindChain(resolver, new Model1());
+            result.Chain.ShouldBeTheSameAs(chain);
+            result.RealInput.ShouldBeTheSameAs(model2);
         }
 
         [Test]

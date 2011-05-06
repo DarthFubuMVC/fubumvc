@@ -9,8 +9,15 @@ namespace FubuMVC.Core.Registration.Querying
     { 
         string Category { get; }
         Type InputType { get; }
-        BehaviorChain FindChain(IChainResolver resolver, object model);
-        string FindUrl(IChainResolver resolver, object model);
+        ForwardingResult FindChain(IChainResolver resolver, object model);
+
+        
+    }
+
+    public class ForwardingResult
+    {
+        public object RealInput { get; set; }
+        public BehaviorChain Chain { get; set; }
     }
 
 
@@ -41,16 +48,7 @@ namespace FubuMVC.Core.Registration.Querying
             get { return typeof(T); }
         }
 
-        public BehaviorChain FindChain(IChainResolver resolver, object model)
-        {
-            var input = (T)model;
-            var realInput = _converter(input);
-
-            // Limitation.  Not respecting the category for now.
-            return resolver.FindUnique(realInput);
-        }
-
-        public string FindUrl(IChainResolver resolver, object model)
+        public ForwardingResult FindChain(IChainResolver resolver, object model)
         {
             var input = (T)model;
             var realInput = _converter(input);
@@ -60,9 +58,11 @@ namespace FubuMVC.Core.Registration.Querying
                 throw new FubuException(2111, "Chain Forwarder for {0} did not return any value for {1}", typeof(T).FullName, model.ToString());
             }
 
-            var chain = resolver.FindUnique(realInput);
-
-            return chain.Route.CreateUrlFromInput(realInput);
+            // Limitation.  Not respecting the category for now.
+            return new ForwardingResult(){
+                Chain = resolver.FindUnique(realInput),
+                RealInput = realInput
+            };
         }
     }
 }
