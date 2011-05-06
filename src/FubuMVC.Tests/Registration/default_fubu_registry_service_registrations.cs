@@ -234,5 +234,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<ISmartRequest, SmartRequest>();
         }
+
+        [Test]
+        public void chain_authorizor_is_registered()
+        {
+            registeredTypeIs<IChainAuthorizor, ChainAuthorizor>();
+        }
     }
 }

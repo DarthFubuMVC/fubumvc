@@ -6,6 +6,8 @@ using System.Web.Routing;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.UI;
@@ -21,74 +23,17 @@ using StructureMap;
 
 namespace FubuMVC.Tests.UI.Forms
 {
-    [TestFixture]
-    public class when_calling_link_to_new
+
+
+
+
+    public class StubChainAuthorizor : IChainAuthorizor
     {
-        private IFubuPage _page;
-        private IUrlRegistry _urls;        
-
-        [SetUp]
-        public void SetUp()
+        public AuthorizationRight Authorize(BehaviorChain chain, object model)
         {
-            _page = MockRepository.GenerateMock<IFubuPage>();
-            _urls = new StubUrlRegistry();            
-            _page.Stub(p => p.Urls).Return(_urls);
-
-            var endpoints = new EndpointService(new StubAuthorizationPreviewService(), _urls);
-            _page.Stub(p => p.Get<IEndpointService>()).Return(endpoints);
+            return AuthorizationRight.Allow;
         }
 
-        [Test]
-        public void for_an_entity()
-        {
-            var tag = _page.LinkToNew<InputModel>();
-            tag.Attr("href").ShouldEqual("url for new {0}".ToFormat(typeof (InputModel).FullName));
-        }
-    }
-
-    [TestFixture]
-    public class when_calling_link_to
-    {
-        private IFubuPage _page;
-        private IUrlRegistry _urls;
-        private InputModel _model;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _page = MockRepository.GenerateMock<IFubuPage>();
-            _urls = new StubUrlRegistry();
-            _model = new InputModel();
-            _page.Stub(p => p.Urls).Return(_urls);
-
-            var endpoints = new EndpointService(new StubAuthorizationPreviewService(), _urls);
-            _page.Stub(p => p.Get<IEndpointService>()).Return(endpoints);
-        }
-
-        [Test]
-        public void for_an_action_by_specifying_an_input_model_instance()
-        {
-            HtmlTag tag = _page.LinkTo(_model);
-            tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.UI.Forms.InputModel");
-        }
-
-        [Test]
-        public void for_an_action_by_specifying_an_input_model_type()
-        {
-            HtmlTag tag = _page.LinkTo<InputModel>();
-            tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.UI.Forms.InputModel");
-        }
-
-        [Test]
-        public void for_an_action_by_specifying_the_action_via_an_expression()
-        {
-            HtmlTag tag = _page.LinkTo<TestController>(x => x.Index());
-            tag.Attr("href").ShouldEqual("url for FubuMVC.Tests.TestController.Index()");
-        }
-    }
-
-    public class StubAuthorizationPreviewService : IAuthorizationPreviewService
-    {
         public bool IsAuthorized(object model)
         {
             return true;

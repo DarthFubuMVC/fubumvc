@@ -71,6 +71,11 @@ namespace FubuMVC.Core.Registration.Querying
             });
         }
 
+        protected bool HasNew(Type entityType)
+        {
+            return resolver.FindCreatorOf(entityType) != null;
+        }
+
         protected T ForNew(Type entityType)
         {
             return findAnswerFromResolver(null, r =>

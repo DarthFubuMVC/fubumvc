@@ -61,6 +61,9 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IAuthorizationPreviewService, AuthorizationPreviewService>();
             graph.Services.SetServiceIfNone<IEndpointService, EndpointService>();
             graph.Services.SetServiceIfNone<IAuthorizationPolicyExecutor, AuthorizationPolicyExecutor>();
+            graph.Services.SetServiceIfNone<IChainAuthorizor, ChainAuthorizor>();
+
+
             graph.Services.SetServiceIfNone<ICollectionTypeProvider, DefaultCollectionTypeProvider>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();

@@ -10,33 +10,50 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Security
 {
-    public class AuthorizationPreviewService : ChainInterrogator<AuthorizationRight>, IAuthorizationPreviewService
-    {
-        private readonly ITypeResolver _types;
-        private readonly IEndPointAuthorizorFactory _factory;
-        private readonly IFubuRequest _request;
 
-        public AuthorizationPreviewService(ITypeResolver types, IChainResolver resolver, IEndPointAuthorizorFactory factory, IFubuRequest request) : base(resolver)
+    public interface IChainAuthorizor
+    {
+        AuthorizationRight Authorize(BehaviorChain chain, object model);
+    }
+
+    public class ChainAuthorizor : IChainAuthorizor
+    {
+        private readonly IFubuRequest _request;
+        private readonly IEndPointAuthorizorFactory _factory;
+        private readonly ITypeResolver _types;
+
+        public ChainAuthorizor(IFubuRequest request, IEndPointAuthorizorFactory factory, ITypeResolver types)
         {
-            _types = types;
-            _factory = factory;
             _request = request;
+            _factory = factory;
+            _types = types;
         }
 
-        protected override AuthorizationRight createResult(object model, BehaviorChain chain)
+
+        public AuthorizationRight Authorize(BehaviorChain chain, object model)
         {
             if (model != null)
             {
                 _request.Set(_types.ResolveType(model), model);
             }
 
-            return rightsFor(chain);
-        }
-
-        private AuthorizationRight rightsFor(BehaviorChain chain)
-        {
             var endpoint = _factory.AuthorizorFor(chain.UniqueId);
             return endpoint.IsAuthorized(_request);
+        }
+    }
+
+    public class AuthorizationPreviewService : ChainInterrogator<AuthorizationRight>, IAuthorizationPreviewService
+    {
+        private readonly IChainAuthorizor _authorizor;
+
+        public AuthorizationPreviewService(IChainResolver resolver, IChainAuthorizor authorizor) : base(resolver)
+        {
+            _authorizor = authorizor;
+        }
+
+        protected override AuthorizationRight createResult(object model, BehaviorChain chain)
+        {
+            return _authorizor.Authorize(chain, model);
         }
 
         public bool IsAuthorized(object model)

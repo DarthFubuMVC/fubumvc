@@ -100,7 +100,6 @@
     <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
-    <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Models\CollectionPropertyBinderTester.cs" />
     <Compile Include="Models\PropertyBinderTester.cs" />
