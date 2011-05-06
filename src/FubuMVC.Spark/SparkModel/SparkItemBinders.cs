@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Bottles;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core.Registration;
-using Spark;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    // TODO : Reconsider this
 	public class BindContext
 	{
-		public BindContext()
-		{
-			AvailableItems = new List<SparkItem>();
-			Namespaces = new List<string>();
-			Tracer = new NulloTracer();			
-		}
-
 		public string Master { get; set; }
 		public string ViewModelType { get; set; }
 		public IEnumerable<string> Namespaces { get; set; }
+
+        public TypePool TypePool { get; set; }
 		public IEnumerable<SparkItem> AvailableItems { get; set; }
-		public ISparkPackageTracer Tracer { get; set; }
+		public ISparkTracer Tracer { get; set; }
 	}
 
 	public interface ISparkItemBinder
@@ -77,21 +67,7 @@ namespace FubuMVC.Spark.SparkModel
 	}
 
 	public class ViewModelBinder : ISparkItemBinder
-	{
-		private readonly ITypeResolver _typeResolver;
-
-		public ViewModelBinder()
-		{
-			var resolver = new TypeResolver();
-			resolver.AddStrategy<FullTypeNameStrategy>();
-			_typeResolver = resolver;
-		}
-
-		public ViewModelBinder(ITypeResolver typeResolver)
-		{
-			_typeResolver = typeResolver;
-		}
-
+	{	
 		public bool CanBind(SparkItem item, BindContext context)
 		{
 			return context.ViewModelType.IsNotEmpty();
@@ -100,57 +76,9 @@ namespace FubuMVC.Spark.SparkModel
 		public void Bind(SparkItem item, BindContext context)
 		{
 			// TODO: We could account for <use namespace="..."/>
-			item.ViewModelType = _typeResolver.ResolveType(context.ViewModelType);
+            var types = context.TypePool.TypesWithFullName(context.ViewModelType);
+            item.ViewModelType = types.Count() == 1 ? types.First() : null;
 			context.Tracer.Trace(item, "View model type is : [{0}]", item.ViewModelType);
 		}
-	}
-	
-	// Note: Would be much better to rely on something like AssemblyScanner
-	// (Diagnostics has a simple one, but we need SM like).
-	public class FullTypeNameStrategy : ITypeResolverStrategy
-	{
-		private readonly TypePool _typePool;
-
-		public FullTypeNameStrategy() : this(DefaultTypePool())
-		{
-		}
-
-		public FullTypeNameStrategy(TypePool typePool)
-		{
-			_typePool = typePool;
-		}		
-
-		public bool Matches(object model)
-		{
-			return model is string;
-		}
-
-		public Type ResolveType(object model)
-		{
-			var types = _typePool.TypesWithFullName((string) model);            
-			return types.Count() == 1 ? types.First() : null;
-		}
-
-		public static TypePool DefaultTypePool()
-		{			
-			var binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;			
-			var candiateNames = new FileSystem().FindAssemblyNames(binPath).ToList();			
-			
-			var assemblyFilters = new CompositeFilter<Assembly>();						
-			assemblyFilters.Includes += a => candiateNames.Contains(a.GetName().Name);
-			assemblyFilters.Excludes += a => a.IsDynamic;
-
-			var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-				.Where(assemblyFilters.MatchesAll);
-		
-			var typePool = new TypePool(Assembly.GetCallingAssembly()) 
-			{ 
-				ShouldScanAssemblies = true 
-			};
-			
-			typePool.AddAssemblies(assemblies.ToList());
-			
-			return typePool;
-		}		
 	}
 }

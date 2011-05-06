@@ -40,7 +40,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 			{ 
 				AvailableItems = _sparkItems = createItems(), 
 				Master = "application", 
-				Tracer = MockFor<ISparkPackageTracer>() 
+				Tracer = MockFor<ISparkTracer>() 
 			};
         }
 

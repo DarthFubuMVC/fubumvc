@@ -10,15 +10,15 @@ namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly IEnumerable<SparkItem> _sparkItems;
-        public SparkViewFacility(IEnumerable<SparkItem> sparkItems)
+        private readonly ISparkItemComposer _composer;
+        public SparkViewFacility(ISparkItemComposer composer)
         {
-            _sparkItems = sparkItems;
+            _composer = composer;
         }
 
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            return _sparkItems
+            return _composer.ComposeViews(types)
                 .Where(x => x.HasViewModel())
                 .Select(item => new SparkViewToken(item));
         }

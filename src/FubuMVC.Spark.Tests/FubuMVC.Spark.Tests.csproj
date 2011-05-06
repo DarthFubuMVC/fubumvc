@@ -77,7 +77,7 @@
     <Compile Include="SparkModel\SharedDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\SharedItemLocatorTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
-    <Compile Include="SparkModel\SparkItemBuilderTester.cs" />
+    <Compile Include="SparkModel\SparkItemComposerTester.cs" />
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
     <Compile Include="SparkModel\Policies\NamespacePolicyTester.cs" />
@@ -87,7 +87,6 @@
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
     <Compile Include="SparkModel\Binding\MasterPageBinderTester.cs" />
     <Compile Include="SparkModel\Binding\ViewModelBinderTester.cs" />
-    <Compile Include="SparkModel\Binding\FullTypeNameStrategyTester.cs" />
     <Compile Include="SparkViewFacilityTester.cs" />
     <Compile Include="SparkViewTokenTester.cs" />
     <Compile Include="SparkModel\Scanning\SparkRequestExtensionsTester.cs" />

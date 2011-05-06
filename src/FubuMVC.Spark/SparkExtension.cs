@@ -12,27 +12,29 @@ namespace FubuMVC.Spark
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
         private readonly SparkItems _items;
-        private SparkItemBuilder _itemBuilder;
+        private SparkItemComposer _itemComposer;
         private SparkItemFinder _itemFinder;
         
         public SparkExtension()
         {
 			_items = new SparkItems();
 			_itemFinder = new SparkItemFinder();
-            _itemBuilder = new SparkItemBuilder(_items);
+            _itemComposer = new SparkItemComposer(_items);
 			
 			defaults();
         }
+
         public void Configure(FubuRegistry registry)
         {
-            populateAndBuildItems();
+            locateTemplates();
 			
-            registry.Views.Facility(new SparkViewFacility(_items));
+            registry.Views.Facility(new SparkViewFacility(_itemComposer));
             registry.Services(configureServices);
         }
 
         private void configureServices(IServiceRegistry services)
         {
+            // TODO : Reconsider this
             services.SetServiceIfNone<ISparkItems>(_items);
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
             services.AddService<IActivator, SparkActivator>();
@@ -40,17 +42,16 @@ namespace FubuMVC.Spark
             services.AddService<ISparkViewModification, SiteResourceAttacher>();
         }
 
-        private void populateAndBuildItems()
+        private void locateTemplates()
         {
             _items.Clear();
             _items.AddRange(_itemFinder.FindInHost());
             _items.AddRange(_itemFinder.FindInPackages());
-            _itemBuilder.BuildItems();
         }
 		
 		private void defaults()
 		{			
-			_itemBuilder
+			_itemComposer
                 .AddBinder<MasterPageBinder>()
                 .AddBinder<ViewModelBinder>()
                 .Apply<NamespacePolicy>()
