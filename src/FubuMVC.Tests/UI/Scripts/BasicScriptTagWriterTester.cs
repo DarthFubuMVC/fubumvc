@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.UI.Scripts
             };
 
             var writer = new BasicScriptTagWriter(new StubContentRegistry());
-            writer.Write(scripts).Select(x => x.ToString())
+            writer.Write(scripts.Select(x => x.Name)).Select(x => x.ToString())
                 .ShouldHaveTheSameElementsAs(
                 "<script src=\"url for jquery.js\" type=\"text/javascript\"></script>", 
                 "<script src=\"url for script1.js\" type=\"text/javascript\"></script>", 

@@ -14,16 +14,15 @@ namespace FubuMVC.Core.UI.Scripts
             _registry = registry;
         }
 
-        public IEnumerable<HtmlTag> Write(IEnumerable<IScript> scripts)
+        public IEnumerable<HtmlTag> Write(IEnumerable<string> scriptNames)
         {
-            return scripts.Select(x =>
+            return scriptNames.Select(x =>
             {
                 // TODO -- is it possible that we could have something besides JavaScript?
-                var scriptUrl = _registry.ScriptUrl(x.Name);
+                var scriptUrl = _registry.ScriptUrl(x);
                 return new HtmlTag("script").Attr("src", scriptUrl).Attr("type", "text/javascript");
             });
+
         }
-
-
     }
 }

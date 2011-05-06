@@ -3,6 +3,7 @@ using FubuMVC.Core.Content;
 using FubuMVC.Core.UI.Scripts;
 using FubuMVC.Core.View;
 using HtmlTags;
+using System.Linq;
 
 namespace FubuMVC.Core.UI
 {
@@ -11,12 +12,17 @@ namespace FubuMVC.Core.UI
     {
         public static void Script(this IFubuPage page, string scriptName)
         {
-            page.Get<ScriptRequirements>().Require(scriptName);
+            page.Get<ScriptRequirements>().ConfiguredScript(scriptName);
         }
 
         public static void OptionalScript(this IFubuPage page, string scriptName)
         {
             page.Get<ScriptRequirements>().UseFileIfExists(scriptName);
+        }
+
+        public static void PageScript(this IFubuPage page, string scriptName)
+        {
+            page.Get<ScriptRequirements>().PageScript(scriptName);
         }
 
         // Tested manually
@@ -48,8 +54,12 @@ namespace FubuMVC.Core.UI
 
             public TagList ScriptTags()
             {
-                var scripts = _scripts.GetScripts(_requirements.AllScriptNames());
-                var tags = _writer.Write(scripts);
+                var configuredScripts = _scripts.GetScripts(_requirements.AllConfiguredScriptNames());
+                var pageScriptNames = _requirements.AllPageScriptNames();
+
+                var allScripts = configuredScripts.Select(x => x.Name).Concat(pageScriptNames);
+                
+                var tags = _writer.Write(allScripts);
 
                 return new TagList(tags);
             }

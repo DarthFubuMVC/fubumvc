@@ -25,11 +25,21 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void do_not_double_dip_a_requested_file()
         {
-            ClassUnderTest.Require("jquery.js");
-            ClassUnderTest.Require("jquery.js");
-            ClassUnderTest.Require("jquery.js");
+            ClassUnderTest.ConfiguredScript("jquery.js");
+            ClassUnderTest.ConfiguredScript("jquery.js");
+            ClassUnderTest.ConfiguredScript("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.AllScriptNames().Single(), "jquery.js");
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.AllConfiguredScriptNames().Single(), "jquery.js");
+        }
+
+        [Test]
+        public void do_not_double_dip_a_pagescript_file()
+        {
+            ClassUnderTest.PageScript("jquery.js");
+            ClassUnderTest.PageScript("jquery.js");
+            ClassUnderTest.PageScript("jquery.js");
+
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.AllPageScriptNames().Single(), "jquery.js");
         }
 
         [Test]
@@ -38,7 +48,7 @@ namespace FubuMVC.Tests.UI.Scripts
             scriptExists("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.AllScriptNames().Single(), "jquery.js");
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.AllConfiguredScriptNames().Single(), "jquery.js");
         }
 
         [Test]
@@ -47,7 +57,7 @@ namespace FubuMVC.Tests.UI.Scripts
             scriptDoesNotExist("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js"); 
 
-            SpecificationExtensions.ShouldBeFalse(ClassUnderTest.AllScriptNames().Any());
+            SpecificationExtensions.ShouldBeFalse(ClassUnderTest.AllConfiguredScriptNames().Any());
         }
 
     }
