@@ -11,12 +11,17 @@ namespace FubuMVC.Core.Diagnostics
 
         public DebuggingOutputWriter(IDebugDetector detector, IDebugReport report)
         {
-            _inner = detector.IsDebugCall() ? (IOutputWriter) new RecordingOutputWriter(report) : new HttpResponseOutputWriter();
+            _inner = detector.IsDebugCall() ? (IOutputWriter) new DiagnosticRecordingOutputWriter(report) : new HttpResponseOutputWriter();
         }
 
         public void WriteFile(string contentType, string localFilePath, string displayName)
         {
             _inner.WriteFile(contentType, localFilePath, displayName);
+        }
+
+        public RecordedOuput Record(Action action)
+        {
+            return _inner.Record(action);
         }
 
         public void Write(string contentType, string renderedOutput)

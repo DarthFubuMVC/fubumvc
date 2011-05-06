@@ -6,7 +6,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Diagnostics
 {
     [TestFixture]
-    public class RecordingOutputWriterTester : InteractionContext<RecordingOutputWriter>
+    public class RecordingOutputWriterTester : InteractionContext<DiagnosticRecordingOutputWriter>
     {
         [Test]
         public void redirect_to_url()

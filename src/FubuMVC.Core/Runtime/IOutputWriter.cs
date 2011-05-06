@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Web;
 
@@ -11,6 +12,7 @@ namespace FubuMVC.Core.Runtime
         void AppendCookie(HttpCookie cookie);
 
         void WriteResponseCode(HttpStatusCode status);
+        RecordedOuput Record(Action action);
     }
 
 

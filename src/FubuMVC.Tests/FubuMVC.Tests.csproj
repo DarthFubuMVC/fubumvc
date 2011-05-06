@@ -83,6 +83,8 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
+    <Compile Include="Caching\InputModelCacheTester.cs" />
+    <Compile Include="Caching\RequestOutputCacheBehaviorTester.cs" />
     <Compile Include="Commands\AliasLibraryTester.cs" />
     <Compile Include="Commands\InstallationRunnerTester.cs" />
     <Compile Include="Commands\InstallCommandTester.cs" />

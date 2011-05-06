@@ -5,11 +5,11 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
 {
-    public class RecordingOutputWriter : IOutputWriter
+    public class DiagnosticRecordingOutputWriter : IOutputWriter
     {
         private readonly IDebugReport _report;
 
-        public RecordingOutputWriter(IDebugReport report)
+        public DiagnosticRecordingOutputWriter(IDebugReport report)
         {
             _report = report;
         }
@@ -22,6 +22,17 @@ namespace FubuMVC.Core.Diagnostics
                 DisplayName = displayName,
                 LocalFilePath = localFilePath
             });
+        }
+
+        public RecordedOuput Record(Action action)
+        {
+            //TODO: Recording Output Report?
+            _report.AddDetails(new OutputReport()
+                               {
+                                   Contents = "recorded",
+                                   ContentType = "recorded"
+                               });
+            return new RecordedOuput("","");
         }
 
         public void Write(string contentType, string renderedOutput)

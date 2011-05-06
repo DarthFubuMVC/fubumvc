@@ -52,9 +52,9 @@ namespace FubuMVC.Tests.Registration
         public void replace_service_by_specifying_types()
         {
             var graph = new BehaviorGraph(null);
-            graph.Services.ReplaceService<IOutputWriter, RecordingOutputWriter>();
+            graph.Services.ReplaceService<IOutputWriter, DiagnosticRecordingOutputWriter>();
 
-            graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof (RecordingOutputWriter));
+            graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof (DiagnosticRecordingOutputWriter));
         }
 
         [Test]
