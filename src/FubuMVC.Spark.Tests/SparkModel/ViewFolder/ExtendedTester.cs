@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             packages.Add(pack1);
             packages.Add(pack2);
 
-            var scanner = new SparkItemFinder(new FileScanner(), packages) {HostPath = pathApp};
+            var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
             
             var allItems = new List<SparkItem>();
             allItems.AddRange(scanner.FindInPackages());

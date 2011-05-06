@@ -13,12 +13,12 @@ namespace FubuMVC.Spark
     {
         private readonly SparkItems _items;
         private SparkItemComposer _itemComposer;
-        private SparkItemFinder _itemFinder;
+        private TemplateFinder _templateFinder;
         
         public SparkExtension()
         {
 			_items = new SparkItems();
-			_itemFinder = new SparkItemFinder();
+			_templateFinder = new TemplateFinder();
             _itemComposer = new SparkItemComposer(_items);
 			
 			defaults();
@@ -45,8 +45,8 @@ namespace FubuMVC.Spark
         private void locateTemplates()
         {
             _items.Clear();
-            _items.AddRange(_itemFinder.FindInHost());
-            _items.AddRange(_itemFinder.FindInPackages());
+            _items.AddRange(_templateFinder.FindInHost());
+            _items.AddRange(_templateFinder.FindInPackages());
         }
 		
 		private void defaults()

@@ -74,7 +74,7 @@
     <Compile Include="RenderSparkBehavior.cs" />
     <Compile Include="SparkModel\Scanning\FileFound.cs" />
     <Compile Include="SparkModel\Scanning\ScanRequest.cs" />
-    <Compile Include="SparkModel\SparkItemFinder.cs" />
+    <Compile Include="SparkModel\TemplateFinder.cs" />
     <Compile Include="SparkModel\SparkItemBinders.cs" />
     <Compile Include="SparkModel\SparkRoot.cs" />
     <Compile Include="SparkModel\SparkItemComposer.cs" />

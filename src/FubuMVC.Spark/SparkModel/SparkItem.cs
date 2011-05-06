@@ -11,7 +11,15 @@ namespace FubuMVC.Spark.SparkModel
         string ViewPath { get; set; }
     }
 
-	public class SparkItem : ITemplate
+    public class Template : ITemplate
+    {
+        public string FilePath { get; set; }
+        public string RootPath { get; set; }
+        public string Origin { get; set; }
+        public string ViewPath { get; set; }
+    }
+
+    public class SparkItem : ITemplate
     {
         public SparkItem(string filePath, string rootPath, string origin)
         {
