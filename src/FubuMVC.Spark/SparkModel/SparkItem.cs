@@ -23,14 +23,18 @@ namespace FubuMVC.Spark.SparkModel
         public string FilePath { get; private set; }
         public string RootPath { get; private set; }
         public string Origin { get; private set; }
-
-        public SparkItem Master { get; set; }
-        public Type ViewModelType { get; set; }
-        
-        public string Namespace { get; set; }
         public string ViewPath { get; set; }
 
-        public override string ToString()
+        public SparkItem Master { get; set; }
+        public Type ViewModelType { get; set; }        
+        public string Namespace { get; set; }
+
+	    public bool HasViewModel()
+	    {
+	        return ViewModelType != null;
+	    }
+
+	    public override string ToString()
         {
             return FilePath;
         }

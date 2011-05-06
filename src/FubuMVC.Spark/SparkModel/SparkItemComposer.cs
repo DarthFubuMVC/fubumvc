@@ -21,6 +21,8 @@ namespace FubuMVC.Spark.SparkModel
         public SparkItemComposer(IEnumerable<SparkItem> sparkItems) : this(sparkItems, new ChunkLoader()) { }
         public SparkItemComposer(IEnumerable<SparkItem> sparkItems, IChunkLoader chunkLoader)
         {
+            // TODO : I think we need to get a list of ITemplate in here. Enriched (ViewPath set) and work from that.
+            // In other words, separate the template from sparkitem, and let the composer create the items.
             _sparkItems = sparkItems;
             _chunkLoader = chunkLoader;
         }

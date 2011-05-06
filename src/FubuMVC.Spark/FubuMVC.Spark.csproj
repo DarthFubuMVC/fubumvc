@@ -69,7 +69,7 @@
     <Compile Include="SparkModel\SharedDirectoryProvider.cs" />
     <Compile Include="SparkModel\SparkItemPolicies.cs" />
     <Compile Include="SparkModel\SharedItemLocator.cs" />
-    <Compile Include="SparkModel\SparkItemExtensions.cs" />
+    <Compile Include="SparkModel\TemplateExtensions.cs" />
     <Compile Include="SparkModel\SparkItemViewFolder.cs" />
     <Compile Include="RenderSparkBehavior.cs" />
     <Compile Include="SparkModel\Scanning\FileFound.cs" />

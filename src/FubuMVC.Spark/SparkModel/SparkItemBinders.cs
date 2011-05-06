@@ -57,7 +57,7 @@ namespace FubuMVC.Spark.SparkModel
 
 			if(master.FilePath == item.FilePath)
 			{
-				tracer.Trace(item, "Master page skipped because it is the item.", masterName);
+				tracer.Trace(item, "Master page skipped on itself.", masterName);
 				return;
 			}
 			            
