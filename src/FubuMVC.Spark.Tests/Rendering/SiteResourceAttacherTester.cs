@@ -30,7 +30,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             Services.Inject(_request);
         }
         [Test]
-        public void if_view_is_not_ifubupage_returns_false()
+        public void if_view_is_not_ifubusparkview_returns_false()
         {
             ClassUnderTest.Applies(_sparkView).ShouldBeFalse();
         }
