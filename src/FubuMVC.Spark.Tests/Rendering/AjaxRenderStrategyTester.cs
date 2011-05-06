@@ -1,0 +1,40 @@
+﻿using FubuCore.Binding;
+using FubuMVC.Core;
+using FubuMVC.Spark.Rendering;
+using FubuTestingSupport;
+using NUnit.Framework;
+using Rhino.Mocks;
+
+namespace FubuMVC.Spark.Tests.Rendering
+{
+    [TestFixture]
+    public class AjaxRenderStrategyTester : InteractionContext<AjaxRenderStrategy>
+    {
+        private InMemoryRequestData _requestData;
+        private IRenderAction _renderAction;
+
+        protected override void beforeEach()
+        {
+            _requestData = new InMemoryRequestData();
+            _renderAction = MockFor<IRenderAction>();
+            _renderAction.Expect(x => x.Render());
+            Services.Inject<IRequestData>(_requestData);
+            Services.Inject(_renderAction);
+        }
+
+        [Test]
+        public void if_is_ajax_request_applies_returns_true_otherwise_false()
+        {
+            ClassUnderTest.Applies().ShouldBeFalse();
+            _requestData[AjaxExtensions.XRequestedWithHeader] = "XMLHttpRequest";
+            ClassUnderTest.Applies().ShouldBeTrue();
+        }
+
+        [Test]
+        public void invoke_calls_render_to_the_injected_render_action()
+        {
+            ClassUnderTest.Invoke();
+            _renderAction.VerifyAllExpectations();
+        }
+    }
+}

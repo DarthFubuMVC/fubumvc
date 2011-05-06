@@ -67,9 +67,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
     <Compile Include="Rendering\DefaultRenderActionTester.cs" />
+    <Compile Include="Rendering\DefaultRenderStrategyTester.cs" />
     <Compile Include="Rendering\NestedOutputTester.cs" />
     <Compile Include="Rendering\NestedRenderActionTester.cs" />
+    <Compile Include="Rendering\NestedRenderStrategyTester.cs" />
+    <Compile Include="Rendering\SparkViewRendererTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
