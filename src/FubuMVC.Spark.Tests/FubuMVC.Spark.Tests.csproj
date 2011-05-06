@@ -71,6 +71,7 @@
     <Compile Include="Rendering\NestedOutputTester.cs" />
     <Compile Include="Rendering\NestedRenderActionTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
+    <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
     <Compile Include="SparkModel\SharedDirectoryProviderTester.cs" />

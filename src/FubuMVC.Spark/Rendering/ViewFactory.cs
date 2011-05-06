@@ -22,18 +22,14 @@ namespace FubuMVC.Spark.Rendering
 
         public ISparkView GetView()
         {
-            var entry = _viewEntrySource.GetViewEntry();
-            var view = entry.CreateInstance();
+            var view = _viewEntrySource.GetViewEntry().CreateInstance();
             applyModifications(view);
-            
             return view;
         }
 
         private void applyModifications(ISparkView view)
         {
-            _modifications
-                .Where(m => m.Applies(view))
-                .Each(m => m.Modify(view));
+            _modifications.Where(m => m.Applies(view)).Each(m => m.Modify(view));
         }
     }
 }
