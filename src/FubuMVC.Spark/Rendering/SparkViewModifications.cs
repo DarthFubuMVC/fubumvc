@@ -31,7 +31,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 	
-	// TODO: UT
     public class SiteResourceAttacher : ISparkViewModification
     {
         private readonly ISparkViewEngine _engine;

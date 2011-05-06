@@ -28,7 +28,7 @@ namespace FubuMVC.Spark.Rendering
 
         public T GetNew<T>()
         {
-            return ServiceLocator.GetInstance<T>();
+            return (T)ServiceLocator.GetInstance(typeof(T));
         }
 
         public IUrlRegistry Urls

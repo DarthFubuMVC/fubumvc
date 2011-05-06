@@ -1,7 +1,5 @@
 Tests needed in SparkModel:
  
- - Tests for Rendering.
-  
  - SparkActivator
 
 More coverage needed for:
