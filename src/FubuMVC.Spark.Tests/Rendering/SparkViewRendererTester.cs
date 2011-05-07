@@ -10,6 +10,7 @@ namespace FubuMVC.Spark.Tests.Rendering
     public class SparkViewRendererTester : InteractionContext<SparkViewRenderer>
     {
         private IRenderStrategy[] _strategies;
+
         protected override void beforeEach()
         {
             _strategies = Services.CreateMockArrayFor<IRenderStrategy>(3);
@@ -23,7 +24,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         }
 
         [Test]
-        public void when_render_the_first_applicable_strategy_is_invoked()
+        public void when_rendering_the_first_applicable_strategy_is_invoked()
         {
             ClassUnderTest.Render();
             _strategies.Each(x => x.VerifyAllExpectations());

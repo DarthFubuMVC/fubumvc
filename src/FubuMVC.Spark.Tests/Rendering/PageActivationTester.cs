@@ -13,6 +13,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         private IPageActivator _activator;
         private ISparkView _sparkView;
         private FubuSparkView _fubuSparkView;
+
         protected override void beforeEach()
         {
             _activator = MockFor<IPageActivator>();
@@ -21,8 +22,8 @@ namespace FubuMVC.Spark.Tests.Rendering
 
             _activator.Expect(x => x.Activate(_fubuSparkView));
             Services.Inject(_activator);
-
         }
+
         [Test]
         public void if_view_is_not_ifubupage_returns_false()
         {
@@ -36,11 +37,10 @@ namespace FubuMVC.Spark.Tests.Rendering
         }
 
         [Test]
-        public void the_activator_is_modify_the_view_using_the_injected_activator()
+        public void the_activator_modifies_view_using_injected_activator()
         {
             ClassUnderTest.Modify(_fubuSparkView);
             _fubuSparkView.VerifyAllExpectations();
         }
-
     }
 }

@@ -31,7 +31,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         }
 
         [Test]
-        public void invoke_calls_render_to_the_injected_render_action()
+        public void invokes_render_on_injected_render_action()
         {
             ClassUnderTest.Invoke();
             _renderAction.VerifyAllExpectations();

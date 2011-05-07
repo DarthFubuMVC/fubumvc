@@ -49,7 +49,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         }
 
         [Test]
-        public void get_new_does_uses_the_service_locator_always()
+        public void get_new_uses_the_service_locator_always()
         {
             var original = new ViewObject { Tag = "original" };
             var latest = new ViewObject { Tag = "latest" };
@@ -119,7 +119,9 @@ namespace FubuMVC.Spark.Tests.Rendering
         public string Name { get; set; }
     }
 
-    public class ViewObject {
-        public string Tag { get; set; }}
+    public class ViewObject 
+    {
+        public string Tag { get; set; }
+    }
 
 }

@@ -15,6 +15,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         private ISparkViewModification _modification3;
 
         private ISparkView _generatedView;
+
         protected override void beforeEach()
         {
             var source = MockFor<IViewEntrySource>();
@@ -52,6 +53,5 @@ namespace FubuMVC.Spark.Tests.Rendering
             _modification2.VerifyAllExpectations();
             _modification3.VerifyAllExpectations();
         }
-
     }
 }

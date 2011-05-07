@@ -11,6 +11,7 @@ namespace FubuMVC.Spark.Tests.Rendering
     {
         private IFubuSparkView _view;
         private NestedOutput _nestedOutput;
+
         protected override void beforeEach()
         {
             var viewOutput = MockFor<ViewOutput>();
@@ -31,14 +32,15 @@ namespace FubuMVC.Spark.Tests.Rendering
 
             ClassUnderTest.Render();
         }
+
         [Test]
-        public void renders_the_view_from_the_factory_using_the_injected_view_output()
+        public void renders_view_from_factory_using_injected_view_output()
         {
             _view.VerifyAllExpectations();
         }
 
         [Test]
-        public void sets_the_nested_output_writer_as_the_view_output()
+        public void sets_nested_output_writer_as_view_output()
         {
             _nestedOutput.IsActive();
             _nestedOutput.Writer.ShouldEqual(_view.Output);

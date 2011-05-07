@@ -17,6 +17,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         private ISparkViewEngine _engine;
         private IFubuRequest _request;
         private IResourcePathManager _resourcePathManager;
+
         protected override void beforeEach()
         {
             _sparkView = MockFor<ISparkView>();
@@ -29,6 +30,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             Services.Inject(_engine);
             Services.Inject(_request);
         }
+
         [Test]
         public void if_view_is_not_ifubusparkview_returns_false()
         {
@@ -47,7 +49,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         [TestCase("/Fubu", "/Fubu", "views/home/home.spark", "/Fubu/views/home/home.spark")]
         [TestCase("Fubu/", "/Fubu", "views/home/home.spark", "/Fubu/views/home/home.spark")]
         [TestCase("/Fubu/", "/Fubu", "views/home/home.spark", "/Fubu/views/home/home.spark")]
-        public void after_modifying_the_view_site_resource_is_resolved_correctly(string applicationPath, string root, string path, string expected)
+        public void after_modification_site_resource_resolves_correctly(string applicationPath, string root, string path, string expected)
         {
             _request
                 .Stub(x => x.Get<SiteResourceAttacher.AppPath>())

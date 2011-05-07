@@ -29,8 +29,9 @@ namespace FubuMVC.Spark.Tests.Rendering
             Services.Inject(viewFactory);
 
         }
+
         [Test]
-        public void renders_the_view_from_the_factory_using_the_nested_output_writer()
+        public void renders_view_from_factory_using_nested_output_writer()
         {
             ClassUnderTest.Render();
             _view.VerifyAllExpectations();

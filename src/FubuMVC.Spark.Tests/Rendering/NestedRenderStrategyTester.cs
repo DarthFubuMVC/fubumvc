@@ -11,6 +11,7 @@ namespace FubuMVC.Spark.Tests.Rendering
     {
         private NestedOutput _nestedOutput;
         private IRenderAction _renderAction;
+
         protected override void beforeEach()
         {
             _nestedOutput = new NestedOutput();
@@ -19,6 +20,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             Services.Inject(_nestedOutput);
             Services.Inject(_renderAction);
         }
+
         [Test]
         public void if_nested_output_is_active_applies_returns_true_otherwise_false()
         {
@@ -28,7 +30,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         }
 
         [Test]
-        public void invoke_calls_render_to_the_injected_render_action()
+        public void invokes_render_on_injected_render_action()
         {
             ClassUnderTest.Invoke();
             _renderAction.VerifyAllExpectations();

@@ -13,6 +13,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         private IDictionary<int, ISparkViewEntry> _cache;
         private SparkViewDescriptor _descriptor;
         private ISparkViewEngine _engine;
+
         protected override void beforeEach()
         {
             _cache = new Dictionary<int, ISparkViewEntry>();
