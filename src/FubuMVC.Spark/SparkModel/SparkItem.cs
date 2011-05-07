@@ -3,6 +3,24 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    public interface ISparkDescriptor
+    {
+        string Name { get; } 
+    }
+
+    public class ViewDescriptor
+    {
+        public string Name { get { return "View"; } }
+        public ITemplate Master { get; set; }
+        public Type ViewModel { get; set; }
+        public string Namespace { get; set; }
+    }
+
+    public class NulloDescriptor : ISparkDescriptor
+    {
+        public string Name { get { return "Undefined"; } }
+    }
+
     public interface ITemplate
     {
         string FilePath { get; }
@@ -13,10 +31,17 @@ namespace FubuMVC.Spark.SparkModel
 
     public class Template : ITemplate
     {
+        public Template()
+        {
+            Descriptor = new NulloDescriptor();
+        }
+
         public string FilePath { get; set; }
         public string RootPath { get; set; }
         public string Origin { get; set; }
         public string ViewPath { get; set; }
+
+        public ISparkDescriptor Descriptor { get; set; }
     }
 
     public class SparkItem : ITemplate
