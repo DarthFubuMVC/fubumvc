@@ -8,14 +8,14 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class SparkItemViewFolder : IViewFolder
     {
-        private readonly IEnumerable<SparkItem> _items;
+        private readonly IEnumerable<ITemplate> _templates;
         private readonly Cache<string, IList<string>> _listViews;
         private readonly Cache<string, bool> _hasView;
         private readonly Cache<string, FileSystemViewFile> _getViewSource;
 
-        public SparkItemViewFolder(IEnumerable<SparkItem> items)
+        public SparkItemViewFolder(IEnumerable<ITemplate> templates)
         {
-            _items = items;
+            _templates = templates;
             _listViews = new Cache<string, IList<string>>(listViews);
             _hasView = new Cache<string, bool>(hasView);
             _getViewSource = new Cache<string, FileSystemViewFile>(getViewSource);
@@ -38,7 +38,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private IList<string> listViews(string path)
         {
-            return _items
+            return _templates
 				.Where(x => x.ViewPath.DirectoryPath() == path)
 				.Select(x => x.ViewPath)
 				.ToList();
@@ -46,12 +46,12 @@ namespace FubuMVC.Spark.SparkModel
 
         private bool hasView(string path)
         {
-            return _items.Any(x => x.ViewPath == path);
+            return _templates.Any(x => x.ViewPath == path);
         }
 
         private FileSystemViewFile getViewSource(string path)
         {
-            return _items
+            return _templates
 				.Where(x => x.ViewPath == path)
 				.Select(x => new FileSystemViewFile(x.FilePath))
 				.First();

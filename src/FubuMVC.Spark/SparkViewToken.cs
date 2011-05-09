@@ -9,16 +9,16 @@ namespace FubuMVC.Spark
 {
     public class SparkViewToken : IViewToken
     {
-        private readonly SparkItem _item;
+        private readonly ViewDescriptor _descriptor;
 
-        public SparkViewToken(SparkItem item)
+        public SparkViewToken(ViewDescriptor viewDescriptor)
         {
-            _item = item;
+            _descriptor = viewDescriptor;
         }
 
         public BehaviorNode ToBehavioralNode()
         {
-            return new SparkViewOutput(_item);
+            return new SparkViewOutput(_descriptor);
         }
 
         public Type ViewType
@@ -28,21 +28,21 @@ namespace FubuMVC.Spark
 
         public Type ViewModelType
         {
-            get { return _item.ViewModelType; }
+            get { return _descriptor.ViewModel; }
         }
 
         public string Name
         {
-            get { return _item.Name(); }
+            get { return _descriptor.Template.Name(); }
         }
 
         public string Folder
         {
-            get { return _item.Namespace; }
+            get { return _descriptor.Namespace; }
         }
         public override string ToString()
         {
-            return _item.RelativePath();
+            return _descriptor.Template.RelativePath();
         }
     }
 }

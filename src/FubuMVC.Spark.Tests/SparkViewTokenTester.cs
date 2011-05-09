@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using FubuCore;
 using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -12,17 +13,18 @@ namespace FubuMVC.Spark.Tests
     {
         private SparkViewToken _token;
         private SparkItem _item;
-
+        private ViewDescriptor _descriptor;
         [SetUp]
         public void SetUp()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _item = new SparkItem(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin)
-                        {
-                            Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"}),
-                            ViewModelType = typeof (ProductModel)
-                        };
-            _token = new SparkViewToken(_item);
+            _item = new SparkItem(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin);
+            _descriptor = new ViewDescriptor(_item)
+                                   {
+                                       Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"}),
+                                       ViewModel = typeof (ProductModel)
+                                   };
+            _token = new SparkViewToken(_item.Descriptor.As<ViewDescriptor>());
         }
 
         [Test]
@@ -32,15 +34,15 @@ namespace FubuMVC.Spark.Tests
         }
 
         [Test]
-        public void folder_is_item_namespace()
+        public void folder_is_descriptor_namespace()
         {
-            _token.Folder.ShouldEqual(_item.Namespace);
+            _token.Folder.ShouldEqual(_descriptor.Namespace);
         }
 
         [Test]
-        public void view_model_type_is_item_view_model_type()
+        public void view_model_type_is_descriptor_view_model()
         {
-            _token.ViewModelType.ShouldEqual(_item.ViewModelType);
+            _token.ViewModelType.ShouldEqual(_descriptor.ViewModel);
         }
 
         [Test]

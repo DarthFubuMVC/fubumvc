@@ -6,35 +6,35 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISparkTracer
     {
-        void Trace(SparkItem item, string format, params object[] args);
-        void Trace(SparkItem item, string text);
+        void Trace(ITemplate template, string format, params object[] args);
+        void Trace(ITemplate template, string text);
     }
 
     public class NulloTracer : ISparkTracer
     {
-        public void Trace(SparkItem item, string format, params object[] args) { }
-        public void Trace(SparkItem item, string text) { }
+        public void Trace(ITemplate template, string format, params object[] args) { }
+        public void Trace(ITemplate template, string text) { }
     }
 
     public class SparkTracer : ISparkTracer
     {
-        private readonly Action<SparkItem, string, object[]> _format;
-        private readonly Action<SparkItem ,string> _trace;
+        private readonly Action<ITemplate, string, object[]> _format;
+        private readonly Action<ITemplate, string> _trace;
 
-        public SparkTracer(Action<SparkItem, string, object[]> format, Action<SparkItem, string> trace)
+        public SparkTracer(Action<ITemplate, string, object[]> format, Action<ITemplate, string> trace)
         {
             _format = format;
             _trace = trace;
         }
 
-        public void Trace(SparkItem item, string format, params object [] args)
+        public void Trace(ITemplate template, string format, params object[] args)
         {
-            _format(item,format, args);
+            _format(template,format, args);
         }
 
-        public void Trace(SparkItem item, string text)
+        public void Trace(ITemplate template, string text)
         {
-            _trace(item, text);
+            _trace(template, text);
         }
 
         public static SparkTracer Default()
@@ -42,19 +42,19 @@ namespace FubuMVC.Spark.SparkModel
             return new SparkTracer(formatTrace, trace);
         }
 
-        private static PackageLog getPackageLogger(SparkItem item)
+        private static PackageLog getPackageLogger(ITemplate template)
         {
-            return PackageRegistry.Diagnostics.LogFor(item);
+            return PackageRegistry.Diagnostics.LogFor(template);
         }
 
-        private static void formatTrace(SparkItem item, string format, object[] args)
+        private static void formatTrace(ITemplate template, string format, object[] args)
         {
-            getPackageLogger(item).Trace(format, args);
+            getPackageLogger(template).Trace(format, args);
         }
 
-        private static void trace(SparkItem item, string text)
+        private static void trace(ITemplate template, string text)
         {
-            getPackageLogger(item).Trace(text);
+            getPackageLogger(template).Trace(text);
         }
     }
 }

@@ -13,10 +13,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     {
         private BindContext _context;
         private SparkItem _sparkItem;
-
+        private ViewDescriptor _descriptor;
         protected override void beforeEach()
         {
             _sparkItem = new SparkItem("", "", "");
+            _descriptor = new ViewDescriptor(_sparkItem);
             _context = new BindContext
             {
                 ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Baz",
@@ -30,14 +31,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             _context.ViewModelType = typeof(Bar).FullName;
             ClassUnderTest.Bind(_sparkItem, _context);
-            _sparkItem.ViewModelType.ShouldBeNull();
+            _descriptor.ViewModel.ShouldBeNull();
         }
 
         [Test]
         public void if_view_model_type_exists_it_is_assigned_on_item()
         {
             ClassUnderTest.Bind(_sparkItem, _context);
-            _sparkItem.ViewModelType.ShouldEqual(typeof(Baz));
+            _descriptor.ViewModel.ShouldEqual(typeof(Baz));
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             _context.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_sparkItem, _context);
-            _sparkItem.ViewModelType.ShouldBeNull();
+            _descriptor.ViewModel.ShouldBeNull();
         }
 
         [Test]

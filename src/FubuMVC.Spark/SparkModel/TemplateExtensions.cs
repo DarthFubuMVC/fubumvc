@@ -9,39 +9,39 @@ namespace FubuMVC.Spark.SparkModel
 {
     public static class TemplateExtensions
     {
-        public static string RelativePath(this ITemplate item)
+        public static string RelativePath(this ITemplate template)
         {
-            return item.FilePath.PathRelativeTo(item.RootPath);
+            return template.FilePath.PathRelativeTo(template.RootPath);
         }
 
-        public static string DirectoryPath(this ITemplate item)
+        public static string DirectoryPath(this ITemplate template)
         {
-            return Path.GetDirectoryName(item.FilePath);
+            return Path.GetDirectoryName(template.FilePath);
         }
 
-        public static string RelativeDirectoryPath(this ITemplate item)
+        public static string RelativeDirectoryPath(this ITemplate template)
         {
-            return item.DirectoryPath().PathRelativeTo(item.RootPath);
+            return template.DirectoryPath().PathRelativeTo(template.RootPath);
         }
 
-        public static string Name(this ITemplate item)
+        public static string Name(this ITemplate template)
         {
-            return Path.GetFileNameWithoutExtension(item.FilePath);
+            return Path.GetFileNameWithoutExtension(template.FilePath);
         }
 
-        public static bool IsPartial(this ITemplate item)
+        public static bool IsPartial(this ITemplate template)
 		{
-            return Path.GetFileName(item.FilePath).StartsWith("_") && item.IsSparkView();
+            return Path.GetFileName(template.FilePath).StartsWith("_") && template.IsSparkView();
         }
 
-        public static bool IsSparkView(this ITemplate item)
+        public static bool IsSparkView(this ITemplate template)
 		{
-            return Path.GetExtension(item.FilePath).Equals(Constants.DotSpark);
+            return Path.GetExtension(template.FilePath).Equals(Constants.DotSpark);
         }
 
-        public static bool IsXml(this ITemplate item)
+        public static bool IsXml(this ITemplate template)
 		{
-            return Path.GetExtension(item.FilePath).Equals(".xml");
+            return Path.GetExtension(template.FilePath).Equals(".xml");
         }
     }
 
@@ -49,26 +49,26 @@ namespace FubuMVC.Spark.SparkModel
 
     public static class SparkItemEnumerableExtensions
     {
-        public static IEnumerable<SparkItem> ByName(this IEnumerable<SparkItem> items, string name)
+        public static IEnumerable<ITemplate> ByName(this IEnumerable<ITemplate> templates, string name)
         {
-            return items.Where(x => x.Name() == name);
+            return templates.Where(x => x.Name() == name);
         }
 
-        public static IEnumerable<SparkItem> ByOrigin(this IEnumerable<SparkItem> items, string origin)
+        public static IEnumerable<ITemplate> ByOrigin(this IEnumerable<ITemplate> templates, string origin)
         {
-            return items.Where(x => x.Origin == origin);
+            return templates.Where(x => x.Origin == origin);
         }
-        public static SparkItem FirstByName(this IEnumerable<SparkItem> items, string name)
+        public static ITemplate FirstByName(this IEnumerable<ITemplate> templates, string name)
         {
-            return items.ByName(name).FirstOrDefault();
+            return templates.ByName(name).FirstOrDefault();
         }
 		
 		// TODO: UT
-        public static IEnumerable<SparkItem> InDirectories(this IEnumerable<SparkItem> items, IEnumerable<string> directories)
+        public static IEnumerable<ITemplate> InDirectories(this IEnumerable<ITemplate> templates, IEnumerable<string> directories)
         {
-            var predicate = new CompositePredicate<SparkItem>();
+            var predicate = new CompositePredicate<ITemplate>();
             predicate = directories.Aggregate(predicate, (current, local) => current + (x => x.DirectoryPath() == local));
-            return items.Where(predicate.MatchesAny);
+            return templates.Where(predicate.MatchesAny);
         }
 
     }

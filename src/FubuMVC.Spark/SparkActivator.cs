@@ -18,12 +18,12 @@ namespace FubuMVC.Spark
 {
 	public class SparkActivator : IActivator
 	{
-		private readonly ISparkItems _sparkItems;
+		private readonly ISparkTemplates _sparkTemplates;
 		private readonly ISparkViewEngine _engine;
 
-		public SparkActivator (ISparkItems sparkItems, ISparkViewEngine engine)
+		public SparkActivator (ISparkTemplates sparkTemplates, ISparkViewEngine engine)
 		{
-			_sparkItems = sparkItems;
+			_sparkTemplates = sparkTemplates;
 			_engine = engine;
 		}
 
@@ -31,9 +31,9 @@ namespace FubuMVC.Spark
 		{
 			sparkSettings ();
 
-			_engine.ViewFolder = new SparkItemViewFolder (_sparkItems);
+			_engine.ViewFolder = new SparkItemViewFolder (_sparkTemplates);
 			_engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
-			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_sparkItems);
+			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_sparkTemplates);
 		}
 
 		private void sparkSettings ()
@@ -52,18 +52,18 @@ namespace FubuMVC.Spark
 	// Temporary : Going to be removed soon.
 	public class FubuBindingProvider : BindingProvider
 	{	
-		private readonly ISparkItems _sparkItems;
+		private readonly ISparkTemplates _sparkTemplates;
 
-		public FubuBindingProvider (ISparkItems sparkItems)
+		public FubuBindingProvider (ISparkTemplates sparkTemplates)
 		{
-			_sparkItems = sparkItems;
+			_sparkTemplates = sparkTemplates;
 		}
 
 		public override IEnumerable<Binding> GetBindings (IViewFolder viewFolder)
 		{					
 			var bindings = new List<Binding> ();
 			
-			foreach (var binding in _sparkItems.ByName("bindings").Where(i => i.IsXml())) {
+			foreach (var binding in _sparkTemplates.ByName("bindings").Where(i => i.IsXml())) {
 				var file = viewFolder.GetViewSource (binding.ViewPath);
 				using (var stream = file.OpenViewStream())
 				using (var reader = new StreamReader(stream)) {

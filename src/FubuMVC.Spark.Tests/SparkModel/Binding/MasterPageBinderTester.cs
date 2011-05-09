@@ -35,10 +35,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 
         protected override void beforeEach()
         {           
-            Services.Inject<ISharedItemLocator>(new SharedItemLocator());
+            Services.Inject<ISharedTemplateLocator>(new SharedTemplateLocator());
             _context = new BindContext 
 			{ 
-				AvailableItems = _sparkItems = createItems(), 
+				AvailableTemplates = _sparkItems = createItems(), 
 				Master = "application", 
 				Tracer = MockFor<ISparkTracer>() 
 			};
@@ -71,7 +71,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         private SparkItem newSpark(string root, string origin, params string[] relativePaths)
         {
             var paths = new[]{root}.Union(relativePaths).ToArray();
-            return new SparkItem(FileSystem.Combine(paths), root, origin);
+            var sparkItem = new SparkItem(FileSystem.Combine(paths), root, origin);
+            new ViewDescriptor(sparkItem);
+            return sparkItem;
         }
 
         [Test]
@@ -79,7 +81,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var sparkItem = _sparkItems.First();
             ClassUnderTest.Bind(sparkItem, _context);
-            _sparkItems.ElementAt(2).ShouldEqual(sparkItem.Master);
+            _sparkItems.ElementAt(2).ShouldEqual(sparkItem.Descriptor.As<ViewDescriptor>().Master);
         }
 
         [Test]
@@ -87,7 +89,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var sparkItem = _sparkItems.ElementAt(3);
             ClassUnderTest.Bind(sparkItem, _context);
-            _sparkItems.ElementAt(5).ShouldEqual(sparkItem.Master);
+            _sparkItems.ElementAt(5).ShouldEqual(sparkItem.Descriptor.As<ViewDescriptor>().Master);
         }
 
         [Test]
@@ -95,7 +97,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var sparkItem = _sparkItems.ElementAt(6);
             ClassUnderTest.Bind(sparkItem, _context);
-            _sparkItems.Last().ShouldEqual(sparkItem.Master);
+            _sparkItems.Last().ShouldEqual(sparkItem.Descriptor.As<ViewDescriptor>().Master);
         }
 
         [Test]
@@ -103,7 +105,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var sparkItem = _sparkItems.ElementAt(8);
             ClassUnderTest.Bind(sparkItem, _context);
-            _sparkItems.ElementAt(9).ShouldEqual(sparkItem.Master);
+            _sparkItems.ElementAt(9).ShouldEqual(sparkItem.Descriptor.As<ViewDescriptor>().Master);
         }
 
         [Test]
@@ -111,7 +113,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var sparkItem = _sparkItems.ElementAt(10);
             ClassUnderTest.Bind(sparkItem, _context);
-            _sparkItems.Last().ShouldEqual(sparkItem.Master);
+            _sparkItems.Last().ShouldEqual(sparkItem.Descriptor.As<ViewDescriptor>().Master);
         }
 
         [Test]
@@ -119,7 +121,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
 			var item = _sparkItems.Last();
             ClassUnderTest.Bind(item, _context);
-			item.Master.ShouldBeNull();
+            item.Descriptor.As<ViewDescriptor>().Master.ShouldBeNull();
         }
 
         [Test]

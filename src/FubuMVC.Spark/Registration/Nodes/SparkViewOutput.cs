@@ -10,16 +10,16 @@ namespace FubuMVC.Spark.Registration.Nodes
     public class SparkViewOutput : OutputNode<RenderSparkBehavior>
     {
         private static readonly IDictionary<int, ISparkViewEntry> _cache;
-        private readonly SparkItem _item;
+        private readonly ViewDescriptor _descriptor;
 
         static SparkViewOutput()
         {
             _cache = new Dictionary<int, ISparkViewEntry>();
         }
 
-        public SparkViewOutput(SparkItem item)
+        public SparkViewOutput(ViewDescriptor descriptor)
         {
-            _item = item;
+            _descriptor = descriptor;
         }
 
         protected override void configureObject(ObjectDef def)
@@ -34,12 +34,12 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
         {
-            var descriptor = new SparkViewDescriptor().AddTemplate(_item.ViewPath);
-            if(useMaster && _item.Master != null)
+            var sparkDescriptor = new SparkViewDescriptor().AddTemplate(_descriptor.Template.ViewPath);
+            if (useMaster && _descriptor.Master != null)
             {
-                descriptor.AddTemplate(_item.Master.ViewPath);
+                sparkDescriptor.AddTemplate(_descriptor.Master.ViewPath);
             }
-            return descriptor;
+            return sparkDescriptor;
         }
 
         private static void configureStrategy<TStrategy, TViewRenderer>(ListDependency strategies, SparkViewDescriptor descriptor)
@@ -60,7 +60,7 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         public override string Description
         {
-            get { return string.Format("Spark [{0}]", _item.RelativePath()); }
+            get { return string.Format("Spark [{0}]", _descriptor.Template.RelativePath()); }
         }
     }
 }

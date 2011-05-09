@@ -19,9 +19,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly SparkItemViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
-        private readonly IEnumerable<SparkItem> _pak1Items;
-        private readonly IEnumerable<SparkItem> _pak2Items;
-        private readonly IEnumerable<SparkItem> _appItems;
+        private readonly IEnumerable<ITemplate> _pak1Items;
+        private readonly IEnumerable<ITemplate> _pak2Items;
+        private readonly IEnumerable<ITemplate> _appItems;
 
         public ExtendedTester()
         {
@@ -51,9 +51,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _viewFolder = new SparkItemViewFolder(allItems);
             _engine = new SparkViewEngine { ViewFolder = _viewFolder };
 
-            _pak1Items = new List<SparkItem>(allItems.ByOrigin(Package1));
-            _pak2Items = new List<SparkItem>(allItems.ByOrigin(Package2));
-            _appItems = new List<SparkItem>(allItems.ByOrigin(FubuSparkConstants.HostOrigin));
+            _pak1Items = new List<ITemplate>(allItems.ByOrigin(Package1));
+            _pak2Items = new List<ITemplate>(allItems.ByOrigin(Package2));
+            _appItems = new List<ITemplate>(allItems.ByOrigin(FubuSparkConstants.HostOrigin));
         }
 
         [Test]
@@ -175,9 +175,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             renderSparkItem(cuatroView, master).ShouldEqual("Lenovo SerieX");
         }
 
-        private string getViewSource(SparkItem item)
+        private string getViewSource(ITemplate template)
         {
-            var content = _viewFolder.GetViewSource(item.ViewPath);
+            var content = _viewFolder.GetViewSource(template.ViewPath);
             using (var stream = content.OpenViewStream())
             {
                 using (var reader = new StreamReader(stream))
@@ -187,11 +187,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             }
         }
 
-        private string renderSparkItem(SparkItem item, params SparkItem[] templates)
+        private string renderSparkItem(ITemplate template, params ITemplate[] templates)
         {
             templates = templates ?? Enumerable.Empty<SparkItem>().ToArray();
             var descriptor = new SparkViewDescriptor();
-            descriptor.AddTemplate(item.ViewPath);
+            descriptor.AddTemplate(template.ViewPath);
             templates.Each(x => descriptor.AddTemplate(x.ViewPath));
 
             var instance = _engine.CreateInstance(descriptor);

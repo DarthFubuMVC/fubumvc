@@ -4,35 +4,39 @@ using FubuCore.Util;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ISparkItemPolicy
+    public interface ISparkTemplatePolicy
     {
-        bool Matches(SparkItem item);
-        void Apply(SparkItem item);
+        bool Matches(ITemplate template);
+        void Apply(ITemplate template);
     }
 
-    public class NamespacePolicy : ISparkItemPolicy
+    public class NamespacePolicy : ISparkTemplatePolicy
     {
-        public bool Matches(SparkItem item)
+        public bool Matches(ITemplate template)
         {
-            return item.HasViewModel() && item.Namespace.IsEmpty();
+            var descriptor = template.Descriptor as ViewDescriptor;
+            if (descriptor == null)
+            {
+                return false;
+            }
+            return descriptor.HasViewModel() && descriptor.Namespace.IsEmpty();
         }
 
-        public void Apply(SparkItem item)
+        public void Apply(ITemplate template)
         {
-            var relativePath = item.RelativePath();
+            var relativePath = template.RelativePath();
             var relativeNamespace = Path.GetDirectoryName(relativePath);
-
-            var nspace = item.ViewModelType.Assembly.GetName().Name;
+            var descriptor = template.Descriptor.As<ViewDescriptor>();
+            var nspace = descriptor.ViewModel.Assembly.GetName().Name;
             if (relativeNamespace.IsNotEmpty())
             {
                 nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
             }
-
-            item.Namespace = nspace;
+            descriptor.Namespace = nspace;
         }
     }
 
-    public class ViewPathPolicy : ISparkItemPolicy
+    public class ViewPathPolicy : ISparkTemplatePolicy
     {
         private readonly Cache<string, string> _cache;
         public ViewPathPolicy()
@@ -40,14 +44,14 @@ namespace FubuMVC.Spark.SparkModel
             _cache = new Cache<string, string>(getPrefix);
         }
 
-        public bool Matches(SparkItem item)
+        public bool Matches(ITemplate template)
         {
-            return item.ViewPath.IsEmpty();
+            return template.ViewPath.IsEmpty();
         }
 
-        public void Apply(SparkItem item)
+        public void Apply(ITemplate template)
         {
-            item.ViewPath = FileSystem.Combine(_cache[item.Origin], item.RelativePath());
+            template.ViewPath = FileSystem.Combine(_cache[template.Origin], template.RelativePath());
         }
 
         private static string getPrefix(string origin)

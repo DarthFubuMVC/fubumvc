@@ -12,7 +12,7 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface IChunkLoader
     {
-        IEnumerable<Chunk> Load(SparkItem item);
+        IEnumerable<Chunk> Load(ITemplate template);
     }
 
     public class ChunkLoader : IChunkLoader
@@ -31,9 +31,9 @@ namespace FubuMVC.Spark.SparkModel
             _loaders = new Cache<string, ViewLoader>(defaultLoaderByRoot);
         }
 
-        public IEnumerable<Chunk> Load(SparkItem item)
+        public IEnumerable<Chunk> Load(ITemplate template)
         {
-            return _loaders[item.RootPath].Load(item.RelativePath()).ToList();
+            return _loaders[template.RootPath].Load(template.RelativePath()).ToList();
         }
 
         private ViewLoader defaultLoaderByRoot(string root)

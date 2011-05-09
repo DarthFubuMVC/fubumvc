@@ -13,20 +13,20 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class SparkItemComposerTester : InteractionContext<SparkItemComposer>
     {
-        private FakeSparkItemPolicy _policy1;
-        private FakeSparkItemPolicy _policy2;
+        private FakeSparkTemplatePolicy _policy1;
+        private FakeSparkTemplatePolicy _policy2;
 
-        private FakeSparkItemBinder _binder1;
-        private FakeSparkItemBinder _binder2;
+        private FakeSparkTemplateBinder _binder1;
+        private FakeSparkTemplateBinder _binder2;
 
-        private SparkItem _item1;
-        private SparkItem _item2;
+        private ITemplate _item1;
+        private ITemplate _item2;
 
-        private IList<SparkItem> _policy1Items;
-        private IList<SparkItem> _policy2Items;
+        private IList<ITemplate> _policy1Items;
+        private IList<ITemplate> _policy2Items;
 
-        private IList<SparkItem> _binder1Items;
-        private IList<SparkItem> _binder2Items;
+        private IList<ITemplate> _binder1Items;
+        private IList<ITemplate> _binder2Items;
 
         private readonly TypePool _typePool;
 
@@ -51,17 +51,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             registerBindersAndPolicies();
 
-            OtherSparkItemBinder.Reset();
-            OtherSparkItemPolicy.Reset();
+            OtherSparkTemplateBinder.Reset();
+            OtherSparkTemplatePolicy.Reset();
         }
 
         private void configurePolicies()
         {
-            _policy1Items = new List<SparkItem>();
-            _policy2Items = new List<SparkItem>();
+            _policy1Items = new List<ITemplate>();
+            _policy2Items = new List<ITemplate>();
 
-            _policy1 = new FakeSparkItemPolicy();
-            _policy2 = new FakeSparkItemPolicy();
+            _policy1 = new FakeSparkTemplatePolicy();
+            _policy2 = new FakeSparkTemplatePolicy();
 
             _policy1.Filter += x => x == _item1;
             _policy2.Filter += x => x == _item2;
@@ -72,11 +72,11 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void configureBinders()
         {
-            _binder1Items = new List<SparkItem>();
-            _binder2Items = new List<SparkItem>();
+            _binder1Items = new List<ITemplate>();
+            _binder2Items = new List<ITemplate>();
 
-            _binder1 = new FakeSparkItemBinder();
-            _binder2 = new FakeSparkItemBinder();
+            _binder1 = new FakeSparkTemplateBinder();
+            _binder2 = new FakeSparkTemplateBinder();
 
             _binder1.Filter += x => x == _item1;
             _binder2.Filter += x => x == _item2;
@@ -115,17 +115,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var invoked = false;
 
-            var binder = new FakeSparkItemBinder();
+            var binder = new FakeSparkTemplateBinder();
             binder.Action += x => invoked = true;
 
             ClassUnderTest
                 .AddBinder(binder)
-                .AddBinder<OtherSparkItemBinder>();
+                .AddBinder<OtherSparkTemplateBinder>();
 
             ClassUnderTest.ComposeViews(_typePool);
 
             invoked.ShouldBeTrue();
-            OtherSparkItemBinder.Invoked.ShouldBeTrue();
+            OtherSparkTemplateBinder.Invoked.ShouldBeTrue();
         }
 
         [Test]
@@ -134,47 +134,47 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var invoked1 = false;
             var invoked2 = false;
 
-            var policy = new FakeSparkItemPolicy();
+            var policy = new FakeSparkTemplatePolicy();
             policy.Action += x => invoked1 = true;
 
             ClassUnderTest.Apply(policy);
-            ClassUnderTest.Apply<FakeSparkItemPolicy>(p => p.Action += x => invoked2 = true);
-            ClassUnderTest.Apply<OtherSparkItemPolicy>();
+            ClassUnderTest.Apply<FakeSparkTemplatePolicy>(p => p.Action += x => invoked2 = true);
+            ClassUnderTest.Apply<OtherSparkTemplatePolicy>();
 
             ClassUnderTest.ComposeViews(_typePool);
 
             invoked1.ShouldBeTrue();
             invoked2.ShouldBeTrue();
-            OtherSparkItemPolicy.Invoked.ShouldBeTrue();
+            OtherSparkTemplatePolicy.Invoked.ShouldBeTrue();
         }
     }
 
-    public class FakeSparkItemBinder : ISparkItemBinder
+    public class FakeSparkTemplateBinder : ISparkTemplateBinder
     {
-        public FakeSparkItemBinder()
+        public FakeSparkTemplateBinder()
         {
-            Filter = new CompositePredicate<SparkItem>();
-            Action = new CompositeAction<SparkItem>();
+            Filter = new CompositePredicate<ITemplate>();
+            Action = new CompositeAction<ITemplate>();
         }
 
-        public CompositePredicate<SparkItem> Filter { get; set; }
-        public CompositeAction<SparkItem> Action { get; set; }
+        public CompositePredicate<ITemplate> Filter { get; set; }
+        public CompositeAction<ITemplate> Action { get; set; }
 
 
-        public bool CanBind(SparkItem item, BindContext context)
+        public bool CanBind(ITemplate template, BindContext context)
         {
-            return Filter.MatchesAny(item);
+            return Filter.MatchesAny(template);
         }
 
-        public void Bind(SparkItem item, BindContext context)
+        public void Bind(ITemplate template, BindContext context)
         {
-            Action.Do(item);
+            Action.Do(template);
         }
     }
 
-    public class OtherSparkItemBinder : FakeSparkItemBinder
+    public class OtherSparkTemplateBinder : FakeSparkTemplateBinder
     {
-        public OtherSparkItemBinder()
+        public OtherSparkTemplateBinder()
         {
             Action += x => Invoked = true;
         }
@@ -185,30 +185,30 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public static bool Invoked { get; private set; }
     }
 
-    public class FakeSparkItemPolicy : ISparkItemPolicy
+    public class FakeSparkTemplatePolicy : ISparkTemplatePolicy
     {
-        public FakeSparkItemPolicy()
+        public FakeSparkTemplatePolicy()
         {
-            Filter = new CompositePredicate<SparkItem>();
-            Action = new CompositeAction<SparkItem>();
+            Filter = new CompositePredicate<ITemplate>();
+            Action = new CompositeAction<ITemplate>();
         }
 
-        public CompositePredicate<SparkItem> Filter { get; set; }
-        public CompositeAction<SparkItem> Action { get; set; }
-        public bool Matches(SparkItem item)
+        public CompositePredicate<ITemplate> Filter { get; set; }
+        public CompositeAction<ITemplate> Action { get; set; }
+        public bool Matches(ITemplate template)
         {
-            return Filter.MatchesAny(item);
+            return Filter.MatchesAny(template);
         }
 
-        public void Apply(SparkItem item)
+        public void Apply(ITemplate template)
         {
-            Action.Do(item);
+            Action.Do(template);
         }
     }
 
-    public class OtherSparkItemPolicy : FakeSparkItemPolicy
+    public class OtherSparkTemplatePolicy : FakeSparkTemplatePolicy
     {
-        public OtherSparkItemPolicy()
+        public OtherSparkTemplatePolicy()
         {
             Action += x => Invoked = true;
         }

@@ -1,25 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ISparkDescriptor
-    {
-        string Name { get; } 
-    }
-
-    public class ViewDescriptor
-    {
-        public string Name { get { return "View"; } }
-        public ITemplate Master { get; set; }
-        public Type ViewModel { get; set; }
-        public string Namespace { get; set; }
-    }
-
-    public class NulloDescriptor : ISparkDescriptor
-    {
-        public string Name { get { return "Undefined"; } }
-    }
 
     public interface ITemplate
     {
@@ -27,21 +9,7 @@ namespace FubuMVC.Spark.SparkModel
         string RootPath { get; }
         string Origin { get; }
         string ViewPath { get; set; }
-    }
-
-    public class Template : ITemplate
-    {
-        public Template()
-        {
-            Descriptor = new NulloDescriptor();
-        }
-
-        public string FilePath { get; set; }
-        public string RootPath { get; set; }
-        public string Origin { get; set; }
-        public string ViewPath { get; set; }
-
-        public ISparkDescriptor Descriptor { get; set; }
+        ISparkDescriptor Descriptor { get; set; }
     }
 
     public class SparkItem : ITemplate
@@ -58,14 +26,7 @@ namespace FubuMVC.Spark.SparkModel
         public string Origin { get; private set; }
         public string ViewPath { get; set; }
 
-        public SparkItem Master { get; set; }
-        public Type ViewModelType { get; set; }        
-        public string Namespace { get; set; }
-
-	    public bool HasViewModel()
-	    {
-	        return ViewModelType != null;
-	    }
+        public ISparkDescriptor Descriptor { get; set; }
 
 	    public override string ToString()
         {
@@ -75,11 +36,11 @@ namespace FubuMVC.Spark.SparkModel
 
     // TODO : This is a bit silly. Rework pending. 
 
-    public class SparkItems : List<SparkItem>, ISparkItems
+    public class SparkTemplates : List<ITemplate>, ISparkTemplates
     {
-        public SparkItems() {}
-        public SparkItems(IEnumerable<SparkItem> items) : base(items) {}
+        public SparkTemplates() {}
+        public SparkTemplates(IEnumerable<ITemplate> templates) : base(templates) { }
     }
 
-    public interface ISparkItems : IEnumerable<SparkItem> {}
+    public interface ISparkTemplates : IEnumerable<ITemplate> { }
 }

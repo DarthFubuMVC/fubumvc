@@ -11,15 +11,15 @@ namespace FubuMVC.Spark
     // This approach uses default conventions.
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
-        private readonly SparkItems _items;
+        private readonly SparkTemplates _templates;
         private SparkItemComposer _itemComposer;
         private TemplateFinder _templateFinder;
         
         public SparkExtension()
         {
-			_items = new SparkItems();
+			_templates = new SparkTemplates();
 			_templateFinder = new TemplateFinder();
-            _itemComposer = new SparkItemComposer(_items);
+            _itemComposer = new SparkItemComposer(_templates);
 			
 			defaults();
         }
@@ -35,7 +35,7 @@ namespace FubuMVC.Spark
         private void configureServices(IServiceRegistry services)
         {
             // TODO : Reconsider this
-            services.SetServiceIfNone<ISparkItems>(_items);
+            services.SetServiceIfNone<ISparkTemplates>(_templates);
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
             services.AddService<IActivator, SparkActivator>();
             services.AddService<ISparkViewModification, PageActivation>();
@@ -44,9 +44,9 @@ namespace FubuMVC.Spark
 
         private void locateTemplates()
         {
-            _items.Clear();
-            _items.AddRange(_templateFinder.FindInHost());
-            _items.AddRange(_templateFinder.FindInPackages());
+            _templates.Clear();
+            _templates.AddRange(_templateFinder.FindInHost());
+            _templates.AddRange(_templateFinder.FindInPackages());
         }
 		
 		private void defaults()

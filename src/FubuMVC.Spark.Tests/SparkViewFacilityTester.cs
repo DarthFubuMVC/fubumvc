@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -19,14 +21,16 @@ namespace FubuMVC.Spark.Tests
             var root = AppDomain.CurrentDomain.BaseDirectory;
             _items = new List<SparkItem>
             {
-                new SparkItem(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin) {ViewModelType = typeof (ModelA)},
+                new SparkItem(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin),
                 new SparkItem(Path.Combine(root, "Views", "Home", "_partial1.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "ModelBView.spark"), root, FubuSparkConstants.HostOrigin) {ViewModelType = typeof (ModelB)},
+                new SparkItem(Path.Combine(root, "Views", "Home", "ModelBView.spark"), root, FubuSparkConstants.HostOrigin),
                 new SparkItem(Path.Combine(root, "Views", "Home", "_partial2.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "ModelCView.spark"), root, FubuSparkConstants.HostOrigin) {ViewModelType = typeof (ModelC)},
+                new SparkItem(Path.Combine(root, "Views", "Home", "ModelCView.spark"), root, FubuSparkConstants.HostOrigin),
                 new SparkItem(Path.Combine(root, "Views", "Home", "_partial3.spark"), root, FubuSparkConstants.HostOrigin)
             };
-
+            new ViewDescriptor(_items[0]) { ViewModel = typeof(ModelA) };
+            new ViewDescriptor(_items[2]) { ViewModel = typeof(ModelB) };
+            new ViewDescriptor(_items[4]) { ViewModel = typeof(ModelC) };
             MockFor<ISparkItemComposer>().Expect(c => c.ComposeViews(Arg<TypePool>.Is.Anything)).Return(_items);
         }
 

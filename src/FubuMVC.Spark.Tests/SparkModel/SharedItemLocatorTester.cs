@@ -9,14 +9,14 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class SharedItemLocatorTester : InteractionContext<SharedItemLocator>
+    public class SharedItemLocatorTester : InteractionContext<SharedTemplateLocator>
     {
-        private SparkItem _applicationItem;
-        private SparkItem _messageItem;
-        private SparkItem _lowerCasedCompanyItem;
-        private SparkItem _upperCasedCompanyItem;
+        private ITemplate _applicationItem;
+        private ITemplate _messageItem;
+        private ITemplate _lowerCasedCompanyItem;
+        private ITemplate _upperCasedCompanyItem;
 
-        private SparkItem _headerItem;
+        private ITemplate _headerItem;
 
         protected override void beforeEach()
         {
@@ -42,11 +42,11 @@ namespace FubuMVC.Spark.Tests.SparkModel
             sharedDirectoryProvider.Stub(x => x.GetDirectories(fromItem, items)).Return(sharedDirectories);
             Services.Inject(sharedDirectoryProvider);
 
-            _applicationItem = ClassUnderTest.LocateItem("application", fromItem, items);
-            _messageItem = ClassUnderTest.LocateItem("message", fromItem, items);
-            _lowerCasedCompanyItem = ClassUnderTest.LocateItem("company", fromItem, items);
-            _upperCasedCompanyItem = ClassUnderTest.LocateItem("Company", fromItem, items);
-            _headerItem = ClassUnderTest.LocateItem("header", fromItem, items);
+            _applicationItem = ClassUnderTest.LocateTemplate("application", fromItem, items);
+            _messageItem = ClassUnderTest.LocateTemplate("message", fromItem, items);
+            _lowerCasedCompanyItem = ClassUnderTest.LocateTemplate("company", fromItem, items);
+            _upperCasedCompanyItem = ClassUnderTest.LocateTemplate("Company", fromItem, items);
+            _headerItem = ClassUnderTest.LocateTemplate("header", fromItem, items);
         }
 
         [Test]
