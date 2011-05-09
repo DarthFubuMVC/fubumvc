@@ -27,10 +27,14 @@
 	<file src="..\..\build\FubuMVC.Core.*" target="lib" />
 	<file src="..\..\build\Ionic.Zip.*" target="lib" />
 	<file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
+  <file src="..\..\build\Bottles.*" target="lib" />
+  <file src="..\..\lib\Microsoft.Web.Infrastructure\Microsoft.Web.Infrastructure.dll" target="lib"/>
 
 	<file src="..\..\build\fubu.exe" target="tools" />
 	<file src="..\..\build\FubuCore.*" target="tools" />
 	<file src="..\..\build\FubuMVC.Core.*" target="tools" />
 	<file src="..\..\build\Ionic.Zip.*" target="tools" />
+  <file src="..\..\build\Bottles.*" target="tools" />
+	
   </files>
 </package>
