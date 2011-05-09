@@ -56,6 +56,11 @@ namespace FubuMVC.Core.UI
 
         public static HtmlTag LinkTo(this IFubuPage page, object inputModel)
         {
+            if (inputModel == null)
+            {
+                return new HtmlTag("a").Authorized(false).Render(false);
+            }
+
             return page.AuthorizedLinkTo(x => x.EndpointFor(inputModel));
         }
 
