@@ -58,7 +58,7 @@ namespace FubuMVC.Core.UI
         {
             if (inputModel == null)
             {
-                return new HtmlTag("a").Authorized(false).Render(false);
+                return new HtmlTag("a").Authorized(false);
             }
 
             return page.AuthorizedLinkTo(x => x.EndpointFor(inputModel));
