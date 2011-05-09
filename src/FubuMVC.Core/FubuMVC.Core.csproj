@@ -72,6 +72,7 @@
     <Compile Include="Caching\ICacheProvider.cs" />
     <Compile Include="Caching\IRequestOutputCache.cs" />
     <Compile Include="Caching\RequestOutputCacheBehavior.cs" />
+    <Compile Include="Caching\RequestOutputCacheNode.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
     <Compile Include="Content\DefaultMimeTypeProvider.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
