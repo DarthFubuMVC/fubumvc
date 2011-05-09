@@ -13,7 +13,8 @@ namespace FubuMVC.Core.Registration.Nodes
         Output,
         Wrapper,
         Chain,
-        Authorization
+        Authorization,
+        Cache
     }
 
     public class BehaviorSearch
