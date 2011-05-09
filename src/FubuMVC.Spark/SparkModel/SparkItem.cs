@@ -19,6 +19,7 @@ namespace FubuMVC.Spark.SparkModel
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
+            Descriptor = new NulloDescriptor();
         }
 
         public string FilePath { get; private set; }

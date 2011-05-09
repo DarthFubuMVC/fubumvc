@@ -25,24 +25,11 @@ namespace FubuMVC.Spark.SparkModel
 		void Bind(ITemplate template, BindContext context);
 	}
 
-    public class NulloDescriptorBinder : ISparkTemplateBinder
-    {
-        public bool CanBind(ITemplate template, BindContext context)
-        {
-            return !template.IsSparkView() || template.IsPartial();
-        }
-
-        public void Bind(ITemplate template, BindContext context)
-        {
-            template.Descriptor = new NulloDescriptor();
-        }
-    }
-
     public class ViewDescriptorBinder : ISparkTemplateBinder
     {
         public bool CanBind(ITemplate template, BindContext context)
         {
-            return template.IsSparkView();
+            return template.IsSparkView() && !template.IsPartial();
         }
 
         public void Bind(ITemplate template, BindContext context)

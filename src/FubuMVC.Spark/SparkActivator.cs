@@ -4,7 +4,6 @@ using System.IO;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core.UI;
-using FubuCore;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using HtmlTags;

@@ -52,6 +52,7 @@ namespace FubuMVC.Spark
 		private void defaults()
 		{			
 			_itemComposer
+                .AddBinder<ViewDescriptorBinder>()
                 .AddBinder<MasterPageBinder>()
                 .AddBinder<ViewModelBinder>()
                 .Apply<NamespacePolicy>()
