@@ -310,23 +310,23 @@ namespace FubuMVC.Core.Registration
 
     public class ChainGroup
     {
-        private readonly Cache<MethodInfo, IEnumerable<BehaviorChain>> _chains;
+        private readonly Cache<string, IEnumerable<BehaviorChain>> _chains;
 
         public ChainGroup(Type handlerType, BehaviorGraph graph)
         {
-            _chains = new Cache<MethodInfo, IEnumerable<BehaviorChain>>(method =>
+            _chains = new Cache<string, IEnumerable<BehaviorChain>>(method =>
             {
                 return graph.Behaviors.Where(x => x.FirstCall() != null).Where(x =>
                 {
                     var call = x.FirstCall();
-                    return call.HandlerType == handlerType && call.Method == method;
+                    return call.HandlerType == handlerType && call.Method.Name == method;
                 }).ToList();
             });
         }
 
         public IEnumerable<BehaviorChain> ChainsFor(MethodInfo method)
         {
-            return _chains[method];
+            return _chains[method.Name];
         }
     }
 

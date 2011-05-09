@@ -302,5 +302,7 @@ namespace FubuCore
         {
             return prop1.DeclaringType == prop2.DeclaringType && prop1.Name == prop2.Name;
         }
+
+
     }
 }
