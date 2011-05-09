@@ -15,7 +15,7 @@ namespace FubuCore.Testing.Binding
     public class BasicTypeConverterTester
     {
         private ValueConverterRegistry _registry;
-        private BasicTypeConverter _basicTypeConverter;
+        private TypeDescriptorConverterFamily _typeDescriptorConverterFamily;
         private PropertyInfo _property;
         private IPropertyContext _context;
         private string _propertyValue;
@@ -27,11 +27,12 @@ namespace FubuCore.Testing.Binding
         {
             _registry = new ValueConverterRegistry(new IConverterFamily[0]);
             _property = typeof(PropertyHolder).GetProperty("Property");
-            _basicTypeConverter = _registry.Families.SingleOrDefault(cf =>
-                cf.Matches(_property)) as BasicTypeConverter;
-            _basicTypeConverter.ShouldNotBeNull();
+            _typeDescriptorConverterFamily = _registry.Families.SingleOrDefault(cf =>
+                cf.Matches(_property)) as TypeDescriptorConverterFamily;
+            _typeDescriptorConverterFamily.ShouldNotBeNull();
 
             _context = MockRepository.GenerateMock<IPropertyContext>();
+            _context.Stub(x => x.Property).Return(_property);
             _propertyValue = "some value";
             _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(3);
         }
@@ -39,20 +40,20 @@ namespace FubuCore.Testing.Binding
         [Test]
         public void should_match_property()
         {
-            _basicTypeConverter.Matches(_property).ShouldBeTrue();
+            _typeDescriptorConverterFamily.Matches(_property).ShouldBeTrue();
         }
 
         [Test]
         public void should_not_match_on_exception()
         {
-            _basicTypeConverter.Matches(null).ShouldBeFalse();
+            _typeDescriptorConverterFamily.Matches(null).ShouldBeFalse();
         }
 
         [Test]
         public void should_build()
         {
-            ValueConverter converter = _basicTypeConverter.Build(_registry, _property);
-            converter(_context).ShouldEqual(_propertyValue);
+            ValueConverter converter = _typeDescriptorConverterFamily.Build(_registry, _property);
+            converter.Convert(_context).ShouldEqual(_propertyValue);
             _context.VerifyAllExpectations();
         }
     }
@@ -78,6 +79,7 @@ namespace FubuCore.Testing.Binding
             _numericTypeFamily.ShouldNotBeNull();
 
             _context = MockRepository.GenerateMock<IPropertyContext>();
+            _context.Stub(x => x.Property).Return(_property);
             _propertyValue = "1,000.001";
             _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(4);
         }
@@ -95,7 +97,7 @@ namespace FubuCore.Testing.Binding
             using (new ScopedCulture(CultureInfo.CreateSpecificCulture("en-us")))
             {
                 ValueConverter converter = _numericTypeFamily.Build(_registry, _property);
-                converter(_context).ShouldEqual(1000.001m);
+                converter.Convert(_context).ShouldEqual(1000.001m);
                 _context.VerifyAllExpectations();
             }
         }
@@ -122,6 +124,7 @@ namespace FubuCore.Testing.Binding
             _numericTypeFamily.ShouldNotBeNull();
 
             _context = MockRepository.GenerateMock<IPropertyContext>();
+            _context.Stub(x => x.Property).Return(_property);
             _propertyValue = "1.000,001";
             _context.Expect(c => c.PropertyValue).Return(_propertyValue).Repeat.Times(4);
         }
@@ -139,7 +142,7 @@ namespace FubuCore.Testing.Binding
             using (new ScopedCulture(CultureInfo.CreateSpecificCulture("de-DE")))
             {
                 ValueConverter converter = _numericTypeFamily.Build(_registry, _property);
-                converter(_context).ShouldEqual(1000.001m);
+                converter.Convert(_context).ShouldEqual(1000.001m);
                 _context.VerifyAllExpectations();
             }
         }

@@ -35,7 +35,7 @@ namespace FubuCore.Testing.Binding
         public void should_build()
         {
             ValueConverter converter = _aspNetObjectConversionFamily.Build(_registry, _property);
-            converter(_context).ShouldEqual(_propertyValue);
+            converter.Convert(_context).ShouldEqual(_propertyValue);
             _context.VerifyAllExpectations();
         }
     }

@@ -1,23 +1,63 @@
 using System;
-using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
+    public enum ColorEnum
+    {
+        red, blue, green
+    }
+
+    public class Address
+    {
+        public Address()
+        {
+            StateOrProvince = string.Empty;
+            Country = string.Empty;
+            AddressType = string.Empty;
+        }
+
+        public int Order { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public string AddressType { get; set; }
+
+        public string Address1 { get; set; }
+
+        public string Address2 { get; set; }
+
+        public string City { get; set; }
+
+        public string StateOrProvince { get; set; }
+
+        public string Country { get; set; }
+
+        public string PostalCode { get; set; }
+
+        //[Required]
+        //public TimeZoneInfo TimeZone { get; set; }
+
+
+        public DateTime DateEntered { get; set; }
+
+        public ColorEnum Color { get; set; }
+        public Guid Guid { get; set; }
+    }
+
     [TestFixture]
     public class ConversionPropertyBinderTester : PropertyBinderTester
     {
         [SetUp]
         public void SetUp()
         {
-            context = new InMemoryBindingContext();
+            context = new InMemoryStructureMapBindingContext();
             propertyBinder = new ConversionPropertyBinder(new ValueConverterRegistry(new IConverterFamily[0]));
         }
 

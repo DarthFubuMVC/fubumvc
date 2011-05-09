@@ -1,10 +1,6 @@
-using FubuCore.Binding;
-using FubuMVC.Core;
-using FubuMVC.Core.Runtime;
-using FubuMVC.StructureMap;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class ModelBinderCacheTester

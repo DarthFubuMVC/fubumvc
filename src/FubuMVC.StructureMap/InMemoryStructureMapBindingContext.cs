@@ -5,29 +5,29 @@ using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.StructureMap
 {
-    public class InMemoryBindingContext : BindingContext
+    public class InMemoryStructureMapBindingContext : BindingContext
     {
         private readonly InMemoryRequestData _data;
         private readonly IContainer _container;
 
-        public InMemoryBindingContext() : this(new InMemoryRequestData(), new Container())
+        public InMemoryStructureMapBindingContext() : this(new InMemoryRequestData(), new Container())
         {
         }
 
-        private InMemoryBindingContext(InMemoryRequestData data, IContainer container)
+        private InMemoryStructureMapBindingContext(InMemoryRequestData data, IContainer container)
             : base(data, new StructureMapServiceLocator(container))
         {
             _data = data;
             _container = container;
         }
 
-        public InMemoryBindingContext WithData(string key, object value)
+        public InMemoryStructureMapBindingContext WithData(string key, object value)
         {
             this[key] = value;
             return this;
         }
 
-        public InMemoryBindingContext WithPropertyValue(object value)
+        public InMemoryStructureMapBindingContext WithPropertyValue(object value)
         {
             PropertyValue = value;
             return this;

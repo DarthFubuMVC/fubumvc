@@ -8,7 +8,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class PassthroughBinderTester
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Models
             var context = MockRepository.GenerateMock<IPropertyContext>();
             context.Expect(c => c.PropertyValue).Return(new object());
             ValueConverter converter = binder.Build(MockRepository.GenerateStub<IValueConverterRegistry>(), property(x => x.File));
-            converter(context);
+            converter.Convert(context);
             context.VerifyAllExpectations();
         }
 

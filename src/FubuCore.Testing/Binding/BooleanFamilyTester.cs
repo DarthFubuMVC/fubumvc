@@ -1,12 +1,10 @@
 using System.Reflection;
-using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
-using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class BooleanFamilyTester
@@ -27,7 +25,7 @@ namespace FubuMVC.Tests.Models
             ValueConverter converter = new BooleanFamily().Build(null, property);
             context.ForProperty(property, x =>
             {
-                converter(context).As<bool>().ShouldBeTrue();
+                converter.Convert(context).As<bool>().ShouldBeTrue();
             });
         }
 
@@ -58,7 +56,7 @@ namespace FubuMVC.Tests.Models
             ValueConverter converter = new BooleanFamily().Build(null, property);
             context.ForProperty(property, x =>
             {
-                convertedValue = converter(context).As<bool>();
+                convertedValue = converter.Convert(context).As<bool>();
             });
 
             return convertedValue;

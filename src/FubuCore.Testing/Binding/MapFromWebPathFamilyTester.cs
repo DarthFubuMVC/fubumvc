@@ -1,12 +1,11 @@
 using System.Reflection;
-using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class MapFromWebPathFamilyTester
@@ -38,9 +37,9 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void resolve_to_full_paths_for_settings_marked_for_local_path_resolution()
         {
-            var value = new InMemoryBindingContext().WithPropertyValue("~/file.txt");
+            var value = new InMemoryStructureMapBindingContext().WithPropertyValue("~/file.txt");
 
-            object result = family.Build(null, expandProp)(value);
+            object result = family.Build(null, expandProp).Convert(value);
             result.ShouldEqual(webAppFolder + @"/file.txt");
         }
 

@@ -1,13 +1,10 @@
-using System;
 using FubuCore.Binding;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
-using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class NestedObjectConversionIntegrationTester
@@ -18,7 +15,7 @@ namespace FubuMVC.Tests.Models
         [SetUp]
         public void SetUp()
         {
-            resolver = StructureMapContainerFacility.GetBasicFubuContainer().GetInstance<IObjectResolver>();
+            resolver = ObjectResolver.Basic();
             data = new InMemoryRequestData();
             
         }
@@ -107,24 +104,18 @@ namespace FubuMVC.Tests.Models
 
             public bool IsActive { get; set; }
 
-            [FakeRequired, FakeMaximumStringLength(100)]
             public string AddressType { get; set; }
 
-            [FakeRequired, FakeMaximumStringLength(250)]
             public string Address1 { get; set; }
 
             public string Address2 { get; set; }
 
-            [FakeRequired, FakeMaximumStringLength(250)]
             public string City { get; set; }
 
-            [FakeRequired]
             public string StateOrProvince { get; set; }
 
-            [FakeRequired, FakeMaximumStringLength(100)]
             public string Country { get; set; }
 
-            [FakeRequired, FakeMaximumStringLength(50)]
             public string PostalCode { get; set; }
 
         }

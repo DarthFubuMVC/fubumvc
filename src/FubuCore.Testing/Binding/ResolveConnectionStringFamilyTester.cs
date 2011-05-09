@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Configuration;
 using System.Reflection;
 using FubuCore.Binding;
@@ -8,7 +7,7 @@ using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class ResolveConnectionStringFamilyTester
@@ -52,18 +51,18 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void return_the_original_value_if_the_connection_string_doesnt_exist()
         {
-            var value = new InMemoryBindingContext().WithPropertyValue("foo");
+            var value = new InMemoryStructureMapBindingContext().WithPropertyValue("foo");
 
-            object result = family.Build(null, expandProp)(value);
+            object result = family.Build(null, expandProp).Convert(value);
             result.ShouldEqual("foo");
         }
 
         [Test]
         public void return_the_value_from_the_connectionStrings_section()
         {
-            var context = new InMemoryBindingContext().WithPropertyValue(connectionStringKey);
+            var context = new InMemoryStructureMapBindingContext().WithPropertyValue(connectionStringKey);
 
-            object result = family.Build(null, expandProp)(context);
+            object result = family.Build(null, expandProp).Convert(context);
             result.ShouldEqual(actualConnectionString);
         }
 

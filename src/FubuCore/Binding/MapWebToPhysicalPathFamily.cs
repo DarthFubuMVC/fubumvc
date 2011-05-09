@@ -1,27 +1,23 @@
 using System;
 using System.Reflection;
-using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuCore.Binding
 {
-    public class MapWebToPhysicalPathFamily : IConverterFamily
+    public class MapWebToPhysicalPathFamily : StatelessConverter
     {
-        public bool Matches(PropertyInfo property)
+        public override bool Matches(PropertyInfo property)
         {
             return property.HasAttribute<MapWebToPhysicalPathAttribute>();
         }
 
-        public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
+        public override object Convert(IPropertyContext context)
         {
-            return rawValue =>
-            {
-                var strVal = rawValue.PropertyValue as String;
+            var strVal = context.PropertyValue as String;
 
-                return strVal.IsNotEmpty()
-                           ? strVal.ToPhysicalPath()
-                           : strVal;
-            };
+            return strVal.IsNotEmpty()
+                       ? strVal.ToPhysicalPath()
+                       : strVal;
         }
     }
 }

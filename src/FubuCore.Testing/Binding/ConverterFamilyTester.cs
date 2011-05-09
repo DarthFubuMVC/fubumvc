@@ -4,7 +4,7 @@ using FubuCore.Reflection;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class ConverterFamilyTester
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Models
         [Test]
         public void use_the_builder_func_from_the_constructor_to_build_the_string_converter()
         {
-            ValueConverter converter = x => 1;
+            ValueConverter converter = new LambdaValueConverter(x => 1);
 
             var family = new ConverterFamily(null, (r, t) => converter);
             family.Build(null, null).ShouldBeTheSameAs(converter);

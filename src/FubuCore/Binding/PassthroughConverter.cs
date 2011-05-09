@@ -1,18 +1,18 @@
+using System;
 using System.Reflection;
 
 namespace FubuCore.Binding
 {
-    public class PassthroughConverter<T> : IConverterFamily
+    public class PassthroughConverter<T> : StatelessConverter
     {
-        public bool Matches(PropertyInfo property)
+        public override bool Matches(PropertyInfo property)
         {
             return property.PropertyType.IsAssignableFrom(typeof (T));
         }
 
-        // Like it says, straight pass through
-        public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
+        public override object Convert(IPropertyContext context)
         {
-            return context => context.PropertyValue;
+            return context.PropertyValue;
         }
     }
 }

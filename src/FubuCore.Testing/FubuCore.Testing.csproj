@@ -51,6 +51,7 @@
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -66,14 +67,29 @@
     <Compile Include="Binding\ASPNetObjectConversionFamilyTester.cs" />
     <Compile Include="Binding\BasicTypeConverterTester.cs" />
     <Compile Include="Binding\BindingResultTester.cs" />
+    <Compile Include="Binding\BooleanFamilyTester.cs" />
+    <Compile Include="Binding\CollectionPropertyBinderTester.cs" />
+    <Compile Include="Binding\ConversionPropertyBinderTester.cs" />
+    <Compile Include="Binding\ConverterFamilyTester.cs" />
     <Compile Include="Binding\ConvertProblemTester.cs" />
+    <Compile Include="Binding\ExpandEnvironmentVariablesFamilyTester.cs" />
     <Compile Include="Binding\FlatFileRequestDataTester.cs" />
+    <Compile Include="Binding\InMemoryBindingContext.cs" />
     <Compile Include="Binding\InMemoryRequestDataTester.cs" />
+    <Compile Include="Binding\MapFromWebPathFamilyTester.cs" />
+    <Compile Include="Binding\MapWebToPhysicalPathFamilyTester.cs" />
+    <Compile Include="Binding\ModelBinderCacheTester.cs" />
+    <Compile Include="Binding\NestedObjectConversionIntegrationTester.cs" />
+    <Compile Include="Binding\PassthroughBinderTester.cs" />
+    <Compile Include="Binding\PropertyBinderTester.cs" />
     <Compile Include="Binding\ReaderBinderTester.cs" />
     <Compile Include="Binding\RequestDataTester.cs" />
+    <Compile Include="Binding\ResolveConnectionStringFamilyTester.cs" />
     <Compile Include="Binding\ServiceArgumentsTester.cs" />
     <Compile Include="Binding\SmartRequestTester.cs" />
+    <Compile Include="Binding\StandardModelBinderTester.cs" />
     <Compile Include="Binding\TypeDescriptorCacheTester.cs" />
+    <Compile Include="Binding\ValueConverterRegistryTester.cs" />
     <Compile Include="BooleanExtensionsTester.cs" />
     <Compile Include="CommandLine\ArgumentTester.cs" />
     <Compile Include="CommandLine\BooleanFlagTester.cs" />

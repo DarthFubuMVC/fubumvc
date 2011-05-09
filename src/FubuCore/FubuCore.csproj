@@ -98,6 +98,7 @@
     <Compile Include="Binding\ServiceArguments.cs" />
     <Compile Include="Binding\SmartRequest.cs" />
     <Compile Include="Binding\StandardModelBinder.cs" />
+    <Compile Include="Binding\StatelessConverter.cs" />
     <Compile Include="CommandLine\CommandFailureException.cs" />
     <Compile Include="CommandLine\ConsoleWriter.cs" />
     <Compile Include="CommandLine\EnumerableArgument.cs" />

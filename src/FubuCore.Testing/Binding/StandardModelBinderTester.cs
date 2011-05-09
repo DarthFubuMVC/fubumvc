@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
-using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class StandardModelBinderTester
@@ -17,19 +16,16 @@ namespace FubuMVC.Tests.Models
         [SetUp]
         public void SetUp()
         {
-            // Lots of stuff to put together, so I'm just using a minimalistic
-            // container to do it for me because I'm lazy -- JDM 2/12/2010
-            IContainer container = StructureMapContainerFacility.GetBasicFubuContainer();
-            binder = container.GetInstance<StandardModelBinder>();
-
-            context = new InMemoryBindingContext();
+            binder = (StandardModelBinder) StandardModelBinder.Basic();
+            
+            context = new InMemoryStructureMapBindingContext();
 
             result = null;
         }
 
         #endregion
 
-        private InMemoryBindingContext context;
+        private InMemoryStructureMapBindingContext context;
         private StandardModelBinder binder;
         private BindResult result;
 

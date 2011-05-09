@@ -1,11 +1,10 @@
-﻿using FubuCore.Binding;
+using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class CollectionPropertyBinderTester : PropertyBinderTester
@@ -13,9 +12,8 @@ namespace FubuMVC.Tests.Models
         [SetUp]
         public void Setup()
         {
-            context = new InMemoryBindingContext();
-            var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            var objectResolver = container.GetInstance<ObjectResolver>();
+            context = new InMemoryStructureMapBindingContext();
+            var objectResolver = ObjectResolver.Basic();
             context.Container.Configure(x =>
             {
                 x.For<IObjectResolver>().Use(objectResolver);

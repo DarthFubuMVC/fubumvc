@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Diagnostics
     public class when_resolving_successfully : InteractionContext<RecordingObjectResolver>
     {
         private BindResult result;
-        private InMemoryBindingContext context;
+        private InMemoryStructureMapBindingContext context;
 
         protected override void beforeEach()
         {
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Diagnostics
             {
                 Value = new object()
             };
-            context = new InMemoryBindingContext();
+            context = new InMemoryStructureMapBindingContext();
             MockFor<ObjectResolver>().Expect(x => x.BindModel(typeof (BinderTarget), context)).Return(result);
 
             ClassUnderTest.BindModel(typeof (BinderTarget), context).ShouldBeTheSameAs(result);

@@ -6,7 +6,7 @@ using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class ValueConverterRegistryTester
@@ -36,7 +36,12 @@ namespace FubuMVC.Tests.Models
             PropertyInfo nullIntProp = ReflectionHelper.GetProperty<Target>(x => x.NullInt);
             var reg = new ValueConverterRegistry(new IConverterFamily[0]);
             var value = new InMemoryBindingContext().WithPropertyValue("99");
-            reg.FindConverter(nullIntProp)(value).ShouldEqual(99);
+            value.ForProperty(nullIntProp, c =>
+            {
+                reg.FindConverter(nullIntProp).Convert(c).ShouldEqual(99);
+            });
+
+            
         }
 
         [Test]
@@ -45,8 +50,13 @@ namespace FubuMVC.Tests.Models
             PropertyInfo nullIntProp = ReflectionHelper.GetProperty<Target>(x => x.NullInt);
             var reg = new ValueConverterRegistry(new IConverterFamily[0]);
 
-            var value = new InMemoryBindingContext().WithPropertyValue(null);
-            reg.FindConverter(nullIntProp)(value).ShouldEqual(null);
+            var value = new InMemoryStructureMapBindingContext().WithPropertyValue(null);
+            value.ForProperty(nullIntProp, c =>
+            {
+                reg.FindConverter(nullIntProp).Convert(c).ShouldEqual(null);
+            });
+
+            
         }
 
         [Test]

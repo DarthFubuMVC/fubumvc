@@ -102,8 +102,6 @@
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
-    <Compile Include="Models\CollectionPropertyBinderTester.cs" />
-    <Compile Include="Models\PropertyBinderTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
@@ -216,18 +214,6 @@
     <Compile Include="FubuBootstrapperIntegrationTester.cs" />
     <Compile Include="FubuRegistryTester.cs" />
     <Compile Include="HtmlGenerationTestExtensions.cs" />
-    <Compile Include="Models\BooleanFamilyTester.cs" />
-    <Compile Include="Models\ConversionPropertyBinderTester.cs" />
-    <Compile Include="Models\ConverterFamilyTester.cs" />
-    <Compile Include="Models\MapWebToPhysicalPathFamilyTester.cs" />
-    <Compile Include="Models\ExpandEnvironmentVariablesFamilyTester.cs" />
-    <Compile Include="Models\MapFromWebPathFamilyTester.cs" />
-    <Compile Include="Models\ModelBinderCacheTester.cs" />
-    <Compile Include="Models\NestedObjectConversionIntegrationTester.cs" />
-    <Compile Include="Models\PassthroughBinderTester.cs" />
-    <Compile Include="Models\ResolveConnectionStringFamilyTester.cs" />
-    <Compile Include="Models\StandardModelBinderTester.cs" />
-    <Compile Include="Models\ValueConverterRegistryTester.cs" />
     <Compile Include="Registration\BehaviorGraphTester.cs">
     </Compile>
     <Compile Include="Registration\BehaviorVisitorTester.cs" />

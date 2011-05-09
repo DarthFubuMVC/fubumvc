@@ -1,27 +1,23 @@
 using System;
 using System.Reflection;
-using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuCore.Binding
 {
-    public class MapFromWebPathFamily : IConverterFamily
+    public class MapFromWebPathFamily : StatelessConverter
     {
-        public bool Matches(PropertyInfo property)
+        public override bool Matches(PropertyInfo property)
         {
             return property.HasAttribute<MapFromWebPathAttribute>();
         }
 
-        public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
+        public override object Convert(IPropertyContext context)
         {
-            return rawValue =>
-            {
-                var strVal = rawValue.PropertyValue as String;
+            var stringValue = context.PropertyValue as String;
 
-                return strVal.IsNotEmpty()
-                           ? strVal.ToAbsoluteUrl()
-                           : strVal;
-            };
+            return stringValue.IsNotEmpty()
+                       ? stringValue.ToAbsoluteUrl()
+                       : stringValue;
         }
     }
 }

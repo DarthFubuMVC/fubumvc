@@ -1,18 +1,19 @@
+using System;
 using System.Reflection;
 using FubuCore.Binding;
 
 namespace FubuCore.Binding
 {
-    public class ASPNetObjectConversionFamily : IConverterFamily
+    public class ASPNetObjectConversionFamily : StatelessConverter
     {
-        public bool Matches(PropertyInfo property)
+        public override bool Matches(PropertyInfo property)
         {
             return AggregateDictionary.IsSystemProperty(property);
         }
 
-        public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
+        public override object Convert(IPropertyContext context)
         {
-            return context => context.PropertyValue;
+            return context.PropertyValue;
         }
     }
 }

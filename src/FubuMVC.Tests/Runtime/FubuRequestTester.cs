@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Runtime
     public abstract class ObjectResolverContext
     {
         protected List<IModelBinder> binders;
-        protected InMemoryBindingContext data;
+        protected InMemoryStructureMapBindingContext data;
         protected ObjectResolver resolver;
 
 
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Runtime
         public void SetUp()
         {
             binders = new List<IModelBinder>();
-            data = new InMemoryBindingContext();
+            data = new InMemoryStructureMapBindingContext();
 
             setupContext();
 

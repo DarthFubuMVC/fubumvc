@@ -25,7 +25,7 @@ namespace FubuCore.Binding
             {
                 var converter = _cache[property];
 
-                var value = converter(x);
+                var value = converter.Convert(x);
                     
                 property.SetValue(x.Object, value, null);
             });

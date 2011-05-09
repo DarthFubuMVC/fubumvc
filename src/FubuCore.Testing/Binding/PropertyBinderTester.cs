@@ -1,16 +1,16 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.StructureMap;
-using FubuMVC.Tests.UI;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     public abstract class PropertyBinderTester
     {
-        protected InMemoryBindingContext context;
+        protected InMemoryStructureMapBindingContext context;
         protected IPropertyBinder propertyBinder;
 
         protected bool matches(Expression<Func<AddressViewModel, object>> expression)
@@ -28,5 +28,18 @@ namespace FubuMVC.Tests.Models
         {
             matches(expression).ShouldBeFalse();
         }
+    }
+
+    public class AddressViewModel
+    {
+        public Address Address { get; set; }
+        public bool ShouldShow { get; set; }
+        public IList<LocalityViewModel> Localities { get; set; }
+    }
+
+    public class LocalityViewModel
+    {
+        public string ZipCode { get; set; }
+        public string CountyName { get; set; }
     }
 }

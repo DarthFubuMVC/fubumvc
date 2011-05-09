@@ -1,29 +1,26 @@
+using System;
 using System.ComponentModel;
 using System.Reflection;
 
 namespace FubuCore.Binding
 {
-    public class BooleanFamily : IConverterFamily
+    public class BooleanFamily : StatelessConverter
     {
-        public const string Checkbox_On = "on";
+        private static TypeConverter _converter = TypeDescriptor.GetConverter(typeof(bool));
+        public const string CheckboxOn = "on";
 
-        public bool Matches(PropertyInfo property)
+        public override bool Matches(PropertyInfo property)
         {
             return property.PropertyType.IsTypeOrNullableOf<bool>();
         }
 
-        public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
+        public override object Convert(IPropertyContext context)
         {
-            var converter = TypeDescriptor.GetConverter(typeof(bool));
+            if (context.PropertyValue is bool) return context.PropertyValue;
 
-            return x =>
-            {
-                if (x.PropertyValue is bool) return x.PropertyValue;
-
-                return x.PropertyValue.ToString().Contains(x.Property.Name)
-                || x.PropertyValue.ToString().EqualsIgnoreCase(Checkbox_On)
-                || (bool) converter.ConvertFrom(x.PropertyValue);
-            };
+            return context.PropertyValue.ToString().Contains(context.Property.Name)
+            || context.PropertyValue.ToString().EqualsIgnoreCase(CheckboxOn)
+            || (bool)_converter.ConvertFrom(context.PropertyValue);
         }
     }
 }

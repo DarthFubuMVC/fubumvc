@@ -6,7 +6,7 @@ using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Models
+namespace FubuCore.Testing.Binding
 {
     [TestFixture]
     public class ExpandEnvironmentVariablesFamilyTester
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Models
         public void expand_environment_variables_for_settings_marked_for_expansion()
         {
             string expandedVariable = Environment.GetEnvironmentVariable("SystemRoot");
-            var context = new InMemoryBindingContext();
+            var context = new InMemoryStructureMapBindingContext();
             context[expandProp.Name] = "%SystemRoot%\\foo";
 
             bool wasCalled = false;
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Models
             {
                 wasCalled = true;
 
-                converter(context).ShouldEqual(expandedVariable + @"\foo");
+                converter.Convert(context).ShouldEqual(expandedVariable + @"\foo");
             });
 
             wasCalled.ShouldBeTrue();

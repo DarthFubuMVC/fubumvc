@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Web;
 using FubuCore.Binding;
 using System.Linq;
+using FubuCore.Util;
 
 namespace FubuCore.Binding
 {
@@ -41,7 +42,7 @@ namespace FubuCore.Binding
 
             Add<BooleanFamily>();
             Add<NumericTypeFamily>();
-            Add<BasicTypeConverter>();
+            Add<TypeDescriptorConverterFamily>();
         }
 
         public void Add<T>() where T : IConverterFamily, new()
@@ -51,8 +52,11 @@ namespace FubuCore.Binding
 
     }
 
-    public class BasicTypeConverter : IConverterFamily
+    public class TypeDescriptorConverterFamily : IConverterFamily
     {
+        private readonly Cache<Type, ValueConverter> _converters 
+            = new Cache<Type, ValueConverter>(type => new BasicValueConverter(type));
+
         public bool Matches(PropertyInfo property)
         {
             try
@@ -65,20 +69,29 @@ namespace FubuCore.Binding
             }
         }
 
+
+
         public ValueConverter Build(IValueConverterRegistry registry, PropertyInfo property)
         {
             var propertyType = property.PropertyType;
 
-            return GetValueConverter(propertyType);
+            return _converters[propertyType];
         }
 
-        public static ValueConverter GetValueConverter(Type propertyType)
-        {
-            var converter = TypeDescriptor.GetConverter(propertyType);
 
-           
-            return context =>
+        public class BasicValueConverter : ValueConverter
+        {
+            private readonly TypeConverter _converter;
+
+            public BasicValueConverter(Type propertyType)
             {
+                _converter = TypeDescriptor.GetConverter(propertyType);
+            }
+
+            public object Convert(IPropertyContext context)
+            {
+                var propertyType = context.Property.PropertyType;
+
                 if (context.PropertyValue != null)
                 {
                     if (context.PropertyValue.GetType() == propertyType)
@@ -87,8 +100,8 @@ namespace FubuCore.Binding
                     }
                 }
 
-                return converter.ConvertFrom(context.PropertyValue);
-            };
+                return _converter.ConvertFrom(context.PropertyValue);
+            }
         }
     }
    
