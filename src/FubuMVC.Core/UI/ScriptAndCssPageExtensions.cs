@@ -30,20 +30,18 @@ namespace FubuMVC.Core.UI
 
         public class ScriptIncludeWriter
         {
-            private readonly ScriptGraph _scripts;
             private readonly ScriptRequirements _requirements;
             private readonly IScriptTagWriter _writer;
 
-            public ScriptIncludeWriter(ScriptGraph scripts, ScriptRequirements requirements, IScriptTagWriter writer)
+            public ScriptIncludeWriter(ScriptRequirements requirements, IScriptTagWriter writer)
             {
-                _scripts = scripts;
                 _requirements = requirements;
                 _writer = writer;
             }
 
             public TagList ScriptTags()
             {
-                var scripts = _scripts.GetScripts(_requirements.AllScriptNames());
+                var scripts = _requirements.GetScriptsToRender();
                 var tags = _writer.Write(scripts);
 
                 return new TagList(tags);
