@@ -12,6 +12,8 @@ namespace $rootnamespace$.App_Start
     {
         public static void Start()
         {
+	    // ConfigureFubuMVC is the top level FubuRegistry
+	    // for this application
             FubuApplication.For<ConfigureFubuMVC>()
                 .StructureMap(() => new Container())
                 .Bootstrap(RouteTable.Routes);
