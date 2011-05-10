@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
-using FubuCore.Util;
 using Spark;
 
 namespace FubuMVC.Spark.SparkModel

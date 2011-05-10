@@ -78,10 +78,10 @@ namespace FubuMVC.Spark.SparkModel
         }
         private static IEnumerable<string> getAncestors(string filePath, string root)
         {
-            string directory;
+            string directory = null;
             do
             {
-                directory = Path.GetDirectoryName(filePath);
+                directory = Path.GetDirectoryName(directory ?? filePath);
                 if (directory == null) break;
                 yield return directory;
             } while (directory.IsNotEmpty() && directory.PathRelativeTo(root).IsNotEmpty());
