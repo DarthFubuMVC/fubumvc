@@ -15,17 +15,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
     {
         private string _root;
         private ISharedPathBuilder _builder;
-        private SparkItem _item;
-        private SparkItem _packageItem;
-        private IList<SparkItem> _items;
+        private Template _item;
+        private Template _packageItem;
+        private IList<Template> _items;
         protected override void beforeEach()
         {
             _root = AppDomain.CurrentDomain.BaseDirectory;
             
-            _item = new SparkItem(getPath("Actions", "Home", "home.spark"), _root, FubuSparkConstants.HostOrigin);
-            _packageItem = new SparkItem(getPath("Packages", "Package1", "Actions", "Home", "home.spark"), _root, "Package1");
+            _item = new Template(getPath("Actions", "Home", "home.spark"), _root, FubuSparkConstants.HostOrigin);
+            _packageItem = new Template(getPath("Packages", "Package1", "Actions", "Home", "home.spark"), _root, "Package1");
             
-            _items = new List<SparkItem> { _item, _packageItem };
+            _items = new List<Template> { _item, _packageItem };
             
             _builder = MockFor<ISharedPathBuilder>();
             _builder.Stub(x => x.SharedFolderNames).Return(new[] {Constants.Shared});

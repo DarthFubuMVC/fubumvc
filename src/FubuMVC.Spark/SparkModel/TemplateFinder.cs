@@ -13,8 +13,8 @@ namespace FubuMVC.Spark.SparkModel
     public interface ITemplateFinder
     {
         // TODO: Change to ITemplate
-        IEnumerable<SparkItem> FindInHost();
-        IEnumerable<SparkItem> FindInPackages();
+        IEnumerable<Template> FindInHost();
+        IEnumerable<Template> FindInPackages();
     }
 
     // TODO: switch from SparkItem to Template
@@ -48,9 +48,9 @@ namespace FubuMVC.Spark.SparkModel
             set { _hostPath = value; }
         }
 
-        public IEnumerable<SparkItem> FindInHost()
+        public IEnumerable<Template> FindInHost()
         {
-            var items = new List<SparkItem>();
+            var items = new List<Template>();
             var root = new SparkRoot
             {
                 Origin = FubuSparkConstants.HostOrigin, 
@@ -65,9 +65,9 @@ namespace FubuMVC.Spark.SparkModel
             return items;
         }
 
-        public IEnumerable<SparkItem> FindInPackages()
+        public IEnumerable<Template> FindInPackages()
         {
-            var items = new List<SparkItem>();
+            var items = new List<Template>();
             var roots = packageRoots(_packages).ToArray();
             var request = buildRequest(items, roots);
             
@@ -115,7 +115,7 @@ namespace FubuMVC.Spark.SparkModel
             return packageRoots;
         }
 
-        private ScanRequest buildRequest(ICollection<SparkItem> files, params SparkRoot[] sparkRoots)
+        private ScanRequest buildRequest(ICollection<Template> files, params SparkRoot[] sparkRoots)
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);
@@ -124,7 +124,7 @@ namespace FubuMVC.Spark.SparkModel
             request.AddHandler(fileFound =>
             {
                 var origin = sparkRoots.First(x => x.Path == fileFound.Root).Origin;
-                var sparkFile = new SparkItem(fileFound.Path, fileFound.Root, origin);                
+                var sparkFile = new Template(fileFound.Path, fileFound.Root, origin);                
                 files.Add(sparkFile);
             });
 

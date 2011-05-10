@@ -11,15 +11,15 @@ namespace FubuMVC.Spark
     // This approach uses default conventions.
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
-        private readonly SparkTemplates _templates;
-        private SparkItemComposer _itemComposer;
-        private TemplateFinder _templateFinder;
+        private readonly Templates _templates;
+        private TemplateComposer _composer;
+        private TemplateFinder _finder;
         
         public SparkExtension()
         {
-			_templates = new SparkTemplates();
-			_templateFinder = new TemplateFinder();
-            _itemComposer = new SparkItemComposer(_templates);
+			_templates = new Templates();
+			_finder = new TemplateFinder();
+            _composer = new TemplateComposer(_templates);
 			
 			defaults();
         }
@@ -28,7 +28,7 @@ namespace FubuMVC.Spark
         {
             locateTemplates();
 			
-            registry.Views.Facility(new SparkViewFacility(_itemComposer));
+            registry.Views.Facility(new SparkViewFacility(_composer));
             registry.Services(configureServices);
         }
 
@@ -36,8 +36,10 @@ namespace FubuMVC.Spark
         {
             // TODO : Reconsider this
             services.SetServiceIfNone<ISparkTemplates>(_templates);
+            
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
             services.AddService<IActivator, SparkActivator>();
+            
             services.AddService<ISparkViewModification, PageActivation>();
             services.AddService<ISparkViewModification, SiteResourceAttacher>();
         }
@@ -45,13 +47,13 @@ namespace FubuMVC.Spark
         private void locateTemplates()
         {
             _templates.Clear();
-            _templates.AddRange(_templateFinder.FindInHost());
-            _templates.AddRange(_templateFinder.FindInPackages());
+            _templates.AddRange(_finder.FindInHost());
+            _templates.AddRange(_finder.FindInPackages());
         }
 		
 		private void defaults()
 		{			
-			_itemComposer
+			_composer
                 .AddBinder<ViewDescriptorBinder>()
                 .AddBinder<MasterPageBinder>()
                 .AddBinder<ViewModelBinder>()

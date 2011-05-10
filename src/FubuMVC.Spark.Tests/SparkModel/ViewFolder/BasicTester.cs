@@ -16,16 +16,16 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly string _pak1;
         private readonly string _pak2;
 
-        private readonly SparkItem _hostHomeView;
-        private readonly SparkItem _hostApplicationView;
-        private readonly SparkItem _hostFooterPartialView;
-        private readonly SparkItem _pak1HomeView;
-        private readonly SparkItem _pak1NamePartialView;
-        private readonly SparkItem _pak2HomeView;
-        private readonly SparkItem _pak2ApplicationView;
-        private readonly SparkItem _pak2ThemeView;
+        private readonly Template _hostHomeView;
+        private readonly Template _hostApplicationView;
+        private readonly Template _hostFooterPartialView;
+        private readonly Template _pak1HomeView;
+        private readonly Template _pak1NamePartialView;
+        private readonly Template _pak2HomeView;
+        private readonly Template _pak2ApplicationView;
+        private readonly Template _pak2ThemeView;
 
-        private readonly SparkItemViewFolder _viewFolder;
+        private readonly TemplateViewFolder _viewFolder;
 
         public BasicTester()
         {
@@ -33,18 +33,18 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _pak1 = Path.Combine(_hostRoot, "Pak1");
             _pak2 = Path.Combine(_hostRoot, "Pak2");
 
-            _hostHomeView = new SparkItem(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
-            _hostApplicationView = new SparkItem(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
-            _hostFooterPartialView = new SparkItem(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
+            _hostHomeView = new Template(Path.Combine(_hostRoot, "Home", "Home.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
+            _hostApplicationView = new Template(Path.Combine(_hostRoot, "Shared", "application.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
+            _hostFooterPartialView = new Template(Path.Combine(_hostRoot, "Shared", "_footer.spark"), _hostRoot, FubuSparkConstants.HostOrigin);
 
-            _pak1HomeView = new SparkItem(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "Pak1");
-            _pak1NamePartialView = new SparkItem(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "Pak1");
+            _pak1HomeView = new Template(Path.Combine(_pak1, "Home", "Home.spark"), _hostRoot, "Pak1");
+            _pak1NamePartialView = new Template(Path.Combine(_pak1, "Home", "_name.spark"), _hostRoot, "Pak1");
 
-            _pak2HomeView = new SparkItem(Path.Combine(_pak2, "Home", "Home.spark"), _hostRoot, "Pak2");
-            _pak2ApplicationView = new SparkItem(Path.Combine(_pak2, "Shared", "application.spark"), _hostRoot, "Pak2");
-            _pak2ThemeView = new SparkItem(Path.Combine(_pak2, "Shared", "theme.spark"), _hostRoot, "Pak2");
+            _pak2HomeView = new Template(Path.Combine(_pak2, "Home", "Home.spark"), _hostRoot, "Pak2");
+            _pak2ApplicationView = new Template(Path.Combine(_pak2, "Shared", "application.spark"), _hostRoot, "Pak2");
+            _pak2ThemeView = new Template(Path.Combine(_pak2, "Shared", "theme.spark"), _hostRoot, "Pak2");
 
-            var sparkItems = new List<SparkItem>
+            var sparkItems = new List<Template>
             {
                 _hostHomeView, _hostApplicationView, _hostFooterPartialView,
                 _pak1HomeView, _pak1NamePartialView,
@@ -54,7 +54,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             var viewPathPolicy = new ViewPathPolicy();
             sparkItems.Each(viewPathPolicy.Apply);
 
-            _viewFolder = new SparkItemViewFolder(sparkItems);
+            _viewFolder = new TemplateViewFolder(sparkItems);
         }
 
         [Test]

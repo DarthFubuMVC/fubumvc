@@ -30,7 +30,7 @@ namespace FubuMVC.Spark
 		{
 			sparkSettings ();
 
-			_engine.ViewFolder = new SparkItemViewFolder (_sparkTemplates);
+			_engine.ViewFolder = new TemplateViewFolder (_sparkTemplates);
 			_engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
 			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_sparkTemplates);
 		}

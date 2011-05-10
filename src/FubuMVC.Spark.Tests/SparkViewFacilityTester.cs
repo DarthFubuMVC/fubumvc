@@ -14,24 +14,24 @@ namespace FubuMVC.Spark.Tests
     [TestFixture]
     public class SparkViewFacilityTester : InteractionContext<SparkViewFacility>
     {
-        private IList<SparkItem> _items;
+        private IList<Template> _items;
 
         protected override void beforeEach()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _items = new List<SparkItem>
+            _items = new List<Template>
             {
-                new SparkItem(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "_partial1.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "ModelBView.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "_partial2.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "ModelCView.spark"), root, FubuSparkConstants.HostOrigin),
-                new SparkItem(Path.Combine(root, "Views", "Home", "_partial3.spark"), root, FubuSparkConstants.HostOrigin)
+                new Template(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine(root, "Views", "Home", "_partial1.spark"), root, FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine(root, "Views", "Home", "ModelBView.spark"), root, FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine(root, "Views", "Home", "_partial2.spark"), root, FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine(root, "Views", "Home", "ModelCView.spark"), root, FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine(root, "Views", "Home", "_partial3.spark"), root, FubuSparkConstants.HostOrigin)
             };
             new ViewDescriptor(_items[0]) { ViewModel = typeof(ModelA) };
             new ViewDescriptor(_items[2]) { ViewModel = typeof(ModelB) };
             new ViewDescriptor(_items[4]) { ViewModel = typeof(ModelC) };
-            MockFor<ISparkItemComposer>().Expect(c => c.ComposeViews(Arg<TypePool>.Is.Anything)).Return(_items);
+            MockFor<ITemplateComposer>().Expect(c => c.Compose(Arg<TypePool>.Is.Anything)).Return(_items);
         }
 
         public class ModelA { }

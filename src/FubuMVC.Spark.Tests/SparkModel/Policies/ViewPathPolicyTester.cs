@@ -11,7 +11,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()
         {
-            var item = new SparkItem("", "", FubuSparkConstants.HostOrigin);
+            var item = new Template("", "", FubuSparkConstants.HostOrigin);
             ClassUnderTest.Apply(item);
             item.ViewPath.ShouldBeEmpty();
         }
@@ -19,7 +19,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         [Test]
         public void when_origin_is_not_host_prefix_is_not_emtpy()
         {
-            var item = new SparkItem("", "", "Foo");
+            var item = new Template("", "", "Foo");
             ClassUnderTest.Apply(item);
             item.ViewPath.ShouldNotBeEmpty();
         }
@@ -27,10 +27,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         [Test]
         public void the_items_of_the_same_origin_have_the_same_prefix()
         {
-            var baz1 = new SparkItem("", "", "Baz");
-            var baz2 = new SparkItem("", "", "Baz");
-            var bar1 = new SparkItem("", "", "Bar");
-            var bar2 = new SparkItem("", "", "Bar");
+            var baz1 = new Template("", "", "Baz");
+            var baz2 = new Template("", "", "Baz");
+            var bar1 = new Template("", "", "Bar");
+            var bar2 = new Template("", "", "Bar");
 
             new[] { baz1, baz2, bar1, bar2 }.Each(x => ClassUnderTest.Apply(x));
 
@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
 		[Test]
         public void it_matches_when_viewpath_is_empty()
         {
-            var item = new SparkItem("", "", "Foo");
+            var item = new Template("", "", "Foo");
 			ClassUnderTest.Matches(item).ShouldBeTrue();
             ClassUnderTest.Apply(item);
 			ClassUnderTest.Matches(item).ShouldBeFalse();

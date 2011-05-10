@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private const string Package1 = "Package1";
         private const string Package2 = "Package2";
 
-        private readonly SparkItemViewFolder _viewFolder;
+        private readonly TemplateViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
         private readonly IEnumerable<ITemplate> _pak1Items;
@@ -41,14 +41,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
             
-            var allItems = new List<SparkItem>();
+            var allItems = new List<Template>();
             allItems.AddRange(scanner.FindInPackages());
             allItems.AddRange(scanner.FindInHost());
 
             var viewPathPolicy = new ViewPathPolicy();
             allItems.Each(viewPathPolicy.Apply);
 
-            _viewFolder = new SparkItemViewFolder(allItems);
+            _viewFolder = new TemplateViewFolder(allItems);
             _engine = new SparkViewEngine { ViewFolder = _viewFolder };
 
             _pak1Items = new List<ITemplate>(allItems.ByOrigin(Package1));
@@ -189,7 +189,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
         private string renderSparkItem(ITemplate template, params ITemplate[] templates)
         {
-            templates = templates ?? Enumerable.Empty<SparkItem>().ToArray();
+            templates = templates ?? Enumerable.Empty<Template>().ToArray();
             var descriptor = new SparkViewDescriptor();
             descriptor.AddTemplate(template.ViewPath);
             templates.Each(x => descriptor.AddTemplate(x.ViewPath));

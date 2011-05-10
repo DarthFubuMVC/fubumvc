@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    // TODO : Below needs changes wrt locating single or many.
+
     public interface ISharedTemplateLocator
     {
         ITemplate LocateTemplate(string name, ITemplate fromTemplate, IEnumerable<ITemplate> templates);

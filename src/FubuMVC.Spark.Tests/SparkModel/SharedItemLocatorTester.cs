@@ -21,7 +21,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         protected override void beforeEach()
         {
             var sharedDirectoryProvider = MockFor<ISharedDirectoryProvider>();
-            var fromItem = new SparkItem("", "", "");
+            var fromItem = new Template("", "", "");
             var sharedDirectories = new List<string>
             {
               Path.Combine("App","Views","Shared"),
@@ -30,13 +30,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
               Path.Combine("App","Actions","Shared"),
             };
 
-            var items = new List<SparkItem>
+            var items = new List<Template>
             {
-                new SparkItem(Path.Combine(sharedDirectories.ElementAt(0), "Company.spark"), "", ""),
-                new SparkItem(Path.Combine(sharedDirectories.ElementAt(1), "company.spark"), "", ""),
-                new SparkItem(Path.Combine(sharedDirectories.ElementAt(2), "application.spark"), "", ""),
-                new SparkItem(Path.Combine(sharedDirectories.ElementAt(3), "application.spark"), "", ""),
-                new SparkItem(Path.Combine("App","Views","Home", "header.spark"), "", ""),
+                new Template(Path.Combine(sharedDirectories.ElementAt(0), "Company.spark"), "", ""),
+                new Template(Path.Combine(sharedDirectories.ElementAt(1), "company.spark"), "", ""),
+                new Template(Path.Combine(sharedDirectories.ElementAt(2), "application.spark"), "", ""),
+                new Template(Path.Combine(sharedDirectories.ElementAt(3), "application.spark"), "", ""),
+                new Template(Path.Combine("App","Views","Home", "header.spark"), "", ""),
             };
 
             sharedDirectoryProvider.Stub(x => x.GetDirectories(fromItem, items)).Return(sharedDirectories);

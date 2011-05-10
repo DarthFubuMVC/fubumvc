@@ -9,9 +9,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateExtensionsTester
     {
-        private readonly SparkItem _bottomItem;
-        private readonly SparkItem _middleItem;
-        private readonly SparkItem _topItem;
+        private readonly Template _bottomItem;
+        private readonly Template _middleItem;
+        private readonly Template _topItem;
 
         public TemplateExtensionsTester()
         {
@@ -21,9 +21,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.spark");
             var topPath = Path.Combine(rootPath, "Livelock.spark");
             
-            _bottomItem = new SparkItem(bottomPath, rootPath, "chuck");
-            _middleItem = new SparkItem(middlePath, rootPath, "chuck");
-            _topItem = new SparkItem(topPath, rootPath, "chuck");
+            _bottomItem = new Template(bottomPath, rootPath, "chuck");
+            _middleItem = new Template(middlePath, rootPath, "chuck");
+            _topItem = new Template(topPath, rootPath, "chuck");
         }
 
         [Test]
@@ -61,21 +61,21 @@ namespace FubuMVC.Spark.Tests.SparkModel
 		[Test]
         public void is_partial_returns_true_if_file_starts_with_underscore_and_ends_with_dot_spark()
         {
-			new SparkItem("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
-			new SparkItem("_Template.htm", "", "").IsPartial().ShouldBeFalse();
+			new Template("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
+			new Template("_Template.htm", "", "").IsPartial().ShouldBeFalse();
         }
 		
 		[Test]
         public void is_spark_view_returns_true_if_file_ends_with_dot_spark()
         {
 			_bottomItem.IsSparkView().ShouldBeTrue();
-			new SparkItem("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
+			new Template("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
         }
 		
 		[Test]
         public void is_xml_returns_true_if_file_ends_with_xml()
         {
-			new SparkItem("bindings.xml", "", "").IsXml().ShouldBeTrue();
+			new Template("bindings.xml", "", "").IsXml().ShouldBeTrue();
         }
     }
 }

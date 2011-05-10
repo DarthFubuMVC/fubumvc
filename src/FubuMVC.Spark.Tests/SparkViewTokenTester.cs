@@ -12,13 +12,13 @@ namespace FubuMVC.Spark.Tests
     public class SparkViewTokenTester
     {
         private SparkViewToken _token;
-        private SparkItem _item;
+        private Template _item;
         private ViewDescriptor _descriptor;
         [SetUp]
         public void SetUp()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _item = new SparkItem(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin);
+            _item = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin);
             _descriptor = new ViewDescriptor(_item)
                                    {
                                        Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"}),
