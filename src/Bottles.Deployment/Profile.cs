@@ -9,11 +9,20 @@ namespace Bottles.Deployment
     {
         public static readonly string RecipePrefix = "recipe:";
         private readonly IList<string> _recipes = new List<string>();
-        private readonly EnvironmentSettings _settings = new EnvironmentSettings();
-        
+        private readonly EnvironmentSettings _settings;
+
+        public Profile() : this(new EnvironmentSettings())
+        {
+        }
+
+        public Profile(EnvironmentSettings settings)
+        {
+            _settings = settings;
+        }
+
         public void ReadText(string text)
         {
-            if (text.IsEmpty()) return;
+            if (text.Trim().IsEmpty()) return;
             if (text.StartsWith(RecipePrefix))
             {
                 var recipeName = text.Substring(RecipePrefix.Length).Trim();

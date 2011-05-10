@@ -23,6 +23,7 @@ namespace FubuMVC.HelloWorld
                 .IgnoreMethodSuffix("Command")
                 .IgnoreMethodSuffix("Query")
                 .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Command"), "POST")
+                .ConstrainToHttpMethod(action => action.Method.Name.EndsWith("Post"), "POST")
                 .ConstrainToHttpMethod(action => action.Method.Name.StartsWith("Query"), "GET");
 
             ApplyConvention<OutputModelSettingBehaviorConfiguration>();

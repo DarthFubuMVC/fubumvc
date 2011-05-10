@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Bottles.Configuration;
 using Bottles.Deployment;
 using Bottles.Deployment.Parsing;
+using Bottles.Deployment.Runtime;
 using Bottles.Deployment.Writing;
 using Bottles.Tests.Deployment.Writing;
 using FubuCore;
@@ -59,11 +60,104 @@ namespace Bottles.Tests.Deployment.Parsing
             writer.AddEnvironmentSetting<SimpleSettings>(x => x.Two, "h4", "env-value");
             writer.AddEnvironmentSetting("dbName", "blue");
 
+            writer.ProfileFor("default").AddRecipe("r1");
+            writer.ProfileFor("default").AddRecipe("r2");
+            writer.ProfileFor("default").AddRecipe("r3");
+            writer.ProfileFor("default").AddProperty<SimpleSettings>(x => x.One, "h3", "profile-value");
+            writer.ProfileFor("default").AddProperty("dbName", "profile-db");
+
             writer.Flush(FlushOptions.Wipeout);
 
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
 
-            theHosts = reader.Read();
+            theHosts = reader.Read(new DeploymentOptions("default"));
+        }
+
+        [Test]
+        public void read_profile_from_the_file()
+        {
+            var environment = new EnvironmentSettings();
+            var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
+            var profile = reader.ReadProfile(new DeploymentOptions("default"), environment);
+
+            environment.Overrides["dbName"].ShouldEqual("profile-db");
+
+            profile.Recipes.ShouldHaveTheSameElementsAs("r1", "r2", "r3");
+        }
+
+        [Test]
+        public void environment_properties_are_substituted_within_host_settings_but_profile_value_overrides_environment()
+        {
+            theHosts.First(x => x.Name == "h5").GetDirective<SimpleSettings>()
+                .One.ShouldEqual("*profile-db*");
+        }
+
+        [Test]
+        public void got_all_the_unique_hosts()
+        {
+            // Only the recipes loaded by the profile will count
+            theHosts.Select(x => x.Name).ShouldHaveTheSameElementsAs("h1", "h2", "h3");
+        }
+    }
+
+    [TestFixture]
+    public class DeploymentReaderIntegratedTester
+    {
+        private IEnumerable<HostManifest> theHosts;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var writer = new DeploymentWriter("clonewars");
+
+            var recipeDefinition = writer.RecipeFor("r1");
+            var host = recipeDefinition.HostFor("h1");
+
+            host.AddDirective(new SimpleSettings
+            {
+                One = "one",
+                Two = "two"
+            });
+
+            host.AddDirective(new OneSettings()
+            {
+                Name = "Jeremy",
+                Age = 37
+            });
+
+            host.AddReference(new BottleReference()
+            {
+                Name = "bottle1"
+            });
+
+            host.AddReference(new BottleReference()
+            {
+                Name = "bottle2"
+            });
+
+            recipeDefinition.HostFor("h2").AddProperty<ThreeSettings>(x => x.Direction, "North");
+            recipeDefinition.HostFor("h3").AddProperty<TwoSettings>(x => x.City, "Austin");
+
+
+            writer.RecipeFor("r2").HostFor("h3").AddProperty<SimpleSettings>(x => x.One, "one");
+            writer.RecipeFor("r3").HostFor("h3").AddProperty<SimpleSettings>(x => x.Two, "two");
+            writer.RecipeFor("r4").HostFor("h4").AddProperty<SimpleSettings>(x => x.Two, "ten");
+            writer.RecipeFor("r4").HostFor("h5").AddProperty<SimpleSettings>(x => x.Two, "ten");
+            writer.RecipeFor("r4").HostFor("h5").AddProperty<SimpleSettings>(x => x.One, "*{dbName}*");
+
+            writer.AddEnvironmentSetting<SimpleSettings>(x => x.Two, "h4", "env-value");
+            writer.AddEnvironmentSetting("dbName", "blue");
+
+            writer.ProfileFor("default").AddRecipe("r1");
+            writer.ProfileFor("default").AddRecipe("r2");
+            writer.ProfileFor("default").AddRecipe("r3");
+            writer.ProfileFor("default").AddRecipe("r4");
+
+            writer.Flush(FlushOptions.Wipeout);
+
+            var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
+
+            theHosts = reader.Read(new DeploymentOptions("default"));
         }
 
         [Test]

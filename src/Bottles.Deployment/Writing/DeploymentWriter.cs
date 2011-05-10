@@ -15,6 +15,9 @@ namespace Bottles.Deployment.Writing
         private readonly Cache<string, RecipeDefinition> _recipes =
             new Cache<string, RecipeDefinition>(name => new RecipeDefinition(name));
 
+        private readonly Cache<string, ProfileDefinition> _profiles = 
+            new Cache<string, ProfileDefinition>(name => new ProfileDefinition(name));
+
         private readonly DeploymentSettings _settings;
         private readonly IFileSystem _system;
         private readonly TypeDescriptorCache _types = new TypeDescriptorCache();
@@ -35,6 +38,11 @@ namespace Bottles.Deployment.Writing
             return _recipes[name];
         }
 
+        public ProfileDefinition ProfileFor(string name)
+        {
+            return _profiles[name];
+        }
+
         public void Flush(FlushOptions options)
         {
             var input = new InitializeInput(_settings);
@@ -48,6 +56,8 @@ namespace Bottles.Deployment.Writing
             writeEnvironmentSettings();
 
             _recipes.Each(writeRecipe);
+
+            _profiles.Each(writeProfile);
         }
 
         private void writeEnvironmentSettings()
@@ -59,6 +69,11 @@ namespace Bottles.Deployment.Writing
         private void writeRecipe(RecipeDefinition recipe)
         {
             new RecipeWriter(_types).WriteTo(recipe, _settings);
+        }
+
+        private void writeProfile(ProfileDefinition profile)
+        {
+            new ProfileWriter().WriteTo(profile, _settings);
         }
 
 

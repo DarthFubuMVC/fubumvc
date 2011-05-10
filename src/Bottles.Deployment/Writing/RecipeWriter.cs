@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Reflection;
 
@@ -20,6 +21,7 @@ namespace Bottles.Deployment.Writing
 
             _fileSystem.CreateDirectory(recipeDirectory);
 
+            // TODO -- get this into DeploymentSettings
             var controlFilePath = FileSystem.Combine(recipeDirectory, ProfileFiles.RecipesControlFile);
 
             new FileSystem().WriteToFlatFile(controlFilePath, writer =>

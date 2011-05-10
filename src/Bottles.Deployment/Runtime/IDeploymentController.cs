@@ -1,7 +1,7 @@
-﻿namespace Bottles.Deployment.Runtime
+namespace Bottles.Deployment.Runtime
 {
     public interface IDeploymentController
     {
-        void Deploy();
+        void Deploy(DeploymentOptions options);
     }
 }

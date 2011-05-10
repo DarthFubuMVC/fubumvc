@@ -7,6 +7,27 @@ using System.Linq;
 
 namespace Bottles.Deployment.Runtime
 {
+    public class DeploymentOptions
+    {
+        private readonly IList<string> _recipeNames = new List<string>();
+
+        public DeploymentOptions() : this("default")
+        {
+        }
+
+        public DeploymentOptions(string profileName)
+        {
+            ProfileName = profileName;
+        }
+
+        public string ProfileName { get; private set; }
+
+        public IList<string> RecipeNames
+        {
+            get { return _recipeNames; }
+        }
+    }
+
     public class DeploymentController : IDeploymentController
     {
         private readonly IProfileReader _reader;
@@ -20,10 +41,10 @@ namespace Bottles.Deployment.Runtime
             _factory = factory;
         }
 
-        public void Deploy()
+        public void Deploy(DeploymentOptions options)
         {
             // need to log inside of reader
-            var hosts = _reader.Read();
+            var hosts = _reader.Read(options);
 
             var runners = _factory.BuildRunners(hosts);
 

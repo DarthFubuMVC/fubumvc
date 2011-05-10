@@ -52,7 +52,7 @@ namespace Bottles.Tests.Deployment
 
             var container = DeploymentBootstrapper.Bootstrap(settings);
             var deploymentController = container.GetInstance<IDeploymentController>();
-            deploymentController.Deploy();
+            deploymentController.Deploy(new DeploymentOptions());
         }
 
     }

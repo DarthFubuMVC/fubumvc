@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Configuration;
+using Bottles.Deployment.Runtime;
 using FubuCore;
 
 namespace Bottles.Deployment.Parsing
@@ -18,15 +20,41 @@ namespace Bottles.Deployment.Parsing
             _settings = settings;
         }
 
-        // TODO -- recipe selection / filtering
-        public IEnumerable<HostManifest> Read()
+        // TODO
+        //         -- unless Recipes is non-empty, then use that one
+        //         -- fill in the recipes
+        public static IEnumerable<Recipe> FilterRecipes(Profile profile, DeploymentOptions options, IEnumerable<Recipe> recipes)
+        {
+            return recipes;
+        }
+
+        public Profile ReadProfile(DeploymentOptions options, EnvironmentSettings settings)
+        {
+            var profileFile = _settings.GetProfile(options.ProfileName);
+            var profile = new Profile(settings);
+
+            _fileSystem.ReadTextFile(profileFile, profile.ReadText);
+
+            return profile;
+        }
+
+        public IEnumerable<HostManifest> Read(DeploymentOptions options)
         {
             var environment = EnvironmentSettings.ReadFrom(_settings.EnvironmentFile);
             environment.SetRoot(_settings.TargetDirectory);
 
-            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
-            recipes = _sorter.Order(recipes);
+            var profile = ReadProfile(options, environment);
 
+            var recipes = readRecipes(environment, options, profile);
+            var hosts = collateHosts(recipes);
+
+            addEnvironmentSettingsToHosts(environment, hosts);
+            
+            return hosts;
+        }
+
+        private IEnumerable<HostManifest> collateHosts(IEnumerable<Recipe> recipes)
+        {
             // TODO -- throw up if no recipes
             //REVIEW: hardening
             if (recipes == null || !recipes.Any())
@@ -36,12 +64,16 @@ namespace Bottles.Deployment.Parsing
             var firstRecipe = recipes.First();
             recipes.Skip(1).Each(firstRecipe.AppendBehind);
 
-            var hosts = firstRecipe.Hosts;
+            return firstRecipe.Hosts;
+        }
 
-            addEnvironmentSettingsToHosts(environment, hosts);
-
-            
-            return hosts;
+        private IEnumerable<Recipe> readRecipes(EnvironmentSettings environment, DeploymentOptions options, Profile profile)
+        {
+            // TODO -- log which recipes are read
+            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
+            recipes = FilterRecipes(profile, options, recipes);
+            recipes = _sorter.Order(recipes);
+            return recipes;
         }
 
         private static void addEnvironmentSettingsToHosts(EnvironmentSettings environment, IEnumerable<HostManifest> hosts)
