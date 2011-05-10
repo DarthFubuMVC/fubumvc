@@ -11,28 +11,23 @@ namespace FubuMVC.Spark.SparkModel
     // TODO: UT
     public class ViewDescriptor : ISparkDescriptor
     {
+        private readonly ITemplate _template;
         private readonly IList<ITemplate> _bindings = new List<ITemplate>();
         public ViewDescriptor(ITemplate template)
         {
-            Template = template;
+            _template = template;
         }
 
-        public string Name { get { return "View"; } }
+        string ISparkDescriptor.Name { get { return "View"; } }
 
-        public ITemplate Template { get; private set; }
+        public string Name() { return _template.Name(); }
         public ITemplate Master { get; set; }
-        public IEnumerable<ITemplate> Bindings
-        {
-            get { return _bindings; }
-        }
-
+        public IEnumerable<ITemplate> Bindings { get { return _bindings; } }
         public Type ViewModel { get; set; }
         public string Namespace { get; set; }
-
-        public void AddBinding(ITemplate template)
-        {
-            _bindings.Add(template);
-        }
+        public string ViewPath { get { return _template.ViewPath; } }
+        public string RelativePath() { return _template.RelativePath(); }
+        public void AddBinding(ITemplate template) { _bindings.Add(template); }
 
         public bool HasViewModel()
         {

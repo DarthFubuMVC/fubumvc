@@ -34,7 +34,7 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
         {
-            var sparkDescriptor = new SparkViewDescriptor().AddTemplate(_descriptor.Template.ViewPath);
+            var sparkDescriptor = new SparkViewDescriptor().AddTemplate(_descriptor.ViewPath);
             if (useMaster && _descriptor.Master != null)
             {
                 sparkDescriptor.AddTemplate(_descriptor.Master.ViewPath);
@@ -60,7 +60,7 @@ namespace FubuMVC.Spark.Registration.Nodes
 
         public override string Description
         {
-            get { return string.Format("Spark [{0}]", _descriptor.Template.RelativePath()); }
+            get { return string.Format("Spark [{0}]", _descriptor.RelativePath()); }
         }
     }
 }

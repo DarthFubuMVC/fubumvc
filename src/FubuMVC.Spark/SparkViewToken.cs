@@ -33,7 +33,7 @@ namespace FubuMVC.Spark
 
         public string Name
         {
-            get { return _descriptor.Template.Name(); }
+            get { return _descriptor.Name(); }
         }
 
         public string Folder
@@ -42,7 +42,7 @@ namespace FubuMVC.Spark
         }
         public override string ToString()
         {
-            return _descriptor.Template.RelativePath();
+            return _descriptor.RelativePath();
         }
     }
 }

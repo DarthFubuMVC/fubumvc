@@ -37,6 +37,7 @@ namespace FubuMVC.Spark.SparkModel
         void Bind(IBindRequest request);
 	}
 
+    // TODO: UT
     public class ViewDescriptorBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
