@@ -70,12 +70,8 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var template = request.Target;
-            // Fix this up. Should not be necessary to check for is spark view and partial as that is the precondition for having a ViewDescriptor.
-            return template.Descriptor is ViewDescriptor 
-                && request.Master != string.Empty 
-                && template.IsSparkView() 
-                && !template.IsPartial();
-		}
+            return template.Descriptor is ViewDescriptor && request.Master != string.Empty;
+        }
 
         public void Bind(IBindRequest request)
         {

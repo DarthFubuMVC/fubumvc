@@ -48,31 +48,34 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             return new List<Template>
             {
-                newTemplate(_pak1Root, Pak1, "Actions", "Controllers", "Home", "Home.spark"),
-                newTemplate(_pak1Root, Pak1, "Actions", "Handlers", "Products", "list.spark"),
-                newTemplate(_pak1Root, Pak1, "Actions", "Shared", "application.spark"),
-                newTemplate(_pak2Root, Pak2, "Features", "Controllers", "Home", "Home.spark"),
-                newTemplate(_pak2Root, Pak2, "Features", "Handlers", "Products", "list.spark"),
-                newTemplate(_pak2Root, Pak2, "Shared", "application.spark"),
+                newTemplate(_pak1Root, Pak1, true, "Actions", "Controllers", "Home", "Home.spark"), // 0
+                newTemplate(_pak1Root, Pak1, true, "Actions", "Handlers", "Products", "list.spark"), // 1
+                newTemplate(_pak1Root, Pak1, false, "Actions", "Shared", "application.spark"), // 2
+                newTemplate(_pak2Root, Pak2, true, "Features", "Controllers", "Home", "Home.spark"), // 3
+                newTemplate(_pak2Root, Pak2, true, "Features", "Handlers", "Products", "list.spark"), // 4
+                newTemplate(_pak2Root, Pak2, false, "Shared", "application.spark"), // 5
                 
-                newTemplate(_pak3Root, Pak3, "Features", "Controllers", "Home", "Home.spark"),
+                newTemplate(_pak3Root, Pak3, true, "Features", "Controllers", "Home", "Home.spark"), // 6
 				
-                newTemplate(_hostRoot, Host, "Actions", "Shared", "application.spark"),
-                newTemplate(_hostRoot, Host, "Features", "Mixer", "chuck.spark"),
-                newTemplate(_hostRoot, Host, "Features", "Mixer", "Shared", "application.spark"),                
-                newTemplate(_hostRoot, Host, "Features", "roundkick.spark"),
-                newTemplate(_hostRoot, Host, "Handlers", "Products", "details.spark"),
-				newTemplate(_hostRoot, Host, "Shared", "bindings.xml"),				
-                newTemplate(_hostRoot, Host, "Shared", "_Partial.spark"),
-				newTemplate(_hostRoot, Host, "Shared", "application.spark")
+                newTemplate(_hostRoot, Host, false, "Actions", "Shared", "application.spark"), // 7
+                newTemplate(_hostRoot, Host, true, "Features", "Mixer", "chuck.spark"), // 8
+                newTemplate(_hostRoot, Host, false, "Features", "Mixer", "Shared", "application.spark"), // 9
+                newTemplate(_hostRoot, Host, true, "Features", "roundkick.spark"), // 10
+                newTemplate(_hostRoot, Host, true, "Handlers", "Products", "details.spark"), // 11
+				newTemplate(_hostRoot, Host, false, "Shared", "bindings.xml"), // 12
+                newTemplate(_hostRoot, Host, false, "Shared", "_Partial.spark"), // 13
+				newTemplate(_hostRoot, Host, false, "Shared", "application.spark") // 14
             };
         }
 
-        private Template newTemplate(string root, string origin, params string[] relativePaths)
+        private static Template newTemplate(string root, string origin, bool isView, params string[] relativePaths)
         {
-            var paths = new[]{root}.Union(relativePaths).ToArray();
+            var paths = new[] { root }.Union(relativePaths).ToArray();
             var template = new Template(FileSystem.Combine(paths), root, origin);
-            template.Descriptor = new ViewDescriptor(template);            
+            if (isView)
+            {
+                template.Descriptor = new ViewDescriptor(template);
+            }
             return template;
         }
 
@@ -127,16 +130,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-        public void if_item_is_a_master_page_it_is_not_bound_to_itself()
-        {
-			var template = _templates.Last();
-            _request.Target = template;
-
-            ClassUnderTest.Bind(_request);
-            template.Descriptor.As<ViewDescriptor>().Master.ShouldBeNull();
-        }
-
-        [Test]
 		public void	if_explicit_empty_master_then_binder_is_not_applied()
         {
             var template = _templates.ElementAt(3);
@@ -145,24 +138,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 
 			ClassUnderTest.CanBind(_request).ShouldBeFalse();	
 		}
-		
-		[Test]
-		public void	if_spark_item_is_not_normal_view_then_binder_is_not_applied()
-		{
+        [Test]
+        public void if_descriptor_is_not_viewdescriptor_then_binder_is_not_applied()
+        {
             var template = _templates.ElementAt(12);
             _request.Target = template;
-
-			ClassUnderTest.CanBind(_request).ShouldBeFalse();	
-		}
-		
-		[Test]
-		public void	if_spark_item_is_partial_then_binder_is_not_applied()
-		{
-            var template = _templates.ElementAt(13);
-		    _request.Master = null;
-            _request.Target = template;
-
-			ClassUnderTest.CanBind(_request).ShouldBeFalse();	
-		}
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
     }
 }
