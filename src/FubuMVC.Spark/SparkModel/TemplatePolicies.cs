@@ -14,9 +14,9 @@ namespace FubuMVC.Spark.SparkModel
     {
         public bool Matches(ITemplate template)
         {
-            var descriptor = template.Descriptor;
-			
-            return descriptor is ViewDescriptor 
+            var descriptor = template.Descriptor as ViewDescriptor;
+						
+            return descriptor != null
 				&& descriptor.HasViewModel() 
 				&& descriptor.Namespace.IsEmpty();
         }
