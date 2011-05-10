@@ -29,6 +29,11 @@ namespace Bottles.Deployment
             return provider.SettingsFor<T>();
         }
 
+        public IEnumerable<SettingDataSource> CreateDiagnosticReport()
+        {
+            return new SettingsProvider(_resolver, _data).CreateDiagnosticReport();
+        }
+
         public IDirective GetDirective(Type directiveType)
         {
             var provider = new SettingsProvider(_resolver, _data);

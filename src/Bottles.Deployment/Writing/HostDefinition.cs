@@ -46,6 +46,14 @@ namespace Bottles.Deployment.Writing
             });
         }
 
+        public void AddProperty(string key, string value)
+        {
+            _values.Add(new PropertyValue(){
+                Name = key,
+                Value = value
+            });
+        }
+
         public IEnumerable<IDirective> Directives
         {
             get { return _directives; }

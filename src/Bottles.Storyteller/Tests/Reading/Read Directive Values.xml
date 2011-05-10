@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Read Directive Values" lifecycle="Acceptance">
+<Test name="Read Directive Values" lifecycle="Regression">
   <Deployment>
     <Configure isStep="True">
       <DeploymentConfiguration>
@@ -27,8 +27,8 @@
         <FetchPropertiesForHost isStep="True" host="ConsoleHost" />
         <CheckPropertiesForHost isStep="True">
           <rows>
-            <row isStep="True" Key="Command" Value="Ping" Provenance="Recipe:Console" />
-            <row isStep="True" Key="Args" Value="www.google.com" Provenance="Recipe:Console" />
+            <row isStep="True" Key="Command" Value="Ping" Provenance="storyteller\recipes\Console\ConsoleHost.host" />
+            <row isStep="True" Key="Args" Value="www.google.com" Provenance="storyteller\recipes\Console\ConsoleHost.host" />
           </rows>
         </CheckPropertiesForHost>
       </ProfileReader>

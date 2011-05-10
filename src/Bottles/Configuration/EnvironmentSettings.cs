@@ -13,7 +13,7 @@ namespace Bottles.Configuration
         public static readonly string ROOT = "root";
 
         private readonly Cache<string, string> _overrides = new Cache<string, string>();
-        private readonly Cache<string, SettingsData> _settings = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment));
+        private readonly Cache<string, SettingsData> _settings = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment){Provenance = EnvironmentSettingsFileName});
         private readonly SettingsData _environmentSettings = new SettingsData(SettingCategory.environment){
             Provenance = "Environment settings"
         };

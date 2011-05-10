@@ -92,12 +92,7 @@ namespace Bottles.Tests.Deployment.Parsing
                 .One.ShouldEqual("*profile-db*");
         }
 
-        [Test]
-        public void got_all_the_unique_hosts()
-        {
-            // Only the recipes loaded by the profile will count
-            theHosts.Select(x => x.Name).ShouldHaveTheSameElementsAs("h1", "h2", "h3");
-        }
+
     }
 
     [TestFixture]

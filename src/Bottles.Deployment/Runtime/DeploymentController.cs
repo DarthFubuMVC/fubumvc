@@ -20,7 +20,7 @@ namespace Bottles.Deployment.Runtime
             ProfileName = profileName;
         }
 
-        public string ProfileName { get; private set; }
+        public string ProfileName { get; set; }
 
         public IList<string> RecipeNames
         {

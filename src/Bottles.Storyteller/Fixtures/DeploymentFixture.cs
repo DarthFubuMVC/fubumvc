@@ -1,5 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Bottles.Deployment;
+using Bottles.Deployment.Parsing;
+using Bottles.Deployment.Runtime;
+using Bottles.Deployment.Writing;
+using FubuCore;
 using FubuCore.Configuration;
 using StoryTeller;
 using StoryTeller.Engine;
@@ -22,49 +29,78 @@ namespace Bottles.Storyteller.Fixtures
 
     public class DeploymentOptionsFixture : Fixture
     {
+        private DeploymentOptions _options;
+
+        public override void SetUp(ITestContext context)
+        {
+            _options = new DeploymentOptions();
+            context.Store(_options);
+        }
+
         [FormatAs("Profile is {profile}")]
         public void ProfileIs(string profile)
         {
-            throw new NotImplementedException();
+            _options.ProfileName = profile;
         }
 
         [FormatAs("Recipes are {recipes}")]
         public void Recipes(string[] recipes)
         {
-            throw new NotImplementedException();
+            _options.RecipeNames.AddRange(recipes);
         }
     }
 
     public class DeploymentConfigurationFixture : Fixture
     {
+        private DeploymentSettings _settings;
+        private DeploymentWriter _writer;
+
+        public override void SetUp(ITestContext context)
+        {
+            _settings = new DeploymentSettings("storyteller");
+            context.Store(_settings);
+
+            _writer = new DeploymentWriter("storyteller");
+        }
+
+        public override void TearDown()
+        {
+            Debug.WriteLine("Writing to " + _settings.DeploymentDirectory.ToFullPath());
+            _writer.Flush(FlushOptions.Wipeout);
+        }
+
+
         [ExposeAsTable("The environment settings are")]
         public void EnvironmentSettings(string Key, string Value)
         {
-            throw new NotImplementedException();
+            _writer.AddEnvironmentSetting(Key, Value);
         }
 
         [ExposeAsTable("The profile settings are")]
         public void ProfileSettings(string ProfileName, string Key, string Value)
         {
-            throw new NotImplementedException();
+            _writer.ProfileFor(ProfileName).AddProperty(Key, Value);
         }
 
         [FormatAs("Profile {profile} contains recipe(s) {recipeNames}")]
         public void ProfileRecipes(string profile, string[] recipeNames)
         {
-            throw new NotImplementedException();
+            
+            var profileDef = _writer.ProfileFor(profile);
+            recipeNames.Each(profileDef.AddRecipe);
         }
 
         [FormatAs("Recipe {recipe} depends on other recipe(s) {dependencies}")]
         public void RecipeDependencies(string recipe, string[] dependencies)
         {
-            throw new NotImplementedException();
+            var recipeDef = _writer.RecipeFor(recipe);
+            dependencies.Each(recipeDef.RegisterDependency);
         }
 
         [ExposeAsTable("The host directive values are")]
         public void HostValues(string Recipe, string Host, string Key, string Value)
         {
-            throw new NotImplementedException();
+            _writer.RecipeFor(Recipe).HostFor(Host).AddProperty(Key, Value);
         }
     }
 
@@ -73,12 +109,22 @@ namespace Bottles.Storyteller.Fixtures
     public class ProfileReaderFixture : Fixture
     {
         private IEnumerable<SettingDataSource> _hostData;
+        private DeploymentSettings _deploymentSettings;
+        private DeploymentOptions _deploymentOptions;
+        private ProfileReader _profileReader;
 
+        public override void SetUp(ITestContext context)
+        {
+            _deploymentSettings = context.Retrieve<DeploymentSettings>();
+            _deploymentOptions = context.Retrieve<DeploymentOptions>();
+            _profileReader = new ProfileReader(new RecipeSorter(), _deploymentSettings, new FileSystem());
+        }
 
         [FormatAs("All the properties for host {host} are")]
         public void FetchPropertiesForHost(string host)
         {
-            throw new NotImplementedException();            
+            _hostData = _profileReader.Read(_deploymentOptions)
+                .Single(h => h.Name == host).CreateDiagnosticReport();
         }
 
         public IGrammar CheckPropertiesForHost()
@@ -98,7 +144,7 @@ namespace Bottles.Storyteller.Fixtures
 
         private IEnumerable<string> findHosts()
         {
-            throw new NotImplementedException();
+            return _profileReader.Read(_deploymentOptions).Select(h=>h.Name);
         }
 
 
