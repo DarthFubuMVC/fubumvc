@@ -14,12 +14,11 @@ namespace FubuMVC.Spark.SparkModel
     {
         public bool Matches(ITemplate template)
         {
-            var descriptor = template.Descriptor as ViewDescriptor;
-            if (descriptor == null)
-            {
-                return false;
-            }
-            return descriptor.HasViewModel() && descriptor.Namespace.IsEmpty();
+            var descriptor = template.Descriptor;
+			
+            return descriptor is ViewDescriptor 
+				&& descriptor.HasViewModel() 
+				&& descriptor.Namespace.IsEmpty();
         }
 
         public void Apply(ITemplate template)
@@ -28,10 +27,12 @@ namespace FubuMVC.Spark.SparkModel
             var relativeNamespace = Path.GetDirectoryName(relativePath);
             var descriptor = template.Descriptor.As<ViewDescriptor>();
             var nspace = descriptor.ViewModel.Assembly.GetName().Name;
+			
             if (relativeNamespace.IsNotEmpty())
             {
                 nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
             }
+			
             descriptor.Namespace = nspace;
         }
     }

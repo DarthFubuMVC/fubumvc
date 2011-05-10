@@ -69,8 +69,8 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            var template = request.Target;
-            return template.Descriptor is ViewDescriptor && request.Master != string.Empty;
+            return request.Target.Descriptor is ViewDescriptor 
+				&& request.Master != string.Empty;
         }
 
         public void Bind(IBindRequest request)
