@@ -65,6 +65,7 @@
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
+    <Compile Include="SparkModel\ReachableDirectoryLocator.cs" />
     <Compile Include="SparkModel\Descriptors.cs" />
     <Compile Include="SparkModel\FubuSparkConstants.cs" />
     <Compile Include="SparkModel\SharedDirectoryProvider.cs" />
@@ -87,7 +88,6 @@
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />
-    <Compile Include="SparkModel\SharedPathBuilder.cs" />
     <Compile Include="SparkModel\Scanning\ScanRequestExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

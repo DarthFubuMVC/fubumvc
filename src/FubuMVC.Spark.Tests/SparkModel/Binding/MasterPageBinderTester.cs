@@ -96,7 +96,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target = template;
             
             ClassUnderTest.Bind(_request);
-            _templates.ElementAt(5).ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.ElementAt(5));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target = template;
             
             ClassUnderTest.Bind(_request);
-            _templates.Last().ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.Last());
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target = template;
 
             ClassUnderTest.Bind(_request);
-            _templates.ElementAt(9).ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.ElementAt(9));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target = template;
 
             ClassUnderTest.Bind(_request);
-            _templates.Last().ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.Last());
         }
 
         [Test]

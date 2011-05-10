@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -120,46 +121,38 @@ namespace FubuMVC.Spark.SparkModel
 		}
 	}
 
-    // TODO : We need to utilize same algorithm that is used for locating shared paths. 
+    public class ReachableBindingsBinder : ITemplateBinder
+    {
+        private readonly IReachableDirectoryLocator _reachableDirectoryLocator;
+        private const string Bindings = "bindings.xml";
 
-    //public class ReachableBindingsBinder : ISparkTemplateBinder
-    //{
-    //    private const string Bindings = "bindings.xml";
+        public ReachableBindingsBinder()
+            : this(new ReachableDirectoryLocator())
+        {
+        }
 
-    //    public bool CanBind(ITemplate template, IBindContext context)
-    //    {
-    //        return template.Descriptor is ViewDescriptor;
-    //    }
+        public ReachableBindingsBinder(IReachableDirectoryLocator reachableDirectoryLocator)
+        {
+            _reachableDirectoryLocator = reachableDirectoryLocator;
+        }
+        public bool CanBind(IBindRequest request)
+        {
+            return request.Target.Descriptor is ViewDescriptor;
+        }
 
-    //    public void Bind(ITemplate template, IBindContext context)
-    //    {
-    //        var descriptor = template.Descriptor.As<ViewDescriptor>();
-    //        var candidates = context.AvailableTemplates
-    //            .Where(x => x.IsXml()).Where(x => x.Name() == Bindings)
-    //            .ToList();
-    //        var bindings = getTemplates(template, candidates);
-    //        bindings.Each(descriptor.AddBinding);
+        public void Bind(IBindRequest request)
+        {
+            var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
 
-    //    }
-    //    private static IEnumerable<ITemplate> getTemplates(ITemplate template, IEnumerable<ITemplate> candidates)
-    //    {
-    //        var directory = Path.GetDirectoryName(template.ViewPath) ?? string.Empty;
-    //        var templates = new List<ITemplate>();
-    //        do
-    //        {
-    //            var nearestPath = Path.Combine(directory, Bindings);
-    //            var sharedPath = Path.Combine(directory, Constants.Shared, Bindings);
-    //            templates.AddRange(candidates.Where(x => x.ViewPath == nearestPath || x.ViewPath == sharedPath));
-    //            if (directory.Length > 0)
-    //            {
-    //                directory = Path.GetDirectoryName(directory);
-    //            }
-    //            else
-    //            {
-    //                break;
-    //            }
-    //        } while (directory != null);
-    //        return templates;
-    //    }
-    //}
+            var candidates = request.Templates.Where(x => x.Name() == Bindings).Where(x => x.IsXml()).ToList();
+            
+            var reachables = _reachableDirectoryLocator
+                .GetDirectories(request.Target, request.Templates)
+                .Select(x => x.Path).ToList();
+
+            var bindings = candidates.InDirectories(reachables);
+            
+            bindings.Each(descriptor.AddBinding);
+        }
+    }
 }

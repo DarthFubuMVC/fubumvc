@@ -43,6 +43,10 @@ namespace FubuMVC.Spark.SparkModel
 		{
             return Path.GetExtension(template.FilePath).Equals(".xml");
         }
+        public static bool FromHost(this ITemplate template)
+        {
+            return template.Origin == FubuSparkConstants.HostOrigin;
+        }
     }
 
     // TODO: Reconsider this (ITemplate).
@@ -66,10 +70,7 @@ namespace FubuMVC.Spark.SparkModel
 		// TODO: UT
         public static IEnumerable<ITemplate> InDirectories(this IEnumerable<ITemplate> templates, IEnumerable<string> directories)
         {
-            var predicate = new CompositePredicate<ITemplate>();
-            predicate = directories.Aggregate(predicate, (current, local) => current + (x => x.DirectoryPath() == local));
-            return templates.Where(predicate.MatchesAny);
+            return directories.SelectMany(local => templates.Where(x => x.DirectoryPath() == local));
         }
-
     }
 }
