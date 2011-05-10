@@ -72,10 +72,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var paths = new[]{root}.Union(relativePaths).ToArray();
             var template = new Template(FileSystem.Combine(paths), root, origin);
-            
-            // Ahh - this is not so smart.
-            new ViewDescriptor(template);
-            
+            template.Descriptor = new ViewDescriptor(template);            
             return template;
         }
 

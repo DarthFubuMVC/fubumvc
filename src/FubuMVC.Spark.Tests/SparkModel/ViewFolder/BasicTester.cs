@@ -44,7 +44,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _pak2ApplicationView = new Template(Path.Combine(_pak2, "Shared", "application.spark"), _hostRoot, "Pak2");
             _pak2ThemeView = new Template(Path.Combine(_pak2, "Shared", "theme.spark"), _hostRoot, "Pak2");
 
-            var sparkItems = new List<Template>
+            var templates = new List<Template>
             {
                 _hostHomeView, _hostApplicationView, _hostFooterPartialView,
                 _pak1HomeView, _pak1NamePartialView,
@@ -52,9 +52,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             };
 
             var viewPathPolicy = new ViewPathPolicy();
-            sparkItems.Each(viewPathPolicy.Apply);
+            templates.Each(viewPathPolicy.Apply);
 
-            _viewFolder = new TemplateViewFolder(sparkItems);
+            _viewFolder = new TemplateViewFolder(templates);
         }
 
         [Test]

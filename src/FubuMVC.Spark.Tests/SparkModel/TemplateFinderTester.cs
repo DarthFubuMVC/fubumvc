@@ -13,8 +13,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
     public class TemplateFinderTester : InteractionContext<TemplateFinder>
     {
         private readonly string _templatePath;
+
         private PackageInfo _pak1;
         private PackageInfo _pak2;
+
         private string _pak1Path;
         private string _pak2Path;
 
@@ -42,13 +44,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void finder_locates_all_relevant_spark_items()
+        public void finder_locates_all_relevant_spark_templates()
         {
             ClassUnderTest.FindInHost().ShouldHaveCount(48);
         }
 
         [Test]
-        public void exclude_directory_makes_the_finder_to_skip_completely_the_directory()
+        public void exclude_directory_makes_finder_skip_directory_completely()
         {
             ClassUnderTest.ExcludeHostDirectory("App");
             ClassUnderTest.ExcludeHostDirectory("Package2", "Handlers", "Shared");
@@ -57,7 +59,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void include_file_makes_the_matching_files_to_be_included_when_finding_items()
+        public void include_file_makes_matching_files_to_be_included_when_finding_templates()
         {
             ClassUnderTest.IncludeFile("file.*");
             ClassUnderTest.IncludeFile("baz.*");
@@ -78,7 +80,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void all_the_items_found_in_host_have_host_as_origin()
+        public void all_templates_found_in_host_have_host_as_origin()
         {
             ClassUnderTest.FindInHost()
                 .All(x => x.Origin == FubuSparkConstants.HostOrigin)
@@ -87,7 +89,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
 
         [Test]
-        public void all_the_items_found_in_host_have_root_as_host_path()
+        public void all_templates_found_in_host_have_root_as_host_path()
         {
             ClassUnderTest.FindInHost()
                 .All(x => x.RootPath == _templatePath)
@@ -96,7 +98,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
 
         [Test]
-        public void items_found_in_host_have_set_their_filepath()
+        public void templates_found_in_host_have_set_their_filepath()
         {
             var items = ClassUnderTest.FindInHost().ToList();
             items.ShouldContain(x => x.FilePath == Path.Combine(_templatePath, "A3.spark"));
@@ -106,14 +108,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void find_in_packages_scan_the_packages_web_content_folder()
+        public void find_in_packages_scans_the_packages_web_content_folder()
         {
             var items = ClassUnderTest.FindInPackages();
             items.ShouldHaveCount(16);
         }
 
         [Test]
-        public void the_items_found_in_packages_have_the_origin_as_the_package_name()
+        public void templates_found_in_packages_have_package_name_as_origin()
         {
             var items = ClassUnderTest.FindInPackages();
 
@@ -122,7 +124,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void the_items_found_in_packages_have_the_root_path_as_the_package_name_web_content_folder()
+        public void templates_found_in_packages_have_package_name_web_content_folder_as_root_path()
         {
             var items = ClassUnderTest.FindInPackages();
 

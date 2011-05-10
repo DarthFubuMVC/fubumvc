@@ -12,12 +12,9 @@ namespace FubuMVC.Spark.SparkModel
     public class ViewDescriptor : ISparkDescriptor
     {
         private readonly IList<ITemplate> _bindings = new List<ITemplate>();
-
         public ViewDescriptor(ITemplate template)
         {
             Template = template;
-            // Ahh..
-            Template.Descriptor = this;
         }
 
         public string Name { get { return "View"; } }
@@ -41,8 +38,8 @@ namespace FubuMVC.Spark.SparkModel
         {
             return ViewModel != null;
         }
-
     }
+
     public class NulloDescriptor : ISparkDescriptor
     {
         public string Name { get { return "Template"; } }

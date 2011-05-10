@@ -23,7 +23,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
             var path = Path.Combine(_root, "controllers", "home", "home.spark");
             var item = new Template(path, _root, "");
-            new ViewDescriptor(item) {ViewModel = typeof (FooViewModel)};
+            item.Descriptor = new ViewDescriptor(item)
+            {
+                ViewModel = typeof (FooViewModel)
+            };
+            
             ClassUnderTest.Apply(item);
             item.Descriptor.As<ViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests.controllers.home");
         }
@@ -33,7 +37,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
             var path = Path.Combine(_root, "home.spark");
             var item = new Template(path, _root, "");
-            item.Descriptor = new ViewDescriptor(item) { ViewModel = typeof(FooViewModel) };
+            item.Descriptor = new ViewDescriptor(item)
+            {
+                ViewModel = typeof(FooViewModel)
+            };
             
             ClassUnderTest.Apply(item);
             item.Descriptor.As<ViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests");
@@ -44,7 +51,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
             var path = Path.Combine(_root, "home.spark");
             var item = new Template(path, _root, "");
-            new ViewDescriptor(item) { ViewModel = typeof(FooViewModel) };
+            item.Descriptor = new ViewDescriptor(item)
+            {
+                ViewModel = typeof(FooViewModel)
+            };
 			
 			ClassUnderTest.Matches(item).ShouldBeTrue();
         }		
@@ -63,17 +73,15 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
 			var path = Path.Combine(_root, "home.spark");
             var item = new Template(path, _root, "");
-            new ViewDescriptor(item)
+            item.Descriptor = new ViewDescriptor(item)
             {
                 ViewModel = typeof(FooViewModel),
                 Namespace = "Someone.Else.Did.This" 
             };
+
 			ClassUnderTest.Matches(item).ShouldBeFalse();
-        }		
-		
+        }	
     }
 
-    public class FooViewModel
-    {
-    }
+    public class FooViewModel {}
 }

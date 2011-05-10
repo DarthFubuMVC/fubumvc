@@ -50,7 +50,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(IBindRequest request)
         {
-           new ViewDescriptor(request.Target);
+            request.Target.Descriptor = new ViewDescriptor(request.Target);
         }
     }
 

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -14,12 +12,12 @@ namespace FubuMVC.Spark.Tests
     [TestFixture]
     public class SparkViewFacilityTester : InteractionContext<SparkViewFacility>
     {
-        private IList<Template> _items;
+        private IList<Template> _templates;
 
         protected override void beforeEach()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _items = new List<Template>
+            _templates = new List<Template>
             {
                 new Template(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine(root, "Views", "Home", "_partial1.spark"), root, FubuSparkConstants.HostOrigin),
@@ -28,10 +26,12 @@ namespace FubuMVC.Spark.Tests
                 new Template(Path.Combine(root, "Views", "Home", "ModelCView.spark"), root, FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine(root, "Views", "Home", "_partial3.spark"), root, FubuSparkConstants.HostOrigin)
             };
-            new ViewDescriptor(_items[0]) { ViewModel = typeof(ModelA) };
-            new ViewDescriptor(_items[2]) { ViewModel = typeof(ModelB) };
-            new ViewDescriptor(_items[4]) { ViewModel = typeof(ModelC) };
-            MockFor<ITemplateComposer>().Expect(c => c.Compose(Arg<TypePool>.Is.Anything)).Return(_items);
+            
+            _templates[0].Descriptor = new ViewDescriptor(_templates[0]) { ViewModel = typeof(ModelA) };
+            _templates[2].Descriptor = new ViewDescriptor(_templates[2]) { ViewModel = typeof(ModelB) };
+            _templates[4].Descriptor = new ViewDescriptor(_templates[4]) { ViewModel = typeof(ModelC) };
+            
+            MockFor<ITemplateComposer>().Expect(c => c.Compose(Arg<TypePool>.Is.Anything)).Return(_templates);
         }
 
         public class ModelA { }

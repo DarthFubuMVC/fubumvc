@@ -19,6 +19,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             _template = new Template("", "", "");
             _descriptor = new ViewDescriptor(_template);
+            _template.Descriptor = _descriptor;
+
             _request = new BindRequest
             {
                 Target = _template,

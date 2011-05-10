@@ -12,25 +12,30 @@ namespace FubuMVC.Spark.Tests
     public class SparkViewTokenTester
     {
         private SparkViewToken _token;
-        private Template _item;
+        private Template _template;
         private ViewDescriptor _descriptor;
+
         [SetUp]
         public void SetUp()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _item = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin);
-            _descriptor = new ViewDescriptor(_item)
-                                   {
-                                       Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"}),
-                                       ViewModel = typeof (ProductModel)
-                                   };
-            _token = new SparkViewToken(_item.Descriptor.As<ViewDescriptor>());
+            _template = new Template(Path.Combine(root, "Views", "Home", "Home.spark"), root, FubuSparkConstants.HostOrigin);
+            
+            _descriptor = new ViewDescriptor(_template)
+            {
+                Namespace = String.Join(".", new[] {GetType().Name, "Views", "Home"}),
+                ViewModel = typeof (ProductModel)
+            };
+            
+            _template.Descriptor = _descriptor;
+
+            _token = new SparkViewToken(_template.Descriptor.As<ViewDescriptor>());
         }
 
         [Test]
         public void name_is_item_name()
         {
-            _token.Name.ShouldEqual(_item.Name());
+            _token.Name.ShouldEqual(_template.Name());
         }
 
         [Test]
@@ -55,7 +60,7 @@ namespace FubuMVC.Spark.Tests
         public void description_should_contain_view_path()
         {
             var view = (SparkViewOutput)_token.ToBehavioralNode();
-            view.Description.ShouldContain(_item.RelativePath());
+            view.Description.ShouldContain(_template.RelativePath());
         }
     }
 

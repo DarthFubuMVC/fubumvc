@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Spark.Compiler;
 using Spark.FileSystem;
 
 namespace FubuMVC.Spark.Tests.SparkModel
@@ -11,8 +9,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class ChunkLoaderTester : InteractionContext<ChunkLoader>
     {
-        private readonly Template _item1 = new Template("r/t1/path1", "r/t1", "t1");
-        private readonly Template _item2 = new Template("r/t2/path2", "r/t2", "t2");
+        private readonly Template _template1 = new Template("r/t1/path1", "r/t1", "t1");
+        private readonly Template _template2 = new Template("r/t2/path2", "r/t2", "t2");
+
         private string _lastRequestedRoot;
         private int _rootRequestCount;
 
@@ -28,8 +27,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
                 return new InMemoryViewFolder
                 {
-                    {_item1.RelativePath(), @"<use master=""M1""/><div>path1</div>"},
-                    {_item2.RelativePath(), @"<use master=""M2""/><div>path2</div>"}
+                    {_template1.RelativePath(), @"<use master=""M1""/><div>path1</div>"},
+                    {_template2.RelativePath(), @"<use master=""M2""/><div>path2</div>"}
                 };
             });
         }
@@ -37,18 +36,18 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void view_folders_are_segregated_by_root_path()
         {
-            ClassUnderTest.Load(_item1);
-            _lastRequestedRoot.ShouldEqual(_item1.RootPath);
-            ClassUnderTest.Load(_item2);
-            _lastRequestedRoot.ShouldEqual(_item2.RootPath);
+            ClassUnderTest.Load(_template1);
+            _lastRequestedRoot.ShouldEqual(_template1.RootPath);
+            ClassUnderTest.Load(_template2);
+            _lastRequestedRoot.ShouldEqual(_template2.RootPath);
         }
 
         [Test]
         public void view_folders_are_cached_by_root_path()
         {
-            ClassUnderTest.Load(_item1);
-            ClassUnderTest.Load(_item2);
-            ClassUnderTest.Load(_item1);
+            ClassUnderTest.Load(_template1);
+            ClassUnderTest.Load(_template2);
+            ClassUnderTest.Load(_template1);
             _rootRequestCount.ShouldEqual(2);
         }
     }
@@ -62,14 +61,11 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         protected override void beforeEach()
         {
-            Services.Inject<Func<string, IViewFolder>>(root =>
+            Services.Inject<Func<string, IViewFolder>>(root => new InMemoryViewFolder
             {
-                return new InMemoryViewFolder
-                {
-                    { _spark1.RelativePath(), @"<use master=""Fubu""/><div>Hail master Fubu..</div>" },
-                    { _spark2.RelativePath(), @"<use namespace=""a.b.c""/><use namespace=""x.y.z""/><div>Namespaces</div>" },
-                    { _spark3.RelativePath(), @"<use master=""""/><viewdata model=""Foo.Bar.Baz""><div>With Model - empty master</div>" }
-                };
+                { _spark1.RelativePath(), @"<use master=""Fubu""/><div>Hail master Fubu..</div>" },
+                { _spark2.RelativePath(), @"<use namespace=""a.b.c""/><use namespace=""x.y.z""/><div>Namespaces</div>" },
+                { _spark3.RelativePath(), @"<use master=""""/><viewdata model=""Foo.Bar.Baz""><div>With Model - empty master</div>" }
             });
         }
 

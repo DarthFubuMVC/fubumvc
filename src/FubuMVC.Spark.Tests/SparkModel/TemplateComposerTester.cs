@@ -22,17 +22,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate _template1;
         private ITemplate _template2;
 
-        private IList<ITemplate> _policy1Items;
-        private IList<ITemplate> _policy2Items;
+        private IList<ITemplate> _policy1Templates;
+        private IList<ITemplate> _policy2Templates;
 
-        private IList<ITemplate> _binder1Items;
-        private IList<ITemplate> _binder2Items;
+        private IList<ITemplate> _binder1Templates;
+        private IList<ITemplate> _binder2Templates;
 
-        private readonly TypePool _typePool;
+        private readonly TypePool _types;
 
         public TemplateComposerTester()
         {
-            _typePool = new TypePool(GetType().Assembly);
+            _types = new TypePool(GetType().Assembly);
         }
 
         protected override void beforeEach()
@@ -57,8 +57,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void configurePolicies()
         {
-            _policy1Items = new List<ITemplate>();
-            _policy2Items = new List<ITemplate>();
+            _policy1Templates = new List<ITemplate>();
+            _policy2Templates = new List<ITemplate>();
 
             _policy1 = new FakeTemplatePolicy();
             _policy2 = new FakeTemplatePolicy();
@@ -66,14 +66,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _policy1.Filter += x => x == _template1;
             _policy2.Filter += x => x == _template2;
 
-            _policy1.Action += _policy1Items.Add;
-            _policy2.Action += _policy2Items.Add;
+            _policy1.Action += _policy1Templates.Add;
+            _policy2.Action += _policy2Templates.Add;
         }
 
         private void configureBinders()
         {
-            _binder1Items = new List<ITemplate>();
-            _binder2Items = new List<ITemplate>();
+            _binder1Templates = new List<ITemplate>();
+            _binder2Templates = new List<ITemplate>();
 
             _binder1 = new FakeTemplateBinder();
             _binder2 = new FakeTemplateBinder();
@@ -81,8 +81,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _binder1.Filter += x => x.Target == _template1;
             _binder2.Filter += x => x.Target == _template2;
 
-            _binder1.Action += x => _binder1Items.Add(x.Target);
-            _binder2.Action += x => _binder2Items.Add(x.Target);
+            _binder1.Action += x => _binder1Templates.Add(x.Target);
+            _binder2.Action += x => _binder2Templates.Add(x.Target);
         }
 
         private void registerBindersAndPolicies()
@@ -97,17 +97,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void binders_that_match_are_applied_against_each_spark_item()
         {
-            ClassUnderTest.Compose(_typePool);
-            _binder1Items.ShouldHaveCount(1).ShouldContain(_template1);
-            _binder2Items.ShouldHaveCount(1).ShouldContain(_template2);
+            ClassUnderTest.Compose(_types);
+            _binder1Templates.ShouldHaveCount(1).ShouldContain(_template1);
+            _binder2Templates.ShouldHaveCount(1).ShouldContain(_template2);
         }
 
         [Test]
         public void policies_that_match_are_applied_against_each_spark_item()
         {
-            ClassUnderTest.Compose(_typePool);
-            _policy1Items.ShouldHaveCount(1).ShouldContain(_template1);
-            _policy2Items.ShouldHaveCount(1).ShouldContain(_template2);
+            ClassUnderTest.Compose(_types);
+            _policy1Templates.ShouldHaveCount(1).ShouldContain(_template1);
+            _policy2Templates.ShouldHaveCount(1).ShouldContain(_template2);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .AddBinder(binder)
                 .AddBinder<OtherTemplateBinder>();
 
-            ClassUnderTest.Compose(_typePool);
+            ClassUnderTest.Compose(_types);
 
             invoked.ShouldBeTrue();
             OtherTemplateBinder.Invoked.ShouldBeTrue();
@@ -141,7 +141,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.Apply<FakeTemplatePolicy>(p => p.Action += x => invoked2 = true);
             ClassUnderTest.Apply<OtherTemplatePolicy>();
 
-            ClassUnderTest.Compose(_typePool);
+            ClassUnderTest.Compose(_types);
 
             invoked1.ShouldBeTrue();
             invoked2.ShouldBeTrue();

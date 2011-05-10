@@ -9,9 +9,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateExtensionsTester
     {
-        private readonly Template _bottomItem;
-        private readonly Template _middleItem;
-        private readonly Template _topItem;
+        private readonly Template _bottomTemplate;
+        private readonly Template _middleTemplate;
+        private readonly Template _topTemplate;
 
         public TemplateExtensionsTester()
         {
@@ -21,41 +21,41 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.spark");
             var topPath = Path.Combine(rootPath, "Livelock.spark");
             
-            _bottomItem = new Template(bottomPath, rootPath, "chuck");
-            _middleItem = new Template(middlePath, rootPath, "chuck");
-            _topItem = new Template(topPath, rootPath, "chuck");
+            _bottomTemplate = new Template(bottomPath, rootPath, "chuck");
+            _middleTemplate = new Template(middlePath, rootPath, "chuck");
+            _topTemplate = new Template(topPath, rootPath, "chuck");
         }
 
         [Test]
         public void relative_path_returns_correct_fragment_1()
         {
-            _bottomItem.RelativePath()
+            _bottomTemplate.RelativePath()
                 .ShouldEqual("Finding{0}Sherlock{0}Homes.spark".ToFormat(Path.DirectorySeparatorChar));
         }
 
         [Test]
         public void relative_path_returns_correct_fragment_2()
         {
-            _middleItem.RelativePath()
+            _middleTemplate.RelativePath()
                 .ShouldEqual("Dining{0}Philosophers.spark".ToFormat(Path.DirectorySeparatorChar));
         }
 
         [Test]
         public void relative_path_returns_correct_fragment_3()
         {
-            _topItem.RelativePath().ShouldEqual("Livelock.spark");
+            _topTemplate.RelativePath().ShouldEqual("Livelock.spark");
         }
 
         [Test]
         public void name_returns_filename_without_extension()
         {
-            _topItem.Name().ShouldEqual("Livelock");
+            _topTemplate.Name().ShouldEqual("Livelock");
         }
 
         [Test]
         public void directory_path_returns_directory_path_of_file()
         {
-            _topItem.DirectoryPath().ShouldEqual(_topItem.RootPath);
+            _topTemplate.DirectoryPath().ShouldEqual(_topTemplate.RootPath);
         }
 		
 		[Test]
@@ -68,7 +68,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 		[Test]
         public void is_spark_view_returns_true_if_file_ends_with_dot_spark()
         {
-			_bottomItem.IsSparkView().ShouldBeTrue();
+			_bottomTemplate.IsSparkView().ShouldBeTrue();
 			new Template("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
         }
 		
