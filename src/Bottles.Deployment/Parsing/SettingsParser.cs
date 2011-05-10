@@ -1,22 +1,31 @@
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using FubuCore;
-using FubuCore.CommandLine;
 using FubuCore.Configuration;
 
 namespace Bottles.Deployment.Parsing
 {
     public class SettingsParser
     {
-        public static readonly string INVALID_SYNTAX = "Configuration line must be in the form of 'Class.Prop=Value' or 'bottle:<bottle name> <relationship>'";
-        private readonly SettingsData _settings;
+        public static readonly string INVALID_SYNTAX =
+            "Configuration line must be in the form of 'Class.Prop=Value' or 'bottle:<bottle name>'";
+
         private readonly IList<BottleReference> _references = new List<BottleReference>();
+        private readonly SettingsData _settings;
 
         public SettingsParser(string description, IDictionary<string, string> substitutions)
         {
             _settings = new SettingsData(SettingCategory.core, substitutions);
-            _settings.Description = description;
+            _settings.Provenance = description;
+        }
+
+        public SettingsData Settings
+        {
+            get { return _settings; }
+        }
+
+        public IEnumerable<BottleReference> References
+        {
+            get { return _references; }
         }
 
         public void ParseText(string text)
@@ -51,7 +60,7 @@ namespace Bottles.Deployment.Parsing
             {
                 throw new SettingsParserException("Missing property name");
             }
-            
+
             var propertyName = text.Substring(0, index).Trim();
             var value = text.Substring(index + 1, text.Length - index - 1).Trim();
 
@@ -67,16 +76,6 @@ namespace Bottles.Deployment.Parsing
         {
             var reference = BottleReference.ParseFrom(text);
             _references.Add(reference);
-        }
-
-        public SettingsData Settings
-        {
-            get { return _settings; }
-        }
-
-        public IEnumerable<BottleReference> References
-        {
-            get { return _references; }
         }
     }
 }

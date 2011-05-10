@@ -18,7 +18,7 @@ namespace FubuCore.Configuration
             document.Load(file);
 
             var data = Parse(document.DocumentElement, substitutions);
-            data.Description = file;
+            data.Provenance = file;
 
             return data;
         }

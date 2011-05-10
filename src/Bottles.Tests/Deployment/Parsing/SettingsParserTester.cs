@@ -22,7 +22,7 @@ namespace Bottles.Tests.Deployment.Parsing
         [Test]
         public void the_description_from_the_ctor_makes_it_to_the_settings_data()
         {
-            theParser.Settings.Description.ShouldEqual("some description");
+            theParser.Settings.Provenance.ShouldEqual("some description");
         }
 
         [Test]

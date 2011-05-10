@@ -41,7 +41,7 @@ namespace FubuCore.Configuration
             return this;
         }
 
-        public string Description
+        public string Provenance
         {
             get; set;
         }

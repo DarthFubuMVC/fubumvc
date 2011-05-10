@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.WebForms.Testing", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Tests.Widget1", "FubuMVC.Tests.Widget1\FubuMVC.Tests.Widget1.csproj", "{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bottles.Storyteller", "Bottles.Storyteller\Bottles.Storyteller.csproj", "{609019BD-8FA1-495E-B8E1-2F0E237EFF34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -630,6 +632,21 @@ Global
 		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{584A2B9D-4A24-4BF8-A5AB-F18C3E104D7B}.Retail|x86.ActiveCfg = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Release|x86.ActiveCfg = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{609019BD-8FA1-495E-B8E1-2F0E237EFF34}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

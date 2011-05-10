@@ -36,6 +36,8 @@ namespace FubuCore.Configuration
             return _steps.Any(x => x.Value(key, callback));
         }
 
+        
+
         public bool HasAnyValuePrefixedWith(string key)
         {
             return _steps.Any(x => x.HasAnyValuePrefixedWith(key));
@@ -55,6 +57,11 @@ namespace FubuCore.Configuration
                 _settingData = settingData;
             }
 
+            public IEnumerable<string> AllKeys
+            {
+                get { return _settingData.SelectMany(data => data.AllKeys); }
+            }
+
             public bool HasAnyValuePrefixedWith(string key)
             {
                 return _settingData.Any(x => x.AllKeys.Any(k => k.StartsWith(key)));
@@ -69,6 +76,26 @@ namespace FubuCore.Configuration
 
                 return true;
             }
+
+            public SettingDataSource DiagnosticValueOf(string key)
+            {
+                var setting = _settingData.FirstOrDefault(x => x.Has(key));
+                return setting == null ? null : new SettingDataSource(){
+                    Key = key, Provenance = setting.Provenance, Value = setting.Get(key)
+                };
+            }
+        }
+
+        public IEnumerable<SettingDataSource> CreateDiagnosticReport()
+        {
+            return _steps.SelectMany(step => step.AllKeys)
+                .Distinct().OrderBy(x=>x)
+                .Select(diagnosticSourceForKey);
+        }
+
+        private SettingDataSource diagnosticSourceForKey(string key)
+        {
+            return _steps.FirstValue(x => x.DiagnosticValueOf(key));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Bottles.Configuration
         private readonly Cache<string, string> _overrides = new Cache<string, string>();
         private readonly Cache<string, SettingsData> _settings = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment));
         private readonly SettingsData _environmentSettings = new SettingsData(SettingCategory.environment){
-            Description = "Environment settings"
+            Provenance = "Environment settings"
         };
 
         public void ReadText(string text)

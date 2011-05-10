@@ -29,13 +29,28 @@ namespace FubuCore.Configuration
 
         public object SettingsFor(Type settingsType)
         {
-            var settingsData = new SettingsRequestData(_sources.SelectMany(x => x.FindSettingData()));
+            SettingsRequestData settingsData = getSettingsData();
             var prefixedData = new PrefixedRequestData(settingsData, settingsType.Name + ".");
 
             var result = _resolver.BindModel(settingsType, prefixedData);
             result.AssertNoProblems(settingsType);
 
             return result.Value;
+        }
+
+        private SettingsRequestData getSettingsData()
+        {
+            return new SettingsRequestData(_sources.SelectMany(x => x.FindSettingData()));
+        }
+
+        public IEnumerable<SettingDataSource> CreateDiagnosticReport()
+        {
+            return getSettingsData().CreateDiagnosticReport();
+        }
+
+        public static SettingsProvider For(params SettingsData[] data)
+        {
+            return new SettingsProvider(ObjectResolver.Basic(), data);
         }
     }
 

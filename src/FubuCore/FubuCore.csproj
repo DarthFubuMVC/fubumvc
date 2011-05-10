@@ -104,6 +104,7 @@
     <Compile Include="CommandLine\EnumerableArgument.cs" />
     <Compile Include="CommandLine\HelpCommand.cs" />
     <Compile Include="CommandLine\HelpInput.cs" />
+    <Compile Include="Configuration\SettingDataSource.cs" />
     <Compile Include="Configuration\SettingsProvider.cs" />
     <Compile Include="Configuration\FolderAppSettingsXmlSource.cs" />
     <Compile Include="Configuration\SettingsData.cs" />
