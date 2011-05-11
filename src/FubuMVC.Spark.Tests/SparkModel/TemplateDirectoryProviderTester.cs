@@ -11,7 +11,7 @@ using Spark;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class SharedDirectoryProviderTester : InteractionContext<SharedDirectoryProvider>
+    public class TemplateDirectoryProviderTester : InteractionContext<TemplateDirectoryProvider>
     {
         private string _root;
         private ISharedPathBuilder _builder;

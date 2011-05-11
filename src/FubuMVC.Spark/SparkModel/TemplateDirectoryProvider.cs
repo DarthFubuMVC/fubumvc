@@ -4,33 +4,33 @@ using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ISharedDirectoryProvider
+    public interface ITemplateDirectoryProvider
     {
         IEnumerable<string> SharedPathsOf(ITemplate template, IEnumerable<ITemplate> templates);
         IEnumerable<string> ReachablesOf(ITemplate template, IEnumerable<ITemplate> templates);
     }
 
-    public class SharedDirectoryProvider : ISharedDirectoryProvider
+    public class TemplateDirectoryProvider : ITemplateDirectoryProvider
     {
         private readonly ISharedPathBuilder _builder;
 
-        public SharedDirectoryProvider() : this(new SharedPathBuilder()) { }
-        public SharedDirectoryProvider(ISharedPathBuilder builder)
+        public TemplateDirectoryProvider() : this(new SharedPathBuilder()) { }
+        public TemplateDirectoryProvider(ISharedPathBuilder builder)
         {
             _builder = builder;
         }
 
         public IEnumerable<string> SharedPathsOf(ITemplate template, IEnumerable<ITemplate> templates)
         {
-            return getDirectories(template, false, templates);
+            return getDirectories(template, templates, false);
         }
 
         public IEnumerable<string> ReachablesOf(ITemplate template, IEnumerable<ITemplate> templates)
         {
-            return getDirectories(template, true, templates);
+            return getDirectories(template, templates, true);
         }
 
-        private IEnumerable<string> getDirectories(ITemplate template, bool includeDirectAncestor, IEnumerable<ITemplate> templates)
+        private IEnumerable<string> getDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor)
         {
             foreach (var directory in _builder.BuildFrom(template.FilePath, template.RootPath, includeDirectAncestor))
             {

@@ -10,10 +10,10 @@ namespace FubuMVC.Spark.SparkModel
 
     public class TemplateLocator : ITemplateLocator
     {
-        private readonly ISharedDirectoryProvider _provider;
+        private readonly ITemplateDirectoryProvider _provider;
 
-        public TemplateLocator() : this(new SharedDirectoryProvider()) { }
-        public TemplateLocator(ISharedDirectoryProvider provider)
+        public TemplateLocator() : this(new TemplateDirectoryProvider()) { }
+        public TemplateLocator(ITemplateDirectoryProvider provider)
         {
             _provider = provider;
         }

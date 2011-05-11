@@ -86,7 +86,7 @@
     <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
-    <Compile Include="SparkModel\SharedDirectoryProviderTester.cs" />
+    <Compile Include="SparkModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\TemplateLocatorTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
     <Compile Include="SparkModel\TemplateComposerTester.cs" />

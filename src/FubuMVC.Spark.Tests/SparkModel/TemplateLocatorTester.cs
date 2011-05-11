@@ -20,7 +20,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         protected override void beforeEach()
         {
-            var sharedDirectoryProvider = MockFor<ISharedDirectoryProvider>();
+            var templateDirectoryProvider = MockFor<ITemplateDirectoryProvider>();
             var fromItem = new Template("", "", "");
             var sharedDirectories = new List<string>
             {
@@ -39,8 +39,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 new Template(Path.Combine("App","Views","Home", "header.spark"), "", ""),
             };
 
-            sharedDirectoryProvider.Stub(x => x.SharedPathsOf(fromItem, items)).Return(sharedDirectories);
-            Services.Inject(sharedDirectoryProvider);
+            templateDirectoryProvider.Stub(x => x.SharedPathsOf(fromItem, items)).Return(sharedDirectories);
+            Services.Inject(templateDirectoryProvider);
 
             _applicationItem = ClassUnderTest.LocateSharedTemplates("application", fromItem, items).FirstOrDefault();
             _messageItem = ClassUnderTest.LocateSharedTemplates("message", fromItem, items).FirstOrDefault();

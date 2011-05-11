@@ -67,7 +67,7 @@
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Descriptors.cs" />
     <Compile Include="SparkModel\FubuSparkConstants.cs" />
-    <Compile Include="SparkModel\SharedDirectoryProvider.cs" />
+    <Compile Include="SparkModel\TemplateDirectoryProvider.cs" />
     <Compile Include="SparkModel\SharedPathBuilder.cs" />
     <Compile Include="SparkModel\TemplatePolicies.cs" />
     <Compile Include="SparkModel\TemplateLocator.cs" />
