@@ -4,7 +4,6 @@ using FubuCore;
 
 namespace Bottles
 {
-    // TODO -- Remove the fubu-isms.  Make this stuff alterable?
     public static class BottleFiles
     {
         static BottleFiles()
@@ -19,6 +18,7 @@ namespace Bottles
         public static readonly string VersionFile = ".version";
         public static readonly string DataFolder = "Data";
         public static readonly string ConfigFolder = "Config";
+        public static readonly string BinaryFolder = "bin";
 
         public static string ContentFolder { get; set; }
         public static string PackagesFolder { get; set; }

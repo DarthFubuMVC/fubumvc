@@ -36,54 +36,17 @@ namespace Bottles.Deployment.Runtime.Content
         IEnumerable<BottleExplosionRequest> DetermineExplosionRequests(PackageManifest manifest);
     }
 
-    // Have this thing used by FubuWebsite
-    public class FubuBottleDestination : IBottleDestination
-    {
-        private readonly string _physicalPath;
-
-        public FubuBottleDestination(string physicalPath)
-        {
-            _physicalPath = physicalPath;
-        }
-
-
-
-        public bool Equals(FubuBottleDestination other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other._physicalPath, _physicalPath);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (FubuBottleDestination)) return false;
-            return Equals((FubuBottleDestination) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (_physicalPath != null ? _physicalPath.GetHashCode() : 0);
-        }
-
-        public IEnumerable<BottleExplosionRequest> DetermineExplosionRequests(PackageManifest manifest)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return string.Format("PhysicalPath: {0}", _physicalPath);
-        }
-    }
 
     public class BottleExplosionRequest
     {
         public BottleExplosionRequest(IPackageLog log)
         {
             Log = log;
+        }
+
+        public BottleExplosionRequest()
+        {
+            Log = new PackageLog();
         }
 
         public string BottleName { get; set; }

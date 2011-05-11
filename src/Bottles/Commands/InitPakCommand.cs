@@ -61,7 +61,7 @@ namespace Bottles.Commands
 
             var manifest = new PackageManifest{
                 Name = input.Name,
-                Role = input.RoleFlag ?? BottleRole.Module
+                Role = input.RoleFlag ?? BottleRoles.Module
             };
 
             if (input.NoWebContentFlag)

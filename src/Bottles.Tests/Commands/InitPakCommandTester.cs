@@ -78,19 +78,19 @@ namespace Bottles.Tests.Commands
             pm.Name.ShouldEqual(pakName);
             pm.EnvironmentAssembly.ShouldEqual("asm");
             pm.EnvironmentClassName.ShouldEqual("cls");
-            pm.Role.ShouldEqual(BottleRole.Module);
+            pm.Role.ShouldEqual(BottleRoles.Module);
         }
 
         [Test]
         public void the_pak_should_have_role_overrided()
         {
-            theInput.RoleFlag = BottleRole.Binaries;
+            theInput.RoleFlag = BottleRoles.Binaries;
 
             execute();
 
             var pm = fs.LoadPackageManifestFrom(thePath);
 
-            pm.Role.ShouldEqual(BottleRole.Binaries);
+            pm.Role.ShouldEqual(BottleRoles.Binaries);
         }
     }
 }

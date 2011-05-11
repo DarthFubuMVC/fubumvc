@@ -100,7 +100,7 @@
     <Compile Include="Diagnostics\PackageLog.cs" />
     <Compile Include="Diagnostics\PackagingDiagnostics.cs" />
     <Compile Include="Diagnostics\PackagingDiagnosticsExtensions.cs" />
-    <Compile Include="BottleRole.cs" />
+    <Compile Include="BottleRoles.cs" />
     <Compile Include="PackagingRuntimeGraph.cs" />
     <Compile Include="Parsing\PackageManifestXmlReader.cs" />
     <Compile Include="ProfileFiles.cs" />

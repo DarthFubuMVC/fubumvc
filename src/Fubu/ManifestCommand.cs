@@ -97,7 +97,7 @@ namespace Fubu
         {
             var manifest = new PackageManifest
                            {
-                               Role = BottleRole.Application
+                               Role = BottleRoles.Application
                            };
             ApplyChanges(input, manifest);
             persist(fileSystem, input, manifest);

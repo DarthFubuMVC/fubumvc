@@ -99,6 +99,7 @@
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
+    <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
@@ -330,6 +331,10 @@
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
+      <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
+      <Name>Bottles.Deployment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bottles\Bottles.csproj">
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>
@@ -341,6 +346,10 @@
     <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
       <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
       <Name>FubuLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Deployers\FubuMVC.Deployers.csproj">
+      <Project>{15052F0B-098A-4115-BD7B-E66657FCE73A}</Project>
+      <Name>FubuMVC.Deployers</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -13,7 +13,7 @@ namespace Bottles
 
         public PackageManifest()
         {
-            Role = BottleRole.Module;
+            Role = BottleRoles.Module;
 
             DataFileSet = new FileSet();
             ContentFileSet = new FileSet(){
