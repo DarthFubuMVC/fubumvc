@@ -19,7 +19,7 @@ namespace Bottles.Tests.Deployment
         {
             IFileSystem fileSystem = new FileSystem();
             var settings = new DeploymentSettings(@"C:\dev\test-profile\");
-            IBottleRepository bottles = new BottleRepository(fileSystem, new PackageExploder(new ZipFileService(fileSystem), new PackageExploderLogger(s=>{ }), fileSystem ), settings);
+            IBottleRepository bottles = new BottleRepository(fileSystem, new ZipFileService(fileSystem), settings);
 
             var initializer = new IisFubuInitializer(fileSystem, new DeploymentSettings());
             

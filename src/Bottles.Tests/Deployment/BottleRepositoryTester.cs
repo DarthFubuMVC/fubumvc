@@ -5,6 +5,7 @@ using Bottles.Deployment.Bootstrapping;
 using Bottles.Deployment.Writing;
 using Bottles.Diagnostics;
 using Bottles.Exploding;
+using Bottles.Zipping;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace Bottles.Tests.Deployment
         {
             new DeploymentWriter(".\\brt").Flush(FlushOptions.Wipeout);
             theSettings = new DeploymentSettings(".\\brt");
-            repo = new BottleRepository(MockFor<IFileSystem>(), MockFor<IPackageExploder>(), theSettings);
+            repo = new BottleRepository(MockFor<IFileSystem>(), MockFor<IZipFileService>(), theSettings);
         }
 
 
@@ -41,9 +42,9 @@ namespace Bottles.Tests.Deployment
         {
             repo.ExplodeTo("bot", "x");
 
-            MockFor<IPackageExploder>().AssertWasCalled(
+            MockFor<IZipFileService>().AssertWasCalled(
                 fs =>
-                fs.Explode(FileSystem.Combine(theSettings.BottlesDirectory, "bot.zip"), "x",
+                fs.ExtractTo(FileSystem.Combine(theSettings.BottlesDirectory, "bot.zip"), "x",
                            ExplodeOptions.PreserveDestination));
         }
 

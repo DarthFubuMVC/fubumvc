@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Bottles.Exploding;
+using Bottles.Zipping;
 using FubuCore;
 using System.Collections.Generic;
 
@@ -9,14 +10,14 @@ namespace Bottles.Deployment
     public class BottleRepository : IBottleRepository
     {
         private readonly IFileSystem _fileSystem;
-        private readonly IPackageExploder _exploder;
+        private readonly IZipFileService _zipService;
         private readonly DeploymentSettings _settings;
 
-        public BottleRepository(IFileSystem fileSystem, IPackageExploder exploder, DeploymentSettings settings)
+        public BottleRepository(IFileSystem fileSystem, IZipFileService zipService, DeploymentSettings settings)
         {
             _fileSystem = fileSystem;
+            _zipService = zipService;
             _settings = settings;
-            _exploder = exploder;
         }
 
         public void CopyTo(string bottleName, string destination)
@@ -29,20 +30,22 @@ namespace Bottles.Deployment
         {
             var bottleFile = pathForBottle(bottleName);
 
+            // TODO -- needs logging?
             //REVIEW: get_app_dir, zip-filename == path???
-            _exploder.Explode(bottleFile, destination, ExplodeOptions.PreserveDestination);
+            _zipService.ExtractTo(bottleFile, destination, ExplodeOptions.PreserveDestination);
         }
 
         public void ExplodeFiles(BottleExplosionRequest request)
         {
-            var bottleFile = pathForBottle(request.BottleName);
-            
+            var bottleName = request.BottleName;
+
+            var bottleFile = pathForBottle(bottleName);
             _fileSystem.CreateDirectory(_settings.StagingDirectory);
 
-            var tempDirectory = FileSystem.Combine(_settings.StagingDirectory, request.BottleName);
+            var tempDirectory = FileSystem.Combine(_settings.StagingDirectory, bottleName);
 
-            request.Log.Trace("Exploding bottle {0} to {1}");
-            _exploder.Explode(bottleFile, tempDirectory, ExplodeOptions.DeleteDestination);
+
+            explodeToStaging(request, bottleFile, tempDirectory);
 
             var sourceDirectory = FileSystem.Combine(tempDirectory, request.BottleDirectory);
 
@@ -58,9 +61,25 @@ namespace Bottles.Deployment
                 
                 _fileSystem.Copy(file, destinationFile);
             });
+        }
 
-            
+        public PackageManifest ReadManifest(string bottleName)
+        {
+            throw new NotImplementedException();
+        }
 
+        private readonly IList<string> _bottlesExplodedToStaging = new List<string>();
+        private void explodeToStaging(BottleExplosionRequest request, string bottleFile, string tempDirectory)
+        {
+            if (_bottlesExplodedToStaging.Contains(request.BottleName))
+            {
+                return;
+            }
+
+            request.Log.Trace("Exploding bottle {0} to {1}");
+            _zipService.ExtractTo(bottleFile, tempDirectory, ExplodeOptions.DeleteDestination);
+        
+            _bottlesExplodedToStaging.Add(request.BottleName);
         }
 
         string pathForBottle(string bottleName)

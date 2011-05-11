@@ -20,6 +20,7 @@ namespace Bottles.Deployment.Bootstrapping
                 x.ConnectImplementationsToTypesClosing(typeof (IInitializer<>));
                 x.ConnectImplementationsToTypesClosing(typeof (IDeployer<>));
                 x.ConnectImplementationsToTypesClosing(typeof (IFinalizer<>));
+
             });
 
             Scan(x =>

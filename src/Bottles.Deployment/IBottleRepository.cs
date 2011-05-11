@@ -1,4 +1,5 @@
-﻿using Bottles.Diagnostics;
+﻿using System.Collections.Generic;
+using Bottles.Diagnostics;
 
 namespace Bottles.Deployment
 {
@@ -16,6 +17,7 @@ namespace Bottles.Deployment
         /// This is the directory within the bottle
         /// </summary>
         public string BottleDirectory { get; set; }
+
         public string DestinationDirectory { get; set;}
 
         public IPackageLog Log { get; private set; }
@@ -58,5 +60,20 @@ namespace Bottles.Deployment
         void ExplodeTo(string bottleName, string destination);
 
         void ExplodeFiles(BottleExplosionRequest request);
+
+        PackageManifest ReadManifest(string bottleName);
+    }
+
+
+    public class BottleMoverRequest
+    {
+        public IPackageLog Log { get; set; }
+        public string PhysicalPath { get; set; }
+        public IEnumerable<BottleReference> References { get; set; }
+    }
+
+    public interface IBottleMover
+    {
+        void Move(BottleMoverRequest request);
     }
 }
