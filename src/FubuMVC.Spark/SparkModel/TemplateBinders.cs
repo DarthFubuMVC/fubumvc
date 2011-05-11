@@ -145,7 +145,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
 
-            var bindings = _sharedTemplateLocator.LocateTemplates(Bindings, request.Target, request.Templates);
+            var bindings = _sharedTemplateLocator.LocateTemplates(Bindings, request.Target, request.Templates).Where(x => x.IsXml());
             
             bindings.Each(descriptor.AddBinding);
         }
