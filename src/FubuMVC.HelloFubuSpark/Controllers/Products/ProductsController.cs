@@ -1,6 +1,5 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
-using FubuValidation;
 
 namespace FubuMVC.HelloFubuSpark.Controllers.Products
 {
@@ -35,9 +34,7 @@ namespace FubuMVC.HelloFubuSpark.Controllers.Products
 
     public class CreateProductModel
     {
-        [Required]
         public string Title { get; set; }
-        [Required]
         public string Description { get; set; }
     }
 

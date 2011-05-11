@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Urls;
-using FubuMVC.HelloFubuSpark.Controllers;
 using FubuMVC.HelloFubuSpark.Controllers.Air;
 
 namespace FubuMVC.HelloFubuSpark
