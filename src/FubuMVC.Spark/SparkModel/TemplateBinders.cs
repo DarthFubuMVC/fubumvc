@@ -124,7 +124,7 @@ namespace FubuMVC.Spark.SparkModel
     public class ReachableBindingsBinder : ITemplateBinder
     {
         private readonly ITemplateLocator _sharedTemplateLocator;
-        private const string Bindings = "bindings.xml";
+        private const string Bindings = "bindings";
 
         public ReachableBindingsBinder()
             : this(new TemplateLocator())
