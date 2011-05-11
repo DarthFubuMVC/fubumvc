@@ -1,11 +1,9 @@
-using System;
-using System.IO;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using FubuCore;
 using System.Collections.Generic;
 
-namespace Bottles.Deployment
+namespace Bottles.Deployment.Runtime.Content
 {
     public class BottleRepository : IBottleRepository
     {
@@ -20,7 +18,7 @@ namespace Bottles.Deployment
             _settings = settings;
         }
 
-        public void CopyTo(string bottleName, string destination)
+        public virtual void CopyTo(string bottleName, string destination)
         {
             var path = pathForBottle(bottleName);
             _fileSystem.Copy(path, destination);
@@ -38,6 +36,12 @@ namespace Bottles.Deployment
         public void ExplodeFiles(BottleExplosionRequest request)
         {
             var bottleName = request.BottleName;
+
+            if (request.BottleDirectory.IsEmpty())
+            {
+                CopyTo(request.BottleName, request.DestinationDirectory);
+                return;
+            }
 
             var bottleFile = pathForBottle(bottleName);
             _fileSystem.CreateDirectory(_settings.StagingDirectory);
@@ -65,7 +69,8 @@ namespace Bottles.Deployment
 
         public PackageManifest ReadManifest(string bottleName)
         {
-            throw new NotImplementedException();
+            var fileName = pathForBottle(bottleName);
+            return _zipService.GetPackageManifest(fileName);
         }
 
         private readonly IList<string> _bottlesExplodedToStaging = new List<string>();
@@ -82,7 +87,7 @@ namespace Bottles.Deployment
             _bottlesExplodedToStaging.Add(request.BottleName);
         }
 
-        string pathForBottle(string bottleName)
+        private string pathForBottle(string bottleName)
         {
             if (!bottleName.EndsWith(BottleFiles.Extension))
                 bottleName = bottleName + "." + BottleFiles.Extension;

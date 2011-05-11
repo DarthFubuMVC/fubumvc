@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Bottles;
 using Bottles.Commands;
 using FubuCore;
@@ -97,7 +97,7 @@ namespace Fubu
         {
             var manifest = new PackageManifest
                            {
-                               Role = PackageRole.Application
+                               Role = BottleRole.Application
                            };
             ApplyChanges(input, manifest);
             persist(fileSystem, input, manifest);

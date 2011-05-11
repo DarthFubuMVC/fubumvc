@@ -29,7 +29,7 @@ namespace Bottles
                 .Select(Path.GetDirectoryName)
                 .Select(manifestReader.LoadFromFolder);
 
-            var filtered = pis.Where(pi=>PackageRole.Module.Equals(pi.Role));
+            var filtered = pis.Where(pi=>BottleRole.Module.Equals(pi.Role));
 
             ConsoleWriter.PrintHorizontalLine();
             ConsoleWriter.Write("Solution Package Loader found:");

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Bottles.Deployment.Runtime;
+using Bottles.Deployment.Runtime.Content;
 using Bottles.Diagnostics;
 using FubuCore;
 using System.Collections.Generic;

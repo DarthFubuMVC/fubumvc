@@ -13,7 +13,7 @@ namespace Bottles
 
         public PackageManifest()
         {
-            Role = PackageRole.Module;
+            Role = BottleRole.Module;
 
             DataFileSet = new FileSet();
             ContentFileSet = new FileSet(){

@@ -77,7 +77,7 @@
     <Compile Include="Diagnostics\DeploymentDiagnostics.cs" />
     <Compile Include="EntryLogWriter.cs" />
     <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
-    <Compile Include="FubuMVC\FubuBottleMover.cs" />
+    <Compile Include="Runtime\Content\IBottleMover.cs" />
     <Compile Include="Parsing\HostReader.cs" />
     <Compile Include="Parsing\IProfileReader.cs" />
     <Compile Include="Parsing\IRecipeSorter.cs" />
@@ -86,10 +86,10 @@
     <Compile Include="Recipe.cs" />
     <Compile Include="Directives\Activation.cs" />
     <Compile Include="Directives\FubuWebsite.cs" />
-    <Compile Include="BottleRepository.cs" />
+    <Compile Include="Runtime\Content\BottleRepository.cs" />
     <Compile Include="Directives\TopshelfService.cs" />
     <Compile Include="HostManifest.cs" />
-    <Compile Include="IBottleRepository.cs" />
+    <Compile Include="Runtime\Content\IBottleRepository.cs" />
     <Compile Include="IDirective.cs" />
     <Compile Include="IProcessRunner.cs" />
     <Compile Include="Parsing\SettingsParserException.cs" />

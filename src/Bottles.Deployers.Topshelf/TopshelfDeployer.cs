@@ -5,6 +5,7 @@ using System.Text;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Deployment.Runtime.Content;
 using Bottles.Diagnostics;
 using FubuCore;
 

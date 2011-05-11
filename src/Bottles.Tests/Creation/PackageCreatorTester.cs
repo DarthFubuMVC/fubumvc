@@ -220,6 +220,11 @@ namespace Bottles.Tests.Creation
             throw new NotImplementedException();
         }
 
+        public PackageManifest GetPackageManifest(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExtractTo(string fileName, string folder, ExplodeOptions options)
         {
             throw new NotImplementedException();

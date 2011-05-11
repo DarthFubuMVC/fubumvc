@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using Bottles.Deployment;
 using Bottles.Deployment.Bootstrapping;
+using Bottles.Deployment.Runtime.Content;
 using Bottles.Deployment.Writing;
 using Bottles.Diagnostics;
 using Bottles.Exploding;
@@ -11,8 +12,39 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Bottles.Tests.Deployment
+namespace Bottles.Tests.Deployment.Runtime.Content
 {
+
+    [TestFixture]
+    public class when_handling_a_bottle_explosion_request_with_a_blank_bottle_repository : InteractionContext<BottleRepository>
+    {
+        private BottleExplosionRequest theRequest;
+
+        protected override void beforeEach()
+        {
+            theRequest = new BottleExplosionRequest(new PackageLog()){
+                BottleDirectory = string.Empty,
+                BottleName = "bottle1",
+                DestinationDirectory = "destination directory"
+            };
+
+            Services.Inject(new DeploymentSettings());
+            Services.PartialMockTheClassUnderTest();
+
+            
+
+            ClassUnderTest.Expect(x => x.CopyTo("bottle1", "destination directory"));
+
+            ClassUnderTest.ExplodeFiles(theRequest);
+        }
+
+        [Test]
+        public void should_just_move_the_file_instead()
+        {
+            ClassUnderTest.VerifyAllExpectations();
+        }
+    }
+
     [TestFixture]
     public class BottleRepositoryTester : InteractionContext<BottleRepository>
     {

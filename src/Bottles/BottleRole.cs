@@ -1,6 +1,6 @@
 ﻿namespace Bottles
 {
-    public static class PackageRole
+    public static class BottleRole
     {
         /// <summary>
         /// The package should just contain dlls. Useful for getting 3rd party dlls

@@ -10,5 +10,6 @@ namespace Bottles.Zipping
         void ExtractTo(string fileName, string directory, ExplodeOptions options);
         string GetVersion(string fileName);
         void ExtractTo(string description, Stream stream, string directory);
+        PackageManifest GetPackageManifest(string fileName);
     }
 }

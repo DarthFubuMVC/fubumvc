@@ -4,6 +4,7 @@ using Bottles.Deployment;
 using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
+using Bottles.Deployment.Runtime.Content;
 using Bottles.Diagnostics;
 using FubuCore;
 using Microsoft.Web.Administration;
