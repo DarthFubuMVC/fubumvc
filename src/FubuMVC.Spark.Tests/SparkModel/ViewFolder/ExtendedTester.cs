@@ -41,7 +41,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
             
-            var allTemplates = new List<Template>();
+            var allTemplates = new List<ITemplate>();
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
 

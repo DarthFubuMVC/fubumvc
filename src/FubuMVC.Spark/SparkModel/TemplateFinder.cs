@@ -9,15 +9,12 @@ using FubuMVC.Spark.SparkModel.Scanning;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    // We need a new type, ITemplateSource that allows for enrichment (viewpath)
     public interface ITemplateFinder
     {
-        // TODO: Change to ITemplate
-        IEnumerable<Template> FindInHost();
-        IEnumerable<Template> FindInPackages();
+        IEnumerable<ITemplate> FindInHost();
+        IEnumerable<ITemplate> FindInPackages();
     }
 
-    // TODO: switch from SparkItem to Template
     public class TemplateFinder : ITemplateFinder
     {
         private readonly IFileScanner _fileScanner;
@@ -35,6 +32,7 @@ namespace FubuMVC.Spark.SparkModel
             _hostExcludes = new CompositeAction<ScanRequest>();
 
             IncludeFile("*spark");
+            // TODO: This is not automatically synched with what the attacher looks for.
             IncludeFile("bindings.xml");
 
             ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
@@ -48,32 +46,32 @@ namespace FubuMVC.Spark.SparkModel
             set { _hostPath = value; }
         }
 
-        public IEnumerable<Template> FindInHost()
+        public IEnumerable<ITemplate> FindInHost()
         {
-            var items = new List<Template>();
+            var templates = new List<ITemplate>();
             var root = new SparkRoot
             {
                 Origin = FubuSparkConstants.HostOrigin, 
                 Path = HostPath
             };
 
-            var request = buildRequest(items, root);
+            var request = buildRequest(templates, root);
             _hostExcludes.Do(request);
             
             _fileScanner.Scan(request);
             
-            return items;
+            return templates;
         }
 
-        public IEnumerable<Template> FindInPackages()
+        public IEnumerable<ITemplate> FindInPackages()
         {
-            var items = new List<Template>();
+            var templates = new List<ITemplate>();
             var roots = packageRoots(_packages).ToArray();
-            var request = buildRequest(items, roots);
+            var request = buildRequest(templates, roots);
             
             _fileScanner.Scan(request);
             
-            return items;
+            return templates;
         }
 
         public void IncludeFile(string filter)
@@ -115,7 +113,7 @@ namespace FubuMVC.Spark.SparkModel
             return packageRoots;
         }
 
-        private ScanRequest buildRequest(ICollection<Template> files, params SparkRoot[] sparkRoots)
+        private ScanRequest buildRequest(ICollection<ITemplate> templates, params SparkRoot[] sparkRoots)
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);
@@ -125,7 +123,7 @@ namespace FubuMVC.Spark.SparkModel
             {
                 var origin = sparkRoots.First(x => x.Path == fileFound.Root).Origin;
                 var sparkFile = new Template(fileFound.Path, fileFound.Root, origin);                
-                files.Add(sparkFile);
+                templates.Add(sparkFile);
             });
 
             return request;
