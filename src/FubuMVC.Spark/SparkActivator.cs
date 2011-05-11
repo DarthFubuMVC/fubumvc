@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
@@ -9,8 +7,6 @@ using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using HtmlTags;
 using Spark;
-using Spark.Bindings;
-using Spark.FileSystem;
 
 namespace FubuMVC.Spark
 {
@@ -25,6 +21,7 @@ namespace FubuMVC.Spark
 			_engine = engine;
 		}
 
+        // Reconsider
 		public void Activate (IEnumerable<IPackageInfo> packages, IPackageLog log)
 		{
 			sparkSettings ();
@@ -44,32 +41,6 @@ namespace FubuMVC.Spark
                 .AddNamespace (typeof(FubuRegistryExtensions).Namespace) // FubuMVC.Spark
                 .AddNamespace (typeof(FubuPageExtensions).Namespace) // FubuMVC.Core.UI
                 .AddNamespace (typeof(HtmlTag).Namespace); // HtmlTags   
-		}
-	}
-	
-	// Temporary : Going to be removed soon.
-	public class FubuBindingProvider : BindingProvider
-	{	
-		private readonly ISparkTemplates _sparkTemplates;
-
-		public FubuBindingProvider (ISparkTemplates sparkTemplates)
-		{
-			_sparkTemplates = sparkTemplates;
-		}
-
-		public override IEnumerable<Binding> GetBindings (IViewFolder viewFolder)
-		{					
-			var bindings = new List<Binding> ();
-			
-			foreach (var binding in _sparkTemplates.ByName("bindings").Where(i => i.IsXml())) {
-				var file = viewFolder.GetViewSource (binding.ViewPath);
-				using (var stream = file.OpenViewStream())
-				using (var reader = new StreamReader(stream)) {
-					bindings.AddRange (LoadStandardMarkup (reader));
-				}					
-			}		
-			
-			return bindings;
 		}
 	}
 }

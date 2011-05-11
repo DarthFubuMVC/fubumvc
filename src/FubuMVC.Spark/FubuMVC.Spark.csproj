@@ -55,6 +55,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Registration\Nodes\SparkViewOutput.cs" />
     <Compile Include="Rendering\RenderStrategies.cs" />
     <Compile Include="Rendering\RenderActions.cs" />

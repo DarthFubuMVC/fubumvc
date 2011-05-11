@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -41,7 +44,17 @@ namespace FubuMVC.Spark.SparkModel
     {
         public Templates() {}
         public Templates(IEnumerable<ITemplate> templates) : base(templates) { }
+
+        public IEnumerable<ITemplate> BindingsForView(string viewPath)
+        {
+            return this
+                .Where(x => x.ViewPath == viewPath && x.Descriptor is ViewDescriptor)
+                .FirstValue(x => x.Descriptor.As<ViewDescriptor>().Bindings);
+        }
     }
 
-    public interface ISparkTemplates : IEnumerable<ITemplate> { }
+    public interface ISparkTemplates : IEnumerable<ITemplate>
+    {
+        IEnumerable<ITemplate> BindingsForView(string viewPath);
+    }
 }
