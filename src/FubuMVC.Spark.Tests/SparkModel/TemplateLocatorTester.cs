@@ -9,7 +9,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class SharedItemLocatorTester : InteractionContext<SharedTemplateLocator>
+    public class TemplateLocatorTester : InteractionContext<TemplateLocator>
     {
         private ITemplate _applicationItem;
         private ITemplate _messageItem;
@@ -42,11 +42,11 @@ namespace FubuMVC.Spark.Tests.SparkModel
             sharedDirectoryProvider.Stub(x => x.GetDirectories(fromItem, items, false)).Return(sharedDirectories);
             Services.Inject(sharedDirectoryProvider);
 
-            _applicationItem = ClassUnderTest.LocateTemplate("application", fromItem, items);
-            _messageItem = ClassUnderTest.LocateTemplate("message", fromItem, items);
-            _lowerCasedCompanyItem = ClassUnderTest.LocateTemplate("company", fromItem, items);
-            _upperCasedCompanyItem = ClassUnderTest.LocateTemplate("Company", fromItem, items);
-            _headerItem = ClassUnderTest.LocateTemplate("header", fromItem, items);
+            _applicationItem = ClassUnderTest.LocateSharedTemplates("application", fromItem, items).FirstOrDefault();
+            _messageItem = ClassUnderTest.LocateSharedTemplates("message", fromItem, items).FirstOrDefault();
+            _lowerCasedCompanyItem = ClassUnderTest.LocateSharedTemplates("company", fromItem, items).FirstOrDefault();
+            _upperCasedCompanyItem = ClassUnderTest.LocateSharedTemplates("Company", fromItem, items).FirstOrDefault();
+            _headerItem = ClassUnderTest.LocateSharedTemplates("header", fromItem, items).FirstOrDefault();
         }
 
         [Test]

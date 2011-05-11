@@ -57,12 +57,12 @@ namespace FubuMVC.Spark.SparkModel
 
     public class MasterPageBinder : ITemplateBinder
 	{
-		private readonly ISharedTemplateLocator _sharedTemplateLocator;
+		private readonly ITemplateLocator _sharedTemplateLocator;
 		private const string FallbackMaster = "Application";
 		public string MasterName { get; set; }
 
-		public MasterPageBinder() : this(new SharedTemplateLocator()) {}
-		public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
+		public MasterPageBinder() : this(new TemplateLocator()) {}
+		public MasterPageBinder(ITemplateLocator sharedTemplateLocator)
 		{
 			_sharedTemplateLocator = sharedTemplateLocator;
 			MasterName = FallbackMaster;
@@ -80,7 +80,8 @@ namespace FubuMVC.Spark.SparkModel
 			var tracer = request.Logger;
 			var masterName = request.Master ?? MasterName;
 
-			var master = _sharedTemplateLocator.LocateTemplate(masterName, template, request.Templates);
+			var master = _sharedTemplateLocator.LocateSharedTemplates(masterName, template, request.Templates)
+                .Where(x => x.IsSparkView()).FirstOrDefault();
 			
 			if(master == null)
 			{
@@ -122,17 +123,17 @@ namespace FubuMVC.Spark.SparkModel
 
     public class ReachableBindingsBinder : ITemplateBinder
     {
-        private readonly ISharedDirectoryProvider _provider;
+        private readonly ITemplateLocator _sharedTemplateLocator;
         private const string Bindings = "bindings.xml";
 
         public ReachableBindingsBinder()
-            : this(new SharedDirectoryProvider())
+            : this(new TemplateLocator())
         {
         }
 
-        public ReachableBindingsBinder(ISharedDirectoryProvider provider)
+        public ReachableBindingsBinder(ITemplateLocator sharedTemplateLocator)
         {
-            _provider = provider;
+            _sharedTemplateLocator = sharedTemplateLocator;
         }
 
         public bool CanBind(IBindRequest request)
@@ -144,11 +145,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
 
-            var candidates = request.Templates.Where(x => x.Name() == Bindings).Where(x => x.IsXml()).ToList();
-
-            var reachables = _provider.GetDirectories(request.Target, request.Templates, true);
-
-            var bindings = candidates.InDirectories(reachables);
+            var bindings = _sharedTemplateLocator.LocateTemplates(Bindings, request.Target, request.Templates);
             
             bindings.Each(descriptor.AddBinding);
         }
