@@ -49,7 +49,8 @@ namespace FubuMVC.Spark.SparkModel
         {
             return this
                 .Where(x => x.ViewPath == viewPath && x.Descriptor is ViewDescriptor)
-                .FirstValue(x => x.Descriptor.As<ViewDescriptor>().Bindings);
+                .SelectMany(x => x.Descriptor.As<ViewDescriptor>().Bindings)
+                .ToList();
         }
     }
 
