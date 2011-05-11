@@ -78,19 +78,15 @@ namespace FubuMVC.Spark.SparkModel
             var template = request.Target;
 			var tracer = request.Logger;
 			var masterName = request.Master ?? MasterName;
-
-			var master = _templateLocator.LocateSharedTemplates(masterName, template, request.Templates)
+			
+			// TODO: Rather have a method for this.
+			var master = _templateLocator
+				.LocateSharedTemplates(masterName, template, request.Templates)
                 .Where(x => x.IsSparkView()).FirstOrDefault();
 			
 			if(master == null)
 			{
 				tracer.Log(template, "Expected master page [{0}] not found.", masterName);
-				return;
-			}
-
-			if(master.FilePath == template.FilePath)
-			{
-				tracer.Log(template, "Master page skipped on itself.", masterName);
 				return;
 			}
 
@@ -142,6 +138,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
             
+			// TODO: Rather have a method for this.
             var bindings = _templateLocator
                 .LocateReachableTemplates(BindingsName, request.Target, request.Templates)
                 .Where(x => x.IsXml());            
