@@ -43,7 +43,7 @@ namespace Fubu
         public override bool Execute(CreateDeploymentInput input)
         {
             var settings = DeploymentSettings.ForDirectory(input.DeploymentFlag);
-            var directive = new FubuWebsite();
+            var directive = new Website();
 
             if (input.VirtualDirFlag.IsNotEmpty())
             {

@@ -1,17 +1,15 @@
 ﻿using Bottles.Configuration;
 using FubuCore;
-using Bottles;
 
 namespace Bottles.Deployment.Directives
 {
-    public class FubuWebsite : IDirective
+    public class Website : IDirective
     {
-
         public static readonly string WEBSITE_NAME = "website-name";
         public static readonly string VIRTUAL_DIR = "virtual-dir";
         public static readonly string APP_POOL = "app-pool";
 
-        public FubuWebsite()
+        public Website()
         {
             Port = 80;
             DirectoryBrowsing = Activation.Disable;

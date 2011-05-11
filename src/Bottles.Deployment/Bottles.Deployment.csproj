@@ -85,7 +85,7 @@
     <Compile Include="Profile.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="Directives\Activation.cs" />
-    <Compile Include="Directives\FubuWebsite.cs" />
+    <Compile Include="Directives\Website.cs" />
     <Compile Include="Runtime\Content\BottleRepository.cs" />
     <Compile Include="Directives\TopshelfService.cs" />
     <Compile Include="HostManifest.cs" />

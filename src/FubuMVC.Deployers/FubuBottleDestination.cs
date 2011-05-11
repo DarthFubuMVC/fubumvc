@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Deployment.Runtime.Content;
@@ -7,7 +6,6 @@ using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Deployers
 {
-    // Have this thing used by FubuWebsite
     public class FubuBottleDestination : IBottleDestination
     {
         private readonly string _physicalPath;
@@ -32,20 +30,20 @@ namespace FubuMVC.Deployers
 
                 case BottleRoles.Config:
                     yield return new BottleExplosionRequest()
-                    {
-                        BottleDirectory = BottleFiles.ConfigFolder,
-                        BottleName = manifest.Name,
-                        DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.ConfigFolder)
-                    };
+                                 {
+                                     BottleDirectory = BottleFiles.ConfigFolder,
+                                     BottleName = manifest.Name,
+                                     DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.ConfigFolder)
+                                 };
                     break;
 
                 case BottleRoles.Module:
                     yield return new BottleExplosionRequest()
-                    {
-                        BottleDirectory = null,
-                        BottleName = manifest.Name,
-                        DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder, FubuMvcPackageFacility.FubuPackagesFolder)
-                    };
+                                 {
+                                     BottleDirectory = null,
+                                     BottleName = manifest.Name,
+                                     DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder, FubuMvcPackageFacility.FubuPackagesFolder)
+                                 };
                     break;
 
                 case BottleRoles.Application:
@@ -94,5 +92,4 @@ namespace FubuMVC.Deployers
             return string.Format("PhysicalPath: {0}", _physicalPath);
         }
     }
-
 }

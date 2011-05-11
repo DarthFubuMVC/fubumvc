@@ -22,12 +22,12 @@ namespace Bottles.Tests.Deployment
             var settings = new DeploymentSettings(@"C:\dev\test-profile\");
             IBottleRepository bottles = new BottleRepository(fileSystem, new ZipFileService(fileSystem), settings);
 
-            var initializer = new IisFubuInitializer(fileSystem, new DeploymentSettings());
+            var initializer = new WebAppOfflineInitializer(fileSystem, new DeploymentSettings());
             
-            var deployer = new IisFubuDeployer(fileSystem, bottles);
+            var deployer = new IisWebsiteCreator();
             
 
-            var directive = new FubuWebsite();
+            var directive = new Website();
             directive.WebsiteName = "fubu";
             directive.WebsitePhysicalPath = @"C:\dev\test-web";
             directive.VDir = "bob";
@@ -41,7 +41,7 @@ namespace Bottles.Tests.Deployment
 
             var host = new HostManifest("a");
 
-            deployer.Execute(directive, host, new PackageLog());
+            deployer.Create(directive);
         }
         
     }

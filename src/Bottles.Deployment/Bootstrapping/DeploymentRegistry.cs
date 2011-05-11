@@ -15,7 +15,7 @@ namespace Bottles.Deployment.Bootstrapping
                 x.AssembliesFromApplicationBaseDirectory(a => a.GetName().Name.Contains("Deployers"));
 
                 //REVIEW: Ugly?
-                x.AssemblyContainingType<FubuWebsite>();
+                x.AssemblyContainingType<Website>();
 
                 x.ConnectImplementationsToTypesClosing(typeof (IInitializer<>));
                 x.ConnectImplementationsToTypesClosing(typeof (IDeployer<>));

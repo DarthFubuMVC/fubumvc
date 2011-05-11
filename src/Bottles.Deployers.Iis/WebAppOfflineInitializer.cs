@@ -1,6 +1,4 @@
-﻿using System;
 using Bottles.Deployment;
-using Bottles.Deployment.Diagnostics;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
 using Bottles.Diagnostics;
@@ -8,19 +6,18 @@ using FubuCore;
 
 namespace Bottles.Deployers.Iis
 {
-    // TODO -- I think this is misnamed
-    public class IisFubuInitializer : IInitializer<FubuWebsite>
+    public class WebAppOfflineInitializer : IInitializer<Website>
     {
         private readonly IFileSystem _fileSystem;
         private readonly DeploymentSettings _settings;
 
-        public IisFubuInitializer(IFileSystem fileSystem, DeploymentSettings settings)
+        public WebAppOfflineInitializer(IFileSystem fileSystem, DeploymentSettings settings)
         {
             _fileSystem = fileSystem;
             _settings = settings;
         }
 
-        public void Execute(FubuWebsite directive, HostManifest host, IPackageLog log)
+        public void Execute(Website directive, HostManifest host, IPackageLog log)
         {
             if (_settings.UserForced)
             {
@@ -35,7 +32,8 @@ namespace Bottles.Deployers.Iis
             var appOfflineFile = FileSystem.Combine(directive.VDirPhysicalPath, "app_offline.htm");
 
             log.Trace("Applying the application offline file");
-            _fileSystem.WriteStringToFile(appOfflineFile, "&lt;html&gt;&lt;body&gt;Application is being rebuilt&lt;/body&gt;&lt;/html&gt;");
+            _fileSystem.WriteStringToFile(appOfflineFile,
+                                          "&lt;html&gt;&lt;body&gt;Application is being rebuilt&lt;/body&gt;&lt;/html&gt;");
         }
     }
 }

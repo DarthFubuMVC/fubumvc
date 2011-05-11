@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
@@ -7,17 +7,16 @@ using FubuCore;
 
 namespace Bottles.Deployers.Iis
 {
-    // TODO -- think this should be renamed
-    public class IisFubuFinalizer : IFinalizer<FubuWebsite>
+    public class WebAppOfflineFinalizer : IFinalizer<Website>
     {
         private readonly IFileSystem _fileSystem;
 
-        public IisFubuFinalizer(IFileSystem fileSystem)
+        public WebAppOfflineFinalizer(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
         }
 
-        public void Execute(FubuWebsite directive, HostManifest host, IPackageLog log)
+        public void Execute(Website directive, HostManifest host, IPackageLog log)
         {
             _fileSystem.DeleteFile(FileSystem.Combine(directive.VDirPhysicalPath, "app_offline.htm"));
         }

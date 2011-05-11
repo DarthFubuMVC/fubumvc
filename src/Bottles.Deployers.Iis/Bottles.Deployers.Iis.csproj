@@ -42,9 +42,9 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IisFubuDeployer.cs" />
-    <Compile Include="IisFubuFinalizer.cs" />
-    <Compile Include="IisFubuInitializer.cs" />
+    <Compile Include="IISWebsiteCreator.cs" />
+    <Compile Include="WebAppOfflineFinalizer.cs" />
+    <Compile Include="WebAppOfflineInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerManagerExtensions.cs" />
   </ItemGroup>
