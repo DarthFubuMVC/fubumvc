@@ -30,11 +30,11 @@ namespace FubuMVC.Spark.SparkModel
 
         private IEnumerable<ITemplate> locateTemplates(string name, ITemplate fromTemplate, IEnumerable<ITemplate> templates, bool sharedsOnly)
         {
-            var reachables = sharedsOnly
-                                 ? _provider.SharedPathsOf(fromTemplate, templates)
-                                 : _provider.ReachablesOf(fromTemplate, templates);
-            return templates.ByName(name).InDirectories(reachables);
+            var directories = sharedsOnly 
+                ? _provider.SharedPathsOf(fromTemplate, templates) 
+                : _provider.ReachablesOf(fromTemplate, templates);
+            
+            return templates.ByName(name).InDirectories(directories);
         }
-
     }
 }

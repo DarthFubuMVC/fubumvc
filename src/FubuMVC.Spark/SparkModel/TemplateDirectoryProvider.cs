@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.SparkModel
 
         private IEnumerable<string> getDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor)
         {
-            foreach (var directory in _builder.BuildFrom(template.FilePath, template.RootPath, includeDirectAncestor))
+            foreach (var directory in _builder.BuildBy(template.FilePath, template.RootPath, includeDirectAncestor))
             {
                 yield return directory;
             }
@@ -43,7 +43,6 @@ namespace FubuMVC.Spark.SparkModel
             }
 
             var hostRoot = findHostRoot(templates);
-
             if (hostRoot.IsEmpty())
             {
                 yield break;
@@ -54,7 +53,6 @@ namespace FubuMVC.Spark.SparkModel
                 yield return Path.Combine(hostRoot, sharedFolder);
             }
         }
-
 
         private static string findHostRoot(IEnumerable<ITemplate> templates)
         {

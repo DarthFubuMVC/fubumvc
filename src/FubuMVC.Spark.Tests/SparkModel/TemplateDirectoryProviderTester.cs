@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var paths = Enumerable.Empty<string>();
             _builder
-                .Expect(x => x.BuildFrom(_item.FilePath, _item.RootPath, false))
+                .Expect(x => x.BuildBy(_item.FilePath, _item.RootPath, false))
                 .Return(paths);
 
             ClassUnderTest.SharedPathsOf(_item, _items).ToList();
@@ -54,7 +54,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var paths = new[] { getPath("Shared"), getPath("Views", "Shared") };
             _builder
-                .Stub(x => x.BuildFrom(null, null, false)).IgnoreArguments()
+                .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
                 .Return(paths);
 
             ClassUnderTest.SharedPathsOf(_item, _items)
@@ -66,7 +66,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var paths = new[] { getPath("Shared"), getPath("Views", "Shared") };
             _builder
-                .Stub(x => x.BuildFrom(null, null, false)).IgnoreArguments()
+                .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
                 .Return(paths);
 
             ClassUnderTest.SharedPathsOf(_item, _items)
@@ -81,7 +81,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 getPath("Packages", "Package1", "Shared"), 
                 getPath("Packages", "Package1", "Actions", "Shared") };
             _builder
-                .Stub(x => x.BuildFrom(null, null, false)).IgnoreArguments()
+                .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
                 .Return(paths);
 
             _items.Remove(_item);
@@ -98,7 +98,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 getPath("Packages", "Package1", "Shared"), 
                 getPath("Packages", "Package1", "Actions", "Shared") };
             _builder
-                .Stub(x => x.BuildFrom(null, null, false))
+                .Stub(x => x.BuildBy(null, null, false))
                 .IgnoreArguments().Return(paths);
 
             ClassUnderTest.SharedPathsOf(_packageItem, _items)
