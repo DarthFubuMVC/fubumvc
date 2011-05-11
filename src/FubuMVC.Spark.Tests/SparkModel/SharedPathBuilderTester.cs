@@ -55,6 +55,20 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
+        public void path_one_level_with_includeAncestor_bool_flag_returns_correct_paths()
+        {
+            var path = FileSystem.Combine(_rootPath, "path1");
+
+            var expected = new List<string> {_rootPath};
+
+            _folderNames.Each(s => expected.Add(FileSystem.Combine(_rootPath, s)));
+
+            ClassUnderTest.BuildFrom(path, _rootPath, true)
+                .ShouldHaveTheSameElementsAs(expected);
+        }
+
+
+        [Test]
         public void path_two_level_returns_correct_shared_paths()
         {
             var p1 = FileSystem.Combine(_rootPath, "path1");
@@ -65,6 +79,26 @@ namespace FubuMVC.Spark.Tests.SparkModel
             paths.Each(p => _folderNames.Each(s => expected.Add(FileSystem.Combine(p, s))));
 
             ClassUnderTest.BuildFrom(p2, _rootPath, false)
+                .ShouldHaveTheSameElementsAs(expected);
+        }
+
+
+
+        [Test]
+        public void path_two_level_with_includeAncestor_bool_flag_returns_correct_paths()
+        {
+            var p1 = FileSystem.Combine(_rootPath, "path1");
+            var p2 = FileSystem.Combine(p1, "path2");
+            var paths = new List<string> { p1, _rootPath };
+
+            var expected = new List<string>();
+            paths.Each(p =>
+            {
+                expected.Add(p);
+                _folderNames.Each(s => expected.Add(FileSystem.Combine(p, s)));
+            });
+
+            ClassUnderTest.BuildFrom(p2, _rootPath, true)
                 .ShouldHaveTheSameElementsAs(expected);
         }
 
@@ -86,5 +120,29 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.BuildFrom(tree, _rootPath, false)
                 .ShouldHaveTheSameElementsAs(expected);
         }
+
+        [Test]
+        public void path_n_level_with_includeAncestor_bool_flag_returns_correct_paths()
+        {
+            var tree = _rootPath;
+            var paths = new List<string>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                paths.Insert(0, tree);
+                tree = FileSystem.Combine(tree, "p" + i);
+            }
+
+            var expected = new List<string>();
+            paths.Each(p =>
+            {
+                expected.Add(p);
+                _folderNames.Each(s => expected.Add(FileSystem.Combine(p, s)));
+            });
+
+            ClassUnderTest.BuildFrom(tree, _rootPath, true)
+                .ShouldHaveTheSameElementsAs(expected);
+        }
+
     }
 }
