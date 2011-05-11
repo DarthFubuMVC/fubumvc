@@ -123,12 +123,14 @@ namespace FubuMVC.Spark.SparkModel
     public class ReachableBindingsBinder : ITemplateBinder
     {
         private readonly ITemplateLocator _templateLocator;
-        private const string Bindings = "bindings";
+        private const string FallbackBindingsName = "bindings";
+        public string BindingsName { get; set; }
 
         public ReachableBindingsBinder() : this(new TemplateLocator()) {}
         public ReachableBindingsBinder(ITemplateLocator templateLocator)
         {
             _templateLocator = templateLocator;
+            BindingsName = FallbackBindingsName;
         }
 
         public bool CanBind(IBindRequest request)
@@ -140,9 +142,8 @@ namespace FubuMVC.Spark.SparkModel
         {
             var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
             
-            // We should rather just have a method for this.
             var bindings = _templateLocator
-                .LocateReachableTemplates(Bindings, request.Target, request.Templates)
+                .LocateReachableTemplates(BindingsName, request.Target, request.Templates)
                 .Where(x => x.IsXml());            
             
             bindings.Each(descriptor.AddBinding);
