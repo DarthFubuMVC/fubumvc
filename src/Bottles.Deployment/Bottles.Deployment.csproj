@@ -78,6 +78,7 @@
     <Compile Include="EntryLogWriter.cs" />
     <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
     <Compile Include="Runtime\Content\IBottleMover.cs" />
+    <Compile Include="Parsing\DeploymentPlan.cs" />
     <Compile Include="Parsing\HostReader.cs" />
     <Compile Include="Parsing\IProfileReader.cs" />
     <Compile Include="Parsing\IRecipeSorter.cs" />

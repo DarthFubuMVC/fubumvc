@@ -25,8 +25,8 @@
       <ProfileReader>
         <CheckHosts isStep="True">
           <Rows>
-            <row isStep="True" expected="OO" />
             <row isStep="True" expected="CH" />
+            <row isStep="True" expected="OO" />
           </Rows>
         </CheckHosts>
         <FetchPropertiesForHost isStep="True" host="CH" />

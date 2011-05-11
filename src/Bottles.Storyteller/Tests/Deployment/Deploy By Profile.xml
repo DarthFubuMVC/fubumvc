@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<Test name="Deploy By Profile" lifecycle="Acceptance">
+  <Comment><![CDATA[Validates that the deployment will happen by profile]]></Comment>
+</Test>

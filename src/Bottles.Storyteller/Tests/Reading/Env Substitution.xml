@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<Test name="Env Substitution" lifecycle="Regression">
+<Test name="Environment Substitution" lifecycle="Regression">
+  <Comment><![CDATA[Ensures that the environment settings can be substituted in later settings using the {key} syntax]]></Comment>
   <Deployment>
     <Configure isStep="True">
       <DeploymentConfiguration>

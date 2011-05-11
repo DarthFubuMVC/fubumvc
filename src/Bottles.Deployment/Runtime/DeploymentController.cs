@@ -44,7 +44,8 @@ namespace Bottles.Deployment.Runtime
         public void Deploy(DeploymentOptions options)
         {
             // need to log inside of reader
-            var hosts = _reader.Read(options);
+            var plan = _reader.Read(options);
+            var hosts = plan.Hosts;
 
             var runners = _factory.BuildRunners(hosts);
 

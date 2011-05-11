@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Configuration;
@@ -20,44 +19,45 @@ namespace Bottles.Deployment.Parsing
             _settings = settings;
         }
 
-        // TODO
-        //         -- unless Recipes is non-empty, then use that one
-        //         -- fill in the recipes
-        public static IEnumerable<Recipe> FilterRecipes(Profile profile, DeploymentOptions options, IEnumerable<Recipe> recipes)
-        {
-            return recipes.Where(r => profile.Recipes.Contains(r.Name));
-        }
+            return recipes.Where(r => profile.Recipes.Contains(r.Name) || options.RecipeNames.Contains(r.Name));
 
-        public Profile ReadProfile(DeploymentOptions options, EnvironmentSettings settings)
-        {
-            var profileFile = _settings.GetProfile(options.ProfileName);
-            var profile = new Profile(settings);
-
-            _fileSystem.ReadTextFile(profileFile, profile.ReadText);
-
-            options.RecipeNames.Each(profile.AddRecipe);
-
-            return profile;
-        }
-
-        public IEnumerable<HostManifest> Read(DeploymentOptions options)
+        public DeploymentPlan Read(DeploymentOptions options)
         {
             var environment = EnvironmentSettings.ReadFrom(_settings.EnvironmentFile);
-            environment.SetRoot(_settings.TargetDirectory);
 
-            var profile = ReadProfile(options, environment);
+            return Read(options, environment);
+        }
+
+        public DeploymentPlan Read(DeploymentOptions options, EnvironmentSettings environment)
+        {
+            var deploymentPlan = new DeploymentPlan();
+
+            environment.SetRootSetting(_settings.TargetDirectory);
+
+            var profile = readProfile(environment, options);
 
             var recipes = readRecipes(environment, options, profile);
-            var hosts = collateHosts(recipes);
+            deploymentPlan.AddRecipes(recipes);
 
+            var hosts = collateHosts(recipes);
             addEnvironmentSettingsToHosts(environment, hosts);
-            
-            return hosts;
+            deploymentPlan.AddHosts(hosts);
+
+            deploymentPlan.SetProfile(profile);
+            return deploymentPlan;
+        }
+
+        private Profile readProfile(EnvironmentSettings environment, DeploymentOptions options)
+        {
+            var profile = new Profile(environment);
+            var profileFile = _settings.GetProfile(options.ProfileName);
+            _fileSystem.ReadTextFile(profileFile, profile.ReadText);
+            return profile;
         }
 
         private IEnumerable<HostManifest> collateHosts(IEnumerable<Recipe> recipes)
         {
-            // TODO -- throw up if no recipes
+            // TODO -- throw up if no recipes or return 0?
             //REVIEW: hardening
             if (recipes == null || !recipes.Any())
                 return new HostManifest[0];
@@ -71,11 +71,31 @@ namespace Bottles.Deployment.Parsing
 
         private IEnumerable<Recipe> readRecipes(EnvironmentSettings environment, DeploymentOptions options, Profile profile)
         {
-            // TODO -- log which recipes are read
             var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
-            recipes = FilterRecipes(profile, options, recipes);
+            recipes = buildEntireRecipeGraph(profile, options, recipes);
+            // TODO -- log which recipes were selected
             recipes = _sorter.Order(recipes);
             return recipes;
+        }
+
+        public static IEnumerable<Recipe> buildEntireRecipeGraph(Profile profile, DeploymentOptions options, IEnumerable<Recipe> allRecipesAvailable)
+        {
+            var recipesToRun = new List<string>();
+
+            recipesToRun.AddRange(profile.Recipes);
+            recipesToRun.AddRange(options.RecipeNames);
+
+            var dependencies = new List<string>();
+
+            recipesToRun.Each(r =>
+            {
+                var rec = allRecipesAvailable.Single(x => x.Name == r);
+                dependencies.AddRange(rec.Dependencies);
+            });
+
+            recipesToRun.AddRange(dependencies.Distinct());
+
+            return recipesToRun.Distinct().Select(name => allRecipesAvailable.Single(o => o.Name == name));
         }
 
         private static void addEnvironmentSettingsToHosts(EnvironmentSettings environment, IEnumerable<HostManifest> hosts)

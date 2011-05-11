@@ -70,7 +70,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
 
-            theHosts = reader.Read(new DeploymentOptions("default"));
+            theHosts = reader.Read(new DeploymentOptions("default")).Hosts;
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Bottles.Tests.Deployment.Parsing
         {
             var environment = new EnvironmentSettings();
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
-            var profile = reader.ReadProfile(new DeploymentOptions("default"), environment);
+            var profile = reader.Read(new DeploymentOptions("default"), environment).Profile;
 
             environment.Overrides["dbName"].ShouldEqual("profile-db");
 
@@ -152,7 +152,7 @@ namespace Bottles.Tests.Deployment.Parsing
 
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
 
-            theHosts = reader.Read(new DeploymentOptions("default"));
+            theHosts = reader.Read(new DeploymentOptions("default")).Hosts;
         }
 
         [Test]
