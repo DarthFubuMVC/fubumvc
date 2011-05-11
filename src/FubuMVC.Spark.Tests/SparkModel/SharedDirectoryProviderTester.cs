@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,7 +45,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Expect(x => x.BuildFrom(_item.FilePath, _item.RootPath, false))
                 .Return(paths);
 
-            ClassUnderTest.GetDirectories(_item, _items, false).ToList();
+            ClassUnderTest.SharedPathsOf(_item, _items).ToList();
             _builder.VerifyAllExpectations();
         }
 
@@ -58,7 +57,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Stub(x => x.BuildFrom(null, null, false)).IgnoreArguments()
                 .Return(paths);
 
-            ClassUnderTest.GetDirectories(_item, _items, false)
+            ClassUnderTest.SharedPathsOf(_item, _items)
                 .Each(x => paths.ShouldContain(x));
         }
 
@@ -70,7 +69,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Stub(x => x.BuildFrom(null, null, false)).IgnoreArguments()
                 .Return(paths);
 
-            ClassUnderTest.GetDirectories(_item, _items, false)
+            ClassUnderTest.SharedPathsOf(_item, _items)
                 .SequenceEqual(paths).ShouldBeTrue();
         }
 
@@ -87,7 +86,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _items.Remove(_item);
 
-            ClassUnderTest.GetDirectories(_packageItem, _items, false)
+            ClassUnderTest.SharedPathsOf(_packageItem, _items)
                 .SequenceEqual(paths).ShouldBeTrue();
         }
 
@@ -102,7 +101,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .Stub(x => x.BuildFrom(null, null, false))
                 .IgnoreArguments().Return(paths);
 
-            ClassUnderTest.GetDirectories(_packageItem, _items, false)
+            ClassUnderTest.SharedPathsOf(_packageItem, _items)
                 .SequenceEqual(paths.Union(new[] { rootShared }))
                 .ShouldBeTrue();
         }

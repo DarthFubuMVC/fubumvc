@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 new Template(Path.Combine("App","Views","Home", "header.spark"), "", ""),
             };
 
-            sharedDirectoryProvider.Stub(x => x.GetDirectories(fromItem, items, false)).Return(sharedDirectories);
+            sharedDirectoryProvider.Stub(x => x.SharedPathsOf(fromItem, items)).Return(sharedDirectories);
             Services.Inject(sharedDirectoryProvider);
 
             _applicationItem = ClassUnderTest.LocateSharedTemplates("application", fromItem, items).FirstOrDefault();

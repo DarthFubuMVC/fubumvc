@@ -6,7 +6,8 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISharedDirectoryProvider
     {
-        IEnumerable<string> GetDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor);
+        IEnumerable<string> SharedPathsOf(ITemplate template, IEnumerable<ITemplate> templates);
+        IEnumerable<string> ReachablesOf(ITemplate template, IEnumerable<ITemplate> templates);
     }
 
     public class SharedDirectoryProvider : ISharedDirectoryProvider
@@ -19,7 +20,17 @@ namespace FubuMVC.Spark.SparkModel
             _builder = builder;
         }
 
-        public IEnumerable<string> GetDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor)
+        public IEnumerable<string> SharedPathsOf(ITemplate template, IEnumerable<ITemplate> templates)
+        {
+            return getDirectories(template, false, templates);
+        }
+
+        public IEnumerable<string> ReachablesOf(ITemplate template, IEnumerable<ITemplate> templates)
+        {
+            return getDirectories(template, true, templates);
+        }
+
+        private IEnumerable<string> getDirectories(ITemplate template, bool includeDirectAncestor, IEnumerable<ITemplate> templates)
         {
             foreach (var directory in _builder.BuildFrom(template.FilePath, template.RootPath, includeDirectAncestor))
             {
@@ -43,6 +54,8 @@ namespace FubuMVC.Spark.SparkModel
                 yield return Path.Combine(hostRoot, sharedFolder);
             }
         }
+
+
         private static string findHostRoot(IEnumerable<ITemplate> templates)
         {
             return templates.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
