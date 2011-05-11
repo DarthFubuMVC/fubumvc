@@ -25,7 +25,7 @@ namespace Bottles.Deployment.Parsing
         //         -- fill in the recipes
         public static IEnumerable<Recipe> FilterRecipes(Profile profile, DeploymentOptions options, IEnumerable<Recipe> recipes)
         {
-            return recipes;
+            return recipes.Where(r => profile.Recipes.Contains(r.Name));
         }
 
         public Profile ReadProfile(DeploymentOptions options, EnvironmentSettings settings)
@@ -34,6 +34,8 @@ namespace Bottles.Deployment.Parsing
             var profile = new Profile(settings);
 
             _fileSystem.ReadTextFile(profileFile, profile.ReadText);
+
+            options.RecipeNames.Each(profile.AddRecipe);
 
             return profile;
         }
