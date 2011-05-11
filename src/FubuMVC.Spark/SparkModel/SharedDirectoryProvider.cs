@@ -1,29 +1,51 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    // NOTE: RECONSIDER THIS, IT HAS BECOME A HELPER
     public interface ISharedDirectoryProvider
     {
-        IEnumerable<string> GetDirectories(ITemplate template, IEnumerable<ITemplate> templates);
+        IEnumerable<string> GetDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor);
     }
 
     public class SharedDirectoryProvider : ISharedDirectoryProvider
     {
-        private readonly IReachableDirectoryLocator _locator;
+        private readonly ISharedPathBuilder _builder;
 
-        public SharedDirectoryProvider() : this(new ReachableDirectoryLocator()) {}
-        public SharedDirectoryProvider(IReachableDirectoryLocator locator)
+        public SharedDirectoryProvider() : this(new SharedPathBuilder()) { }
+        public SharedDirectoryProvider(ISharedPathBuilder builder)
         {
-            _locator = locator;
+            _builder = builder;
         }
 
-        public IEnumerable<string> GetDirectories(ITemplate template, IEnumerable<ITemplate> templates)
+        public IEnumerable<string> GetDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor)
         {
-            return _locator.GetDirectories(template, templates)
-                .Where(x => x.IsShared)
-                .Select(x => x.Path);
+            foreach (var directory in _builder.BuildFrom(template.FilePath, template.RootPath, includeDirectAncestor))
+            {
+                yield return directory;
+            }
+
+            if (template.Origin == FubuSparkConstants.HostOrigin)
+            {
+                yield break;
+            }
+
+            var hostRoot = findHostRoot(templates);
+
+            if (hostRoot.IsEmpty())
+            {
+                yield break;
+            }
+
+            foreach (var sharedFolder in _builder.SharedFolderNames)
+            {
+                yield return Path.Combine(hostRoot, sharedFolder);
+            }
+        }
+        private static string findHostRoot(IEnumerable<ITemplate> templates)
+        {
+            return templates.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
@@ -123,18 +122,19 @@ namespace FubuMVC.Spark.SparkModel
 
     public class ReachableBindingsBinder : ITemplateBinder
     {
-        private readonly IReachableDirectoryLocator _reachableDirectoryLocator;
+        private readonly ISharedDirectoryProvider _provider;
         private const string Bindings = "bindings.xml";
 
         public ReachableBindingsBinder()
-            : this(new ReachableDirectoryLocator())
+            : this(new SharedDirectoryProvider())
         {
         }
 
-        public ReachableBindingsBinder(IReachableDirectoryLocator reachableDirectoryLocator)
+        public ReachableBindingsBinder(ISharedDirectoryProvider provider)
         {
-            _reachableDirectoryLocator = reachableDirectoryLocator;
+            _provider = provider;
         }
+
         public bool CanBind(IBindRequest request)
         {
             return request.Target.Descriptor is ViewDescriptor;
@@ -145,10 +145,8 @@ namespace FubuMVC.Spark.SparkModel
             var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
 
             var candidates = request.Templates.Where(x => x.Name() == Bindings).Where(x => x.IsXml()).ToList();
-            
-            var reachables = _reachableDirectoryLocator
-                .GetDirectories(request.Target, request.Templates)
-                .Select(x => x.Path).ToList();
+
+            var reachables = _provider.GetDirectories(request.Target, request.Templates, true);
 
             var bindings = candidates.InDirectories(reachables);
             

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Web;
 using System.IO;
+using System.Linq;
+using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core.UI;
@@ -10,8 +11,6 @@ using HtmlTags;
 using Spark;
 using Spark.Bindings;
 using Spark.FileSystem;
-using S = Spark;
-using System.Linq;
 
 namespace FubuMVC.Spark
 {

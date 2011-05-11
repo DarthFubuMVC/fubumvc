@@ -1,5 +1,4 @@
-﻿using System;
-using FubuCore;
+﻿using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;

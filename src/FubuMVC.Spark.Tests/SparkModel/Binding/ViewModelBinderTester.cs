@@ -1,9 +1,9 @@
 ﻿using System;
-using FubuMVC.Core.Registration;
-using FubuTestingSupport;
-using FubuMVC.Spark.SparkModel;
-using NUnit.Framework;
 using System.CodeDom.Compiler;
+using FubuMVC.Core.Registration;
+using FubuMVC.Spark.SparkModel;
+using FubuTestingSupport;
+using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binding

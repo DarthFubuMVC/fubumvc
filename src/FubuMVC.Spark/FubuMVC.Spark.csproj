@@ -65,10 +65,10 @@
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
-    <Compile Include="SparkModel\ReachableDirectoryLocator.cs" />
     <Compile Include="SparkModel\Descriptors.cs" />
     <Compile Include="SparkModel\FubuSparkConstants.cs" />
     <Compile Include="SparkModel\SharedDirectoryProvider.cs" />
+    <Compile Include="SparkModel\SharedPathBuilder.cs" />
     <Compile Include="SparkModel\TemplatePolicies.cs" />
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />

@@ -1,10 +1,3 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using FubuCore;
-using FubuMVC.Spark.SparkModel;
-using FubuTestingSupport;
-using NUnit.Framework;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {

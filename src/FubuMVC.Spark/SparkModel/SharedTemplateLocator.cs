@@ -4,7 +4,6 @@ using System.Linq;
 namespace FubuMVC.Spark.SparkModel
 {
     // TODO : Below needs changes wrt locating single or many.
-    // NOTE: RECONSIDER THIS, IT HAS BECOME A HELPER
     public interface ISharedTemplateLocator
     {
         ITemplate LocateTemplate(string name, ITemplate fromTemplate, IEnumerable<ITemplate> templates);
@@ -22,7 +21,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public ITemplate LocateTemplate(string name, ITemplate fromTemplate, IEnumerable<ITemplate> templates)
         {
-            var reachables = _provider.GetDirectories(fromTemplate, templates);
+            var reachables = _provider.GetDirectories(fromTemplate, templates, false);
             return templates.ByName(name).InDirectories(reachables).FirstOrDefault();
         }
     }
