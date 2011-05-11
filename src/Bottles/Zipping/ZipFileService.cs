@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Xml.Serialization;
 using Bottles.Exploding;
 using FubuCore;
 using Ionic.Zip;
@@ -79,6 +80,24 @@ namespace Bottles.Zipping
                 stream.Position = 0;
                 var reader = new StreamReader(stream);
                 return reader.ReadToEnd();
+            }
+        }
+
+        public PackageManifest GetPackageManifest(string fileName)
+        {
+            using (var zipFile = new ZipFile(fileName))
+            {
+
+                var entry = zipFile.Entries.SingleOrDefault(x => x.FileName == PackageManifest.FILE);
+                if (entry == null) return null;
+
+                var stream = new MemoryStream();
+                entry.Extract(stream);
+
+                stream.Position = 0;
+
+                var serializer = new XmlSerializer(typeof (PackageManifest));
+                return (PackageManifest) serializer.Deserialize(stream);
             }
         }
     }

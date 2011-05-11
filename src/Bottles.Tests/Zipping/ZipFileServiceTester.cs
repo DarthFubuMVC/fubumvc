@@ -35,6 +35,34 @@ namespace Bottles.Tests.Zipping
         }
 
         [Test]
+        public void read_a_package_manifest()
+        {
+            var manifest = new PackageManifest{
+                Role = "application",
+                Name = "something"
+            };
+
+            new FileSystem().WriteObjectToFile(PackageManifest.FILE, manifest);
+
+            if (File.Exists("zip1.zip"))
+            {
+                File.Delete("zip1.zip");
+            }
+
+            using (var zip1 = new ZipFile("zip1.zip"))
+            {
+                zip1.AddFile(PackageManifest.FILE, "");
+                zip1.Save();
+            }
+
+            var service = new ZipFileService(new FileSystem());
+            var manifest2 = service.GetPackageManifest("zip1.zip");
+
+            manifest2.Name.ShouldEqual(manifest.Name);
+            manifest2.Role.ShouldEqual(manifest.Role);
+        }
+
+        [Test]
         public void create_test_zip_to_a_nonexistent_path()
         {
             var fileSystem = new FileSystem();
