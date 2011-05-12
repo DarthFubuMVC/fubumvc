@@ -11,81 +11,85 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateLocatorTester : InteractionContext<TemplateLocator>
     {
-        private ITemplate _applicationItem;
-        private ITemplate _messageItem;
-        private ITemplate _lowerCasedCompanyItem;
-        private ITemplate _upperCasedCompanyItem;
-
-        private ITemplate _headerItem;
+        private ITemplateDirectoryProvider _provider;
+        private ITemplate _template;
+        private IList<string> _masterDirectories;
+        private IList<string> _bindingDirectories;
+        private IList<ITemplate> _masterTemplates;
+        private IList<ITemplate> _bindingTemplates;
 
         protected override void beforeEach()
         {
-            var fromItem = new Template("", "", "");
-            var sharedDirectories = new List<string>
+            _template = MockFor<ITemplate>();
+            _masterDirectories = new List<string>
             {
-              Path.Combine("App","Views","Shared"),
-              Path.Combine("App","Handlers","Shared"),
-              Path.Combine("App","Controllers","Shared"),
-              Path.Combine("App","Actions","Shared"),
+                Path.Combine("App", "Actions", "Shared"),
+                Path.Combine("App", "Views", "Shared"),
+                Path.Combine("App", "Shared")
+            };
+            _bindingDirectories = new List<string>
+            {
+                Path.Combine("App", "Views", "Shared"),
+                Path.Combine("App", "Views"),
+                Path.Combine("App", "Shared"),
+                Path.Combine("App")
+            };
+         
+            _masterTemplates = new List<ITemplate>
+            {
+                new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin)
             };
 
-            var items = new List<Template>
+            _bindingTemplates = new List<ITemplate>
             {
-                new Template(Path.Combine(sharedDirectories.ElementAt(0), "Company.spark"), "", ""),
-                new Template(Path.Combine(sharedDirectories.ElementAt(1), "company.spark"), "", ""),
-                new Template(Path.Combine(sharedDirectories.ElementAt(2), "application.spark"), "", ""),
-                new Template(Path.Combine(sharedDirectories.ElementAt(3), "application.spark"), "", ""),
-                new Template(Path.Combine("App","Views","Home", "header.spark"), "", ""),
+                new Template(Path.Combine("App", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",FubuSparkConstants.HostOrigin)
             };
 
-            var templateDirectoryProvider = MockFor<ITemplateDirectoryProvider>();
-            templateDirectoryProvider.Stub(x => x.SharedPathsOf(fromItem, items)).Return(sharedDirectories);
-
-            _applicationItem = ClassUnderTest.LocateSharedTemplates("application", fromItem, items).FirstOrDefault();
-            _messageItem = ClassUnderTest.LocateSharedTemplates("message", fromItem, items).FirstOrDefault();
-            _lowerCasedCompanyItem = ClassUnderTest.LocateSharedTemplates("company", fromItem, items).FirstOrDefault();
-            _upperCasedCompanyItem = ClassUnderTest.LocateSharedTemplates("Company", fromItem, items).FirstOrDefault();
-            _headerItem = ClassUnderTest.LocateSharedTemplates("header", fromItem, items).FirstOrDefault();
+            _provider = MockFor<ITemplateDirectoryProvider>();
+            _provider.Stub(x => x.SharedPathsOf(_template, _masterTemplates)).Return(_masterDirectories);
+            _provider.Stub(x => x.ReachablesOf(_template, _bindingTemplates)).Return(_bindingDirectories);
         }
 
         [Test]
-        public void if_exists_the_item_is_not_null()
+        public void locate_master_returns_template_that_match_first_shared_directory_and_name()
         {
-            _applicationItem.ShouldNotBeNull();
+            var master = ClassUnderTest.LocateMaster("application", _template, _masterTemplates);
+            master.ShouldNotBeNull().ShouldEqual(_masterTemplates[2]);
         }
 
         [Test]
-        public void the_located_item_name_match_the_requested_spark_name()
+        public void if_not_exists_locate_master_returns_null()
         {
-            _applicationItem.Name().ShouldEqual("application");
+            var master = ClassUnderTest.LocateMaster("admin", _template, _masterTemplates);
+            master.ShouldBeNull();
         }
 
         [Test]
-        public void the_located_item_is_under_the_reachable_directories()
+        public void locate_binding_returns_template_that_match_shared_directories_and_name()
         {
-            _applicationItem.DirectoryPath().ShouldEqual(Path.Combine("App", "Controllers", "Shared"));
+            var bindings = ClassUnderTest.LocateBindings("bindings", _template, _bindingTemplates);
+            bindings.ShouldNotBeNull().ShouldHaveCount(4);
+
+            bindings.ElementAt(0).ShouldEqual(_bindingTemplates[6]);
+            bindings.ElementAt(1).ShouldEqual(_bindingTemplates[4]);
+            bindings.ElementAt(2).ShouldEqual(_bindingTemplates[2]);
+            bindings.ElementAt(3).ShouldEqual(_bindingTemplates[0]);
         }
 
         [Test]
-        public void when_not_found_returns_null()
+        public void if_not_exists_locate_bindings_returns_empty_list()
         {
-            _messageItem.ShouldBeNull();
+            var bindings = ClassUnderTest.LocateBindings("sparkbindings", _template, _bindingTemplates);
+            bindings.ShouldNotBeNull().ShouldHaveCount(0);
         }
 
-        [Test]
-        public void items_are_localized_by_their_exact_case_sensitive_name()
-        {
-            _lowerCasedCompanyItem.Name().ShouldEqual("company");
-            _lowerCasedCompanyItem.DirectoryPath().ShouldEqual(Path.Combine("App", "Handlers", "Shared"));
-
-            _upperCasedCompanyItem.Name().ShouldEqual("Company");
-            _upperCasedCompanyItem.DirectoryPath().ShouldEqual(Path.Combine("App", "Views", "Shared"));
-        }
-
-        [Test]
-        public void if_the_item_by_name_exists_but_is_not_under_any_of_the_shared_directories_returns_null()
-        {
-            _headerItem.ShouldBeNull();
-        }
     }
 }
