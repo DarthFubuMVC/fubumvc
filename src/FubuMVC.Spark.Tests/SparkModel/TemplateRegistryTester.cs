@@ -13,15 +13,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate[] _bindings;
         protected override void beforeEach()
         {
-            _templates = new List<ITemplate>();
-            _templates.Add(new Template("App/Shared/bindings.xml", "App", FubuSparkConstants.HostOrigin));
-            _templates.Add(new Template("App/bindings.xml", "App", FubuSparkConstants.HostOrigin));
-            _templates.Add(new Template("App/Views/binding.xml", "App", FubuSparkConstants.HostOrigin));
-            _templates.Add(new Template("App/Actions/binding.xml", "App", FubuSparkConstants.HostOrigin));
-            _templates.Add(new Template("App/Actions/Home/home.spark", "App", FubuSparkConstants.HostOrigin));
-            _templates.Add(new Template("App/Packages1/Views/Home/home.spark", "App/Package1", "Package1"));
-            _templates.Add(new Template("App/Packages1/Views/Products/list.spark", "App/Package1", "Package1"));
-            _templates.Add(new Template("App/Views/Home/home.spark", "App", FubuSparkConstants.HostOrigin));
+            _templates = new List<ITemplate>
+            {
+                new Template("App/Shared/bindings.xml", "App", FubuSparkConstants.HostOrigin),
+                new Template("App/bindings.xml", "App", FubuSparkConstants.HostOrigin),
+                new Template("App/Views/binding.xml", "App", FubuSparkConstants.HostOrigin),
+                new Template("App/Actions/binding.xml", "App", FubuSparkConstants.HostOrigin),
+                new Template("App/Actions/Home/home.spark", "App", FubuSparkConstants.HostOrigin),
+                new Template("App/Packages1/Views/Home/home.spark", "App/Package1", "Package1"),
+                new Template("App/Packages1/Views/Products/list.spark", "App/Package1", "Package1"),
+                new Template("App/Views/Home/home.spark", "App", FubuSparkConstants.HostOrigin)
+            };
 
             _bindings = new[] { _templates[0], _templates[1], _templates[2] };
 
@@ -61,7 +63,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void all_templates()
         {
-            ClassUnderTest.AllTemplates().ShouldHaveCount(8);
+            ClassUnderTest.AllTemplates().ShouldHaveCount(8).ShouldEqual(_templates);
         }
 
         [Test]
