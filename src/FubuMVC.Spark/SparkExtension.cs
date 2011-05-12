@@ -57,6 +57,7 @@ namespace FubuMVC.Spark
                 .AddBinder<ViewDescriptorBinder>()
                 .AddBinder<MasterPageBinder>()
                 .AddBinder<ViewModelBinder>()
+				.AddBinder<ReachableBindingsBinder>()
                 .Apply<NamespacePolicy>()
                 .Apply<ViewPathPolicy>();			
 		}
