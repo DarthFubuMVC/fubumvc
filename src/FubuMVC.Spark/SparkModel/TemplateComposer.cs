@@ -14,12 +14,12 @@ namespace FubuMVC.Spark.SparkModel
     {
         private readonly IList<ITemplateBinder> _binders = new List<ITemplateBinder>();
         private readonly IList<ITemplatePolicy> _policies = new List<ITemplatePolicy>();
-        private readonly IEnumerable<ITemplate> _templates;
+        private readonly ITemplates _templates;
         
         private readonly IChunkLoader _chunkLoader;
 
-        public TemplateComposer(IEnumerable<ITemplate> templates) : this(templates, new ChunkLoader()) { }
-        public TemplateComposer(IEnumerable<ITemplate> templates, IChunkLoader chunkLoader)
+        public TemplateComposer(ITemplates templates) : this(templates, new ChunkLoader()) { }
+        public TemplateComposer(ITemplates templates, IChunkLoader chunkLoader)
         {
             _templates = templates;
             _chunkLoader = chunkLoader;

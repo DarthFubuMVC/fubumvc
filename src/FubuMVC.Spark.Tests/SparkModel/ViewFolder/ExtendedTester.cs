@@ -20,9 +20,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly TemplateViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
-        private readonly IEnumerable<ITemplate> _pak1Templates;
-        private readonly IEnumerable<ITemplate> _pak2Templates;
-        private readonly IEnumerable<ITemplate> _appTemplates;
+        private readonly ITemplates _pak1Templates;
+        private readonly ITemplates _pak2Templates;
+        private readonly ITemplates _appTemplates;
 
         public ExtendedTester()
         {
@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
             
-            var allTemplates = new List<ITemplate>();
+            var allTemplates = new Templates();
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
 
@@ -55,9 +55,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
                 BindingProvider = new FubuBindingProvider(new Templates(allTemplates))
             };
 
-            _pak1Templates = new List<ITemplate>(allTemplates.ByOrigin(Package1));
-            _pak2Templates = new List<ITemplate>(allTemplates.ByOrigin(Package2));
-            _appTemplates = new List<ITemplate>(allTemplates.ByOrigin(FubuSparkConstants.HostOrigin));
+            _pak1Templates = new Templates(allTemplates.ByOrigin(Package1));
+            _pak2Templates = new Templates(allTemplates.ByOrigin(Package2));
+            _appTemplates = new Templates(allTemplates.FromHost());
         }
 
         [Test]

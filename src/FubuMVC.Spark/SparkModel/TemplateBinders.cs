@@ -14,7 +14,7 @@ namespace FubuMVC.Spark.SparkModel
         IEnumerable<string> Namespaces { get; }
 
         TypePool Types { get; }
-        IEnumerable<ITemplate> Templates { get; }
+        ITemplates Templates { get; }
         ISparkLogger Logger { get; }
     }
 
@@ -27,7 +27,7 @@ namespace FubuMVC.Spark.SparkModel
 		public IEnumerable<string> Namespaces { get; set; }
 
         public TypePool Types { get; set; }
-        public IEnumerable<ITemplate> Templates { get; set; }
+        public ITemplates Templates { get; set; }
 		public ISparkLogger Logger { get; set; }
 	}
 

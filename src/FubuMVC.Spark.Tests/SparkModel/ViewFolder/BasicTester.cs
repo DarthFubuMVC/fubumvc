@@ -16,14 +16,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly string _pak1;
         private readonly string _pak2;
 
-        private readonly Template _hostHomeView;
-        private readonly Template _hostApplicationView;
-        private readonly Template _hostFooterPartialView;
-        private readonly Template _pak1HomeView;
-        private readonly Template _pak1NamePartialView;
-        private readonly Template _pak2HomeView;
-        private readonly Template _pak2ApplicationView;
-        private readonly Template _pak2ThemeView;
+        private readonly ITemplate _hostHomeView;
+        private readonly ITemplate _hostApplicationView;
+        private readonly ITemplate _hostFooterPartialView;
+        private readonly ITemplate _pak1HomeView;
+        private readonly ITemplate _pak1NamePartialView;
+        private readonly ITemplate _pak2HomeView;
+        private readonly ITemplate _pak2ApplicationView;
+        private readonly ITemplate _pak2ThemeView;
 
         private readonly TemplateViewFolder _viewFolder;
 
@@ -44,7 +44,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _pak2ApplicationView = new Template(Path.Combine(_pak2, "Shared", "application.spark"), _hostRoot, "Pak2");
             _pak2ThemeView = new Template(Path.Combine(_pak2, "Shared", "theme.spark"), _hostRoot, "Pak2");
 
-            var templates = new List<Template>
+            var templates = new List<ITemplate>
             {
                 _hostHomeView, _hostApplicationView, _hostFooterPartialView,
                 _pak1HomeView, _pak1NamePartialView,

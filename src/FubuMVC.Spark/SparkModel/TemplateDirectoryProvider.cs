@@ -6,8 +6,8 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplateDirectoryProvider
     {
-        IEnumerable<string> SharedPathsOf(ITemplate template, IEnumerable<ITemplate> templates);
-        IEnumerable<string> ReachablesOf(ITemplate template, IEnumerable<ITemplate> templates);
+        IEnumerable<string> SharedPathsOf(ITemplate template, ITemplates templates);
+        IEnumerable<string> ReachablesOf(ITemplate template, ITemplates templates);
     }
 
     public class TemplateDirectoryProvider : ITemplateDirectoryProvider
@@ -20,17 +20,17 @@ namespace FubuMVC.Spark.SparkModel
             _builder = builder;
         }
 
-        public IEnumerable<string> SharedPathsOf(ITemplate template, IEnumerable<ITemplate> templates)
+        public IEnumerable<string> SharedPathsOf(ITemplate template, ITemplates templates)
         {
             return getDirectories(template, templates, false);
         }
 
-        public IEnumerable<string> ReachablesOf(ITemplate template, IEnumerable<ITemplate> templates)
+        public IEnumerable<string> ReachablesOf(ITemplate template, ITemplates templates)
         {
             return getDirectories(template, templates, true);
         }
 
-        private IEnumerable<string> getDirectories(ITemplate template, IEnumerable<ITemplate> templates, bool includeDirectAncestor)
+        private IEnumerable<string> getDirectories(ITemplate template, ITemplates templates, bool includeDirectAncestor)
         {
             foreach (var directory in _builder.BuildBy(template.FilePath, template.RootPath, includeDirectAncestor))
             {
@@ -42,7 +42,8 @@ namespace FubuMVC.Spark.SparkModel
                 yield break;
             }
 
-            var hostRoot = findHostRoot(templates);
+            var hostRoot = templates.HostRootPath();
+
             if (hostRoot.IsEmpty())
             {
                 yield break;
@@ -55,11 +56,6 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield return Path.Combine(hostRoot, sharedFolder);
             }
-        }
-
-        private static string findHostRoot(IEnumerable<ITemplate> templates)
-        {
-            return templates.ByOrigin(FubuSparkConstants.HostOrigin).FirstValue(x => x.RootPath);
         }
     }
 }

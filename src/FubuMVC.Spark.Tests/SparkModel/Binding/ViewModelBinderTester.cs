@@ -12,7 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class ViewModelBinderTester : InteractionContext<ViewModelBinder>
     {
         private BindRequest _request;
-        private Template _template;
+        private ITemplate _template;
         private ViewDescriptor _descriptor;
 
         protected override void beforeEach()

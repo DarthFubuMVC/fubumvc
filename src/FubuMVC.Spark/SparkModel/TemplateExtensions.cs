@@ -47,29 +47,4 @@ namespace FubuMVC.Spark.SparkModel
             return template.Origin == FubuSparkConstants.HostOrigin;
         }
     }
-
-    // TODO: Reconsider this (ITemplate).
-
-    public static class TemplateEnumerableExtensions
-    {
-        public static IEnumerable<ITemplate> ByName(this IEnumerable<ITemplate> templates, string name)
-        {
-            return templates.Where(x => x.Name() == name);
-        }
-
-        public static IEnumerable<ITemplate> ByOrigin(this IEnumerable<ITemplate> templates, string origin)
-        {
-            return templates.Where(x => x.Origin == origin);
-        }
-        public static ITemplate FirstByName(this IEnumerable<ITemplate> templates, string name)
-        {
-            return templates.ByName(name).FirstOrDefault();
-        }
-		
-		// TODO: UT
-        public static IEnumerable<ITemplate> InDirectories(this IEnumerable<ITemplate> templates, IEnumerable<string> directories)
-        {
-            return directories.SelectMany(local => templates.Where(x => x.DirectoryPath() == local));
-        }
-    }
 }

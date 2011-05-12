@@ -13,12 +13,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
     [TestFixture]
     public class SparkScannerTester : InteractionContext<FileScanner>
     {
-        private IList<Template> _scanResult;
+        private IList<ITemplate> _scanResult;
 
         protected override void beforeEach()
         {
             Services.Inject<IFileSystem>(new FileSystem());
-            _scanResult = new List<Template>();
+            _scanResult = new List<ITemplate>();
             var request = new ScanRequest();
             
 			request.AddRoots(TestSource.Paths());

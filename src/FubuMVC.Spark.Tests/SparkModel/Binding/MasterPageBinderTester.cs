@@ -13,7 +13,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>
     {
         private BindRequest _request;
-        private IEnumerable<Template> _templates;
+        private ITemplates _templates;
 
         const string Host = FubuSparkConstants.HostOrigin;
         const string Pak1 = "pak1";
@@ -44,9 +44,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 			};
         }
 
-        private IEnumerable<Template> createTemplates()
+        private ITemplates createTemplates()
         {
-            return new List<Template>
+            return new Templates
             {
                 newTemplate(_pak1Root, Pak1, true, "Actions", "Controllers", "Home", "Home.spark"), // 0
                 newTemplate(_pak1Root, Pak1, true, "Actions", "Handlers", "Products", "list.spark"), // 1
@@ -68,7 +68,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             };
         }
 
-        private static Template newTemplate(string root, string origin, bool isView, params string[] relativePaths)
+        private static ITemplate newTemplate(string root, string origin, bool isView, params string[] relativePaths)
         {
             var paths = new[] { root }.Union(relativePaths).ToArray();
             var template = new Template(FileSystem.Combine(paths), root, origin);

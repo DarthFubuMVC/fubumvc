@@ -15,8 +15,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate _template;
         private IList<string> _masterDirectories;
         private IList<string> _bindingDirectories;
-        private IList<ITemplate> _masterTemplates;
-        private IList<ITemplate> _bindingTemplates;
+        private ITemplates _masterTemplates;
+        private ITemplates _bindingTemplates;
 
         protected override void beforeEach()
         {
@@ -34,15 +34,15 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 Path.Combine("App", "Shared"),
                 Path.Combine("App")
             };
-         
-            _masterTemplates = new List<ITemplate>
+
+            _masterTemplates = new Templates
             {
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App",FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin)
             };
 
-            _bindingTemplates = new List<ITemplate>
+            _bindingTemplates = new Templates
             {
                 new Template(Path.Combine("App", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),

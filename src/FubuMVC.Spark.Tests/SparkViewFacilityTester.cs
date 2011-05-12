@@ -12,12 +12,12 @@ namespace FubuMVC.Spark.Tests
     [TestFixture]
     public class SparkViewFacilityTester : InteractionContext<SparkViewFacility>
     {
-        private IList<Template> _templates;
+        private IList<ITemplate> _templates;
 
         protected override void beforeEach()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _templates = new List<Template>
+            _templates = new List<ITemplate>
             {
                 new Template(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine(root, "Views", "Home", "_partial1.spark"), root, FubuSparkConstants.HostOrigin),

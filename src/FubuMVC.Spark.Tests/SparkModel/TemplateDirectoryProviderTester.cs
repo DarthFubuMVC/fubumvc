@@ -15,9 +15,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     {
         private string _root;
         private ISharedPathBuilder _builder;
-        private Template _item;
-        private Template _packageItem;
-        private IList<Template> _items;
+        private ITemplate _item;
+        private ITemplate _packageItem;
+        private ITemplates _items;
 
         protected override void beforeEach()
         {
@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _item = new Template(getPath("Actions", "Home", "home.spark"), _root, FubuSparkConstants.HostOrigin);
             _packageItem = new Template(getPath("Packages", "Package1", "Actions", "Home", "home.spark"), _root, "Package1");
 
-            _items = new List<Template> { _item, _packageItem };
+            _items = new Templates { _item, _packageItem };
 
             _builder = MockFor<ISharedPathBuilder>();
             _builder.Stub(x => x.SharedFolderNames).Return(new[] { Constants.Shared });
@@ -86,8 +86,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _builder
                 .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
                 .Return(paths);
-
-            _items.Remove(_item);
+            _items = new Templates(_items.Where(x => x != _item).ToList());
 
             ClassUnderTest.SharedPathsOf(_packageItem, _items)
                 .SequenceEqual(paths).ShouldBeTrue();

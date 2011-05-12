@@ -9,9 +9,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class TemplateExtensionsTester
     {
-        private readonly Template _bottomTemplate;
-        private readonly Template _middleTemplate;
-        private readonly Template _topTemplate;
+        private readonly ITemplate _bottomTemplate;
+        private readonly ITemplate _middleTemplate;
+        private readonly ITemplate _topTemplate;
 
         public TemplateExtensionsTester()
         {

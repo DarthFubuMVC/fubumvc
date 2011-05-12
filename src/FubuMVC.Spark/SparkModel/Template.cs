@@ -37,8 +37,6 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    // TODO : This is a bit silly. Rework pending. 
-
     public class Templates : List<ITemplate>, ITemplates
     {
         public Templates() {}
@@ -51,11 +49,42 @@ namespace FubuMVC.Spark.SparkModel
                 .SelectMany(x => x.Descriptor.As<ViewDescriptor>().Bindings)
                 .ToList();
         }
+
+        public IEnumerable<ITemplate> ByNameAndDirectories(string name, IEnumerable<string> directories)
+        {
+            return directories
+                .SelectMany(local => this.Where(x => x.Name() == name && x.DirectoryPath() == local));
+        }
+        public ITemplate FirstByName(string name)
+        {
+            return this.Where(x => x.Name() == name).FirstOrDefault();
+        }
+
+        public IEnumerable<ITemplate> ByOrigin(string origin)
+        {
+            return this.Where(x => x.Origin == origin);
+        }
+
+        public IEnumerable<ITemplate> FromHost()
+        {
+            return ByOrigin(FubuSparkConstants.HostOrigin);
+        }
+
+        public string HostRootPath()
+        {
+            return FromHost().FirstValue(x => x.RootPath);
+        }
+
     }
 
-    // TODO: Consider migrating extension methods into this.
     public interface ITemplates : IEnumerable<ITemplate>
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);
+        ITemplate FirstByName(string name);
+        IEnumerable<ITemplate> ByNameAndDirectories(string name, IEnumerable<string> directories);
+        IEnumerable<ITemplate> ByOrigin(string origin);
+        IEnumerable<ITemplate> FromHost();
+        string HostRootPath();
+        ITemplate this[int index] { get; }
     }
 }

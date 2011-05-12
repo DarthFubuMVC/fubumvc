@@ -12,7 +12,7 @@ namespace FubuMVC.Spark.Tests
     public class SparkViewTokenTester
     {
         private SparkViewToken _token;
-        private Template _template;
+        private ITemplate _template;
         private ViewDescriptor _descriptor;
 
         [SetUp]
