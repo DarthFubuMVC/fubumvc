@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 
@@ -69,6 +70,11 @@ namespace FubuMVC.Spark.SparkModel
         {
             return this;
         }
+
+        public IEnumerable<ITemplate> FromHost()
+        {
+            return ByOrigin(FubuSparkConstants.HostOrigin);
+        }
     }
 
     public interface ITemplates 
@@ -78,5 +84,6 @@ namespace FubuMVC.Spark.SparkModel
         IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories);
         IEnumerable<ITemplate> ByOrigin(string origin);
         IEnumerable<ITemplate> AllTemplates();
+        IEnumerable<ITemplate> FromHost();
     }
 }

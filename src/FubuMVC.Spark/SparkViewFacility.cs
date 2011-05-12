@@ -22,8 +22,9 @@ namespace FubuMVC.Spark
             return _composer.Compose(types)
                 .AllTemplates()
                 .Where(x => x.Descriptor is ViewDescriptor)
-                .Where(x => x.Descriptor.As<ViewDescriptor>().HasViewModel())
-                .Select(item => new SparkViewToken(item.Descriptor.As<ViewDescriptor>()));
+                .Select(x => x.Descriptor.As<ViewDescriptor>())
+                .Where(x => x.HasViewModel())
+                .Select(x => new SparkViewToken(x));
         }
 
         public BehaviorNode CreateViewNode(Type type)

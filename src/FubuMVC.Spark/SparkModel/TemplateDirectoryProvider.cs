@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-            var hostTemplate = templates.ByOrigin(FubuSparkConstants.HostOrigin).FirstOrDefault();
+            var hostTemplate = templates.FromHost().FirstOrDefault();
             if (hostTemplate == null)
             {
                 yield break;

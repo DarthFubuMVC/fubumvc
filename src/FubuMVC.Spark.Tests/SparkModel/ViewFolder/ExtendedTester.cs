@@ -57,7 +57,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             _pak1Templates = new Templates(allTemplates.ByOrigin(Package1));
             _pak2Templates = new Templates(allTemplates.ByOrigin(Package2));
-            _appTemplates = new Templates(allTemplates.ByOrigin(FubuSparkConstants.HostOrigin));
+            _appTemplates = new Templates(allTemplates.FromHost());
         }
 
         [Test]
