@@ -29,7 +29,8 @@ namespace Bottles.Tests.Deployment
             theProfile.ReadText("Key1=Value1");
             theProfile.Recipes.Any().ShouldBeFalse();
 
-            theProfile.Settings.Overrides["Key1"].ShouldEqual("Value1");
+            
+            theProfile.Overrides["Key1"].ShouldEqual("Value1");
         }
     }
 }

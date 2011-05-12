@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Bottles.Configuration;
 using Bottles.Deployment.Runtime;
@@ -38,19 +37,28 @@ namespace Bottles.Deployment.Parsing
 
             var profile = readProfile(environment, options);
 
+            //environment smashing has to happen before this
+
             var recipes = readRecipes(environment, options, profile);
+
             deploymentPlan.AddRecipes(recipes);
 
             var hosts = collateHosts(recipes);
 
-            addEnvironmentSettingsToHosts(environment, hosts);
+            deploymentPlan.SetEnv(environment);
+
+            deploymentPlan.SetProfile(profile);
+
+            //run diagnostics here
+
+            deploymentPlan.CombineOverrides();
 
             addProfileSettingsToHosts(profile, hosts);
 
+            addEnvironmentSettingsToHosts(environment, hosts);
+            
             deploymentPlan.AddHosts(hosts);
-
-
-            deploymentPlan.SetProfile(profile);
+            
             return deploymentPlan;
         }
 
@@ -76,7 +84,7 @@ namespace Bottles.Deployment.Parsing
 
         private IEnumerable<Recipe> readRecipes(EnvironmentSettings environment, DeploymentOptions options, Profile profile)
         {
-            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment);
+            var recipes = RecipeReader.ReadRecipes(_settings.RecipesDirectory, environment, profile);
             recipes = buildEntireRecipeGraph(profile, options, recipes);
             // TODO -- log which recipes were selected
             recipes = _sorter.Order(recipes);

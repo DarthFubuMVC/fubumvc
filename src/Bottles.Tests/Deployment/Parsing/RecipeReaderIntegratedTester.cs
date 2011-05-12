@@ -63,6 +63,7 @@ namespace Bottles.Tests.Deployment.Parsing
             writer.ProfileFor("default").AddRecipe("r1");
             writer.ProfileFor("default").AddRecipe("r2");
             writer.ProfileFor("default").AddRecipe("r3");
+            writer.ProfileFor("default").AddRecipe("r4");
             writer.ProfileFor("default").AddProperty<SimpleSettings>(x => x.One, "h3", "profile-value");
             writer.ProfileFor("default").AddProperty("dbName", "profile-db");
 
@@ -70,7 +71,8 @@ namespace Bottles.Tests.Deployment.Parsing
 
             var reader = new ProfileReader(new RecipeSorter(), new DeploymentSettings("clonewars"), new FileSystem());
 
-            theHosts = reader.Read(new DeploymentOptions("default")).Hosts;
+            var profile = reader.Read(new DeploymentOptions("default"));
+            theHosts = profile.Hosts;
         }
 
         [Test]
@@ -82,13 +84,14 @@ namespace Bottles.Tests.Deployment.Parsing
 
             environment.Overrides["dbName"].ShouldEqual("profile-db");
 
-            profile.Recipes.ShouldHaveTheSameElementsAs("r1", "r2", "r3");
+            profile.Recipes.ShouldHaveTheSameElementsAs("r1", "r2", "r3", "r4");
         }
 
         [Test]
         public void environment_properties_are_substituted_within_host_settings_but_profile_value_overrides_environment()
         {
-            theHosts.First(x => x.Name == "h5").GetDirective<SimpleSettings>()
+            var host = theHosts.First(x => x.Name == "h5");
+            host.GetDirective<SimpleSettings>()
                 .One.ShouldEqual("*profile-db*");
         }
 
@@ -226,7 +229,7 @@ namespace Bottles.Tests.Deployment.Parsing
             var environmentSettings = new EnvironmentSettings();
             environmentSettings.Overrides["setting"] = "environment setting";
 
-            theRecipes = RecipeReader.ReadRecipes("starwars\\recipes", environmentSettings);
+            theRecipes = RecipeReader.ReadRecipes("starwars\\recipes", environmentSettings, new Profile(environmentSettings));
         }
 
         [Test]

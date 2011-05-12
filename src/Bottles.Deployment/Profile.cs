@@ -13,7 +13,7 @@ namespace Bottles.Deployment
         public static readonly string RecipePrefix = "recipe:";
         private readonly IList<string> _recipes = new List<string>();
         private readonly EnvironmentSettings _settings;
-        private readonly SettingsData _overrides;
+        private readonly Cache<string,string> _overrides;
         private readonly Cache<string, SettingsData> _settingsByHost = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.profile) { Provenance = "PROFILE NAME" });
 
         public Profile() : this(new EnvironmentSettings())
@@ -23,8 +23,8 @@ namespace Bottles.Deployment
         public Profile(EnvironmentSettings settings)
         {
             _settings = settings;
-            _overrides = new SettingsData(SettingCategory.profile);
-            _overrides.Provenance = "profile";
+            _overrides = new Cache<string, string>();
+
         }
 
         public void ReadText(string text)
@@ -91,6 +91,11 @@ namespace Bottles.Deployment
         public SettingsData DataForHost(string hostName)
         {
             return _settingsByHost[hostName];
+        }
+
+        public Cache<string, string> Overrides
+        {
+            get { return _overrides; }
         }
     }
 }

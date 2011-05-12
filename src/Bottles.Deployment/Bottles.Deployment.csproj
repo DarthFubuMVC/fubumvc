@@ -71,6 +71,7 @@
     <Compile Include="Configuration\ConfigurationDeployer.cs" />
     <Compile Include="DependsOnAttribute.cs" />
     <Compile Include="DeploymentSettings.cs" />
+    <Compile Include="Diagnostics\DiagnosticsReport.cs" />
     <Compile Include="Directives\ScheduledTask.cs" />
     <Compile Include="Directives\ScheduleType.cs" />
     <Compile Include="Deployers\WindowsSchedulerDeployer.cs" />
@@ -137,7 +138,9 @@
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Diagnostics\diagnostics.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
