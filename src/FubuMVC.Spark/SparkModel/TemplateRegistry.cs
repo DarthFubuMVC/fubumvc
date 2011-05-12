@@ -14,7 +14,7 @@ namespace FubuMVC.Spark.SparkModel
             return this
                 .Where(x => x.ViewPath == viewPath && x.Descriptor is ViewDescriptor)
                 .SelectMany(x => x.Descriptor.As<ViewDescriptor>().Bindings)
-                .ToList<ITemplate>();
+                .ToList();
         }
 
         public IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories)
