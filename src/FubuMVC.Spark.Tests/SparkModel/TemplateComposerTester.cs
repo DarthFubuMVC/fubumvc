@@ -44,7 +44,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
             chunkLoader.Stub(x => x.Load(Arg<Template>.Is.Anything)).Return(Enumerable.Empty<Chunk>());
 
             Services.InjectArray(new[] { _template1, _template2 });
-            Services.Inject(chunkLoader);
 
             configurePolicies();
             configureBinders();

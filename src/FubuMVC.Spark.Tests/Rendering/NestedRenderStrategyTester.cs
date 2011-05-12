@@ -18,7 +18,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             _renderAction = MockFor<IRenderAction>();
             _renderAction.Expect(x => x.Render());
             Services.Inject(_nestedOutput);
-            Services.Inject(_renderAction);
         }
 
         [Test]

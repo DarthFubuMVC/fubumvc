@@ -21,7 +21,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             _fubuSparkView = MockFor<FubuSparkView>();
 
             _activator.Expect(x => x.Activate(_fubuSparkView));
-            Services.Inject(_activator);
         }
 
         [Test]

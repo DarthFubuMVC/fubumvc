@@ -19,7 +19,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             _renderAction = MockFor<IRenderAction>();
             _renderAction.Expect(x => x.Render());
             Services.Inject<IRequestData>(_requestData);
-            Services.Inject(_renderAction);
         }
 
         [Test]

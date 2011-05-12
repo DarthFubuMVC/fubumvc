@@ -6,11 +6,11 @@ namespace FubuMVC.Spark.SparkModel
 {
     // TODO : UT
     public class FubuBindingProvider : BindingProvider
-    {	
-        private readonly ISparkTemplates _sparkTemplates;
-        public FubuBindingProvider (ISparkTemplates sparkTemplates)
+    {
+        private readonly ISparkTemplates _templates;
+        public FubuBindingProvider(ISparkTemplates templates)
         {
-            _sparkTemplates = sparkTemplates;
+            _templates = templates;
         }
 
         public override IEnumerable<Binding> GetBindings(BindingRequest request)
@@ -18,16 +18,16 @@ namespace FubuMVC.Spark.SparkModel
             var viewFolder = request.ViewFolder;
             var viewPath = request.ViewPath;
             var bindings = new List<Binding>();
-			
-            foreach (var binding in _sparkTemplates.BindingsForView(viewPath)) 
+
+            foreach (var binding in _templates.BindingsForView(viewPath))
             {
-                var file = viewFolder.GetViewSource (binding.ViewPath);
-                using (var stream = file.OpenViewStream())
-                using (var reader = new StreamReader(stream)) {
-                    bindings.AddRange (LoadStandardMarkup (reader));
-                }					
-            }		
-			
+                using (var stream = viewFolder.GetViewSource(binding.ViewPath).OpenViewStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    bindings.AddRange(LoadStandardMarkup(reader));
+                }
+            }
+
             return bindings;
         }
     }

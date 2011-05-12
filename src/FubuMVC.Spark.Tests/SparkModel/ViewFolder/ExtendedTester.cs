@@ -92,7 +92,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         public void the_correct_number_of_templates_are_resolved()
         {
             _appTemplates.ShouldHaveCount(9);
-            _pak1Templates.ShouldHaveCount(9);
+            _pak1Templates.ShouldHaveCount(10);
             _pak2Templates.ShouldHaveCount(8);
         }
 

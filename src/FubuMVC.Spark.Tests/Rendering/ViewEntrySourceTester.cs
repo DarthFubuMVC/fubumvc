@@ -23,7 +23,6 @@ namespace FubuMVC.Spark.Tests.Rendering
 
             Services.Inject(_cache);
             Services.Inject(_descriptor);
-            Services.Inject(_engine);
         }
 
         [Test]

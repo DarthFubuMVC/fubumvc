@@ -26,7 +26,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             _view.Expect(x => x.RenderView(nestedOutput.Writer));
 
             Services.Inject(nestedOutput);
-            Services.Inject(viewFactory);
 
         }
 

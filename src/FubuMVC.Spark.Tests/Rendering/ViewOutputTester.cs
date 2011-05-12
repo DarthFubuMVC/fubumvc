@@ -13,7 +13,6 @@ namespace FubuMVC.Spark.Tests.Rendering
         protected override void beforeEach()
         {
             _outputWriter = MockFor<IOutputWriter>();
-            Services.Inject(_outputWriter);
         }
 
         [Test]

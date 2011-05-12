@@ -87,6 +87,7 @@
     <Compile Include="Rendering\ViewOutputTester.cs" />
     <Compile Include="SparkModel\Binding\ReachableBindingsBinderTester.cs" />
     <Compile Include="SparkModel\Binding\ViewDescriptorBinderTester.cs" />
+    <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
     <Compile Include="SparkModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\TemplateLocatorTester.cs" />
@@ -149,6 +150,9 @@
     <None Include="Templates\Package2\sample.123">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\bindings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\Pak1\Alpha\Hotel.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

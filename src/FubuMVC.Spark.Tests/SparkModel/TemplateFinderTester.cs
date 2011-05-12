@@ -46,7 +46,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void finder_locates_all_relevant_spark_templates()
         {
-            ClassUnderTest.FindInHost().ShouldHaveCount(48);
+            ClassUnderTest.FindInHost().ShouldHaveCount(49);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             items.ShouldContain(x => x.Name() == "file");
             items.ShouldContain(x => x.Name() == "baz");
             items.ShouldContain(x => x.Name() == "dog");
-            items.ShouldHaveCount(52);
+            items.ShouldHaveCount(53);
         }
 
         [Test]

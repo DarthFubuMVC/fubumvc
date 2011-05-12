@@ -11,7 +11,7 @@ namespace FubuMVC.Spark.Tests.Rendering
     [TestFixture]
     public class SiteResourceAttacherTester : InteractionContext<SiteResourceAttacher>
     {
-		private string _testPath = "views/home/home.spark";
+		private const string TestPath = "views/home/home.spark";
 		
         private ISparkView _sparkView;
         private FubuSparkView _fubuSparkView;
@@ -28,8 +28,6 @@ namespace FubuMVC.Spark.Tests.Rendering
             _resourcePathManager = MockFor<IResourcePathManager>();
 
             _engine.Stub(x => x.ResourcePathManager).Return(_resourcePathManager);
-            Services.Inject(_engine);
-            Services.Inject(_request);
         }
 
         [Test]
@@ -47,31 +45,31 @@ namespace FubuMVC.Spark.Tests.Rendering
 		[Test]
 		public void resolves_correctly_with_empty_app_path()
 		{
-			after_modification_site_resource_resolves_correctly("", "", _testPath);
+			after_modification_site_resource_resolves_correctly("", "", TestPath);
 		}
 
 		[Test]
 		public void resolves_correctly_with_slashed_app_path()
 		{
-			after_modification_site_resource_resolves_correctly("/", "", _testPath);
+			after_modification_site_resource_resolves_correctly("/", "", TestPath);
 		}		
 
 		[Test]
 		public void resolves_correctly_with_before_slash_on_named_app_path()
 		{
-			after_modification_site_resource_resolves_correctly("/Fubu", "/Fubu", "/Fubu/{0}".ToFormat(_testPath));
+			after_modification_site_resource_resolves_correctly("/Fubu", "/Fubu", "/Fubu/{0}".ToFormat(TestPath));
 		}
 
 		[Test]
 		public void resolves_correctly_with_after_slash_on_named_app_path()
 		{
-			after_modification_site_resource_resolves_correctly("Fubu/", "/Fubu", "/Fubu/{0}".ToFormat(_testPath));
+			after_modification_site_resource_resolves_correctly("Fubu/", "/Fubu", "/Fubu/{0}".ToFormat(TestPath));
 		}
 
 		[Test]
 		public void resolves_correctly_with_wrapped_slashes_on_named_app_path()
 		{
-			after_modification_site_resource_resolves_correctly("/Fubu/", "/Fubu", "/Fubu/{0}".ToFormat(_testPath));
+			after_modification_site_resource_resolves_correctly("/Fubu/", "/Fubu", "/Fubu/{0}".ToFormat(TestPath));
 		}
 		
 		private void after_modification_site_resource_resolves_correctly(string applicationPath, string root, string expected)
@@ -81,12 +79,12 @@ namespace FubuMVC.Spark.Tests.Rendering
                 .Return(new SiteResourceAttacher.AppPath {ApplicationPath = applicationPath});
 
             _resourcePathManager
-                .Stub(x => x.GetResourcePath(root, _testPath))
+                .Stub(x => x.GetResourcePath(root, TestPath))
                 .Return(expected);
 
             ClassUnderTest.Modify(_fubuSparkView);
 
-            _fubuSparkView.SiteResource(_testPath).ShouldEqual(expected);
+            _fubuSparkView.SiteResource(TestPath).ShouldEqual(expected);
         }
     }
 }

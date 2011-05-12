@@ -31,7 +31,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _builder = MockFor<ISharedPathBuilder>();
             _builder.Stub(x => x.SharedFolderNames).Return(new[] { Constants.Shared });
 
-            Services.Inject(_builder);
         }
 
         private string getPath(params string[] parts)
