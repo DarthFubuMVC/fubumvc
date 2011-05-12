@@ -5,13 +5,13 @@ namespace FubuCore.CommandLine
 {
     public static class ConsoleWriter
     {
-        private static int CONSOLE_WIDTH;
+        private static int CONSOLE_WIDTH = 80;
 
         private static string HL;
 
         static ConsoleWriter()
         {
-            CONSOLE_WIDTH = Console.BufferWidth;
+            //CONSOLE_WIDTH = Console.BufferWidth;
             HL = new string('-', CONSOLE_WIDTH);
         }
 

@@ -20,8 +20,6 @@ namespace Bottles.Deployment.Parsing
             _settings = settings;
         }
 
-            return recipes.Where(r => profile.Recipes.Contains(r.Name) || options.RecipeNames.Contains(r.Name));
-
         public DeploymentPlan Read(DeploymentOptions options)
         {
             var environment = EnvironmentSettings.ReadFrom(_settings.EnvironmentFile);

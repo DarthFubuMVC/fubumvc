@@ -155,13 +155,25 @@ namespace Bottles.Storyteller.Fixtures
                 .Grammar();
         }
 
+        public IGrammar CheckRecipes()
+        {
+            return VerifyStringList(findRecipies)
+                .Titled("The recipies in order are")
+                .Ordered()
+                .Grammar();
+        }
+
+        private IEnumerable<string> findRecipies()
+        {
+            return _profileReader.Read(_deploymentOptions).Recipes.Select(r => r.Name);
+        }
+
         private IEnumerable<string> findHosts()
         {
             return _profileReader.Read(_deploymentOptions).Hosts.Select(h=>h.Name);
         }
 
-            var profile = _profileReader.ReadProfile(_deploymentOptions, new EnvironmentSettings());
-            return profile.Recipes;
+
 
     }
 
