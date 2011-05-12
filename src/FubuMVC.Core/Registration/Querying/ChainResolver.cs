@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Registration.Querying
         // we possibly need an alternative that finds by category
         public BehaviorChain Find<T>(Expression<Action<T>> expression)
         {
-            var chain = _behaviorGraph.BehaviorFor(expression);
+            var chain = _behaviorGraph.ChainsFor(typeof(T), ReflectionHelper.GetMethod(expression)).SingleOrDefault();
             if (chain == null)
             {
                 throw new FubuException(2108, "No behavior chain registered for {0}.{1}()", typeof(T).FullName, ReflectionHelper.GetMethod(expression).Name);
@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         private IEnumerable<BehaviorChain> findChainsByType(Type modelType)
         {
-            return _behaviorGraph.Behaviors.Where(x => x.InputType() == modelType);
+            return _behaviorGraph.ChainsFor(modelType);
         }
 
 
@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Registration.Querying
             var forwarder = FindForwarder(model);
             if (forwarder != null)
             {
-                return forwarder.FindChain(this, model);
+                return forwarder.FindChain(this, model).Chain;
             }
             
             var modelType = _typeResolver.ResolveType(model);
@@ -122,16 +122,12 @@ namespace FubuMVC.Core.Registration.Querying
 
         public BehaviorChain Find(Type handlerType, MethodInfo method)
         {
-            return _behaviorGraph.Behaviors.Where(x => x.FirstCall() != null).SingleOrDefault(x =>
-            {
-                var call = x.FirstCall();
-                return call.HandlerType == handlerType && call.Method == method;
-            });
+            return _behaviorGraph.ChainsFor(handlerType, method).SingleOrDefault();
         }
 
         public BehaviorChain FindCreatorOf(Type type)
         {
-            return _behaviorGraph.Behaviors.SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
+            return _behaviorGraph.ChainThatCreates(type);
         }
 
         public void RootAt(string baseUrl)

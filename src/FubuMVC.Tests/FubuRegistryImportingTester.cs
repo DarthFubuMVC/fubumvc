@@ -166,7 +166,12 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
-        	public void AppendCookie(HttpCookie cookie)
+            public RecordedOutput Record(Action action)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AppendCookie(HttpCookie cookie)
         	{
         		throw new NotImplementedException();
         	}

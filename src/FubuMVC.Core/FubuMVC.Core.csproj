@@ -79,6 +79,12 @@
     <Compile Include="Conneg\MediaProcessingException.cs" />
     <Compile Include="Conneg\MediaProcessor.cs" />
     <Compile Include="Conneg\XmlFormatter.cs" />
+    <Compile Include="Caching\AspNetRuntimeCacheProvider.cs" />
+    <Compile Include="Caching\CacheOptions.cs" />
+    <Compile Include="Caching\ICacheProvider.cs" />
+    <Compile Include="Caching\IRequestOutputCache.cs" />
+    <Compile Include="Caching\RequestOutputCacheBehavior.cs" />
+    <Compile Include="Caching\RequestOutputCacheNode.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
     <Compile Include="Content\DefaultMimeTypeProvider.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
@@ -92,7 +98,9 @@
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="CurrentRequest.cs" />
+    <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
+    <Compile Include="Diagnostics\NulloOutputWriter.cs" />
     <Compile Include="Diagnostics\WannaKillAttribute.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorFactory.cs" />
@@ -256,6 +264,7 @@
     <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
+    <Compile Include="Runtime\RecordedOutput.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />
@@ -328,6 +337,9 @@
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
     <Compile Include="UI\Scripts\BasicScriptTagWriter.cs" />
+    <Compile Include="UI\IContentFileCombiner.cs" />
+    <Compile Include="UI\ICssLinkTagWriter.cs" />
+    <Compile Include="UI\ContentFileCombinerPackage.cs" />
     <Compile Include="UI\Scripts\IScriptTagWriter.cs" />
     <Compile Include="UI\Scripts\ScriptDslReader.cs" />
     <Compile Include="UI\Scripts\ScriptGatherer.cs" />
@@ -445,6 +457,7 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\Diagnostics\examples.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

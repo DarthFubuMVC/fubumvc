@@ -222,7 +222,6 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<ISmartRequest, FubuSmartRequest>();
         }
 
-
         [Test]
         public void request_history_cache_is_registered()
         {
@@ -240,5 +239,12 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IPageActivator, PageActivator>();
         }
+
+        [Test]
+        public void chain_authorizor_is_registered()
+        {
+            registeredTypeIs<IChainAuthorizor, ChainAuthorizor>();
+        }
+
     }
 }

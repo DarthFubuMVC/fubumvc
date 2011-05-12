@@ -1,11 +1,12 @@
 using System.Web;
 using System.Web.Routing;
 using Bottles;
-using FubuCore;
+
 using FubuMVC.Core;
-using FubuMVC.Core.Packaging;
 using FubuMVC.StructureMap;
 using StructureMap;
+using FubuMVC.Core.UI;
+
 
 namespace FubuTestApplication
 {
@@ -21,4 +22,6 @@ namespace FubuTestApplication
             PackageRegistry.AssertNoFailures();
         }
     }
+
+
 }

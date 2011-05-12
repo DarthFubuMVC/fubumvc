@@ -84,6 +84,8 @@
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Commands\LinkCommandTester.cs" />
+    <Compile Include="Caching\InputModelCacheTester.cs" />
+    <Compile Include="Caching\RequestOutputCacheBehaviorTester.cs" />
     <Compile Include="Commands\ManifestCommandTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
@@ -101,7 +103,6 @@
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
-    <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />

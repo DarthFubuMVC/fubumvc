@@ -29,6 +29,11 @@ namespace FubuMVC.Core.Registration.Routes
 
         public string CreateUrlFromInput(object input)
         {
+            if (input == null)
+            {
+                return Pattern;
+            }
+
             if (Input == null)
             {
                 throw new InvalidOperationException("Cannot call this method if the RouteDefinition has not input type");

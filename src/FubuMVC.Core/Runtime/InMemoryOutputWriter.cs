@@ -25,6 +25,12 @@ namespace FubuMVC.Core.Runtime
             _writer.WriteLine(renderedOutput);
         }
 
+        public RecordedOutput Record(Action action)
+        {
+            action();
+            return new RecordedOutput("","");
+        }
+
         public void RedirectToUrl(string url)
         {
         }

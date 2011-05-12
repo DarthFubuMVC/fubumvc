@@ -25,6 +25,7 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
+                x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
             });
         }
     }

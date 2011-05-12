@@ -18,6 +18,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
+using RecordingOutputWriter = FubuMVC.Core.Diagnostics.RecordingOutputWriter;
 
 namespace FubuMVC.Tests.Registration
 {

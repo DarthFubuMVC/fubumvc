@@ -67,7 +67,7 @@ namespace FubuMVC.Core.Registration.Routes
             url = fillRouteValues(url, input);
             url = fillQueryInputs(url, x => x.ToQueryString(input));
 
-            return url.ToAbsoluteUrl();
+            return url;
         }
 
         public string CreateUrlFromParameters(RouteParameters parameters)

@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Web;
 using FubuMVC.Core.Diagnostics;
@@ -6,17 +7,51 @@ using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using RecordingOutputWriter = FubuMVC.Core.Diagnostics.RecordingOutputWriter;
 
 namespace FubuMVC.Tests.Diagnostics
 {
+
     [TestFixture]
-    public class RecordingOutputWriterTester : InteractionContext<RecordingOutputWriter>
+    public class DebuggingOutputWriterTester_during_non_debug_call : InteractionContext<RecordingOutputWriter>
     {
+        [Test]
+        public void should_use_http_response_output_writer_for_non_debug_calls()
+        {
+            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
+            ClassUnderTest.Inner.ShouldBeOfType<HttpResponseOutputWriter>();
+        }
+    }
+
+    [TestFixture]
+    public class DebuggingOutputWriterTester_during_debug_call : InteractionContext<RecordingOutputWriter>
+    {
+        [Test]
+        public void should_use_http_response_output_writer_for_non_debug_calls()
+        {
+            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
+            ClassUnderTest.Inner.ShouldBeOfType<NulloOutputWriter>();
+        }
+    }
+
+    [TestFixture]
+    public class DebuggingOutputWriterTester : InteractionContext<RecordingOutputWriter>
+    {
+        protected override void beforeEach()
+        {
+            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
+            ClassUnderTest.Inner = MockFor<IOutputWriter>();
+        }
+
+
         [Test]
         public void redirect_to_url()
         {
         	var url = "some url";
             ClassUnderTest.RedirectToUrl(url);
+
+            
+
         	MockFor<IDebugReport>().AddDetails(new RedirectReport
         	                                   	{
         	                                   		Url = url
@@ -60,7 +95,8 @@ namespace FubuMVC.Tests.Diagnostics
 			ClassUnderTest.WriteResponseCode(HttpStatusCode.Unauthorized);
 			MockFor<IDebugReport>()
 				.AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.Unauthorized }));
-			MockFor<IOutputWriter>()
+			
+            MockFor<IOutputWriter>()
 				.AssertWasCalled(w => w.WriteResponseCode(HttpStatusCode.Unauthorized));
 		}
 
@@ -75,5 +111,21 @@ namespace FubuMVC.Tests.Diagnostics
 			MockFor<IOutputWriter>()
 				.AssertWasCalled(w => w.AppendCookie(cookie));
 		}
+
+        [Test]
+        public void recorded_output()
+        {
+            Action action = () => { };
+            var theRecordedOutput = new RecordedOutput("content type", "the output");
+
+            MockFor<IOutputWriter>().Stub(x => x.Record(action)).Return(theRecordedOutput);
+
+            ClassUnderTest.Record(action);
+
+            MockFor<IDebugReport>().AssertWasCalled(x => x.AddDetails(new OutputReport(){
+                Contents = theRecordedOutput.Content,
+                ContentType = theRecordedOutput.RecordedContentType
+            }));
+        }
     }
 }

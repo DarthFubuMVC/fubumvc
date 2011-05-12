@@ -7,6 +7,7 @@ namespace FubuMVC.Core.Registration.Nodes
         Wrapper,
         Chain,
         Authorization,
-        Process
+        Process,
+        Cache
     }
 }

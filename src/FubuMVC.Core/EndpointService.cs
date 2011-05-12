@@ -1,7 +1,10 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Policy;
 using FubuCore.Reflection;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
 
@@ -17,11 +20,6 @@ namespace FubuMVC.Core
         Endpoint EndpointForNew(Type entityType);
         bool HasNewEndpoint<T>();
         bool HasNewEndpoint(Type type);
-
-
-        // Not sure these two methods won't get axed
-        Endpoint EndpointForPropertyUpdate(object model);
-        Endpoint EndpointForPropertyUpdate(Type type);
 
         Endpoint EndpointFor(Type handlerType, MethodInfo method);
     }
@@ -60,32 +58,31 @@ namespace FubuMVC.Core
         }
     }
 
-    public class EndpointService : IEndpointService
+    public class EndpointService : ChainInterrogator<Endpoint>, IEndpointService
     {
-        private readonly IAuthorizationPreviewService _authorization;
-        private readonly IUrlRegistry _urls;
+        private readonly IChainAuthorizor _authorizor;
 
-        public EndpointService(IAuthorizationPreviewService authorization, IUrlRegistry urls)
+        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver) : base(resolver)
         {
-            _authorization = authorization;
-            _urls = urls;
+            _authorizor = authorizor;
+        }
+
+        protected override Endpoint createResult(object model, BehaviorChain chain)
+        {
+            return new Endpoint(){
+                IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
+                Url = chain.Route.CreateUrlFromInput(model)
+            };
         }
 
         public Endpoint EndpointFor(object model)
         {
-            return new Endpoint(){
-                IsAuthorized = _authorization.IsAuthorized(model),
-                Url = _urls.UrlFor(model)
-            };
+            return For(model);
         }
 
         public Endpoint EndpointFor(object model, string category)
         {
-            return new Endpoint()
-            {
-                IsAuthorized = _authorization.IsAuthorized(model, category),
-                Url = _urls.UrlFor(model, category)
-            };
+            return For(model, category);
         }
 
         public Endpoint EndpointFor<TController>(Expression<Action<TController>> expression)
@@ -100,10 +97,7 @@ namespace FubuMVC.Core
 
         public Endpoint EndpointForNew(Type entityType)
         {
-            return new Endpoint(){
-                IsAuthorized = _authorization.IsAuthorizedForNew(entityType),
-                Url = _urls.UrlForNew(entityType)
-            };
+            return ForNew(entityType);
         }
 
         public bool HasNewEndpoint<T>()
@@ -113,32 +107,12 @@ namespace FubuMVC.Core
 
         public bool HasNewEndpoint(Type type)
         {
-            return _urls.HasNewUrl(type);
-        }
-
-        public Endpoint EndpointForPropertyUpdate(object model)
-        {
-            return new Endpoint(){
-                IsAuthorized = _authorization.IsAuthorizedForPropertyUpdate(model),
-                Url = _urls.UrlForPropertyUpdate(model)
-            };
-        }
-
-        public Endpoint EndpointForPropertyUpdate(Type type)
-        {
-            return new Endpoint()
-            {
-                IsAuthorized = _authorization.IsAuthorizedForPropertyUpdate(type),
-                Url = _urls.UrlForPropertyUpdate(type)
-            };
+            return HasNew(type);
         }
 
         public Endpoint EndpointFor(Type handlerType, MethodInfo method)
         {
-            return new Endpoint(){
-                IsAuthorized = _authorization.IsAuthorized(handlerType, method),
-                Url = _urls.UrlFor(handlerType, method)
-            };
+            return For(handlerType, method);
         }
     }
 }

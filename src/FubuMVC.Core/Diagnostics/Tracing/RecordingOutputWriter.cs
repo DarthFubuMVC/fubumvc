@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Web;
 using FubuMVC.Core.Runtime;
@@ -58,5 +59,10 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 			_report.AddDetails(new HttpStatusReport { Status = status });
 			_inner.WriteResponseCode(status);
         }
+
+	    public RecordedOutput Record(Action action)
+	    {
+	        throw new NotImplementedException();
+	    }
     }
 }

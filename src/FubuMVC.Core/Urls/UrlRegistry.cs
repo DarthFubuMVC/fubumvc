@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
@@ -16,20 +15,12 @@ namespace FubuMVC.Core.Urls
         public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern)
             : base(resolver)
         {
-            _templateFunc = (s) =>
-            {
-                return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End);
-            };
+            _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
         public string UrlFor(object model)
         {
             return For(model);
-        }
-
-        protected override string applyForwarder(object model, IChainForwarder forwarder)
-        {
-            return forwarder.FindUrl(resolver, model);
         }
 
         public string UrlFor(object model, string category)
@@ -42,21 +33,10 @@ namespace FubuMVC.Core.Urls
             return findAnswerFromResolver(null, r => r.Find(expression));
         }
 
-        public string UrlFor<TInput>(RouteParameters parameters)
-        {
-            return UrlFor(typeof (TInput), parameters);
-        }
-
         public string UrlFor(Type modelType, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType);
             return chain.Route.Input.CreateUrlFromParameters(parameters);
-        }
-
-        public string UrlFor<TInput>(RouteParameters parameters, string category)
-        {
-            Type modelType = typeof (TInput);
-            return UrlFor(modelType, category, parameters);
         }
 
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
@@ -80,16 +60,9 @@ namespace FubuMVC.Core.Urls
             return buildUrlTemplate(new TModel(), hash);
         }
 
-        private string buildUrlTemplate(object model, params Func<object, object>[] hash)
-        {
-            var chain = resolver.FindUnique(model);
-
-            return _templateFunc(chain.Route.CreateTemplate(model, hash));
-        }
-
         public string UrlForNew<T>()
         {
-            return UrlForNew(typeof(T));
+            return UrlForNew(typeof (T));
         }
 
         public string UrlForNew(Type entityType)
@@ -99,7 +72,7 @@ namespace FubuMVC.Core.Urls
 
         public bool HasNewUrl<T>()
         {
-            return HasNewUrl(typeof(T));
+            return HasNewUrl(typeof (T));
         }
 
         public bool HasNewUrl(Type type)
@@ -115,29 +88,41 @@ namespace FubuMVC.Core.Urls
         [Obsolete("TEMPORARY HACK")]
         public string UrlForPropertyUpdate(Type type)
         {
-            object o = Activator.CreateInstance(type);
+            var o = Activator.CreateInstance(type);
             return UrlForPropertyUpdate(o);
         }
 
+        protected override string createResult(object model, BehaviorChain chain)
+        {
+            return chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl();
+        }
+
+        public string UrlFor<TInput>(RouteParameters parameters)
+        {
+            return UrlFor(typeof (TInput), parameters);
+        }
+
+        public string UrlFor<TInput>(RouteParameters parameters, string category)
+        {
+            var modelType = typeof (TInput);
+            return UrlFor(modelType, category, parameters);
+        }
+
+        private string buildUrlTemplate(object model, params Func<object, object>[] hash)
+        {
+            var chain = resolver.FindUnique(model);
+
+            return _templateFunc(chain.Route.CreateTemplate(model, hash));
+        }
+
         /// <summary>
-        /// This is only for automated testing scenarios.  Do NOT use in real
-        /// scenarios
+        ///   This is only for automated testing scenarios.  Do NOT use in real
+        ///   scenarios
         /// </summary>
-        /// <param name="baseUrl"></param>
+        /// <param name = "baseUrl"></param>
         public void RootAt(string baseUrl)
         {
             resolver.RootAt(baseUrl);
         }
-
-        protected override string findAnswerFromResolver(object model, Func<IChainResolver, BehaviorChain> finder)
-        {
-            BehaviorChain chain = finder(resolver);
-            
-            // TODO -- throw if no input
-
-            return model == null ? chain.Route.Pattern.ToAbsoluteUrl() : chain.Route.Input.CreateUrlFromInput(model);
-        }
     }
-
-
 }
