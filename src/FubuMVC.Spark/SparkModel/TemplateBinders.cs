@@ -141,11 +141,16 @@ namespace FubuMVC.Spark.SparkModel
         public void Bind(IBindRequest request)
         {
             var target = request.Target;
+            var logger = request.Logger;
             var templates = request.Templates;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
             _templateLocator.LocateBindings(BindingsName, target, templates)
-                .Each(descriptor.AddBinding);
+            .Each(template =>
+            {
+                descriptor.AddBinding(template);
+                logger.Log(target, "Binding attached : {0}", template.FilePath);
+            });
         }
     }
 }
