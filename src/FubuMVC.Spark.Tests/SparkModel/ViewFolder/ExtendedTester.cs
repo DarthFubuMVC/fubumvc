@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
         public ExtendedTester()
         {
-            var testRoot = Path.Combine(Directory.GetCurrentDirectory(), "templateRegistry");
+            var testRoot = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
 
             var pathApp = Path.Combine(testRoot, "App");
             var pathPackage1 = Path.Combine(pathApp, "fubu-packages", "Package1", "WebContent");

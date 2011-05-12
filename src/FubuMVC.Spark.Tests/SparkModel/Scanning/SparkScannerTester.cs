@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
         {
             Func<string, string> pathFor = root => TestSource.Paths().Single(p => p.EndsWith(root));
 
-            _scanResult.Where(s => s.RootPath == pathFor("templateRegistry")).ShouldHaveCount(37);
+            _scanResult.Where(s => s.RootPath == pathFor("Templates")).ShouldHaveCount(37);
             _scanResult.Where(s => s.RootPath == pathFor("Pak1")).ShouldHaveCount(8);
             _scanResult.Where(s => s.RootPath == pathFor("Pak2")).ShouldHaveCount(4);
         }
@@ -51,7 +51,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Scanning
     {
         public static IEnumerable<string> Paths()
         {
-            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "templateRegistry");
+            var templatePath = FileSystem.Combine(Directory.GetCurrentDirectory(), "Templates");
             yield return FileSystem.Combine(templatePath, "Pak1");
             yield return FileSystem.Combine(templatePath, "Pak2");
             yield return templatePath;

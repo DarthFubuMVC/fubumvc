@@ -20,7 +20,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         protected override void beforeEach()
         {
             const string viewPath = "/_Package1_/Handlers/Models/SerieSL.spark";
-            var appRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templateRegistry");
+            var appRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates");
             var packageRoot = Path.Combine(appRoot, "App", "fubu-packages", "Package1", "WebContent");
             
             var binding1 = new Template(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
