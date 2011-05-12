@@ -47,7 +47,7 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-            if(includeDirectAncestor)
+            if (includeDirectAncestor)
             {
                 yield return hostRoot;
             }

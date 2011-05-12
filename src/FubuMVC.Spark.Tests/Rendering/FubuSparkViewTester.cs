@@ -112,6 +112,15 @@ namespace FubuMVC.Spark.Tests.Rendering
             ClassUnderTest.SetModel(model);
             ClassUnderTest.Model.ShouldEqual(model);
         }
+
+        [Test]
+        public void get_model_returns_the_view_model()
+        {
+            var model = new PersonViewModel { Name = "Mr. FubuSpark" };
+            ClassUnderTest.SetModel(model);
+            ClassUnderTest.GetModel().ShouldEqual(model);
+        }
+
     }
 
     public class PersonViewModel
