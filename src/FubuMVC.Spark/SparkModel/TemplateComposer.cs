@@ -7,7 +7,7 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplateComposer
     {
-        IEnumerable<ITemplate> Compose(TypePool typePool);
+        ITemplates Compose(TypePool typePool);
     }
 
     public class TemplateComposer : ITemplateComposer
@@ -55,9 +55,9 @@ namespace FubuMVC.Spark.SparkModel
             return this;
         }
 
-        public IEnumerable<ITemplate> Compose(TypePool typePool)
+        public ITemplates Compose(TypePool typePool)
         {
-            _templates.Each(t =>
+            _templates.AllTemplates().Each(t =>
             {
                 var bindRequest = createBindRequest(t, typePool);
 

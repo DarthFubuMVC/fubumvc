@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
@@ -41,13 +42,13 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-
-            var hostRoot = templates.HostRootPath();
-
-            if (hostRoot.IsEmpty())
+            var hostTemplate = templates.ByOrigin(FubuSparkConstants.HostOrigin).FirstOrDefault();
+            if (hostTemplate == null)
             {
                 yield break;
             }
+            var hostRoot = hostTemplate.RootPath;
+
             if (includeDirectAncestor)
             {
                 yield return hostRoot;

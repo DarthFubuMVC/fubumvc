@@ -20,6 +20,7 @@ namespace FubuMVC.Spark
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
             return _composer.Compose(types)
+                .AllTemplates()
                 .Where(x => x.Descriptor is ViewDescriptor)
                 .Where(x => x.Descriptor.As<ViewDescriptor>().HasViewModel())
                 .Select(item => new SparkViewToken(item.Descriptor.As<ViewDescriptor>()));

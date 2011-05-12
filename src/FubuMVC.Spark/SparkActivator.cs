@@ -26,7 +26,7 @@ namespace FubuMVC.Spark
 		{
 			sparkSettings ();
 
-			_engine.ViewFolder = new TemplateViewFolder (_templates);
+			_engine.ViewFolder = new TemplateViewFolder (_templates.AllTemplates());
 			_engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
 			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_templates);
 		}

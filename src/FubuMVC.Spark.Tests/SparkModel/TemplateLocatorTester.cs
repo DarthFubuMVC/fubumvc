@@ -15,8 +15,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate _template;
         private IList<string> _masterDirectories;
         private IList<string> _bindingDirectories;
-        private ITemplates _masterTemplates;
-        private ITemplates _bindingTemplates;
+        private Templates _masterTemplates;
+        private Templates _bindingTemplates;
 
         protected override void beforeEach()
         {

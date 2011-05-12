@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
@@ -13,7 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>
     {
         private BindRequest _request;
-        private ITemplates _templates;
+        private Templates _templates;
 
         const string Host = FubuSparkConstants.HostOrigin;
         const string Pak1 = "pak1";
@@ -44,7 +43,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 			};
         }
 
-        private ITemplates createTemplates()
+        private Templates createTemplates()
         {
             return new Templates
             {

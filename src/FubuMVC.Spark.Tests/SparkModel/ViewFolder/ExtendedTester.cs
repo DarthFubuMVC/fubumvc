@@ -20,9 +20,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly TemplateViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
-        private readonly ITemplates _pak1Templates;
-        private readonly ITemplates _pak2Templates;
-        private readonly ITemplates _appTemplates;
+        private readonly Templates _pak1Templates;
+        private readonly Templates _pak2Templates;
+        private readonly Templates _appTemplates;
 
         public ExtendedTester()
         {
@@ -57,7 +57,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             _pak1Templates = new Templates(allTemplates.ByOrigin(Package1));
             _pak2Templates = new Templates(allTemplates.ByOrigin(Package2));
-            _appTemplates = new Templates(allTemplates.FromHost());
+            _appTemplates = new Templates(allTemplates.ByOrigin(FubuSparkConstants.HostOrigin));
         }
 
         [Test]

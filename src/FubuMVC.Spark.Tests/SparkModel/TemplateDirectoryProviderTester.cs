@@ -17,7 +17,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ISharedPathBuilder _builder;
         private ITemplate _item;
         private ITemplate _packageItem;
-        private ITemplates _items;
+        private Templates _items;
 
         protected override void beforeEach()
         {

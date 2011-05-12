@@ -50,7 +50,7 @@ namespace FubuMVC.Spark.SparkModel
                 .ToList();
         }
 
-        public IEnumerable<ITemplate> ByNameAndDirectories(string name, IEnumerable<string> directories)
+        public IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories)
         {
             return directories
                 .SelectMany(local => this.Where(x => x.Name() == name && x.DirectoryPath() == local));
@@ -65,26 +65,18 @@ namespace FubuMVC.Spark.SparkModel
             return this.Where(x => x.Origin == origin);
         }
 
-        public IEnumerable<ITemplate> FromHost()
+        public IEnumerable<ITemplate> AllTemplates()
         {
-            return ByOrigin(FubuSparkConstants.HostOrigin);
+            return this;
         }
-
-        public string HostRootPath()
-        {
-            return FromHost().FirstValue(x => x.RootPath);
-        }
-
     }
 
-    public interface ITemplates : IEnumerable<ITemplate>
+    public interface ITemplates 
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);
         ITemplate FirstByName(string name);
-        IEnumerable<ITemplate> ByNameAndDirectories(string name, IEnumerable<string> directories);
+        IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories);
         IEnumerable<ITemplate> ByOrigin(string origin);
-        IEnumerable<ITemplate> FromHost();
-        string HostRootPath();
-        ITemplate this[int index] { get; }
+        IEnumerable<ITemplate> AllTemplates();
     }
 }
