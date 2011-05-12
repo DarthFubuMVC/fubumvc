@@ -50,7 +50,7 @@ namespace FubuMVC.Spark.SparkModel
 
     // TODO: Reconsider this (ITemplate).
 
-    public static class SparkItemEnumerableExtensions
+    public static class TemplateEnumerableExtensions
     {
         public static IEnumerable<ITemplate> ByName(this IEnumerable<ITemplate> templates, string name)
         {

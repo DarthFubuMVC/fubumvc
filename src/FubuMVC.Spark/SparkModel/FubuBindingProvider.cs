@@ -6,8 +6,8 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class FubuBindingProvider : BindingProvider
     {
-        private readonly ISparkTemplates _templates;
-        public FubuBindingProvider(ISparkTemplates templates)
+        private readonly ITemplates _templates;
+        public FubuBindingProvider(ITemplates templates)
         {
             _templates = templates;
         }

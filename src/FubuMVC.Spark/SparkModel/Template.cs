@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 
@@ -40,7 +39,7 @@ namespace FubuMVC.Spark.SparkModel
 
     // TODO : This is a bit silly. Rework pending. 
 
-    public class Templates : List<ITemplate>, ISparkTemplates
+    public class Templates : List<ITemplate>, ITemplates
     {
         public Templates() {}
         public Templates(IEnumerable<ITemplate> templates) : base(templates) { }
@@ -54,7 +53,8 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public interface ISparkTemplates : IEnumerable<ITemplate>
+    // TODO: Consider migrating extension methods into this.
+    public interface ITemplates : IEnumerable<ITemplate>
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);
     }

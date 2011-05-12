@@ -13,7 +13,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class FubuBindingProviderTester : InteractionContext<FubuBindingProvider>
     {
-        private ISparkTemplates _templates;
+        private ITemplates _templates;
         private BindingRequest _request;
         private IViewFolder _viewFolder;
 
@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _request = new BindingRequest(_viewFolder) {ViewPath = viewPath};
 
-            _templates = MockFor<ISparkTemplates>();
+            _templates = MockFor<ITemplates>();
             _templates.Expect(x => x.BindingsForView(viewPath)).Return(new[] {binding1, binding2});
         }
 
