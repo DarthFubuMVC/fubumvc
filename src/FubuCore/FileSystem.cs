@@ -347,6 +347,11 @@ namespace FubuCore
             Process.Start("notepad", filename);
         }
 
+        public void LaunchBrowser(string filename)
+        {
+            Process.Start("explorer", filename);
+        }
+
         public void DeleteFile(string filename)
         {
             if (!File.Exists(filename)) return;

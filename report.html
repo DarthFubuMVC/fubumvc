@@ -1,4 +1,5 @@
-﻿html, body{
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Bottles Deployment Diagnostics</title><style>html, body{
 	font-family:Arial, Helvetica, sans-serif;
 	color:#111;
 	line-height:1.4em;
@@ -228,4 +229,4 @@ pre.failure
 #script-names-text
 {
 	width: 400px;
-}
+}</style></head><body><div class="main"><h2>Bottles Deployment Diagnostics</h2><div class="left"><dl><dt>Command Line:</dt><dd>bottle deploy {profile}</dd><dt>Ran On:</dt><dd>2pm</dd><dt>Profile:</dt><dd>{profile name}</dd></dl><h3>Profile</h3><h4>Overrides</h4><dl><dt>virtual-dir</dt><dd>FubuDifferent</dd></dl><h3>Recipes</h3><ol><li>baseline</li></ol><h3>Hosts</h3><ol><li>web</li></ol><h3>Environment</h3><h4>Overrides</h4><dl><dt>app-pool</dt><dd>FubuTestApp</dd><dt>root</dt><dd>deployment\target</dd><dt>virtual-dir</dt><dd>FubuDifferent</dd></dl><dl></dl></div><div class="right"><h3>Settings</h3><h4>web</h4><table class="details"><thead><tr><td>Key</td><td>Value</td><td>Porvenance</td></tr><tr><td>FubuWebsite.AnonAuth</td><td>Enable</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.AppPool</td><td>{app-pool}</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.BasicAuth</td><td>Disable</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.DirectoryBrowsing</td><td>Enable</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.Password</td><td></td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.Port</td><td>80</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.Username</td><td></td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.VDir</td><td>{virtual-dir}</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.VDirPhysicalPath</td><td>deployment\target\web\{virtual-dir}</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.WebsiteName</td><td>{website-name}</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.WebsitePhysicalPath</td><td>deployment\target\web</td><td>deployment\recipes\baseline\web.host</td></tr><tr><td>FubuWebsite.WindowsAuth</td><td>Disable</td><td>deployment\recipes\baseline\web.host</td></tr></thead><tbody></tbody></table></div></div></body></html>
