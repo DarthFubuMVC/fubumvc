@@ -79,10 +79,7 @@ namespace FubuMVC.Spark.SparkModel
 			var tracer = request.Logger;
 			var masterName = request.Master ?? MasterName;
 			
-			// TODO: Rather have a method for this.
-			var master = _templateLocator
-				.LocateSharedTemplates(masterName, template, request.Templates)
-                .Where(x => x.IsSparkView()).FirstOrDefault();
+			var master = _templateLocator.LocateMaster(masterName, template, request.Templates);
 			
 			if(master == null)
 			{
@@ -136,14 +133,12 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(IBindRequest request)
         {
-            var descriptor = request.Target.Descriptor.As<ViewDescriptor>();
-            
-			// TODO: Rather have a method for this.
-            var bindings = _templateLocator
-                .LocateReachableTemplates(BindingsName, request.Target, request.Templates)
-                .Where(x => x.IsXml());            
-            
-            bindings.Each(descriptor.AddBinding);
+            var target = request.Target;
+            var templates = request.Templates;
+            var descriptor = target.Descriptor.As<ViewDescriptor>();
+
+            _templateLocator.LocateBindings(BindingsName, target, templates)
+                .Each(descriptor.AddBinding);
         }
     }
 }
