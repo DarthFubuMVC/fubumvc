@@ -47,7 +47,10 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-
+            if(includeDirectAncestor)
+            {
+                yield return hostRoot;
+            }
             foreach (var sharedFolder in _builder.SharedFolderNames)
             {
                 yield return Path.Combine(hostRoot, sharedFolder);
