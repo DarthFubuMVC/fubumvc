@@ -6,6 +6,7 @@
         <ProfileRecipes isStep="True" profile="Bob" recipeNames="A,B,C" />
         <RecipeDependencies isStep="True" recipe="A" dependencies="B,C" />
         <RecipeDependencies isStep="True" recipe="C" dependencies="B" />
+        <RecipeStandalone isStep="True" recipe="B" />
       </DeploymentConfiguration>
     </Configure>
     <Options isStep="True">

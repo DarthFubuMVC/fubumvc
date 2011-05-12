@@ -85,7 +85,6 @@ namespace Bottles.Storyteller.Fixtures
         [FormatAs("A profile {profile} that contains the recipe(s) {recipeNames}")]
         public void ProfileRecipes(string profile, string[] recipeNames)
         {
-            
             var profileDef = _writer.ProfileFor(profile);
             recipeNames.Each(profileDef.AddRecipe);
         }
@@ -94,6 +93,12 @@ namespace Bottles.Storyteller.Fixtures
         public void X(string RecipeName, string[] HostNames)
         {
             HostNames.Each(hn => _writer.RecipeFor(RecipeName).HostFor(hn));
+        }
+
+        [FormatAs("A recipie {recipe} that is standalone")]
+        public void RecipeStandalone(string recipe)
+        {
+            _writer.RecipeFor(recipe);
         }
 
         [FormatAs("A recipe {recipe} that depends on the recipe(s) {dependencies}")]
@@ -129,14 +134,16 @@ namespace Bottles.Storyteller.Fixtures
         [FormatAs("All the properties for host {host} are")]
         public void FetchPropertiesForHost(string host)
         {
-            _hostData = _profileReader.Read(_deploymentOptions).Hosts
-                .Single(h => h.Name == host).CreateDiagnosticReport();
+            var ahost = _profileReader.Read(_deploymentOptions).Hosts
+                .Single(h => h.Name == host);
+
+            _hostData = ahost.CreateDiagnosticReport();
         }
 
         public IGrammar CheckPropertiesForHost()
         {
             return VerifySetOf(() => _hostData)
-                .Titled("The deployment properties")
+                .Titled("The deployment properties are")
                 .MatchOn(x => x.Key, x => x.Value, x => x.Provenance);
         }
 

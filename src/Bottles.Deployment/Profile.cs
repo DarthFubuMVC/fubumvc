@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Configuration;
 using FubuCore;
 using FubuCore.Configuration;
+using FubuCore.Util;
 
 namespace Bottles.Deployment
 {
@@ -11,7 +13,8 @@ namespace Bottles.Deployment
         public static readonly string RecipePrefix = "recipe:";
         private readonly IList<string> _recipes = new List<string>();
         private readonly EnvironmentSettings _settings;
-        private readonly SettingsData _profileSettings;
+        private readonly SettingsData _overrides;
+        private readonly Cache<string, SettingsData> _settingsByHost = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.profile) { Provenance = "PROFILE NAME" });
 
         public Profile() : this(new EnvironmentSettings())
         {
@@ -20,8 +23,8 @@ namespace Bottles.Deployment
         public Profile(EnvironmentSettings settings)
         {
             _settings = settings;
-            _profileSettings = new SettingsData(SettingCategory.profile);
-            _profileSettings.Provenance = "profile";
+            _overrides = new SettingsData(SettingCategory.profile);
+            _overrides.Provenance = "profile";
         }
 
         public void ReadText(string text)
@@ -34,8 +37,6 @@ namespace Bottles.Deployment
             }
             else
             {
-                _profileSettings.With("key", "value");
-
                 if (!text.Contains("="))
                 {
                     throw new EnvironmentSettingsException(text);
@@ -47,11 +48,25 @@ namespace Bottles.Deployment
                     throw new EnvironmentSettingsException(text);
                 }
 
-                _profileSettings.With(parts[0], parts[1]);
+                var value = parts.Last();
+                var directiveParts = parts.First().Split('.');
 
-                //TODO: -- tuck prov in here
-                //_settings.ReadText(text);
-                
+
+                if (directiveParts.Length == 1) //override 'property=value'
+                {
+                    _overrides[parts.First()] = value;
+                }
+                else if (directiveParts.Length >= 3) // host.directive.property=value
+                {
+                    var hostName = directiveParts.First();
+                    var propertyName = directiveParts.Skip(1).Join(".");
+
+                    _settingsByHost[hostName][propertyName] = value;
+                }
+                else
+                {
+                    throw new EnvironmentSettingsException(text);
+                }
             }
         }
 
@@ -71,6 +86,11 @@ namespace Bottles.Deployment
         public EnvironmentSettings Settings
         {
             get { return _settings; }
+        }
+
+        public SettingsData DataForHost(string hostName)
+        {
+            return _settingsByHost[hostName];
         }
     }
 }

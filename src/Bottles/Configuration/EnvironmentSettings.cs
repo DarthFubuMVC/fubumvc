@@ -32,17 +32,17 @@ namespace Bottles.Configuration
             }
 
             var value = parts.Last();
-            
             var directiveParts = parts.First().Split('.');
-            if (directiveParts.Length == 1)
+
+            if (directiveParts.Length == 1) //override 'property=value'
             {
                 _overrides[parts.First()] = value;
             }
-            else if (directiveParts.Length == 2)
+            else if (directiveParts.Length == 2)//environment setting 'directive.property=value'
             {
                 _environmentSettings[parts.First()] = value;
             }
-            else if (directiveParts.Length >= 3)
+            else if (directiveParts.Length >= 3) // host.directive.property=value
             {
                 var hostName = directiveParts.First();
                 var propertyName = directiveParts.Skip(1).Join(".");

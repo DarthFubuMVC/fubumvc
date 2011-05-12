@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Bottles.Configuration;
 using Bottles.Deployment.Runtime;
@@ -40,8 +42,13 @@ namespace Bottles.Deployment.Parsing
             deploymentPlan.AddRecipes(recipes);
 
             var hosts = collateHosts(recipes);
+
             addEnvironmentSettingsToHosts(environment, hosts);
+
+            addProfileSettingsToHosts(profile, hosts);
+
             deploymentPlan.AddHosts(hosts);
+
 
             deploymentPlan.SetProfile(profile);
             return deploymentPlan;
@@ -57,11 +64,9 @@ namespace Bottles.Deployment.Parsing
 
         private IEnumerable<HostManifest> collateHosts(IEnumerable<Recipe> recipes)
         {
-            // TODO -- throw up if no recipes or return 0?
-            //REVIEW: hardening
             if (recipes == null || !recipes.Any())
-                return new HostManifest[0];
-            //hardening
+                throw new Exception("Bah! no recipies");
+            
 
             var firstRecipe = recipes.First();
             recipes.Skip(1).Each(firstRecipe.AppendBehind);
@@ -96,6 +101,11 @@ namespace Bottles.Deployment.Parsing
             recipesToRun.AddRange(dependencies.Distinct());
 
             return recipesToRun.Distinct().Select(name => allRecipesAvailable.Single(o => o.Name == name));
+        }
+
+        private static void addProfileSettingsToHosts(Profile profile, IEnumerable<HostManifest> hosts)
+        {
+            hosts.Each(host => host.RegisterSettings(profile.DataForHost(host.Name)));
         }
 
         private static void addEnvironmentSettingsToHosts(EnvironmentSettings environment, IEnumerable<HostManifest> hosts)

@@ -1,3 +1,4 @@
+using System.Linq;
 using Bottles.Deployment;
 using FubuCore.Configuration;
 using NUnit.Framework;
@@ -131,6 +132,24 @@ namespace Bottles.Tests.Deployment
             host2.RegisterSettings(data4);
 
             host2.GetDirective<OneDirective>().Age.ShouldEqual(8);
+        }
+
+        [Test]
+        public void respects_ordering_for_diagnostics_report()
+        {
+            var host1 = new HostManifest("h1");
+            host1.RegisterSettings(data4); //age 7
+            host1.RegisterSettings(data5); //age 8
+
+            var dia = host1.CreateDiagnosticReport();
+            dia.Single().Value.ShouldEqual("7");
+
+            var host2 = new HostManifest("h1");
+            host2.RegisterSettings(data5); //age 8
+            host2.RegisterSettings(data4); //age 7
+
+            var dia2 = host2.CreateDiagnosticReport();
+            dia2.Single().Value.ShouldEqual("8");
         }
 
         [Test]
