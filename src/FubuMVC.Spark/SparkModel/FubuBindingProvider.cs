@@ -4,7 +4,6 @@ using Spark.Bindings;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    // TODO : UT
     public class FubuBindingProvider : BindingProvider
     {
         private readonly ISparkTemplates _templates;

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Bottles;
+using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
@@ -47,9 +48,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             var viewPathPolicy = new ViewPathPolicy();
             allTemplates.Each(viewPathPolicy.Apply);
-
             _viewFolder = new TemplateViewFolder(allTemplates);
-            _engine = new SparkViewEngine { ViewFolder = _viewFolder };
+            _engine = new SparkViewEngine
+            {
+                ViewFolder = _viewFolder,
+                BindingProvider = new FubuBindingProvider(new Templates(allTemplates))
+            };
 
             _pak1Templates = new List<ITemplate>(allTemplates.ByOrigin(Package1));
             _pak2Templates = new List<ITemplate>(allTemplates.ByOrigin(Package2));
@@ -91,8 +95,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         [Test]
         public void the_correct_number_of_templates_are_resolved()
         {
-            _appTemplates.ShouldHaveCount(9);
-            _pak1Templates.ShouldHaveCount(10);
+            _appTemplates.ShouldHaveCount(11);
+            _pak1Templates.ShouldHaveCount(11);
             _pak2Templates.ShouldHaveCount(8);
         }
 
@@ -173,6 +177,26 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
             getViewSource(cuatroView).ShouldEqual("<use master=\"Maker\"/> SerieX");           
             renderTemplate(cuatroView, master).ShouldEqual("Lenovo SerieX");
+        }
+
+        [Test]
+        public void binding_works_under_package_context()
+        {
+            var serieZ = _pak1Templates.FirstByName("SerieZ");
+            serieZ.Descriptor = new ViewDescriptor(serieZ);
+            serieZ.Descriptor.As<ViewDescriptor>().AddBinding(_pak1Templates.First(x => x.Name() == "bindings"));
+            serieZ.Descriptor.As<ViewDescriptor>().AddBinding(_appTemplates.First(x => x.Name() == "bindings"));
+            renderTemplate(serieZ).ShouldEqual("SerieZ Hi from Package1 Bye from Host");
+        }
+
+        [Test]
+        public void binding_works_under_host_context()
+        {
+            var macMini = _appTemplates.FirstByName("MacMini");
+            macMini.Descriptor = new ViewDescriptor(macMini);
+            macMini.Descriptor.As<ViewDescriptor>().AddBinding(_appTemplates.First(x => x.Name() == "bindings"));
+            var content = renderTemplate(macMini);
+            content.ShouldEqual(@"MacMini Hi from Host");
         }
 
         private string getViewSource(ITemplate template)
