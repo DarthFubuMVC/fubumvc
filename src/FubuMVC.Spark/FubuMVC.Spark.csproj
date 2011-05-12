@@ -71,7 +71,7 @@
     <Compile Include="SparkModel\TemplateDirectoryProvider.cs" />
     <Compile Include="SparkModel\SharedPathBuilder.cs" />
     <Compile Include="SparkModel\TemplatePolicies.cs" />
-    <Compile Include="SparkModel\TemplateLocator.cs" />
+    <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />
     <Compile Include="SparkModel\TemplateRegistry.cs" />
     <Compile Include="SparkModel\TemplateViewFolder.cs" />

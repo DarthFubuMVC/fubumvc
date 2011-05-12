@@ -92,7 +92,7 @@
     <Compile Include="SparkModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
     <Compile Include="SparkModel\TemplateComposerTester.cs" />
-    <Compile Include="SparkModel\TemplateLocatorTester.cs" />
+    <Compile Include="SparkModel\SharedTemplateLocatorTester.cs" />
     <Compile Include="SparkModel\TemplateRegistryTester.cs" />
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />

@@ -34,7 +34,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 
         protected override void beforeEach()
         {           
-            Services.Inject<ITemplateLocator>(new TemplateLocator());
+            Services.Inject<ISharedTemplateLocator>(new SharedTemplateLocator());
             _request = new BindRequest 
 			{ 
 				TemplateRegistry = _templateRegistry = createTemplates(), 

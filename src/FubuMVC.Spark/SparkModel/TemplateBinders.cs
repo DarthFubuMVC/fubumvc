@@ -56,14 +56,14 @@ namespace FubuMVC.Spark.SparkModel
 
     public class MasterPageBinder : ITemplateBinder
 	{
-		private readonly ITemplateLocator _templateLocator;
+		private readonly ISharedTemplateLocator _sharedTemplateLocator;
 		private const string FallbackMaster = "Application";
 		public string MasterName { get; set; }
 
-		public MasterPageBinder() : this(new TemplateLocator()) {}
-		public MasterPageBinder(ITemplateLocator templateLocator)
+		public MasterPageBinder() : this(new SharedTemplateLocator()) {}
+		public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
 		{
-			_templateLocator = templateLocator;
+			_sharedTemplateLocator = sharedTemplateLocator;
 			MasterName = FallbackMaster;
 		}
 
@@ -79,7 +79,7 @@ namespace FubuMVC.Spark.SparkModel
 			var tracer = request.Logger;
 			var masterName = request.Master ?? MasterName;
 			
-			var master = _templateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
+			var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
 			
 			if(master == null)
 			{
@@ -122,14 +122,14 @@ namespace FubuMVC.Spark.SparkModel
 
     public class ReachableBindingsBinder : ITemplateBinder
     {
-        private readonly ITemplateLocator _templateLocator;
+        private readonly ISharedTemplateLocator _sharedTemplateLocator;
         private const string FallbackBindingsName = "bindings";
         public string BindingsName { get; set; }
 
-        public ReachableBindingsBinder() : this(new TemplateLocator()) {}
-        public ReachableBindingsBinder(ITemplateLocator templateLocator)
+        public ReachableBindingsBinder() : this(new SharedTemplateLocator()) {}
+        public ReachableBindingsBinder(ISharedTemplateLocator sharedTemplateLocator)
         {
-            _templateLocator = templateLocator;
+            _sharedTemplateLocator = sharedTemplateLocator;
             BindingsName = FallbackBindingsName;
         }
 
@@ -145,7 +145,7 @@ namespace FubuMVC.Spark.SparkModel
             var templates = request.TemplateRegistry;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
-            _templateLocator.LocateBindings(BindingsName, target, templates)
+            _sharedTemplateLocator.LocateBindings(BindingsName, target, templates)
             .Each(template =>
             {
                 descriptor.AddBinding(template);
