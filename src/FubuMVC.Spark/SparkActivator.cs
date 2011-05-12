@@ -12,12 +12,12 @@ namespace FubuMVC.Spark
 {
 	public class SparkActivator : IActivator
 	{
-		private readonly ITemplates _templates;
+		private readonly ITemplateRegistry _templateRegistry;
 		private readonly ISparkViewEngine _engine;
 
-		public SparkActivator (ITemplates templates, ISparkViewEngine engine)
+		public SparkActivator (ITemplateRegistry templateRegistry, ISparkViewEngine engine)
 		{
-			_templates = templates;
+			_templateRegistry = templateRegistry;
 			_engine = engine;
 		}
 
@@ -26,9 +26,9 @@ namespace FubuMVC.Spark
 		{
 			sparkSettings ();
 
-			_engine.ViewFolder = new TemplateViewFolder (_templates.AllTemplates());
+			_engine.ViewFolder = new TemplateViewFolder (_templateRegistry.AllTemplates());
 			_engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
-			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_templates);
+			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_templateRegistry);
 		}
 
 		private void sparkSettings ()

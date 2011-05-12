@@ -14,7 +14,7 @@ namespace FubuMVC.Spark.SparkModel
         IEnumerable<string> Namespaces { get; }
 
         TypePool Types { get; }
-        ITemplates Templates { get; }
+        ITemplateRegistry TemplateRegistry { get; }
         ISparkLogger Logger { get; }
     }
 
@@ -27,7 +27,7 @@ namespace FubuMVC.Spark.SparkModel
 		public IEnumerable<string> Namespaces { get; set; }
 
         public TypePool Types { get; set; }
-        public ITemplates Templates { get; set; }
+        public ITemplateRegistry TemplateRegistry { get; set; }
 		public ISparkLogger Logger { get; set; }
 	}
 
@@ -79,7 +79,7 @@ namespace FubuMVC.Spark.SparkModel
 			var tracer = request.Logger;
 			var masterName = request.Master ?? MasterName;
 			
-			var master = _templateLocator.LocateMaster(masterName, template, request.Templates);
+			var master = _templateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
 			
 			if(master == null)
 			{
@@ -142,7 +142,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var target = request.Target;
             var logger = request.Logger;
-            var templates = request.Templates;
+            var templates = request.TemplateRegistry;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
             _templateLocator.LocateBindings(BindingsName, target, templates)

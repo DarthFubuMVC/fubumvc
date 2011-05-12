@@ -13,14 +13,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class FubuBindingProviderTester : InteractionContext<FubuBindingProvider>
     {
-        private ITemplates _templates;
+        private ITemplateRegistry _templateRegistry;
         private BindingRequest _request;
         private IViewFolder _viewFolder;
 
         protected override void beforeEach()
         {
             const string viewPath = "/_Package1_/Handlers/Models/SerieSL.spark";
-            var appRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates");
+            var appRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templateRegistry");
             var packageRoot = Path.Combine(appRoot, "App", "fubu-packages", "Package1", "WebContent");
             
             var binding1 = new Template(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
@@ -32,15 +32,15 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _request = new BindingRequest(_viewFolder) {ViewPath = viewPath};
 
-            _templates = MockFor<ITemplates>();
-            _templates.Expect(x => x.BindingsForView(viewPath)).Return(new[] {binding1, binding2});
+            _templateRegistry = MockFor<ITemplateRegistry>();
+            _templateRegistry.Expect(x => x.BindingsForView(viewPath)).Return(new[] {binding1, binding2});
         }
 
         [Test]
         public void the_templates_used_as_binding_source_are_retrieved_using_the_sparktemplates_object()
         {
             ClassUnderTest.GetBindings(_request).ToList();
-            _templates.VerifyAllExpectations();
+            _templateRegistry.VerifyAllExpectations();
         }
 
         [Test]

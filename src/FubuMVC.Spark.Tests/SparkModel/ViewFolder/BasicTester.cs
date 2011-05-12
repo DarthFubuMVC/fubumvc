@@ -29,7 +29,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
 
         public BasicTester()
         {
-            _hostRoot = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
+            _hostRoot = Path.Combine(Directory.GetCurrentDirectory(), "templateRegistry");
             _pak1 = Path.Combine(_hostRoot, "Pak1");
             _pak2 = Path.Combine(_hostRoot, "Pak2");
 

@@ -15,7 +15,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         public TemplateExtensionsTester()
         {
-            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "templateRegistry");
 
             var bottomPath = Path.Combine(rootPath, "Finding", "Sherlock", "Homes.spark");
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.spark");

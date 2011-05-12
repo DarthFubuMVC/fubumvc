@@ -43,7 +43,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var chunkLoader = MockFor<IChunkLoader>();
             chunkLoader.Stub(x => x.Load(Arg<Template>.Is.Anything)).Return(Enumerable.Empty<Chunk>());
 
-            Services.Inject<ITemplates>(new Templates {_template1, _template2});
+            Services.Inject<ITemplateRegistry>(new TemplateRegistry {_template1, _template2});
             configurePolicies();
             configureBinders();
 

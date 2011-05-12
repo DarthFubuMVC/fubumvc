@@ -12,7 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>
     {
         private BindRequest _request;
-        private Templates _templates;
+        private TemplateRegistry _templateRegistry;
 
         const string Host = FubuSparkConstants.HostOrigin;
         const string Pak1 = "pak1";
@@ -37,15 +37,15 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             Services.Inject<ITemplateLocator>(new TemplateLocator());
             _request = new BindRequest 
 			{ 
-				Templates = _templates = createTemplates(), 
+				TemplateRegistry = _templateRegistry = createTemplates(), 
 				Master = "application", 
 				Logger = MockFor<ISparkLogger>() 
 			};
         }
 
-        private Templates createTemplates()
+        private TemplateRegistry createTemplates()
         {
-            return new Templates
+            return new TemplateRegistry
             {
                 newTemplate(_pak1Root, Pak1, true, "Actions", "Controllers", "Home", "Home.spark"), // 0
                 newTemplate(_pak1Root, Pak1, true, "Actions", "Handlers", "Products", "list.spark"), // 1
@@ -81,57 +81,57 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void master_is_the_closest_ancestor_with_the_specified_name_in_shared_1()
         {
-            var template = _templates.First();
+            var template = _templateRegistry.First();
             _request.Target = template;
             
             ClassUnderTest.Bind(_request);
-            _templates.ElementAt(2).ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
+            _templateRegistry.ElementAt(2).ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
         }
 
         [Test]
         public void master_is_the_closest_ancestor_with_the_specified_name_in_shared_2()
         {
-            var template = _templates.ElementAt(3);
+            var template = _templateRegistry.ElementAt(3);
             _request.Target = template;
             
             ClassUnderTest.Bind(_request);
-            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.ElementAt(5));
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templateRegistry.ElementAt(5));
         }
 
         [Test]
         public void fallback_to_master_in_shared_host_when_no_local_ancestor_exists()
         {
-            var template = _templates.ElementAt(6);
+            var template = _templateRegistry.ElementAt(6);
             _request.Target = template;
             
             ClassUnderTest.Bind(_request);
-            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.Last());
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templateRegistry.Last());
         }
 
         [Test]
         public void fallback_to_master_in_host_1()
         {
-            var template = _templates.ElementAt(8);
+            var template = _templateRegistry.ElementAt(8);
             _request.Target = template;
 
             ClassUnderTest.Bind(_request);
-            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.ElementAt(9));
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templateRegistry.ElementAt(9));
         }
 
         [Test]
         public void fallback_to_master_in_host_2()
         {
-            var template = _templates.ElementAt(10);
+            var template = _templateRegistry.ElementAt(10);
             _request.Target = template;
 
             ClassUnderTest.Bind(_request);
-            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templates.Last());
+            template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templateRegistry.Last());
         }
 
         [Test]
 		public void	if_explicit_empty_master_then_binder_is_not_applied()
         {
-            var template = _templates.ElementAt(3);
+            var template = _templateRegistry.ElementAt(3);
             _request.Master = string.Empty;
             _request.Target = template;
 
@@ -140,7 +140,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_descriptor_is_not_viewdescriptor_then_binder_is_not_applied()
         {
-            var template = _templates.ElementAt(12);
+            var template = _templateRegistry.ElementAt(12);
             _request.Target = template;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }

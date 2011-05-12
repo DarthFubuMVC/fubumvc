@@ -22,7 +22,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         public TemplateFinderTester()
         {
-            _templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
+            _templatePath = Path.Combine(Directory.GetCurrentDirectory(), "templateRegistry");
         }
 
         protected override void beforeEach()
@@ -32,8 +32,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _pak1 = new PackageInfo("Pak1");
             _pak2 = new PackageInfo("Pak2");
 
-            _pak1Path = Path.Combine("Templates", "Pak1");
-            _pak2Path = Path.Combine("Templates", "Package2");
+            _pak1Path = Path.Combine("templateRegistry", "Pak1");
+            _pak2Path = Path.Combine("templateRegistry", "Package2");
 
             Services.InjectArray<IPackageInfo>(new[] { _pak1, _pak2 });
 

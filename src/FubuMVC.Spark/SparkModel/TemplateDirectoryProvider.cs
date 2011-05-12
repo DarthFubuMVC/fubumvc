@@ -7,8 +7,8 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplateDirectoryProvider
     {
-        IEnumerable<string> SharedPathsOf(ITemplate template, ITemplates templates);
-        IEnumerable<string> ReachablesOf(ITemplate template, ITemplates templates);
+        IEnumerable<string> SharedPathsOf(ITemplate template, ITemplateRegistry templateRegistry);
+        IEnumerable<string> ReachablesOf(ITemplate template, ITemplateRegistry templateRegistry);
     }
 
     public class TemplateDirectoryProvider : ITemplateDirectoryProvider
@@ -21,17 +21,17 @@ namespace FubuMVC.Spark.SparkModel
             _builder = builder;
         }
 
-        public IEnumerable<string> SharedPathsOf(ITemplate template, ITemplates templates)
+        public IEnumerable<string> SharedPathsOf(ITemplate template, ITemplateRegistry templateRegistry)
         {
-            return getDirectories(template, templates, false);
+            return getDirectories(template, templateRegistry, false);
         }
 
-        public IEnumerable<string> ReachablesOf(ITemplate template, ITemplates templates)
+        public IEnumerable<string> ReachablesOf(ITemplate template, ITemplateRegistry templateRegistry)
         {
-            return getDirectories(template, templates, true);
+            return getDirectories(template, templateRegistry, true);
         }
 
-        private IEnumerable<string> getDirectories(ITemplate template, ITemplates templates, bool includeDirectAncestor)
+        private IEnumerable<string> getDirectories(ITemplate template, ITemplateRegistry templateRegistry, bool includeDirectAncestor)
         {
             foreach (var directory in _builder.BuildBy(template.FilePath, template.RootPath, includeDirectAncestor))
             {
@@ -42,7 +42,7 @@ namespace FubuMVC.Spark.SparkModel
             {
                 yield break;
             }
-            var hostTemplate = templates.FromHost().FirstOrDefault();
+            var hostTemplate = templateRegistry.FromHost().FirstOrDefault();
             if (hostTemplate == null)
             {
                 yield break;

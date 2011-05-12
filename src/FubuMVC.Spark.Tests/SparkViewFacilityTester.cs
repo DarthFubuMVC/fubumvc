@@ -12,12 +12,12 @@ namespace FubuMVC.Spark.Tests
     [TestFixture]
     public class SparkViewFacilityTester : InteractionContext<SparkViewFacility>
     {
-        private Templates _templates;
+        private TemplateRegistry _templateRegistry;
 
         protected override void beforeEach()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _templates = new Templates
+            _templateRegistry = new TemplateRegistry
             {
                 new Template(Path.Combine(root, "Views", "Home", "ModelAView.spark"), root, FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine(root, "Views", "Home", "_partial1.spark"), root, FubuSparkConstants.HostOrigin),
@@ -27,11 +27,11 @@ namespace FubuMVC.Spark.Tests
                 new Template(Path.Combine(root, "Views", "Home", "_partial3.spark"), root, FubuSparkConstants.HostOrigin)
             };
             
-            _templates[0].Descriptor = new ViewDescriptor(_templates[0]) { ViewModel = typeof(ModelA) };
-            _templates[2].Descriptor = new ViewDescriptor(_templates[2]) { ViewModel = typeof(ModelB) };
-            _templates[4].Descriptor = new ViewDescriptor(_templates[4]) { ViewModel = typeof(ModelC) };
+            _templateRegistry[0].Descriptor = new ViewDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
+            _templateRegistry[2].Descriptor = new ViewDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
+            _templateRegistry[4].Descriptor = new ViewDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
             
-            MockFor<ITemplateComposer>().Expect(c => c.Compose(Arg<TypePool>.Is.Anything)).Return(_templates);
+            MockFor<ITemplateComposer>().Expect(c => c.Compose(Arg<TypePool>.Is.Anything)).Return(_templateRegistry);
         }
 
         public class ModelA { }

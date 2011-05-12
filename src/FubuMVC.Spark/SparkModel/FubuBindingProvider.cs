@@ -6,10 +6,10 @@ namespace FubuMVC.Spark.SparkModel
 {
     public class FubuBindingProvider : BindingProvider
     {
-        private readonly ITemplates _templates;
-        public FubuBindingProvider(ITemplates templates)
+        private readonly ITemplateRegistry _templateRegistry;
+        public FubuBindingProvider(ITemplateRegistry templateRegistry)
         {
-            _templates = templates;
+            _templateRegistry = templateRegistry;
         }
 
         public override IEnumerable<Binding> GetBindings(BindingRequest request)
@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.SparkModel
             var viewPath = request.ViewPath;
             var bindings = new List<Binding>();
 
-            foreach (var binding in _templates.BindingsForView(viewPath))
+            foreach (var binding in _templateRegistry.BindingsForView(viewPath))
             {
                 using (var stream = viewFolder.GetViewSource(binding.ViewPath).OpenViewStream())
                 using (var reader = new StreamReader(stream))

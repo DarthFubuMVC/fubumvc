@@ -15,8 +15,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate _template;
         private IList<string> _masterDirectories;
         private IList<string> _bindingDirectories;
-        private Templates _masterTemplates;
-        private Templates _bindingTemplates;
+        private TemplateRegistry _masterTemplateRegistry;
+        private TemplateRegistry _bindingTemplateRegistry;
 
         protected override void beforeEach()
         {
@@ -35,14 +35,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 Path.Combine("App")
             };
 
-            _masterTemplates = new Templates
+            _masterTemplateRegistry = new TemplateRegistry
             {
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App",FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin)
             };
 
-            _bindingTemplates = new Templates
+            _bindingTemplateRegistry = new TemplateRegistry
             {
                 new Template(Path.Combine("App", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
@@ -54,40 +54,40 @@ namespace FubuMVC.Spark.Tests.SparkModel
             };
 
             _provider = MockFor<ITemplateDirectoryProvider>();
-            _provider.Stub(x => x.SharedPathsOf(_template, _masterTemplates)).Return(_masterDirectories);
-            _provider.Stub(x => x.ReachablesOf(_template, _bindingTemplates)).Return(_bindingDirectories);
+            _provider.Stub(x => x.SharedPathsOf(_template, _masterTemplateRegistry)).Return(_masterDirectories);
+            _provider.Stub(x => x.ReachablesOf(_template, _bindingTemplateRegistry)).Return(_bindingDirectories);
         }
 
         [Test]
         public void locate_master_returns_template_that_match_first_shared_directory_and_name()
         {
-            var master = ClassUnderTest.LocateMaster("application", _template, _masterTemplates);
-            master.ShouldNotBeNull().ShouldEqual(_masterTemplates[2]);
+            var master = ClassUnderTest.LocateMaster("application", _template, _masterTemplateRegistry);
+            master.ShouldNotBeNull().ShouldEqual(_masterTemplateRegistry[2]);
         }
 
         [Test]
         public void if_not_exists_locate_master_returns_null()
         {
-            var master = ClassUnderTest.LocateMaster("admin", _template, _masterTemplates);
+            var master = ClassUnderTest.LocateMaster("admin", _template, _masterTemplateRegistry);
             master.ShouldBeNull();
         }
 
         [Test]
         public void locate_binding_returns_template_that_match_shared_directories_and_name()
         {
-            var bindings = ClassUnderTest.LocateBindings("bindings", _template, _bindingTemplates);
+            var bindings = ClassUnderTest.LocateBindings("bindings", _template, _bindingTemplateRegistry);
             bindings.ShouldNotBeNull().ShouldHaveCount(4);
 
-            bindings.ElementAt(0).ShouldEqual(_bindingTemplates[6]);
-            bindings.ElementAt(1).ShouldEqual(_bindingTemplates[4]);
-            bindings.ElementAt(2).ShouldEqual(_bindingTemplates[2]);
-            bindings.ElementAt(3).ShouldEqual(_bindingTemplates[0]);
+            bindings.ElementAt(0).ShouldEqual(_bindingTemplateRegistry[6]);
+            bindings.ElementAt(1).ShouldEqual(_bindingTemplateRegistry[4]);
+            bindings.ElementAt(2).ShouldEqual(_bindingTemplateRegistry[2]);
+            bindings.ElementAt(3).ShouldEqual(_bindingTemplateRegistry[0]);
         }
 
         [Test]
         public void if_not_exists_locate_bindings_returns_empty_list()
         {
-            var bindings = ClassUnderTest.LocateBindings("sparkbindings", _template, _bindingTemplates);
+            var bindings = ClassUnderTest.LocateBindings("sparkbindings", _template, _bindingTemplateRegistry);
             bindings.ShouldNotBeNull().ShouldHaveCount(0);
         }
 

@@ -7,21 +7,21 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplateComposer
     {
-        ITemplates Compose(TypePool typePool);
+        ITemplateRegistry Compose(TypePool typePool);
     }
 
     public class TemplateComposer : ITemplateComposer
     {
         private readonly IList<ITemplateBinder> _binders = new List<ITemplateBinder>();
         private readonly IList<ITemplatePolicy> _policies = new List<ITemplatePolicy>();
-        private readonly ITemplates _templates;
+        private readonly ITemplateRegistry _templateRegistry;
         
         private readonly IChunkLoader _chunkLoader;
 
-        public TemplateComposer(ITemplates templates) : this(templates, new ChunkLoader()) { }
-        public TemplateComposer(ITemplates templates, IChunkLoader chunkLoader)
+        public TemplateComposer(ITemplateRegistry templateRegistry) : this(templateRegistry, new ChunkLoader()) { }
+        public TemplateComposer(ITemplateRegistry templateRegistry, IChunkLoader chunkLoader)
         {
-            _templates = templates;
+            _templateRegistry = templateRegistry;
             _chunkLoader = chunkLoader;
         }
 
@@ -55,9 +55,9 @@ namespace FubuMVC.Spark.SparkModel
             return this;
         }
 
-        public ITemplates Compose(TypePool typePool)
+        public ITemplateRegistry Compose(TypePool typePool)
         {
-            _templates.AllTemplates().Each(t =>
+            _templateRegistry.AllTemplates().Each(t =>
             {
                 var bindRequest = createBindRequest(t, typePool);
 
@@ -68,7 +68,7 @@ namespace FubuMVC.Spark.SparkModel
                 policies.Each(policy => policy.Apply(t));
             });
 
-            return _templates;
+            return _templateRegistry;
         }
 
         private BindRequest createBindRequest(ITemplate template, TypePool typePool)
@@ -78,7 +78,7 @@ namespace FubuMVC.Spark.SparkModel
             {
                 Target = template,
                 Types = typePool,
-                Templates = _templates,
+                TemplateRegistry = _templateRegistry,
                 Master = chunks.Master(),
                 ViewModelType = chunks.ViewModel(),
                 Namespaces = chunks.Namespaces(),
