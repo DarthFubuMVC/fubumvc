@@ -54,7 +54,19 @@ namespace FubuCore.DependencyAnalysis
 
         public IEnumerable<T> Ordered()
         {
-            return GetLoadOrder().Select(name => _items[name]);
+            return GetLoadOrder().Select(convert).ToList();
+        }
+
+        T convert(string name)
+        {
+            try
+            {
+                return _items[name];
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw new KeyNotFoundException("Couldn't find key '{0}' for type '{1}'".ToFormat(name, typeof(T)), ex);
+            }
         }
 
         public IEnumerable<string> GetLoadOrder()

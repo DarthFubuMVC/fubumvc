@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Test name="Profile   Enivronment   Directive" lifecycle="Acceptance">
+  <Deployment>
+    <Configure isStep="True">
+      <DeploymentConfiguration>
+        <ProfileRecipes isStep="True" profile="General" recipeNames="DeltaForce" />
+        <ProfileSettings isStep="True">
+          <table>
+            <row isStep="True" ProfileName="General" Key="Army.Target.Hill" Value="Hamburger" />
+          </table>
+        </ProfileSettings>
+        <EnvironmentSettings isStep="True">
+          <table>
+            <row isStep="True" Key="Army.Target.Hill" Value="Hill22" />
+            <row isStep="True" Key="Army.Target.Weapon" Value="Knives" />
+          </table>
+        </EnvironmentSettings>
+        <HostValues isStep="True">
+          <table>
+            <row isStep="True" Recipe="DeltaForce" Host="Army" Key="Target.Hill" Value="Hostel" />
+            <row isStep="True" Recipe="DeltaForce" Host="Army" Key="Target.Weapon" Value="AK-47" />
+            <row isStep="True" Recipe="DeltaForce" Host="Army" Key="Target.Chant" Value="Boo Yeah" />
+          </table>
+        </HostValues>
+      </DeploymentConfiguration>
+    </Configure>
+    <Options isStep="True">
+      <DeploymentOptions>
+        <ProfileIs isStep="True" profile="General" />
+      </DeploymentOptions>
+    </Options>
+    <ReadingProfile isStep="True">
+      <ProfileReader>
+        <FetchPropertiesForHost isStep="True" host="Army" />
+        <CheckPropertiesForHost isStep="True">
+          <rows>
+            <row isStep="True" Key="Target.Hill" Value="Hamburger" Provenance="PROFILE NAME" />
+            <row isStep="True" Key="Target.Weapon" Value="Knives" Provenance="environment.settings" />
+            <row isStep="True" Key="Target.Chant" Value="Boo Yeah" Provenance="storyteller\recipes\DeltaForce\Army.host" />
+          </rows>
+        </CheckPropertiesForHost>
+      </ProfileReader>
+    </ReadingProfile>
+  </Deployment>
+</Test>

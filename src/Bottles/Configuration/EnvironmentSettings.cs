@@ -13,7 +13,7 @@ namespace Bottles.Configuration
         public static readonly string ROOT = "root";
 
         private readonly Cache<string, string> _overrides = new Cache<string, string>();
-        private readonly Cache<string, SettingsData> _settings = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment){Provenance = EnvironmentSettingsFileName});
+        private readonly Cache<string, SettingsData> _settingsByHost = new Cache<string, SettingsData>(name => new SettingsData(SettingCategory.environment){Provenance = EnvironmentSettingsFileName});
         private readonly SettingsData _environmentSettings = new SettingsData(SettingCategory.environment){
             Provenance = "Environment settings"
         };
@@ -32,22 +32,22 @@ namespace Bottles.Configuration
             }
 
             var value = parts.Last();
-            
             var directiveParts = parts.First().Split('.');
-            if (directiveParts.Length == 1)
+
+            if (directiveParts.Length == 1) //override 'property=value'
             {
                 _overrides[parts.First()] = value;
             }
-            else if (directiveParts.Length == 2)
+            else if (directiveParts.Length == 2)//environment setting 'directive.property=value'
             {
                 _environmentSettings[parts.First()] = value;
             }
-            else if (directiveParts.Length >= 3)
+            else if (directiveParts.Length >= 3) // host.directive.property=value
             {
                 var hostName = directiveParts.First();
                 var propertyName = directiveParts.Skip(1).Join(".");
 
-                _settings[hostName][propertyName] = value;
+                _settingsByHost[hostName][propertyName] = value;
             }
             else
             {
@@ -64,7 +64,7 @@ namespace Bottles.Configuration
 
         public SettingsData DataForHost(string hostName)
         {
-            return _settings[hostName];
+            return _settingsByHost[hostName];
         }
 
         public SettingsData EnvironmentSettingsData()
@@ -80,7 +80,10 @@ namespace Bottles.Configuration
             return environment;
         }
 
-        public void SetRoot(string targetDirectory)
+        /// <summary>
+        /// Sets {root} to targetDirectory for use in other settings files
+        /// </summary>
+        public void SetRootSetting(string targetDirectory)
         {
             _overrides[ROOT] = targetDirectory;
         }

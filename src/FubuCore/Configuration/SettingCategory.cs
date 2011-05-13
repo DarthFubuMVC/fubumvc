@@ -4,6 +4,7 @@ namespace FubuCore.Configuration
     {
         environment,
         package,
-        core
+        core,
+        profile
     }
 }

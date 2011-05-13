@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Test name="Only Read The selected Recipe" lifecycle="Regression">
+  <Deployment>
+    <Configure isStep="True">
+      <DeploymentConfiguration>
+        <ProfileRecipes isStep="True" profile="Picky" recipeNames="Console" />
+        <ProfileRecipes isStep="True" profile="Slob" recipeNames="Console,Windows" />
+        <ProfileRecipes isStep="True" profile="OneOff" recipeNames="AdHoc" />
+        <HostValues isStep="True">
+          <table>
+            <row isStep="True" Recipe="Console" Host="CH" Key="Command" Value="Ping" />
+            <row isStep="True" Recipe="Windows" Host="WH" Key="Titel" Value="Bob" />
+            <row isStep="True" Recipe="AdHoc" Host="OO" Key="Actor" Value="Boom" />
+          </table>
+        </HostValues>
+      </DeploymentConfiguration>
+    </Configure>
+    <Options isStep="True">
+      <DeploymentOptions>
+        <ProfileIs isStep="True" profile="Picky" />
+        <Recipes isStep="True" recipes="AdHoc" />
+      </DeploymentOptions>
+    </Options>
+    <ReadingProfile isStep="True">
+      <ProfileReader>
+        <CheckHosts isStep="True">
+          <Rows>
+            <row isStep="True" expected="CH" />
+            <row isStep="True" expected="OO" />
+          </Rows>
+        </CheckHosts>
+        <FetchPropertiesForHost isStep="True" host="CH" />
+        <CheckPropertiesForHost isStep="True">
+          <rows>
+            <row isStep="True" Key="Command" Value="Ping" Provenance="storyteller\recipes\Console\CH.host" />
+          </rows>
+        </CheckPropertiesForHost>
+        <FetchPropertiesForHost isStep="True" host="OO" />
+        <CheckPropertiesForHost isStep="True">
+          <rows>
+            <row isStep="True" Key="Actor" Value="Boom" Provenance="storyteller\recipes\AdHoc\OO.host" />
+          </rows>
+        </CheckPropertiesForHost>
+        <CheckRecipes isStep="True">
+          <Rows>
+            <row isStep="True" expected="Console" />
+            <row isStep="True" expected="AdHoc" />
+          </Rows>
+        </CheckRecipes>
+      </ProfileReader>
+    </ReadingProfile>
+  </Deployment>
+</Test>

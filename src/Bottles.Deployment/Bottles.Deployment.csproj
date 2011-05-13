@@ -64,6 +64,7 @@
     <Compile Include="Commands\InstallMode.cs" />
     <Compile Include="Commands\AddReferenceCommand.cs" />
     <Compile Include="Commands\OpenBottleManifestCommand.cs" />
+    <Compile Include="Commands\ReportCommand.cs" />
     <Compile Include="Commands\SetPropCommand.cs" />
     <Compile Include="Commands\VdirCommand.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Configuration\ConfigurationDeployer.cs" />
     <Compile Include="DependsOnAttribute.cs" />
     <Compile Include="DeploymentSettings.cs" />
+    <Compile Include="Diagnostics\DiagnosticsReport.cs" />
     <Compile Include="Directives\ScheduledTask.cs" />
     <Compile Include="Directives\ScheduleType.cs" />
     <Compile Include="Deployers\WindowsSchedulerDeployer.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="EntryLogWriter.cs" />
     <Compile Include="Diagnostics\IDeploymentDiagnostics.cs" />
     <Compile Include="Runtime\Content\IBottleMover.cs" />
+    <Compile Include="Parsing\DeploymentPlan.cs" />
     <Compile Include="Parsing\HostReader.cs" />
     <Compile Include="Parsing\IProfileReader.cs" />
     <Compile Include="Parsing\IRecipeSorter.cs" />
@@ -136,7 +139,9 @@
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Diagnostics\diagnostics.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

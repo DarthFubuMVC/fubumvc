@@ -1,0 +1,231 @@
+﻿html, body{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#111;
+	line-height:1.4em;
+	background-color: #ccc;
+}
+
+a, a:visited{
+	color: #111;
+}
+
+.main{
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color: #fff;
+}
+
+.main h2 {
+	-moz-background-clip:border;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 10px;
+}
+
+.main h3 {
+	padding: 10px;
+	margin: 0px;
+	background-color: #EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+}
+
+.main h4 {
+	padding: 10px;
+	margin: 0px;
+	background-color: #EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+}
+
+.main .homelink {
+	background-color:#EBEAEA;
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0;
+	padding: 2px;
+	padding-left: 10px;
+}
+
+.main ul {
+	border-color:#FAFAFA #DDDDDD #D2D2D2;
+	border-style:solid;
+	border-width:1px;
+	margin: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.main div.left
+{
+    float:left;
+    width:60%;
+    background-color: #fff;
+}
+
+.main div.right
+{
+    float:left;
+    width:40%;
+    background-color: #fff;
+}
+
+.main ul > li {
+}
+
+.main table > thead > tr > th{
+	padding: 8px;
+	background-color: #eee;
+}
+
+.main table > tbody > tr > td {
+	padding: 8px;
+	border-bottom: 1px dotted #d8d8d8;
+}
+
+.main table > tbody > tr:hover{
+	background-color: #c8c8c8;
+}
+
+.main-content{
+	padding: 4px 10px;
+}
+
+.convention-log li{
+	font-family: Consolas, Courier New, Courier;	
+}
+
+.behavior
+{
+	border: solid thin black;
+	margin: 20px;
+	padding: 10px;
+}
+
+.content
+{
+	overflow:scroll;
+	background-color: #dddddd;
+}
+
+
+table.details
+{
+    border: solid thin black;
+    margin-bottom: 25px;
+}
+
+table.details TR
+{
+	padding-bottom: 1px;
+	padding-top: 1px;
+}
+
+table.details > THEAD > TR
+{
+	border-bottom: solid thin black;
+}
+
+table.details TD
+{
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+table.details TH
+{
+    BACKGROUND-COLOR: Silver;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0px;
+}
+
+.chainId
+{
+	 /* must be monospace */
+	font-family: Consolas, Courier New, Courier;
+	font-size: smaller;
+}
+
+
+.summary {
+	margin: 5px 10px;
+}
+
+#version-display{
+	float:right;
+	font-size:small;
+	font-weight:normal;
+}
+
+.fubu-internal{
+    color:#999999;
+    font-size:0.8em;
+    line-height:0.6em;
+}
+
+.fubu-internal a, .fub-internal a:visited{
+    color:#999999;
+}
+
+.main table > tbody > tr.fubu-internal:hover{
+	color: #111;
+}
+
+.route-link {
+	text-decoration: none;
+}
+
+.route-link:hover {
+	text-decoration: underline;
+}
+
+.authz-decision {
+    font-weight: bold;
+}
+
+.execution-time
+{
+	text-align:right;
+}
+
+.failure
+{
+	background-color: #FFFFAA;
+}
+
+pre.failure
+{
+	font-size:smaller;
+	overflow:scroll;
+}
+
+.log
+{
+	padding-left: 20px;
+}
+
+.script-query
+{
+	padding: 5px 2px 2px 10px;
+	background-color:White;
+	padding-top:10px;
+	padding-bottom: 20px;
+}
+
+#script-names-text
+{
+	width: 400px;
+}

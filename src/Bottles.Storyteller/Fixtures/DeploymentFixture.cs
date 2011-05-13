@@ -19,8 +19,8 @@ namespace Bottles.Storyteller.Fixtures
         {
             Title = "Bottles Deployment";
 
-            this["Configure"] = Embed<DeploymentConfigurationFixture>("If the deployment configuration is");
-            this["Options"] = Embed<DeploymentOptionsFixture>("And the deployment options are");
+            this["Configure"] = Embed<DeploymentConfigurationFixture>("Given a deployment configuration that has");
+            this["Options"] = Embed<DeploymentOptionsFixture>("When the deployment is executed with:");
             this["ReadingProfile"] = Embed<ProfileReaderFixture>("Then reading the deployment profile results in");
         }
     }
@@ -37,13 +37,13 @@ namespace Bottles.Storyteller.Fixtures
             context.Store(_options);
         }
 
-        [FormatAs("Profile is {profile}")]
+        [FormatAs("Profile set to {profile}")]
         public void ProfileIs(string profile)
         {
             _options.ProfileName = profile;
         }
 
-        [FormatAs("Recipes are {recipes}")]
+        [FormatAs("Recipes set to {recipes}")]
         public void Recipes(string[] recipes)
         {
             _options.RecipeNames.AddRange(recipes);
@@ -82,15 +82,26 @@ namespace Bottles.Storyteller.Fixtures
             _writer.ProfileFor(ProfileName).AddProperty(Key, Value);
         }
 
-        [FormatAs("Profile {profile} contains recipe(s) {recipeNames}")]
+        [FormatAs("A profile {profile} that contains the recipe(s) {recipeNames}")]
         public void ProfileRecipes(string profile, string[] recipeNames)
         {
-            
             var profileDef = _writer.ProfileFor(profile);
             recipeNames.Each(profileDef.AddRecipe);
         }
 
-        [FormatAs("Recipe {recipe} depends on other recipe(s) {dependencies}")]
+        [FormatAs("The recipe {RecipeName} has host(s) {HostNames}")]
+        public void X(string RecipeName, string[] HostNames)
+        {
+            HostNames.Each(hn => _writer.RecipeFor(RecipeName).HostFor(hn));
+        }
+
+        [FormatAs("A recipie {recipe} that is standalone")]
+        public void RecipeStandalone(string recipe)
+        {
+            _writer.RecipeFor(recipe);
+        }
+
+        [FormatAs("A recipe {recipe} that depends on the recipe(s) {dependencies}")]
         public void RecipeDependencies(string recipe, string[] dependencies)
         {
             var recipeDef = _writer.RecipeFor(recipe);
@@ -123,14 +134,16 @@ namespace Bottles.Storyteller.Fixtures
         [FormatAs("All the properties for host {host} are")]
         public void FetchPropertiesForHost(string host)
         {
-            _hostData = _profileReader.Read(_deploymentOptions)
-                .Single(h => h.Name == host).CreateDiagnosticReport();
+            var ahost = _profileReader.Read(_deploymentOptions).Hosts
+                .Single(h => h.Name == host);
+
+            _hostData = ahost.CreateDiagnosticReport();
         }
 
         public IGrammar CheckPropertiesForHost()
         {
             return VerifySetOf(() => _hostData)
-                .Titled("The deployment properties")
+                .Titled("The deployment properties are")
                 .MatchOn(x => x.Key, x => x.Value, x => x.Provenance);
         }
 
@@ -142,10 +155,24 @@ namespace Bottles.Storyteller.Fixtures
                 .Grammar();
         }
 
+        public IGrammar CheckRecipes()
+        {
+            return VerifyStringList(findRecipies)
+                .Titled("The recipies in order are")
+                .Ordered()
+                .Grammar();
+        }
+
+        private IEnumerable<string> findRecipies()
+        {
+            return _profileReader.Read(_deploymentOptions).Recipes.Select(r => r.Name);
+        }
+
         private IEnumerable<string> findHosts()
         {
-            return _profileReader.Read(_deploymentOptions).Select(h=>h.Name);
+            return _profileReader.Read(_deploymentOptions).Hosts.Select(h=>h.Name);
         }
+
 
 
     }

@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         }
 
         public static string GetResourceText(Type type, string filename)
-        {
+        {   
             var stream = type.Assembly.GetManifestResourceStream(type, filename);
             if (stream == null) return String.Empty;
             var reader = new StreamReader(stream);

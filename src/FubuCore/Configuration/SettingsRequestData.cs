@@ -7,19 +7,22 @@ namespace FubuCore.Configuration
 {
     public class SettingsRequestData : IRequestData
     {
+        private readonly SettingsStep _profileStep;
         private readonly SettingsStep _environmentStep;
         private readonly SettingsStep _packageStep;
         private readonly SettingsStep _coreStep;
+        
         private readonly SettingsStep[] _steps;
 
 
         public SettingsRequestData(IEnumerable<SettingsData> settingData)
         {
+            _profileStep = new SettingsStep(settingData.Where(x=>x.Category == SettingCategory.profile));
             _environmentStep = new SettingsStep(settingData.Where(x => x.Category == SettingCategory.environment));
             _packageStep = new SettingsStep(settingData.Where(x => x.Category == SettingCategory.package));
             _coreStep = new SettingsStep(settingData.Where(x => x.Category == SettingCategory.core));
 
-            _steps = new []{_environmentStep, _packageStep, _coreStep};
+            _steps = new []{_profileStep, _environmentStep, _packageStep, _coreStep};
         }
 
         public object Value(string key)
