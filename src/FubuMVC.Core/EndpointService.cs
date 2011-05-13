@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Urls;
+using FubuCore;
 
 namespace FubuMVC.Core
 {
@@ -71,7 +72,7 @@ namespace FubuMVC.Core
         {
             return new Endpoint(){
                 IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                Url = chain.Route.CreateUrlFromInput(model)
+                Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl()
             };
         }
 
