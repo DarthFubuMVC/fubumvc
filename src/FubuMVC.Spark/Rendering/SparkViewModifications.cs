@@ -3,6 +3,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using Spark;
+using FubuMVC.Core;
 
 namespace FubuMVC.Spark.Rendering
 {
@@ -34,9 +35,9 @@ namespace FubuMVC.Spark.Rendering
     public class SiteResourceAttacher : ISparkViewModification
     {
         private readonly ISparkViewEngine _engine;
-		private readonly IFubuRequest _request;
+		private readonly CurrentRequest _request;
 		
-        public SiteResourceAttacher(ISparkViewEngine engine, IFubuRequest request)
+        public SiteResourceAttacher(ISparkViewEngine engine, CurrentRequest request)
         {
             _engine = engine;
 			_request = request;
@@ -59,7 +60,7 @@ namespace FubuMVC.Spark.Rendering
 		
         private string siteRoot()
         {			
-			var appPath = _request.Get<AppPath>().ApplicationPath;
+			var appPath = _request.ApplicationPath;
 			var siteRoot = string.Empty;
             
 			if (appPath.IsNotEmpty() && !string.Equals(appPath, "/"))
@@ -69,14 +70,5 @@ namespace FubuMVC.Spark.Rendering
 			
             return siteRoot;
         }
-		
-		#region Nested Class: AppPath
-		
-		public class AppPath
-		{
-			public string ApplicationPath {get;set;}
-        }
-		
-		#endregion
     }
 }
