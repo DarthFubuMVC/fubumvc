@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Bottles.Configuration;
 using Bottles.Deployment.Parsing;
-using FubuCore.Util;
 using HtmlTags;
 
 namespace Bottles.Deployment.Diagnostics
@@ -12,7 +10,7 @@ namespace Bottles.Deployment.Diagnostics
     {
         public void Report(DeploymentPlan plan)
         {
-            Report(plan, "deploymentreport.html");
+            Report(plan, "deploymentplan.html");
         }
         public void Report(DeploymentPlan plan, string locationToWriteReport)
         {
@@ -80,27 +78,12 @@ namespace Bottles.Deployment.Diagnostics
             var tags = new List<HtmlTag>();
 
             tags.Add(commandLine());
-            tags.AddRange(addProfile(dp));
             tags.Add(addRecipes(dp));
             tags.Add(addHosts(dp));
             tags.AddRange(addEnvironment(dp));
             left.Append(tags);
 
             return left;
-        }
-
-        private IEnumerable<HtmlTag> addProfile(DeploymentPlan dp)
-        {
-            HtmlTag tag = new HtmlTag("h3").Text("Profile");
-            HtmlTag o = new HtmlTag("h4").Text("Overrides");
-
-
-            var dl = new DLTag();
-
-            dp.Profile.Overrides.Each((k, v) => { dl.AddDefinition(k, v); });
-
-
-            return new List<HtmlTag> {tag, o, dl};
         }
 
         private IList<HtmlTag> addEnvironment(DeploymentPlan dp)
