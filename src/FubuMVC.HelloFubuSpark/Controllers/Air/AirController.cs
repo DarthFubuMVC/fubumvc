@@ -7,18 +7,13 @@
             return new AirViewModel { Text = "Take a breath?" };
         }
 
-        //public JavaScriptResponse BreatheView()
-        //{
-        //    return new JavaScriptResponse() { ViewName = "Breathe" };
-        //}
-
-        public JsonResponse Breathe(AirInputModel model)
+        public BreatheViewModel Breathe(AirInputModel model)
         {
             var result = model.TakeABreath
-                ? new AirViewModel { Text = "Breathe in!" }
-                : new AirViewModel { Text = "Exhale!" };
+                ? new BreatheViewModel { Text = "Breathe in!" }
+                : new BreatheViewModel { Text = "Exhale!" };
 
-            return new JsonResponse() { Model = result };
+            return result;
         }
     }
 
@@ -32,9 +27,9 @@
         public string Text { get; set; }
     }
 
-    public class JsonResponse
+    public class BreatheViewModel : AirViewModel
     {
-        public object Model { get; set; }
+        
     }
 
 }
