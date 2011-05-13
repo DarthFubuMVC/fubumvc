@@ -5,21 +5,19 @@
 <viewdata model="FubuMVC.HelloFubuSpark.Controllers.Air.AirViewModel" />
 <content:head>
     <script type="text/javascript" src="../../Scripts/jquery-1.4.2.js"></script>
-    <script type="text/javascript" src="/Air/BreatheView"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            var renderView = function (data) {
-                var viewContents = Spark.Air.Breathe.RenderView({ breatheResult: data.Model });
-                $("div#viewOutputArea").append(viewContents);
-            }
+      $(document).ready(function () {
+      var renderView = function (data) {
+      $("#viewOutputArea").append(data);
+      }
 
-            var takeABreath = function (breathIn) {
-                $.post("/Air/Breathe", { TakeABreath: breathIn }, renderView, "json");
-            }
+      var takeABreath = function (breathIn) {
+      $.post("/Air/Breathe", { TakeABreath: breathIn }, renderView);
+      }
 
-            $("#yesButton").click(function () { takeABreath(true); });
-            $("#noButton").click(function () { takeABreath(false); });
-        });
+      $("#yesButton").click(function () { takeABreath(true); });
+      $("#noButton").click(function () { takeABreath(false); });
+      });
     </script>
 </content:head>
 <content:title>Do we have lift-off?</content:title>

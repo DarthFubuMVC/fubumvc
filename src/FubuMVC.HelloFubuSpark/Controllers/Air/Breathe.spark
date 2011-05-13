@@ -1,3 +1,3 @@
-﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Air.AirViewModel" />
+﻿<viewdata model="FubuMVC.HelloFubuSpark.Controllers.Air.BreatheViewModel" />
 
 <h2>${Model.Text}</h2>
