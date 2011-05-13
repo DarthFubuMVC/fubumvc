@@ -37,6 +37,7 @@ namespace FubuMVC.Spark.SparkModel
             var directories = sharedsOnly 
                 ? _provider.SharedPathsOf(fromTemplate, templateRegistry) 
                 : _provider.ReachablesOf(fromTemplate, templateRegistry);
+
             return templateRegistry.ByNameUnderDirectories(name, directories);
         }
     }

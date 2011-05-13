@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -38,21 +37,23 @@ namespace FubuMVC.Spark.SparkModel
                 yield return directory;
             }
 
-            if (template.Origin == FubuSparkConstants.HostOrigin)
+            if (template.FromHost())
             {
                 yield break;
             }
+
             var hostTemplate = templateRegistry.FromHost().FirstOrDefault();
             if (hostTemplate == null)
             {
                 yield break;
             }
-            var hostRoot = hostTemplate.RootPath;
 
+            var hostRoot = hostTemplate.RootPath;
             if (includeDirectAncestor)
             {
                 yield return hostRoot;
             }
+
             foreach (var sharedFolder in _builder.SharedFolderNames)
             {
                 yield return Path.Combine(hostRoot, sharedFolder);

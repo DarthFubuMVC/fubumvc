@@ -52,7 +52,6 @@ namespace FubuMVC.Spark.Registration.Nodes
 			viewEntrySource.DependencyByValue(_cache);
             viewEntrySource.DependencyByValue(descriptor);
 
-
             strategies.AddType(typeof (TStrategy))
                 .DependencyByType(typeof (IRenderAction), typeof (TViewRenderer))
                 .DependencyByType<IViewFactory>(factory);

@@ -29,7 +29,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Log(ITemplate template, string format, params object[] args)
         {
-            _format(template,format, args);
+            _format(template, format, args);
         }
 
         public void Log(ITemplate template, string text)
@@ -37,12 +37,12 @@ namespace FubuMVC.Spark.SparkModel
             _trace(template, text);
         }
 
-        public static SparkLogger Default()
+        public static ISparkLogger Default()
         {
             return new SparkLogger(formatTrace, trace);
         }
 
-        private static PackageLog getPackageLogger(ITemplate template)
+        private static IPackageLog getPackageLogger(ITemplate template)
         {
             return PackageRegistry.Diagnostics.LogFor(template);
         }

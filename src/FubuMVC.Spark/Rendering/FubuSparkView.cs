@@ -71,11 +71,9 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-
     public interface IFubuSparkView : ISparkView
     {
         TextWriter Output { get; set; }
         Func<string, string> SiteResource { get; set; }
     }
-
 }

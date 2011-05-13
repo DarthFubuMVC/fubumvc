@@ -21,20 +21,17 @@ namespace FubuMVC.Spark
 			_engine = engine;
 		}
 
-        // Reconsider
 		public void Activate (IEnumerable<IPackageInfo> packages, IPackageLog log)
 		{
-			sparkSettings ();
-
-			_engine.ViewFolder = new TemplateViewFolder (_templateRegistry.AllTemplates());
-			_engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
-			((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider (_templateRegistry);
+			configureSparkSettings();
+            setEngineDependencies();
 		}
 
-		private void sparkSettings ()
+
+        // We need to get these settings from DSL and defaults
+		private void configureSparkSettings ()
 		{
-			var settings = (SparkSettings)_engine.Settings;
-            
+			var settings = (SparkSettings)_engine.Settings;            
 			settings.AddAssembly (typeof(HtmlTag).Assembly)
                 .AddAssembly (typeof(FubuPageExtensions).Assembly)
                 .AddNamespace (typeof(VirtualPathUtility).Namespace) // System.Web
@@ -42,5 +39,12 @@ namespace FubuMVC.Spark
                 .AddNamespace (typeof(FubuPageExtensions).Namespace) // FubuMVC.Core.UI
                 .AddNamespace (typeof(HtmlTag).Namespace); // HtmlTags   
 		}
+
+        private void setEngineDependencies()
+        {
+            _engine.ViewFolder = new TemplateViewFolder(_templateRegistry.AllTemplates());
+            _engine.DefaultPageBaseType = typeof(FubuSparkView).FullName;
+            ((SparkViewEngine)_engine).BindingProvider = new FubuBindingProvider(_templateRegistry);
+        }
 	}
 }

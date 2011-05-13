@@ -31,6 +31,8 @@ namespace FubuMVC.Spark.SparkModel
             _requestConfig = new CompositeAction<ScanRequest>();
             _hostExcludes = new CompositeAction<ScanRequest>();
 
+            // TODO: Preferably set this on the Finder from the SparkExtension (as a default convention).
+
             IncludeFile("*spark");
             // TODO: This is not automatically synched with what the attacher looks for.
             IncludeFile("bindings.xml");
@@ -83,6 +85,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             _hostExcludes += r => r.ExcludeDirectory(Path.Combine(HostPath, path));
         }
+
         public void ExcludeHostDirectory(params string[] parts)
         {
             excludeDirectory(Path.Combine(HostPath, Path.Combine(parts)));

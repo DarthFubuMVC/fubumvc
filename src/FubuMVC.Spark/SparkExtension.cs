@@ -34,7 +34,6 @@ namespace FubuMVC.Spark
 
         private void configureServices(IServiceRegistry services)
         {
-            // TODO : Reconsider this
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
             
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            

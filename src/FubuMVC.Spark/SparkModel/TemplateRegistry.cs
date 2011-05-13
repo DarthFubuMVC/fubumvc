@@ -22,6 +22,7 @@ namespace FubuMVC.Spark.SparkModel
             return directories
                 .SelectMany(local => this.Where(x => x.Name() == name && x.DirectoryPath() == local));
         }
+
         public ITemplate FirstByName(string name)
         {
             return this.Where(x => x.Name() == name).FirstOrDefault();
@@ -39,9 +40,10 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<ITemplate> FromHost()
         {
-            return ByOrigin(FubuSparkConstants.HostOrigin);
+            return this.Where(x => x.FromHost());
         }
     }
+
     public interface ITemplateRegistry
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);
@@ -51,5 +53,4 @@ namespace FubuMVC.Spark.SparkModel
         IEnumerable<ITemplate> AllTemplates();
         IEnumerable<ITemplate> FromHost();
     }
-
 }
