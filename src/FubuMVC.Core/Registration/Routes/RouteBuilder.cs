@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             var parent = new RouteDefinition(pattern);
             Type routeType = typeof (RouteInput<>).MakeGenericType(inputType);
-            var input = Activator.CreateInstance(routeType, pattern) as IRouteInput;
+            var input = Activator.CreateInstance(routeType, parent) as IRouteInput;
 
             populateRoute(pattern, inputType, input);
             parent.Input = input;

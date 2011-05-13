@@ -96,10 +96,6 @@
       <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
       <Name>FubuTestingSupport</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Spark.Web.FubuMVC\Spark.Web.FubuMVC.csproj">
-      <Project>{E0CE2949-1667-4C21-8DEC-70615A77D62F}</Project>
-      <Name>Spark.Web.FubuMVC</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

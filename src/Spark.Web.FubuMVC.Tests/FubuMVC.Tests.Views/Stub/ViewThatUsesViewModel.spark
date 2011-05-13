@@ -1,2 +1,0 @@
-﻿<viewdata model="Spark.Web.FubuMVC.Tests.Models.FakeViewModel"/>
-<div>${Model.Text}</div>
