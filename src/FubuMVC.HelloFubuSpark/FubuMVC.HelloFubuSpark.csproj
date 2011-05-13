@@ -58,7 +58,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".fubu-manifest" />
     <Content Include="Content\styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.2.js" />
