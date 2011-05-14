@@ -9,18 +9,18 @@ namespace FubuMVC.Spark.Tests.Rendering
     [TestFixture]
     public class ViewFactoryTester : InteractionContext<ViewFactory>
     {
-        private ISparkView _sparkView;
+        private IFubuSparkView _sparkView;
         private ISparkViewModification _modification1;
         private ISparkViewModification _modification2;
         private ISparkViewModification _modification3;
 
-        private ISparkView _generatedView;
+        private IFubuSparkView _generatedView;
 
         protected override void beforeEach()
         {
             var source = MockFor<IViewEntrySource>();
             var entry = MockFor<ISparkViewEntry>();
-            _sparkView = MockFor<ISparkView>();
+            _sparkView = MockFor<IFubuSparkView>();
             source.Stub(x => x.GetViewEntry()).Return(entry);
             entry.Stub(x => x.CreateInstance()).Return(_sparkView);
             var modifications = Services.CreateMockArrayFor<ISparkViewModification>(3);

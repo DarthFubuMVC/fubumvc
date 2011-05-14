@@ -4,15 +4,60 @@ using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using Spark;
 using FubuMVC.Core;
+using System.Collections.Generic;
 
 namespace FubuMVC.Spark.Rendering
 {
     public interface ISparkViewModification
     {
-        bool Applies(ISparkView view);
-        void Modify(ISparkView view);
+        bool Applies(IFubuSparkView view);
+        void Modify(IFubuSparkView view);
     }
+	
+	// TODO : UT
+	public class NestedOutputActivation : ISparkViewModification
+    {
+        private readonly NestedOutput _nestedOutput;		
+        public NestedOutputActivation(NestedOutput nestedOutput)
+        {
+            _nestedOutput = nestedOutput;
+        }
 
+        public bool Applies(IFubuSparkView view)
+        {
+            return !_nestedOutput.IsActive();
+        }
+
+        public void Modify(IFubuSparkView view)
+        {
+            _nestedOutput.SetView(() => view);
+        }
+    }
+	
+	// TODO : UT
+	public class NestedOutputSwitch : ISparkViewModification
+    {
+        private readonly NestedOutput _nestedOutput;
+        public NestedOutputSwitch(NestedOutput nestedOutput)
+        {
+            _nestedOutput = nestedOutput;
+        }
+
+        public bool Applies(IFubuSparkView view)
+        {
+            return _nestedOutput.IsActive();
+        }
+
+        public void Modify(IFubuSparkView view)
+        {
+			// assume the values of the outer view collections			
+			var outerView = _nestedOutput.View;			
+			view.Content = outerView.Content;
+            view.OnceTable = outerView.OnceTable;
+        }
+    }
+	
+	
     public class PageActivation : ISparkViewModification
     {
         private readonly IPageActivator _activator;
@@ -21,12 +66,12 @@ namespace FubuMVC.Spark.Rendering
             _activator = activator;
         }
 
-        public bool Applies(ISparkView view)
+        public bool Applies(IFubuSparkView view)
         {
             return view is IFubuPage;
         }
 
-        public void Modify(ISparkView view)
+        public void Modify(IFubuSparkView view)
         {
             _activator.Activate((IFubuPage)view);
         }
@@ -43,14 +88,14 @@ namespace FubuMVC.Spark.Rendering
 			_request = request;
         }
 
-        public bool Applies(ISparkView view)
+        public bool Applies(IFubuSparkView view)
         {
-            return view is IFubuSparkView;
+            return true;
         }
 
-        public void Modify(ISparkView view)
+        public void Modify(IFubuSparkView view)
         {
-            ((IFubuSparkView) view).SiteResource = SiteResource;
+            view.SiteResource = SiteResource;
         }
 		
         public string SiteResource(string path)

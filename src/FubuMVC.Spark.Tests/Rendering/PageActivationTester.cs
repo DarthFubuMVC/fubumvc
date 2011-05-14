@@ -11,13 +11,13 @@ namespace FubuMVC.Spark.Tests.Rendering
     public class PageActivationTester : InteractionContext<PageActivation>
     {
         private IPageActivator _activator;
-        private ISparkView _sparkView;
+        private IFubuSparkView _sparkView;
         private FubuSparkView _fubuSparkView;
 
         protected override void beforeEach()
         {
             _activator = MockFor<IPageActivator>();
-            _sparkView = MockFor<ISparkView>();
+            _sparkView = MockFor<IFubuSparkView>();
             _fubuSparkView = MockFor<FubuSparkView>();
 
             _activator.Expect(x => x.Activate(_fubuSparkView));

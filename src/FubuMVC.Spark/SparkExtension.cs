@@ -41,6 +41,8 @@ namespace FubuMVC.Spark
             
             services.AddService<ISparkViewModification, PageActivation>();
             services.AddService<ISparkViewModification, SiteResourceAttacher>();
+			services.AddService<ISparkViewModification, NestedOutputActivation>();
+			services.AddService<ISparkViewModification, NestedOutputSwitch>();
         }
 
         private void locateTemplates()

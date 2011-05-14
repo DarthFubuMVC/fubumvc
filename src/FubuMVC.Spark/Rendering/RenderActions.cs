@@ -1,4 +1,6 @@
-﻿namespace FubuMVC.Spark.Rendering
+﻿using System.IO;
+using System.Collections.Generic;
+namespace FubuMVC.Spark.Rendering
 {
     public interface IRenderAction
     {
@@ -6,7 +8,7 @@
     }
 
     public class NestedRenderAction : IRenderAction
-    {
+    {				
         private readonly IViewFactory _viewFactory;
         private readonly NestedOutput _nestedOutput;
 
@@ -15,32 +17,34 @@
             _viewFactory = viewFactory;
             _nestedOutput = nestedOutput;
         }
-
-        public void Render()
-        {
-            var view = _viewFactory.GetView();
-            view.RenderView(_nestedOutput.Writer);
+		
+		public void Render()
+        {            
+			var view = _viewFactory.GetView();
+			var outerView = _nestedOutput.View;
+            view.RenderView(outerView.Output);
         }
     }
 
     public class DefaultRenderAction : IRenderAction
     {
         private readonly IViewFactory _viewFactory;
-        private readonly NestedOutput _nestedOutput;
         private readonly ViewOutput _viewOutput;
 
-        public DefaultRenderAction(IViewFactory viewFactory, NestedOutput nestedOutput, ViewOutput viewOutput)
+        public DefaultRenderAction(IViewFactory viewFactory, ViewOutput viewOutput)
         {
             _viewFactory = viewFactory;
             _viewOutput = viewOutput;
-            _nestedOutput = nestedOutput;
         }
 
         public void Render()
         {
-            var view = (IFubuSparkView)_viewFactory.GetView();
-            _nestedOutput.SetWriter(() => view.Output);
-            view.RenderView(_viewOutput);
+            var view = _viewFactory.GetView();            
+			view.RenderView(_viewOutput);
+			
+			// proactively dispose named content. pools spoolwriter pages. avoids finalizers.
+	        view.Content.Values.Each(c => c.Close());
+    	    view.Content.Clear();
         }
     }
 }

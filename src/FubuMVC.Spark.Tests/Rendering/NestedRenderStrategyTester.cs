@@ -24,7 +24,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         public void if_nested_output_is_active_applies_returns_true_otherwise_false()
         {
             ClassUnderTest.Applies().ShouldBeFalse();
-            _nestedOutput.SetWriter(() => new StringWriter());
+            _nestedOutput.SetView(() => MockFor<IFubuSparkView>());
             ClassUnderTest.Applies().ShouldBeTrue();
         }
 

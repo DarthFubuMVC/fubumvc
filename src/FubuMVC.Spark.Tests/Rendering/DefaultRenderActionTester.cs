@@ -3,6 +3,7 @@ using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Collections.Generic;
 
 namespace FubuMVC.Spark.Tests.Rendering
 {
@@ -10,23 +11,18 @@ namespace FubuMVC.Spark.Tests.Rendering
     public class DefaultRenderActionTester : InteractionContext<DefaultRenderAction>
     {
         private IFubuSparkView _view;
-        private NestedOutput _nestedOutput;
 
         protected override void beforeEach()
         {
             var viewOutput = MockFor<ViewOutput>();
-
-            _nestedOutput = new NestedOutput();
-
             _view = MockFor<IFubuSparkView>();
 
             var viewFactory = MockFor<IViewFactory>();
             viewFactory.Stub(x => x.GetView()).Return(_view);
 
             _view.Stub(x => x.Output).Return(new StringWriter());
+			_view.Stub(x => x.Content).Return(new Dictionary<string, TextWriter>());
             _view.Expect(x => x.RenderView(viewOutput));
-
-            Services.Inject(_nestedOutput);
 
             ClassUnderTest.Render();
         }
@@ -36,12 +32,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             _view.VerifyAllExpectations();
         }
-
-        [Test]
-        public void sets_nested_output_writer_as_view_output()
-        {
-            _nestedOutput.IsActive();
-            _nestedOutput.Writer.ShouldEqual(_view.Output);
-        }
+		
+		// TODO : tests for Content being cleared missing
     }
 }

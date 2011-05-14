@@ -7,6 +7,7 @@ using FubuMVC.Core.View;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using Spark;
+using System.Collections.Generic;
 
 namespace FubuMVC.Spark.Rendering
 {
@@ -73,7 +74,11 @@ namespace FubuMVC.Spark.Rendering
 
     public interface IFubuSparkView : ISparkView
     {
+		// Try to hide this away
+		Dictionary<string, TextWriter> Content { set; get; }
+		Dictionary<string, string> OnceTable { set; get; }
         TextWriter Output { get; set; }
-        Func<string, string> SiteResource { get; set; }
+     
+		Func<string, string> SiteResource { get; set; }
     }
 }

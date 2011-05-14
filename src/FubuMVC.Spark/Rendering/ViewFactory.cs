@@ -6,7 +6,7 @@ namespace FubuMVC.Spark.Rendering
 {
     public interface IViewFactory
     {
-        ISparkView GetView();
+        IFubuSparkView GetView();
     }
 
     public class ViewFactory : IViewFactory
@@ -20,14 +20,14 @@ namespace FubuMVC.Spark.Rendering
             _viewEntrySource = viewEntrySource;
         }
 
-        public ISparkView GetView()
+        public IFubuSparkView GetView()
         {
-            var view = _viewEntrySource.GetViewEntry().CreateInstance();
+            var view = (IFubuSparkView) _viewEntrySource.GetViewEntry().CreateInstance();
             applyModifications(view);
             return view;
         }
 
-        private void applyModifications(ISparkView view)
+        private void applyModifications(IFubuSparkView view)
         {
             _modifications.Where(m => m.Applies(view)).Each(m => m.Modify(view));
         }
