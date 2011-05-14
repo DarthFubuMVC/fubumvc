@@ -35,6 +35,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bottles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="Bottles.Deployment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\Bottles.Deployment.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
@@ -74,14 +82,6 @@
     <Compile Include="RestartCommand.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
-      <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
-      <Name>Bottles.Deployment</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bottles\Bottles.csproj">
-      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
-      <Name>Bottles</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>

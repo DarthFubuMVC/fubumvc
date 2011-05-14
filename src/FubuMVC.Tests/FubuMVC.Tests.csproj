@@ -33,6 +33,14 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bottles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="Bottles.Deployment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\Bottles.Deployment.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
@@ -343,14 +351,6 @@
     <ProjectReference Include="..\AssemblyPackage\AssemblyPackage.csproj">
       <Project>{99DBA82A-E811-4DA0-983C-12E8317F8642}</Project>
       <Name>AssemblyPackage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bottles.Deployment\Bottles.Deployment.csproj">
-      <Project>{665AEFFB-7582-484F-8C77-8310B1AE55F2}</Project>
-      <Name>Bottles.Deployment</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bottles\Bottles.csproj">
-      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
-      <Name>Bottles</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Deployers\FubuMVC.Deployers.csproj">
       <Project>{15052F0B-098A-4115-BD7B-E66657FCE73A}</Project>

@@ -34,6 +34,13 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bottles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="Bottles.Deployment">
+      <HintPath>..\..\lib\bottles\Bottles.Deployment.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
@@ -444,12 +451,6 @@
     <Compile Include="Security\ISecurityContext.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />
     <Compile Include="Web\Security\WebSecurityContext.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bottles\Bottles.csproj">
-      <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
-      <Name>Bottles</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Diagnostics\HtmlWriting\diagnostics.css" />
