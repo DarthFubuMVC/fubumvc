@@ -3,7 +3,6 @@
 <content:title>To Infinity...</content:title>
 <content:header>...and BEYOND!</content:header>
 <content:head><link href="~/Content/styles.css" rel="stylesheet" type="text/css" /></content:head>
-<br />
 
 <div class="spark-journey">
     Journey with Spark: 
@@ -11,16 +10,13 @@
         <SparkJourney region="'Black Hole Orbit'" attempt="2" trajectory="'Too Steep'" /><br />
         <SparkJourney region="'Black Hole Orbit'" attempt="3" trajectory="'Optimal'" />
 </div>
-<br />
 
 <div class="fubu-journey">
     Journey with Fubu: 
         <FubuJourney region="Unknown Region" attempt="1" trajectory="Aimless" /><br />
         <FubuJourney region="Black Hole Orbit" attempt="2" trajectory="Too Steep" /><br />
-        <FubuJourney region="Black Hole Orbit" attempt="3" trajectory="Optimal" /><br />
-<br />
+        <FubuJourney region="Black Hole Orbit" attempt="3" trajectory="Optimal" />
 </div>
-<br />
 
 <content:footer>
   <div class="footer-infinity">To infinity...and BEYOND!</div>
@@ -33,9 +29,7 @@
   <use content="SparkRippedAsunder">Spark where are you? Come in Spark, please respond!</use>
 </div>
 
-<br />
 <div class="fubu-journey">
     <use content="FubuRippedAsunder">Fubu where are you? Come in Fubu, please respond!</use>
 </div>
 <div class="oblivion">Oblivion</div>
-<br />

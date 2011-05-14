@@ -6,7 +6,10 @@ namespace FubuMVC.Spark.Rendering
     {
         void Render();
     }
-
+	
+	// Note: Perhaps we could use SparkViewDecorator 
+	// to handle "set asside" / "restore previous state of "view content" + proactive disposal.
+	
     public class NestedRenderAction : IRenderAction
     {				
         private readonly IViewFactory _viewFactory;
