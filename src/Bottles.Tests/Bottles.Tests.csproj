@@ -31,6 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuTestingSupport.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
@@ -159,14 +171,6 @@
     <ProjectReference Include="..\Bottles\Bottles.csproj">
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
-      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
-      <Name>FubuCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
-      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
-      <Name>FubuTestingSupport</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

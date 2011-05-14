@@ -33,6 +33,18 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuTestingSupport.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlTags, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -340,14 +352,6 @@
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
-      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
-      <Name>FubuCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
-      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
-      <Name>FubuLocalization</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Deployers\FubuMVC.Deployers.csproj">
       <Project>{15052F0B-098A-4115-BD7B-E66657FCE73A}</Project>
       <Name>FubuMVC.Deployers</Name>
@@ -375,10 +379,6 @@
     <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
       <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
       <Name>FubuTestApplication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTestingSupport\FubuTestingSupport.csproj">
-      <Project>{CEF04237-F832-4BAF-BA5F-C5DEA0635E8E}</Project>
-      <Name>FubuTestingSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -116,12 +120,6 @@
     <Compile Include="Zipping\ZipFileService.cs" />
     <Compile Include="Zipping\ZipFileWrapper.cs" />
     <Compile Include="Zipping\ZipFolderRequest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
-      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
-      <Name>FubuCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

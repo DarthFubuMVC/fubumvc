@@ -34,6 +34,14 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlTags, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -441,14 +449,6 @@
     <ProjectReference Include="..\Bottles\Bottles.csproj">
       <Project>{E208A2B1-31B0-4455-BA16-3D79F5887ECE}</Project>
       <Name>Bottles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
-      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
-      <Name>FubuCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuLocalization\FubuLocalization.csproj">
-      <Project>{05E7BD1E-6AB0-4D6E-91EB-B004AFA1A619}</Project>
-      <Name>FubuLocalization</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

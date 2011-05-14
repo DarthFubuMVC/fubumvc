@@ -52,12 +52,6 @@
     <Content Include="WebContent\content\scripts\Pak1-A.js" />
     <Content Include="WebContent\content\scripts\Script1.js" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FubuCore\FubuCore.csproj">
-      <Project>{342B987C-E0A4-4129-958D-8E08084E8A06}</Project>
-      <Name>FubuCore</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
