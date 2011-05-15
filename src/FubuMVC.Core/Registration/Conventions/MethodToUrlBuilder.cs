@@ -17,16 +17,21 @@ namespace FubuMVC.Core.Registration.Conventions
             return methodName.Contains("_");
         }
 
-        public static void Alter(RouteDefinition route, ActionCall call, IConfigurationObserver observer)
+        public static void Alter(IRouteDefinition route, ActionCall call, IConfigurationObserver observer)
         {
             var properties = call.HasInput
                                  ? new TypeDescriptorCache().GetPropertiesFor(call.InputType()).Keys
                                  : new string[0];
 
             Alter(route, call.Method.Name, properties, text => observer.RecordCallStatus(call, text));
+
+            if (call.HasInput)
+            {
+                route.ApplyInputType(call.InputType());
+            }
         }
 
-        public static void Alter(RouteDefinition route, string methodName, IEnumerable<string> properties, Action<string> log)
+        public static void Alter(IRouteDefinition route, string methodName, IEnumerable<string> properties, Action<string> log)
         {
             log("Method name interpreted by the MethodToUrlBuilder");
             var parts = methodName.Split('_').ToList();
@@ -55,6 +60,8 @@ namespace FubuMVC.Core.Registration.Conventions
             }
 
             route.Append(parts.Join("/"));
+
+            
         }
     }
 }

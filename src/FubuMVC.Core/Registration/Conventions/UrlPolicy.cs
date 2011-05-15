@@ -46,6 +46,14 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             var route = call.ToRouteDefinition();
 
+
+            // TODO -- far better diagnostics here
+            if (MethodToUrlBuilder.Matches(call.Method.Name))
+            {
+                MethodToUrlBuilder.Alter(route, call, new NulloConfigurationObserver());
+                return route;
+            }
+
             if (!IgnoreControllerNamespaceEntirely)
             {
                 addNamespace(route, call);
