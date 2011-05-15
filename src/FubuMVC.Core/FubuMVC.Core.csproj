@@ -193,6 +193,7 @@
     <Compile Include="Registration\AssemblyScanner.cs" />
     <Compile Include="Registration\AssemblyScanningExtensions.cs" />
     <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
+    <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\DSL\MediaExpression.cs" />

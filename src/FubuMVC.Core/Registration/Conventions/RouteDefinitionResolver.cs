@@ -23,8 +23,10 @@ namespace FubuMVC.Core.Registration.Conventions
 
             _inputPolicy.PropertyFilters.Includes +=
                 prop => prop.InputProperty.HasAttribute<RouteInputAttribute>();
+
             _inputPolicy.PropertyFilters.Includes +=
                 prop => prop.InputProperty.HasAttribute<QueryStringAttribute>();
+            
             _inputPolicy.PropertyAlterations.Register(prop => prop.HasAttribute<QueryStringAttribute>(),
                                                       (route, prop) => route.Input.AddQueryInput(prop));
 

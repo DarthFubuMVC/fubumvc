@@ -13,9 +13,7 @@ namespace FubuMVC.Core.Registration.Routes
             var input = new RouteInput<T>(parent);
             Type inputType = typeof (T);
 
-            populateRoute(pattern, inputType, input);
-
-            parent.Input = input;
+            parent.ApplyInputType(inputType);
 
             return parent;
         }

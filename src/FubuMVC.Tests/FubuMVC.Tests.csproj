@@ -132,6 +132,7 @@
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />
     <Compile Include="Registration\Conventions\AuthorizedByAttributeConventionTester.cs" />
+    <Compile Include="Registration\Conventions\MethodToUrlBuilderTester.cs" />
     <Compile Include="Registration\Conventions\PartialRegistrationConventionTester.cs" />
     <Compile Include="Registration\Conventions\RenderStatusCodeConventionTester.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicyTester.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="Registration\Scanning\AssemblyScannerTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Registration\TypePoolTester.cs" />
-    <Compile Include="Routing\RouteDefinitionExtensionsTester.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />

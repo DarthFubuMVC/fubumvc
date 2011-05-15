@@ -13,18 +13,19 @@ namespace FubuMVC.Core.Registration.Conventions
 {
     public class UrlPolicy : IUrlPolicy
     {
+        private readonly Builder<ActionCall, string> _appendClassBuilder = new Builder<ActionCall, string>(call => "");
         private readonly Func<ActionCall, bool> _filter;
         private readonly List<Type> _ignoreClassNames = new List<Type>();
         private readonly List<string> _ignoredClassSuffixes = new List<string>();
         private readonly List<string> _ignoredMethodNames = new List<string>();
         private readonly List<string> _ignoredNamespaces = new List<string>();
-        private readonly List<ModifyRouteStrategy> _modifications = new List<ModifyRouteStrategy>();
 
         private readonly Builder<MethodInfo, string> _methodNameBuilder
             = new Builder<MethodInfo, string>(method => method.Name);
 
+        private readonly List<ModifyRouteStrategy> _modifications = new List<ModifyRouteStrategy>();
+
         private readonly IRouteInputPolicy _routeInputPolicy;
-        private readonly Builder<ActionCall, string> _appendClassBuilder = new Builder<ActionCall, string>(call => "");
 
         public UrlPolicy(Func<ActionCall, bool> filter, IRouteInputPolicy routeInputPolicy)
         {
@@ -43,7 +44,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public IRouteDefinition Build(ActionCall call)
         {
-            IRouteDefinition route = call.ToRouteDefinition();
+            var route = call.ToRouteDefinition();
 
             if (!IgnoreControllerNamespaceEntirely)
             {
@@ -51,28 +52,27 @@ namespace FubuMVC.Core.Registration.Conventions
             }
 
             if (!IgnoreControllerNamesEntirely)
+            {
                 addClassName(route, call);
+            }
 
-            addMethodName(route, call);
+            AddMethodName(route, call);
 
             if (call.HasInput)
             {
                 _routeInputPolicy.AlterRoute(route, call);
             }
 
-            _modifications.Each(m =>
-                                    {
-                                        if (m.Filter(call))
-                                            m.Modify(route);
-                                    });
+            _modifications.Where(m => m.Filter(call)).Each(m => m.Modify(route));
 
             return route;
         }
 
-        private void addMethodName(IRouteDefinition route, ActionCall call)
+        public void AddMethodName(IRouteDefinition route, ActionCall call)
         {
             if (_ignoredMethodNames.Contains(call.Method.Name.ToLower())) return;
-            string urlPart = _methodNameBuilder.Build(call.Method);
+            
+            var urlPart = _methodNameBuilder.Build(call.Method);
             if (urlPart.IsNotEmpty())
             {
                 route.Append(urlPart.ToLower());
@@ -83,17 +83,17 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             if (_ignoreClassNames.Contains(call.HandlerType)) return;
 
-            string className = getClassName(call);
+            var className = getClassName(call);
 
             // So Home/HomeController == /home and not /home/home
-            string lastName = route.Pattern.Split('/').LastOrDefault();
+            var lastName = route.Pattern.Split('/').LastOrDefault();
             if (className != lastName)
             {
                 className += _appendClassBuilder.Build(call);
                 route.Append(className);
             }
-
         }
+
 
         private string getClassName(ActionCall call)
         {
@@ -105,7 +105,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         private void addNamespace(IRouteDefinition route, ActionCall call)
         {
-            string ns = replace(call.HandlerType.Namespace, _ignoredNamespaces).TrimStart('.');
+            var ns = replace(call.HandlerType.Namespace, _ignoredNamespaces).TrimStart('.');
             ns = ns.Replace('.', '/');
             route.Append(ns);
 
@@ -115,9 +115,9 @@ namespace FubuMVC.Core.Registration.Conventions
             }
         }
 
-        private string replace(string starting, List<string> list)
+        private static string replace(string starting, IEnumerable<string> list)
         {
-            string returnValue = starting.ToLower();
+            var returnValue = starting.ToLower();
             list.Each(x => returnValue = returnValue.Replace(x, ""));
 
             return returnValue;
@@ -160,8 +160,13 @@ namespace FubuMVC.Core.Registration.Conventions
 
         public void RegisterRouteModification(Func<ActionCall, bool> filter, Action<IRouteDefinition> modification)
         {
-            _modifications.Add(new ModifyRouteStrategy() { Filter = filter, Modify = modification });
+            _modifications.Add(new ModifyRouteStrategy{
+                Filter = filter,
+                Modify = modification
+            });
         }
+
+        #region Nested type: ModifyRouteStrategy
 
         public class ModifyRouteStrategy
         {
@@ -169,5 +174,6 @@ namespace FubuMVC.Core.Registration.Conventions
             public Action<IRouteDefinition> Modify { get; set; }
         }
 
+        #endregion
     }
 }

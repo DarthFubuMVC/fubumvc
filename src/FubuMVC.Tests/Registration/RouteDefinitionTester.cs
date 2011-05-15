@@ -472,27 +472,96 @@ namespace FubuMVC.Tests.Registration
             route.Constraints.ShouldBeNull();
         }
 
-        [Test]
-        public void add_constraint_to_route()
-        {
-            var url = new RouteDefinition("my/sample");
-            var constraintToAdd = new HttpMethodConstraint("POST");
-            url.AddRouteConstraint("httpMethod", constraintToAdd);
-            Route route = url.ToRoute();
 
-            route.Constraints["httpMethod"].ShouldEqual(constraintToAdd);
+        [Test]
+        public void no_http_method_constraints_on_startup()
+        {
+            var route = new RouteDefinition("something");
+            route.GetHttpMethodConstraints().Any().ShouldBeFalse();
         }
 
         [Test]
-        public void add_constraint_to_route_with_model()
+        public void add_http_method_constraint()
         {
-            var parent = new RouteDefinition("my/sample");
-            parent.Input = new RouteInput<SampleViewModel>(parent);
-            var constraintToAdd = new HttpMethodConstraint("POST");
-            parent.AddRouteConstraint("httpMethod", constraintToAdd);
-            Route route = parent.ToRoute();
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("get");
 
-            route.Constraints["httpMethod"].ShouldEqual(constraintToAdd);
+            route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET");
+        }
+
+        [Test]
+        public void add_http_method_constraint_multiple_times()
+        {
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("get");
+            route.AddHttpMethodConstraint("Get");
+
+            route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET");
+        }
+
+        [Test]
+        public void add_multiple_http_constraints()
+        {
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("get");
+            route.AddHttpMethodConstraint("POST");
+
+            route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET", "POST");
+        }
+
+        [Test]
+        public void add_multiple_http_method_constraint_multiple_times()
+        {
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("get");
+            route.AddHttpMethodConstraint("Get");
+            route.AddHttpMethodConstraint("Post");
+            route.AddHttpMethodConstraint("POST");
+
+            route.GetHttpMethodConstraints().ShouldHaveTheSameElementsAs("GET", "POST");
+        }
+
+        [Test]
+        public void create_route_with_no_http_constraints()
+        {
+            var route = new RouteDefinition("something").ToRoute();
+            route.Constraints.ShouldBeNull();
+        }
+
+        [Test]
+        public void create_route_with_http_constraints()
+        {
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("Get");
+            route.AddHttpMethodConstraint("POST");
+
+        
+            route.ToRoute().Constraints.Single().Value.ShouldBeOfType<HttpMethodConstraint>()
+                .AllowedMethods.ShouldHaveTheSameElementsAs("GET", "POST");
+        }
+
+        [Test]
+        public void responds_to_get_with_no_constraints()
+        {
+            var route = new RouteDefinition("something");
+            route.RespondsToGet().ShouldBeTrue();
+        }
+
+        [Test]
+        public void responds_to_get_if_GET_is_explicitly_allowed()
+        {
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("Get");
+            route.AddHttpMethodConstraint("POST");
+            route.RespondsToGet().ShouldBeTrue();
+        }
+
+        [Test]
+        public void does_not_respond_to_get_if_http_methods_are_explicitly_defined_and_get_is_not_allowed()
+        {
+            var route = new RouteDefinition("something");
+            route.AddHttpMethodConstraint("POST");
+            route.RespondsToGet().ShouldBeFalse();
         }
 
     }

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Routing;
-using HtmlTags;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using HtmlTags;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
@@ -24,13 +22,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
         {
             if (chain.Route == null) return " -";
 
-            var httpMethodConstraint = chain.Route.Constraints.Where(kv => kv.Key == RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT).Select(kv => kv.Value).FirstOrDefault() as HttpMethodConstraint;
-            var pattern = "";
-            
-            if (httpMethodConstraint != null)
-                pattern = httpMethodConstraint.AllowedMethods.Join(",");
-
-            return pattern;
+            return chain.Route.AllowedHttpMethods.Any() ? chain.Route.AllowedHttpMethods.Join(",") : "All";
         }
     }
 }

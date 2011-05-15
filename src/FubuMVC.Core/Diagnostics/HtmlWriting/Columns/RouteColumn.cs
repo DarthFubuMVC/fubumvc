@@ -40,9 +40,8 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             if (chain == null || chain.Rank > 0) return false;
             if (chain.Route == null) return false;
 
-            var httpConstraint = chain.Route.Constraints.Select(c => c.Value).OfType<HttpMethodConstraint>().FirstOrDefault();
-            if (httpConstraint != null && !httpConstraint.AllowedMethods.Any(m => m.Equals("GET", StringComparison.OrdinalIgnoreCase))) return false;
-            return true;
+            return chain.Route.RespondsToGet();
+
         }
 
         public string Text(BehaviorChain chain)
