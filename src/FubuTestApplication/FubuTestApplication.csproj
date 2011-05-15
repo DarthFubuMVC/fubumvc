@@ -45,6 +45,9 @@
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />

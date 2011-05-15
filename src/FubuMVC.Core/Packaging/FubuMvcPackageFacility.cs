@@ -26,16 +26,13 @@ namespace FubuMVC.Core.Packaging
 
             if (applicationPath.IsNotEmpty())
             {
-                var fileSystem = new FileSystem();
-
                 // Development mode
-                Loader(new PackageManifestReader(applicationPath, fileSystem, folder => folder));
+                Loader(new LinkedFolderPackageLoader(GetApplicationPath(), folder => folder));
                 
                 // Production mode with zip files and standalone assemblies (e.g., Spark.Web.FubuMVC)
-                var zipFilePackageReader = BuildZipFilePackageLoader(applicationPath, fileSystem);
-                Loader(zipFilePackageReader);
+                Loader(new ZipFilePackageLoader());
 
-            	var standaloneLoader = BuildStandaloneAssemblyPackageLoader(fileSystem);
+            	var standaloneLoader = new StandaloneAssemblyPackageLoader(new StandaloneAssemblyFinder());
 				Loader(standaloneLoader);
             }
 
@@ -44,24 +41,25 @@ namespace FubuMVC.Core.Packaging
             Activator(new PackageFolderActivator(_contentFolderService));
         }
 
-		public static StandaloneAssemblyPackageLoader BuildStandaloneAssemblyPackageLoader(FileSystem fileSystem)
-		{
-			var assemblyFinder = new StandaloneAssemblyFinder(fileSystem);
-			return new StandaloneAssemblyPackageLoader(assemblyFinder);
-		}
-
-        public static ZipFilePackageLoader BuildZipFilePackageLoader(string applicationPath, FileSystem fileSystem)
-        {
-            var zipFileManifestReader = new PackageManifestReader(applicationPath, fileSystem, ZipFilePackageLoader.GetContentFolderForPackage);
-            PackageExploder packageExploder = PackageExploder.GetPackageExploder(fileSystem);
-            return new ZipFilePackageLoader(zipFileManifestReader, packageExploder);
-        }
-
-
 
         public static string GetApplicationPath()
         {
             return PhysicalRootPath ?? HostingEnvironment.ApplicationPhysicalPath ?? determineApplicationPathFromAppDomain();
+        }
+
+        /// <summary>
+        /// These are the places that FubuMVC should look for packages
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<string> GetPackageDirectories()
+        {
+            yield return FileSystem.Combine(GetApplicationPath(), "bin", FubuPackagesFolder);
+            yield return FileSystem.Combine(GetApplicationPath(), FubuContentFolder);
+        }
+
+        public static string GetExplodedPackagesDirectory()
+        {
+            return FileSystem.Combine(GetApplicationPath(), FubuContentFolder);
         }
 
         private static string determineApplicationPathFromAppDomain()

@@ -8,5 +8,4 @@
   <ContentFileSet Include="*.as*x;*.master;Content\*.*;*.config">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
-  <include>..\TestPackage1</include>
 </package>

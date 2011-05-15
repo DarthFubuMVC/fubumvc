@@ -42,6 +42,7 @@ namespace FubuMVC.Core.Registration.Conventions
             return _filter(call);
         }
 
+        // TODO -- sucks, but need to break the IUrlPolicy signature to add diagnostics
         public IRouteDefinition Build(ActionCall call)
         {
             var route = call.ToRouteDefinition();

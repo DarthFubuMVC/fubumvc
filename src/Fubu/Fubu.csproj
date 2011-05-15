@@ -55,6 +55,9 @@
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />

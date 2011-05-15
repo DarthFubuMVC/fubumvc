@@ -23,4 +23,17 @@ namespace FubuMVC.Core.Packaging
             return assemblies.Select(assembly => AssemblyPackageInfo.CreateFor(Assembly.Load(assembly)).As<IPackageInfo>());
 		}
 	}
+
+    public class StandaloneAssemblyFinder : IStandaloneAssemblyFinder
+    {
+        public IEnumerable<string> FindAssemblies(string applicationDirectory)
+        {
+            var assemblyNames = new FileSet { Include = "*.dll", DeepSearch = false };
+            var fileSystem = new FileSystem();
+
+            return FubuMvcPackageFacility
+                .GetPackageDirectories()
+                .SelectMany(dir => fileSystem.FindFiles(dir, assemblyNames));
+        }
+    }
 }

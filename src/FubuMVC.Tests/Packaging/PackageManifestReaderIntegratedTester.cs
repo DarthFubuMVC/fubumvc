@@ -18,6 +18,8 @@ namespace FubuMVC.Tests.Packaging
     {
         private string packageFolder;
         private PackageManifestReader reader;
+        private string theApplicationDirectory = "../../".ToFullPath();
+        private LinkedFolderPackageLoader linkedFolderReader;
 
         [SetUp]
         public void SetUp()
@@ -33,7 +35,9 @@ namespace FubuMVC.Tests.Packaging
 
             fileSystem.PersistToFile(manifest, packageFolder, PackageManifest.FILE);
 
-            reader = new PackageManifestReader("../../".ToFullPath(), fileSystem, folder => folder);
+            linkedFolderReader = new LinkedFolderPackageLoader(theApplicationDirectory, f => f);
+
+            reader = new PackageManifestReader(fileSystem, folder => folder);
         }
 
 
@@ -41,7 +45,7 @@ namespace FubuMVC.Tests.Packaging
         [TearDown]
         public void TearDown()
         {
-            new FileSystem().DeleteFile(FileSystem.Combine("../../".ToFullPath(), PackageManifest.FILE));
+            new FileSystem().DeleteFile(FileSystem.Combine(theApplicationDirectory, PackageManifest.FILE));
         }
 
 
@@ -79,12 +83,13 @@ namespace FubuMVC.Tests.Packaging
             var includes = new PackageManifest();
             includes.AddLink("../TestPackage1");
 
-            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.FILE);
+            new FileSystem().PersistToFile(includes, theApplicationDirectory, PackageManifest.FILE);
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
 
-            var package = reader.Load(new PackageLog()).Single();
+            
+            var package = linkedFolderReader.Load(new PackageLog()).Single();
             assemblyLoader.LoadAssembliesFromPackage(package);
 
             assemblyLoader.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
@@ -96,12 +101,12 @@ namespace FubuMVC.Tests.Packaging
 			var includes = new PackageManifest();
 			includes.AddAssembly("TestPackage1");
 
-            new FileSystem().PersistToFile(includes, "../../".ToFullPath(), PackageManifest.FILE);
+            new FileSystem().PersistToFile(includes, theApplicationDirectory, PackageManifest.FILE);
 
 			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
 
-			var package = reader.Load(new PackageLog()).Single();
+			var package = linkedFolderReader.Load(new PackageLog()).Single();
 			assemblyLoader.LoadAssembliesFromPackage(package);
 
 			assemblyLoader

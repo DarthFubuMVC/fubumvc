@@ -47,7 +47,8 @@ namespace Fubu
                 new FileSystem().DeleteDirectory(packageFolder);
             }
 
-            exploder.LogPackageState(input.AppFolder);
+            // TODO -- this needs to be redone
+            //exploder.LogPackageState(input.AppFolder);
         }
 
 

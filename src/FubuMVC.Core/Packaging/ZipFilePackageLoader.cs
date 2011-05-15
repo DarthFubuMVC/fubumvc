@@ -9,23 +9,19 @@ namespace FubuMVC.Core.Packaging
 {
     public class ZipFilePackageLoader : IPackageLoader
     {
-        private readonly IPackageManifestReader _reader;
-        private readonly IPackageExploder _exploder;
-
-        public ZipFilePackageLoader(IPackageManifestReader reader, IPackageExploder exploder)
-        {
-            _reader = reader;
-            _exploder = exploder;
-        }
-
         public IEnumerable<IPackageInfo> Load(IPackageLog log)
         {
-            var applicationDirectory = FubuMvcPackageFacility.GetApplicationPath();
+            var exploder = PackageExploder.GetPackageExploder(log);
+            var reader = new PackageManifestReader(new FileSystem(), GetContentFolderForPackage);
 
-            //this finds all of the bottles in <applicationDirectory>/bin/packages
-            //then calls load from folder on each exploded zip
-            return _exploder.ExplodeAllZipsAndReturnPackageDirectories(applicationDirectory, log)
-                .Select(dir => _reader.LoadFromFolder(dir));
+            return FubuMvcPackageFacility.GetPackageDirectories().SelectMany(dir =>
+            {
+                return exploder.ExplodeDirectory(new ExplodeDirectory(){
+                    DestinationDirectory = FubuMvcPackageFacility.GetExplodedPackagesDirectory(),
+                    PackageDirectory = dir,
+                    Log = log
+                });
+            }).Select(dir => reader.LoadFromFolder(dir));
         }
 
         public static string GetContentFolderForPackage(string packageFolder)
