@@ -1,0 +1,10 @@
+﻿<bindings>
+  <element name="FubuJourney">#this.Partial(new FubuMVC.HelloSpark.Controllers.FifthElement.FubuJourneyInputModel {WhereTo="@region", Attempt=@attempt, Trajectory="@trajectory"} );</element>
+  <element name="FubuProceedToEventHorizon">#this.Partial(new FubuMVC.HelloSpark.Controllers.FifthElement.FubuEventHorizonInputModel {Attempt=@attempt, Trajectory=@trajectory} );</element>
+  <element name="Form">
+    <start>this.FormFor&lt;@model&gt;().Attr("class", "validate")</start>
+    <end>this.EndForm()</end>
+  </element>
+  <element name="LabelFor">this.LabelFor(m =&gt; m.@property)</element>
+  <element name="InputFor">this.InputFor(m =&gt; m.@property)</element>
+</bindings>

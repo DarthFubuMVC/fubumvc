@@ -1,0 +1,10 @@
+﻿<default region="'Unknown Region'" attempt="0" />
+
+<div>Attempt ${attempt}: Entering ${region}</div>
+
+<test if="region == 'Black Hole Orbit'">
+    <SparkProceedToEventHorizon />
+</test>
+<else>
+    <div>Attempt ${attempt}: ...just drifting now...</div>
+</else>

@@ -1,0 +1,14 @@
+﻿<default trajectory="'Too Steep!'" />
+
+<div>Attempt ${attempt}: Proceeding to Event Horizon. Trajectory: ${trajectory}</div>
+
+<test if="trajectory == 'Optimal'">
+    <content:SparkWormHole>
+        <div class="spark-journey">Attempt ${attempt}:Spark, WE'RE THROUGH!! Oh my goodness, you guys should see this! Guys?</div>
+    </content:SparkWormHole>
+</test>
+<else>
+    <content:SparkRippedAsunder>
+        <div>Attempt ${attempt}: Spark, WE'RE NOT GONNA MAKE IT!! AAAAAAaaaaaaaaahhhhhh</div>
+    </content:SparkRippedAsunder>
+</else>
