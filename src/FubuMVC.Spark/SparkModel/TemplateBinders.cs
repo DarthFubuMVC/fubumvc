@@ -106,12 +106,19 @@ namespace FubuMVC.Spark.SparkModel
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
             var types = request.Types.TypesWithFullName(request.ViewModelType);
-            if(types.Count() != 1)
+            var count = types.Count();
+            if (count == 0)
+            {
+                const string msg = "View model type : {0} not found";
+                request.Logger.Log(template, msg, request.ViewModelType);
+                return;
+            }
+            if (count > 1)
             {
                 var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
                 const string msg = "Unable to set view model type : {0} - candidates were : {1}";
-                
-                request.Logger.Log(template, msg, candidates);
+
+                request.Logger.Log(template, msg, request.ViewModelType, candidates);
                 return;
             }
 

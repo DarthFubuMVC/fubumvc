@@ -1,11 +1,8 @@
 ﻿using FubuCore;
-using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
 using Spark;
 using FubuMVC.Core;
-using System.Collections.Generic;
-
 namespace FubuMVC.Spark.Rendering
 {
     public interface ISparkViewModification
