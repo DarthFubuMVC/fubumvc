@@ -78,20 +78,20 @@
     <Content Include="Content\Styles\chains\view.css" />
     <Content Include="Content\Styles\requests\view.css" />
     <Content Include="diagnostics.script.config" />
-    <None Include="Views\Chains\Unknown.spark" />
-    <None Include="Views\Chains\View.spark" />
-    <None Include="Views\Dashboard.spark" />
-    <None Include="Views\Requests.spark" />
-    <None Include="Views\Notifications\NoOutputs.spark">
+    <None Include="Endpoints\Chains\Unknown.spark" />
+    <None Include="Endpoints\Chains\View.spark" />
+    <None Include="Endpoints\Dashboard.spark" />
+    <None Include="Endpoints\Requests.spark" />
+    <None Include="Notifications\NoOutputs.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Views\Packaging\Log.spark" />
-    <None Include="Views\Requests\View.spark" />
-    <None Include="Views\Routes.spark">
+    <None Include="Endpoints\Packaging\Log.spark" />
+    <None Include="Endpoints\Requests\View.spark" />
+    <None Include="Endpoints\Routes.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Views\Routes\Authorization.spark" />
-    <None Include="Views\Shared\Application.spark" />
+    <None Include="Endpoints\Routes\Authorization.spark" />
+    <None Include="Shared\Application.spark" />
     <Content Include="Content\Images\block.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Scripts\jquery\i18n\grid.locale-bg.js" />
@@ -145,19 +145,19 @@
     <Content Include="Content\Styles\master.css" />
     <Content Include="Content\Styles\snapdragon\common.css" />
     <Content Include="Content\Styles\snapdragon\forms.css" />
-    <Content Include="Views\Bindings.xml" />
-    <None Include="Views\Shared\AuthorizationReport.spark" />
-    <None Include="Views\Shared\FileOutputReport.spark" />
-    <None Include="Views\Shared\ExceptionReport.spark" />
-    <None Include="Views\Shared\SetValueReport.spark" />
-    <None Include="Views\Shared\OutputReport.spark" />
-    <None Include="Views\Shared\ModelBindingReport.spark" />
-    <None Include="Views\Shared\Notifications.spark" />
-    <None Include="Views\Shared\NavigationMenu.spark">
+    <Content Include="Shared\bindings.xml" />
+    <None Include="Shared\AuthorizationReport.spark" />
+    <None Include="Shared\FileOutputReport.spark" />
+    <None Include="Shared\ExceptionReport.spark" />
+    <None Include="Shared\SetValueReport.spark" />
+    <None Include="Shared\OutputReport.spark" />
+    <None Include="Shared\ModelBindingReport.spark" />
+    <None Include="Shared\Notifications.spark" />
+    <None Include="Shared\NavigationMenu.spark">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Views\Shared\BehaviorDetails.spark" />
-    <None Include="Views\Shared\_global.spark" />
+    <None Include="Shared\BehaviorDetails.spark" />
+    <None Include="Shared\_global.spark" />
     <Content Include="web.config" />
     <Content Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -169,7 +169,6 @@
   <ItemGroup>
     <Compile Include="Behaviors\UnknownObjectBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
-    <Compile Include="Configuration\SparkPolicies\NotificationActionSparkPolicy.cs" />
     <Compile Include="Endpoints\RequestsEndpoint.cs" />
     <Compile Include="Endpoints\Requests\AutocompleteEndpoint.cs" />
     <Compile Include="Endpoints\Requests\FilterEndpoint.cs" />
@@ -219,7 +218,6 @@
     <Compile Include="Grids\RowComparer.cs" />
     <Compile Include="Infrastructure\JsonService.cs" />
     <Compile Include="Configuration\PartialActionSource.cs" />
-    <Compile Include="Configuration\SparkPolicies\PartialActionSparkPolicy.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="Endpoints\Routes\AuthorizationEndpoint.cs" />
     <Compile Include="Endpoints\Chains\UnknownEndpoint.cs" />
@@ -232,7 +230,6 @@
     <Compile Include="Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicy.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrls.cs" />
-    <Compile Include="Configuration\SparkPolicies\DiagnosticsEndpointSparkPolicy.cs" />
     <Compile Include="Endpoints\DiagnosticsEndpointMarker.cs" />
     <Compile Include="Endpoints\DashboardEndpoint.cs" />
     <Compile Include="Endpoints\RoutesEndpoint.cs" />
@@ -314,6 +311,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
+      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

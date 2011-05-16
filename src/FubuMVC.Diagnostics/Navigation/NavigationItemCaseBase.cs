@@ -4,7 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Configuration.Policies;
-using Spark.Web.FubuMVC.Extensions;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
@@ -29,7 +28,7 @@ namespace FubuMVC.Diagnostics.Navigation
                 .Value
                 .HandlerType
                 .Name
-                .RemoveSuffix(DiagnosticsEndpointUrlPolicy.ENDPOINT);
+                .Replace(DiagnosticsEndpointUrlPolicy.ENDPOINT, "");
         }
 
         public virtual string Url()

@@ -61,7 +61,6 @@
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
-    <Compile Include="Configuration\Spark\DiagnosticsEndpointSparkPolicyTester.cs" />
     <Compile Include="Endpoints\Chains\when_viewing_an_endpoint.cs" />
     <Compile Include="Endpoints\DiagnosticsTestEndpointMarker.cs" />
     <Compile Include="Endpoints\Nested\AnotherEndpoint.cs" />

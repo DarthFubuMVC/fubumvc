@@ -1,4 +1,4 @@
-﻿<viewdata model="DashboardModel" />
+﻿<viewdata model="FubuMVC.Diagnostics.Models.DashboardModel" />
 <content:title>Dashboard</content:title>
 <content:main>
   <h2>Diagnostics Dashboard</h2>

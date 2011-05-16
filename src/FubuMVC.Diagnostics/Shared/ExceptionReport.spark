@@ -1,7 +1,7 @@
 ﻿<use master="" />
 <use namespace="FubuCore" />
 <use namespace="FubuMVC.Core.Diagnostics" />
-<viewdata model="ExceptionReport" />
+<viewdata model="FubuMVC.Core.Diagnostics.ExceptionReport" />
 <div class="exception">
   <pre>
     <code>${Model.Text.HtmlEncode()}</code>

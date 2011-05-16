@@ -1,4 +1,4 @@
-﻿<viewdata model="ChainModel" />
+﻿<viewdata model="FubuMVC.Diagnostics.Models.ChainModel" />
 <content:title>Chain ${Model.Chain.UniqueId.ToString()}</content:title>
 <content:head>
   <Stylesheet href="chains/view.css" />

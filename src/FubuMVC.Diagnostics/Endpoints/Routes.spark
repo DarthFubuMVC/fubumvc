@@ -1,7 +1,7 @@
 ﻿<use namespace="FubuMVC.Core.Registration" />
 <use namespace="FubuMVC.Diagnostics.Models.Grids" />
 <use namespace="FubuMVC.Diagnostics.Models.Routes" />
-<viewdata model="RoutesModel" />
+<viewdata model="FubuMVC.Diagnostics.Models.Routes.RoutesModel" />
 <content:title>Route Explorer</content:title>
 <content:head>
   <Script src="routes.js" />

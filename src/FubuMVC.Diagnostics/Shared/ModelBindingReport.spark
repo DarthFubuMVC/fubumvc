@@ -1,7 +1,7 @@
 ﻿<use master="" />
 <use namespace="FubuMVC.Core.Diagnostics" />
 <use namespace="System.Linq" />
-<viewdata model="ModelBindingReport" />
+<viewdata model="FubuMVC.Core.Diagnostics.ModelBindingReport" />
 <div class="model-binding">
   <h4>Bound Model: ${Model.BoundType.FullName}</h4>
   <table class="grid" if="Model.Any()">

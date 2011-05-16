@@ -1,5 +1,5 @@
 ﻿<use namespace="FubuMVC.Diagnostics.Models.Routes"/>
-<viewdata model="AuthorizationModel" />
+<viewdata model="FubuMVC.Diagnostics.Models.Routes.AuthorizationModel" />
 <content:title>Registered Authorization Rules</content:title>
 <content:head>
 </content:head>

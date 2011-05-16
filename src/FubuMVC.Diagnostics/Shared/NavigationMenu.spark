@@ -1,5 +1,5 @@
 ﻿<use namespace="FubuMVC.Diagnostics.Navigation" />
-<viewdata model="NavigationMenu" />
+<viewdata model="FubuMVC.Diagnostics.Navigation.NavigationMenu" />
 <content:navigation>
   <ul id="Menu">
     <li each="var item in Model.Items">

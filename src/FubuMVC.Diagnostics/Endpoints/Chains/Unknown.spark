@@ -1,4 +1,4 @@
-﻿<viewdata model="UnknownChainRequest" />
+﻿<viewdata model="FubuMVC.Diagnostics.Models.UnknownChainRequest" />
 <content:title>Unknown Chain</content:title>
 <content:head>
   <Stylesheet href="chains/view.css" />

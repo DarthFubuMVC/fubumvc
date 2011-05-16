@@ -1,6 +1,6 @@
 ﻿<use namespace="FubuMVC.Diagnostics.Models.Grids" />
 <use namespace="FubuMVC.Diagnostics.Models.Requests" />
-<viewdata model="RequestExplorerModel" />
+<viewdata model="FubuMVC.Diagnostics.Models.Requests.RequestExplorerModel" />
 <content:title>Request Explorer</content:title>
 <content:head>
   <Script src="requests.js" />

@@ -3,8 +3,6 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Behaviors;
 using FubuMVC.Diagnostics.Configuration;
-using FubuMVC.Diagnostics.Configuration.Policies;
-using FubuMVC.Diagnostics.Configuration.SparkPolicies;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Grids.Columns;
@@ -14,7 +12,7 @@ using FubuMVC.Diagnostics.Models.Requests;
 using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
-using Spark.Web.FubuMVC;
+using FubuMVC.Spark;
 
 namespace FubuMVC.Diagnostics
 {
@@ -22,13 +20,10 @@ namespace FubuMVC.Diagnostics
     {
         public FubuDiagnosticsRegistry()
         {
-			this.IncludeDiagnostics(true);
+			IncludeDiagnostics(true);
+            
             this.ApplyEndpointConventions(typeof(DiagnosticsEndpointMarker));
-            this.Spark(spark => spark
-                                    .Policies
-                                    .Add(new DiagnosticsEndpointSparkPolicy(typeof (DiagnosticsEndpointMarker)))
-                                    .Add<PartialActionSparkPolicy>()
-									.Add<NotificationActionSparkPolicy>());
+            this.UseSpark();
 
             Services(x =>
                          {
@@ -66,8 +61,7 @@ namespace FubuMVC.Diagnostics
 
 
         	Policies
-        		.ConditionallyWrapBehaviorChainsWith<UnknownObjectBehavior>(
-        			call => call.InputType() == typeof (ChainRequest));
+        		.ConditionallyWrapBehaviorChainsWith<UnknownObjectBehavior>(call => call.InputType() == typeof (ChainRequest));
 
             Actions
                 .FindWith<PartialActionSource>()

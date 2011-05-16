@@ -1,6 +1,6 @@
 ﻿<use master="" />
 <use namespace="FubuMVC.Diagnostics.Models.Requests" />
-<viewdata model="BehaviorDetailsModel" />
+<viewdata model="FubuMVC.Core.Diagnostics.BehaviorDetailsModel" />
 <div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only hitarea">
   <span class="ui-button-text">${Model.BehaviorType.FullName}</span>
 </div>

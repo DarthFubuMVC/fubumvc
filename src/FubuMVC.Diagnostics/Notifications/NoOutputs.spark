@@ -1,5 +1,5 @@
-﻿<use master="Notifications" />
-<viewdata model="NoOutputsNotification" />
+﻿<viewdata model="FubuMVC.Diagnostics.Notifications.NoOutputsNotification" />
+<use master="Notifications" />
 <content:main>
   <div class="ui-widget dashboard-notice">
     <div class="ui-state-highlight ui-corner-all">

@@ -12,8 +12,8 @@ namespace FubuMVC.Spark
     public class SparkExtension : IFubuRegistryExtension, ISparkExtension
     {
         private readonly TemplateRegistry _templateRegistry;
-        private TemplateComposer _composer;
-        private TemplateFinder _finder;
+        private readonly TemplateComposer _composer;
+        private readonly TemplateFinder _finder;
         
         public SparkExtension()
         {

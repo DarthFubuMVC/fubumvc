@@ -5,8 +5,6 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    // TODO : Consider applying Cache<,>
-
     public interface IBindRequest
     {
         ITemplate Target { get; }
@@ -44,10 +42,10 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var template = request.Target;
-            
-            return !(template.Descriptor is ViewDescriptor) 
-                && template.IsSparkView() 
-                && !template.IsPartial();
+
+            return template.IsSparkView() 
+                && !template.IsPartial() 
+                && request.ViewModelType.IsNotEmpty();
         }
 
         public void Bind(IBindRequest request)
@@ -71,11 +69,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-
-            return descriptor != null
-                && descriptor.Master == null
-                && request.ViewModelType.IsNotEmpty()
+            return request.Target.Descriptor is ViewDescriptor 
 				&& request.Master != string.Empty;
         }
 
@@ -101,39 +95,29 @@ namespace FubuMVC.Spark.SparkModel
 	public class ViewModelBinder : ITemplateBinder
 	{
         public bool CanBind(IBindRequest request)
-        {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-
-            return descriptor != null
-                   && !descriptor.HasViewModel()
-                   && request.ViewModelType.IsNotEmpty();
-        }
+		{
+			return request.Target.Descriptor is ViewDescriptor 
+                && request.ViewModelType.IsNotEmpty();
+		}
 
         public void Bind(IBindRequest request)
         {
-            var logger = request.Logger;
             var template = request.Target;
-            var descriptor = template.Descriptor.As<ViewDescriptor>();            
+            var descriptor = template.Descriptor.As<ViewDescriptor>();
 
             var types = request.Types.TypesWithFullName(request.ViewModelType);
-            var typeCount = types.Count();
-
-            if(typeCount == 1)
+            if(types.Count() != 1)
             {
-                descriptor.ViewModel = types.First();
-                logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
+                var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
+                const string msg = "Unable to set view model type : {0} - candidates were : {1}";
                 
+                request.Logger.Log(template, msg, request.ViewModelType, candidates);
                 return;
             }
 
-            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
-            
-            if (typeCount > 1)
-            {
-                var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
-                logger.Log(template, "Type ambiguity on: {0}", candidates);                
-            }            
-        }
+            descriptor.ViewModel = types.First();            
+            request.Logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
+		}
 	}
 
     public class ReachableBindingsBinder : ITemplateBinder
@@ -151,10 +135,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-            
-            return descriptor != null 
-                && descriptor.Bindings.Count() == 0;
+            return request.Target.Descriptor is ViewDescriptor;
         }
 
         public void Bind(IBindRequest request)
@@ -164,8 +145,8 @@ namespace FubuMVC.Spark.SparkModel
             var templates = request.TemplateRegistry;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
-            var bindings = _sharedTemplateLocator.LocateBindings(BindingsName, target, templates);
-            bindings.Each(template =>
+            _sharedTemplateLocator.LocateBindings(BindingsName, target, templates)
+            .Each(template =>
             {
                 descriptor.AddBinding(template);
                 logger.Log(target, "Binding attached : {0}", template.FilePath);

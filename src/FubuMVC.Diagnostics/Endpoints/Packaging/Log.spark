@@ -1,4 +1,4 @@
-﻿<viewdata model="PackageDiagnosticsModel" />
+﻿<viewdata model="FubuMVC.Diagnostics.Models.PackageDiagnosticsModel" />
 <content:title>Package Loading Log</content:title>
 <content:head>
 </content:head>
