@@ -125,7 +125,6 @@
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
-    <Compile Include="Packaging\StandaloneAssemblyPackageLoaderTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />

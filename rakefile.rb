@@ -71,12 +71,13 @@ task :compile => [:clean, :version] do
   AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
   
   copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
+  copyOutputFiles "src/FubuMVC.GettingStarted/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
+
   copyOutputFiles "src/FubuMVC.WebForms/bin/#{COMPILE_TARGET}", "FubuMVC.WebForms.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuMVC.Spark/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
-
+  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
 end
 
 
@@ -118,5 +119,12 @@ end
 
 desc "Build the nuget package"
 task :nuget do
+    FileUtils.rm_rf "artifacts"
+	FileUtils.mkdir "artifacts"
 	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o #{props[:artifacts]} -Version #{build_number}"
+end
+
+desc "Bundles up the packaged content in FubuFastPack"
+task :bundle_getting_started do
+  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe assembly-pak src/FubuMVC.GettingStarted -projfile FubuMVC.GettingStarted.csproj"
 end

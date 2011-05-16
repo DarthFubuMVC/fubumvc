@@ -41,6 +41,16 @@ namespace FubuMVC.Core.UI
         {
             Body.Append(this.WriteScriptTags());
         }
+
+        public void Add(Func<FubuHtmlDocument, HtmlTag> func)
+        {
+            Add(func(this));
+        }
+
+        public void Add(Func<FubuHtmlDocument, ITagSource> source)
+        {
+            source(this).AllTags().Each(Add);
+        }
     }
 
     public class FubuHtmlDocument<T> : FubuHtmlDocument, IFubuPage<T> where T : class

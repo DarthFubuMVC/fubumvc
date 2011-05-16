@@ -428,6 +428,11 @@ namespace FubuMVC.Core.Registration
         {
             return _creators[type];
         }
+
+        public BehaviorChain FindHomeChain()
+        {
+            return Behaviors.FirstOrDefault(x => x.Route != null && x.Route.Pattern == string.Empty);
+        }
     }
 
     public class ChainGroup

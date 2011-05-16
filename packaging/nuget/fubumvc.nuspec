@@ -16,6 +16,7 @@
       <dependency id="StructureMap" version="[2.6.2,2.7)" />
       <dependency id="CommonServiceLocator" version="1.0" />
       <dependency id="WebActivator" version="1.1" />
+      <dependency id="FubuCore" version="0.9.0.1" />
     </dependencies>
   </metadata>
   <files>
@@ -23,10 +24,10 @@
 	<file src="ConfigureFubuMVC.cs.pp" target="content" />
 
 	<file src="web.config.transform" target="content" />
+  <file src="..\..\build\FubuMVC.GettingStarted.dll" target="content\fubu-content" />
 	
-	<file src="..\..\build\FubuCore.*" target="lib" />
-	<file src="..\..\build\FubuLocalization.*" target="lib" />
 	<file src="..\..\build\FubuMVC.Core.*" target="lib" />
+	
 	<file src="..\..\build\Ionic.Zip.*" target="lib" />
 	<file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
 	<file src="..\..\build\Bottles.*" target="lib" />
@@ -36,7 +37,9 @@
 	<file src="..\..\build\FubuCore.*" target="tools" />
 	<file src="..\..\build\FubuMVC.Core.*" target="tools" />
 	<file src="..\..\build\Ionic.Zip.*" target="tools" />
-        <file src="..\..\build\Bottles.*" target="tools" />
+    <file src="..\..\build\Bottles.*" target="tools" />
+    <file src="..\..\build\Bottle*.exe" target="tools" />
+	<file src="..\..\build\StructureMap.dll" target="tools" />
 	
   </files>
 </package>

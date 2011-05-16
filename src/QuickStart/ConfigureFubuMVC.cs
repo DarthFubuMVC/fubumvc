@@ -1,6 +1,5 @@
 using FubuMVC.Core;
 using FubuMVC.Spark;
-using Spark;
 
 namespace QuickStart
 {

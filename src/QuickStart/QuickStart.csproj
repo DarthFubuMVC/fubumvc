@@ -42,6 +42,10 @@
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Spark">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
     </Reference>
@@ -65,6 +69,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\logo.png" />
+    <Content Include="fubu-content\FubuMVC.GettingStarted.dll" />
+    <Content Include="fubu-content\FubuMVC.GettingStarted.pdb" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
