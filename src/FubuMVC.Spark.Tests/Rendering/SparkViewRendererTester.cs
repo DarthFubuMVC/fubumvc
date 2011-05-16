@@ -18,9 +18,9 @@ namespace FubuMVC.Spark.Tests.Rendering
             _strategies[1].Expect(x => x.Applies()).Return(true);
             _strategies[2].Expect(x => x.Applies()).Return(false).Repeat.Never();
 
-            _strategies[0].Expect(x => x.Invoke()).Repeat.Never();
-            _strategies[1].Expect(x => x.Invoke());
-            _strategies[2].Expect(x => x.Invoke()).Repeat.Never();
+            _strategies[0].Expect(x => x.Invoke(Arg<IRenderAction>.Is.Anything)).Repeat.Never();
+            _strategies[1].Expect(x => x.Invoke(Arg<IRenderAction>.Is.Anything));
+            _strategies[2].Expect(x => x.Invoke(Arg<IRenderAction>.Is.Anything)).Repeat.Never();
         }
 
         [Test]

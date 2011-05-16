@@ -25,11 +25,13 @@ namespace FubuMVC.Spark.Registration.Nodes
         protected override void configureObject(ObjectDef def)
         {
             var renderer = def.DependencyByType(typeof (ISparkViewRenderer), typeof (SparkViewRenderer));
-            var strategies = renderer.EnumerableDependenciesOf<IRenderStrategy>();
-
-            configureStrategy<NestedRenderStrategy, NestedRenderAction>(strategies, createDescriptor(false));
-            configureStrategy<AjaxRenderStrategy, DefaultRenderAction>(strategies, createDescriptor(false));
-            configureStrategy<DefaultRenderStrategy, DefaultRenderAction>(strategies, createDescriptor(true));
+            var viewDefinition = new ViewDefinition(createDescriptor(true), createDescriptor(false));
+            var viewEntrySource =
+                renderer.DependencyByType(typeof (IRenderAction), typeof (RenderAction))
+                .DependencyByType(typeof(IViewFactory), typeof(ViewFactory))
+                .DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
+            viewEntrySource.DependencyByValue(_cache);
+            viewEntrySource.DependencyByValue(viewDefinition);
         }
 
         private SparkViewDescriptor createDescriptor(bool useMaster)
@@ -40,21 +42,6 @@ namespace FubuMVC.Spark.Registration.Nodes
                 sparkDescriptor.AddTemplate(_descriptor.Master.ViewPath);
             }
             return sparkDescriptor;
-        }
-
-        private static void configureStrategy<TStrategy, TViewRenderer>(ListDependency strategies, SparkViewDescriptor descriptor)
-            where TStrategy : IRenderStrategy
-            where TViewRenderer : IRenderAction
-        {
-            var factory = new ObjectDef { Type = typeof(ViewFactory) };            
-			var viewEntrySource = factory.DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
-            
-			viewEntrySource.DependencyByValue(_cache);
-            viewEntrySource.DependencyByValue(descriptor);
-
-            strategies.AddType(typeof (TStrategy))
-                .DependencyByType(typeof (IRenderAction), typeof (TViewRenderer))
-                .DependencyByType<IViewFactory>(factory);
         }
 
         public override string Description

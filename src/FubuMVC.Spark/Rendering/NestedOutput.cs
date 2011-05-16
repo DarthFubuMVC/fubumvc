@@ -1,22 +1,24 @@
 ﻿using System;
+using System.IO;
 
 namespace FubuMVC.Spark.Rendering
 {
     public class NestedOutput
     {
-        private Func<IFubuSparkView> _view;
+        private Func<TextWriter> _writer;
         private bool _isActive;
 
-        public void SetView(Func<IFubuSparkView> view)
+        public void SetWriter(Func<TextWriter> writer)
         {
+            _writer = writer;
             _isActive = true;
-            _view = view;
         }
 
-        public IFubuSparkView View
+        public TextWriter Writer
         {
-            get { return _view(); }
+            get { return _writer(); }
         }
+
 		
         public bool IsActive()
         {
