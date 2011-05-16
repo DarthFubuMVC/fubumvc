@@ -1,3 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloSpark.Controllers.LocationViewModel" />
-
-We're here: ${Model.RawUrl}
