@@ -27,10 +27,7 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public RouteConventionExpression IgnoreNamespaceForUrlFrom<T>()
-        {
-            return IgnoreNamespaceText(typeof (T).Namespace);
-        }
+
 
         public RouteConventionExpression IgnoreMethodsNamed(string methodName)
         {
@@ -184,6 +181,22 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         #endregion
+
+        /// <summary>
+        /// This directs the routing conventions to ignore the default
+        /// assembly namespace when creating a route
+        /// </summary>
+        /// <returns></returns>
+        public RouteConventionExpression RootAtAssemblyNamespace()
+        {
+            var assembly = FubuRegistry.FindTheCallingAssembly();
+            return IgnoreNamespaceText(assembly.GetName().Name);
+        }
+
+        public RouteConventionExpression IgnoreNamespaceForUrlFrom<T>()
+        {
+            return IgnoreNamespaceText(typeof(T).Namespace);
+        }
     }
 
     public interface IInputTypeRouteInputsModel<T>

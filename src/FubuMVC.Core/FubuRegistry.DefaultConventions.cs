@@ -29,6 +29,9 @@ namespace FubuMVC.Core
             _systemPolicies.Add(new AttachAuthorizationPolicy());
 
             Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
+            Output.ToHtml
+                .WhenCallMatches(x => x.Method.Name.ToLower().EndsWith("html") && x.OutputType() == typeof (string));
+            
             Output.ToJson.WhenCallMatches(x => x.Method.HasAttribute<JsonEndpointAttribute>());
             Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
 
