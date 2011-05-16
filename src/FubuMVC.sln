@@ -46,8 +46,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Spark", "FubuMVC.Sp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Spark.Tests", "FubuMVC.Spark.Tests\FubuMVC.Spark.Tests.csproj", "{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStart", "QuickStart\QuickStart.csproj", "{66A9D435-DC25-4DE1-99A8-003C54B0111B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.HelloSpark", "FubuMVC.HelloSpark\FubuMVC.HelloSpark.csproj", "{7BAD96E8-DB12-4F32-8042-00555CCD9954}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.GettingStarted", "FubuMVC.GettingStarted\FubuMVC.GettingStarted.csproj", "{D0765EFA-2B15-4F68-A70F-7946E9B5F134}"
@@ -350,21 +348,6 @@ Global
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{7F5C625C-603B-4D8B-97A8-BCBF6D8BC1FC}.Retail|x86.ActiveCfg = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|x86.ActiveCfg = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Any CPU.ActiveCfg = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Any CPU.Build.0 = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
-		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|x86.ActiveCfg = Release|Any CPU
 		{7BAD96E8-DB12-4F32-8042-00555CCD9954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7BAD96E8-DB12-4F32-8042-00555CCD9954}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BAD96E8-DB12-4F32-8042-00555CCD9954}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
