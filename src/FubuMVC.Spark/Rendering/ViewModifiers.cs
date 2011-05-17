@@ -12,7 +12,13 @@ namespace FubuMVC.Spark.Rendering
         IFubuSparkView Modify(IFubuSparkView view);
     }
 
-    public class PageActivation : IViewModifier
+    public class BasicViewModifier : IViewModifier
+    {
+        public virtual bool Applies(IFubuSparkView view) { return true; }
+        public virtual IFubuSparkView Modify(IFubuSparkView view) { return view; }
+    }
+
+    public class PageActivation : BasicViewModifier
     {
         private readonly IPageActivator _activator;
         public PageActivation(IPageActivator activator)
@@ -20,18 +26,13 @@ namespace FubuMVC.Spark.Rendering
             _activator = activator;
         }
 
-        public bool Applies(IFubuSparkView view)
-        {
-            return true;
-        }
-
-        public IFubuSparkView Modify(IFubuSparkView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
             return view.Modify(v => _activator.Activate(v));
         }
     }
 
-    public class SiteResourceAttacher : IViewModifier
+    public class SiteResourceAttacher : BasicViewModifier
     {
         private readonly ISparkViewEngine _engine;
         private readonly CurrentRequest _request;
@@ -42,9 +43,7 @@ namespace FubuMVC.Spark.Rendering
             _request = request;
         }
 
-        public bool Applies(IFubuSparkView view) { return true; }
-
-        public IFubuSparkView Modify(IFubuSparkView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
             return view.Modify(v => v.SiteResource = SiteResource);
         }
@@ -63,7 +62,7 @@ namespace FubuMVC.Spark.Rendering
     }
 
     // TODO : UT
-    public class ContentActivation : IViewModifier
+    public class ContentActivation : BasicViewModifier
     {
         private readonly Dictionary<string, TextWriter> _content;
         public ContentActivation()
@@ -71,16 +70,14 @@ namespace FubuMVC.Spark.Rendering
             _content = new Dictionary<string, TextWriter>();
         }
 
-        public bool Applies(IFubuSparkView view) { return true; }
-
-        public IFubuSparkView Modify(IFubuSparkView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
             return view.Modify(v => v.Content = _content);
         }
     }
 
     // TODO : UT
-    public class OnceTableActivation : IViewModifier
+    public class OnceTableActivation : BasicViewModifier
     {
         private readonly Dictionary<string, string> _once;
         public OnceTableActivation()
@@ -88,9 +85,7 @@ namespace FubuMVC.Spark.Rendering
             _once = new Dictionary<string, string>();
         }
 
-        public bool Applies(IFubuSparkView view) { return true; }
-
-        public IFubuSparkView Modify(IFubuSparkView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
             return view.Modify(v => v.OnceTable = _once);
         }
