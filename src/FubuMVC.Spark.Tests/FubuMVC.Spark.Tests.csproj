@@ -89,6 +89,12 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
+    <Compile Include="Rendering\ContentActivationTester.cs" />
+    <Compile Include="Rendering\FubuSparkViewDecoratorTester.cs" />
+    <Compile Include="Rendering\NestedOutputActivationTester.cs" />
+    <Compile Include="Rendering\NestedViewOutputActivatorTester.cs" />
+    <Compile Include="Rendering\OnceTableActivationTester.cs" />
+    <Compile Include="Rendering\OuterViewOutputActivatorTester.cs" />
     <Compile Include="Rendering\RenderActionTester.cs" />
     <Compile Include="Rendering\DefaultRenderStrategyTester.cs" />
     <Compile Include="Rendering\FubuSparkViewTester.cs" />
@@ -96,6 +102,7 @@
     <Compile Include="Rendering\NestedRenderStrategyTester.cs" />
     <Compile Include="Rendering\PageActivationTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
+    <Compile Include="Rendering\ViewContentDisposerTester.cs" />
     <Compile Include="Rendering\ViewRendererTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />

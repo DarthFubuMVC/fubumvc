@@ -76,6 +76,7 @@ namespace FubuMVC.Spark.Rendering
     {
         Dictionary<string, TextWriter> Content { set; get; }
         Dictionary<string, string> OnceTable { set; get; }
+        Dictionary<string, object> Globals { set; get; }
         TextWriter Output { get; set; }
         void Render();
         Func<string, string> SiteResource { get; set; }
@@ -91,7 +92,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class FubuSparkViewDecorator : FubuSparkView, IFubuSparkView
+    public class FubuSparkViewDecorator : IFubuSparkView
     {
         private readonly IFubuSparkView _view;
         public FubuSparkViewDecorator(IFubuSparkView view)
@@ -104,40 +105,73 @@ namespace FubuMVC.Spark.Rendering
         public CompositeAction<IFubuSparkView> PreRender { get; set; }
         public CompositeAction<IFubuSparkView> PostRender { get; set; }
 
-        public override void Render()
+        public void Render()
         {
             PreRender.Do(_view);
             _view.Render();
             PostRender.Do(_view);
         }
 
-        public override Guid GeneratedViewId
+        public Guid GeneratedViewId
         {
             get { return _view.GeneratedViewId; }
         }
 
-        Func<string, string> IFubuSparkView.SiteResource
+        public Func<string, string> SiteResource
         {
-            get { return _view.SiteResource; } 
+            get { return _view.SiteResource; }
             set { _view.SiteResource = value; }
         }
 
-        Dictionary<string, TextWriter> IFubuSparkView.Content
+        public Dictionary<string, TextWriter> Content
         {
-            get { return _view.Content; } 
+            get { return _view.Content; }
             set { _view.Content = value; }
         }
 
-        Dictionary<string, string> IFubuSparkView.OnceTable
+        public Dictionary<string, string> OnceTable
         {
-            get { return _view.OnceTable; } 
+            get { return _view.OnceTable; }
             set { _view.OnceTable = value; }
         }
 
-        TextWriter IFubuSparkView.Output
+        public Dictionary<string, object> Globals
         {
-            get { return _view.Output; } 
+            get { return _view.Globals; }
+            set { _view.Globals = value; }
+        }
+
+        public TextWriter Output
+        {
+            get { return _view.Output; }
             set { _view.Output = value; }
+        }
+
+        public string ElementPrefix
+        {
+            get { return _view.ElementPrefix; }
+            set { _view.ElementPrefix = value; }
+        }
+
+        public IServiceLocator ServiceLocator
+        {
+            get { return _view.ServiceLocator; }
+            set { _view.ServiceLocator = value; }
+        }
+
+        public IUrlRegistry Urls
+        {
+            get { return _view.Urls; }
+        }
+
+        public T Get<T>()
+        {
+            return _view.Get<T>();
+        }
+
+        public T GetNew<T>()
+        {
+            return _view.GetNew<T>();
         }
     }
 }
