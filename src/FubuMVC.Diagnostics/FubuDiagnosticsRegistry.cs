@@ -20,8 +20,6 @@ namespace FubuMVC.Diagnostics
     {
         public FubuDiagnosticsRegistry()
         {
-			IncludeDiagnostics(true);
-            
             this.ApplyEndpointConventions(typeof(DiagnosticsEndpointMarker));
             this.UseSpark();
 
