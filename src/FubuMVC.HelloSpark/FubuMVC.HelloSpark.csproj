@@ -41,6 +41,10 @@
       <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Spark, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\spark\Spark.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -76,10 +80,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <None Include="Controllers\Family\Silvia.spark" />
-    <None Include="Controllers\Family\George.spark" />
-    <None Include="Controllers\Family\Marcus.spark" />
-    <None Include="Controllers\Family\Jack.spark" />
     <None Include="Shared\_global.spark" />
     <None Include="Shared\_WhereAreWe.spark" />
     <None Include="Shared\Application.spark" />
@@ -101,7 +101,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Controllers\Family\FamilyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

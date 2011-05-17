@@ -2,6 +2,7 @@ using System.Web;
 using System.Web.Routing;
 using Bottles;
 using FubuMVC.Core;
+using FubuMVC.Spark;
 using StructureMap;
 using FubuMVC.StructureMap;
 
@@ -14,6 +15,7 @@ namespace FubuMVC.HelloSpark
             FubuApplication
                 .For<HelloSparkRegistry>()
                 .StructureMap(() => new Container(SetupContainer))
+                .ModifyRegistry(registry => registry.UseSpark())
                 .Bootstrap(RouteTable.Routes);
 
             // If there is an error during bootstrapping, it will not automatically be considered

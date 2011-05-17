@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web.Routing;
-using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Diagnostics.Infrastructure
 {
@@ -14,10 +13,7 @@ namespace FubuMVC.Diagnostics.Infrastructure
         {
             var constraint = chain
                                  .Route
-                                 .Constraints
-                                 .Where(kv => kv.Key == RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT)
-                                 .Select(kv => kv.Value)
-                                 .FirstOrDefault() as HttpMethodConstraint;
+                                 .Constraints[RouteDefinition.HTTP_METHOD_CONSTRAINT] as HttpMethodConstraint;
             if(constraint == null)
             {
                 return NoConstraints;
