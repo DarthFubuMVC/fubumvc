@@ -13,9 +13,9 @@ namespace FubuMVC.Spark.Rendering
     public class ViewFactory : IViewFactory
     {
         private readonly IViewEntrySource _viewEntrySource;
-        private readonly IEnumerable<ISparkViewModification> _modifications;
+        private readonly IEnumerable<IViewModifier> _modifications;
 
-        public ViewFactory(IViewEntrySource viewEntrySource, IEnumerable<ISparkViewModification> modifications)
+        public ViewFactory(IViewEntrySource viewEntrySource, IEnumerable<IViewModifier> modifications)
         {
             _modifications = modifications;
             _viewEntrySource = viewEntrySource;
@@ -44,7 +44,7 @@ namespace FubuMVC.Spark.Rendering
             {
                 if(modification.Applies(view))
                 {
-                    view = modification.Modify(view);
+                    view = modification.Modify(view); // consider if we should add a "?? view;" or just let it fail
                 }
             }
             return view;

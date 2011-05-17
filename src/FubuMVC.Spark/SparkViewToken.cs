@@ -18,7 +18,7 @@ namespace FubuMVC.Spark
 
         public BehaviorNode ToBehavioralNode()
         {
-            return new SparkViewOutput(_descriptor);
+            return new SparkViewNode(_descriptor);
         }
 
         public Type ViewType

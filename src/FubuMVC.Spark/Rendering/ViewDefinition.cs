@@ -10,6 +10,6 @@ namespace FubuMVC.Spark.Rendering
             PartialDescriptor = partialDescriptor;
         }
         public SparkViewDescriptor ViewDescriptor { get; private set; }
-        public SparkViewDescriptor PartialDescriptor { get;private set; }
+        public SparkViewDescriptor PartialDescriptor { get; private set; }
     }
 }

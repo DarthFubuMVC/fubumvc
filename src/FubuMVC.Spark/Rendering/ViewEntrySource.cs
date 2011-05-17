@@ -48,8 +48,5 @@ namespace FubuMVC.Spark.Rendering
             }
             return entry;
         }
-
     }
-
-
 }

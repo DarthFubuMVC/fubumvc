@@ -96,7 +96,7 @@
     <Compile Include="Rendering\NestedRenderStrategyTester.cs" />
     <Compile Include="Rendering\PageActivationTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
-    <Compile Include="Rendering\SparkViewRendererTester.cs" />
+    <Compile Include="Rendering\ViewRendererTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />

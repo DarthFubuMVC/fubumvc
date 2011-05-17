@@ -9,10 +9,15 @@ namespace FubuMVC.Spark.Rendering
         void Invoke(IRenderAction action);
     }
 
+    public class DefaultRenderStrategy : IRenderStrategy
+    {
+        public bool Applies() { return true; }
+        public void Invoke(IRenderAction action) { action.Render(); }
+    }
+
     public class NestedRenderStrategy : IRenderStrategy
     {
         private readonly NestedOutput _nestedOutput;
-
         public NestedRenderStrategy(NestedOutput nestedOutput)
         {
 		    _nestedOutput = nestedOutput;
@@ -31,8 +36,7 @@ namespace FubuMVC.Spark.Rendering
 
     public class AjaxRenderStrategy : IRenderStrategy
     {
-        private readonly IRequestData _requestData;
-		
+        private readonly IRequestData _requestData;		
         public AjaxRenderStrategy(IRequestData requestData)
         {
             _requestData = requestData;
@@ -46,19 +50,6 @@ namespace FubuMVC.Spark.Rendering
         public void Invoke(IRenderAction action)
         {
             action.RenderPartial();
-        }
-    }
-
-    public class DefaultRenderStrategy : IRenderStrategy
-    {
-        public bool Applies()
-        {
-            return true;
-        }
-
-        public void Invoke(IRenderAction action)
-        {
-            action.Render();
         }
     }
 }

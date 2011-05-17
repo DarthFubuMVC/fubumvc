@@ -82,10 +82,18 @@ namespace FubuMVC.Spark.Rendering
         Guid GeneratedViewId { get; }
     }
 
+    public static class FubuSparkViewExtensions
+    {
+        public static IFubuSparkView Modify(this IFubuSparkView view, Action<IFubuSparkView> modify)
+        {
+            modify(view);
+            return view;
+        }
+    }
+
     public class FubuSparkViewDecorator : FubuSparkView, IFubuSparkView
     {
         private readonly IFubuSparkView _view;
-
         public FubuSparkViewDecorator(IFubuSparkView view)
         {
             _view = view;
@@ -95,7 +103,6 @@ namespace FubuMVC.Spark.Rendering
 
         public CompositeAction<IFubuSparkView> PreRender { get; set; }
         public CompositeAction<IFubuSparkView> PostRender { get; set; }
-
 
         public override void Render()
         {
@@ -108,9 +115,29 @@ namespace FubuMVC.Spark.Rendering
         {
             get { return _view.GeneratedViewId; }
         }
-        Func<string, string> IFubuSparkView.SiteResource { get { return _view.SiteResource; } set { _view.SiteResource = value; } }
-        Dictionary<string, TextWriter> IFubuSparkView.Content { get { return _view.Content; } set { _view.Content = value; } }
-        Dictionary<string, string> IFubuSparkView.OnceTable { get { return _view.OnceTable; } set { _view.OnceTable = value; } }
-        TextWriter IFubuSparkView.Output { get { return _view.Output; } set { _view.Output = value; } }
+
+        Func<string, string> IFubuSparkView.SiteResource
+        {
+            get { return _view.SiteResource; } 
+            set { _view.SiteResource = value; }
+        }
+
+        Dictionary<string, TextWriter> IFubuSparkView.Content
+        {
+            get { return _view.Content; } 
+            set { _view.Content = value; }
+        }
+
+        Dictionary<string, string> IFubuSparkView.OnceTable
+        {
+            get { return _view.OnceTable; } 
+            set { _view.OnceTable = value; }
+        }
+
+        TextWriter IFubuSparkView.Output
+        {
+            get { return _view.Output; } 
+            set { _view.Output = value; }
+        }
     }
 }

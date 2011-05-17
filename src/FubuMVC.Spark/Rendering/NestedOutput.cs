@@ -18,7 +18,6 @@ namespace FubuMVC.Spark.Rendering
         {
             get { return _writer(); }
         }
-
 		
         public bool IsActive()
         {
