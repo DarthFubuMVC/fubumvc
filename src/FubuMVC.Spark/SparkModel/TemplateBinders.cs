@@ -101,29 +101,29 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(IBindRequest request)
         {
+            var logger = request.Logger;
             var template = request.Target;
-            var descriptor = template.Descriptor.As<ViewDescriptor>();
+            var descriptor = template.Descriptor.As<ViewDescriptor>();            
 
             var types = request.Types.TypesWithFullName(request.ViewModelType);
-            var count = types.Count();
-            if (count == 0)
+            var typeCount = types.Count();
+
+            if(typeCount == 1)
             {
-                const string msg = "View model type : {0} not found";
-                request.Logger.Log(template, msg, request.ViewModelType);
+                descriptor.ViewModel = types.First();
+                logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
+                
                 return;
             }
-            if (count > 1)
+
+            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
+            
+            if (typeCount > 1)
             {
                 var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
-                const string msg = "Unable to set view model type : {0} - candidates were : {1}";
-
-                request.Logger.Log(template, msg, request.ViewModelType, candidates);
-                return;
-            }
-
-            descriptor.ViewModel = types.First();            
-            request.Logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
-		}
+                logger.Log(template, "Type ambiguity on: {0}", candidates);                
+            }            
+        }
 	}
 
     public class ReachableBindingsBinder : ITemplateBinder

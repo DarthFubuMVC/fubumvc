@@ -15,35 +15,38 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         private BindRequest _request;
         private List<ITemplate> _bindings;
         private ISparkLogger _logger;
+
         protected override void beforeEach()
         {
             var repo = new MockRepository();
+            
             _bindings = new List<ITemplate>();
             _bindings.AddRange(Enumerable.Range(1, 5).Select(x => repo.DynamicMock<ITemplate>()));
 
             _logger = MockFor<ISparkLogger>();
             _sharedTemplateLocator = MockFor<ISharedTemplateLocator>();
+
             _template = MockFor<ITemplate>();
             _template.Stub(x => x.Descriptor).PropertyBehavior();
             _template.Stub(x => x.FilePath).Return("Fubu.spark");
             _template.Stub(x => x.RootPath).Return("/App/Views");
-            _template.Stub(x => x.Origin).Return("Host");
-
+            _template.Stub(x => x.Origin).Return("Host");            
             _template.Descriptor = new ViewDescriptor(_template);
 
             ClassUnderTest.BindingsName = "bindings";
 
             _request = new BindRequest
-                           {
-                               TemplateRegistry = new TemplateRegistry(new[] { _template }.Union(_bindings)),
-                               Target = _template,
-                               ViewModelType = typeof (ProductModel).FullName,
-                               Logger = _logger,
-                           };
+            {
+                TemplateRegistry = new TemplateRegistry(new[] { _template }.Union(_bindings)),
+                Target = _template,
+                ViewModelType = typeof (ProductModel).FullName,
+                Logger = _logger,
+            };
 
             _sharedTemplateLocator
                 .Expect(x => x.LocateBindings(ClassUnderTest.BindingsName, _template, _request.TemplateRegistry))
                 .Return(_bindings);
+            
             _logger
                 .Expect(x => x.Log(Arg.Is(_template), Arg<string>.Is.Anything, Arg<string>.Is.Anything))
                 .Repeat.Times(_bindings.Count);
