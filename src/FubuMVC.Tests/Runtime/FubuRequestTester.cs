@@ -163,15 +163,6 @@ namespace FubuMVC.Tests.Runtime
             _fubuRequest = container.GetInstance<IFubuRequest>();
         }
 
-        [Test, Ignore("Don't know why this test was here.  This is a valid usage because the data would kill it off anyway")]
-        public void should_mark_the_recursive_property_as_a_conversion_problem()
-        {
-            _fubuRequest.Get<BinderKiller>().ShouldNotBeNull();
-            var convertProblems = _fubuRequest.ProblemsFor<BinderKiller>();
-            convertProblems.ShouldHaveCount(1);
-            convertProblems.Single().PropertyName().ShouldEqual("Friend.Unlucky.Enemy");
-        }
-
         public class BinderKiller
         {
             public string Name { get; set; }

@@ -65,12 +65,6 @@ namespace FubuMVC.Tests.Behaviors
             _page.Stub(p => p.Get<IFubuRequest>()).Return(_request);
         }
 
-        [Test, Ignore("TEMPORARILY ignored until the UI to FubuMVC.Core merge")]
-        public void should_invoke_partial_inside_behavior_by_default_even_when_partial_behavior_does_not_execute()
-        {
-            _page.Partial<InputModel>();
-            PartialInvokingHandler.AssertWasCalled(h=>h.Invoke());
-        }
 
         [Test]
         public void perform_invoke_should_return_continue()

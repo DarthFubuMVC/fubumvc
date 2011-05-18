@@ -179,7 +179,6 @@
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\DotNotationNamingConventionTester.cs" />
-    <Compile Include="UI\Extensibility\ContentExtensionGraphTester.cs" />
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
     <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />
     <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
@@ -202,7 +201,6 @@
     <Compile Include="UI\Security\AccessRightTester.cs" />
     <Compile Include="UI\Security\FieldAccessServiceIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
-    <Compile Include="UI\ShowEditFieldExpressionsIntegratedTester.cs" />
     <Compile Include="UI\TagProfileTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
@@ -217,7 +215,6 @@
     <Compile Include="Configuration\FakeSettings.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\ContinuationTester.cs" />
-    <Compile Include="Debugging.cs" />
     <Compile Include="Diagnostics\ActionColumnTester.cs" />
     <Compile Include="Diagnostics\BehaviorGraphWriterTester.cs" />
     <Compile Include="Diagnostics\BehaviorTracerTester.cs" />
@@ -264,7 +261,6 @@
     <Compile Include="Registration\ServiceRegistryTester.cs" />
     <Compile Include="Registration\Utilities\ActionCallSpec.cs" />
     <Compile Include="Registration\Utilities\BehaviorSpec.cs" />
-    <Compile Include="Registration\Expressions\ExplicitRouteExpressionTester.cs" />
     <Compile Include="Registration\FuncBuilderTester.cs" />
     <Compile Include="Registration\ActionCallTester.cs" />
     <Compile Include="Registration\RouteBuilderTester.cs" />

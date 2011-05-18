@@ -109,51 +109,7 @@ namespace FubuMVC.Tests.UI.Forms
         }
     }
 
-    [TestFixture, Ignore("Temporarily ignoring these until UI is merged into FubuMVC.Core")]
-    public class when_calling_partial
-    {
-        private IFubuPage _page;
-        private IPartialFactory _partialFactory;
-        private IActionBehavior _behavior;
-        private IFubuRequest _request;
 
-        [SetUp]
-        public void SetUp()
-        {
-            _page = MockRepository.GenerateStub<IFubuPage>();
-            _partialFactory = MockRepository.GenerateStub<IPartialFactory>();
-            _behavior = MockRepository.GenerateStub<IActionBehavior>();
-            
-            _partialFactory.Stub(f => f.BuildPartial(typeof (InputModel))).Return(_behavior);
-            _page.Stub(p => p.Get<IPartialFactory>()).Return(_partialFactory);
-            
-
-            _request = MockRepository.GenerateStub<IFubuRequest>();
-            _page.Stub(p => p.Get<IFubuRequest>()).Return(_request);
-        }
-
-        [Test]
-        public void should_build_partial()
-        {
-            _page.Partial<InputModel>();
-
-            _partialFactory.AssertWasCalled(f=>f.BuildPartial(typeof(InputModel)));
-            _page.AssertWasCalled(p=>p.Get<IPartialFactory>());
-            _behavior.AssertWasCalled(b=>b.InvokePartial());
-        }
-
-        [Test]
-        public void should_build_partial_and_set_model()
-        {
-            var model = new InputModel();
-            _page.Partial(model);
-
-            _request.AssertWasCalled(r=>r.Set(model));
-            _partialFactory.AssertWasCalled(f => f.BuildPartial(typeof(InputModel)));
-            _page.AssertWasCalled(p => p.Get<IPartialFactory>());
-            _behavior.AssertWasCalled(b => b.InvokePartial());
-        }
-    }
 
     [TestFixture]
     public class when_calling_partial_for_each

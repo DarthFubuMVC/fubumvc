@@ -1,1 +1,1 @@
-@src\Bottles.Console\bin\Debug\BottleRunner.exe %*
+@lib\bottles\BottleRunner.exe %*

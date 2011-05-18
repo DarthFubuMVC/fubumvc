@@ -64,22 +64,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
-    [TestFixture]
-    public class IntegratedTestOfRenderTextBehavior
-    {
-        #region Setup/Teardown
 
-        [SetUp]
-        public void SetUp()
-        {
-            var registry = new FubuRegistry(x =>
-            {
-                //x.Route("some/route").Calls<ReportController>(o => o.BuildReport()).OutputToText();
-            });
-        }
-
-        #endregion
-    }
 
     public class ReportController
     {

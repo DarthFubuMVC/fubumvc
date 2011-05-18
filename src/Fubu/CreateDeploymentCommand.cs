@@ -63,7 +63,8 @@ namespace Fubu
 
             Console.WriteLine("");
 
-            new AddReferenceCommand().Execute(new AddReferenceCommandInput(){
+            new ReferenceBottleCommand().Execute(new ReferenceBottleInput()
+            {
                 Bottle = input.ApplicationBottleName,
                 Host = input.HostFlag,
                 Recipe = input.RecipeFlag

@@ -8,15 +8,6 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Registration.Expressions
 {
-    public class OredevFubuRegistry : FubuRegistry
-    {
-        public OredevFubuRegistry()
-        {
-            Route("route/to/this")
-                .Calls<when_explicitly_registering_a_route.InputController>(x => x.DoSomething(null))
-                .OutputToJson();
-        }
-    }
 
 
     [TestFixture]
