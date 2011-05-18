@@ -29,23 +29,22 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-        public void does_not_bind_templates_with_no_view_model()
-        {
-            var request = new BindRequest
-            {
-                Target = new Template("Fubu.spark", "", "testing")                
-            };
-
-            ClassUnderTest.CanBind(request).ShouldBeFalse();
-        }
-
-        [Test]
-        public void binds_valid_templates_with_view_model()
+        public void if_template_is_valid_for_binding_then_binder_can_be_applied()
         {
             var request = new BindRequest
             {
                 Target = new Template("Fubu.spark", "", "testing"),
-                ViewModelType = "SomeModel"
+            };
+
+            ClassUnderTest.CanBind(request).ShouldBeTrue();
+        }
+
+        [Test]
+        public void assign_descriptor_as_an_instance_of_viewdescriptor()
+        {
+            var request = new BindRequest
+            {
+                Target = new Template("Fubu.spark", "", "testing"),
             };
 
             ClassUnderTest.Bind(request);

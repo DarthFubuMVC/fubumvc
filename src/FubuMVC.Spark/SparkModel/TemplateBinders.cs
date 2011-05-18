@@ -43,9 +43,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var template = request.Target;
 
-            return template.IsSparkView() 
-                && !template.IsPartial() 
-                && request.ViewModelType.IsNotEmpty();
+            return template.IsSparkView() && !template.IsPartial();
         }
 
         public void Bind(IBindRequest request)
@@ -69,7 +67,8 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            return request.Target.Descriptor is ViewDescriptor 
+            return request.Target.Descriptor is ViewDescriptor
+                && request.ViewModelType.IsNotEmpty()
 				&& request.Master != string.Empty;
         }
 
@@ -152,8 +151,8 @@ namespace FubuMVC.Spark.SparkModel
             var templates = request.TemplateRegistry;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
-            _sharedTemplateLocator.LocateBindings(BindingsName, target, templates)
-            .Each(template =>
+            var bindings = _sharedTemplateLocator.LocateBindings(BindingsName, target, templates);
+            bindings.Each(template =>
             {
                 descriptor.AddBinding(template);
                 logger.Log(target, "Binding attached : {0}", template.FilePath);
