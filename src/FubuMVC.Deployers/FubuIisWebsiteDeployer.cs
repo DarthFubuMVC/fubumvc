@@ -8,7 +8,9 @@ using Bottles.Diagnostics;
 
 namespace FubuMVC.Deployers
 {
-    public class FubuIisWebsiteDeployer : IDeployer<Website>
+    public class FubuWebsite : Website{}
+
+    public class FubuIisWebsiteDeployer : IDeployer<FubuWebsite>
     {
         private readonly IBottleMover _bottleMover;
 
@@ -17,7 +19,7 @@ namespace FubuMVC.Deployers
             _bottleMover = bottleMover;
         }
 
-        public void Execute(Website website, HostManifest host, IPackageLog log)
+        public void Execute(FubuWebsite website, HostManifest host, IPackageLog log)
         {
             // TODO -- more logging!!!!
             

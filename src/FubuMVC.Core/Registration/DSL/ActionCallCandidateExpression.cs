@@ -13,6 +13,7 @@ namespace FubuMVC.Core.Registration.DSL
         private readonly BehaviorMatcher _matcher;
         private readonly TypePool _types;
         private readonly ActionSourceMatcher _actionSourceMatcher;
+        
         public ActionCallCandidateExpression(BehaviorMatcher matcher, TypePool types, ActionSourceMatcher actionSourceMatcher)
         {
             _matcher = matcher;
@@ -20,16 +21,10 @@ namespace FubuMVC.Core.Registration.DSL
             _types = types;
         }
 
-        // more to come...
-
-
         public ActionCallCandidateExpression IncludeClassesSuffixedWithController()
         {
             return IncludeTypes(x => x.Name.EndsWith("Controller"));
         }
-
-
-        // TODO -- something in here that can close on types?
 
         public ActionCallCandidateExpression ExcludeTypes(Expression<Func<Type, bool>> filter)
         {

@@ -10,6 +10,7 @@
   <assembly>Ionic.Zip</assembly>
   <assembly>Microsoft.Practices.ServiceLocation</assembly>
   <assembly>Bottles.Deployment</assembly>
+  <assembly>StructureMap</assembly>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>

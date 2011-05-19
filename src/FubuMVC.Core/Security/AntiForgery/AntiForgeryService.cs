@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Security.AntiForgery
                 }
                 catch (FubuException)
                 {
-                    //TODO: Log this?
+                    // TODO -- log this.  Need a generic tracing mechanism
                 }
             }
 

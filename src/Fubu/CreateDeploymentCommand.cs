@@ -7,6 +7,7 @@ using Bottles.Deployment.Writing;
 using FubuCore.CommandLine;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Deployers;
 
 namespace Fubu
 {
@@ -43,7 +44,7 @@ namespace Fubu
         public override bool Execute(CreateDeploymentInput input)
         {
             var settings = DeploymentSettings.ForDirectory(input.DeploymentFlag);
-            var directive = new Website();
+            var directive = new FubuWebsite();
 
             if (input.VirtualDirFlag.IsNotEmpty())
             {

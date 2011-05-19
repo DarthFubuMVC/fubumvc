@@ -45,3 +45,10 @@ _combined/
 src/FubuMVC.6.0.ReSharper
 storyteller
 deploymentplan.html
+
+src/Spark.Web.FubuMVC/
+report.htm
+installation_report.htm
+src/Spark.Web.FubuMVC
+FubuTestAppRoot
+deployment
