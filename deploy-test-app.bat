@@ -29,3 +29,7 @@ bottles set-profile-prop second virtual-dir=FubuDifferent
 bottles set-host-prop baseline web FubuWebsite.DirectoryBrowsing=Enable
 
 bottles create-all -target debug
+
+copy src\FubuMVC.Deployers\bin\Debug\FubuMVC*.dll lib\bottles /Y
+copy src\FubuMVC.Deployers\bin\Debug\FubuMVC*.pdb lib\bottles /Y
+

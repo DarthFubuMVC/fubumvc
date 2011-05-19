@@ -52,3 +52,5 @@ installation_report.htm
 src/Spark.Web.FubuMVC
 FubuTestAppRoot
 deployment
+ 
+lib/bottles/FubuMVC*.*
