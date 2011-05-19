@@ -11,10 +11,12 @@ PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008-2010 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
+BUILD_DIR = File.expand_path("build")
+ARTIFACTS = File.expand_path("artifacts")
 
 tc_build_number = ENV["BUILD_NUMBER"]
 build_revision = tc_build_number || Time.new.strftime('5%H%M')
-build_number = "#{BUILD_VERSION}.#{build_revision}"
+BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 
 props = { :stage => BUILD_DIR, :artifacts => ARTIFACTS }
 
@@ -33,8 +35,8 @@ assemblyinfo :version do |asm|
   rescue
     commit = "git unavailable"
   end
-  puts "##teamcity[buildNumber '#{build_number}']" unless tc_build_number.nil?
-  puts "Version: #{build_number}" if tc_build_number.nil?
+  puts "##teamcity[buildNumber '#{BUILD_NUMBER}']" unless tc_build_number.nil?
+  puts "Version: #{BUILD_NUMBER}" if tc_build_number.nil?
   asm.trademark = commit
   asm.product_name = PRODUCT
   asm.description = BUILD_NUMBER
