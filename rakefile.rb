@@ -24,7 +24,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
 desc "Target used for the CI server"
-task :ci => [:default,:package,:nuget]
+task :ci => [:default,:package,"nug:build"]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
