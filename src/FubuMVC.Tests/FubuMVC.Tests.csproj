@@ -122,6 +122,7 @@
     <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
+    <Compile Include="Diagnostics\DiagnosticBehaviorFactoryTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
