@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -142,6 +143,19 @@ namespace FubuMVC.Tests
             // Chains from the parent should also have the wrapper
             graph.BehaviorFor<Action2>(x => x.M1()).IsWrappedBy(typeof(Wrapper)).ShouldBeTrue();
             graph.BehaviorFor<Action2>(x => x.M2()).IsWrappedBy(typeof(Wrapper)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void import_conventions_are_applied_to_imported_registry()
+        {
+            var importConfig = new bool[3];
+
+            importConfig.Each((b, i) => parent.ConfigureImports(x => importConfig[i] = import == x));
+
+            parent.Import(import, "import");
+            parent.BuildGraph();
+
+            importConfig.Each(b => b.ShouldBeTrue());
         }
 
 
