@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore.Binding;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
@@ -32,6 +33,26 @@ namespace FubuMVC.Tests.Diagnostics
             MockFor<IContainerFacility>()
                 .Expect(x => x.Get<IDebugReport>())
                 .Return(MockFor<IDebugReport>());
+        }
+
+        [Test]
+        public void the_outputwriter_is_wrapped_by_recording_output_writer()
+        {
+            ClassUnderTest.BuildBehavior(_serviceArguments, Guid.NewGuid());
+            _serviceArguments.Get<IOutputWriter>()
+                .ShouldBeOfType<Core.Diagnostics.Tracing.RecordingOutputWriter>();
+        }
+
+        [Test]
+        public void the_requested_behavior_is_wrapped_by_diagnostics_behavior()
+        {
+            MockFor<IBehaviorFactory>()
+                .Expect(x => x.BuildBehavior(Arg.Is(_serviceArguments), Arg<Guid>.Is.Anything))
+                .Return(MockFor<IActionBehavior>());
+
+            ClassUnderTest.BuildBehavior(_serviceArguments, Guid.NewGuid())
+                .ShouldBeOfType<DiagnosticBehavior>()
+                .Inner.ShouldEqual(MockFor<IActionBehavior>());
         }
 
         [Test]
