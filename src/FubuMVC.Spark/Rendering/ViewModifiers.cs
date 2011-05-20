@@ -12,6 +12,33 @@ namespace FubuMVC.Spark.Rendering
         IFubuSparkView Modify(IFubuSparkView view);
     }
 
+    public interface IViewModifierService
+    {
+        IFubuSparkView Modify(IFubuSparkView view);
+    }
+
+    public class ViewModifierService : IViewModifierService
+    {
+        private readonly IEnumerable<IViewModifier> _modifications;
+
+        public ViewModifierService(IEnumerable<IViewModifier> modifications)
+        {
+            _modifications = modifications;
+        }
+
+        public IFubuSparkView Modify(IFubuSparkView view)
+        {
+            foreach (var modification in _modifications)
+            {
+                if (modification.Applies(view))
+                {
+                    view = modification.Modify(view); // consider if we should add a "?? view;" or just let it fail
+                }
+            }
+            return view;
+        }
+    }
+
     public class BasicViewModifier : IViewModifier
     {
         public virtual bool Applies(IFubuSparkView view) { return true; }
@@ -61,7 +88,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    // TODO : UT
     public class ContentActivation : BasicViewModifier
     {
         private readonly Dictionary<string, TextWriter> _content;
@@ -76,7 +102,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    // TODO : UT
     public class OnceTableActivation : BasicViewModifier
     {
         private readonly Dictionary<string, string> _once;
@@ -91,7 +116,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    // TODO : UT
     public class ViewContentDisposer : IViewModifier
     {
         private readonly NestedOutput _nestedOutput;
@@ -117,7 +141,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    // TODO : UT
     public class OuterViewOutputActivator : IViewModifier
     {
         private readonly NestedOutput _nestedOutput;
@@ -140,7 +163,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    // TODO : UT
     public class NestedViewOutputActivator : IViewModifier
     {
         private readonly NestedOutput _nestedOutput;
@@ -160,7 +182,6 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    // TODO : UT
     public class NestedOutputActivation : IViewModifier
     {
         private readonly NestedOutput _nestedOutput;
@@ -179,4 +200,5 @@ namespace FubuMVC.Spark.Rendering
             return view.Modify(v => _nestedOutput.SetWriter(() => v.Output));
         }
     }
+
 }

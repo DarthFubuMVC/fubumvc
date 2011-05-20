@@ -9,13 +9,7 @@ namespace FubuMVC.Spark.Registration.Nodes
 {
     public class SparkViewNode : OutputNode<RenderSparkBehavior>
     {
-        private static readonly IDictionary<int, ISparkViewEntry> _cache;
         private readonly ViewDescriptor _descriptor;
-
-        static SparkViewNode()
-        {
-            _cache = new Dictionary<int, ISparkViewEntry>();
-        }
 
         public SparkViewNode(ViewDescriptor descriptor)
         {
@@ -32,7 +26,6 @@ namespace FubuMVC.Spark.Registration.Nodes
                 .DependencyByType(typeof(IViewFactory), typeof(ViewFactory))
                 .DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
 
-            viewEntrySource.DependencyByValue(_cache);
             viewEntrySource.DependencyByValue(viewDefinition);
         }
 

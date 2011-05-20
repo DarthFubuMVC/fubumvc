@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
@@ -13,11 +12,11 @@ namespace FubuMVC.Spark.Rendering
     public class ViewFactory : IViewFactory
     {
         private readonly IViewEntrySource _viewEntrySource;
-        private readonly IEnumerable<IViewModifier> _modifications;
+        private readonly IViewModifierService _service;
 
-        public ViewFactory(IViewEntrySource viewEntrySource, IEnumerable<IViewModifier> modifications)
+        public ViewFactory(IViewEntrySource viewEntrySource, IViewModifierService service)
         {
-            _modifications = modifications;
+            _service = service;
             _viewEntrySource = viewEntrySource;
         }
 
@@ -34,19 +33,7 @@ namespace FubuMVC.Spark.Rendering
         private IFubuSparkView getView(Func<ISparkViewEntry> func)
         {
             var view = (IFubuSparkView)func().CreateInstance();
-            view = applyModifications(view);
-            return view;
-        }
-
-        private IFubuSparkView applyModifications(IFubuSparkView view)
-        {
-            foreach (var modification in _modifications)
-            {
-                if(modification.Applies(view))
-                {
-                    view = modification.Modify(view); // consider if we should add a "?? view;" or just let it fail
-                }
-            }
+            view = _service.Modify(view);
             return view;
         }
     }

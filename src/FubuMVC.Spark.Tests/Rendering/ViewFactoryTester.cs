@@ -9,49 +9,46 @@ namespace FubuMVC.Spark.Tests.Rendering
     [TestFixture]
     public class ViewFactoryTester : InteractionContext<ViewFactory>
     {
-        private FubuSparkView _sparkView;
-        private IViewModifier _modification1;
-        private IViewModifier _modification2;
-        private IViewModifier _modification3;
+        private IViewModifierService _service;
+        private IViewEntrySource _entrySource;
 
-        private IFubuSparkView _generatedView;
+        private ISparkViewEntry _sourceEntry;
+        private FubuSparkView _entryView;
+        private IFubuSparkView _serviceView;
 
         protected override void beforeEach()
         {
-            var source = MockFor<IViewEntrySource>();
-            var entry = MockFor<ISparkViewEntry>();
-            _sparkView = MockFor<FubuSparkView>();
-            source.Stub(x => x.GetViewEntry()).Return(entry);
-            entry.Stub(x => x.CreateInstance()).Return(_sparkView);
-            var modifications = Services.CreateMockArrayFor<IViewModifier>(3);
-            _modification1 = modifications[0];
-            _modification2 = modifications[1];
-            _modification3 = modifications[2];
-            
-            _modification1.Expect(x => x.Applies(_sparkView)).Return(true);
-            _modification2.Expect(x => x.Applies(_sparkView)).Return(false);
-            _modification3.Expect(x => x.Applies(_sparkView)).Return(true);
+            _service = MockFor<IViewModifierService>();
+            _entrySource = MockFor<IViewEntrySource>();
 
-            _modification1.Expect(x => x.Modify(_sparkView)).Return(_sparkView);
-            _modification2.Expect(x => x.Modify(_sparkView)).Repeat.Never();
-            _modification3.Expect(x => x.Modify(_sparkView)).Return(_sparkView);
+            _sourceEntry = MockRepository.GenerateMock<ISparkViewEntry>();
+            _entryView = MockRepository.GenerateMock<FubuSparkView>();
+            _serviceView = MockRepository.GenerateMock<IFubuSparkView>();
 
-            _generatedView = ClassUnderTest.GetView();
+            _sourceEntry.Expect(x => x.CreateInstance()).Return(_entryView);
+            _service.Expect(x => x.Modify(_entryView)).Return(_serviceView);
         }
 
         [Test]
-        public void creates_the_instance_from_the_entry_returned_by_the_injected_entry_source()
+        public void getview_returns_uses_the_entry_from_the_entrysource_and_applies_the_service_modifications()
         {
-            _generatedView.ShouldEqual(_sparkView);
+            _entrySource.Expect(x => x.GetViewEntry()).Return(_sourceEntry);
+
+            ClassUnderTest.GetView().ShouldEqual(_serviceView);
+            _entrySource.VerifyAllExpectations();
+            _sourceEntry.VerifyAllExpectations();
+            _service.VerifyAllExpectations();
         }
 
         [Test]
-        public void only_the_applicable_modifications_are_used_against_the_view_instance()
+        public void getpartialview_returns_uses_the_entry_from_the_entrysource_and_applies_the_service_modifications()
         {
-            _modification2.AssertWasNotCalled(x => x.Modify(_sparkView));
-            _modification1.VerifyAllExpectations();
-            _modification2.VerifyAllExpectations();
-            _modification3.VerifyAllExpectations();
+            _entrySource.Expect(x => x.GetPartialViewEntry()).Return(_sourceEntry);
+
+            ClassUnderTest.GetPartialView().ShouldEqual(_serviceView);
+            _entrySource.VerifyAllExpectations();
+            _sourceEntry.VerifyAllExpectations();
+            _service.VerifyAllExpectations();
         }
     }
 }

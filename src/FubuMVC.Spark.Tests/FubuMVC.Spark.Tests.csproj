@@ -103,6 +103,8 @@
     <Compile Include="Rendering\PageActivationTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
+    <Compile Include="Rendering\ViewEntryProviderCacheTester.cs" />
+    <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="Rendering\ViewRendererTester.cs" />
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />

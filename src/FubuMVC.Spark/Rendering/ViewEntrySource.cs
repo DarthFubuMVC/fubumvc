@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Spark;
+﻿using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
@@ -11,42 +10,23 @@ namespace FubuMVC.Spark.Rendering
 
     public class ViewEntrySource : IViewEntrySource
     {
-        private readonly IDictionary<int, ISparkViewEntry> _cache;
-        private readonly ISparkViewEngine _engine;
+        private readonly IViewEntryProvider _provider;
         private readonly ViewDefinition _viewDefinition;
 
-        public ViewEntrySource(ISparkViewEngine engine, ViewDefinition viewDefinition, IDictionary<int, ISparkViewEntry> cache)
+        public ViewEntrySource(ViewDefinition viewDefinition, IViewEntryProvider provider)
         {
-            _cache = cache;
-            _engine = engine;
+            _provider = provider;
             _viewDefinition = viewDefinition;
         }
 
         public ISparkViewEntry GetViewEntry()
         {
-            return getViewEntry(_viewDefinition.ViewDescriptor);
+            return _provider.GetViewEntry(_viewDefinition.ViewDescriptor);
         }
 
         public ISparkViewEntry GetPartialViewEntry()
         {
-            return getViewEntry(_viewDefinition.PartialDescriptor);
-        }
-
-        private ISparkViewEntry getViewEntry(SparkViewDescriptor descriptor)
-        {
-            ISparkViewEntry entry;
-            var key = descriptor.GetHashCode();
-
-            _cache.TryGetValue(key, out entry);
-            if (entry == null || !entry.IsCurrent())
-            {
-                entry = _engine.CreateEntry(descriptor);
-                lock (_cache)
-                {
-                    _cache[key] = entry;
-                }
-            }
-            return entry;
+            return _provider.GetViewEntry(_viewDefinition.PartialDescriptor);
         }
     }
 }

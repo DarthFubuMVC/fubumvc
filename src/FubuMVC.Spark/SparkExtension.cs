@@ -43,6 +43,9 @@ namespace FubuMVC.Spark
             services.AddService<IRenderStrategy, AjaxRenderStrategy>();
             services.AddService<IRenderStrategy, DefaultRenderStrategy>();
 
+            services.SetServiceIfNone<IViewEntryProvider, ViewEntryProviderCache>();
+            services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
+
             services.AddService<IViewModifier, PageActivation>();
             services.AddService<IViewModifier, SiteResourceAttacher>();
             services.AddService<IViewModifier, ContentActivation>();
