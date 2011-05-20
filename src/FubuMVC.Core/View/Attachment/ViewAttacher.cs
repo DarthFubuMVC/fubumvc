@@ -28,8 +28,6 @@ namespace FubuMVC.Core.View.Attachment
                 views.AddRange(facility.FindViews(_types, graph));
             }
 
-            //= _facilities.SelectMany(x => x.FindViews(_types));
-
             var bag = new ViewBag(views);
 
             graph.Behaviors
@@ -41,6 +39,11 @@ namespace FubuMVC.Core.View.Attachment
         public List<IViewFacility> Facilities
         {
             get { return _facilities; }
+        }
+
+        public IEnumerable<IViewsForActionFilter> Filters
+        {
+            get { return _filters; }
         }
 
         public TypePool Types

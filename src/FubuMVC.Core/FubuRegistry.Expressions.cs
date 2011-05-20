@@ -120,6 +120,11 @@ namespace FubuMVC.Core
             });
         }
 
+        public void ConfigureImports(Action<FubuRegistry> configuration)
+        {
+            _importsConventions.Add(configuration);
+        }
+
         public void IncludeDiagnostics(bool shouldInclude)
         {
             _diagnosticLevel = shouldInclude ? DiagnosticLevel.FullRequestTracing : DiagnosticLevel.None;

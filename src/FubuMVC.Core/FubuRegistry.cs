@@ -7,7 +7,6 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.View;
 using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
@@ -20,6 +19,7 @@ namespace FubuMVC.Core
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
+        private readonly IList<Action<FubuRegistry>> _importsConventions = new List<Action<FubuRegistry>>();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
         private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
@@ -117,7 +117,11 @@ namespace FubuMVC.Core
             _conventions.Configure(graph);
 
             // Importing behavior chains from imports
-            _imports.Each(x => x.ImportInto(graph));
+            _imports.Each(x =>
+            {
+                _importsConventions.Each(c => c(x.Registry));
+                x.ImportInto(graph);
+            });
 
             _explicits.Configure(graph);
 

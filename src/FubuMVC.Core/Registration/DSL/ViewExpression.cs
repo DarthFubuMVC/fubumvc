@@ -53,6 +53,23 @@ namespace FubuMVC.Core.Registration.DSL
             });
         }
 
+        public ViewExpression TryToAttachViewsFromPackages()
+        {
+            _registry.ConfigureImports(i =>
+            {
+                var importAttacher = i.Views._viewAttacher;
+
+                if(importAttacher.Facilities.Count == 0)
+                {
+                    _viewAttacher.Filters.Each(importAttacher.AddViewsForActionFilter);
+                }
+
+                _viewAttacher.Facilities.Each(importAttacher.AddFacility);
+            });
+
+            return this;
+        }
+
         /// <summary>
         /// Define a view activation policy
         /// </summary>
