@@ -63,13 +63,14 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Rendering\ViewDefinition.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
-    <Compile Include="Registration\Nodes\SparkViewOutput.cs" />
+    <Compile Include="Registration\Nodes\SparkViewNode.cs" />
     <Compile Include="Rendering\RenderStrategies.cs" />
-    <Compile Include="Rendering\RenderActions.cs" />
+    <Compile Include="Rendering\RenderAction.cs" />
     <Compile Include="Rendering\NestedOutput.cs" />
-    <Compile Include="Rendering\SparkViewModifications.cs" />
-    <Compile Include="Rendering\SparkViewRenderer.cs" />
+    <Compile Include="Rendering\ViewModifiers.cs" />
+    <Compile Include="Rendering\ViewRenderer.cs" />
     <Compile Include="Rendering\ViewEntrySource.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />

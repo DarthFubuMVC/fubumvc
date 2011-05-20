@@ -1,5 +1,6 @@
 COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
 require File.dirname(__FILE__) + "/build_support/BuildUtils.rb"
+require File.dirname(__FILE__) + "/build_support/nugs.rb"
 
 include FileTest
 require 'albacore'
@@ -10,12 +11,14 @@ PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008-2010 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
+BUILD_DIR = File.expand_path("build")
+ARTIFACTS = File.expand_path("artifacts")
 
 tc_build_number = ENV["BUILD_NUMBER"]
 build_revision = tc_build_number || Time.new.strftime('5%H%M')
-build_number = "#{BUILD_VERSION}.#{build_revision}"
+BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 
-props = { :stage => File.expand_path("build"), :artifacts => File.expand_path("artifacts") }
+props = { :stage => BUILD_DIR, :artifacts => ARTIFACTS }
 
 desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
@@ -32,13 +35,13 @@ assemblyinfo :version do |asm|
   rescue
     commit = "git unavailable"
   end
-  puts "##teamcity[buildNumber '#{build_number}']" unless tc_build_number.nil?
-  puts "Version: #{build_number}" if tc_build_number.nil?
+  puts "##teamcity[buildNumber '#{BUILD_NUMBER}']" unless tc_build_number.nil?
+  puts "Version: #{BUILD_NUMBER}" if tc_build_number.nil?
   asm.trademark = commit
   asm.product_name = PRODUCT
-  asm.description = build_number
+  asm.description = BUILD_NUMBER
   asm.version = asm_version
-  asm.file_version = build_number
+  asm.file_version = BUILD_NUMBER
   asm.custom_attributes :AssemblyInformationalVersion => asm_version
   asm.copyright = COPYRIGHT
   asm.output_file = COMMON_ASSEMBLY_INFO
@@ -73,6 +76,7 @@ task :compile => [:clean, :version] do
   copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuMVC.GettingStarted/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
 
+  copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuMVC.WebForms/bin/#{COMPILE_TARGET}", "FubuMVC.WebForms.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuMVC.Spark/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
 
@@ -115,15 +119,6 @@ zip :package do |zip|
 	zip.output_file = 'fubumvc.zip'
 	zip.output_path = [props[:artifacts]]
 end
-
-
-desc "Build the nuget package"
-task :nuget do
-    FileUtils.rm_rf "artifacts"
-	FileUtils.mkdir "artifacts"
-	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o #{props[:artifacts]} -Version #{build_number}"
-end
-
 desc "Bundles up the packaged content in FubuFastPack"
 task :bundle_getting_started do
   sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe assembly-pak src/FubuMVC.GettingStarted -projfile FubuMVC.GettingStarted.csproj"

@@ -43,9 +43,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var template = request.Target;
 
-            return template.IsSparkView() 
-                && !template.IsPartial() 
-                && request.ViewModelType.IsNotEmpty();
+            return template.IsSparkView() && !template.IsPartial();
         }
 
         public void Bind(IBindRequest request)
@@ -69,7 +67,8 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            return request.Target.Descriptor is ViewDescriptor 
+            return request.Target.Descriptor is ViewDescriptor
+                && request.ViewModelType.IsNotEmpty()
 				&& request.Master != string.Empty;
         }
 
@@ -102,22 +101,29 @@ namespace FubuMVC.Spark.SparkModel
 
         public void Bind(IBindRequest request)
         {
+            var logger = request.Logger;
             var template = request.Target;
-            var descriptor = template.Descriptor.As<ViewDescriptor>();
+            var descriptor = template.Descriptor.As<ViewDescriptor>();            
 
             var types = request.Types.TypesWithFullName(request.ViewModelType);
-            if(types.Count() != 1)
+            var typeCount = types.Count();
+
+            if(typeCount == 1)
             {
-                var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
-                const string msg = "Unable to set view model type : {0} - candidates were : {1}";
+                descriptor.ViewModel = types.First();
+                logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
                 
-                request.Logger.Log(template, msg, candidates);
                 return;
             }
 
-            descriptor.ViewModel = types.First();            
-            request.Logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
-		}
+            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
+            
+            if (typeCount > 1)
+            {
+                var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
+                logger.Log(template, "Type ambiguity on: {0}", candidates);                
+            }            
+        }
 	}
 
     public class ReachableBindingsBinder : ITemplateBinder
@@ -145,8 +151,8 @@ namespace FubuMVC.Spark.SparkModel
             var templates = request.TemplateRegistry;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
-            _sharedTemplateLocator.LocateBindings(BindingsName, target, templates)
-            .Each(template =>
+            var bindings = _sharedTemplateLocator.LocateBindings(BindingsName, target, templates);
+            bindings.Each(template =>
             {
                 descriptor.AddBinding(template);
                 logger.Log(target, "Binding attached : {0}", template.FilePath);

@@ -17,7 +17,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             _requestData = new InMemoryRequestData();
             _renderAction = MockFor<IRenderAction>();
-            _renderAction.Expect(x => x.Render());
+            _renderAction.Expect(x => x.RenderPartial());
             Services.Inject<IRequestData>(_requestData);
         }
 
@@ -32,7 +32,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         [Test]
         public void invokes_render_on_injected_render_action()
         {
-            ClassUnderTest.Invoke();
+            ClassUnderTest.Invoke(_renderAction);
             _renderAction.VerifyAllExpectations();
         }
     }

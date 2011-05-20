@@ -53,13 +53,13 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void the_node_is_of_sparkviewoutput_type()
         {
-            _token.ToBehavioralNode().ShouldBeOfType<SparkViewOutput>();
+            _token.ToBehavioralNode().ShouldBeOfType<SparkViewNode>();
         }
 
         [Test]
         public void description_should_contain_view_path()
         {
-            var view = (SparkViewOutput)_token.ToBehavioralNode();
+            var view = (SparkViewNode)_token.ToBehavioralNode();
             view.Description.ShouldContain(_template.RelativePath());
         }
     }

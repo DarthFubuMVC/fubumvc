@@ -39,7 +39,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 			{ 
 				TemplateRegistry = _templateRegistry = createTemplates(), 
 				Master = "application", 
-				Logger = MockFor<ISparkLogger>() 
+				Logger = MockFor<ISparkLogger>(),
+                ViewModelType = typeof(ProductModel).FullName
 			};
         }
 
@@ -137,6 +138,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 
 			ClassUnderTest.CanBind(_request).ShouldBeFalse();	
 		}
+
         [Test]
         public void if_descriptor_is_not_viewdescriptor_then_binder_is_not_applied()
         {
@@ -144,5 +146,25 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target = template;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
+
+        [Test]
+        public void if_view_model_type_is_empty_then_binder_is_not_applied()
+        {
+            var template = _templateRegistry.ElementAt(11);
+            _request.ViewModelType = string.Empty;
+            _request.Target = template;
+
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
+        [Test]
+        public void if_template_is_valid_for_binding_then_binder_can_be_applied()
+        {
+            var template = _templateRegistry.ElementAt(11);
+            _request.Target = template;
+            ClassUnderTest.CanBind(_request).ShouldBeTrue();
+        }
+
+
     }
 }

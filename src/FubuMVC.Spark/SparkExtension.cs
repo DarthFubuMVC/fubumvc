@@ -38,11 +38,19 @@ namespace FubuMVC.Spark
             
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
             services.AddService<IActivator, SparkActivator>();
-            
-            services.AddService<ISparkViewModification, PageActivation>();
-            services.AddService<ISparkViewModification, SiteResourceAttacher>();
-			services.AddService<ISparkViewModification, NestedOutputActivation>();
-			services.AddService<ISparkViewModification, NestedOutputSwitch>();
+
+            services.AddService<IRenderStrategy, NestedRenderStrategy>();
+            services.AddService<IRenderStrategy, AjaxRenderStrategy>();
+            services.AddService<IRenderStrategy, DefaultRenderStrategy>();
+
+            services.AddService<IViewModifier, PageActivation>();
+            services.AddService<IViewModifier, SiteResourceAttacher>();
+            services.AddService<IViewModifier, ContentActivation>();
+            services.AddService<IViewModifier, OnceTableActivation>();
+            services.AddService<IViewModifier, OuterViewOutputActivator>();
+            services.AddService<IViewModifier, NestedViewOutputActivator>();
+            services.AddService<IViewModifier, ViewContentDisposer>();
+            services.AddService<IViewModifier, NestedOutputActivation>();
         }
 
         private void locateTemplates()

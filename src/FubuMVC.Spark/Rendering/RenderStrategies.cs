@@ -6,18 +6,21 @@ namespace FubuMVC.Spark.Rendering
     public interface IRenderStrategy
     {
         bool Applies();
-        void Invoke();
+        void Invoke(IRenderAction action);
+    }
+
+    public class DefaultRenderStrategy : IRenderStrategy
+    {
+        public bool Applies() { return true; }
+        public void Invoke(IRenderAction action) { action.Render(); }
     }
 
     public class NestedRenderStrategy : IRenderStrategy
     {
         private readonly NestedOutput _nestedOutput;
-        private readonly IRenderAction _renderAction;
-        
-		public NestedRenderStrategy(IRenderAction renderAction, NestedOutput nestedOutput)
+        public NestedRenderStrategy(NestedOutput nestedOutput)
         {
-            _renderAction = renderAction;
-            _nestedOutput = nestedOutput;
+		    _nestedOutput = nestedOutput;
         }
 
         public bool Applies()
@@ -25,20 +28,17 @@ namespace FubuMVC.Spark.Rendering
             return _nestedOutput.IsActive();
         }
 
-        public void Invoke()
+        public void Invoke(IRenderAction action)
         {
-            _renderAction.Render();
+            action.RenderPartial();
         }
     }
 
     public class AjaxRenderStrategy : IRenderStrategy
     {
-        private readonly IRenderAction _renderAction;
-        private readonly IRequestData _requestData;
-		
-        public AjaxRenderStrategy(IRenderAction renderAction, IRequestData requestData)
+        private readonly IRequestData _requestData;		
+        public AjaxRenderStrategy(IRequestData requestData)
         {
-            _renderAction = renderAction;
             _requestData = requestData;
         }
 
@@ -47,28 +47,9 @@ namespace FubuMVC.Spark.Rendering
             return _requestData.IsAjaxRequest();
         }
 
-        public void Invoke()
+        public void Invoke(IRenderAction action)
         {
-            _renderAction.Render();
-        }
-    }
-
-    public class DefaultRenderStrategy : IRenderStrategy
-    {
-        private readonly IRenderAction _renderAction;
-        public DefaultRenderStrategy(IRenderAction renderAction)
-        {
-            _renderAction = renderAction;
-        }
-
-        public bool Applies()
-        {
-            return true;
-        }
-
-        public void Invoke()
-        {
-            _renderAction.Render();
+            action.RenderPartial();
         }
     }
 }

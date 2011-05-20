@@ -9,10 +9,10 @@ namespace FubuMVC.Spark.Tests.Rendering
     [TestFixture]
     public class ViewFactoryTester : InteractionContext<ViewFactory>
     {
-        private IFubuSparkView _sparkView;
-        private ISparkViewModification _modification1;
-        private ISparkViewModification _modification2;
-        private ISparkViewModification _modification3;
+        private FubuSparkView _sparkView;
+        private IViewModifier _modification1;
+        private IViewModifier _modification2;
+        private IViewModifier _modification3;
 
         private IFubuSparkView _generatedView;
 
@@ -20,10 +20,10 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             var source = MockFor<IViewEntrySource>();
             var entry = MockFor<ISparkViewEntry>();
-            _sparkView = MockFor<IFubuSparkView>();
+            _sparkView = MockFor<FubuSparkView>();
             source.Stub(x => x.GetViewEntry()).Return(entry);
             entry.Stub(x => x.CreateInstance()).Return(_sparkView);
-            var modifications = Services.CreateMockArrayFor<ISparkViewModification>(3);
+            var modifications = Services.CreateMockArrayFor<IViewModifier>(3);
             _modification1 = modifications[0];
             _modification2 = modifications[1];
             _modification3 = modifications[2];
@@ -32,9 +32,9 @@ namespace FubuMVC.Spark.Tests.Rendering
             _modification2.Expect(x => x.Applies(_sparkView)).Return(false);
             _modification3.Expect(x => x.Applies(_sparkView)).Return(true);
 
-            _modification1.Expect(x => x.Modify(_sparkView));
+            _modification1.Expect(x => x.Modify(_sparkView)).Return(_sparkView);
             _modification2.Expect(x => x.Modify(_sparkView)).Repeat.Never();
-            _modification3.Expect(x => x.Modify(_sparkView));
+            _modification3.Expect(x => x.Modify(_sparkView)).Return(_sparkView);
 
             _generatedView = ClassUnderTest.GetView();
         }

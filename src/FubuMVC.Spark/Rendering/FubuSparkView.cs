@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public abstract class FubuSparkView : SparkViewBase, IFubuPage, IFubuSparkView
+    public abstract class FubuSparkView : SparkViewBase, IFubuSparkView
     {
         private readonly Cache<Type, object> _services = new Cache<Type, object>();
 
@@ -65,20 +65,113 @@ namespace FubuMVC.Spark.Rendering
         }
 
         public TViewModel Model { get; set; }
-        
+
         public object GetModel()
         {
             return Model;
         }
     }
 
-    public interface IFubuSparkView : ISparkView
+    public interface IFubuSparkView : IFubuPage
     {
-		// Try to hide this away
-		Dictionary<string, TextWriter> Content { set; get; }
-		Dictionary<string, string> OnceTable { set; get; }
+        Dictionary<string, TextWriter> Content { set; get; }
+        Dictionary<string, string> OnceTable { set; get; }
+        Dictionary<string, object> Globals { set; get; }
         TextWriter Output { get; set; }
-     
-		Func<string, string> SiteResource { get; set; }
+        void Render();
+        Func<string, string> SiteResource { get; set; }
+        Guid GeneratedViewId { get; }
+    }
+
+    public static class FubuSparkViewExtensions
+    {
+        public static IFubuSparkView Modify(this IFubuSparkView view, Action<IFubuSparkView> modify)
+        {
+            modify(view);
+            return view;
+        }
+    }
+
+    public class FubuSparkViewDecorator : IFubuSparkView
+    {
+        private readonly IFubuSparkView _view;
+        public FubuSparkViewDecorator(IFubuSparkView view)
+        {
+            _view = view;
+            PreRender = new CompositeAction<IFubuSparkView>();
+            PostRender = new CompositeAction<IFubuSparkView>();
+        }
+
+        public CompositeAction<IFubuSparkView> PreRender { get; set; }
+        public CompositeAction<IFubuSparkView> PostRender { get; set; }
+
+        public void Render()
+        {
+            PreRender.Do(_view);
+            _view.Render();
+            PostRender.Do(_view);
+        }
+
+        public Guid GeneratedViewId
+        {
+            get { return _view.GeneratedViewId; }
+        }
+
+        public Func<string, string> SiteResource
+        {
+            get { return _view.SiteResource; }
+            set { _view.SiteResource = value; }
+        }
+
+        public Dictionary<string, TextWriter> Content
+        {
+            get { return _view.Content; }
+            set { _view.Content = value; }
+        }
+
+        public Dictionary<string, string> OnceTable
+        {
+            get { return _view.OnceTable; }
+            set { _view.OnceTable = value; }
+        }
+
+        public Dictionary<string, object> Globals
+        {
+            get { return _view.Globals; }
+            set { _view.Globals = value; }
+        }
+
+        public TextWriter Output
+        {
+            get { return _view.Output; }
+            set { _view.Output = value; }
+        }
+
+        public string ElementPrefix
+        {
+            get { return _view.ElementPrefix; }
+            set { _view.ElementPrefix = value; }
+        }
+
+        public IServiceLocator ServiceLocator
+        {
+            get { return _view.ServiceLocator; }
+            set { _view.ServiceLocator = value; }
+        }
+
+        public IUrlRegistry Urls
+        {
+            get { return _view.Urls; }
+        }
+
+        public T Get<T>()
+        {
+            return _view.Get<T>();
+        }
+
+        public T GetNew<T>()
+        {
+            return _view.GetNew<T>();
+        }
     }
 }

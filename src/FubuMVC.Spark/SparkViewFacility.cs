@@ -21,6 +21,7 @@ namespace FubuMVC.Spark
         {
             return _composer.Compose(types)
                 .AllTemplates()
+                // TODO : Clean this up
                 .Where(x => x.Descriptor is ViewDescriptor)
                 .Select(x => x.Descriptor.As<ViewDescriptor>())
                 .Where(x => x.HasViewModel())
