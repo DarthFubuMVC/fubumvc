@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Registration.DSL
             });
         }
 
-        public ViewExpression TryToAttachViewsFromPackages()
+        public ViewExpression TryToAttachViewsInPackages()
         {
             _registry.ConfigureImports(i =>
             {

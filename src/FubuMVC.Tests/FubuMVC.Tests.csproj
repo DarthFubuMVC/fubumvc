@@ -139,6 +139,7 @@
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />
     <Compile Include="Registration\Conventions\WrapWithAttributeConventionTester.cs" />
     <Compile Include="Registration\DSL\PoliciesExpressionTester.cs" />
+    <Compile Include="Registration\DSL\ViewExpressionTester.cs" />
     <Compile Include="Registration\Expressions\ActionLessViewRegistrationTester.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
