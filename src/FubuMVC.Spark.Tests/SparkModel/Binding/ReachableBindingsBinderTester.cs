@@ -12,8 +12,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     {
         private ISharedTemplateLocator _sharedTemplateLocator;
         private ITemplate _template;
-        private BindRequest _request;
-        private List<ITemplate> _bindings;
+        private IBindRequest _request;
+        private IList<ITemplate> _bindings;
         private ISparkLogger _logger;
 
         protected override void beforeEach()
@@ -59,19 +59,26 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-        public void does_not_bind_templates_with_nullodescriptor()
-        {
-            _template.Descriptor = new NulloDescriptor();
-            ClassUnderTest.CanBind(_request).ShouldBeFalse();
-        }
-
-        [Test]
         public void add_each_binding_to_the_descriptor()
         {
             ClassUnderTest.Bind(_request);
             _sharedTemplateLocator.VerifyAllExpectations();
             _template.Descriptor.As<ViewDescriptor>().Bindings.ShouldEqual(_bindings);
 
+        }
+
+        [Test]
+        public void does_not_bind_templates_with_no_viewdescriptor()
+        {
+            _template.Descriptor = new NulloDescriptor();
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
+        [Test]
+        public void does_not_attempt_add_bindings_if_prior_processed()
+        {
+            _template.Descriptor.As<ViewDescriptor>().AddBinding(MockFor<ITemplate>());            
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
         [Test]

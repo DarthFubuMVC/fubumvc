@@ -5,6 +5,8 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    // TODO : Consider applying Cache<,>
+
     public interface IBindRequest
     {
         ITemplate Target { get; }
@@ -42,8 +44,10 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var template = request.Target;
-
-            return template.IsSparkView() && !template.IsPartial();
+            
+            return !(template.Descriptor is ViewDescriptor) 
+                && template.IsSparkView() 
+                && !template.IsPartial();
         }
 
         public void Bind(IBindRequest request)
@@ -67,7 +71,10 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            return request.Target.Descriptor is ViewDescriptor
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                && descriptor.Master == null
                 && request.ViewModelType.IsNotEmpty()
 				&& request.Master != string.Empty;
         }
@@ -94,10 +101,13 @@ namespace FubuMVC.Spark.SparkModel
 	public class ViewModelBinder : ITemplateBinder
 	{
         public bool CanBind(IBindRequest request)
-		{
-			return request.Target.Descriptor is ViewDescriptor 
-                && request.ViewModelType.IsNotEmpty();
-		}
+        {
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                   && !descriptor.HasViewModel()
+                   && request.ViewModelType.IsNotEmpty();
+        }
 
         public void Bind(IBindRequest request)
         {
@@ -141,7 +151,10 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            return request.Target.Descriptor is ViewDescriptor;
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            
+            return descriptor != null 
+                && descriptor.Bindings.Count() == 0;
         }
 
         public void Bind(IBindRequest request)

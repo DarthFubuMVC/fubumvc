@@ -81,6 +81,18 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
 
 			ClassUnderTest.Matches(item).ShouldBeFalse();
         }	
+
+        [Test]
+        public void it_does_not_match_nullodescriptor()
+        {
+            var path = Path.Combine(_root, "home.spark");
+            var item = new Template(path, _root, "")
+            {
+                Descriptor = new NulloDescriptor()
+            };
+
+            ClassUnderTest.Matches(item).ShouldBeFalse();            
+        }
     }
 
     public class FooViewModel {}

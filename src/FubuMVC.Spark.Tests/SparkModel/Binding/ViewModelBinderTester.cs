@@ -65,6 +65,20 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
+        public void it_does_not_bind_template_that_does_not_have_viewdescriptor_set()
+        {
+            _template.Descriptor = new NulloDescriptor();
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
+        [Test]
+        public void it_does_not_bind_viewmodel_if_already_set()
+        {
+            _descriptor.ViewModel = typeof(Baz);
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
+        [Test]
         public void it_logs_to_tracer()
         {
             ClassUnderTest.Bind(_request);

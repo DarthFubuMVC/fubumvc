@@ -29,11 +29,24 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
+        public void does_not_bind_if_descriptor_is_already_set()
+        {
+            var request = new BindRequest
+            {
+                Target = new Template("Fubu.spark", "", "testing")                
+            };
+
+            request.Target.Descriptor = new ViewDescriptor(request.Target);
+
+            ClassUnderTest.CanBind(request).ShouldBeFalse();
+        }
+
+        [Test]
         public void if_template_is_valid_for_binding_then_binder_can_be_applied()
         {
             var request = new BindRequest
             {
-                Target = new Template("Fubu.spark", "", "testing"),
+                Target = new Template("Fubu.spark", "", "testing")
             };
 
             ClassUnderTest.CanBind(request).ShouldBeTrue();

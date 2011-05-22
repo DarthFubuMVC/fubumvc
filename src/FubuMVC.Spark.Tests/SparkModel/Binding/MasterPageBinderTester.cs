@@ -165,6 +165,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             ClassUnderTest.CanBind(_request).ShouldBeTrue();
         }
 
-
+        [Test]
+        public void if_master_is_already_set_binder_is_not_applied()
+        {
+            _request.Target = _templateRegistry.ElementAt(11);
+            _request.Target.Descriptor.As<ViewDescriptor>().Master = _templateRegistry.ElementAt(14);
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
     }
 }
