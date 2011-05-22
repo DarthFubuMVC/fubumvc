@@ -13,8 +13,7 @@ namespace FubuMVC.HelloSpark
             IncludeDiagnostics(true);
 
             Applies
-                .ToThisAssembly()
-                .ToAllPackageAssemblies();
+                .ToThisAssembly();
 
             Actions
                 .IncludeClassesSuffixedWithController();
