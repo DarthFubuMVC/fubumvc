@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Behaviors;
@@ -12,7 +13,6 @@ using FubuMVC.Diagnostics.Models.Requests;
 using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
-using FubuMVC.Spark;
 
 namespace FubuMVC.Diagnostics
 {
@@ -20,6 +20,9 @@ namespace FubuMVC.Diagnostics
     {
         public FubuDiagnosticsRegistry()
         {
+            Applies
+                .ToAssemblyContainingType<BehaviorStart>();
+
             this.ApplyEndpointConventions(typeof(DiagnosticsEndpointMarker));
 
             Services(x =>
