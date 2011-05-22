@@ -5,7 +5,7 @@
 </content:head>
 <content:main>
   <h2 class="route">
-    <span>Route: ${Model.Chain.RoutePattern}</span>
+    <span>Route: ${Model.Chain.Route}</span>
     <if condition="Model.HasConstraints()">
       <span>(${Model.Constraints})</span>
     </if>

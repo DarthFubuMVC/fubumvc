@@ -155,6 +155,7 @@
     <Content Include="Content\Styles\snapdragon\forms.css" />
     <Content Include="Shared\bindings.xml" />
     <None Include="Shared\AuthorizationReport.spark" />
+    <None Include="Shared\BehaviorStart.spark" />
     <None Include="Shared\FileOutputReport.spark" />
     <None Include="Shared\ExceptionReport.spark" />
     <None Include="Shared\SetValueReport.spark" />

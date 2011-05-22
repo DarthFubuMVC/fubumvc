@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Web.Routing;
+using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Diagnostics.Infrastructure
 {
@@ -11,15 +10,12 @@ namespace FubuMVC.Diagnostics.Infrastructure
 
         public string Resolve(BehaviorChain chain)
         {
-            var constraint = chain
-                                 .Route
-                                 .Constraints[RouteDefinition.HTTP_METHOD_CONSTRAINT] as HttpMethodConstraint;
-            if(constraint == null)
+            if (chain.Route == null || !chain.Route.AllowedHttpMethods.Any())
             {
                 return NoConstraints;
             }
 
-            return constraint.AllowedMethods.Join(",");
+            return chain.Route.AllowedHttpMethods.Join(",");
         }
     }
 }

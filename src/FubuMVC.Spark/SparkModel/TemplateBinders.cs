@@ -5,6 +5,8 @@ using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Spark.SparkModel
 {
+    // TODO : Consider applying Cache<,>
+
     public interface IBindRequest
     {
         ITemplate Target { get; }
@@ -22,20 +24,20 @@ namespace FubuMVC.Spark.SparkModel
     {
         public ITemplate Target { get; set; }
 
-		public string Master { get; set; }
-		public string ViewModelType { get; set; }
-		public IEnumerable<string> Namespaces { get; set; }
+        public string Master { get; set; }
+        public string ViewModelType { get; set; }
+        public IEnumerable<string> Namespaces { get; set; }
 
         public TypePool Types { get; set; }
         public ITemplateRegistry TemplateRegistry { get; set; }
-		public ISparkLogger Logger { get; set; }
-	}
+        public ISparkLogger Logger { get; set; }
+    }
 
-	public interface ITemplateBinder
-	{
+    public interface ITemplateBinder
+    {
         bool CanBind(IBindRequest request);
         void Bind(IBindRequest request);
-	}
+    }
 
     public class ViewDescriptorBinder : ITemplateBinder
     {
@@ -43,9 +45,9 @@ namespace FubuMVC.Spark.SparkModel
         {
             var template = request.Target;
 
-            return template.IsSparkView() 
-                && !template.IsPartial() 
-                && request.ViewModelType.IsNotEmpty();
+            return !(template.Descriptor is ViewDescriptor)
+                && template.IsSparkView()
+                && !template.IsPartial();
         }
 
         public void Bind(IBindRequest request)
@@ -55,70 +57,84 @@ namespace FubuMVC.Spark.SparkModel
     }
 
     public class MasterPageBinder : ITemplateBinder
-	{
-		private readonly ISharedTemplateLocator _sharedTemplateLocator;
-		private const string FallbackMaster = "Application";
-		public string MasterName { get; set; }
+    {
+        private readonly ISharedTemplateLocator _sharedTemplateLocator;
+        private const string FallbackMaster = "Application";
+        public string MasterName { get; set; }
 
-		public MasterPageBinder() : this(new SharedTemplateLocator()) {}
-		public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
-		{
-			_sharedTemplateLocator = sharedTemplateLocator;
-			MasterName = FallbackMaster;
-		}
+        public MasterPageBinder() : this(new SharedTemplateLocator()) { }
+        public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
+        {
+            _sharedTemplateLocator = sharedTemplateLocator;
+            MasterName = FallbackMaster;
+        }
 
         public bool CanBind(IBindRequest request)
         {
-            return request.Target.Descriptor is ViewDescriptor 
-				&& request.Master != string.Empty;
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                && descriptor.Master == null
+                && request.ViewModelType.IsNotEmpty()
+                && request.Master != string.Empty;
         }
 
         public void Bind(IBindRequest request)
         {
             var template = request.Target;
-			var tracer = request.Logger;
-			var masterName = request.Master ?? MasterName;
-			
-			var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
-			
-			if(master == null)
-			{
-				tracer.Log(template, "Expected master page [{0}] not found.", masterName);
-				return;
-			}
+            var tracer = request.Logger;
+            var masterName = request.Master ?? MasterName;
 
-		    template.Descriptor.As<ViewDescriptor>().Master = master;
-			tracer.Log(template, "Master page [{0}] found at {1}", masterName, master.FilePath);
-		}		
-	}
+            var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
 
-	public class ViewModelBinder : ITemplateBinder
-	{
+            if (master == null)
+            {
+                tracer.Log(template, "Expected master page [{0}] not found.", masterName);
+                return;
+            }
+
+            template.Descriptor.As<ViewDescriptor>().Master = master;
+            tracer.Log(template, "Master page [{0}] found at {1}", masterName, master.FilePath);
+        }
+    }
+
+    public class ViewModelBinder : ITemplateBinder
+    {
         public bool CanBind(IBindRequest request)
-		{
-			return request.Target.Descriptor is ViewDescriptor 
-                && request.ViewModelType.IsNotEmpty();
-		}
+        {
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                   && !descriptor.HasViewModel()
+                   && request.ViewModelType.IsNotEmpty();
+        }
 
         public void Bind(IBindRequest request)
         {
+            var logger = request.Logger;
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
             var types = request.Types.TypesWithFullName(request.ViewModelType);
-            if(types.Count() != 1)
+            var typeCount = types.Count();
+
+            if (typeCount == 1)
             {
-                var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
-                const string msg = "Unable to set view model type : {0} - candidates were : {1}";
-                
-                request.Logger.Log(template, msg, request.ViewModelType, candidates);
+                descriptor.ViewModel = types.First();
+                logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
+
                 return;
             }
 
-            descriptor.ViewModel = types.First();            
-            request.Logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
-		}
-	}
+            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
+
+            if (typeCount > 1)
+            {
+                var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
+                logger.Log(template, "Type ambiguity on: {0}", candidates);
+            }
+        }
+    }
 
     public class ReachableBindingsBinder : ITemplateBinder
     {
@@ -126,7 +142,7 @@ namespace FubuMVC.Spark.SparkModel
         private const string FallbackBindingsName = "bindings";
         public string BindingsName { get; set; }
 
-        public ReachableBindingsBinder() : this(new SharedTemplateLocator()) {}
+        public ReachableBindingsBinder() : this(new SharedTemplateLocator()) { }
         public ReachableBindingsBinder(ISharedTemplateLocator sharedTemplateLocator)
         {
             _sharedTemplateLocator = sharedTemplateLocator;
@@ -135,7 +151,10 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanBind(IBindRequest request)
         {
-            return request.Target.Descriptor is ViewDescriptor;
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                && descriptor.Bindings.Count() == 0;
         }
 
         public void Bind(IBindRequest request)
@@ -145,8 +164,8 @@ namespace FubuMVC.Spark.SparkModel
             var templates = request.TemplateRegistry;
             var descriptor = target.Descriptor.As<ViewDescriptor>();
 
-            _sharedTemplateLocator.LocateBindings(BindingsName, target, templates)
-            .Each(template =>
+            var bindings = _sharedTemplateLocator.LocateBindings(BindingsName, target, templates);
+            bindings.Each(template =>
             {
                 descriptor.AddBinding(template);
                 logger.Log(target, "Binding attached : {0}", template.FilePath);

@@ -21,7 +21,6 @@ namespace FubuMVC.Diagnostics
         public FubuDiagnosticsRegistry()
         {
             this.ApplyEndpointConventions(typeof(DiagnosticsEndpointMarker));
-            this.UseSpark();
 
             Services(x =>
                          {

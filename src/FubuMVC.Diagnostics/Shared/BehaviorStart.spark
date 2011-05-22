@@ -1,0 +1,5 @@
+﻿<use master="" />
+<viewdata model="FubuMVC.Core.Diagnostics.BehaviorStart" />
+<div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only hitarea">
+  <span class="ui-button-text">Behavior Start</span>
+</div>

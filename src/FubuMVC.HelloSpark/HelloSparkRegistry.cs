@@ -30,7 +30,10 @@ namespace FubuMVC.HelloSpark
             Policies.Add<AntiForgeryPolicy>();
             
             this.UseSpark();
-            Views.TryToAttachWithDefaultConventions();
+            
+            Views
+                .TryToAttachWithDefaultConventions()
+                .TryToAttachViewsInPackages();
 
             HtmlConvention<SampleHtmlConventions>();
 						

@@ -2,6 +2,7 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>diagnostics</Name>
   <assembly>FubuMVC.Diagnostics</assembly>
+  <assembly>Newtonsoft.Json</assembly>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>
