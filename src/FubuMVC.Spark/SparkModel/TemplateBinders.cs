@@ -126,6 +126,8 @@ namespace FubuMVC.Spark.SparkModel
                 return;
             }
 
+            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
+
             if (typeCount > 1)
             {
                 var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");

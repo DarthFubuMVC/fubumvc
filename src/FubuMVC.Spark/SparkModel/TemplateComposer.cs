@@ -7,21 +7,20 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplateComposer
     {
-        ITemplateRegistry Compose(TypePool typePool);
+        void Compose(ITemplateRegistry templateRegistry);
     }
 
     public class TemplateComposer : ITemplateComposer
     {
         private readonly IList<ITemplateBinder> _binders = new List<ITemplateBinder>();
         private readonly IList<ITemplatePolicy> _policies = new List<ITemplatePolicy>();
-        private readonly ITemplateRegistry _templateRegistry;
-        
+        private readonly TypePool _types;
         private readonly IChunkLoader _chunkLoader;
 
-        public TemplateComposer(ITemplateRegistry templateRegistry) : this(templateRegistry, new ChunkLoader()) { }
-        public TemplateComposer(ITemplateRegistry templateRegistry, IChunkLoader chunkLoader)
+        public TemplateComposer(TypePool types) : this(types, new ChunkLoader()) { }
+        public TemplateComposer(TypePool types, IChunkLoader chunkLoader)
         {
-            _templateRegistry = templateRegistry;
+            _types = types;
             _chunkLoader = chunkLoader;
         }
 
@@ -55,11 +54,11 @@ namespace FubuMVC.Spark.SparkModel
             return this;
         }
 
-        public ITemplateRegistry Compose(TypePool typePool)
+        public void Compose(ITemplateRegistry templates)
         {
-            _templateRegistry.AllTemplates().Each(t =>
+            templates.AllTemplates().Each(t =>
             {
-                var bindRequest = createBindRequest(t, typePool);
+                var bindRequest = createBindRequest(t, templates);
 
                 var binders = _binders.Where(x => x.CanBind(bindRequest));
                 var policies = _policies.Where(x => x.Matches(t));
@@ -67,18 +66,16 @@ namespace FubuMVC.Spark.SparkModel
                 binders.Each(binder => binder.Bind(bindRequest));
                 policies.Each(policy => policy.Apply(t));
             });
-
-            return _templateRegistry;
         }
 
-        private BindRequest createBindRequest(ITemplate template, TypePool typePool)
+        private BindRequest createBindRequest(ITemplate template, ITemplateRegistry templateRegistry)
         {
             var chunks = _chunkLoader.Load(template);
             return new BindRequest
             {
                 Target = template,
-                Types = typePool,
-                TemplateRegistry = _templateRegistry,
+                Types = _types,
+                TemplateRegistry = templateRegistry,
                 Master = chunks.Master(),
                 ViewModelType = chunks.ViewModel(),
                 Namespaces = chunks.Namespaces(),

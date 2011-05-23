@@ -11,17 +11,17 @@ namespace FubuMVC.Spark
 {
     public class SparkViewFacility : IViewFacility
     {
-        private readonly ITemplateComposer _composer;
-        public SparkViewFacility(ITemplateComposer composer)
+        private readonly ITemplateRegistry _templateRegistry;
+        public SparkViewFacility(ITemplateRegistry templateRegistry)
         {
-            _composer = composer;
+            _templateRegistry = templateRegistry;
         }
 
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            return _composer.Compose(types)
+            // clean up pending
+            return _templateRegistry
                 .AllTemplates()
-                // TODO : Clean this up
                 .Where(x => x.Descriptor is ViewDescriptor)
                 .Select(x => x.Descriptor.As<ViewDescriptor>())
                 .Where(x => x.HasViewModel())

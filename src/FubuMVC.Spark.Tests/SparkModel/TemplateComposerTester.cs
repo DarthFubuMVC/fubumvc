@@ -28,6 +28,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private IList<ITemplate> _binder1Templates;
         private IList<ITemplate> _binder2Templates;
 
+        private ITemplateRegistry _templateRegistry;
         private readonly TypePool _types;
 
         public TemplateComposerTester()
@@ -39,11 +40,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _template1 = new Template("tmpl1.spark", "x", "o1");
             _template2 = new Template("tmpl2.spark", "z", "o2");
+            _templateRegistry = new TemplateRegistry {_template1, _template2};
 
             var chunkLoader = MockFor<IChunkLoader>();
             chunkLoader.Stub(x => x.Load(Arg<Template>.Is.Anything)).Return(Enumerable.Empty<Chunk>());
 
-            Services.Inject<ITemplateRegistry>(new TemplateRegistry {_template1, _template2});
+            Services.Inject(_types);
             configurePolicies();
             configureBinders();
 
@@ -95,7 +97,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void binders_that_match_are_applied_against_each_spark_item()
         {
-            ClassUnderTest.Compose(_types);
+            ClassUnderTest.Compose(_templateRegistry);
             _binder1Templates.ShouldHaveCount(1).ShouldContain(_template1);
             _binder2Templates.ShouldHaveCount(1).ShouldContain(_template2);
         }
@@ -103,7 +105,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void policies_that_match_are_applied_against_each_spark_item()
         {
-            ClassUnderTest.Compose(_types);
+            ClassUnderTest.Compose(_templateRegistry);
             _policy1Templates.ShouldHaveCount(1).ShouldContain(_template1);
             _policy2Templates.ShouldHaveCount(1).ShouldContain(_template2);
         }
@@ -120,7 +122,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 .AddBinder(binder)
                 .AddBinder<OtherTemplateBinder>();
 
-            ClassUnderTest.Compose(_types);
+            ClassUnderTest.Compose(_templateRegistry);
 
             invoked.ShouldBeTrue();
             OtherTemplateBinder.Invoked.ShouldBeTrue();
@@ -139,7 +141,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             ClassUnderTest.Apply<FakeTemplatePolicy>(p => p.Action += x => invoked2 = true);
             ClassUnderTest.Apply<OtherTemplatePolicy>();
 
-            ClassUnderTest.Compose(_types);
+            ClassUnderTest.Compose(_templateRegistry);
 
             invoked1.ShouldBeTrue();
             invoked2.ShouldBeTrue();

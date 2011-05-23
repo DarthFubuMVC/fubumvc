@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests
 {
@@ -30,8 +28,8 @@ namespace FubuMVC.Spark.Tests
             _templateRegistry[0].Descriptor = new ViewDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
             _templateRegistry[2].Descriptor = new ViewDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
             _templateRegistry[4].Descriptor = new ViewDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
-            
-            MockFor<ITemplateComposer>().Expect(c => c.Compose(Arg<TypePool>.Is.Anything)).Return(_templateRegistry);
+
+            Services.Inject<ITemplateRegistry>(_templateRegistry);
         }
 
         public class ModelA { }
@@ -41,12 +39,11 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void find_views_returns_view_tokens_from_items_with_a_view_model_only()
         {
-            var views = ClassUnderTest.FindViews(null, null);
+            var views = ClassUnderTest.FindViews(new TypePool(typeof(SparkViewFacilityTester).Assembly), new BehaviorGraph());
             views.ShouldHaveCount(3);
             views.ShouldContain(x => x.ViewModelType == typeof(ModelA));
             views.ShouldContain(x => x.ViewModelType == typeof(ModelB));
             views.ShouldContain(x => x.ViewModelType == typeof(ModelC));
         }
-
     }
 }
