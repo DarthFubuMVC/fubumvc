@@ -1,7 +1,7 @@
 ﻿<use master="" />
-<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="FubuMVC.Core.Diagnostics.Tracing" />
 <use namespace="System.Linq" />
-<viewdata model="FubuMVC.Core.Diagnostics.AuthorizationReport" />
+<viewdata model="FubuMVC.Core.Diagnostics.Tracing.AuthorizationReport" />
 <div class="authorization-report" if="Model.Details.Any()">
   <h4>Authorization</h4>
   <table class="grid">
