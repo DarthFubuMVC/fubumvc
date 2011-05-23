@@ -1,7 +1,7 @@
 namespace :nug do
 	@nuget = "lib/nuget.exe"
 	@nugroot = File.expand_path("/nugs")
-	@dependencies = []
+	@dependencies = ['FubuCore','Bottles']
 	
 	desc "Build the nuget package"
 	task :build do
@@ -9,12 +9,12 @@ namespace :nug do
 	end
 
 	desc "pulls new NuGet updates from your local machine"
-	task :pull, [:location] => [:build] do |t, args|
+	task :pull, [:location] do |t, args|
 		args.with_defaults(:location => 'local')
 		location = args[:location]
 		
 		@dependencies.each do |f|
-			#nuget install
+			sh "#{@nuget} install #{f} /Source #{@nugroot} /ExcludeVersion /OutputDirectory .\\lib"
 		end
 	end
 		
