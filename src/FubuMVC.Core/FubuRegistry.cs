@@ -54,6 +54,8 @@ namespace FubuMVC.Core
             get { return GetType().ToString(); }
         }
 
+        public TypePool Types { get { return _types; } }
+
         public static Assembly FindTheCallingAssembly()
         {
             var trace = new StackTrace(false);
