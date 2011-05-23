@@ -122,6 +122,7 @@
     <Compile Include="Diagnostics\DiagnosticBehaviorFactoryTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
+    <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />

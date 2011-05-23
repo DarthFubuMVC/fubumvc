@@ -22,6 +22,7 @@ using FubuMVC.Core.Web.Security;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
 using NUnit.Framework;
+using IPackageFiles = FubuMVC.Core.Packaging.IPackageFiles;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -244,6 +245,19 @@ namespace FubuMVC.Tests.Registration
         public void chain_authorizor_is_registered()
         {
             registeredTypeIs<IChainAuthorizor, ChainAuthorizor>();
+        }
+
+        [Test]
+        public void package_files_are_registered()
+        {
+            registeredTypeIs<IPackageFiles, PackageFilesCache>();
+        }
+
+        [Test]
+        public void an_activator_for_PackageFileActivator_is_registered()
+        {
+            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+                .Any(x => x.Type == typeof(PackageFileActivator)).ShouldBeTrue();
         }
 
     }

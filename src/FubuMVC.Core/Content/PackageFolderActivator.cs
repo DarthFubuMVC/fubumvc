@@ -5,6 +5,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Content
 {
+    [MarkedForTermination("Can make this obsolete with more generic PackageFileActivator")]
     public class PackageFolderActivator : IActivator
     {
         private readonly IContentFolderService _contents;

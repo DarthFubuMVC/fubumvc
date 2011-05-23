@@ -185,6 +185,10 @@
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
+    <Compile Include="Packaging\IPackageFiles.cs" />
+    <Compile Include="Packaging\PackageFileActivator.cs" />
+    <Compile Include="Packaging\PackageFilesCache.cs" />
+    <Compile Include="Packaging\PackageSettingsSource.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
     <Compile Include="Packaging\ZipFilePackageLoader.cs" />
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />

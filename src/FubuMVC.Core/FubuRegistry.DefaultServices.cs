@@ -28,6 +28,7 @@ using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.Web.Security;
+using IPackageFiles = FubuMVC.Core.Packaging.IPackageFiles;
 
 namespace FubuMVC.Core
 {
@@ -150,6 +151,9 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IPageActivationRules, PageActivationRuleCache>();
             graph.Services.SetServiceIfNone<IPageActivator, PageActivator>();
+
+            graph.Services.SetServiceIfNone<IPackageFiles, PackageFilesCache>();
+            graph.Services.AddService<IActivator>(typeof (PackageFileActivator));
 
             registerActivators(graph);
             registerHtmlConventions(graph);

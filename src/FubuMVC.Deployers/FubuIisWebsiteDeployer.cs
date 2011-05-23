@@ -1,5 +1,4 @@
-﻿using System;
-using Bottles.Deployers.Iis;
+﻿using Bottles.Deployers.Iis;
 using Bottles.Deployment;
 using Bottles.Deployment.Directives;
 using Bottles.Deployment.Runtime;
