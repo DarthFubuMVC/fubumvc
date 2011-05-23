@@ -38,7 +38,7 @@
       <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
+      <HintPath>..\..\lib\htmltags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>

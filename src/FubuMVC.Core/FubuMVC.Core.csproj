@@ -34,12 +34,11 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\bottles\Bottles.dll</HintPath>
+    <Reference Include="Bottles">
+      <HintPath>..\..\lib\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
-      <HintPath>..\..\lib\bottles\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\..\lib\Bottles\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -49,9 +48,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="HtmlTags">
+      <HintPath>..\..\lib\htmltags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\lib\DotNetZip\Ionic.Zip.dll</HintPath>

@@ -6,7 +6,7 @@
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>
-  <ContentFileSet Include="*.as*x;*.master;Content\*.*;*.config">
+  <ContentFileSet Include="*.as*x;*.master;Content\*.*;*.config" Exclude="data/*">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
 </package>

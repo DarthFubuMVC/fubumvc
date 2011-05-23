@@ -54,3 +54,4 @@ FubuTestAppRoot
 deployment
  
 lib/bottles/FubuMVC*.*
+lib/**/*.nupkg
