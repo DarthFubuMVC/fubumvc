@@ -22,11 +22,11 @@ namespace FubuMVC.Deployers
         public void Execute(FubuWebsite website, HostManifest host, IPackageLog log)
         {
             // TODO -- more logging!!!!
-            
-            new IisWebsiteCreator().Create(website);
 
+            new IisWebsiteCreator().Create(website);
+            
             var destination = new FubuBottleDestination(website.VDirPhysicalPath);
-            _bottleMover.Move(destination, host.BottleReferences);
+            _bottleMover.Move(log, destination, host.BottleReferences);
         }
     }
 }
