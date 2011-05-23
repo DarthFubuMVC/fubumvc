@@ -1,9 +1,7 @@
 namespace :nug do
 	@nuget = "lib/nuget.exe"
-	
-	@packname = 'fubumvc'
-	@files = ['Fubu','FubuCore','FubuLocalization','FubuMVC.Core','FubuMVC.StructureMap','FubuMVC.WebForms'].map {|name| name + ".dll"}
 	@nugroot = File.expand_path("/nugs")
+	@dependencies = []
 	
 	desc "Build the nuget package"
 	task :build do
@@ -15,8 +13,8 @@ namespace :nug do
 		args.with_defaults(:location => 'local')
 		location = args[:location]
 		
-		@files.each do |f|
-			#copy to 
+		@dependencies.each do |f|
+			#nuget install
 		end
 	end
 		
@@ -24,8 +22,11 @@ namespace :nug do
 	task :push, [:location] => [:build] do |t, args|
 		args.with_defaults(:location => 'local')
 		location = args[:location]
-			
-		Dir["#{ARTIFACTS}/*.nupkg"].each do |fn|		
+		
+		FileUtils.makedirs(@nugroot)
+		
+		Dir["#{ARTIFACTS}/*.nupkg"].each do |fn|
+			puts "Copying package #{fn} to #{@nugroot}"
 			FileUtils.cp fn, @nugroot
 		end
 	end
