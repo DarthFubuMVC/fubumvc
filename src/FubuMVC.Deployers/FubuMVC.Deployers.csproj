@@ -42,7 +42,7 @@
     </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
+      <HintPath>..\..\lib\fubucore\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,7 +1,7 @@
 namespace :nug do
 	@nuget = "lib/nuget.exe"
 	@nugroot = File.expand_path("/nugs")
-	@dependencies = ['FubuCore','Bottles']
+	@dependencies = ['FubuCore','Bottles', 'FubuLocalization']
 	
 	desc "Build the nuget package"
 	task :build do

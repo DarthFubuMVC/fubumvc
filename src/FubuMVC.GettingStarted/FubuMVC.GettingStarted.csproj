@@ -32,16 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FubuCore">
-      <HintPath>..\..\lib\fubucore\FubuCore.dll</HintPath>
+      <HintPath>..\..\lib\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
+      <HintPath>..\..\lib\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\..\lib\htmltags\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\lib\CommonServiceLocator\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
