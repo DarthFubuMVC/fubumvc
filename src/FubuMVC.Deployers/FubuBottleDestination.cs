@@ -21,7 +21,8 @@ namespace FubuMVC.Deployers
             switch (manifest.Role)
             {
                 case BottleRoles.Binaries:
-                    yield return new BottleExplosionRequest(){
+                    yield return new BottleExplosionRequest
+                    {
                         BottleDirectory = BottleFiles.BinaryFolder, 
                         BottleName = manifest.Name, 
                         DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder)
@@ -42,7 +43,14 @@ namespace FubuMVC.Deployers
                                  {
                                      BottleDirectory = null,
                                      BottleName = manifest.Name,
-                                     DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder, FubuMvcPackageFacility.FubuPackagesFolder)
+                                     DestinationDirectory = _physicalPath.AppendPath(BottleFiles.BinaryFolder, FubuMvcPackageFacility.FubuPackagesFolder)
+                                 };
+
+                    yield return new BottleExplosionRequest
+                                 {
+                                     BottleDirectory = BottleFiles.BinaryFolder,
+                                     BottleName = manifest.Name,
+                                     DestinationDirectory = _physicalPath.AppendPath(BottleFiles.BinaryFolder)
                                  };
                     break;
 

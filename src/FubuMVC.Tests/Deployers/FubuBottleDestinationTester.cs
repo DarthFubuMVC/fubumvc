@@ -54,17 +54,23 @@ namespace FubuMVC.Tests.Deployers
         [Test]
         public void create_request_for_module()
         {
-            var request = theDestination.DetermineExplosionRequests(new PackageManifest()
+            var requests = theDestination.DetermineExplosionRequests(new PackageManifest()
             {
                 Role = BottleRoles.Module,
                 Name = "the bottle name"
-            }).Single();
+            });
 
-            request.BottleDirectory.ShouldBeNull();
-            var thePackagesFolder = FileSystem.Combine(theRootFolder, BottleFiles.BinaryFolder,
+            var firstRequest = requests.First();
+
+            firstRequest.BottleDirectory.ShouldBeNull();
+            var thePackagesFolder = theRootFolder.AppendPath(BottleFiles.BinaryFolder,
                                               FubuMvcPackageFacility.FubuPackagesFolder);
 
-            request.DestinationDirectory.ShouldEqual(thePackagesFolder);
+            firstRequest.DestinationDirectory.ShouldEqual(thePackagesFolder);
+
+            var secondRequet = requests.Skip(1).First();
+            secondRequet.BottleDirectory.ShouldEqual(BottleFiles.BinaryFolder);
+            secondRequet.DestinationDirectory.ShouldEqual(theRootFolder.AppendPath(BottleFiles.BinaryFolder));
         }
 
         [Test]

@@ -20,7 +20,7 @@ namespace Fubu
         {
             if (fileSystem.ApplicationManifestExists(input.AppFolder))
             {
-                modifyAndListExistingManifest(fileSystem, input);
+                loadAndDisplay(fileSystem, input);
 
                 if (input.OpenFlag)
                 {
@@ -29,19 +29,19 @@ namespace Fubu
             }
             else
             {
-                WriteManifestCannotBeFound(input.AppFolder);
+                DisplayManifestCannotBeFound(input.AppFolder);
                 return false;
             }
             return true;
         }
 
-        private void modifyAndListExistingManifest(IFileSystem fileSystem, ManifestInput input)
+        private void loadAndDisplay(IFileSystem fileSystem, ManifestInput input)
         {
             var manifest = fileSystem.LoadApplicationManifestFrom(input.AppFolder);
-            WriteManifest(input, manifest);
+            DisplayManifest(input, manifest);
         }
 
-        public virtual void WriteManifest(ManifestInput input, PackageManifest manifest)
+        public virtual void DisplayManifest(ManifestInput input, PackageManifest manifest)
         {
             var title = "Application Manifest for " + FileSystem.Combine(input.AppFolder, PackageManifest.FILE);
             var report = new TwoColumnReport(title);
@@ -57,13 +57,13 @@ namespace Fubu
             LinkCommand.ListCurrentLinks(input.AppFolder, manifest);
         }
 
-        public virtual void WriteManifestCannotBeFound(string folder)
+        public virtual void DisplayManifestCannotBeFound(string folder)
         {
             var file = FileSystem.Combine(folder, PackageManifest.FILE);
             Console.WriteLine("Application Manifest file at {0} does not exist", file);
         }
 
-        public virtual void WriteCannotOverwriteFileWithoutForce(string folder)
+        public virtual void DisplayCannotOverwriteFileWithoutForce(string folder)
         {
             var file = FileSystem.Combine(folder, PackageManifest.FILE);
             Console.WriteLine("File {0} already exists, use the '-f' flag to overwrite the existing file", file);
