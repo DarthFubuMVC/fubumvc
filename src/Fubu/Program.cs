@@ -23,10 +23,10 @@ namespace Fubu
                 factory.RegisterCommands(typeof(AliasCommand).Assembly);
                 factory.RegisterCommands(typeof(IFubuCommand).Assembly);
                 factory.RegisterCommands(typeof(Program).Assembly);
-
+                
                 // TODO -- don't think this should be permanent
                 factory.RegisterCommands(typeof(CreateVdirCommand).Assembly);
-
+                
                 var executor = new CommandExecutor(factory);
                 success = executor.Execute(args);
             }

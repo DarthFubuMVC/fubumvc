@@ -80,10 +80,10 @@ namespace FubuMVC.Tests.Packaging
         [Test]
         public void load_all_packages_by_reading_the_include_folder()
         {
-            var includes = new PackageManifest();
+            var includes = new LinkManifest();
             includes.AddLink("../TestPackage1");
 
-            new FileSystem().PersistToFile(includes, theApplicationDirectory, PackageManifest.FILE);
+            new FileSystem().PersistToFile(includes, theApplicationDirectory, LinkManifest.FILE);
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));

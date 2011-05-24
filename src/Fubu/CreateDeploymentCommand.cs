@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using Bottles.Deployment;
 using Bottles.Deployment.Commands;
-using Bottles.Deployment.Directives;
 using Bottles.Deployment.Writing;
 using FubuCore.CommandLine;
 using FubuCore;

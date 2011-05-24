@@ -35,11 +35,16 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles">
-      <HintPath>..\..\lib\Bottles\lib\Bottles.dll</HintPath>
+    <Reference Include="Bottles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="Bottles.Deployment">
-      <HintPath>..\..\lib\Bottles\lib\Bottles.Deployment.dll</HintPath>
+    <Reference Include="Bottles.Deployers.Iis">
+      <HintPath>..\..\lib\bottles\lib\Bottles.Deployers.Iis.dll</HintPath>
+    </Reference>
+    <Reference Include="Bottles.Deployment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\bottles\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
