@@ -12,34 +12,29 @@
     <description>A compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc</tags>
     <dependencies>
-      <dependency id="HtmlTags" version="[0.9.1.9]" />
+      <dependency id="HtmlTags" version="[0.9.1.9,)" />
       <dependency id="StructureMap" version="[2.6.2,2.7)" />
       <dependency id="CommonServiceLocator" version="1.0" />
       <dependency id="WebActivator" version="1.1" />
-      <dependency id="FubuCore" version="0.9.0.1" />
+      <dependency id="FubuCore" version="[0.9.0.1,)" />
     </dependencies>
   </metadata>
   <files>
-	<file src="FubuMVC.cs.pp" target="content\App_Start" />
-	<file src="ConfigureFubuMVC.cs.pp" target="content" />
-
-	<file src="web.config.transform" target="content" />
-  <file src="..\..\build\FubuMVC.GettingStarted.dll" target="content\fubu-content" />
-	
-	<file src="..\..\build\FubuMVC.Core.*" target="lib" />
-	
-	<file src="..\..\build\Ionic.Zip.*" target="lib" />
-	<file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
-	<file src="..\..\build\Bottles.*" target="lib" />
-	<file src="..\..\lib\Microsoft.Web.Infrastructure\Microsoft.Web.Infrastructure.dll" target="lib"/>
-
-	<file src="..\..\build\fubu.exe" target="tools" />
-	<file src="..\..\build\FubuCore.*" target="tools" />
-	<file src="..\..\build\FubuMVC.Core.*" target="tools" />
-	<file src="..\..\build\Ionic.Zip.*" target="tools" />
+    <file src="FubuMVC.cs.pp" target="content\App_Start" />
+    <file src="ConfigureFubuMVC.cs.pp" target="content" />
+    <file src="web.config.transform" target="content" />
+    <file src="..\..\build\FubuMVC.GettingStarted.dll" target="content\fubu-content" />	
+    <file src="..\..\build\FubuMVC.Core.*" target="lib" />	
+    <file src="..\..\build\Ionic.Zip.*" target="lib" />
+    <file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
+    <file src="..\..\build\Bottles.*" target="lib" />
+    <file src="..\..\lib\Microsoft.Web.Infrastructure\Microsoft.Web.Infrastructure.dll" target="lib"/>
+    <file src="..\..\build\fubu.exe" target="tools" />
+    <file src="..\..\build\FubuCore.*" target="tools" />
+    <file src="..\..\build\FubuMVC.Core.*" target="tools" />
+    <file src="..\..\build\Ionic.Zip.*" target="tools" />
     <file src="..\..\build\Bottles.*" target="tools" />
     <file src="..\..\build\Bottle*.exe" target="tools" />
-	<file src="..\..\build\StructureMap.dll" target="tools" />
-	
+    <file src="..\..\build\StructureMap.dll" target="tools" />	
   </files>
 </package>
