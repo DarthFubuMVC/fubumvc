@@ -77,24 +77,6 @@ namespace FubuMVC.Tests.Packaging
             directoryContinuation.AssertWasCalled(x => x.Invoke(packageDirectory));
         }
 
-        [Test]
-        public void load_all_packages_by_reading_the_include_folder()
-        {
-            var includes = new LinkManifest();
-            includes.AddLink("../TestPackage1");
-
-            new FileSystem().PersistToFile(includes, theApplicationDirectory, LinkManifest.FILE);
-
-            var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
-            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
-
-            
-            var package = linkedFolderReader.Load(new PackageLog()).Single();
-            assemblyLoader.LoadAssembliesFromPackage(package);
-
-            assemblyLoader.Assemblies.Single().GetName().Name.ShouldEqual("TestPackage1");
-        }
-
 		[Test]
 		public void load_packages_by_assembly()
 		{

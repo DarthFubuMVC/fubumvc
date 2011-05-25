@@ -40,16 +40,19 @@
       <HintPath>..\..\lib\bottles\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployers.Iis">
+	  <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\bottles\lib\Bottles.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\bottles\lib\Bottles.Deployment.dll</HintPath>
+	</Reference>
     <Reference Include="Bottles.Deployers.Iis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Bottles\lib\Bottles.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
+	  <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Bottles\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
