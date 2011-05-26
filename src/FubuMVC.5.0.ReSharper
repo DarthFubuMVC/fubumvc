@@ -1,17 +1,5 @@
 <Configuration>
   <SharedSolutionTemplateManager>
-    <LiveTemplates>
-      <Template uid="c7021f12-6126-43b0-9e05-5f94d617d1e1" shortcut="pvt" description="New test case" text="[Test]&#xD;&#xA;public void $TESTNAME$()&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
-        <Context>
-          <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
-        </Context>
-        <Categories />
-        <Variables>
-          <Variable name="TESTNAME" expression="" initialRange="0" />
-        </Variables>
-        <CustomProperties />
-      </Template>
-    </LiveTemplates>
     <FileTemplates>
       <Template uid="9ea59a45-01b5-4f71-8df7-9916694ea957" shortcut="" description="Unit Tester" text="using NUnit.Framework;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$&#xD;&#xA;{&#xD;&#xA;    [TestFixture]&#xD;&#xA;    public class $CLASSNAME$&#xD;&#xA;    {&#xD;&#xA;        &#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
         <Categories />

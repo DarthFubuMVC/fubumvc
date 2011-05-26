@@ -100,7 +100,6 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IObjectResolver, ObjectResolver>();
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
             graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
-            graph.Services.SetServiceIfNone<ISettingsProvider, AppSettingsProvider>();
             graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
             graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
             graph.Services.SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();

@@ -102,11 +102,6 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IBindingContext, BindingContext>();
         }
 
-        [Test]
-        public void AppSettingsProvider_is_registered()
-        {
-            registeredTypeIs<ISettingsProvider, AppSettingsProvider>();
-        }
 
         [Test]
         public void property_cache_is_registered()
