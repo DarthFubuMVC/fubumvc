@@ -55,3 +55,4 @@ deployment
  
 lib/bottles/FubuMVC*.*
 lib/**/*.nupkg
+.links

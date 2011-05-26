@@ -81,9 +81,13 @@ namespace FubuMVC.Tests.Packaging
 		public void load_packages_by_assembly()
 		{
 			var includes = new PackageManifest();
-			includes.AddAssembly("TestPackage1");
-
+            
             new FileSystem().PersistToFile(includes, theApplicationDirectory, PackageManifest.FILE);
+
+		    var links = new LinkManifest();
+            links.AddLink("../TestPackage1");
+
+            new FileSystem().PersistToFile(links, theApplicationDirectory, LinkManifest.FILE);
 
 			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
             assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
