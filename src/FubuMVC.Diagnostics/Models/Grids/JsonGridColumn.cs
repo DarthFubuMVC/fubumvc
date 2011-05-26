@@ -30,10 +30,13 @@
 
     	public override int GetHashCode()
     	{
-    		unchecked
-    		{
-    			return (Name.GetHashCode()*397) ^ Value.GetHashCode();
-    		}
+            unchecked
+            {
+                var hash = 17;
+                hash = hash * 397 + (Name != null ? Name.GetHashCode() : 0);
+                hash = hash * 397 + (Value != null ? Value.GetHashCode() : 0);
+                return hash;
+            }
     	}
     }
 }
