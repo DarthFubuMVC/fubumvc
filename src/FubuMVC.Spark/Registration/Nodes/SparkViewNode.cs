@@ -34,10 +34,25 @@ namespace FubuMVC.Spark.Registration.Nodes
             var sparkDescriptor = new SparkViewDescriptor().AddTemplate(_descriptor.ViewPath);
             if (useMaster && _descriptor.Master != null)
             {
-                sparkDescriptor.AddTemplate(_descriptor.Master.ViewPath);
+                appendMasterPage(sparkDescriptor, _descriptor.Master);
             }
 
             return sparkDescriptor;
+        }
+
+
+        private static void appendMasterPage(SparkViewDescriptor descriptor, ITemplate template)
+        {
+            if (template == null)
+            {
+                return;
+            }
+            descriptor.AddTemplate(template.ViewPath);
+            var viewDescriptor = template.Descriptor as ViewDescriptor;
+            if (viewDescriptor != null)
+            {
+                appendMasterPage(descriptor, viewDescriptor.Master);
+            }
         }
 
         public override string Description

@@ -148,12 +148,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-        public void if_view_model_type_is_empty_then_binder_is_not_applied()
+        public void if_view_model_type_is_empty_and_master_is_not_set_then_binder_is_not_applied()
         {
             var template = _templateRegistry.ElementAt(11);
             _request.ViewModelType = string.Empty;
             _request.Target = template;
-
+            _request.Master = "";
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+            _request.Master = null;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

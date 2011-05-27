@@ -75,7 +75,7 @@ namespace FubuMVC.Spark.SparkModel
 
             return descriptor != null
                 && descriptor.Master == null
-                && request.ViewModelType.IsNotEmpty()
+                && (request.ViewModelType.IsNotEmpty() || request.Master.IsNotEmpty())
                 && request.Master != string.Empty;
         }
 

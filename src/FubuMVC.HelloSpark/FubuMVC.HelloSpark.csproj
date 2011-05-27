@@ -71,6 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\styles.css" />
+    <None Include="Controllers\ThreePassRendering\ThreePassSample.spark" />
+    <None Include="Controllers\ThreePassRendering\Shared\Application.spark" />
+    <None Include="Controllers\ThreePassRendering\Shared\_Sidebar.spark" />
+    <None Include="Controllers\ThreePassRendering\Shared\Html.spark" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.2.js" />
     <Content Include="Web.config" />
@@ -106,6 +110,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controllers\Family\FamilyController.cs" />
+    <Compile Include="Controllers\ThreePassRendering\ThreePassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
