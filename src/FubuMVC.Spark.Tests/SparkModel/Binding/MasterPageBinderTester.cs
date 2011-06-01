@@ -174,5 +174,13 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target.Descriptor.As<ViewDescriptor>().Master = _templateRegistry.ElementAt(14);
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
+
+        [Test]
+        public void does_not_bind_partials()
+        {
+            _request.Target = _templateRegistry.ElementAt(13);
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
     }
 }

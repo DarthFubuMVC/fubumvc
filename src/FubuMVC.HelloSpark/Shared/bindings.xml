@@ -7,4 +7,5 @@
   </element>
   <element name="LabelFor">this.LabelFor(m =&gt; m.@property)</element>
   <element name="InputFor">this.InputFor(m =&gt; m.@property)</element>
+  <element name="SayHello">"Hello"</element>
 </bindings>

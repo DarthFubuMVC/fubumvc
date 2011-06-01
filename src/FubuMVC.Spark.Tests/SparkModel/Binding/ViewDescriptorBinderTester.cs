@@ -7,14 +7,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class ViewDescriptorBinderTester : InteractionContext<ViewDescriptorBinder>
     {
         [Test]
-        public void does_not_bind_partials()
+        public void bind_partials()
         {
             var request = new BindRequest
             {
                 Target = new Template("_partial.spark", "", "testing")
             };
 
-            ClassUnderTest.CanBind(request).ShouldBeFalse();
+            ClassUnderTest.CanBind(request).ShouldBeTrue();
         }
 
         [Test]

@@ -79,6 +79,13 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
+        public void does_not_bind_partials()
+        {
+            _request.Target = new Template("_partial.spark", "", "testing");
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
+        [Test]
         public void it_logs_to_tracer()
         {
             ClassUnderTest.Bind(_request);

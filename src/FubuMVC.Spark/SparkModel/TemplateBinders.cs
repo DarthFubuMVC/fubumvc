@@ -44,10 +44,7 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var template = request.Target;
-
-            return !(template.Descriptor is ViewDescriptor)
-                && template.IsSparkView()
-                && !template.IsPartial();
+            return !(template.Descriptor is ViewDescriptor) && template.IsSparkView();
         }
 
         public void Bind(IBindRequest request)
@@ -76,6 +73,7 @@ namespace FubuMVC.Spark.SparkModel
             return descriptor != null
                 && descriptor.Master == null
                 && (request.ViewModelType.IsNotEmpty() || request.Master.IsNotEmpty())
+                && !request.Target.IsPartial()
                 && request.Master != string.Empty;
         }
 
@@ -106,6 +104,7 @@ namespace FubuMVC.Spark.SparkModel
 
             return descriptor != null
                    && !descriptor.HasViewModel()
+                   && !request.Target.IsPartial()
                    && request.ViewModelType.IsNotEmpty();
         }
 
@@ -153,8 +152,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
 
-            return descriptor != null
-                && descriptor.Bindings.Count() == 0;
+            return descriptor != null && descriptor.Bindings.Count() == 0;
         }
 
         public void Bind(IBindRequest request)
