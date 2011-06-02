@@ -3,10 +3,4 @@
   <Role>module</Role>
   <Name>pak1</Name>
   <assembly>TestPackage1</assembly>
-  <DataFileSet Include="*.*">
-    <DeepSearch>true</DeepSearch>
-  </DataFileSet>
-  <ContentFileSet Include="*.as*x;*.master;Content\*.*;*.config" Exclude="data/*">
-    <DeepSearch>true</DeepSearch>
-  </ContentFileSet>
 </package>
