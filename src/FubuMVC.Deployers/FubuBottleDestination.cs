@@ -1,42 +1,45 @@
 using System.Collections.Generic;
 using Bottles;
+using Bottles.Deployers.Iis;
 using Bottles.Deployment.Runtime.Content;
 using FubuCore;
 using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Deployers
 {
-    public class FubuBottleDestination : IBottleDestination
+    public class FubuBottleDestination : WebsiteBottleDestination, IBottleDestination
     {
         private readonly string _physicalPath;
 
-        public FubuBottleDestination(string physicalPath)
+        public FubuBottleDestination(string physicalPath) : base(physicalPath)
         {
             _physicalPath = physicalPath;
         }
 
 
-        public IEnumerable<BottleExplosionRequest> DetermineExplosionRequests(PackageManifest manifest)
+        public override IEnumerable<BottleExplosionRequest> DetermineExplosionRequests(PackageManifest manifest)
         {
+            var baseRequests = base.DetermineExplosionRequests(manifest);
             switch (manifest.Role)
             {
-                case BottleRoles.Binaries:
-                    yield return new BottleExplosionRequest
-                    {
-                        BottleDirectory = BottleFiles.BinaryFolder, 
-                        BottleName = manifest.Name, 
-                        DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder)
-                    };
-                    break;
-
-                case BottleRoles.Config:
-                    yield return new BottleExplosionRequest()
-                                 {
-                                     BottleDirectory = BottleFiles.ConfigFolder,
-                                     BottleName = manifest.Name,
-                                     DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.ConfigFolder)
-                                 };
-                    break;
+                    
+//                case BottleRoles.Binaries:
+//                    yield return new BottleExplosionRequest
+//                    {
+//                        BottleDirectory = BottleFiles.BinaryFolder, 
+//                        BottleName = manifest.Name, 
+//                        DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder)
+//                    };
+//                    break;
+//
+//                case BottleRoles.Config:
+//                    yield return new BottleExplosionRequest()
+//                                 {
+//                                     BottleDirectory = BottleFiles.ConfigFolder,
+//                                     BottleName = manifest.Name,
+//                                     DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.ConfigFolder)
+//                                 };
+//                    break;
 
                 case BottleRoles.Module:
                     yield return new BottleExplosionRequest()
@@ -46,31 +49,34 @@ namespace FubuMVC.Deployers
                                      DestinationDirectory = _physicalPath.AppendPath(BottleFiles.BinaryFolder, FubuMvcPackageFacility.FubuPackagesFolder)
                                  };
 
-                    yield return new BottleExplosionRequest
-                                 {
-                                     BottleDirectory = BottleFiles.BinaryFolder,
-                                     BottleName = manifest.Name,
-                                     DestinationDirectory = _physicalPath.AppendPath(BottleFiles.BinaryFolder)
-                                 };
-                    break;
-
-                case BottleRoles.Application:
-                    yield return new BottleExplosionRequest{
-                        BottleName = manifest.Name,
-                        BottleDirectory = BottleFiles.BinaryFolder,
-                        DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder)
-                    };
-
-                    yield return new BottleExplosionRequest{
-                        BottleName = manifest.Name,
-                        BottleDirectory = BottleFiles.WebContentFolder,
-                        DestinationDirectory = _physicalPath
-                    };
                     
+                    foreach(var request in baseRequests)
+                    {
+                        yield return request;
+                    }
                     break;
+
+//                case BottleRoles.Application:
+//                    yield return new BottleExplosionRequest{
+//                        BottleName = manifest.Name,
+//                        BottleDirectory = BottleFiles.BinaryFolder,
+//                        DestinationDirectory = FileSystem.Combine(_physicalPath, BottleFiles.BinaryFolder)
+//                    };
+//
+//                    yield return new BottleExplosionRequest{
+//                        BottleName = manifest.Name,
+//                        BottleDirectory = BottleFiles.WebContentFolder,
+//                        DestinationDirectory = _physicalPath
+//                    };
+//                    
+//                    break;
 
                 default:
-                    yield break;
+                    foreach(var request in baseRequests)
+                    {
+                        yield return request;
+                    }
+                    break;
             }
         }
 

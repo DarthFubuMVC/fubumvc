@@ -27,8 +27,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var binding2 = new Template(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, FubuSparkConstants.HostOrigin);
 
             _viewFolder = MockFor<IViewFolder>();
-            _viewFolder.Expect(x => x.GetViewSource(binding1.ViewPath)).Return(new FileSystemViewFile(binding1.FilePath));
-            _viewFolder.Expect(x => x.GetViewSource(binding2.ViewPath)).Return(new FileSystemViewFile(binding2.FilePath));
+            _viewFolder.Expect(x => x.GetViewSource(binding1.ViewPath)).Message("1").Return(new FileSystemViewFile(binding1.FilePath));
+            _viewFolder.Expect(x => x.GetViewSource(binding2.ViewPath)).Message("2").Return(new FileSystemViewFile(binding2.FilePath));
 
             _request = new BindingRequest(_viewFolder) {ViewPath = viewPath};
 

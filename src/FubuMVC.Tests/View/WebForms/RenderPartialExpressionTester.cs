@@ -222,13 +222,13 @@ namespace FubuMVC.Tests.View.WebForms
 
             _model.PartialModelArray = new[] { _partialModel, model2, model3 };
 
-            _tagGenerator.Expect(c => c.BeforeEachofPartial(null, 0, 3)).IgnoreArguments().Return(new NoTag());
-            _tagGenerator.Expect(c => c.BeforeEachofPartial(null, 1, 3)).IgnoreArguments().Return(new NoTag());
-            _tagGenerator.Expect(c => c.BeforeEachofPartial(null, 2, 3)).IgnoreArguments().Return(new NoTag());
+            _tagGenerator.Expect(c => c.BeforeEachofPartial(null, 0, 3)).Return(new NoTag());
+            _tagGenerator.Expect(c => c.BeforeEachofPartial(null, 1, 3)).Return(new NoTag());
+            _tagGenerator.Expect(c => c.BeforeEachofPartial(null, 2, 3)).Return(new NoTag());
 
-            _tagGenerator.Expect(c => c.AfterEachofPartial(null, 0, 3)).IgnoreArguments().Return(new NoTag());
-            _tagGenerator.Expect(c => c.AfterEachofPartial(null, 1, 3)).IgnoreArguments().Return(new NoTag());
-            _tagGenerator.Expect(c => c.AfterEachofPartial(null, 2, 3)).IgnoreArguments().Return(new NoTag());
+            _tagGenerator.Expect(c => c.AfterEachofPartial(null, 0, 3)).Return(new NoTag());
+            _tagGenerator.Expect(c => c.AfterEachofPartial(null, 1, 3)).Return(new NoTag());
+            _tagGenerator.Expect(c => c.AfterEachofPartial(null, 2, 3)).Return(new NoTag());
 
             _expression.ForEachOf(m => m.PartialModelArray).ToString();
 

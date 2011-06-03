@@ -36,6 +36,9 @@
     <Reference Include="Bottles">
       <HintPath>..\..\lib\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
+    <Reference Include="Bottles.Deployers.Iis">
+      <HintPath>..\..\lib\Bottles\lib\Bottles.Deployers.Iis.dll</HintPath>
+    </Reference>
     <Reference Include="Bottles.Deployment">
       <HintPath>..\..\lib\Bottles\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
