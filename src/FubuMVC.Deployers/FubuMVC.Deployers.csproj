@@ -40,9 +40,11 @@
     <Reference Include="Bottles.Deployment">
       <HintPath>..\..\lib\bottles\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fubucore\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.1.7\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,6 +64,9 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

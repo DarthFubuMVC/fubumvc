@@ -32,16 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FubuCore">
-      <HintPath>..\..\lib\FubuCore\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.1.7\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\..\lib\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.1.7\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\..\lib\htmltags\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\lib\CommonServiceLocator\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,5 +76,8 @@
   -->
   <ItemGroup>
     <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -34,24 +34,38 @@
     <Reference Include="Bottles">
       <HintPath>..\..\lib\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fubucore\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.1.7\lib\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    <Reference Include="FubuLocalization">
+      <HintPath>..\packages\FubuLocalization.0.9.1.7\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuTestingSupport, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuCore\lib\FubuTestingSupport.dll</HintPath>
+    <Reference Include="FubuTestingSupport">
+      <HintPath>..\packages\FubuTestingSupport.0.9.1.7\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\..\lib\htmltags\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\CommonServiceLocator\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking.2.6.2.1\lib\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,24 +75,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f">
-      <HintPath>..\..\lib\Rhino mocks\Rhino.Mocks.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="Spark, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
-      <HintPath>..\..\lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
@@ -146,6 +144,7 @@
     <Content Include="Templates\A4.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieZ.spark">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

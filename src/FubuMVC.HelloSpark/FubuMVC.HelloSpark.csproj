@@ -13,6 +13,7 @@
     <RootNamespace>FubuMVC.HelloSpark</RootNamespace>
     <AssemblyName>FubuMVC.HelloSpark</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,14 +37,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fubucore\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore">
+      <HintPath>..\packages\FubuCore.0.9.1.7\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Spark, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -59,15 +68,6 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="HtmlTags, Version=0.9.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\lib\htmltags\lib\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <HintPath>..\..\lib\CommonServiceLocator\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\styles.css" />
@@ -88,6 +88,7 @@
     <None Include="Controllers\Family\Jack.spark" />
     <None Include="Controllers\Family\Marcus.spark" />
     <None Include="Controllers\Family\Silvia.spark" />
+    <Content Include="packages.config" />
     <None Include="Shared\_global.spark" />
     <None Include="Shared\_WhereAreWe.spark" />
     <None Include="Shared\Application.spark" />
