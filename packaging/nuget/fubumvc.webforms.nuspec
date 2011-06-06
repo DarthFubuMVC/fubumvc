@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.WebForms</id>
+    <version>0.0.0</version>
+    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
+    <owners>Joshua Flanagan</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://fubumvc.com</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Support for using the ASP.NET WebForms view engine within a FubuMVC application.</description>
+    <tags>webforms fubumvc</tags>
+    <dependencies>
+      <dependency id="FubuMVC.Lib" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\build\FubuMVC.WebForms.*" target="lib" />	
+    <file src="..\..\src\FubuMVC.WebForms\**\*.cs" target="src" />	
+  </files>
+</package>
