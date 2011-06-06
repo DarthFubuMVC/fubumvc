@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>FubuMVC.lib</id>
+    <id>FubuMVC.References</id>
     <version>0.0.0</version>
     <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
     <owners>Joshua Flanagan</owners>
@@ -9,8 +9,8 @@
     <projectUrl>http://fubumvc.com</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Minimal libraries for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
-    <tags>web framework mvc</tags>
+    <description>Minimal assembly references needed for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
+    <tags>web framework mvc fubumvc</tags>
     <dependencies>
       <dependency id="Bottles" />
       <dependency id="CommonServiceLocator" />
