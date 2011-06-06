@@ -7,7 +7,14 @@ namespace FubuMVC.Core.Packaging
 {
     public class PackageSettingsSource : ISettingsSource
     {
+        public static readonly string FILE = "packageSettings.config";
         private readonly IPackageFiles _files;
+
+        public static void WriteToDirectory(SettingsData data, string directory)
+        {
+            data.Category = SettingCategory.package;
+            XmlSettingsParser.Write(data, directory.AppendPath(FILE));
+        }
 
         public PackageSettingsSource(IPackageFiles files)
         {
@@ -16,10 +23,7 @@ namespace FubuMVC.Core.Packaging
 
         public IEnumerable<SettingsData> FindSettingData()
         {
-            var fileSet = new FileSet(){
-                DeepSearch = true,
-                Include = "config/*.config"
-            };
+            FileSet fileSet = GetFileSet();
 
             return _files.FindFiles(fileSet).Select(file =>
             {
@@ -28,6 +32,14 @@ namespace FubuMVC.Core.Packaging
 
                 return data;
             });
+        }
+
+        public static FileSet GetFileSet()
+        {
+            return new FileSet(){
+                DeepSearch = true,
+                Include = "config/*.config;" + FILE
+            };
         }
     }
 }

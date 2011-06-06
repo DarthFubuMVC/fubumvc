@@ -47,6 +47,9 @@ namespace FubuMVC.Tests.Packaging
             var data6 = newData();
             var data7 = newData();
 
+
+            
+
             saveData(data1, "a", "a1");
             saveData(data2, "a", "a2");
             saveData(data3, "b", "b3");
@@ -55,21 +58,24 @@ namespace FubuMVC.Tests.Packaging
             saveData(data6, "c", "c6");
             saveData(data7, "c", "c7");
 
+            var data8 = newData();
+            data8["pak1"] = "pak1-value";
+            PackageSettingsSource.WriteToDirectory(data8, "geonosis".AppendPath("a"));
+
             theCache = new PackageFilesCache();
             theCache.AddDirectory(FileSystem.Combine("geonosis", "a"));
             theCache.AddDirectory(FileSystem.Combine("geonosis", "b"));
             theCache.AddDirectory(FileSystem.Combine("geonosis", "c"));
+
+            
         }
 
         [Test]
         public void find_files()
         {
-            var fileSpec = new FileSet(){
-                DeepSearch = true,
-                Include = "config/*.config"
-            };
-            theCache.FindFiles(fileSpec).Select(x => Path.GetFileNameWithoutExtension(x))
-                .ShouldHaveTheSameElementsAs("a1", "a2", "b3", "b4", "c5", "c6", "c7");
+            var fileSpec = PackageSettingsSource.GetFileSet();
+            theCache.FindFiles(fileSpec).Select(x => Path.GetFileNameWithoutExtension(x)).OrderBy(x => x)
+                .ShouldHaveTheSameElementsAs("a1", "a2", "b3", "b4", "c5", "c6", "c7", "packageSettings");
         }
 
         [Test]
@@ -79,7 +85,7 @@ namespace FubuMVC.Tests.Packaging
             var allData = source.FindSettingData();
             allData.Each(x => x.Category.ShouldEqual(SettingCategory.package));
 
-            allData.Count().ShouldEqual(7);
+            allData.Count().ShouldEqual(8);
         }
     }
 }
