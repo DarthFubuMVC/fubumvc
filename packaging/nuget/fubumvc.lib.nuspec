@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>FubuMVC</id>
+    <id>FubuMVC.lib</id>
     <version>0.0.0</version>
     <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
     <owners>Joshua Flanagan</owners>
@@ -9,20 +9,19 @@
     <projectUrl>http://fubumvc.com</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A compositional, convention-based framework for complex web applications.
-		This package allows you to quickly create a new FubuMVC web application. If you just want to reference
-		the FubuMVC libraries without the guidance, use the FubuMVC.Lib package instead.</description>
+    <description>Minimal libraries for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.lib"/>
-      <dependency id="WebActivator" version="1.1" />
+      <dependency id="Bottles" />
+      <dependency id="CommonServiceLocator" />
+      <dependency id="FubuCore" />
+      <dependency id="FubuLocalization" />
+      <dependency id="HtmlTags" />
+      <dependency id="StructureMap" />
     </dependencies>
   </metadata>
   <files>
-    <file src="FubuMVC.cs.pp" target="content\App_Start" />
-    <file src="ConfigureFubuMVC.cs.pp" target="content" />
-    <file src="web.config.transform" target="content" />
-    <file src="..\..\build\FubuMVC.GettingStarted.dll" target="content\fubu-content" />	
-    <file src="..\..\lib\Microsoft.Web.Infrastructure\Microsoft.Web.Infrastructure.dll" target="lib"/>
+    <file src="..\..\build\FubuMVC.Core.*" target="lib" />	
+    <file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
   </files>
 </package>
