@@ -23,5 +23,8 @@
   <files>
     <file src="..\..\build\FubuMVC.Core.*" target="lib" />	
     <file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
+
+    <file src="..\..\src\FubuMVC.Core\**\*.cs" target="src\FubuMVC.Core" />
+    <file src="..\..\src\FubuMVC.StructureMap\**\*.cs" target="src\FubuMVC.StructureMap" />
   </files>
 </package>
