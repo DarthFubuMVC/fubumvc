@@ -9,14 +9,14 @@ namespace FubuMVC.StructureMap
 {
     public class NestedStructureMapContainerBehavior : IActionBehavior
     {
-        private readonly ExplicitArguments _arguments;
+        private readonly ServiceArguments _arguments;
         private readonly Guid _behaviorId;
         private readonly IContainer _container;
 
         public NestedStructureMapContainerBehavior(IContainer container, ServiceArguments arguments, Guid behaviorId)
         {
             _container = container;
-            _arguments = arguments.ToExplicitArgs();
+            _arguments = arguments;
             _behaviorId = behaviorId;
         }
 
@@ -25,7 +25,8 @@ namespace FubuMVC.StructureMap
         {
             using (IContainer nested = _container.GetNestedContainer())
             {
-                var behavior = nested.GetInstance<IActionBehavior>(_arguments, _behaviorId.ToString());
+                nested.Configure(x => _arguments.EachService((type, value) => x.For(type).Use(value)));
+                var behavior = nested.GetInstance<IActionBehavior>(_behaviorId.ToString());
                 behavior.Invoke();
             }
         }
