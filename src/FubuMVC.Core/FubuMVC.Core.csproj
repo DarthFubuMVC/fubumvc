@@ -111,6 +111,7 @@
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
     <Compile Include="CurrentRequest.cs" />
+    <Compile Include="Diagnostics\ConfigurationReport.cs" />
     <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\NulloOutputWriter.cs" />
