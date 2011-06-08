@@ -53,6 +53,7 @@ namespace FubuMVC.Core.Registration.Routes
             const string propertyFindingPattern =
                 @"
 \{              # start variable
+\*?             # optional greedy token
 (?<varname>\w+) # capture 1 or more word characters as the variable name
 (:              # optional section beginning with a colon
 (?<default>\w+) # capture 1 or more word characters as the default value

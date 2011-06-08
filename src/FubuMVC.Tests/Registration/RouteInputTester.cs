@@ -40,6 +40,15 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void can_substitute_greedy_parameters()
+        {
+            var parameters = new RouteParameters<FakeInput>();
+            parameters[x => x.Code] = "computers/laptop/i7/dell&ibm";
+            _parameter.Substitute(parameters, "product/category/{*Code}").ShouldEqual("product/category/computers/laptop/i7/dell%26ibm");
+        }
+
+
+        [Test]
         public void is_satisfied_negative()
         {
             _parameter.IsSatisfied(new RouteParameters()).ShouldBeFalse();

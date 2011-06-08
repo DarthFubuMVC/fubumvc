@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using FubuCore;
 using FubuCore.Reflection;
 
@@ -10,11 +13,14 @@ namespace FubuMVC.Core.Registration.Routes
         // use the full blown accessor to get the value
 
         private readonly Accessor _accessor;
+        private readonly Regex _regex;
 
         public RouteParameter(Accessor accessor)
         {
             _accessor = accessor;
             accessor.ForAttribute<RouteInputAttribute>(x => DefaultValue = x.DefaultValue);
+
+            _regex = new Regex(@"(?<Greedy>{\*" + Name + @"})|(?<Normal>{" + Name + @"})", RegexOptions.Compiled);
         }
 
         public string Name { get { return _accessor.Name; } }
@@ -35,7 +41,17 @@ namespace FubuMVC.Core.Registration.Routes
 
         private string substitute(string url, string parameterValue)
         {
-            return url.Replace("{" + Name + "}", parameterValue.UrlEncoded());
+            return _regex.Replace(url, isGreedy(url) ? encodeGreedy(parameterValue) : parameterValue.UrlEncoded());
+        }
+
+        private bool isGreedy(string url)
+        {
+            return _regex.Match(url).Groups["Greedy"].Value.IsNotEmpty();
+        }
+
+        private static string encodeGreedy(string parameterValue)
+        {
+            return parameterValue.Split('/').Select(x => x.UrlEncode()).Join("/");
         }
 
         public string Substitute(RouteParameters parameters, string url)
