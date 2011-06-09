@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Binding;
-using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Tracing;
@@ -25,7 +24,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [SetUp]
         public void SetUp()
         {
-            theContainer = new Container(cfg => cfg.For<ISettingsProvider>().Use<SettingsProvider>());
+            theContainer = new Container();
             theRoutes = FubuApplication.For(() => new FubuRegistry(x =>
             {
                 x.Actions.IncludeType<DiagnosticController>();
