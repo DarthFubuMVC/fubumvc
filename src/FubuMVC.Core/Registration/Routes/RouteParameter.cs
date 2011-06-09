@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Registration.Routes
             _accessor = accessor;
             accessor.ForAttribute<RouteInputAttribute>(x => DefaultValue = x.DefaultValue);
 
-            _regex = new Regex(@"(?<Greedy>{\*" + Name + @"})|(?<Normal>{" + Name + @"})", RegexOptions.Compiled);
+            _regex = new Regex(@"{\*?" + Name + @"}", RegexOptions.Compiled);
         }
 
         public string Name { get { return _accessor.Name; } }
@@ -41,17 +41,14 @@ namespace FubuMVC.Core.Registration.Routes
 
         private string substitute(string url, string parameterValue)
         {
-            return _regex.Replace(url, isGreedy(url) ? encodeGreedy(parameterValue) : parameterValue.UrlEncoded());
+            var encodedValue = encodeParameterValue(parameterValue);
+            return _regex.Replace(url, encodedValue);
         }
 
-        private bool isGreedy(string url)
+        private static string encodeParameterValue(string parameterValue)
         {
-            return _regex.Match(url).Groups["Greedy"].Value.IsNotEmpty();
-        }
-
-        private static string encodeGreedy(string parameterValue)
-        {
-            return parameterValue.Split('/').Select(x => x.UrlEncode()).Join("/");
+            var values = parameterValue.Split('/');
+            return values.Length > 0 ? values.Select(x => x.UrlEncoded()).Join("/") : values.UrlEncoded();
         }
 
         public string Substitute(RouteParameters parameters, string url)

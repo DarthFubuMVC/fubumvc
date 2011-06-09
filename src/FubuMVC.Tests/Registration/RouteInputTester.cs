@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Routes;
 using FubuTestingSupport;
@@ -47,6 +48,13 @@ namespace FubuMVC.Tests.Registration
             _parameter.Substitute(parameters, "product/category/{*Code}").ShouldEqual("product/category/computers/laptop/i7/dell%26ibm");
         }
 
+        [Test]
+        public void can_substitute_greedy_parameters_deals_with_html_encoding()
+        {
+            var parameters = new RouteParameters<FakeInput>();
+            parameters[x => x.Code] = "laptop&apple";
+            _parameter.Substitute(parameters, "product/category/{*Code}").ShouldEqual("product/category/laptop%26apple");
+        }
 
         [Test]
         public void is_satisfied_negative()
