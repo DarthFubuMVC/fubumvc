@@ -74,6 +74,8 @@
     <Compile Include="CreateDeploymentCommand.cs" />
     <Compile Include="InstallPackageCommand.cs" />
     <Compile Include="InstallPackageInput.cs" />
+    <Compile Include="NewCommand.cs" />
+    <Compile Include="NewCommandInput.cs" />
     <Compile Include="PackagesCommand.cs" />
     <Compile Include="PackagesInput.cs" />
     <Compile Include="Program.cs" />
