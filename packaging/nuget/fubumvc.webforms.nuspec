@@ -12,7 +12,7 @@
     <description>Support for using the ASP.NET WebForms view engine within a FubuMVC application.</description>
     <tags>webforms fubumvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.Lib" />
+      <dependency id="FubuMVC.References" />
     </dependencies>
   </metadata>
   <files>

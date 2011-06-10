@@ -14,7 +14,7 @@
 		the FubuMVC libraries without the guidance, use the FubuMVC.Lib package instead.</description>
     <tags>web framework mvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.lib"/>
+      <dependency id="FubuMVC.References"/>
       <dependency id="WebActivator" version="1.1" />
     </dependencies>
   </metadata>
