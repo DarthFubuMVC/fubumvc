@@ -18,7 +18,6 @@
             RootPath = rootPath;
             Origin = origin;
             Descriptor = new NulloDescriptor();
-            ViewPath = filePath.Substring(0, rootPath.Length);
         }
 
         public string FilePath { get; private set; }
