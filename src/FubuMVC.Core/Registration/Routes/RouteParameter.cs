@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public object DefaultValue { get; set; }
 
-        public bool CanSubstitue(object inputModel)
+        public bool CanSubstitute(object inputModel)
         {
             return GetRawValue(inputModel) != null;
         }

@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             var url = _parent.Pattern;
 
-            if (_routeParameters.Any(x => !x.CanSubstitue(input)))
+            if (_routeParameters.Any(x => !x.CanSubstitute(input)))
             {
                 throw new FubuException(
                     2107,
