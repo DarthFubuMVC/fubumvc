@@ -16,6 +16,7 @@ namespace FubuMVC.Core.Runtime
         IEnumerable<ConvertProblem> ProblemsFor<T>();
         IEnumerable<T> Find<T>() where T : class;
         void SetObject(object input);
+        void Clear(Type getType);
     }
 
 
@@ -58,6 +59,14 @@ namespace FubuMVC.Core.Runtime
             if (input == null) throw new ArgumentNullException();
 
             _cache[input.GetType()] = input;
+        }
+
+        public void Clear(Type getType)
+        {
+            if (_cache.Has(getType))
+            {
+                _cache.Remove(getType);
+            }
         }
     }
 }

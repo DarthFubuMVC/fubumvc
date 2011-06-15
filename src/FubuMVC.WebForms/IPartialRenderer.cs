@@ -74,7 +74,7 @@ namespace FubuMVC.WebForms
                 _request.Set(viewModel.GetType(), viewModel);
             }
             _activator.Activate(view);
-
+            _request.Clear(viewModel.GetType());
             setParentPageIfNotAlreadySet(view, page);
 
             if (index.HasValue)

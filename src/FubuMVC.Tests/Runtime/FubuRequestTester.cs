@@ -221,6 +221,39 @@ namespace FubuMVC.Tests.Runtime
     }
 
     [TestFixture]
+    public class when_clearing_a_type_from_the_request : InteractionContext<FubuRequest>
+    {
+        private BinderTarget _binderTarget;
+
+        protected override void beforeEach()
+        {
+            _binderTarget = new BinderTarget();
+            ClassUnderTest.Set(_binderTarget);
+        }
+
+        [Test]
+        public void should_not_do_anything_if_the_type_does_not_exist_in_the_request()
+        {
+            ClassUnderTest.Clear(typeof(when_clearing_a_type_from_the_request));
+            ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeTheSameAs(_binderTarget);
+        }
+
+        [Test]
+        public void should_not_clear_a_subclass_type_when_instructed_to_clear_a_parent_type()
+        {
+            ClassUnderTest.Clear(typeof(BinderTargetBase));
+            ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeTheSameAs(_binderTarget);
+        }
+
+        [Test]
+        public void should_remove_the_type_from_the_request_if_it_exists()
+        {
+            ClassUnderTest.Clear(_binderTarget.GetType());
+            typeof(NullReferenceException).ShouldBeThrownBy(()=> ClassUnderTest.Get(_binderTarget.GetType()).ShouldBeNull());
+        }
+    }
+
+    [TestFixture]
     public class setting_an_object_explicitly_registers_the_new_object : InteractionContext<FubuRequest>
     {
         private BinderTarget registered;

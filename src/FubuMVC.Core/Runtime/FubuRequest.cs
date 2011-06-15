@@ -63,5 +63,13 @@ namespace FubuMVC.Core.Runtime
                 Value = input
             };
         }
+
+        public void Clear(Type getType)
+        {
+            if (_values.Has(getType))
+            {
+                _values.Remove(getType);
+            }
+        }
     }
 }
