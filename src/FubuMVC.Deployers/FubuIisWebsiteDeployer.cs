@@ -1,4 +1,5 @@
-﻿using Bottles.Deployers.Iis;
+﻿using System;
+using Bottles.Deployers.Iis;
 using Bottles.Deployment;
 using Bottles.Deployment.Runtime;
 using Bottles.Deployment.Runtime.Content;
@@ -25,6 +26,11 @@ namespace FubuMVC.Deployers
             
             var destination = new FubuBottleDestination(website.VDirPhysicalPath);
             _bottleMover.Move(log, destination, host.BottleReferences);
+        }
+
+        public string GetDescription(FubuWebsite directive)
+        {
+            return "Installing a FubuMVC application at " + directive.VDirPhysicalPath;
         }
     }
 }
