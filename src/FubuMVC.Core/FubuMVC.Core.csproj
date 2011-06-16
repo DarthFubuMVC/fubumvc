@@ -35,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.0.62\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.0.69\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
-      <HintPath>..\packages\Bottles.Deployment.0.9.0.62\lib\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployment.0.9.0.69\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.1.24\lib\FubuCore.dll</HintPath>
