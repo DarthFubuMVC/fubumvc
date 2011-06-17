@@ -1,6 +1,7 @@
 using System.Web;
 using System.Web.Routing;
 using Bottles;
+using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.HelloWorld.Services;
 using StructureMap;
@@ -32,6 +33,7 @@ namespace FubuMVC.HelloWorld
                 i.TheCallingAssembly();
                 i.Convention<SettingsScanner>();
             });
+            x.For<ISettingsProvider>().Use<AppSettingsProvider>();
             x.SetAllProperties(s => s.Matching(p => p.Name.EndsWith("Settings")));
         }
     }

@@ -1,8 +1,7 @@
 ﻿<viewdata model="TestPackage4.HelloWorld"/>
 
-<content:MainContent>
+
 <div id="main">
 Hello from Test Package 4
 <h1 id="message">$!{Model.Message}</h1>
 </div>
-</content:MainContent>
