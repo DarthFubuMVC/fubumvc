@@ -25,7 +25,42 @@ namespace IntegrationTesting
 
             _solutionDirectory = Path.GetFullPath(path);
         }
+        public void RunBottles(string commandLine)
+        {
 
+            var fileName = Path.Combine(_solutionDirectory, @"bottlesrunner.exe");
+            Debug.WriteLine("Execute: {0} {1}".ToFormat(fileName, commandLine));
+            var startup = new ProcessStartInfo(fileName, commandLine)
+            {
+                CreateNoWindow = true,
+                RedirectStandardError = true,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                WorkingDirectory = _solutionDirectory
+            };
+
+            try
+            {
+
+                var process = Process.Start(startup);
+                var processOutput = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + processOutput);
+                }
+            }
+            catch (StorytellerAssertionException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException("Trying to run " + fileName, e);
+            }
+        }
         public void RunFubu(string commandLine)
         {
 

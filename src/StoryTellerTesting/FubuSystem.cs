@@ -32,12 +32,6 @@ namespace IntegrationTesting
             _runner = new CommandRunner();
             _runner.RunFubu("createvdir src/FubuTestApplication fubu-testing");
 
-            _runner.RunFubu("init-pak src/TestPackage1 pak1");
-            _runner.RunFubu("init-pak src/TestPackage2 pak2");
-            _runner.RunFubu("init-pak src/TestPackage3 pak3");
-			_runner.RunFubu("init-pak src/TestPackage4 pak4");
-			_runner.RunFubu("init-pak src/FubuMVC.Spark spark");
-
             _runner.RunFubu("create-pak pak1 pak1.zip -f");
             _runner.RunFubu("create-pak pak2 pak2.zip -f");
             _runner.RunFubu("create-pak pak3 pak3.zip -f");
