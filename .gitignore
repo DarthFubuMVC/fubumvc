@@ -57,3 +57,6 @@ lib/bottles/FubuMVC*.*
 lib/**/*.nupkg
 .links
 packaging/release
+*.swp
+output
+output/*
