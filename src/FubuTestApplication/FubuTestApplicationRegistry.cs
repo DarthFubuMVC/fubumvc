@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.UI;
+using FubuMVC.Spark;
 using FubuMVC.WebForms;
 using FubuTestApplication.ConnegActions;
 
@@ -12,6 +13,12 @@ namespace FubuTestApplication
             IncludeDiagnostics(true);
 
             Import<WebFormsEngine>();
+            this.UseSpark();
+
+            Views
+                .TryToAttachViewsInPackages()
+                .TryToAttachWithDefaultConventions();
+
 
             Actions.IncludeType<ScriptsHandler>();
 

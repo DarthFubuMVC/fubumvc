@@ -7,7 +7,7 @@
         <InstallPackage isStep="True" zipFile="pak4.zip" />
       </PackagingSetup>
     </SetUp>
-    <OpenPage isStep="True" url="http://localhost/fubu-testing/pak4/testpackage4/hellospark/helloworld" />
+    <OpenPage isStep="True" url="http://localhost/fubu-testing/testpackage4/hellospark/helloworld" />
     <TextOfMessageHeadingShouldBe isStep="True" message="Hello, World!" />
   </Package4>
 </Test>

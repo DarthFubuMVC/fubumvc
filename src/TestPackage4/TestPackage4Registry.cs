@@ -1,9 +1,10 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Spark;
+using Spark;
 
 namespace TestPackage4
 {
-	public class TestPackage4Registry : FubuPackageRegistry//, IFubuRegistryExtension
+	public class TestPackage4Registry : FubuPackageRegistry, IFubuRegistryExtension
 	{
 	    public TestPackage4Registry()
 	    {
@@ -11,9 +12,9 @@ namespace TestPackage4
 
             Actions.IncludeClassesSuffixedWithController();
 
-	        this.UseSpark();
-
-	        Views.TryToAttachWithDefaultConventions();
+	        Views
+                .TryToAttachViewsInPackages()
+                .TryToAttachWithDefaultConventions();
 
 	    }
 
