@@ -47,9 +47,7 @@ namespace FubuMVC.Spark.SparkModel
     public interface ITemplateRegistry
     {
         IEnumerable<ITemplate> BindingsForView(string viewPath);
-        ITemplate FirstByName(string name);
         IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories);
-        IEnumerable<ITemplate> ByOrigin(string origin);
         IEnumerable<ITemplate> AllTemplates();
         IEnumerable<ITemplate> FromHost();
     }
