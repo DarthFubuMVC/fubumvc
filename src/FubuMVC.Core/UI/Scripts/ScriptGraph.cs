@@ -10,6 +10,7 @@ namespace FubuMVC.Core.UI.Scripts
     public interface IScriptRegistration
     {
         void Alias(string name, string alias);
+        void Fallback(string name, string windowVariableName, string fallbackName);
         void Dependency(string dependent, string dependency);
         void Extension(string extender, string @base);
         void AddToSet(string setName, string name);
@@ -59,6 +60,11 @@ namespace FubuMVC.Core.UI.Scripts
         public void Alias(string name, string alias)
         {
             _objects[name].AddAlias(alias);
+        }
+
+        public void Fallback(string name, string windowVariable, string fallbackName)
+        {
+            _objects[name].AddFallback(fallbackName, windowVariable);
         }
 
         public void Dependency(string dependent, string dependency)

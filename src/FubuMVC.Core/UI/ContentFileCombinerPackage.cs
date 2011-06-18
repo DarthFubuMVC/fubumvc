@@ -43,9 +43,9 @@ namespace FubuMVC.Core.UI
             _folderService.RegisterDirectory(FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), "content"));
         }
 
-        public IEnumerable<HtmlTag> Write(IEnumerable<string> scripts)
+        public IEnumerable<HtmlTag> Write(IEnumerable<IScript> scripts)
         {
-            var rawFiles = scripts.Select(script => _folderService.FileNameFor(ContentType.scripts, script)).Where(x => x != null).ToArray();
+            var rawFiles = scripts.Select(script => _folderService.FileNameFor(ContentType.scripts, script.Name)).Where(x => x != null).ToArray();
             var combinedName = _fileCombiner.GenerateCombinedFile(rawFiles, "; // src: {0}");
             if (combinedName == null) { return Enumerable.Empty<HtmlTag>(); }
             var scriptUrl = "~/content/{0}".ToFormat(combinedName).ToAbsoluteUrl();

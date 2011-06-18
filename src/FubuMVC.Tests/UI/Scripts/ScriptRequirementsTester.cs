@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.UI.Scripts
             ClassUnderTest.Require("jquery.js");
             ClassUnderTest.Require("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetScriptsToRender().Single(), "jquery.js");
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetScriptsToRender().Select(x => x.Name).Single(), "jquery.js");
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.UI.Scripts
             scriptExists("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetScriptsToRender().Single(), "jquery.js");
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetScriptsToRender().Select(x => x.Name).Single(), "jquery.js");
         }
 
         [Test]
@@ -75,11 +75,11 @@ namespace FubuMVC.Tests.UI.Scripts
             ClassUnderTest.Require("a"); // depends on b & c
             ClassUnderTest.Require("f"); // no dependencies
 
-            ClassUnderTest.GetScriptsToRender().ShouldHaveTheSameElementsAs("b", "c", "f", "a");
+            ClassUnderTest.GetScriptsToRender().Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "f", "a");
             // ask for d, get d,e (not b, since it was already written)
 
             ClassUnderTest.Require("d"); // depends on e and b
-            ClassUnderTest.GetScriptsToRender().ShouldHaveTheSameElementsAs("e", "d");
+            ClassUnderTest.GetScriptsToRender().Select(x => x.Name).ShouldHaveTheSameElementsAs("e", "d");
         }
     }
 }

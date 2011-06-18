@@ -88,6 +88,11 @@ namespace FubuMVC.Core.UI.Scripts
                     _registration.Alias(tokens.Dequeue(), key);
                     break;
 
+                case "fallback":
+                    if (tokens.Count != 2) throw new InvalidSyntaxException("Two tokens must appear on the right side of the 'fallback' verb");
+                    _registration.Fallback(key, tokens.Dequeue(), tokens.Dequeue());
+                    break;
+
                 case "requires":
                     tokens.Each(name => _registration.Dependency(key, name));
                     break;
