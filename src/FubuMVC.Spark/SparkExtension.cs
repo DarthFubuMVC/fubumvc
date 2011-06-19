@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Bottles;
+using Bottles.Diagnostics;
+using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
-using FubuCore.Util;
-using FubuCore;
-using System.Reflection;
-using System.Threading;
-using Bottles.Diagnostics;
 
 namespace FubuMVC.Spark
 {
@@ -21,9 +20,9 @@ namespace FubuMVC.Spark
         private static readonly TemplateRegistry _templateRegistry = new TemplateRegistry();
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
 
-        private TemplateFinder _finder;
-        private TemplateComposer _composer;
-        private IPackageLog _logger;
+        private readonly TemplateFinder _finder;
+        private readonly TemplateComposer _composer;
+        private readonly IPackageLog _logger;
         
         public SparkExtension()
         {
@@ -34,21 +33,27 @@ namespace FubuMVC.Spark
 
         public void Configure(FubuRegistry registry)
         {
-            lock (_lock)
+            if (shouldScan())
             {
-                if (shouldScan()) { scan(registry); }
+                lock (_lock)
+                {
+                    if (shouldScan())
+                    {
+                        scan(registry);
+                    }
+                }
             }
 
             registry.Views.Facility(new SparkViewFacility(_templateRegistry));            
             registry.Services(configureServices);
         }
 
-        private bool shouldScan()
+        private static bool shouldScan()
         {
             return !_hasScanned;
         }
 
-        private void scan(FubuRegistry parentRegistry)
+        private void scan(IFubuRegistry parentRegistry)
         {
             var msg = "Initializing Spark in: [{0}]".ToFormat(parentRegistry.Name);
             _logger.Trace(ConsoleColor.Green, msg);
@@ -96,7 +101,7 @@ namespace FubuMVC.Spark
             return types;
         }
 
-        private void configureServices(IServiceRegistry services)
+        private static void configureServices(IServiceRegistry services)
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);            
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());            
@@ -143,7 +148,7 @@ namespace FubuMVC.Spark
 
     public static class ServiceRegistryExtensions
     {
-        public static void FillType<TInterface, TConcrete>(this IServiceRegistry registry)
+        public static void FillType<TInterface, TConcrete>(this IServiceRegistry registry) where TConcrete : TInterface
         {
             registry.FillType(typeof(TInterface), typeof(TConcrete));
         }
