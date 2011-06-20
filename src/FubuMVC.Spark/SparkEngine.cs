@@ -115,6 +115,7 @@ namespace FubuMVC.Spark
 
             filter.Excludes.Add(a => a.IsDynamic);
             filter.Excludes.Add(a => types.HasAssembly(a));
+            filter.Includes += (t => true);
 
             types.AddSource(() => AppDomain.CurrentDomain.GetAssemblies().Where(filter.MatchesAll));
 

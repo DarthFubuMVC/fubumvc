@@ -13,6 +13,7 @@ using FubuMVC.Diagnostics.Models.Requests;
 using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
+using FubuMVC.Spark;
 
 namespace FubuMVC.Diagnostics
 {
@@ -66,6 +67,11 @@ namespace FubuMVC.Diagnostics
             Actions
                 .FindWith<PartialActionSource>()
 				.FindWith<NotificationActionSource>();
+
+            Views
+                .TryToAttachWithDefaultConventions();
+
+            this.UseSpark();
 
             Output
                 .ToJson
