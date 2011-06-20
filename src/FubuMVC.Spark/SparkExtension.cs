@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Bottles;
@@ -23,12 +24,14 @@ namespace FubuMVC.Spark
         private readonly TemplateFinder _finder;
         private readonly TemplateComposer _composer;
         private readonly IPackageLog _logger;
+        private readonly IList<ITemplateFilter> _filters;
         
         public SparkExtension()
         {
             _logger = PackageRegistry.Diagnostics.LogFor(this);
             _finder = new TemplateFinder();            
             _composer = new TemplateComposer(_types.Value);
+            _filters = new List<ITemplateFilter>();
         }
 
         public void Configure(FubuRegistry registry)
@@ -44,7 +47,7 @@ namespace FubuMVC.Spark
                 }
             }
 
-            registry.Views.Facility(new SparkViewFacility(_templateRegistry));            
+            registry.Views.Facility(new SparkViewFacility(_templateRegistry, new TemplateFilterComposer(_filters)));
             registry.Services(configureServices);
         }
 
@@ -123,12 +126,19 @@ namespace FubuMVC.Spark
             services.FillType<IViewModifier, NestedViewOutputActivator>();
             services.FillType<IViewModifier, ViewContentDisposer>();
             services.FillType<IViewModifier, NestedOutputActivation>();
-        }		
+        }
+
+        public ISparkExtension ExcludeTemplate(ITemplateFilter filter)
+        {
+            _filters.Fill(filter);
+            return this;
+        }
     }
 
     public interface ISparkExtension
     {
         // We need expressions here such that template finder + composer can be configured/replaced
+        ISparkExtension ExcludeTemplate(ITemplateFilter filter);
     }
 
     public static class FubuRegistryExtensions
@@ -143,6 +153,15 @@ namespace FubuMVC.Spark
             var spark = new SparkExtension();
             configure(spark);
             spark.Configure(fubuRegistry);
+        }
+    }
+
+    public static class SparkExtensions
+    {
+        public static ISparkExtension ExcludeTemplate<TFilter>(this ISparkExtension spark, TFilter filter)
+            where TFilter : ITemplateFilter, new()
+        {
+            return spark.ExcludeTemplate(new TFilter());
         }
     }
 
