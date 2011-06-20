@@ -41,6 +41,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             packages.Add(pack2);
 
             var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
+            // This is now conventionally applied in SparkEngine
+            new DefaultTemplateFinderConventions().Configure(scanner);
             
             var allTemplates = new TemplateRegistry();
             allTemplates.AddRange(scanner.FindInPackages());

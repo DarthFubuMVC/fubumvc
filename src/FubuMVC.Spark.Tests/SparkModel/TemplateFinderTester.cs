@@ -41,6 +41,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _pak2.RegisterFolder(BottleFiles.WebContentFolder, _pak2Path);
 
             ClassUnderTest.HostPath = _templatePath;
+
+            // This is now conventionally applied in SparkEngine
+            new DefaultTemplateFinderConventions().Configure(ClassUnderTest);
         }
 
         [Test]

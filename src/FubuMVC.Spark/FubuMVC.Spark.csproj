@@ -63,6 +63,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="FubuRegistryExtensions.cs" />
+    <Compile Include="ITemplateComposerConvention.cs" />
+    <Compile Include="ITemplateFinderConvention.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
@@ -95,7 +98,7 @@
     <Compile Include="SparkModel\Scanning\FileScanner.cs" />
     <Compile Include="SparkModel\Template.cs" />
     <Compile Include="SparkActivator.cs" />
-    <Compile Include="SparkExtension.cs" />
+    <Compile Include="SparkEngine.cs" />
     <Compile Include="SparkModel\SparkLogger.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />

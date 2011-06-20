@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests
 {
@@ -42,33 +40,11 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void find_views_returns_view_tokens_from_items_with_a_view_model_only()
         {
-            MockFor<ITemplateFilterComposer>()
-                .Expect(c => c.Matches(Arg<ITemplate>.Is.NotNull))
-                .Return(true)
-                .Repeat
-                .Any();
-
             var views = ClassUnderTest.FindViews(new TypePool(typeof(SparkViewFacilityTester).Assembly), new BehaviorGraph());
             views.ShouldHaveCount(3);
             views.ShouldContain(x => x.ViewModelType == typeof(ModelA));
             views.ShouldContain(x => x.ViewModelType == typeof(ModelB));
             views.ShouldContain(x => x.ViewModelType == typeof(ModelC));
-        }
-
-        [Test]
-        public void find_views_returns_view_tokens_for_templates_not_excluded_by_filters()
-        {
-            var filters = new List<ITemplateFilter>
-                              {
-                                  new LambdaTemplateFilter(t => t.FilePath == Path.Combine(_root, "Views", "Home", "ModelCView.spark"))
-                              };
-            Services.Inject<ITemplateFilterComposer>(new TemplateFilterComposer(filters));
-
-            var views = ClassUnderTest.FindViews(new TypePool(typeof(SparkViewFacilityTester).Assembly), new BehaviorGraph());
-            views.ShouldHaveCount(2);
-            views.ShouldContain(x => x.ViewModelType == typeof(ModelA));
-            views.ShouldContain(x => x.ViewModelType == typeof(ModelB));
-            views.ShouldNotHave(x => x.ViewModelType == typeof(ModelC));
         }
     }
 }

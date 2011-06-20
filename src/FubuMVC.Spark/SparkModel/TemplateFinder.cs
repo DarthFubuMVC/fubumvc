@@ -4,7 +4,6 @@ using System.Linq;
 using Bottles;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Spark.SparkModel.Scanning;
 
 namespace FubuMVC.Spark.SparkModel
@@ -30,16 +29,6 @@ namespace FubuMVC.Spark.SparkModel
             _packages = packages;
             _requestConfig = new CompositeAction<ScanRequest>();
             _hostExcludes = new CompositeAction<ScanRequest>();
-
-            // TODO: Preferably set this on the Finder from the SparkExtension (as a default convention).
-
-            IncludeFile("*spark");
-            // TODO: This is not automatically synched with what the attacher looks for.
-            IncludeFile("bindings.xml");
-
-            ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
-            ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder, FubuMvcPackageFacility.FubuContentFolder);
-            ExcludeHostDirectory(FubuMvcPackageFacility.FubuContentFolder);
         }
 
         public string HostPath
