@@ -28,6 +28,8 @@ namespace FubuMVC.HelloWorld
 
             ApplyConvention<OutputModelSettingBehaviorConfiguration>();
 
+            Import<WebFormsEngine>();
+
             Policies.Add<AntiForgeryPolicy>();
             Views.TryToAttachWithDefaultConventions();
 
