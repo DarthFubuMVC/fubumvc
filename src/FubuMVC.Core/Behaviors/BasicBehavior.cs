@@ -10,13 +10,13 @@ namespace FubuMVC.Core.Behaviors
 
     public abstract class BasicBehavior : IActionBehavior
     {
-        private readonly Action _partialInvoke;
+        private readonly PartialBehavior _partialBehavior;
+        private Action _innerInvoke;
 
         protected BasicBehavior(PartialBehavior partialBehavior)
         {
-            _partialInvoke = partialBehavior == PartialBehavior.Executes
-                ? (Action) (Invoke)
-                : () => { if (InsideBehavior != null) InsideBehavior.InvokePartial(); };
+            _partialBehavior = partialBehavior;
+            _innerInvoke = () => { if (InsideBehavior != null) InsideBehavior.Invoke(); };
         }
 
         public IActionBehavior InsideBehavior { get; set; }
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Behaviors
         {
             if (performInvoke() == DoNext.Continue && InsideBehavior != null)
             {
-                InsideBehavior.Invoke();
+                _innerInvoke();
             }
 
             afterInsideBehavior();
@@ -33,7 +33,15 @@ namespace FubuMVC.Core.Behaviors
 
         public void InvokePartial()
         {
-            _partialInvoke();
+            if (_partialBehavior == PartialBehavior.Executes)
+            {
+                _innerInvoke = () => { if (InsideBehavior != null) InsideBehavior.InvokePartial(); };
+                Invoke();
+            }
+            else if (InsideBehavior != null)
+            {
+                InsideBehavior.InvokePartial();
+            }
         }
 
         protected virtual DoNext performInvoke()
