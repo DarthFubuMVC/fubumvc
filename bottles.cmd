@@ -1,1 +1,1 @@
-@lib\bottles\tools\BottleRunner.exe %*
+@lib\bottles\BottleRunner.exe %*
