@@ -34,6 +34,7 @@ test.db
 test-results
 fubu-content
 spark.zip
+diagnostics.zip
 
 deployment/bottles/*.zip
 
