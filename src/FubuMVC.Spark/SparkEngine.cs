@@ -60,6 +60,7 @@ namespace FubuMVC.Spark
                 scan(registry);
             }
 
+            _logger.Trace("Adding [{0}] to registry [{1}]", typeof(SparkViewFacility).Name, registry.Name);
             registry.Views.Facility(new SparkViewFacility(_templateRegistry));
             registry.Services(configureServices);
         }
