@@ -18,5 +18,6 @@
   </metadata>
   <files>
     <file src="..\..\build\FubuMVC.Spark.*" target="lib" />	
+    <file src="..\..\src\FubuMVC.Spark\**\*.cs" target="src" />	
   </files>
 </package>
