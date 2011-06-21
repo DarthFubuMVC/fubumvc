@@ -16,7 +16,7 @@
       <dependency id="CommonServiceLocator" />
       <dependency id="FubuCore" />
       <dependency id="FubuLocalization" />
-      <dependency id="HtmlTags" />
+      <dependency id="HtmlTags" version="1.0.0" />
       <dependency id="StructureMap" />
     </dependencies>
   </metadata>
