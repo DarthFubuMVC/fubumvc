@@ -3,8 +3,8 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.Spark</id>
     <version>0.0.0</version>
-    <authors>Joshua Arnold, Alex Henning Johannessen, Jeremy D. Miller</authors>
-    <owners>Joshua Arnold, Joshua Flanagan</owners>
+    <authors>Joshua Arnold, Jaime Febres, Alex Henning Johannessen, Jeremy D. Miller</authors>
+    <owners>Joshua Arnold, Alex Henning Johannessen, Joshua Flanagan</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
     <projectUrl>http://fubumvc.com</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
