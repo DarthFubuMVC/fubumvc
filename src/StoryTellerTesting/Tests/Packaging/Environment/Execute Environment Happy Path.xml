@@ -7,7 +7,7 @@
         <row isStep="True" Description="FubuTestApplication.GoodInstaller1" TraceText="All Good 1" Success="True" />
         <row isStep="True" Description="FubuTestApplication.GoodInstaller2" TraceText="All Good 2" Success="True" />
         <row isStep="True" Description="FubuTestApplication.GoodInstaller3" TraceText="All Good 3" Success="True" />
-        <row isStep="True" Description="FubuTestApplication.EnvironmentWithAllGoodInstallers" Success="True" TraceText="I started up with all good installers" />
+        <row isStep="True" Description="FubuTestApplication.EnvironmentWithAllGoodInstallers" Success="True" TraceText="Environment class was specified 'FubuTestApplication.EnvironmentWithAllGoodInstallers, FubuTestApplication' I started up with all good installers" />
       </rows>
     </InstallLogs>
   </EnvironmentRunner>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -21,7 +22,17 @@ namespace IntegrationTesting.Fixtures.Packages
         {
             SelectionValuesFor("environments").AddRange(findEnvironments());
 
-            this["InstallLogs"] = VerifySetOf(() => _installLogs).Titled("The log entries for installation should be")
+            this["InstallLogs"] = VerifySetOf(
+                () =>
+                _installLogs.Select(x =>
+                                    new LogEntry()
+                                        {
+                                            Description = x.Description,
+                                            Success = x.Success,
+                                            TraceText = x.TraceText.Replace(Environment.NewLine, " ")
+                                        })
+                )
+                .Titled("The log entries for installation should be")
                 .MatchOn(x => x.Description, x => x.Success, x => x.TraceText);
 
             this["EnvironmentLogs"] = VerifySetOf(() => _environmentLogs).Titled("The log entries for checking the environment should be")
