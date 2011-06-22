@@ -1,3 +1,4 @@
+using System;
 using FubuTestingSupport;
 using FubuMVC.Core.UI.Scripts;
 using NUnit.Framework;
@@ -35,7 +36,6 @@ namespace FubuMVC.Tests.UI.Scripts
             MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("G.js", "F.js"));
         }
     }
-
 
     [TestFixture]
     public class ScriptDslReaderTester : InteractionContext<ScriptDslReader>
@@ -110,6 +110,37 @@ namespace FubuMVC.Tests.UI.Scripts
             MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("crud", "crudForm.js"));
             MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("crud", "validation.js"));
             MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("crud", "stateManager.js"));
+        }
+
+        [Test]
+        public void read_fallback_happy_path()
+        {
+            ClassUnderTest.ReadLine("jquery is https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js");
+            ClassUnderTest.ReadLine("jquery fallback jQuery jquery-1.5.2.min.js");
+
+            MockFor<IScriptRegistration>().AssertWasCalled(x => 
+                x.Fallback("jquery", "jQuery", "jquery-1.5.2.min.js"));
+        }
+
+        [Test]
+        public void negative_case_for_fallback_when_not_enough_tokens_passed_to_verb()
+        {
+            ClassUnderTest.ReadLine("jquery is https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js");
+            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.ReadLine("jquery fallback jQuery");
+            }).Message.ShouldContain("Two tokens must appear on the right side of the 'fallback' verb");
+        }
+
+
+        [Test]
+        public void negative_case_for_fallback_when_too_many_tokens_passed_to_verb()
+        {
+            ClassUnderTest.ReadLine("jquery is https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js");
+            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.ReadLine("jquery fallback jQuery jQuery2 jQuery3");
+            }).Message.ShouldContain("Two tokens must appear on the right side of the 'fallback' verb");
         }
 
         [Test]

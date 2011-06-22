@@ -9,7 +9,7 @@ namespace FubuMVC.Core.UI.Scripts
         private readonly IContentFolderService _folders;
         private readonly ScriptGraph _scriptGraph;
         private readonly List<string> _requirements = new List<string>();
-        private readonly List<string> _rendered = new List<string>();
+        private readonly List<IScript> _rendered = new List<IScript>();
 
         public ScriptRequirements(IContentFolderService folders, ScriptGraph scriptGraph)
         {
@@ -40,9 +40,9 @@ namespace FubuMVC.Core.UI.Scripts
         /// </summary>
         /// <remarks>Can be called multiple times within an HTTP request, and will not return any script more than once.</remarks>
         /// <returns></returns>
-        public IEnumerable<string> GetScriptsToRender()
+        public IEnumerable<IScript> GetScriptsToRender()
         {
-            var requiredScripts = _scriptGraph.GetScripts(_requirements).Select(x => x.Name).Except(_rendered).ToList();
+            var requiredScripts = _scriptGraph.GetScripts(_requirements).Except(_rendered).ToList();
             _rendered.AddRange(requiredScripts);
             return requiredScripts;
         }

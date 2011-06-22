@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.UI.Scripts
 {
@@ -17,6 +18,13 @@ namespace FubuMVC.Core.UI.Scripts
         }
 
         public string Name { get; set; }
+        public string FallbackName { get; set; }
+        public string WindowVariableName { get; set; }
+
+        public bool HasFallback
+        {
+            get { return FallbackName.IsNotEmpty(); }
+        }
 
         public void AddAlias(string alias)
         {
@@ -33,6 +41,12 @@ namespace FubuMVC.Core.UI.Scripts
         public void AddDependency(IScriptObject scriptObject)
         {
             _dependencies.Fill(scriptObject);
+        }
+
+        public void AddFallback(string fallbackName, string windowVariableName)
+        {
+            FallbackName = fallbackName;
+            WindowVariableName = windowVariableName;
         }
 
         public IEnumerator<IScript> GetEnumerator()
