@@ -18,22 +18,27 @@ namespace FubuMVC.Core.Behaviors
 
         public void Invoke()
         {
+            performAction(x => x.Invoke());
+        }
+
+        public void InvokePartial()
+        {
+            performAction(x => x.InvokePartial());
+        }
+
+        private void performAction(Action<IActionBehavior> action)
+        {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             try
             {
-                InnerBehavior.Invoke();
+                action(InnerBehavior);
             }
             finally
             {
                 stopwatch.Stop();
                 _record(stopwatch.ElapsedMilliseconds);
             }
-        }
-
-        public void InvokePartial()
-        {
-            Invoke();
         }
     }
 }

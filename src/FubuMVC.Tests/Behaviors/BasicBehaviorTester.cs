@@ -1,75 +1,158 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.UI;
-using FubuMVC.Core.View;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors
 {
-	[TestFixture]
-    public class BasicBehaviorTester
+    public abstract class non_partial_implementation_of_BasicBehavior : InteractionContext<TestBehavior>
     {
-        public static IPartialInvokingHandler PartialInvokingHandler;
-        private IFubuPage _page;
-        private IPartialFactory _partialFactory;
-        private BasicBehavior _behavior;
-        private IFubuRequest _request;
+        protected IActionBehavior InnerBehavior;
 
-        public class PartialHandlingBehavior : IActionBehavior
+        protected override void beforeEach()
         {
-            public void Invoke()
-            {
-                
-            }
+            MockFor<PartialBehaviorProvider>().Expect(x => x()).Return(PartialBehavior.Ignored);
 
-            public void InvokePartial()
-            {
-                PartialInvokingHandler.Invoke();
-            }
+            InnerBehavior = MockFor<IActionBehavior>();
+            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
-        public interface IPartialInvokingHandler{void Invoke();}
-        public class FakeController
+    }
+
+    public abstract class partial_implementation_of_BasicBehavior : InteractionContext<TestBehavior>
+    {
+        protected IActionBehavior InnerBehavior;
+
+        protected override void beforeEach()
         {
-            public void SomeAction() { }
+            MockFor<PartialBehaviorProvider>().Expect(x => x()).Return(PartialBehavior.Executes);
+
+            InnerBehavior = MockFor<IActionBehavior>();
+            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
-        public class WrappingBehavior : BasicBehavior
+    }
+
+    [TestFixture]
+    public class when_calling_Invoke_on_non_partial : non_partial_implementation_of_BasicBehavior
+    {
+        protected override void beforeEach()
         {
-            public WrappingBehavior()
-                : base(PartialBehavior.Ignored)
-            {
-            }
-
-            public DoNext PerformInvoke()
-            {
-                return base.performInvoke();
-            }
+            base.beforeEach();
+            ClassUnderTest.Invoke();
         }
-        public class InputModel { }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _page = MockRepository.GenerateStub<IFubuPage>();
-            _partialFactory = MockRepository.GenerateStub<IPartialFactory>();
-            _behavior = new WrappingBehavior();
-            PartialInvokingHandler = MockRepository.GenerateStub<IPartialInvokingHandler>();
-            _behavior.InsideBehavior = new PartialHandlingBehavior();
-
-            _partialFactory.Stub(f => f.BuildPartial(typeof(InputModel))).Return(_behavior);
-            _page.Stub(p => p.Get<IPartialFactory>()).Return(_partialFactory);
-
-            _request = MockRepository.GenerateStub<IFubuRequest>();
-            _page.Stub(p => p.Get<IFubuRequest>()).Return(_request);
-        }
-
 
         [Test]
-        public void perform_invoke_should_return_continue()
+        public void it_should_call_the_overriden_performInvoke_and_afterInsideBehavior()
         {
-            new WrappingBehavior().PerformInvoke().ShouldEqual(DoNext.Continue);
+            MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasCalled(x => x.Do());
+            MockFor<IDoSomethingAfterInnerBehavior>().AssertWasCalled(x => x.Do());
+        }
+
+        [Test]
+        public void it_should_call_Invoke_on_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasCalled(x => x.Invoke());
+            InnerBehavior.AssertWasNotCalled(x => x.InvokePartial());
+        }
+    }
+
+    [TestFixture]
+    public class when_calling_InvokePartial_on_non_partial : non_partial_implementation_of_BasicBehavior
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.InvokePartial();
+        }
+
+        [Test]
+        public void it_should_not_call_the_overriden_performInvoke_nor_afterInsideBehavior()
+        {
+            MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasNotCalled(x => x.Do());
+            MockFor<IDoSomethingAfterInnerBehavior>().AssertWasNotCalled(x => x.Do());
+        }
+
+        [Test]
+        public void it_should_call_InvokePartial_on_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasCalled(x => x.InvokePartial());
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
+        }
+    }
+
+    [TestFixture]
+    public class when_calling_Invoke_on_partial : partial_implementation_of_BasicBehavior
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.Invoke();
+        }
+
+        [Test]
+        public void it_should_call_the_overriden_performInvoke_and_afterInsideBehavior()
+        {
+            MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasCalled(x => x.Do());
+            MockFor<IDoSomethingAfterInnerBehavior>().AssertWasCalled(x => x.Do());
+        }
+
+        [Test]
+        public void it_should_call_Invoke_on_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasCalled(x => x.Invoke());
+            InnerBehavior.AssertWasNotCalled(x => x.InvokePartial());
+        }
+    }
+
+    [TestFixture]
+    public class when_calling_InvokePartial_on_partial : partial_implementation_of_BasicBehavior
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.InvokePartial();
+        }
+
+        [Test]
+        public void it_should_call_the_overriden_performInvoke_and_afterInsideBehavior()
+        {
+            MockFor<IDoSomethingBeforeInnerBehavior>().AssertWasCalled(x => x.Do());
+            MockFor<IDoSomethingAfterInnerBehavior>().AssertWasCalled(x => x.Do());
+        }
+
+        [Test]
+        public void it_should_call_InvokePartial_on_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasCalled(x => x.InvokePartial());
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
+        }
+    }
+
+    public interface IDoSomethingBeforeInnerBehavior { void Do(); }
+    public interface IDoSomethingAfterInnerBehavior { void Do(); }
+    public delegate PartialBehavior PartialBehaviorProvider();
+
+    public class TestBehavior : BasicBehavior
+    {
+        readonly IDoSomethingBeforeInnerBehavior _before;
+        readonly IDoSomethingAfterInnerBehavior _after;
+
+        public TestBehavior(IDoSomethingBeforeInnerBehavior before, IDoSomethingAfterInnerBehavior after,
+            PartialBehaviorProvider partialBehaviorProvider) : base(partialBehaviorProvider())
+        {
+            _before = before;
+            _after = after;
+        }
+
+        protected override DoNext performInvoke()
+        {
+            _before.Do();
+            return DoNext.Continue;
+        }
+
+        protected override void afterInsideBehavior()
+        {
+            _after.Do();
         }
     }
 }
