@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Reflection;
@@ -564,7 +565,15 @@ namespace FubuMVC.Tests.Registration
             route.RespondsToGet().ShouldBeFalse();
         }
 
+        [Test]
+        public void default_value_syntax_for_urlpattern_produces_correct_route()
+        {
+            var parent = new RouteDefinition("my/sample/{InPath:hello}/{AlsoInPath:world}");
+            parent.Input = new RouteInput<SampleViewModel>(parent);
+
+            var route = parent.ToRoute();
+
+            Assert.IsFalse(Regex.Match(route.Url, @":\w+").Success);
+        }
     }
-
-
 }
