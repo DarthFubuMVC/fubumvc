@@ -78,9 +78,12 @@ namespace FubuMVC.Spark.Rendering
         Dictionary<string, string> OnceTable { set; get; }
         Dictionary<string, object> Globals { set; get; }
         TextWriter Output { get; set; }
+        
         void Render();
-        Func<string, string> SiteResource { get; set; }
         Guid GeneratedViewId { get; }
+
+        ICacheService CacheService { get; set; }
+        Func<string, string> SiteResource { get; set; }
     }
 
     public static class FubuSparkViewExtensions
@@ -115,6 +118,12 @@ namespace FubuMVC.Spark.Rendering
         public Guid GeneratedViewId
         {
             get { return _view.GeneratedViewId; }
+        }
+
+        public ICacheService CacheService
+        {
+            get { return _view.CacheService; }
+            set { _view.CacheService = value; }
         }
 
         public Func<string, string> SiteResource

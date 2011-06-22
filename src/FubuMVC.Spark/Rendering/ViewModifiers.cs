@@ -59,6 +59,20 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
+    public class CacheAttacher : BasicViewModifier
+    {
+        private readonly ICacheService _cacheService;
+        public CacheAttacher(ICacheService cacheService)
+        {
+            _cacheService = cacheService;
+        }
+
+        public override IFubuSparkView Modify(IFubuSparkView view)
+        {
+            return view.Modify(v => v.CacheService = _cacheService);
+        }
+    }
+
     public class SiteResourceAttacher : BasicViewModifier
     {
         private readonly ISparkViewEngine _engine;

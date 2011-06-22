@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
@@ -11,6 +12,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
+using Spark.Caching;
 
 namespace FubuMVC.Spark
 {
@@ -43,14 +45,14 @@ namespace FubuMVC.Spark
 
         private void setupComposerDefaults()
         {
-            _composerConventions
-                .Apply(composer => composer
-                                       .AddBinder<ViewDescriptorBinder>()
-                                       .AddBinder<MasterPageBinder>()
-                                       .AddBinder<ViewModelBinder>()
-                                       .AddBinder<ReachableBindingsBinder>()
-                                       .Apply<NamespacePolicy>()
-                                       .Apply<ViewPathPolicy>());
+            _composerConventions.Apply(
+                composer => composer
+                    .AddBinder<ViewDescriptorBinder>()
+                    .AddBinder<MasterPageBinder>()
+                    .AddBinder<ViewModelBinder>()
+                    .AddBinder<ReachableBindingsBinder>()
+                    .Apply<NamespacePolicy>()
+                    .Apply<ViewPathPolicy>());
         }
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
@@ -127,6 +129,7 @@ namespace FubuMVC.Spark
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
+            services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
 
             services.FillType<IActivator, SparkActivator>();
 

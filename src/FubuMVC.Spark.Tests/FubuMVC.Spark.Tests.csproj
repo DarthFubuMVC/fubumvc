@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
     <Compile Include="Rendering\ContentActivationTester.cs" />
+    <Compile Include="Rendering\CacheAttacherTester.cs" />
     <Compile Include="Rendering\FubuSparkViewDecoratorTester.cs" />
     <Compile Include="Rendering\NestedOutputActivationTester.cs" />
     <Compile Include="Rendering\NestedViewOutputActivatorTester.cs" />
