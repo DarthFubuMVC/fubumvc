@@ -176,7 +176,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
                 header.Header("Description");
                 header.Header("Type");
             });
-            foreach (var node in behaviorChain.Top)
+            foreach (var node in behaviorChain)
             {
 
                 var description = node.ToString().HtmlEncode().ConvertCRLFToBreaks();
