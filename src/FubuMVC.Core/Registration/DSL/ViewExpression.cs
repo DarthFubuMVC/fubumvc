@@ -27,14 +27,14 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTypeFilter)
+        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter)
         {
-            return RegisterActionLessViews(viewTypeFilter, chain => { chain.IsPartialOnly = true; });
+            return RegisterActionLessViews(viewTokenFilter, chain => { chain.IsPartialOnly = true; });
         }
 
-        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
+        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
         {
-            _viewAttacher.Apply(new ActionLessViewConvention(viewTypeFilter, configureChain));
+            _viewAttacher.Apply(new ActionLessViewConvention(viewTokenFilter, configureChain));
             return this;          
         }
 
@@ -108,12 +108,12 @@ namespace FubuMVC.Core.Registration.DSL
 
     public class ActionLessViewConvention : IViewBagConvention
     {
-        private readonly Func<IViewToken, bool> _viewTypeFilter;
+        private readonly Func<IViewToken, bool> _viewTokenFilter;
         private readonly Action<BehaviorChain> _configureChain;
 
-        public ActionLessViewConvention(Func<IViewToken, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
+        public ActionLessViewConvention(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
         {
-            _viewTypeFilter = viewTypeFilter;
+            _viewTokenFilter = viewTokenFilter;
             _configureChain = configureChain;
         }
 
@@ -121,7 +121,7 @@ namespace FubuMVC.Core.Registration.DSL
         {
             bag
                 .Views
-                .Where(token => _viewTypeFilter(token))
+                .Where(token => _viewTokenFilter(token))
                 .Each(token =>
                           {
                               var chain = graph.AddChain();
