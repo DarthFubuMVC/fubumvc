@@ -1,0 +1,11 @@
+<viewdata model="FUBUPROJECTNAME.Models.View.WelcomeViewModel" />
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome to FubuMVC</title>
+	</head>
+	<body>
+		<h1>Welcome to FubuMVC</h1>
+		<p>If you see this. It works.</p>
+	</body>
+</html>
