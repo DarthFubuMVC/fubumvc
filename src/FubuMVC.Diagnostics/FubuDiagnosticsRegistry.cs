@@ -70,8 +70,7 @@ namespace FubuMVC.Diagnostics
 
             Views
                 .TryToAttachWithDefaultConventions()
-                .RegisterActionLessViews(token => typeof(IBehaviorDetails).IsAssignableFrom(token.ViewModelType),
-                    chain => { chain.IsPartialOnly = true; });
+                .RegisterActionLessViews(token => typeof(IBehaviorDetails).IsAssignableFrom(token.ViewModelType));
 
             this.UseSpark();
 

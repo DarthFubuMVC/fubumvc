@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using FubuMVC.Core.Diagnostics;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.UI.Diagnostics;
 using FubuMVC.Diagnostics.Models.Requests;
 using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
@@ -15,7 +12,7 @@ namespace FubuMVC.Diagnostics.Configuration
     {
         public IEnumerable<ActionCall> FindActions(TypePool types)
         {
-            // TODO -- this should be from the container or use headless views
+            // TODO -- This should come from the container somehow
         	yield return PartialActionFor<NavigationMenu>();
             yield return PartialActionFor<BehaviorDetailsModel>();
         }
@@ -31,7 +28,7 @@ namespace FubuMVC.Diagnostics.Configuration
 	{
 		public IEnumerable<ActionCall> FindActions(TypePool types)
 		{
-			// TODO -- This should come from the container or use headless views
+			// TODO -- This should come from the container somehow
 			var actionType = typeof(NotificationAction<>).MakeGenericType(typeof(NoOutputsNotification));
 			yield return new ActionCall(actionType, actionType.GetExecuteMethod());
 		}

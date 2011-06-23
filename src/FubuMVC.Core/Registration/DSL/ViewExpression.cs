@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTypeFilter)
         {
-            return RegisterActionLessViews(viewTypeFilter, chain => { });
+            return RegisterActionLessViews(viewTypeFilter, chain => { chain.IsPartialOnly = true; });
         }
 
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
