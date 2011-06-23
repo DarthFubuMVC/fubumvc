@@ -17,16 +17,7 @@ namespace FubuMVC.Diagnostics.Configuration
         {
             // TODO -- this should be from the container or use headless views
         	yield return PartialActionFor<NavigationMenu>();
-			yield return PartialActionFor<AuthorizationReport>();
-			yield return PartialActionFor<BehaviorStart>();
-			yield return PartialActionFor<ExceptionReport>();
-			yield return PartialActionFor<FieldAccessReport>();
-			yield return PartialActionFor<FileOutputReport>();
-			yield return PartialActionFor<ModelBindingReport>();
-			yield return PartialActionFor<OutputReport>();
-			yield return PartialActionFor<RedirectReport>();
-			yield return PartialActionFor<SetValueReport>();
-        	yield return PartialActionFor<BehaviorDetailsModel>();
+            yield return PartialActionFor<BehaviorDetailsModel>();
         }
 
 		public ActionCall PartialActionFor<T>()

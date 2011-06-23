@@ -16,6 +16,11 @@ namespace FubuMVC.Core.Security.AntiForgery
             graph.Behaviors.Each(b =>
                 {
                     ActionCall call = b.FirstCall();
+                    if(call == null)
+                    {
+                        return;
+                    }
+
                     call.ForAttributes<AntiForgeryTokenAttribute>(a => call.AddBefore(new AntiForgeryNode(a.Salt)));
                 });
         }

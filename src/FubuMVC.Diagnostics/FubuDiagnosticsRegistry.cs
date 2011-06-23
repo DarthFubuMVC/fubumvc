@@ -69,7 +69,9 @@ namespace FubuMVC.Diagnostics
 				.FindWith<NotificationActionSource>();
 
             Views
-                .TryToAttachWithDefaultConventions();
+                .TryToAttachWithDefaultConventions()
+                .RegisterActionLessViews(token => typeof(IBehaviorDetails).IsAssignableFrom(token.ViewModelType),
+                    chain => { chain.IsPartialOnly = true; });
 
             this.UseSpark();
 

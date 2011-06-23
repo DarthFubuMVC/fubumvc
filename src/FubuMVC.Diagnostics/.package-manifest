@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Role>module</Role>
-  <Name>diagnostics</Name>
+  <Name>FubuMVC.Diagnostics</Name>
   <assembly>FubuMVC.Diagnostics</assembly>
   <assembly>Newtonsoft.Json</assembly>
   <assembly>Spark</assembly>
