@@ -1,0 +1,8 @@
+#!/bin/sh
+FILEDIR="$( cd "$( dirname "$0" )" && pwd )"
+if [[ $OSTYPE = "msys" || $OSTYPE = "cygwin" ]]
+then
+  exec "$FILEDIR/fubu.exe" "$@"
+else
+  exec mono $MONO_OPTIONS "$FILEDIR/fubu.exe" "$@"
+fi

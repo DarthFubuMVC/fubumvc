@@ -1,93 +1,123 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 using FubuCore.CommandLine;
+using FubuMVC.Core;
 using Ionic.Zip;
 
 namespace Fubu
 {
-    [CommandDescription("Creates a new FubuMVC project", Name = "new")]
+    [CommandDescription("Creates a new FubuMVC solution", Name = "new")]
     public class NewCommand : FubuCommand<NewCommandInput>
     {
         private Dictionary<string, string> _templateKeywords;
-        private string _newProjectPath;
-        private const string DELIMITER = "@@";
-        private static string TEMPLATEZIP = Path.Combine(Assembly.GetExecutingAssembly().Location, "fubuTemplate.zip");
+        private static readonly string TemplateZip = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "fubuTemplate.zip");
+        private static readonly FileSet TopLevelFileSet = new FileSet
+                                                              {
+                                                                  DeepSearch = false,
+                                                                  Include = "*.*",
+                                                                  Exclude = "*.exe;*.dll"
+                                                              };
+
+        public NewCommand()
+        {
+            FileSystem = new FileSystem();
+        }
+
+        public IFileSystem FileSystem { get; set; }
 
         public override bool Execute(NewCommandInput input)
         {
             _templateKeywords = new Dictionary<string, string>
                                 {
-                                    { "PROJECTNAME", input.ProjectName },
-                                    { "SHORTNAME", input.ProjectName.Split('.').Last() },
-                                    { "PROJECTGUID", Guid.NewGuid().ToString() }
+                                    { "FUBUPROJECTNAME", input.ProjectName },
+                                    { "FUBUPROJECTSHORTNAME", input.ProjectName.Split('.').Last() },
+                                    { "FACEFACE-FACE-FACE-FACE-FACEFACEFACE", Guid.NewGuid().ToString().ToUpper() }
                                 };
-            _newProjectPath = Path.Combine(Environment.CurrentDirectory, input.ProjectName);
-
-            var templateZip = input.ZipFlag ?? TEMPLATEZIP;
-            using (var zip = new ZipFile(templateZip))
+            var projectPath = Path.Combine(Environment.CurrentDirectory, input.ProjectName);
+            if (string.IsNullOrEmpty(input.GitFlag))
             {
-               zip.ExtractAll(_newProjectPath); 
+                Unzip(input.ZipFlag, projectPath);
+            }
+            else
+            {
+                var proc = new Process();
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.FileName = "git";
+                proc.StartInfo.Arguments = string.Format("clone {0} {1}", input.GitFlag, projectPath);
+
+                proc.Start();
+                proc.WaitForExit();
+                if (proc.ExitCode != 0)
+                {
+                    throw new FubuException(proc.ExitCode, "Command finished with a non-zero exit code");
+                }
             }
 
-            var templateDirectory = new DirectoryInfo(input.ProjectName);
-            ParseDirectory(templateDirectory);
+            ParseDirectory(projectPath);
 
+            Console.WriteLine("Solution {0} created", input.ProjectName);
             return true;
         }
 
-        public void ParseDirectory(DirectoryInfo directory)
+        public void Unzip(string zipPath, string destination)
         {
-            var newDirectoryName = ReplaceKeywords(directory.FullName);
-            if (directory.FullName != newDirectoryName)
-            {
-                directory.MoveTo(newDirectoryName);
-                directory.Refresh();
-            }
+            var templateZip = string.IsNullOrEmpty(zipPath)
+                                ? TemplateZip
+                                : Path.Combine(Environment.CurrentDirectory, zipPath);
 
-            var files = directory.EnumerateFileSystemInfos();
-            files.OfType<FileInfo>().Each(ParseFile);
-            files.OfType<DirectoryInfo>().Each(ParseDirectory);
+            using (var zip = ZipFile.Read(templateZip))
+            {
+                Console.WriteLine("Unzipping: {0}", Path.GetFileName(templateZip));
+                zip.ZipError += (sender, error) => Console.WriteLine("Error Unzipping {0} - {1}", error.FileName, error.Exception);
+                zip.ExtractAll(destination);
+            }
         }
 
-        public void ParseFile(FileInfo file)
+        public void ParseDirectory(string directory)
         {
-            // Ignore files larger than 1MB
-            if (file.Length > (1024 * 1024))
+            var newDirectoryName = ReplaceKeywords(directory);
+            if (directory != newDirectoryName)
             {
-                return;
+                Console.WriteLine("{0} -> {1}",directory, Path.GetFileName(newDirectoryName));
+                FileSystem.MoveDirectory(directory, newDirectoryName);
+                directory = newDirectoryName;
             }
 
+            FileSystem.FindFiles(directory, TopLevelFileSet).Each(ParseFile);
+            FileSystem.ChildDirectoriesFor(directory).Each(ParseDirectory);
+        }
 
-            string fileContent;
-            using (var reader = new StreamReader(file.Open(FileMode.Open, FileAccess.Read)))
+        public void ParseFile(string file)
+        {
+            string fileContent = string.Empty;
+
+            FileSystem.ReadTextFile(file, c =>
             {
-                fileContent = reader.ReadToEnd();
-            }
+                fileContent = c;
+            });
 
             var replacedFileContent = ReplaceKeywords(fileContent);
-            if (fileContent == replacedFileContent)
+            if (fileContent != replacedFileContent)
             {
-                return;
+                FileSystem.WriteStringToFile(file, replacedFileContent);
             }
 
-            using (var writer = new StreamWriter(file.Open(FileMode.Truncate, FileAccess.Write)))
+            var newFileName = ReplaceKeywords(file);
+            if (file != newFileName)
             {
-                writer.Write(replacedFileContent);
-            }
-
-            var newFileName = ReplaceKeywords(file.FullName);
-            if (file.FullName != newFileName)
-            {
-                file.MoveTo(newFileName);
+                Console.WriteLine("{0} -> {1}", file, Path.GetFileName(newFileName));
+                FileSystem.MoveFile(file, newFileName);
             }
         }
 
         public string ReplaceKeywords(string input)
         {
-            return _templateKeywords.Aggregate(input, (memo, keyword) => memo.Replace(DELIMITER + keyword.Key + DELIMITER, keyword.Value));
+            return _templateKeywords.Aggregate(input, (memo, keyword) => memo.Replace(keyword.Key, keyword.Value));
         }
     }
 }
