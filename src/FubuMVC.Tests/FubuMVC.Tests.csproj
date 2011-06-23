@@ -326,7 +326,8 @@
       <DependentUpon>View4.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="View\ViewAttacherTester.cs" />
+    <Compile Include="View\ViewAttacherConventionTester.cs" />
+    <Compile Include="View\ViewBagConventionRunnerTester.cs" />
     <Compile Include="View\ViewsForActionFiltersTester.cs" />
     <Compile Include="View\WebForms\PartialRendererTester.cs">
       <SubType>ASPXCodeBehind</SubType>

@@ -7,55 +7,13 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.View.Attachment
 {
-    public class ViewAttacher : IConfigurationAction
+    public class ViewAttacherConvention : IViewBagConvention
     {
-        private readonly List<IViewFacility> _facilities = new List<IViewFacility>();
         private readonly List<IViewsForActionFilter> _filters = new List<IViewsForActionFilter>();
-        private readonly TypePool _types;
-
-        public ViewAttacher(TypePool types)
-        {
-            _types = types;
-        }
-
-        public void Configure(BehaviorGraph graph)
-        {
-            _types.ShouldScanAssemblies = true;
-            var views = new List<IViewToken>();
-
-            foreach (var facility in _facilities)
-            {
-                views.AddRange(facility.FindViews(_types, graph));
-            }
-
-            var bag = new ViewBag(views);
-
-            graph.Behaviors
-                .Select(x => x.FirstCall())
-                .Where(x => x != null)
-                .Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
-        }
-
-        public List<IViewFacility> Facilities
-        {
-            get { return _facilities; }
-        }
 
         public IEnumerable<IViewsForActionFilter> Filters
         {
             get { return _filters; }
-        }
-
-        public TypePool Types
-        {
-            get { return _types; }
-        }
-
-        public void AddFacility(IViewFacility facility)
-        {
-            var typeOfFacility = facility.GetType();
-            if(_facilities.Any(f => f.GetType() == typeOfFacility)) return;
-            _facilities.Add(facility);
         }
 
         public void AddViewsForActionFilter(IViewsForActionFilter filter)
@@ -63,6 +21,13 @@ namespace FubuMVC.Core.View.Attachment
             _filters.Add(filter);
         }
 
+        public void Configure(ViewBag bag, BehaviorGraph graph)
+        {
+            graph.Behaviors
+                .Select(x => x.FirstCall())
+                .Where(x => x != null)
+                .Each(a => AttemptToAttachViewToAction(bag, a, graph.Observer));
+        }
 
         public void AttemptToAttachViewToAction(ViewBag bag, ActionCall call, IConfigurationObserver observer)
         {

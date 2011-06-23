@@ -25,7 +25,8 @@ namespace FubuMVC.Core
         private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
-        private readonly ViewAttacher _viewAttacher;
+        private readonly ViewAttacherConvention _viewAttacherConvention;
+        private readonly ViewBagConventionRunner _bagRunner;
         private IConfigurationObserver _observer;
         private Func<Type, MethodInfo, ActionCall> _actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
 
@@ -33,7 +34,8 @@ namespace FubuMVC.Core
         {
             _behaviorMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
             _observer = new NulloConfigurationObserver();
-            _viewAttacher = new ViewAttacher(_types);
+            _viewAttacherConvention = new ViewAttacherConvention();
+            _bagRunner = new ViewBagConventionRunner(_types);
 
             setupDefaultConventionsAndPolicies();
         }

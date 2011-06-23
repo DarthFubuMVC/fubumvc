@@ -13,7 +13,7 @@ namespace FubuMVC.Core
     {
         private void setupDefaultConventionsAndPolicies()
         {
-
+            _bagRunner.Apply(_viewAttacherConvention);
 
             // Add Behaviors First
             addConvention(graph => _behaviorMatcher.BuildBehaviors(_types, graph));
@@ -46,7 +46,7 @@ namespace FubuMVC.Core
             _systemPolicies.Add(new StringOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());
 
-            _conventions.Add(_viewAttacher);
+            _conventions.Add(_bagRunner);
             Policies.Add<JsonMessageInputConvention>();
             Policies.Add<UrlRegistryCategoryConvention>();
             Policies.Add<UrlForNewConvention>();

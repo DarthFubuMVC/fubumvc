@@ -439,6 +439,8 @@
     <Compile Include="View\Activation\SetPageModelActivationSource.cs" />
     <Compile Include="View\Activation\SetTagProfilePageActivationAction.cs" />
     <Compile Include="View\Activation\ViewTypeExtensions.cs" />
+    <Compile Include="View\Attachment\IViewAttacher.cs" />
+    <Compile Include="View\Attachment\IViewBagConvention.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\Activation\IPageActivator.cs" />
     <Compile Include="View\Attachment\IViewsForActionFilter.cs" />
@@ -447,7 +449,7 @@
     <Compile Include="View\PageHarness.cs" />
     <Compile Include="View\Attachment\ActionInSameFolderAsViewReturnsViewModelType.cs" />
     <Compile Include="View\Attachment\ActionWithSameNameAndFolderAsViewReturnsViewModelType.cs" />
-    <Compile Include="View\Attachment\ViewAttacher.cs" />
+    <Compile Include="View\Attachment\ViewAttacherConvention.cs" />
     <Compile Include="View\Attachment\ViewBag.cs" />
     <Compile Include="Security\IAuthenticationContext.cs" />
     <Compile Include="Security\ISecurityContext.cs" />

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -13,9 +11,9 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.View
 {
     [TestFixture]
-    public class ViewAttacherTester
+    public class ViewAttacherConventionTester
     {
-        private ViewAttacher _viewAttacher;
+        private ViewAttacherConvention _viewAttacherConvention;
         private ActionCall _action;
         private IViewsForActionFilter _firstFilterThatFindsExactlyOne;
         private ViewBag _views;
@@ -29,7 +27,6 @@ namespace FubuMVC.Tests.View
         [SetUp]
         public void Setup()
         {
-            var types = new TypePool(null);
             _observer = new RecordingConfigurationObserver();
             _action = ActionCall.For<ViewsForActionFilterTesterController>(x => x.AAction());
             _fromFindsOne = new FakeViewToken();
@@ -39,26 +36,26 @@ namespace FubuMVC.Tests.View
             _firstFilterThatFindsExactlyOne = createFilterThatReturns(_fromFindsOne);
             _secondFilterThatFindsExactlyOne = createFilterThatReturns(_fromSecondFindsOne);
             _filterThatFindsMultiple = createFilterThatReturns(_fromFindsOne, _fromSecondFindsOne);
-            _viewAttacher = new ViewAttacher(types);
+            _viewAttacherConvention = new ViewAttacherConvention();
         }
 
         [Test]
         public void does_not_attach_a_view_if_no_filters_find_a_match()
         {
-            _viewAttacher.AddViewsForActionFilter(_filterThatFindsNone);
+            _viewAttacherConvention.AddViewsForActionFilter(_filterThatFindsNone);
             
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
+            _viewAttacherConvention.AttemptToAttachViewToAction(_views, _action, _observer);
             _action.OfType<FakeViewToken>().ShouldHaveCount(0);
         }
 
         [Test]
         public void should_use_first_filter_that_returns_exactly_one_view()
         {
-            _viewAttacher.AddViewsForActionFilter(_filterThatFindsNone);
-            _viewAttacher.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
-            _viewAttacher.AddViewsForActionFilter(_secondFilterThatFindsExactlyOne);
+            _viewAttacherConvention.AddViewsForActionFilter(_filterThatFindsNone);
+            _viewAttacherConvention.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
+            _viewAttacherConvention.AddViewsForActionFilter(_secondFilterThatFindsExactlyOne);
 
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
+            _viewAttacherConvention.AttemptToAttachViewToAction(_views, _action, _observer);
             var attachedView = _action.OfType<FakeViewToken>().ShouldHaveCount(1).FirstOrDefault();
             attachedView.ShouldBeTheSameAs(_fromFindsOne);
         }
@@ -66,9 +63,9 @@ namespace FubuMVC.Tests.View
         [Test]
         public void should_not_attach_a_view_from_a_filter_that_returns_more_than_one_token()
         {
-            _viewAttacher.AddViewsForActionFilter(_filterThatFindsMultiple);
+            _viewAttacherConvention.AddViewsForActionFilter(_filterThatFindsMultiple);
 
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
+            _viewAttacherConvention.AttemptToAttachViewToAction(_views, _action, _observer);
             _action.OfType<FakeViewToken>().ShouldHaveCount(0);
         }
 
@@ -77,36 +74,17 @@ namespace FubuMVC.Tests.View
         {
             _fromFindsOne.Name = "TestToken";
 
-            _viewAttacher.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
-            _viewAttacher.AttemptToAttachViewToAction(_views, _action, _observer);
+            _viewAttacherConvention.AddViewsForActionFilter(_firstFilterThatFindsExactlyOne);
+            _viewAttacherConvention.AttemptToAttachViewToAction(_views, _action, _observer);
 
             _observer.LastLogEntry.ShouldContain(_fromFindsOne.Name);
         }
 
-        [Test]
-        public void should_not_add_same_type_of_facility_more_than_once()
-        {
-            _viewAttacher.AddFacility(new TestViewFacility());
-            _viewAttacher.AddFacility(new TestViewFacility());
-
-            _viewAttacher.Facilities.ShouldHaveCount(1);
-        }
-        
         private static IViewsForActionFilter createFilterThatReturns(params IViewToken[] viewTokens)
         {
             var filter = MockRepository.GenerateMock<IViewsForActionFilter>();
             filter.Stub(x => x.Apply(null, null)).IgnoreArguments().Return(viewTokens);
             return filter;
-        }
-
-        public class TestViewFacility : IViewFacility
-        {
-            public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
-            {
-                return Enumerable.Empty<IViewToken>();
-            }
-
-            public BehaviorNode CreateViewNode(Type type) { return null; }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using System.Collections.Generic;
@@ -9,12 +10,14 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewExpression
     {
-        private readonly ViewAttacher _viewAttacher;
+        private readonly IViewAttacher _viewAttacher;
+        private readonly ViewAttacherConvention _viewAttacherConvention;
         private readonly FubuRegistry _registry;
 
-        public ViewExpression(ViewAttacher viewAttacher, FubuRegistry registry)
+        public ViewExpression(IViewAttacher viewAttacher, FubuRegistry registry, ViewAttacherConvention viewAttacherConvention)
         {
             _viewAttacher = viewAttacher;
+            _viewAttacherConvention = viewAttacherConvention;
             _registry = registry;
         }
 
@@ -37,7 +40,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
-            var expression = new ViewsForActionFilterExpression(_viewAttacher);
+            var expression = new ViewsForActionFilterExpression(_viewAttacherConvention);
             configure(expression);
 
             return this;
@@ -58,13 +61,18 @@ namespace FubuMVC.Core.Registration.DSL
             _registry.ConfigureImports(i =>
             {
                 var importAttacher = i.Views._viewAttacher;
+                var importConvention = i.Views._viewAttacherConvention;
 
-                if(importAttacher.Facilities.Count == 0)
+                if(!importAttacher.Facilities.Any())
                 {
-                    _viewAttacher.Filters.Each(importAttacher.AddViewsForActionFilter);
+                    _viewAttacherConvention
+                        .Filters
+                        .Each(importConvention.AddViewsForActionFilter);
                 }
 
-                _viewAttacher.Facilities.Each(importAttacher.AddFacility);
+                _viewAttacher
+                    .Facilities
+                    .Each(importAttacher.AddFacility);
             });
 
             return this;

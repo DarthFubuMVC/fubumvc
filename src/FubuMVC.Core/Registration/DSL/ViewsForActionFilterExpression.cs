@@ -5,9 +5,9 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewsForActionFilterExpression
     {
-        private readonly ViewAttacher _attacher;
+        private readonly ViewAttacherConvention _attacher;
 
-        public ViewsForActionFilterExpression(ViewAttacher attacher)
+        public ViewsForActionFilterExpression(ViewAttacherConvention attacher)
         {
             _attacher = attacher;
         }
