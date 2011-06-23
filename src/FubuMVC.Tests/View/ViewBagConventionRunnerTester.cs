@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
@@ -31,11 +31,70 @@ namespace FubuMVC.Tests.View
             _runner.Facilities.ShouldHaveCount(1);
         }
 
+        [Test]
+        public void should_run_inner_bag_convention()
+        {
+            _runner.AddFacility(new TestViewFacility());
+
+            var convention = new TestViewBagConvention();
+            _runner.Apply(convention);
+
+            _runner
+                .Configure(new FubuRegistry().BuildGraph());
+
+            convention
+                .Executed
+                .ShouldBeTrue();
+        }
+
+        public class TestViewBagConvention : IViewBagConvention
+        {
+            public void Configure(ViewBag bag, BehaviorGraph graph)
+            {
+                Executed = true;
+            }
+
+            public bool Executed { get; set; }
+        }
+
+        public class TestViewToken : IViewToken
+        {
+            public BehaviorNode ToBehavioralNode()
+            {
+                throw new NotImplementedException();
+            }
+
+            public Type ViewType
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public Type ViewModelType
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public string Name
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public string Folder
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj.GetType() == GetType();
+            }
+        }
+
         public class TestViewFacility : IViewFacility
         {
             public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
             {
-                return Enumerable.Empty<IViewToken>();
+                yield return new TestViewToken();
             }
 
             public BehaviorNode CreateViewNode(Type type) { return null; }

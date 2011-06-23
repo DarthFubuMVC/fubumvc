@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuCore.Util;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 using FubuMVC.Spark.SparkModel;
 
@@ -28,11 +25,6 @@ namespace FubuMVC.Spark
                 .Select(x => x.Descriptor.As<ViewDescriptor>())
                 .Where(x => x.HasViewModel())
                 .Select(x => new SparkViewToken(x));
-        }
-
-        public BehaviorNode CreateViewNode(Type type)
-        {
-            return null;
         }
     }
 }

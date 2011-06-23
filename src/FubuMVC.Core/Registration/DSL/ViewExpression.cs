@@ -10,11 +10,11 @@ namespace FubuMVC.Core.Registration.DSL
 {
     public class ViewExpression
     {
-        private readonly IViewAttacher _viewAttacher;
+        private readonly ViewBagConventionRunner _viewAttacher;
         private readonly ViewAttacherConvention _viewAttacherConvention;
         private readonly FubuRegistry _registry;
 
-        public ViewExpression(IViewAttacher viewAttacher, FubuRegistry registry, ViewAttacherConvention viewAttacherConvention)
+        public ViewExpression(ViewBagConventionRunner viewAttacher, FubuRegistry registry, ViewAttacherConvention viewAttacherConvention)
         {
             _viewAttacher = viewAttacher;
             _viewAttacherConvention = viewAttacherConvention;
@@ -27,14 +27,14 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
-        public ViewExpression RegisterActionLessViews(Func<Type, bool> viewTypeFilter)
+        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTypeFilter)
         {
             return RegisterActionLessViews(viewTypeFilter, chain => { });
         }
 
-        public ViewExpression RegisterActionLessViews(Func<Type, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
+        public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
         {
-            _registry.ApplyConvention(new ActionLessViewConvention(_viewAttacher.Facilities, _viewAttacher.Types, viewTypeFilter, configureChain));
+            _viewAttacher.Apply(new ActionLessViewConvention(viewTypeFilter, configureChain));
             return this;          
         }
 
@@ -106,33 +106,30 @@ namespace FubuMVC.Core.Registration.DSL
         }
     }
 
-    public class ActionLessViewConvention : IConfigurationAction
+    public class ActionLessViewConvention : IViewBagConvention
     {
-        private readonly IEnumerable<IViewFacility> _facilities;
-        private readonly TypePool _types;
-        private readonly Func<Type, bool> _viewTypeFilter;
+        private readonly Func<IViewToken, bool> _viewTypeFilter;
         private readonly Action<BehaviorChain> _configureChain;
 
-        public ActionLessViewConvention(IEnumerable<IViewFacility> facilities, TypePool types, Func<Type, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
+        public ActionLessViewConvention(Func<IViewToken, bool> viewTypeFilter, Action<BehaviorChain> configureChain)
         {
-            _facilities = facilities;
-            _types = types;
             _viewTypeFilter = viewTypeFilter;
             _configureChain = configureChain;
         }
 
-        public void Configure(BehaviorGraph graph)
+        public void Configure(ViewBag bag, BehaviorGraph graph)
         {
-            // This needs to be forced to true here
-            _types.ShouldScanAssemblies = true;
-            _types.TypesMatching(_viewTypeFilter).Each(type =>
-            {
-                var chain = graph.AddChain();
-                var node = _facilities.FirstValue(x => x.CreateViewNode(type));
-                chain.AddToEnd(node);
+            bag
+                .Views
+                .Where(token => _viewTypeFilter(token))
+                .Each(token =>
+                          {
+                              var chain = graph.AddChain();
+                              var output = token.ToBehavioralNode();
+                              chain.AddToEnd(output);
 
-                _configureChain(chain);
-            });
+                              _configureChain(chain);
+                          });
         }
     }
 }

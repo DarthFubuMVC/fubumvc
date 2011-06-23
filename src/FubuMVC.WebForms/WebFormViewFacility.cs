@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
 
 namespace FubuMVC.WebForms
@@ -13,22 +12,14 @@ namespace FubuMVC.WebForms
     {
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            return types.TypesMatching(IsWebFormView).Select(x => new WebFormViewToken(x) as IViewToken);
-        }
-
-        public BehaviorNode CreateViewNode(Type type)
-        {
-            if (IsWebFormControl(type) || IsWebFormView(type))
-            {
-                return new WebFormView(type);
-            }
-
-            return null;
+            return types
+                    .TypesMatching(IsWebFormView)
+                    .Select(x => new WebFormViewToken(x) as IViewToken);
         }
 
         public static bool IsWebFormView(Type type)
         {
-            return type.CanBeCastTo<Page>() && type.CanBeCastTo<IFubuPage>();
+            return type.CanBeCastTo<TemplateControl>() && type.CanBeCastTo<IFubuPage>();
         }
 
         public static bool IsWebFormControl(Type type)

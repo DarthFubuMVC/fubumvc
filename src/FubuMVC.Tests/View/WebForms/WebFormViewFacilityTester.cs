@@ -53,26 +53,6 @@ namespace FubuMVC.Tests.View.WebForms
 
             views.Each(x => x.ShouldBeOfType<WebFormViewToken>().ViewType.CanBeCastTo<TemplateControl>().ShouldBeTrue());
         }
-
-        [Test]
-        public void create_view_node_for_a_web_forms_page()
-        {
-            new WebFormViewFacility().CreateViewNode(typeof (WebPage))
-                .ShouldBeOfType<WebFormView>().ViewName.ShouldEqual(typeof(WebPage).ToVirtualPath());
-        }
-
-        [Test]
-        public void create_view_node_for_a_web_forms_control()
-        {
-            new WebFormViewFacility().CreateViewNode(typeof (WebFormControl))
-                .ShouldBeOfType<WebFormView>().ViewName.ShouldEqual(typeof (WebFormControl).ToVirtualPath());
-        }
-
-        [Test]
-        public void create_view_node_for_a_not_web_forms_type_returns_null()
-        {
-            new WebFormViewFacility().CreateViewNode(GetType()).ShouldBeNull();
-        }
     }
 
     public class WebFormControl : UserControl{}
