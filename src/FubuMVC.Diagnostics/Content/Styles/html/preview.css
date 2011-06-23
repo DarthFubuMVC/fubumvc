@@ -1,0 +1,21 @@
+.property-list li
+{
+    list-style-type:none;
+    margin-left:-15px;
+}
+
+.property-list li h4
+{
+    font-size:1.5em;
+}
+
+.property-list .example fieldset
+{
+    border:1px solid #666;
+    margin-left:25px;
+}
+
+.property-list .example pre.blk
+{
+    margin-bottom:15px;
+}

@@ -4,7 +4,7 @@ using FubuMVC.Diagnostics.Models;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
-    public class DashboardAction : NavigationItemCaseBase
+    public class DashboardAction : NavigationItemBase
     {
         public DashboardAction(BehaviorGraph graph, IEndpointService endpointService) 
             : base(graph, endpointService)

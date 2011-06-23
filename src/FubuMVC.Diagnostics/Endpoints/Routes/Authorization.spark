@@ -2,6 +2,7 @@
 <viewdata model="FubuMVC.Diagnostics.Models.Routes.AuthorizationModel" />
 <content:title>Registered Authorization Rules</content:title>
 <content:head>
+  <Script src="authorization.js" />
 </content:head>
 <content:main>
   <h2>Registered Authorization Rules</h2>
@@ -19,11 +20,4 @@
       </div>
     </for>
   </div>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#authorization-rules').accordion({
-        collapsible:true
-      });
-    });
-  </script>
 </content:main>

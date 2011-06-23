@@ -7,13 +7,13 @@ using FubuMVC.Diagnostics.Configuration.Policies;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
-    public abstract class NavigationItemCaseBase : INavigationItemAction
+    public abstract class NavigationItemBase : INavigationItemAction
     {
         private readonly BehaviorGraph _graph;
         private readonly IEndpointService _endpointService;
         private readonly Lazy<ActionCall> _actionCall;
 
-        protected NavigationItemCaseBase(BehaviorGraph graph, IEndpointService endpointService)
+        protected NavigationItemBase(BehaviorGraph graph, IEndpointService endpointService)
         {
             _graph = graph;
             _endpointService = endpointService;

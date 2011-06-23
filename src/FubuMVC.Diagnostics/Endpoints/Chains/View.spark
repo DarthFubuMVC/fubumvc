@@ -2,6 +2,7 @@
 <content:title>Chain ${Model.Chain.UniqueId.ToString()}</content:title>
 <content:head>
   <Stylesheet href="chains/view.css" />
+  <Script src="chains/view.js" />
 </content:head>
 <content:main>
   <h2 class="route">
@@ -25,13 +26,4 @@
   <div id="arrow" style="display:none">
     <Image src="down-arrow.png" />
   </div>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      var arrow = $('#arrow').html();
-      $('#nodes > li:not(:last)').each(function() {
-        $(this).append('<li class="arrow">' + arrow  + '</li>');
-      });
-    });
-  </script>
 </content:main>

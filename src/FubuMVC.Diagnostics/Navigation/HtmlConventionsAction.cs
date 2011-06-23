@@ -1,24 +1,24 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Models.Requests;
+using FubuMVC.Diagnostics.Models.Html;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
-    public class RequestExplorerAction : NavigationItemBase
+    public class HtmlConventionsAction : NavigationItemBase
     {
-        public RequestExplorerAction(BehaviorGraph graph, IEndpointService endpointService)
+        public HtmlConventionsAction(BehaviorGraph graph, IEndpointService endpointService)
             : base(graph, endpointService)
         {
         }
 
         public override string Text()
         {
-            return "Request Explorer";
+            return "Html Conventions";
         }
 
         protected override object inputModel()
         {
-            return new RequestExplorerRequestModel();
+            return new HtmlConventionsRequestModel();
         }
     }
 }

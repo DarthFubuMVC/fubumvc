@@ -73,6 +73,8 @@
     <Content Include="Content\Images\filter_wrap_left.gif" />
     <Content Include="Content\Images\filter_wrap_right.gif" />
     <Content Include="Content\Images\pre_code_bg_blk.gif" />
+    <Content Include="Content\Scripts\chains\view.js" />
+    <Content Include="Content\Scripts\html\selector.js" />
     <Content Include="Content\Scripts\jquery\jquery.treeview.js" />
     <Content Include="Content\Scripts\prettyprint.js" />
     <Content Include="Content\Scripts\requests.js" />
@@ -83,12 +85,17 @@
     <Content Include="Content\Scripts\json2.js" />
     <Content Include="Content\Scripts\knockout-1.1.2.js" />
     <Content Include="Content\Scripts\requests\view.js" />
+    <Content Include="Content\Scripts\authorization.js" />
     <Content Include="Content\Styles\chains\view.css" />
+    <Content Include="Content\Styles\html\preview.css" />
+    <Content Include="Content\Styles\html\selector.css" />
     <Content Include="Content\Styles\requests\view.css" />
     <Content Include="diagnostics.script.config" />
     <None Include="Endpoints\Chains\Unknown.spark" />
     <None Include="Endpoints\Chains\View.spark" />
+    <None Include="Endpoints\Html.spark" />
     <None Include="Endpoints\Dashboard.spark" />
+    <None Include="Endpoints\Html\Preview.spark" />
     <None Include="Endpoints\Requests.spark" />
     <None Include="Notifications\NoOutputs.spark">
       <SubType>Designer</SubType>
@@ -159,6 +166,7 @@
     <None Include="Shared\BehaviorStart.spark" />
     <None Include="Shared\FileOutputReport.spark" />
     <None Include="Shared\ExceptionReport.spark" />
+    <None Include="Shared\Html.spark" />
     <None Include="Shared\SetValueReport.spark" />
     <None Include="Shared\OutputReport.spark" />
     <None Include="Shared\ModelBindingReport.spark" />
@@ -179,6 +187,8 @@
   <ItemGroup>
     <Compile Include="Behaviors\UnknownObjectBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
+    <Compile Include="Endpoints\HtmlEndpoint.cs" />
+    <Compile Include="Endpoints\Html\PreviewEndpoint.cs" />
     <Compile Include="Endpoints\RequestsEndpoint.cs" />
     <Compile Include="Endpoints\Requests\AutocompleteEndpoint.cs" />
     <Compile Include="Endpoints\Requests\FilterEndpoint.cs" />
@@ -252,6 +262,10 @@
     <Compile Include="Infrastructure\IHttpRequest.cs" />
     <Compile Include="Models\AutocompleteRequestModel.cs" />
     <Compile Include="Models\Grids\IGridModel.cs" />
+    <Compile Include="Models\Html\HtmlConventionsPreviewRequestModel.cs" />
+    <Compile Include="Models\Html\HtmlConventionsPreviewViewModel.cs" />
+    <Compile Include="Models\Html\HtmlConventionsRequestModel.cs" />
+    <Compile Include="Models\Html\HtmlConventionsViewModel.cs" />
     <Compile Include="Models\IRequestCacheModelBuilder.cs" />
     <Compile Include="Models\JqGridColumn.cs" />
     <Compile Include="Models\JqGridColumnModel.cs" />
@@ -283,12 +297,13 @@
     <Compile Include="Models\Routes\RoutesModel.cs" />
     <Compile Include="Models\UnknownChainRequest.cs" />
     <Compile Include="Navigation\DashboardAction.cs" />
+    <Compile Include="Navigation\HtmlConventionsAction.cs" />
     <Compile Include="Navigation\INavigationItemAction.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\Grids\JsonGridModel.cs" />
     <Compile Include="Models\Grids\JsonGridRow.cs" />
     <Compile Include="Navigation\INavigationMenuBuilder.cs" />
-    <Compile Include="Navigation\NavigationItemCaseBase.cs" />
+    <Compile Include="Navigation\NavigationItemBase.cs" />
     <Compile Include="Navigation\NavigationMenu.cs" />
     <Compile Include="Navigation\NavigationMenuBuilder.cs" />
     <Compile Include="Navigation\NavigationMenuItem.cs" />

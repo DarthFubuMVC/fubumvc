@@ -4,7 +4,7 @@ using FubuMVC.Diagnostics.Models.Routes;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
-    public class RouteAuthorizationAction : NavigationItemCaseBase
+    public class RouteAuthorizationAction : NavigationItemBase
     {
         public RouteAuthorizationAction(BehaviorGraph graph, IEndpointService endpointService)
             : base(graph, endpointService)

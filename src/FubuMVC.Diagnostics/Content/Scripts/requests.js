@@ -132,7 +132,7 @@
                 bgiframe: true,
                 autoOpen: false,
                 height: 150,
-                width: 500,
+                width: 510,
                 modal: true
             });
 
