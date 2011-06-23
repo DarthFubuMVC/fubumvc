@@ -24,10 +24,10 @@ BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 props = { :stage => BUILD_DIR, :artifacts => ARTIFACTS }
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test]
+task :default => [:compile, :unit_test, "template:build"]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_depencencies,:default,:history, :publish]
+task :ci => [:update_all_dependencies, :default, "template:build", :package,"nuget:build"]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -86,8 +86,9 @@ task :compile => [:restore_if_missing, :clean, :version] do
   #copyOutputFiles "src/FubuMVC.Spark/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
   #copyOutputFiles "src/FubuMVC.Deployers/bin/#{COMPILE_TARGET}", "*Deployers*.{dll,pdb}", props[:stage]
 
-  #copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
-  #copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
+  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
+  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
+  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu", props[:stage]
 
   bottles("create-pak fubumvc-deployers build/fubumvc-deployers.zip -target #{COMPILE_TARGET}")
   
@@ -101,7 +102,7 @@ end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
   Dir.glob(File.join(fromDir, filePattern)){|file| 		
-	copy(file, outDir) if File.file?(file)
+	copy(file, outDir, :preserve => true) if File.file?(file)
   } 
 end
 
@@ -150,5 +151,44 @@ end
 def self.fubu(args)
   fubu = Platform.runtime("src/fubu/bin/#{COMPILE_TARGET}/fubu.exe")
   sh "#{fubu} #{args}" 
+end
+
+FUBUTEMPLATE_DIR = 'fubuTemplate'
+namespace :template do
+
+  desc "Cleans, Updates, and Zips fubuTemplate"
+  task :build => ["template:clean", "template:update", "template:zip"]
+
+  desc "Updates and zips default FubuTemplate"
+  zip :zip do |zip|
+    zip.directories_to_zip = [FUBUTEMPLATE_DIR]
+    zip.output_file = 'fubuTemplate.zip'
+    zip.output_path = ['build']
+  end
+
+  desc "Update fubuTemplate dependencies"
+  task :update do
+    path = File.join(FUBUTEMPLATE_DIR, "/fubuDependencies.txt")
+    dependencies_dir = File.join(FUBUTEMPLATE_DIR, 'lib/FubuMVC')
+    unless File.exists?(path)
+      puts "No fubuDependencies.txt file"
+      return
+    end
+    mkdir_p(dependencies_dir)
+    IO.readlines(path).each do |l|
+      cp "build/#{l.chomp}", "#{dependencies_dir}/#{l.chomp}"
+    end
+  end
+
+  desc "Cleans matching files in fubuTemplateIgnore.txt"
+  task :clean, [:dry_run] do |t, args|
+    Dir.chdir(FUBUTEMPLATE_DIR) do
+      files = IO.readlines('fubuTemplateIgnore.txt')
+              .map{|l| Dir["**/#{l.chomp}"]}
+              .flatten
+              .uniq
+      args[:dry_run] ? puts(files) : rm_r(files)
+    end
+  end
 end
 
