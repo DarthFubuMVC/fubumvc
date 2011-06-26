@@ -30,15 +30,14 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
                 row.Header("Source");
             });
 
-            report.Each(binding =>
-            {
-                table.AddBodyRow(row =>
-                {
-                    row.Cell(binding.Key);
-                    row.Cell(binding.Value.ToString());
-                    row.Cell(binding.Source.ToString());
-                });
-            });
+            report
+                .OfType<ModelBindingKey>()
+                .Each(binding => table.AddBodyRow(row =>
+                                                      {
+                                                          row.Cell(binding.Key);
+                                                          row.Cell(binding.Value.ToString());
+                                                          row.Cell(binding.Source.ToString());
+                                                      }));
         }
 
         public void FileOutput(FileOutputReport report)

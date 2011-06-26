@@ -118,6 +118,9 @@
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\DiagnosticBehaviorFactoryTester.cs" />
+    <Compile Include="Diagnostics\RecordingModelBinderCacheTester.cs" />
+    <Compile Include="Diagnostics\RecordingPropertyBinderCacheTester.cs" />
+    <Compile Include="Diagnostics\RecordingValueConverterRegistryTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />

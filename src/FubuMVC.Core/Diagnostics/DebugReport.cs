@@ -123,7 +123,7 @@ namespace FubuMVC.Core.Diagnostics
             _currentModelBinding.MarkFinished();
         }
 
-        public void AddBindingDetail(ModelBindingKey binding)
+        public void AddBindingDetail(IModelBindingDetail binding)
         {
             if (_currentModelBinding != null) _currentModelBinding.Add(binding);
         }

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Diagnostics
 {
-    public class ModelBindingReport : TimedReport, IEnumerable<ModelBindingKey>, IBehaviorDetails
+    public class ModelBindingReport : TimedReport, IEnumerable<IModelBindingDetail>, IBehaviorDetails
     {
         public Type BoundType { get; set; }
         public object StoredObject { get; set; }
 
-        private readonly IList<ModelBindingKey> _bindings = new List<ModelBindingKey>();
-        public IEnumerator<ModelBindingKey> GetEnumerator()
+        private readonly IList<IModelBindingDetail> _bindings = new List<IModelBindingDetail>();
+        public IEnumerator<IModelBindingDetail> GetEnumerator()
         {
             return _bindings.GetEnumerator();
         }
@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Diagnostics
             return GetEnumerator();
         }
 
-        public void Add(ModelBindingKey binding)
+        public void Add(IModelBindingDetail binding)
         {
             _bindings.Add(binding);
         }

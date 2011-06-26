@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Diagnostics
         void MarkException(Exception exception);
         void StartModelBinding(Type type);
         void EndModelBinding(object target);
-        void AddBindingDetail(ModelBindingKey binding);
+        void AddBindingDetail(IModelBindingDetail binding);
         string Url { get; set; }
         DateTime Time { get; set; }
         IDictionary<string, object> FormData { get; }

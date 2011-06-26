@@ -114,6 +114,9 @@
     <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\NulloOutputWriter.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingModelBinderCache.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingPropertyBinderCache.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingValueConverterRegistry.cs" />
     <Compile Include="Diagnostics\WannaKillAttribute.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorFactory.cs" />
@@ -183,7 +186,6 @@
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
     <Compile Include="FubuRegistry.DefaultServices.cs" />
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
-    <Compile Include="IActionSource.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\IPackageFiles.cs" />
     <Compile Include="Packaging\PackageFileActivator.cs" />

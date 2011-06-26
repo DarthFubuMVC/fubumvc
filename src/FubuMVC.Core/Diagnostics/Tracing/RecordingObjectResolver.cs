@@ -24,8 +24,12 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                _report.AddBindingDetail(new ModelBindingException
+                                             {
+                                                 StackTrace = exc.StackTrace
+                                             });
                 _report.EndModelBinding(null);
                 throw;
             }
