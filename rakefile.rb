@@ -1,4 +1,5 @@
 COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
+CLR_TOOLS_VERSION = "v4.0.30319"
 
 buildsupportfiles = Dir["#{File.dirname(__FILE__)}/buildsupport/*.rb"]
 raise "Run `git submodule update --init` to populate your buildsupport folder." unless buildsupportfiles.any?
@@ -12,7 +13,6 @@ RESULTS_DIR = "results"
 PRODUCT = "FubuMVC"
 COPYRIGHT = 'Copyright 2008-2010 Chad Myers, Jeremy D. Miller, Joshua Flanagan, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
-CLR_TOOLS_VERSION = "v4.0.30319"
 BUILD_DIR = File.expand_path("build")
 ARTIFACTS = File.expand_path("artifacts")
 
@@ -75,7 +75,7 @@ desc "Compiles the app"
 task :compile => [:clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
   AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
-  
+
   copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
   copyOutputFiles "src/FubuMVC.GettingStarted/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
 
@@ -86,11 +86,9 @@ task :compile => [:clean, :version] do
 
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
   copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
-  
-  sh "bottles create-pak fubumvc-deployers build/fubumvc-deployers.zip -target #{COMPILE_TARGET}"
+
+  bottles("create-pak fubumvc-deployers build/fubumvc-deployers.zip -target #{COMPILE_TARGET}")
 end
-
-
 
 def copyOutputFiles(fromDir, filePattern, outDir)
   Dir.glob(File.join(fromDir, filePattern)){|file| 		
@@ -110,13 +108,13 @@ end
 
 desc "Runs the StoryTeller suite of end to end tests.  IIS must be running first"
 task :storyteller => [:compile] do
-  sh "lib/storyteller/StoryTellerRunner Storyteller.xml output/st-results.htm"
+  storyteller("Storyteller.xml output/st-results.htm")
 end
 
 desc "Set up the virtual directories for the HelloWorld applications"
 task :virtual_dir => [:compile] do
-  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe createvdir src/FubuMVC.HelloWorld helloworld"
-  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe createvdir src/FubuMVC.HelloFubuSpark hellofubuspark"
+  fubu("createvdir src/FubuMVC.HelloWorld helloworld")
+  fubu("createvdir src/FubuMVC.HelloFubuSpark hellofubuspark")
 end
 
 desc "ZIPs up the build results"
@@ -127,5 +125,20 @@ zip :package do |zip|
 end
 desc "Bundles up the packaged content in FubuFastPack"
 task :bundle_getting_started do
-  sh "src/fubu/bin/#{COMPILE_TARGET}/fubu.exe assembly-pak src/FubuMVC.GettingStarted -projfile FubuMVC.GettingStarted.csproj"
+  fubu("assembly-pak src/FubuMVC.GettingStarted -projfile FubuMVC.GettingStarted.csproj")
+end
+
+def self.bottles(args)
+  bottles = Platform.runtime(Nuget.tool("Bottles.Tools", "BottleRunner.exe"))
+  sh "#{bottles} #{args}"
+end
+
+def self.storyteller(args)
+st = Platform.runtime("lib/storyteller/StoryTellerRunner.exe") 
+sh "#{st} #{args}"
+end
+
+def self.fubu(args)
+  fubu = Platform.runtime("src/fubu/bin/#{COMPILE_TARGET}/fubu.exe")
+  sh "#{fubu} #{args}" 
 end
