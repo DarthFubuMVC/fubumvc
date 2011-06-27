@@ -36,10 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.0.69\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.0.83\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.1.24\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.1.32\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
