@@ -33,5 +33,6 @@
     <file src="..\..\build\Ionic.Zip.*" target="tools" />
     <file src="..\..\build\StructureMap.dll" target="tools" />	
     <file src="..\..\build\Bottles*.*" target="tools" />	
+    <file src="..\..\build\fubumvc-deployers.zip" target="tools" />
   </files>
 </package>

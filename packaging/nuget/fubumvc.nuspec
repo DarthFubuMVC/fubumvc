@@ -19,7 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\fubumvc-deployers.zip" target="tools" />
     <file src="FubuMVC.cs.pp" target="content\App_Start" />
     <file src="ConfigureFubuMVC.cs.pp" target="content" />
     <file src="web.config.transform" target="content" />
