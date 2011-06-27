@@ -32,8 +32,6 @@ namespace FubuMVC.Core.Diagnostics
                              x.ReplaceService<IDebugDetector, DebugDetector>();
                              x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
                              x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
-                             x.ReplaceService<IModelBinderCache, RecordingModelBinderCache>();
-                             x.ReplaceService<IPropertyBinderCache, RecordingPropertyBinderCache>();
                              x.ReplaceService<IValueConverterRegistry, RecordingValueConverterRegistry>();
                          });
         }

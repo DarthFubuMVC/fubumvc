@@ -27,7 +27,11 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 			arguments.Set(typeof(IOutputWriter), new RecordingOutputWriter(report, writer));
             arguments.Set(typeof(IDebugReport), report);
 
-            return _inner.BuildBehavior(arguments, behaviorId);
+            var behavior = _inner.BuildBehavior(arguments, behaviorId);
+            var diagnostics = _container.Get<DiagnosticBehavior>();
+            diagnostics.Report = report;
+            diagnostics.Inner = behavior;
+            return diagnostics;
         }
     }
 }

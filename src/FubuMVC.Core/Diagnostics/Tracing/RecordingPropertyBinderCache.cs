@@ -5,10 +5,10 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class RecordingPropertyBinderCache : IPropertyBinderCache
     {
-        private readonly PropertyBinderCache _inner;
+        private readonly IPropertyBinderCache _inner;
         private readonly IDebugReport _report;
 
-        public RecordingPropertyBinderCache(PropertyBinderCache inner, IDebugReport report)
+        public RecordingPropertyBinderCache(IPropertyBinderCache inner, IDebugReport report)
         {
             _inner = inner;
             _report = report;

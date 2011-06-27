@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Web.Routing;
 using Bottles;
 using Bottles.Environment;
 using FubuCore.Binding;
@@ -11,7 +10,6 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -61,13 +59,15 @@ namespace FubuMVC.StructureMap
                         var tracer = context.GetInstance<BehaviorTracer>();
                         tracer.Inner = behavior;
 
-                        var diagnostics = context.GetInstance<DiagnosticBehavior>();
-                        diagnostics.Inner = tracer;
-
-                        return diagnostics;
+                        return tracer;
                     });
 
-                    //x.For<IDebugReport>().HybridHttpOrThreadLocalScoped().Use<DebugReport>();
+                    x.For<IModelBinderCache>()
+                        .EnrichAllWith((context, cache) => new RecordingModelBinderCache(cache, context.GetInstance<IDebugReport>()));
+
+                    x.For<IPropertyBinderCache>()
+                        .EnrichAllWith((context, cache) => new RecordingPropertyBinderCache(cache, context.GetInstance<IDebugReport>()));
+
                     x.For<IDebugDetector>().Use<DebugDetector>();
                 });
             }

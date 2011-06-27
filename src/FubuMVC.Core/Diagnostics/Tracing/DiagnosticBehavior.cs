@@ -8,19 +8,29 @@ namespace FubuMVC.Core.Diagnostics.Tracing
     public class DiagnosticBehavior : IActionBehavior
     {
         private readonly IDebugDetector _detector;
-        private readonly IDebugReport _report;
+        private IDebugReport _report;
         private readonly IUrlRegistry _urls;
+        private readonly IRequestHistoryCache _history;
 
-        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IUrlRegistry urls,
+        public DiagnosticBehavior(IDebugDetector detector, IUrlRegistry urls,
                                   IRequestHistoryCache history)
         {
-            _report = report;
             _detector = detector;
             _urls = urls;
-
-            history.AddReport(report);
+            _history = history;
         }
-
+        
+        public IDebugReport Report
+        {
+            get { return _report; }
+            set
+            {
+                if((_report = value) != null)
+                {
+                    _history.AddReport(value);
+                }
+            }
+        }
         public IActionBehavior Inner { get; set; }
 
         public void Invoke()
