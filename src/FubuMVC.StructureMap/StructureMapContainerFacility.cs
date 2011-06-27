@@ -61,10 +61,13 @@ namespace FubuMVC.StructureMap
                         var tracer = context.GetInstance<BehaviorTracer>();
                         tracer.Inner = behavior;
 
-                        return tracer;
+                        var diagnostics = context.GetInstance<DiagnosticBehavior>();
+                        diagnostics.Inner = tracer;
+
+                        return diagnostics;
                     });
 
-                    x.For<IDebugReport>().HybridHttpOrThreadLocalScoped().Use<DebugReport>();
+                    //x.For<IDebugReport>().HybridHttpOrThreadLocalScoped().Use<DebugReport>();
                     x.For<IDebugDetector>().Use<DebugDetector>();
                 });
             }

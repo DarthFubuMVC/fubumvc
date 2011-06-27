@@ -1,0 +1,6 @@
+﻿<use master="" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="System.Linq" />
+<viewdata model="FubuMVC.Core.Diagnostics.ValueConverterSelection" />
+<p class="statement">Selecting Value Converter for ${Model.PropertyName}</p>
+<p class="msg-info">${Model.ConverterType.FullName}</p>

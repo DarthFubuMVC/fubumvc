@@ -1,0 +1,6 @@
+﻿<use master="" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="System.Linq" />
+<viewdata model="FubuMVC.Core.Diagnostics.ModelBinderSelection" />
+<p class="statement">Selecting model binder for ${Model.ModelType.FullName}</p>
+<p class="msg-info">${Model.BinderType.FullName}</p>

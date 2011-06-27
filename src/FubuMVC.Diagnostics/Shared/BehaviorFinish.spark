@@ -1,9 +1,9 @@
 ﻿<use master="" />
-<viewdata model="FubuMVC.Core.Diagnostics.BehaviorStart" />
+<viewdata model="FubuMVC.Core.Diagnostics.BehaviorFinish" />
 <div class="console">
   ${this.ImageFor('console-line.png').AddClass('indicator')}
   <span class="message">
-    <p class="statement">Starting Behavior</p>
+    <p class="statement">Finished Behavior</p>
     <p class="msg-info">${Model.BehaviorType}</p>
   </span>
   <div class="cboth"></div>

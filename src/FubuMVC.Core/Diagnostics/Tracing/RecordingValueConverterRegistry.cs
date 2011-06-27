@@ -17,12 +17,15 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         public ValueConverter FindConverter(PropertyInfo property)
         {
             var converter = _inner.FindConverter(property);
-            _report.AddBindingDetail(new ValueConverterSelection
-                                         {
-                                             ConverterType = converter.GetType(),
-                                             PropertyName = property.Name,
-                                             PropertyType = property.PropertyType
-                                         });
+            if (converter != null)
+            {
+                _report.AddBindingDetail(new ValueConverterSelection
+                                             {
+                                                 ConverterType = converter.GetType(),
+                                                 PropertyName = property.Name,
+                                                 PropertyType = property.PropertyType
+                                             });
+            }
             return converter;
         }
     }

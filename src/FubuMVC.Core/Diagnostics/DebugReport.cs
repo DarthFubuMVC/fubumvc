@@ -70,7 +70,7 @@ namespace FubuMVC.Core.Diagnostics
             _behaviors.Add(report);
             _behaviorStack.Push(report);
 
-            AddDetails(new BehaviorStart());
+            AddDetails(new BehaviorStart { BehaviorType = behavior.GetType() });
 
             return report;
         }
@@ -79,6 +79,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             BehaviorReport report = _behaviorStack.Pop();
             report.MarkFinished();
+            AddDetails(new BehaviorFinish { BehaviorType = report.BehaviorType });
         }
 
         public void AddDetails(IBehaviorDetails details)
@@ -121,6 +122,7 @@ namespace FubuMVC.Core.Diagnostics
 
             _currentModelBinding.StoredObject = target;
             _currentModelBinding.MarkFinished();
+            _currentModelBinding = null;
         }
 
         public void AddBindingDetail(IModelBindingDetail binding)

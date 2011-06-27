@@ -1,0 +1,21 @@
+﻿<use master="" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="System.Linq" />
+<viewdata model="FubuMVC.Core.Diagnostics.ModelBindingKey" />
+<p class="statement">Binding value</p>
+<table class="grid">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${Model.Key}</td>
+      <td>${Model.Value}</td>
+      <td>${Model.Source}</td>
+    </tr>
+  </tbody>
+</table>

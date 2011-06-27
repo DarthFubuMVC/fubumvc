@@ -1,6 +1,11 @@
 ﻿<use master="" />
 <use namespace="FubuMVC.Core.Diagnostics" />
 <viewdata model="FubuMVC.Core.Diagnostics.SetValueReport" />
-<div class="set-value">
-  <h4>Set value of ${Model.Type.FullName} to ${Model.Value}</h4>
+<div class="console">
+  ${this.ImageFor('console-line.png').AddClass('indicator')}
+  <span class="message">
+    <p class="statement">Setting value of ${Model.Type.FullName}</p>
+    <p class="msg-info">${Model.Value}</p>
+  </span>
+  <div class="cboth"></div>
 </div>

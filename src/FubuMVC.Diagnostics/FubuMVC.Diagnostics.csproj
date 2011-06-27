@@ -69,6 +69,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\console-line.png" />
     <Content Include="Content\Images\down-arrow.png" />
     <Content Include="Content\Images\filter_wrap_left.gif" />
     <Content Include="Content\Images\filter_wrap_right.gif" />
@@ -164,6 +165,12 @@
     <Content Include="Shared\bindings.xml" />
     <None Include="Shared\AuthorizationReport.spark" />
     <None Include="Shared\BehaviorStart.spark" />
+    <None Include="Shared\BehaviorFinish.spark" />
+    <None Include="Shared\ValueConverterSelection.spark" />
+    <None Include="Shared\PropertyBinderSelection.spark" />
+    <None Include="Shared\ModelBinderSelection.spark" />
+    <None Include="Shared\ModelBindingException.spark" />
+    <None Include="Shared\ModelBindingKey.spark" />
     <None Include="Shared\FileOutputReport.spark" />
     <None Include="Shared\ExceptionReport.spark" />
     <None Include="Shared\Html.spark" />

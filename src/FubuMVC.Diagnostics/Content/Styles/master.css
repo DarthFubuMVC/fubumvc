@@ -66,6 +66,13 @@ h2
 	min-height:500px;
 }
 
+#Content .container
+{
+    margin-left:10px;
+    margin-right:10px;
+    background:#fff;
+}
+
 #Footer {
     background-color:#333;
     border-top: 1px solid #111111;

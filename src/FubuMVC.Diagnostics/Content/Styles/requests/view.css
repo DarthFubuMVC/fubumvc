@@ -10,6 +10,11 @@
     text-align:left;
 }
 
+#nodes li.with-children
+{
+    border-left:1px dotted #B6B6B6;
+}
+
 #nodes li .ui-button
 {
     text-align:center;
@@ -23,4 +28,65 @@ h2.request
 h4.request-identifier
 {
     font-style:italic;
+}
+
+.console
+{
+    clear:left;
+    padding-bottom:5px;
+    margin-bottom:10px;
+    border-bottom:1px solid #B6B6B6;
+}
+
+.last .console
+{
+    border-bottom:0;
+}
+
+.console .indicator
+{
+    font-weight:bold;
+    font-size:1.2em;
+    float:left;
+    margin-right:10px;
+}
+
+.console .message
+{
+    float:left;
+    margin-top:-2px;
+}
+
+.console .message p
+{
+    margin-top:0;
+    margin-bottom:0;
+    overflow:hidden;
+}
+
+.console .message p.statement
+{
+    color:#0080ff;
+}
+
+.console .message p.msg-info
+{
+    color:#808080;
+}
+
+.cboth
+{
+    clear:both;
+}
+
+.ui-widget pre
+{
+    margin-bottom:5px;
+    border-top:1px solid #CCC;
+    border-right:1px solid #CCC;
+}
+
+.console .message ul
+{
+    width:100%;
 }

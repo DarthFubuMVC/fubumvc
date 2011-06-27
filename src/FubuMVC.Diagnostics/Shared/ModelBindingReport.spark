@@ -2,22 +2,22 @@
 <use namespace="FubuMVC.Core.Diagnostics" />
 <use namespace="System.Linq" />
 <viewdata model="FubuMVC.Core.Diagnostics.ModelBindingReport" />
-<div class="model-binding">
-  <h4>Bound Model: ${Model.BoundType.FullName}</h4>
-  <table class="grid" if="Model.Any()">
-    <thead>
-      <tr>
-        <th>Key</th>
-        <th>Value</th>
-        <th>Source</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr each="var key in Model">
-        <td>${key.Key}</td>
-        <td>${key.Value}</td>
-        <td>${key.Source}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="console">
+  ${this.ImageFor('console-line.png').AddClass('indicator')}
+  <span class="message">
+    <p class="statement">Starting model binding</p>
+    <p class="msg-info">${Model.BoundType.FullName}</p>
+    <ul if="Model.Any()">
+      <li class="binding-detail" each="var detail in Model">
+        <div class="console">
+          ${this.ImageFor('console-line.png').AddClass('indicator')}
+          <span class="message">
+            #this.Partial((object)detail);
+          </span>
+          <div class="cboth"></div>
+        </div>
+      </li>
+    </ul>
+  </span>
+  <div class="cboth"></div>
 </div>

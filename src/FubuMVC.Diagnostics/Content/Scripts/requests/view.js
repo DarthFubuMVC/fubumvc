@@ -1,8 +1,25 @@
 ﻿$(document).ready(function () {
+
+    var resetDottedLines = function() {
+        if($(this).find('.children:visible').size() != 0) {
+            $(this).addClass('with-children');
+        }
+        else {
+            $(this).removeClass('with-children');
+        }
+    };
+
     $('#nodes').treeview({
         collapsed: true,
 		animated: 'fast',
-        prerendered: true
+        prerendered: true,
+        toggle: function() {
+            resetDottedLines.call(this);
+        }
+    });
+
+    $('#nodes > li').each(function() {
+        resetDottedLines.call(this);
     });
 
     $('.output').each(function() {

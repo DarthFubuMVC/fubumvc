@@ -17,11 +17,14 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         public IModelBinder BinderFor(Type modelType)
         {
             var binder = _inner.BinderFor(modelType);
-            _report.AddBindingDetail(new ModelBinderSelection
-                                         {
-                                             ModelType = modelType,
-                                             BinderType = binder == null ? null : binder.GetType()
-                                         });
+            if (binder != null)
+            {
+                _report.AddBindingDetail(new ModelBinderSelection
+                                             {
+                                                 ModelType = modelType,
+                                                 BinderType = binder.GetType()
+                                             });
+            }
             return binder;
         }
     }

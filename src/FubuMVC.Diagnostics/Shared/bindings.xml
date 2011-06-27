@@ -7,4 +7,10 @@
   <element name="Navigation">#this.Partial&lt;FubuMVC.Diagnostics.Navigation.NavigationMenu&gt;();</element>
   <element name="FilterLink">this.LinkTo(new FubuMVC.Diagnostics.Models.Routes.RouteRequestModel { Column = '@column', Value = '@value' }).Text('@text')</element>
   <element name="BehaviorDetails">#this.PartialFor(@details);</element>
+  <element name="console">
+    <div class="console">
+      <span>this.ImageFor('console-line.png').AddClass('indicator')</span>
+      <span class="message">child::*</span>
+    </div>
+  </element>
 </bindings>

@@ -37,12 +37,11 @@ namespace FubuMVC.Core.Diagnostics
         }
     }
 
-    public class BehaviorStart : IBehaviorDetails
+    public abstract class BehaviorIndicator : IBehaviorDetails
     {
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            
-        }
+        public Type BehaviorType { get; set; }
+
+        public abstract void AcceptVisitor(IBehaviorDetailsVisitor visitor);
 
         public bool Equals(BehaviorStart other)
         {
@@ -53,12 +52,26 @@ namespace FubuMVC.Core.Diagnostics
         {
             if (ReferenceEquals(null, obj)) return false;
 
-            return obj.GetType() == typeof (BehaviorStart);
+            return obj.GetType() == typeof(BehaviorStart);
         }
 
         public override int GetHashCode()
         {
             return 0;
+        }
+    }
+
+    public class BehaviorStart : BehaviorIndicator
+    {
+        public override void AcceptVisitor(IBehaviorDetailsVisitor visitor)
+        {
+        }
+    }
+
+    public class BehaviorFinish : BehaviorIndicator
+    {
+        public override void AcceptVisitor(IBehaviorDetailsVisitor visitor)
+        {
         }
     }
 }

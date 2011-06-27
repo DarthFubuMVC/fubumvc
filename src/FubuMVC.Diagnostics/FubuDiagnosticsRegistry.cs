@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -70,13 +71,22 @@ namespace FubuMVC.Diagnostics
 
             Views
                 .TryToAttachWithDefaultConventions()
-                .RegisterActionLessViews(token => typeof(IBehaviorDetails).IsAssignableFrom(token.ViewModelType));
+                .RegisterActionLessViews(token => token.ViewModelType.IsDiagnosticsReport());
 
             this.UseSpark();
 
             Output
                 .ToJson
                 .WhenCallMatches(call => call.OutputType().Name.StartsWith("Json"));
+        }
+    }
+
+    public static class DiagnosticsExtensions
+    {
+        public static bool IsDiagnosticsReport(this Type type)
+        {
+            return typeof (IBehaviorDetails).IsAssignableFrom(type) ||
+                   typeof (IModelBindingDetail).IsAssignableFrom(type);
         }
     }
 }

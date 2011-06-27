@@ -1,0 +1,16 @@
+﻿<use master="" />
+<use namespace="FubuMVC.Core.Diagnostics" />
+<use namespace="System.Linq" />
+<viewdata model="FubuMVC.Core.Diagnostics.ModelBindingException" />
+<p class="statement">Handling exception</p>
+<div class="ui-widget">
+  <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+    <p>
+      <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+      <span>An exception was caught.</span>
+      <pre>
+        ${Model.StackTrace}
+      </pre>
+    </p>
+  </div>
+</div>

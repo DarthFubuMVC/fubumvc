@@ -17,12 +17,15 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         public IPropertyBinder BinderFor(PropertyInfo property)
         {
             var binder = _inner.BinderFor(property);
-            _report.AddBindingDetail(new PropertyBinderSelection
-                                         {
-                                             BinderType = binder.GetType(),
-                                             PropertyName = property.Name,
-                                             PropertyType = property.PropertyType
-                                         });
+            if (binder != null)
+            {
+                _report.AddBindingDetail(new PropertyBinderSelection
+                                             {
+                                                 BinderType = binder.GetType(),
+                                                 PropertyName = property.Name,
+                                                 PropertyType = property.PropertyType
+                                             });
+            }
             return binder;
         }
     }
