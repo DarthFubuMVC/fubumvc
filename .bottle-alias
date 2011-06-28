@@ -14,6 +14,6 @@
     <alias name="helloworld" folder="src/FubuMVC.HelloWorld" />
     <alias name="hellospark" folder="src/FubuMVC.HelloFubuSpark" />
     <alias name="fubumvc-deployers" folder="src/FubuMVC.Deployers" />
-	<alias name="diagnostics" folder="src/FubuMVC.Diagnostics" />
+	<alias name="fubumvc-diagnostics" folder="src/FubuMVC.Diagnostics" />
   </Aliases>
 </aliases>

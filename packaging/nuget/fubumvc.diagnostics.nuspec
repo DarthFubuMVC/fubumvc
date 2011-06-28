@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.Diagnostics</id>
+    <version>0.0.0</version>
+    <authors>Joshua Arnold, et al.</authors>
+    <owners>Joshua Arnold, Joshua Flanagan</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://fubumvc.com</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Advanced Diagnostics for FubuMVC.</description>
+    <tags>fubumvc</tags>
+    <dependencies>
+      <dependency id="FubuMVC.References" />
+	  <dependency id="FubuMVC.Spark" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\build\fubumvc-diagnostics.zip" target="lib" />	
+	<file src="..\..\build\fubumvc-diagnostics.zip" target="content\bin\fubu-packages" />	
+  </files>
+</package>
