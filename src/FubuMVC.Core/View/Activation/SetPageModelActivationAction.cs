@@ -25,7 +25,7 @@ namespace FubuMVC.Core.View.Activation
         {
             var modelPage = (IFubuPage<T>)page;
             var request = services.GetInstance<IFubuRequest>();
-            modelPage.Model = request.Get<T>() ?? request.Find<T>().FirstOrDefault();
+            modelPage.Model = request.Find<T>().FirstOrDefault() ?? request.Get<T>();
 
 //            if (modelPage.Model == null)
 //            {
