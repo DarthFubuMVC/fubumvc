@@ -27,7 +27,6 @@ namespace FubuMVC.HelloWorld
 
         private static void SetupContainer(ConfigurationExpression x)
         {
-            x.AddRegistry<AppSettingProviderRegistry>();
             x.For<IHttpSession>().Use<CurrentHttpContextSession>();
             x.Scan(i =>
             {

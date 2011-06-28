@@ -5,10 +5,10 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 {
     public class RecordingModelBinderWrapper : IModelBinderCache
     {
-        private readonly IModelBinderCache _inner;
+        private readonly ModelBinderCache _inner;
         private readonly Func<IDebugReport> _report;
 
-        public RecordingModelBinderWrapper(IModelBinderCache inner, Func<IDebugReport> report)
+        public RecordingModelBinderWrapper(ModelBinderCache inner, Func<IDebugReport> report)
         {
             _inner = inner;
             _report = report;
