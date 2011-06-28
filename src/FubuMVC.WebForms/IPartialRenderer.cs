@@ -69,12 +69,14 @@ namespace FubuMVC.WebForms
             var page = new Page();
             page.Controls.Add(view as Control);
 
+            var shouldClearModel = false;
             if (viewModel != null)
             {
+                shouldClearModel = !_request.Has(viewModel.GetType());
                 _request.Set(viewModel.GetType(), viewModel);
             }
             _activator.Activate(view);
-            _request.Clear(viewModel.GetType());
+
             setParentPageIfNotAlreadySet(view, page);
 
             if (index.HasValue)
@@ -87,6 +89,11 @@ namespace FubuMVC.WebForms
             _builder.ExecuteControl(page, writer);
 
             writer.Flush();
+
+            if (shouldClearModel)
+            {
+                _request.Clear(viewModel.GetType());
+            }
         }
 
         public string Render<T>(IFubuPage parentView, Type controlType, T viewModel, string prefix) where T : class

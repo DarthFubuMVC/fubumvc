@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Web.UI;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
@@ -115,6 +116,62 @@ namespace FubuMVC.Tests.View.WebForms
 
             var control = _executeCatcher.First<Page>().Controls[0].ShouldBeOfType<TestControl>();
             ((INeedToKnowAboutParentPage)control).ParentPage.ShouldBeOfType<Page>();
+        }
+    }
+
+    [TestFixture]
+    public class PartialRender_setting_model_in_FubuRequest : InteractionContext<PartialRenderer>
+    {
+        [Test]
+        public void should_set_the_model_in_the_FubuRequest()
+        {
+            var viewModel = new TestControlViewModel();
+            ClassUnderTest.Render(new TestControl(), viewModel, "", new StringWriter());
+
+            MockFor<IFubuRequest>().AssertWasCalled(r => r.Set(viewModel.GetType(), viewModel));
+        }
+    }
+
+    [TestFixture]
+    public class PartialRender_when_view_model_doesnt_already_exist_in_request : InteractionContext<PartialRenderer>
+    {
+        private InMemoryFubuRequest _request;
+
+        protected override void beforeEach()
+        {
+            _request = new InMemoryFubuRequest();
+            Services.Inject<IFubuRequest>(_request);
+        }
+
+        [Test]
+        public void should_clear_the_model_after_rendering()
+        {
+            ClassUnderTest.Render(new TestControl(), new TestControlViewModel(), "", new StringWriter());
+
+            _request.Has(typeof(TestControlViewModel)).ShouldBeFalse();
+        }
+    }
+
+    [TestFixture]
+    public class PartialRender_when_view_model_already_exists_in_request : InteractionContext<PartialRenderer>
+    {
+        private InMemoryFubuRequest _request;
+        private TestControlViewModel _viewModel;
+
+        protected override void beforeEach()
+        {
+            _viewModel = new TestControlViewModel();
+            _request = new InMemoryFubuRequest();
+            _request.Set(_viewModel);
+            Services.Inject<IFubuRequest>(_request);
+        }
+
+        [Test]
+        public void should_not_clear_the_model_after_rendering()
+        {
+            ClassUnderTest.Render(new TestControl(), _viewModel, "", new StringWriter());
+
+            _request.Has(typeof(TestControlViewModel)).ShouldBeTrue();
         }
     }
 
