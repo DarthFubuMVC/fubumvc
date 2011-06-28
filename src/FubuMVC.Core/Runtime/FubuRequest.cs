@@ -53,6 +53,16 @@ namespace FubuMVC.Core.Runtime
             return _values.GetAll().Select(x => x.Value).OfType<T>();
         }
 
+        public bool Has<T>()
+        {
+            return _values.Has(typeof (T));
+        }
+
+        public bool Has(Type type)
+        {
+            return _values.Has(type);
+        }
+
         public virtual void SetObject(object input)
         {
             if (input == null) throw new ArgumentNullException();

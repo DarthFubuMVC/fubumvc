@@ -15,6 +15,8 @@ namespace FubuMVC.Core.Runtime
         
         IEnumerable<ConvertProblem> ProblemsFor<T>();
         IEnumerable<T> Find<T>() where T : class;
+        bool Has<T>();
+        bool Has(Type type);
         void SetObject(object input);
         void Clear(Type getType);
     }
@@ -52,6 +54,16 @@ namespace FubuMVC.Core.Runtime
         public IEnumerable<T> Find<T>() where T : class
         {
             return _cache.GetAll().OfType<T>();
+        }
+
+        public bool Has<T>()
+        {
+            return _cache.Has(typeof(T));
+        }
+
+        public bool Has(Type type)
+        {
+            return _cache.Has(type);
         }
 
         public void SetObject(object input)
