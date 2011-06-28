@@ -176,7 +176,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public IRouteDefinition ToRouteDefinition()
         {
-            if (!HasInput) return new RouteDefinition(string.Empty);
+            if (!HasInput) return RouteDefinition.Empty();
 
             try
             {

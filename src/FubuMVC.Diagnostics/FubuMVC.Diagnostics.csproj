@@ -192,8 +192,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvancedDiagnosticsFubuExtension.cs" />
     <Compile Include="Behaviors\UnknownObjectBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
+    <Compile Include="Configuration\RemoveBasicDiagnostics.cs" />
     <Compile Include="Endpoints\HtmlEndpoint.cs" />
     <Compile Include="Endpoints\Html\PreviewEndpoint.cs" />
     <Compile Include="Endpoints\RequestsEndpoint.cs" />

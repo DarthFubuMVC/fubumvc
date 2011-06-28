@@ -157,6 +157,9 @@ namespace FubuMVC.Core.Registration.Routes
             return string.Format("{0}", _pattern);
         }
 
-
+        public static IRouteDefinition Empty()
+        {
+            return new RouteDefinition(string.Empty);
+        }
     }
 }

@@ -62,8 +62,8 @@ namespace FubuMVC.Diagnostics
 
 
 
-        	Policies
-        		.ConditionallyWrapBehaviorChainsWith<UnknownObjectBehavior>(call => call.InputType() == typeof (ChainRequest));
+            Policies
+                .ConditionallyWrapBehaviorChainsWith<UnknownObjectBehavior>(call => call.InputType() == typeof (ChainRequest));
 
             Actions
                 .FindWith<PartialActionSource>()
