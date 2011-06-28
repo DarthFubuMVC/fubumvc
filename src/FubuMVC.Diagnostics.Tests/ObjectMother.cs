@@ -1,3 +1,4 @@
+using Bottles;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 
@@ -11,6 +12,7 @@ namespace FubuMVC.Diagnostics.Tests
         }
         public static BehaviorGraph DiagnosticsGraph()
         {
+            PackageRegistry.LoadPackages(f => { });
             return DiagnosticsRegistry()
                     .BuildGraph();
         }
