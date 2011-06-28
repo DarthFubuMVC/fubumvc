@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -5,10 +6,12 @@ using System.Web.UI;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Tests.View.FakeViews;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
+using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View.WebForms
@@ -39,6 +42,12 @@ namespace FubuMVC.Tests.View.WebForms
         }
 
         [Test]
+        public void do_not_consider_ascx_files_as_views_when_doing_view_attachment()
+        {
+            WebFormViewFacility.IsWebFormView(typeof(WebFormControlMarkedAsFubuPage)).ShouldBeFalse();
+        }
+
+        [Test]
         public void is_web_form_control()
         {
             WebFormViewFacility.IsWebFormControl(typeof(WebFormControl)).ShouldBeTrue();
@@ -55,6 +64,35 @@ namespace FubuMVC.Tests.View.WebForms
         }
     }
 
-    public class WebFormControl : UserControl{}
+    public class WebFormControl : UserControl {}
     public class WebPage : FubuPage{}
+    public class WebFormControlMarkedAsFubuPage : UserControl, IFubuPage {
+        public string ElementPrefix
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IServiceLocator ServiceLocator
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IUrlRegistry Urls
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public T Get<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetNew<T>()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

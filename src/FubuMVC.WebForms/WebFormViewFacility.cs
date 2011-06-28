@@ -19,7 +19,7 @@ namespace FubuMVC.WebForms
 
         public static bool IsWebFormView(Type type)
         {
-            return type.CanBeCastTo<TemplateControl>() && type.CanBeCastTo<IFubuPage>();
+            return type.CanBeCastTo<Page>() && type.CanBeCastTo<IFubuPage>();
         }
 
         public static bool IsWebFormControl(Type type)

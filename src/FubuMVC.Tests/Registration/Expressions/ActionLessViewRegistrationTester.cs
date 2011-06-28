@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             var registry = new FubuRegistry();
             registry.Import<WebFormsEngine>();
 
-            registry.Views.RegisterActionLessViews(token => WebFormViewFacility.IsWebFormControl(token.ViewType), chain => chain.IsPartialOnly = true);
+            registry.Views.RegisterActionLessViews(token => token.ViewType.Name.StartsWith("FakeView"), chain => chain.IsPartialOnly = true);
 
             theBehaviorGraph = registry.BuildGraph();
         }
@@ -43,9 +43,9 @@ namespace FubuMVC.Tests.Registration.Expressions
         }
     }
 
-    public class FakeView1 : FubuControl<InputModel>{}
-    public class FakeView2 : FubuControl<TestInputModel>{}
-    public class FakeView3 : FubuControl<Model1>{}
-    public class FakeView4 : FubuControl<Model3>{}
+    public class FakeView1 : FubuPage<InputModel>{}
+    public class FakeView2 : FubuPage<TestInputModel> { }
+    public class FakeView3 : FubuPage<Model1> { }
+    public class FakeView4 : FubuPage<Model3> { }
 
 }
