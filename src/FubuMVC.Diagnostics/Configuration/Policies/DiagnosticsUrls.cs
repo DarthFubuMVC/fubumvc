@@ -14,7 +14,13 @@ namespace FubuMVC.Diagnostics.Configuration.Policies
                 return null;
             }
 
-            return path.Replace(PREFIX, "{0}/".ToFormat(ROOT));
+            path = path.Replace(PREFIX, "{0}/".ToFormat(ROOT));
+            if(path.EndsWith("/"))
+            {
+                return path.Substring(0, path.Length - 1);
+            }
+
+            return path;
         }
     }
 }

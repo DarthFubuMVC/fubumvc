@@ -40,5 +40,14 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
                 .ToRelativeUrl(null)
                 .ShouldBeNull();
         }
+
+        [Test]
+        public void should_not_have_trailing_slash_for_root_route()
+        {
+            DiagnosticsUrls
+                .ToRelativeUrl("~/")
+                .EndsWith("/")
+                .ShouldBeFalse();
+        }
     }
 }
