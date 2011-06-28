@@ -3,12 +3,12 @@ using FubuCore.Binding;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
 {
-    public class RecordingModelBinderCache : IModelBinderCache
+    public class RecordingModelBinderWrapper : IModelBinderCache
     {
         private readonly IModelBinderCache _inner;
-        private readonly IDebugReport _report;
+        private readonly Func<IDebugReport> _report;
 
-        public RecordingModelBinderCache(IModelBinderCache inner, IDebugReport report)
+        public RecordingModelBinderWrapper(IModelBinderCache inner, Func<IDebugReport> report)
         {
             _inner = inner;
             _report = report;
@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             var binder = _inner.BinderFor(modelType);
             if (binder != null)
             {
-                _report.AddBindingDetail(new ModelBinderSelection
+                _report().AddBindingDetail(new ModelBinderSelection
                                              {
                                                  ModelType = modelType,
                                                  BinderType = binder.GetType()

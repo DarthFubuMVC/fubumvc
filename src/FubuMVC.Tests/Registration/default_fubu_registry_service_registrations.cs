@@ -9,6 +9,7 @@ using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -178,7 +179,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void content_registry_cache_would_be_a_singleton()
         {
-            ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache)).ShouldBeTrue();
+            ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache), new ObjectDef(typeof(ContentRegistryCache))).ShouldBeTrue();
         }
 
         [Test]

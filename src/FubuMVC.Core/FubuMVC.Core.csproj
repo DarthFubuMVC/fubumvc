@@ -114,8 +114,8 @@
     <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
     <Compile Include="Diagnostics\NulloOutputWriter.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingModelBinderCache.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingPropertyBinderCache.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingModelBinderWrapper.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingPropertyBinderWrapper.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingValueConverterRegistry.cs" />
     <Compile Include="Diagnostics\WannaKillAttribute.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />

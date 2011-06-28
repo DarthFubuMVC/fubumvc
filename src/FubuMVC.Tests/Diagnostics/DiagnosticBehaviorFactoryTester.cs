@@ -21,7 +21,6 @@ namespace FubuMVC.Tests.Diagnostics
             _serviceArguments = new ServiceArguments();
 
             var db = MockRepository.GenerateMock<DiagnosticBehavior>(
-                MockFor<IDebugReport>(), 
                 MockFor<IDebugDetector>(), 
                 MockFor<IUrlRegistry>(), 
                 MockFor<IRequestHistoryCache>());

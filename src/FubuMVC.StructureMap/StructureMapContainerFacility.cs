@@ -62,12 +62,6 @@ namespace FubuMVC.StructureMap
                         return tracer;
                     });
 
-                    x.For<IModelBinderCache>()
-                        .EnrichAllWith((context, cache) => new RecordingModelBinderCache(cache, context.GetInstance<IDebugReport>()));
-
-                    x.For<IPropertyBinderCache>()
-                        .EnrichAllWith((context, cache) => new RecordingPropertyBinderCache(cache, context.GetInstance<IDebugReport>()));
-
                     x.For<IDebugDetector>().Use<DebugDetector>();
                 });
             }
@@ -93,7 +87,7 @@ namespace FubuMVC.StructureMap
                 });
             }
 
-            if (ServiceRegistry.ShouldBeSingleton(serviceType))
+            if (ServiceRegistry.ShouldBeSingleton(serviceType, def))
             {
                 _registry.For(serviceType).Singleton();
             }

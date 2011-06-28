@@ -9,7 +9,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Diagnostics
 {
     [TestFixture]
-    public class RecordingPropertyBinderCacheTester : InteractionContext<RecordingPropertyBinderCache>
+    public class RecordingPropertyBinderWrapperTester : InteractionContext<RecordingPropertyBinderWrapper>
     {
         [Test]
         public void should_resolve_binder_and_log_selection()

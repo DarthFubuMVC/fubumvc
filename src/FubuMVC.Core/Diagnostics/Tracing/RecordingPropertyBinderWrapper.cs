@@ -3,12 +3,12 @@ using FubuCore.Binding;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
 {
-    public class RecordingPropertyBinderCache : IPropertyBinderCache
+    public class RecordingPropertyBinderWrapper : IPropertyBinderCache
     {
-        private readonly IPropertyBinderCache _inner;
+        private readonly PropertyBinderCache _inner;
         private readonly IDebugReport _report;
 
-        public RecordingPropertyBinderCache(IPropertyBinderCache inner, IDebugReport report)
+        public RecordingPropertyBinderWrapper(PropertyBinderCache inner, IDebugReport report)
         {
             _inner = inner;
             _report = report;

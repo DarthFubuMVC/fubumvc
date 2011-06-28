@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Diagnostics
             };
             report.AddDetails(details);
 
-            report.First().ShouldHaveTheSameElementsAs(new BehaviorStart(), details);
+            report.First().ShouldHaveTheSameElementsAs(new BehaviorStart(), new BehaviorFinish(), details);
             report.Skip(1).First().Count().ShouldEqual(1);
         }
 
@@ -77,10 +77,10 @@ namespace FubuMVC.Tests.Diagnostics
             report.EndBehavior();
             report.MarkException(new ApplicationException("First one is wrong"));
 
-            // The first detail is BehaviorStart
-            report.First().Skip(1).First().ShouldBeOfType<ExceptionReport>().Text.ShouldContain("First one is wrong");
-            report.Skip(1).First().Count().ShouldEqual(1);
-            report.Skip(2).First().Count().ShouldEqual(1);
+            // The first detail is BehaviorStart, the second is BehaviorFinish
+            report.First().Skip(2).First().ShouldBeOfType<ExceptionReport>().Text.ShouldContain("First one is wrong");
+            report.Skip(1).First().Count().ShouldEqual(2);
+            report.Skip(2).First().Count().ShouldEqual(2);
             report.Last().Skip(1).First().ShouldBeOfType<ExceptionReport>().Text.ShouldContain("NotImplementedException");
         }
 

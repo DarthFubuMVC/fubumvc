@@ -52,7 +52,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             if (ReferenceEquals(null, obj)) return false;
 
-            return obj.GetType() == typeof(BehaviorStart);
+            return typeof(BehaviorIndicator).IsAssignableFrom(obj.GetType());
         }
 
         public override int GetHashCode()

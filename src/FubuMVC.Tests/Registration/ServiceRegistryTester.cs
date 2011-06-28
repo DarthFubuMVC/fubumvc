@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using FubuCore.Binding;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -101,8 +102,16 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_be_singleton_is_true_for_any_type_ending_in_Cache()
         {
-            ServiceRegistry.ShouldBeSingleton(typeof (IPropertyBinderCache)).ShouldBeTrue();
-            ServiceRegistry.ShouldBeSingleton(typeof (IModelBinderCache)).ShouldBeTrue();
+            ServiceRegistry.ShouldBeSingleton(typeof (IPropertyBinderCache), new ObjectDef(typeof (PropertyBinderCache))).ShouldBeTrue();
+            ServiceRegistry.ShouldBeSingleton(typeof (IModelBinderCache), new ObjectDef(typeof (ModelBinderCache))).ShouldBeTrue();
+
+        }
+
+        [Test]
+        public void should_be_singleton_is_false_for_any_recording_wrapper_for_type_ending_in_Cache()
+        {
+            ServiceRegistry.ShouldBeSingleton(typeof (IPropertyBinderCache), new ObjectDef(typeof(RecordingPropertyBinderWrapper))).ShouldBeFalse();
+            ServiceRegistry.ShouldBeSingleton(typeof (IModelBinderCache), new ObjectDef(typeof(RecordingModelBinderWrapper))).ShouldBeFalse();
         }
     }
 }
