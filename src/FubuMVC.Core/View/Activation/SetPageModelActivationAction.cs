@@ -25,7 +25,22 @@ namespace FubuMVC.Core.View.Activation
         {
             var modelPage = (IFubuPage<T>)page;
             var request = services.GetInstance<IFubuRequest>();
-            modelPage.Model = request.Find<T>().FirstOrDefault() ?? request.Get<T>();
+            T model;
+            //We need to see if there is an exact match first.
+            if(request.Has<T>())
+            {
+                //We've got an exact match, call request.Get<T> knowing we'll get the exact match.
+                model = request.Get<T>();
+            }
+            else
+            {
+                //We didn't find nan exact match, so we need to look for things that can be cast to the type requested.
+                var found = request.Find<T>().FirstOrDefault();
+                //If we don't find anything that satisfies the type request, call Get<T>() which will quietly create what we're looking for underneath the hood.
+                model = found ?? request.Get<T>();
+            }
+
+            modelPage.Model = model;
 
 //            if (modelPage.Model == null)
 //            {
