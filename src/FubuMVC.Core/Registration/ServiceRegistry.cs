@@ -128,10 +128,9 @@ namespace FubuMVC.Core.Registration
             list.Add(new ObjectDef(concreteType));
         }
 
-        public static bool ShouldBeSingleton(Type type, ObjectDef def)
+        public static bool ShouldBeSingleton(Type type)
         {
-            return type.Name.EndsWith("Cache") &&
-                (def.Type == null || !def.Type.Name.StartsWith("Recording"));
+            return type.Name.EndsWith("Cache");
         }
     }
 }

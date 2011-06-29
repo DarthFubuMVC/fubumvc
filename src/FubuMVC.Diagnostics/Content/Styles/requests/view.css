@@ -36,6 +36,7 @@ h4.request-identifier
     padding-bottom:5px;
     margin-bottom:10px;
     border-bottom:1px solid #B6B6B6;
+    white-space:normal;
 }
 
 .last .console
@@ -72,6 +73,7 @@ h4.request-identifier
 .console .message p.msg-info
 {
     color:#808080;
+    width:90%;
 }
 
 .cboth

@@ -62,6 +62,10 @@ namespace FubuMVC.StructureMap
                         return tracer;
                     });
 
+                    x.For<IDebugReport>()
+                        .HybridHttpOrThreadLocalScoped()
+                        .Use<DebugReport>();
+
                     x.For<IDebugDetector>().Use<DebugDetector>();
                 });
             }
@@ -87,7 +91,7 @@ namespace FubuMVC.StructureMap
                 });
             }
 
-            if (ServiceRegistry.ShouldBeSingleton(serviceType, def))
+            if (ServiceRegistry.ShouldBeSingleton(serviceType))
             {
                 _registry.For(serviceType).Singleton();
             }

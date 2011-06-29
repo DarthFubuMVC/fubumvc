@@ -22,6 +22,12 @@
         resetDottedLines.call(this);
     });
 
+    $('.console > .message > ul').each(function() {
+        $(this).find('li.binding-detail:last').each(function() {
+            $(this).addClass('last');
+        });
+    });
+
     $('.output').each(function() {
         var metadata = $(this).metadata();
         if(metadata.type && metadata.type == 'application/json') {

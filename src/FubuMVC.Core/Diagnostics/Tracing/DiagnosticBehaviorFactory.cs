@@ -19,18 +19,18 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 
         public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
-			var writer = arguments.Has(typeof(IOutputWriter)) 
-                ? arguments.Get<IOutputWriter>() 
+            var diagnostics = _container.Get<DiagnosticBehavior>();
+
+            var writer = arguments.Has(typeof(IOutputWriter))
+                ? arguments.Get<IOutputWriter>()
                 : _container.Get<IOutputWriter>();
 
             var report = _container.Get<IDebugReport>();
-			arguments.Set(typeof(IOutputWriter), new RecordingOutputWriter(report, writer));
-            arguments.Set(typeof(IDebugReport), report);
+            arguments.Set(typeof(IOutputWriter), new RecordingOutputWriter(report, writer));
 
             var behavior = _inner.BuildBehavior(arguments, behaviorId);
-            var diagnostics = _container.Get<DiagnosticBehavior>();
-            diagnostics.Report = report;
             diagnostics.Inner = behavior;
+
             return diagnostics;
         }
     }

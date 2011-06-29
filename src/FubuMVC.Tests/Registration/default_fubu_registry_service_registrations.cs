@@ -179,7 +179,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void content_registry_cache_would_be_a_singleton()
         {
-            ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache), new ObjectDef(typeof(ContentRegistryCache))).ShouldBeTrue();
+            ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache)).ShouldBeTrue();
         }
 
         [Test]
