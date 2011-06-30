@@ -12,21 +12,22 @@ namespace FubuMVC.Spark.Rendering
     {
         private readonly IViewEntryProviderCache _provider;
         private readonly ViewDefinition _viewDefinition;
-
-        public ViewEntrySource(ViewDefinition viewDefinition, IViewEntryProviderCache provider)
+        private readonly ISparkDescriptorResolver _resolver;
+        public ViewEntrySource(ViewDefinition viewDefinition, IViewEntryProviderCache provider, ISparkDescriptorResolver resolver)
         {
             _provider = provider;
+            _resolver = resolver;
             _viewDefinition = viewDefinition;
         }
-
         public ISparkViewEntry GetViewEntry()
         {
-            return _provider.GetViewEntry(_viewDefinition.ViewDescriptor);
+            var descriptor = _resolver.ResolveDescriptor(_viewDefinition);
+            return _provider.GetViewEntry(descriptor);
         }
-
         public ISparkViewEntry GetPartialViewEntry()
         {
-            return _provider.GetViewEntry(_viewDefinition.PartialDescriptor);
+            var descriptor = _resolver.ResolvePartialDescriptor(_viewDefinition);
+            return _provider.GetViewEntry(descriptor);
         }
     }
 }

@@ -139,7 +139,7 @@ namespace FubuMVC.Spark
 
             services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
-
+            services.SetServiceIfNone<ISparkDescriptorResolver, SparkDescriptorResolver>();
             services.FillType<IViewModifier, PageActivation>();
             services.FillType<IViewModifier, SiteResourceAttacher>();
             services.FillType<IViewModifier, ContentActivation>();

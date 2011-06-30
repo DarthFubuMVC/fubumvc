@@ -102,6 +102,7 @@
     <Compile Include="Rendering\NestedRenderStrategyTester.cs" />
     <Compile Include="Rendering\PageActivationTester.cs" />
     <Compile Include="Rendering\SiteResourceAttacherTester.cs" />
+    <Compile Include="Rendering\SparkDescriptorResolverTester.cs" />
     <Compile Include="Rendering\ViewContentDisposerTester.cs" />
     <Compile Include="Rendering\ViewEntryProviderCacheTester.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />

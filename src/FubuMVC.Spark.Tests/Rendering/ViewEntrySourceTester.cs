@@ -31,6 +31,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             provider.Stub(x => x.GetViewEntry(_viewDefinition.PartialDescriptor)).Return(_partialEntry);
 
             Services.Inject(_viewDefinition);
+            Services.Inject<ISparkDescriptorResolver>(new SparkDescriptorResolver());
         }
 
         [Test]
@@ -44,6 +45,5 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             ClassUnderTest.GetPartialViewEntry().ShouldEqual(_partialEntry);
         }
-
     }
 }
