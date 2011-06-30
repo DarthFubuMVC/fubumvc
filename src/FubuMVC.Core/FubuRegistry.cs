@@ -11,6 +11,19 @@ using FubuMVC.Core.View.Attachment;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// The <see cref="FubuRegistry"/> class provides methods and grammars for configuring FubuMVC.
+    /// Using a <see cref="FubuRegistry"/> subclass is the recommended way of configuring FubuMVC.
+    /// </summary>
+    /// <example>
+    /// public class MyFubuRegistry : FubuRegistry
+    /// {
+    ///     public MyFubuRegistry()
+    ///     {
+    ///         Applies.ToThisAssembly();
+    ///     }
+    /// }
+    /// </example>
     public partial class FubuRegistry
     {
         private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
@@ -46,16 +59,28 @@ namespace FubuMVC.Core
             configure(this);
         }
 
+        /// <summary>
+        /// Provide a custom builder for action calls.
+        /// This is for advanced usage to override the default new ActionCall(type, method) usage.
+        /// </summary>
+        /// <param name="actionCallProvider"></param>
         public void ActionCallProvider(Func<Type, MethodInfo, ActionCall> actionCallProvider)
         {
             _actionCallProvider = actionCallProvider;
         }
 
+        /// <summary>
+        /// Gets the name of the <see cref="FubuRegistry"/>. Mostly used for diagnostics.
+        /// </summary>
         public virtual string Name
         {
             get { return GetType().ToString(); }
         }
 
+        /// <summary>
+        /// Finds the currently executing assembly.
+        /// </summary>
+        /// <returns></returns>
         public static Assembly FindTheCallingAssembly()
         {
             var trace = new StackTrace(false);
@@ -106,7 +131,10 @@ namespace FubuMVC.Core
             }
         }
 
-
+        /// <summary>
+        /// Constructs a <see cref="BehaviorGraph"/> using the configuration expressions defined in this <see cref="FubuRegistry"/>. This method is mostly for internal usage.
+        /// </summary>
+        /// <returns></returns>
         public BehaviorGraph BuildGraph()
         {
             var graph = new BehaviorGraph(_observer);

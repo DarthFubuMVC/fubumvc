@@ -21,23 +21,44 @@ namespace FubuMVC.Core.Registration.DSL
             _registry = registry;
         }
 
+        /// <summary>
+        /// Registers a view facility
+        /// </summary>
+        /// <param name="facility"></param>
+        /// <returns></returns>
         public ViewExpression Facility(IViewFacility facility)
         {
             _viewAttacher.AddFacility(facility);
             return this;
         }
 
+        /// <summary>
+        /// Configures actionless views for view tokens matching the specified predicate.
+        /// </summary>
+        /// <param name="viewTokenFilter"></param>
+        /// <returns></returns>
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter)
         {
             return RegisterActionLessViews(viewTokenFilter, chain => { chain.IsPartialOnly = true; });
         }
 
+        /// <summary>
+        /// Configures actionless views for view tokens matching the specified predicate.
+        /// </summary>
+        /// <param name="viewTokenFilter"></param>
+        /// <param name="configureChain">Continuation for configuring each generated <see cref="BehaviorChain"/></param>
+        /// <returns></returns>
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
         {
             _viewAttacher.Apply(new ActionLessViewConvention(viewTokenFilter, configureChain));
             return this;          
         }
 
+        /// <summary>
+        /// Configures the view attachment mechanism.
+        /// </summary>
+        /// <param name="configure"></param>
+        /// <returns></returns>
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
             var expression = new ViewsForActionFilterExpression(_viewAttacherConvention);
@@ -46,6 +67,13 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        /// <summary>
+        /// Configures the view attachment mechanism with default conventions:
+        /// a) by_ViewModel_and_Namespace_and_MethodName
+        /// b) by_ViewModel_and_Namespace
+        /// c) by_ViewModel
+        /// </summary>
+        /// <returns></returns>
         public ViewExpression TryToAttachWithDefaultConventions()
         {
             return TryToAttach(x =>
@@ -56,6 +84,10 @@ namespace FubuMVC.Core.Registration.DSL
             });
         }
 
+        /// <summary>
+        /// Instructs the view attachment mechanism to include views from all packages.
+        /// </summary>
+        /// <returns></returns>
         public ViewExpression TryToAttachViewsInPackages()
         {
             _registry.ConfigureImports(i =>
