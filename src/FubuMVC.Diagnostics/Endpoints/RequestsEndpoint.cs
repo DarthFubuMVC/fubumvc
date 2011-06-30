@@ -26,16 +26,19 @@ namespace FubuMVC.Diagnostics.Endpoints
             var columnModel = new JqGridColumnModel();
             var behaviorReport = report.Requests.FirstOrDefault();
 
-            _columnBuilders
-                .SelectMany(builder => builder.ColumnsFor(behaviorReport))
-                .Each(col => columnModel.AddColumn(new JqGridColumn
-                                                       {
-                                                           hidden = col.IsHidden,
-                                                           hidedlg = col.IsHidden,
-                                                           hideFilter = col.HideFilter,
-                                                           name = col.Name,
-                                                           index = col.Name
-                                                       }));
+            if (behaviorReport != null)
+            {
+                _columnBuilders
+                    .SelectMany(builder => builder.ColumnsFor(behaviorReport))
+                    .Each(col => columnModel.AddColumn(new JqGridColumn
+                                                           {
+                                                               hidden = col.IsHidden,
+                                                               hidedlg = col.IsHidden,
+                                                               hideFilter = col.HideFilter,
+                                                               name = col.Name,
+                                                               index = col.Name
+                                                           }));
+            }
             return new RequestExplorerModel { ColumnModel = columnModel };
         }
     }

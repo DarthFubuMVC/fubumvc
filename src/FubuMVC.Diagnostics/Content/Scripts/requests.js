@@ -197,6 +197,7 @@
             data: JSON.stringify(params),
             dataType: "json",
             success: function(data) {
+                $('#NoData').hide();
                 grid()[0].addJSONData(data);
             },
             error: function() {
@@ -208,6 +209,11 @@
     }
     
     function setupGrid() {
+        if(!columnModel.length) {
+            $('#NoData').show();
+            return;
+        }
+        
         grid()
             .jqGrid({
                 datatype: function(gridData) {

@@ -142,6 +142,7 @@ h2
 .ui-widget p
 {
     margin:0;
+    padding: 10px;
 }
 
 .dashboard-notice
@@ -189,4 +190,9 @@ pre.blk {
 p
 {
     margin-top:15px;
+}
+
+.ui-state-notice, .ui-widget-content .ui-state-notice
+{
+    background: #FFEE7D;
 }
