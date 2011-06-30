@@ -16,7 +16,7 @@ namespace FubuMVC.Spark.Tests.Rendering
 
         protected override void beforeEach()
         {
-            var provider = MockFor<IViewEntryProvider>();
+            var provider = MockFor<IViewEntryProviderCache>();
 
             _viewDefinition = new ViewDefinition(new SparkViewDescriptor(), new SparkViewDescriptor());
             _viewDefinition.ViewDescriptor.AddTemplate("Views/Home/home.spark");

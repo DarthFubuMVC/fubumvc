@@ -10,10 +10,10 @@ namespace FubuMVC.Spark.Rendering
 
     public class ViewEntrySource : IViewEntrySource
     {
-        private readonly IViewEntryProvider _provider;
+        private readonly IViewEntryProviderCache _provider;
         private readonly ViewDefinition _viewDefinition;
 
-        public ViewEntrySource(ViewDefinition viewDefinition, IViewEntryProvider provider)
+        public ViewEntrySource(ViewDefinition viewDefinition, IViewEntryProviderCache provider)
         {
             _provider = provider;
             _viewDefinition = viewDefinition;
