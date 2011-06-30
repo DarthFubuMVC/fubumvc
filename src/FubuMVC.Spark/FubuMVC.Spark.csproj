@@ -66,6 +66,7 @@
     <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="ITemplateComposerConvention.cs" />
     <Compile Include="ITemplateFinderConvention.cs" />
+    <Compile Include="Registration\ViewDescriptorHelper.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />

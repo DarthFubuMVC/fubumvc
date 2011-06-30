@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             var provider = MockFor<IViewEntryProviderCache>();
 
-            _viewDefinition = new ViewDefinition(new SparkViewDescriptor(), new SparkViewDescriptor());
+            _viewDefinition = new ViewDefinition(new SparkViewDescriptor(), new SparkViewDescriptor(), null);
             _viewDefinition.ViewDescriptor.AddTemplate("Views/Home/home.spark");
             _viewDefinition.ViewDescriptor.AddTemplate("Shared/application.spark");
 
