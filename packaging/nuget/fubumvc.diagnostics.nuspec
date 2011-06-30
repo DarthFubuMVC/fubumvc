@@ -12,7 +12,7 @@
     <description>Advanced Diagnostics for FubuMVC.</description>
     <tags>fubumvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.References" />
+      <dependency id="FubuMVC.References" version="0.9.1.513" />
 	  <dependency id="FubuMVC.Spark" />
     </dependencies>
   </metadata>
