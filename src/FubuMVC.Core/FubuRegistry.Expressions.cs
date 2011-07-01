@@ -209,7 +209,7 @@ namespace FubuMVC.Core
                 IncludeDiagnostics(config =>
                                        {
                                             config.LimitRecordingTo(50);
-                                            config.ExcludeRequests(r => r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
+                                            config.ExcludeRequests(r => r.Path != null && r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
                                        });
             }
             else
