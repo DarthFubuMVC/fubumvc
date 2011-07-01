@@ -137,9 +137,9 @@ namespace FubuMVC.Spark
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
-            services.SetServiceIfNone<IViewEntryProvider, ViewEntryProviderCache>();
+            services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
-
+            services.SetServiceIfNone<ISparkDescriptorResolver, SparkDescriptorResolver>();
             services.FillType<IViewModifier, PageActivation>();
             services.FillType<IViewModifier, SiteResourceAttacher>();
             services.FillType<IViewModifier, ContentActivation>();

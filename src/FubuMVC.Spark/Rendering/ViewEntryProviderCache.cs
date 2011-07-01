@@ -3,12 +3,12 @@ using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public interface IViewEntryProvider
+    public interface IViewEntryProviderCache
     {
         ISparkViewEntry GetViewEntry(SparkViewDescriptor descriptor);
     }
 
-    public class ViewEntryProviderCache : IViewEntryProvider
+    public class ViewEntryProviderCache : IViewEntryProviderCache
     {
         private readonly IDictionary<int, ISparkViewEntry> _cache;
         private readonly ISparkViewEngine _engine;

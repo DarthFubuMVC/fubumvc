@@ -16,9 +16,9 @@ namespace FubuMVC.Spark.Tests.Rendering
 
         protected override void beforeEach()
         {
-            var provider = MockFor<IViewEntryProvider>();
+            var provider = MockFor<IViewEntryProviderCache>();
 
-            _viewDefinition = new ViewDefinition(new SparkViewDescriptor(), new SparkViewDescriptor());
+            _viewDefinition = new ViewDefinition(new SparkViewDescriptor(), new SparkViewDescriptor(), null);
             _viewDefinition.ViewDescriptor.AddTemplate("Views/Home/home.spark");
             _viewDefinition.ViewDescriptor.AddTemplate("Shared/application.spark");
 
@@ -31,6 +31,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             provider.Stub(x => x.GetViewEntry(_viewDefinition.PartialDescriptor)).Return(_partialEntry);
 
             Services.Inject(_viewDefinition);
+            Services.Inject<ISparkDescriptorResolver>(new SparkDescriptorResolver());
         }
 
         [Test]
@@ -44,6 +45,5 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             ClassUnderTest.GetPartialViewEntry().ShouldEqual(_partialEntry);
         }
-
     }
 }
