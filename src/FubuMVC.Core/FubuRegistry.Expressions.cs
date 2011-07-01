@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core
 {
@@ -196,27 +199,53 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// Specify whether to include diagnostics tracing. This is turned off by default
+        /// Specifies whether to include diagnostics tracing. This is turned off by default
         /// </summary>
         /// <param name="shouldInclude"></param>
         public void IncludeDiagnostics(bool shouldInclude)
         {
-            _diagnosticLevel = shouldInclude ? DiagnosticLevel.FullRequestTracing : DiagnosticLevel.None;
-
             if (shouldInclude)
             {
-                UsingObserver(new RecordingConfigurationObserver());
-
-                Import<DiagnosticsRegistry>(string.Empty);
-
-                Services(graph => graph.AddService(new DiagnosticsIndicator().SetEnabled()));
+                IncludeDiagnostics(config =>
+                                       {
+                                            config.LimitRecordingTo(50);
+                                            config.ExcludeRequests(r => r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
+                                       });
             }
             else
             {
+                _diagnosticLevel = DiagnosticLevel.None;
                 Actions
                     .ExcludeTypes(t => t.HasAttribute<FubuDiagnosticsAttribute>())
                     .ExcludeMethods(call => call.Method.HasAttribute<FubuDiagnosticsAttribute>());
             }
+        }
+
+        /// <summary>
+        /// Configures the internal diagnostics for the <see cref="BehaviorGraph"/> produced by this <see cref="FubuRegistry"/>.
+        /// </summary>
+        /// <param name="configure"></param>
+        public void IncludeDiagnostics(Action<IDiagnosticsConfigurationExpression> configure)
+        {
+            _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
+            UsingObserver(new RecordingConfigurationObserver());
+            Import<DiagnosticsRegistry>(string.Empty);
+
+            var filters = new List<IRequestHistoryCacheFilter>();
+            var config = new DiagnosticsConfigurationExpression(filters);
+            configure(config);
+
+            Services(graph =>
+                         {
+                             graph.AddService(new DiagnosticsIndicator().SetEnabled());
+                             graph.AddService(new DiagnosticsConfiguration { MaxRequests = config.MaxRequests });
+                             filters
+                                 .Each(filter => graph.AddService(typeof(IRequestHistoryCacheFilter), new ObjectDef
+                                                                                                          {
+                                                                                                              Type = filter.GetType(),
+                                                                                                              Value = filter
+                                                                                                          }));
+                         });
         }
 
         /// <summary>

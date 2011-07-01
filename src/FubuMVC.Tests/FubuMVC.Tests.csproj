@@ -117,6 +117,7 @@
     <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
+    <Compile Include="Diagnostics\DefaultDiagnosticsConventionsTester.cs" />
     <Compile Include="Diagnostics\DiagnosticBehaviorFactoryTester.cs" />
     <Compile Include="Diagnostics\RecordingModelBinderWrapperTester.cs" />
     <Compile Include="Diagnostics\RecordingPropertyBinderWrapperTester.cs" />

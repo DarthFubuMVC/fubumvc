@@ -9,11 +9,13 @@ namespace FubuMVC.Core.Diagnostics
         private readonly Queue<IDebugReport> _reports = new Queue<IDebugReport>();
         private readonly Func<CurrentRequest> _request;
         private readonly IEnumerable<IRequestHistoryCacheFilter> _filters;
+        private readonly DiagnosticsConfiguration _configuration;
 
-        public RequestHistoryCache(Func<CurrentRequest> request, IEnumerable<IRequestHistoryCacheFilter> filters)
+        public RequestHistoryCache(Func<CurrentRequest> request, IEnumerable<IRequestHistoryCacheFilter> filters, DiagnosticsConfiguration configuration)
         {
             _request = request;
             _filters = filters;
+            _configuration = configuration;
         }
 
         public void AddReport(IDebugReport report)
@@ -24,7 +26,7 @@ namespace FubuMVC.Core.Diagnostics
             }
 
             _reports.Enqueue(report);
-            while (_reports.Count > 50)
+            while (_reports.Count > _configuration.MaxRequests)
             {
                 _reports.Dequeue();
             }

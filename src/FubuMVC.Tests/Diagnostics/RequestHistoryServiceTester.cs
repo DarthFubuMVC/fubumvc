@@ -11,15 +11,19 @@ namespace FubuMVC.Tests.Diagnostics
     public class RequestHistoryServiceTester : InteractionContext<RequestHistoryCache>
     {
         private CurrentRequest _request;
+        private DiagnosticsConfiguration _configuration;
 
         protected override void beforeEach()
         {
             _request = new CurrentRequest();
+            _configuration = new DiagnosticsConfiguration {MaxRequests = 60};
+
             Container.Inject(_request);
+            Container.Inject(_configuration);
         }
 
         [Test]
-        public void only_keeps_50_records()
+        public void only_keeps_maximum_records()
         {
             MockFor<IRequestHistoryCacheFilter>()
                 .Expect(c => c.Exclude(_request))
@@ -27,14 +31,14 @@ namespace FubuMVC.Tests.Diagnostics
                 .Repeat
                 .Any();
 
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < _configuration.MaxRequests + 10; ++i)
             {
                 ClassUnderTest.AddReport(new DebugReport());
             }
 
             ClassUnderTest
                 .RecentReports()
-                .ShouldHaveCount(50);
+                .ShouldHaveCount(_configuration.MaxRequests);
         }
 
         [Test]
@@ -46,7 +50,7 @@ namespace FubuMVC.Tests.Diagnostics
                 .Repeat
                 .Any();
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < _configuration.MaxRequests; i++)
             {
                 ClassUnderTest.AddReport(new DebugReport());
             }
