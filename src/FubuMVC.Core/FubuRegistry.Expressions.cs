@@ -206,11 +206,17 @@ namespace FubuMVC.Core
         {
             if (shouldInclude)
             {
+                ConfigureImports(i =>
+                {
+                    if(i is DiagnosticsRegistry) return;
+                    i.IncludeDiagnostics(shouldInclude);
+                });
+
                 IncludeDiagnostics(config =>
-                                       {
-                                            config.LimitRecordingTo(50);
-                                            config.ExcludeRequests(r => r.Path != null && r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
-                                       });
+                {
+                    config.LimitRecordingTo(50);
+                    config.ExcludeRequests(r => r.Path != null && r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
+                });
             }
             else
             {
@@ -236,16 +242,16 @@ namespace FubuMVC.Core
             configure(config);
 
             Services(graph =>
-                         {
-                             graph.AddService(new DiagnosticsIndicator().SetEnabled());
-                             graph.AddService(new DiagnosticsConfiguration { MaxRequests = config.MaxRequests });
-                             filters
-                                 .Each(filter => graph.AddService(typeof(IRequestHistoryCacheFilter), new ObjectDef
-                                                                                                          {
-                                                                                                              Type = filter.GetType(),
-                                                                                                              Value = filter
-                                                                                                          }));
-                         });
+            {
+                graph.SetServiceIfNone(new DiagnosticsIndicator().SetEnabled());
+                graph.SetServiceIfNone(new DiagnosticsConfiguration { MaxRequests = config.MaxRequests });
+                filters
+                    .Each(filter => graph.AddService(typeof(IRequestHistoryCacheFilter), new ObjectDef
+                                                                                            {
+                                                                                                Type = filter.GetType(),
+                                                                                                Value = filter
+                                                                                            }));
+            });
         }
 
         /// <summary>

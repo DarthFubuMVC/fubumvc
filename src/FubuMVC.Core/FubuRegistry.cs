@@ -147,10 +147,12 @@ namespace FubuMVC.Core
             _conventions.Configure(graph);
 
             // Importing behavior chains from imports
+            var observerImporter = new ObserverImporter(graph.Observer);
             _imports.Each(x =>
             {
                 _importsConventions.Each(c => c(x.Registry));
                 x.ImportInto(graph);
+                observerImporter.Import(x.Registry._observer);
             });
 
             _explicits.Configure(graph);
