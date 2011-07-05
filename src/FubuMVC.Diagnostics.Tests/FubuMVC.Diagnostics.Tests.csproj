@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bottles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bottles.0.9.0.83\lib\Bottles.dll</HintPath>
+    <Reference Include="Bottles">
+      <HintPath>..\packages\Bottles.0.9.0.90\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.1.32\lib\FubuCore.dll</HintPath>
