@@ -78,6 +78,16 @@ namespace FubuMVC.Tests.Security
         }
 
         [Test]
+        public void adding_a_rule()
+        {
+            var node = new AuthorizationNode();
+            node.AddRule(typeof (UrlModelShouldStartWithJ));
+
+            toBehavior(node).Policies.Single().ShouldBeOfType<AuthorizationPolicy<UrlModel>>()
+                .InnerRule.ShouldBeOfType<UrlModelShouldStartWithJ>();
+        }
+
+        [Test]
         public void adding_multiple_roles()
         {
             var node = new AuthorizationNode();

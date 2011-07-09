@@ -56,11 +56,27 @@ namespace FubuMVC.Core.Security
         /// <returns></returns>
         public ObjectDef AddPolicy<TModel, TRule>() where TRule : IAuthorizationRule<TModel> where TModel : class
         {
-            var topDef = ObjectDef.ForType<AuthorizationPolicy<TModel>>();
+            return AddRule(typeof(TRule));
+        }
+
+        /// <summary>
+        /// Adds the specified <see cref="IAuthorizationRule{T}"/>
+        /// </summary>
+        /// <param name="ruleType">Closed generic rule type</param>
+        /// <returns></returns>
+        public ObjectDef AddRule(Type ruleType)
+        {
+            // TODO -- blow up if this isn't IAuthorizationRule<T>
+            var modelType = ruleType
+                .FindInterfaceThatCloses(typeof(IAuthorizationRule<>))
+                .GetGenericArguments()
+                .First();
+
+            var topDef = new ObjectDef(typeof(AuthorizationPolicy<>).MakeGenericType(modelType));
             _policies.Add(topDef);
 
-            var ruleObjectDef = ObjectDef.ForType<TRule>();
-            topDef.DependencyByType<IAuthorizationRule<TModel>>(ruleObjectDef);
+            var ruleObjectDef = new ObjectDef(ruleType);
+            topDef.Dependency(typeof(IAuthorizationRule<>).MakeGenericType(modelType), ruleObjectDef);
 
             return ruleObjectDef;
         }
