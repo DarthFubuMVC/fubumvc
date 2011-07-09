@@ -30,7 +30,7 @@ namespace FubuMVC.Spark
 
         public SparkEngine()
         {
-            _logger = PackageRegistry.Diagnostics.LogFor(this);
+            _logger = getLogger();
             _finder = new TemplateFinder();
             _composer = new TemplateComposer(_types.Value);
 
@@ -148,6 +148,17 @@ namespace FubuMVC.Spark
             services.FillType<IViewModifier, NestedViewOutputActivator>();
             services.FillType<IViewModifier, ViewContentDisposer>();
             services.FillType<IViewModifier, NestedOutputActivation>();
+        }
+
+        private IPackageLog getLogger()
+        {
+            IPackageLog log = null;
+            if(PackageRegistry.Diagnostics != null)
+            {
+                log = PackageRegistry.Diagnostics.LogFor(this);
+            }
+
+            return log ?? new PackageLog();
         }
 
         public SparkEngine FindWith(ITemplateFinder finder)
