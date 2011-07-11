@@ -232,12 +232,4 @@ namespace FubuMVC.Spark
             return spark.ConfigureComposer(new LambdaTemplateComposerConvention(configure));
         }
     }
-
-    public static class ServiceRegistryExtensions
-    {
-        public static void FillType<TInterface, TConcrete>(this IServiceRegistry registry) where TConcrete : TInterface
-        {
-            registry.FillType(typeof(TInterface), typeof(TConcrete));
-        }
-    }
 }

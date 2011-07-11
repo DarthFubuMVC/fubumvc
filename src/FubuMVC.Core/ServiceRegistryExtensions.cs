@@ -11,5 +11,10 @@ namespace FubuMVC.Core
 			scan(scanner);
 			scanner.Configure(services);
 		}
+
+	    public static void FillType<TInterface, TConcrete>(this IServiceRegistry registry) where TConcrete : TInterface
+	    {
+	        registry.FillType(typeof(TInterface), typeof(TConcrete));
+	    }
 	}
 }
