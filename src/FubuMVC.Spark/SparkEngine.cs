@@ -9,7 +9,6 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
@@ -155,13 +154,9 @@ namespace FubuMVC.Spark
 
         private IPackageLog getLogger()
         {
-            IPackageLog log = null;
-            if(PackageRegistry.Diagnostics != null)
-            {
-                log = PackageRegistry.Diagnostics.LogFor(this);
-            }
-
-            return log ?? new PackageLog();
+            return PackageRegistry.Diagnostics != null
+                ? PackageRegistry.Diagnostics.LogFor(this)
+                : new PackageLog();
         }
 
         public SparkEngine FindWith(ITemplateFinder finder)
@@ -203,7 +198,7 @@ namespace FubuMVC.Spark
             return source;
         }
 
-        public static SparkEngine ConfigureFinder<TConvention>(this SparkEngine spark, TConvention convention)
+        public static SparkEngine ConfigureFinder<TConvention>(this SparkEngine spark)
             where TConvention : ITemplateFinderConvention, new()
         {
             return spark.ConfigureFinder(new TConvention());
@@ -214,19 +209,19 @@ namespace FubuMVC.Spark
             return spark.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
         }
 
-        public static SparkEngine FindWith<TFinder>(this SparkEngine spark, TFinder finder)
+        public static SparkEngine FindWith<TFinder>(this SparkEngine spark)
             where TFinder : ITemplateFinder, new()
         {
             return spark.FindWith(new TFinder());
         }
 
-        public static SparkEngine ComposeWith<TComposer>(this SparkEngine spark, TComposer composer)
+        public static SparkEngine ComposeWith<TComposer>(this SparkEngine spark)
             where TComposer : ITemplateComposer, new()
         {
             return spark.ComposeWith(new TComposer());
         }
 
-        public static SparkEngine ConfigureComposer<TConvention>(this SparkEngine spark, TConvention convention)
+        public static SparkEngine ConfigureComposer<TConvention>(this SparkEngine spark)
             where TConvention : ITemplateComposerConvention, new()
         {
             return spark.ConfigureComposer(new TConvention());
