@@ -9,6 +9,7 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using Spark;
@@ -148,6 +149,8 @@ namespace FubuMVC.Spark
             services.FillType<IViewModifier, NestedViewOutputActivator>();
             services.FillType<IViewModifier, ViewContentDisposer>();
             services.FillType<IViewModifier, NestedOutputActivation>();
+
+            services.SetServiceIfNone(new DefaultViewDefinitionPolicy());
         }
 
         private IPackageLog getLogger()
