@@ -10,8 +10,7 @@ namespace FubuMVC.Spark.Registration
         {
             var normal = viewDescriptor.ToSparkViewDescriptor();
             var partial = viewDescriptor.ToPartialSparkViewDescriptor();
-            var viewModel = viewDescriptor.ViewModel;
-            return new ViewDefinition(normal, partial, viewModel);
+            return new ViewDefinition(normal, partial);
         }
 
         public static SparkViewDescriptor ToSparkViewDescriptor(this ViewDescriptor viewDescriptor)

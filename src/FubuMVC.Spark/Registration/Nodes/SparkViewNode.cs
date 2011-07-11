@@ -18,14 +18,12 @@ namespace FubuMVC.Spark.Registration.Nodes
         protected override void configureObject(ObjectDef def)
         {
             var renderer = def.DependencyByType(typeof (IViewRenderer), typeof (ViewRenderer));
-            var viewDefinition = _descriptor.ToViewDefinition();
-            
-            var viewEntrySource =
-                renderer.DependencyByType(typeof (IRenderAction), typeof (RenderAction))
+
+            var viewEntrySource = renderer.DependencyByType(typeof(IRenderAction), typeof(RenderAction))
                 .DependencyByType(typeof(IViewFactory), typeof(ViewFactory))
                 .DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
 
-            viewEntrySource.DependencyByValue(viewDefinition);
+            viewEntrySource.DependencyByValue(_descriptor);
         }
 
         public override string Description
