@@ -24,7 +24,7 @@ namespace FubuMVC.Spark.Rendering
             return true;
         }
 
-        public ViewDefinition Create(ViewDescriptor descriptor)
+        public virtual ViewDefinition Create(ViewDescriptor descriptor)
         {
             return _cache[descriptor];
         }
