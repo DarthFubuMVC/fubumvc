@@ -150,6 +150,7 @@ namespace FubuMVC.Spark
             services.FillType<IViewModifier, NestedOutputActivation>();
 
             services.SetServiceIfNone(new DefaultViewDefinitionPolicy());
+            services.SetServiceIfNone<IViewDefinitionResolver, ViewDefinitionResolver>();
         }
 
         private IPackageLog getLogger()
