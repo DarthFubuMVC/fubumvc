@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuCore.Util;
-using FubuMVC.Core.Packaging;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public interface IScriptRegistration
     {

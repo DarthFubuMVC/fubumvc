@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.UI.Scripts;
 using HtmlTags;
 
 namespace FubuMVC.Core.UI

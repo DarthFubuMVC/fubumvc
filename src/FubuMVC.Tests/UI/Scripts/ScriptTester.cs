@@ -1,4 +1,4 @@
-﻿using FubuMVC.Core.UI.Scripts;
+using FubuMVC.Core.Assets;
 using FubuTestingSupport;
 using NUnit.Framework;
 

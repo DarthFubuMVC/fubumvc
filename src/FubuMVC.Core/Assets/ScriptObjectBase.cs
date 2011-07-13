@@ -1,9 +1,7 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public abstract class ScriptObjectBase : IScriptObject
     {

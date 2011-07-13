@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Content;
 using System.Linq;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public class ScriptRequirements
     {

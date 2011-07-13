@@ -1,8 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public class ScriptSet : ScriptObjectBase
     {

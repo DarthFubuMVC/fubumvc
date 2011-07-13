@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Bottles.Diagnostics;
-using FubuMVC.Core.UI.Scripts;
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Packaging;
 using StoryTeller;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;

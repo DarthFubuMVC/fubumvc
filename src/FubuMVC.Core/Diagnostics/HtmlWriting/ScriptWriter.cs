@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FubuMVC.Core.UI.Scripts;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;

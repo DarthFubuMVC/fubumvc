@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Bottles.Diagnostics;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.UI.Scripts;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

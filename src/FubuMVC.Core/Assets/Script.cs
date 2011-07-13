@@ -1,10 +1,8 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FubuCore.Util;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public class Script : ScriptObjectBase, IScript
     {

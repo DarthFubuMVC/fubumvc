@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using FubuMVC.Core.UI.Scripts;
+using System.Linq;
+using FubuMVC.Core.Assets;
 using FubuTestingSupport;
 using NUnit.Framework;
 

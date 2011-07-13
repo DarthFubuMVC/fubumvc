@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public interface IScript : IScriptObject, IComparable<IScript>
     {

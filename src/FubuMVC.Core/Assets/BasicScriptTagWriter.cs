@@ -3,7 +3,7 @@ using System.Linq;
 using FubuMVC.Core.Content;
 using HtmlTags;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     public class BasicScriptTagWriter : IScriptTagWriter
     {

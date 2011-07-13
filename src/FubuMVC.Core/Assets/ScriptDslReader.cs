@@ -4,7 +4,7 @@ using FubuCore.CommandLine;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Core.UI.Scripts
+namespace FubuMVC.Core.Assets
 {
     [Serializable]
     public class InvalidSyntaxException : Exception
