@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Content;
 using HtmlTags;
@@ -8,6 +9,7 @@ namespace FubuMVC.Core.UI
     public interface ICssLinkTagWriter
     {
         IEnumerable<HtmlTag> Write(IEnumerable<string> stylesheets);
+        IEnumerable<HtmlTag> WriteIfExists(IEnumerable<string> stylesheets);
     }
 
     public class CssLinkTagWriter : ICssLinkTagWriter
@@ -21,11 +23,19 @@ namespace FubuMVC.Core.UI
 
         public IEnumerable<HtmlTag> Write(IEnumerable<string> stylesheets)
         {
-            return stylesheets.Select(stylesheet =>
-            {
-                var url = _contentRegistry.CssUrl(stylesheet);
-                return new HtmlTag("link").Attr("href", url).Attr("rel", "stylesheet").Attr("type", "text/css");
-            });
+            return createCssTags(stylesheets, false);
+        }
+
+        public IEnumerable<HtmlTag> WriteIfExists(IEnumerable<string> stylesheets)
+        {
+            return createCssTags(stylesheets, true);
+        }
+
+        private IEnumerable<HtmlTag> createCssTags(IEnumerable<string> stylesheets, bool optional)
+        {
+            return stylesheets.Select(x => _contentRegistry.CssUrl(x, optional))
+                .Where(x => x != null)
+                .Select(url => new HtmlTag("link").Attr("href", url).Attr("rel", "stylesheet").Attr("type", "text/css"));
         }
     }
 

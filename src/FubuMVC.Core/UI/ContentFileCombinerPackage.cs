@@ -78,5 +78,10 @@ namespace FubuMVC.Core.UI
             var url = "~/content/{0}".ToFormat(combinedName).ToAbsoluteUrl();
             return new[] { new HtmlTag("link").Attr("href", url).Attr("rel", "stylesheet").Attr("type", "text/css") };
         }
+
+        public IEnumerable<HtmlTag> WriteIfExists(IEnumerable<string> stylesheets)
+        {
+            return Write(stylesheets);
+        }
     }
 }

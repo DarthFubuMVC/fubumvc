@@ -25,35 +25,33 @@ namespace FubuMVC.Tests.Content
         {
             hasFile("something.png");
             folders.Stub(x => x.ExistsInApplicationDirectory(ContentType.images, "something.png")).Return(true);
-            theContentFiles["something.png"].ShouldEqual("~/content/images/something.png");
+            theContentFiles.File("something.png").ShouldEqual("~/content/images/something.png");
         }
 
         [Test]
         public void return_url_for_the_image_file_found_at_the_first_package()
         {
             hasFile("something.png");
-            theContentFiles["something.png"].ShouldEqual("~/_content/images/something.png");
+            theContentFiles.File("something.png").ShouldEqual("~/_content/images/something.png");
         }
 
         [Test]
-        public void return_url_for_the_image_file_found_at_the_first_package_2()
-        {
-            hasFile("something.png");
-            theContentFiles["something.png"].ShouldEqual("~/_content/images/something.png");
-        }
-
-        [Test]
-        public void return_url_for_the_image_file_found_at_the_first_package_3()
-        {
-            hasFile("something.png");
-            theContentFiles["something.png"].ShouldEqual("~/_content/images/something.png");
-        }
-
-        [Test]
-        public void return_url_for_the_image_file_found_at_the_first_package_4()
+        public void return_url_for_the_image_file_found_at_the_first_package_in_a_deeper_path()
         {
             hasFile("e/j/something.png");
-            theContentFiles["e/j/something.png"].ShouldEqual("~/_content/images/e/j/something.png");
+            theContentFiles.File("e/j/something.png").ShouldEqual("~/_content/images/e/j/something.png");
+        }
+
+        [Test]
+        public void return_null_if_optional_file_does_not_exist()
+        {
+            theContentFiles.File("something.png", true).ShouldBeNull();
+        }
+
+        [Test]
+        public void return_path_from_main_application_if_file_does_not_exist_and_not_optional()
+        {
+            theContentFiles.File("something.png", true).ShouldBeNull();
         }
 
 

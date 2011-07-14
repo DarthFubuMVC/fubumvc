@@ -21,17 +21,19 @@ namespace FubuMVC.Core.Content
 
         public string ImageUrl(string name)
         {
-            return _images[name].ToAbsoluteUrl();
+            return _images.File(name).ToAbsoluteUrl();
         }
 
-        public string CssUrl(string name)
+        public string CssUrl(string name, bool optional)
         {
-            return _styles[name].ToAbsoluteUrl();
+            var file = _styles.File(name, optional);
+            return file != null ? file.ToAbsoluteUrl() : null;
         }
 
-        public string ScriptUrl(string name)
+        public string ScriptUrl(string name, bool optional)
         {
-            return _scripts[name].ToAbsoluteUrl();
+            var file = _scripts.File(name, optional);
+            return file != null ? file.ToAbsoluteUrl() : null;
         }
     }
 
@@ -39,7 +41,7 @@ namespace FubuMVC.Core.Content
     {
         private readonly ContentType _contentType;
         private readonly IContentFolderService _service;
-        private readonly Cache<string, string> _urls = new Cache<string, string>();
+        private readonly Cache<Tuple<string, bool>, string> _urls = new Cache<Tuple<string, bool>, string>();
 
         public ContentFiles(IContentFolderService service, ContentType contentType)
         {
@@ -57,8 +59,10 @@ namespace FubuMVC.Core.Content
              * This implementation isn't smart enough to deal with "appended" virtual directory paths
              * 
              */
-            _urls.OnMissing = filename =>
+            _urls.OnMissing = (args) =>
             {
+                var filename = args.Item1;
+                var optional = args.Item2;
                 if (_service.ExistsInApplicationDirectory(_contentType, filename))
                 {
                     return "~/content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
@@ -69,13 +73,14 @@ namespace FubuMVC.Core.Content
                     return "~/_content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
                 }
 
+                if (optional) return null;
                 return "~/content/{0}/{1}".ToFormat(_contentType, filename.TrimStart('/'));
             };
         }
 
-        public string this[string fileName]
+        public string File(string fileName, bool optional = false)
         {
-            get { return _urls[fileName]; }
+            return _urls[new Tuple<string, bool>(fileName, optional)];
         }
     }
 }

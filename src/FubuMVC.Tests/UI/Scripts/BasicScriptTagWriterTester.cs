@@ -38,12 +38,12 @@ namespace FubuMVC.Tests.UI.Scripts
             throw new NotImplementedException();
         }
 
-        public string CssUrl(string name)
+        public string CssUrl(string name, bool optional)
         {
             throw new NotImplementedException();
         }
 
-        public string ScriptUrl(string name)
+        public string ScriptUrl(string name, bool optional)
         {
             return "url for " + name;
         }

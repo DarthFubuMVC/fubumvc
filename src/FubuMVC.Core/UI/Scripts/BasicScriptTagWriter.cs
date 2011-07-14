@@ -19,7 +19,7 @@ namespace FubuMVC.Core.UI.Scripts
             return scripts.Select(x =>
             {
                 // TODO -- is it possible that we could have something besides JavaScript?
-                var scriptUrl = _registry.ScriptUrl(x);
+                var scriptUrl = _registry.ScriptUrl(x, false);
                 return new HtmlTag("script").Attr("src", scriptUrl).Attr("type", "text/javascript");
             });
         }
