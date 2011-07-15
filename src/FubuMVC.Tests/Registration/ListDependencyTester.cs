@@ -54,7 +54,42 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
+
+    [TestFixture]
+    public class ListDependency_as_dependency
+    {
+
+        [Test]
+        public void Should_satisfy_dependency()
+        {
+            var def = new ObjectDef(typeof(NeedListOfDoers));
+
+            var doer1 = new ASomethingDoer();
+
+            var doers = new ListDependency(typeof (IEnumerable<ISomethingDoer>));
+            doers.AddValue(doer1);
+            doers.AddType(typeof (BSomethingDoer));
+
+            def.Dependency(doers);
+
+
+            def.Dependencies.ShouldHaveCount(1);
+        }
+        
+    }
+
+    public class NeedListOfDoers
+    {
+        private readonly IEnumerable<ISomethingDoer> _doers;
+
+        public NeedListOfDoers(IEnumerable<ISomethingDoer> doers)
+        {
+            _doers = doers;
+        }
+    }
+
     public interface ISomethingDoer{}
 
     public class ASomethingDoer : ISomethingDoer{}
+    public class BSomethingDoer : ISomethingDoer{}
 }
