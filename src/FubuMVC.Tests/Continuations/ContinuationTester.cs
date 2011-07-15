@@ -71,12 +71,28 @@ namespace FubuMVC.Tests.Continuations
         }
 
         [Test]
-        public void assert_redirect_to_a_target()
+        public void assert_redirect_to_a_target_via_equals()
         {
             var input = new InputModelWithEquals {Name = "Luke"};
             FubuContinuation continuation = FubuContinuation.RedirectTo(input);
 
             continuation.AssertWasRedirectedTo(new InputModelWithEquals {Name = "Luke"});
+
+            shouldFail(() => continuation.AssertWasRedirectedTo(new InputModelWithEquals()));
+            shouldFail(() => continuation.AssertWasTransferedTo(input));
+            shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
+
+            shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
+            shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
+        }
+
+        [Test]
+        public void assert_redirect_to_a_target_via_predicate()
+        {
+            var input = new InputModel { Name = "Luke", Age = 1 };
+            FubuContinuation continuation = FubuContinuation.RedirectTo(input);
+
+            continuation.AssertWasRedirectedTo<InputModel>(x => x.Name == input.Name);
 
             shouldFail(() => continuation.AssertWasRedirectedTo(new InputModelWithEquals()));
             shouldFail(() => continuation.AssertWasTransferedTo(input));
@@ -116,12 +132,28 @@ namespace FubuMVC.Tests.Continuations
 
 
         [Test]
-        public void assert_transfer_to_a_target()
+        public void assert_transfer_to_a_target_via_equals()
         {
             var input = new InputModelWithEquals {Name = "Luke"};
             FubuContinuation continuation = FubuContinuation.TransferTo(input);
 
             continuation.AssertWasTransferedTo(new InputModelWithEquals {Name = "Luke"});
+
+            shouldFail(() => continuation.AssertWasTransferedTo(new InputModelWithEquals()));
+            shouldFail(() => continuation.AssertWasRedirectedTo(input));
+            shouldFail(() => continuation.AssertWasContinuedToNextBehavior());
+
+            shouldFail(() => continuation.AssertWasTransferedTo<ControllerTarget>(x => x.OneInOneOut(null)));
+            shouldFail(() => continuation.AssertWasRedirectedTo<ControllerTarget>(x => x.OneInOneOut(null)));
+        }
+
+        [Test]
+        public void assert_transfer_to_a_target_via_predicate()
+        {
+            var input = new InputModel {Name = "Luke", Age = 1};
+            FubuContinuation continuation = FubuContinuation.TransferTo(input);
+
+            continuation.AssertWasTransferedTo<InputModel>(x => x.Name == input.Name);
 
             shouldFail(() => continuation.AssertWasTransferedTo(new InputModelWithEquals()));
             shouldFail(() => continuation.AssertWasRedirectedTo(input));
