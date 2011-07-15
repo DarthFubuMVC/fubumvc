@@ -16,6 +16,7 @@ namespace FubuMVC.Core
     public partial class FubuRegistry : IFubuRegistry
     {
         private DiagnosticLevel _diagnosticLevel = DiagnosticLevel.None;
+        private bool _diagnosticsRegistryImported = false;
 
         /// <summary>
         /// Expression builder for configuring the default <see cref="UrlPolicy"/>, the default route, as well as supplying custom <see cref="IUrlPolicy"/> implementations.
@@ -206,16 +207,16 @@ namespace FubuMVC.Core
         {
             if (shouldInclude)
             {
-                ConfigureImports(i =>
-                {
-                    if(i is DiagnosticsRegistry) return;
-                    i.IncludeDiagnostics(shouldInclude);
-                });
-
                 IncludeDiagnostics(config =>
                 {
                     config.LimitRecordingTo(50);
                     config.ExcludeRequests(r => r.Path != null && r.Path.ToLower().StartsWith("/{0}".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)));
+                });
+                ConfigureImports(i =>
+                {
+                    if (i is DiagnosticsRegistry) return;
+                    i._diagnosticsRegistryImported = _diagnosticsRegistryImported;
+                    i.IncludeDiagnostics(shouldInclude);
                 });
             }
             else
@@ -235,8 +236,11 @@ namespace FubuMVC.Core
         {
             _diagnosticLevel = DiagnosticLevel.FullRequestTracing;
             UsingObserver(new RecordingConfigurationObserver());
-            Import<DiagnosticsRegistry>(string.Empty);
-
+            if (!_diagnosticsRegistryImported)
+            {
+                Import<DiagnosticsRegistry>(string.Empty);
+                _diagnosticsRegistryImported = true;
+            }
             var filters = new List<IRequestHistoryCacheFilter>();
             var config = new DiagnosticsConfigurationExpression(filters);
             configure(config);
