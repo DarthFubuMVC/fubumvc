@@ -73,7 +73,7 @@ namespace FubuMVC.Core.Registration.ObjectGraph
 
         public void AssertValid()
         {
-            _items.Each(x => x.ValidatePluggabilityTo(DependencyType));
+            _items.Each(x => x.ValidatePluggabilityTo(ElementType));
         }
 
         public void AddRange(IEnumerable<ObjectDef> items)
