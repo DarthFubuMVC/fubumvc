@@ -3,6 +3,7 @@ using System.Web.Hosting;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
+using System.Linq;
 
 namespace FubuMVC.Core.Packaging.VirtualPaths
 {
@@ -19,7 +20,8 @@ namespace FubuMVC.Core.Packaging.VirtualPaths
 
             HostingEnvironment.RegisterVirtualPathProvider(provider);
 
-            packages.Each(x => x.ForFolder(BottleFiles.WebContentFolder, provider.RegisterContentDirectory));
+            //TODO: Need to search packages in a deterministic order so that packages can override other packages. Sorting by name as a temporary measure.
+            packages.OrderBy(x => x.Name).Each(x => x.ForFolder(BottleFiles.WebContentFolder, provider.RegisterContentDirectory));
         }
 
         public override string ToString()
