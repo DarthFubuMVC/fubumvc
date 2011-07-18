@@ -113,6 +113,7 @@
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
+    <Compile Include="Continuations\RedirectableTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Registration\Conventions\AuthorizedByAttributeConventionTester.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilderTester.cs" />
     <Compile Include="Registration\Conventions\PartialRegistrationConventionTester.cs" />
+    <Compile Include="Registration\Conventions\RedirectableHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\RenderStatusCodeConventionTester.cs" />
     <Compile Include="Registration\Conventions\ReorderBehaviorsPolicyTester.cs" />
     <Compile Include="Registration\Conventions\UrlRegistryCategoryConventionTester.cs" />

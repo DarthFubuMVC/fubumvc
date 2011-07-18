@@ -15,7 +15,15 @@ namespace FubuMVC.Core.View.Attachment
         public ViewBag(IEnumerable<IViewToken> views)
         {
             _views = views;
-            _viewsByType.OnMissing = type => _views.Where(x => x.ViewModelType == type);
+            _viewsByType.OnMissing = type =>
+            {
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Continuations.Redirectable<>))
+                {
+                    type = type.GetGenericArguments().First();
+                }
+
+                return _views.Where(x => x.ViewModelType == type);
+            };
         }
 
         public IEnumerable<IViewToken> ViewsFor(Type viewModelType)
