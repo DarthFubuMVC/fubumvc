@@ -42,6 +42,7 @@ namespace FubuMVC.Core
 
             
             Policies.Add<ContinuationHandlerConvention>();
+            Policies.Add<RedirectableHandlerConvention>();
 
             _systemPolicies.Add(new StringOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());
