@@ -6,3 +6,4 @@ Topics
 
    gettingstarted
    viewengines/index
+   usingfubunew

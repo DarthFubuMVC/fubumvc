@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bottles.Exploding;
+using Bottles.Zipping;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
@@ -14,7 +16,6 @@ namespace Fubu
     [CommandDescription("Creates a new FubuMVC solution", Name = "new")]
     public class NewCommand : FubuCommand<NewCommandInput>
     {
-        private Dictionary<string, string> _templateKeywords;
         private static readonly string TemplateZip = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "fubuTemplate.zip");
         private static readonly FileSet TopLevelFileSet = new FileSet
                                                               {
@@ -26,18 +27,26 @@ namespace Fubu
         public NewCommand()
         {
             FileSystem = new FileSystem();
+            ZipService = new ZipFileService(FileSystem);
+            KeywordReplacer = new KeywordReplacer();
+            ProcessFactory = new ProcessFactory();
         }
 
         public IFileSystem FileSystem { get; set; }
+        public IZipFileService ZipService { get; set; }
+        public IKeywordReplacer KeywordReplacer { get; set; }
+        public IProcessFactory ProcessFactory { get; set; }
 
         public override bool Execute(NewCommandInput input)
         {
-            _templateKeywords = new Dictionary<string, string>
+            var templateKeywords = new Dictionary<string, string>
                                 {
                                     { "FUBUPROJECTNAME", input.ProjectName },
                                     { "FUBUPROJECTSHORTNAME", input.ProjectName.Split('.').Last() },
                                     { "FACEFACE-FACE-FACE-FACE-FACEFACEFACE", Guid.NewGuid().ToString().ToUpper() }
                                 };
+            KeywordReplacer.SetTokens(templateKeywords);
+
             var projectPath = Path.Combine(Environment.CurrentDirectory, input.ProjectName);
             if (string.IsNullOrEmpty(input.GitFlag))
             {
@@ -45,16 +54,18 @@ namespace Fubu
             }
             else
             {
-                var proc = new Process();
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.FileName = "git";
-                proc.StartInfo.Arguments = string.Format("clone {0} {1}", input.GitFlag, projectPath);
-
-                proc.Start();
-                proc.WaitForExit();
-                if (proc.ExitCode != 0)
+                var gitProcess = ProcessFactory.Create(p =>
                 {
-                    throw new FubuException(proc.ExitCode, "Command finished with a non-zero exit code");
+                    p.UseShellExecute = false;
+                    p.FileName = "git";
+                    p.Arguments = string.Format("clone {0} {1}", input.GitFlag, projectPath);
+                });
+
+                gitProcess.Start();
+                gitProcess.WaitForExit();
+                if (gitProcess.ExitCode != 0)
+                {
+                    throw new FubuException(gitProcess.ExitCode, "Command finished with a non-zero exit code");
                 }
             }
 
@@ -70,20 +81,15 @@ namespace Fubu
                                 ? TemplateZip
                                 : Path.Combine(Environment.CurrentDirectory, zipPath);
 
-            using (var zip = ZipFile.Read(templateZip))
-            {
-                Console.WriteLine("Unzipping: {0}", Path.GetFileName(templateZip));
-                zip.ZipError += (sender, error) => Console.WriteLine("Error Unzipping {0} - {1}", error.FileName, error.Exception);
-                zip.ExtractAll(destination);
-            }
+            ZipService.ExtractTo(templateZip, destination, ExplodeOptions.PreserveDestination);
         }
 
         public void ParseDirectory(string directory)
         {
-            var newDirectoryName = ReplaceKeywords(directory);
+            var newDirectoryName = KeywordReplacer.Replace(directory);
             if (directory != newDirectoryName)
             {
-                Console.WriteLine("{0} -> {1}",directory, Path.GetFileName(newDirectoryName));
+                Console.WriteLine("{0} -> {1}",directory, FileSystem.GetFileName(newDirectoryName));
                 FileSystem.MoveDirectory(directory, newDirectoryName);
                 directory = newDirectoryName;
             }
@@ -94,30 +100,20 @@ namespace Fubu
 
         public void ParseFile(string file)
         {
-            string fileContent = string.Empty;
+            var fileContent = FileSystem.ReadStringFromFile(file);
 
-            FileSystem.ReadTextFile(file, c =>
-            {
-                fileContent = c;
-            });
-
-            var replacedFileContent = ReplaceKeywords(fileContent);
+            var replacedFileContent = KeywordReplacer.Replace(fileContent);
             if (fileContent != replacedFileContent)
             {
                 FileSystem.WriteStringToFile(file, replacedFileContent);
             }
 
-            var newFileName = ReplaceKeywords(file);
+            var newFileName = KeywordReplacer.Replace(file);
             if (file != newFileName)
             {
                 Console.WriteLine("{0} -> {1}", file, Path.GetFileName(newFileName));
                 FileSystem.MoveFile(file, newFileName);
             }
-        }
-
-        public string ReplaceKeywords(string input)
-        {
-            return _templateKeywords.Aggregate(input, (memo, keyword) => memo.Replace(keyword.Key, keyword.Value));
         }
     }
 }
