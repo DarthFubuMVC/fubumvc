@@ -33,33 +33,33 @@ namespace FubuMVC.Core.Assets
             _dependencies.Fill(scriptObject);
         }
 
-        public IEnumerator<IScript> GetEnumerator()
-        {
-            foreach (IScript script in AllScripts())
-            {
-                yield return script;
+        //public IEnumerator<IScript> GetEnumerator()
+        //{
+        //    foreach (IScript script in AllScripts())
+        //    {
+        //        yield return script;
 
-                foreach (var dependency in script.Dependencies())
-                {
-                    foreach (var s in dependency)
-                    {
-                        yield return s;
-                    }
-                }
-            }
+        //        foreach (var dependency in script.Dependencies())
+        //        {
+        //            foreach (var s in dependency)
+        //            {
+        //                yield return s;
+        //            }
+        //        }
+        //    }
 
-            foreach (var scriptObject in _dependencies)
-            {
-                foreach (IScript s in scriptObject)
-                {
-                    yield return s;
-                }
-            }
-        }
+        //    foreach (var scriptObject in _dependencies)
+        //    {
+        //        foreach (IScript s in scriptObject)
+        //        {
+        //            yield return s;
+        //        }
+        //    }
+        //}
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    return GetEnumerator();
+        //}
     }
 }

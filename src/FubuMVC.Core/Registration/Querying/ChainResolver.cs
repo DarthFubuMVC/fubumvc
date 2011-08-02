@@ -25,7 +25,14 @@ namespace FubuMVC.Core.Registration.Querying
         // we possibly need an alternative that finds by category
         public BehaviorChain Find<T>(Expression<Action<T>> expression)
         {
-            var chain = _behaviorGraph.ChainsFor(typeof(T), ReflectionHelper.GetMethod(expression)).SingleOrDefault();
+            var chains = _behaviorGraph.ChainsFor(typeof(T), ReflectionHelper.GetMethod(expression));
+            if (chains.Count() > 1)
+            {
+                throw new FubuException(2108, "More than one behavior chain registered for {0}.{1}()", typeof(T).FullName, ReflectionHelper.GetMethod(expression).Name);
+            }
+
+
+            var chain = chains.SingleOrDefault();
             if (chain == null)
             {
                 throw new FubuException(2108, "No behavior chain registered for {0}.{1}()", typeof(T).FullName, ReflectionHelper.GetMethod(expression).Name);

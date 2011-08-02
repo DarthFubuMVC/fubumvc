@@ -5,16 +5,6 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
 {
-    public interface IScriptRegistration
-    {
-        void Alias(string name, string alias);
-        void Dependency(string dependent, string dependency);
-        void Extension(string extender, string @base);
-        void AddToSet(string setName, string name);
-        void Preceeding(string beforeName, string afterName);
-    }
-
-
     public class ScriptGraph : IComparer<IScript>, IScriptRegistration
     {
         private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
@@ -109,7 +99,7 @@ namespace FubuMVC.Core.Assets
                 var dependency = ObjectFor(rule.Dependency);
                 var dependent = ObjectFor(rule.Dependent);
 
-                dependency.AllScripts().Each(script => dependent.AddDependency(script));
+                dependency.AllScripts().Each(dependent.AddDependency);
             });
 
             _extenders.Each(x =>
