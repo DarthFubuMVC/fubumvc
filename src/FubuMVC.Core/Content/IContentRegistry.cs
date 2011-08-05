@@ -1,5 +1,8 @@
-﻿namespace FubuMVC.Core.Content
+﻿using System;
+
+namespace FubuMVC.Core.Content
 {
+    [Obsolete("Being rendered obsolete by newer asset pipeline")]
     public interface IContentRegistry
     {
         string ImageUrl(string name);

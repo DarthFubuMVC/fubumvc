@@ -84,6 +84,11 @@
     <Compile Include="Behaviors\Conditional\IsAjaxRequest.cs" />
     <Compile Include="Behaviors\Conditional\IsNotAjaxRequest.cs" />
     <Compile Include="Behaviors\Conditional\LambdaConditional.cs" />
+    <Compile Include="Assets\AssetBase.cs" />
+    <Compile Include="Assets\AssetDependency.cs" />
+    <Compile Include="Assets\Files\AssetPath.cs" />
+    <Compile Include="Assets\Files\AssetPathException.cs" />
+    <Compile Include="Assets\Files\AssetPipeline.cs" />
     <Compile Include="Assets\Interfaces.cs" />
     <Compile Include="Behaviors\DataContractJsonReader.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
@@ -439,10 +444,8 @@
     <Compile Include="UI\ContentFileCombinerPackage.cs" />
     <Compile Include="Assets\ScriptDslReader.cs" />
     <Compile Include="Assets\ScriptGatherer.cs" />
-    <Compile Include="Assets\Script.cs" />
     <Compile Include="Assets\ScriptExtension.cs" />
     <Compile Include="Assets\ScriptGraph.cs" />
-    <Compile Include="Assets\ScriptObjectBase.cs" />
     <Compile Include="Assets\ScriptRequirements.cs" />
     <Compile Include="Assets\ScriptRule.cs" />
     <Compile Include="Assets\ScriptSet.cs" />

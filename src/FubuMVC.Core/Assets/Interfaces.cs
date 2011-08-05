@@ -4,28 +4,29 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Assets
 {
-    public interface IScriptObject //: IEnumerable<IScript>
+    public interface IAsset
     {
         string Name { get; }
         bool Matches(string key);
         void AddAlias(string alias);
 
-        IEnumerable<IScript> AllScripts();
-        IEnumerable<IScriptObject> Dependencies();
-        void AddDependency(IScriptObject scriptObject);
+        // TODO -- why are both here?
+        IEnumerable<IAssetDependency> AllScripts();
+        IEnumerable<IAsset> Dependencies();
+        void AddDependency(IAsset asset);
     }
 
-    public interface IScript : IScriptObject, IComparable<IScript>
+    public interface IAssetDependency : IAsset, IComparable<IAssetDependency>
     {
-        bool MustBeAfter(IScript script);
-        void MustBePreceededBy(IScript script);
-        void AddExtension(IScript extender);
+        bool MustBeAfter(IAssetDependency assetDependency);
+        void MustBePreceededBy(IAssetDependency assetDependency);
+        void AddExtension(IAssetDependency extender);
 
         bool IsFirstRank();
     }
 
 
-    public interface IScriptRegistration
+    public interface IAssetRegistration
     {
         void Alias(string name, string alias);
         void Dependency(string dependent, string dependency);

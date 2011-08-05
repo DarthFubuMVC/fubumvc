@@ -14,10 +14,10 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void write_the_tags()
         {
-            var scripts = new List<IScript>(){
-                new Script("jquery.js"),
-                new Script("script1.js"),
-                new Script("script2.js")
+            var scripts = new List<IAssetDependency>(){
+                new AssetDependency("jquery.js"),
+                new AssetDependency("script1.js"),
+                new AssetDependency("script2.js")
             };
 
             var writer = new BasicScriptTagWriter(new StubContentRegistry());

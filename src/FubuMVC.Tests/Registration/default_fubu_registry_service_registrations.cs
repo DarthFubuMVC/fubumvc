@@ -198,7 +198,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void script_graph_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<ScriptGraph>().Value.ShouldNotBeNull();
+            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
         }
 
         [Test]

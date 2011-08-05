@@ -37,11 +37,11 @@ namespace FubuMVC.Core.Assets
 
     public class ScriptDslReader
     {
-        private readonly IScriptRegistration _registration;
+        private readonly IAssetRegistration _registration;
         private Action<string> _readerAction;
         private string _lastName;
 
-        public ScriptDslReader(IScriptRegistration registration)
+        public ScriptDslReader(IAssetRegistration registration)
         {
             _registration = registration;
         }

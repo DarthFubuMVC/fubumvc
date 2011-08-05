@@ -21,18 +21,18 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void should_have_added_all_the_scripts_to_the_set()
         {
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "D.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "E.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "F.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "G.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "D.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "E.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "F.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("SET01", "G.js"));
         }
 
         [Test]
         public void uses_the_order_to_set_dependencies()
         {
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("E.js", "D.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("F.js", "E.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("G.js", "F.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("E.js", "D.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("F.js", "E.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("G.js", "F.js"));
         }
     }
 
@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.UI.Scripts
         public void preceeding()
         {
             ClassUnderTest.ReadLine("before-b preceeds b");
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Preceeding("before-b", "b"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Preceeding("before-b", "b"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             ClassUnderTest.ReadLine("jquery is jquery.1.4.2.js");
 
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Alias("jquery.1.4.2.js", "jquery"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Alias("jquery.1.4.2.js", "jquery"));
         }
 
         [Test]
@@ -60,14 +60,14 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             ClassUnderTest.ReadLine("validation2.js extends validation.core.js");
 
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Extension("validation2.js", "validation.core.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Extension("validation2.js", "validation.core.js"));
         }
 
         [Test]
         public void read_requires_with_a_single_dependency_happy_path()
         {
             ClassUnderTest.ReadLine("validation.js requires jquery");
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("validation.js", "jquery"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("validation.js", "jquery"));
         }
 
         [Test]
@@ -75,9 +75,9 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             ClassUnderTest.ReadLine("crudForm.js requires jquery, validation.js, stateManager.js");
 
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "jquery"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "validation.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "stateManager.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "jquery"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "validation.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "stateManager.js"));
         }
 
 
@@ -86,9 +86,9 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             ClassUnderTest.ReadLine("crudForm.js requires jquery,validation.js,stateManager.js");
 
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "jquery"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "validation.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "stateManager.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "jquery"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "validation.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "stateManager.js"));
         }
 
 
@@ -97,9 +97,9 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             ClassUnderTest.ReadLine("crudForm.js requires jquery,validation.js, stateManager.js");
 
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "jquery"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "validation.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "stateManager.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "jquery"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "validation.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.Dependency("crudForm.js", "stateManager.js"));
         }
 
         [Test]
@@ -107,9 +107,9 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             ClassUnderTest.ReadLine("crud includes crudForm.js, validation.js, stateManager.js");
         
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("crud", "crudForm.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("crud", "validation.js"));
-            MockFor<IScriptRegistration>().AssertWasCalled(x => x.AddToSet("crud", "stateManager.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("crud", "crudForm.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("crud", "validation.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToSet("crud", "stateManager.js"));
         }
 
         [Test]

@@ -10,8 +10,8 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void should_be_after_is_false_for_unrelated_scripts()
         {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
+            var s1 = new AssetDependency("1");
+            var s2 = new AssetDependency("2");
         
             s1.MustBeAfter(s2).ShouldBeFalse();
             s2.MustBeAfter(s1).ShouldBeFalse();
@@ -21,8 +21,8 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void should_be_after_a_direct_dependency()
         {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
+            var s1 = new AssetDependency("1");
+            var s2 = new AssetDependency("2");
 
             s2.AddDependency(s1);
 
@@ -33,9 +33,9 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void should_be_after_a_direct_dependency_2_deep()
         {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
-            var s3 = new Script("3");
+            var s1 = new AssetDependency("1");
+            var s2 = new AssetDependency("2");
+            var s3 = new AssetDependency("3");
         
             s3.AddDependency(s2);
             s2.AddDependency(s1);
@@ -47,9 +47,9 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void should_be_after_bouncing_through_a_set()
         {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
-            var s3 = new Script("3");
+            var s1 = new AssetDependency("1");
+            var s2 = new AssetDependency("2");
+            var s3 = new AssetDependency("3");
 
             var set = new ScriptSet();
             set.Add(s1);
@@ -64,8 +64,8 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void extender_scenario()
         {
-            var s1 = new Script("1");
-            var s2 = new Script("2");
+            var s1 = new AssetDependency("1");
+            var s2 = new AssetDependency("2");
 
             s2.AddDependency(s1);
 

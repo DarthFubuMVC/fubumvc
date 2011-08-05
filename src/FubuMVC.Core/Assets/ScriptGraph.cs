@@ -5,15 +5,15 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
 {
-    public class ScriptGraph : IComparer<IScript>, IScriptRegistration
+    public class AssetGraph : IComparer<IAssetDependency>, IAssetRegistration
     {
-        private readonly Cache<string, IScriptObject> _objects = new Cache<string, IScriptObject>();
+        private readonly Cache<string, IAsset> _objects = new Cache<string, IAsset>();
         private readonly Cache<string, ScriptSet> _sets = new Cache<string, ScriptSet>();
         private readonly List<ScriptExtension> _extenders = new List<ScriptExtension>();
         private readonly List<ScriptRule> _rules = new List<ScriptRule>();
         private readonly List<ScriptPreceeding> _preceedings = new List<ScriptPreceeding>();
 
-        public ScriptGraph()
+        public AssetGraph()
         {
             _sets.OnMissing = name => new ScriptSet{
                 Name = name
@@ -30,11 +30,11 @@ namespace FubuMVC.Core.Assets
                 return 
                     _objects.GetAll().FirstOrDefault(x => x.Matches(name)) 
                     ?? 
-                    new Script(name);
+                    new AssetDependency(name);
             };
         }
 
-        public int Compare(IScript x, IScript y)
+        public int Compare(IAssetDependency x, IAssetDependency y)
         {
             if (ReferenceEquals(x, y)) return 0;
 
@@ -79,7 +79,7 @@ namespace FubuMVC.Core.Assets
             });
         }
 
-        public IEnumerable<IScript> GetScripts(IEnumerable<string> names)
+        public IEnumerable<IAssetDependency> GetScripts(IEnumerable<string> names)
         {
             return new ScriptGatherer(this, names).Gather();
         }
@@ -121,14 +121,14 @@ namespace FubuMVC.Core.Assets
         }
 
         // Find by name or by alias
-        public IScriptObject ObjectFor(string name)
+        public IAsset ObjectFor(string name)
         {
             return _objects[name];
         }
 
-        public IScript ScriptFor(string name)
+        public IAssetDependency ScriptFor(string name)
         {
-            return (IScript) ObjectFor(name);
+            return (IAssetDependency) ObjectFor(name);
         }
 
     }

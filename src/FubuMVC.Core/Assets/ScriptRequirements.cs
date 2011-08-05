@@ -7,14 +7,14 @@ namespace FubuMVC.Core.Assets
     public class ScriptRequirements
     {
         private readonly IContentFolderService _folders;
-        private readonly ScriptGraph _scriptGraph;
+        private readonly AssetGraph _assetGraph;
         private readonly List<string> _requirements = new List<string>();
         private readonly List<string> _rendered = new List<string>();
 
-        public ScriptRequirements(IContentFolderService folders, ScriptGraph scriptGraph)
+        public ScriptRequirements(IContentFolderService folders, AssetGraph assetGraph)
         {
             _folders = folders;
-            _scriptGraph = scriptGraph;
+            _assetGraph = assetGraph;
         }
 
         public void Require(string name)
@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Assets
         /// <returns></returns>
         public IEnumerable<string> GetScriptsToRender()
         {
-            var requiredScripts = _scriptGraph.GetScripts(_requirements).Select(x => x.Name).Except(_rendered).ToList();
+            var requiredScripts = _assetGraph.GetScripts(_requirements).Select(x => x.Name).Except(_rendered).ToList();
             _rendered.AddRange(requiredScripts);
             return requiredScripts;
         }

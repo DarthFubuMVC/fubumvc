@@ -4,23 +4,23 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
 {
-    public class Script : ScriptObjectBase, IScript
+    public class AssetDependency : AssetBase, IAssetDependency
     {
-        private readonly IList<IScript> _extensions = new List<IScript>();
-        private readonly Cache<IScript, bool> _isAfter = new Cache<IScript, bool>();
+        private readonly IList<IAssetDependency> _extensions = new List<IAssetDependency>();
+        private readonly Cache<IAssetDependency, bool> _isAfter = new Cache<IAssetDependency, bool>();
         private bool _hasPreceeding;
 
-        public Script()
+        public AssetDependency()
         {
             _isAfter.OnMissing = isAfterInChain;
         }
 
-        public Script(string name) : this()
+        public AssetDependency(string name) : this()
         {
             Name = name;
         }
 
-        public override IEnumerable<IScript> AllScripts()
+        public override IEnumerable<IAssetDependency> AllScripts()
         {
             yield return this;
 
@@ -30,19 +30,19 @@ namespace FubuMVC.Core.Assets
             }
         }
 
-        public bool MustBeAfter(IScript script)
+        public bool MustBeAfter(IAssetDependency assetDependency)
         {
-            var returnValue = _isAfter[script];
+            var returnValue = _isAfter[assetDependency];
             return returnValue;
         }
 
-        public void MustBePreceededBy(IScript script)
+        public void MustBePreceededBy(IAssetDependency assetDependency)
         {
             _hasPreceeding = true;
-            _isAfter[script] = true;
+            _isAfter[assetDependency] = true;
         }
 
-        public void AddExtension(IScript extender)
+        public void AddExtension(IAssetDependency extender)
         {
             _extensions.Add(extender);
             _isAfter[extender] = false;
@@ -54,16 +54,16 @@ namespace FubuMVC.Core.Assets
             return (!_hasPreceeding) && (!Dependencies().Any());
         }
 
-        public int CompareTo(IScript other)
+        public int CompareTo(IAssetDependency other)
         {
             return Name.CompareTo(other.Name);
         }
 
-        private bool isAfterInChain(IScript script)
+        private bool isAfterInChain(IAssetDependency assetDependency)
         {
             // The filter on "not this" is introduced because of the extensions
             var dependencies = Dependencies().SelectMany(x => x.AllScripts()).Where(x => !ReferenceEquals(x, this));
-            return dependencies.Contains(script) || dependencies.Any(x => x.MustBeAfter(script));
+            return dependencies.Contains(assetDependency) || dependencies.Any(x => x.MustBeAfter(assetDependency));
         }
 
         public override string ToString()

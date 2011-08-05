@@ -12,14 +12,14 @@ namespace FubuMVC.Tests.UI.Scripts
     [TestFixture]
     public class ScriptGraphTester
     {
-        private ScriptGraph theGraph;
+        private AssetGraph theGraph;
         private bool _compiled;
 
         [SetUp] 
         public void SetUp()
         {
             _compiled = false;
-            theGraph = new ScriptGraph(); 
+            theGraph = new AssetGraph(); 
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void find_object_by_name_and_the_object_does_not_exist_use_script_by_name()
         {
-            theGraph.ObjectFor("Name.js").ShouldBeOfType<IScript>()
+            theGraph.ObjectFor("Name.js").ShouldBeOfType<IAssetDependency>()
                 .Name.ShouldEqual("Name.js");
         }
 
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.UI.Scripts
         public void find_object_by_alias()
         {
             theGraph.Alias("Name.js", "Name");
-            theGraph.ObjectFor("Name").ShouldBeOfType<IScript>()
+            theGraph.ObjectFor("Name").ShouldBeOfType<IAssetDependency>()
                 .Name.ShouldEqual("Name.js");
         }
 
@@ -169,7 +169,7 @@ namespace FubuMVC.Tests.UI.Scripts
         [SetUp]
         public void SetUp()
         {
-            graph = new ScriptGraph();
+            graph = new AssetGraph();
             var reader = new ScriptDslReader(graph);
             reader.ReadLine("1 includes A,B,C");
             reader.ReadLine("2 includes C,D");
@@ -219,6 +219,6 @@ namespace FubuMVC.Tests.UI.Scripts
         }
 
 
-        private ScriptGraph graph;
+        private AssetGraph graph;
     }
 }

@@ -8,12 +8,12 @@ namespace FubuMVC.Tests.UI.Scripts
     [TestFixture]
     public class ScriptSetTester
     {
-        private ScriptGraph theGraph;
+        private AssetGraph theGraph;
 
         [SetUp]
         public void SetUp()
         {
-            theGraph = new ScriptGraph();
+            theGraph = new AssetGraph();
         }
 
         [Test]

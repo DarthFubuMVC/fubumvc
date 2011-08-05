@@ -6,24 +6,24 @@ namespace FubuMVC.Core.Assets
 
     public class ScriptLevel
     {
-        public IScript Script { get; set; }
+        public IAssetDependency AssetDependency { get; set; }
         public int Level { get; set; }
     }
 
 
     public class ScriptGatherer
     {
-        private readonly ScriptGraph _graph;
+        private readonly AssetGraph _graph;
         private readonly IEnumerable<string> _names;
-        private readonly List<IScript> _scripts = new List<IScript>();
+        private readonly List<IAssetDependency> _scripts = new List<IAssetDependency>();
 
-        public ScriptGatherer(ScriptGraph graph, IEnumerable<string> names)
+        public ScriptGatherer(AssetGraph graph, IEnumerable<string> names)
         {
             _graph = graph;
             _names = names;
         }
 
-        public IEnumerable<IScript> Gather()
+        public IEnumerable<IAssetDependency> Gather()
         {
             _names.Select(x => _graph.ObjectFor(x)).Distinct().Each(gatherFrom);
 
@@ -36,33 +36,33 @@ namespace FubuMVC.Core.Assets
 
 
 
-        private readonly IList<IScriptObject> _gatheredList = new List<IScriptObject>();
+        private readonly IList<IAsset> _gatheredList = new List<IAsset>();
 
-        private void gatherFrom(IScriptObject scriptObject)
+        private void gatherFrom(IAsset asset)
         {
-            if (_gatheredList.Contains(scriptObject)) return;
-            _gatheredList.Add(scriptObject);
+            if (_gatheredList.Contains(asset)) return;
+            _gatheredList.Add(asset);
 
-            var allScripts = scriptObject.AllScripts();
+            var allScripts = asset.AllScripts();
             _scripts.Fill(allScripts);
 
             allScripts.Each(gatherFrom);
-            scriptObject.Dependencies().Each(gatherFrom);
+            asset.Dependencies().Each(gatherFrom);
         }
     }
 
 
     public class ScriptSorter
     {
-        private readonly IList<IScript> _scripts;
-        private readonly IList<IList<IScript>> _levels = new List<IList<IScript>>();
+        private readonly IList<IAssetDependency> _scripts;
+        private readonly IList<IList<IAssetDependency>> _levels = new List<IList<IAssetDependency>>();
 
-        public ScriptSorter(IList<IScript> scripts)
+        public ScriptSorter(IList<IAssetDependency> scripts)
         {
             _scripts = scripts;
         }
 
-        public IEnumerable<IScript> Sort()
+        public IEnumerable<IAssetDependency> Sort()
         {
             var top = _scripts.Where(x => x.IsFirstRank()).ToList();
             _scripts.RemoveAll(top.Contains);
@@ -70,7 +70,7 @@ namespace FubuMVC.Core.Assets
 
             while (_scripts.Any())
             {
-                var level = new List<IScript>();
+                var level = new List<IAssetDependency>();
                 foreach (var script in _scripts.ToArray())
                 {
                     if (!_scripts.Any(x => script.MustBeAfter(x)))

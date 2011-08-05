@@ -12,12 +12,12 @@ namespace IntegrationTesting.Fixtures.Scripts
 {
     public class ScriptGraphFixture : Fixture
     {
-        private ScriptGraph _graph;
-        private IEnumerable<IScript> _scripts;
+        private AssetGraph _graph;
+        private IEnumerable<IAssetDependency> _scripts;
 
         public ScriptGraphFixture()
         {
-            _graph = new ScriptGraph();
+            _graph = new AssetGraph();
         }
 
         public IGrammar SetupScriptGraph()
@@ -25,7 +25,7 @@ namespace IntegrationTesting.Fixtures.Scripts
             return Embed<ScriptGraphSetupFixture>("If the script graph is configured as")
                 .Before((step, context) =>
                 {
-                    _graph = new ScriptGraph();
+                    _graph = new AssetGraph();
                     context.Store(_graph);
                 });
         }
@@ -89,11 +89,11 @@ namespace IntegrationTesting.Fixtures.Scripts
     
     public class ScriptGraphSetupFixture : Fixture
     {
-        private ScriptGraph _graph;
+        private AssetGraph _graph;
 
         public override void SetUp(ITestContext context)
         {
-            _graph = context.Retrieve<ScriptGraph>();
+            _graph = context.Retrieve<AssetGraph>();
         }
 
         public override void TearDown()

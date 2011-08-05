@@ -8,12 +8,12 @@ namespace FubuMVC.Tests.UI.Scripts
     [TestFixture]
     public class ScriptObjectBaseTester
     {
-        private ScriptObjectBase theObject;
+        private AssetBase theObject;
 
         [SetUp]
         public void SetUp()
         {
-            theObject = MockRepository.GenerateMock<ScriptObjectBase>();
+            theObject = MockRepository.GenerateMock<AssetBase>();
             theObject.Name = "The name";
         }
 

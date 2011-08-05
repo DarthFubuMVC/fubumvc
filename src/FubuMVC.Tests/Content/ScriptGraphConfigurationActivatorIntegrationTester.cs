@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Content
     [TestFixture]
     public class ScriptGraphConfigurationActivatorIntegrationTester
     {
-        private ScriptGraph scripts;
+        private AssetGraph assets;
         private ScriptGraphConfigurationActivator activator;
         private PackageLog log;
 
@@ -25,8 +25,8 @@ namespace FubuMVC.Tests.Content
             Directory.GetFiles(".", "*.script.config").Each(x => File.Delete(x));
 
 
-            scripts = new ScriptGraph();
-            activator = new ScriptGraphConfigurationActivator(scripts, new FileSystem());
+            assets = new AssetGraph();
+            activator = new ScriptGraphConfigurationActivator(assets, new FileSystem());
 
             log = new PackageLog();
         }
@@ -42,21 +42,21 @@ g requires h
 ");
 
             activator.ReadFile("something.script.config", log);
-            scripts.CompileDependencies(log);
+            assets.CompileDependencies(log);
 
             Assert.IsTrue(log.Success, log.FullTraceText());
 
             // got the alias
-            scripts.GetScripts(new string[]{"jquery"}).Single().Name.ShouldEqual("jquery.1.4.2.js");
+            assets.GetScripts(new string[]{"jquery"}).Single().Name.ShouldEqual("jquery.1.4.2.js");
         
             // got the set
-            scripts.GetScripts(new string[]{"a"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
+            assets.GetScripts(new string[]{"a"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
 
             // got the extension
-            scripts.GetScripts(new string[]{"d"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
+            assets.GetScripts(new string[]{"d"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
 
             // got the requires
-            scripts.GetScripts(new string[]{"g"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
+            assets.GetScripts(new string[]{"g"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
         }
 
         [Test]
@@ -75,21 +75,21 @@ g requires h
             activator.ReadScriptConfig(".", log);
             Debug.WriteLine(log.FullTraceText());
 
-            scripts.CompileDependencies(log);
+            assets.CompileDependencies(log);
 
             Assert.IsTrue(log.Success, log.FullTraceText());
 
             // got the alias
-            scripts.GetScripts(new string[] { "jquery" }).Single().Name.ShouldEqual("jquery.1.4.2.js");
+            assets.GetScripts(new string[] { "jquery" }).Single().Name.ShouldEqual("jquery.1.4.2.js");
 
             // got the set
-            scripts.GetScripts(new string[] { "a" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
+            assets.GetScripts(new string[] { "a" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
 
             // got the extension
-            scripts.GetScripts(new string[] { "d" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
+            assets.GetScripts(new string[] { "d" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
 
             // got the requires
-            scripts.GetScripts(new string[] { "g" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
+            assets.GetScripts(new string[] { "g" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
         }
     }
 }

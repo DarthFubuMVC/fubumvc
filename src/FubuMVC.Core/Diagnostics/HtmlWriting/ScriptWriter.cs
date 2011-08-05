@@ -15,12 +15,12 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
     [FubuDiagnostics("Scripts")]
     public class ScriptWriter
     {
-        private readonly ScriptGraph _scripts;
+        private readonly AssetGraph _assets;
         private readonly IUrlRegistry _urls;
 
-        public ScriptWriter(ScriptGraph scripts, IUrlRegistry urls)
+        public ScriptWriter(AssetGraph assets, IUrlRegistry urls)
         {
-            _scripts = scripts;
+            _assets = assets;
             _urls = urls;
         }
 
@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
                 document.Add("b").Text("Results");
                 document.Push("ul");
                 
-                var actuals = _scripts.GetScripts(queryNames);
+                var actuals = _assets.GetScripts(queryNames);
                 actuals.Each(script => document.Push("li").Text(script.Name));
             }
 

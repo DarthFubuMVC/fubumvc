@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.UI.Scripts
     {
         protected override void beforeEach()
         {
-            var scriptGraph = new ScriptGraph();
+            var scriptGraph = new AssetGraph();
             scriptGraph.Dependency("a", "b");
             scriptGraph.Dependency("a", "c");
             scriptGraph.Dependency("d", "e");

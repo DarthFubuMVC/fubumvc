@@ -178,7 +178,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IContentRegistry, ContentRegistryCache>();
 
-            graph.Services.SetServiceIfNone(new ScriptGraph());
+            graph.Services.SetServiceIfNone(new AssetGraph());
 
             graph.Services.SetServiceIfNone<IScriptTagWriter, BasicScriptTagWriter>();
             graph.Services.SetServiceIfNone<ICssLinkTagWriter, CssLinkTagWriter>();

@@ -11,12 +11,12 @@ namespace FubuMVC.Core.Content
 {
     public class ScriptGraphConfigurationActivator : IActivator
     {
-        private readonly ScriptGraph _scripts;
+        private readonly AssetGraph _assets;
         private readonly IFileSystem _fileSystem;
 
-        public ScriptGraphConfigurationActivator(ScriptGraph scripts, IFileSystem fileSystem)
+        public ScriptGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem)
         {
-            _scripts = scripts;
+            _assets = assets;
             _fileSystem = fileSystem;
         }
 
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Content
             ReadScriptConfig(FubuMvcPackageFacility.GetApplicationPath(), log);
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadScriptConfig(folder, log)));
 
-            _scripts.CompileDependencies(log);
+            _assets.CompileDependencies(log);
         }
 
         public void ReadScriptConfig(string folder, IPackageLog log)
@@ -47,7 +47,7 @@ namespace FubuMVC.Core.Content
 
         public void ReadFile(string file, IPackageLog log)
         {
-            var reader = new ScriptDslReader(_scripts);
+            var reader = new ScriptDslReader(_assets);
             log.Trace("  Reading script directives from {0}", file);
             log.TrapErrors(() =>
             {
