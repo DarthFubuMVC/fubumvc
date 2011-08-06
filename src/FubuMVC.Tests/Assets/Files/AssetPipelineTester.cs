@@ -1,81 +1,68 @@
 using FubuMVC.Core.Assets.Files;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Assets.Files
 {
     [TestFixture]
     public class AssetPipelineTester
     {
-        private PackageAssets thePackageAssets;
+        private AssetPipeline thePipeline;
         private AssetFileDataMother theFiles;
 
         [SetUp]
         public void SetUp()
         {
-            thePackageAssets = new PackageAssets();
-            theFiles = new AssetFileDataMother((path, file) => thePackageAssets.AddFile(path, file));
+            thePipeline = new AssetPipeline();
+            theFiles = new AssetFileDataMother(thePipeline.AddFile);
         }
 
         [Test]
-        public void find_by_unique_name_with_no_duplicates_can_look_through_all_types()
+        public void find_exact_match_with_package_type_and_name()
         {
             theFiles.LoadAssets(@"
-jquery=scripts/jquery.js
-icon=images/icon.gif
-main=styles/main.css
+app=application:scripts/jquery.js
+pak1-image=pak1:images/jquery.js
+pak1-script=pak1:scripts/jquery.js
+pak2=pak1:scripts/jquery.js
 ");
 
-            thePackageAssets.FindByName("jquery.js").ShouldBeTheSameAs(theFiles["jquery"]);
-            thePackageAssets.FindByName("icon.gif").ShouldBeTheSameAs(theFiles["icon"]);
-            thePackageAssets.FindByName("main.css").ShouldBeTheSameAs(theFiles["main"]);
+            thePipeline.Find("pak1:scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1-script"]);
         }
 
         [Test]
-        public void find_by_unique_name_with_duplicates_should_look_in_scripts_then_styles_then_images()
+        public void application_takes_precedence_over_package_asset_without_any_override()
         {
             theFiles.LoadAssets(@"
-script-jquery=scripts/jquery.js
-images-jquery=images/jquery.js
-styles-jquery=styles/jquery.js
-styles-main=styles/main.css
-images-main=images/main.css
+app=application:scripts/jquery.js
+pak1=pak1:scripts/jquery.js
 ");
 
-            thePackageAssets.FindByName("jquery.js").ShouldBeTheSameAs(theFiles["script-jquery"]);
-            thePackageAssets.FindByName("main.css").ShouldBeTheSameAs(theFiles["styles-main"]);
+            thePipeline.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["app"]);
         }
 
         [Test]
-        public void find_by_type_and_name()
+        public void package_order_takes_precedence_without_any_overrides()
         {
             theFiles.LoadAssets(@"
-script-jquery=scripts/jquery.js
-images-jquery=images/jquery.js
-styles-jquery=styles/jquery.js
-styles-main=styles/main.css
-images-main=images/main.css
+pak1=pak1:scripts/jquery.js
+pak2=pak2:scripts/jquery.js
+pak3=pak3:scripts/jquery.js
 ");
 
-            thePackageAssets.FindByName("scripts/jquery.js").ShouldBeTheSameAs(theFiles["script-jquery"]);
-            thePackageAssets.FindByName("styles/jquery.js").ShouldBeTheSameAs(theFiles["styles-jquery"]);
-            thePackageAssets.FindByName("images/jquery.js").ShouldBeTheSameAs(theFiles["images-jquery"]);
+            thePipeline.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1"]);
+
         }
 
         [Test]
-        public void no_match_should_be_null()
+        public void overrides_can_override_application_precedence()
         {
             theFiles.LoadAssets(@"
-script-jquery=scripts/jquery.js
-images-jquery=images/jquery.js
-styles-jquery=styles/jquery.js
-styles-main=styles/main.css
-images-main=images/main.css
+app=application:scripts/jquery.js
+pak1=pak1:scripts/jquery.js!override
 ");
 
-            thePackageAssets.FindByName("nothing/that/exists").ShouldBeNull();
+            thePipeline.Find("scripts/jquery.js").ShouldBeTheSameAs(theFiles["pak1"]);
         }
-
-
     }
 }

@@ -86,9 +86,13 @@
     <Compile Include="Behaviors\Conditional\LambdaConditional.cs" />
     <Compile Include="Assets\AssetBase.cs" />
     <Compile Include="Assets\AssetDependency.cs" />
+    <Compile Include="Assets\Files\AssetFile.cs" />
+    <Compile Include="Assets\Files\AssetFileSource.cs" />
     <Compile Include="Assets\Files\AssetPath.cs" />
     <Compile Include="Assets\Files\AssetPathException.cs" />
     <Compile Include="Assets\Files\AssetPipeline.cs" />
+    <Compile Include="Assets\Files\AssetType.cs" />
+    <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\Interfaces.cs" />
     <Compile Include="Behaviors\DataContractJsonReader.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />

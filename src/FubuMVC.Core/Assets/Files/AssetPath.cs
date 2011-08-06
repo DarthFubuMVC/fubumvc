@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets.Files
 {
@@ -20,7 +21,16 @@ namespace FubuMVC.Core.Assets.Files
             }
 
             readPath(path);
-            
+        }
+
+        public AssetPath(string package, string name, AssetType? type)
+        {
+            if (package == null) throw new ArgumentNullException("package");
+            if (name == null) throw new ArgumentNullException("name");
+
+            Name = name;
+            Package = package;
+            Type = type;
         }
 
         private void readPath(string path)

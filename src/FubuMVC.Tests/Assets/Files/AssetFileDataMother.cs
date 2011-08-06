@@ -34,11 +34,19 @@ namespace FubuMVC.Tests.Assets.Files
 
             var parts = line.Split('=');
             var key = parts.First();
-            var path = new AssetPath(parts.Last());
+            var stringPath = parts.Last();
+            var @override = stringPath.EndsWith("!override");
+            if (@override)
+            {
+                stringPath = stringPath.Replace("!override", "");
+            }
+
+            var path = new AssetPath(stringPath);
 
             var file = new AssetFile()
                        {
-                           Name = path.Name
+                           Name = path.Name,
+                           Override = @override
                        };
 
             _files[key] = file;
