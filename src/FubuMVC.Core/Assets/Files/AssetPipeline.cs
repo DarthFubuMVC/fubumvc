@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    public class AssetPipeline
-    {
-        
-    }
+
 
     public enum AssetFileSource
     {
@@ -50,28 +48,55 @@ namespace FubuMVC.Core.Assets.Files
         styles
     }
 
+    //public class AssetPipeline
+    //{
+    //    private readonly PackageAssets
+    //}
+
     // Forget CDN for now
     public class PackageAssets
     {
         private readonly Cache<AssetType, List<AssetFile>> _files = new Cache<AssetType, List<AssetFile>>(key => new List<AssetFile>());
 
-
-        public void AddFile(AssetType type, AssetFile file)
+        public void AddFile(AssetPath path, AssetFile file)
         {
-            _files[type].Add(file);
+            if (!path.Type.HasValue)
+            {
+                throw new ArgumentException("AssetPath must have an AssetType to be used here");
+            }
+
+            _files[path.Type.Value].Add(file);
         }
 
         public AssetFile FindByName(string name)
         {
-            throw new NotImplementedException();
+            var path = new AssetPath(name);
+            return FindByPath(path).SingleOrDefault();
         }
 
-        public AssetFile FindByPath(string path)
+        public IEnumerable<AssetFile> FindByPath(AssetPath path)
         {
-            throw new NotImplementedException();
+            if (path.Type.HasValue)
+            {
+                return matchingType(path.Type.Value, path.Name);
+            }
+
+            var scripts = matchingType(AssetType.scripts, path.Name);
+            if (scripts.Any()) return scripts;
+
+            var styles = matchingType(AssetType.styles, path.Name);
+            if (styles.Any()) return styles;
+
+            var images = matchingType(AssetType.images, path.Name);
+            if (images.Any()) return images;
+
+            return new AssetFile[0];
         }
 
-
+        private IEnumerable<AssetFile> matchingType(AssetType type, string name)
+        {
+            return _files[type].Where(x => x.Name == name);
+        }
     }
 
 
@@ -83,25 +108,25 @@ namespace FubuMVC.Core.Assets.Files
     //    string MimeType { get; }
     //}
 
-    public class AssetPipelineReader
-    {
-        private readonly IFileSystem _system;
+    //public class AssetPipelineReader
+    //{
+    //    private readonly IFileSystem _system;
 
-        public AssetPipelineReader(IFileSystem system)
-        {
-            _system = system;
-        }
+    //    public AssetPipelineReader(IFileSystem system)
+    //    {
+    //        _system = system;
+    //    }
 
-        public void ReadApplicationFolder(string directory, AssetPipeline pipeline)
-        {
-            throw new NotImplementedException();
-        }
+    //    public void ReadApplicationFolder(string directory, AssetPipeline pipeline)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public void ReadPackageFolder(string directory, AssetPipeline pipeline)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public void ReadPackageFolder(string directory, AssetPipeline pipeline)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 
     
 }
