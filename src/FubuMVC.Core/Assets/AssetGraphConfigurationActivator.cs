@@ -4,17 +4,16 @@ using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Packaging;
 
-namespace FubuMVC.Core.Content
+namespace FubuMVC.Core.Assets
 {
-    public class ScriptGraphConfigurationActivator : IActivator
+    public class AssetGraphConfigurationActivator : IActivator
     {
         private readonly AssetGraph _assets;
         private readonly IFileSystem _fileSystem;
 
-        public ScriptGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem)
+        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem)
         {
             _assets = assets;
             _fileSystem = fileSystem;

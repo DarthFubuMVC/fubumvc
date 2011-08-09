@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Content
     public class ScriptGraphConfigurationActivatorIntegrationTester
     {
         private AssetGraph assets;
-        private ScriptGraphConfigurationActivator activator;
+        private AssetGraphConfigurationActivator activator;
         private PackageLog log;
 
         [SetUp]
@@ -26,7 +26,7 @@ namespace FubuMVC.Tests.Content
 
 
             assets = new AssetGraph();
-            activator = new ScriptGraphConfigurationActivator(assets, new FileSystem());
+            activator = new AssetGraphConfigurationActivator(assets, new FileSystem());
 
             log = new PackageLog();
         }

@@ -205,7 +205,7 @@ namespace FubuMVC.Tests.Registration
         public void should_be_a_script_configuration_activator_registered_as_a_service()
         {
             new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof(ScriptGraphConfigurationActivator)).ShouldBeTrue();
+                .Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
         }
 
         [Test]

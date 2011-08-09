@@ -86,6 +86,7 @@
     <Compile Include="Behaviors\Conditional\LambdaConditional.cs" />
     <Compile Include="Assets\AssetBase.cs" />
     <Compile Include="Assets\AssetDependency.cs" />
+    <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
     <Compile Include="Assets\Files\AssetFile.cs" />
     <Compile Include="Assets\Files\AssetFileBuilder.cs" />
     <Compile Include="Assets\Files\AssetFileSource.cs" />
@@ -148,7 +149,7 @@
     <Compile Include="Content\FileRouteHandler.cs" />
     <Compile Include="Content\IMimeTypeProvider.cs" />
     <Compile Include="Content\PackageFolderActivator.cs" />
-    <Compile Include="Content\ScriptGraphConfigurationActivator.cs" />
+    <Compile Include="Assets\AssetGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
