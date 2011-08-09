@@ -5,7 +5,12 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    public class AssetPipeline
+    public interface IAssetFileRegistration
+    {
+        void AddFile(AssetPath path, AssetFile file);
+    }
+
+    public class AssetPipeline : IAssetFileRegistration
     {
         public static readonly string Application = "application";
 
@@ -49,6 +54,11 @@ namespace FubuMVC.Core.Assets.Files
         public AssetFile Find(string path)
         {
             return _memoizedFiles[path];
+        }
+
+        public PackageAssets AssetsFor(string packageName)
+        {
+            return _packages[packageName];
         }
     }
 }
