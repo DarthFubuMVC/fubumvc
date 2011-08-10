@@ -10,7 +10,12 @@ namespace FubuMVC.Core.Assets.Files
         void AddFile(AssetPath path, AssetFile file);
     }
 
-    public class AssetPipeline : IAssetFileRegistration
+    public interface IAssetPipeline
+    {
+        AssetFile Find(string path);
+    }
+
+    public class AssetPipeline : IAssetFileRegistration, IAssetPipeline
     {
         public static readonly string Application = "application";
 

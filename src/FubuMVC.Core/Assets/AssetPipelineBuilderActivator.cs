@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
@@ -46,6 +47,9 @@ namespace FubuMVC.Core.Assets
             }
         }
 
-        
+        public override string ToString()
+        {
+            return "Building the AssetPipeline from the application and package content folders";
+        }
     }
 }

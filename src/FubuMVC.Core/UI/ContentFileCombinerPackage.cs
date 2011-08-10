@@ -9,6 +9,7 @@ using HtmlTags;
 
 namespace FubuMVC.Core.UI
 {
+    [MarkedForTermination]
     public class ContentFileCombinerPackage : IFubuRegistryExtension
     {
         public void Configure(FubuRegistry registry)
@@ -31,6 +32,7 @@ namespace FubuMVC.Core.UI
         }
     }
 
+    [MarkedForTermination]
     public class CombiningScriptTagWriter : IScriptTagWriter
     {
         private readonly IContentFolderService _folderService;
@@ -53,6 +55,7 @@ namespace FubuMVC.Core.UI
         }
     }
 
+    [MarkedForTermination]
     public class CombiningCssLinkTagWriter : ICssLinkTagWriter
     {
         private readonly IContentFolderService _folderService;
