@@ -3,7 +3,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
     public class when_reading_an_ordered_set : InteractionContext<AssetDslReader>
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.UI.Scripts
 
 
     [TestFixture]
-    public class ScriptDslReaderTester : InteractionContext<AssetDslReader>
+    public class AssetDslReaderTester : InteractionContext<AssetDslReader>
     {
         [Test]
         public void preceeding()

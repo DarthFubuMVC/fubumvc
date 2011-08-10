@@ -3,14 +3,13 @@ using System.Diagnostics;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Assets;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
-    public class ScriptGraphTester
+    public class AssetGraphTester
     {
         private AssetGraph theGraph;
         private bool _compiled;
@@ -126,11 +125,11 @@ namespace FubuMVC.Tests.UI.Scripts
 
             theGraph.CompileDependencies(new PackageLog());
 
-            var a = theGraph.ScriptFor("A");
-            var b = theGraph.ScriptFor("B");
-            var c = theGraph.ScriptFor("C");
-            var d = theGraph.ScriptFor("D");
-            var f = theGraph.ScriptFor("F");
+            var a = theGraph.FileDependencyFor("A");
+            var b = theGraph.FileDependencyFor("B");
+            var c = theGraph.FileDependencyFor("C");
+            var d = theGraph.FileDependencyFor("D");
+            var f = theGraph.FileDependencyFor("F");
 
             f.MustBeAfter(c).ShouldBeFalse();
             b.MustBeAfter(c).ShouldBeFalse();
@@ -154,8 +153,8 @@ namespace FubuMVC.Tests.UI.Scripts
             theGraph.Preceeding("before-b", "b");
             theGraph.CompileDependencies(new PackageLog());
 
-            theGraph.ScriptFor("before-b").MustBeAfter(theGraph.ScriptFor("b")).ShouldBeFalse();
-            theGraph.ScriptFor("b").MustBeAfter(theGraph.ScriptFor("before-b")).ShouldBeTrue();
+            theGraph.FileDependencyFor("before-b").MustBeAfter(theGraph.FileDependencyFor("b")).ShouldBeFalse();
+            theGraph.FileDependencyFor("b").MustBeAfter(theGraph.FileDependencyFor("before-b")).ShouldBeTrue();
 
             ScriptNamesFor("b").ShouldHaveTheSameElementsAs("b");
             ScriptNamesFor("b", "before-b").ShouldHaveTheSameElementsAs("before-b", "b");
@@ -187,24 +186,24 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void d_should_be_after_d1_and_d2()
         {
-            var d = graph.ScriptFor("D");
-            d.MustBeAfter(graph.ScriptFor("D1")).ShouldBeTrue();
-            d.MustBeAfter(graph.ScriptFor("D2")).ShouldBeTrue();
+            var d = graph.FileDependencyFor("D");
+            d.MustBeAfter(graph.FileDependencyFor("D1")).ShouldBeTrue();
+            d.MustBeAfter(graph.FileDependencyFor("D2")).ShouldBeTrue();
         
-            graph.ScriptFor("D1").MustBeAfter(d).ShouldBeFalse();
-            graph.ScriptFor("D2").MustBeAfter(d).ShouldBeFalse();
+            graph.FileDependencyFor("D1").MustBeAfter(d).ShouldBeFalse();
+            graph.FileDependencyFor("D2").MustBeAfter(d).ShouldBeFalse();
         }
 
 
         [Test]
         public void fetch_for_a_set_that_includes_another_set()
         {
-            var a = graph.ScriptFor("A");
-            var b = graph.ScriptFor("B");
-            var c = graph.ScriptFor("C");
-            var c1 = graph.ScriptFor("C-1");
-            var crudForm = graph.ScriptFor("crudForm.js");
-            var validation = graph.ScriptFor("validation.js");
+            var a = graph.FileDependencyFor("A");
+            var b = graph.FileDependencyFor("B");
+            var c = graph.FileDependencyFor("C");
+            var c1 = graph.FileDependencyFor("C-1");
+            var crudForm = graph.FileDependencyFor("crudForm.js");
+            var validation = graph.FileDependencyFor("validation.js");
 
             a.MustBeAfter(crudForm).ShouldBeTrue();
             a.MustBeAfter(validation).ShouldBeTrue();

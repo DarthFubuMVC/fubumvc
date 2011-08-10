@@ -2,10 +2,10 @@ using FubuMVC.Core.Assets;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
-    public class ScriptTester
+    public class FileDependencyTester
     {
         [Test]
         public void should_be_after_is_false_for_unrelated_scripts()

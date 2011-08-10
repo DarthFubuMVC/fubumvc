@@ -2,15 +2,14 @@ using System.Linq;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Content;
-using FubuMVC.Core.Packaging;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
-    public class ScriptRequirementsTester : InteractionContext<AssetRequirements>
+    public class AssetRequirementsTester : InteractionContext<AssetRequirements>
     {
         private void scriptExists(string name)
         {

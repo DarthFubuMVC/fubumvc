@@ -6,7 +6,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using System.Linq;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
     public class BasicScriptTagWriterTester

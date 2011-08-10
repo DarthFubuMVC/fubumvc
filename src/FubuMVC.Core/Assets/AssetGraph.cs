@@ -44,6 +44,11 @@ namespace FubuMVC.Core.Assets
             return 0;
         }
 
+        public IEnumerable<IFileDependency> AllDependencies()
+        {
+            return _objects.OfType<IFileDependency>();
+        }
+
         public void Alias(string name, string alias)
         {
             _objects[name].AddAlias(alias);
@@ -104,8 +109,8 @@ namespace FubuMVC.Core.Assets
 
             _extenders.Each(x =>
             {
-                var @base = ScriptFor(x.Base);
-                var extender = ScriptFor(x.Extender);
+                var @base = FileDependencyFor(x.Base);
+                var extender = FileDependencyFor(x.Extender);
 
                 @base.AddExtension(extender);
                 extender.AddDependency(@base);
@@ -113,8 +118,8 @@ namespace FubuMVC.Core.Assets
 
             _preceedings.Each(x =>
             {
-                var before = ScriptFor(x.Before);
-                var after = ScriptFor(x.After);
+                var before = FileDependencyFor(x.Before);
+                var after = FileDependencyFor(x.After);
 
                 after.MustBePreceededBy(before);
             });
@@ -126,7 +131,7 @@ namespace FubuMVC.Core.Assets
             return _objects[name];
         }
 
-        public IFileDependency ScriptFor(string name)
+        public IFileDependency FileDependencyFor(string name)
         {
             return (IFileDependency) ObjectFor(name);
         }

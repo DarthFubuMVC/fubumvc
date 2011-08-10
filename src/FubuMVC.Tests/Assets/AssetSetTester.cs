@@ -3,10 +3,10 @@ using FubuMVC.Core.Assets;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
-    public class ScriptSetTester
+    public class AssetSetTester
     {
         private AssetGraph theGraph;
 

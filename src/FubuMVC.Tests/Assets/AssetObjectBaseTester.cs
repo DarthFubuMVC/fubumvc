@@ -3,10 +3,10 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.UI.Scripts
+namespace FubuMVC.Tests.Assets
 {
     [TestFixture]
-    public class ScriptObjectBaseTester
+    public class AssetObjectBaseTester
     {
         private AssetBase theObject;
 
