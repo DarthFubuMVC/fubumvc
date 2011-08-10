@@ -19,14 +19,14 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void find_all_scripts_if_just_referring_to_script_files()
         {
-            var theSet = new ScriptSet();
+            var theSet = new AssetSet();
             theSet.Add("a");
             theSet.Add("b");
             theSet.Add("c");
 
             theSet.FindScripts(theGraph);
 
-            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("a", "b", "c");
+            theSet.AllFileDependencies().Select(x => x.Name).ShouldHaveTheSameElementsAs("a", "b", "c");
         }
 
         [Test]
@@ -36,13 +36,13 @@ namespace FubuMVC.Tests.UI.Scripts
             theGraph.AddToSet("1", "B");
             theGraph.AddToSet("1", "C");
 
-            var theSet = new ScriptSet();
+            var theSet = new AssetSet();
             theSet.Add("1");
 
-            theGraph.ScriptSetFor("1").FindScripts(theGraph);
+            theGraph.AssetSetFor("1").FindScripts(theGraph);
             theSet.FindScripts(theGraph);
 
-            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C");
+            theSet.AllFileDependencies().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C");
         }
 
         [Test]
@@ -52,14 +52,14 @@ namespace FubuMVC.Tests.UI.Scripts
             theGraph.AddToSet("1", "B");
             theGraph.AddToSet("1", "C");
 
-            var theSet = new ScriptSet();
+            var theSet = new AssetSet();
             theSet.Add("1");
             theSet.Add("D");
 
-            theGraph.ScriptSetFor("1").FindScripts(theGraph);
+            theGraph.AssetSetFor("1").FindScripts(theGraph);
             theSet.FindScripts(theGraph);
 
-            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D");
+            theSet.AllFileDependencies().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D");
         }
 
         [Test]
@@ -71,15 +71,15 @@ namespace FubuMVC.Tests.UI.Scripts
             theGraph.AddToSet("2", "C");
             theGraph.AddToSet("2", "D");
 
-            var theSet = new ScriptSet();
+            var theSet = new AssetSet();
             theSet.Add("1");
             theSet.Add("E");
 
-            theGraph.ScriptSetFor("1").FindScripts(theGraph);
-            theGraph.ScriptSetFor("2").FindScripts(theGraph);
+            theGraph.AssetSetFor("1").FindScripts(theGraph);
+            theGraph.AssetSetFor("2").FindScripts(theGraph);
             theSet.FindScripts(theGraph);
 
-            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D", "E");
+            theSet.AllFileDependencies().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D", "E");
         }
 
         [Test]
@@ -91,16 +91,16 @@ namespace FubuMVC.Tests.UI.Scripts
             theGraph.AddToSet("2", "C");
             theGraph.AddToSet("2", "D");
 
-            var theSet = new ScriptSet();
+            var theSet = new AssetSet();
             theSet.Add("1");
             theSet.Add("2");
             theSet.Add("E");
 
-            theGraph.ScriptSetFor("1").FindScripts(theGraph);
-            theGraph.ScriptSetFor("2").FindScripts(theGraph);
+            theGraph.AssetSetFor("1").FindScripts(theGraph);
+            theGraph.AssetSetFor("2").FindScripts(theGraph);
             theSet.FindScripts(theGraph);
 
-            theSet.AllScripts().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D", "E");
+            theSet.AllFileDependencies().Select(x => x.Name).ShouldHaveTheSameElementsAs("A", "B", "C", "D", "E");
         }
     }
 }

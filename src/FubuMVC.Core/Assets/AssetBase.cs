@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Assets
 {
-    public abstract class AssetBase : IAsset
+    public abstract class AssetBase : IRequestedAsset
     {
         private readonly List<string> _aliases = new List<string>();
-        private readonly List<IAsset> _dependencies = new List<IAsset>();
+        private readonly List<IRequestedAsset> _dependencies = new List<IRequestedAsset>();
 
         public bool Matches(string key)
         {
@@ -20,14 +20,14 @@ namespace FubuMVC.Core.Assets
             _aliases.Fill(alias.ToLowerInvariant());
         }
 
-        public abstract IEnumerable<IAssetDependency> AllScripts();
+        public abstract IEnumerable<IFileDependency> AllFileDependencies();
 
-        public IEnumerable<IAsset> Dependencies()
+        public IEnumerable<IRequestedAsset> Dependencies()
         {
             return _dependencies;
         }
 
-        public void AddDependency(IAsset asset)
+        public void AddDependency(IRequestedAsset asset)
         {
             _dependencies.Fill(asset);
         }

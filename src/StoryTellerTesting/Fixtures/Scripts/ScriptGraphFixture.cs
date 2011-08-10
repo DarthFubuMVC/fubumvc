@@ -13,7 +13,7 @@ namespace IntegrationTesting.Fixtures.Scripts
     public class ScriptGraphFixture : Fixture
     {
         private AssetGraph _graph;
-        private IEnumerable<IAssetDependency> _scripts;
+        private IEnumerable<IFileDependency> _scripts;
 
         public ScriptGraphFixture()
         {
@@ -43,7 +43,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         [FormatAs("Fetch the scripts for {names}")]
         public void FetchList(string[] names)
         {
-            _scripts = _graph.GetScripts(names);
+            _scripts = _graph.GetAssets(names);
         }
 
         [Hidden]

@@ -4,23 +4,24 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Assets
 {
-    public interface IAsset
+    public interface IRequestedAsset
     {
         string Name { get; }
         bool Matches(string key);
         void AddAlias(string alias);
 
         // TODO -- why are both here?
-        IEnumerable<IAssetDependency> AllScripts();
-        IEnumerable<IAsset> Dependencies();
-        void AddDependency(IAsset asset);
+        IEnumerable<IFileDependency> AllFileDependencies();
+        IEnumerable<IRequestedAsset> Dependencies();
+
+        void AddDependency(IRequestedAsset asset);
     }
 
-    public interface IAssetDependency : IAsset, IComparable<IAssetDependency>
+    public interface IFileDependency : IRequestedAsset, IComparable<IFileDependency>
     {
-        bool MustBeAfter(IAssetDependency assetDependency);
-        void MustBePreceededBy(IAssetDependency assetDependency);
-        void AddExtension(IAssetDependency extender);
+        bool MustBeAfter(IFileDependency fileDependency);
+        void MustBePreceededBy(IFileDependency fileDependency);
+        void AddExtension(IFileDependency extender);
 
         bool IsFirstRank();
     }

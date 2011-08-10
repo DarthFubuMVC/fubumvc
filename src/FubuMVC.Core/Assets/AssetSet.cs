@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets
 {
-    public class ScriptSet : AssetBase
+    public class AssetSet : AssetBase
     {
         private readonly List<string> _includes = new List<string>();
-        private IList<IAsset> _objects;
+        private IList<IRequestedAsset> _objects;
 
-        public override IEnumerable<IAssetDependency> AllScripts()
+        public override IEnumerable<IFileDependency> AllFileDependencies()
         {
-            return _objects.SelectMany(x => x.AllScripts()).Distinct();
+            return _objects.SelectMany(x => x.AllFileDependencies()).Distinct();
         }
 
         public void FindScripts(AssetGraph graph)
@@ -26,11 +26,11 @@ namespace FubuMVC.Core.Assets
             _includes.Fill(name);
         }
 
-        public void Add(IAsset child)
+        public void Add(IRequestedAsset child)
         {
             if (_objects == null)
             {
-                _objects = new List<IAsset>();
+                _objects = new List<IRequestedAsset>();
             }
 
             _objects.Add(child);

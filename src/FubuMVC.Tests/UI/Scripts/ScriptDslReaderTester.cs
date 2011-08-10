@@ -6,7 +6,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.UI.Scripts
 {
     [TestFixture]
-    public class when_reading_an_ordered_set : InteractionContext<ScriptDslReader>
+    public class when_reading_an_ordered_set : InteractionContext<AssetDslReader>
     {
         protected override void beforeEach()
         {
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.UI.Scripts
 
 
     [TestFixture]
-    public class ScriptDslReaderTester : InteractionContext<ScriptDslReader>
+    public class ScriptDslReaderTester : InteractionContext<AssetDslReader>
     {
         [Test]
         public void preceeding()

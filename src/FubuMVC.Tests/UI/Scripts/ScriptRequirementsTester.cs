@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.UI.Scripts
 {
     [TestFixture]
-    public class ScriptRequirementsTester : InteractionContext<ScriptRequirements>
+    public class ScriptRequirementsTester : InteractionContext<AssetRequirements>
     {
         private void scriptExists(string name)
         {
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.UI.Scripts
             ClassUnderTest.Require("jquery.js");
             ClassUnderTest.Require("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetScriptsToRender().Single(), "jquery.js");
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetAssetsToRender().Single(), "jquery.js");
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.UI.Scripts
             scriptExists("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetScriptsToRender().Single(), "jquery.js");
+            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetAssetsToRender().Single(), "jquery.js");
         }
 
         [Test]
@@ -49,13 +49,13 @@ namespace FubuMVC.Tests.UI.Scripts
             scriptDoesNotExist("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            SpecificationExtensions.ShouldBeFalse(ClassUnderTest.GetScriptsToRender().Any());
+            SpecificationExtensions.ShouldBeFalse(ClassUnderTest.GetAssetsToRender().Any());
         }
 
     }
 
     [TestFixture]
-    public class when_asking_script_requirements_for_scripts_to_write : InteractionContext<ScriptRequirements>
+    public class when_asking_script_requirements_for_scripts_to_write : InteractionContext<AssetRequirements>
     {
         protected override void beforeEach()
         {
@@ -75,11 +75,11 @@ namespace FubuMVC.Tests.UI.Scripts
             ClassUnderTest.Require("a"); // depends on b & c
             ClassUnderTest.Require("f"); // no dependencies
 
-            ClassUnderTest.GetScriptsToRender().ShouldHaveTheSameElementsAs("b", "c", "f", "a");
+            ClassUnderTest.GetAssetsToRender().ShouldHaveTheSameElementsAs("b", "c", "f", "a");
             // ask for d, get d,e (not b, since it was already written)
 
             ClassUnderTest.Require("d"); // depends on e and b
-            ClassUnderTest.GetScriptsToRender().ShouldHaveTheSameElementsAs("e", "d");
+            ClassUnderTest.GetAssetsToRender().ShouldHaveTheSameElementsAs("e", "d");
         }
     }
 }

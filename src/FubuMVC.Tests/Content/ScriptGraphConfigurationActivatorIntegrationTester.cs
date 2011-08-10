@@ -47,16 +47,16 @@ g requires h
             Assert.IsTrue(log.Success, log.FullTraceText());
 
             // got the alias
-            assets.GetScripts(new string[]{"jquery"}).Single().Name.ShouldEqual("jquery.1.4.2.js");
+            assets.GetAssets(new string[]{"jquery"}).Single().Name.ShouldEqual("jquery.1.4.2.js");
         
             // got the set
-            assets.GetScripts(new string[]{"a"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
+            assets.GetAssets(new string[]{"a"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
 
             // got the extension
-            assets.GetScripts(new string[]{"d"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
+            assets.GetAssets(new string[]{"d"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
 
             // got the requires
-            assets.GetScripts(new string[]{"g"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
+            assets.GetAssets(new string[]{"g"}).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
         }
 
         [Test]
@@ -80,16 +80,16 @@ g requires h
             Assert.IsTrue(log.Success, log.FullTraceText());
 
             // got the alias
-            assets.GetScripts(new string[] { "jquery" }).Single().Name.ShouldEqual("jquery.1.4.2.js");
+            assets.GetAssets(new string[] { "jquery" }).Single().Name.ShouldEqual("jquery.1.4.2.js");
 
             // got the set
-            assets.GetScripts(new string[] { "a" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
+            assets.GetAssets(new string[] { "a" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("b", "c", "d", "f");
 
             // got the extension
-            assets.GetScripts(new string[] { "d" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
+            assets.GetAssets(new string[] { "d" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("d", "f");
 
             // got the requires
-            assets.GetScripts(new string[] { "g" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
+            assets.GetAssets(new string[] { "g" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("h", "g");
         }
     }
 }

@@ -5,17 +5,17 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetGraph : IComparer<IAssetDependency>, IAssetRegistration
+    public class AssetGraph : IComparer<IFileDependency>, IAssetRegistration
     {
-        private readonly Cache<string, IAsset> _objects = new Cache<string, IAsset>();
-        private readonly Cache<string, ScriptSet> _sets = new Cache<string, ScriptSet>();
-        private readonly List<ScriptExtension> _extenders = new List<ScriptExtension>();
-        private readonly List<ScriptRule> _rules = new List<ScriptRule>();
-        private readonly List<ScriptPreceeding> _preceedings = new List<ScriptPreceeding>();
+        private readonly Cache<string, IRequestedAsset> _objects = new Cache<string, IRequestedAsset>();
+        private readonly Cache<string, AssetSet> _sets = new Cache<string, AssetSet>();
+        private readonly List<Extension> _extenders = new List<Extension>();
+        private readonly List<DependencyRule> _rules = new List<DependencyRule>();
+        private readonly List<PreceedingAsset> _preceedings = new List<PreceedingAsset>();
 
         public AssetGraph()
         {
-            _sets.OnMissing = name => new ScriptSet{
+            _sets.OnMissing = name => new AssetSet{
                 Name = name
             };
 
@@ -30,11 +30,11 @@ namespace FubuMVC.Core.Assets
                 return 
                     _objects.GetAll().FirstOrDefault(x => x.Matches(name)) 
                     ?? 
-                    new AssetDependency(name);
+                    new FileDependency(name);
             };
         }
 
-        public int Compare(IAssetDependency x, IAssetDependency y)
+        public int Compare(IFileDependency x, IFileDependency y)
         {
             if (ReferenceEquals(x, y)) return 0;
 
@@ -51,16 +51,16 @@ namespace FubuMVC.Core.Assets
 
         public void Dependency(string dependent, string dependency)
         {
-            _rules.Fill(new ScriptRule()
-            {
-                Dependency = dependency,
-                Dependent = dependent
-            });
+            _rules.Fill(new DependencyRule()
+                        {
+                            Dependency = dependency,
+                            Dependent = dependent
+                        });
         }
 
         public void Extension(string extender, string @base)
         {
-            _extenders.Add(new ScriptExtension(){
+            _extenders.Add(new Extension(){
                 Base = @base,
                 Extender = extender
             });
@@ -73,18 +73,18 @@ namespace FubuMVC.Core.Assets
 
         public void Preceeding(string beforeName, string afterName)
         {
-            _preceedings.Add(new ScriptPreceeding(){
+            _preceedings.Add(new PreceedingAsset(){
                 Before = beforeName,
                 After = afterName
             });
         }
 
-        public IEnumerable<IAssetDependency> GetScripts(IEnumerable<string> names)
+        public IEnumerable<IFileDependency> GetAssets(IEnumerable<string> names)
         {
-            return new ScriptGatherer(this, names).Gather();
+            return new AssetGatherer(this, names).Gather();
         }
 
-        public ScriptSet ScriptSetFor(string someName)
+        public AssetSet AssetSetFor(string someName)
         {
             return _sets[someName];
         }
@@ -99,7 +99,7 @@ namespace FubuMVC.Core.Assets
                 var dependency = ObjectFor(rule.Dependency);
                 var dependent = ObjectFor(rule.Dependent);
 
-                dependency.AllScripts().Each(dependent.AddDependency);
+                dependency.AllFileDependencies().Each(dependent.AddDependency);
             });
 
             _extenders.Each(x =>
@@ -121,14 +121,14 @@ namespace FubuMVC.Core.Assets
         }
 
         // Find by name or by alias
-        public IAsset ObjectFor(string name)
+        public IRequestedAsset ObjectFor(string name)
         {
             return _objects[name];
         }
 
-        public IAssetDependency ScriptFor(string name)
+        public IFileDependency ScriptFor(string name)
         {
-            return (IAssetDependency) ObjectFor(name);
+            return (IFileDependency) ObjectFor(name);
         }
 
     }

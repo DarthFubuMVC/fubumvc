@@ -1,12 +1,12 @@
 namespace FubuMVC.Core.Assets
 {
-    public class ScriptExtension
+    public class Extension
     {
         public string Base { get; set; }
         public string Extender { get; set; }
     }
 
-    public class ScriptPreceeding
+    public class PreceedingAsset
     {
         public string Before { get; set; }
         public string After { get; set; }

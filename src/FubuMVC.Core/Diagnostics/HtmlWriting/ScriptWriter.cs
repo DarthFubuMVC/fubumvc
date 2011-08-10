@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
                 document.Add("b").Text("Results");
                 document.Push("ul");
                 
-                var actuals = _assets.GetScripts(queryNames);
+                var actuals = _assets.GetAssets(queryNames);
                 actuals.Each(script => document.Push("li").Text(script.Name));
             }
 

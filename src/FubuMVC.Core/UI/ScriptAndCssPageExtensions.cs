@@ -9,12 +9,12 @@ namespace FubuMVC.Core.UI
     {
         public static void Script(this IFubuPage page, string scriptName)
         {
-            page.Get<ScriptRequirements>().Require(scriptName);
+            page.Get<AssetRequirements>().Require(scriptName);
         }
 
         public static void OptionalScript(this IFubuPage page, string scriptName)
         {
-            page.Get<ScriptRequirements>().UseFileIfExists(scriptName);
+            page.Get<AssetRequirements>().UseFileIfExists(scriptName);
         }
 
         // Tested manually
@@ -30,10 +30,10 @@ namespace FubuMVC.Core.UI
 
         public class ScriptIncludeWriter
         {
-            private readonly ScriptRequirements _requirements;
+            private readonly AssetRequirements _requirements;
             private readonly IScriptTagWriter _writer;
 
-            public ScriptIncludeWriter(ScriptRequirements requirements, IScriptTagWriter writer)
+            public ScriptIncludeWriter(AssetRequirements requirements, IScriptTagWriter writer)
             {
                 _requirements = requirements;
                 _writer = writer;
@@ -41,7 +41,7 @@ namespace FubuMVC.Core.UI
 
             public TagList ScriptTags()
             {
-                var scripts = _requirements.GetScriptsToRender();
+                var scripts = _requirements.GetAssetsToRender();
                 var tags = _writer.Write(scripts);
 
                 return new TagList(tags);

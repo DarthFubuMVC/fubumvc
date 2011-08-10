@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void get_a_set_for_an_empty_graph_returns_an_empty_set_of_that_name()
         {
-            theGraph.ScriptSetFor("some name")
+            theGraph.AssetSetFor("some name")
                 .ShouldNotBeNull()
                 .Name.ShouldEqual("some name");
         }
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.UI.Scripts
                 _compiled = true;
             }
 
-            IEnumerable<string> scripts = theGraph.GetScripts(names).Select(x => x.Name);
+            IEnumerable<string> scripts = theGraph.GetAssets(names).Select(x => x.Name);
             scripts.Each(x => Debug.WriteLine(x));
             return scripts;
         }
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.UI.Scripts
         [Test]
         public void find_object_by_name_and_the_object_does_not_exist_use_script_by_name()
         {
-            theGraph.ObjectFor("Name.js").ShouldBeOfType<IAssetDependency>()
+            theGraph.ObjectFor("Name.js").ShouldBeOfType<IFileDependency>()
                 .Name.ShouldEqual("Name.js");
         }
 
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.UI.Scripts
         public void find_object_by_alias()
         {
             theGraph.Alias("Name.js", "Name");
-            theGraph.ObjectFor("Name").ShouldBeOfType<IAssetDependency>()
+            theGraph.ObjectFor("Name").ShouldBeOfType<IFileDependency>()
                 .Name.ShouldEqual("Name.js");
         }
 
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.UI.Scripts
         public void find_a_set_by_name()
         {
             theGraph.AddToSet("SetA", "A");
-            theGraph.ObjectFor("SetA").ShouldBeOfType<ScriptSet>();
+            theGraph.ObjectFor("SetA").ShouldBeOfType<AssetSet>();
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.UI.Scripts
         {
             theGraph.AddToSet("SetA", "A");
             theGraph.Alias("SetA", "SetA-Alias");
-            theGraph.ObjectFor("SetA-Alias").ShouldBeOfType<ScriptSet>().Name.ShouldEqual("SetA");
+            theGraph.ObjectFor("SetA-Alias").ShouldBeOfType<AssetSet>().Name.ShouldEqual("SetA");
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace FubuMVC.Tests.UI.Scripts
             f.MustBeAfter(b).ShouldBeTrue();
 
 
-            IEnumerable<string> theNames = theGraph.GetScripts(new string[]{"A"}).Select(x => x.Name).ToList();
+            IEnumerable<string> theNames = theGraph.GetAssets(new string[]{"A"}).Select(x => x.Name).ToList();
             theNames.Each(x => Debug.WriteLine(x));
             theNames.ShouldHaveTheSameElementsAs("B", "C", "F", "A", "D");
         }
@@ -170,7 +170,7 @@ namespace FubuMVC.Tests.UI.Scripts
         public void SetUp()
         {
             graph = new AssetGraph();
-            var reader = new ScriptDslReader(graph);
+            var reader = new AssetDslReader(graph);
             reader.ReadLine("1 includes A,B,C");
             reader.ReadLine("2 includes C,D");
             reader.ReadLine("3 includes 1,E");
@@ -214,7 +214,7 @@ namespace FubuMVC.Tests.UI.Scripts
             b.MustBeAfter(crudForm).ShouldBeFalse();
             crudForm.MustBeAfter(b).ShouldBeFalse();
 
-            IEnumerable<string> theNames = graph.GetScripts(new string[] { "1" }).Select(x => x.Name).ToList();
+            IEnumerable<string> theNames = graph.GetAssets(new string[] { "1" }).Select(x => x.Name).ToList();
             theNames.Each(x => Debug.WriteLine(x));
         }
 

@@ -46,7 +46,7 @@ namespace FubuMVC.Core.Assets
 
         public void ReadFile(string file, IPackageLog log)
         {
-            var reader = new ScriptDslReader(_assets);
+            var reader = new AssetDslReader(_assets);
             log.Trace("  Reading script directives from {0}", file);
             log.TrapErrors(() =>
             {

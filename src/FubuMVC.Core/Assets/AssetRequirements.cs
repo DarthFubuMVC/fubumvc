@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets
 {
-    public class ScriptRequirements
+    public class AssetRequirements
     {
         private readonly IContentFolderService _folders;
         private readonly AssetGraph _assetGraph;
         private readonly List<string> _requirements = new List<string>();
         private readonly List<string> _rendered = new List<string>();
 
-        public ScriptRequirements(IContentFolderService folders, AssetGraph assetGraph)
+        public AssetRequirements(IContentFolderService folders, AssetGraph assetGraph)
         {
             _folders = folders;
             _assetGraph = assetGraph;
@@ -40,11 +40,11 @@ namespace FubuMVC.Core.Assets
         /// </summary>
         /// <remarks>Can be called multiple times within an HTTP request, and will not return any script more than once.</remarks>
         /// <returns></returns>
-        public IEnumerable<string> GetScriptsToRender()
+        public IEnumerable<string> GetAssetsToRender()
         {
-            var requiredScripts = _assetGraph.GetScripts(_requirements).Select(x => x.Name).Except(_rendered).ToList();
-            _rendered.AddRange(requiredScripts);
-            return requiredScripts;
+            var requiredAssets = _assetGraph.GetAssets(_requirements).Select(x => x.Name).Except(_rendered).ToList();
+            _rendered.AddRange(requiredAssets);
+            return requiredAssets;
         }
     }
 
