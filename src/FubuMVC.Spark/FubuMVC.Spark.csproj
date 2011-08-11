@@ -68,6 +68,7 @@
     <Compile Include="Rendering\ViewDefinition.cs" />
     <Compile Include="Rendering\ViewDefinitionResolver.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
+    <Compile Include="SparkHtmlOutputPolicy.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Registration\Nodes\SparkViewNode.cs" />
     <Compile Include="Rendering\RenderStrategies.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
     <Compile Include="SparkModel\SparkLogger.cs" />
+    <Compile Include="SparkRenderHtmlBehavior.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />

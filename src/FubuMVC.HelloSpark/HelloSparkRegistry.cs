@@ -37,7 +37,7 @@ namespace FubuMVC.HelloSpark
                 .TryToAttachViewsInPackages();
 
             HtmlConvention<SampleHtmlConventions>();
-						
+
             Services(s => s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>());
         }
     }
