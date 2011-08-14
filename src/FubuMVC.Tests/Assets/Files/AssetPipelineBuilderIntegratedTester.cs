@@ -42,29 +42,29 @@ namespace FubuMVC.Tests.Assets.Files
 
         private void writeFiles()
         {
-            writeAppFile(AssetType.scripts, "jquery.js");
-            writeAppFile(AssetType.scripts, "jquery.forms.js");
-            writeAppFile(AssetType.scripts, "folder1", "script1.js");
-            writeAppFile(AssetType.scripts, "folder1", "script2.js");
-            writeAppFile(AssetType.scripts, "folder1", "folder2", "script3.js");
+            writeAppFile(AssetFolder.scripts, "jquery.js");
+            writeAppFile(AssetFolder.scripts, "jquery.forms.js");
+            writeAppFile(AssetFolder.scripts, "folder1", "script1.js");
+            writeAppFile(AssetFolder.scripts, "folder1", "script2.js");
+            writeAppFile(AssetFolder.scripts, "folder1", "folder2", "script3.js");
 
-            writeAppFile(AssetType.styles, "main.css");
-            writeAppFile(AssetType.styles, "sidebar.css");
-            writeAppFile(AssetType.styles, "folder2", "page.css");
+            writeAppFile(AssetFolder.styles, "main.css");
+            writeAppFile(AssetFolder.styles, "sidebar.css");
+            writeAppFile(AssetFolder.styles, "folder2", "page.css");
 
-            writePackageFile(AssetType.scripts, "jquery.js");
-            writePackageFile(AssetType.scripts, "pak1.js");
+            writePackageFile(AssetFolder.scripts, "jquery.js");
+            writePackageFile(AssetFolder.scripts, "pak1.js");
         }
 
-        private void writeAppFile(AssetType assetType, params string[] names)
+        private void writeAppFile(AssetFolder assetFolder, params string[] names)
         {
-            var path = AppDirectory.ToFullPath().AppendPath("content", assetType.ToString()).AppendPath(names);
+            var path = AppDirectory.ToFullPath().AppendPath("content", assetFolder.ToString()).AppendPath(names);
             system.WriteStringToFile(path, "something");
         }
 
-        private void writePackageFile(AssetType assetType, params string[] names)
+        private void writePackageFile(AssetFolder assetFolder, params string[] names)
         {
-            var path = PackageDirectory.ToFullPath().AppendPath("content", assetType.ToString()).AppendPath(names);
+            var path = PackageDirectory.ToFullPath().AppendPath("content", assetFolder.ToString()).AppendPath(names);
             system.WriteStringToFile(path, "something");
         }
 
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void verify_the_styles()
         {
-            var styles = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetType.styles);
+            var styles = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetFolder.styles);
             styles.OrderBy(x => x.Name).Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("folder2/page.css", "main.css", "sidebar.css");
         }
@@ -86,7 +86,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void verify_that_application_files_were_loaded()
         {
-            var scripts = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetType.scripts);
+            var scripts = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetFolder.scripts);
             scripts.OrderBy(x => x.Name).Select(x => x.Name).ShouldHaveTheSameElementsAs(
                 "folder1/folder2/script3.js",
                 "folder1/script1.js",
@@ -100,10 +100,10 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void verify_the_file_path_is_correct()
         {
-            var scripts = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetType.scripts);
+            var scripts = thePipeline.AssetsFor(AssetPipeline.Application).FilesForAssetType(AssetFolder.scripts);
 
             var file = scripts.Single(x => x.Name == "folder1/script1.js");
-            file.FullPath.ShouldEqual(AppDirectory.AppendPath("content", AssetType.scripts.ToString(), "folder1", "script1.js").ToFullPath());   
+            file.FullPath.ShouldEqual(AppDirectory.AppendPath("content", AssetFolder.scripts.ToString(), "folder1", "script1.js").ToFullPath());   
         }
     }
 }

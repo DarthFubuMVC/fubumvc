@@ -23,14 +23,14 @@ namespace FubuMVC.Core.Assets.Files
             readPath(path);
         }
 
-        public AssetPath(string package, string name, AssetType? type)
+        public AssetPath(string package, string name, AssetFolder? folder)
         {
             if (package == null) throw new ArgumentNullException("package");
             if (name == null) throw new ArgumentNullException("name");
 
             Name = name;
             Package = package;
-            Type = type;
+            Folder = folder;
         }
 
         private void readPath(string path)
@@ -41,13 +41,13 @@ namespace FubuMVC.Core.Assets.Files
                 return;
             }
 
-            foreach (AssetType type in Enum.GetValues(typeof(AssetType)))
+            foreach (AssetFolder type in Enum.GetValues(typeof(AssetFolder)))
             {
                 var prefix = type.ToString() + "/";
 
                 if (path.StartsWith(prefix))
                 {
-                    Type = type;
+                    Folder = type;
                     Name = path.Substring(prefix.Length);
                     return;
                 }
@@ -58,6 +58,6 @@ namespace FubuMVC.Core.Assets.Files
 
         public string Name { get; private set; }
         public string Package { get; private set; }
-        public AssetType? Type { get; private set; }
+        public AssetFolder? Folder { get; private set; }
     }
 }

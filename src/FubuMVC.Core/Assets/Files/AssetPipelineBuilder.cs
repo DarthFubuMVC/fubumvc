@@ -53,20 +53,20 @@ namespace FubuMVC.Core.Assets.Files
 
         public virtual void LoadFilesFromContentFolder(PackageAssetDirectory directory, string contentFolder)
         {
-            ReadAssetType(directory, contentFolder, AssetType.styles);
+            ReadAssetType(directory, contentFolder, AssetFolder.styles);
             
             // TODO -- not yet sure what to do with images
             //ReadAssetType(directory, contentFolder, AssetType.images);
-            ReadAssetType(directory, contentFolder, AssetType.scripts);
+            ReadAssetType(directory, contentFolder, AssetFolder.scripts);
         }
 
-        public void ReadAssetType(PackageAssetDirectory directory, string contentFolder, AssetType assetType)
+        public void ReadAssetType(PackageAssetDirectory directory, string contentFolder, AssetFolder assetFolder)
         {
-            var specificFolder = contentFolder.AppendPath(assetType.ToString());
+            var specificFolder = contentFolder.AppendPath(assetFolder.ToString());
             if (_system.DirectoryExists(specificFolder))
             {
                 _log.Trace(LoadingAssetTypeForPackageAt.ToFormat(specificFolder));
-                var builder = new AssetFileBuilder(_registration, specificFolder, directory, assetType);
+                var builder = new AssetFileBuilder(_registration, specificFolder, directory, assetFolder);
 
                 _system.FindFiles(specificFolder, FileSet.Everything()).Each(builder.CreateAssetFile);
             }

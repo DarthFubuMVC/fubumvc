@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Assets
             packageDirectory = directory;
         }
 
-        private AssetType AssetTypeIs
+        private AssetFolder AssetFolderIs
         {
             set
             {
@@ -57,30 +57,30 @@ namespace FubuMVC.Tests.Assets
             packageDirectory = ".".ToFullPath();
             _packages = new List<IPackageInfo>();
 
-            AssetTypeIs = AssetType.scripts;
+            AssetFolderIs = AssetFolder.scripts;
             writeFile("a.js");
             writeFile("b.js");
             writeFile("folder1/c.js");
             writeFile("folder2/d.js");
 
-            AssetTypeIs = AssetType.styles;
+            AssetFolderIs = AssetFolder.styles;
             writeFile("main.css");
             writeFile("page.css");
             writeFile("folder1/a.css");
 
             startPackage("pak1");
-            AssetTypeIs = AssetType.scripts;
+            AssetFolderIs = AssetFolder.scripts;
             writeFile("e.js");
             writeFile("f.js");
 
             startPackage("pak2");
-            AssetTypeIs = AssetType.styles;
+            AssetFolderIs = AssetFolder.styles;
             writeFile("a.css");
             writeFile("b.css");
             writeFile("c.css");
 
             startPackage("pak3");
-            AssetTypeIs = AssetType.scripts;
+            AssetFolderIs = AssetFolder.scripts;
             writeFile("a.js");
 
             thePipeline = new AssetPipeline();
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void got_files_from_package()
         {
-            thePipeline.AssetsFor("pak1").FilesForAssetType(AssetType.scripts).Select(x => x.Name)
+            thePipeline.AssetsFor("pak1").FilesForAssetType(AssetFolder.scripts).Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("e.js", "f.js");
         }
 

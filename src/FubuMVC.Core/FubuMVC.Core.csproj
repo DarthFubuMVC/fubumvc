@@ -96,8 +96,9 @@
     <Compile Include="Assets\Files\AssetFileSource.cs" />
     <Compile Include="Assets\Files\AssetPath.cs" />
     <Compile Include="Assets\Files\AssetPathException.cs" />
+    <Compile Include="Assets\Files\AssetPipeline.cs" />
     <Compile Include="Assets\Files\AssetPipelineBuilder.cs" />
-    <Compile Include="Assets\Files\AssetType.cs" />
+    <Compile Include="Assets\Files\AssetFolder.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\IAssetTagSubject.cs" />
     <Compile Include="Assets\Interfaces.cs" />

@@ -5,6 +5,6 @@ namespace FubuMVC.Core.Assets
     public interface IAssetTagSubject
     {
         string Name { get; }
-        AssetType AssetType { get; }
+        AssetFolder AssetFolder { get; }
     }
 }
