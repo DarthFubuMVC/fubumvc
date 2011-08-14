@@ -1,5 +1,5 @@
 
-.. _index
+.. _index:
 
 =====================
 FubuMVC Documentation
@@ -7,17 +7,10 @@ FubuMVC Documentation
 
 .. rubric:: Everything about FubuMVC, the MVC framework that doesn't get in your way.
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
    intro/index
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   topics/index
+   More FubuMVC <ref/index>
 

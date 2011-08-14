@@ -1,7 +1,7 @@
-Reference
+Topics
 =========
 
 .. toctree::
    :maxdepth: 2
 
-   fubuexe
+   usingfubunew
