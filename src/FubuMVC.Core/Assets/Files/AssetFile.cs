@@ -9,6 +9,8 @@ namespace FubuMVC.Core.Assets.Files
     /// </summary>
     public class AssetFile 
     {
+        public AssetFolder? Folder { get; set; }
+
         public string Name { get; set; }
         public string FullPath { get; set; }
         //public DateTime LastChanged { get; set; }

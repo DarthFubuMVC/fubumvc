@@ -18,6 +18,23 @@ namespace FubuMVC.Tests.Assets.Files
         }
 
         [Test]
+        public void adding_a_file_by_path_sets_the_folder_on_the_file()
+        {
+            // This is important for later
+            var theFile = new AssetFile(){
+                Name = "a.js"
+            };
+
+            var thePath = new AssetPath("pak1", "a.js", AssetFolder.styles);
+
+
+            theFile.Folder.ShouldBeNull();
+            thePipeline.AddFile(thePath, theFile);
+
+            theFile.Folder.ShouldEqual(thePath.Folder.Value);
+        }
+
+        [Test]
         public void find_exact_match_with_package_type_and_name()
         {
             theFiles.LoadAssets(@"
