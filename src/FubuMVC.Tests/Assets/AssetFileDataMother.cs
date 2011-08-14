@@ -5,7 +5,7 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Files;
 
-namespace FubuMVC.Tests.Assets.Files
+namespace FubuMVC.Tests.Assets
 {
     public class AssetFileDataMother
     {

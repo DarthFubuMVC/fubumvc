@@ -41,5 +41,31 @@ namespace FubuMVC.Core.Assets.Files
         {
             MimeType = Folder.HasValue ? provider.For(Extension(), Folder.Value) : provider.For(Extension());
         }
+
+        public bool Equals(AssetFile other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other.Folder.Equals(Folder) && Equals(other.Name, Name) && Equals(other.FullPath, FullPath);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (AssetFile)) return false;
+            return Equals((AssetFile) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = (Folder.HasValue ? Folder.Value.GetHashCode() : 0);
+                result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
+                result = (result*397) ^ (FullPath != null ? FullPath.GetHashCode() : 0);
+                return result;
+            }
+        }
     }
 }
