@@ -1,10 +1,21 @@
-﻿using FubuCore.Util;
+﻿using System;
+using System.Runtime.Serialization;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Content
 {
+    // TODO -- rename this to just MimeTypeProvider and move to Assets.  Make it easy to alter this
+    // in FubuRegistry
     public class DefaultMimeTypeProvider : IMimeTypeProvider
     {
-        private static Cache<string, string> _mimeTypes = new Cache<string, string>();
+        public const string JAVASCRIPT = "application/x-javascript";
+        public const string CSS = "text/css";
+
+
+        private static readonly Cache<string, string> _mimeTypes = new Cache<string, string>(extension =>
+        {
+            throw new UnknownExtensionException(extension);
+        });
 
         static DefaultMimeTypeProvider()
         {
@@ -14,8 +25,8 @@ namespace FubuMVC.Core.Content
             _mimeTypes[".jpeg"] = "image/jpeg";
             _mimeTypes[".bm"] = "image/bmp";
             _mimeTypes[".bmp"] = "image/bmp";
-            _mimeTypes[".css"] = "text/css";
-            _mimeTypes[".js"] = "application/x-javascript";
+            _mimeTypes[".css"] = CSS;
+            _mimeTypes[".js"] = JAVASCRIPT;
         }
 
         public string For(string extension)
@@ -26,6 +37,18 @@ namespace FubuMVC.Core.Content
         public void Register(string extension, string mimeType)
         {
             _mimeTypes[extension] = mimeType;
+        }
+    }
+
+    [Serializable]
+    public class UnknownExtensionException : Exception
+    {
+        public UnknownExtensionException(string extension) : base("No mimetype registered or known for extension " + extension)
+        {
+        }
+
+        protected UnknownExtensionException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
