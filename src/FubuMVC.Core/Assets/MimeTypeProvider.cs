@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using FubuCore.Util;
+using FubuMVC.Core.Assets.Files;
 
-namespace FubuMVC.Core.Content
+namespace FubuMVC.Core.Assets
 {
-    // TODO -- rename this to just MimeTypeProvider and move to Assets.  Make it easy to alter this
+    // TODO -- Make it easy to alter this
     // in FubuRegistry
-    public class DefaultMimeTypeProvider : IMimeTypeProvider
+    public class MimeTypeProvider : IMimeTypeProvider
     {
         public const string JAVASCRIPT = "application/x-javascript";
         public const string CSS = "text/css";
 
 
-        private static readonly Cache<string, string> _mimeTypes = new Cache<string, string>(extension =>
+        private readonly Cache<string, string> _mimeTypes = new Cache<string, string>(extension =>
         {
             throw new UnknownExtensionException(extension);
         });
 
-        static DefaultMimeTypeProvider()
+        public MimeTypeProvider()
         {
             _mimeTypes[".gif"] = "image/gif";
             _mimeTypes[".png"] = "image/png";
@@ -32,6 +33,26 @@ namespace FubuMVC.Core.Content
         public string For(string extension)
         {
             return _mimeTypes[extension];
+        }
+
+        public string For(string extension, AssetFolder folder)
+        {
+            if (_mimeTypes.Has(extension))
+            {
+                return _mimeTypes[extension];
+            }
+
+            switch (folder)
+            {
+                case AssetFolder.scripts:
+                    return JAVASCRIPT;
+
+                case AssetFolder.styles:
+                    return CSS;
+
+                default:
+                    throw new UnknownExtensionException(extension);
+            }
         }
 
         public void Register(string extension, string mimeType)

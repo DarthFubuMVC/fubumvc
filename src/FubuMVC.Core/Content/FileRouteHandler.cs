@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Routing;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Assets;
 
 namespace FubuMVC.Core.Content
 {

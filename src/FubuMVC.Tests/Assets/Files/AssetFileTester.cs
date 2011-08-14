@@ -1,3 +1,4 @@
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
 using FubuTestingSupport;
@@ -29,6 +30,20 @@ namespace FubuMVC.Tests.Assets.Files
         }
 
         [Test]
+        public void use_the_asset_folder_while_determining_mimetype()
+        {
+            var coffee = new AssetFile(){
+                Name = "something.coffee", 
+                Folder = AssetFolder.scripts
+            };
+
+            var provider = new MimeTypeProvider();
+            coffee.DetermineMimetype(provider);
+
+            coffee.MimeType.ShouldEqual(MimeTypeProvider.JAVASCRIPT);
+        }
+
+        [Test]
         public void determine_mimetype_positive()
         {
             var scriptFile = new AssetFile
@@ -41,26 +56,14 @@ namespace FubuMVC.Tests.Assets.Files
                 Name = "main.css"
             };
 
-            var provider = new DefaultMimeTypeProvider();
+            var provider = new MimeTypeProvider();
 
             scriptFile.DetermineMimetype(provider);
-            scriptFile.MimeType.ShouldEqual(DefaultMimeTypeProvider.JAVASCRIPT);
+            scriptFile.MimeType.ShouldEqual(MimeTypeProvider.JAVASCRIPT);
 
             cssFile.DetermineMimetype(provider);
-            cssFile.MimeType.ShouldEqual(DefaultMimeTypeProvider.CSS);
+            cssFile.MimeType.ShouldEqual(MimeTypeProvider.CSS);
         }
 
-        [Test]
-        public void unknown_mimetype_is_thrown_if_the_mimetype_cannot_be_determined()
-        {
-            var weirdFile = new AssetFile{
-                Name = "file1.weird"
-            };
-
-            Exception<UnknownExtensionException>.ShouldBeThrownBy(() =>
-            {
-                weirdFile.DetermineMimetype(new DefaultMimeTypeProvider());
-            }).Message.ShouldContain(".weird");
-        }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
@@ -8,8 +7,8 @@ namespace FubuMVC.Core.Assets
 {
     public class AssetDeclarationVerificationActivator : IActivator
     {
-        private readonly AssetPipeline _pipeline;
         private readonly AssetGraph _graph;
+        private readonly AssetPipeline _pipeline;
 
         public AssetDeclarationVerificationActivator(AssetPipeline pipeline, AssetGraph graph)
         {

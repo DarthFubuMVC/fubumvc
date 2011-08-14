@@ -52,6 +52,11 @@ namespace FubuMVC.Core.Assets.Files
             }
         }
 
+        public IEnumerable<AssetFile> AllFiles()
+        {
+            return _allPackages.SelectMany(x => x.AllFiles());
+        }
+
         // Not worrying about throwing exceptions for something not found here.
         public AssetFile Find(AssetPath path)
         {

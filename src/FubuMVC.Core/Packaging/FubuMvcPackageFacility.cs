@@ -6,6 +6,7 @@ using System.Web.Routing;
 using Bottles;
 using Bottles.Exploding;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging.VirtualPaths;
 using FubuMVC.Core.Registration;
@@ -18,7 +19,7 @@ namespace FubuMVC.Core.Packaging
         public static readonly string FubuContentFolder = "fubu-content";
 
         private readonly IContentFolderService _contentFolderService = new ContentFolderService(new FileSystem());
-        private readonly IMimeTypeProvider _mimeTypeProvider = new DefaultMimeTypeProvider();
+        private readonly IMimeTypeProvider _mimeTypeProvider = new MimeTypeProvider();
 
         public FubuMvcPackageFacility()
         {

@@ -38,7 +38,7 @@ namespace FubuMVC.Core.Assets.Files
 
         public void DetermineMimetype(IMimeTypeProvider provider)
         {
-            MimeType = provider.For(Extension());
+            MimeType = Folder.HasValue ? provider.For(Extension(), Folder.Value) : provider.For(Extension());
         }
     }
 }

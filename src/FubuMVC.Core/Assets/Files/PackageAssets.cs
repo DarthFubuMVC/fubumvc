@@ -60,5 +60,10 @@ namespace FubuMVC.Core.Assets.Files
         {
             return _files[folder];
         }
+
+        public IEnumerable<AssetFile> AllFiles()
+        {
+            return _files.GetAll().SelectMany(x => x);
+        }
     }
 }
