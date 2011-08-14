@@ -9,11 +9,13 @@ using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.UI
 {
+    [MarkedForTermination]
     public interface IContentFileCombiner
     {
         string GenerateCombinedFile(IEnumerable<string> filenames, string separatorFormat = null);
     }
 
+    [MarkedForTermination]
     public class ContentFileCombiner : IContentFileCombiner
     {
         private const string CombinedFileFolder = "_combined";

@@ -99,6 +99,7 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
+    <Compile Include="Assets\Combination\AssetFileCombinationTester.cs" />
     <Compile Include="Assets\Files\AssetFileDataMother.cs" />
     <Compile Include="Assets\Files\AssetPathTester.cs" />
     <Compile Include="Assets\Files\AssetPipelineBuilderIntegratedTester.cs" />
