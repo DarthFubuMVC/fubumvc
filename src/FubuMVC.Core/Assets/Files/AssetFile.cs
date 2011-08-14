@@ -9,11 +9,12 @@ namespace FubuMVC.Core.Assets.Files
     /// Forget CDN for now
     /// Forget LastChanged
     /// </summary>
-    public class AssetFile 
+    public class AssetFile : IAssetTagSubject
     {
         public AssetFolder? Folder { get; set; }
 
         public string Name { get; set; }
+
         public string FullPath { get; set; }
         //public DateTime LastChanged { get; set; }
         public bool Override { get; set; }

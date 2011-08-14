@@ -100,6 +100,8 @@
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
     <Compile Include="Assets\Combination\AssetFileCombinationTester.cs" />
+    <Compile Include="Assets\Combination\ScriptFileCombinationTester.cs" />
+    <Compile Include="Assets\Combination\StyleFileCombinationTester.cs" />
     <Compile Include="Assets\Files\AssetFileDataMother.cs" />
     <Compile Include="Assets\Files\AssetFileTester.cs" />
     <Compile Include="Assets\Files\AssetPathTester.cs" />

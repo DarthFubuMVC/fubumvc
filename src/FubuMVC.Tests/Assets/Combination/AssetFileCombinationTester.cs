@@ -24,15 +24,16 @@ namespace FubuMVC.Tests.Assets.Combination
         [Test]
         public void append_the_ultimate_extension_to_the_name()
         {
-            var combination1 = new AssetFileCombination(null, ".js", _files);
+            // extension = ".js"
+            var combination1 = new ScriptFileCombination(_files);
             combination1.Name.ShouldEndWith(".js");
         }
 
         [Test]
         public void name_is_consistent()
         {
-            var combination1 = new AssetFileCombination(null, ".js", _files);
-            var combination2 = new AssetFileCombination(null, ".js", _files);
+            var combination1 = new ScriptFileCombination(_files);
+            var combination2 = new ScriptFileCombination(_files);
 
             combination1.Name.ShouldEqual(combination2.Name);
         }
@@ -40,8 +41,8 @@ namespace FubuMVC.Tests.Assets.Combination
         [Test]
         public void use_the_folder_if_it_exists_for_the_name()
         {
-            var combination1 = new AssetFileCombination("f1", ".js", _files);
-            var combination2 = new AssetFileCombination("f1/f2", ".js", _files);
+            var combination1 = new StyleFileCombination("f1", _files);
+            var combination2 = new StyleFileCombination("f1/f2", _files);
 
 
             combination1.Name.ShouldStartWith("f1/");

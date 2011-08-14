@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -7,18 +8,56 @@ using FubuCore;
 
 namespace FubuMVC.Core.Assets.Combination
 {
-    //public class AssetFileRequirements
-    //{
-    //    private readonly IList<>
+    public class AssetTagPlan
+    {
+        private readonly string _mimeType;
+        private readonly IList<IAssetTagSubject> _subjects = new List<IAssetTagSubject>();
 
-    //    public AssetFileRequirements(IEnumerable<AssetFile> files)
-    //    {
-    //    }
-    //}
+        public AssetTagPlan(string mimeType, IEnumerable<AssetFile> files)
+        {
+            _mimeType = mimeType;
+
+            _subjects.AddRange(files);
+        }
+    }
     
 
+    public class ScriptFileCombination : AssetFileCombination
+    {
+        public ScriptFileCombination(IEnumerable<AssetFile> files) : base(null, ".js", files)
+        {
+        }
 
-    public class AssetFileCombination
+        public override AssetFolder? Folder
+        {
+            get { return AssetFolder.scripts; }
+        }
+
+        public override string MimeType
+        {
+            get { return MimeTypeProvider.JAVASCRIPT; }
+        }
+    }
+
+    public class StyleFileCombination : AssetFileCombination
+    {
+        public StyleFileCombination(string folder, IEnumerable<AssetFile> files) : base(folder, ".css", files)
+        {
+        }
+
+        public override AssetFolder? Folder
+        {
+            get { return AssetFolder.styles; }
+        }
+
+        public override string MimeType
+        {
+            get { return MimeTypeProvider.CSS; }
+        }
+    }
+
+
+    public abstract class AssetFileCombination : IAssetTagSubject
     {
         private readonly string _name;
         private readonly IEnumerable<AssetFile> _files;
@@ -41,6 +80,9 @@ namespace FubuMVC.Core.Assets.Combination
         {
             get { return _name; }
         }
+
+        public abstract AssetFolder? Folder { get; }
+        public abstract string MimeType { get; }
 
         public IEnumerable<AssetFile> Files
         {

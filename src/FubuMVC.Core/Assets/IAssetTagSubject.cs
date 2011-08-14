@@ -5,6 +5,7 @@ namespace FubuMVC.Core.Assets
     public interface IAssetTagSubject
     {
         string Name { get; }
-        AssetFolder AssetFolder { get; }
+        AssetFolder? Folder { get; }
+        string MimeType { get; }
     }
 }
