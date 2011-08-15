@@ -56,23 +56,24 @@ namespace FubuMVC.Core.Assets.Combination
             var index = _subjects.IndexOf(assetFile);
             if (index < 0) return false;
 
-            var endIndex = index + combinationCount - 1;
-            if (endIndex > _subjects.Count - 1) return false;
+            var list = TryFindSequenceStartingWith(assetFile, combinationCount);
+            if (list == null) return false;
 
-            var queue = new Queue<AssetFile>(combination.Files);
-
-
-            for (int i = index; i < endIndex; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                var file = queue.Dequeue();
-                if (_subjects[i] != file) return false;
+                if (list[i] != combination.FileAt(i)) return false;
             }
 
+            replaceFilesWithCombination(combination, index);
+
+            return true;
+        }
+
+        private void replaceFilesWithCombination(AssetFileCombination combination, int index)
+        {
             combination.Files.Each(f => _subjects.Remove(f));
 
             _subjects.Insert(index, combination);
-
-            return true;
         }
     }
 }

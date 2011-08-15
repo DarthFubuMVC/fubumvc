@@ -38,5 +38,10 @@ namespace FubuMVC.Core.Assets.Combination
         {
             get { return _files; }
         }
+
+        public AssetFile FileAt(int index)
+        {
+            return _files.ElementAt(index);
+        }
     }
 }
