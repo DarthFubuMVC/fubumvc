@@ -15,7 +15,6 @@ namespace FubuMVC.Core.Assets.Combination
             _mimeType = mimeType;
 
             _subjects.AddRange(files);
-
         }
 
         public string MimeType
@@ -28,20 +27,41 @@ namespace FubuMVC.Core.Assets.Combination
             get { return _subjects; }
         }
 
+        public IList<AssetFile> TryFindSequenceStartingWith(AssetFile assetFile, int combinationCount)
+        {
+            var index = _subjects.IndexOf(assetFile);
+            if (index < 0) return null;
+
+            var endIndex = index + combinationCount - 1;
+            if (endIndex > _subjects.Count - 1) return null;
+
+            var subjectSection = _subjects.Skip(index).Take(combinationCount);
+
+            if (subjectSection.All(x => x is AssetFile))
+            {
+                return subjectSection.OfType<AssetFile>().ToList();
+            }
+
+            return null;
+        }
+
         public bool TryCombination(AssetFileCombination combination)
         {
             var combinationCount = combination.Files.Count();
-            var subjectCount = _subjects.Count;
 
-            if (combinationCount > subjectCount) return false;
+            if (combinationCount > _subjects.Count) return false;
 
-            var index = _subjects.IndexOf(combination.Files.First());
+            var assetFile = combination.Files.First();
+
+            var index = _subjects.IndexOf(assetFile);
             if (index < 0) return false;
 
             var endIndex = index + combinationCount - 1;
-            if (endIndex > subjectCount - 1) return false;
+            if (endIndex > _subjects.Count - 1) return false;
 
             var queue = new Queue<AssetFile>(combination.Files);
+
+
             for (int i = index; i < endIndex; i++)
             {
                 var file = queue.Dequeue();

@@ -1,5 +1,6 @@
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Files;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -30,6 +31,8 @@ k=scripts/k.js
 ");
         }
 
+
+
         private ScriptFileCombination combinationFor(string text)
         {
             var names = text.Split(',');
@@ -45,6 +48,49 @@ k=scripts/k.js
 
             return new AssetTagPlan(MimeTypeProvider.JAVASCRIPT, files);
         }
+
+        [Test]
+        public void try_to_find_a_sequence_that_is_too_long_from_that_point_should_return_null()
+        {
+            var plan = planFor("a,b,c,d,e,f,g,h,i,j,k");
+            plan.TryFindSequenceStartingWith(theFiles["a"], 20).ShouldBeNull();
+            plan.TryFindSequenceStartingWith(theFiles["i"], 5).ShouldBeNull();
+
+        }
+
+        [Test]
+        public void try_to_find_a_sequence_where_the_start_is_not_found()
+        {
+            var plan = planFor("a,b,c,d,e,f,g,h,i,j,k");
+            plan.TryFindSequenceStartingWith(new AssetFile(), 2).ShouldBeNull();
+        }
+
+        [Test]
+        public void try_to_find_a_sequence_success()
+        {
+            var plan = planFor("a,b,c,d,e,f,g,h,i,j,k");
+            plan.TryFindSequenceStartingWith(theFiles["b"], 3).Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("b.js", "c.js", "d.js");
+
+            plan.TryFindSequenceStartingWith(theFiles["b"], 2).Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("b.js", "c.js");
+
+            plan.TryFindSequenceStartingWith(theFiles["b"], 5).Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("b.js", "c.js", "d.js", "e.js", "f.js");
+
+
+        }
+
+        [Test]
+        public void try_finding_a_sequence_should_skip_if_there_are_any_combos_in_the_list()
+        {
+            var plan = planFor("a,b,c,d,e,f,g,h,i,j,k");
+            var combo = combinationFor("c,d,e");
+            plan.TryCombination(combo);
+
+            plan.TryFindSequenceStartingWith(theFiles["b"], 3).ShouldBeNull();
+        }
+
 
         [Test]
         public void replace_with_multiple_combinations_1()
