@@ -5,6 +5,7 @@ using System.Web.Routing;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Content
 {
@@ -56,7 +57,7 @@ namespace FubuMVC.Core.Content
         {
             var extension = Path.GetExtension(_fileName).ToLower();
 
-            context.Response.ContentType = _mimeTypeProvider.For(extension);
+            context.Response.ContentType = _mimeTypeProvider.For(extension).Value;
             context.Response.WriteFile(_fileName);
         }
 

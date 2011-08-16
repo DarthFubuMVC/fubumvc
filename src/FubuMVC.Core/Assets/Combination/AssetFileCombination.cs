@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using FubuCore;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -32,7 +33,7 @@ namespace FubuMVC.Core.Assets.Combination
         }
 
         public abstract AssetFolder? Folder { get; }
-        public abstract string MimeType { get; }
+        public abstract MimeType MimeType { get; }
 
         public IEnumerable<AssetFile> Files
         {

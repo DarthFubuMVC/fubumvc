@@ -10,6 +10,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Packaging.VirtualPaths;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Packaging
 {

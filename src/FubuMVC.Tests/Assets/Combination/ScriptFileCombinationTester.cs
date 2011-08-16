@@ -1,6 +1,7 @@
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -13,7 +14,7 @@ namespace FubuMVC.Tests.Assets.Combination
         public void mime_type_has_to_be_javascript()
         {
             var combination = new ScriptFileCombination(new AssetFile[0]);
-            combination.MimeType.ShouldEqual(MimeTypeProvider.JAVASCRIPT);
+            combination.MimeType.ShouldEqual(MimeType.Javascript);
         }
 
         [Test]

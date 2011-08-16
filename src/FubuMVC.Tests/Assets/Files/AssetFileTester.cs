@@ -1,6 +1,7 @@
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -40,7 +41,7 @@ namespace FubuMVC.Tests.Assets.Files
             var provider = new MimeTypeProvider();
             coffee.DetermineMimetype(provider);
 
-            coffee.MimeType.ShouldEqual(MimeTypeProvider.JAVASCRIPT);
+            coffee.MimeType.ShouldEqual(MimeType.Javascript);
         }
 
         [Test]
@@ -59,10 +60,10 @@ namespace FubuMVC.Tests.Assets.Files
             var provider = new MimeTypeProvider();
 
             scriptFile.DetermineMimetype(provider);
-            scriptFile.MimeType.ShouldEqual(MimeTypeProvider.JAVASCRIPT);
+            scriptFile.MimeType.ShouldEqual(MimeType.Javascript);
 
             cssFile.DetermineMimetype(provider);
-            cssFile.MimeType.ShouldEqual(MimeTypeProvider.CSS);
+            cssFile.MimeType.ShouldEqual(MimeType.Css);
         }
 
     }

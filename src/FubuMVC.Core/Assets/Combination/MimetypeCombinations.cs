@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Files;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -11,14 +12,14 @@ namespace FubuMVC.Core.Assets.Combination
     // TODO -- think about combining this into AssetCombinationCache 
     public class CombinationCandidateCache
     {
-        private readonly Cache<string, MimetypeCombinations> _combinations = new Cache<string, MimetypeCombinations>(mimeType => new MimetypeCombinations(mimeType));
+        private readonly Cache<MimeType, MimetypeCombinations> _combinations = new Cache<MimeType, MimetypeCombinations>(mimeType => new MimetypeCombinations(mimeType));
 
-        public void AddFiles(string mimeType, string name, IEnumerable<AssetFile> files)
+        public void AddFiles(MimeType mimeType, string name, IEnumerable<AssetFile> files)
         {
             _combinations[mimeType][name].AddFiles(files);
         }
 
-        public IEnumerable<CombinationCandidate> OrderedCombinationCandidatesFor(string mimeType)
+        public IEnumerable<CombinationCandidate> OrderedCombinationCandidatesFor(MimeType mimeType)
         {
             return _combinations[mimeType].GetAll().OrderByDescending(x => x.Length);
         }
@@ -26,7 +27,7 @@ namespace FubuMVC.Core.Assets.Combination
 
     public class MimetypeCombinations : Cache<string, CombinationCandidate>
     {
-        public MimetypeCombinations(string mimeType) : base(name => new CombinationCandidate(mimeType, name))
+        public MimetypeCombinations(MimeType mimeType) : base(name => new CombinationCandidate(mimeType, name))
         {
         }
     }
@@ -34,7 +35,7 @@ namespace FubuMVC.Core.Assets.Combination
     public interface IAssetCombinationCache
     {
         void StoreCombination(string mimeType, AssetFileCombination combination);
-        IEnumerable<AssetFileCombination> OrderedListOfCombinations(string mimeType);
+        IEnumerable<AssetFileCombination> OrderedListOfCombinations(MimeType mimeType);
     }
 
     public class AssetCombinationCache : IAssetCombinationCache
@@ -47,7 +48,7 @@ namespace FubuMVC.Core.Assets.Combination
             _combinations[mimeType][combination.Name] = combination;
         }
 
-        public IEnumerable<AssetFileCombination> OrderedListOfCombinations(string mimeType)
+        public IEnumerable<AssetFileCombination> OrderedListOfCombinations(MimeType mimeType)
         {
             throw new NotImplementedException();
         }

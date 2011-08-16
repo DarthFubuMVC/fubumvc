@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -14,9 +15,9 @@ namespace FubuMVC.Core.Assets.Combination
             get { return AssetFolder.scripts; }
         }
 
-        public override string MimeType
+        public override MimeType MimeType
         {
-            get { return MimeTypeProvider.JAVASCRIPT; }
+            get { return MimeType.Javascript; }
         }
     }
 }

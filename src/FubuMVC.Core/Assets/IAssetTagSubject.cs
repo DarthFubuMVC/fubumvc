@@ -1,4 +1,5 @@
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets
 {
@@ -6,6 +7,6 @@ namespace FubuMVC.Core.Assets
     {
         string Name { get; }
         AssetFolder? Folder { get; }
-        string MimeType { get; }
+        MimeType MimeType { get; }
     }
 }

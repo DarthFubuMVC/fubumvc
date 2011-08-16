@@ -1,6 +1,7 @@
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -46,7 +47,7 @@ k=scripts/k.js
             var names = text.Split(',');
             var files = names.Select(x => theFiles[x]);
 
-            return new AssetTagPlan(MimeTypeProvider.JAVASCRIPT, files);
+            return new AssetTagPlan(MimeType.Javascript, files);
         }
 
         [Test]

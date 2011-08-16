@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Files
 {
@@ -35,7 +36,7 @@ namespace FubuMVC.Core.Assets.Files
             return Path.GetExtension(Name);
         }
 
-        public string MimeType { get; private set; }
+        public MimeType MimeType { get; private set; }
 
         public void DetermineMimetype(IMimeTypeProvider provider)
         {

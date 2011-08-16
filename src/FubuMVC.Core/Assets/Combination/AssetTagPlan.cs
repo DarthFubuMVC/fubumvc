@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Combination
 {
     public class AssetTagPlan
     {
-        private readonly string _mimeType;
+        private readonly MimeType _mimeType;
         private readonly IList<IAssetTagSubject> _subjects = new List<IAssetTagSubject>();
 
-        public AssetTagPlan(string mimeType, IEnumerable<AssetFile> files)
+        public AssetTagPlan(MimeType mimeType, IEnumerable<AssetFile> files)
         {
             _mimeType = mimeType;
 
             _subjects.AddRange(files);
         }
 
-        public string MimeType
+        public MimeType MimeType
         {
             get { return _mimeType; }
         }
