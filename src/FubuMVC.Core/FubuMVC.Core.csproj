@@ -90,8 +90,12 @@
     <Compile Include="Assets\AssetDependency.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
+    <Compile Include="Assets\Combination\CombinationDeterminationService.cs" />
+    <Compile Include="Assets\Combination\ICombinationDeterminationService.cs" />
+    <Compile Include="Assets\Combination\MimetypeCombinations.cs" />
     <Compile Include="Assets\Combination\AssetFileCombination.cs" />
     <Compile Include="Assets\Combination\AssetTagPlan.cs" />
+    <Compile Include="Assets\Combination\Classes.cs" />
     <Compile Include="Assets\Combination\ScriptFileCombination.cs" />
     <Compile Include="Assets\Combination\StyleFileCombination.cs" />
     <Compile Include="Assets\Files\AssetFile.cs" />

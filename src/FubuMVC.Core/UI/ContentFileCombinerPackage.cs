@@ -17,7 +17,7 @@ namespace FubuMVC.Core.UI
             registry.Services(x =>
             {
                 x.ReplaceService<IContentFileCombiner, ContentFileCombiner>();
-                x.ReplaceService<IScriptTagWriter, CombiningScriptTagWriter>();
+                x.ReplaceService<IAssetTagWriter, CombiningAssetTagWriter>();
                 x.ReplaceService<ICssLinkTagWriter, CombiningCssLinkTagWriter>();
             });
         }
@@ -33,21 +33,21 @@ namespace FubuMVC.Core.UI
     }
 
     [MarkedForTermination]
-    public class CombiningScriptTagWriter : IScriptTagWriter
+    public class CombiningAssetTagWriter : IAssetTagWriter
     {
         private readonly IContentFolderService _folderService;
         private readonly IContentFileCombiner _fileCombiner;
 
-        public CombiningScriptTagWriter(IContentFolderService folderService, IContentFileCombiner fileCombiner)
+        public CombiningAssetTagWriter(IContentFolderService folderService, IContentFileCombiner fileCombiner)
         {
             _folderService = folderService;
             _fileCombiner = fileCombiner;
             _folderService.RegisterDirectory(FileSystem.Combine(FubuMvcPackageFacility.GetApplicationPath(), "content"));
         }
 
-        public IEnumerable<HtmlTag> Write(IEnumerable<string> scripts)
+        public IEnumerable<HtmlTag> Write(IEnumerable<string> assetNames)
         {
-            var rawFiles = scripts.Select(script => _folderService.FileNameFor(ContentType.scripts, script)).Where(x => x != null).ToArray();
+            var rawFiles = assetNames.Select(script => _folderService.FileNameFor(ContentType.scripts, script)).Where(x => x != null).ToArray();
             var combinedName = _fileCombiner.GenerateCombinedFile(rawFiles, "; // src: {0}");
             if (combinedName == null) { return Enumerable.Empty<HtmlTag>(); }
             var scriptUrl = "~/content/{0}".ToFormat(combinedName).ToAbsoluteUrl();

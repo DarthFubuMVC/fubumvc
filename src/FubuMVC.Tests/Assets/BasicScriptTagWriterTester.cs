@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Assets
                 new FileDependency("script2.js")
             };
 
-            var writer = new BasicScriptTagWriter(new StubContentRegistry());
+            var writer = new AssetTagWriter(new StubContentRegistry());
             writer.Write(scripts.Select(x => x.Name)).Select(x => x.ToString())
                 .ShouldHaveTheSameElementsAs(
                 "<script src=\"url for jquery.js\" type=\"text/javascript\"></script>", 

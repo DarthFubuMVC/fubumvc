@@ -31,9 +31,9 @@ namespace FubuMVC.Core.UI
         public class ScriptIncludeWriter
         {
             private readonly AssetRequirements _requirements;
-            private readonly IScriptTagWriter _writer;
+            private readonly IAssetTagWriter _writer;
 
-            public ScriptIncludeWriter(AssetRequirements requirements, IScriptTagWriter writer)
+            public ScriptIncludeWriter(AssetRequirements requirements, IAssetTagWriter writer)
             {
                 _requirements = requirements;
                 _writer = writer;

@@ -7,20 +7,20 @@ using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Combination
 {
+
     public abstract class AssetFileCombination : IAssetTagSubject
     {
-        private readonly string _name;
         private readonly IEnumerable<AssetFile> _files;
 
         protected AssetFileCombination(string folder, string extension, IEnumerable<AssetFile> files)
         {
-            var basicName = getCombinedName(files) + extension;
-            _name = folder.IsNotEmpty() ? folder + "/" + basicName : basicName;
+            var basicName = GetCombinedName(files) + extension;
+            Name = folder.IsNotEmpty() ? folder + "/" + basicName : basicName;
 
             _files = files;
         }
 
-        private static string getCombinedName(IEnumerable<AssetFile> rawFiles)
+        public static string GetCombinedName(IEnumerable<AssetFile> rawFiles)
         {
             var name = rawFiles.Select(x => x.Name.ToLowerInvariant()).OrderBy(x => x).Join("*");
             return MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(name)).Select(b => b.ToString("x2")).Join("");
@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Assets.Combination
 
         public string Name
         {
-            get { return _name; }
+            get; set;
         }
 
         public abstract AssetFolder? Folder { get; }

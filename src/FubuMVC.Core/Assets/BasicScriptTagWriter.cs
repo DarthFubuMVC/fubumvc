@@ -1,22 +1,23 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Content;
 using HtmlTags;
 
 namespace FubuMVC.Core.Assets
 {
-    public class BasicScriptTagWriter : IScriptTagWriter
+    // TODO -- this HAS to be rewritten
+    public class AssetTagWriter : IAssetTagWriter
     {
         private readonly IContentRegistry _registry;
 
-        public BasicScriptTagWriter(IContentRegistry registry)
+        public AssetTagWriter(IContentRegistry registry)
         {
             _registry = registry;
         }
 
-        public IEnumerable<HtmlTag> Write(IEnumerable<string> scripts)
+        public IEnumerable<HtmlTag> Write(IEnumerable<string> assetNames)
         {
-            return scripts.Select(x =>
+            return assetNames.Select(x =>
             {
                 // TODO -- is it possible that we could have something besides JavaScript?
                 var scriptUrl = _registry.ScriptUrl(x, false);

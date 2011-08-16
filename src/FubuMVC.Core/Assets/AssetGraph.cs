@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuCore.Util;
+using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets
 {

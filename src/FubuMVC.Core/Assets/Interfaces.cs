@@ -36,9 +36,9 @@ namespace FubuMVC.Core.Assets
         void Preceeding(string beforeName, string afterName);
     }
 
-    public interface IScriptTagWriter
+    public interface IAssetTagWriter
     {
-        IEnumerable<HtmlTag> Write(IEnumerable<string> scripts);
+        IEnumerable<HtmlTag> Write(IEnumerable<string> assetNames);
     }
 
 

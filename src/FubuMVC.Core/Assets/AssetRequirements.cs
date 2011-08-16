@@ -27,6 +27,7 @@ namespace FubuMVC.Core.Assets
             return _requirements;
         }
 
+        // TODO -- is this used?  If so, needs to be tied into AssetPipeline
         public void UseFileIfExists(string name)
         {
             if (_folders.FileExists(ContentType.scripts, name))

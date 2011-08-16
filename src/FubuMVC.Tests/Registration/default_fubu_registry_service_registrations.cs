@@ -211,7 +211,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void iscriptwriter_is_registered_to_the_basic_writer()
         {
-            registeredTypeIs<IScriptTagWriter, BasicScriptTagWriter>();
+            registeredTypeIs<IAssetTagWriter, AssetTagWriter>();
         }
 
         [Test]
