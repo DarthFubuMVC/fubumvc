@@ -13,9 +13,10 @@ namespace FubuMVC.Core.Assets.Combination
     {
         private readonly IEnumerable<AssetFile> _files;
 
-        protected AssetFileCombination(string folder, string extension, IEnumerable<AssetFile> files)
+        protected AssetFileCombination(string folder, MimeType mimeType, IEnumerable<AssetFile> files)
         {
-            var basicName = GetCombinedName(files) + extension;
+            MimeType = mimeType;
+            var basicName = GetCombinedName(files) + mimeType.DefaultExtension();
             Name = folder.IsNotEmpty() ? folder + "/" + basicName : basicName;
 
             _files = files;
@@ -33,7 +34,7 @@ namespace FubuMVC.Core.Assets.Combination
         }
 
         public abstract AssetFolder? Folder { get; }
-        public abstract MimeType MimeType { get; }
+        public MimeType MimeType { get; private set; }
 
         public IEnumerable<AssetFile> Files
         {

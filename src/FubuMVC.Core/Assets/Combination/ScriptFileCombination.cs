@@ -6,18 +6,13 @@ namespace FubuMVC.Core.Assets.Combination
 {
     public class ScriptFileCombination : AssetFileCombination
     {
-        public ScriptFileCombination(IEnumerable<AssetFile> files) : base(null, ".js", files)
+        public ScriptFileCombination(IEnumerable<AssetFile> files) : base(null, MimeType.Javascript, files)
         {
         }
 
         public override AssetFolder? Folder
         {
             get { return AssetFolder.scripts; }
-        }
-
-        public override MimeType MimeType
-        {
-            get { return MimeType.Javascript; }
         }
     }
 }

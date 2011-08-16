@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using FubuCore.Util;
+using System.Linq;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -69,6 +70,11 @@ namespace FubuMVC.Core.Runtime
         public bool HasExtension(string extension)
         {
             return _extensions.Contains(extension);
+        }
+
+        public string DefaultExtension()
+        {
+            return _extensions.FirstOrDefault();
         }
     }
 }
