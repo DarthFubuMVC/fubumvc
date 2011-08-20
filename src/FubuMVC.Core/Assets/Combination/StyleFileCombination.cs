@@ -10,6 +10,11 @@ namespace FubuMVC.Core.Assets.Combination
         {
         }
 
+        public StyleFileCombination(string name, string folder, IEnumerable<AssetFile> files) : this(folder, files)
+        {
+            Name = name;
+        }
+
         public override AssetFolder? Folder
         {
             get { return AssetFolder.styles; }

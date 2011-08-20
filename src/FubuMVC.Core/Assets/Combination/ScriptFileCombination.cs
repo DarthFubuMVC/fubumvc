@@ -10,6 +10,12 @@ namespace FubuMVC.Core.Assets.Combination
         {
         }
 
+        public ScriptFileCombination(string name, IEnumerable<AssetFile> files)
+            : this(files)
+        {
+            Name = name;
+        }
+
         public override AssetFolder? Folder
         {
             get { return AssetFolder.scripts; }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -36,6 +37,8 @@ namespace FubuMVC.Core.Assets.Combination
 
         public void ExecutePolicy(AssetTagPlan plan, ICombinationPolicy policy)
         {
+            policy.DetermineCombinations(plan).Each(combo => _cache.StoreCombination(plan.MimeType, combo));
+
             throw new NotImplementedException();
         }
 

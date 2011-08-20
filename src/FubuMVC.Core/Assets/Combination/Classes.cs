@@ -9,14 +9,14 @@ namespace FubuMVC.Core.Assets.Combination
 {
     public class AssetCombinationSet : Cache<string, AssetFileCombination>
     {
-        private readonly string _mimeType;
+        private readonly MimeType _mimeType;
 
-        public AssetCombinationSet(string mimeType)
+        public AssetCombinationSet(MimeType mimeType)
         {
             _mimeType = mimeType;
         }
 
-        public string MimeType
+        public MimeType MimeType
         {
             get { return _mimeType; }
         }

@@ -45,5 +45,13 @@ namespace FubuMVC.Core.Assets.Combination
         {
             return _files.ElementAt(index);
         }
+
+        public int Length
+        {
+            get
+            {
+                return _files.Count();
+            }
+        }
     }
 }

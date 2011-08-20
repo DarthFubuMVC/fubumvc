@@ -90,7 +90,9 @@
     <Compile Include="Assets\AssetDependency.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
+    <Compile Include="Assets\Combination\AssetCombinationCache.cs" />
     <Compile Include="Assets\Combination\CombinationDeterminationService.cs" />
+    <Compile Include="Assets\Combination\IAssetCombinationCache.cs" />
     <Compile Include="Assets\Combination\ICombinationDeterminationService.cs" />
     <Compile Include="Assets\Combination\MimetypeCombinations.cs" />
     <Compile Include="Assets\Combination\AssetFileCombination.cs" />
