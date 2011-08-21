@@ -102,6 +102,7 @@
     <Compile Include="Assets\Combination\AssetFileCombinationTester.cs" />
     <Compile Include="Assets\Combination\AssetTagPlanTester.cs" />
     <Compile Include="Assets\Combination\AssetCombinationCacheTester.cs" />
+    <Compile Include="Assets\Combination\CombinationCandidateTester.cs" />
     <Compile Include="Assets\Combination\CombinationDeterminationServiceTester.cs" />
     <Compile Include="Assets\Combination\ScriptFileCombinationTester.cs" />
     <Compile Include="Assets\Combination\StyleFileCombinationTester.cs" />

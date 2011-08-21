@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -12,7 +13,8 @@ namespace FubuMVC.Core.Assets.Combination
 
         public StyleFileCombination(string name, string folder, IEnumerable<AssetFile> files) : this(folder, files)
         {
-            Name = name;
+            Name = folder.IsNotEmpty() ? folder + "/" + name : name;
+
         }
 
         public override AssetFolder? Folder
