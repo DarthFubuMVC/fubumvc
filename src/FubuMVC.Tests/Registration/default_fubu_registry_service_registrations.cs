@@ -203,6 +203,13 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void asset_combination_cache_is_registered_as_a_singleton()
+        {
+            registeredTypeIs<IAssetCombinationCache, AssetCombinationCache>();
+            ServiceRegistry.ShouldBeSingleton(typeof(AssetCombinationCache)).ShouldBeTrue();
+        }
+
+        [Test]
         public void script_graph_is_registered()
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
