@@ -7,6 +7,7 @@ using FubuCore.Binding;
 using FubuCore.Configuration;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
@@ -178,10 +179,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IContentRegistry, ContentRegistryCache>();
 
-            graph.Services.SetServiceIfNone(new AssetGraph());
 
-            graph.Services.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
-            graph.Services.SetServiceIfNone<ICssLinkTagWriter, CssLinkTagWriter>();
 
             graph.Services.SetServiceIfNone<IFileSystem, FileSystem>();
             
@@ -206,16 +204,27 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IPackageFiles, PackageFilesCache>();
             graph.Services.AddService<IActivator>(typeof (PackageFileActivator));
 
-
             graph.Services.SetServiceIfNone<IBindingLogger, NulloBindingLogger>();
             graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();
 
             graph.Services.SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
             graph.Services.SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
 
+
+            registerAssetServices(graph);
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);
+        }
+
+        private void registerAssetServices(BehaviorGraph graph)
+        {
+            graph.Services.SetServiceIfNone(new AssetGraph());
+
+            graph.Services.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
+            graph.Services.SetServiceIfNone<ICssLinkTagWriter, CssLinkTagWriter>();
+
+            graph.Services.SetServiceIfNone<ICombinationDeterminationService, CombinationDeterminationService>();
         }
 
         private void registerActivators(BehaviorGraph graph)

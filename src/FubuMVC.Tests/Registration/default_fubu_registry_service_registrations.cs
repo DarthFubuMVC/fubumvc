@@ -5,6 +5,7 @@ using FubuCore.Binding;
 using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
@@ -193,6 +194,12 @@ namespace FubuMVC.Tests.Registration
         public void content_registry_cache_would_be_a_singleton()
         {
             ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void combination_determination_service_is_registered()
+        {
+            registeredTypeIs<ICombinationDeterminationService, CombinationDeterminationService>();
         }
 
         [Test]
