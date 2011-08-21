@@ -4,45 +4,38 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets.Combination
 {
+    // TODO -- gotta hit this with integration tests.  Hard.
     public class CombinationDeterminationService : ICombinationDeterminationService
     {
-        private readonly AssetGraph _graph;
         private readonly IAssetCombinationCache _cache;
         private readonly IEnumerable<ICombinationPolicy> _policies;
 
-        public CombinationDeterminationService(AssetGraph graph, IAssetCombinationCache cache, IEnumerable<ICombinationPolicy> policies)
+        public CombinationDeterminationService(IAssetCombinationCache cache, IEnumerable<ICombinationPolicy> policies)
         {
-            _graph = graph;
             _cache = cache;
             _policies = policies;
         }
 
         public void TryToReplaceWithCombinations(AssetTagPlan plan)
         {
-            tryAllExistingCombinations(plan);
+            TryAllExistingCombinations(plan);
 
             tryCombinationCandidatesAndPolicies(plan);
         }
 
         private void tryCombinationCandidatesAndPolicies(AssetTagPlan plan)
         {
-            throw new NotImplementedException();
-
-            // will need to depend on CombinationCandidateCache here.
-
-            //var mimeTypePolicies = _policies.Where(x => x.MimeType == plan.MimeType);
-            //var combinationPolicies = _graph.OrderedCombinationCandidates(plan.MimeType).Union(mimeTypePolicies);
-            //combinationPolicies.Each(policy => ExecutePolicy(plan, policy));
+            var mimeTypePolicies = _policies.Where(x => x.MimeType == plan.MimeType);
+            var combinationPolicies = _cache.OrderedCombinationCandidatesFor(plan.MimeType).Union(mimeTypePolicies);
+            combinationPolicies.Each(policy => ExecutePolicy(plan, policy));
         }
 
-        public void ExecutePolicy(AssetTagPlan plan, ICombinationPolicy policy)
+        public virtual void ExecutePolicy(AssetTagPlan plan, ICombinationPolicy policy)
         {
             policy.DetermineCombinations(plan).Each(combo => _cache.StoreCombination(plan.MimeType, combo));
-
-            throw new NotImplementedException();
         }
 
-        private void tryAllExistingCombinations(AssetTagPlan plan)
+        public void TryAllExistingCombinations(AssetTagPlan plan)
         {
             _cache.OrderedListOfCombinations(plan.MimeType).Each(combo => plan.TryCombination(combo));
         }

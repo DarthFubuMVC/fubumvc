@@ -46,7 +46,7 @@ namespace FubuMVC.Core.Assets.Combination
             return null;
         }
 
-        public bool TryCombination(AssetFileCombination combination)
+        public virtual bool TryCombination(AssetFileCombination combination)
         {
             var combinationCount = combination.Files.Count();
 
