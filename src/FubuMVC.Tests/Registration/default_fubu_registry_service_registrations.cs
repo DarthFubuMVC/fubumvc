@@ -210,6 +210,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void asset_tag_planner_is_registered()
+        {
+            registeredTypeIs<IAssetTagPlanner, AssetTagPlanner>();
+        }
+
+        [Test]
         public void script_graph_is_registered()
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();

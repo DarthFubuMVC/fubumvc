@@ -227,6 +227,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ICombinationDeterminationService, CombinationDeterminationService>();
 
             graph.Services.SetServiceIfNone<IAssetCombinationCache, AssetCombinationCache>();
+            graph.Services.SetServiceIfNone<IAssetTagPlanner, AssetTagPlanner>();
         }
 
         private void registerActivators(BehaviorGraph graph)

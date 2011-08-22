@@ -10,7 +10,12 @@ using FubuCore;
 namespace FubuMVC.Core.Assets
 {
     // Make this stupid about Mime type sorting.  Assume that it's fed ONE MimeType at a time
-    public class AssetTagPlanner
+    public interface IAssetTagPlanner
+    {
+        AssetTagPlan BuildPlan(MimeType mimeType, IEnumerable<string> names);
+    }
+
+    public class AssetTagPlanner : IAssetTagPlanner
     {
         private readonly IAssetPipeline _pipeline;
         private readonly ICombinationDeterminationService _combinations;
