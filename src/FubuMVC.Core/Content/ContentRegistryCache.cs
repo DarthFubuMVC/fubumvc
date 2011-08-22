@@ -5,6 +5,7 @@ using FubuCore.Util;
 namespace FubuMVC.Core.Content
 {
     // Tested through StoryTeller
+    [MarkedForTermination]
     public class ContentRegistryCache : IContentRegistry
     {
         private readonly ContentFiles _images;
@@ -37,6 +38,7 @@ namespace FubuMVC.Core.Content
         }
     }
 
+    [MarkedForTermination]
     public class ContentFiles
     {
         private readonly ContentType _contentType;

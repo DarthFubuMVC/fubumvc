@@ -112,6 +112,7 @@
     <Compile Include="Assets\Files\AssetPipelineBuilder.cs" />
     <Compile Include="Assets\Files\AssetFolder.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
+    <Compile Include="Assets\IAssetDependencyFinder.cs" />
     <Compile Include="Assets\IAssetTagSubject.cs" />
     <Compile Include="Assets\Interfaces.cs" />
     <Compile Include="Assets\MissingAssetTagSubject.cs" />

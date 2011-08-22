@@ -15,6 +15,21 @@ namespace FubuMVC.Core.Assets
         private readonly List<DependencyRule> _rules = new List<DependencyRule>();
         private readonly List<PreceedingAsset> _preceedings = new List<PreceedingAsset>();
 
+        /// <summary>
+        /// Use this method in automated tests when you need to set up an
+        /// AssetGraph
+        /// </summary>
+        /// <param name="configure"></param>
+        /// <returns></returns>
+        public static AssetGraph Build(Action<AssetGraph> configure)
+        {
+            var graph = new AssetGraph();
+            configure(graph);
+            graph.CompileDependencies(new PackageLog());
+
+            return graph;
+        }
+
         public AssetGraph()
         {
             _sets.OnMissing = name => new AssetSet{
@@ -88,6 +103,7 @@ namespace FubuMVC.Core.Assets
 
         public IEnumerable<IFileDependency> GetAssets(IEnumerable<string> names)
         {
+            // TODO -- Memoize this.  Seriously.
             return new AssetGatherer(this, names).Gather();
         }
 

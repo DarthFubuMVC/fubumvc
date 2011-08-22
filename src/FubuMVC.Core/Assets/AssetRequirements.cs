@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Content;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets
 {
@@ -22,9 +24,20 @@ namespace FubuMVC.Core.Assets
             _requirements.Fill(name);
         }
 
-        public IEnumerable<string> RequestedScripts()
+        public IEnumerable<string> AllRequestedAssets
         {
-            return _requirements;
+            get
+            {
+                return _requirements;
+            }
+        }
+
+        public IEnumerable<string> AllRenderedAssets
+        {
+            get
+            {
+                return _rendered;
+            }
         }
 
         // TODO -- is this used?  If so, needs to be tied into AssetPipeline
@@ -41,12 +54,30 @@ namespace FubuMVC.Core.Assets
         /// </summary>
         /// <remarks>Can be called multiple times within an HTTP request, and will not return any script more than once.</remarks>
         /// <returns></returns>
-        public IEnumerable<string> GetAssetsToRender()
+        [Obsolete("This will go away after Asset Pipeline is complete")]
+        public IEnumerable<string> GetAssetsToRenderOLD()
         {
             var requiredAssets = _assetGraph.GetAssets(_requirements).Select(x => x.Name).Except(_rendered).ToList();
             _rendered.AddRange(requiredAssets);
             return requiredAssets;
         }
+
+        public IEnumerable<string> GetAssetsToRender(MimeType mimeType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<RequestedAssetNames> GetAssetsToRender()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class RequestedAssetNames
+    {
+        public MimeType MimeType { get; set;}
+        public IEnumerable<string> AssetNames { get; set;}
+
     }
 
 

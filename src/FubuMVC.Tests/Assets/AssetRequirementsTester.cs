@@ -30,16 +30,7 @@ namespace FubuMVC.Tests.Assets
             ClassUnderTest.Require("jquery.js");
             ClassUnderTest.Require("jquery.js");
 
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetAssetsToRender().Single(), "jquery.js");
-        }
-
-        [Test]
-        public void use_file_if_exists_positive_case()
-        {
-            scriptExists("jquery.js");
-            ClassUnderTest.UseFileIfExists("jquery.js");
-
-            SpecificationExtensions.ShouldEqual(ClassUnderTest.GetAssetsToRender().Single(), "jquery.js");
+            ClassUnderTest.GetAssetsToRenderOLD().Single().ShouldEqual("jquery.js");
         }
 
         [Test]
@@ -48,9 +39,17 @@ namespace FubuMVC.Tests.Assets
             scriptDoesNotExist("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            SpecificationExtensions.ShouldBeFalse(ClassUnderTest.GetAssetsToRender().Any());
+            ClassUnderTest.GetAssetsToRenderOLD().Any().ShouldBeFalse();
         }
 
+        [Test]
+        public void use_file_if_exists_positive_case()
+        {
+            scriptExists("jquery.js");
+            ClassUnderTest.UseFileIfExists("jquery.js");
+
+            ClassUnderTest.GetAssetsToRenderOLD().Single().ShouldEqual("jquery.js");
+        }
     }
 
     [TestFixture]
@@ -58,13 +57,13 @@ namespace FubuMVC.Tests.Assets
     {
         protected override void beforeEach()
         {
-            var scriptGraph = new AssetGraph();
-            scriptGraph.Dependency("a", "b");
-            scriptGraph.Dependency("a", "c");
-            scriptGraph.Dependency("d", "e");
-            scriptGraph.Dependency("d", "b");
-            scriptGraph.CompileDependencies(new PackageLog());
-            Services.Inject(scriptGraph);
+            var assetGraph = new AssetGraph();
+            assetGraph.Dependency("a", "b");
+            assetGraph.Dependency("a", "c");
+            assetGraph.Dependency("d", "e");
+            assetGraph.Dependency("d", "b");
+            assetGraph.CompileDependencies(new PackageLog());
+            Services.Inject(assetGraph);
         }
 
         [Test]
@@ -74,11 +73,11 @@ namespace FubuMVC.Tests.Assets
             ClassUnderTest.Require("a"); // depends on b & c
             ClassUnderTest.Require("f"); // no dependencies
 
-            ClassUnderTest.GetAssetsToRender().ShouldHaveTheSameElementsAs("b", "c", "f", "a");
+            ClassUnderTest.GetAssetsToRenderOLD().ShouldHaveTheSameElementsAs("b", "c", "f", "a");
             // ask for d, get d,e (not b, since it was already written)
 
             ClassUnderTest.Require("d"); // depends on e and b
-            ClassUnderTest.GetAssetsToRender().ShouldHaveTheSameElementsAs("e", "d");
+            ClassUnderTest.GetAssetsToRenderOLD().ShouldHaveTheSameElementsAs("e", "d");
         }
     }
 }

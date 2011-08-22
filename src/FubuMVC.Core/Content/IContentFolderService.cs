@@ -5,6 +5,7 @@ using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Content
 {
+    [MarkedForTermination]
     public interface IContentFolderService
     {
         string FileNameFor(ContentType contentType, string contentFileName);
@@ -14,7 +15,7 @@ namespace FubuMVC.Core.Content
         bool ExistsInApplicationDirectory(ContentType contentType, string contentFileName);
     }
 
-
+    [MarkedForTermination]
     public enum ContentType
     {
         images,
@@ -22,6 +23,7 @@ namespace FubuMVC.Core.Content
         styles
     }
 
+    [MarkedForTermination]
     public class ContentFolderService : IContentFolderService
     {
         private readonly IList<string> _directories = new List<string>();

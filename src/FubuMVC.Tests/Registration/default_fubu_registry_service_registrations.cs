@@ -210,6 +210,14 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void asset_dependency_finder_should_be_registered_as_a_singleton()
+        {
+            registeredTypeIs<IAssetDependencyFinder, AssetDependencyFinderCache>();
+            ServiceRegistry.ShouldBeSingleton(typeof(AssetDependencyFinderCache))
+                .ShouldBeTrue();
+        }
+
+        [Test]
         public void asset_tag_planner_is_registered()
         {
             registeredTypeIs<IAssetTagPlanner, AssetTagPlanner>();
