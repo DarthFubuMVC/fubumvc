@@ -12,6 +12,15 @@ namespace FubuMVC.Core.Assets.Files
     /// </summary>
     public class AssetFile : IAssetTagSubject
     {
+        public AssetFile()
+        {
+        }
+
+        public AssetFile(string name)
+        {
+            Name = name;
+        }
+
         public AssetFolder? Folder { get; set; }
 
         public string Name { get; set; }
@@ -68,5 +77,11 @@ namespace FubuMVC.Core.Assets.Files
                 return result;
             }
         }
+
+
     }
+
+
+
+
 }

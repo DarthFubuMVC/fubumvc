@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Mime;
 using FubuCore.Util;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Png = New("image/png", ".png");
         public static readonly MimeType Jpg = New("image/jpeg", ".jpg", ".jpeg");
         public static readonly MimeType Bmp = New("image/bmp", ".bmp", ".bm");
-
+        public static readonly MimeType Unknown = New("dunno");
 
 
         private readonly IList<string> _extensions = new List<string>();
@@ -75,6 +76,12 @@ namespace FubuMVC.Core.Runtime
         public string DefaultExtension()
         {
             return _extensions.FirstOrDefault();
+        }
+
+        public static MimeType DetermineMimeTypeFromName(string name)
+        {
+            var extension = Path.GetExtension(name);
+            return _mimeTypes.GetAll().FirstOrDefault(x => x.HasExtension(extension));
         }
     }
 }

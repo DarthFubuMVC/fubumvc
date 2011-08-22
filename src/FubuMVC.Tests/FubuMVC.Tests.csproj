@@ -99,6 +99,7 @@
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
+    <Compile Include="Assets\AssetTagPlannerTester.cs" />
     <Compile Include="Assets\Combination\AssetFileCombinationTester.cs" />
     <Compile Include="Assets\Combination\AssetTagPlanTester.cs" />
     <Compile Include="Assets\Combination\AssetCombinationCacheTester.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\Files\AssetPipelineTester.cs" />
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
     <Compile Include="Assets\MimeTypeProviderTester.cs" />
+    <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />
     <Compile Include="Runtime\OutputWriterTester.cs" />
+    <Compile Include="Runtime\MimeTypeTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryBehaviorTester.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryServiceTester.cs" />

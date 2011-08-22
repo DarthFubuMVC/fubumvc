@@ -8,8 +8,6 @@ namespace FubuMVC.Core.Assets.Combination
 {
     public class CombinationCandidate : ICombinationPolicy
     {
-        // TODO -- combination should allow you to override the name!
-
         private readonly MimeType _mimeType;
         private readonly string _name;
         private readonly IList<AssetFile> _files = new List<AssetFile>();

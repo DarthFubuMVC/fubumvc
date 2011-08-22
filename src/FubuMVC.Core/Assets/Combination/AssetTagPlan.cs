@@ -11,11 +11,19 @@ namespace FubuMVC.Core.Assets.Combination
         private readonly MimeType _mimeType;
         private readonly IList<IAssetTagSubject> _subjects = new List<IAssetTagSubject>();
 
-        public AssetTagPlan(MimeType mimeType, IEnumerable<AssetFile> files)
+        public AssetTagPlan(MimeType mimeType, IEnumerable<AssetFile> files) : this(mimeType)
+        {
+            _subjects.AddRange(files);
+        }
+
+        public AssetTagPlan(MimeType mimeType)
         {
             _mimeType = mimeType;
+        }
 
-            _subjects.AddRange(files);
+        public void AddSubjects(IEnumerable<IAssetTagSubject> subjects)
+        {
+            _subjects.AddRange(subjects);
         }
 
         public MimeType MimeType

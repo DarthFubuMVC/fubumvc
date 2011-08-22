@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 
