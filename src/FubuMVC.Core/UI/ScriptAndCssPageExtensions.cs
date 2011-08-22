@@ -41,7 +41,7 @@ namespace FubuMVC.Core.UI
 
             public TagList ScriptTags()
             {
-                var scripts = _requirements.GetAssetsToRenderOLD();
+                var scripts = _requirements.DequeueAssetsToRenderOLD();
                 var tags = _writer.Write(scripts);
 
                 return new TagList(tags);

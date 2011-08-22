@@ -1,10 +1,15 @@
+using System;
+using System.Diagnostics;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Assets
 {
@@ -13,14 +18,14 @@ namespace FubuMVC.Tests.Assets
     {
         private void scriptExists(string name)
         {
-            MockFor<IContentFolderService>().Stub(x => x.FileExists(ContentType.scripts, name))
-                .Return(true);
+            MockFor<IAssetPipeline>().Stub(x => x.Find(name))
+                .Return(new AssetFile(name));
         }
 
         private void scriptDoesNotExist(string name)
         {
-            MockFor<IContentFolderService>().Stub(x => x.FileExists(ContentType.scripts, name))
-                .Return(false);
+            MockFor<IAssetPipeline>().Stub(x => x.Find(name))
+                .Return(null);
         }
 
         [Test]
@@ -30,7 +35,7 @@ namespace FubuMVC.Tests.Assets
             ClassUnderTest.Require("jquery.js");
             ClassUnderTest.Require("jquery.js");
 
-            ClassUnderTest.GetAssetsToRenderOLD().Single().ShouldEqual("jquery.js");
+            ClassUnderTest.AllRequestedAssets.Single().ShouldEqual("jquery.js");
         }
 
         [Test]
@@ -39,7 +44,7 @@ namespace FubuMVC.Tests.Assets
             scriptDoesNotExist("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            ClassUnderTest.GetAssetsToRenderOLD().Any().ShouldBeFalse();
+            ClassUnderTest.AllRequestedAssets.Any().ShouldBeFalse();
         }
 
         [Test]
@@ -48,7 +53,74 @@ namespace FubuMVC.Tests.Assets
             scriptExists("jquery.js");
             ClassUnderTest.UseFileIfExists("jquery.js");
 
-            ClassUnderTest.GetAssetsToRenderOLD().Single().ShouldEqual("jquery.js");
+            ClassUnderTest.AllRequestedAssets.Single().ShouldEqual("jquery.js");
+        }
+    }
+
+    [TestFixture]
+    public class when_dequeue_ing_by_mimetype : InteractionContext<AssetRequirements>
+    {
+        protected override void beforeEach()
+        {
+            // The AssetDependencyFinderCache is simple enough to use as is in UT's
+            Services.Inject<IAssetDependencyFinder>(new AssetDependencyFinderCache(new AssetGraph()));
+        }
+
+        [Test]
+        public void dequeue_assets_by_mimetype()
+        {
+            ClassUnderTest.Require("main.css", "a.css", "b.css");
+            ClassUnderTest.Require("main.js", "a.js", "b.js");
+
+            ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript)
+                .ShouldHaveTheSameElementsAs("a.js", "b.js", "main.js");
+
+        }
+
+        [Test]
+        public void dequeue_assets_by_mimetype_latches()
+        {
+            ClassUnderTest.Require("main.css", "a.css", "b.css");
+            ClassUnderTest.Require("main.js", "a.js", "b.js");
+
+            ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript);
+
+            ClassUnderTest.Require("d.js", "e.js", "f.css");
+
+            ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript)
+                .ShouldHaveTheSameElementsAs("d.js", "e.js");
+        }
+
+        [Test]
+        public void dequeue_all_assets()
+        {
+            ClassUnderTest.Require("main.css", "a.css", "b.css");
+            ClassUnderTest.Require("main.js", "a.js", "b.js");
+
+            ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
+                .ShouldHaveTheSameElementsAs(
+                    RequestedAssetNames.For(MimeType.Javascript, "a.js", "b.js", "main.js"),
+                    RequestedAssetNames.For(MimeType.Css, "a.css", "b.css", "main.css")
+                    
+                );
+        }
+
+        [Test]
+        public void dequeue_all_assets_latches()
+        {
+            ClassUnderTest.Require("main.css", "a.css", "b.css");
+            ClassUnderTest.Require("main.js", "a.js", "b.js");
+
+            ClassUnderTest.DequeueAssetsToRender();
+
+            ClassUnderTest.Require("c.css", "d.css");
+            ClassUnderTest.Require("c.js", "d.js");
+        
+            ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
+                .ShouldHaveTheSameElementsAs(
+                    RequestedAssetNames.For(MimeType.Javascript, "c.js", "d.js"),
+                    RequestedAssetNames.For(MimeType.Css, "c.css", "d.css")
+                );
         }
     }
 
@@ -58,26 +130,29 @@ namespace FubuMVC.Tests.Assets
         protected override void beforeEach()
         {
             var assetGraph = new AssetGraph();
-            assetGraph.Dependency("a", "b");
-            assetGraph.Dependency("a", "c");
-            assetGraph.Dependency("d", "e");
-            assetGraph.Dependency("d", "b");
+            assetGraph.Dependency("a.js", "b.js");
+            assetGraph.Dependency("a.js", "c.js");
+            assetGraph.Dependency("d.js", "e.js");
+            assetGraph.Dependency("d.js", "b.js");
             assetGraph.CompileDependencies(new PackageLog());
-            Services.Inject(assetGraph);
+            Services.Inject<IAssetDependencyFinder>(new AssetDependencyFinderCache(assetGraph));
         }
 
         [Test]
         public void should_not_write_the_same_scripts_more_than_once()
         {
             // ask for a & f, get b,c,a,f
-            ClassUnderTest.Require("a"); // depends on b & c
-            ClassUnderTest.Require("f"); // no dependencies
+            ClassUnderTest.Require("a.js"); // depends on b & c
+            ClassUnderTest.Require("f.js"); // no dependencies
 
-            ClassUnderTest.GetAssetsToRenderOLD().ShouldHaveTheSameElementsAs("b", "c", "f", "a");
+            ClassUnderTest.DequeueAssetsToRenderOLD().ShouldHaveTheSameElementsAs("b.js", "c.js", "f.js", "a.js");
             // ask for d, get d,e (not b, since it was already written)
 
-            ClassUnderTest.Require("d"); // depends on e and b
-            ClassUnderTest.GetAssetsToRenderOLD().ShouldHaveTheSameElementsAs("e", "d");
+            ClassUnderTest.Require("d.js"); // depends on e and b
+            var assets = ClassUnderTest.DequeueAssetsToRenderOLD();
+
+
+            assets.ShouldHaveTheSameElementsAs("e.js", "d.js");
         }
     }
 }

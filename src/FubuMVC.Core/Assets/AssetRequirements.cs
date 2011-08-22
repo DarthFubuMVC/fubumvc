@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
 using System.Linq;
 using FubuMVC.Core.Runtime;
@@ -8,18 +9,18 @@ namespace FubuMVC.Core.Assets
 {
     public class AssetRequirements
     {
-        private readonly IContentFolderService _folders;
-        private readonly AssetGraph _assetGraph;
+        private readonly IAssetDependencyFinder _finder;
+        private readonly IAssetPipeline _pipeline;
         private readonly List<string> _requirements = new List<string>();
         private readonly List<string> _rendered = new List<string>();
 
-        public AssetRequirements(IContentFolderService folders, AssetGraph assetGraph)
+        public AssetRequirements(IAssetDependencyFinder finder, IAssetPipeline pipeline)
         {
-            _folders = folders;
-            _assetGraph = assetGraph;
+            _finder = finder;
+            _pipeline = pipeline;
         }
 
-        public void Require(string name)
+        public void Require(params string[] name)
         {
             _requirements.Fill(name);
         }
@@ -40,10 +41,9 @@ namespace FubuMVC.Core.Assets
             }
         }
 
-        // TODO -- is this used?  If so, needs to be tied into AssetPipeline
         public void UseFileIfExists(string name)
         {
-            if (_folders.FileExists(ContentType.scripts, name))
+            if (_pipeline.Find(name) != null)
             {
                 Require(name);
             }
@@ -55,31 +55,44 @@ namespace FubuMVC.Core.Assets
         /// <remarks>Can be called multiple times within an HTTP request, and will not return any script more than once.</remarks>
         /// <returns></returns>
         [Obsolete("This will go away after Asset Pipeline is complete")]
-        public IEnumerable<string> GetAssetsToRenderOLD()
+        public IEnumerable<string> DequeueAssetsToRenderOLD()
         {
-            var requiredAssets = _assetGraph.GetAssets(_requirements).Select(x => x.Name).Except(_rendered).ToList();
-            _rendered.AddRange(requiredAssets);
-            return requiredAssets;
+            return DequeueAssetsToRender().SelectMany(x => x.AssetNames).ToList();
         }
 
-        public IEnumerable<string> GetAssetsToRender(MimeType mimeType)
+        private IEnumerable<string> outstandingAssets()
         {
-            throw new NotImplementedException();
+            return _requirements.Except(_rendered).ToList();
         }
 
-        public IEnumerable<RequestedAssetNames> GetAssetsToRender()
+        public IEnumerable<string> DequeueAssetsToRender(MimeType mimeType)
         {
-            throw new NotImplementedException();
+            var requested = outstandingAssets()
+                .Where(x => MimeType.DetermineMimeTypeFromName(x) == mimeType);
+
+            return returnOrderedDependenciesFor(requested);
+        }
+
+        private IEnumerable<string> returnOrderedDependenciesFor(IEnumerable<string> requested)
+        {
+            var toRender = _finder.CompileDependenciesAndOrder(requested).ToList();
+            toRender.RemoveAll(x => _rendered.Contains(x));
+            _rendered.Fill(toRender);
+
+            return toRender;
+        }
+
+        public IEnumerable<RequestedAssetNames> DequeueAssetsToRender()
+        {
+            return outstandingAssets().GroupBy(MimeType.DetermineMimeTypeFromName).Select(buildRequestedAssetNames).ToList();
+        }
+
+        private RequestedAssetNames buildRequestedAssetNames(IGrouping<MimeType, string> group)
+        {
+            return new RequestedAssetNames{
+                AssetNames = returnOrderedDependenciesFor(group),
+                MimeType = group.Key
+            };
         }
     }
-
-    public class RequestedAssetNames
-    {
-        public MimeType MimeType { get; set;}
-        public IEnumerable<string> AssetNames { get; set;}
-
-    }
-
-
-   
 }
