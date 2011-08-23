@@ -120,6 +120,8 @@
     <Compile Include="Assets\MimeTypeProviderTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />
     <Compile Include="Assets\Tags\AssetTagBuilderTester.cs" />
+    <Compile Include="Assets\Tags\TraceOnlyMissingAssetHandlerTester.cs" />
+    <Compile Include="Assets\Tags\YellowScreenMissingAssetHandlerTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />
