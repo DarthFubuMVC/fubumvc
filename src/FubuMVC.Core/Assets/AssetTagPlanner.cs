@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
@@ -32,6 +33,11 @@ namespace FubuMVC.Core.Assets
             _combinations.TryToReplaceWithCombinations(plan);
 
             return plan;
+        }
+
+        public AssetTagPlan BuildPlan(AssetPlanKey key)
+        {
+            return BuildPlan(key.MimeType, key.Names);
         }
 
         public IEnumerable<IAssetTagSubject> FindSubjects(IEnumerable<string> names)

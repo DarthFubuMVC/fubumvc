@@ -219,9 +219,22 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void asset_tag_plan_cache_is_registered_as_a_singleton()
+        {
+            registeredTypeIs<IAssetTagPlanCache, AssetTagPlanCache>();
+            ServiceRegistry.ShouldBeSingleton(typeof (AssetTagPlanCache)).ShouldBeTrue();
+        }
+
+        [Test]
         public void asset_tag_planner_is_registered()
         {
             registeredTypeIs<IAssetTagPlanner, AssetTagPlanner>();
+        }
+
+        [Test]
+        public void asset_requirements_are_registered()
+        {
+            registeredTypeIs<IAssetRequirements, AssetRequirements>();
         }
 
         [Test]

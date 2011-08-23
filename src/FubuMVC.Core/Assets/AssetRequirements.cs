@@ -7,7 +7,17 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetRequirements
+    public interface IAssetRequirements
+    {
+        void Require(params string[] name);
+        IEnumerable<string> AllRequestedAssets { get; }
+        IEnumerable<string> AllRenderedAssets { get; }
+        void UseFileIfExists(string name);
+        IEnumerable<string> DequeueAssetsToRender(MimeType mimeType);
+        IEnumerable<RequestedAssetNames> DequeueAssetsToRender();
+    }
+
+    public class AssetRequirements : IAssetRequirements
     {
         private readonly IAssetDependencyFinder _finder;
         private readonly IAssetPipeline _pipeline;

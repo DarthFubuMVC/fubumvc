@@ -5,7 +5,6 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Assets
 {
-    // TODO -- this HAS to be rewritten
     public class AssetTagWriter : IAssetTagWriter
     {
         private readonly IContentRegistry _registry;

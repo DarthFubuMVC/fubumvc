@@ -93,7 +93,10 @@
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetNamesKey.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
+    <Compile Include="Assets\AssetPlanKey.cs" />
+    <Compile Include="Assets\AssetTagPlanCache.cs" />
     <Compile Include="Assets\AssetTagPlanner.cs" />
+    <Compile Include="Assets\AssetTagWriter.cs" />
     <Compile Include="Assets\Combination\AssetCombinationCache.cs" />
     <Compile Include="Assets\Combination\CombinationCandidate.cs" />
     <Compile Include="Assets\Combination\CombinationDeterminationService.cs" />
@@ -114,8 +117,11 @@
     <Compile Include="Assets\Files\AssetPipeline.cs" />
     <Compile Include="Assets\Files\AssetPipelineBuilder.cs" />
     <Compile Include="Assets\Files\AssetFolder.cs" />
+    <Compile Include="Assets\Files\IAssetFileRegistration.cs" />
+    <Compile Include="Assets\Files\IAssetPipeline.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\IAssetDependencyFinder.cs" />
+    <Compile Include="Assets\IAssetTagPlanCache.cs" />
     <Compile Include="Assets\IAssetTagPlanner.cs" />
     <Compile Include="Assets\IAssetTagSubject.cs" />
     <Compile Include="Assets\Interfaces.cs" />
@@ -477,7 +483,6 @@
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
     <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
-    <Compile Include="Assets\BasicScriptTagWriter.cs" />
     <Compile Include="UI\IContentFileCombiner.cs" />
     <Compile Include="UI\ICssLinkTagWriter.cs" />
     <Compile Include="UI\ContentFileCombinerPackage.cs" />

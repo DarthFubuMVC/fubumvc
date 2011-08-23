@@ -5,16 +5,6 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    public interface IAssetFileRegistration
-    {
-        void AddFile(AssetPath path, AssetFile file);
-    }
-
-    public interface IAssetPipeline
-    {
-        AssetFile Find(string path);
-    }
-
     public class AssetPipeline : IAssetFileRegistration, IAssetPipeline
     {
         public static readonly string Application = "application";
