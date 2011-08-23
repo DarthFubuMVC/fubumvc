@@ -187,18 +187,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void content_registry_is_registered()
-        {
-            registeredTypeIs<IContentRegistry, ContentRegistryCache>();
-        }
-
-        [Test]
-        public void content_registry_cache_would_be_a_singleton()
-        {
-            ServiceRegistry.ShouldBeSingleton(typeof(ContentRegistryCache)).ShouldBeTrue();
-        }
-
-        [Test]
         public void combination_determination_service_is_registered()
         {
             registeredTypeIs<ICombinationDeterminationService, CombinationDeterminationService>();

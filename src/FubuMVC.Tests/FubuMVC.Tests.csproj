@@ -101,6 +101,7 @@
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
     <Compile Include="Assets\AssetExpressionUsageTester.cs" />
     <Compile Include="Assets\AssetFileHandlerTester.cs" />
+    <Compile Include="Assets\AssetGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="Assets\AssetNamesKeyTester.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
     <Compile Include="Assets\AssetTagPlanCacheTester.cs" />
@@ -120,8 +121,8 @@
     <Compile Include="Assets\Files\AssetPipelineBuilderTester.cs" />
     <Compile Include="Assets\Files\AssetPipelineTester.cs" />
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
-    <Compile Include="Assets\MimeTypeProviderTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />
+    <Compile Include="Assets\StubPackage.cs" />
     <Compile Include="Assets\Tags\AssetTagBuilderTester.cs" />
     <Compile Include="Assets\Tags\TraceOnlyMissingAssetHandlerTester.cs" />
     <Compile Include="Assets\Tags\YellowScreenMissingAssetHandlerTester.cs" />
@@ -165,8 +166,12 @@
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />
     <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
+    <Compile Include="Conneg\ConnegBehaviorConventionTester.cs" />
+    <Compile Include="Conneg\ConnegNodeTester.cs" />
+    <Compile Include="Conneg\Conneg_Services_Registration_Tester.cs" />
+    <Compile Include="Conneg\MediaProcessorTester.cs" />
+    <Compile Include="Conneg\XmlFormatterTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
-    <Compile Include="Content\StubPackage.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\DefaultDiagnosticsConventionsTester.cs" />
@@ -497,6 +502,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\Packages\" />
+    <Folder Include="Content\" />
     <Folder Include="Core\" />
     <Folder Include="DSL\" />
     <Folder Include="Results\" />

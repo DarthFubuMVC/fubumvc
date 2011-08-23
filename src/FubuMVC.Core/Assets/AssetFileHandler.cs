@@ -2,6 +2,7 @@ using System;
 using System.Web;
 using System.Web.Routing;
 using FubuCore;
+using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets
 {
@@ -16,7 +17,15 @@ namespace FubuMVC.Core.Assets
 
         public static string DetermineAssetUrl(IAssetTagSubject subject)
         {
-            var url = "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, subject.Folder, subject.Name);
+            var folder = subject.Folder;
+            var name = subject.Name;
+
+            return DetermineAssetUrl(folder, name);
+        }
+
+        public static string DetermineAssetUrl(AssetFolder? folder, string name)
+        {
+            var url = "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, folder, name);
             return url.ToAbsoluteUrl();
         }
     }

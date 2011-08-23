@@ -4,7 +4,7 @@ using Bottles;
 using Bottles.Assemblies;
 using FubuCore.Util;
 
-namespace FubuMVC.Tests.Content
+namespace FubuMVC.Tests.Assets
 {
     public class StubPackage : IPackageInfo
     {

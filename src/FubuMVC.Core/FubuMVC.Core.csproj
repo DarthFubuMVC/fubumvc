@@ -180,14 +180,8 @@
     <Compile Include="Caching\IRequestOutputCache.cs" />
     <Compile Include="Caching\RequestOutputCacheBehavior.cs" />
     <Compile Include="Caching\RequestOutputCacheNode.cs" />
-    <Compile Include="Content\ContentRegistryCache.cs" />
     <Compile Include="Registration\DSL\AssetsExpression.cs" />
-    <Compile Include="Runtime\MimeTypeProvider.cs" />
-    <Compile Include="Content\IContentFolderService.cs" />
-    <Compile Include="Content\IContentRegistry.cs" />
     <Compile Include="Content\FileRouteHandler.cs" />
-    <Compile Include="Runtime\IMimeTypeProvider.cs" />
-    <Compile Include="Content\PackageFolderActivator.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />

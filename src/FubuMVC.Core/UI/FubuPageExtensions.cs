@@ -2,6 +2,8 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
@@ -294,7 +296,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
         {
-            return viewPage.Get<IContentRegistry>().ImageUrl(imageFilename);
+            return AssetFileHandler.DetermineAssetUrl(AssetFolder.images, imageFilename);
         }
 
         public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)

@@ -2,6 +2,8 @@ using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
@@ -26,7 +28,7 @@ namespace FubuMVC.Diagnostics.Core.Extensions
 
         public static HtmlTag ImageFor(this IFubuPage page, string path)
         {
-			var url = page.Get<IContentRegistry>().ImageUrl(path);
+            var url = AssetFileHandler.DetermineAssetUrl(AssetFolder.images, path);
             return new HtmlTag("img").Attr("src", url);
         }
 

@@ -179,9 +179,6 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IPartialInvoker, PartialInvoker>();
 
-            graph.Services.SetServiceIfNone<IContentRegistry, ContentRegistryCache>();
-
-
 
             graph.Services.SetServiceIfNone<IFileSystem, FileSystem>();
             

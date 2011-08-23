@@ -110,8 +110,6 @@ namespace FubuMVC.Core
                     // container facility has to be spun up here
                     var containerFacility = _facility.Value;
 
-                    registerServicesFromFubuFacility();
-
                     applyRegistryModifications();
 
                     applyFubuExtensionsFromPackages(log);
@@ -142,11 +140,6 @@ namespace FubuMVC.Core
             var graph = _registry.Value.BuildGraph();
 
             return graph;
-        }
-
-        private void registerServicesFromFubuFacility()
-        {
-            _registry.Value.Services(_fubuFacility.RegisterServices);
         }
 
         private void applyRegistryModifications()

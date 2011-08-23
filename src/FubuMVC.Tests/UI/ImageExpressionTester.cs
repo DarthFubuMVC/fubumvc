@@ -1,3 +1,5 @@
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.View;
 using FubuTestingSupport;
@@ -13,27 +15,17 @@ namespace FubuMVC.Tests.UI
         [Test]
         public void image_url()
         {
-            var registry = MockRepository.GenerateMock<IContentRegistry>();
             var page = MockRepository.GenerateMock<IFubuPage>();
 
-            page.Stub(x => x.Get<IContentRegistry>()).Return(registry);
-
-            registry.Stub(x => x.ImageUrl("some icon name")).Return("some url");
-
-            page.ImageUrl("some icon name").ShouldEqual("some url");
+            page.ImageUrl("some icon name").ShouldEqual(AssetFileHandler.DetermineAssetUrl(AssetFolder.images, "some icon name"));
         }
 
         [Test]
         public void image_tag()
         {
-            var registry = MockRepository.GenerateMock<IContentRegistry>();
             var page = MockRepository.GenerateMock<IFubuPage>();
 
-            page.Stub(x => x.Get<IContentRegistry>()).Return(registry);
-
-            registry.Stub(x => x.ImageUrl("some icon name")).Return("some url");
-
-            page.Image("some icon name").Attr("src").ShouldEqual("some url");
+            page.Image("some icon name").Attr("src").ShouldEqual(AssetFileHandler.DetermineAssetUrl(AssetFolder.images, "some icon name"));
         }
     }
 }

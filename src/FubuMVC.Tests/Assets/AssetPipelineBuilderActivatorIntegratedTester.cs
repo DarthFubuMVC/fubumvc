@@ -6,7 +6,6 @@ using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Tests.Content;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;

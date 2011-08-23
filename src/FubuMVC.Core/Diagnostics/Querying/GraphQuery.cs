@@ -1,24 +1,23 @@
-using FubuMVC.Core.Content;
-using FubuMVC.Core.Registration;
 using System.Linq;
+using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Registration;
 
 namespace FubuMVC.Core.Diagnostics.Querying
 {
     public class GraphQuery
     {
         private readonly BehaviorGraph _graph;
-        private readonly IContentRegistry _contentRegistry;
 
-        public GraphQuery(BehaviorGraph graph, IContentRegistry contentRegistry)
+        public GraphQuery(BehaviorGraph graph)
         {
             _graph = graph;
-            _contentRegistry = contentRegistry;
         }
 
         [UrlPattern("_fubu/all")]
         public EndpointModel All()
         {
-            return new EndpointModel(){
+            return new EndpointModel{
                 AllEndpoints = _graph.Behaviors.Select(x => new EndpointToken(x)).ToArray()
             };
         }
@@ -26,12 +25,12 @@ namespace FubuMVC.Core.Diagnostics.Querying
         [UrlPattern("_fubu/imageurl/{Name}")]
         public string ImageUrlFor(ImageUrlRequest image)
         {
-            return _contentRegistry.ImageUrl(image.Name);
+            return AssetFileHandler.DetermineAssetUrl(AssetFolder.images, image.Name);
         }
     }
 
     public class ImageUrlRequest
     {
-        public string Name { get; set;}
+        public string Name { get; set; }
     }
 }
