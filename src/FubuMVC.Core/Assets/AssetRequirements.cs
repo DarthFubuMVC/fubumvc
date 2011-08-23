@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Assets
         IEnumerable<string> AllRenderedAssets { get; }
         void UseFileIfExists(string name);
         IEnumerable<string> DequeueAssetsToRender(MimeType mimeType);
-        IEnumerable<RequestedAssetNames> DequeueAssetsToRender();
+        IEnumerable<AssetPlanKey> DequeueAssetsToRender();
     }
 
     public class AssetRequirements : IAssetRequirements
@@ -59,17 +59,6 @@ namespace FubuMVC.Core.Assets
             }
         }
 
-        /// <summary>
-        /// Returns a list of scripts that have been Required, and any of their dependencies.
-        /// </summary>
-        /// <remarks>Can be called multiple times within an HTTP request, and will not return any script more than once.</remarks>
-        /// <returns></returns>
-        [Obsolete("This will go away after Asset Pipeline is complete")]
-        public IEnumerable<string> DequeueAssetsToRenderOLD()
-        {
-            return DequeueAssetsToRender().SelectMany(x => x.AssetNames).ToList();
-        }
-
         private IEnumerable<string> outstandingAssets()
         {
             return _requirements.Except(_rendered).ToList();
@@ -92,17 +81,15 @@ namespace FubuMVC.Core.Assets
             return toRender;
         }
 
-        public IEnumerable<RequestedAssetNames> DequeueAssetsToRender()
+        public IEnumerable<AssetPlanKey> DequeueAssetsToRender()
         {
-            return outstandingAssets().GroupBy(MimeType.DetermineMimeTypeFromName).Select(buildRequestedAssetNames).ToList();
-        }
-
-        private RequestedAssetNames buildRequestedAssetNames(IGrouping<MimeType, string> group)
-        {
-            return new RequestedAssetNames{
-                AssetNames = returnOrderedDependenciesFor(group),
-                MimeType = group.Key
-            };
+            return outstandingAssets()
+                .GroupBy(MimeType.DetermineMimeTypeFromName)
+                .Select(@group =>
+                {
+                    _rendered.AddRange(group);
+                    return new AssetPlanKey(@group.Key, @group);
+                }).ToList();
         }
     }
 }

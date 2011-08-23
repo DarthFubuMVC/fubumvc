@@ -99,8 +99,8 @@ namespace FubuMVC.Tests.Assets
 
             ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
                 .ShouldHaveTheSameElementsAs(
-                    RequestedAssetNames.For(MimeType.Javascript, "a.js", "b.js", "main.js"),
-                    RequestedAssetNames.For(MimeType.Css, "a.css", "b.css", "main.css")
+                    AssetPlanKey.For(MimeType.Javascript, "a.js", "b.js", "main.js"),
+                    AssetPlanKey.For(MimeType.Css, "a.css", "b.css", "main.css")
                     
                 );
         }
@@ -118,8 +118,8 @@ namespace FubuMVC.Tests.Assets
         
             ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
                 .ShouldHaveTheSameElementsAs(
-                    RequestedAssetNames.For(MimeType.Javascript, "c.js", "d.js"),
-                    RequestedAssetNames.For(MimeType.Css, "c.css", "d.css")
+                    AssetPlanKey.For(MimeType.Javascript, "c.js", "d.js"),
+                    AssetPlanKey.For(MimeType.Css, "c.css", "d.css")
                 );
         }
     }
@@ -145,11 +145,14 @@ namespace FubuMVC.Tests.Assets
             ClassUnderTest.Require("a.js"); // depends on b & c
             ClassUnderTest.Require("f.js"); // no dependencies
 
-            ClassUnderTest.DequeueAssetsToRenderOLD().ShouldHaveTheSameElementsAs("b.js", "c.js", "f.js", "a.js");
+
+
+
+            ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript).ShouldHaveTheSameElementsAs("b.js", "c.js", "f.js", "a.js");
             // ask for d, get d,e (not b, since it was already written)
 
             ClassUnderTest.Require("d.js"); // depends on e and b
-            var assets = ClassUnderTest.DequeueAssetsToRenderOLD();
+            var assets = ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript);
 
 
             assets.ShouldHaveTheSameElementsAs("e.js", "d.js");

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 
@@ -45,6 +46,16 @@ namespace FubuMVC.Core.Assets
             {
                 return ((_mimeType != null ? _mimeType.GetHashCode() : 0)*397) ^ (_names != null ? _names.GetHashCode() : 0);
             }
+        }
+
+        public static AssetPlanKey For(MimeType mimeType, params string[] names)
+        {
+            return new AssetPlanKey(mimeType, names);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("MimeType: {0}, Names: {1}", _mimeType, Names.Join(", "));
         }
     }
 }

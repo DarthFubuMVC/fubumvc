@@ -53,5 +53,6 @@ namespace FubuMVC.Core.Assets
         {
             return _hashcode.Value;
         }
+
     }
 }

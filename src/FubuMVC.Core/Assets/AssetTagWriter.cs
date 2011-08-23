@@ -1,29 +1,34 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
+using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Content;
 using HtmlTags;
 
 namespace FubuMVC.Core.Assets
 {
+    public interface IAssetTagWriter
+    {
+    }
+
     public class AssetTagWriter : IAssetTagWriter
     {
-        private readonly IContentRegistry _registry;
+        private readonly IAssetTagPlanCache _planCache;
+        private readonly IAssetRequirements _requirements;
+        private readonly IAssetTagBuilder _builder;
 
-        public AssetTagWriter(IContentRegistry registry)
+        public AssetTagWriter(IAssetTagPlanCache planCache, IAssetRequirements requirements, IAssetTagBuilder builder)
         {
-            _registry = registry;
+            _planCache = planCache;
+            _requirements = requirements;
+            _builder = builder;
         }
 
-        public IEnumerable<HtmlTag> Write(IEnumerable<string> assetNames)
+        public IEnumerable<HtmlTag> WriteAllTags()
         {
-            return assetNames.Select(x =>
-            {
-                // TODO -- is it possible that we could have something besides JavaScript?
-                var scriptUrl = _registry.ScriptUrl(x, false);
-                return new HtmlTag("script").Attr("src", scriptUrl).Attr("type", "text/javascript");
-            });
+            var requests = _requirements.DequeueAssetsToRender();
+            throw new NotImplementedException();
         }
-
-
     }
 }
