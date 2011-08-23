@@ -9,6 +9,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Content
 {
+    [MarkedForTermination("will be obsolete with AssetFileHandler")]
     public class FileRouteHandler : IRouteHandler
     {
         private readonly IContentFolderService _folders;
@@ -42,6 +43,7 @@ namespace FubuMVC.Core.Content
         }
     }
 
+    [MarkedForTermination("will be obsolete with AssetFileHandler")]
     public class FileHttpHandler : IHttpHandler
     {
         private readonly string _fileName;
