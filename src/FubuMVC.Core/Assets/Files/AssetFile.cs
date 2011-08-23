@@ -53,13 +53,27 @@ namespace FubuMVC.Core.Assets.Files
             return Path.GetExtension(Name);
         }
 
+        
         // TODO -- just pull MimeType live
-        public MimeType MimeType { get; private set; }
-
-        // TODO -- get rid of this
-        public void DetermineMimetype(IMimeTypeProvider provider)
+        public MimeType MimeType
         {
-            MimeType = Folder.HasValue ? provider.For(Extension(), Folder.Value) : provider.For(Extension());
+            get
+            {
+                var mimeType = MimeType.DetermineMimeTypeFromName(Name);
+                if (mimeType != null) return mimeType;
+
+                switch (Folder)
+                {
+                    case AssetFolder.scripts:
+                        return MimeType.Javascript;
+
+                    case AssetFolder.styles:
+                        return MimeType.Css;
+
+                    default:
+                        throw new UnknownExtensionException(Extension());
+                }
+            }
         }
 
         public bool Equals(AssetFile other)

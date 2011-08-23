@@ -38,9 +38,6 @@ namespace FubuMVC.Tests.Assets.Files
                 Folder = AssetFolder.scripts
             };
 
-            var provider = new MimeTypeProvider();
-            coffee.DetermineMimetype(provider);
-
             coffee.MimeType.ShouldEqual(MimeType.Javascript);
         }
 
@@ -57,12 +54,9 @@ namespace FubuMVC.Tests.Assets.Files
                 Name = "main.css"
             };
 
-            var provider = new MimeTypeProvider();
 
-            scriptFile.DetermineMimetype(provider);
             scriptFile.MimeType.ShouldEqual(MimeType.Javascript);
 
-            cssFile.DetermineMimetype(provider);
             cssFile.MimeType.ShouldEqual(MimeType.Css);
         }
 
