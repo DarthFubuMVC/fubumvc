@@ -231,6 +231,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void by_default_the_missing_asset_handler_is_traceonle()
+        {
+            registeredTypeIs<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
+        }
+
+        [Test]
         public void script_graph_is_registered()
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
