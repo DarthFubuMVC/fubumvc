@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Assets
         IEnumerable<string> AllRequestedAssets { get; }
         IEnumerable<string> AllRenderedAssets { get; }
         void UseFileIfExists(string name);
-        IEnumerable<string> DequeueAssetsToRender(MimeType mimeType);
+        AssetPlanKey DequeueAssetsToRender(MimeType mimeType);  
         IEnumerable<AssetPlanKey> DequeueAssetsToRender();
     }
 
@@ -64,12 +64,13 @@ namespace FubuMVC.Core.Assets
             return _requirements.Except(_rendered).ToList();
         }
 
-        public IEnumerable<string> DequeueAssetsToRender(MimeType mimeType)
+        public AssetPlanKey DequeueAssetsToRender(MimeType mimeType)
         {
             var requested = outstandingAssets()
                 .Where(x => MimeType.DetermineMimeTypeFromName(x) == mimeType);
 
-            return returnOrderedDependenciesFor(requested);
+            var names = returnOrderedDependenciesFor(requested);
+            return new AssetPlanKey(mimeType, names);
         }
 
         private IEnumerable<string> returnOrderedDependenciesFor(IEnumerable<string> requested)
@@ -83,13 +84,8 @@ namespace FubuMVC.Core.Assets
 
         public IEnumerable<AssetPlanKey> DequeueAssetsToRender()
         {
-            return outstandingAssets()
-                .GroupBy(MimeType.DetermineMimeTypeFromName)
-                .Select(@group =>
-                {
-                    _rendered.AddRange(group);
-                    return new AssetPlanKey(@group.Key, @group);
-                }).ToList();
+            var mimeTypes = outstandingAssets().Select(MimeType.DetermineMimeTypeFromName).Distinct().ToList();
+            return mimeTypes.Select(DequeueAssetsToRender).ToList();
         }
     }
 }

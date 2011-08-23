@@ -1,18 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets
 {
-    public class AssetPlanKey
+    public class AssetPlanKey : IEnumerable<string>
     {
         private readonly MimeType _mimeType;
-        private readonly AssetNamesKey _names;
+        private readonly IEnumerable<string> _names;
 
         public AssetPlanKey(MimeType mimeType, IEnumerable<string> names)
         {
             _mimeType = mimeType;
-            _names = new AssetNamesKey(names);
+            _names = names;
         }
 
         public MimeType MimeType
@@ -22,14 +23,14 @@ namespace FubuMVC.Core.Assets
 
         public IEnumerable<string> Names
         {
-            get { return _names.Names; }
+            get { return _names; }
         }
 
         public bool Equals(AssetPlanKey other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other._mimeType, _mimeType) && Equals(other._names, _names);
+            return Equals(other._mimeType, _mimeType) && other._names.IsEqualTo(_names);
         }
 
         public override bool Equals(object obj)
@@ -44,13 +45,23 @@ namespace FubuMVC.Core.Assets
         {
             unchecked
             {
-                return ((_mimeType != null ? _mimeType.GetHashCode() : 0)*397) ^ (_names != null ? _names.GetHashCode() : 0);
+                return ((_mimeType != null ? _mimeType.GetHashCode() : 0)*397) ^ (_names != null ? _names.Join("*").GetHashCode() : 0);
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public static AssetPlanKey For(MimeType mimeType, params string[] names)
         {
             return new AssetPlanKey(mimeType, names);
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            return _names.GetEnumerator();
         }
 
         public override string ToString()

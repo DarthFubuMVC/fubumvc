@@ -7,5 +7,6 @@ namespace FubuMVC.Core.Assets
     public interface IAssetTagPlanCache
     {
         AssetTagPlan PlanFor(MimeType mimeType, IEnumerable<string> names);
+        AssetTagPlan PlanFor(AssetPlanKey key);
     }
 }

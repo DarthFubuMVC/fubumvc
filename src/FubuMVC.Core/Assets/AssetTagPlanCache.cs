@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Combination;
@@ -20,7 +21,13 @@ namespace FubuMVC.Core.Assets
 
         public AssetTagPlan PlanFor(MimeType mimeType, IEnumerable<string> names)
         {
-            return _plans[new AssetPlanKey(mimeType, names)];
+            var key = new AssetPlanKey(mimeType, names);
+            return PlanFor(key);
+        }
+
+        public AssetTagPlan PlanFor(AssetPlanKey key)
+        {
+            return _plans[key];
         }
     }
 }

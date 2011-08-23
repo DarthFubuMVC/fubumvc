@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Content;
+using FubuMVC.Core.Runtime;
 using HtmlTags;
 
 namespace FubuMVC.Core.Assets
@@ -28,7 +29,20 @@ namespace FubuMVC.Core.Assets
         public IEnumerable<HtmlTag> WriteAllTags()
         {
             var requests = _requirements.DequeueAssetsToRender();
-            throw new NotImplementedException();
+
+            return requests.SelectMany(TagsForPlan);
+        }
+
+        public IEnumerable<HtmlTag> WriteTags(MimeType mimeType)
+        {
+            var plan = _requirements.DequeueAssetsToRender(mimeType);
+            return TagsForPlan(plan);
+        }
+
+        public IEnumerable<HtmlTag> TagsForPlan(AssetPlanKey key)
+        {
+            var plan = _planCache.PlanFor(key);
+            return _builder.Build(plan);
         }
     }
 }
