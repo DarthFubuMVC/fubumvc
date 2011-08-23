@@ -5,6 +5,7 @@ using System.Web.Routing;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
@@ -23,6 +24,9 @@ namespace FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
+            AssetDeclarationVerificationActivator.Latched = true;
+
+
             registry = new FubuRegistry(x =>
             {
                 

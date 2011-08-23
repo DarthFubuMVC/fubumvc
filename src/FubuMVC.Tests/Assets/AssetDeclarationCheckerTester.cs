@@ -13,6 +13,12 @@ namespace FubuMVC.Tests.Assets
     {
         string theAssetName = "folder/a.js";
 
+        [SetUp]
+        public void SetUp()
+        {
+            AssetDeclarationVerificationActivator.Latched = false;
+        }
+
         [Test]
         public void does_not_log_a_problem_if_an_asset_file_can_be_found()
         {

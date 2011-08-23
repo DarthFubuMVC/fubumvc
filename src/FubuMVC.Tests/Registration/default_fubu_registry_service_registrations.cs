@@ -6,6 +6,7 @@ using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
@@ -244,6 +245,19 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void asset_pipeline_is_registered_as_both_IAssetPipeline_and_IAssetFileRegistration_as_the_same_instance()
+        {
+            var services = new FubuRegistry().BuildGraph().Services;
+            var pipeline1 = services.DefaultServiceFor<IAssetPipeline>().Value.ShouldBeOfType<AssetPipeline>();
+            var pipeline2 = services.DefaultServiceFor<IAssetFileRegistration>().Value.ShouldBeOfType<AssetPipeline>();
+
+            pipeline1.ShouldNotBeNull();
+            pipeline2.ShouldNotBeNull();
+
+            pipeline1.ShouldBeTheSameAs(pipeline2);
+        }
+
+        [Test]
         public void by_default_the_missing_asset_handler_is_traceonle()
         {
             registeredTypeIs<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
@@ -260,6 +274,22 @@ namespace FubuMVC.Tests.Registration
         {
             new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
                 .Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
+        }
+
+        [Test]
+        public void asset_graph_and_pipeline_activators_are_registered_in_the_correct_order()
+        {
+            var activators = new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>().ToList();
+
+            activators.Any(x => x.Type == typeof(AssetGraphConfigurationActivator)).ShouldBeTrue();
+            activators.Any(x => x.Type == typeof(AssetPipelineBuilderActivator)).ShouldBeTrue();
+            activators.Any(x => x.Type == typeof(AssetDeclarationVerificationActivator)).ShouldBeTrue();
+
+            activators.RemoveAll(x => !x.Type.Namespace.Contains(typeof (AssetGraph).Namespace));
+
+            activators[0].Type.ShouldEqual(typeof (AssetGraphConfigurationActivator));
+            activators[1].Type.ShouldEqual(typeof(AssetPipelineBuilderActivator));
+            activators[2].Type.ShouldEqual(typeof(AssetDeclarationVerificationActivator));
         }
 
         [Test]

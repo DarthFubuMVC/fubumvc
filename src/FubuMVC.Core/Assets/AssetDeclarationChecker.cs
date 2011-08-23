@@ -25,6 +25,9 @@ namespace FubuMVC.Core.Assets
             var file = _pipeline.Find(path);
             if (file == null)
             {
+                // Guard clause to allow automated tests with faked up data work
+                if (AssetDeclarationVerificationActivator.Latched) return;
+
                 _log.MarkFailure(SpecifiedAssetFileDependencyDoesNotExist.ToFormat(path));
             }
         }

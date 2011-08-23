@@ -1,5 +1,6 @@
 using System;
 using FubuCore.Configuration;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
@@ -71,6 +72,8 @@ namespace FubuMVC.Tests.Configuration
         [SetUp]
         public void SetUp()
         {
+            AssetDeclarationVerificationActivator.Latched = true;
+
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
             provider = container.GetInstance<AppSettingsProvider>();
         }

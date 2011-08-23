@@ -8,9 +8,11 @@ namespace FubuMVC.Core.Assets
     public class AssetDeclarationVerificationActivator : IActivator
     {
         private readonly AssetGraph _graph;
-        private readonly AssetPipeline _pipeline;
+        private readonly IAssetPipeline _pipeline;
 
-        public AssetDeclarationVerificationActivator(AssetPipeline pipeline, AssetGraph graph)
+        public static bool Latched { get; set; }
+
+        public AssetDeclarationVerificationActivator(IAssetPipeline pipeline, AssetGraph graph)
         {
             _pipeline = pipeline;
             _graph = graph;

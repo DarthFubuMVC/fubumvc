@@ -9,9 +9,9 @@ namespace FubuMVC.Core.Assets
 {
     public class AssetPipelineBuilderActivator : IActivator
     {
-        private readonly AssetPipeline _pipeline;
+        private readonly IAssetFileRegistration _pipeline;
 
-        public AssetPipelineBuilderActivator(AssetPipeline pipeline)
+        public AssetPipelineBuilderActivator(IAssetFileRegistration pipeline)
         {
             _pipeline = pipeline;
         }
