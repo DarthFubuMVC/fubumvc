@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Assets
         void Require(params string[] name);
         IEnumerable<string> AllRequestedAssets { get; }
         IEnumerable<string> AllRenderedAssets { get; }
-        void UseFileIfExists(string name);
+        void UseAssetIfExists(params string[] names);
         AssetPlanKey DequeueAssetsToRender(MimeType mimeType);  
         IEnumerable<AssetPlanKey> DequeueAssetsToRender();
     }
@@ -51,12 +51,15 @@ namespace FubuMVC.Core.Assets
             }
         }
 
-        public void UseFileIfExists(string name)
+        public void UseAssetIfExists(params string[] names)
         {
-            if (_pipeline.Find(name) != null)
+            names.Each(name =>
             {
-                Require(name);
-            }
+                if (_pipeline.Find(name) != null)
+                {
+                    Require(name);
+                }
+            });
         }
 
         private IEnumerable<string> outstandingAssets()

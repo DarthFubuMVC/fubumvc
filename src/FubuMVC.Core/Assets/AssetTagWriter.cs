@@ -3,13 +3,14 @@ using System.Linq;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
+using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core.Assets
 {
     public interface IAssetTagWriter
     {
-        IEnumerable<HtmlTag> WriteAllTags();
-        IEnumerable<HtmlTag> WriteTags(MimeType mimeType);
+        TagList WriteAllTags();
+        TagList WriteTags(MimeType mimeType);
     }
 
     // Mostly depending on StoryTeller tests for this class
@@ -26,17 +27,17 @@ namespace FubuMVC.Core.Assets
             _builder = builder;
         }
 
-        public IEnumerable<HtmlTag> WriteAllTags()
+        public TagList WriteAllTags()
         {
             var requests = _requirements.DequeueAssetsToRender();
 
-            return requests.SelectMany(TagsForPlan);
+            return requests.SelectMany(TagsForPlan).ToTagList();
         }
 
-        public IEnumerable<HtmlTag> WriteTags(MimeType mimeType)
+        public TagList WriteTags(MimeType mimeType)
         {
             var plan = _requirements.DequeueAssetsToRender(mimeType);
-            return TagsForPlan(plan);
+            return TagsForPlan(plan).ToTagList();
         }
 
         public IEnumerable<HtmlTag> TagsForPlan(AssetPlanKey key)
@@ -45,4 +46,6 @@ namespace FubuMVC.Core.Assets
             return _builder.Build(plan);
         }
     }
+
+    
 }

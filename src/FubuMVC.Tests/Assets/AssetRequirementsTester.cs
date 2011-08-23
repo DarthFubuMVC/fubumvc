@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Assets
         public void use_file_if_exists_negative_case()
         {
             scriptDoesNotExist("jquery.js");
-            ClassUnderTest.UseFileIfExists("jquery.js");
+            ClassUnderTest.UseAssetIfExists("jquery.js");
 
             ClassUnderTest.AllRequestedAssets.Any().ShouldBeFalse();
         }
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Assets
         public void use_file_if_exists_positive_case()
         {
             scriptExists("jquery.js");
-            ClassUnderTest.UseFileIfExists("jquery.js");
+            ClassUnderTest.UseAssetIfExists("jquery.js");
 
             ClassUnderTest.AllRequestedAssets.Single().ShouldEqual("jquery.js");
         }

@@ -482,9 +482,7 @@
     <Compile Include="UI\Navigation\MenuItemToken.cs" />
     <Compile Include="UI\PartialExpressionExtensions.cs" />
     <Compile Include="UI\PartialInvoker.cs" />
-    <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
-    <Compile Include="UI\IContentFileCombiner.cs" />
-    <Compile Include="UI\ICssLinkTagWriter.cs" />
+    <Compile Include="UI\AssetFilePageExtensions.cs" />
     <Compile Include="Assets\AssetDslReader.cs" />
     <Compile Include="Assets\AssetGatherer.cs" />
     <Compile Include="Assets\Extension.cs" />

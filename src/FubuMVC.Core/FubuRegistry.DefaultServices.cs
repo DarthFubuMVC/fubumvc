@@ -229,7 +229,6 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone(new AssetGraph());
 
             graph.Services.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
-            graph.Services.SetServiceIfNone<ICssLinkTagWriter, CssLinkTagWriter>();
 
             graph.Services.SetServiceIfNone<ICombinationDeterminationService, CombinationDeterminationService>();
 

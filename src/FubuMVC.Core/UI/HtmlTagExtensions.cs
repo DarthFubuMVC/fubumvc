@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuLocalization;
@@ -38,6 +39,11 @@ namespace FubuMVC.Core.UI
         public static T TextIfEmpty<T>(this T tag, StringToken token) where T : HtmlTag
         {
             return tag.TextIfEmpty(token.ToString());
+        }
+
+        public static TagList ToTagList(this IEnumerable<HtmlTag> tags)
+        {
+            return new TagList(tags);
         }
     }
 }
