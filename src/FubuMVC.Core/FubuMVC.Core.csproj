@@ -175,6 +175,7 @@
     <Compile Include="Caching\RequestOutputCacheBehavior.cs" />
     <Compile Include="Caching\RequestOutputCacheNode.cs" />
     <Compile Include="Content\ContentRegistryCache.cs" />
+    <Compile Include="Registration\DSL\AssetsExpression.cs" />
     <Compile Include="Runtime\MimeTypeProvider.cs" />
     <Compile Include="Content\IContentFolderService.cs" />
     <Compile Include="Content\IContentRegistry.cs" />

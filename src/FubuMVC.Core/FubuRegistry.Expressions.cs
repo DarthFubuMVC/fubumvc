@@ -280,6 +280,16 @@ namespace FubuMVC.Core
         }
 
 
+        /// <summary>
+        /// Modify or configure the settings, data, and policies for the Assets Pipeline feature
+        /// </summary>
+        public AssetsExpression Assets
+        {
+            get
+            {
+                return new AssetsExpression(this);
+            }
+        }
 
         #region Nested type: RegistryImport
 
