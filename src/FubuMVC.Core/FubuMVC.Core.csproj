@@ -485,7 +485,6 @@
     <Compile Include="UI\ScriptAndCssPageExtensions.cs" />
     <Compile Include="UI\IContentFileCombiner.cs" />
     <Compile Include="UI\ICssLinkTagWriter.cs" />
-    <Compile Include="UI\ContentFileCombinerPackage.cs" />
     <Compile Include="Assets\AssetDslReader.cs" />
     <Compile Include="Assets\AssetGatherer.cs" />
     <Compile Include="Assets\Extension.cs" />

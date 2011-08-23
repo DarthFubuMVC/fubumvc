@@ -245,6 +245,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void asset_tag_write_is_registered()
+        {
+            registeredTypeIs<IAssetTagWriter, AssetTagWriter>();
+        }
+
+        [Test]
         public void asset_pipeline_is_registered_as_both_IAssetPipeline_and_IAssetFileRegistration_as_the_same_instance()
         {
             var services = new FubuRegistry().BuildGraph().Services;

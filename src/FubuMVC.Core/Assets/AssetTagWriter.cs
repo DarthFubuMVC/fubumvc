@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Assets.Tags;
-using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 
@@ -11,13 +8,16 @@ namespace FubuMVC.Core.Assets
 {
     public interface IAssetTagWriter
     {
+        IEnumerable<HtmlTag> WriteAllTags();
+        IEnumerable<HtmlTag> WriteTags(MimeType mimeType);
     }
 
+    // Mostly depending on StoryTeller tests for this class
     public class AssetTagWriter : IAssetTagWriter
     {
+        private readonly IAssetTagBuilder _builder;
         private readonly IAssetTagPlanCache _planCache;
         private readonly IAssetRequirements _requirements;
-        private readonly IAssetTagBuilder _builder;
 
         public AssetTagWriter(IAssetTagPlanCache planCache, IAssetRequirements requirements, IAssetTagBuilder builder)
         {
