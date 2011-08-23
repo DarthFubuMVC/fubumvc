@@ -84,5 +84,13 @@ namespace FubuMVC.Core.Assets.Combination
 
             _subjects.Insert(index, combination);
         }
+
+        public IEnumerable<MissingAssetTagSubject> RemoveMissingAssets()
+        {
+            var missing = _subjects.OfType<MissingAssetTagSubject>().ToList();
+            _subjects.RemoveAll(x => x is MissingAssetTagSubject);
+
+            return missing;
+        }
     }
 }

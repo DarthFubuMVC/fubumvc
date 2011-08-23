@@ -229,5 +229,25 @@ k=scripts/k.js
         }
 
 
+        [Test]
+        public void remove_missing()
+        {
+            var plan = planFor("a,b,c,d");
+            var plan2 = planFor("e,f,g");
+            var plan3 = planFor("h,i");
+            plan.AddSubjects(new IAssetTagSubject[]{new MissingAssetTagSubject("s1.js"), new MissingAssetTagSubject("s2.js")});
+        
+            plan.AddSubjects(plan2.Subjects);
+
+            plan.AddSubjects(new IAssetTagSubject[] { new MissingAssetTagSubject("s3.js"), new MissingAssetTagSubject("s4.js") });
+
+            plan.AddSubjects(plan3.Subjects);
+
+            var missing = plan.RemoveMissingAssets();
+            missing.Select(x => x.Name).ShouldHaveTheSameElementsAs("s1.js", "s2.js", "s3.js", "s4.js");
+
+            plan.Subjects.Select(x => x.Name).ShouldHaveTheSameElementsAs("a.js", "b.js", "c.js", "d.js", "e.js", "f.js", "g.js", "h.js", "i.js");
+        }
+
     }
 }

@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Content;
 using HtmlTags;
 
 namespace FubuMVC.Core.UI
 {
+    [MarkedForTermination]
     public interface ICssLinkTagWriter
     {
         IEnumerable<HtmlTag> Write(IEnumerable<string> stylesheets);
         IEnumerable<HtmlTag> WriteIfExists(IEnumerable<string> stylesheets);
     }
 
+    [MarkedForTermination]
     public class CssLinkTagWriter : ICssLinkTagWriter
     {
         private readonly IContentRegistry _contentRegistry;
