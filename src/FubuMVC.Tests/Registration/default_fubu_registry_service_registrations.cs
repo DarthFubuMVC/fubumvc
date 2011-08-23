@@ -6,6 +6,7 @@ using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
@@ -221,6 +222,12 @@ namespace FubuMVC.Tests.Registration
         public void asset_tag_planner_is_registered()
         {
             registeredTypeIs<IAssetTagPlanner, AssetTagPlanner>();
+        }
+
+        [Test]
+        public void asset_tag_builder_is_registered()
+        {
+            registeredTypeIs<IAssetTagBuilder, AssetTagBuilder>();
         }
 
         [Test]

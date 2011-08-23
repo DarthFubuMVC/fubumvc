@@ -92,5 +92,13 @@ namespace FubuMVC.Core.Assets.Combination
 
             return missing;
         }
+
+        public static AssetTagPlan For(MimeType mimeType, params IAssetTagSubject[] subjects)
+        {
+            var plan = new AssetTagPlan(mimeType);
+            plan.AddSubjects(subjects);
+
+            return plan;
+        }
     }
 }

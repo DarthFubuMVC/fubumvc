@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
@@ -9,12 +7,6 @@ using FubuCore;
 
 namespace FubuMVC.Core.Assets
 {
-    // Make this stupid about Mime type sorting.  Assume that it's fed ONE MimeType at a time
-    public interface IAssetTagPlanner
-    {
-        AssetTagPlan BuildPlan(MimeType mimeType, IEnumerable<string> names);
-    }
-
     public class AssetTagPlanner : IAssetTagPlanner
     {
         private readonly IAssetPipeline _pipeline;
@@ -59,17 +51,5 @@ namespace FubuMVC.Core.Assets
         }
 
 
-    }
-
-    [Serializable]
-    public class MixedMimetypeException : Exception
-    {
-        public MixedMimetypeException(string message) : base(message)
-        {
-        }
-
-        protected MixedMimetypeException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

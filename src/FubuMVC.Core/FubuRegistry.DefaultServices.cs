@@ -8,6 +8,7 @@ using FubuCore.Configuration;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
@@ -229,6 +230,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IAssetCombinationCache, AssetCombinationCache>();
             graph.Services.SetServiceIfNone<IAssetDependencyFinder, AssetDependencyFinderCache>();
             graph.Services.SetServiceIfNone<IAssetTagPlanner, AssetTagPlanner>();
+            graph.Services.SetServiceIfNone<IAssetTagBuilder, AssetTagBuilder>();
         }
 
         private void registerActivators(BehaviorGraph graph)

@@ -12,6 +12,8 @@ namespace FubuMVC.Core.Assets.Files
     /// </summary>
     public class AssetFile : IAssetTagSubject
     {
+        
+
         public AssetFile()
         {
         }
@@ -19,6 +21,12 @@ namespace FubuMVC.Core.Assets.Files
         public AssetFile(string name)
         {
             Name = name;
+        }
+
+        public AssetFile(string name, AssetFolder? folder)
+        {
+            Name = name;
+            Folder = folder;
         }
 
         public AssetFolder? Folder { get; set; }
@@ -45,8 +53,10 @@ namespace FubuMVC.Core.Assets.Files
             return Path.GetExtension(Name);
         }
 
+        // TODO -- just pull MimeType live
         public MimeType MimeType { get; private set; }
 
+        // TODO -- get rid of this
         public void DetermineMimetype(IMimeTypeProvider provider)
         {
             MimeType = Folder.HasValue ? provider.For(Extension(), Folder.Value) : provider.For(Extension());
