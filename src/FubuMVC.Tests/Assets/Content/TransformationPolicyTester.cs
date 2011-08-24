@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
@@ -115,7 +116,7 @@ namespace FubuMVC.Tests.Assets.Content
 
     public class StubTransformer : IAssetTransformer
     {
-        public string Transform(IContentSource inner)
+        public string Transform(string contents, IEnumerable<AssetFile> files)
         {
             throw new NotImplementedException();
         }
@@ -123,7 +124,7 @@ namespace FubuMVC.Tests.Assets.Content
 
     public class StubTransformer2 : IAssetTransformer
     {
-        public string Transform(IContentSource inner)
+        public string Transform(string contents, IEnumerable<AssetFile> files)
         {
             throw new NotImplementedException();
         }

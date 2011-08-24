@@ -12,9 +12,9 @@ namespace FubuMVC.Core.Assets.Content
             _file = file;
         }
 
-        public string GetContent(ITransformContext context)
+        public string GetContent(IContentPipeline pipeline)
         {
-            return context.ReadContentsFrom(_file.FullPath);
+            return pipeline.ReadContentsFrom(_file.FullPath);
         }
 
         public IEnumerable<AssetFile> Files

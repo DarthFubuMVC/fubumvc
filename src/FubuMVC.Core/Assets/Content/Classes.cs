@@ -4,35 +4,16 @@ using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public interface ITransformContext
+    public interface IContentPipeline
     {
         string ReadContentsFrom(string file);
+        IAssetTransformer GetTransformer<T>() where T : IAssetTransformer;
     }
 
     public interface IContentSource
     {
-        string GetContent(ITransformContext context);
+        string GetContent(IContentPipeline pipeline);
         IEnumerable<AssetFile> Files { get; }
-    }
-
-    public class TransformSource<T> : IContentSource where T : IAssetTransformer
-    {
-        private readonly IContentSource _inner;
-
-        public TransformSource(IContentSource inner)
-        {
-            _inner = inner;
-        }
-
-        public string GetContent(ITransformContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<AssetFile> Files
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 
     public class CombiningContentSource : IContentSource
@@ -44,7 +25,7 @@ namespace FubuMVC.Core.Assets.Content
             _innerSources = innerSources;
         }
 
-        public string GetContent(ITransformContext context)
+        public string GetContent(IContentPipeline pipeline)
         {
             throw new NotImplementedException();
         }
@@ -57,7 +38,7 @@ namespace FubuMVC.Core.Assets.Content
 
     public interface IAssetTransformer
     {
-        string Transform(IContentSource inner);
+        string Transform(string contents, IEnumerable<AssetFile> files);
     }
 
     public class TransformationPlan

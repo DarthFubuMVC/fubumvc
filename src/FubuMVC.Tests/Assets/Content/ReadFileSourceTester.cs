@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void read_content()
         {
-            var context = MockRepository.GenerateMock<ITransformContext>();
+            var context = MockRepository.GenerateMock<IContentPipeline>();
             var file = new AssetFile("something.js"){
                 FullPath = "some/path"
             };

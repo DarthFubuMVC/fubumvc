@@ -109,6 +109,7 @@
     <Compile Include="Assets\Combination\AssetCombinationSet.cs" />
     <Compile Include="Assets\Combination\ScriptFileCombination.cs" />
     <Compile Include="Assets\Combination\StyleFileCombination.cs" />
+    <Compile Include="Assets\Content\TransformSource.cs" />
     <Compile Include="Assets\Files\AssetFile.cs" />
     <Compile Include="Assets\Files\AssetFileBuilder.cs" />
     <Compile Include="Assets\Files\AssetFileSource.cs" />
