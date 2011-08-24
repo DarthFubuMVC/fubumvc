@@ -5,7 +5,7 @@ using FubuMVC.Core.Runtime;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Core.Assets.Transformation
+namespace FubuMVC.Core.Assets.Content
 {
     public class TransformationPolicy : ITransformationPolicy
     {

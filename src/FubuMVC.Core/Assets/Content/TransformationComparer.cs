@@ -5,7 +5,7 @@ using FubuMVC.Core.Assets.Files;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Core.Assets.Transformation
+namespace FubuMVC.Core.Assets.Content
 {
     public class TransformationComparer : IComparer<ITransformationPolicy>
     {

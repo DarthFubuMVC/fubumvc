@@ -1,19 +1,38 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Assets.Transformation
+namespace FubuMVC.Core.Assets.Content
 {
     public interface ITransformContext
     {
-        
+        string ReadContentsFrom(string file);
     }
 
     public interface IContentSource
     {
         string GetContent(ITransformContext context);
         IEnumerable<AssetFile> Files { get; }
+    }
+
+    public class TransformSource<T> : IContentSource where T : IAssetTransformer
+    {
+        private readonly IContentSource _inner;
+
+        public TransformSource(IContentSource inner)
+        {
+            _inner = inner;
+        }
+
+        public string GetContent(ITransformContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<AssetFile> Files
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
     public class CombiningContentSource : IContentSource
@@ -39,15 +58,6 @@ namespace FubuMVC.Core.Assets.Transformation
     public interface IAssetTransformer
     {
         string Transform(IContentSource inner);
-    }
-
-    public enum ActionType
-    {
-        Generate = 1,
-        Substitution = 2,
-        Transformation = 3,
-        BatchedTransformation = 4, 
-        Global = 5 // minification mostly, but might use this for tracing too
     }
 
     public class TransformationPlan
@@ -94,17 +104,5 @@ namespace FubuMVC.Core.Assets.Transformation
     {
         // keeps transformation plan per name
         // keeps transformer 
-    }
-
-
-    public interface ITransformationPolicy
-    {
-        IEnumerable<string> Extensions { get; }
-        ActionType ActionType { get; }
-        Type TransformerType { get; }
-        MimeType MimeType { get; }
-        int? MatchingExtensionPosition(IList<string> extensions);
-        bool AppliesTo(AssetFile file);
-        bool MustBeAfter(ITransformationPolicy policy);
     }
 }

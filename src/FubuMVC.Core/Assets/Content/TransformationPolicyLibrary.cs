@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using System.Linq;
 
-namespace FubuMVC.Core.Assets.Transformation
+namespace FubuMVC.Core.Assets.Content
 {
     public class TransformationPolicyLibrary
     {

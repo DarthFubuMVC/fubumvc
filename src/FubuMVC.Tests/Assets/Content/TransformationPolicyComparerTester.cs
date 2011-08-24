@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Transformation;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Assets.Transformations
+namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
     public class TransformationPolicyComparerTester

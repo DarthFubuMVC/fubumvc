@@ -1,11 +1,11 @@
 using System;
+using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Transformation;
 using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Assets.Transformations
+namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
     public class TransformationPolicyTester
