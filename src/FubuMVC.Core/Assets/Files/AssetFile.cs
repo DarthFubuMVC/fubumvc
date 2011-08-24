@@ -1,19 +1,17 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
-using FubuMVC.Core.Content;
+using System.Linq;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Files
 {
     /// <summary>
-    ///  Make AssetFile dumb
-    /// Forget CDN for now
-    /// Forget LastChanged
+    ///   Make AssetFile dumb
+    ///   Forget CDN for now
+    ///   Forget LastChanged
     /// </summary>
     public class AssetFile : IAssetTagSubject
     {
-        
-
         public AssetFile()
         {
         }
@@ -29,32 +27,13 @@ namespace FubuMVC.Core.Assets.Files
             Folder = folder;
         }
 
+        public string FullPath { get; set; }
+        //public DateTime LastChanged { get; set; }
+        public bool Override { get; set; }
         public AssetFolder? Folder { get; set; }
 
         public string Name { get; set; }
 
-        public string FullPath { get; set; }
-        //public DateTime LastChanged { get; set; }
-        public bool Override { get; set; }
-
-        public override string ToString()
-        {
-            var description = string.Format("Asset: {0} at {1}", Name, FullPath);
-            if (Override)
-            {
-                description = description + " (Override)";
-            }
-
-            return description;
-        }
-
-        public string Extension()
-        {
-            return Path.GetExtension(Name);
-        }
-
-        
-        // TODO -- just pull MimeType live
         public MimeType MimeType
         {
             get
@@ -76,6 +55,25 @@ namespace FubuMVC.Core.Assets.Files
             }
         }
 
+        public override string ToString()
+        {
+            var description = string.Format("Asset: {0} at {1}", Name, FullPath);
+            if (Override)
+            {
+                description = description + " (Override)";
+            }
+
+            return description;
+        }
+
+        public string Extension()
+        {
+            return Path.GetExtension(Name);
+        }
+
+
+        // TODO -- just pull MimeType live
+
         public bool Equals(AssetFile other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -95,7 +93,7 @@ namespace FubuMVC.Core.Assets.Files
         {
             unchecked
             {
-                int result = (Folder.HasValue ? Folder.Value.GetHashCode() : 0);
+                var result = (Folder.HasValue ? Folder.Value.GetHashCode() : 0);
                 result = (result*397) ^ (Name != null ? Name.GetHashCode() : 0);
                 result = (result*397) ^ (FullPath != null ? FullPath.GetHashCode() : 0);
                 return result;
@@ -103,9 +101,9 @@ namespace FubuMVC.Core.Assets.Files
         }
 
 
+        public IEnumerable<string> AllExtensions()
+        {
+            return Name.Split('.').Skip(1).Select(x => "." + x);
+        }
     }
-
-
-
-
 }

@@ -4,6 +4,7 @@ using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FubuMVC.Tests.Assets.Files
 {
@@ -58,6 +59,15 @@ namespace FubuMVC.Tests.Assets.Files
             scriptFile.MimeType.ShouldEqual(MimeType.Javascript);
 
             cssFile.MimeType.ShouldEqual(MimeType.Css);
+        }
+
+        [Test]
+        public void find_all_the_possible_extensions()
+        {
+            new AssetFile("script.js").AllExtensions().ShouldHaveTheSameElementsAs(".js");
+            new AssetFile("script.trans1.js").AllExtensions().ShouldHaveTheSameElementsAs(".trans1",".js");
+            new AssetFile("script.trans1.trans2.js").AllExtensions().ShouldHaveTheSameElementsAs(".trans1", ".trans2",".js");
+            new AssetFile("something").AllExtensions().Any().ShouldBeFalse();
         }
 
     }
