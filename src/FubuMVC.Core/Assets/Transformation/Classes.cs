@@ -111,12 +111,6 @@ namespace FubuMVC.Core.Assets.Transformation
         // keeps transformer 
     }
 
-    
-    public class TransformationPolicyLibrary
-    {
-        // has all the TransformationPolicy's
-        // TODO -- this thing needs to play in the bootstrapping to get the mimetypes
-    }
 
     public interface ITransformationPolicy
     {

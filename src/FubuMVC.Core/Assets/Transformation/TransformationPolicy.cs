@@ -87,4 +87,35 @@ namespace FubuMVC.Core.Assets.Transformation
             return false;
         }
     }
+
+    public class JavascriptTransformationPolicy<T> : TransformationPolicy where T : IAssetTransformer
+    {
+        public JavascriptTransformationPolicy(ActionType actionType) : base(actionType, MimeType.Javascript, typeof(T))
+        {
+        }
+
+        public static JavascriptTransformationPolicy<T> For(ActionType actionType, params string[] extensions)
+        {
+            var policy = new JavascriptTransformationPolicy<T>(actionType);
+            extensions.Each(policy.AddExtension);
+
+            return policy;
+        }
+    }
+
+    public class CssTransformationPolicy<T> : TransformationPolicy where T : IAssetTransformer
+    {
+        public CssTransformationPolicy(ActionType actionType)
+            : base(actionType, MimeType.Css, typeof(T))
+        {
+        }
+
+        public static CssTransformationPolicy<T> For(ActionType actionType, params string[] extensions)
+        {
+            var policy = new CssTransformationPolicy<T>(actionType);
+            extensions.Each(policy.AddExtension);
+
+            return policy;
+        }
+    }
 }
