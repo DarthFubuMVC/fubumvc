@@ -43,26 +43,11 @@ namespace FubuMVC.Core.Assets.Transformation
 
     public enum ActionType
     {
-        Generate,
-        Substitution,
-        Transformation,
-        BatchedTransformation, 
-        Global // minification mostly, but might use this for tracing too
-    }
-
-    public class TransformationComparer : IComparer<ITransformationPolicy>
-    {
-        private readonly TransformationPolicyLibrary _library;
-
-        public TransformationComparer(TransformationPolicyLibrary library)
-        {
-            _library = library;
-        }
-
-        public int Compare(ITransformationPolicy x, ITransformationPolicy y)
-        {
-            throw new NotImplementedException();
-        }
+        Generate = 1,
+        Substitution = 2,
+        Transformation = 3,
+        BatchedTransformation = 4, 
+        Global = 5 // minification mostly, but might use this for tracing too
     }
 
     public class TransformationPlan

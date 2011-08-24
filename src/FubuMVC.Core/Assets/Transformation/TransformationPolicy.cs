@@ -14,6 +14,7 @@ namespace FubuMVC.Core.Assets.Transformation
         private readonly MimeType _mimeType;
         private readonly Type _transformerType;
         private readonly IList<Func<AssetFile, bool>> _matchingCriteria = new List<Func<AssetFile, bool>>();
+        private readonly IList<Func<ITransformationPolicy, bool>> _mustBeAfterRules = new List<Func<ITransformationPolicy, bool>>();
 
         public TransformationPolicy(ActionType actionType, MimeType mimeType, Type transformerType)
         {
@@ -36,6 +37,11 @@ namespace FubuMVC.Core.Assets.Transformation
         public void AddMatchingCriteria(Func<AssetFile, bool> criteria)
         {
             _matchingCriteria.Add(criteria);
+        }
+
+        public void AddMustBeAfterRule(Func<ITransformationPolicy, bool> mustBeAfterTest)
+        {
+            _mustBeAfterRules.Add(mustBeAfterTest);
         }
 
         public void AddExtension(string extension)
@@ -82,9 +88,21 @@ namespace FubuMVC.Core.Assets.Transformation
             return _matchingCriteria.Any(x => x(file));
         }
 
-        public virtual bool MustBeAfter(ITransformationPolicy policy)
+        public bool MustBeAfter(ITransformationPolicy policy)
         {
-            return false;
+            return _mustBeAfterRules.Any(x => x(policy));
+        }
+
+        public override string ToString()
+        {
+            return "Transform with {0} for {1} with extensions {2} ({3})"
+                .ToFormat(
+                    TransformerType.Name,
+                    MimeType.Value,
+                    _extensions.Join(", "),
+                    ActionType
+                );
+
         }
     }
 

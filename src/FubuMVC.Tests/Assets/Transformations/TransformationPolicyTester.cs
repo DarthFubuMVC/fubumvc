@@ -91,6 +91,21 @@ namespace FubuMVC.Tests.Assets.Transformations
             policy.MustBeAfter(policy2).ShouldBeFalse();
             policy2.MustBeAfter(policy).ShouldBeFalse();
         }
+
+        [Test]
+        public void use_must_be_after_rules()
+        {
+            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+                                                  typeof(StubTransformer));
+
+            var policy2 = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+                                                  typeof(StubTransformer));
+
+            policy2.AddMustBeAfterRule(p => p == policy);
+
+            policy.MustBeAfter(policy2).ShouldBeFalse();
+            policy2.MustBeAfter(policy).ShouldBeTrue();
+        }
     }
 
     public interface ExtendingIAssetTransformer : IAssetTransformer
