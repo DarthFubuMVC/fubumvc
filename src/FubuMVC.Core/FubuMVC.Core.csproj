@@ -134,6 +134,7 @@
     <Compile Include="Assets\Tags\IMissingAssetHandler.cs" />
     <Compile Include="Assets\Tags\MissingAssetsException.cs" />
     <Compile Include="Assets\Tags\TraceOnlyMissingAssetHandler.cs" />
+    <Compile Include="Assets\Transformation\Classes.cs" />
     <Compile Include="Behaviors\DataContractJsonReader.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\IJsonReader.cs" />
