@@ -20,6 +20,15 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
+        public void no_inner_content_sources()
+        {
+            var file = new AssetFile("something.js");
+            var source = new ReadFileSource(file);
+
+            source.InnerSources.Any().ShouldBeFalse();
+        }
+
+        [Test]
         public void read_content()
         {
             var context = MockRepository.GenerateMock<IContentPipeline>();

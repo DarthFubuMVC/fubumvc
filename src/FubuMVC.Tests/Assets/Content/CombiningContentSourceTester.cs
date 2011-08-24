@@ -48,6 +48,12 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
+        public void inner_sources_returns_the_____wait_for_it______the_inner_sources()
+        {
+            ClassUnderTest.InnerSources.ShouldHaveTheSameElementsAs(theInners);
+        }
+
+        [Test]
         public void files_should_return_a_union_of_all_the_files_in_the_inner_sources()
         {
             ClassUnderTest.Files.ShouldHaveTheSameElementsAs(allFiles);

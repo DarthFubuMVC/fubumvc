@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
 
@@ -20,6 +21,34 @@ namespace FubuMVC.Core.Assets.Content
         public IEnumerable<AssetFile> Files
         {
             get { yield return _file; }
+        }
+
+        public IEnumerable<IContentSource> InnerSources
+        {
+            get
+            {
+                yield break;
+            }
+        }
+
+        public bool Equals(ReadFileSource other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._file, _file);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (ReadFileSource)) return false;
+            return Equals((ReadFileSource) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_file != null ? _file.GetHashCode() : 0);
         }
     }
 }

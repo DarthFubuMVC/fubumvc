@@ -25,5 +25,10 @@ namespace FubuMVC.Core.Assets.Content
         {
             get { return _inner.Files; }
         }
+
+        public IEnumerable<IContentSource> InnerSources
+        {
+            get { yield return _inner; }
+        }
     }
 }

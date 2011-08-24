@@ -3,6 +3,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Linq;
 
 namespace FubuMVC.Tests.Assets.Content
 {
@@ -17,6 +18,12 @@ namespace FubuMVC.Tests.Assets.Content
             MockFor<IContentSource>().Stub(x => x.Files).Return(files);
 
             ClassUnderTest.Files.ShouldBeTheSameAs(files);
+        }
+
+        [Test]
+        public void inner_sources_includes_only_the_one_inner_source()
+        {
+            ClassUnderTest.InnerSources.Single().ShouldBeTheSameAs(MockFor<IContentSource>());
         }
 
         [Test]

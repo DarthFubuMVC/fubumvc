@@ -32,5 +32,10 @@ namespace FubuMVC.Core.Assets.Content
         {
             get { return _innerSources.SelectMany(x => x.Files); }
         }
+
+        public IEnumerable<IContentSource> InnerSources
+        {
+            get { return _innerSources; }
+        }
     }
 }
