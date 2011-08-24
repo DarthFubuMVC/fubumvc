@@ -110,6 +110,9 @@
     <Compile Include="Assets\Combination\ScriptFileCombination.cs" />
     <Compile Include="Assets\Combination\StyleFileCombination.cs" />
     <Compile Include="Assets\Content\CombiningContentSource.cs" />
+    <Compile Include="Assets\Content\IAssetTransformer.cs" />
+    <Compile Include="Assets\Content\IContentPipeline.cs" />
+    <Compile Include="Assets\Content\IContentSource.cs" />
     <Compile Include="Assets\Content\TransformationPlan.cs" />
     <Compile Include="Assets\Content\TransformSource.cs" />
     <Compile Include="Assets\Files\AssetFile.cs" />
