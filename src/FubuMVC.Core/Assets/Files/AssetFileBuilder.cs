@@ -22,10 +22,9 @@ namespace FubuMVC.Core.Assets.Files
         {
             var name = filename.PathRelativeTo(_specificDirectory).Replace(Path.DirectorySeparatorChar, '/');
             var path = new AssetPath(_directory.PackageName, name, _assetFolder);
-            var file = new AssetFile()
+            var file = new AssetFile(name)
                        {
-                           FullPath = filename.ToFullPath(),
-                           Name = name
+                           FullPath = filename.ToFullPath()
                        };
 
             _registration.AddFile(path, file);

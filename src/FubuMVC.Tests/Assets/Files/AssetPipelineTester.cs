@@ -21,9 +21,7 @@ namespace FubuMVC.Tests.Assets.Files
         public void adding_a_file_by_path_sets_the_folder_on_the_file()
         {
             // This is important for later
-            var theFile = new AssetFile(){
-                Name = "a.js"
-            };
+            var theFile = new AssetFile("a.js");
 
             var thePath = new AssetPath("pak1", "a.js", AssetFolder.styles);
 

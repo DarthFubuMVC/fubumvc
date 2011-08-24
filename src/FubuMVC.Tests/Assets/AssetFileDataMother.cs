@@ -17,6 +17,11 @@ namespace FubuMVC.Tests.Assets
             _callback = callback;
         }
 
+        public AssetFile this[string key]
+        {
+            get { return _files[key]; }
+        }
+
         public void LoadAssets(string text)
         {
             var reader = new StringReader(text);
@@ -43,24 +48,13 @@ namespace FubuMVC.Tests.Assets
 
             var path = new AssetPath(stringPath);
 
-            var file = new AssetFile()
-                       {
-                           Name = path.Name,
-                           Override = @override
-                       };
+            var file = new AssetFile(path.Name){
+                Override = @override
+            };
 
             _files[key] = file;
 
             _callback(path, file);
         }
-
-        public AssetFile this[string key]
-        {
-            get
-            {
-                return _files[key];
-            }
-        }
-    
     }
 }

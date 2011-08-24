@@ -25,9 +25,9 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void determine_asset_url_simple()
         {
-            var file = new AssetFile{
-                Folder = AssetFolder.scripts,
-                Name = "jquery.forms.js"
+            var file = new AssetFile("jquery.forms.js")
+            {
+                Folder = AssetFolder.scripts
             };
 
             AssetFileHandler.DetermineAssetUrl(file)
@@ -37,10 +37,9 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void determine_asset_url_complex()
         {
-            var file = new AssetFile
+            var file = new AssetFile("shared/jquery.forms.js")
             {
-                Folder = AssetFolder.scripts,
-                Name = "shared/jquery.forms.js"
+                Folder = AssetFolder.scripts
             };
 
             AssetFileHandler.DetermineAssetUrl(file)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,31 +13,13 @@ namespace FubuMVC.Core.Assets.Files
     /// </summary>
     public class AssetFile : IAssetTagSubject
     {
-        public AssetFile()
-        {
-        }
+        private readonly string _name;
+        private readonly Lazy<MimeType> _mimeType;
 
         public AssetFile(string name)
         {
-            Name = name;
-        }
-
-        public AssetFile(string name, AssetFolder? folder)
-        {
-            Name = name;
-            Folder = folder;
-        }
-
-        public string FullPath { get; set; }
-        //public DateTime LastChanged { get; set; }
-        public bool Override { get; set; }
-        public AssetFolder? Folder { get; set; }
-
-        public string Name { get; set; }
-
-        public MimeType MimeType
-        {
-            get
+            _name = name;
+            _mimeType = new Lazy<MimeType>(() =>
             {
                 var mimeType = MimeType.DetermineMimeTypeFromName(Name);
                 if (mimeType != null) return mimeType;
@@ -52,6 +35,28 @@ namespace FubuMVC.Core.Assets.Files
                     default:
                         throw new UnknownExtensionException(Extension());
                 }
+            });
+        }
+
+        public AssetFile(string name, AssetFolder? folder) : this(name)
+        {
+            Folder = folder;
+        }
+
+        public string FullPath { get; set; }
+        public bool Override { get; set; }
+        public AssetFolder? Folder { get; set; }
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public MimeType MimeType
+        {
+            get
+            {
+                return _mimeType.Value;
             }
         }
 
@@ -70,9 +75,6 @@ namespace FubuMVC.Core.Assets.Files
         {
             return Path.GetExtension(Name);
         }
-
-
-        // TODO -- just pull MimeType live
 
         public bool Equals(AssetFile other)
         {

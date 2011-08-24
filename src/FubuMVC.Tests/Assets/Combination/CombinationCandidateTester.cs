@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.Assets.Combination
     [TestFixture]
     public class CombinationCandidateTester
     {
-        private readonly Cache<string, AssetFile> _files = new Cache<string, AssetFile>(name => new AssetFile(){Name = name});
+        private readonly Cache<string, AssetFile> _files = new Cache<string, AssetFile>(name => new AssetFile(name));
         private MimeType theCurrentMimeType = MimeType.Javascript;
 
         [SetUp]

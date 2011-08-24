@@ -10,15 +10,9 @@ namespace FubuMVC.Tests.Assets.Combination
     public class AssetFileCombinationTester
     {
         private readonly IEnumerable<AssetFile> _files = new[]{
-            new AssetFile{
-                Name = "jquery.js"
-            },
-            new AssetFile{
-                Name = "script1.js"
-            },
-            new AssetFile{
-                Name = "script2.js"
-            },
+            new AssetFile("jquery.js"),
+            new AssetFile("script1.js"),
+            new AssetFile("script2.js")
         };
 
         [Test]

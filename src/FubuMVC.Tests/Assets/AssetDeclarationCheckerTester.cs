@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Assets
         [Test]
         public void does_not_log_a_problem_if_an_asset_file_can_be_found()
         {
-            MockFor<IAssetPipeline>().Stub(x => x.Find(theAssetName)).Return(new AssetFile());
+            MockFor<IAssetPipeline>().Stub(x => x.Find(theAssetName)).Return(new AssetFile("something.js"));
 
             ClassUnderTest.VerifyFileDependency(theAssetName);
 

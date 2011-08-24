@@ -63,7 +63,7 @@ k=scripts/k.js
         public void try_to_find_a_sequence_where_the_start_is_not_found()
         {
             var plan = planFor("a,b,c,d,e,f,g,h,i,j,k");
-            plan.TryFindSequenceStartingWith(new AssetFile(), 2).ShouldBeNull();
+            plan.TryFindSequenceStartingWith(new AssetFile("something.js"), 2).ShouldBeNull();
         }
 
         [Test]

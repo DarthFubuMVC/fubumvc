@@ -16,9 +16,7 @@ namespace FubuMVC.Tests.Assets.Combination
         {
             for (int i = 0; i < count; i++)
             {
-                var file = new AssetFile(){
-                    Name = "script" + i + ".js"
-                };
+                var file = new AssetFile("script" + i + ".js");
 
                 yield return file;
             }

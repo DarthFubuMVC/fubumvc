@@ -14,9 +14,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void finds_the_extension_of_itself()
         {
-            var file = new AssetFile{
-                Name = "script.js"
-            };
+            var file = new AssetFile("script.js");
 
             file.Extension().ShouldEqual(".js");
         }
@@ -24,9 +22,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void finds_the_extension_even_with_multiple_dots()
         {
-            var file = new AssetFile(){
-                Name = "jquery.forms.js"
-            };
+            var file = new AssetFile("jquery.forms.js");
 
             file.Extension().ShouldEqual(".js");
         }
@@ -34,8 +30,7 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void use_the_asset_folder_while_determining_mimetype()
         {
-            var coffee = new AssetFile(){
-                Name = "something.coffee", 
+            var coffee = new AssetFile("something.coffee"){
                 Folder = AssetFolder.scripts
             };
 
@@ -45,16 +40,9 @@ namespace FubuMVC.Tests.Assets.Files
         [Test]
         public void determine_mimetype_positive()
         {
-            var scriptFile = new AssetFile
-            {
-                Name = "script.js"
-            };
+            var scriptFile = new AssetFile("script.js");
 
-            var cssFile = new AssetFile
-            {
-                Name = "main.css"
-            };
-
+            var cssFile = new AssetFile("main.css");
 
             scriptFile.MimeType.ShouldEqual(MimeType.Javascript);
 
