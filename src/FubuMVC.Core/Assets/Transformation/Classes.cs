@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Assets.Transformation
         string Transform(IContentSource inner);
     }
 
-    public enum TransformationAction
+    public enum ActionType
     {
         Generate,
         Substitution,
@@ -121,71 +121,11 @@ namespace FubuMVC.Core.Assets.Transformation
     public interface ITransformationPolicy
     {
         IEnumerable<string> Extensions { get; }
-        TransformationAction Action { get; }
+        ActionType ActionType { get; }
         Type TransformerType { get; }
         MimeType MimeType { get; }
-        int MatchingExtensionPosition(IEnumerable<string> extensions);
+        int? MatchingExtensionPosition(IList<string> extensions);
         bool AppliesTo(AssetFile file);
         bool MustBeAfter(ITransformationPolicy policy);
     }
-
-    public class TransformationPolicy : ITransformationPolicy
-    {
-        private readonly TransformationAction _action;
-        private readonly IList<string> _extensions = new List<string>();
-        private readonly MimeType _mimeType;
-        private readonly Type _transformerType;
-        private readonly IList<Func<AssetFile, bool>> _matchingCriteria = new List<Func<AssetFile, bool>>();
-        private readonly IList<Func<TransformationPolicy, bool>> _predecessorCritera = new List<Func<TransformationPolicy, bool>>();
-
-        public TransformationPolicy(TransformationAction action, MimeType mimeType, Type transformerType)
-        {
-            _action = action;
-            _mimeType = mimeType;
-            _transformerType = transformerType;
-        }
-
-        public void AddExtension(string extension)
-        {
-            _extensions.Add(extension);
-        }
-
-        public IEnumerable<string> Extensions
-        {
-            get { return _extensions; }
-        }
-
-        public virtual int MatchingExtensionPosition(IEnumerable<string> extensions)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TransformationAction Action
-        {
-            get { return _action; }
-        }
-
-        public Type TransformerType
-        {
-            get { return _transformerType; }
-        }
-
-        public MimeType MimeType
-        {
-            get { return _mimeType; }
-        }
-
-        public bool AppliesTo(AssetFile file)
-        {
-            // Yes if the 
-            throw new NotImplementedException();
-        }
-
-        public virtual bool MustBeAfter(ITransformationPolicy policy)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
 }
