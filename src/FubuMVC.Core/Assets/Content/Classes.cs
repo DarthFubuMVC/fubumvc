@@ -16,26 +16,6 @@ namespace FubuMVC.Core.Assets.Content
         IEnumerable<AssetFile> Files { get; }
     }
 
-    public class CombiningContentSource : IContentSource
-    {
-        private readonly IEnumerable<IContentSource> _innerSources;
-
-        public CombiningContentSource(IEnumerable<IContentSource> innerSources)
-        {
-            _innerSources = innerSources;
-        }
-
-        public string GetContent(IContentPipeline pipeline)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<AssetFile> Files
-        {
-            get { throw new NotImplementedException(); }
-        }
-    }
-
     public interface IAssetTransformer
     {
         string Transform(string contents, IEnumerable<AssetFile> files);
