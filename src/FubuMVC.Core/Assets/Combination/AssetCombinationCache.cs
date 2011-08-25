@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Assets.Combination
 
         public AssetFileCombination FindCombination(string name)
         {
-            throw new NotImplementedException();
+            return _combinations.GetAll().SelectMany(x => x.GetAll()).FirstOrDefault(x => x.Name == name);
         }
     }
 }

@@ -46,6 +46,30 @@ namespace FubuMVC.Tests.Assets.Combination
         }
 
         [Test]
+        public void find_combination_in_the_underlying_storage()
+        {
+            var theCache = new AssetCombinationCache();
+            var scriptCombo1 = new ScriptFileCombination("script1", files(5));
+            theCache.StoreCombination(MimeType.Javascript, scriptCombo1);
+            theCache.StoreCombination(MimeType.Javascript, new ScriptFileCombination("script2", files(6)));
+            theCache.StoreCombination(MimeType.Javascript, new ScriptFileCombination("script3", files(7)));
+            theCache.StoreCombination(MimeType.Javascript, new ScriptFileCombination("script4", files(4)));
+        
+        
+            theCache.StoreCombination(MimeType.Css, new StyleFileCombination("css1", null, files(10)));
+            theCache.StoreCombination(MimeType.Css, new StyleFileCombination("css2", null, files(8)));
+            var cssCombo3 = new StyleFileCombination("css3", null, files(12));
+            theCache.StoreCombination(MimeType.Css, cssCombo3);
+            theCache.StoreCombination(MimeType.Css, new StyleFileCombination("css4", null, files(15)));
+
+
+            theCache.FindCombination("script1").ShouldBeTheSameAs(scriptCombo1);
+            theCache.FindCombination("css3").ShouldBeTheSameAs(cssCombo3);
+
+
+        }
+
+        [Test]
         public void store_combinations_and_pull_out_in_order_by_size()
         {
             var theCache = new AssetCombinationCache();
