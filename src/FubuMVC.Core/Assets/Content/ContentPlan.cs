@@ -24,6 +24,21 @@ namespace FubuMVC.Core.Assets.Content
             _sources.AddRange(files.Select(InitialSourceForAssetFile));
         }
 
+        public void AcceptVisitor(IContentPlanVisitor visitor)
+        {
+            _sources.Each(s => acceptVisitorForSource(visitor, s));
+        }
+
+        private static void acceptVisitorForSource(IContentPlanVisitor visitor, IContentSource source)
+        {
+            visitor.Push(source);
+
+            source.InnerSources.Each(s => acceptVisitorForSource(visitor, s));
+
+            visitor.Pop();
+        }
+
+
         public string Name
         {
             get { return _name; }

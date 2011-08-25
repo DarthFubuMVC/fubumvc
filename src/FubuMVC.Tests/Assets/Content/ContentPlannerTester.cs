@@ -12,6 +12,8 @@ namespace FubuMVC.Tests.Assets.Content
     [TestFixture]
     public class ContentPlannerTester : InteractionContext<ContentPlanner>
     {
+        private AssetFile[] theFiles;
+
         [Test]
         public void throw_argument_out_of_range_exception_when_findfiles_cannot_find_anything()
         {
@@ -22,6 +24,68 @@ namespace FubuMVC.Tests.Assets.Content
             {
                 ClassUnderTest.FindFiles("script1");
             });
+        }
+
+        [Test]
+        public void accept_a_visitor_simple()
+        {
+            var mocks = new MockRepository();
+
+            var visitor = mocks.StrictMock<IContentPlanVisitor>();
+
+
+            theFiles = new AssetFile[]{
+                new AssetFile("a.js"){FullPath = "a.js"}, 
+                new AssetFile("b.js"){FullPath = "b.js"}, 
+                new AssetFile("c.js"){FullPath = "c.js"}, 
+                new AssetFile("d.js"){FullPath = "d.js"}, 
+            };
+
+            var plan = new ContentPlan("something", theFiles);
+            var read0 = plan.AllSources.ElementAt(0);
+            var read1 = plan.AllSources.ElementAt(1);
+            var read2 = plan.AllSources.ElementAt(2);
+            var read3 = plan.AllSources.ElementAt(3);
+
+            var combo1 = plan.Combine(new IContentSource[]{read1, read2});
+            var combo2 = plan.Combine(new IContentSource[]{read0, combo1, read3});
+
+            using (mocks.Ordered())
+            {
+                visitor.Expect(x => x.Push(combo2));
+
+                visitor.Expect(x => x.Push(read0));
+                visitor.Expect(x => x.Pop());
+
+                visitor.Expect(x => x.Push(combo1));
+
+                visitor.Expect(x => x.Push(read1));
+                visitor.Expect(x => x.Pop());
+
+                visitor.Expect(x => x.Push(read2));
+                visitor.Expect(x => x.Pop());
+
+                visitor.Expect(x => x.Pop());
+
+
+                visitor.Expect(x => x.Push(read3));
+                visitor.Expect(x => x.Pop());
+
+                visitor.Expect(x => x.Pop());
+
+                
+            }
+
+            mocks.ReplayAll();
+
+            plan.AcceptVisitor(visitor);
+
+
+            mocks.VerifyAll();
+
+            
+
+
         }
     }
 
