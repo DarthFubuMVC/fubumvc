@@ -44,7 +44,6 @@ namespace FubuMVC.Core.Assets.Content
 
         public IEnumerable<AssetFile> FindFiles(string name)
         {
-            throw new NotImplementedException();
             var combination = _combinations.FindCombination(name);
             if (combination != null)
             {
@@ -52,6 +51,13 @@ namespace FubuMVC.Core.Assets.Content
             }
 
             var assetFile = _pipeline.Find(name);
+
+            if (assetFile == null)
+            {
+                throw new ArgumentOutOfRangeException("No combination or asset file exists with the name " + name);
+            }
+
+
             return new AssetFile[]{assetFile};
         }
     }

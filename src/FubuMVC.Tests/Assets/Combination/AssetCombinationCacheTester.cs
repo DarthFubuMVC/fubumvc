@@ -67,6 +67,8 @@ namespace FubuMVC.Tests.Assets.Combination
             theCache.FindCombination("css3").ShouldBeTheSameAs(cssCombo3);
 
 
+            theCache.FindCombination("something that does not exist").ShouldBeNull();
+
         }
 
         [Test]

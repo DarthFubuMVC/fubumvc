@@ -116,6 +116,7 @@
     <Compile Include="Assets\Combination\StyleFileCombinationTester.cs" />
     <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\Content\CombiningContentSourceTester.cs" />
+    <Compile Include="Assets\Content\ContentPlannerTester.cs" />
     <Compile Include="Assets\Content\FileReadTester.cs" />
     <Compile Include="Assets\Content\ContentPlanTester.cs" />
     <Compile Include="Assets\Content\TransformTester.cs" />
