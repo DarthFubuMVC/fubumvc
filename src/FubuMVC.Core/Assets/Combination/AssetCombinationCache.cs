@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
@@ -31,6 +32,11 @@ namespace FubuMVC.Core.Assets.Combination
         public IEnumerable<CombinationCandidate> OrderedCombinationCandidatesFor(MimeType mimeType)
         {
             return _candidates[mimeType].GetAll().OrderByDescending(x => x.Length);
+        }
+
+        public AssetFileCombination FindCombination(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

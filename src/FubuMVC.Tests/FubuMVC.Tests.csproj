@@ -116,9 +116,9 @@
     <Compile Include="Assets\Combination\StyleFileCombinationTester.cs" />
     <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\Content\CombiningContentSourceTester.cs" />
-    <Compile Include="Assets\Content\ReadFileSourceTester.cs" />
-    <Compile Include="Assets\Content\TransformationPlanTester.cs" />
-    <Compile Include="Assets\Content\TransformSourceTester.cs" />
+    <Compile Include="Assets\Content\FileReadTester.cs" />
+    <Compile Include="Assets\Content\ContentPlanTester.cs" />
+    <Compile Include="Assets\Content\TransformTester.cs" />
     <Compile Include="Assets\Files\AssetFileTester.cs" />
     <Compile Include="Assets\Files\AssetPathTester.cs" />
     <Compile Include="Assets\Files\AssetPipelineBuilderIntegratedTester.cs" />
@@ -131,8 +131,8 @@
     <Compile Include="Assets\Tags\TraceOnlyMissingAssetHandlerTester.cs" />
     <Compile Include="Assets\Tags\YellowScreenMissingAssetHandlerTester.cs" />
     <Compile Include="Assets\Content\TransformationPolicyComparerTester.cs" />
-    <Compile Include="Assets\Content\TransformationPolicyLibraryTester.cs" />
-    <Compile Include="Assets\Content\TransformationPolicyTester.cs" />
+    <Compile Include="Assets\Content\TransformerPolicyLibraryTester.cs" />
+    <Compile Include="Assets\Content\TransformerPolicyTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />

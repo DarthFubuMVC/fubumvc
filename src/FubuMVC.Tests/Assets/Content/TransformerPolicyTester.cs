@@ -9,12 +9,12 @@ using FubuTestingSupport;
 namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
-    public class TransformationPolicyTester
+    public class TransformerPolicyTester
     {
         [Test]
         public void matching_extension_position()
         {
-            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof (StubTransformer));
 
             policy.MatchingExtensionPosition(new[]{".js", ".coffee"}).HasValue.ShouldBeFalse();
@@ -29,20 +29,20 @@ namespace FubuMVC.Tests.Assets.Content
             // Wrong concrete type
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
             {
-                new TransformationPolicy(ActionType.Generate, MimeType.Javascript, GetType());
+                new TransformerPolicy(ActionType.Generate, MimeType.Javascript, GetType());
             });
 
             // Not a concrete type
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
             {
-                new TransformationPolicy(ActionType.Generate, MimeType.Javascript, typeof(ExtendingIAssetTransformer));
+                new TransformerPolicy(ActionType.Generate, MimeType.Javascript, typeof(IExtendingITransformer));
             });
         }
 
         [Test]
         public void applies_to_negative_on_all()
         {
-            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
  
             policy.AddExtension(".coffee");
@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void applies_to_positive_based_on_mimetype()
         {
-            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
 
             policy.AddExtension(".coffee");
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void applies_to_positive_and_negative_based_on_other_criteria()
         {
-            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
   
             policy.AddMatchingCriteria(file => file.Name.StartsWith("yes"));
@@ -83,10 +83,10 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void must_be_after_is_false_by_default()
         {
-            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
 
-            var policy2 = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy2 = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
 
             policy.MustBeAfter(policy2).ShouldBeFalse();
@@ -96,10 +96,10 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void use_must_be_after_rules()
         {
-            var policy = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
 
-            var policy2 = new TransformationPolicy(ActionType.Transformation, MimeType.Javascript,
+            var policy2 = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
 
             policy2.AddMustBeAfterRule(p => p == policy);
@@ -107,14 +107,24 @@ namespace FubuMVC.Tests.Assets.Content
             policy.MustBeAfter(policy2).ShouldBeFalse();
             policy2.MustBeAfter(policy).ShouldBeTrue();
         }
+
+        [Test]
+        public void must_be_batched()
+        {
+            new JavascriptTransformerPolicy<StubTransformer>(ActionType.Generate).MustBeBatched().ShouldBeFalse();
+            new JavascriptTransformerPolicy<StubTransformer>(ActionType.Substitution).MustBeBatched().ShouldBeFalse();
+            new JavascriptTransformerPolicy<StubTransformer>(ActionType.Transformation).MustBeBatched().ShouldBeFalse();
+            new JavascriptTransformerPolicy<StubTransformer>(ActionType.BatchedTransformation).MustBeBatched().ShouldBeTrue();
+            new JavascriptTransformerPolicy<StubTransformer>(ActionType.Global).MustBeBatched().ShouldBeTrue();
+        }
     }
 
-    public interface ExtendingIAssetTransformer : IAssetTransformer
+    public interface IExtendingITransformer : ITransformer
     {
         
     }
 
-    public class StubTransformer : IAssetTransformer
+    public class StubTransformer : ITransformer
     {
         public string Transform(string contents, IEnumerable<AssetFile> files)
         {
@@ -122,7 +132,7 @@ namespace FubuMVC.Tests.Assets.Content
         }
     }
 
-    public class StubTransformer2 : IAssetTransformer
+    public class StubTransformer2 : ITransformer
     {
         public string Transform(string contents, IEnumerable<AssetFile> files)
         {

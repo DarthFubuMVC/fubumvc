@@ -8,7 +8,7 @@ using System.Linq;
 namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
-    public class TransformSourceTester : InteractionContext<TransformSource<StubTransformer>>
+    public class TransformTester : InteractionContext<Transform<StubTransformer>>
     {
         [Test]
         public void files_delegates_to_the_inner()
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void get_content_invokes_the_corrent_asset_transformer_against_the_content_of_the_inner_source()
         {
-            var theTransformerFoundFromThePipeline = MockFor<IAssetTransformer>();
+            var theTransformerFoundFromThePipeline = MockFor<ITransformer>();
             var thePipeline = MockFor<IContentPipeline>();
 
             var files = new AssetFile[0];

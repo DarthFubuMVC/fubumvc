@@ -11,5 +11,7 @@ namespace FubuMVC.Core.Assets.Combination
 
         void AddFilesToCandidate(MimeType mimeType, string name, IEnumerable<AssetFile> files);
         IEnumerable<CombinationCandidate> OrderedCombinationCandidatesFor(MimeType mimeType);
+
+        AssetFileCombination FindCombination(string name);
     }
 }

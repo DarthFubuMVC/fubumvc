@@ -9,39 +9,39 @@ namespace FubuMVC.Tests.Assets.Content
     [TestFixture]
     public class TransformationPolicyComparerTester
     {
-        private TransformationComparer theComparer;
-        private TransformationPolicy generate;
-        private TransformationPolicy substitution;
-        private TransformationPolicy transformation;
-        private TransformationPolicy batched;
-        private TransformationPolicy global;
-        private JavascriptTransformationPolicy<StubTransformer> generateA;
-        private JavascriptTransformationPolicy<StubTransformer> generateB;
-        private JavascriptTransformationPolicy<StubTransformer> generateC;
-        private JavascriptTransformationPolicy<StubTransformer> generate2;
-        private JavascriptTransformationPolicy<StubTransformer> generate3;
+        private TransformerComparer theComparer;
+        private TransformerPolicy generate;
+        private TransformerPolicy substitution;
+        private TransformerPolicy _transformer;
+        private TransformerPolicy batched;
+        private TransformerPolicy global;
+        private JavascriptTransformerPolicy<StubTransformer> generateA;
+        private JavascriptTransformerPolicy<StubTransformer> generateB;
+        private JavascriptTransformerPolicy<StubTransformer> generateC;
+        private JavascriptTransformerPolicy<StubTransformer> generate2;
+        private JavascriptTransformerPolicy<StubTransformer> generate3;
 
         [SetUp]
         public void SetUp()
         {
             var file = new AssetFile("something.a.b.c.d.js");
-            theComparer = new TransformationComparer(file);
+            theComparer = new TransformerComparer(file);
 
-            generate = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate);
-            generate2 = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate);
-            generate3 = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate);
-            generateA = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate, ".a");
-            generateB = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate, ".b");
-            generateC = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate, ".c");
-            substitution = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Substitution);
-            transformation = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Transformation);
-            batched = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.BatchedTransformation);
-            global = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Global);
+            generate = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate);
+            generate2 = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate);
+            generate3 = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate);
+            generateA = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate, ".a");
+            generateB = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate, ".b");
+            generateC = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate, ".c");
+            substitution = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Substitution);
+            _transformer = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Transformation);
+            batched = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.BatchedTransformation);
+            global = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Global);
         }
 
-        private IList<ITransformationPolicy> sort(params ITransformationPolicy[] policies)
+        private IList<ITransformerPolicy> sort(params ITransformerPolicy[] policies)
         {
-            var list = new List<ITransformationPolicy>(policies);
+            var list = new List<ITransformerPolicy>(policies);
             list.Sort(theComparer);
 
             return list;
@@ -56,11 +56,11 @@ namespace FubuMVC.Tests.Assets.Content
             sort(substitution, global).ShouldHaveTheSameElementsAs(substitution, global);
             sort(global, substitution).ShouldHaveTheSameElementsAs(substitution, global);
 
-            sort(batched, global, generate, substitution, transformation)
-                .ShouldHaveTheSameElementsAs(generate, substitution, transformation, batched, global);
+            sort(batched, global, generate, substitution, _transformer)
+                .ShouldHaveTheSameElementsAs(generate, substitution, _transformer, batched, global);
 
-            sort(batched, global, generate, substitution, transformation)
-                .ShouldHaveTheSameElementsAs(generate, substitution, transformation, batched, global);
+            sort(batched, global, generate, substitution, _transformer)
+                .ShouldHaveTheSameElementsAs(generate, substitution, _transformer, batched, global);
 
         
         }
@@ -100,9 +100,9 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void return_zero_for_ordering_if_there_is_no_possible_way_to_sort()
         {
-            var generate4 = JavascriptTransformationPolicy<StubTransformer>.For(ActionType.Generate, ".4");
+            var generate4 = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate, ".4");
 
-            var comparer = new TransformationComparer(new AssetFile("something.js"));
+            var comparer = new TransformerComparer(new AssetFile("something.js"));
             comparer.Compare(generate, generate4).ShouldEqual(0);
             comparer.Compare(generate4, generate).ShouldEqual(0);
         }

@@ -7,21 +7,21 @@ using FubuCore;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class TransformationComparer : IComparer<ITransformationPolicy>
+    public class TransformerComparer : IComparer<ITransformerPolicy>
     {
         private readonly AssetFile _file;
-        private readonly Cache<ITransformationPolicy, int?> _positions;
+        private readonly Cache<ITransformerPolicy, int?> _positions;
         private readonly Lazy<IList<string>> _extensions;
 
-        public TransformationComparer(AssetFile file)
+        public TransformerComparer(AssetFile file)
         {
             _file = file;
             _extensions = new Lazy<IList<string>>(() => _file.AllExtensions().ToList());
 
-            _positions = new Cache<ITransformationPolicy, int?>(policy => policy.MatchingExtensionPosition(_extensions.Value));
+            _positions = new Cache<ITransformerPolicy, int?>(policy => policy.MatchingExtensionPosition(_extensions.Value));
         }
 
-        public int Compare(ITransformationPolicy x, ITransformationPolicy y)
+        public int Compare(ITransformerPolicy x, ITransformerPolicy y)
         {
             if (ReferenceEquals(x, y)) return 0;
 

@@ -5,11 +5,12 @@ using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
 using FubuCore;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
-    public class TransformationPlanTester
+    public class ContentPlanTester
     {
         [Test]
         public void initial_source_for_asset_file_with_a_path_is_a_read_file_source()
@@ -18,8 +19,8 @@ namespace FubuMVC.Tests.Assets.Content
                 FullPath = "something"
             };
 
-            var source = TransformationPlan.InitialSourceForAssetFile(assetFile)
-                .ShouldBeOfType<ReadFileSource>();
+            var source = ContentPlan.InitialSourceForAssetFile(assetFile)
+                .ShouldBeOfType<FileRead>();
 
             source.Files.Single().ShouldBeTheSameAs(assetFile);
         }
@@ -33,7 +34,7 @@ namespace FubuMVC.Tests.Assets.Content
 
             Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
             {
-                TransformationPlan.InitialSourceForAssetFile(assetFile);
+                ContentPlan.InitialSourceForAssetFile(assetFile);
             });
         }
 
@@ -47,9 +48,27 @@ namespace FubuMVC.Tests.Assets.Content
                 new AssetFile("something4.js"){FullPath = "something4.js"}, 
             };
 
-            var plan = new TransformationPlan("a plan", files);
+            var plan = new ContentPlan("a plan", files);
 
-            plan.AllSources.ShouldHaveTheSameElementsAs(files.Select(x => new ReadFileSource(x)));
+            plan.AllSources.ShouldHaveTheSameElementsAs(files.Select(x => new FileRead(x)));
+        }
+
+        [Test]
+        public void find_for_file_initially()
+        {
+            var files = new AssetFile[]{
+                new AssetFile("something.js"){FullPath = "something.js"}, 
+                new AssetFile("something2.js"){FullPath = "something2.js"}, 
+                new AssetFile("something3.js"){FullPath = "something3.js"}, 
+                new AssetFile("something4.js"){FullPath = "something4.js"}, 
+            };
+
+            var plan = new ContentPlan("a plan", files);
+
+            files.Each(f =>
+            {
+                plan.FindForFile(f).ShouldBeOfType<FileRead>().Files.Single().ShouldBeTheSameAs(f);
+            });
         }
 
 
@@ -59,7 +78,7 @@ namespace FubuMVC.Tests.Assets.Content
     public class when_applying_a_transform_to_an_existing_subject
     {
         private AssetFile[] files;
-        private TransformationPlan thePlan;
+        private ContentPlan thePlan;
         private IContentSource theReadFileSource;
         private IContentSource theTransformerNode;
 
@@ -73,7 +92,7 @@ namespace FubuMVC.Tests.Assets.Content
                 new AssetFile("something4.js"){FullPath = "something4.js"}, 
             };
 
-            thePlan = new TransformationPlan("a plan", files);
+            thePlan = new ContentPlan("a plan", files);
             theReadFileSource = thePlan.AllSources.ElementAt(2);
             theTransformerNode = thePlan.ApplyTransform(theReadFileSource, typeof(StubTransformer));
         }
@@ -93,7 +112,7 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void the_transformer_node_should_use_the_specified_transformer_type()
         {
-            theTransformerNode.ShouldBeOfType<TransformSource<StubTransformer>>();
+            theTransformerNode.ShouldBeOfType<Transform<StubTransformer>>();
         }
 
         [Test]
@@ -107,10 +126,10 @@ namespace FubuMVC.Tests.Assets.Content
     public class when_combining_a_series_of_sources
     {
         private AssetFile[] files;
-        private TransformationPlan thePlan;
+        private ContentPlan thePlan;
         private IContentSource theReadFileSource;
         private IContentSource theTransformerNode;
-        private CombiningContentSource theCombination;
+        private Core.Assets.Content.Combination theCombination;
 
         [SetUp]
         public void SetUp()
@@ -122,20 +141,20 @@ namespace FubuMVC.Tests.Assets.Content
                 new AssetFile("something4.js"){FullPath = "something4.js"}, 
             };
 
-            thePlan = new TransformationPlan("a plan", files);
+            thePlan = new ContentPlan("a plan", files);
             theCombination = thePlan.Combine(new[]{thePlan.AllSources.ElementAt(1), thePlan.AllSources.ElementAt(2)});
         }
 
         [Test]
         public void the_combination_should_take_the_place_of_the_inner_sources_in_the_plan()
         {
-            thePlan.AllSources.ShouldHaveTheSameElementsAs(new ReadFileSource(files[0]), theCombination, new ReadFileSource(files[3]));
+            thePlan.AllSources.ShouldHaveTheSameElementsAs(new FileRead(files[0]), theCombination, new FileRead(files[3]));
         }
 
         [Test]
         public void the_combination_contains_the_read_file_sources()
         {
-            theCombination.InnerSources.ShouldHaveTheSameElementsAs(new ReadFileSource(files[1]), new ReadFileSource(files[2]));
+            theCombination.InnerSources.ShouldHaveTheSameElementsAs(new FileRead(files[1]), new FileRead(files[2]));
         }
     }
 
@@ -143,10 +162,10 @@ namespace FubuMVC.Tests.Assets.Content
     public class when_combining_a_series_of_sources_at_the_beginning_of_the_plan
     {
         private AssetFile[] files;
-        private TransformationPlan thePlan;
+        private ContentPlan thePlan;
         private IContentSource theReadFileSource;
         private IContentSource theTransformerNode;
-        private CombiningContentSource theCombination;
+        private Core.Assets.Content.Combination theCombination;
 
         [SetUp]
         public void SetUp()
@@ -158,20 +177,20 @@ namespace FubuMVC.Tests.Assets.Content
                 new AssetFile("something4.js"){FullPath = "something4.js"}, 
             };
 
-            thePlan = new TransformationPlan("a plan", files);
+            thePlan = new ContentPlan("a plan", files);
             theCombination = thePlan.Combine(new[] { thePlan.AllSources.ElementAt(0), thePlan.AllSources.ElementAt(1) });
         }
 
         [Test]
         public void the_combination_should_take_the_place_of_the_inner_sources_in_the_plan()
         {
-            thePlan.AllSources.ShouldHaveTheSameElementsAs(theCombination, new ReadFileSource(files[2]), new ReadFileSource(files[3]));
+            thePlan.AllSources.ShouldHaveTheSameElementsAs(theCombination, new FileRead(files[2]), new FileRead(files[3]));
         }
 
         [Test]
         public void the_combination_contains_the_read_file_sources()
         {
-            theCombination.InnerSources.ShouldHaveTheSameElementsAs(new ReadFileSource(files[0]), new ReadFileSource(files[1]));
+            theCombination.InnerSources.ShouldHaveTheSameElementsAs(new FileRead(files[0]), new FileRead(files[1]));
         }
     }
 }

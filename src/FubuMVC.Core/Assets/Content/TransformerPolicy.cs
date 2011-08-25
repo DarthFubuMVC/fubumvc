@@ -7,20 +7,20 @@ using FubuCore;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class TransformationPolicy : ITransformationPolicy
+    public class TransformerPolicy : ITransformerPolicy
     {
         private readonly ActionType _actionType;
         private readonly IList<string> _extensions = new List<string>();
         private readonly MimeType _mimeType;
         private readonly Type _transformerType;
         private readonly IList<Func<AssetFile, bool>> _matchingCriteria = new List<Func<AssetFile, bool>>();
-        private readonly IList<Func<ITransformationPolicy, bool>> _mustBeAfterRules = new List<Func<ITransformationPolicy, bool>>();
+        private readonly IList<Func<ITransformerPolicy, bool>> _mustBeAfterRules = new List<Func<ITransformerPolicy, bool>>();
 
-        public TransformationPolicy(ActionType actionType, MimeType mimeType, Type transformerType)
+        public TransformerPolicy(ActionType actionType, MimeType mimeType, Type transformerType)
         {
-            if (!transformerType.IsConcreteTypeOf<IAssetTransformer>())
+            if (!transformerType.IsConcreteTypeOf<ITransformer>())
             {
-                throw new ArgumentOutOfRangeException("Type {0} is not a concrete type of {1}".ToFormat(transformerType.FullName, typeof(IAssetTransformer).FullName));
+                throw new ArgumentOutOfRangeException("Type {0} is not a concrete type of {1}".ToFormat(transformerType.FullName, typeof(ITransformer).FullName));
             }
 
             _actionType = actionType;
@@ -39,7 +39,7 @@ namespace FubuMVC.Core.Assets.Content
             _matchingCriteria.Add(criteria);
         }
 
-        public void AddMustBeAfterRule(Func<ITransformationPolicy, bool> mustBeAfterTest)
+        public void AddMustBeAfterRule(Func<ITransformerPolicy, bool> mustBeAfterTest)
         {
             _mustBeAfterRules.Add(mustBeAfterTest);
         }
@@ -88,7 +88,7 @@ namespace FubuMVC.Core.Assets.Content
             return _matchingCriteria.Any(x => x(file));
         }
 
-        public bool MustBeAfter(ITransformationPolicy policy)
+        public bool MustBeAfter(ITransformerPolicy policy)
         {
             return _mustBeAfterRules.Any(x => x(policy));
         }
@@ -106,31 +106,36 @@ namespace FubuMVC.Core.Assets.Content
         }
     }
 
-    public class JavascriptTransformationPolicy<T> : TransformationPolicy where T : IAssetTransformer
+    public class JavascriptTransformerPolicy<T> : TransformerPolicy where T : ITransformer
     {
-        public JavascriptTransformationPolicy(ActionType actionType) : base(actionType, MimeType.Javascript, typeof(T))
+        public JavascriptTransformerPolicy(ActionType actionType) : base(actionType, MimeType.Javascript, typeof(T))
         {
         }
 
-        public static JavascriptTransformationPolicy<T> For(ActionType actionType, params string[] extensions)
+        public static JavascriptTransformerPolicy<T> For(ActionType actionType, params string[] extensions)
         {
-            var policy = new JavascriptTransformationPolicy<T>(actionType);
+            var policy = new JavascriptTransformerPolicy<T>(actionType);
             extensions.Each(policy.AddExtension);
 
             return policy;
         }
+
+        public bool MustBeBatched()
+        {
+            return ActionType == ActionType.BatchedTransformation || ActionType == ActionType.Global;
+        }
     }
 
-    public class CssTransformationPolicy<T> : TransformationPolicy where T : IAssetTransformer
+    public class CssTransformerPolicy<T> : TransformerPolicy where T : ITransformer
     {
-        public CssTransformationPolicy(ActionType actionType)
+        public CssTransformerPolicy(ActionType actionType)
             : base(actionType, MimeType.Css, typeof(T))
         {
         }
 
-        public static CssTransformationPolicy<T> For(ActionType actionType, params string[] extensions)
+        public static CssTransformerPolicy<T> For(ActionType actionType, params string[] extensions)
         {
-            var policy = new CssTransformationPolicy<T>(actionType);
+            var policy = new CssTransformerPolicy<T>(actionType);
             extensions.Each(policy.AddExtension);
 
             return policy;

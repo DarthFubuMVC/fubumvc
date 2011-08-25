@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
-    public class CombiningContentSourceTester : InteractionContext<CombiningContentSource>
+    public class CombiningContentSourceTester : InteractionContext<Core.Assets.Content.Combination>
     {
         private IContentSource[] theInners;
         private AssetFile[] files1;
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Assets.Content
         [Test]
         public void the_content_should_include_all_the_content_in_order_of_the_inners()
         {
-            var separator = CombiningContentSource.Separator;
+            var separator = Core.Assets.Content.Combination.Separator;
             ClassUnderTest.GetContent(thePipeline).ShouldEqual(theInnerContent.Join(separator));
         }
     }

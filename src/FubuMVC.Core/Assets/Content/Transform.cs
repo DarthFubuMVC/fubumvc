@@ -4,11 +4,11 @@ using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class TransformSource<T> : IContentSource where T : IAssetTransformer
+    public class Transform<T> : IContentSource where T : ITransformer
     {
         private readonly IContentSource _inner;
 
-        public TransformSource(IContentSource inner)
+        public Transform(IContentSource inner)
         {
             _inner = inner;
         }

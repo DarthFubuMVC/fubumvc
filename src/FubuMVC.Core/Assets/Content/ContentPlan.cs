@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class TransformationPlan
+    public class ContentPlan
     {
         private readonly string _name;
         private readonly IList<IContentSource> _sources = new List<IContentSource>();
 
-        public TransformationPlan(string name, IEnumerable<AssetFile> files)
+        public ContentPlan(string name, IEnumerable<AssetFile> files)
         {
             _name = name;
             _sources.AddRange(files.Select(InitialSourceForAssetFile));
@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Assets.Content
         {
             if (file.FullPath.IsNotEmpty())
             {
-                return new ReadFileSource(file);
+                return new FileRead(file);
             }
 
             throw new ArgumentOutOfRangeException("Don't know how to determine a content source for an AssetFile without a FullPath (yet)");
@@ -40,12 +40,12 @@ namespace FubuMVC.Core.Assets.Content
             }
         }
 
-        public CombiningContentSource Combine(IEnumerable<IContentSource> sources)
+        public Combination Combine(IEnumerable<IContentSource> sources)
         {
             int index = findIndexOfSource(sources.First());
             _sources.RemoveAll(x => sources.Contains(x));
 
-            var combination = new CombiningContentSource(sources);
+            var combination = new Combination(sources);
             _sources.Insert(index, combination);
 
             return combination;
@@ -56,7 +56,7 @@ namespace FubuMVC.Core.Assets.Content
             int index = findIndexOfSource(source);
 
             _sources.Remove(source);
-            var transformer = typeof (TransformSource<>).CloseAndBuildAs<IContentSource>(source, transformerType);
+            var transformer = typeof (Transform<>).CloseAndBuildAs<IContentSource>(source, transformerType);
             _sources.Insert(index, transformer);
 
             return transformer;
@@ -70,6 +70,11 @@ namespace FubuMVC.Core.Assets.Content
                 throw new ArgumentOutOfRangeException("Source {0} is not in the top level of this plan".ToFormat(source));
             }
             return index;
+        }
+
+        public IContentSource FindForFile(AssetFile file)
+        {
+            return AllSources.FirstOrDefault(x => x.Files.Contains(file));
         }
     }
 }

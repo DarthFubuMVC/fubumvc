@@ -8,13 +8,13 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
-    public class ReadFileSourceTester
+    public class FileReadTester
     {
         [Test]
         public void files_are_just_the_one_file()
         {
             var file = new AssetFile("something.js");
-            var source = new ReadFileSource(file);
+            var source = new FileRead(file);
 
             source.Files.Single().ShouldBeTheSameAs(file);
         }
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Assets.Content
         public void no_inner_content_sources()
         {
             var file = new AssetFile("something.js");
-            var source = new ReadFileSource(file);
+            var source = new FileRead(file);
 
             source.InnerSources.Any().ShouldBeFalse();
         }
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Assets.Content
             var theContents = "some contents";
             context.Stub(x => x.ReadContentsFrom(file.FullPath)).Return(theContents);
 
-            var source = new ReadFileSource(file);
+            var source = new FileRead(file);
 
             source.GetContent(context).ShouldEqual(theContents);
         }

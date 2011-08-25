@@ -5,7 +5,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public interface ITransformationPolicy
+    public interface ITransformerPolicy
     {
         IEnumerable<string> Extensions { get; }
         ActionType ActionType { get; }
@@ -13,6 +13,6 @@ namespace FubuMVC.Core.Assets.Content
         MimeType MimeType { get; }
         int? MatchingExtensionPosition(IList<string> extensions);
         bool AppliesTo(AssetFile file);
-        bool MustBeAfter(ITransformationPolicy policy);
+        bool MustBeAfter(ITransformerPolicy policy);
     }
 }

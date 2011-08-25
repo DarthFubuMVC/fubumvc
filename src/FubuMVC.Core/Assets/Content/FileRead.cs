@@ -4,11 +4,11 @@ using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class ReadFileSource : IContentSource
+    public class FileRead : IContentSource
     {
         private readonly AssetFile _file;
 
-        public ReadFileSource(AssetFile file)
+        public FileRead(AssetFile file)
         {
             _file = file;
         }
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Assets.Content
             }
         }
 
-        public bool Equals(ReadFileSource other)
+        public bool Equals(FileRead other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -42,8 +42,8 @@ namespace FubuMVC.Core.Assets.Content
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (ReadFileSource)) return false;
-            return Equals((ReadFileSource) obj);
+            if (obj.GetType() != typeof (FileRead)) return false;
+            return Equals((FileRead) obj);
         }
 
         public override int GetHashCode()

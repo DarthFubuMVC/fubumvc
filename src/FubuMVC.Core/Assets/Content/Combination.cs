@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class CombiningContentSource : IContentSource
+    public class Combination : IContentSource
     {
         private readonly IEnumerable<IContentSource> _innerSources;
         public static readonly string Separator = Environment.NewLine + Environment.NewLine;
 
-        public CombiningContentSource(IEnumerable<IContentSource> innerSources)
+        public Combination(IEnumerable<IContentSource> innerSources)
         {
             _innerSources = innerSources;
         }
