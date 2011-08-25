@@ -47,12 +47,9 @@ namespace FubuMVC.Core.Assets.Content
             throw new ArgumentOutOfRangeException("Don't know how to determine a content source for an AssetFile without a FullPath (yet)");
         }
 
-        public IEnumerable<IContentSource> AllSources
+        public IEnumerable<IContentSource> GetAllSources()
         {
-            get
-            {
-                return _sources;
-            }
+            return _sources.ToArray();
         }
 
         public Combination Combine(IEnumerable<IContentSource> sources)
@@ -89,7 +86,15 @@ namespace FubuMVC.Core.Assets.Content
 
         public IContentSource FindForFile(AssetFile file)
         {
-            return AllSources.FirstOrDefault(x => x.Files.Contains(file));
+            return GetAllSources().FirstOrDefault(x => x.Files.Contains(file));
+        }
+
+        public void CombineAll()
+        {
+            if (GetAllSources().Count() > 1)
+            {
+                Combine(GetAllSources().ToList());
+            }
         }
     }
 }

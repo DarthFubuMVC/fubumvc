@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using FubuMVC.Core.Assets.Content;
 using FubuTestingSupport;
+using FubuCore;
 
 namespace FubuMVC.Tests.Assets.Content
 {
@@ -17,7 +18,8 @@ namespace FubuMVC.Tests.Assets.Content
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                _expectations.Add(line.Trim());
+                if (line.Trim().IsEmpty()) continue;
+                _expectations.Add(line.TrimEnd());
             }
         }
 
@@ -32,7 +34,7 @@ namespace FubuMVC.Tests.Assets.Content
             }
             catch (Exception)
             {
-                new ContentExpectationWriter(_expectations, previewer.Descriptions.ToList());
+                new ContentExpectationWriter(_expectations, previewer.Descriptions.ToList()).Write();
 
                 throw;
             }

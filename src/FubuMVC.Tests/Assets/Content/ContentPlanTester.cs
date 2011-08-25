@@ -50,7 +50,7 @@ namespace FubuMVC.Tests.Assets.Content
 
             var plan = new ContentPlan("a plan", files);
 
-            plan.AllSources.ShouldHaveTheSameElementsAs(files.Select(x => new FileRead(x)));
+            plan.GetAllSources().ShouldHaveTheSameElementsAs(files.Select(x => new FileRead(x)));
         }
 
         [Test]
@@ -93,20 +93,20 @@ namespace FubuMVC.Tests.Assets.Content
             };
 
             thePlan = new ContentPlan("a plan", files);
-            theReadFileSource = thePlan.AllSources.ElementAt(2);
+            theReadFileSource = thePlan.GetAllSources().ElementAt(2);
             theTransformerNode = thePlan.ApplyTransform(theReadFileSource, typeof(StubTransformer));
         }
 
         [Test]
         public void should_remove_the_original_content_source_from_all_sources()
         {
-            thePlan.AllSources.ShouldNotContain(theReadFileSource);
+            thePlan.GetAllSources().ShouldNotContain(theReadFileSource);
         }
 
         [Test]
         public void the_new_transform_source_should_be_at_the_same_position_as_the_original_readfilesource()
         {
-            thePlan.AllSources.ElementAt(2).ShouldBeTheSameAs(theTransformerNode);            
+            thePlan.GetAllSources().ElementAt(2).ShouldBeTheSameAs(theTransformerNode);            
         }
 
         [Test]
@@ -142,13 +142,13 @@ namespace FubuMVC.Tests.Assets.Content
             };
 
             thePlan = new ContentPlan("a plan", files);
-            theCombination = thePlan.Combine(new[]{thePlan.AllSources.ElementAt(1), thePlan.AllSources.ElementAt(2)});
+            theCombination = thePlan.Combine(new[]{thePlan.GetAllSources().ElementAt(1), thePlan.GetAllSources().ElementAt(2)});
         }
 
         [Test]
         public void the_combination_should_take_the_place_of_the_inner_sources_in_the_plan()
         {
-            thePlan.AllSources.ShouldHaveTheSameElementsAs(new FileRead(files[0]), theCombination, new FileRead(files[3]));
+            thePlan.GetAllSources().ShouldHaveTheSameElementsAs(new FileRead(files[0]), theCombination, new FileRead(files[3]));
         }
 
         [Test]
@@ -178,13 +178,13 @@ namespace FubuMVC.Tests.Assets.Content
             };
 
             thePlan = new ContentPlan("a plan", files);
-            theCombination = thePlan.Combine(new[] { thePlan.AllSources.ElementAt(0), thePlan.AllSources.ElementAt(1) });
+            theCombination = thePlan.Combine(new[] { thePlan.GetAllSources().ElementAt(0), thePlan.GetAllSources().ElementAt(1) });
         }
 
         [Test]
         public void the_combination_should_take_the_place_of_the_inner_sources_in_the_plan()
         {
-            thePlan.AllSources.ShouldHaveTheSameElementsAs(theCombination, new FileRead(files[2]), new FileRead(files[3]));
+            thePlan.GetAllSources().ShouldHaveTheSameElementsAs(theCombination, new FileRead(files[2]), new FileRead(files[3]));
         }
 
         [Test]

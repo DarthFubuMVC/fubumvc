@@ -110,12 +110,15 @@
     <Compile Include="Assets\Combination\ScriptFileCombination.cs" />
     <Compile Include="Assets\Combination\StyleFileCombination.cs" />
     <Compile Include="Assets\Content\Combination.cs" />
+    <Compile Include="Assets\Content\ContentPlanner.cs" />
     <Compile Include="Assets\Content\IContentPlanVisitor.cs" />
     <Compile Include="Assets\Content\ITransformer.cs" />
     <Compile Include="Assets\Content\IContentPipeline.cs" />
     <Compile Include="Assets\Content\IContentSource.cs" />
     <Compile Include="Assets\Content\ContentPlan.cs" />
+    <Compile Include="Assets\Content\TooManyBatchedTransformationsException.cs" />
     <Compile Include="Assets\Content\Transform.cs" />
+    <Compile Include="Assets\Content\TransformerRequirements.cs" />
     <Compile Include="Assets\Files\AssetFile.cs" />
     <Compile Include="Assets\Files\AssetFileBuilder.cs" />
     <Compile Include="Assets\Files\AssetFileSource.cs" />

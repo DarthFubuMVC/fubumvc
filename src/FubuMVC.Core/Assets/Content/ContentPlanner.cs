@@ -1,0 +1,146 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Files;
+
+namespace FubuMVC.Core.Assets.Content
+{
+    public class ContentPlanner
+    {
+        private readonly IAssetCombinationCache _combinations;
+        private readonly IAssetPipeline _pipeline;
+        private readonly ITransformerPolicyLibrary _library;
+
+        public ContentPlanner(IAssetCombinationCache combinations, IAssetPipeline pipeline, ITransformerPolicyLibrary library)
+        {
+            _combinations = combinations;
+            _pipeline = pipeline;
+            _library = library;
+        }
+
+        public ContentPlan BuildPlanFor(string name)
+        {
+            var files = FindFiles(name);
+            var requirements = new TransformerRequirements(_library);
+
+
+
+            // Step 1, for each file, grab anything 
+            // for each file, grab the source, and pull in each policy that is not batched.  Dequeue all the policies
+
+            // Step 2, for the batching stuff, combine, then batch and pop the policy
+            // if you can't pull of the batch, blow chunks.
+
+            // Step 3, do the globals, watch the batching
+
+            // Step 4, combine everything
+
+            var plan = new ContentPlan(name, files);
+
+            // step 1
+            applyNonBatchedNonGlobalTransforms(files, plan, requirements);
+
+            // step 2
+            applyBatchedNonGlobalTransforms(plan, requirements);
+
+            
+
+            // step 4
+            combineWhateverIsLeft(plan);
+
+            return plan;
+        }
+
+        private void applyBatchedNonGlobalTransforms(ContentPlan plan, TransformerRequirements requirements)
+        {
+            // blow up if there is more than one batched transform
+            var policies = requirements.AllBatchedTransformerPolicies();
+
+            if (policies.Count() > 1)
+            {
+                throw new TooManyBatchedTransformationsException(policies.Select(x => x.TransformerType));
+            }
+
+            var policy = policies.SingleOrDefault();
+            if (policy == null) return;
+
+            batchGroups(policy, plan, requirements).Each(group =>
+            {
+                var combo = plan.Combine(group);
+                plan.ApplyTransform(combo, policy.TransformerType);
+            });
+
+        }
+
+        private static IEnumerable<IList<IContentSource>> batchGroups(ITransformerPolicy policy, ContentPlan plan, TransformerRequirements requirements)
+        {
+            var sources = new Lazy<List<IContentSource>>();
+
+            foreach (var source in plan.GetAllSources().ToList())
+            {
+                if (requirements.IsNextPolicy(source, policy))
+                {
+                    sources.Value.Add(source);
+                    requirements.DequeueTransformer(source, policy);
+                }
+                else
+                {
+                    if (sources.IsValueCreated)
+                    {
+                        yield return sources.Value;
+                        sources = new Lazy<List<IContentSource>>();
+                    }
+                }
+            }
+
+            if (sources.IsValueCreated)
+            {
+                yield return sources.Value;
+            }
+        }
+
+        private static void combineWhateverIsLeft(ContentPlan plan)
+        {
+            plan.CombineAll();
+        }
+
+        private static void applyNonBatchedNonGlobalTransforms(IEnumerable<AssetFile> files, ContentPlan plan, TransformerRequirements requirements)
+        {
+            foreach (var file in files)
+            {
+                var source = plan.FindForFile(file);
+                var policies = requirements.PoliciesFor(file);
+
+                while (policies.Any() && !policies.Peek().MustBeBatched())
+                {
+                    var policy = policies.Dequeue();
+                    source = plan.ApplyTransform(source, policy.TransformerType);
+                }
+            }
+        }
+
+
+        public IEnumerable<AssetFile> FindFiles(string name)
+        {
+            var combination = _combinations.FindCombination(name);
+            if (combination != null)
+            {
+                return combination.Files;
+            }
+
+            var assetFile = _pipeline.Find(name);
+
+            if (assetFile == null)
+            {
+                throw new ArgumentOutOfRangeException("No combination or asset file exists with the name " + name);
+            }
+
+
+            return new AssetFile[]{assetFile};
+        }
+    }
+
+
+
+}

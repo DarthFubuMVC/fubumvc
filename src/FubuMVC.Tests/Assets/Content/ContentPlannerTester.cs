@@ -42,10 +42,10 @@ namespace FubuMVC.Tests.Assets.Content
             };
 
             var plan = new ContentPlan("something", theFiles);
-            var read0 = plan.AllSources.ElementAt(0);
-            var read1 = plan.AllSources.ElementAt(1);
-            var read2 = plan.AllSources.ElementAt(2);
-            var read3 = plan.AllSources.ElementAt(3);
+            var read0 = plan.GetAllSources().ElementAt(0);
+            var read1 = plan.GetAllSources().ElementAt(1);
+            var read2 = plan.GetAllSources().ElementAt(2);
+            var read3 = plan.GetAllSources().ElementAt(3);
 
             var combo1 = plan.Combine(new IContentSource[]{read1, read2});
             var combo2 = plan.Combine(new IContentSource[]{read0, combo1, read3});
