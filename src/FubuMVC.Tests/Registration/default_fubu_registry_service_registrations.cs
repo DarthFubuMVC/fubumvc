@@ -6,6 +6,7 @@ using FubuCore.Configuration;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
@@ -236,6 +237,12 @@ namespace FubuMVC.Tests.Registration
         public void asset_tag_write_is_registered()
         {
             registeredTypeIs<IAssetTagWriter, AssetTagWriter>();
+        }
+
+        [Test]
+        public void transformer_library_is_registered()
+        {
+            registeredTypeIs<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
         }
 
         [Test]
