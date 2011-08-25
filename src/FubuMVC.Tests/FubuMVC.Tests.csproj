@@ -117,6 +117,7 @@
     <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\Content\CombinationTester.cs" />
     <Compile Include="Assets\Content\ContentPlannerTester.cs" />
+    <Compile Include="Assets\Content\ContentPlanPreviewerTester.cs" />
     <Compile Include="Assets\Content\FileReadTester.cs" />
     <Compile Include="Assets\Content\ContentPlanTester.cs" />
     <Compile Include="Assets\Content\TransformTester.cs" />

@@ -6,13 +6,6 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets.Content
 {
-
-    public interface IContentPlanVisitor
-    {
-        void Push(IContentSource node);
-        void Pop();
-    }
-
     public class ContentPlan
     {
         private readonly string _name;
