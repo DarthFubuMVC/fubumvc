@@ -12,10 +12,17 @@ namespace FubuMVC.Tests.Assets.Files
     public class AssetFileTester
     {
         [Test]
+        public void derive_the_asset_folder_from_the_mimetype_by_default()
+        {
+            new AssetFile("script.js").Folder.ShouldEqual(AssetFolder.scripts);
+            new AssetFile("style.css").Folder.ShouldEqual(AssetFolder.styles);
+        }
+
+        [Test]
         public void finds_the_extension_of_itself()
         {
             var file = new AssetFile("script.js");
-
+            
             file.Extension().ShouldEqual(".js");
         }
 

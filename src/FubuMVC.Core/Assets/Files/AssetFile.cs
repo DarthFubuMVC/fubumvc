@@ -14,38 +14,52 @@ namespace FubuMVC.Core.Assets.Files
     public class AssetFile : IAssetTagSubject
     {
         private readonly string _name;
-        private readonly Lazy<MimeType> _mimeType;
+        private MimeType _mimeType;
 
         public AssetFile(string name)
         {
             _name = name;
-            _mimeType = new Lazy<MimeType>(() =>
+
+            var mimeType = MimeType.DetermineMimeTypeFromName(Name);
+            if (mimeType != null)
             {
-                var mimeType = MimeType.DetermineMimeTypeFromName(Name);
-                if (mimeType != null) return mimeType;
+                _mimeType = mimeType;
+            }
 
-                switch (Folder)
-                {
-                    case AssetFolder.scripts:
-                        return MimeType.Javascript;
 
-                    case AssetFolder.styles:
-                        return MimeType.Css;
-
-                    default:
-                        throw new UnknownExtensionException(Extension());
-                }
-            });
         }
 
         public AssetFile(string name, AssetFolder? folder) : this(name)
         {
             Folder = folder;
+
+            if (_mimeType == null && folder.HasValue)
+            {
+                _mimeType = MimeType.ForFolder(folder.Value);
+            }
         }
+
+
 
         public string FullPath { get; set; }
         public bool Override { get; set; }
-        public AssetFolder? Folder { get; set; }
+
+
+        private AssetFolder? _folder;
+        public AssetFolder? Folder
+        {
+            get
+            {
+                if (!_folder.HasValue && _mimeType != null)
+                {
+                    _folder = _mimeType.Folder();
+                }
+                
+                
+                return _folder;
+            }
+            set { _folder = value; }
+        }
 
         public string Name
         {
@@ -56,7 +70,12 @@ namespace FubuMVC.Core.Assets.Files
         {
             get
             {
-                return _mimeType.Value;
+                if (_mimeType == null && _folder.HasValue)
+                {
+                    _mimeType = MimeType.ForFolder(_folder.Value);
+                }
+
+                return _mimeType;
             }
         }
 

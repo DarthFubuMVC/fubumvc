@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Assets.Content
             }
         }
 
-        public void Assert(ContentPlan plan)
+        public void AssertMatches(ContentPlan plan)
         {
             var previewer = new ContentPlanPreviewer();
             plan.AcceptVisitor(previewer);

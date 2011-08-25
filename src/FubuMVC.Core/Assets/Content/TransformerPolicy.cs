@@ -104,12 +104,18 @@ namespace FubuMVC.Core.Assets.Content
                 );
 
         }
+
+        public bool MustBeBatched()
+        {
+            return ActionType == ActionType.BatchedTransformation || ActionType == ActionType.Global;
+        }
     }
 
     public class JavascriptTransformerPolicy<T> : TransformerPolicy where T : ITransformer
     {
-        public JavascriptTransformerPolicy(ActionType actionType) : base(actionType, MimeType.Javascript, typeof(T))
+        public JavascriptTransformerPolicy(ActionType actionType, params string[] extensions) : base(actionType, MimeType.Javascript, typeof(T))
         {
+            extensions.Each(AddExtension);
         }
 
         public static JavascriptTransformerPolicy<T> For(ActionType actionType, params string[] extensions)
@@ -119,26 +125,15 @@ namespace FubuMVC.Core.Assets.Content
 
             return policy;
         }
-
-        public bool MustBeBatched()
-        {
-            return ActionType == ActionType.BatchedTransformation || ActionType == ActionType.Global;
-        }
     }
 
     public class CssTransformerPolicy<T> : TransformerPolicy where T : ITransformer
     {
-        public CssTransformerPolicy(ActionType actionType)
+        public CssTransformerPolicy(ActionType actionType, params string[] extensions)
             : base(actionType, MimeType.Css, typeof(T))
         {
+            extensions.Each(AddExtension);
         }
 
-        public static CssTransformerPolicy<T> For(ActionType actionType, params string[] extensions)
-        {
-            var policy = new CssTransformerPolicy<T>(actionType);
-            extensions.Each(policy.AddExtension);
-
-            return policy;
-        }
     }
 }

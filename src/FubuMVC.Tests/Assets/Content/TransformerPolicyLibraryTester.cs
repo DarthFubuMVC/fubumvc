@@ -29,10 +29,10 @@ namespace FubuMVC.Tests.Assets.Content
             js3 = JavascriptTransformerPolicy<StubTransformer>.For(ActionType.Generate, ".a");
 
 
-            globalCSS = CssTransformerPolicy<StubTransformer>.For(ActionType.Global);
-            css1 = CssTransformerPolicy<StubTransformer>.For(ActionType.Transformation, ".css");
-            less = CssTransformerPolicy<StubTransformer>.For(ActionType.Transformation, ".less");
-            sass = CssTransformerPolicy<StubTransformer>.For(ActionType.Transformation, ".sass");
+            globalCSS = new CssTransformerPolicy<StubTransformer>(ActionType.Global);
+            css1 = new CssTransformerPolicy<StubTransformer>(ActionType.Transformation, ".css");
+            less = new CssTransformerPolicy<StubTransformer>(ActionType.Transformation, ".less");
+            sass = new CssTransformerPolicy<StubTransformer>(ActionType.Transformation, ".sass");
             
             var policies = new List<ITransformerPolicy>(){
                 globalJS,

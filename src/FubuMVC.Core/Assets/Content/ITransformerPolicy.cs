@@ -14,5 +14,6 @@ namespace FubuMVC.Core.Assets.Content
         int? MatchingExtensionPosition(IList<string> extensions);
         bool AppliesTo(AssetFile file);
         bool MustBeAfter(ITransformerPolicy policy);
+        bool MustBeBatched();
     }
 }

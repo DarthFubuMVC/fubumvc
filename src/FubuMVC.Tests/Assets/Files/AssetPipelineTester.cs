@@ -25,8 +25,6 @@ namespace FubuMVC.Tests.Assets.Files
 
             var thePath = new AssetPath("pak1", "a.js", AssetFolder.styles);
 
-
-            theFile.Folder.ShouldBeNull();
             thePipeline.AddFile(thePath, theFile);
 
             theFile.Folder.ShouldEqual(thePath.Folder.Value);
