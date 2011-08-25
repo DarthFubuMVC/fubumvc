@@ -49,4 +49,6 @@ namespace FubuMVC.Core.Assets.Content
             return builder.ToString().Trim();
         }
     }
+
+    
 }

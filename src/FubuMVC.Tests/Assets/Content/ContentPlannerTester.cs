@@ -9,6 +9,11 @@ using System.Linq;
 
 namespace FubuMVC.Tests.Assets.Content
 {
+
+
+
+
+
     [TestFixture]
     public class ContentPlannerTester : InteractionContext<ContentPlanner>
     {

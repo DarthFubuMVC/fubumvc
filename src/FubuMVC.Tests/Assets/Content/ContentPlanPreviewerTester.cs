@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
@@ -6,9 +8,95 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Assets.Content
 {
+    public class ContentExpectationWriter
+    {
+        private readonly IList<string> _expectations;
+        private readonly IList<string> _actuals;
+        private readonly int _leftLength;
+        private readonly int _startOfRightColumn;
+        private readonly int _rightLength;
+
+        public ContentExpectationWriter(IList<string> expectations, IList<string> actuals)
+        {
+            _expectations = expectations;
+            _actuals = actuals;
+
+            _leftLength = actuals.Max(x => x.Length);
+            _startOfRightColumn = _leftLength + 10;
+
+            _rightLength = _expectations.Max(x => x.Length);
+        }
+
+        public void Write()
+        {
+            writeHeaders();
+
+            writeBodyRows();
+        }
+
+        private void writeBodyRows()
+        {
+            var numberOfRows = new int[] { _expectations.Count, _actuals.Count }.Max();
+
+            for (int i = 0; i < numberOfRows; i++)
+            {
+                writeBodyRow(i);
+            }
+        }
+
+        private void writeBodyRow(int i)
+        {
+            var text = "".PadRight(_startOfRightColumn);
+
+            if (i < _expectations.Count)
+            {
+                text = _expectations[i].PadRight(_startOfRightColumn);
+            }
+
+            if (i < _actuals.Count)
+            {
+                text += _actuals[i];
+            }
+
+            Debug.WriteLine(text);
+        }
+
+        private void writeHeaders()
+        {
+            var header1 = "Expected".PadRight(_startOfRightColumn) + "Actual";
+            Debug.WriteLine(header1);
+
+            var header2 = "".PadRight(_leftLength, '=') + "".PadRight(10, ' ') + "".PadRight(_rightLength, '=');
+            Debug.WriteLine(header2);
+        }
+    }
+
+
     [TestFixture]
     public class ContentPlanPreviewerTester
     {
+        [Test]
+        public void try_out_the_writer()
+        {
+            var expected = new List<string>(){
+                "Jasper",
+                "Carthage"
+
+            };
+
+            var actual = new List<string>(){
+                "Jasper",
+                "Carthage",
+                "Joplin",
+                "Bentonville",
+                "Fayetteville"
+            };
+
+            new ContentExpectationWriter(expected, actual).Write();
+        }
+
+
+
         [Test]
         public void try_it_against_a_3_deep_hierarchy()
         {
