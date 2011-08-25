@@ -20,6 +20,14 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
+        public void to_string_because_automated_tests_depend_on_it()
+        {
+            var file = new AssetFile("something.js");
+            var read = new FileRead(file);
+            read.ToString().ShouldEqual("FileRead:something.js");
+        }
+
+        [Test]
         public void no_inner_content_sources()
         {
             var file = new AssetFile("something.js");

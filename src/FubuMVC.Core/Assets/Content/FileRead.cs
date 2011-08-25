@@ -50,5 +50,10 @@ namespace FubuMVC.Core.Assets.Content
         {
             return (_file != null ? _file.GetHashCode() : 0);
         }
+
+        public override string ToString()
+        {
+            return "FileRead:" + _file.Name;
+        }
     }
 }

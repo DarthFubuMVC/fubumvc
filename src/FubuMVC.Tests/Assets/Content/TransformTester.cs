@@ -21,6 +21,12 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
+        public void to_string_because_it_matters_for_testing()
+        {
+            ClassUnderTest.ToString().ShouldEqual("Transform:" + typeof (StubTransformer).Name);
+        }
+
+        [Test]
         public void inner_sources_includes_only_the_one_inner_source()
         {
             ClassUnderTest.InnerSources.Single().ShouldBeTheSameAs(MockFor<IContentSource>());

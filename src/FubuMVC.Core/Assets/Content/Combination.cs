@@ -37,5 +37,10 @@ namespace FubuMVC.Core.Assets.Content
         {
             get { return _innerSources; }
         }
+
+        public override string ToString()
+        {
+            return "Combination";
+        }
     }
 }

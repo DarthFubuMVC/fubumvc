@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Assets.Content
 {
     [TestFixture]
-    public class CombiningContentSourceTester : InteractionContext<Core.Assets.Content.Combination>
+    public class CombinationTester : InteractionContext<Core.Assets.Content.Combination>
     {
         private IContentSource[] theInners;
         private AssetFile[] files1;
@@ -64,6 +64,12 @@ namespace FubuMVC.Tests.Assets.Content
         {
             var separator = Core.Assets.Content.Combination.Separator;
             ClassUnderTest.GetContent(thePipeline).ShouldEqual(theInnerContent.Join(separator));
+        }
+
+        [Test]
+        public void to_string_because_it_matters_for_automated_testing()
+        {
+            ClassUnderTest.ToString().ShouldEqual("Combination");
         }
     }
 }

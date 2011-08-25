@@ -30,5 +30,10 @@ namespace FubuMVC.Core.Assets.Content
         {
             get { yield return _inner; }
         }
+
+        public override string ToString()
+        {
+            return "Transform:" + typeof (T).Name;
+        }
     }
 }
