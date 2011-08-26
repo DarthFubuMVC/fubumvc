@@ -1,26 +1,53 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Runtime;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Content
 {
+    public enum BatchBehavior
+    {
+        NoBatching,
+        MustBeBatched
+    }
+
+    public class GlobalTransformerPolicy<T> : TransformerPolicy
+    {
+        private readonly BatchBehavior _batching;
+
+        public GlobalTransformerPolicy(MimeType mimeType, BatchBehavior batching)
+            : base(ActionType.Global, mimeType, typeof (T))
+        {
+            _batching = batching;
+        }
+
+        public override bool MustBeBatched()
+        {
+            return _batching == BatchBehavior.MustBeBatched;
+        }
+    }
+
     public class TransformerPolicy : ITransformerPolicy
     {
         private readonly ActionType _actionType;
         private readonly IList<string> _extensions = new List<string>();
-        private readonly MimeType _mimeType;
-        private readonly Type _transformerType;
         private readonly IList<Func<AssetFile, bool>> _matchingCriteria = new List<Func<AssetFile, bool>>();
-        private readonly IList<Func<ITransformerPolicy, bool>> _mustBeAfterRules = new List<Func<ITransformerPolicy, bool>>();
+        private readonly MimeType _mimeType;
+
+        private readonly IList<Func<ITransformerPolicy, bool>> _mustBeAfterRules =
+            new List<Func<ITransformerPolicy, bool>>();
+
+        private readonly Type _transformerType;
 
         public TransformerPolicy(ActionType actionType, MimeType mimeType, Type transformerType)
         {
             if (!transformerType.IsConcreteTypeOf<ITransformer>())
             {
-                throw new ArgumentOutOfRangeException("Type {0} is not a concrete type of {1}".ToFormat(transformerType.FullName, typeof(ITransformer).FullName));
+                throw new ArgumentOutOfRangeException(
+                    "Type {0} is not a concrete type of {1}".ToFormat(transformerType.FullName,
+                                                                      typeof (ITransformer).FullName));
             }
 
             _actionType = actionType;
@@ -32,21 +59,6 @@ namespace FubuMVC.Core.Assets.Content
                 var fileExtensions = file.AllExtensions();
                 return _extensions.Any(x => fileExtensions.Contains(x));
             });
-        }
-
-        public void AddMatchingCriteria(Func<AssetFile, bool> criteria)
-        {
-            _matchingCriteria.Add(criteria);
-        }
-
-        public void AddMustBeAfterRule(Func<ITransformerPolicy, bool> mustBeAfterTest)
-        {
-            _mustBeAfterRules.Add(mustBeAfterTest);
-        }
-
-        public void AddExtension(string extension)
-        {
-            _extensions.Add(extension);
         }
 
         public IEnumerable<string> Extensions
@@ -93,6 +105,26 @@ namespace FubuMVC.Core.Assets.Content
             return _mustBeAfterRules.Any(x => x(policy));
         }
 
+        public virtual bool MustBeBatched()
+        {
+            return ActionType == ActionType.BatchedTransformation;
+        }
+
+        public void AddMatchingCriteria(Func<AssetFile, bool> criteria)
+        {
+            _matchingCriteria.Add(criteria);
+        }
+
+        public void AddMustBeAfterRule(Func<ITransformerPolicy, bool> mustBeAfterTest)
+        {
+            _mustBeAfterRules.Add(mustBeAfterTest);
+        }
+
+        public void AddExtension(string extension)
+        {
+            _extensions.Add(extension);
+        }
+
         public override string ToString()
         {
             return "Transform with {0} for {1} with extensions {2} ({3})"
@@ -102,18 +134,13 @@ namespace FubuMVC.Core.Assets.Content
                     _extensions.Join(", "),
                     ActionType
                 );
-
-        }
-
-        public bool MustBeBatched()
-        {
-            return ActionType == ActionType.BatchedTransformation || ActionType == ActionType.Global;
         }
     }
 
     public class JavascriptTransformerPolicy<T> : TransformerPolicy where T : ITransformer
     {
-        public JavascriptTransformerPolicy(ActionType actionType, params string[] extensions) : base(actionType, MimeType.Javascript, typeof(T))
+        public JavascriptTransformerPolicy(ActionType actionType, params string[] extensions)
+            : base(actionType, MimeType.Javascript, typeof (T))
         {
             extensions.Each(AddExtension);
         }
@@ -130,10 +157,9 @@ namespace FubuMVC.Core.Assets.Content
     public class CssTransformerPolicy<T> : TransformerPolicy where T : ITransformer
     {
         public CssTransformerPolicy(ActionType actionType, params string[] extensions)
-            : base(actionType, MimeType.Css, typeof(T))
+            : base(actionType, MimeType.Css, typeof (T))
         {
             extensions.Each(AddExtension);
         }
-
     }
 }

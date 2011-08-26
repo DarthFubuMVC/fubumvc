@@ -115,7 +115,25 @@ namespace FubuMVC.Tests.Assets.Content
             new JavascriptTransformerPolicy<StubTransformer>(ActionType.Substitution).MustBeBatched().ShouldBeFalse();
             new JavascriptTransformerPolicy<StubTransformer>(ActionType.Transformation).MustBeBatched().ShouldBeFalse();
             new JavascriptTransformerPolicy<StubTransformer>(ActionType.BatchedTransformation).MustBeBatched().ShouldBeTrue();
-            new JavascriptTransformerPolicy<StubTransformer>(ActionType.Global).MustBeBatched().ShouldBeTrue();
+            
+        }
+
+        [Test]
+        public void global_action_in_transformer_policy_is_not_batched_by_default()
+        {
+            new JavascriptTransformerPolicy<StubTransformer>(ActionType.Global).MustBeBatched().ShouldBeFalse();
+        }
+
+        [Test]
+        public void set_must_be_batched_in_global_transformer()
+        {
+            new GlobalTransformerPolicy<StubTransformer>(MimeType.Javascript, BatchBehavior.NoBatching)
+                .MustBeBatched().ShouldBeFalse();
+
+            new GlobalTransformerPolicy<StubTransformer>(MimeType.Javascript, BatchBehavior.MustBeBatched)
+                .MustBeBatched().ShouldBeTrue();
+
+            
         }
     }
 
