@@ -98,6 +98,7 @@
     <Compile Include="Assets\AssetTagPlanner.cs" />
     <Compile Include="Assets\AssetTagWriter.cs" />
     <Compile Include="Assets\Combination\AssetCombinationCache.cs" />
+    <Compile Include="Assets\Combination\AssetGrouper.cs" />
     <Compile Include="Assets\Combination\CombinationCandidate.cs" />
     <Compile Include="Assets\Combination\CombinationDeterminationService.cs" />
     <Compile Include="Assets\Combination\IAssetCombinationCache.cs" />
