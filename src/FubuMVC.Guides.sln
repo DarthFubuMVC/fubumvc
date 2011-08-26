@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.GuideApp", "FubuMVC.GuideApp\FubuMVC.GuideApp.csproj", "{059A7BB2-E74F-4155-9250-CC9D31B6A7A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStart", "QuickStart\QuickStart.csproj", "{66A9D435-DC25-4DE1-99A8-003C54B0111B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49ADE702-591B-4644-81C6-F7F9BF4C7518}"
+	ProjectSection(SolutionItems) = preProject
+		..\rakefile.rb = ..\rakefile.rb
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{059A7BB2-E74F-4155-9250-CC9D31B6A7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{059A7BB2-E74F-4155-9250-CC9D31B6A7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{059A7BB2-E74F-4155-9250-CC9D31B6A7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{059A7BB2-E74F-4155-9250-CC9D31B6A7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

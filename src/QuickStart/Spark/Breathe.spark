@@ -1,0 +1,3 @@
+﻿<viewdata model="QuickStart.Spark.BreatheViewModel" />
+
+<h2>${Model.Text}</h2>
