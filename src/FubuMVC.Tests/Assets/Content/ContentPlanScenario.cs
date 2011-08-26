@@ -61,6 +61,12 @@ namespace FubuMVC.Tests.Assets.Content
             _files.AddRange(files);
         }
 
+        void IContentPlanScenario.TransformerPolicy<T>()
+        {
+            var policy = new T();
+            _policies.Add(policy);
+        }
+
         public static ContentPlanShouldBeExpression For(Action<IContentPlanScenario> configure)
         {
             var scenario = new ContentPlanScenario();

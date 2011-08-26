@@ -24,32 +24,31 @@ namespace FubuMVC.Core.Assets.Content
             var files = FindFiles(name);
             var requirements = new TransformerRequirements(_library);
 
-
-
-            // Step 1, for each file, grab anything 
-            // for each file, grab the source, and pull in each policy that is not batched.  Dequeue all the policies
-
-            // Step 2, for the batching stuff, combine, then batch and pop the policy
-            // if you can't pull of the batch, blow chunks.
-
-            // Step 3, do the globals, watch the batching
-
-            // Step 4, combine everything
-
             var plan = new ContentPlan(name, files);
 
-            // step 1
             applyNonBatchedNonGlobalTransforms(files, plan, requirements);
 
-            // step 2
             applyBatchedNonGlobalTransforms(plan, requirements);
 
-            
+            applyGlobalTransforms(plan);
 
-            // step 4
             combineWhateverIsLeft(plan);
 
             return plan;
+        }
+
+        private void applyGlobalTransforms(ContentPlan plan)
+        {
+            var globalPolicies = _library.FindGlobalPoliciesFor(plan.MimeType);
+            globalPolicies.Each(policy =>
+            {
+                if (policy.MustBeBatched())
+                {
+                    plan.CombineAll();
+                }
+
+                plan.GetAllSources().Each(s => plan.ApplyTransform(s, policy.TransformerType));
+            });
         }
 
         private void applyBatchedNonGlobalTransforms(ContentPlan plan, TransformerRequirements requirements)

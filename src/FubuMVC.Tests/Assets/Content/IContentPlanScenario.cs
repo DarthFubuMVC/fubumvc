@@ -9,5 +9,7 @@ namespace FubuMVC.Tests.Assets.Content
         string SingleAssetFileName { set; }
         void CombinationOfScriptsIs(string name, params string[] fileNames);
         void CombinationOfStyles(string name, params string[] fileNames);
+
+        void TransformerPolicy<T>() where T : ITransformerPolicy, new();
     }
 }

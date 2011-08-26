@@ -1,6 +1,7 @@
 using System;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
@@ -12,6 +13,43 @@ namespace FubuMVC.Tests.Assets.Content
     [TestFixture]
     public class ContentPlanTester
     {
+        [Test]
+        public void figure_out_mime_type_after_ctor()
+        {
+            var jsFile = new AssetFile("something.js"){
+                FullPath = "something.js"
+            };
+            new ContentPlan("something", new AssetFile[]{
+                jsFile
+            }).MimeType.ShouldEqual(MimeType.Javascript);
+
+            var cssFile = new AssetFile("something.css"){
+                FullPath = "something.css"
+            };
+            new ContentPlan("something", new AssetFile[]{
+                cssFile
+            }).MimeType.ShouldEqual(MimeType.Css);
+        }
+
+        [Test]
+        public void throw_argument_out_of_range_with_mixed_mimetype()
+        {
+            var jsFile = new AssetFile("something.js")
+            {
+                FullPath = "something.js"
+            };
+
+            var cssFile = new AssetFile("something.css")
+            {
+                FullPath = "something.css"
+            };
+
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                new ContentPlan("something", new AssetFile[]{jsFile, cssFile});
+            });
+        }
+
         [Test]
         public void initial_source_for_asset_file_with_a_path_is_a_read_file_source()
         {

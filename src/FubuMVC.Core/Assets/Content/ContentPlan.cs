@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
 using FubuCore;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Content
 {
@@ -10,11 +11,25 @@ namespace FubuMVC.Core.Assets.Content
     {
         private readonly string _name;
         private readonly IList<IContentSource> _sources = new List<IContentSource>();
+        private MimeType _mimeType;
 
         public ContentPlan(string name, IEnumerable<AssetFile> files)
         {
             _name = name;
             _sources.AddRange(files.Select(InitialSourceForAssetFile));
+
+            var mimeTypes = files.Select(x => x.MimeType).Distinct();
+            if (mimeTypes.Count() > 1)
+            {
+                throw new ArgumentOutOfRangeException("The list of files is a mix of MimeTypes");
+            }
+
+            _mimeType = mimeTypes.Single();
+        }
+
+        public MimeType MimeType
+        {
+            get { return _mimeType; }
         }
 
         public void AcceptVisitor(IContentPlanVisitor visitor)
