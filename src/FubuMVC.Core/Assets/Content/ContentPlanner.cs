@@ -66,8 +66,15 @@ namespace FubuMVC.Core.Assets.Content
 
             batchGroups(policy, plan, requirements).Each(group =>
             {
-                var combo = plan.Combine(group);
-                plan.ApplyTransform(combo, policy.TransformerType);
+                if (group.Count() == 1)
+                {
+                    plan.ApplyTransform(group.Single(), policy.TransformerType);
+                }
+                else
+                {
+                    var combo = plan.Combine(group);
+                    plan.ApplyTransform(combo, policy.TransformerType);
+                }
             });
 
         }

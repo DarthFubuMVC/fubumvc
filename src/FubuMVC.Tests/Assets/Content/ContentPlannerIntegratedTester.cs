@@ -154,8 +154,7 @@ Combination
   FileRead:script4.js
   FileRead:script5.js
   Transform:CoffeeTransformer
-    Combination
-      FileRead:script6.coffee.js
+    FileRead:script6.coffee.js
 ");
         }
 
@@ -264,6 +263,64 @@ Transform:ATransformer
     FileRead:script3.js
 ");
         }
+
+        [Test]
+        public void apply_a_mix_of_tranformations_and_combos_batched_global_transform_to_a_combo()
+        {
+            ContentPlanScenario.For(x =>
+            {
+                x.TransformerPolicy<BatchedGlobalJsTransformer>();
+                x.TransformerPolicy<BatchedGlobalCssTransformer>();
+
+                x.JsTransformer<StubTransformer>(ActionType.Transformation, ".stub");
+
+                x.CombinationOfScriptsIs("combo1", "script1.js", "script2.stub.js", "script3.js");
+            })
+            .ShouldMatch(@"
+Transform:ATransformer
+  Combination
+    FileRead:script1.js
+    Transform:StubTransformer
+      FileRead:script2.stub.js
+    FileRead:script3.js
+");
+        }
+
+
+        [Test]
+        public void apply_a_mix_of_tranformations_and_combos_batched_global_transform_to_a_combo_2()
+        {
+            ContentPlanScenario.For(x =>
+            {
+                x.TransformerPolicy<BatchedGlobalJsTransformer>();
+                x.TransformerPolicy<BatchedGlobalCssTransformer>();
+
+                x.JsTransformer<StubTransformer>(ActionType.Transformation, ".stub");
+                x.JsTransformer<CoffeeTransformer>(ActionType.BatchedTransformation, ".coffee");
+
+
+
+                x.CombinationOfScriptsIs("combo1", "script1.coffee.js", "script2.stub.coffee.js", "script3.js", "script4.coffee.js", "script5.stub.js");
+            })
+            .ShouldMatch(@"
+Transform:ATransformer
+  Combination
+    Transform:CoffeeTransformer
+      Combination
+        FileRead:script1.coffee.js
+        Transform:StubTransformer
+          FileRead:script2.stub.coffee.js
+    FileRead:script3.js
+    Transform:CoffeeTransformer
+      FileRead:script4.coffee.js
+    Transform:StubTransformer
+      FileRead:script5.stub.js
+");
+        }
+
+
+
+
 
     }
 
