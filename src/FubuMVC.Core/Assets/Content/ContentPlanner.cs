@@ -6,7 +6,7 @@ using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class ContentPlanner
+    public class ContentPlanner : IContentPlanner
     {
         private readonly IAssetCombinationCache _combinations;
         private readonly IAssetPipeline _pipeline;

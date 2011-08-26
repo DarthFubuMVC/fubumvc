@@ -241,7 +241,11 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IAssetTagPlanCache, AssetTagPlanCache>();
 
             graph.Services.SetServiceIfNone<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
+
+            graph.Services.SetServiceIfNone<IContentPlanner, ContentPlanner>();
+            graph.Services.SetServiceIfNone<IContentPlanCache, ContentPlanCache>();
         }
+
 
         private void registerActivators(BehaviorGraph graph)
         {

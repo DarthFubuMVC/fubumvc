@@ -240,6 +240,19 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void content_planner_is_registered()
+        {
+            registeredTypeIs<IContentPlanner, ContentPlanner>();
+        }
+
+        [Test]
+        public void content_plan_cache_is_registered_as_a_singleton()
+        {
+            registeredTypeIs<IContentPlanCache, ContentPlanCache>();
+            ServiceRegistry.ShouldBeSingleton(typeof (ContentPlanCache));
+        }
+
+        [Test]
         public void transformer_library_is_registered()
         {
             registeredTypeIs<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
