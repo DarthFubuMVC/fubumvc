@@ -304,6 +304,7 @@ namespace FubuMVC.Tests.Registration
             activators[0].Type.ShouldEqual(typeof (AssetGraphConfigurationActivator));
             activators[1].Type.ShouldEqual(typeof(AssetPipelineBuilderActivator));
             activators[2].Type.ShouldEqual(typeof(AssetDeclarationVerificationActivator));
+            activators[3].Type.ShouldEqual(typeof(MimetypeRegistrationActivator));
         }
 
         [Test]

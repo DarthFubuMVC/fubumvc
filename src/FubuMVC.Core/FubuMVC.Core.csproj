@@ -138,6 +138,7 @@
     <Compile Include="Assets\IAssetTagPlanner.cs" />
     <Compile Include="Assets\IAssetTagSubject.cs" />
     <Compile Include="Assets\Interfaces.cs" />
+    <Compile Include="Assets\MimetypeRegistrationActivator.cs" />
     <Compile Include="Assets\MissingAssetTagSubject.cs" />
     <Compile Include="Assets\MixedMimetypeException.cs" />
     <Compile Include="Assets\RequestedAssetNames.cs" />

@@ -17,10 +17,11 @@ namespace FubuMVC.Core.Assets.Content
     {
         private readonly BatchBehavior _batching;
 
-        public GlobalTransformerPolicy(MimeType mimeType, BatchBehavior batching)
+        public GlobalTransformerPolicy(MimeType mimeType, BatchBehavior batching, params string[] extensions)
             : base(ActionType.Global, mimeType, typeof (T))
         {
             _batching = batching;
+            extensions.Each(AddExtension);
         }
 
         public override bool MustBeBatched()

@@ -252,6 +252,7 @@ namespace FubuMVC.Core
             graph.Services.FillType(typeof (IActivator), typeof (AssetGraphConfigurationActivator));
             graph.Services.FillType(typeof (IActivator), typeof (AssetPipelineBuilderActivator));
             graph.Services.FillType(typeof (IActivator), typeof (AssetDeclarationVerificationActivator));
+            graph.Services.FillType(typeof (IActivator), typeof (MimetypeRegistrationActivator));
         }
 
         private void registerAuthorizationServices(BehaviorGraph graph)
