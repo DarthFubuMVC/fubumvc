@@ -7,6 +7,7 @@ buildsupportfiles.each { |ext| load ext }
 
 include FileTest
 require 'albacore'
+import 'docs/sphinx.rb'
 load "VERSION.txt"
 
 RESULTS_DIR = "results"
@@ -144,3 +145,4 @@ def self.fubu(args)
   fubu = Platform.runtime("src/fubu/bin/#{COMPILE_TARGET}/fubu.exe")
   sh "#{fubu} #{args}" 
 end
+
