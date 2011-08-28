@@ -7,7 +7,6 @@ buildsupportfiles.each { |ext| load ext }
 
 include FileTest
 require 'albacore'
-import 'docs/sphinx.rb'
 load "VERSION.txt"
 
 RESULTS_DIR = "results"
