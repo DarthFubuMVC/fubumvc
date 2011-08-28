@@ -34,7 +34,7 @@ Sphinx is a Python tool we use to create the FubuMVC documentation. It requires 
 1. Install Python from [python.org](http://python.org/download) (Preferrably 2.7)
 1. Add the Python /Scripts directory to the PATH (i.e. c:\Python27\Scripts)
 1. On 32 Bit Windows simply run `easy_install -U Sphinx`
-1. On 64 Bit Widnows, follow these [instructions to get easy_install installed](http://pypi.python.org/pypi/setuptools), then run `easy_install -U Sphinx`
+1. On 64 Bit Windows, follow these [instructions to get easy_install installed](http://pypi.python.org/pypi/setuptools), then run `easy_install -U Sphinx`
 1. Then test that `sphinx_build` is available, and you're done.
 
 Building the Documentation
