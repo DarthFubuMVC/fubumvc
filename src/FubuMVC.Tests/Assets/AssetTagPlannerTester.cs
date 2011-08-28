@@ -33,12 +33,6 @@ namespace FubuMVC.Tests.Assets
 
         }
 
-        [Test]
-        public void creating_a_plan_for_a_single_file_short_circuits_the_whole_experience_with_no_combos()
-        {
-            Assert.Fail("Do.");
-        }
-
 
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -20,7 +21,14 @@ namespace FubuMVC.Core.Assets.Combination
 
         public IEnumerable<AssetFileCombination> DetermineCombinations(AssetTagPlan plan)
         {
-            throw new NotImplementedException();
+            var grouper = new AssetGrouper<IAssetTagSubject>();
+            var groups = grouper.GroupSubjects(plan.Subjects, s => s is AssetFile)
+                .Where(x => x.Count > 1);
+
+            foreach (var @group in groups)
+            {
+                yield return new ScriptFileCombination(@group.Cast<AssetFile>().ToList());
+            }
         }
     }
 

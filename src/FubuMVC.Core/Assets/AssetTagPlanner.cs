@@ -23,16 +23,26 @@ namespace FubuMVC.Core.Assets
         {
             var plan = new AssetTagPlan(mimeType);
             plan.AddSubjects(FindSubjects(names));
-            
-            if (plan.Subjects.Any(x => x.MimeType != mimeType))
+
+            validateMatchingMimetypes(mimeType, plan, names);
+
+            if (plan.Subjects.Count == 1)
             {
-                var message = "Files {0} have mixed mimetype's".ToFormat(names.Join(", "));
-                throw new MixedMimetypeException(message);
+                return plan;
             }
 
             _combinations.TryToReplaceWithCombinations(plan);
 
             return plan;
+        }
+
+        private void validateMatchingMimetypes(MimeType mimeType, AssetTagPlan plan, IEnumerable<string> names)
+        {
+            if (plan.Subjects.Any(x => x.MimeType != mimeType))
+            {
+                var message = "Files {0} have mixed mimetype's".ToFormat(names.Join(", "));
+                throw new MixedMimetypeException(message);
+            }
         }
 
         public AssetTagPlan BuildPlan(AssetPlanKey key)
