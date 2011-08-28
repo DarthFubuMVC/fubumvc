@@ -6,9 +6,6 @@ namespace FubuMVC.Core.Assets.Combination
 {
     public class AssetGrouper<T>
     {
-        // TODO -- retrofit this back to the ContentPlanner.
-
-
         private readonly Stack<IList<T>> _groups = new Stack<IList<T>>();
         private bool _inGroup;
 

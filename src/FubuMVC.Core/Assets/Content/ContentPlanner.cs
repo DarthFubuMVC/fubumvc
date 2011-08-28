@@ -9,10 +9,11 @@ namespace FubuMVC.Core.Assets.Content
     public class ContentPlanner : IContentPlanner
     {
         private readonly IAssetCombinationCache _combinations;
-        private readonly IAssetPipeline _pipeline;
         private readonly ITransformerPolicyLibrary _library;
+        private readonly IAssetPipeline _pipeline;
 
-        public ContentPlanner(IAssetCombinationCache combinations, IAssetPipeline pipeline, ITransformerPolicyLibrary library)
+        public ContentPlanner(IAssetCombinationCache combinations, IAssetPipeline pipeline,
+                              ITransformerPolicyLibrary library)
         {
             _combinations = combinations;
             _pipeline = pipeline;
@@ -51,22 +52,18 @@ namespace FubuMVC.Core.Assets.Content
             });
         }
 
-        private void applyBatchedNonGlobalTransforms(ContentPlan plan, TransformerRequirements requirements)
+        private static void applyBatchedNonGlobalTransforms(ContentPlan plan, TransformerRequirements requirements)
         {
-            // blow up if there is more than one batched transform
-            var policies = requirements.AllBatchedTransformerPolicies();
-
-            if (policies.Count() > 1)
-            {
-                throw new TooManyBatchedTransformationsException(policies.Select(x => x.TransformerType));
-            }
-
-            var policy = policies.SingleOrDefault();
+            var policy = findBatchedTransformerPolicy(requirements);
             if (policy == null) return;
 
-            batchGroups(policy, plan, requirements).Each(group =>
+
+            var groups = new AssetGrouper<IContentSource>()
+                .GroupSubjects(plan.GetAllSources(), source => requirements.IsNextPolicy(source, policy));
+
+            groups.Each(group =>
             {
-                if (group.Count() == 1)
+                if (group.Count == 1)
                 {
                     plan.ApplyTransform(group.Single(), policy.TransformerType);
                 }
@@ -75,43 +72,32 @@ namespace FubuMVC.Core.Assets.Content
                     var combo = plan.Combine(group);
                     plan.ApplyTransform(combo, policy.TransformerType);
                 }
+
+                group.Each(s => requirements.DequeueTransformer(s, policy));
             });
-
         }
 
-        private static IEnumerable<IList<IContentSource>> batchGroups(ITransformerPolicy policy, ContentPlan plan, TransformerRequirements requirements)
+        private static ITransformerPolicy findBatchedTransformerPolicy(TransformerRequirements requirements)
         {
-            var sources = new Lazy<List<IContentSource>>();
+            var policies = requirements.AllBatchedTransformerPolicies();
 
-            foreach (var source in plan.GetAllSources().ToList())
+            // There can only be one! -- gotta say it in the Highlander voice
+            if (policies.Count() > 1)
             {
-                if (requirements.IsNextPolicy(source, policy))
-                {
-                    sources.Value.Add(source);
-                    requirements.DequeueTransformer(source, policy);
-                }
-                else
-                {
-                    if (sources.IsValueCreated)
-                    {
-                        yield return sources.Value;
-                        sources = new Lazy<List<IContentSource>>();
-                    }
-                }
+                throw new TooManyBatchedTransformationsException(policies.Select(x => x.TransformerType));
             }
 
-            if (sources.IsValueCreated)
-            {
-                yield return sources.Value;
-            }
+            return policies.SingleOrDefault();
         }
+
 
         private static void combineWhateverIsLeft(ContentPlan plan)
         {
             plan.CombineAll();
         }
 
-        private static void applyNonBatchedNonGlobalTransforms(IEnumerable<AssetFile> files, ContentPlan plan, TransformerRequirements requirements)
+        private static void applyNonBatchedNonGlobalTransforms(IEnumerable<AssetFile> files, ContentPlan plan,
+                                                               TransformerRequirements requirements)
         {
             foreach (var file in files)
             {
@@ -143,10 +129,7 @@ namespace FubuMVC.Core.Assets.Content
             }
 
 
-            return new AssetFile[]{assetFile};
+            return new[]{assetFile};
         }
     }
-
-
-
 }
