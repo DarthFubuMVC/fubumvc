@@ -103,6 +103,7 @@
     <Compile Include="Assets\Combination\CombinationDeterminationService.cs" />
     <Compile Include="Assets\Combination\CombineAllScriptFiles.cs" />
     <Compile Include="Assets\Combination\CombineAllStylesheets.cs" />
+    <Compile Include="Assets\Combination\CombineAllUniqueSetsCombinationDeterminationService.cs" />
     <Compile Include="Assets\Combination\IAssetCombinationCache.cs" />
     <Compile Include="Assets\Combination\ICombinationDeterminationService.cs" />
     <Compile Include="Assets\Combination\ICombinationPolicy.cs" />

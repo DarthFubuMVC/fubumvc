@@ -24,13 +24,19 @@ namespace FubuMVC.Tests.Assets.Combination
                 new ScriptFileCombination(new AssetFile[0])
             };
 
-            var thePlan = new AssetTagPlan(MimeType.Css, new AssetFile[0]);
+
+
+            var thePlan = MockRepository.GenerateMock<AssetTagPlan>(MimeType.Css, new AssetFile[0]);
+            combos.Each(combo => thePlan.Expect(x => x.TryCombination(combo)).Return(true));
 
             policy.Stub(x => x.DetermineCombinations(thePlan)).Return(combos);
 
             ClassUnderTest.ExecutePolicy(thePlan, policy);
 
             combos.Each(c => MockFor<IAssetCombinationCache>().AssertWasCalled(x => x.StoreCombination(thePlan.MimeType ,c)));
+
+            // All the combos should have been registered
+            thePlan.VerifyAllExpectations();
         }
 
         [Test]

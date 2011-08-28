@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Combination
 {
@@ -16,7 +17,20 @@ namespace FubuMVC.Core.Assets.Combination
             _policies = policies;
         }
 
-        public void TryToReplaceWithCombinations(AssetTagPlan plan)
+        protected IAssetCombinationCache cache
+        {
+            get { return _cache; }
+        }
+
+        protected IEnumerable<ICombinationPolicy> policies
+        {
+            get
+            {
+                return _policies;
+            }
+        }
+
+        public virtual void TryToReplaceWithCombinations(AssetTagPlan plan)
         {
             TryAllExistingCombinations(plan);
 
@@ -32,7 +46,11 @@ namespace FubuMVC.Core.Assets.Combination
 
         public virtual void ExecutePolicy(AssetTagPlan plan, ICombinationPolicy policy)
         {
-            policy.DetermineCombinations(plan).Each(combo => _cache.StoreCombination(plan.MimeType, combo));
+            policy.DetermineCombinations(plan).Each(combo =>
+            {
+                _cache.StoreCombination(plan.MimeType, combo);
+                plan.TryCombination(combo);
+            });
         }
 
         public void TryAllExistingCombinations(AssetTagPlan plan)

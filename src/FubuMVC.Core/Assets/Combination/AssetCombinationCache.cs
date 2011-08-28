@@ -7,6 +7,7 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Combination
 {
+    // TODO -- simplify this down and eliminate the storage by MimeType
     public class AssetCombinationCache : IAssetCombinationCache
     {
         private readonly Cache<MimeType, AssetCombinationSet> _combinations

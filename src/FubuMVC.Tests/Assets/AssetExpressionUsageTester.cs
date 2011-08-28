@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Registration;
 using HtmlTags;
@@ -48,7 +49,19 @@ namespace FubuMVC.Tests.Assets
 
             registry.BuildGraph().Services.DefaultServiceFor<IMissingAssetHandler>()
                 .Type.ShouldEqual(typeof(MyDifferentMissingAssetHandler));
-        }   
+        }
+
+        [Test]
+        public void apply_the_simplistic_asset_combination_approach()
+        {
+            var registry = new FubuRegistry();
+            registry.Assets.CombineAllUniqueAssetRequests();
+
+            registry.BuildGraph().Services.DefaultServiceFor<ICombinationDeterminationService>()
+                .Type.ShouldEqual(typeof(CombineAllUniqueSetsCombinationDeterminationService)); 
+
+
+        }
     }
 
     public class MyDifferentMissingAssetHandler : IMissingAssetHandler

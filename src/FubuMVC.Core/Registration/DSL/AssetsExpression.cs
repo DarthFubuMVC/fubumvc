@@ -1,3 +1,4 @@
+using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Tags;
 
 namespace FubuMVC.Core.Registration.DSL
@@ -38,6 +39,18 @@ namespace FubuMVC.Core.Registration.DSL
         {
             setService<IMissingAssetHandler, T>();
 
+            return this;
+        }
+
+        /// <summary>
+        /// This directs FubuMVC to apply a *very* naive combination policy to create a combination
+        /// for each unique set of requested assets (styles will only be combined if they are in the
+        /// same folder).  
+        /// </summary>
+        /// <returns></returns>
+        public AssetsExpression CombineAllUniqueAssetRequests()
+        {
+            setService<ICombinationDeterminationService, CombineAllUniqueSetsCombinationDeterminationService>();
             return this;
         }
 
