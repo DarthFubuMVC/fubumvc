@@ -29,6 +29,16 @@ namespace FubuMVC.Core.Assets.Files
 
         }
 
+        public string ContentFolder()
+        {
+            if (!_name.Contains('/'))
+            {
+                return null;
+            }
+
+            return _name.Split('/').Reverse().Skip(1).Reverse().Join("/");
+        }
+
         public AssetFile(string name, AssetFolder? folder) : this(name)
         {
             Folder = folder;

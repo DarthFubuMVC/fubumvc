@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Assets
             return plan;
         }
 
-        private void validateMatchingMimetypes(MimeType mimeType, AssetTagPlan plan, IEnumerable<string> names)
+        private static void validateMatchingMimetypes(MimeType mimeType, AssetTagPlan plan, IEnumerable<string> names)
         {
             if (plan.Subjects.Any(x => x.MimeType != mimeType))
             {

@@ -12,6 +12,24 @@ namespace FubuMVC.Tests.Assets.Files
     public class AssetFileTester
     {
         [Test]
+        public void content_folder_is_null_if_under_the_root()
+        {
+            new AssetFile("something.js").ContentFolder().ShouldBeNull();
+        }
+
+        [Test]
+        public void content_folder_under_a_single_folder()
+        {
+            new AssetFile("f1/main.css").ContentFolder().ShouldEqual("f1");
+        }
+
+        [Test]
+        public void content_folder_under_deep_folders()
+        {
+            new AssetFile("f1/f2/main.css").ContentFolder().ShouldEqual("f1/f2");
+        }
+
+        [Test]
         public void derive_the_asset_folder_from_the_mimetype_by_default()
         {
             new AssetFile("script.js").Folder.ShouldEqual(AssetFolder.scripts);
