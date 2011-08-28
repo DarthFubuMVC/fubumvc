@@ -54,6 +54,25 @@ namespace FubuMVC.Core.Registration.DSL
             return this;
         }
 
+        /// <summary>
+        /// Additively registers an ICombinationPolicy.  NOTE:  this will have no
+        /// effect if you are using the CombineAllUniqueAssetRequests() options
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public AssetsExpression CombineWith<T>() where T : ICombinationPolicy
+        {
+            addService<ICombinationPolicy, T>();
+            return this;
+        }
+
+
+
+        private void addService<TInterface, TConcrete>() where TConcrete : TInterface
+        {
+            _registry.Services(x => x.AddService<TInterface, TConcrete>());
+        }
+
         private void setService<TInterface, TConcrete>() where TConcrete : TInterface
         {
             _registry.Services(x => x.ReplaceService<TInterface, TConcrete>());

@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration;
 using HtmlTags;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace FubuMVC.Tests.Assets
 {
@@ -62,6 +63,20 @@ namespace FubuMVC.Tests.Assets
 
 
         }
+
+        [Test]
+        public void register_a_combination_policy_with_CombineWith()
+        {
+            var registry = new FubuRegistry();
+            registry.Assets
+                .CombineWith<CombineAllScriptFiles>()
+                .CombineWith<CombineAllStylesheets>();
+
+            registry.BuildGraph().Services.ServicesFor(typeof(ICombinationPolicy))
+                .Select(x => x.Type).ShouldHaveTheSameElementsAs(typeof(CombineAllScriptFiles), typeof(CombineAllStylesheets));
+        }
+
+
     }
 
     public class MyDifferentMissingAssetHandler : IMissingAssetHandler
