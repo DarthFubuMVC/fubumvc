@@ -4,5 +4,6 @@ namespace FubuMVC.Core.Assets.Content
     {
         string ReadContentsFrom(string file);
         ITransformer GetTransformer<T>() where T : ITransformer;
+
     }
 }

@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 
 namespace FubuMVC.Core.Assets.Files
 {
     public class AssetPath
     {
+        public AssetPath(IEnumerable<string> pathParts) : this(pathParts.Join("/"))
+        {
+        }
+
         public AssetPath(string path)
         {
             if (path.Contains(":"))
@@ -33,6 +37,10 @@ namespace FubuMVC.Core.Assets.Files
             Folder = folder;
         }
 
+        public string Name { get; private set; }
+        public string Package { get; private set; }
+        public AssetFolder? Folder { get; private set; }
+
         private void readPath(string path)
         {
             if (!path.Contains("/"))
@@ -41,9 +49,9 @@ namespace FubuMVC.Core.Assets.Files
                 return;
             }
 
-            foreach (AssetFolder type in Enum.GetValues(typeof(AssetFolder)))
+            foreach (AssetFolder type in Enum.GetValues(typeof (AssetFolder)))
             {
-                var prefix = type.ToString() + "/";
+                var prefix = type + "/";
 
                 if (path.StartsWith(prefix))
                 {
@@ -55,9 +63,5 @@ namespace FubuMVC.Core.Assets.Files
 
             Name = path;
         }
-
-        public string Name { get; private set; }
-        public string Package { get; private set; }
-        public AssetFolder? Folder { get; private set; }
     }
 }

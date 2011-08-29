@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Runtime;
+using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.Assets
 {
@@ -29,15 +32,107 @@ namespace FubuMVC.Core.Assets
             var url = "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, folder, name);
             return url.ToAbsoluteUrl();
         }
-
-
     }
 
-    public class ContentPlanHandler : IHttpHandler
+    public class AssetHttpHandler : IHttpHandler
+    {
+        public AssetHttpHandler(IContentWriter writer, IEnumerable<string> routeValues)
+        {
+        }
+
+        public void ProcessRequest(HttpContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsReusable
+        {
+            get { return false; }
+        }
+    }
+
+    public interface IImageWriter
+    {
+        void WriteImageToOutput(string name);
+    }
+
+    public class ImageWriter : IImageWriter
+    {
+        private readonly IOutputWriter _writer;
+        private readonly IAssetPipeline _pipeline;
+
+        public ImageWriter(IOutputWriter writer, IAssetPipeline pipeline)
+        {
+            _writer = writer;
+            _pipeline = pipeline;
+        }
+
+        public void WriteImageToOutput(string name)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ContentPipeline : IContentPipeline
+    {
+        private readonly IServiceLocator _services;
+        private readonly IFileSystem _fileSystem;
+
+        public ContentPipeline(IServiceLocator services, IFileSystem fileSystem)
+        {
+            _services = services;
+            _fileSystem = fileSystem;
+        }
+
+        public string ReadContentsFrom(string file)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITransformer GetTransformer<T>() where T : ITransformer
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IContentPlanExecutor
+    {
+        void Execute(string name, Action<string, IEnumerable<AssetFile>> continuation);
+    }
+
+    public class ContentPlanExecutor : IContentPlanExecutor
+    {
+        private readonly IContentPlanCache _cache;
+        private readonly IContentPipeline _pipeline;
+
+        public ContentPlanExecutor(IContentPlanCache cache, IContentPipeline pipeline)
+        {
+            _cache = cache;
+            _pipeline = pipeline;
+        }
+
+        public void Execute(string name, Action<string, IEnumerable<AssetFile>> continuation)
+        {
+            var plan = _cache.PlanFor(name);
+            //var contents = plan.
+        }
+    }
+
+    public class ContentWriter
+    {
+        
+    }
+
+    public interface IContentWriter
+    {
+        
+    }
+
+    public class ContentHttpPlanHandler : IHttpHandler
     {
         private readonly ContentPlan _plan;
 
-        public ContentPlanHandler(ContentPlan plan)
+        public ContentHttpPlanHandler(ContentPlan plan)
         {
             _plan = plan;
         }

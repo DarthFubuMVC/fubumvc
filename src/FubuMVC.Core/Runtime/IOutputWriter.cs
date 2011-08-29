@@ -14,6 +14,7 @@ namespace FubuMVC.Core.Runtime
         void RedirectToUrl(string url);
         void AppendCookie(HttpCookie cookie);
 
+
         void WriteResponseCode(HttpStatusCode status);
         RecordedOutput Record(Action action);
     }
