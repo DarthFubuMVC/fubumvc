@@ -5,7 +5,6 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Runtime;
 using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.Assets.Http
@@ -48,28 +47,6 @@ namespace FubuMVC.Core.Assets.Http
         public bool IsReusable
         {
             get { return false; }
-        }
-    }
-
-    public interface IImageWriter
-    {
-        void WriteImageToOutput(string name);
-    }
-
-    public class ImageWriter : IImageWriter
-    {
-        private readonly IOutputWriter _writer;
-        private readonly IAssetPipeline _pipeline;
-
-        public ImageWriter(IOutputWriter writer, IAssetPipeline pipeline)
-        {
-            _writer = writer;
-            _pipeline = pipeline;
-        }
-
-        public void WriteImageToOutput(string name)
-        {
-            throw new NotImplementedException();
         }
     }
 

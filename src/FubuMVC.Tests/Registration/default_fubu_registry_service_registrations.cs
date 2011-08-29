@@ -291,6 +291,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void ImageWriter_is_configured()
+        {
+            registeredTypeIs<IImageWriter, ImageWriter>();
+        }
+
+        [Test]
         public void script_graph_is_registered()
         {
             new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();

@@ -139,6 +139,8 @@
     <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\Http\ContentPlanExecutor.cs" />
     <Compile Include="Assets\Http\IContentPlanExecutor.cs" />
+    <Compile Include="Assets\Http\IImageWriter.cs" />
+    <Compile Include="Assets\Http\ImageWriter.cs" />
     <Compile Include="Assets\Http\ProcessContentAction.cs" />
     <Compile Include="Assets\IAssetDependencyFinder.cs" />
     <Compile Include="Assets\IAssetTagPlanCache.cs" />
@@ -426,11 +428,13 @@
     <Compile Include="Runtime\IHttpOutputWriter.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
+    <Compile Include="Runtime\IResponseCaching.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
+    <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Runtime\RecordedOutput.cs" />
-    <Compile Include="Runtime\SetterBinder.cs" />
+    <Compile Include="Runtime\ResponseCaching.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />
