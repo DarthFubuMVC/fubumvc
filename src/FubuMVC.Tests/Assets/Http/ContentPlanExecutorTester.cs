@@ -23,12 +23,13 @@ namespace FubuMVC.Tests.Assets.Http
             theFiles = new AssetFile[]{new AssetFile("something.js"), new AssetFile("other.css")};
 
             var theSource = MockFor<IContentSource>();
-            MockFor<IContentPlanCache>().Stub(x => x.SourceFor(theContentPlanName)).Return(theSource);
+            var assetPath = new AssetPath(theContentPlanName);
+            MockFor<IContentPlanCache>().Stub(x => x.SourceFor(assetPath)).Return(theSource);
 
             theSource.Stub(x => x.GetContent(MockFor<IContentPipeline>())).Return(theContents);
             theSource.Stub(x => x.Files).Return(theFiles);
 
-            ClassUnderTest.Execute(theContentPlanName, theContinuation);
+            ClassUnderTest.Execute(assetPath, theContinuation);
         }
 
         [Test]

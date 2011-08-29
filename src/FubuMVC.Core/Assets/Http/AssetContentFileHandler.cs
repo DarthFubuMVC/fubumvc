@@ -49,16 +49,6 @@ namespace FubuMVC.Core.Assets.Http
         }
     }
 
-    public class ContentWriter
-    {
-        
-    }
-
-    public interface IContentWriter
-    {
-        
-    }
-
     public class ContentHttpPlanHandler : IHttpHandler
     {
         private readonly ContentPlan _plan;

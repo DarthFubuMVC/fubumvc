@@ -339,6 +339,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void icontent_writer_is_registered()
+        {
+            registeredTypeIs<IContentWriter, ContentWriter>();
+        }
+
+        [Test]
         public void file_system_is_registered()
         {
             registeredTypeIs<IFileSystem, FileSystem>();

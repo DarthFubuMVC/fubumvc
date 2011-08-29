@@ -140,6 +140,7 @@
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
     <Compile Include="Assets\Http\ContentPlanExecutorTester.cs" />
+    <Compile Include="Assets\Http\ContentWriterTester.cs" />
     <Compile Include="Assets\Http\ImageWriterTester.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />

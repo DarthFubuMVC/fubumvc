@@ -1,5 +1,7 @@
 using System;
 using FubuCore.Util;
+using FubuMVC.Core.Assets.Files;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets.Content
 {
@@ -9,6 +11,7 @@ namespace FubuMVC.Core.Assets.Content
 
         public ContentPlanCache(IContentPlanner planner)
         {
+            // TODO -- strongly consider going to AssetPath here.
             _plans = new Cache<string, ContentPlan>(planner.BuildPlanFor);
         }
 
@@ -17,9 +20,11 @@ namespace FubuMVC.Core.Assets.Content
             return _plans[name];
         }
 
-        public IContentSource SourceFor(string name)
+        public IContentSource SourceFor(AssetPath path)
         {
-            return PlanFor(name);
+            if (path.Package.IsNotEmpty()) return _plans[path.ToFullName()];
+
+            return PlanFor(path.Name);
         }
     }
 }

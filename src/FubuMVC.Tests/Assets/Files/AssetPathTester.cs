@@ -23,6 +23,32 @@ namespace FubuMVC.Tests.Assets.Files
         
         }
 
+        [Test]
+        public void to_full_name_with_only_a_name()
+        {
+            new AssetPath("file.txt").ToFullName().ShouldEqual("file.txt");
+        }
+
+        [Test]
+        public void to_full_name_when_the_mime_type_can_be_inferred()
+        {
+            new AssetPath("scripts/script1.js").ToFullName().ShouldEqual("scripts/script1.js");
+        }
+
+        [Test]
+        public void to_full_name_with_a_package()
+        {
+            new AssetPath("pak1", "script1.js", AssetFolder.scripts)
+                .ToFullName().ShouldEqual("pak1:scripts/script1.js");
+        }
+
+        [Test]
+        public void to_full_name_with_a_package_and_nested_structure()
+        {
+            new AssetPath("pak1", "f1/f2/script1.js", AssetFolder.scripts)
+                .ToFullName().ShouldEqual("pak1:scripts/f1/f2/script1.js");
+        }
+
 
         [Test]
         public void mangled_path_throws_exception()

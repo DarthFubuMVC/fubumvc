@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuMVC.Core.Runtime;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets.Files
 {
@@ -37,6 +38,19 @@ namespace FubuMVC.Core.Assets.Files
             Name = name;
             Package = package;
             Folder = folder;
+        }
+
+        public string ToFullName()
+        {
+            var name = "";
+
+            // TODO -- make an extension in FubuCore for this
+            if (Package.IsNotEmpty()) name += Package + ":";
+            if (Folder.HasValue) name += Folder + "/";
+            
+            name += Name;
+
+            return name;
         }
 
         public string Name { get; private set; }
@@ -76,6 +90,32 @@ namespace FubuMVC.Core.Assets.Files
             }
 
             return Folder.Equals(AssetFolder.images);
+        }
+
+        public bool Equals(AssetPath other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Name, Name) && Equals(other.Package, Package) && other.Folder.Equals(Folder);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (AssetPath)) return false;
+            return Equals((AssetPath) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = (Name != null ? Name.GetHashCode() : 0);
+                result = (result*397) ^ (Package != null ? Package.GetHashCode() : 0);
+                result = (result*397) ^ (Folder.HasValue ? Folder.Value.GetHashCode() : 0);
+                return result;
+            }
         }
     }
 }

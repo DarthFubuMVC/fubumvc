@@ -31,5 +31,30 @@ namespace FubuMVC.Tests.Assets.Content
 
             MockFor<IContentPlanner>().VerifyAllExpectations();
         }
+
+        [Test]
+        public void use_full_name_if_there_is_a_package()
+        {
+            var path = new AssetPath("pak1", "a.js", AssetFolder.scripts);
+            var thePlan = new ContentPlan("something", new AssetFile[]{new AssetFile("a.js"){FullPath = "a.js"}, });
+
+            MockFor<IContentPlanner>().Stub(x => x.BuildPlanFor(path.ToFullName()))
+                .Return(thePlan);
+
+            ClassUnderTest.SourceFor(path).ShouldBeTheSameAs(thePlan);
+        }
+
+        [Test]
+        public void only_use_the_name_if_there_is_no_package()
+        {
+            var path = new AssetPath("scripts/a.js");
+            var thePlan = new ContentPlan("something", new AssetFile[] { new AssetFile("a.js") { FullPath = "a.js" }, });
+
+
+            MockFor<IContentPlanner>().Stub(x => x.BuildPlanFor(path.Name))
+                .Return(thePlan);
+
+            ClassUnderTest.SourceFor(path).ShouldBeTheSameAs(thePlan); 
+        }
     }
 }

@@ -1,7 +1,9 @@
+using FubuMVC.Core.Assets.Files;
+
 namespace FubuMVC.Core.Assets.Http
 {
     public interface IContentPlanExecutor
     {
-        void Execute(string name, ProcessContentAction continuation);
+        void Execute(AssetPath path, ProcessContentAction continuation);
     }
 }

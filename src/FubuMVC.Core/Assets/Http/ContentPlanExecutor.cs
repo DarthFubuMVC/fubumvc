@@ -1,4 +1,5 @@
 using FubuMVC.Core.Assets.Content;
+using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Http
 {
@@ -13,9 +14,9 @@ namespace FubuMVC.Core.Assets.Http
             _pipeline = pipeline;
         }
 
-        public void Execute(string name, ProcessContentAction continuation)
+        public void Execute(AssetPath path, ProcessContentAction continuation)
         {
-            var source = _cache.SourceFor(name);
+            var source = _cache.SourceFor(path);
             var contents = source.GetContent(_pipeline);
 
             continuation(contents, source.Files);
