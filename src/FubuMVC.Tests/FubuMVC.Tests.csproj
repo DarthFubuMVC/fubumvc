@@ -138,6 +138,7 @@
     <Compile Include="Assets\Files\AssetPipelineBuilderTester.cs" />
     <Compile Include="Assets\Files\AssetPipelineTester.cs" />
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
+    <Compile Include="Assets\Http\ContentPlanExecutorTester.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />
     <Compile Include="Assets\StubPackage.cs" />

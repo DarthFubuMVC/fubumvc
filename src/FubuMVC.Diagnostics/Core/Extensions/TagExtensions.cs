@@ -4,6 +4,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;

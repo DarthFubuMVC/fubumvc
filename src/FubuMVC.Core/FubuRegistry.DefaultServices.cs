@@ -10,6 +10,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
@@ -247,6 +248,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IContentPlanner, ContentPlanner>();
             graph.Services.SetServiceIfNone<IContentPlanCache, ContentPlanCache>();
+            graph.Services.SetServiceIfNone<IContentPlanExecutor, ContentPlanExecutor>();
         }
 
 

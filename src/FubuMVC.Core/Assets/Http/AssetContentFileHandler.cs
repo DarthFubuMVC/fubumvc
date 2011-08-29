@@ -8,7 +8,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FubuMVC.Core.Assets
+namespace FubuMVC.Core.Assets.Http
 {
     public class AssetContentFileHandler : IRouteHandler
     {
@@ -92,29 +92,6 @@ namespace FubuMVC.Core.Assets
         public ITransformer GetTransformer<T>() where T : ITransformer
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public interface IContentPlanExecutor
-    {
-        void Execute(string name, Action<string, IEnumerable<AssetFile>> continuation);
-    }
-
-    public class ContentPlanExecutor : IContentPlanExecutor
-    {
-        private readonly IContentPlanCache _cache;
-        private readonly IContentPipeline _pipeline;
-
-        public ContentPlanExecutor(IContentPlanCache cache, IContentPipeline pipeline)
-        {
-            _cache = cache;
-            _pipeline = pipeline;
-        }
-
-        public void Execute(string name, Action<string, IEnumerable<AssetFile>> continuation)
-        {
-            var plan = _cache.PlanFor(name);
-            //var contents = plan.
         }
     }
 

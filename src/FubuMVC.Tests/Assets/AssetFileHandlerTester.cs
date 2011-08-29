@@ -1,6 +1,7 @@
 using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Assets.Http;
 using NUnit.Framework;
 using FubuTestingSupport;
 

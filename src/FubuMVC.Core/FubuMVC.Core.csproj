@@ -89,7 +89,7 @@
     <Compile Include="Assets\AssetDeclarationVerificationActivator.cs" />
     <Compile Include="Assets\AssetDependency.cs" />
     <Compile Include="Assets\AssetDependencyFinderCache.cs" />
-    <Compile Include="Assets\AssetContentFileHandler.cs" />
+    <Compile Include="Assets\Http\AssetContentFileHandler.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetNamesKey.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
@@ -137,6 +137,9 @@
     <Compile Include="Assets\Files\IAssetFileRegistration.cs" />
     <Compile Include="Assets\Files\IAssetPipeline.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
+    <Compile Include="Assets\Http\ContentPlanExecutor.cs" />
+    <Compile Include="Assets\Http\IContentPlanExecutor.cs" />
+    <Compile Include="Assets\Http\ProcessContentAction.cs" />
     <Compile Include="Assets\IAssetDependencyFinder.cs" />
     <Compile Include="Assets\IAssetTagPlanCache.cs" />
     <Compile Include="Assets\IAssetTagPlanner.cs" />

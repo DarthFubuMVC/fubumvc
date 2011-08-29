@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;

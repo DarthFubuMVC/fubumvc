@@ -8,6 +8,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
@@ -275,6 +276,12 @@ namespace FubuMVC.Tests.Registration
             pipeline2.ShouldNotBeNull();
 
             pipeline1.ShouldBeTheSameAs(pipeline2);
+        }
+
+        [Test]
+        public void content_plan_executor_is_registered()
+        {
+            registeredTypeIs<IContentPlanExecutor, ContentPlanExecutor>();
         }
 
         [Test]

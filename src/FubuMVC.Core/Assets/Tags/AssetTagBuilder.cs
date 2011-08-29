@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
 
