@@ -5,7 +5,6 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
-using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.Assets.Http
 {
@@ -47,28 +46,6 @@ namespace FubuMVC.Core.Assets.Http
         public bool IsReusable
         {
             get { return false; }
-        }
-    }
-
-    public class ContentPipeline : IContentPipeline
-    {
-        private readonly IServiceLocator _services;
-        private readonly IFileSystem _fileSystem;
-
-        public ContentPipeline(IServiceLocator services, IFileSystem fileSystem)
-        {
-            _services = services;
-            _fileSystem = fileSystem;
-        }
-
-        public string ReadContentsFrom(string file)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITransformer GetTransformer<T>() where T : ITransformer
-        {
-            throw new NotImplementedException();
         }
     }
 

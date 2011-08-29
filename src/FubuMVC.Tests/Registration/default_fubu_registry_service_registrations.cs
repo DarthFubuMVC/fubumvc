@@ -303,6 +303,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void ContentPipeline_is_registered()
+        {
+            registeredTypeIs<IContentPipeline, ContentPipeline>();
+        }
+
+        [Test]
         public void should_be_a_script_configuration_activator_registered_as_a_service()
         {
             new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
