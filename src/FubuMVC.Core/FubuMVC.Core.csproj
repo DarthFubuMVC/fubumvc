@@ -89,7 +89,7 @@
     <Compile Include="Assets\AssetDeclarationVerificationActivator.cs" />
     <Compile Include="Assets\AssetDependency.cs" />
     <Compile Include="Assets\AssetDependencyFinderCache.cs" />
-    <Compile Include="Assets\AssetFileHandler.cs" />
+    <Compile Include="Assets\AssetContentFileHandler.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetNamesKey.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />

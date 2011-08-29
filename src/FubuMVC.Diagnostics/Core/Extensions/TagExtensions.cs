@@ -28,7 +28,7 @@ namespace FubuMVC.Diagnostics.Core.Extensions
 
         public static HtmlTag ImageFor(this IFubuPage page, string path)
         {
-            var url = AssetFileHandler.DetermineAssetUrl(AssetFolder.images, path);
+            var url = AssetContentFileHandler.DetermineAssetUrl(AssetFolder.images, path);
             return new HtmlTag("img").Attr("src", url);
         }
 

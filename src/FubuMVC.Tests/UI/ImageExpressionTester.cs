@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.UI
         {
             var page = MockRepository.GenerateMock<IFubuPage>();
 
-            page.ImageUrl("some icon name").ShouldEqual(AssetFileHandler.DetermineAssetUrl(AssetFolder.images, "some icon name"));
+            page.ImageUrl("some icon name").ShouldEqual(AssetContentFileHandler.DetermineAssetUrl(AssetFolder.images, "some icon name"));
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.UI
         {
             var page = MockRepository.GenerateMock<IFubuPage>();
 
-            page.Image("some icon name").Attr("src").ShouldEqual(AssetFileHandler.DetermineAssetUrl(AssetFolder.images, "some icon name"));
+            page.Image("some icon name").Attr("src").ShouldEqual(AssetContentFileHandler.DetermineAssetUrl(AssetFolder.images, "some icon name"));
         }
     }
 }

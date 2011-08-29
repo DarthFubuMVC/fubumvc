@@ -84,6 +84,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void IResponseCaching_is_registered()
+        {
+            registeredTypeIs<IResponseCaching, ResponseCaching>();
+        }
+
+        [Test]
         public void IPartialFactory_is_registered()
         {
             registeredTypeIs<IPartialFactory, PartialFactory>();

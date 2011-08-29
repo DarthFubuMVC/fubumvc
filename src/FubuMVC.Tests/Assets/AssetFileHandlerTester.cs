@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Assets
                 Folder = AssetFolder.scripts
             };
 
-            AssetFileHandler.DetermineAssetUrl(file)
+            AssetContentFileHandler.DetermineAssetUrl(file)
                 .ShouldEqual("http://myapp.com/_content/scripts/jquery.forms.js");
         }
 
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Assets
                 Folder = AssetFolder.scripts
             };
 
-            AssetFileHandler.DetermineAssetUrl(file)
+            AssetContentFileHandler.DetermineAssetUrl(file)
                 .ShouldEqual("http://myapp.com/_content/scripts/shared/jquery.forms.js"); 
         }
     }

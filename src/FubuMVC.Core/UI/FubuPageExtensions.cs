@@ -296,7 +296,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
         {
-            return AssetFileHandler.DetermineAssetUrl(AssetFolder.images, imageFilename);
+            return AssetContentFileHandler.DetermineAssetUrl(AssetFolder.images, imageFilename);
         }
 
         public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)

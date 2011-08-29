@@ -141,7 +141,10 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ITypeResolver, TypeResolver>();
             graph.Services.AddService(new TypeDescriptorCache());
 
+
             graph.Services.SetServiceIfNone<IOutputWriter, OutputWriter>();
+            graph.Services.SetServiceIfNone<IResponseCaching, ResponseCaching>();
+
             graph.Services.SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             graph.Services.SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
             graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();

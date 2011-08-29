@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Diagnostics.Querying
         [UrlPattern("_fubu/imageurl/{Name}")]
         public string ImageUrlFor(ImageUrlRequest image)
         {
-            return AssetFileHandler.DetermineAssetUrl(AssetFolder.images, image.Name);
+            return AssetContentFileHandler.DetermineAssetUrl(AssetFolder.images, image.Name);
         }
     }
 
