@@ -7,12 +7,15 @@ using FubuTestingSupport;
 using System.Linq;
 using FubuCore;
 using System.Collections.Generic;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Assets.Content
 {
+
     [TestFixture]
     public class ContentPlanTester
     {
+
         [Test]
         public void figure_out_mime_type_after_ctor()
         {

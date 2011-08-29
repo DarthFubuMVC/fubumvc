@@ -7,11 +7,11 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public class ContentPlan
+    public class ContentPlan : IContentSource
     {
         private readonly string _name;
         private readonly IList<IContentSource> _sources = new List<IContentSource>();
-        private MimeType _mimeType;
+        private readonly MimeType _mimeType;
 
         public ContentPlan(string name, IEnumerable<AssetFile> files)
         {
@@ -110,6 +110,27 @@ namespace FubuMVC.Core.Assets.Content
             {
                 Combine(GetAllSources().ToList());
             }
+        }
+
+        public IContentSource Top()
+        {
+            CombineAll();
+            return _sources.Single();
+        }
+
+        string IContentSource.GetContent(IContentPipeline pipeline)
+        {
+            return Top().GetContent(pipeline);
+        }
+
+        IEnumerable<AssetFile> IContentSource.Files
+        {
+            get { return Top().Files; }
+        }
+
+        IEnumerable<IContentSource> IContentSource.InnerSources
+        {
+            get { return Top().InnerSources; }
         }
     }
 }

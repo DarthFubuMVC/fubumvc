@@ -16,5 +16,10 @@ namespace FubuMVC.Core.Assets.Content
         {
             return _plans[name];
         }
+
+        public IContentSource SourceFor(string name)
+        {
+            return PlanFor(name);
+        }
     }
 }
