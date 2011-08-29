@@ -44,14 +44,14 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void determine_mime_type_from_name_for_js()
         {
-            MimeType.DetermineMimeTypeFromName("file.coffee.js")
+            MimeType.MimeTypeByFileName("file.coffee.js")
                 .ShouldEqual(MimeType.Javascript);
         }
 
         [Test]
         public void determine_mime_type_from_name_for_css()
         {
-            MimeType.DetermineMimeTypeFromName("style.css")
+            MimeType.MimeTypeByFileName("style.css")
                 .ShouldEqual(MimeType.Css);
         }
 
@@ -61,8 +61,8 @@ namespace FubuMVC.Tests.Runtime
             MimeType.Javascript.AddExtension(".coffee");
             MimeType.Css.AddExtension(".scss");
 
-            MimeType.DetermineMimeTypeFromName("file.coffee").ShouldEqual(MimeType.Javascript);
-            MimeType.DetermineMimeTypeFromName("file.scss").ShouldEqual(MimeType.Css);
+            MimeType.MimeTypeByFileName("file.coffee").ShouldEqual(MimeType.Javascript);
+            MimeType.MimeTypeByFileName("file.scss").ShouldEqual(MimeType.Css);
         }
     }
 }

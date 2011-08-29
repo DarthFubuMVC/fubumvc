@@ -70,7 +70,7 @@ namespace FubuMVC.Core.Assets
         public AssetPlanKey DequeueAssetsToRender(MimeType mimeType)
         {
             var requested = outstandingAssets()
-                .Where(x => MimeType.DetermineMimeTypeFromName(x) == mimeType);
+                .Where(x => MimeType.MimeTypeByFileName(x) == mimeType);
 
             var names = returnOrderedDependenciesFor(requested);
             return new AssetPlanKey(mimeType, names);
@@ -87,7 +87,7 @@ namespace FubuMVC.Core.Assets
 
         public IEnumerable<AssetPlanKey> DequeueAssetsToRender()
         {
-            var mimeTypes = outstandingAssets().Select(MimeType.DetermineMimeTypeFromName).Distinct().ToList();
+            var mimeTypes = outstandingAssets().Select(MimeType.MimeTypeByFileName).Distinct().ToList();
             return mimeTypes.Select(DequeueAssetsToRender).ToList();
         }
     }

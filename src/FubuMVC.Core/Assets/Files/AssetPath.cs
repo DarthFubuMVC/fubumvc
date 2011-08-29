@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Files
 {
@@ -62,6 +64,18 @@ namespace FubuMVC.Core.Assets.Files
             }
 
             Name = path;
+        }
+
+        public bool IsImage()
+        {
+            var mimeType = MimeType.MimeTypeByFileName(Name);
+
+            if (mimeType != null && mimeType.Folder() != null)
+            {
+                return mimeType.Folder() == AssetFolder.images;
+            }
+
+            return Folder.Equals(AssetFolder.images);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Assets.Files
         {
             _name = name;
 
-            var mimeType = MimeType.DetermineMimeTypeFromName(Name);
+            var mimeType = MimeType.MimeTypeByFileName(Name);
             if (mimeType != null)
             {
                 _mimeType = mimeType;

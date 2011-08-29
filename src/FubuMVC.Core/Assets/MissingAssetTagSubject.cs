@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Assets
         {
             Name = name;
 
-            MimeType = MimeType.DetermineMimeTypeFromName(name);
+            MimeType = MimeType.MimeTypeByFileName(name);
         }
 
         public string Name { get; private set; }

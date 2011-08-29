@@ -8,6 +8,23 @@ namespace FubuMVC.Tests.Assets.Files
     public class AssetPathTester
     {
         [Test]
+        public void is_image()
+        {
+            new AssetPath("images/pict.bmp").IsImage().ShouldBeTrue();
+            new AssetPath("images/pict.jpg").IsImage().ShouldBeTrue();
+            new AssetPath("images/pict.jpeg").IsImage().ShouldBeTrue();
+            new AssetPath("images/pict.gif").IsImage().ShouldBeTrue();
+            new AssetPath("images/pict.png").IsImage().ShouldBeTrue();
+            new AssetPath("styles/pict.png").IsImage().ShouldBeTrue();
+            new AssetPath("images/pict.unk").IsImage().ShouldBeTrue(); // Use the folder as is
+            new AssetPath("styles/pict.unk").IsImage().ShouldBeFalse(); // Use the folder as is
+            new AssetPath("images/pict.js").IsImage().ShouldBeFalse();
+            new AssetPath("images/pict.css").IsImage().ShouldBeFalse();
+        
+        }
+
+
+        [Test]
         public void mangled_path_throws_exception()
         {
             Exception<AssetPathException>.ShouldBeThrownBy(() =>

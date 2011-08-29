@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Runtime
             return _mimeTypes.GetAll();
         }
 
-        public static MimeType FindMimeType(string mimeTypeValue)
+        public static MimeType MimeTypeByValue(string mimeTypeValue)
         {
             return _mimeTypes[mimeTypeValue];
         }
@@ -97,7 +97,7 @@ namespace FubuMVC.Core.Runtime
             return _extensions.FirstOrDefault();
         }
 
-        public static MimeType DetermineMimeTypeFromName(string name)
+        public static MimeType MimeTypeByFileName(string name)
         {
             var extension = Path.GetExtension(name);
             return _mimeTypes.GetAll().FirstOrDefault(x => x.HasExtension(extension));
