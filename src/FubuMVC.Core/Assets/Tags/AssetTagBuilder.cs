@@ -39,7 +39,7 @@ namespace FubuMVC.Core.Assets.Tags
             var func = _builders[plan.MimeType];
             Func<IAssetTagSubject, HtmlTag> builder = s =>
             {
-                var url = AssetContentFileHandler.DetermineAssetUrl(s);
+                var url = AssetContentHandler.DetermineAssetUrl(s);
                 return func(s, url);
             };
 

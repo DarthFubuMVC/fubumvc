@@ -1,10 +1,8 @@
-using FubuMVC.Core.Assets;
+using System.Linq;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
-using System.Linq;
 
 namespace FubuMVC.Tests.Assets.Files
 {
@@ -37,32 +35,6 @@ namespace FubuMVC.Tests.Assets.Files
         }
 
         [Test]
-        public void finds_the_extension_of_itself()
-        {
-            var file = new AssetFile("script.js");
-            
-            file.Extension().ShouldEqual(".js");
-        }
-
-        [Test]
-        public void finds_the_extension_even_with_multiple_dots()
-        {
-            var file = new AssetFile("jquery.forms.js");
-
-            file.Extension().ShouldEqual(".js");
-        }
-
-        [Test]
-        public void use_the_asset_folder_while_determining_mimetype()
-        {
-            var coffee = new AssetFile("something.coffee"){
-                Folder = AssetFolder.scripts
-            };
-
-            coffee.MimeType.ShouldEqual(MimeType.Javascript);
-        }
-
-        [Test]
         public void determine_mimetype_positive()
         {
             var scriptFile = new AssetFile("script.js");
@@ -78,10 +50,36 @@ namespace FubuMVC.Tests.Assets.Files
         public void find_all_the_possible_extensions()
         {
             new AssetFile("script.js").AllExtensions().ShouldHaveTheSameElementsAs(".js");
-            new AssetFile("script.trans1.js").AllExtensions().ShouldHaveTheSameElementsAs(".trans1",".js");
-            new AssetFile("script.trans1.trans2.js").AllExtensions().ShouldHaveTheSameElementsAs(".trans1", ".trans2",".js");
+            new AssetFile("script.trans1.js").AllExtensions().ShouldHaveTheSameElementsAs(".trans1", ".js");
+            new AssetFile("script.trans1.trans2.js").AllExtensions().ShouldHaveTheSameElementsAs(".trans1", ".trans2",
+                                                                                                 ".js");
             new AssetFile("something").AllExtensions().Any().ShouldBeFalse();
         }
 
+        [Test]
+        public void finds_the_extension_even_with_multiple_dots()
+        {
+            var file = new AssetFile("jquery.forms.js");
+
+            file.Extension().ShouldEqual(".js");
+        }
+
+        [Test]
+        public void finds_the_extension_of_itself()
+        {
+            var file = new AssetFile("script.js");
+
+            file.Extension().ShouldEqual(".js");
+        }
+
+        [Test]
+        public void use_the_asset_folder_while_determining_mimetype()
+        {
+            var coffee = new AssetFile("something.coffee"){
+                Folder = AssetFolder.scripts
+            };
+
+            coffee.MimeType.ShouldEqual(MimeType.Javascript);
+        }
     }
 }

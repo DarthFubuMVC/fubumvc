@@ -4,7 +4,6 @@ using System.Reflection;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
-using FubuCore.Configuration;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
@@ -13,7 +12,11 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
+<<<<<<< HEAD
 using FubuMVC.Core.Content;
+=======
+using FubuMVC.Core.Conneg;
+>>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
@@ -66,7 +69,7 @@ namespace FubuMVC.Core
         void Import(FubuRegistry registry, string prefix);
         void IncludeDiagnostics(bool shouldInclude);
         void IncludeDiagnostics(Action<IDiagnosticsConfigurationExpression> configure);
-        
+
 
         /// <summary>
         ///   This allows you to drop down to direct manipulation of the BehaviorGraph
@@ -98,7 +101,8 @@ namespace FubuMVC.Core
             config.ExcludeRequests(new TFilter());
         }
 
-        public static void ExcludeRequests(this IDiagnosticsConfigurationExpression config, Func<CurrentRequest, bool> shouldExclude)
+        public static void ExcludeRequests(this IDiagnosticsConfigurationExpression config,
+                                           Func<CurrentRequest, bool> shouldExclude)
         {
             config.ExcludeRequests(new LambdaRequestHistoryCacheFilter(shouldExclude));
         }
@@ -138,6 +142,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IHttpOutputWriter, AspNetHttpOutputWriter>();
 
             graph.Services.AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
+
 
             graph.Services.SetServiceIfNone<ITypeResolver, TypeResolver>();
             graph.Services.AddService(new TypeDescriptorCache());
@@ -186,7 +191,7 @@ namespace FubuMVC.Core
 
 
             graph.Services.SetServiceIfNone<IFileSystem, FileSystem>();
-            
+
             graph.Services.SetServiceIfNone<IRoutePolicy, StandardRoutePolicy>();
 
             graph.Services.SetServiceIfNone<IObjectConverter, ObjectConverter>();
@@ -198,7 +203,12 @@ namespace FubuMVC.Core
 
             graph.Services.AddService<IFormatter, JsonFormatter>();
             graph.Services.AddService<IFormatter, XmlFormatter>();
+<<<<<<< HEAD
 
+=======
+            graph.Services.SetServiceIfNone(typeof (IMediaProcessor<>), typeof (MediaProcessor<>));
+
+>>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
             graph.Services.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
 
@@ -214,8 +224,12 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
             graph.Services.SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
 
+<<<<<<< HEAD
 
             registerAssetServices(graph);
+=======
+            registerAssetServices(graph);
+>>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);
@@ -252,7 +266,6 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IImageWriter, ImageWriter>();
             graph.Services.SetServiceIfNone<IContentPipeline, ContentPipeline>();
             graph.Services.SetServiceIfNone<IContentWriter, ContentWriter>();
-
         }
 
 
@@ -292,7 +305,7 @@ namespace FubuMVC.Core
 
             graph.Services.ClearAll<HtmlConventionRegistry>();
             graph.Services.ReplaceService(library);
-            graph.Services.SetServiceIfNone(typeof(ITagGenerator<>), typeof(TagGenerator<>));
+            graph.Services.SetServiceIfNone(typeof (ITagGenerator<>), typeof (TagGenerator<>));
             graph.Services.SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
         }
     }

@@ -6,6 +6,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using Bottles.Environment;
 using FubuCore;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Packaging;
@@ -153,7 +154,12 @@ namespace FubuMVC.Core
 
             // Build route objects from route definitions on graph + add packaging routes
             _facility.Value.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
-            _fubuFacility.AddPackagingContentRoutes(routes);
+
+
+
+
+            var contentHandler = new AssetContentHandler(() => _facility.Value.Get<IContentWriter>());
+            routes.Add(contentHandler.BuildRoute());
 
             return routes;
         }

@@ -89,7 +89,7 @@
     <Compile Include="Assets\AssetDeclarationVerificationActivator.cs" />
     <Compile Include="Assets\AssetDependency.cs" />
     <Compile Include="Assets\AssetDependencyFinderCache.cs" />
-    <Compile Include="Assets\Http\AssetContentFileHandler.cs" />
+    <Compile Include="Assets\Http\AssetContentHandler.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetNamesKey.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
@@ -138,6 +138,7 @@
     <Compile Include="Assets\Files\IAssetPipeline.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\Content\ContentPipeline.cs" />
+    <Compile Include="Assets\Http\AssetHttpHandler.cs" />
     <Compile Include="Assets\Http\ContentPlanExecutor.cs" />
     <Compile Include="Assets\Http\ContentWriter.cs" />
     <Compile Include="Assets\Http\IContentPlanExecutor.cs" />
@@ -214,7 +215,6 @@
     <Compile Include="Caching\RequestOutputCacheBehavior.cs" />
     <Compile Include="Caching\RequestOutputCacheNode.cs" />
     <Compile Include="Registration\DSL\AssetsExpression.cs" />
-    <Compile Include="Content\FileRouteHandler.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
     <Compile Include="Continuations\FubuContinuation.cs" />

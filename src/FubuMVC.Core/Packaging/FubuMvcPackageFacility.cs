@@ -69,14 +69,6 @@ namespace FubuMVC.Core.Packaging
             return basePath;
         }
 
-        public void AddPackagingContentRoutes(ICollection<RouteBase> routes)
-        {
-            // TODO -- put this back
-            //new FileRouteHandler(_mimeTypeProvider).RegisterRoute(routes);
-            //new FileRouteHandler(_mimeTypeProvider).RegisterRoute(routes);
-            //new FileRouteHandler(_mimeTypeProvider).RegisterRoute(routes);
-        }
-
         public override string ToString()
         {
             return "FubuMVC Packaging Facility";

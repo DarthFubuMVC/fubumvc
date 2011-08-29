@@ -204,8 +204,6 @@ namespace FubuMVC.Tests.Assets.Content
     {
         private AssetFile[] files;
         private ContentPlan thePlan;
-        private IContentSource theReadFileSource;
-        private IContentSource theTransformerNode;
         private Core.Assets.Content.Combination theCombination;
 
         [SetUp]

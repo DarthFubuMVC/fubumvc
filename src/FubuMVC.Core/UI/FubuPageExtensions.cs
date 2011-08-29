@@ -2,10 +2,8 @@ using System;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
-using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Configuration;
@@ -72,14 +70,14 @@ namespace FubuMVC.Core.UI
             return page.AuthorizedLinkTo(x => x.EndpointFor(actionExpression));
         }
 
-        public static HtmlTag LinkToNew<T> (this IFubuPage page)
+        public static HtmlTag LinkToNew<T>(this IFubuPage page)
         {
             return page.AuthorizedLinkTo(x => x.EndpointForNew<T>());
         }
-        
+
         public static string LinkVariable(this IFubuPage page, string variable, object input)
         {
-            string url = page.Urls.UrlFor(input);
+            var url = page.Urls.UrlFor(input);
             return "var {0} = '{1}';".ToFormat(variable, url);
         }
 
@@ -89,11 +87,11 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that accepts user input for a property of the page's view model
+        ///   Builds a tag that accepts user input for a property of the page's view model
         /// </summary>
-        /// <typeparam name="T">The model type of the strongly typed view</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the model</param>
+        /// <typeparam name = "T">The model type of the strongly typed view</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "expression">An expression that specifies a property on the model</param>
         /// <returns></returns>
         public static HtmlTag InputFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
@@ -102,11 +100,11 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that accepts user input for a property on a model retrieved from the <see cref="IFubuRequest" />
+        ///   Builds a tag that accepts user input for a property on a model retrieved from the <see cref = "IFubuRequest" />
         /// </summary>
-        /// <typeparam name="T">The type to retrieve from the request</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the retrieved type instance</param>
+        /// <typeparam name = "T">The type to retrieve from the request</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "expression">An expression that specifies a property on the retrieved type instance</param>
         /// <returns></returns>
         public static HtmlTag InputFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
         {
@@ -114,25 +112,26 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that accepts user input tag for a property on a provided model instance
+        ///   Builds a tag that accepts user input tag for a property on a provided model instance
         /// </summary>
-        /// <typeparam name="T">The type of the given model</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="model">The model used to provide values for the tag</param>
-        /// <param name="expression">An expression that specifies a property on the provided model</param>
+        /// <typeparam name = "T">The type of the given model</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "model">The model used to provide values for the tag</param>
+        /// <param name = "expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
-        public static HtmlTag InputFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression) where T : class
+        public static HtmlTag InputFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
+            where T : class
         {
             return page.Tags(model).InputFor(expression);
         }
 
 
         /// <summary>
-        /// Builds a tag that displays the name of a property on the page's view model
+        ///   Builds a tag that displays the name of a property on the page's view model
         /// </summary>
-        /// <typeparam name="T">The model type of the strongly typed view</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the model</param>
+        /// <typeparam name = "T">The model type of the strongly typed view</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "expression">An expression that specifies a property on the model</param>
         /// <returns></returns>
         public static HtmlTag LabelFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
@@ -141,11 +140,11 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that displays the name of a property on a model retrieved from the <see cref="IFubuRequest" />
+        ///   Builds a tag that displays the name of a property on a model retrieved from the <see cref = "IFubuRequest" />
         /// </summary>
-        /// <typeparam name="T">The type to retrieve from the request</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the retrieved type instance</param>
+        /// <typeparam name = "T">The type to retrieve from the request</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "expression">An expression that specifies a property on the retrieved type instance</param>
         /// <returns></returns>
         public static HtmlTag LabelFor<T>(this IFubuPage page, Expression<Func<T, object>> expression) where T : class
         {
@@ -153,24 +152,25 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that displays the name of a property on a given model
+        ///   Builds a tag that displays the name of a property on a given model
         /// </summary>
-        /// <typeparam name="T">The type of the given model</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="model">The model used to provide values for the tag</param>
-        /// <param name="expression">An expression that specifies a property on the provided model</param>
+        /// <typeparam name = "T">The type of the given model</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "model">The model used to provide values for the tag</param>
+        /// <param name = "expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
-        public static HtmlTag LabelFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression) where T : class
+        public static HtmlTag LabelFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
+            where T : class
         {
             return page.Tags(model).LabelFor(expression);
         }
 
         /// <summary>
-        /// Builds a tag that displays the current value of a property on the page's view model
+        ///   Builds a tag that displays the current value of a property on the page's view model
         /// </summary>
-        /// <typeparam name="T">The model type of the strongly typed view</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the model</param>
+        /// <typeparam name = "T">The model type of the strongly typed view</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "expression">An expression that specifies a property on the model</param>
         /// <returns></returns>
         public static HtmlTag DisplayFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
@@ -179,11 +179,11 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that displays the current value of a property on a model retrieved from the <see cref="IFubuRequest" />
+        ///   Builds a tag that displays the current value of a property on a model retrieved from the <see cref = "IFubuRequest" />
         /// </summary>
-        /// <typeparam name="T">The type to retrieve from the request</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="expression">An expression that specifies a property on the retrieved type instance</param>
+        /// <typeparam name = "T">The type to retrieve from the request</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "expression">An expression that specifies a property on the retrieved type instance</param>
         /// <returns></returns>
         public static HtmlTag DisplayFor<T>(this IFubuPage page, Expression<Func<T, object>> expression)
             where T : class
@@ -192,12 +192,12 @@ namespace FubuMVC.Core.UI
         }
 
         /// <summary>
-        /// Builds a tag that displays the current value of a property on a given model
+        ///   Builds a tag that displays the current value of a property on a given model
         /// </summary>
-        /// <typeparam name="T">The type of the given model</typeparam>
-        /// <param name="page">The view</param>
-        /// <param name="model">The model used to provide values for the tag</param>
-        /// <param name="expression">An expression that specifies a property on the provided model</param>
+        /// <typeparam name = "T">The type of the given model</typeparam>
+        /// <param name = "page">The view</param>
+        /// <param name = "model">The model used to provide values for the tag</param>
+        /// <param name = "expression">An expression that specifies a property on the provided model</param>
         /// <returns></returns>
         public static HtmlTag DisplayFor<T>(this IFubuPage page, T model, Expression<Func<T, object>> expression)
             where T : class
@@ -214,14 +214,15 @@ namespace FubuMVC.Core.UI
         public static TextboxTag TextBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
             where T : class
         {
-            string name = ElementNameFor(page, expression);
-			object value = page.Model.ValueOrDefault(expression);
-			return new TextboxTag(name, (value == null) ? "" : value.ToString());
+            var name = ElementNameFor(page, expression);
+            var value = page.Model.ValueOrDefault(expression);
+            return new TextboxTag(name, (value == null) ? "" : value.ToString());
         }
 
         // TODO -- Jeremy to add tests
         // IN Dovetail, want to add a label attribute for the localized header of the property
-        public static CheckboxTag CheckBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, bool>> expression) where T : class
+        public static CheckboxTag CheckBoxFor<T>(this IFubuPage<T> page, Expression<Func<T, bool>> expression)
+            where T : class
         {
             // TODO -- run modifications on this?
             return new CheckboxTag(page.Model.ValueOrDefault(expression));
@@ -240,27 +241,27 @@ namespace FubuMVC.Core.UI
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
         {
-            string url = page.Urls.UrlFor(new TInputModel());
+            var url = page.Urls.UrlFor(new TInputModel());
             return new FormTag(url);
         }
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page, TInputModel model)
         {
-            string url = page.Urls.UrlFor(model);
+            var url = page.Urls.UrlFor(model);
             return new FormTag(url);
         }
 
 
         public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
         {
-            string url = view.Urls.UrlFor(expression);
+            var url = view.Urls.UrlFor(expression);
             return new FormTag(url);
         }
 
 
         public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
         {
-            string url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
+            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
 
             return new FormTag(url);
         }
@@ -274,7 +275,6 @@ namespace FubuMVC.Core.UI
         {
             return new HtmlTag("span").Text(text);
         }
-
 
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
         {
-            return AssetContentFileHandler.DetermineAssetUrl(AssetFolder.images, imageFilename);
+            return AssetContentHandler.DetermineAssetUrl(AssetFolder.images, imageFilename);
         }
 
         public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)

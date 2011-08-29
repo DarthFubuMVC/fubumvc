@@ -1,15 +1,11 @@
-using System;
-using System.Diagnostics;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Content;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Assets
 {
@@ -67,6 +63,37 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void dequeue_all_assets()
+        {
+            ClassUnderTest.Require("main.css", "a.css", "b.css");
+            ClassUnderTest.Require("main.js", "a.js", "b.js");
+
+            ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
+                .ShouldHaveTheSameElementsAs(
+                    AssetPlanKey.For(MimeType.Javascript, "a.js", "b.js", "main.js"),
+                    AssetPlanKey.For(MimeType.Css, "a.css", "b.css", "main.css")
+                );
+        }
+
+        [Test]
+        public void dequeue_all_assets_latches()
+        {
+            ClassUnderTest.Require("main.css", "a.css", "b.css");
+            ClassUnderTest.Require("main.js", "a.js", "b.js");
+
+            ClassUnderTest.DequeueAssetsToRender();
+
+            ClassUnderTest.Require("c.css", "d.css");
+            ClassUnderTest.Require("c.js", "d.js");
+
+            ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
+                .ShouldHaveTheSameElementsAs(
+                    AssetPlanKey.For(MimeType.Javascript, "c.js", "d.js"),
+                    AssetPlanKey.For(MimeType.Css, "c.css", "d.css")
+                );
+        }
+
+        [Test]
         public void dequeue_assets_by_mimetype()
         {
             ClassUnderTest.Require("main.css", "a.css", "b.css");
@@ -74,7 +101,6 @@ namespace FubuMVC.Tests.Assets
 
             ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript)
                 .ShouldHaveTheSameElementsAs("a.js", "b.js", "main.js");
-
         }
 
         [Test]
@@ -89,38 +115,6 @@ namespace FubuMVC.Tests.Assets
 
             ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript)
                 .ShouldHaveTheSameElementsAs("d.js", "e.js");
-        }
-
-        [Test]
-        public void dequeue_all_assets()
-        {
-            ClassUnderTest.Require("main.css", "a.css", "b.css");
-            ClassUnderTest.Require("main.js", "a.js", "b.js");
-
-            ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
-                .ShouldHaveTheSameElementsAs(
-                    AssetPlanKey.For(MimeType.Javascript, "a.js", "b.js", "main.js"),
-                    AssetPlanKey.For(MimeType.Css, "a.css", "b.css", "main.css")
-                    
-                );
-        }
-
-        [Test]
-        public void dequeue_all_assets_latches()
-        {
-            ClassUnderTest.Require("main.css", "a.css", "b.css");
-            ClassUnderTest.Require("main.js", "a.js", "b.js");
-
-            ClassUnderTest.DequeueAssetsToRender();
-
-            ClassUnderTest.Require("c.css", "d.css");
-            ClassUnderTest.Require("c.js", "d.js");
-        
-            ClassUnderTest.DequeueAssetsToRender().OrderBy(x => x.MimeType.Value)
-                .ShouldHaveTheSameElementsAs(
-                    AssetPlanKey.For(MimeType.Javascript, "c.js", "d.js"),
-                    AssetPlanKey.For(MimeType.Css, "c.css", "d.css")
-                );
         }
     }
 
@@ -146,9 +140,8 @@ namespace FubuMVC.Tests.Assets
             ClassUnderTest.Require("f.js"); // no dependencies
 
 
-
-
-            ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript).ShouldHaveTheSameElementsAs("b.js", "c.js", "f.js", "a.js");
+            ClassUnderTest.DequeueAssetsToRender(MimeType.Javascript).ShouldHaveTheSameElementsAs("b.js", "c.js", "f.js",
+                                                                                                  "a.js");
             // ask for d, get d,e (not b, since it was already written)
 
             ClassUnderTest.Require("d.js"); // depends on e and b
