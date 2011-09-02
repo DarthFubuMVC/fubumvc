@@ -8,7 +8,7 @@ namespace FubuMVC.Core
 {
     public static class AjaxExtensions
     {
-        private const string XmlHttpRequestValue = "XMLHttpRequest";
+        public const string XmlHttpRequestValue = "XMLHttpRequest";
         public const string XRequestedWithHeader = "X-Requested-With";
 
         public static bool IsAjaxRequest(this HttpContext context)

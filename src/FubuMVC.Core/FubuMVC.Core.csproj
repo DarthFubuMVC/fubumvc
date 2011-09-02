@@ -72,6 +72,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensions.cs" />
+    <Compile Include="Behaviors\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\DataContractJsonReader.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
     <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Registration\IServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
+    <Compile Include="Registration\Nodes\ConditionalNode.cs" />
     <Compile Include="Registration\Routes\IRouteInput.cs" />
     <Compile Include="Registration\Routes\RouteParameters.cs" />
     <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />
