@@ -110,6 +110,7 @@
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
+    <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
     <Compile Include="Diagnostics\IObserverImporter.cs" />
     <Compile Include="Diagnostics\RecordingOutputWriter.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Registration\AssemblyScanner.cs" />
     <Compile Include="Registration\AssemblyScanningExtensions.cs" />
     <Compile Include="Registration\ConnectImplementationsServiceRegistrationConvention.cs" />
+    <Compile Include="Registration\Conventions\HandlersUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />

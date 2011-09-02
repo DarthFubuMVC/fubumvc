@@ -117,6 +117,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelloSparkRegistry.cs" />
+    <Compile Include="Hello\get_Name_handler.cs" />
     <Compile Include="SampleHtmlConventions.cs" />
     <Compile Include="Controllers\Air\AirController.cs" />
     <Compile Include="Controllers\Earth\EarthController.cs" />

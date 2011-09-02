@@ -61,3 +61,5 @@ packaging/release
 *.swp
 output
 output/*
+
+*.dotCover
