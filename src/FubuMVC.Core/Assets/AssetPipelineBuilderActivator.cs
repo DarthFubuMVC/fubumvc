@@ -3,6 +3,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Assets
 {
@@ -24,7 +25,7 @@ namespace FubuMVC.Core.Assets
         private static IEnumerable<PackageAssetDirectory> findDirectories(IEnumerable<IPackageInfo> packages)
         {
             yield return new PackageAssetDirectory(){
-                Directory = ".".ToFullPath(),
+                Directory = FubuMvcPackageFacility.GetApplicationPath(),
                 PackageName = AssetPipeline.Application
             };
 

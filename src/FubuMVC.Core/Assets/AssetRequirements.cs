@@ -30,7 +30,19 @@ namespace FubuMVC.Core.Assets
 
         public void Require(params string[] name)
         {
-            _requirements.Fill(name);
+            name.Each(x =>
+            {
+                // Explode out sets right off the bat
+                if (MimeType.MimeTypeByFileName(x) == null )
+                {
+                    var requiredNames = _finder.CompileDependenciesAndOrder(new string[]{x});
+                    _requirements.Fill(requiredNames);
+                }
+                else
+                {
+                    _requirements.Fill(x);
+                }
+            });
         }
 
         public IEnumerable<string> AllRequestedAssets

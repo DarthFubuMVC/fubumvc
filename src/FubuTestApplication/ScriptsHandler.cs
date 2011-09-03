@@ -31,8 +31,9 @@ namespace FubuTestApplication
         [UrlPattern("scriptloading/{Mandatories}")]
         public HtmlDocument LinkScripts(ScriptRequest request)
         {
-            var document = new HtmlDocument();
-            document.Title = "Script Manager Tester";
+            var document = new HtmlDocument{
+                Title = "Script Manager Tester"
+            };
 
             request.Mandatories.Split(',').Select(x => x.Trim()).Each(x => this.Script(x));
             if (request.Optionals != null)

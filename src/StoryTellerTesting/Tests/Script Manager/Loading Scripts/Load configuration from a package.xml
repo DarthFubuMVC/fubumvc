@@ -12,8 +12,8 @@
     <TheScriptsShouldBe isStep="True">
       <Rows>
         <row isStep="True" expected="/fubu-testing/_content/scripts/Pak1-A.js" />
-        <row isStep="True" expected="/fubu-testing/content/scripts/Script1.js" />
-        <row isStep="True" expected="/fubu-testing/content/scripts/Script2.js" />
+        <row isStep="True" expected="/fubu-testing/_content/scripts/Script1.js" />
+        <row isStep="True" expected="/fubu-testing/_content/scripts/Script2.js" />
       </Rows>
     </TheScriptsShouldBe>
   </ScriptLoading>

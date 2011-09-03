@@ -29,6 +29,8 @@ namespace FubuMVC.Core.Assets
 
         public void ReadScriptConfig(string folder, IPackageLog log)
         {
+            // TODO -- this needs to look at *.asset.config as well
+
             log.Trace("Trying to read *script.config files from {0}", folder);
             var files = _fileSystem.FindFiles(folder, new FileSet(){
                 Include = "*.script.config",
