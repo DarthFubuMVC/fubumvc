@@ -34,6 +34,12 @@ namespace FubuMVC.Tests.Urls
         {
         }
 
+        public class SpecialModelForDefault : RouteInputModel
+        {
+            [RouteInput]
+            public int? PossiblyEmpty { get; set; }
+        }
+
         public class SpecialController
         {
             // A tiny controller class.  The [UrlPattern] att
@@ -41,6 +47,11 @@ namespace FubuMVC.Tests.Urls
             // legacy code
             [UrlPattern("special/{Name}/is/{Age}")]
             public void OverrideMethod(SpecialModel model)
+            {
+            }
+
+            [UrlPattern("defaultage/{Name}/is/{PossiblyEmpty:10}")]
+            public void OverrideMethodDefaultValue(SpecialModelForDefault model)
             {
             }
 
@@ -117,6 +128,25 @@ namespace FubuMVC.Tests.Urls
                 Name = "Jeremy",
                 Age = 35
             }).ShouldEqual("special/Jeremy/is/35");
+        }
+
+        [Test]
+        public void get_url_for_input_model_default_value()
+        {
+            registry.UrlFor(new SpecialModelForDefault()
+            {
+                Name = "Frank"
+            }).ShouldEqual("defaultage/Frank/is/10");
+        }
+
+        [Test]
+        public void get_url_nullable_ok()
+        {
+            registry.UrlFor(new SpecialModelForDefault()
+            {
+                Name = "Frank",
+                PossiblyEmpty = 36
+            }).ShouldEqual("defaultage/Frank/is/36");
         }
 
         [Test]
