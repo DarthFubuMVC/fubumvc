@@ -71,6 +71,43 @@ g requires h
         }
 
         [Test]
+        public void read_a_directory_2()
+        {
+            new FileSystem().WriteStringToFile("something.asset.config",
+                                               @"
+jquery is jquery.1.4.2.js
+a includes b,c,d
+");
+
+            new FileSystem().WriteStringToFile("else.asset.config", @"
+f extends d
+g requires h
+");
+
+            activator.ReadScriptConfig(".", log);
+            Debug.WriteLine(log.FullTraceText());
+
+            assets.CompileDependencies(log);
+
+            Assert.IsTrue(log.Success, log.FullTraceText());
+
+            // got the alias
+            assets.GetAssets(new[] { "jquery" }).Single().Name.ShouldEqual("jquery.1.4.2.js");
+
+            // got the set
+            assets.GetAssets(new[] { "a" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("b",
+                                                                                         "c", "d", "f");
+
+            // got the extension
+            assets.GetAssets(new[] { "d" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("d",
+                                                                                         "f");
+
+            // got the requires
+            assets.GetAssets(new[] { "g" }).Select(x => x.Name).ShouldHaveTheSameElementsAs("h",
+                                                                                         "g");
+        }
+
+        [Test]
         public void read_a_file()
         {
             new FileSystem().WriteStringToFile("something.script.config",
