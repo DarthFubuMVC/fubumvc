@@ -232,6 +232,21 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
+        public void ConditionallyRunIf(Func<bool> condition)
+        {
+            AddBefore(new ConditionalNode(condition));
+        }
+
+        public void ConditionallyRunIf<T>(Func<T,bool> condition)
+        {
+            AddBefore(new ConditionalNode<T>(condition));
+        }
+
+        public void ConditionallyRunIf<T>() where T : ConditionalBehavior
+        {
+            AddBefore(new Wrapper(typeof(T)));
+        }
+
         /// <summary>
         /// Adds a new BehaviorNode to the very end of this BehaviorChain
         /// </summary>

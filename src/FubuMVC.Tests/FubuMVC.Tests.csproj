@@ -155,6 +155,7 @@
     <Compile Include="Registration\HandlerActionsSetTester.cs" />
     <Compile Include="Registration\integrated_type_resolver_registration.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />
+    <Compile Include="Registration\Nodes\ConditionalNodeTester.cs" />
     <Compile Include="Registration\Nodes\NodesTester.cs" />
     <Compile Include="Registration\Nodes\WebFormViewTester.cs">
       <SubType>ASPXCodeBehind</SubType>
