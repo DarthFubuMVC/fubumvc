@@ -96,7 +96,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
-            facility.GetAllActivators().Count().ShouldEqual(8);
+            facility.GetAllActivators().Count().ShouldEqual(9);
         }
 
         [Test]
