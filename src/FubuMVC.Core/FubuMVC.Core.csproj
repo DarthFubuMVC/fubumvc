@@ -148,6 +148,7 @@
     <Compile Include="Assets\Http\ImageWriter.cs" />
     <Compile Include="Assets\Http\ProcessContentAction.cs" />
     <Compile Include="Assets\IAssetDependencyFinder.cs" />
+    <Compile Include="Assets\IAssetRegistration.cs" />
     <Compile Include="Assets\IAssetTagPlanCache.cs" />
     <Compile Include="Assets\IAssetTagPlanner.cs" />
     <Compile Include="Assets\IAssetTagSubject.cs" />

@@ -25,14 +25,4 @@ namespace FubuMVC.Core.Assets
 
         bool IsFirstRank();
     }
-
-
-    public interface IAssetRegistration
-    {
-        void Alias(string name, string alias);
-        void Dependency(string dependent, string dependency);
-        void Extension(string extender, string @base);
-        void AddToSet(string setName, string name);
-        void Preceeding(string beforeName, string afterName);
-    }
 }
