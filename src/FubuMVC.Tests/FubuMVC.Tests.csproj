@@ -144,6 +144,7 @@
     <Compile Include="Assets\Http\ImageWriterTester.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />
+    <Compile Include="Assets\RecordingAssetRegistrationTester.cs" />
     <Compile Include="Assets\StubPackage.cs" />
     <Compile Include="Assets\Tags\AssetTagBuilderTester.cs" />
     <Compile Include="Assets\Tags\TraceOnlyMissingAssetHandlerTester.cs" />
