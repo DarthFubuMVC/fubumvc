@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Tags;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration.DSL
 {
+    // TODO -- add Xml comments for this mess
     public class AssetsExpression
     {
         private readonly FubuRegistry _registry;
@@ -25,6 +27,21 @@ namespace FubuMVC.Core.Registration.DSL
 
                 return recording;
             });
+        }
+
+
+        public AssetsExpression Configure(string text)
+        {
+            var dslReader = new AssetDslReader(_registration.Value);
+
+            var reader = new StringReader(text);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                dslReader.ReadLine(line);
+            }
+
+            return this;
         }
 
         public AssetsExpression(FubuRegistry registry, IAssetRegistration registration)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Bottles.Diagnostics;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
@@ -122,6 +123,24 @@ namespace FubuMVC.Tests.Assets
             registration.Replay(inner);
 
             inner.AssertWasCalled(x => x.Dependency("a.js", "b.js"));
+        }
+
+
+        [Test]
+        public void using_the_configure_method()
+        {
+            var graph = new AssetGraph();
+            var expression = new AssetsExpression(theRegistry, graph);
+
+            expression.Configure(@"
+crud includes a.js, b.js, c.js
+");
+
+            graph.CompileDependencies(new PackageLog());
+
+            graph.AssetSetFor("crud").AllFileDependencies()
+                .Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("a.js", "b.js", "c.js");
         }
 
     }

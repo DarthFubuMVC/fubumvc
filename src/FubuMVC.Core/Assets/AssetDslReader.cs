@@ -48,6 +48,7 @@ namespace FubuMVC.Core.Assets
 
         public void ReadLine(string text)
         {
+            if (text.Trim().IsEmpty()) return;
             if (text.Trim().StartsWith("#")) return;
 
             var tokens = new Queue<string>(StringTokenizer.Tokenize(text.Replace(',', ' ')));

@@ -24,6 +24,7 @@ namespace FubuMVC.Tests.Assets
 
         public void LoadAssets(string text)
         {
+            // TODO -- move this to an ext method in FubuCore
             var reader = new StringReader(text);
             string line;
             while ((line = reader.ReadLine()) != null)
