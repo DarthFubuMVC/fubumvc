@@ -54,6 +54,8 @@ namespace FubuMVC.Tests.Assets.Files
 
             writePackageFile(AssetFolder.scripts, "jquery.js");
             writePackageFile(AssetFolder.scripts, "pak1.js");
+
+            writePackageFile(AssetFolder.scripts, "overrides", "folder1", "script1.js");
         }
 
         private void writeAppFile(AssetFolder assetFolder, params string[] names)
@@ -66,6 +68,14 @@ namespace FubuMVC.Tests.Assets.Files
         {
             var path = PackageDirectory.ToFullPath().AppendPath("content", assetFolder.ToString()).AppendPath(names);
             system.WriteStringToFile(path, "something");
+        }
+
+        [Test]
+        public void load_asset_files_from_an_overrides_sub_folder()
+        {
+            var file = thePipeline.Find("folder1/script1.js");
+            file.Override.ShouldBeTrue();
+            file.FullPath.ShouldContain(@"pak1\content\scripts\overrides\folder1\script1.js");
         }
 
         [Test]
@@ -105,5 +115,7 @@ namespace FubuMVC.Tests.Assets.Files
             var file = scripts.Single(x => x.Name == "folder1/script1.js");
             file.FullPath.ShouldEqual(AppDirectory.AppendPath("content", AssetFolder.scripts.ToString(), "folder1", "script1.js").ToFullPath());   
         }
+
+
     }
 }

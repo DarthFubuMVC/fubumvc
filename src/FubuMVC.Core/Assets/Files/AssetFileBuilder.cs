@@ -5,12 +5,13 @@ namespace FubuMVC.Core.Assets.Files
 {
     public class AssetFileBuilder
     {
+        private readonly AssetFolder _assetFolder;
+        private readonly PackageAssetDirectory _directory;
         private readonly IAssetFileRegistration _registration;
         private readonly string _specificDirectory;
-        private readonly PackageAssetDirectory _directory;
-        private readonly AssetFolder _assetFolder;
 
-        public AssetFileBuilder(IAssetFileRegistration registration, string specificDirectory, PackageAssetDirectory directory, AssetFolder assetFolder)
+        public AssetFileBuilder(IAssetFileRegistration registration, string specificDirectory,
+                                PackageAssetDirectory directory, AssetFolder assetFolder)
         {
             _registration = registration;
             _specificDirectory = specificDirectory;
@@ -22,10 +23,9 @@ namespace FubuMVC.Core.Assets.Files
         {
             var name = filename.PathRelativeTo(_specificDirectory).Replace(Path.DirectorySeparatorChar, '/');
             var path = new AssetPath(_directory.PackageName, name, _assetFolder);
-            var file = new AssetFile(name)
-                       {
-                           FullPath = filename.ToFullPath()
-                       };
+            var file = new AssetFile(name){
+                FullPath = filename.ToFullPath()
+            };
 
             _registration.AddFile(path, file);
         }

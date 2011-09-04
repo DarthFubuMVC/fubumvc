@@ -13,11 +13,21 @@ namespace FubuMVC.Core.Assets.Files
     /// </summary>
     public class AssetFile : IAssetTagSubject
     {
+        // TODO -- let's gather up a constants file for Assets.  Maybe?
+
+        public static readonly string Overrides = "overrides";
+
         private readonly string _name;
         private MimeType _mimeType;
 
         public AssetFile(string name)
         {
+            if (name.StartsWith(Overrides))
+            {
+                Override = true;
+                name = name.Substring(Overrides.Length + 1);
+            }
+
             _name = name;
 
             var mimeType = MimeType.MimeTypeByFileName(Name);

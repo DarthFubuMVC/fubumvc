@@ -9,6 +9,23 @@ namespace FubuMVC.Tests.Assets.Files
     [TestFixture]
     public class AssetFileTester
     {
+
+        [Test]
+        public void create_an_asset_file_from_an_overrides_folder()
+        {
+            var file = new AssetFile("overrides/something.js");
+            file.Name.ShouldEqual("something.js");
+            file.Override.ShouldBeTrue();
+        }
+
+        [Test]
+        public void create_an_asset_file_that_is_not_in_the_overrides_folder()
+        {
+            var file = new AssetFile("something.js");
+            file.Name.ShouldEqual("something.js");
+            file.Override.ShouldBeFalse();
+        }
+
         [Test]
         public void content_folder_is_null_if_under_the_root()
         {
