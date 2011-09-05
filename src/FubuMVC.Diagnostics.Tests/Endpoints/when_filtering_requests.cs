@@ -3,7 +3,6 @@ using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Models.Requests;
-using FubuMVC.Tests;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

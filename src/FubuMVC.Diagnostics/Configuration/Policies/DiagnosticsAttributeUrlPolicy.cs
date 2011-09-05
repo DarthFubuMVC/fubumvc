@@ -24,10 +24,7 @@ namespace FubuMVC.Diagnostics.Configuration.Policies
         {
             var routeDefinition = call.ToRouteDefinition();
             var urlAttribute = call.Method.GetAttribute<FubuDiagnosticsUrlAttribute>();
-            
             routeDefinition.Append(DiagnosticsUrls.ToRelativeUrl(urlAttribute.Url));
-            routeDefinition.ApplyRouteInputAttributes(call);
-
             return routeDefinition;
         }
     }

@@ -23,10 +23,9 @@ namespace FubuMVC.Core.Registration.Conventions
             _markerTypes = markerTypes;
         }
 
-        public bool Matches(ActionCall call, IConfigurationObserver log)
+        public virtual bool Matches(ActionCall call, IConfigurationObserver log)
         {
-            if ((!call.HandlerType.Name.ToLower().EndsWith(HANDLER.ToLower()) && !HandlerExpression.IsMatch(call.HandlerType.Name))
-                || call.Method.HasAttribute<UrlPatternAttribute>())
+            if (!IsHandlerCall(call))
             {
                 return false;
             }
@@ -35,7 +34,7 @@ namespace FubuMVC.Core.Registration.Conventions
             return true;
         }
 
-        public IRouteDefinition Build(ActionCall call)
+        public virtual IRouteDefinition Build(ActionCall call)
         {
             var routeDefinition = call.ToRouteDefinition();
             var strippedNamespace = stripNamespace(call);
@@ -80,7 +79,13 @@ namespace FubuMVC.Core.Registration.Conventions
                 routeDefinition.ConstrainToHttpMethods(httpMethod.ToUpper());
             }
 
+            visit(routeDefinition);
             return routeDefinition;
+        }
+
+        protected virtual void visit(IRouteDefinition routeDefinition)
+        {
+            // no-op
         }
 
         private string stripNamespace(ActionCall call)
@@ -115,6 +120,12 @@ namespace FubuMVC.Core.Registration.Conventions
             return routeBuilder
                 .ToString()
                 .ToLower();
+        }
+
+        public static bool IsHandlerCall(ActionCall call)
+        {
+            var isHandler = call.HandlerType.Name.ToLower().EndsWith(HANDLER.ToLower()) || HandlerExpression.IsMatch(call.HandlerType.Name);
+            return isHandler && !call.Method.HasAttribute<UrlPatternAttribute>();
         }
     }
 }

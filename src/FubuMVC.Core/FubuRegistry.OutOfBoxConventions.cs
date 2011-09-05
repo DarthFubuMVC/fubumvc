@@ -19,6 +19,11 @@ namespace FubuMVC.Core
 
         public void ApplyHandlerConventions(params Type[] markerTypes)
         {
+            ApplyHandlerConventions(markers => new HandlersUrlPolicy(markers), markerTypes);
+        }
+
+        public void ApplyHandlerConventions(Func<Type[], HandlersUrlPolicy> policyBuilder, params Type[] markerTypes)
+        {
             markerTypes
                 .Each(t => Applies
                                .ToAssembly(t.Assembly));
@@ -26,7 +31,7 @@ namespace FubuMVC.Core
             includeHandlers(markerTypes);
 
             Routes
-                .UrlPolicy(new HandlersUrlPolicy(markerTypes));
+                .UrlPolicy(policyBuilder(markerTypes));
         }
 
         private void includeHandlers(params Type[] markerTypes)

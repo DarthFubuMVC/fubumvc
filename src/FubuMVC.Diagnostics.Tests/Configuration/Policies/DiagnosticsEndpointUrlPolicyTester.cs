@@ -5,7 +5,6 @@ using FubuMVC.Diagnostics.Configuration.Policies;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Routes;
-using FubuMVC.Tests;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -14,31 +13,22 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
     [TestFixture]
     public class DiagnosticsEndpointUrlPolicyTester
     {
-        private DiagnosticsEndpointUrlPolicy _policy;
+        private DiagnosticsHandlerUrlPolicy _policy;
         private IConfigurationObserver _observer;
         [SetUp]
         public void Setup()
         {
-            _policy = new DiagnosticsEndpointUrlPolicy();
+            _policy = new DiagnosticsHandlerUrlPolicy();
             _observer = new NulloConfigurationObserver();
         }
 
         [Test]
-        public void should_match_calls_when_handler_type_ends_with_endpoint_and_exists_in_diagnostics_assembly_and_no_attributes_are_found()
+        public void should_match_calls_when_handler_type_ends_with_handler_and_exists_in_diagnostics_assembly_and_no_attributes_are_found()
         {
             var endpointCall = ActionCall.For<RoutesEndpoint>(e => e.Get(new RouteRequestModel()));
             _policy
                 .Matches(endpointCall, _observer)
                 .ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_not_match_calls_that_are_not_endpoints()
-        {
-            var invalidCall = ActionCall.For<InvalidClass>(c => c.Execute());
-            _policy
-                .Matches(invalidCall, _observer)
-                .ShouldBeFalse();
         }
 
         [Test]
@@ -51,9 +41,9 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         }
 
         [Test]
-        public void should_not_match_calls_that_are_endpoints_in_other_assemblies()
+        public void should_not_match_calls_that_are_handlers_in_other_assemblies()
         {
-            var invalidCall = ActionCall.For<InvalidEndpoint>(c => c.Execute());
+            var invalidCall = ActionCall.For<InvalidHandler>(c => c.Execute());
             _policy
                 .Matches(invalidCall, _observer)
                 .ShouldBeFalse();
@@ -69,14 +59,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
                 .ShouldEqual("{0}/routes".ToFormat(DiagnosticsUrls.ROOT));
         }
 
-        public class InvalidEndpoint
-        {
-            public void Execute()
-            {
-            }
-        }
-
-        public class InvalidClass
+        public class InvalidHandler
         {
             public void Execute()
             {

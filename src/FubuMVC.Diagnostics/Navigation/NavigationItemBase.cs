@@ -27,8 +27,7 @@ namespace FubuMVC.Diagnostics.Navigation
             return _actionCall
                 .Value
                 .HandlerType
-                .Name
-                .Replace(DiagnosticsEndpointUrlPolicy.ENDPOINT, "");
+                .Name;
         }
 
         public virtual string Url()

@@ -1,10 +1,10 @@
-using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Behaviors;
 using FubuMVC.Diagnostics.Configuration;
+using FubuMVC.Diagnostics.Configuration.Policies;
 using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Grids.Columns;
@@ -25,7 +25,7 @@ namespace FubuMVC.Diagnostics
             Applies
                 .ToAssemblyContainingType<BehaviorStart>();
 
-            this.ApplyEndpointConventions(typeof(DiagnosticsEndpointMarker));
+            ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof(DiagnosticsEndpointMarker));
 
             Services(x =>
                          {
@@ -78,15 +78,6 @@ namespace FubuMVC.Diagnostics
             Output
                 .ToJson
                 .WhenCallMatches(call => call.OutputType().Name.StartsWith("Json"));
-        }
-    }
-
-    public static class DiagnosticsExtensions
-    {
-        public static bool IsDiagnosticsReport(this Type type)
-        {
-            return typeof (IBehaviorDetails).IsAssignableFrom(type) ||
-                   typeof (IModelBindingDetail).IsAssignableFrom(type);
         }
     }
 }

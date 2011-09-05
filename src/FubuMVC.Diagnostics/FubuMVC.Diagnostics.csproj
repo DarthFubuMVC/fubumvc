@@ -89,6 +89,7 @@
     <Content Include="Content\Styles\html\selector.css" />
     <Content Include="Content\Styles\requests\view.css" />
     <Content Include="diagnostics.script.config" />
+    <None Include=".package-manifest" />
     <None Include="Endpoints\Chains\Unknown.spark" />
     <None Include="Endpoints\Chains\View.spark" />
     <None Include="Endpoints\Html.spark" />
@@ -193,6 +194,7 @@
     <Compile Include="Behaviors\UnknownObjectBehavior.cs" />
     <Compile Include="BindFromAttribute.cs" />
     <Compile Include="Configuration\RemoveBasicDiagnostics.cs" />
+    <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="Endpoints\HtmlEndpoint.cs" />
     <Compile Include="Endpoints\Html\PreviewEndpoint.cs" />
     <Compile Include="Endpoints\RequestsEndpoint.cs" />
@@ -252,9 +254,9 @@
     <Compile Include="Endpoints\Routes\FilterEndpoint.cs" />
     <Compile Include="Extensions\TagExtensions.cs" />
     <Compile Include="FubuDiagnosticsRegistry.cs" />
-    <Compile Include="Configuration\FubuExtensions.cs" />
+    <Compile Include="Configuration\ActionCallExtensions.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsAttributeUrlPolicy.cs" />
-    <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicy.cs" />
+    <Compile Include="Configuration\Policies\DiagnosticsHandlerUrlPolicy.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrls.cs" />
     <Compile Include="Endpoints\DiagnosticsEndpointMarker.cs" />
     <Compile Include="Endpoints\DashboardEndpoint.cs" />

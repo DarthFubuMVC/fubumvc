@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace FubuMVC.Diagnostics.Tests.Configuration
 {
     [TestFixture]
-    public class FubuExtensionsTester
+    public class ActionCallExtensionsTester
     {
         [Test]
         public void diagnostics_call_should_match_diagnostics_endpoint()

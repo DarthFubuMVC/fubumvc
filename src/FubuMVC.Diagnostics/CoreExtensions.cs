@@ -11,6 +11,11 @@ namespace FubuMVC.Diagnostics
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             return properties.Where(predicate);
-        }        
+        }
+
+        public static MethodInfo GetExecuteMethod(this Type type)
+        {
+            return type.GetMethod("Execute", BindingFlags.Public | BindingFlags.Instance);
+        }
     }
 }
