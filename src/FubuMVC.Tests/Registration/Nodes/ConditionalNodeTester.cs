@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void should_execute()
         {
-            var node = new ConditionalNode(() => true);
+            var node = new ConditionalNode(new Wrapper(typeof(FakeBehavior)),() => true);
 
             var behavior = toBehavior(node);
 
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void should_not_execute()
         {
-            var node = new ConditionalNode(() => false);
+            var node = new ConditionalNode(new Wrapper(typeof(FakeBehavior)),() => false);
 
             var behavior = toBehavior(node);
 

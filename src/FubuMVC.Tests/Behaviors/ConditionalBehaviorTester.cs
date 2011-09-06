@@ -6,7 +6,9 @@ using FubuMVC.Core.Behaviors;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-
+//====================
+// Behavior Node
+// ===================
 namespace FubuMVC.Tests.Behaviors.Node
 {
     public abstract class when_condition_is_true : InteractionContext<when_condition_is_true.TrueBehavior>
@@ -16,12 +18,11 @@ namespace FubuMVC.Tests.Behaviors.Node
         protected override void beforeEach()
         {
             InnerBehavior = MockFor<IActionBehavior>();
-            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
 
         public class TrueBehavior : ConditionalBehavior
         {
-            public TrueBehavior() : base(() => true)
+            public TrueBehavior(IActionBehavior innerBehavior) : base(innerBehavior,() => true)
             {
             }
         }
@@ -34,12 +35,11 @@ namespace FubuMVC.Tests.Behaviors.Node
         protected override void beforeEach()
         {
             InnerBehavior = MockFor<IActionBehavior>();
-            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
 
         public class FalseBehavior : ConditionalBehavior
         {
-            public FalseBehavior(): base(() => false)
+            public FalseBehavior(IActionBehavior innerBehavior) : base(innerBehavior,() => false)
             {
             }
         }
@@ -79,7 +79,7 @@ namespace FubuMVC.Tests.Behaviors.Node
         [Test]
         public void it_should_call_the_inner_behavior()
         {
-            InnerBehavior.AssertWasCalled(x => x.Invoke());
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
             InnerBehavior.AssertWasCalled(x => x.InvokePartial());
         }
     }
@@ -130,12 +130,12 @@ namespace FubuMVC.Tests.Behaviors.OfT
         protected override void beforeEach()
         {
             InnerBehavior = MockFor<IActionBehavior>();
-            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
 
         public class TrueBehavior : ConditionalBehavior<FakeContext>
         {
-            public TrueBehavior() : base( new FakeContext(true), x => x.Condition)
+            public TrueBehavior(IActionBehavior innerBehavior)
+                : base(innerBehavior, new FakeContext(true), x => x.Condition)
             {
             }
         }
@@ -158,13 +158,11 @@ namespace FubuMVC.Tests.Behaviors.OfT
         protected override void beforeEach()
         {
             InnerBehavior = MockFor<IActionBehavior>();
-            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
 
         public class FalseBehavior : ConditionalBehavior<FakeContext>
         {
-            public FalseBehavior()
-                : base(new FakeContext(false), x => x.Condition)
+            public FalseBehavior(IActionBehavior innerBehavior) : base(innerBehavior,new FakeContext(false), x => x.Condition)
             {
             }
         }
@@ -204,7 +202,7 @@ namespace FubuMVC.Tests.Behaviors.OfT
         [Test]
         public void it_should_call_the_inner_behavior()
         {
-            InnerBehavior.AssertWasCalled(x => x.Invoke());
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
             InnerBehavior.AssertWasCalled(x => x.InvokePartial());
         }
     }
@@ -257,12 +255,11 @@ namespace FubuMVC.Tests.Behaviors.AjaxRequest
         {
             InnerBehavior = MockFor<IActionBehavior>();
             Services.Inject<IRequestData>(new FakeData(true));
-            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
 
         public class TrueBehavior : IsAjaxRequest
         {
-            public TrueBehavior(IRequestData context) : base(context)
+            public TrueBehavior(IRequestData context,IActionBehavior innerBehavior) : base(innerBehavior,context)
             {
             }
         }
@@ -280,12 +277,11 @@ namespace FubuMVC.Tests.Behaviors.AjaxRequest
         {
             InnerBehavior = MockFor<IActionBehavior>();
             Services.Inject<IRequestData>(new FakeData(false));
-            ClassUnderTest.InsideBehavior = InnerBehavior;
         }
 
         public class FalseBehavior : IsAjaxRequest
         {
-            public FalseBehavior(IRequestData context) : base(context)
+            public FalseBehavior(IRequestData context,IActionBehavior innerBehavior) : base(innerBehavior,context)
             {
             }
         }
@@ -349,7 +345,148 @@ namespace FubuMVC.Tests.Behaviors.AjaxRequest
         [Test]
         public void it_should_call_the_inner_behavior()
         {
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
+            InnerBehavior.AssertWasCalled(x => x.InvokePartial());
+        }
+    }
+
+    [TestFixture]
+    public class partially_invoking_false_behavior : when_condition_is_false
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.InvokePartial();
+        }
+
+        [Test]
+        public void it_should_call_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
+            InnerBehavior.AssertWasNotCalled(x => x.InvokePartial());
+        }
+    }
+
+    [TestFixture]
+    public class invoking_false_behavior : when_condition_is_false
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.Invoke();
+        }
+
+        [Test]
+        public void it_should_call_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
+            InnerBehavior.AssertWasNotCalled(x => x.InvokePartial());
+        }
+    }
+}
+
+//====================
+// Conditional of AjaxRequest
+// ===================
+namespace FubuMVC.Tests.Behaviors.NotAjaxRequest
+{
+    public abstract class when_condition_is_true : InteractionContext<when_condition_is_true.TrueBehavior>
+    {
+        protected IActionBehavior InnerBehavior;
+
+        protected override void beforeEach()
+        {
+            InnerBehavior = MockFor<IActionBehavior>();
+            Services.Inject<IRequestData>(new FakeData(false));
+        }
+
+        public class TrueBehavior : IsNotAjaxRequest
+        {
+            public TrueBehavior(IRequestData context,IActionBehavior innerBehavior) : base(innerBehavior,context)
+            {
+            }
+        }
+    }
+
+
+
+    public abstract class when_condition_is_false : InteractionContext<when_condition_is_false.FalseBehavior>
+    {
+        protected IActionBehavior InnerBehavior;
+
+        protected override void beforeEach()
+        {
+            InnerBehavior = MockFor<IActionBehavior>();
+            Services.Inject<IRequestData>(new FakeData(true));
+        }
+
+        public class FalseBehavior : IsNotAjaxRequest
+        {
+            public FalseBehavior(IRequestData context,IActionBehavior innerBehavior) : base(innerBehavior,context)
+            {
+            }
+        }
+    }
+    public class FakeData : IRequestData
+    {
+        private readonly bool _b;
+
+        public FakeData(bool b)
+        {
+            _b = b;
+        }
+
+        public object Value(string key)
+        {
+            return "";
+        }
+
+        public bool Value(string key, Action<object> callback)
+        {
+            callback(_b ? AjaxExtensions.XmlHttpRequestValue : "");
+            return _b;
+        }
+
+        public bool HasAnyValuePrefixedWith(string key)
+        {
+            return _b;
+        }
+    }
+    [TestFixture]
+    public class invoking_conditional_true_behavior : when_condition_is_true
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.Invoke();
+        }
+
+        [Test]
+        public void it_should_call_the_inner_behavior()
+        {
             InnerBehavior.AssertWasCalled(x => x.Invoke());
+        }
+
+        [Test]
+        public void it_should_not_call_the_partial_invoke()
+        {
+            InnerBehavior.AssertWasNotCalled(x => x.InvokePartial());
+        }
+    }
+
+    [TestFixture]
+    public class partially_invoking_true_behavior : when_condition_is_true
+    {
+        protected override void beforeEach()
+        {
+            base.beforeEach();
+            ClassUnderTest.InvokePartial();
+        }
+
+        [Test]
+        public void it_should_call_the_inner_behavior()
+        {
+            InnerBehavior.AssertWasNotCalled(x => x.Invoke());
             InnerBehavior.AssertWasCalled(x => x.InvokePartial());
         }
     }

@@ -4,22 +4,43 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
 {
+    public interface IConditionalInvoker
+    {
+        void Invoke(bool condition);
+    }
+    public class ConditionalInvoker :IConditionalInvoker
+    {
+        private readonly IActionBehavior _innerBehavior;
+
+        public ConditionalInvoker(IActionBehavior innerBehavior)
+        {
+            _innerBehavior = innerBehavior;
+        }
+
+        public void Invoke(bool condition)
+        {
+            if(condition)
+            _innerBehavior.Invoke();
+        }
+    }
+
     public class ConditionalBehavior : IActionBehavior
     {
         public readonly Func<bool> ShouldExecute;
         private readonly Action _innerInvoke;
         private readonly Action _partialInvoke;
 
-        public ConditionalBehavior(Func<bool> shouldExecute) 
+        public ConditionalBehavior(IActionBehavior innerBehavior, Func<bool> shouldExecute)
         {
+            _insideBehavior = innerBehavior;
             ShouldExecute = shouldExecute;
-            _innerInvoke = () => { if (InsideBehavior != null) InsideBehavior.Invoke(); };
-            _partialInvoke = () => { if (InsideBehavior != null) InsideBehavior.InvokePartial(); };
+            _innerInvoke = () => { if (_insideBehavior != null) _insideBehavior.Invoke(); };
+            _partialInvoke = () => { if (_insideBehavior != null) _insideBehavior.InvokePartial(); };
         }
 
 
-        //TODO: Throw a WTF if there is no inner behavior
-        public IActionBehavior InsideBehavior { get; set; }
+        private IActionBehavior _insideBehavior;
+       
 
         public void Invoke()
         {
@@ -32,29 +53,31 @@ namespace FubuMVC.Core.Behaviors
         {
             if (ShouldExecute())
                 _partialInvoke();
-            Invoke();
+      
         }
     }
 
     public class ConditionalBehavior<T> : ConditionalBehavior
     {
-        public ConditionalBehavior(T context, Func<T, bool> condition)
-            : base(() => condition(context))
+        public ConditionalBehavior(IActionBehavior innerBehavior,T context, Func<T, bool> condition)
+            : base(innerBehavior,() => condition(context))
         {
         }
     }
 
+
     public class IsAjaxRequest : ConditionalBehavior<IRequestData>
     {
-        public IsAjaxRequest(IRequestData context)
-                            : base(context, x => x.IsAjaxRequest())
+        public IsAjaxRequest(IActionBehavior innerBehavior, IRequestData context)
+                            : base(innerBehavior, context, x => x.IsAjaxRequest())
         {
         }
     }
+
     public class IsNotAjaxRequest : ConditionalBehavior<IRequestData>
     {
-        public IsNotAjaxRequest(IRequestData context)
-            : base(context, x => !x.IsAjaxRequest())
+        public IsNotAjaxRequest(IActionBehavior innerBehavior, IRequestData context)
+            : base(innerBehavior, context, x => !x.IsAjaxRequest())
         {
         }
     }
