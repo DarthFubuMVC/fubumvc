@@ -5,6 +5,7 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors
 {
+    [TestFixture]
     public class ConditionalBehaviorInvokerTester : InteractionContext<ConditionalBehaviorInvoker>
     {
         protected override void beforeEach()

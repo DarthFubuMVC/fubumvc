@@ -34,11 +34,26 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return BehaviorCategory.Conditional; }
         }
 
+        public Func<bool> Condition
+        {
+            get { return _condition; }
+        }
+
+        public BehaviorNode InnerNode
+        {
+            get { return _node; }
+        }
+
+        public Type BehaviorType
+        {
+            get { return _conditionalBehavior; }
+        }
+
         protected override ObjectDef buildObjectDef()
         {
-            var conditionalInvoker = new ObjectDef(_conditionalBehavior);
-            conditionalInvoker.DependencyByType<IActionBehavior>(_node.As<IContainerModel>().ToObjectDef());
-            if (_condition != null) conditionalInvoker.DependencyByValue(_condition);
+            var conditionalInvoker = new ObjectDef(BehaviorType);
+            conditionalInvoker.DependencyByType<IActionBehavior>(InnerNode.As<IContainerModel>().ToObjectDef());
+            if (Condition != null) conditionalInvoker.DependencyByValue(Condition);
             _objDef.DependencyByType<IConditionalBehavior>(conditionalInvoker);
             return _objDef;
         }
@@ -63,11 +78,21 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return BehaviorCategory.Conditional; }
         }
 
+        public BehaviorNode InnerNode
+        {
+            get { return _node; }
+        }
+
+        public Func<T, bool> Condition
+        {
+            get { return _condition; }
+        }
+
         protected override ObjectDef buildObjectDef()
         {
             var conditionalInvoker = ObjectDef.ForType<ConditionalBehavior<T>>();
-            conditionalInvoker.DependencyByType<IActionBehavior>(_node.As<IContainerModel>().ToObjectDef());
-            conditionalInvoker.DependencyByValue(_condition);
+            conditionalInvoker.DependencyByType<IActionBehavior>(InnerNode.As<IContainerModel>().ToObjectDef());
+            conditionalInvoker.DependencyByValue(Condition);
             _objDef.DependencyByType<IConditionalBehavior>(conditionalInvoker);
             return _objDef;
 
