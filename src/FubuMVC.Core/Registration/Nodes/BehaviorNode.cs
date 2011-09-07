@@ -247,7 +247,7 @@ namespace FubuMVC.Core.Registration.Nodes
             return conditional;
         }
 
-        public ConditionalNode ConditionallyRunIf<T>() where T : ConditionalBehavior
+        public ConditionalNode ConditionallyRunIf<T>() where T : IConditionalBehavior
         {
             var conditional = new ConditionalNode(this, typeof (T));
             ReplaceWith(conditional);

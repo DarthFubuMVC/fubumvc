@@ -4,62 +4,66 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
 {
-    public interface IConditionalInvoker
+    public interface IConditionalBehavior : IActionBehavior
     {
-        void Invoke(bool condition);
     }
-    public class ConditionalInvoker :IConditionalInvoker
+
+    public class ConditionalBehavior : IConditionalBehavior
     {
         private readonly IActionBehavior _innerBehavior;
+        private readonly Func<bool> _condition;
 
-        public ConditionalInvoker(IActionBehavior innerBehavior)
+        public ConditionalBehavior(IActionBehavior innerBehavior, Func<bool> condition)
         {
             _innerBehavior = innerBehavior;
+            _condition = condition;
         }
-
-        public void Invoke(bool condition)
-        {
-            if(condition)
-            _innerBehavior.Invoke();
-        }
-    }
-
-    public class ConditionalBehavior : IActionBehavior
-    {
-        public readonly Func<bool> ShouldExecute;
-        private readonly Action _innerInvoke;
-        private readonly Action _partialInvoke;
-
-        public ConditionalBehavior(IActionBehavior innerBehavior, Func<bool> shouldExecute)
-        {
-            _insideBehavior = innerBehavior;
-            ShouldExecute = shouldExecute;
-            _innerInvoke = () => { if (_insideBehavior != null) _insideBehavior.Invoke(); };
-            _partialInvoke = () => { if (_insideBehavior != null) _insideBehavior.InvokePartial(); };
-        }
-
-
-        private IActionBehavior _insideBehavior;
-       
 
         public void Invoke()
         {
-            if (ShouldExecute())
-                _innerInvoke();
-          
+            if(_condition())
+                _innerBehavior.Invoke();
         }
 
         public void InvokePartial()
         {
-            if (ShouldExecute())
-                _partialInvoke();
-      
+            if (_condition())
+                _innerBehavior.InvokePartial();
+        }
+    }
+
+    public class ConditionalBehaviorInvoker : IActionBehavior
+    {
+        public readonly Func<bool> ShouldExecute;
+
+
+        public ConditionalBehaviorInvoker(IConditionalBehavior behavior)
+        {
+            _behavior = behavior;
+        }
+
+
+        private IConditionalBehavior _behavior;
+        public IActionBehavior InnerBehavior { get; set; }
+
+        public void Invoke()
+        {
+            _behavior.Invoke();
+            if(InnerBehavior != null)
+                InnerBehavior.Invoke();
+        }
+
+        public void InvokePartial()
+        {
+            _behavior.InvokePartial();
+            if (InnerBehavior != null)
+                InnerBehavior.InvokePartial();
         }
     }
 
     public class ConditionalBehavior<T> : ConditionalBehavior
     {
-        public ConditionalBehavior(IActionBehavior innerBehavior,T context, Func<T, bool> condition)
+        public ConditionalBehavior(IActionBehavior innerBehavior, T context, Func<T, bool> condition)
             : base(innerBehavior,() => condition(context))
         {
         }

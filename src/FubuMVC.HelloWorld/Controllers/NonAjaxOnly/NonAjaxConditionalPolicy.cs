@@ -19,14 +19,11 @@ namespace FubuMVC.HelloWorld.Controllers.NonAjaxOnly
                 .Each(chain =>
                           {
                               chain.Outputs.First().ConditionallyRunIf<CheckForQueryString>();
-
-                              // var renderJsonNode = new RenderJsonNode(typeof(NonAjaxModel));
                               //chain.FirstCall().AddAfter(new Wrapper(typeof (MiddleWare)));
-                              chain.FirstCall().AddAfter(new Wrapper(typeof(MiddleWare)).ConditionallyRunIf<CheckForQueryString>());
-                              chain.FirstCall().Next.AddAfter(new Wrapper(typeof(MiddleWare)));
-                              // chain.AddToEnd(renderJsonNode);
-
-                              //  chain.Outputs.Last().ConditionallyRunIf<IsAjaxRequest>();
+                              chain.FirstCall().AddAfter(new Wrapper(typeof(MiddleWare))
+                                  .ConditionallyRunIf<CurrentRequest>(x => x.RawUrl.Contains("render=false")));
+                               var renderJsonNode = new RenderJsonNode(typeof(NonAjaxModel));
+                               chain.AddToEnd(renderJsonNode.ConditionallyRunIf<IsAjaxRequest>());
                           });
         }
     }
