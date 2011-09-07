@@ -326,11 +326,13 @@
     <Compile Include="ServiceRegistryExtensions.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensions.cs" />
     <Compile Include="UI\Configuration\AccessorDef.cs" />
+    <Compile Include="UI\Configuration\AlwaysElementModifier.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="UI\Configuration\ElementRequest.cs" />
     <Compile Include="UI\Configuration\Interfaces.cs" />
     <Compile Include="UI\Configuration\LambdaElementBuilder.cs" />
     <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
+    <Compile Include="UI\Configuration\OptionalElementModifier.cs" />
     <Compile Include="UI\Configuration\PartialLambdaElementBuilder.cs" />
     <Compile Include="UI\Diagnostics\ExampleHtmlWriter.cs" />
     <Compile Include="UI\Diagnostics\RecordingFieldAccessRightsExecutor.cs" />
