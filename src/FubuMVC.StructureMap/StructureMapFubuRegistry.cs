@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Web;
 using FubuCore.Binding;
 using FubuMVC.Core;
@@ -25,6 +26,11 @@ namespace FubuMVC.StructureMap
         public bool HasAnyValuePrefixedWith(string key)
         {
             return false;
+        }
+
+        public IEnumerable<string> GetKeys()
+        {
+            return new List<string>();
         }
     }
 

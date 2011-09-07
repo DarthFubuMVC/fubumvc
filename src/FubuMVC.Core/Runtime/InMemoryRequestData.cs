@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
 using FubuCore.Util;
@@ -24,6 +25,11 @@ namespace FubuMVC.Core.Runtime
         public bool HasAnyValuePrefixedWith(string key)
         {
             return _values.GetAllKeys().Any(x => x.StartsWith(key));
+        }
+
+        public IEnumerable<string> GetKeys()
+        {
+            return _values.GetAllKeys();
         }
     }
 }

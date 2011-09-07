@@ -38,8 +38,8 @@
     <Reference Include="Bottles.Deployment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FubuMVC.0.9.0.50848\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FubuCore.0.9.0.50850\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore, Version=0.9.1.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FubuCore.0.9.1.39\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\..\lib\fubucore\FubuLocalization.dll</HintPath>
@@ -63,8 +63,8 @@
       <Private>True</Private>
       <HintPath>..\packages\FubuMVC.0.9.0.50848\lib\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
-      <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
