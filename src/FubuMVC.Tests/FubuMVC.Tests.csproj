@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
+    <Compile Include="Behaviors\ConditionalBehaviorInvokerTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />

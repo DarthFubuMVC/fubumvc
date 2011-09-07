@@ -36,14 +36,12 @@ namespace FubuMVC.Core.Behaviors
     {
         public readonly Func<bool> ShouldExecute;
 
-
         public ConditionalBehaviorInvoker(IConditionalBehavior behavior)
         {
             _behavior = behavior;
         }
 
-
-        private IConditionalBehavior _behavior;
+        private readonly IConditionalBehavior _behavior;
         public IActionBehavior InnerBehavior { get; set; }
 
         public void Invoke()
