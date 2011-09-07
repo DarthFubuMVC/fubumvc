@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
-using Ionic.Zip;
+using Bottles.Exploding;
+using Bottles.Zipping;
 using StoryTeller;
 using StoryTeller.Engine;
 using FubuCore;
@@ -55,17 +56,9 @@ namespace IntegrationTesting.Fixtures.Packages
         {
             var tempPath = Path.GetTempPath();
             var zipDirectory = Path.Combine(tempPath, "zip-contents");
-            if (Directory.Exists(zipDirectory))
-            {
-                Directory.Delete(zipDirectory, true);
-            }
 
-            Directory.CreateDirectory(zipDirectory);
-
-            using (var zipFile = new ZipFile(zipFileName))
-            {
-                zipFile.ExtractAll(zipDirectory);
-            }
+            new ZipFileService(new FileSystem())
+                .ExtractTo(zipFileName, zipDirectory, ExplodeOptions.DeleteDestination);
 
             return
                 Directory.GetFiles(zipDirectory, "*", SearchOption.AllDirectories).Select(
