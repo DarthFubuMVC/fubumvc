@@ -1,8 +1,8 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.Urls;
+using FubuMVC.HelloWorld.Controllers.Conditional;
 using FubuMVC.HelloWorld.Controllers.Home;
-using FubuMVC.HelloWorld.Controllers.NonAjaxOnly;
 using FubuMVC.HelloWorld.Controllers.OutputModels;
 using FubuMVC.HelloWorld.Controllers.Products;
 using FubuMVC.WebForms;
@@ -33,7 +33,7 @@ namespace FubuMVC.HelloWorld
 
             Import<WebFormsEngine>();
 
-            Policies.Add<AntiForgeryPolicy>().Add<NonAjaxConditionalPolicy>();
+            Policies.Add<AntiForgeryPolicy>().Add<ConditionalPolicy>();
             Views.TryToAttachWithDefaultConventions();
 
             HtmlConvention<SampleHtmlConventions>();

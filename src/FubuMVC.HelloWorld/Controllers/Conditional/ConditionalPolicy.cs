@@ -1,21 +1,19 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.HelloWorld.Controllers.NonAjaxOnly
+namespace FubuMVC.HelloWorld.Controllers.Conditional
 {
-    public class NonAjaxConditionalPolicy : IConfigurationAction
+    public class ConditionalPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Behaviors.Where(x => x.FirstCall().OutputType().CanBeCastTo<NonAjaxModel>())
+            graph.Behaviors.Where(x => x.FirstCall().OutputType().CanBeCastTo<ConditionalModel>())
                 .Each(chain =>
                           {
                               chain.Outputs.First().ConditionallyRunIf<CheckForQueryString>();

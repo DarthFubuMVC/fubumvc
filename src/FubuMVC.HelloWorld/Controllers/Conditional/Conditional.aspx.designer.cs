@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FubuMVC.HelloWorld.Controllers.NonAjaxOnly
+namespace FubuMVC.HelloWorld.Controllers.Conditional
 {
 
 
-    public partial class NonAjax
+    public partial class Conditional
     {
     }
 }
