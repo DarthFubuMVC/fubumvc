@@ -13,6 +13,7 @@
     <RootNamespace>QuickStart</RootNamespace>
     <AssemblyName>QuickStart</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,9 +37,9 @@
       <HintPath>..\packages\Bottles.0.9.0.50940\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FubuMVC.0.9.0.50848\lib\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployment.0.9.0.111\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore, Version=0.9.1.39, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.1.39\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
@@ -52,9 +53,6 @@
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>

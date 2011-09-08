@@ -18,6 +18,7 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,32 +42,32 @@
   <ItemGroup>
     <Reference Include="FubuCore, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuMVC\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.1.39\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\..\lib\FubuMVC\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.1.544\lib\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuMVC\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.1.544\lib\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.WebForms">
       <HintPath>..\..\lib\FubuMVC\FubuMVC.WebForms.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuMVC\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuMVC\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Spark">
-      <HintPath>..\..\lib\FubuMVC\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FubuMVC\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -95,9 +96,7 @@
     <Compile Include="Behaviors\DemoBehaviorForSelectActions.cs" />
     <Compile Include="Behaviors\DemoBehaviorPolicy.cs" />
     <Compile Include="Behaviors\Wrapper.cs" />
-    <Compile Include="Controllers\Home\Home.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Controllers\Home\Home.cs" />
     <Compile Include="Examples\configuring_actions_RegistryExamples.cs" />
     <Compile Include="Examples\configuring_actions_MyProjectFubuRegistry.cs" />
     <Compile Include="Global.asax.cs">
