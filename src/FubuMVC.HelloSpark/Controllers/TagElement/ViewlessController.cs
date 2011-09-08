@@ -2,14 +2,14 @@
 
 namespace FubuMVC.HelloSpark.Controllers.TagElement
 {
-	public class HtmlController
+	public class ViewlessController
 	{
-		public HtmlTag Tag(TagRequest request)
+		public HtmlTag Tag(HtmlTagRequest request)
 		{
 			return new HtmlTag(request.TagName).Text(request.Text);
 		}
 
-		public HtmlDocument Document(DocumentRequest request)
+		public HtmlDocument Document(HtmlDocumentRequest request)
 		{
 			var document = new HtmlDocument { Title = request.Title };
 			document.Add(new HtmlTag("h1").Text(request.Title));
@@ -19,15 +19,15 @@ namespace FubuMVC.HelloSpark.Controllers.TagElement
 		}
 	}
 
-	public class DocumentRequest
+	public class HtmlDocumentRequest
 	{
 		public string Title { get; set; }
 		public string Text { get; set; }
 	}
 
-	public class TagRequest
+	public class HtmlTagRequest
 	{
-		public TagRequest(string tagName, string text)
+		public HtmlTagRequest(string tagName, string text)
 		{
 			TagName = tagName;
 			Text = text;

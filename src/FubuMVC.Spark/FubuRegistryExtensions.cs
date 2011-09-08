@@ -19,6 +19,7 @@ namespace FubuMVC.Spark
         		.As<IFubuRegistryExtension>()
         		.Configure(fubuRegistry);
 
+            //patch HtmlDocument and HtmlTag output types to use Spark aware outputs
 			fubuRegistry.Policies.Add<SparkHtmlOutputPolicy>();
         }
     }

@@ -19,7 +19,7 @@ namespace FubuMVC.Spark
 	public class SparkRenderHtmlBehavior<T> : IActionBehavior where T : class 
 	{
 		private readonly IOutputWriter _outputWriter;
-		private readonly NestedOutput _nestedOutput;
+		private readonly  NestedOutput _nestedOutput;
 		private readonly IFubuRequest _request;
 
 		public SparkRenderHtmlBehavior(IOutputWriter outputWriter, NestedOutput nestedOutput, IFubuRequest request)
@@ -31,8 +31,8 @@ namespace FubuMVC.Spark
 
 		public void Invoke()
 		{
-			var tag = _request.Get<T>();
-			_outputWriter.WriteHtml(tag);
+			var outputType = _request.Get<T>();
+			_outputWriter.WriteHtml(outputType);
 		}
 
 		public void InvokePartial()

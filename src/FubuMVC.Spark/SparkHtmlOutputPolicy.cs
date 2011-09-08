@@ -21,7 +21,7 @@ namespace FubuMVC.Spark
 						graph.Observer.RecordCallStatus(chain.FirstCall(), "Replaced output node for HtmlTag with SparkHtmlTagOutput.");
 				      });
 
-			graph.Behaviors
+            graph.Behaviors
 				.Where(x => x.ActionOutputType().CanBeCastTo<HtmlDocument>())
 				.Each(chain =>
 				      {
