@@ -108,7 +108,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
         
         [Test]
-        public void should_contain_inner_action_behavior_dependecy_of_should_have_action_behavior_dependency()
+        public void inner_conditional_behavior_dependecy_should_have_action_behavior_dependency()
         {
             ObjectDef objectDef = ToObjectDef().DependencyFor<IConditionalBehavior>()
                 .As<ConfiguredDependency>().Definition;
@@ -117,7 +117,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         [Test]
-        public void should_contain_inner_action_behavior_dependecy_of_should_have_condition_dependency()
+        public void inner_conditional_behavior_dependecy_should_have_condition_dependency()
         {
             ObjectDef objectDef = ToObjectDef().DependencyFor<IConditionalBehavior>()
                 .As<ConfiguredDependency>().Definition;
