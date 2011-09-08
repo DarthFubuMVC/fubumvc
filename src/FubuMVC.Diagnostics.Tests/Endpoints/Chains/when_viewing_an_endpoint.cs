@@ -1,6 +1,8 @@
 using System;
 using FubuMVC.Core.Registration;
+using FubuMVC.Diagnostics.Core;
 using FubuMVC.Diagnostics.Endpoints.Chains;
+using FubuMVC.Diagnostics.Features.Dashboard;
 using FubuMVC.Diagnostics.Models;
 using FubuTestingSupport;
 using NUnit.Framework;

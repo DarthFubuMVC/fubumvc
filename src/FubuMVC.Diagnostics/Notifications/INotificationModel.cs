@@ -1,6 +1,6 @@
 ﻿namespace FubuMVC.Diagnostics.Notifications
 {
-	public interface INotificationModel
+	public interface INotificationModel : IPartialModel
 	{
 	}
 }

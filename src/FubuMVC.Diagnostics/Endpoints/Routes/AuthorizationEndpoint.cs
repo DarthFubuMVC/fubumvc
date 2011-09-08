@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Infrastructure;
-using FubuMVC.Diagnostics.Models.Routes;
+using FubuMVC.Diagnostics.Core.Infrastructure;
+using FubuMVC.Diagnostics.Features.Routes;
 
 namespace FubuMVC.Diagnostics.Endpoints.Routes
 {

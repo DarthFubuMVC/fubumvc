@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Diagnostics.Infrastructure;
+using FubuMVC.Diagnostics.Core.Infrastructure;
 
 namespace FubuMVC.Diagnostics.Navigation
 {

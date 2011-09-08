@@ -1,7 +1,7 @@
 ﻿using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Configuration.Policies;
+using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Tests;
 using FubuTestingSupport;
 using NUnit.Framework;

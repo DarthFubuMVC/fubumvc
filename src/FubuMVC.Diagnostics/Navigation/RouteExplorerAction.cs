@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Models.Routes;
+using FubuMVC.Diagnostics.Features.Routes;
 
 namespace FubuMVC.Diagnostics.Navigation
 {

@@ -1,7 +1,7 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Endpoints.Routes;
-using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Tests;
 using FubuTestingSupport;

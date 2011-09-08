@@ -1,5 +1,5 @@
+using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Endpoints.Requests;
-using FubuMVC.Diagnostics.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Models.Requests;

@@ -3,7 +3,6 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Configuration.Policies;
 
 namespace FubuMVC.Diagnostics.Navigation
 {

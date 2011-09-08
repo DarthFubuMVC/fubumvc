@@ -2,8 +2,8 @@
 using System.Linq;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Grids.Columns.Routes;
-using FubuMVC.Diagnostics.Grids.Filters.Routes;
+using FubuMVC.Diagnostics.Core.Grids.Columns.Routes;
+using FubuMVC.Diagnostics.Core.Grids.Filters.Routes;
 using FubuMVC.Diagnostics.Models.Grids;
 
 namespace FubuMVC.Diagnostics.Notifications

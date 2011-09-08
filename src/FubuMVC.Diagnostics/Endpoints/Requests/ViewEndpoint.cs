@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Diagnostics.Core;
 using FubuMVC.Diagnostics.Models.Requests;
 
 namespace FubuMVC.Diagnostics.Endpoints.Requests

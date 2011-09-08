@@ -1,12 +1,14 @@
 using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Configuration.Policies;
+using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Diagnostics.Endpoints;
+using FubuMVC.Diagnostics.Features.Dashboard;
+using FubuMVC.Diagnostics.Features.Routes;
 using FubuMVC.Diagnostics.Models;
-using FubuMVC.Diagnostics.Models.Routes;
 using FubuTestingSupport;
 using NUnit.Framework;
+using GetHandler = FubuMVC.Diagnostics.Features.Dashboard.GetHandler;
 
 namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
 {
@@ -25,7 +27,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [Test]
         public void should_match_calls_when_handler_type_ends_with_handler_and_exists_in_diagnostics_assembly_and_no_attributes_are_found()
         {
-            var endpointCall = ActionCall.For<RoutesEndpoint>(e => e.Get(new RouteRequestModel()));
+            var endpointCall = ActionCall.For<Diagnostics.Features.Routes.GetHandler>(e => e.Execute(new DefaultRouteRequestModel()));
             _policy
                 .Matches(endpointCall, _observer)
                 .ShouldBeTrue();
@@ -34,7 +36,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [Test]
         public void should_not_match_calls_that_have_diagnostics_url_attribute()
         {
-            var invalidCall = ActionCall.For<DashboardEndpoint>(e => e.Get(new DashboardRequestModel()));
+            var invalidCall = ActionCall.For<GetHandler>(e => e.Execute(new DashboardRequestModel()));
             _policy
                 .Matches(invalidCall, _observer)
                 .ShouldBeFalse();
@@ -52,7 +54,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [Test]
         public void should_strip_namespace_and_make_relative_to_diagnostic_root()
         {
-            var endpointCall = ActionCall.For<RoutesEndpoint>(e => e.Get(new RouteRequestModel()));
+            var endpointCall = ActionCall.For<Features.Routes.GetHandler>(e => e.Execute(new DefaultRouteRequestModel()));
             _policy
                 .Build(endpointCall)
                 .Pattern

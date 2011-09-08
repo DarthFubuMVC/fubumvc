@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Diagnostics.Grids;
+using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Models.Requests;

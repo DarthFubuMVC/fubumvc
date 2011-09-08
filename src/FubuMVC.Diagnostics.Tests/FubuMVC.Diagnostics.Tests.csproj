@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ActionCallExtensionsTester.cs" />
+    <Compile Include="Dashboard\DashboardHandlerTester.cs" />
     <Compile Include="DiagnosticsCallWithAttribute.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
@@ -87,6 +88,9 @@
     <Compile Include="ObjectMother.cs" />
     <Compile Include="Partials\when_executing_a_partial_action.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routes\GetHandlerTester.cs" />
+    <Compile Include="Routes\get_Column_Value_handler_Tester.cs" />
+    <Compile Include="Routes\RoutesModelBuilderTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

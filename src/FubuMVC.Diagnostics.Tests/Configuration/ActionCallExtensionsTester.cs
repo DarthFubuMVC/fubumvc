@@ -1,7 +1,6 @@
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Configuration;
-using FubuMVC.Diagnostics.Endpoints;
-using FubuMVC.Diagnostics.Models.Routes;
+using FubuMVC.Diagnostics.Core.Configuration;
+using FubuMVC.Diagnostics.Features.Routes;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -13,7 +12,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration
         [Test]
         public void diagnostics_call_should_match_diagnostics_endpoint()
         {
-            var endpointCall = ActionCall.For<RoutesEndpoint>(e => e.Get(new RouteRequestModel()));
+            var endpointCall = ActionCall.For<GetHandler>(e => e.Execute(new DefaultRouteRequestModel()));
             
             endpointCall
                 .IsDiagnosticsCall()

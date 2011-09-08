@@ -4,9 +4,8 @@ using FubuMVC.Diagnostics.Models.Requests;
 
 namespace FubuMVC.Diagnostics.Models
 {
-    public interface IRequestCacheModelBuilder
+    public interface IRequestCacheModelBuilder : IModelBuilder<RequestCacheModel>
     {
-        RequestCacheModel Build();
     }
 
 	public class RequestCacheModelBuilder : IRequestCacheModelBuilder

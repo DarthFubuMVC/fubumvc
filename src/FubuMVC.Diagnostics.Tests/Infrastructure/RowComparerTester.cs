@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FubuMVC.Diagnostics.Grids;
+using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Tests;
 using FubuTestingSupport;

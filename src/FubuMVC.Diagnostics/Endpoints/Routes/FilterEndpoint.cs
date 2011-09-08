@@ -1,6 +1,6 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Grids;
+using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Models.Grids;
 
 namespace FubuMVC.Diagnostics.Endpoints.Routes
