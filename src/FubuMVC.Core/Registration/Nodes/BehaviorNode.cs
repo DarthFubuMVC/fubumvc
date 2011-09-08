@@ -247,13 +247,20 @@ namespace FubuMVC.Core.Registration.Nodes
             return conditional;
         }
 
-        public ConditionalNode ConditionallyRunIf<T>() where T : IConditionalBehavior
+        public ConditionalNode ConditionallyRunByBehavior<T>() where T : IConditionalBehavior
         {
             var conditional = new ConditionalNode(this, typeof (T));
             ReplaceWith(conditional);
             return conditional;
         }
-
+        public ConditionalNode<T> ConditionallyRunByConditional<T>() where T : IConditional
+        {
+            var conditional = new ConditionalNode<T>(this, typeof(T));
+            ReplaceWith(conditional);
+            return conditional;
+        }
+      
+        
         /// <summary>
         /// Adds a new BehaviorNode to the very end of this BehaviorChain
         /// </summary>

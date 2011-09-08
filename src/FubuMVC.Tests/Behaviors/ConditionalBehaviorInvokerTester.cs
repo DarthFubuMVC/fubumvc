@@ -44,7 +44,7 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            Services.Inject<Func<bool>>(() => true);
+            Services.Inject<IConditional>(new LambdaConditional(() => true));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            Services.Inject<Func<bool>>(() => false);
+            Services.Inject<IConditional>(new LambdaConditional(() => false));
         }
 
         [Test]

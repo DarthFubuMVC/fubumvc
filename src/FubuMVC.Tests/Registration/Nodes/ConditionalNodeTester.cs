@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             ObjectDef objectDef = ToObjectDef().DependencyFor<IConditionalBehavior>()
                 .As<ConfiguredDependency>().Definition;
 
-            objectDef.DependencyFor<Func<bool>>().ShouldNotBeNull();
+            objectDef.DependencyFor<IConditional>().ShouldNotBeNull();
         }
     }
      [TestFixture]
@@ -122,7 +122,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             ObjectDef objectDef = ToObjectDef().DependencyFor<IConditionalBehavior>()
                 .As<ConfiguredDependency>().Definition;
 
-            objectDef.DependencyFor<Func<IRequestData,bool>>().ShouldNotBeNull();
+            objectDef.DependencyFor<IConditional>().ShouldNotBeNull();
         }
 
     }

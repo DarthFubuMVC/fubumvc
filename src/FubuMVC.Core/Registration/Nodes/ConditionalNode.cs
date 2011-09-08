@@ -53,7 +53,12 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             var conditionalInvoker = new ObjectDef(BehaviorType);
             conditionalInvoker.DependencyByType<IActionBehavior>(InnerNode.As<IContainerModel>().ToObjectDef());
-            if (Condition != null) conditionalInvoker.DependencyByValue(Condition);
+            if (Condition != null)
+            {
+                var conditionalDef = ObjectDef.ForType<LambdaConditional>();
+                conditionalDef.DependencyByValue(Condition);
+                conditionalInvoker.DependencyByType<IConditional>(conditionalDef);
+            }
             _objDef.DependencyByType<IConditionalBehavior>(conditionalInvoker);
             return _objDef;
         }
@@ -62,9 +67,15 @@ namespace FubuMVC.Core.Registration.Nodes
     public class ConditionalNode<T> : BehaviorNode
     {
         private readonly BehaviorNode _node;
+        private readonly Type _conditional;
         private readonly Func<T, bool> _condition;
         private ObjectDef _objDef;
 
+        public ConditionalNode(BehaviorNode node, Type conditional)
+        {
+            _node = node;
+            _conditional = conditional;
+        }
 
         public ConditionalNode(BehaviorNode node, Func<T, bool> condition)
         {
@@ -92,7 +103,16 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             var conditionalInvoker = ObjectDef.ForType<ConditionalBehavior<T>>();
             conditionalInvoker.DependencyByType<IActionBehavior>(InnerNode.As<IContainerModel>().ToObjectDef());
-            conditionalInvoker.DependencyByValue(Condition);
+            if (Condition != null)
+            {
+                var conditionalDef = ObjectDef.ForType<LambdaConditional<T>>();
+                conditionalDef.DependencyByValue(Condition);
+                conditionalInvoker.DependencyByType<IConditional>(conditionalDef);
+            }
+            else
+            {
+                conditionalInvoker.DependencyByType<IConditional>(new ObjectDef(_conditional));
+            }
             _objDef.DependencyByType<IConditionalBehavior>(conditionalInvoker);
             return _objDef;
 

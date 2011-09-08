@@ -16,7 +16,7 @@ namespace FubuMVC.HelloWorld.Controllers.Conditional
             graph.Behaviors.Where(x => x.FirstCall().OutputType().CanBeCastTo<ConditionalModel>())
                 .Each(chain =>
                           {
-                              chain.Outputs.First().ConditionallyRunIf<CheckForQueryString>();
+                              chain.Outputs.First().ConditionallyRunByBehavior<CheckForQueryString>();
                               chain.FirstCall().AddAfter(new Wrapper(typeof(MiddleWare))
                                   .ConditionallyRunIf<CurrentRequest>(x => x.RawUrl.Contains("render=false")));
                           });
@@ -25,11 +25,7 @@ namespace FubuMVC.HelloWorld.Controllers.Conditional
     public class CheckForQueryString : ConditionalBehavior<IFubuRequest>
     {
         public CheckForQueryString(IActionBehavior innerBehavior, IFubuRequest context)
-            : base(innerBehavior, context, x =>
-                                               {
-                                                   return x.Get<CurrentRequest>()
-                                                       .RawUrl.Contains("render=true");
-                                               })
+            : base(innerBehavior, new LambdaConditional<IFubuRequest>(context, x => x.Get<CurrentRequest>().RawUrl.Contains("render=true")))
         {
         }
     }

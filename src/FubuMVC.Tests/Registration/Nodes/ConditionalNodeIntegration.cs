@@ -121,7 +121,7 @@ namespace FubuMVC.Tests.Registration.Nodes.ConditionalTest
 
             graph
              .BehaviorFor<TestConditionalController>(x => x.Herp())
-             .AddToEnd(Wrapper.For<AddTheHerpBehavior>().ConditionallyRunIf<IsAjaxRequest>());
+             .AddToEnd(Wrapper.For<AddTheHerpBehavior>().ConditionallyRunByBehavior<IsAjaxRequest>());
 
             graph
                 .BehaviorFor<TestConditionalController>(x => x.HerpDerp())
