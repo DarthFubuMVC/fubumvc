@@ -2,16 +2,14 @@ using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Core.Behaviors;
 using FubuMVC.Diagnostics.Core.Configuration;
 using FubuMVC.Diagnostics.Core.Configuration.Policies;
 using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Core.Grids.Columns;
 using FubuMVC.Diagnostics.Core.Infrastructure;
-using FubuMVC.Diagnostics.Endpoints;
 using FubuMVC.Diagnostics.Features;
+using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Models;
-using FubuMVC.Diagnostics.Models.Requests;
 using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
@@ -31,9 +29,6 @@ namespace FubuMVC.Diagnostics
                 .ToAssemblyContainingType<BehaviorStart>();
 
             ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof(DiagnosticsFeatures));
-
-            Policies
-                .ConditionallyWrapBehaviorChainsWith<UnknownObjectBehavior>(call => call.InputType() == typeof (ChainRequest));
 
             Actions
                 .FindWith<PartialActionSource>();

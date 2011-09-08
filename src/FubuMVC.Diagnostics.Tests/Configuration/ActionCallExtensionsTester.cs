@@ -10,7 +10,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration
     public class ActionCallExtensionsTester
     {
         [Test]
-        public void diagnostics_call_should_match_diagnostics_endpoint()
+        public void diagnostics_call_should_match_diagnostics_handlers()
         {
             var endpointCall = ActionCall.For<GetHandler>(e => e.Execute(new DefaultRouteRequestModel()));
             

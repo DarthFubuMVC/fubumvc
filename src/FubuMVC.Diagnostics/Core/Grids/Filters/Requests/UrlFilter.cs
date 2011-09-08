@@ -1,5 +1,5 @@
 using FubuMVC.Diagnostics.Core.Grids.Columns.Requests;
-using FubuMVC.Diagnostics.Models.Requests;
+using FubuMVC.Diagnostics.Features.Requests;
 
 namespace FubuMVC.Diagnostics.Core.Grids.Filters.Requests
 {

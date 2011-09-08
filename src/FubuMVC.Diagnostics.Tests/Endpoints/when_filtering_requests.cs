@@ -1,8 +1,8 @@
 using FubuMVC.Diagnostics.Core.Grids;
-using FubuMVC.Diagnostics.Endpoints.Requests;
+using FubuMVC.Diagnostics.Features.Requests;
+using FubuMVC.Diagnostics.Features.Requests.Filter;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Models.Grids;
-using FubuMVC.Diagnostics.Models.Requests;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Diagnostics.Tests.Endpoints
 {
 	[TestFixture]
-	public class when_filtering_requests : InteractionContext<FilterEndpoint>
+	public class when_filtering_requests : InteractionContext<PostHandler>
 	{
 		// sanity check
 		[Test]
@@ -29,7 +29,7 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints
 				.Return(grid);
 
 			ClassUnderTest
-				.Post(query)
+				.Execute(query)
 				.ShouldEqual(grid);
 		}
 	}

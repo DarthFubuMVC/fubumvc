@@ -1,7 +1,7 @@
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Grids;
-using FubuMVC.Diagnostics.Endpoints.Routes;
+using FubuMVC.Diagnostics.Features.Routes.Filter;
 using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Tests;
 using FubuTestingSupport;
@@ -11,7 +11,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Diagnostics.Tests.Endpoints
 {
     [TestFixture]
-    public class when_filtering_routes : InteractionContext<FilterEndpoint>
+    public class when_filtering_routes : InteractionContext<PostHandler>
     {
         private BehaviorGraph _graph;
 
@@ -32,7 +32,7 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints
                 .Return(grid);
 
             ClassUnderTest
-                .Post(query)
+                .Execute(query)
                 .ShouldEqual(grid);
         }
     }

@@ -10,7 +10,7 @@ namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 		private readonly IAuthorizationDescriptor _descriptor;
 
 		public AuthorizationColumn(IAuthorizationDescriptor descriptor)
-			: base("Authorization")
+			: base("Auth")
 		{
 			_descriptor = descriptor;
 		}

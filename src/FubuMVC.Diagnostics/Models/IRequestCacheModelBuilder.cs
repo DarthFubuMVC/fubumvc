@@ -1,6 +1,6 @@
 using System.Linq;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Diagnostics.Models.Requests;
+using FubuMVC.Diagnostics.Features.Requests;
 
 namespace FubuMVC.Diagnostics.Models
 {

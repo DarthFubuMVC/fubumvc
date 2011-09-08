@@ -2,10 +2,9 @@ using FubuCore;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Configuration.Policies;
-using FubuMVC.Diagnostics.Endpoints;
+using FubuMVC.Diagnostics.Features;
 using FubuMVC.Diagnostics.Features.Dashboard;
 using FubuMVC.Diagnostics.Features.Routes;
-using FubuMVC.Diagnostics.Models;
 using FubuTestingSupport;
 using NUnit.Framework;
 using GetHandler = FubuMVC.Diagnostics.Features.Dashboard.GetHandler;
@@ -20,7 +19,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [SetUp]
         public void Setup()
         {
-            _policy = new DiagnosticsHandlerUrlPolicy();
+            _policy = new DiagnosticsHandlerUrlPolicy(typeof(DiagnosticsFeatures));
             _observer = new NulloConfigurationObserver();
         }
 

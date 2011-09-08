@@ -1,7 +1,7 @@
 using System;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Core;
-using FubuMVC.Diagnostics.Endpoints.Chains;
+using FubuMVC.Diagnostics.Features.Chains.View;
 using FubuMVC.Diagnostics.Features.Dashboard;
 using FubuMVC.Diagnostics.Models;
 using FubuTestingSupport;
@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace FubuMVC.Diagnostics.Tests.Endpoints.Chains
 {
 	[TestFixture]
-	public class when_viewing_an_endpoint : InteractionContext<ViewEndpoint>
+	public class when_viewing_an_endpoint : InteractionContext<get_Id_handler>
 	{
 		private BehaviorGraph _graph;
 		protected override void beforeEach()
@@ -20,12 +20,12 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints.Chains
 		}
 
 		[Test]
-		public void should_throw_unknown_chain_exception_if_chain_cannot_be_found()
+		public void should_throw_argument_exception_if_chain_cannot_be_found()
 		{
 			var request = new ChainRequest {Id = Guid.NewGuid()};
 
-			Exception<UnknownObjectException>
-				.ShouldBeThrownBy(() => ClassUnderTest.Get(request));
+			Exception<ArgumentException>
+				.ShouldBeThrownBy(() => ClassUnderTest.Execute(request));
 		}
 
 		[Test]
@@ -35,7 +35,7 @@ namespace FubuMVC.Diagnostics.Tests.Endpoints.Chains
 			var request = new ChainRequest {Id = chain.UniqueId};
 
 			ClassUnderTest
-				.Get(request)
+				.Execute(request)
 				.Chain
 				.ShouldEqual(chain);
 		}
