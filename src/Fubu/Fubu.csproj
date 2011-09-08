@@ -36,13 +36,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.0.50940\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.112\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployers.Iis">
-      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.0.111\lib\Bottles.Deployers.Iis.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.112\lib\Bottles.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
-      <HintPath>..\packages\Bottles.Deployment.0.9.0.111\lib\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployment.0.9.1.112\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.1.39\lib\FubuCore.dll</HintPath>
