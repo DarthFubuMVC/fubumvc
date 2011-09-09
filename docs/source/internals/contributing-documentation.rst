@@ -33,23 +33,23 @@ write the technical documentation and the guides to using FubuMVC. From these
 two documents, we can come up with a list of a few things that really need to
 be documented.
 
-* Behaviors
+    * Behaviors
 
-* Conventions and Policies
+    * Conventions and Policies
 
-* Diagnostics
+    * Diagnostics
 
-* Routing
+    * Routing
 
-* Model Binding
+    * Model Binding
 
-* Configuration / Registration
+    * Configuration / Registration
 
-* Bottles
+    * Bottles
 
-* HtmlTags
+    * HtmlTags
 
-* IoC Integration
+    * IoC Integration
 
 Each of these sections are large undertakings, so feel free to break these down
 to as small as you're comfortable working with. Even a quick overview of
@@ -62,21 +62,25 @@ You've already started if you're reading this document! From this point, there
 are a couple steps you can take to get started on helping improve our
 documentation.
 
-#. Check the `issue tracker`_ for any issued labled ``documentation``. If there
-   is an issue already logged, comment that you would like to work on this issue
-   so we know you're actively working on it.
+    #. Check the `issue tracker`_ for any issued labled ``documentation``. If there
+       is an issue already logged, comment that you would like to work on this issue
+       so we know you're actively working on it.
 
-#. If you can't find an issue that matches what you're planning on working on,
-   go ahead and make one! Make sure to prefix the issue title with ``[doc]`` so
-   that we can get it labeled properly.
+    #. If you can't find an issue that matches what you're planning on working on,
+       go ahead and make one! Make sure to prefix the issue title with ``[doc]`` so
+       that we can get it labeled properly.
 
-#. Start working on the documentation! If you have any questions or need to
-   discuss with the community, please ask on the `mailing list`! We'll gladly help
-   with any questions or provide any guidance you may need when working on the
-   documentation.
+    #. Take a look at the tests. This is a great way to see just what is
+       available in FubuMVC and help you decide what to work on and where to
+       take the documentation for that section of code.
 
-Do you have any guides on actually writing the code?
-----------------------------------------------------
+    #. Start working on the documentation! If you have any questions or need to
+       discuss with the community, please ask on the `mailing list`! We'll gladly help
+       with any questions or provide any guidance you may need when working on the
+       documentation.
+
+Do you have any guides on actually writing the documentation?
+-------------------------------------------------------------
 
 Yes! We have a :doc:`writing-documentation` guide you can use to help when
 writing new documentation and improving the existing documentation.
