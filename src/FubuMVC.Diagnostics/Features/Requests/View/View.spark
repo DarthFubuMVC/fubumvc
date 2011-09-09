@@ -1,5 +1,5 @@
-﻿<use namespace="FubuMVC.Diagnostics.Models.Requests" />
-<viewdata model="FubuMVC.Diagnostics.Models.Requests.RequestDetailsModel" />
+﻿<use namespace="FubuMVC.Diagnostics.Features.Requests" />
+<viewdata model="FubuMVC.Diagnostics.Features.Requests.RequestDetailsModel" />
 <content:title>Request ${Model.Report.Id.ToString()}</content:title>
 <content:head>
   <Stylesheet href="requests/view.css" />

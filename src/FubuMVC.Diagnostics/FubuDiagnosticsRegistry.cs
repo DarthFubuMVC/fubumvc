@@ -33,6 +33,9 @@ namespace FubuMVC.Diagnostics
             Actions
                 .FindWith<PartialActionSource>();
 
+            Routes
+                .UrlPolicy<DiagnosticsAttributeUrlPolicy>();
+
             Views
                 .TryToAttachWithDefaultConventions()
                 .RegisterActionLessViews(token => token.ViewModelType.IsDiagnosticsReport())
@@ -78,7 +81,8 @@ namespace FubuMVC.Diagnostics
                                                 .ConnectImplementationsToTypesClosing(typeof (IPartialDecorator<>))
                                                 .ConnectImplementationsToTypesClosing(typeof (IGridColumnBuilder<>))
                                                 .ConnectImplementationsToTypesClosing(typeof (IGridColumn<>))
-                                                .ConnectImplementationsToTypesClosing(typeof (IGridFilter<>));
+                                                .ConnectImplementationsToTypesClosing(typeof (IGridFilter<>))
+                                                .ConnectImplementationsToTypesClosing(typeof(IModelBuilder<>));
                                         });
                          });
         }

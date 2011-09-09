@@ -18,7 +18,7 @@ namespace FubuMVC.Diagnostics.Navigation
 
         protected override object inputModel()
         {
-            return new RouteRequestModel();
+            return new DefaultRouteRequestModel();
         }
     }
 }

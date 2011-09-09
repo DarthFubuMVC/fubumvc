@@ -2,7 +2,7 @@ namespace FubuMVC.Diagnostics.Features.Html
 {
     public class GetHandler
     {
-        public HtmlConventionsViewModel Get(HtmlConventionsRequestModel request)
+        public HtmlConventionsViewModel Execute(HtmlConventionsRequestModel request)
         {
             return new HtmlConventionsViewModel();
         }

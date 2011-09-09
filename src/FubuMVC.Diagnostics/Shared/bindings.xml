@@ -5,7 +5,7 @@
   <element name="Scripts">this.WriteScriptTags()</element>
   <element name="Image">this.ImageFor('@src')</element>
   <element name="Navigation">#this.Partial&lt;FubuMVC.Diagnostics.Navigation.NavigationMenu&gt;();</element>
-  <element name="FilterLink">this.LinkTo(new FubuMVC.Diagnostics.Models.Routes.RouteRequestModel { Column = '@column', Value = '@value' }).Text('@text')</element>
+  <element name="FilterLink">this.LinkTo(new FubuMVC.Diagnostics.Features.Routes.RouteRequestModel { Column = '@column', Value = '@value' }).Text('@text')</element>
   <element name="BehaviorDetails">#this.PartialFor(@details);</element>
   <element name="console">
     <div class="console">

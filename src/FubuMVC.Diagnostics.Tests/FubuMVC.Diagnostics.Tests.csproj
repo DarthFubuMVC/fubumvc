@@ -76,15 +76,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chains\when_viewing_a_chain.cs" />
     <Compile Include="Configuration\ActionCallExtensionsTester.cs" />
     <Compile Include="Dashboard\DashboardHandlerTester.cs" />
     <Compile Include="DiagnosticsCallWithAttribute.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
-    <Compile Include="Endpoints\Chains\when_viewing_an_endpoint.cs" />
-    <Compile Include="Endpoints\when_filtering_requests.cs" />
-    <Compile Include="Endpoints\when_filtering_routes.cs" />
+    <Compile Include="Requests\when_filtering_requests.cs" />
+    <Compile Include="Routes\when_filtering_routes.cs" />
     <Compile Include="Infrastructure\AuthorizationDescriptorTester.cs" />
     <Compile Include="Infrastructure\GridServiceTester.cs" />
     <Compile Include="Infrastructure\RowComparerTester.cs" />
@@ -117,6 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Endpoints\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

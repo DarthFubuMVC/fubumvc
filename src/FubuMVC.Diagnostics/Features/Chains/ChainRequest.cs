@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Diagnostics.Models
+namespace FubuMVC.Diagnostics.Features.Chains
 {
 	public class ChainRequest
 	{

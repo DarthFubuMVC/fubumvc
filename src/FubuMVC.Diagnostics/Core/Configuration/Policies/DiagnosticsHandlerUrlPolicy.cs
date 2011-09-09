@@ -25,7 +25,7 @@ namespace FubuMVC.Diagnostics.Core.Configuration.Policies
 
         protected override void visit(IRouteDefinition routeDefinition)
         {
-            routeDefinition.Prepend(DiagnosticsUrls.ROOT);
+            routeDefinition.Append(DiagnosticsUrls.ROOT);
         }
     }
 }

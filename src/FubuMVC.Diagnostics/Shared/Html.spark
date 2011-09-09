@@ -1,6 +1,7 @@
-﻿<use master="Application" />
+﻿
+<use master="Application" />
 <use namespace="FubuMVC.Core.Registration" />
-<use namespace="FubuMVC.Diagnostics.Models.Html" />
+<use namespace="FubuMVC.Diagnostics.Features.Html" />
 <content:head>
   <Stylesheet href="html/selector.css" />
   <Script src="html/selector.js" />
@@ -12,7 +13,7 @@
         <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top" role="tab" aria-expanded="true" tabindex="0">
           <a href="javascript:void(0);">Select a View Model:</a>
         </h3>
-        <form action="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Models.Html.HtmlConventionsPreviewInputModel())}" method="post">
+        <form action="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Features.Html.HtmlConventionsPreviewInputModel())}" method="post">
         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" style="padding-top: 11px; padding-bottom: 11px; display: block; overflow-x: auto; overflow-y: auto; " role="tabpanel">
           <input type="text" id="filter-value" tabindex="1" name="OutputModel" data-bind="value: filterValue" class="{ url: '${this.Urls.UrlFor(new AutocompleteRequestModel<BehaviorGraph>())}' }" />
             <button tabindex="2" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" data-bind="click: addFilter" type="submit">

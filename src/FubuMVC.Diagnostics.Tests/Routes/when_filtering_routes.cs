@@ -3,12 +3,11 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Features.Routes.Filter;
 using FubuMVC.Diagnostics.Models.Grids;
-using FubuMVC.Tests;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Endpoints
+namespace FubuMVC.Diagnostics.Tests.Routes
 {
     [TestFixture]
     public class when_filtering_routes : InteractionContext<PostHandler>

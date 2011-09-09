@@ -25,8 +25,9 @@ namespace FubuMVC.Diagnostics.Navigation
         {
             return _actionCall
                 .Value
-                .HandlerType
-                .Name;
+                .InputType()
+                .Name
+                .Replace("RequestModel", string.Empty);
         }
 
         public virtual string Url()

@@ -38,7 +38,9 @@ namespace FubuMVC.Core.Registration.Conventions
         {
             var routeDefinition = call.ToRouteDefinition();
             var strippedNamespace = stripNamespace(call);
-
+            
+            visit(routeDefinition);
+            
             if (strippedNamespace != call.HandlerType.Namespace)
             {
                 if (!strippedNamespace.Contains("."))
@@ -79,7 +81,6 @@ namespace FubuMVC.Core.Registration.Conventions
                 routeDefinition.ConstrainToHttpMethods(httpMethod.ToUpper());
             }
 
-            visit(routeDefinition);
             return routeDefinition;
         }
 

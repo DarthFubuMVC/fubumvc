@@ -4,7 +4,6 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Infrastructure;
-using FubuMVC.Diagnostics.Models;
 
 namespace FubuMVC.Diagnostics.Features.Chains.View
 {

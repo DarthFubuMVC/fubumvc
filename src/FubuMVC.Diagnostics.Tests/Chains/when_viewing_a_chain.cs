@@ -1,16 +1,15 @@
 using System;
 using FubuMVC.Core.Registration;
-using FubuMVC.Diagnostics.Core;
+using FubuMVC.Diagnostics.Features.Chains;
 using FubuMVC.Diagnostics.Features.Chains.View;
 using FubuMVC.Diagnostics.Features.Dashboard;
-using FubuMVC.Diagnostics.Models;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Diagnostics.Tests.Endpoints.Chains
+namespace FubuMVC.Diagnostics.Tests.Chains
 {
 	[TestFixture]
-	public class when_viewing_an_endpoint : InteractionContext<get_Id_handler>
+	public class when_viewing_a_chain : InteractionContext<get_Id_handler>
 	{
 		private BehaviorGraph _graph;
 		protected override void beforeEach()

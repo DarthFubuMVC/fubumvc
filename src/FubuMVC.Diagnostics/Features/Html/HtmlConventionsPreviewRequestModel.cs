@@ -1,11 +1,9 @@
 using System;
-using FubuMVC.Core;
 
 namespace FubuMVC.Diagnostics.Features.Html
 {
     public class HtmlConventionsPreviewRequestModel
     {
-        [RouteInput]
         public string OutputModel { get; set; }
     }
 

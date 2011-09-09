@@ -13,12 +13,12 @@ using Microsoft.Practices.ServiceLocation;
 namespace FubuMVC.Diagnostics.Features.Html.Preview
 {
     // THAR BE DRAGONS! This is mostly ripped from the baseline diagnostics and needs some SERIOUS testing
-    public class GetHandler
+    public class get_OutputModel_handler
     {
         private readonly BehaviorGraph _behaviorGraph;
         private readonly IServiceLocator _services;
 
-        public GetHandler(BehaviorGraph behaviorGraph, IServiceLocator services)
+        public get_OutputModel_handler(BehaviorGraph behaviorGraph, IServiceLocator services)
         {
             _behaviorGraph = behaviorGraph;
             _services = services;
