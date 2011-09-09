@@ -11,5 +11,5 @@ FubuMVC Documentation
    :maxdepth: 2
 
    topics/index
-   More FubuMVC <ref/index>
-
+   ref/index
+   internals/index
