@@ -223,7 +223,7 @@
                 colNames: colNames(),
                 colModel: columnModel,
                 jsonReader: $.fubu.jsonReader,
-                rowNum: 20,
+                rowNum: 50,
                 autowidth: true,
                 height: '100%',
                 mtype: 'POST',

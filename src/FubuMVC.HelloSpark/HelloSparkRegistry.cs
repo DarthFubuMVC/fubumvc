@@ -18,7 +18,7 @@ namespace FubuMVC.HelloSpark
             Actions
                 .IncludeClassesSuffixedWithController();
 
-            ApplyHandlerConventions();
+            //ApplyHandlerConventions();
 
             Routes
                 .HomeIs<AirController>(c => c.TakeABreath())
