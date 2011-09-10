@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -10,10 +10,10 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Routes.Authorization
+namespace FubuMVC.Diagnostics.Tests.Features.Routes.Authorization
 {
     [TestFixture]
-    public class when_viewing_authorized_routes : InteractionContext<Features.Routes.Authorization.GetHandler>
+    public class when_viewing_authorized_routes : InteractionContext<GetHandler>
     {
         private BehaviorGraph _graph;
 

@@ -4,7 +4,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Routes
+namespace FubuMVC.Diagnostics.Tests.Features.Routes
 {
     [TestFixture]
     public class get_Column_Value_handler_Tester : InteractionContext<get_Column_Value_handler>

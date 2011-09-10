@@ -1,11 +1,10 @@
-﻿using FubuMVC.Diagnostics.Features.Dashboard;
-using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Features.Dashboard;
 using FubuMVC.Diagnostics.Notifications;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Dashboard
+namespace FubuMVC.Diagnostics.Tests.Features.Dashboard
 {
     [TestFixture]
     public class DashboardHandlerTester : InteractionContext<GetHandler>

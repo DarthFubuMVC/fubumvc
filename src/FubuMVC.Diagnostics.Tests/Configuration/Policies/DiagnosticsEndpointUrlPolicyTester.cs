@@ -53,7 +53,7 @@ namespace FubuMVC.Diagnostics.Tests.Configuration.Policies
         [Test]
         public void should_strip_namespace_and_make_relative_to_diagnostic_root()
         {
-            var endpointCall = ActionCall.For<Features.Routes.GetHandler>(e => e.Execute(new DefaultRouteRequestModel()));
+            var endpointCall = ActionCall.For<Diagnostics.Features.Routes.GetHandler>(e => e.Execute(new DefaultRouteRequestModel()));
             _policy
                 .Build(endpointCall)
                 .Pattern

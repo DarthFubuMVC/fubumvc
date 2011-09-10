@@ -8,6 +8,8 @@ using FubuMVC.Diagnostics.Core.Grids;
 using FubuMVC.Diagnostics.Core.Grids.Columns;
 using FubuMVC.Diagnostics.Core.Infrastructure;
 using FubuMVC.Diagnostics.Features;
+using FubuMVC.Diagnostics.Features.Html.Preview;
+using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
 using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Models;
 using FubuMVC.Diagnostics.Navigation;
@@ -65,6 +67,12 @@ namespace FubuMVC.Diagnostics
                                  <IGridRowProvider<BehaviorGraph, BehaviorChain>, BehaviorGraphRowProvider>();
                              x.SetServiceIfNone
                                  <IGridRowProvider<RequestCacheModel, RecordedRequestModel>, RequestCacheRowProvider>();
+                             x.SetServiceIfNone<IHtmlConventionsPreviewContextFactory, HtmlConventionsPreviewContextFactory>();
+                             x.SetServiceIfNone<IPreviewModelActivator, PreviewModelActivator>();
+                             x.SetServiceIfNone<IPreviewModelTypeResolver, PreviewModelTypeResolver>();
+                             x.SetServiceIfNone<IPropertySourceGenerator, PropertySourceGenerator>();
+                             x.SetServiceIfNone<IModelPopulator, ModelPopulator>();
+                             x.SetServiceIfNone<ITagGeneratorFactory, TagGeneratorFactory>();
 
                              x.Scan(scan =>
                                         {
@@ -75,7 +83,8 @@ namespace FubuMVC.Diagnostics
 
                                             scan
                                                 .AddAllTypesOf<INavigationItemAction>()
-                                                .AddAllTypesOf<INotificationPolicy>();
+                                                .AddAllTypesOf<INotificationPolicy>()
+                                                .AddAllTypesOf<IPreviewModelDecorator>();
 
                                             scan
                                                 .ConnectImplementationsToTypesClosing(typeof (IPartialDecorator<>))

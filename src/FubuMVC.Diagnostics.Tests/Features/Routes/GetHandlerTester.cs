@@ -1,10 +1,10 @@
-﻿using FubuMVC.Diagnostics.Features.Routes;
+using FubuMVC.Diagnostics.Features.Routes;
 using FubuMVC.Diagnostics.Models;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Routes
+namespace FubuMVC.Diagnostics.Tests.Features.Routes
 {
     [TestFixture]
     public class GetHandlerTester : InteractionContext<GetHandler>

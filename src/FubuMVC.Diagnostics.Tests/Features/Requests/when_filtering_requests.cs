@@ -7,7 +7,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Requests
+namespace FubuMVC.Diagnostics.Tests.Features.Requests
 {
 	[TestFixture]
 	public class when_filtering_requests : InteractionContext<PostHandler>

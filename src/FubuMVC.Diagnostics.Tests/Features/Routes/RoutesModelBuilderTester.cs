@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -10,7 +10,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Routes
+namespace FubuMVC.Diagnostics.Tests.Features.Routes
 {
     [TestFixture]
     public class RoutesModelBuilderTester : InteractionContext<RoutesModelBuilder>

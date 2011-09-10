@@ -7,7 +7,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Diagnostics.Tests.Routes
+namespace FubuMVC.Diagnostics.Tests.Features.Routes
 {
     [TestFixture]
     public class when_filtering_routes : InteractionContext<PostHandler>
