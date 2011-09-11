@@ -14,7 +14,7 @@ namespace FubuMVC.Diagnostics.Partials
 
         public NavigationMenu Enrich(NavigationMenu target)
         {
-            target.Items = _builder.MenuItems().OrderBy(i => i.Url);
+            target.Items = _builder.MenuItems();
             return target;
         }
     }

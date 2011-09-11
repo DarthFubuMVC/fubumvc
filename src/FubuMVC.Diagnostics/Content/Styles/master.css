@@ -17,6 +17,18 @@ h1, h2, h3, h4
 h2
 {
     font-size:2.2em;
+    font-weight: bold;
+}
+
+h3.subheader, h4.subheader
+{
+    margin-top: -20px;
+    font-style: italic;
+    padding-left: 10px;
+}
+
+h4.subheader {
+    margin-top: -15px;
 }
 
 #Header
@@ -195,4 +207,44 @@ p
 .ui-state-notice, .ui-widget-content .ui-state-notice
 {
     background: #FFEE7D;
+}
+
+.sidebar
+{
+    float:left;
+    margin-left:0;
+    width:350px;
+}
+
+.sidebar h3.underline {
+    border-bottom: 1px solid #AAA;
+    padding-bottom: .25em;
+}
+
+.sidebar .notification
+{
+    padding: 10px;
+    background: #EAF2F5;
+}
+
+.sidebar .notification p {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar .notification p a {
+    font-weight: bold;
+}
+
+.content
+{
+    float:right;
+    margin-top:-15px;
+    margin-left: -250px;
+    width:75%;
+}
+
+.grid pre
+{
+    width: auto;
 }

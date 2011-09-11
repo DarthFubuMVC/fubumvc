@@ -4,18 +4,3 @@
     padding: .4em 1em;
     width:200px;
 }
-
-.sidebar
-{
-    float:left;
-    margin-left:0;
-    width:300px;
-}
-
-.content
-{
-    float:right;
-    margin-top:-15px;
-    margin-left: -200px;
-    width:75%;
-}

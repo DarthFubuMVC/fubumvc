@@ -21,6 +21,11 @@ namespace FubuMVC.Diagnostics.Navigation
 
         protected abstract object inputModel();
 
+        public virtual int Rank
+        {
+            get { return 1; }
+        }
+
         public virtual string Text()
         {
             return _actionCall

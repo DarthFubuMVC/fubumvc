@@ -16,7 +16,15 @@ namespace FubuMVC.Diagnostics.Core.Grids.Columns.Routes
 
 		public override string ValueFor(BehaviorChain chain)
 		{
-            if (chain.Route == null) return " -";
+            if (chain.Route == null || chain.Route.Pattern == null)
+            {
+                return "N/A";
+            }
+
+            if(chain.IsPartialOnly)
+            {
+                return "(partial)";
+            }
 
             var pattern = chain.Route.Pattern;
             if (pattern == string.Empty)

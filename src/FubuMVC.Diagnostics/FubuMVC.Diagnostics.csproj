@@ -96,7 +96,6 @@
     <None Include="Features\Dashboard\Dashboard.spark" />
     <None Include="Features\Packaging\Packaging.spark" />
     <None Include="Features\Requests\Requests.spark" />
-    <None Include="Features\Routes\Authorization\Authorization.spark" />
     <None Include="Features\Routes\Routes.spark">
       <SubType>Designer</SubType>
     </None>
@@ -174,7 +173,6 @@
     <None Include="Shared\SetValueReport.spark" />
     <None Include="Shared\OutputReport.spark" />
     <None Include="Shared\ModelBindingReport.spark" />
-    <None Include="Shared\Notifications.spark" />
     <None Include="Shared\NavigationMenu.spark">
       <SubType>Designer</SubType>
     </None>
@@ -293,11 +291,6 @@
     <Compile Include="Features\Requests\RequestDetailsModel.cs" />
     <Compile Include="Features\Requests\RequestExplorerModel.cs" />
     <Compile Include="Features\Requests\RequestExplorerRequestModel.cs" />
-    <Compile Include="Features\Routes\Authorization\GetHandler.cs" />
-    <Compile Include="Features\Routes\Authorization\AuthorizationModel.cs" />
-    <Compile Include="Features\Routes\Authorization\AuthorizationRequestModel.cs" />
-    <Compile Include="Features\Routes\Authorization\AuthorizationRuleModel.cs" />
-    <Compile Include="Features\Routes\Authorization\AuthorizedRouteModel.cs" />
     <Compile Include="Features\Routes\Autocomplete\PostHandler.cs" />
     <Compile Include="Features\Routes\Filter\PostHandler.cs" />
     <Compile Include="Features\Routes\GetHandler.cs" />
@@ -334,7 +327,6 @@
     <Compile Include="Navigation\NavigationMenuItem.cs" />
     <Compile Include="Navigation\PackageDiagnosticsAction.cs" />
     <Compile Include="Navigation\RequestExplorerAction.cs" />
-    <Compile Include="Navigation\RouteAuthorizationAction.cs" />
     <Compile Include="Navigation\RouteExplorerAction.cs" />
     <Compile Include="Notifications\FilterLink.cs" />
     <Compile Include="Notifications\INotificationModel.cs" />

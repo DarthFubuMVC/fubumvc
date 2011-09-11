@@ -231,6 +231,9 @@
                 sortname: 'Route',
                 caption: 'Routes',
                 pager: '#pager',
+                onCellSelect: function (rowId, iRow, content, e) {
+                    window.location = rowId;
+                },
                 ondblClickRow: function (rowId, iRow, iCol, e) {
                     window.location = rowId;
                 },

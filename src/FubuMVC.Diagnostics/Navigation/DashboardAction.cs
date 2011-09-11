@@ -11,6 +11,11 @@ namespace FubuMVC.Diagnostics.Navigation
         {
         }
 
+        public override int Rank
+        {
+            get { return int.MinValue; }
+        }
+
         protected override object inputModel()
         {
             return new DashboardRequestModel();

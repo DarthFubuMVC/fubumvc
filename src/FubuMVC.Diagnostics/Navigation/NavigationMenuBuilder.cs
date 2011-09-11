@@ -18,21 +18,24 @@ namespace FubuMVC.Diagnostics.Navigation
 
         public IEnumerable<NavigationMenuItem> MenuItems()
         {
-            return _actions.Select(a =>
-                                       {
-                                           var url = a.Url().ToAbsoluteUrl();
-										   if(url.EndsWith("/"))
-										   {
-										   		url = url.TrimEnd('/');
-										   }
+            return _actions
+                .OrderBy(a => a.Rank)
+                .ThenBy(a => a.Text())
+                .Select(a =>
+                            {
+                                var url = a.Url().ToAbsoluteUrl();
+                                if (url.EndsWith("/"))
+                                {
+                                    url = url.TrimEnd('/');
+                                }
 
-                                           return new NavigationMenuItem
-                                                          {
-                                                              Text = a.Text(),
-                                                              Url = url,
-                                                              IsActive = url.Equals(_request.CurrentUrl())
-                                                          };
-                                       });
+                                return new NavigationMenuItem
+                                           {
+                                               Text = a.Text(),
+                                               Url = url,
+                                               IsActive = url.Equals(_request.CurrentUrl())
+                                           };
+                            });
         }
     }
 }

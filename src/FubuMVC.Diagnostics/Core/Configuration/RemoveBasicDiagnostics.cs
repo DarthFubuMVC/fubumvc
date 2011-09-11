@@ -27,6 +27,7 @@ namespace FubuMVC.Diagnostics.Core.Configuration
                            })
                 .Each(chain =>
                           {
+                              chain.IsPartialOnly = true;
                               chain.Route = RouteDefinition.Empty();
                           });
         }

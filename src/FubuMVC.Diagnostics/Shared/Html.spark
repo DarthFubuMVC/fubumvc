@@ -1,5 +1,4 @@
-﻿
-<use master="Application" />
+﻿<use master="Application" />
 <use namespace="FubuMVC.Core.Registration" />
 <use namespace="FubuMVC.Diagnostics.Features.Html" />
 <content:head>
