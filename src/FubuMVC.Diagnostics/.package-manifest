@@ -4,12 +4,11 @@
   <Name>FubuMVC.Diagnostics</Name>
   <assembly>FubuMVC.Diagnostics</assembly>
   <assembly>FubuMVC.Spark</assembly>
-  <assembly>Newtonsoft.Json</assembly>
   <assembly>Spark</assembly>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>
-  <ContentFileSet Include="Shared/*.spark;Shared/*.xml;Content/*.*;*.config;Features/*.spark">
+  <ContentFileSet Include="Shared/*.spark;Shared/*.xml;Content/*.*;*.config;Features/*.spark;Notifications/*.spark;">
     <DeepSearch>true</DeepSearch>
   </ContentFileSet>
 </package>

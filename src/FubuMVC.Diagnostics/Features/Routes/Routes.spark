@@ -8,6 +8,7 @@
 </content:head>
 <content:main>
 	<h2 id="route-heading">Route Explorer</h2>
+  <p class="hint">(Use ctrl+f to apply filters)</p>
   <div id="filters" class="filter-container" data-bind="visible: showFilters()">
     <if condition="Model.Filter != null">
       <script type="application/json">

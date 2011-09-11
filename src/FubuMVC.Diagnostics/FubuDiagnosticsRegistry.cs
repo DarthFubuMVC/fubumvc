@@ -26,9 +26,9 @@ namespace FubuMVC.Diagnostics
             setupDiagnosticServices();
 
             Applies
-                .ToThisAssembly()
-                .ToAllPackageAssemblies()
-                .ToAssemblyContainingType<BehaviorStart>();
+                .ToAssemblyContainingType<FubuDiagnosticsRegistry>()
+                .ToAssemblyContainingType<BehaviorStart>()
+                .ToAllPackageAssemblies();
 
             ApplyHandlerConventions(markers => new DiagnosticsHandlerUrlPolicy(markers), typeof(DiagnosticsFeatures));
 
@@ -41,7 +41,7 @@ namespace FubuMVC.Diagnostics
             Views
                 .TryToAttachWithDefaultConventions()
                 .RegisterActionLessViews(token => token.ViewModelType.IsDiagnosticsReport())
-                .RegisterActionLessViews(token => typeof(IPartialModel).IsAssignableFrom(token.ViewModelType));
+                .RegisterActionLessViews(token => typeof (IPartialModel).IsAssignableFrom(token.ViewModelType));
 
             this.UseSpark();
 

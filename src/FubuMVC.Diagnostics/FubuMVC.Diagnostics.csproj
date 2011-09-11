@@ -187,6 +187,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Core\AdvancedDiagnosticsFubuExtension.cs" />
     <Compile Include="Core\Configuration\ActionCallExtensions.cs" />
     <Compile Include="Core\Configuration\PartialActionSource.cs" />
@@ -337,7 +340,6 @@
     <Compile Include="Partials\IPartialDecorator.cs" />
     <Compile Include="Partials\NavigationMenuDecorator.cs" />
     <Compile Include="Partials\PartialAction.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

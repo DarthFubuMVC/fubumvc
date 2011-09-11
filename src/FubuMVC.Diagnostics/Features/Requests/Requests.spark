@@ -8,6 +8,7 @@
 </content:head>
 <content:main>
   <h2 id="explorer-heading">Request Explorer</h2>
+  <p class="hint">(Use ctrl+f to apply filters)</p>
   <div class="ui-widget" id="NoData" style="display:none;">
     <div class="ui-state-notice ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
       <p>

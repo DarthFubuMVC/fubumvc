@@ -19,14 +19,4 @@ namespace FubuMVC.Diagnostics.Core.Configuration
 			return new ActionCall(actionType, actionType.GetExecuteMethod());
 		}
     }
-
-    //public class NotificationActionSource : IActionSource
-    //{
-    //    public IEnumerable<ActionCall> FindActions(TypePool types)
-    //    {
-    //        // TODO -- This should come from the container somehow
-    //        var actionType = typeof(NotificationAction<>).MakeGenericType(typeof(NoOutputsNotification));
-    //        yield return new ActionCall(actionType, actionType.GetExecuteMethod());
-    //    }
-    //}
 }
