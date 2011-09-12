@@ -31,12 +31,12 @@ help the community.
 
 * Report bugs and suggest features on our `issue tracker`
 
-* Submit `pull requests <http://fubu-project.org/contributing>` for new and/or
-  fixed behavior.
+* Submit `pull requests`_ for new and/or fixed behavior.
 
 * Join the `mailing list`_ and share ideas on how to improve FubuMVC. We love
   getting feedback and discussing ways we can continue to improve FubuMVC.
 
+.. _pull requests: http://fubu-project.org/contribute
 .. _#fubumvc IRC channel: irc://irc.freenode.net/fubumvc
 .. _mailing list: https://groups.google.com/group/fubumvc-devel
 .. _issue tracker: https://github.com/DarthFubuMVC/fubumvc/issues
