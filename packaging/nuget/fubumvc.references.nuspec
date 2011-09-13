@@ -21,17 +21,17 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\FubuMVC.Core.*" target="lib" />	
-    <file src="..\..\build\FubuMVC.StructureMap.*" target="lib" />
+    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib" />	
+    <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib" />
 
     <file src="..\..\src\FubuMVC.Core\**\*.cs" target="src\FubuMVC.Core" />
     <file src="..\..\src\FubuMVC.StructureMap\**\*.cs" target="src\FubuMVC.StructureMap" />
 
-    <file src="..\..\build\fubu.exe" target="tools" />
-    <file src="..\..\build\FubuCore.*" target="tools" />
-    <file src="..\..\build\FubuMVC.Core.*" target="tools" />
-    <file src="..\..\build\StructureMap.dll" target="tools" />	
-    <file src="..\..\build\Bottles*.*" target="tools" />	
+    <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
+    <file src="..\..\src\fubu\bin\release\FubuCore.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\FubuMVC.Core.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\StructureMap.dll" target="tools" />	
+    <file src="..\..\src\fubu\bin\release\Bottles*.*" target="tools" />	
     <file src="..\..\build\fubumvc-deployers.zip" target="tools" />
   </files>
 </package>
