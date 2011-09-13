@@ -101,7 +101,14 @@ namespace FubuMVC.Tests.Registration
             {
                 return string.Empty;
             }
+
+            public string ThisIsAnotherAction(MyRequestModel request)
+            {
+                return string.Empty;
+            }
         }
+
+        public class MyRequestModel {}
 
         [Test]
         public void replace_service_by_specifying_a_value()
@@ -129,6 +136,42 @@ namespace FubuMVC.Tests.Registration
             var graph = new BehaviorGraph(null);
             graph.Services.AddService<IRequestData, RequestData>();
             graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RequestData));
+        }
+
+        [Test]
+        public void should_remove_chain()
+        {
+            var graph = new FubuRegistry(x =>
+                                             {
+                                                 x.Applies.ToThisAssembly();
+                                                 x.Actions.IncludeClassesSuffixedWithController();
+
+                                                 x.Routes.HomeIs<MyHomeController>(c => c.ThisIsHome());
+                                             }).BuildGraph();
+            
+            var chain = graph.FindHomeChain();
+            graph.RemoveChain(chain);
+
+            graph
+                .Behaviors
+                .ShouldNotContain(chain);
+        }
+
+        [Test]
+        public void should_remove_chain_from_caches()
+        {
+            var graph = new FubuRegistry(x =>
+            {
+                x.Applies.ToThisAssembly();
+                x.Actions.IncludeClassesSuffixedWithController();
+            }).BuildGraph();
+
+            var chain = graph.ChainsFor(typeof (MyRequestModel)).First();
+            graph.RemoveChain(chain);
+
+            graph
+                .ChainsFor(typeof(MyRequestModel))
+                .ShouldNotContain(chain);
         }
     }
 

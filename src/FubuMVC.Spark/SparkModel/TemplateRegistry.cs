@@ -49,6 +49,7 @@ namespace FubuMVC.Spark.SparkModel
         IEnumerable<ITemplate> BindingsForView(string viewPath);
         IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories);
         IEnumerable<ITemplate> AllTemplates();
+        IEnumerable<ITemplate> ByOrigin(string origin);
         IEnumerable<ITemplate> FromHost();
     }
 }

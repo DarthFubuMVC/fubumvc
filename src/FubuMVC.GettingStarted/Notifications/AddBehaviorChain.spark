@@ -1,0 +1,12 @@
+﻿<use master="" />
+<viewdata model="FubuMVC.GettingStarted.Notifications.AddBehaviorChainNotification" />
+<content:main>
+  <div class="notification">
+    <p>
+      <a href="#">Testing...</a>
+    </p>
+    <p class="body">
+      It would be cool if this showed up.
+    </p>
+  </div>
+</content:main>

@@ -279,6 +279,13 @@ namespace FubuMVC.Core.Registration
             _behaviors.Add(chain);
         }
 
+        public void RemoveChain(BehaviorChain chain)
+        {
+            _behaviors.Remove(chain);
+            _chainsForType.ClearAll();
+            _chainsForTypeAndCategory.ClearAll();
+        }
+
         /// <summary>
         ///   Adds a BehaviorChain for the given url pattern and action type.
         ///   Specify the "arguments" parameters if actionType is an open

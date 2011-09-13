@@ -32,7 +32,7 @@ namespace FubuMVC.Diagnostics.Navigation
                                 return new NavigationMenuItem
                                            {
                                                Text = a.Text(),
-                                               Url = url,
+                                               Url = a.Url(),
                                                IsActive = url.Equals(_request.CurrentUrl())
                                            };
                             });

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Role>module</Role>
+  <Name>FubuMVC.Alpha.GettingStarted</Name>
+  <assembly>FubuMVC.GettingStarted</assembly>
+  <DataFileSet Include="*.*">
+    <DeepSearch>true</DeepSearch>
+  </DataFileSet>
+  <ContentFileSet Include="WebContent/Content/*.*;*.config;Intro/*.spark;Notifications/*.spark;">
+    <DeepSearch>true</DeepSearch>
+  </ContentFileSet>
+</package>
