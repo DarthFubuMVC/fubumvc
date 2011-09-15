@@ -27,7 +27,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
 desc "Target used for the CI server"
-task :ci => [:default,:package,"nuget:build"]
+task :ci => [:update_all_depencencies,:default,:history, :publish]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -72,7 +72,7 @@ end
 
 
 desc "Compiles the app"
-task :compile => [:clean, :version] do
+task :compile => [:restore_if_missing, :clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
   #AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
 
