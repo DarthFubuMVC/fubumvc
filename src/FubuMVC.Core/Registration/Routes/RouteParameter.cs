@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Registration.Routes
             _accessor = accessor;
             accessor.ForAttribute<RouteInputAttribute>(x => DefaultValue = x.DefaultValue);
 
-            _regex = new Regex(@"{\*?" + Name + @"}", RegexOptions.Compiled);
+            _regex = new Regex(@"{\*?" + Name + @"(?:\:.*?)?}", RegexOptions.Compiled);
         }
 
         public string Name { get { return _accessor.Name; } }
