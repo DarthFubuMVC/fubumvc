@@ -3,32 +3,35 @@ using System.Linq;
 using FubuCore;
 using FubuLocalization;
 using FubuMVC.Core.Projections;
+using FubuMVC.Core.Rest;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Tests.Rest
 {
     [TestFixture]
     public class LinkSourceTester
     {
         private Site theSubject;
-        private SimpleProjectionTarget theTarget;
+        private SimpleValueSource<Site> theTarget;
+        private StubUrlRegistry theUrls;
 
         [SetUp]
         public void SetUp()
         {
             theSubject = new Site();
-            theTarget = new SimpleProjectionTarget(theSubject, new StubUrlRegistry());
+            theTarget = new SimpleValueSource<Site>(theSubject);
+            theUrls = new StubUrlRegistry();
         }
 
         [Test]
         public void create_a_link_if_the_filter_passes()
         {
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfSubjectMatches(s => true);
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single()
                 .ShouldNotBeNull();
         }
@@ -36,10 +39,10 @@ namespace FubuMVC.Tests.Projections
         [Test]
         public void do_not_create_a_link_if_the_filter_fails()
         {
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfSubjectMatches(s => false);
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Any().ShouldBeFalse();
         }
 
@@ -48,10 +51,10 @@ namespace FubuMVC.Tests.Projections
         {
             theSubject.IsObsolete = true;
 
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfSubjectMatches(s => !s.IsObsolete);
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Any().ShouldBeFalse();
         }
 
@@ -60,10 +63,10 @@ namespace FubuMVC.Tests.Projections
         {
             theSubject.Name = "Jeremy";
 
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfEquals(x => x.Name, "Chad");
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Any().ShouldBeFalse();
         }
 
@@ -73,10 +76,10 @@ namespace FubuMVC.Tests.Projections
         {
             theSubject.Name = "Jeremy";
 
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfEquals(x => x.Name, "Jeremy");
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Any().ShouldBeTrue();
         }
 
@@ -85,10 +88,10 @@ namespace FubuMVC.Tests.Projections
         {
             theSubject.Name = "Jeremy";
 
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfNotEquals(x => x.Name, "Chad");
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Any().ShouldBeTrue();
         }
 
@@ -98,19 +101,19 @@ namespace FubuMVC.Tests.Projections
         {
             theSubject.Name = "Jeremy";
 
-            var link = new LinkSource<Site>(t => "http://site.com")
+            var link = new LinkSource<Site>((t, urls) => "http://site.com")
                 .IfNotEquals(x => x.Name, "Jeremy");
 
-            link.As<ILinkSource>().LinksFor(theTarget)
+            link.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Any().ShouldBeFalse();
         }
 
         [Test]
         public void create_a_link_with_just_the_url_from_the_target()
         {
-            var source = new LinkSource<Site>(t => "http://site.com");
+            var source = new LinkSource<Site>((t, urls) => "http://site.com");
 
-            var link = source.As<ILinkSource>().LinksFor(theTarget)
+            var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
             link.Uri.ShouldEqual(new Uri("http://site.com"));
@@ -121,10 +124,10 @@ namespace FubuMVC.Tests.Projections
         [Test]
         public void create_a_link_with_just_the_url_from_the_target_with_a_relationship_type()
         {
-            var source = new LinkSource<Site>(t => "http://site.com")
+            var source = new LinkSource<Site>((t, urls) => "http://site.com")
                 .Rel("something");
 
-            var link = source.As<ILinkSource>().LinksFor(theTarget)
+            var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
             link.Uri.ShouldEqual(new Uri("http://site.com"));
@@ -138,11 +141,11 @@ namespace FubuMVC.Tests.Projections
         {
             var token = StringToken.FromKeyString("the title");
 
-            var source = new LinkSource<Site>(t => "http://site.com")
+            var source = new LinkSource<Site>((t, urls) => "http://site.com")
                 .Rel("something")
                 .Title(token);
 
-            var link = source.As<ILinkSource>().LinksFor(theTarget)
+            var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
             link.Uri.ShouldEqual(new Uri("http://site.com"));

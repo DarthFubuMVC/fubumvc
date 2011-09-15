@@ -31,5 +31,17 @@ namespace FubuMVC.Tests.Projections
 
             Debug.WriteLine(builder);
         }
+
+        [Test]
+        public void try_media_xml_with_namespace()
+        {
+            var doc = new XmlDocument();
+            var root = doc.CreateNode(XmlNodeType.Element, "root", "http://mynamespace.xsd");
+            doc.AppendChild(root);
+
+            root.AddElement("something").InnerText = "else";
+
+            Debug.WriteLine(doc.DocumentElement.OuterXml);
+        }
     }
 }

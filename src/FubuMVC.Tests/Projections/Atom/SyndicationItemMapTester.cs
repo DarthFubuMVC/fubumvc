@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Projections.Atom
                 Title2 = "second"
             };
 
-            var target = new SimpleProjectionTarget(subject);
+            var target = new SimpleValueSource<ItemSubject>(subject);
 
             var map1 = new SyndicationItemMap<ItemSubject>();
             map1.Title(x => x.Title);
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Projections.Atom
                 Title = null
             };
 
-            var target = new SimpleProjectionTarget(subject);
+            var target = new SimpleValueSource<ItemSubject>(subject);
 
             var map1 = new SyndicationItemMap<ItemSubject>();
             map1.Title(x => x.Title);
@@ -62,7 +62,7 @@ namespace FubuMVC.Tests.Projections.Atom
                 Id = "001"
             };
 
-            var target = new SimpleProjectionTarget(subject);
+            var target = new SimpleValueSource<ItemSubject>(subject);
 
             var map = new SyndicationItemMap<ItemSubject>(x => x.Id(o => o.Id));
 
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Projections.Atom
                 Number = 333
             };
 
-            var target = new SimpleProjectionTarget(subject);
+            var target = new SimpleValueSource<ItemSubject>(subject);
 
             var map = new SyndicationItemMap<ItemSubject>(x => x.Id(o => o.Number));
 
@@ -99,7 +99,7 @@ namespace FubuMVC.Tests.Projections.Atom
                 Updated = DateTime.Today.AddDays(-3)
             };
 
-            var target = new SimpleProjectionTarget(subject);
+            var target = new SimpleValueSource<ItemSubject>(subject);
 
             var map = new SyndicationItemMap<ItemSubject>(x => x.UpdatedByProperty(o => o.Updated));
 

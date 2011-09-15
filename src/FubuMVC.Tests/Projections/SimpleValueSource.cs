@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.Projections
 {
     [TestFixture]
-    public class SimpleProjectionTargetTester
+    public class SimpleValueSource
     {
         [Test]
         public void retrieve_value_by_accessor()
         {
-            var target = new SimpleProjectionTarget(new SimpleClass{
+            var target = new SimpleValueSource<SimpleClass>(new SimpleClass{
                 Age = 37,
                 Name = "Jeremy"
             });

@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.Projections
     {
         private Address anAddress;
         private XmlAttCentricMediaNode aNode;
-        private SimpleProjectionTarget aTarget;
+        private SimpleValueSource<Address> aTarget;
 
         [SetUp]
         public void SetUp()
@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Projections
                 ZipCode = "78703"
             };
 
-            aTarget = new SimpleProjectionTarget(anAddress);
+            aTarget = new SimpleValueSource<Address>(anAddress);
             aNode = XmlAttCentricMediaNode.ForRoot("root");
         }
 
@@ -37,7 +37,7 @@ namespace FubuMVC.Tests.Projections
             projection.Value(x => x.ZipCode);
 
             
-            projection.As<IValueProjection>().WriteValue(aTarget, aNode);
+            projection.As<IValueProjection<Address>>().WriteValue(aTarget, aNode);
 
             aNode.Element.GetAttribute("Line1").ShouldEqual(anAddress.Line1);
             aNode.Element.GetAttribute("City").ShouldEqual(anAddress.City);

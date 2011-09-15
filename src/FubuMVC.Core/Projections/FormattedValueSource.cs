@@ -1,17 +1,15 @@
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Projections
 {
-    // Hide IDisplayFormatter here?
-
-    public class FormattedProjectionTarget : IProjectionTarget
+    // TODO -- might want something besides IDisplayFormatter
+    public class FormattedValueSource<T> : IValueSource<T>
     {
         private readonly IDisplayFormatter _formatter;
-        private readonly IProjectionTarget _inner;
+        private readonly IValueSource<T> _inner;
 
-        public FormattedProjectionTarget(IDisplayFormatter formatter, IProjectionTarget inner)
+        public FormattedValueSource(IDisplayFormatter formatter, IValueSource<T> inner)
         {
             _formatter = formatter;
             _inner = inner;
@@ -23,12 +21,7 @@ namespace FubuMVC.Core.Projections
             return _formatter.GetDisplay(accessor, innerValue);
         }
 
-        public IUrlRegistry Urls
-        {
-            get { return _inner.Urls; }
-        }
-
-        public object Subject
+        public T Subject
         {
             get { return _inner.Subject; }
         }

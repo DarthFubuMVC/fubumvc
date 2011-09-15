@@ -8,7 +8,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Projections
 {
     [TestFixture]
-    public class when_retrieving_a_value_for_an_accessor : InteractionContext<FormattedProjectionTarget>
+    public class when_retrieving_a_value_for_an_accessor : InteractionContext<FormattedValueSource<SimpleClass>>
     {
         private string theInnerValue;
         private Accessor theAccessor;
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Projections
             theInnerValue = "something";
             theFormattedValue = "formatted";
 
-            MockFor<IProjectionTarget>().Stub(x => x.ValueFor(theAccessor)).Return(theInnerValue);
+            MockFor<IValueSource<SimpleClass>>().Stub(x => x.ValueFor(theAccessor)).Return(theInnerValue);
 
             // TODO -- think you'll want a custom service here
             MockFor<IDisplayFormatter>().Stub(x => x.GetDisplay(theAccessor, theInnerValue))
