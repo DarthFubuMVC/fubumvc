@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.UI.Security;
 
 namespace FubuMVC.Core.UI.Tags
@@ -33,5 +34,11 @@ namespace FubuMVC.Core.UI.Tags
         public TagFactoryExpression AfterPartial { get; private set; }
         public PartialTagFactoryExpression BeforeEachOfPartial { get; private set; }
         public PartialTagFactoryExpression AfterEachOfPartial { get; private set; }
+
+        public TagProfileExpression ConfigureProfile(Action<TagProfile> configure)
+        {
+            configure(_profile);
+            return this;
+        }
     }
 }
