@@ -27,7 +27,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
 desc "Target used for the CI server"
-task :ci => [:default,:package,"nuget:build"]
+task :ci => [:update_all_depencencies,:default,:history, :publish]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -72,20 +72,22 @@ end
 
 
 desc "Compiles the app"
-task :compile => [:clean, :version] do
+task :compile => [:restore_if_missing, :clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuMVC.sln', :clrversion => CLR_TOOLS_VERSION
-  AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
+  #AspNetCompilerRunner.compile :webPhysDir => "src/FubuMVC.HelloWorld", :webVirDir => "localhost/xyzzyplugh"
 
-  copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuMVC.GettingStarted/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
+  
+  
+  #copyOutputFiles "src/FubuMVC.StructureMap/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
+  #copyOutputFiles "src/FubuMVC.GettingStarted/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", props[:stage]
 
-  copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuMVC.WebForms/bin/#{COMPILE_TARGET}", "FubuMVC.WebForms.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuMVC.Spark/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
-  copyOutputFiles "src/FubuMVC.Deployers/bin/#{COMPILE_TARGET}", "*Deployers*.{dll,pdb}", props[:stage]
+  #copyOutputFiles "src/FubuLocalization/bin/#{COMPILE_TARGET}", "FubuLocalization.{dll,pdb}", props[:stage]
+  #copyOutputFiles "src/FubuMVC.WebForms/bin/#{COMPILE_TARGET}", "FubuMVC.WebForms.{dll,pdb}", props[:stage]
+  #copyOutputFiles "src/FubuMVC.Spark/bin/#{COMPILE_TARGET}", "*Spark*.{dll,pdb}", props[:stage]
+  #copyOutputFiles "src/FubuMVC.Deployers/bin/#{COMPILE_TARGET}", "*Deployers*.{dll,pdb}", props[:stage]
 
-  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
-  copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
+  #copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
+  #copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
 
   bottles("create-pak fubumvc-deployers build/fubumvc-deployers.zip -target #{COMPILE_TARGET}")
   
