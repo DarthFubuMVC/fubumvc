@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Projections
     public class ProjectionTester
     {
         private Address anAddress;
-        private XmlMediaNode aNode;
+        private XmlAttCentricMediaNode aNode;
         private SimpleProjectionTarget aTarget;
 
         [SetUp]
@@ -24,7 +24,7 @@ namespace FubuMVC.Tests.Projections
             };
 
             aTarget = new SimpleProjectionTarget(anAddress);
-            aNode = XmlMediaNode.ForRoot("root");
+            aNode = XmlAttCentricMediaNode.ForRoot("root");
         }
 
         [Test]

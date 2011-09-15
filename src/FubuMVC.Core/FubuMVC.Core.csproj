@@ -206,7 +206,8 @@
     <Compile Include="Projections\SimpleProjectionTarget.cs" />
     <Compile Include="Projections\UrlProjection.cs" />
     <Compile Include="Projections\Xml\XmlExtensions.cs" />
-    <Compile Include="Projections\Xml\XmlMediaNode.cs" />
+    <Compile Include="Projections\Xml\XmlAttCentricMediaNode.cs" />
+    <Compile Include="Projections\Xml\XmlNodeCentricMediaNode.cs" />
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\AssemblyScanner.cs" />
     <Compile Include="Registration\AssemblyScanningExtensions.cs" />
