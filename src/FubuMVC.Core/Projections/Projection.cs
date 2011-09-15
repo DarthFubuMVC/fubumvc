@@ -5,13 +5,13 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Projections
 {
-    public class Projection<T> : IValueProjection
+    public class Projection<T> : IValueProjection<T>
     {
-        private readonly IList<IValueProjection> _values = new List<IValueProjection>();
+        private readonly IList<IValueProjection<T>> _values = new List<IValueProjection<T>>();
 
-        public AccessorProjection Value(Expression<Func<T, object>> expression)
+        public AccessorProjection<T> Value(Expression<Func<T, object>> expression)
         {
-            var value = new AccessorProjection(expression.ToAccessor());
+            var value = new AccessorProjection<T>(expression.ToAccessor());
             _values.Add(value);
 
             return value;
@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Projections
 
 
 
-        void IValueProjection.WriteValue(IProjectionTarget target, IMediaNode node)
+        void IValueProjection<T>.WriteValue(IValueSource<T> target, IMediaNode node)
         {
             _values.Each(x => x.WriteValue(target, node));
         }
