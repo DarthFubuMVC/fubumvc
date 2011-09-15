@@ -78,20 +78,31 @@ namespace FubuMVC.Core.Continuations
             assertMatches(_type == ContinuationType.Transfer && callMatches(call));
         }
 
-        public void AssertWasTransferedTo(object destination)
+        public void AssertWasTransferedTo<T>(T destination)
         {
-            assertMatches(_type == ContinuationType.Transfer && _destination != null && _destination.Equals(destination));
+            AssertWasTransferedTo<T>(x => x.Equals(destination));
         }
 
-        public void AssertWasRedirectedTo(object destination)
+        public void AssertWasTransferedTo<T>(Func<T, bool> predicate)
         {
-            assertMatches(_type == ContinuationType.Redirect && _destination != null && _destination.Equals(destination));
+            assertMatches(_destination != null && typeof (T) == _destination.GetType());
+            assertMatches(_type == ContinuationType.Transfer && predicate((T) _destination));
+        }
+
+        public void AssertWasRedirectedTo<T>(T destination)
+        {
+            AssertWasRedirectedTo<T>(x => x.Equals(destination));
+        }
+
+        public void AssertWasRedirectedTo<T>(Func<T, bool> predicate)
+        {
+            assertMatches(_destination != null && typeof(T) == _destination.GetType());
+            assertMatches(_type == ContinuationType.Redirect && predicate((T)_destination));
         }
 
         public void AssertWasRedirectedTo<T>(Expression<Action<T>> expression)
         {
             ActionCall call = ActionCall.For(expression);
-
             assertMatches(_type == ContinuationType.Redirect && callMatches(call));
         }
 
