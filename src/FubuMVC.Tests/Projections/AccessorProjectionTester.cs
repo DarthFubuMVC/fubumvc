@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Projections
     {
         private AccessorProjection theAccessorProjection;
         private SimpleProjectionTarget theProjectionTarget;
-        private XmlMediaNode theMediaNode;
+        private XmlAttCentricMediaNode theMediaNode;
 
         [SetUp]
         public void SetUp()
@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Projections
                 Age = 37
             });
 
-            theMediaNode = XmlMediaNode.ForRoot("root");
+            theMediaNode = XmlAttCentricMediaNode.ForRoot("root");
         }
 
         [Test]

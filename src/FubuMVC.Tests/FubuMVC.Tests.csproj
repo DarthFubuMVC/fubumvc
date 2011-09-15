@@ -138,7 +138,8 @@
     <Compile Include="Projections\ProjectionTester.cs" />
     <Compile Include="Projections\SimpleProjectionTargetTester.cs" />
     <Compile Include="Projections\UrlProjectionTester.cs" />
-    <Compile Include="Projections\Xml\XmlMediaNodeTester.cs" />
+    <Compile Include="Projections\Xml\XmlAttCentricMediaNodeTester.cs" />
+    <Compile Include="Projections\Xml\XmlNodeCentricMediaNodeTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
