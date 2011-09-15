@@ -3,10 +3,10 @@
 <content:main>
   <div class="notification">
     <p>
-      <a href="#">Testing...</a>
+      <a href="http://readthedocs.org/docs/fubumvc/en/latest/topics/gettingstarted.html#say-hello">No Behavior Chains</a>
     </p>
     <p class="body">
-      It would be cool if this showed up.
+      You haven't added any actions yet. <a href="http://readthedocs.org/docs/fubumvc/en/latest/topics/gettingstarted.html#say-hello" target="_blank">Click here</a> for information on how to get started.
     </p>
   </div>
 </content:main>

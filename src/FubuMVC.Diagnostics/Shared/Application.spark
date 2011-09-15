@@ -17,7 +17,6 @@
 			</h2>
 		</div>
 		<Navigation />
-		<use content="navigation"/>
 		<div class="clear"></div>
 	</div>
 </div>

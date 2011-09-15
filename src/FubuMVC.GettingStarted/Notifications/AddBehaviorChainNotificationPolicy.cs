@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
@@ -18,7 +19,8 @@ namespace FubuMVC.GettingStarted.Notifications
 
         public bool Applies()
         {
-            return !nonDiagnosticsChains().Any();
+            var thereAreAnyNonDiagnosticsChains = nonDiagnosticsChains().Any();
+            return !thereAreAnyNonDiagnosticsChains;
         }
 
         public INotificationModel Build()
@@ -35,25 +37,28 @@ namespace FubuMVC.GettingStarted.Notifications
 
         private bool isDiagnosticsChain(BehaviorChain chain)
         {
-            var assembly = GetType().Assembly;
-            var call = chain.FirstCall();
-
-            // First we'll try to grab the action call
-            if (call == null)
+            // No action calls. Check for partials, too
+            var output = chain.InputType();
+            if (output == null)
             {
-                // No action calls. Check for partials, too
-                var output = chain.InputType();
-                if (output == null)
+                // try for a handler
+                var call = chain.FirstCall();
+                if(call == null)
                 {
-                    // No action calls and no partials? You need some suggeestions
+                    // sanity check?
                     return false;
                 }
 
-                return output.Assembly.Equals(assembly) || output.Assembly.Equals(typeof(ActionCall).Assembly);
+                return checkAssembly(call.HandlerType);
             }
 
-            // Make sure the ActionCall is coming from a custom assembly
-            return call.IsDiagnosticsCall() || call.IsInternalFubuAction() || call.HandlerType.Assembly.Equals(assembly);
+            return checkAssembly(output);
+        }
+
+        private bool checkAssembly(Type type)
+        {
+            return type.Assembly.Equals(GetType().Assembly) || type.Assembly.Equals(typeof(INotificationPolicy).Assembly)
+                    || type.Assembly.Equals(typeof(ActionCall).Assembly);
         }
     }
 }
