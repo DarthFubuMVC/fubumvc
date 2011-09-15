@@ -4,16 +4,18 @@ using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
 using FubuCore.Reflection;
 using FubuLocalization;
+using FubuMVC.Core.Projections;
+using FubuMVC.Core.Urls;
 
-namespace FubuMVC.Core.Projections
+namespace FubuMVC.Core.Rest
 {
-    public class LinkSource<T> : ILinkSource
+    public class LinkSource<T> : ILinkSource<T>
     {
-        private readonly Func<IProjectionTarget, string> _urlSource;
-        private Func<IProjectionTarget, bool> _filter = t => true;
+        private readonly Func<IValueSource<T>, IUrlRegistry, string> _urlSource;
+        private Func<IValueSource<T>, bool> _filter = t => true;
         private readonly IList<Action<SyndicationLink>> _modifications = new List<Action<SyndicationLink>>();
 
-        public LinkSource(Func<IProjectionTarget, string> urlSource)
+        public LinkSource(Func<IValueSource<T>, IUrlRegistry, string> urlSource)
         {
             _urlSource = urlSource;
         }
@@ -34,7 +36,7 @@ namespace FubuMVC.Core.Projections
             return modify(link => link.Title = title.ToString());
         }
 
-        public LinkSource<T> If(Func<IProjectionTarget, bool> filter)
+        public LinkSource<T> If(Func<IValueSource<T>, bool> filter)
         {
             _filter = filter;
             return this;
@@ -68,14 +70,14 @@ namespace FubuMVC.Core.Projections
         }
 
 
-        IEnumerable<SyndicationLink> ILinkSource.LinksFor(IProjectionTarget target)
+        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValueSource<T> target, IUrlRegistry urls)
         {
             if (!_filter(target))
             {
                 yield break;
             }
 
-            var url = _urlSource(target);
+            var url = _urlSource(target, urls);
             var link = new SyndicationLink(new Uri(url));
             _modifications.Each(x => x(link));
 

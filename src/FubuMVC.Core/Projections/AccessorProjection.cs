@@ -4,13 +4,13 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Projections
 {
-    public class AccessorProjection : IValueProjection
+    public class AccessorProjection<T> : IValueProjection<T>
     {
         private readonly Accessor _accessor;
         
-        public static AccessorProjection For<T>(Expression<Func<T, object>> expression)
+        public static AccessorProjection<T> For(Expression<Func<T, object>> expression)
         {
-            return new AccessorProjection(expression.ToAccessor());
+            return new AccessorProjection<T>(expression.ToAccessor());
         }
 
         public AccessorProjection(Accessor accessor)
@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Projections
 
         private string _projectedNodeName;
 
-        public AccessorProjection Name(string value)
+        public AccessorProjection<T> Name(string value)
         {
             _projectedNodeName = value;
             return this;
@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Projections
             return _projectedNodeName;
         }
 
-        public void WriteValue(IProjectionTarget target, IMediaNode node)
+        public void WriteValue(IValueSource<T> target, IMediaNode node)
         {
             var value = target.ValueFor(_accessor);
             node.SetAttribute(Name(), value);

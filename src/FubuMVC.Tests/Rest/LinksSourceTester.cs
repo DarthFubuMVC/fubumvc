@@ -5,17 +5,18 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Projections;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Rest;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Projections
+namespace FubuMVC.Tests.Rest
 {
     [TestFixture]
     public class LinksSourceTester
     {
         private Site theSubject;
-        private SimpleProjectionTarget theTarget;
+        private SimpleValueSource<Site> theTarget;
         private ValidStubUrlRegistry theUrls;
         private LinksSource<Site> theLinks;
 
@@ -24,7 +25,7 @@ namespace FubuMVC.Tests.Projections
         {
             theSubject = new Site(){Name = "my site", Id = Guid.NewGuid()};
             theUrls = new ValidStubUrlRegistry();
-            theTarget = new SimpleProjectionTarget(theSubject, theUrls);
+            theTarget = new SimpleValueSource<Site>(theSubject);
 
             theLinks = new LinksSource<Site>();
         }
@@ -34,7 +35,7 @@ namespace FubuMVC.Tests.Projections
         {
             theLinks.LinkToSubject();
 
-            theLinks.As<ILinkSource>().LinksFor(theTarget)
+            theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single().Uri.OriginalString.ShouldEqual(theUrls.UrlFor(theSubject));
         }
 
@@ -43,7 +44,7 @@ namespace FubuMVC.Tests.Projections
         {
             theLinks.LinkTo(site => new SiteAction(site.Name));
 
-            theLinks.As<ILinkSource>().LinksFor(theTarget)
+            theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single().Uri.OriginalString.ShouldEqual(theUrls.UrlFor(new SiteAction(theSubject.Name)));
         }
 
@@ -55,7 +56,7 @@ namespace FubuMVC.Tests.Projections
             var parameters = new RouteParameters<Site>();
             parameters[x => x.Id] = theSubject.Id.ToString();
 
-            theLinks.As<ILinkSource>().LinksFor(theTarget)
+            theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single().Uri.OriginalString.ShouldEqual(theUrls.UrlFor(typeof(Site), parameters));
         }
 

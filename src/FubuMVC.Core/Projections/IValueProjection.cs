@@ -1,7 +1,7 @@
 namespace FubuMVC.Core.Projections
 {
-    public interface IValueProjection
+    public interface IValueProjection<T>
     {
-        void WriteValue(IProjectionTarget target, IMediaNode node);
+        void WriteValue(IValueSource<T> target, IMediaNode node);
     }
 }
