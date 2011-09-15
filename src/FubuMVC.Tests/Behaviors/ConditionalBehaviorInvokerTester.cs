@@ -40,6 +40,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
+    [TestFixture]
     public class when_condition_is_true : InteractionContext<ConditionalBehavior>
     {
         protected override void beforeEach()
@@ -69,6 +70,7 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
+    [TestFixture]
     public class when_condition_is_false : InteractionContext<ConditionalBehavior>
     {
         protected override void beforeEach()
