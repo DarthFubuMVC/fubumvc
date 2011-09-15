@@ -55,6 +55,24 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
+        public void is_able_to_bind_generic_types()
+        {
+            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic[[FubuMVC.Spark.Tests.SparkModel.Binding.Baz]]";
+            ClassUnderTest.Bind(_request);
+            _descriptor.ViewModel.ShouldEqual(typeof (Generic<Baz>));
+        }
+
+
+        [Test]
+        public void is_able_to_bind_complex_generic_types()
+        {
+            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic[[FubuMVC.Spark.Tests.SparkModel.Binding.Baz,FubuMVC.Spark.Tests.SparkModel.Binding.Bar]]";
+            ClassUnderTest.Bind(_request);
+            _descriptor.ViewModel.ShouldEqual(typeof(Generic<Baz,Bar>));
+        }
+
+
+        [Test]
         public void it_does_not_try_to_bind_names_that_are_null_or_empty()
         {
             _request.ViewModelType = string.Empty;
@@ -101,6 +119,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             pool.AddType(generateType("namespace FubuMVC.Spark.Tests.SparkModel.Binding{public class Bar{}}", "FubuMVC.Spark.Tests.SparkModel.Binding.Bar"));
             pool.AddType<Bar>();
             pool.AddType<Baz>();
+            pool.AddType<Generic<Baz>>();
+            pool.AddType<Generic<Baz, Bar>>();
 
             return pool;
         }
@@ -123,4 +143,13 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 
     public class Bar { }
     public class Baz { }
+    public class Generic<T>
+    {
+    }
+
+    public class Generic<T1, T2>
+    {
+        
+    }
+
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Spark.SparkModel.Utils;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -114,7 +115,7 @@ namespace FubuMVC.Spark.SparkModel
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
-            var types = request.Types.TypesWithFullName(request.ViewModelType);
+            var types = request.Types.TypesMatching(type => type.PrettyFullName() == request.ViewModelType);
             var typeCount = types.Count();
 
             if (typeCount == 1)

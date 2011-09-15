@@ -100,6 +100,7 @@
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
     <Compile Include="SparkModel\SparkLogger.cs" />
+    <Compile Include="SparkModel\Utils\PrettyTypeNamesExtensions.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />
