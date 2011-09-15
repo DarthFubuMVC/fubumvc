@@ -1,3 +1,6 @@
+using FubuMVC.Core.Projections;
+using FubuMVC.Core.Projections.Xml;
+using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Projections

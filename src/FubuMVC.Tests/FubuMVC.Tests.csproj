@@ -82,6 +82,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -127,6 +128,17 @@
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
+    <Compile Include="Projections\AccessorProjectionTester.cs" />
+    <Compile Include="Projections\Atom\SyndicationItemMapTester.cs" />
+    <Compile Include="Projections\FormattedProjectionTargetTester.cs" />
+    <Compile Include="Projections\InMemoryMediaNode.cs" />
+    <Compile Include="Projections\LinkSourceTester.cs" />
+    <Compile Include="Projections\LinksSourceTester.cs" />
+    <Compile Include="Projections\play.cs" />
+    <Compile Include="Projections\ProjectionTester.cs" />
+    <Compile Include="Projections\SimpleProjectionTargetTester.cs" />
+    <Compile Include="Projections\UrlProjectionTester.cs" />
+    <Compile Include="Projections\Xml\XmlMediaNodeTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />

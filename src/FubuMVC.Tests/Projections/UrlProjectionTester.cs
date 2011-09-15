@@ -1,3 +1,4 @@
+using FubuMVC.Core.Projections;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;

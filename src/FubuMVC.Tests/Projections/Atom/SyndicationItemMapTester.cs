@@ -1,5 +1,7 @@
 using System;
 using System.ServiceModel.Syndication;
+using FubuMVC.Core.Projections;
+using FubuMVC.Core.Projections.Atom;
 using NUnit.Framework;
 using FubuTestingSupport;
 
