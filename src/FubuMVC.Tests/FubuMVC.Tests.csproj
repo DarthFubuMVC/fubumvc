@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="AjaxExtensionsTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
+    <Compile Include="Behaviors\ConditionalBehaviorInvokerTester.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
@@ -154,6 +155,8 @@
     <Compile Include="Registration\HandlerActionsSetTester.cs" />
     <Compile Include="Registration\integrated_type_resolver_registration.cs" />
     <Compile Include="Registration\ListDependencyTester.cs" />
+    <Compile Include="Registration\Nodes\ConditionalNodeIntegration.cs" />
+    <Compile Include="Registration\Nodes\ConditionalNodeTester.cs" />
     <Compile Include="Registration\Nodes\NodesTester.cs" />
     <Compile Include="Registration\Nodes\WebFormViewTester.cs">
       <SubType>ASPXCodeBehind</SubType>
