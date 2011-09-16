@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\FubuMVC.WebForms.*" target="lib" />	
+    <file src="..\..\src\FubuMVC.WebForms\bin\release\FubuMVC.WebForms.*" target="lib" />	
     <file src="..\..\src\FubuMVC.WebForms\**\*.cs" target="src" />	
   </files>
 </package>
