@@ -6,8 +6,8 @@
     <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
     <owners>Joshua Flanagan</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
-    <projectUrl>http://fubumvc.com</projectUrl>
-    <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
+    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Minimal assembly references needed for a FubuMVC application. FubuMVC is a compositional, convention-based framework for complex web applications</description>
     <tags>web framework mvc fubumvc</tags>
