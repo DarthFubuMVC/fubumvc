@@ -16,7 +16,7 @@
 				</a>
 			</h2>
 		</div>
-		<Navigation />
+		#this.Partial<FubuMVC.Diagnostics.Navigation.NavigationMenu>();
 		<div class="clear"></div>
 	</div>
 </div>

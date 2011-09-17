@@ -46,7 +46,7 @@ namespace FubuMVC.Diagnostics.Tests.Notifications
                 .Build()
                 .As<NoOutputsNotification>()
                 .BehaviorCount
-                .ShouldEqual(2);
+                .ShouldEqual(1);
         }
 
         public class Test
