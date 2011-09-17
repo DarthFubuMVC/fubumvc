@@ -98,6 +98,7 @@
     <Compile Include="Features\Routes\get_Column_Value_handler_Tester.cs" />
     <Compile Include="Features\Routes\RoutesModelBuilderTester.cs" />
     <Compile Include="Features\Routes\when_filtering_routes.cs" />
+    <Compile Include="Features\Routes\when_getting_value_for_view_column.cs" />
     <Compile Include="Infrastructure\AuthorizationDescriptorTester.cs" />
     <Compile Include="Infrastructure\GridServiceTester.cs" />
     <Compile Include="Infrastructure\RowComparerTester.cs" />

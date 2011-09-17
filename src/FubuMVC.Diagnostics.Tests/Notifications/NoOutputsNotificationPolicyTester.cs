@@ -1,5 +1,7 @@
 ﻿using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Grids.Columns.Routes;
 using FubuMVC.Diagnostics.Core.Grids.Filters.Routes;
 using FubuMVC.Diagnostics.Notifications;
@@ -20,9 +22,12 @@ namespace FubuMVC.Diagnostics.Tests.Notifications
                                              {
                                                  registry.Applies.ToThisAssembly();
                                                  registry.Actions.IncludeType<Test>();
-                                                 registry.Actions.IncludeMethods(c => c.Method.Name == "Index");
+                                                 registry.Actions.IncludeMethods(c => c.Method.Name == "Index" || c.Method.Name == "Continuation");
                                              })
                 .BuildGraph();
+            
+            graph.AddChain(new BehaviorChain());
+
             _policy = new NoOutputsNotificationPolicy(graph, new ViewFilter(new ViewColumn()));
         }
 
@@ -49,6 +54,11 @@ namespace FubuMVC.Diagnostics.Tests.Notifications
             public Test Index()
             {
                 return this;
+            }
+
+            public FubuContinuation Continuation()
+            {
+                return FubuContinuation.NextBehavior();
             }
         }
     }
