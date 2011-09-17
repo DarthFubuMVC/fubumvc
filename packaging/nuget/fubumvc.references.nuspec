@@ -21,8 +21,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib" />	
-    <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib" />
+    <file src="..\..\src\FubuMVC.Core\bin\release\FubuMVC.Core.*" target="lib\net40" />	
+    <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
 
     <file src="..\..\src\FubuMVC.Core\**\*.cs" target="src\FubuMVC.Core" />
     <file src="..\..\src\FubuMVC.StructureMap\**\*.cs" target="src\FubuMVC.StructureMap" />
