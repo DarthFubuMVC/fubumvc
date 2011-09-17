@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Grids.Columns.Routes;
@@ -36,11 +37,13 @@ namespace FubuMVC.Diagnostics.Notifications
 
 		private IEnumerable<BehaviorChain> getChainsWithoutOutput()
 		{
-			var filter = new JsonGridFilter {ColumnName = _viewFilter.Column.Name(), Values = new[] {ViewColumn.None}};
-			return _graph
-				.Behaviors
-				.Where(chain => _viewFilter.AppliesTo(chain, filter)
-				                && _viewFilter.Matches(chain, filter));
+		    return _graph
+		        .Behaviors
+		        .Where(chain =>
+		                   {
+		                       var call = chain.LastCall();
+		                       return !chain.Outputs.Any() && (call == null || !call.OutputType().Equals(typeof (FubuContinuation)));
+		                   });
 		}
 	}
 }
