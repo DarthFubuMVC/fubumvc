@@ -40,6 +40,18 @@ namespace FubuMVC.Core.Continuations
             };
         }
 
+        public static FubuContinuation RedirectTo<T>()
+            where T : new()
+        {
+            return RedirectTo(new T());
+        }
+
+        public static FubuContinuation TransferTo<T>()
+            where T : new()
+        {
+            return TransferTo(new T());
+        }
+        
         public static FubuContinuation RedirectTo(object destination)
         {
             if (destination == null) throw new ArgumentNullException("destination");
