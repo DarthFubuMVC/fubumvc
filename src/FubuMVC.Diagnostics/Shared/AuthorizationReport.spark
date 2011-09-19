@@ -2,26 +2,28 @@
 <use namespace="FubuMVC.Core.Diagnostics.Tracing" />
 <use namespace="System.Linq" />
 <viewdata model="FubuMVC.Core.Diagnostics.Tracing.AuthorizationReport" />
-<div class="authorization-report" if="Model.Details.Any()">
-  <h4>Authorization</h4>
-  <table class="grid">
-    <thead>
-      <tr>
-        <th>Policy</th>
-        <th>Vote</th>
-      </tr>
-    </thead>
-    <tfoot>
-      <tr>
-        <td>Decision</td>
-        <td>Model.Decision</td>
-      </tr>
-    </tfoot>
-    <tbody>
-      <tr each="var binding in Model.Details">
-        <td>${binding.PolicyDescription}</td>
-        <td>${binding.Vote}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="console">
+  ${this.ImageFor('console-line.png').AddClass('indicator')}
+  <span class="message">
+    <p class="statement">Authorization</p>
+    <p class="msg-info">${Model.Decision}</p>
+    <div class="authorization-report" if="Model.Details.Any()">
+      <h4>Authorization</h4>
+      <table class="grid">
+        <thead>
+          <tr>
+            <th>Policy</th>
+            <th>Vote</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr each="var binding in Model.Details">
+            <td>${binding.PolicyDescription}</td>
+            <td>${binding.Vote}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </span>
+  <div class="cboth"></div>
 </div>

@@ -2,8 +2,16 @@
 <use namespace="FubuCore" />
 <use namespace="FubuMVC.Core.Diagnostics" />
 <viewdata model="FubuMVC.Core.Diagnostics.ExceptionReport" />
-<div class="exception">
-  <pre>
-    <code>${Model.Text.HtmlEncode()}</code>
-  </pre>
+<div class="console">
+  ${this.ImageFor('console-line.png').AddClass('indicator')}
+  <span class="message">
+    <p class="statement">Exception</p>
+    <p class="msg-info">Unhandled exception</p>
+    <div class="exception">
+      <pre>
+        <code>${Model.Text.HtmlEncode()}</code>
+      </pre>
+    </div>
+  </span>
+  <div class="cboth"></div>
 </div>
