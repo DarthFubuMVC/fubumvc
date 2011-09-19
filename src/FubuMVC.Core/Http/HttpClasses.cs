@@ -11,6 +11,21 @@ namespace FubuMVC.Core.Http
         bool Matches(string mimeType);
     }
 
+    public class MimetypeRequestConditional : IRequestConditional
+    {
+        private readonly string[] _mimeTypes;
+
+        public MimetypeRequestConditional(params string[] mimeTypes)
+        {
+            _mimeTypes = mimeTypes;
+        }
+
+        public bool Matches(string mimeType)
+        {
+            return _mimeTypes.Contains(mimeType);
+        }
+    }
+
     public class MimeTypeList : IEnumerable<string>
     {
         private readonly IList<string> _mimeTypes = new List<string>();
@@ -48,6 +63,16 @@ namespace FubuMVC.Core.Http
     // cause it doesn't right now
     public class CurrentMimeType
     {
+        public CurrentMimeType()
+        {
+        }
+
+        public CurrentMimeType(string contentType, string acceptType)
+        {
+            ContentType = new MimeTypeList(contentType);
+            AcceptTypes = new MimeTypeList(acceptType);
+        }
+
         public MimeTypeList ContentType { get; set; }
         public MimeTypeList AcceptTypes { get; set; }
     }
