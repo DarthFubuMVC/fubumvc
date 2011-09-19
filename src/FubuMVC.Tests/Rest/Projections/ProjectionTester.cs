@@ -1,7 +1,7 @@
 using FubuCore;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Projections;
-using FubuMVC.Core.Rest.Media.Projections.Xml;
+using FubuMVC.Core.Rest.Media.Xml;
 using FubuTestingSupport;
 using NUnit.Framework;
 

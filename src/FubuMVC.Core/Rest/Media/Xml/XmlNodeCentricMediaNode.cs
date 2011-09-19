@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ServiceModel.Syndication;
 using System.Xml;
 
-namespace FubuMVC.Core.Rest.Media.Projections.Xml
+namespace FubuMVC.Core.Rest.Media.Xml
 {
     public class XmlNodeCentricMediaNode : IMediaNode
     {
