@@ -1,15 +1,15 @@
 using FubuCore;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Rest.Projections
+namespace FubuMVC.Core.Rest.Media
 {
     // TODO -- might want something besides IDisplayFormatter
-    public class FormattedValueSource<T> : IValueSource<T>
+    public class FormattedValues<T> : IValues<T>
     {
         private readonly IDisplayFormatter _formatter;
-        private readonly IValueSource<T> _inner;
+        private readonly IValues<T> _inner;
 
-        public FormattedValueSource(IDisplayFormatter formatter, IValueSource<T> inner)
+        public FormattedValues(IDisplayFormatter formatter, IValues<T> inner)
         {
             _formatter = formatter;
             _inner = inner;

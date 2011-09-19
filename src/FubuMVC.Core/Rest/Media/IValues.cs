@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Rest.Projections
+namespace FubuMVC.Core.Rest.Media
 {
-    public interface IValueSource<T>
+    public interface IValues<T>
     {
         object ValueFor(Accessor accessor);
 
@@ -12,6 +12,6 @@ namespace FubuMVC.Core.Rest.Projections
 
     public interface IValueStream<T>
     {
-        IEnumerable<IValueSource<T>> Elements { get;}
+        IEnumerable<IValues<T>> Elements { get;}
     }
 }

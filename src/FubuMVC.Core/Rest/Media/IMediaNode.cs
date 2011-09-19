@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 
-namespace FubuMVC.Core.Rest.Projections
+namespace FubuMVC.Core.Rest.Media
 {
     public interface IMediaNode
     {

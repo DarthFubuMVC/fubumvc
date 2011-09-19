@@ -6,7 +6,7 @@ using FubuLocalization;
 using System.Linq;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Rest.Projections.Atom
+namespace FubuMVC.Core.Rest.Media.Projections.Atom
 {
     // Just use SyndicationLink
 
@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Rest.Projections.Atom
         private readonly IList<Action<SyndicationFeed>> _alterations = new List<Action<SyndicationFeed>>();
         private readonly IList<SyndicationItemMap<T>> _maps = new List<SyndicationItemMap<T>>();
 
-        public SyndicationFeed CreateFeed(DateTime updated, IEnumerable<IValueSource<T>> targets)
+        public SyndicationFeed CreateFeed(DateTime updated, IEnumerable<IValues<T>> targets)
         {
             var feed = new SyndicationFeed{
                 LastUpdatedTime = updated,
@@ -64,8 +64,8 @@ namespace FubuMVC.Core.Rest.Projections.Atom
 
     public class SyndicationItemMap<T>
     {
-        private readonly IList<Action<IValueSource<T>, SyndicationItem>> _modifications
-            = new List<Action<IValueSource<T>, SyndicationItem>>();
+        private readonly IList<Action<IValues<T>, SyndicationItem>> _modifications
+            = new List<Action<IValues<T>, SyndicationItem>>();
 
         public SyndicationItemMap()
         {
@@ -76,12 +76,12 @@ namespace FubuMVC.Core.Rest.Projections.Atom
             configure(this);
         }
 
-        public void ConfigureItem(SyndicationItem item, IValueSource<T> target)
+        public void ConfigureItem(SyndicationItem item, IValues<T> target)
         {
             _modifications.Each(x => x(target, item));
         }
 
-        private Action<IValueSource<T>, SyndicationItem> alter
+        private Action<IValues<T>, SyndicationItem> alter
         {
             set
             {

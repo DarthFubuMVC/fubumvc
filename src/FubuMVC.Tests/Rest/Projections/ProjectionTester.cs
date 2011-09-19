@@ -1,6 +1,7 @@
 using FubuCore;
-using FubuMVC.Core.Rest.Projections;
-using FubuMVC.Core.Rest.Projections.Xml;
+using FubuMVC.Core.Rest.Media;
+using FubuMVC.Core.Rest.Media.Projections;
+using FubuMVC.Core.Rest.Media.Projections.Xml;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ namespace FubuMVC.Tests.Rest.Projections
     {
         private Address anAddress;
         private XmlAttCentricMediaNode aNode;
-        private SimpleValueSource<Address> aTarget;
+        private SimpleValues<Address> aTarget;
 
         [SetUp]
         public void SetUp()
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.Rest.Projections
                 ZipCode = "78703"
             };
 
-            aTarget = new SimpleValueSource<Address>(anAddress);
+            aTarget = new SimpleValues<Address>(anAddress);
             aNode = XmlAttCentricMediaNode.ForRoot("root");
         }
 

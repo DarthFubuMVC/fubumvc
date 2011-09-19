@@ -1,5 +1,5 @@
 using FubuCore.Reflection;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -11,7 +11,7 @@ namespace FubuMVC.Tests.Rest.Projections
         [Test]
         public void retrieve_value_by_accessor()
         {
-            var target = new SimpleValueSource<SimpleClass>(new SimpleClass{
+            var target = new SimpleValues<SimpleClass>(new SimpleClass{
                 Age = 37,
                 Name = "Jeremy"
             });

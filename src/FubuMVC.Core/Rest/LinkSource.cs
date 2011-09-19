@@ -4,18 +4,18 @@ using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
 using FubuCore.Reflection;
 using FubuLocalization;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Rest
 {
     public class LinkSource<T> : ILinkSource<T>
     {
-        private readonly Func<IValueSource<T>, IUrlRegistry, string> _urlSource;
-        private Func<IValueSource<T>, bool> _filter = t => true;
+        private readonly Func<IValues<T>, IUrlRegistry, string> _urlSource;
+        private Func<IValues<T>, bool> _filter = t => true;
         private readonly IList<Action<SyndicationLink>> _modifications = new List<Action<SyndicationLink>>();
 
-        public LinkSource(Func<IValueSource<T>, IUrlRegistry, string> urlSource)
+        public LinkSource(Func<IValues<T>, IUrlRegistry, string> urlSource)
         {
             _urlSource = urlSource;
         }
@@ -36,7 +36,7 @@ namespace FubuMVC.Core.Rest
             return modify(link => link.Title = title.ToString());
         }
 
-        public LinkSource<T> If(Func<IValueSource<T>, bool> filter)
+        public LinkSource<T> If(Func<IValues<T>, bool> filter)
         {
             _filter = filter;
             return this;
@@ -70,7 +70,7 @@ namespace FubuMVC.Core.Rest
         }
 
 
-        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValueSource<T> target, IUrlRegistry urls)
+        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValues<T> target, IUrlRegistry urls)
         {
             if (!_filter(target))
             {

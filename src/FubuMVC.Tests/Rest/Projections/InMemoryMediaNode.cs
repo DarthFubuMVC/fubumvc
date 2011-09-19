@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 
 namespace FubuMVC.Tests.Rest.Projections
 {
