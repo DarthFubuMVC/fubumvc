@@ -102,6 +102,7 @@
     <Compile Include="Caching\RequestOutputCacheBehaviorTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
+    <Compile Include="Http\CurrentMimeTypeTester.cs" />
     <Compile Include="Rest\Conneg\ConnegBehaviorConventionTester.cs" />
     <Compile Include="Rest\Conneg\ConnegNodeTester.cs" />
     <Compile Include="Rest\Conneg\Conneg_Services_Registration_Tester.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Rest.Projections
+namespace FubuMVC.Core.Rest.Media.Projections
 {
     public class Projection<T> : IValueProjection<T>
     {
@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Rest.Projections
 
 
 
-        void IValueProjection<T>.WriteValue(IValueSource<T> target, IMediaNode node)
+        void IValueProjection<T>.WriteValue(IValues<T> target, IMediaNode node)
         {
             _values.Each(x => x.WriteValue(target, node));
         }
