@@ -81,7 +81,10 @@
     <Compile Include="Behaviors\JavaScriptJsonReader.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
-    <Compile Include="Http\HttpClasses.cs" />
+    <Compile Include="Http\CurrentMimeType.cs" />
+    <Compile Include="Http\MimetypeRequestConditional.cs" />
+    <Compile Include="Http\IRequestConditional.cs" />
+    <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Rest\Conneg\ConnegBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegBehaviorConvention.cs" />
     <Compile Include="Rest\Conneg\ConnegInputHandler.cs" />
