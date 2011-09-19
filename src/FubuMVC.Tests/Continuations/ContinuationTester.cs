@@ -266,5 +266,24 @@ namespace FubuMVC.Tests.Continuations
             var continuation = FubuContinuation.TransferTo(destination);
             continuation.Destination<object>().ShouldEqual(destination);
         }
+
+        [Test]
+        public void redirect_via_generic()
+        {
+            var continuation = FubuContinuation.RedirectTo<TestModel>();
+            continuation.AssertWasRedirectedTo<TestModel>(x => x.GetType() == typeof (TestModel));
+        }
+
+        [Test]
+        public void transfer_via_generic()
+        {
+            var continuation = FubuContinuation.TransferTo<TestModel>();
+            continuation.AssertWasTransferedTo<TestModel>(x => x.GetType() == typeof(TestModel));
+        }
+
+        public class TestModel
+        {
+            
+        }
     }
 }
