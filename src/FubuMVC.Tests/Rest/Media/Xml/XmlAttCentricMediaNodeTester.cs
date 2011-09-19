@@ -1,8 +1,8 @@
-using FubuMVC.Core.Rest.Media.Projections.Xml;
+using FubuMVC.Core.Rest.Media.Xml;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests.Rest.Projections.Xml
+namespace FubuMVC.Tests.Rest.Media.Xml
 {
     [TestFixture]
     public class XmlAttCentricMediaNodeTester

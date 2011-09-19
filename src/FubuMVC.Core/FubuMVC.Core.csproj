@@ -210,6 +210,7 @@
     <Compile Include="Rest\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Rest\Media\Projections\Atom\Classes.cs" />
     <Compile Include="Rest\Media\FormattedValues.cs" />
+    <Compile Include="Rest\Media\Xml\XmlClasses.cs" />
     <Compile Include="Rest\RestClasses.cs" />
     <Compile Include="Rest\ILinkSource.cs" />
     <Compile Include="Rest\Media\IMediaNode.cs" />
@@ -219,9 +220,9 @@
     <Compile Include="Rest\LinksSource.cs" />
     <Compile Include="Rest\Media\Projections\Projection.cs" />
     <Compile Include="Rest\Media\SimpleValues.cs" />
-    <Compile Include="Rest\Media\Projections\Xml\XmlExtensions.cs" />
-    <Compile Include="Rest\Media\Projections\Xml\XmlAttCentricMediaNode.cs" />
-    <Compile Include="Rest\Media\Projections\Xml\XmlNodeCentricMediaNode.cs" />
+    <Compile Include="Rest\Media\Xml\XmlExtensions.cs" />
+    <Compile Include="Rest\Media\Xml\XmlAttCentricMediaNode.cs" />
+    <Compile Include="Rest\Media\Xml\XmlNodeCentricMediaNode.cs" />
     <Compile Include="Registration\AddImplementationsServiceRegistrationConvention.cs" />
     <Compile Include="Registration\AssemblyScanner.cs" />
     <Compile Include="Registration\AssemblyScanningExtensions.cs" />
