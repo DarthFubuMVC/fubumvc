@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
 using FubuCore.Reflection;
 using FubuLocalization;
-using FubuMVC.Core.Projections;
+using FubuMVC.Core.Rest.Projections;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Rest
