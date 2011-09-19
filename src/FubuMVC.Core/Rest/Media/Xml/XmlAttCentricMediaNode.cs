@@ -1,47 +1,26 @@
-using System;
-using System.Collections.Generic;
 using System.Xml;
 
 namespace FubuMVC.Core.Rest.Media.Xml
 {
-    // TODO -- need to do a node-centric approach too.
-    public class XmlAttCentricMediaNode : IMediaNode
+    public class XmlAttCentricMediaNode : XmlMediaNode
     {
         public static XmlAttCentricMediaNode ForRoot(string rootElement)
         {
             return new XmlAttCentricMediaNode(new XmlDocument().WithRoot(rootElement));
         }
 
-        private readonly XmlElement _element;
-
-        public XmlAttCentricMediaNode(XmlElement element)
+        public XmlAttCentricMediaNode(XmlElement element) : base(element)
         {
-            _element = element;
         }
 
-        public IMediaNode AddChild(string name)
+        protected override IXmlMediaNode buildChildFor(XmlElement childElement)
         {
-            return new XmlAttCentricMediaNode(_element.AddElement(name));
+            return new XmlAttCentricMediaNode(childElement);
         }
 
-        public void SetAttribute(string name, object value)
+        public override void SetAttribute(string name, object value)
         {
-            _element.SetAttribute(name, value == null ? string.Empty : value.ToString());
-        }
-
-        public void WriteLinks(IEnumerable<Link> links)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return _element.OuterXml;
-        }
-
-        public XmlElement Element
-        {
-            get { return _element; }
+            Element.SetAttribute(name, value == null ? string.Empty : value.ToString());
         }
     }
 }

@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Rest.Media
         public void Write(IValues<T> source, IOutputWriter writer)
         {
             var links = _links.LinksFor(source, _urls);
-            var topNode = _document.CreateRoot();
+            var topNode = _document.Root;
             topNode.WriteLinks(links);
 
             _projection.WriteValue(source, topNode);
@@ -82,7 +82,7 @@ namespace FubuMVC.Core.Rest.Media
 
     public interface IMediaDocument
     {
-        IMediaNode CreateRoot();
+        IMediaNode Root { get; }
         void Write(IOutputWriter writer);
     }
 

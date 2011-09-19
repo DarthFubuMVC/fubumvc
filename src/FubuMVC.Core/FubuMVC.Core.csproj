@@ -211,6 +211,7 @@
     <Compile Include="Rest\Media\Projections\Atom\Classes.cs" />
     <Compile Include="Rest\Media\FormattedValues.cs" />
     <Compile Include="Rest\Media\Xml\XmlClasses.cs" />
+    <Compile Include="Rest\Media\Xml\XmlMediaNode.cs" />
     <Compile Include="Rest\RestClasses.cs" />
     <Compile Include="Rest\ILinkSource.cs" />
     <Compile Include="Rest\Media\IMediaNode.cs" />

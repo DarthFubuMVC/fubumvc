@@ -1,6 +1,7 @@
 using FubuMVC.Core.Rest.Media.Xml;
 using FubuTestingSupport;
 using NUnit.Framework;
+using FubuCore;
 
 namespace FubuMVC.Tests.Rest.Media.Xml
 {
@@ -33,6 +34,13 @@ namespace FubuMVC.Tests.Rest.Media.Xml
             node.Element.ChildNodes.Count.ShouldEqual(2);
             node.Element.FirstChild.Name.ShouldEqual("childA");
             node.Element.LastChild.Name.ShouldEqual("childB");
+        }
+
+        [Test]
+        public void building_a_child_propogates_the_XmlLinkWriter()
+        {
+            var node = XmlAttCentricMediaNode.ForRoot("root");
+            node.AddChild("childA").As<XmlMediaNode>().LinkWriter.ShouldBeTheSameAs(node.LinkWriter);
         }
     }
 }
