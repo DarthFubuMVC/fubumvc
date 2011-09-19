@@ -93,6 +93,11 @@ namespace FubuMVC.Tests.View.WebForms
         {
             throw new NotImplementedException();
         }
+
+        public void Write(object content)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

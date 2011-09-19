@@ -13,6 +13,7 @@ namespace FubuMVC.Core.View
         IUrlRegistry Urls { get; }
         T Get<T>();
         T GetNew<T>();
+        void Write(object content);
     }
 
     public interface IFubuPageWithModel : IFubuPage
@@ -50,6 +51,11 @@ namespace FubuMVC.Core.View
         public T GetNew<T>()
         {
             return ServiceLocator.GetInstance<T>();
+        }
+
+        public void Write(object content)
+        {
+            ServiceLocator.GetInstance<IOutputWriter>().WriteHtml(content);
         }
 
         public object GetModel()

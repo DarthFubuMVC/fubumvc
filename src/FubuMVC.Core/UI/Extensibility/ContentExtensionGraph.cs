@@ -49,13 +49,12 @@ namespace FubuMVC.Core.UI.Extensibility
 
         private static void apply<T>(IEnumerable<IContentExtension<T>> extensions, IFubuPage<T> page, string tag) where T : class
         {
-            var writer = page.ServiceLocator.GetInstance<IOutputWriter>();
             var extensionOutput = extensions.SelectMany(ex => ex.GetExtensions(page)).Where(o => o != null).ToArray();
             if (extensionOutput.Length == 0 && page.Get<DiagnosticsIndicator>().IsDiagnosticsEnabled)
             {
-                writer.WriteHtml("<!-- Content extensions '{1}' for {0} would be rendered here -->".ToFormat(typeof(T).Name, tag));
+                page.Write("<!-- Content extensions '{1}' for {0} would be rendered here -->".ToFormat(typeof(T).Name, tag));
             }
-            extensionOutput.Each(o => writer.WriteHtml(o));
+            extensionOutput.Each(o => page.Write(o));
         }
 
         public void ApplyExtensions<T>(IFubuPage<T> page) where T : class

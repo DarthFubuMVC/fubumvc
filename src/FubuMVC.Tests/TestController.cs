@@ -108,6 +108,11 @@ namespace FubuMVC.Tests
             throw new NotImplementedException();
         }
 
+        public void Write(object content)
+        {
+            throw new NotImplementedException();
+        }
+
         public object GetModel()
         {
             throw new NotImplementedException();
@@ -144,6 +149,11 @@ namespace FubuMVC.Tests
         }
 
         public T GetNew<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Write(object content)
         {
             throw new NotImplementedException();
         }

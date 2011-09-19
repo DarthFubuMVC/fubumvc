@@ -32,6 +32,11 @@ namespace FubuMVC.Core.UI
             throw new NotImplementedException();
         }
 
+        public void Write(object content)
+        {
+            Get<IOutputWriter>().WriteHtml(content);
+        }
+
         public IUrlRegistry Urls
         {
             get { return _services.GetInstance<IUrlRegistry>(); }
