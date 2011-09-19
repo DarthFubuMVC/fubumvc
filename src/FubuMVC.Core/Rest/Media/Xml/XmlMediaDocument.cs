@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Xml;
 using FubuMVC.Core.Runtime;
 using FubuCore;
@@ -10,7 +9,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
     {
         private readonly XmlDocument _document;
         private readonly IXmlMediaNode _topNode;
-        private XmlMediaOptions _options;
+        private readonly XmlMediaOptions _options;
 
         public XmlMediaDocument(XmlMediaOptions options)
         {
@@ -46,51 +45,6 @@ namespace FubuMVC.Core.Rest.Media.Xml
         public void Write(IOutputWriter writer)
         {
             writer.Write(_options.Mimetype, _document.OuterXml);
-        }
-    }
-
-    public interface IXmlMediaNode : IMediaNode
-    {
-        XmlElement Element { get;}
-        IXmlLinkWriter LinkWriter { get; set;}
-    }
-
-    public enum XmlNodeStyle
-    {
-        AttributeCentric,
-        NodeCentric
-    }
-
-    public class XmlMediaOptions
-    {
-        public XmlMediaOptions()
-        {
-            Root = "Root";
-            NodeStyle = XmlNodeStyle.NodeCentric;
-            LinkWriter = AtomXmlLinkWriter.Flyweight;
-            Mimetype = "text/xml";
-        }
-
-        public string Namespace { get; set; }
-        public string Root { get; set; }
-        public XmlNodeStyle NodeStyle { get; set; }
-        public IXmlLinkWriter LinkWriter { get; set; }
-
-        public string Mimetype { get; set; }
-    }
-
-    public interface IXmlLinkWriter
-    {
-        void Write(XmlElement parent, IEnumerable<Link> links);
-    }
-
-    public class AtomXmlLinkWriter : IXmlLinkWriter
-    {
-        public static readonly AtomXmlLinkWriter Flyweight = new AtomXmlLinkWriter();
-
-        public void Write(XmlElement parent, IEnumerable<Link> links)
-        {
-            throw new NotImplementedException();
         }
     }
 }
