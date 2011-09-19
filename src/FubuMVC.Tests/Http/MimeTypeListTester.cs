@@ -1,19 +1,9 @@
 using FubuMVC.Core.Http;
-using NUnit.Framework;
 using FubuTestingSupport;
+using NUnit.Framework;
 
 namespace FubuMVC.Tests.Http
 {
-    [TestFixture]
-    public class CurrentMimeTypeTester
-    {
-        [Test]
-        public void requested_mime_type()
-        {
-            
-        }
-    }
-
     [TestFixture]
     public class MimeTypeListTester
     {
