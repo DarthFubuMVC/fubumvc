@@ -128,6 +128,7 @@
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
+    <Compile Include="Rest\Media\Xml\AtomXmlLinkWriterTester.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaDocumentTester.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaOptionsTester.cs" />
     <Compile Include="Rest\Projections\AccessorProjectionTester.cs" />
