@@ -1,3 +1,5 @@
+using System;
+
 namespace FubuMVC.Core.Rest
 {
     public class Link
@@ -5,5 +7,7 @@ namespace FubuMVC.Core.Rest
         public string Url { get; set; }
         public string Rel { get; set; }
         public string Title { get; set; }
+
+        public string Mimetype { get; set; }
     }
 }
