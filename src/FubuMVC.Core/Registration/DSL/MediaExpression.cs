@@ -1,8 +1,8 @@
 using System;
 using System.Linq.Expressions;
-using FubuMVC.Core.Conneg;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
+using FubuMVC.Core.Rest.Conneg;
 
 namespace FubuMVC.Core.Registration.DSL
 {
