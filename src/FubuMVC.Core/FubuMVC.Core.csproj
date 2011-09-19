@@ -203,6 +203,7 @@
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
     <Compile Include="Packaging\ZipFilePackageLoader.cs" />
     <Compile Include="Rest\Media\MediaClasses.cs" />
+    <Compile Include="Rest\Media\MediaWriter.cs" />
     <Compile Include="Rest\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Rest\Media\Projections\Atom\Classes.cs" />
     <Compile Include="Rest\Media\FormattedValues.cs" />

@@ -5,6 +5,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.Rest.Media.Xml
 {
+    // Needs to be created per request!!!!
     public class XmlMediaDocument : IMediaDocument
     {
         private readonly XmlDocument _document;
@@ -45,6 +46,11 @@ namespace FubuMVC.Core.Rest.Media.Xml
         public void Write(IOutputWriter writer)
         {
             writer.Write(_options.Mimetype, _document.OuterXml);
+        }
+
+        public XmlDocument Document
+        {
+            get { return _document; }
         }
     }
 }
