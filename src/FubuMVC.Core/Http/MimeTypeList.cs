@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Enumerable = System.Linq.Enumerable;
+using FubuCore;
 
 namespace FubuMVC.Core.Http
 {
@@ -13,9 +13,9 @@ namespace FubuMVC.Core.Http
         // look for ',' separated values
         public MimeTypeList(string mimeType)
         {
-            GenericEnumerableExtensions.Each<string>(mimeType.ToDelimitedArray(','), x =>
+            mimeType.ToDelimitedArray(',').Each(x =>
             {
-                var type = Enumerable.First<string>(x.Split(';'));
+                var type = x.Split(';').First();
                 _mimeTypes.Add(type);
             });
         }

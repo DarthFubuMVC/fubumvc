@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Rest.Media.Projections;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -23,7 +24,6 @@ namespace FubuMVC.Core.Rest.Media
     {
         void Write(IValues<T> source, IOutputWriter writer);
         void Write(T source, IOutputWriter writer);
-        bool MatchesRequest();
     }
 
     // this to be consumed by IMediaReader<T>
@@ -33,7 +33,13 @@ namespace FubuMVC.Core.Rest.Media
     }
 
 
+    public interface IMediaChoice
+    {
+        
+    }
 
+    // TODO -- test this with an integrated test.
+    // Don't really care if it's tested with a bunch of mocks.
     public class Media<T> : IMedia<T>
     {
         private readonly IMediaDocument _document;
@@ -51,7 +57,6 @@ namespace FubuMVC.Core.Rest.Media
 
         public void Write(IValues<T> source, IOutputWriter writer)
         {
-            throw new NotImplementedException();
             var links = _links.LinksFor(source, _urls);
             var topNode = _document.CreateRoot();
             topNode.WriteLinks(links);
@@ -65,8 +70,11 @@ namespace FubuMVC.Core.Rest.Media
         {
             Write(new SimpleValues<T>(source), writer);
         }
+    }
 
-        public bool MatchesRequest()
+    public class MediaDefinition<T>
+    {
+        public ObjectDef ToObjectDef()
         {
             throw new NotImplementedException();
         }
@@ -79,23 +87,19 @@ namespace FubuMVC.Core.Rest.Media
     }
 
 
-    public interface IMediaDefinition<T>
-    {
-        void Write(IValues<T> source, IEnumerable<SyndicationLink> links, IOutputWriter writer);
-        bool MatchesMimetype(string mimetype);
-    }
 
-    public interface IXmlMedia<T>
-    {
-        XmlDocument CreateDocument(IValues<T> source, IEnumerable<SyndicationLink> links);
-    }
 
-    public interface IMediaStreamDefinition<T>
-    {
-        void Start(DateTime currentTime, IEnumerable<SyndicationLink> links);
-        void AddItem(IValues<T> source, IEnumerable<SyndicationLink> links);
-        void Write(IOutputWriter writer);
-    }
+    //public interface IXmlMedia<T>
+    //{
+    //    XmlDocument CreateDocument(IValues<T> source, IEnumerable<SyndicationLink> links);
+    //}
+
+    //public interface IMediaStreamDefinition<T>
+    //{
+    //    void Start(DateTime currentTime, IEnumerable<SyndicationLink> links);
+    //    void AddItem(IValues<T> source, IEnumerable<SyndicationLink> links);
+    //    void Write(IOutputWriter writer);
+    //}
 
     /*
      * In the scanning for conneg node, look for types and try to hook up the media definition stuff
