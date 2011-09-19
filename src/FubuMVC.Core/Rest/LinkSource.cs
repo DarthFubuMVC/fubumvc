@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.ServiceModel.Syndication;
 using FubuCore.Reflection;
 using FubuLocalization;
 using FubuMVC.Core.Rest.Media;
@@ -13,14 +12,14 @@ namespace FubuMVC.Core.Rest
     {
         private readonly Func<IValues<T>, IUrlRegistry, string> _urlSource;
         private Func<IValues<T>, bool> _filter = t => true;
-        private readonly IList<Action<SyndicationLink>> _modifications = new List<Action<SyndicationLink>>();
+        private readonly IList<Action<Link>> _modifications = new List<Action<Link>>();
 
         public LinkSource(Func<IValues<T>, IUrlRegistry, string> urlSource)
         {
             _urlSource = urlSource;
         }
 
-        private LinkSource<T> modify(Action<SyndicationLink> modification)
+        private LinkSource<T> modify(Action<Link> modification)
         {
             _modifications.Add(modification);
             return this;
@@ -28,7 +27,7 @@ namespace FubuMVC.Core.Rest
 
         public LinkSource<T> Rel(string rel)
         {
-            return modify(link => link.RelationshipType = rel);
+            return modify(link => link.Rel = rel);
         }
 
         public LinkSource<T> Title(StringToken title)
@@ -70,7 +69,7 @@ namespace FubuMVC.Core.Rest
         }
 
 
-        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValues<T> target, IUrlRegistry urls)
+        IEnumerable<Link> ILinkSource<T>.LinksFor(IValues<T> target, IUrlRegistry urls)
         {
             if (!_filter(target))
             {
@@ -78,7 +77,7 @@ namespace FubuMVC.Core.Rest
             }
 
             var url = _urlSource(target, urls);
-            var link = new SyndicationLink(new Uri(url));
+            var link = new Link{Url = url};
             _modifications.Each(x => x(link));
 
             yield return link;

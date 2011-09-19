@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ServiceModel.Syndication;
 
 namespace FubuMVC.Core.Rest.Media
 {
@@ -8,7 +7,7 @@ namespace FubuMVC.Core.Rest.Media
         IMediaNode AddChild(string name);
         void SetAttribute(string name, object value);
 
-        void WriteLinks(IEnumerable<SyndicationLink> links);
+        void WriteLinks(IEnumerable<Link> links);
 
     }
 }

@@ -116,8 +116,8 @@ namespace FubuMVC.Tests.Rest
             var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
-            link.Uri.ShouldEqual(new Uri("http://site.com"));
-            link.RelationshipType.ShouldBeNull();
+            link.Url.ShouldEqual("http://site.com");
+            link.Rel.ShouldBeNull();
             link.Title.ShouldBeNull();
         }
 
@@ -130,8 +130,8 @@ namespace FubuMVC.Tests.Rest
             var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
-            link.Uri.ShouldEqual(new Uri("http://site.com"));
-            link.RelationshipType.ShouldEqual("something");
+            link.Url.ShouldEqual("http://site.com");
+            link.Rel.ShouldEqual("something");
             link.Title.ShouldBeNull();
         }
 
@@ -148,7 +148,7 @@ namespace FubuMVC.Tests.Rest
             var link = source.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single();
 
-            link.Uri.ShouldEqual(new Uri("http://site.com"));
+            link.Url.ShouldEqual("http://site.com");
             link.Title.ShouldEqual(token.ToString());
         }
 

@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Rest.Media.Projections.Xml
             if (value != null) _parentNode.AddElement(name).InnerText = value.ToString();
         }
 
-        public void WriteLinks(IEnumerable<SyndicationLink> links)
+        public void WriteLinks(IEnumerable<Link> links)
         {
             throw new NotImplementedException();
         }
