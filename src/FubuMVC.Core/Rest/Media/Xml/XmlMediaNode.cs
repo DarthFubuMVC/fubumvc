@@ -29,7 +29,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public void WriteLinks(IEnumerable<Link> links)
         {
-            throw new NotImplementedException();
+            LinkWriter.Write(_element, links);
         }
 
         public XmlElement Element

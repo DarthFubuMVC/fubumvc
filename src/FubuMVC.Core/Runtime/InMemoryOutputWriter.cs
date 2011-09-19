@@ -22,8 +22,11 @@ namespace FubuMVC.Core.Runtime
 
         public void Write(string contentType, string renderedOutput)
         {
+            ContentType = contentType;
             _writer.WriteLine(renderedOutput);
         }
+
+        public string ContentType { get; set; }
 
         public RecordedOutput Record(Action action)
         {
@@ -41,7 +44,6 @@ namespace FubuMVC.Core.Runtime
 
         public void WriteResponseCode(HttpStatusCode status)
         {
-
         }
 
         public override string ToString()
