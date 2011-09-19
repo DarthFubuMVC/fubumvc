@@ -1,5 +1,6 @@
-using FubuMVC.Core.Rest.Projections;
-using FubuMVC.Core.Rest.Projections.Xml;
+using FubuMVC.Core.Rest.Media;
+using FubuMVC.Core.Rest.Media.Projections;
+using FubuMVC.Core.Rest.Media.Projections.Xml;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -9,14 +10,14 @@ namespace FubuMVC.Tests.Rest.Projections
     public class AccessorProjectionTester
     {
         private AccessorProjection<ValueTarget> theAccessorProjection;
-        private SimpleValueSource<ValueTarget> _theValueSource;
+        private SimpleValues<ValueTarget> _theValues;
         private XmlAttCentricMediaNode theMediaNode;
 
         [SetUp]
         public void SetUp()
         {
             theAccessorProjection = AccessorProjection<ValueTarget>.For(x => x.Age);
-            _theValueSource = new SimpleValueSource<ValueTarget>(new ValueTarget
+            _theValues = new SimpleValues<ValueTarget>(new ValueTarget
             {
                 Age = 37
             });
@@ -27,7 +28,7 @@ namespace FubuMVC.Tests.Rest.Projections
         [Test]
         public void project_the_property_with_default_node_name()
         {
-            theAccessorProjection.WriteValue(_theValueSource, theMediaNode);
+            theAccessorProjection.WriteValue(_theValues, theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual("37");
         }
@@ -37,7 +38,7 @@ namespace FubuMVC.Tests.Rest.Projections
         {
             theAccessorProjection.Name("CurrentAge");
 
-            theAccessorProjection.WriteValue(_theValueSource, theMediaNode);
+            theAccessorProjection.WriteValue(_theValues, theMediaNode);
 
             theMediaNode.Element.GetAttribute("CurrentAge").ShouldEqual("37");
         }

@@ -1,7 +1,7 @@
 using System;
 using System.Xml;
 
-namespace FubuMVC.Core.Rest.Projections.Xml
+namespace FubuMVC.Core.Rest.Media.Projections.Xml
 {
     public static class XmlExtensions
     {

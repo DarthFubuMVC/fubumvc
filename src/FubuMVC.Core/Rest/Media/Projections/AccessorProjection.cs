@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Rest.Projections
+namespace FubuMVC.Core.Rest.Media.Projections
 {
     public class AccessorProjection<T> : IValueProjection<T>
     {
@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Rest.Projections
             return _projectedNodeName;
         }
 
-        public void WriteValue(IValueSource<T> target, IMediaNode node)
+        public void WriteValue(IValues<T> target, IMediaNode node)
         {
             var value = target.ValueFor(_accessor);
             node.SetAttribute(Name(), value);

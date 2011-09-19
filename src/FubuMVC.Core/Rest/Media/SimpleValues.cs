@@ -1,12 +1,12 @@
 using FubuCore.Reflection;
 
-namespace FubuMVC.Core.Rest.Projections
+namespace FubuMVC.Core.Rest.Media
 {
-    public class SimpleValueSource<T> : IValueSource<T>
+    public class SimpleValues<T> : IValues<T>
     {
         private readonly T _subject;
 
-        public SimpleValueSource(T subject)
+        public SimpleValues(T subject)
         {
             _subject = subject;
         }

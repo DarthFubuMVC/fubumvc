@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Rest
@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Rest
     {
         private readonly IList<ILinkSource<T>> _sources = new List<ILinkSource<T>>();
 
-        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValueSource<T> target, IUrlRegistry urls)
+        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValues<T> target, IUrlRegistry urls)
         {
             return _sources.SelectMany(x => x.LinksFor(target, urls));
         }
@@ -46,7 +46,7 @@ namespace FubuMVC.Core.Rest
             });
         }
 
-        public LinkSource<T> LinkTo(Func<IValueSource<T>, IUrlRegistry, string> urlSource)
+        public LinkSource<T> LinkTo(Func<IValues<T>, IUrlRegistry, string> urlSource)
         {
             var source = new LinkSource<T>(urlSource);
             _sources.Add(source);

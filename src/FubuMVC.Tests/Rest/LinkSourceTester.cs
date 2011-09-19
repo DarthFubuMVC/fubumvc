@@ -3,7 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuLocalization;
 using FubuMVC.Core.Rest;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -14,14 +14,14 @@ namespace FubuMVC.Tests.Rest
     public class LinkSourceTester
     {
         private Site theSubject;
-        private SimpleValueSource<Site> theTarget;
+        private SimpleValues<Site> theTarget;
         private StubUrlRegistry theUrls;
 
         [SetUp]
         public void SetUp()
         {
             theSubject = new Site();
-            theTarget = new SimpleValueSource<Site>(theSubject);
+            theTarget = new SimpleValues<Site>(theSubject);
             theUrls = new StubUrlRegistry();
         }
 

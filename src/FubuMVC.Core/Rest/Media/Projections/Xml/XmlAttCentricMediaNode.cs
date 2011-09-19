@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
-namespace FubuMVC.Core.Rest.Projections.Xml
+namespace FubuMVC.Core.Rest.Media.Projections.Xml
 {
     // TODO -- need to do a node-centric approach too.
     public class XmlAttCentricMediaNode : IMediaNode

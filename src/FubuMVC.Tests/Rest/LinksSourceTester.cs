@@ -5,7 +5,7 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Rest;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -16,7 +16,7 @@ namespace FubuMVC.Tests.Rest
     public class LinksSourceTester
     {
         private Site theSubject;
-        private SimpleValueSource<Site> theTarget;
+        private SimpleValues<Site> theTarget;
         private ValidStubUrlRegistry theUrls;
         private LinksSource<Site> theLinks;
 
@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Rest
         {
             theSubject = new Site(){Name = "my site", Id = Guid.NewGuid()};
             theUrls = new ValidStubUrlRegistry();
-            theTarget = new SimpleValueSource<Site>(theSubject);
+            theTarget = new SimpleValues<Site>(theSubject);
 
             theLinks = new LinksSource<Site>();
         }

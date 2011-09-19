@@ -1,6 +1,6 @@
 using FubuCore;
 using FubuCore.Reflection;
-using FubuMVC.Core.Rest.Projections;
+using FubuMVC.Core.Rest.Media;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -8,7 +8,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Rest.Projections
 {
     [TestFixture]
-    public class when_retrieving_a_value_for_an_accessor : InteractionContext<FormattedValueSource<SimpleClass>>
+    public class when_retrieving_a_value_for_an_accessor : InteractionContext<FormattedValues<SimpleClass>>
     {
         private string theInnerValue;
         private Accessor theAccessor;
@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Rest.Projections
             theInnerValue = "something";
             theFormattedValue = "formatted";
 
-            MockFor<IValueSource<SimpleClass>>().Stub(x => x.ValueFor(theAccessor)).Return(theInnerValue);
+            MockFor<IValues<SimpleClass>>().Stub(x => x.ValueFor(theAccessor)).Return(theInnerValue);
 
             // TODO -- think you'll want a custom service here
             MockFor<IDisplayFormatter>().Stub(x => x.GetDisplay(theAccessor, theInnerValue))
