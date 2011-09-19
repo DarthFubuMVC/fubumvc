@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
+using FubuMVC.Core.Rest;
 using FubuMVC.Core.Rest.Media;
 
 namespace FubuMVC.Tests.Rest.Projections
@@ -20,7 +21,7 @@ namespace FubuMVC.Tests.Rest.Projections
             _properties.Add(name, value);
         }
 
-        public void WriteLinks(IEnumerable<SyndicationLink> links)
+        public void WriteLinks(IEnumerable<Link> links)
         {
             throw new NotImplementedException();
         }

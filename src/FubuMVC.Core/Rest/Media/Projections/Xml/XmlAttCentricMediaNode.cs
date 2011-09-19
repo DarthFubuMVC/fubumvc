@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Rest.Media.Projections.Xml
             _element.SetAttribute(name, value == null ? string.Empty : value.ToString());
         }
 
-        public void WriteLinks(IEnumerable<SyndicationLink> links)
+        public void WriteLinks(IEnumerable<Link> links)
         {
             throw new NotImplementedException();
         }

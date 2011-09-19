@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Rest
     {
         private readonly IList<ILinkSource<T>> _sources = new List<ILinkSource<T>>();
 
-        IEnumerable<SyndicationLink> ILinkSource<T>.LinksFor(IValues<T> target, IUrlRegistry urls)
+        IEnumerable<Link> ILinkSource<T>.LinksFor(IValues<T> target, IUrlRegistry urls)
         {
             return _sources.SelectMany(x => x.LinksFor(target, urls));
         }

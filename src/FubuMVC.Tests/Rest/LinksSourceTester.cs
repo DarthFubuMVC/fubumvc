@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Rest
             theLinks.LinkToSubject();
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Uri.OriginalString.ShouldEqual(theUrls.UrlFor(theSubject));
+                .Single().Url.ShouldEqual(theUrls.UrlFor(theSubject));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.Rest
             theLinks.LinkTo(site => new SiteAction(site.Name));
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Uri.OriginalString.ShouldEqual(theUrls.UrlFor(new SiteAction(theSubject.Name)));
+                .Single().Url.ShouldEqual(theUrls.UrlFor(new SiteAction(theSubject.Name)));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Rest
             parameters[x => x.Id] = theSubject.Id.ToString();
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
-                .Single().Uri.OriginalString.ShouldEqual(theUrls.UrlFor(typeof(Site), parameters));
+                .Single().Url.ShouldEqual(theUrls.UrlFor(typeof(Site), parameters));
         }
 
         public class SiteAction
