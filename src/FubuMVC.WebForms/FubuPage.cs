@@ -1,6 +1,7 @@
 using System;
 using System.Web.UI;
 using FubuCore.Util;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
@@ -37,6 +38,11 @@ namespace FubuMVC.WebForms
         public T GetNew<T>()
         {
             return ServiceLocator.GetInstance<T>();
+        }
+
+        public void Write(object content)
+        {
+            Get<IOutputWriter>().WriteHtml(content);
         }
 
         public IUrlRegistry Urls

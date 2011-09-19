@@ -32,6 +32,11 @@ namespace FubuMVC.Tests.View
             throw new NotImplementedException();
         }
 
+        public void Write(object content)
+        {
+            throw new NotImplementedException();
+        }
+
         public object GetModel()
         {
             throw new NotImplementedException();

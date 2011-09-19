@@ -1,6 +1,7 @@
 using System;
 using System.Web.UI;
 using FubuCore.Util;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using Microsoft.Practices.ServiceLocation;
@@ -31,6 +32,11 @@ namespace FubuMVC.WebForms
         public T GetNew<T>()
         {
             return ServiceLocator.GetInstance<T>();
+        }
+
+        void IFubuPage.Write(object content)
+        {
+            Get<IOutputWriter>().WriteHtml(content);
         }
 
         object IFubuPageWithModel.GetModel()

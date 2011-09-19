@@ -66,6 +66,11 @@ namespace FubuMVC.WebForms
             return FubuPage.GetNew<T>();
         }
 
+        public void Write(object content)
+        {
+            FubuPage.Write(content);
+        }
+
         public IUrlRegistry Urls
         {
             get { return FubuPage.Urls; }
