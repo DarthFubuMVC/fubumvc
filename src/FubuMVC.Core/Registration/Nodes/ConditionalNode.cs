@@ -74,7 +74,8 @@ namespace FubuMVC.Core.Registration.Nodes
         public ConditionalNode(BehaviorNode node, Type conditional)
         {
             _node = node;
-            _conditional = conditional;
+            _conditional = conditional; 
+            _objDef = ObjectDef.ForType<ConditionalBehaviorInvoker>();
         }
 
         public ConditionalNode(BehaviorNode node, Func<T, bool> condition)
@@ -101,7 +102,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         protected override ObjectDef buildObjectDef()
         {
-            var conditionalInvoker = ObjectDef.ForType<ConditionalBehavior<T>>();
+            var conditionalInvoker = ObjectDef.ForType<ConditionalBehavior>();
             conditionalInvoker.DependencyByType<IActionBehavior>(InnerNode.As<IContainerModel>().ToObjectDef());
             if (Condition != null)
             {

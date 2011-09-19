@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -16,16 +17,16 @@ namespace FubuMVC.HelloWorld.Controllers.Conditional
             graph.Behaviors.Where(x => x.FirstCall().OutputType().CanBeCastTo<ConditionalModel>())
                 .Each(chain =>
                           {
-                              chain.Outputs.First().ConditionallyRunByBehavior<CheckForQueryString>();
+                              chain.Outputs.First().ConditionallyRunIf<CheckForQueryString>();
                               chain.FirstCall().AddAfter(new Wrapper(typeof(MiddleWare))
                                   .ConditionallyRunIf<CurrentRequest>(x => x.RawUrl.Contains("render=false")));
                           });
         }
     }
-    public class CheckForQueryString : ConditionalBehavior<IFubuRequest>
+    public class CheckForQueryString : LambdaConditional<IFubuRequest>
     {
-        public CheckForQueryString(IActionBehavior innerBehavior, IFubuRequest context)
-            : base(innerBehavior, new LambdaConditional<IFubuRequest>(context, x => x.Get<CurrentRequest>().RawUrl.Contains("render=true")))
+        public CheckForQueryString(IFubuRequest context)
+            : base(context, x => x.Get<CurrentRequest>().RawUrl.Contains("render=true"))
         {
         }
     }

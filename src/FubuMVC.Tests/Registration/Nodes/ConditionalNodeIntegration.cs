@@ -42,11 +42,11 @@ namespace FubuMVC.Tests.Registration.Nodes.ConditionalTest
                 .OfType<ConditionalNode>().First();
         }
 
-        private ConditionalNode getHerpNode()
+        private ConditionalNode<IsAjaxRequest> getHerpNode()
         {
             return _graph
                 .BehaviorFor<TestConditionalController>(x => x.Herp())
-                .OfType<ConditionalNode>().First();
+                .OfType<ConditionalNode<IsAjaxRequest>>().First();
         }
 
         private ConditionalNode<CurrentRequest> getHerpDerpNode()
@@ -83,12 +83,7 @@ namespace FubuMVC.Tests.Registration.Nodes.ConditionalTest
                 .InnerNode.ShouldBeOfType<Wrapper>();
         }
 
-        [Test]
-        public void behavior_type_should_be_is_ajax()
-        {
-            getHerpNode()
-                .BehaviorType.ShouldEqual(typeof (IsAjaxRequest));
-        }
+       
         [Test]
         public void condition_should_be_null()
         {
@@ -121,7 +116,7 @@ namespace FubuMVC.Tests.Registration.Nodes.ConditionalTest
 
             graph
              .BehaviorFor<TestConditionalController>(x => x.Herp())
-             .AddToEnd(Wrapper.For<AddTheHerpBehavior>().ConditionallyRunByBehavior<IsAjaxRequest>());
+             .AddToEnd(Wrapper.For<AddTheHerpBehavior>().ConditionallyRunIf<IsAjaxRequest>());
 
             graph
                 .BehaviorFor<TestConditionalController>(x => x.HerpDerp())

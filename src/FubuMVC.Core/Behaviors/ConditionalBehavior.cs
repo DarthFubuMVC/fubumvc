@@ -60,25 +60,18 @@ namespace FubuMVC.Core.Behaviors
         }
     }
 
-    public class ConditionalBehavior<T> : ConditionalBehavior
+  
+
+    public class IsAjaxRequest : LambdaConditional<IRequestData>
     {
-        public ConditionalBehavior(IActionBehavior innerBehavior, IConditional condition) : base(innerBehavior, condition)
+        public IsAjaxRequest(IRequestData context) : base(context, x => x.IsAjaxRequest())
         {
         }
     }
 
-    public class IsAjaxRequest : ConditionalBehavior<IRequestData>
+    public class IsNotAjaxRequest : LambdaConditional<IRequestData>
     {
-        public IsAjaxRequest(IActionBehavior innerBehavior, IRequestData context)
-                            : base(innerBehavior, new LambdaConditional<IRequestData>(context, x => x.IsAjaxRequest()))
-        {
-        }
-    }
-
-    public class IsNotAjaxRequest : ConditionalBehavior<IRequestData>
-    {
-        public IsNotAjaxRequest(IActionBehavior innerBehavior, IRequestData context)
-            : base(innerBehavior, new LambdaConditional<IRequestData>(context, x => !x.IsAjaxRequest()))
+        public IsNotAjaxRequest(IRequestData context) : base(context, x => !x.IsAjaxRequest())
         {
         }
     }
