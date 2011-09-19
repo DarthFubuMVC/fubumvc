@@ -70,6 +70,11 @@ namespace FubuTestApplication
             throw new NotImplementedException();
         }
 
+        public void Write(object content)
+        {
+            throw new NotImplementedException();
+        }
+
         IUrlRegistry IFubuPage.Urls
         {
             get { throw new NotImplementedException(); }

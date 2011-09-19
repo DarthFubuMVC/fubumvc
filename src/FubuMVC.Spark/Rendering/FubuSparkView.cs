@@ -33,6 +33,11 @@ namespace FubuMVC.Spark.Rendering
             return (T)ServiceLocator.GetInstance(typeof(T));
         }
 
+        public void Write(object content)
+        {
+            Output.Write(content);
+        }
+
         public IUrlRegistry Urls
         {
             get { return Get<IUrlRegistry>(); }
@@ -187,6 +192,11 @@ namespace FubuMVC.Spark.Rendering
         public T GetNew<T>()
         {
             return _view.GetNew<T>();
+        }
+
+        public void Write(object content)
+        {
+            _view.Write(content);
         }
     }
 }
