@@ -1,46 +1,26 @@
-using System;
-using System.Collections.Generic;
 using System.Xml;
 
 namespace FubuMVC.Core.Rest.Media.Xml
 {
-    public class XmlNodeCentricMediaNode : IMediaNode
+    public class XmlNodeCentricMediaNode : XmlMediaNode
     {
-        private readonly XmlNode _parentNode;
+        public XmlNodeCentricMediaNode(XmlElement element) : base(element)
+        {
+        }
 
         public static XmlNodeCentricMediaNode ForRoot(string rootElement)
         {
             return new XmlNodeCentricMediaNode(new XmlDocument().WithRoot(rootElement));
         }
 
-        private XmlNodeCentricMediaNode(XmlNode parentNode)
+        protected override IXmlMediaNode buildChildFor(XmlElement childElement)
         {
-            _parentNode = parentNode;
+            return new XmlNodeCentricMediaNode(childElement);
         }
 
-        public IMediaNode AddChild(string name)
+        public override void SetAttribute(string name, object value)
         {
-            return new XmlNodeCentricMediaNode(_parentNode.AddElement(name));
-        }
-
-        public void SetAttribute(string name, object value)
-        {
-            if (value != null) _parentNode.AddElement(name).InnerText = value.ToString();
-        }
-
-        public void WriteLinks(IEnumerable<Link> links)
-        {
-            throw new NotImplementedException();
-        }
-
-        public XmlNode ParentNode
-        {
-            get { return _parentNode; }
-        }
-
-        public override string ToString()
-        {
-            return _parentNode.OuterXml;
+            if (value != null) Element.AddElement(name).InnerText = value.ToString();
         }
     }
 }

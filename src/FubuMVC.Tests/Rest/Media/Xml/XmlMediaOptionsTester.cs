@@ -16,6 +16,12 @@ namespace FubuMVC.Tests.Rest.Media.Xml
         }
 
         [Test]
+        public void mime_type_is_xml_by_default()
+        {
+            theDefaultOptions.Mimetype.ShouldEqual("text/xml");
+        }
+
+        [Test]
         public void root_is_root()
         {
             theDefaultOptions.Root.ShouldEqual("Root");
