@@ -90,6 +90,7 @@
     <Compile Include="Rest\Conneg\ConnegInputBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegInputHandler.cs" />
     <Compile Include="Rest\Conneg\ConnegNode.cs" />
+    <Compile Include="Rest\Conneg\ConnegOutputBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputHandler.cs" />
     <Compile Include="Rest\Conneg\IConnegInputHandler.cs" />
     <Compile Include="Rest\Conneg\IConnegOutputHandler.cs" />
