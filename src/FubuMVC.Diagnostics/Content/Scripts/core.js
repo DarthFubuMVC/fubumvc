@@ -37,4 +37,6 @@ $(document).ready(function () {
 
         $(this).hover(toggleHover, toggleHover);
     });
+
+    $('button').button();
 });

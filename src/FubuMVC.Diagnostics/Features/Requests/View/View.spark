@@ -1,4 +1,4 @@
-﻿<use namespace="FubuMVC.Diagnostics.Features.Requests" />
+﻿  <use namespace="FubuMVC.Diagnostics.Features.Requests" />
 <viewdata model="FubuMVC.Diagnostics.Features.Requests.RequestDetailsModel" />
 <content:title>Request ${Model.Report.Id.ToString()}</content:title>
 <content:head>
@@ -6,10 +6,25 @@
   <Script src="requests/view.js" />
 </content:head>
 <content:main>
-  <h2 class="request">
-    <span>Request: ${Model.Report.Url}</span>
-  </h2>
-  <h4 class="request-identifier">(Request ${Model.Report.Id.ToString()})</h4>
+  <div class="request-info">
+    <h2 class="request">
+      <span>Request: ${Model.Report.Url}</span>
+    </h2>
+    <h4 class="request-identifier">(Request ${Model.Report.Id.ToString()})</h4>
+  </div>
+  <ul class="request-actions">
+    <li>
+      <button type="type" id="ViewRequests" style="display:none;">
+        <span>Back to Request</span>
+      </button>
+    </li>
+    <li>
+      <button type="type" id="ViewLogs">
+        <span>View Logs</span>
+      </button>
+    </li>
+  </ul>
+  <div class="cboth"></div>
   <ul class="request-details">
     <li if="Model.Report.FormData.Count != 0">
       <table class="grid">
@@ -28,11 +43,21 @@
       </table>
     </li>
   </ul>
-  <h3>Nodes:</h3>
-  <ul id="nodes">
-    <li>
-      #this.PartialFor(Model.Root);
-    </li>
-    <li>&nbsp;</li>
-  </ul>
+  <div id="request-viewer">
+    <h3>Nodes:</h3>
+    <ul id="nodes">
+      <li>
+        #this.PartialFor(Model.Root);
+      </li>
+      <li>&nbsp;</li>
+    </ul>
+  </div>
+  <div id="log-viewer" style="display:none;">
+    <h3>Logs:</h3>
+    <ul class="children">
+      <li class="behavior-details" each="var log in Model.Logs">
+        <BehaviorDetails details="log"/>
+      </li>
+    </ul>
+  </div>
 </content:main>

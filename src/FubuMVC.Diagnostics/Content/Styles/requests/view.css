@@ -20,6 +20,27 @@
     text-align:center;
 }
 
+ul.children
+{
+    list-style-type: none;
+}
+
+.request-info
+{
+    float: left;
+    width: 50%;
+}
+
+.request-actions
+{
+    float: right;
+}
+
+ul.request-actions li
+{
+    list-style-type: none;
+}
+
 h2.request
 {
     margin-bottom:0;

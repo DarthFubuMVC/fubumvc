@@ -4,7 +4,6 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
-using FubuMVC.Diagnostics.Core;
 
 namespace FubuMVC.Diagnostics.Features.Requests.View
 {
@@ -25,11 +24,17 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 			    throw new ArgumentException("{0} does not exist".ToFormat(request.Id));
 			}
 
-			var model = new RequestDetailsModel
-			            	{
-			            		Report = report,
-								Root = Gather(report)
-			            	};
+		    var model = new RequestDetailsModel
+		                    {
+		                        Report = report,
+		                        Root = Gather(report),
+		                        Logs = report
+		                            .Steps
+		                            .Where(s => s.Details is RequestLogEntry)
+		                            .Select(s => s.Details)
+		                            .Cast<RequestLogEntry>()
+		                            .ToList()
+		                    };
 			return model;
 		}
 
@@ -73,13 +78,6 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 
 							lastBehavior = behaviorType;
 				      	});
-
-		    root.Logs = report
-		        .Steps
-		        .Where(s => s.Details is RequestLogEntry)
-		        .Select(s => s.Details)
-		        .Cast<RequestLogEntry>()
-		        .ToList();
 
 			return root;
 		}
