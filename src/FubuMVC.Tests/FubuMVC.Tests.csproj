@@ -110,6 +110,7 @@
     <Compile Include="Rest\Conneg\ConnegBehaviorConventionTester.cs" />
     <Compile Include="Rest\Conneg\ConnegInputActionTester.cs" />
     <Compile Include="Rest\Conneg\ConnegNodeTester.cs" />
+    <Compile Include="Rest\Conneg\ConnegOutputBehaviorTester.cs" />
     <Compile Include="Rest\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Rest\Conneg\XmlFormatterTester.cs" />
     <Compile Include="Content\ContentFolderServiceTester.cs" />
@@ -130,10 +131,8 @@
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
-    <Compile Include="Rest\Media\FormatterMediaChoiceTester.cs" />
     <Compile Include="Rest\Media\Formatters\FormatterMediaReaderTester.cs" />
     <Compile Include="Rest\Media\Formatters\JsonFormatterTester.cs" />
-    <Compile Include="Rest\Media\MediaChoiceTester.cs" />
     <Compile Include="Rest\Media\ModelBindingMediaReaderTester.cs" />
     <Compile Include="Rest\Media\Xml\AtomXmlLinkWriterTester.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaDocumentTester.cs" />

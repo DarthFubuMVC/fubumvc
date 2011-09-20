@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Rest.Media.Projections;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -34,6 +36,11 @@ namespace FubuMVC.Core.Rest.Media
         public void Write(T source, IOutputWriter writer)
         {
             Write(new SimpleValues<T>(source), writer);
+        }
+
+        public IEnumerable<string> Mimetypes
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

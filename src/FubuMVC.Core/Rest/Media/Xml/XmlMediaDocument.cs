@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using FubuMVC.Core.Runtime;
 using FubuCore;
@@ -46,6 +47,11 @@ namespace FubuMVC.Core.Rest.Media.Xml
         public void Write(IOutputWriter writer)
         {
             writer.Write(_options.Mimetype, _document.OuterXml);
+        }
+
+        public IEnumerable<string> Mimetypes
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public XmlDocument Document
