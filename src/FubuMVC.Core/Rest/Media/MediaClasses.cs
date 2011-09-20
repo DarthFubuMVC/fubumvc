@@ -29,6 +29,9 @@ namespace FubuMVC.Core.Rest.Media
 
     public class MediaDefinition<T>
     {
+        
+
+        // Maybe multiples
         public ObjectDef ToObjectDef()
         {
             throw new NotImplementedException();
@@ -41,24 +44,4 @@ namespace FubuMVC.Core.Rest.Media
         void Write(IOutputWriter writer);
     }
 
-
-    //public interface IXmlMedia<T>
-    //{
-    //    XmlDocument CreateDocument(IValues<T> source, IEnumerable<SyndicationLink> links);
-    //}
-
-    //public interface IMediaStreamDefinition<T>
-    //{
-    //    void Start(DateTime currentTime, IEnumerable<SyndicationLink> links);
-    //    void AddItem(IValues<T> source, IEnumerable<SyndicationLink> links);
-    //    void Write(IOutputWriter writer);
-    //}
-
-    /*
-     * In the scanning for conneg node, look for types and try to hook up the media definition stuff
-     * 
-     * 
-     * 
-     * 
-     */
 }

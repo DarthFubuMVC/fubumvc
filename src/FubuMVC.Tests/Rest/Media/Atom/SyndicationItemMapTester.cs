@@ -1,11 +1,11 @@
 using System;
 using System.ServiceModel.Syndication;
 using FubuMVC.Core.Rest.Media;
-using FubuMVC.Core.Rest.Media.Projections.Atom;
+using FubuMVC.Core.Rest.Media.Atom;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Rest.Projections.Atom
+namespace FubuMVC.Tests.Rest.Media.Atom
 {
     [TestFixture]
     public class SyndicationItemMapTester
