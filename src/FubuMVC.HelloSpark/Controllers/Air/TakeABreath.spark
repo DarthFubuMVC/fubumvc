@@ -26,6 +26,8 @@
 </div>
 <div id="viewOutputArea"></div>
 
+#this.WriteExtensions("extension-placeholder");
+
 <content:footer>That's right baby!</content:footer>
 
 !{this.LinkTo<FireInputModel>().Text("Light her up!")}
