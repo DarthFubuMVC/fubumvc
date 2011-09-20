@@ -34,6 +34,11 @@ namespace FubuMVC.Tests.View.FakeViews.Folder1
             throw new NotImplementedException();
         }
 
+        public void Write(object content)
+        {
+            throw new NotImplementedException();
+        }
+
         public object GetModel()
         {
             throw new NotImplementedException();
