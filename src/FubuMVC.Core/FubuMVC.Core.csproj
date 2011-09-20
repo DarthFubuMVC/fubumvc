@@ -209,6 +209,7 @@
     <Compile Include="Rest\Media\IMediaReader.cs" />
     <Compile Include="Rest\Media\MediaClasses.cs" />
     <Compile Include="Rest\Media\MediaWriter.cs" />
+    <Compile Include="Rest\Media\ModelBindingMediaReader.cs" />
     <Compile Include="Rest\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Rest\Media\Atom\Classes.cs" />
     <Compile Include="Rest\Media\FormattedValues.cs" />
