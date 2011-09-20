@@ -16,6 +16,7 @@ namespace FubuMVC.Core.Behaviors
         {
             var serializer = new JavaScriptSerializer();
             string inputText = _data.InputText();
+
             return serializer.Deserialize<T>(inputText);
         }
     }

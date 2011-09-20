@@ -130,6 +130,7 @@
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
     <Compile Include="Rest\Media\FormatterMediaChoiceTester.cs" />
+    <Compile Include="Rest\Media\Formatters\FormatterMediaReaderTester.cs" />
     <Compile Include="Rest\Media\Formatters\JsonFormatterTester.cs" />
     <Compile Include="Rest\Media\MediaChoiceTester.cs" />
     <Compile Include="Rest\Media\Xml\AtomXmlLinkWriterTester.cs" />
