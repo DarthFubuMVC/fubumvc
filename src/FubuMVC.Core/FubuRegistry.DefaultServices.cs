@@ -15,6 +15,7 @@ using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media.Formatters;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -192,7 +193,6 @@ namespace FubuMVC.Core
 
             graph.Services.AddService<IFormatter, JsonFormatter>();
             graph.Services.AddService<IFormatter, XmlFormatter>();
-            graph.Services.SetServiceIfNone(typeof (IMediaProcessor<>), typeof (MediaProcessor<>));
 
             graph.Services.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
