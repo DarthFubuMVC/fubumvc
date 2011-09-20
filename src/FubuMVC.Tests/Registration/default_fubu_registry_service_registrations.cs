@@ -256,5 +256,10 @@ namespace FubuMVC.Tests.Registration
                 .Any(x => x.Type == typeof(PackageFileActivator)).ShouldBeTrue();
         }
 
+        [Test]
+        public void setter_binder_is_registered()
+        {
+            registeredTypeIs<ISetterBinder, SetterBinder>();
+        }
     }
 }

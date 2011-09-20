@@ -92,6 +92,7 @@
     <Compile Include="Rest\Conneg\ConnegOutputHandler.cs" />
     <Compile Include="Rest\Conneg\IConnegInputHandler.cs" />
     <Compile Include="Rest\Conneg\IConnegOutputHandler.cs" />
+    <Compile Include="Rest\Media\Formatters\FormatterMediaReader.cs" />
     <Compile Include="Rest\Media\Formatters\IFormatter.cs" />
     <Compile Include="Rest\Conneg\IMediaProcessor.cs" />
     <Compile Include="Rest\Media\Formatters\JsonFormatter.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Packaging\PackageSettingsSource.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
     <Compile Include="Packaging\ZipFilePackageLoader.cs" />
+    <Compile Include="Rest\Media\IMediaReader.cs" />
     <Compile Include="Rest\Media\MediaClasses.cs" />
     <Compile Include="Rest\Media\MediaWriter.cs" />
     <Compile Include="Rest\Media\Projections\AccessorProjection.cs" />
@@ -317,6 +319,7 @@
     <Compile Include="Runtime\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\RecordedOutput.cs" />
+    <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />
