@@ -7,11 +7,6 @@ using System.Linq;
 
 namespace FubuMVC.Core.Rest.Media
 {
-    public interface IMediaReader<T>
-    {
-        T Retrieve(CurrentRequest request);
-    }
-
     public interface IMediaWriter<T>
     {
         void Write(IValues<T> source, IOutputWriter writer);
