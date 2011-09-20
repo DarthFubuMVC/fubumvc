@@ -90,6 +90,7 @@
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Rest\Conneg\ConnegBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegBehaviorConvention.cs" />
+    <Compile Include="Rest\Conneg\ConnegInputBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegInputHandler.cs" />
     <Compile Include="Rest\Conneg\ConnegNode.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputHandler.cs" />

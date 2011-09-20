@@ -1,10 +1,12 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
     // See StoryTeller suite for Conneg
+    [MarkedForTermination]
     public class ConnegBehavior : IActionBehavior
     {
         private readonly IFubuRequest _request;
