@@ -27,6 +27,7 @@ namespace FubuMVC.Core.Diagnostics
                          {
                              x.ReplaceService<IObjectResolver, RecordingObjectResolver>();
                              x.ReplaceService<IDebugReport, DebugReport>();
+                             x.ReplaceService<IRequestObserver, RequestObserver>();
                              x.ReplaceService<IRequestData, RecordingRequestData>();
                              x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
                              x.ReplaceService<IDebugDetector, DebugDetector>();

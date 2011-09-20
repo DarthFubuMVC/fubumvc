@@ -163,6 +163,7 @@
     <None Include="Shared\AuthorizationReport.spark" />
     <None Include="Shared\BehaviorStart.spark" />
     <None Include="Shared\BehaviorFinish.spark" />
+    <None Include="Shared\RequestLogEntry.spark" />
     <None Include="Shared\FieldAccessReport.spark" />
     <None Include="Shared\HttpStatusReport.spark" />
     <None Include="Shared\RedirectReport.spark" />

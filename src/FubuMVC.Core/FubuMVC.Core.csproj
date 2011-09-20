@@ -111,6 +111,9 @@
     <Compile Include="Continuations\FubuContinuation.cs" />
     <Compile Include="Continuations\ContinuationType.cs" />
     <Compile Include="Continuations\IContinuationDirector.cs" />
+    <Compile Include="Diagnostics\IRequestObserver.cs" />
+    <Compile Include="Diagnostics\RequestLogEntry.cs" />
+    <Compile Include="Diagnostics\RequestObserver.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
     <Compile Include="Diagnostics\IObserverImporter.cs" />

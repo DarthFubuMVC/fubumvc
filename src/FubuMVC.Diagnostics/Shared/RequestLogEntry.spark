@@ -1,0 +1,10 @@
+﻿<use master="" />
+<viewdata model="FubuMVC.Core.Diagnostics.RequestLogEntry" />
+<div class="console">
+  ${this.ImageFor('console-line.png').AddClass('indicator')}
+  <span class="message">
+    <p class="statement">Log</p>
+    <p class="msg-info">${Model.Message}</p>
+  </span>
+  <div class="cboth"></div>
+</div>

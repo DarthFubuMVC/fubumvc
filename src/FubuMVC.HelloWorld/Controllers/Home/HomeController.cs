@@ -1,4 +1,5 @@
 using System.Web;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.View;
 using FubuMVC.WebForms;
 
@@ -6,8 +7,16 @@ namespace FubuMVC.HelloWorld.Controllers.Home
 {
     public class HomeController
     {
+        private readonly IRequestObserver _log;
+
+        public HomeController(IRequestObserver log)
+        {
+            _log = log;
+        }
+
         public HomeViewModel Home(HomeInputModel model)
         {
+            _log.RecordLog("Loading home...");
             return new HomeViewModel
             {
                 Text = "Hello, world.",
