@@ -1,7 +1,9 @@
+using FubuCore;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
+    [MarkedForTermination]
     public class ConnegOutputHandler<T> : IConnegOutputHandler where T : class
     {
         private readonly IMediaProcessor<T> _processor;

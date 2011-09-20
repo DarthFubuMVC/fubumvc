@@ -1,9 +1,11 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
+    [MarkedForTermination]
     public class ConnegNode : BehaviorNode
     {
         public Type InputType { get; set; }
