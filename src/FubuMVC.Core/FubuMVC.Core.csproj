@@ -114,6 +114,8 @@
     <Compile Include="Diagnostics\IRequestObserver.cs" />
     <Compile Include="Diagnostics\RequestLogEntry.cs" />
     <Compile Include="Diagnostics\RequestObserver.cs" />
+    <Compile Include="Diagnostics\DebugCallHandler.cs" />
+    <Compile Include="Diagnostics\IDebugCallHandler.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
     <Compile Include="Diagnostics\IObserverImporter.cs" />

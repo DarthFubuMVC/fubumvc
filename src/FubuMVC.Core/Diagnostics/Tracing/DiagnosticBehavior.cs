@@ -1,7 +1,4 @@
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
 {
@@ -9,14 +6,14 @@ namespace FubuMVC.Core.Diagnostics.Tracing
     {
         private readonly IDebugDetector _detector;
         private readonly IDebugReport _report;
-        private readonly IUrlRegistry _urls;
+        private readonly IDebugCallHandler _debugCallHandler;
 
-        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IUrlRegistry urls,
-                                  IRequestHistoryCache history)
+        public DiagnosticBehavior(IDebugReport report, IDebugDetector detector,
+                                  IRequestHistoryCache history, IDebugCallHandler debugCallHandler)
         {
             _report = report;
+            _debugCallHandler = debugCallHandler;
             _detector = detector;
-            _urls = urls;
 
             history.AddReport(report);
         }
@@ -43,10 +40,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 
             if (!_detector.IsDebugCall()) return;
 
-            var debugWriter = new DebugWriter(_report, _urls);
-            var outputWriter = new HttpResponseOutputWriter();
-
-            outputWriter.Write(MimeType.Html.ToString(), debugWriter.Write().ToString());
+            _debugCallHandler.Handle();
         }
     }
 }
