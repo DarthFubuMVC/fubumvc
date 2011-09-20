@@ -1,7 +1,9 @@
 using System;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Rest.Media.Formatters;
 using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Rest.Media
 {
@@ -27,6 +29,26 @@ namespace FubuMVC.Core.Rest.Media
     {
         bool Matches(string mimeType);
         void Write(T source);
+    }
+
+    public class FormatterMediaChoice<T> : IMediaChoice<T>
+    {
+        private readonly IFormatter _formatter;
+
+        public FormatterMediaChoice(IFormatter formatter)
+        {
+            _formatter = formatter;
+        }
+
+        public bool Matches(string mimeType)
+        {
+            return _formatter.MatchingMimetypes.Contains(mimeType);
+        }
+
+        public void Write(T source)
+        {
+            _formatter.Write(source);
+        }
     }
 
     public class MediaChoice<T> : IMediaChoice<T>
