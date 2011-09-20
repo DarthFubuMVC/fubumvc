@@ -133,6 +133,7 @@
     <Compile Include="Rest\Media\Formatters\FormatterMediaReaderTester.cs" />
     <Compile Include="Rest\Media\Formatters\JsonFormatterTester.cs" />
     <Compile Include="Rest\Media\MediaChoiceTester.cs" />
+    <Compile Include="Rest\Media\ModelBindingMediaReaderTester.cs" />
     <Compile Include="Rest\Media\Xml\AtomXmlLinkWriterTester.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaDocumentTester.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaWriterIntegratedTester.cs" />
