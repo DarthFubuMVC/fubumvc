@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media.Formatters;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -29,7 +30,7 @@ namespace FubuMVC.Tests.Rest.Conneg
 
             streamingData.XmlInputIs(xmlInput);
 
-            var xmlOutput = theFormatter.Read<XmlFormatterModel>(new CurrentRequest());
+            var xmlOutput = theFormatter.Read<XmlFormatterModel>();
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
             xmlOutput.FirstName.ShouldEqual(xmlInput.FirstName);
@@ -45,12 +46,12 @@ namespace FubuMVC.Tests.Rest.Conneg
                 LastName = "Miller"
             };
 
-            theFormatter.Write(xmlInput, new CurrentRequest());
+            theFormatter.Write(xmlInput);
 
             streamingData.RewindOutput();
             streamingData.CopyOutputToInputForTesting();
 
-            var xmlOutput = theFormatter.Read<XmlFormatterModel>(new CurrentRequest());
+            var xmlOutput = theFormatter.Read<XmlFormatterModel>();
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);
 
             xmlOutput.FirstName.ShouldEqual(xmlInput.FirstName);

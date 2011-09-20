@@ -1,6 +1,7 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media.Formatters;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -32,10 +33,5 @@ namespace FubuMVC.Tests.Rest.Conneg
                 .ShouldNotBeNull();
         }
 
-        [Test]
-        public void default_media_processor_is_registered()
-        {
-            theServices.DefaultServiceFor(typeof (IMediaProcessor<>)).Type.ShouldEqual(typeof (MediaProcessor<>));
-        }
     }
 }

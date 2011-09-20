@@ -92,13 +92,12 @@
     <Compile Include="Rest\Conneg\ConnegOutputHandler.cs" />
     <Compile Include="Rest\Conneg\IConnegInputHandler.cs" />
     <Compile Include="Rest\Conneg\IConnegOutputHandler.cs" />
-    <Compile Include="Rest\Conneg\IFormatter.cs" />
+    <Compile Include="Rest\Media\Formatters\IFormatter.cs" />
     <Compile Include="Rest\Conneg\IMediaProcessor.cs" />
-    <Compile Include="Rest\Conneg\JsonFormatter.cs" />
+    <Compile Include="Rest\Media\Formatters\JsonFormatter.cs" />
     <Compile Include="Rest\Conneg\MediaProcessingException.cs" />
-    <Compile Include="Rest\Conneg\MediaProcessor.cs" />
     <Compile Include="Rest\Conneg\NulloConnegHandler.cs" />
-    <Compile Include="Rest\Conneg\XmlFormatter.cs" />
+    <Compile Include="Rest\Media\Formatters\XmlFormatter.cs" />
     <Compile Include="Caching\AspNetRuntimeCacheProvider.cs" />
     <Compile Include="Caching\CacheOptions.cs" />
     <Compile Include="Caching\ICacheProvider.cs" />
@@ -205,7 +204,7 @@
     <Compile Include="Rest\Media\MediaClasses.cs" />
     <Compile Include="Rest\Media\MediaWriter.cs" />
     <Compile Include="Rest\Media\Projections\AccessorProjection.cs" />
-    <Compile Include="Rest\Media\Projections\Atom\Classes.cs" />
+    <Compile Include="Rest\Media\Atom\Classes.cs" />
     <Compile Include="Rest\Media\FormattedValues.cs" />
     <Compile Include="Rest\Media\Xml\AtomXmlLinkWriter.cs" />
     <Compile Include="Rest\Media\Xml\IXmlLinkWriter.cs" />
