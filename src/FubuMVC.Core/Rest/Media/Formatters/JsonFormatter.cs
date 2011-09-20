@@ -1,7 +1,9 @@
+using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
-namespace FubuMVC.Core.Rest.Conneg
+namespace FubuMVC.Core.Rest.Media.Formatters
 {
     // See the StoryTeller tests for conneg
     public class JsonFormatter : IFormatter
@@ -15,19 +17,24 @@ namespace FubuMVC.Core.Rest.Conneg
             _reader = reader;
         }
 
-        public T Read<T>(CurrentRequest currentRequest)
-        {
-            return _reader.Read<T>();
-        }
-
-        public void Write<T>(T target, CurrentRequest request)
+        public void Write<T>(T target)
         {
             _writer.Write(target);
         }
 
-        public bool Matches(CurrentRequest request)
+        public T Read<T>()
         {
-            return request.MatchesOneOfTheseMimeTypes("application/json", "text/json");
+            return _reader.Read<T>();
+        }
+
+        public IEnumerable<string> MatchingMimetypes
+        {
+            get
+            {
+                yield return "application/json";
+                yield return "text/json";
+
+            }
         }
     }
 }
