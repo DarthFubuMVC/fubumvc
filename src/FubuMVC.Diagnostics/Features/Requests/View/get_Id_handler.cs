@@ -74,6 +74,13 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 							lastBehavior = behaviorType;
 				      	});
 
+		    root.Logs = report
+		        .Steps
+		        .Where(s => s.Details is RequestLogEntry)
+		        .Select(s => s.Details)
+		        .Cast<RequestLogEntry>()
+		        .ToList();
+
 			return root;
 		}
 	}

@@ -33,7 +33,7 @@ namespace FubuMVC.Diagnostics.Navigation
                                            {
                                                Text = a.Text(),
                                                Url = a.Url(),
-                                               IsActive = url.Equals(_request.CurrentUrl())
+                                               IsActive = url.z(_request.CurrentUrl())
                                            };
                             });
         }

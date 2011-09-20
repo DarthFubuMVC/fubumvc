@@ -9,10 +9,16 @@ namespace FubuMVC.Diagnostics.Features.Requests
         private readonly IList<IBehaviorDetails> _before = new List<IBehaviorDetails>();
         private readonly IList<IBehaviorDetails> _after = new List<IBehaviorDetails>();
 
+        public BehaviorDetailsModel()
+        {
+            Logs = new List<RequestLogEntry>();
+        }
+
         public Type BehaviorType { get; set; }
         public IEnumerable<IBehaviorDetails> Before { get { return _before; } }
         public BehaviorDetailsModel Inner { get; set; }
         public IEnumerable<IBehaviorDetails> After { get { return _after; } }
+        public IEnumerable<RequestLogEntry> Logs { get; set; }
 
         public void AddBefore(IBehaviorDetails details)
         {
