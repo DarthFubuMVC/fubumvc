@@ -5,8 +5,9 @@ using System.ServiceModel.Syndication;
 using FubuLocalization;
 using System.Linq;
 using FubuCore.Reflection;
+using FubuMVC.Core.Rest.Media.Projections;
 
-namespace FubuMVC.Core.Rest.Media.Projections.Atom
+namespace FubuMVC.Core.Rest.Media.Atom
 {
     // Just use SyndicationLink
 
