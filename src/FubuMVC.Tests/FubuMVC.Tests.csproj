@@ -105,11 +105,10 @@
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Rest\Conneg\ConnegBehaviorConventionTester.cs" />
-    <Compile Include="Rest\Conneg\ConnegInputActionTester.cs" />
-    <Compile Include="Rest\Conneg\ConnegNodeTester.cs" />
+    <Compile Include="Rest\Conneg\ConnegInputBehaviorTester.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputBehaviorTester.cs" />
     <Compile Include="Rest\Conneg\Conneg_Services_Registration_Tester.cs" />
-    <Compile Include="Rest\Conneg\XmlFormatterTester.cs" />
+    <Compile Include="Rest\Media\Formatters\XmlFormatterTester.cs" />
     <Compile Include="Content\ContentFolderServiceTester.cs" />
     <Compile Include="Content\FolderActivatorTester.cs" />
     <Compile Include="Content\ContentFilesTester.cs" />
