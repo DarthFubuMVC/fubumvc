@@ -66,11 +66,13 @@ namespace FubuMVC.StructureMap
                         .HybridHttpOrThreadLocalScoped()
                         .Use<DebugReport>();
 
+                    x.For<IFubuRequest>()
+                        .HybridHttpOrThreadLocalScoped()
+                        .Use<RecordingFubuRequest>();
+
                     x.For<CurrentRequest>()
                         .HybridHttpOrThreadLocalScoped()
                         .Use(c => c.GetInstance<IFubuRequest>().Get<CurrentRequest>());
-
-                    x.For<IDebugDetector>().Use<DebugDetector>();
                 });
             }
 

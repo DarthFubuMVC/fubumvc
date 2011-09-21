@@ -25,6 +25,7 @@ namespace FubuMVC.Core.Diagnostics
 
             Services(x =>
                          {
+                             x.SetServiceIfNone<IDebugDetector, DebugDetector>();
                              x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
                              x.ReplaceService<IObjectResolver, RecordingObjectResolver>();
                              x.ReplaceService<IDebugReport, DebugReport>();

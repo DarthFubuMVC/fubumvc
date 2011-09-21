@@ -1,5 +1,4 @@
 using FubuCore.Binding;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -13,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics
             _request = request;
         }
 
-        public bool IsDebugCall()
+        public virtual bool IsDebugCall()
         {
             bool returnValue = false;
             _request.Value(FLAG, o => returnValue = true);

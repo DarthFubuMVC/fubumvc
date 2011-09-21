@@ -19,11 +19,11 @@ namespace FubuMVC.Diagnostics.Core.Infrastructure
 
         public void Handle()
         {
-            var request = new RecordedRequestRequestModel {Id = _report.Id};
-            _request.Set(request);
+            var requestModel = new RecordedRequestRequestModel {Id = _report.Id};
+            _request.Set(requestModel);
             _partialFactory
-                .BuildPartial(request.GetType())
-                .InvokePartial();
+                .BuildPartial(requestModel.GetType())
+                .Invoke();
         }
     }
 }

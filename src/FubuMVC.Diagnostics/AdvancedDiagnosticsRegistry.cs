@@ -76,6 +76,7 @@ namespace FubuMVC.Diagnostics
                              x.SetServiceIfNone<ITagGeneratorFactory, TagGeneratorFactory>();
 
                              x.ReplaceService<IDebugCallHandler, DiagnosticsDebugCallHandler>();
+                             x.ReplaceService<IDebugDetector, AdvancedDebugDetector>();
 
                              x.Scan(scan =>
                                         {
