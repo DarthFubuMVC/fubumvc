@@ -9,27 +9,18 @@ namespace FubuMVC.Core.Rest.Conneg
     [MarkedForTermination]
     public class ConnegBehavior : IActionBehavior
     {
-        private readonly IFubuRequest _request;
         private readonly IActionBehavior _inner;
         private readonly IConnegInputHandler _inputHandler;
         private readonly IConnegOutputHandler _outputHandler;
+        private readonly IFubuRequest _request;
 
-        public ConnegBehavior(IFubuRequest request, IActionBehavior inner, IConnegInputHandler inputHandler, IConnegOutputHandler outputHandler)
+        public ConnegBehavior(IFubuRequest request, IActionBehavior inner, IConnegInputHandler inputHandler,
+                              IConnegOutputHandler outputHandler)
         {
             _request = request;
             _inner = inner;
             _inputHandler = inputHandler;
             _outputHandler = outputHandler;
-        }
-
-        private void execute(Action innerInvocation)
-        {
-            var currentRequest = _request.Get<CurrentRequest>();
-            _inputHandler.ReadInput(currentRequest, _request);
-
-            innerInvocation();
-
-            _outputHandler.WriteOutput(currentRequest, _request);
         }
 
         public IConnegInputHandler InputHandler
@@ -50,6 +41,16 @@ namespace FubuMVC.Core.Rest.Conneg
         public void InvokePartial()
         {
             execute(() => _inner.InvokePartial());
+        }
+
+        private void execute(Action innerInvocation)
+        {
+            var currentRequest = _request.Get<CurrentRequest>();
+            _inputHandler.ReadInput(currentRequest, _request);
+
+            innerInvocation();
+
+            _outputHandler.WriteOutput(currentRequest, _request);
         }
     }
 }

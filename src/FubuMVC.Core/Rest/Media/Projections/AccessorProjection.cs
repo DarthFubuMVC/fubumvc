@@ -7,11 +7,8 @@ namespace FubuMVC.Core.Rest.Media.Projections
     public class AccessorProjection<T> : IValueProjection<T>
     {
         private readonly Accessor _accessor;
-        
-        public static AccessorProjection<T> For(Expression<Func<T, object>> expression)
-        {
-            return new AccessorProjection<T>(expression.ToAccessor());
-        }
+
+        private string _projectedNodeName;
 
         public AccessorProjection(Accessor accessor)
         {
@@ -19,7 +16,16 @@ namespace FubuMVC.Core.Rest.Media.Projections
             Name(accessor.Name);
         }
 
-        private string _projectedNodeName;
+        public void WriteValue(IValues<T> target, IMediaNode node)
+        {
+            var value = target.ValueFor(_accessor);
+            node.SetAttribute(Name(), value);
+        }
+
+        public static AccessorProjection<T> For(Expression<Func<T, object>> expression)
+        {
+            return new AccessorProjection<T>(expression.ToAccessor());
+        }
 
         public AccessorProjection<T> Name(string value)
         {
@@ -30,12 +36,6 @@ namespace FubuMVC.Core.Rest.Media.Projections
         public string Name()
         {
             return _projectedNodeName;
-        }
-
-        public void WriteValue(IValues<T> target, IMediaNode node)
-        {
-            var value = target.ValueFor(_accessor);
-            node.SetAttribute(Name(), value);
         }
     }
 }

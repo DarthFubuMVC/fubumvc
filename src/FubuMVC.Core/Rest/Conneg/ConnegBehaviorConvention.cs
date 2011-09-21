@@ -10,8 +10,8 @@ namespace FubuMVC.Core.Rest.Conneg
 {
     public class ConnegBehaviorConvention : IConfigurationAction
     {
-        private readonly Func<BehaviorChain, bool> _filter;
         private readonly string _description;
+        private readonly Func<BehaviorChain, bool> _filter;
 
         public ConnegBehaviorConvention(Func<BehaviorChain, bool> filter, string description)
         {
@@ -31,7 +31,7 @@ namespace FubuMVC.Core.Rest.Conneg
 
             observer.RecordCallStatus(firstAction, "Meets criteria {0} for Conneg".ToFormat(_description));
 
-            var node = new ConnegNode(){
+            var node = new ConnegNode{
                 InputType = chain.InputType(),
                 OutputType = chain.Calls.Where(x => x.HasOutput).Select(x => x.OutputType()).LastOrDefault()
             };

@@ -5,13 +5,12 @@ namespace FubuMVC.Core.Rest.Media
 {
     public interface IValues<T>
     {
-        object ValueFor(Accessor accessor);
-
         T Subject { get; }
+        object ValueFor(Accessor accessor);
     }
 
     public interface IValueStream<T>
     {
-        IEnumerable<IValues<T>> Elements { get;}
+        IEnumerable<IValues<T>> Elements { get; }
     }
 }

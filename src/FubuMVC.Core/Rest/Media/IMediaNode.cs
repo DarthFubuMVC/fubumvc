@@ -8,6 +8,5 @@ namespace FubuMVC.Core.Rest.Media
         void SetAttribute(string name, object value);
 
         void WriteLinks(IEnumerable<Link> links);
-
     }
 }

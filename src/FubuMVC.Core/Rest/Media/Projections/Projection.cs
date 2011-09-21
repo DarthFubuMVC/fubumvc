@@ -9,19 +9,18 @@ namespace FubuMVC.Core.Rest.Media.Projections
     {
         private readonly IList<IValueProjection<T>> _values = new List<IValueProjection<T>>();
 
+
+        void IValueProjection<T>.WriteValue(IValues<T> target, IMediaNode node)
+        {
+            _values.Each(x => x.WriteValue(target, node));
+        }
+
         public AccessorProjection<T> Value(Expression<Func<T, object>> expression)
         {
             var value = new AccessorProjection<T>(expression.ToAccessor());
             _values.Add(value);
 
             return value;
-        }
-
-
-
-        void IValueProjection<T>.WriteValue(IValues<T> target, IMediaNode node)
-        {
-            _values.Each(x => x.WriteValue(target, node));
         }
     }
 }

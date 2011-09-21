@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using FubuMVC.Core.Runtime;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Rest.Media.Xml
 {
@@ -10,8 +10,8 @@ namespace FubuMVC.Core.Rest.Media.Xml
     public class XmlMediaDocument : IMediaDocument
     {
         private readonly XmlDocument _document;
-        private readonly IXmlMediaNode _topNode;
         private readonly XmlMediaOptions _options;
+        private readonly IXmlMediaNode _topNode;
 
         public XmlMediaDocument(XmlMediaOptions options)
         {
@@ -36,12 +36,14 @@ namespace FubuMVC.Core.Rest.Media.Xml
             _options = options;
         }
 
+        public XmlDocument Document
+        {
+            get { return _document; }
+        }
+
         public IMediaNode Root
         {
-            get
-            {
-                return _topNode;
-            }
+            get { return _topNode; }
         }
 
         public void Write(IOutputWriter writer)
@@ -52,11 +54,6 @@ namespace FubuMVC.Core.Rest.Media.Xml
         public IEnumerable<string> Mimetypes
         {
             get { throw new NotImplementedException(); }
-        }
-
-        public XmlDocument Document
-        {
-            get { return _document; }
         }
     }
 }
