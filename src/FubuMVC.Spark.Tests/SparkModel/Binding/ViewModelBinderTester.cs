@@ -7,7 +7,7 @@ using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Binding
-{ 
+{
     [TestFixture]
     public class ViewModelBinderTester : InteractionContext<ViewModelBinder>
     {
@@ -57,20 +57,18 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void is_able_to_bind_generic_types()
         {
-            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic[[FubuMVC.Spark.Tests.SparkModel.Binding.Baz]]";
+            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>";
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldEqual(typeof (Generic<Baz>));
         }
 
-
         [Test]
         public void is_able_to_bind_complex_generic_types()
         {
-            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic[[FubuMVC.Spark.Tests.SparkModel.Binding.Baz,FubuMVC.Spark.Tests.SparkModel.Binding.Bar]]";
+            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz,FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldEqual(typeof(Generic<Baz,Bar>));
         }
-
 
         [Test]
         public void it_does_not_try_to_bind_names_that_are_null_or_empty()
