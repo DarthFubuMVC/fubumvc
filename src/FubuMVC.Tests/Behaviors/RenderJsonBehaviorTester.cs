@@ -46,6 +46,12 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
+        public void should_use_the_right_mimetype_to_the_output_from_what_is_passed_into_it()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
         public void should_write_json_serialized_string_to_the_output_writer_regardless_of_request_headers()
         {
             string json = JsonUtil.ToJson(output);

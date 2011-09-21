@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -17,7 +16,7 @@ namespace FubuMVC.Core.Rest.Media.Formatters
             _streaming = streaming;
         }
 
-        public void Write<T>(T target)
+        public void Write<T>(T target, string mimeType)
         {
             var serializer = new XmlSerializer(typeof (T));
 
@@ -28,8 +27,7 @@ namespace FubuMVC.Core.Rest.Media.Formatters
 
             serializer.Serialize(xmlWriter, target);
 
-            // TODO -- this needs to be connected to the requested mimetype
-            _streaming.OutputContentType = MatchingMimetypes.First();
+            _streaming.OutputContentType = mimeType;
         }
 
         public T Read<T>()
