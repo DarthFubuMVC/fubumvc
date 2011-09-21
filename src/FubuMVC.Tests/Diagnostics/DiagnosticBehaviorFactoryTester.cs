@@ -5,7 +5,6 @@ using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -22,9 +21,9 @@ namespace FubuMVC.Tests.Diagnostics
 
             var db = MockRepository.GenerateMock<DiagnosticBehavior>(
                 MockFor<IDebugReport>(),
-                MockFor<IDebugDetector>(), 
-                MockFor<IUrlRegistry>(), 
-                MockFor<IRequestHistoryCache>());
+                MockFor<IDebugDetector>(),
+                MockFor<IRequestHistoryCache>(),
+                MockFor<IDebugCallHandler>());
 
             MockFor<IContainerFacility>()
                 .Expect(x => x.Get<DiagnosticBehavior>())

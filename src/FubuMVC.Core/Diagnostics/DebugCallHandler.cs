@@ -20,8 +20,8 @@ namespace FubuMVC.Core.Diagnostics
         public void Handle()
         {
             var debugWriter = new DebugWriter(_report, _urls);
-
-            _outputWriter.Write(MimeType.Html.ToString(), debugWriter.Write().ToString());
+            var outputWriter = new HttpResponseOutputWriter();
+            outputWriter.Write(MimeType.Html.ToString(), debugWriter.Write().ToString());
         }
     }
 }
