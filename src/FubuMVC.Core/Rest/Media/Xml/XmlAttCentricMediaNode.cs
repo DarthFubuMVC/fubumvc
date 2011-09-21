@@ -4,13 +4,13 @@ namespace FubuMVC.Core.Rest.Media.Xml
 {
     public class XmlAttCentricMediaNode : XmlMediaNode
     {
+        public XmlAttCentricMediaNode(XmlElement element) : base(element)
+        {
+        }
+
         public static XmlAttCentricMediaNode ForRoot(string rootElement)
         {
             return new XmlAttCentricMediaNode(new XmlDocument().WithRoot(rootElement));
-        }
-
-        public XmlAttCentricMediaNode(XmlElement element) : base(element)
-        {
         }
 
         protected override IXmlMediaNode buildChildFor(XmlElement childElement)

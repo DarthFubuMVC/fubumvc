@@ -1,5 +1,3 @@
-using System;
-
 namespace FubuMVC.Core.Rest
 {
     public class Link

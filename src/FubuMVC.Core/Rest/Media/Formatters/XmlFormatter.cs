@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using FubuMVC.Core.Runtime;
-using System.Linq;
 
 namespace FubuMVC.Core.Rest.Media.Formatters
 {
@@ -20,11 +19,10 @@ namespace FubuMVC.Core.Rest.Media.Formatters
 
         public void Write<T>(T target)
         {
-            var serializer = new XmlSerializer(typeof(T));
+            var serializer = new XmlSerializer(typeof (T));
 
             // TODO -- later, we'll need to get more sophisticated and worry about the Encoding
-            var xmlWriter = new XmlTextWriter(_streaming.Output, Encoding.Default)
-            {
+            var xmlWriter = new XmlTextWriter(_streaming.Output, Encoding.Default){
                 Formatting = Formatting.None
             };
 
@@ -36,8 +34,8 @@ namespace FubuMVC.Core.Rest.Media.Formatters
 
         public T Read<T>()
         {
-            var serializer = new XmlSerializer(typeof(T));
-            return (T)serializer.Deserialize(_streaming.Input);
+            var serializer = new XmlSerializer(typeof (T));
+            return (T) serializer.Deserialize(_streaming.Input);
         }
 
         public IEnumerable<string> MatchingMimetypes

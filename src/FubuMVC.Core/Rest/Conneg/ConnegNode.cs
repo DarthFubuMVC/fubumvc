@@ -19,24 +19,24 @@ namespace FubuMVC.Core.Rest.Conneg
         protected override ObjectDef buildObjectDef()
         {
             var objectDef = ObjectDef.ForType<ConnegBehavior>();
-            objectDef.Dependency(typeof(IConnegInputHandler), buildInputHandlerDef());
-            objectDef.Dependency(typeof(IConnegOutputHandler), buildOutputHandlerDef());
+            objectDef.Dependency(typeof (IConnegInputHandler), buildInputHandlerDef());
+            objectDef.Dependency(typeof (IConnegOutputHandler), buildOutputHandlerDef());
 
             return objectDef;
         }
 
         private ObjectDef buildOutputHandlerDef()
         {
-            return OutputType == null 
-                       ? ObjectDef.ForType<NulloConnegHandler>() 
-                       : new ObjectDef(typeof(ConnegOutputHandler<>), OutputType);
+            return OutputType == null
+                       ? ObjectDef.ForType<NulloConnegHandler>()
+                       : new ObjectDef(typeof (ConnegOutputHandler<>), OutputType);
         }
 
         private ObjectDef buildInputHandlerDef()
         {
             return InputType == null
                        ? ObjectDef.ForType<NulloConnegHandler>()
-                       : new ObjectDef(typeof(ConnegInputHandler<>), InputType);
+                       : new ObjectDef(typeof (ConnegInputHandler<>), InputType);
         }
     }
 }

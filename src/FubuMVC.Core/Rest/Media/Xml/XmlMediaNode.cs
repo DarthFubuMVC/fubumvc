@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -23,8 +22,6 @@ namespace FubuMVC.Core.Rest.Media.Xml
             return childNode;
         }
 
-        protected abstract IXmlMediaNode buildChildFor(XmlElement childElement);
-
         public abstract void SetAttribute(string name, object value);
 
         public void WriteLinks(IEnumerable<Link> links)
@@ -38,6 +35,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
         }
 
         public IXmlLinkWriter LinkWriter { get; set; }
+        protected abstract IXmlMediaNode buildChildFor(XmlElement childElement);
 
         public override string ToString()
         {
