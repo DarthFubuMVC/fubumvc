@@ -46,7 +46,7 @@ namespace FubuMVC.Tests.Rest.Conneg
                 LastName = "Miller"
             };
 
-            theFormatter.Write(xmlInput);
+            theFormatter.Write(xmlInput, "text/xml");
 
             streamingData.RewindOutput();
             streamingData.CopyOutputToInputForTesting();

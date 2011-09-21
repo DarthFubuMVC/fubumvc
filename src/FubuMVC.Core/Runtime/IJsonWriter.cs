@@ -1,4 +1,5 @@
-﻿using FubuCore.Binding;
+﻿using System;
+using FubuCore.Binding;
 using HtmlTags;
 
 namespace FubuMVC.Core.Runtime
@@ -6,6 +7,7 @@ namespace FubuMVC.Core.Runtime
     public interface IJsonWriter
     {
         void Write(object output);
+        void Write(object output, string mimeType);
     }
 
     public class JsonWriter : IJsonWriter
@@ -19,7 +21,12 @@ namespace FubuMVC.Core.Runtime
 
         public void Write(object output)
         {
-            _outputWriter.Write(MimeType.Json.ToString(), JsonUtil.ToJson(output));
+            Write(output, MimeType.Json.ToString());
+        }
+
+        public void Write(object output, string mimeType)
+        {
+            _outputWriter.Write(mimeType, JsonUtil.ToJson(output));
         }
     }
 
@@ -50,6 +57,12 @@ namespace FubuMVC.Core.Runtime
                     "</textarea></body></html>";
                 _outputWriter.Write(MimeType.Html.ToString(), html);
             }
+        }
+
+        // TODO -- pull this out into Conneg as a different media writer
+        public void Write(object output, string mimeType)
+        {
+            Write(output);
         }
     }
 }
