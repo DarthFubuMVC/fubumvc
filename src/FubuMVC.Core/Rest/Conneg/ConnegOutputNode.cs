@@ -16,6 +16,11 @@ namespace FubuMVC.Core.Rest.Conneg
         {
         }
 
+        public override BehaviorCategory Category
+        {
+            get { return BehaviorCategory.Output; }
+        }
+
         public void AddWriter(IMediaWriterNode node)
         {
             if (node.InputType != InputType)
