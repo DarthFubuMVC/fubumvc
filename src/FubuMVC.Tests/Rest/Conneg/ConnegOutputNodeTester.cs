@@ -133,6 +133,14 @@ namespace FubuMVC.Tests.Rest.Conneg
     [TestFixture]
     public class ConnegOutputNodeTester
     {
+
+        [Test]
+        public void category_is_output()
+        {
+            var node = new ConnegOutputNode(typeof(Address));
+            node.Category.ShouldEqual(BehaviorCategory.Output);
+        }
+
         [Test]
         public void formatter_usage_is_all_by_default()
         {
