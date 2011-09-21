@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Rest.Media.Formatters
             _reader = reader;
         }
 
-        public void Write<T>(T target)
+        public void Write<T>(T target, string mimeType)
         {
             _writer.Write(target);
         }

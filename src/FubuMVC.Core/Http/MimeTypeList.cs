@@ -20,6 +20,11 @@ namespace FubuMVC.Core.Http
             });
         }
 
+        public void AddMimeType(string mimeType)
+        {
+            _mimeTypes.Add(mimeType);
+        }
+
         public bool Matches(params string[] mimeTypes)
         {
             return _mimeTypes.Intersect(mimeTypes).Any();
