@@ -13,7 +13,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Rest.Conneg
 {
     [TestFixture]
-    public class ConnegInputActionTester : InteractionContext<ConnegInputBehavior<Address>>
+    public class ConnegInputBehaviorTester : InteractionContext<ConnegInputBehavior<Address>>
     {
         private IMediaReader<Address> readerFor(params string[] mimeTypes)
         {

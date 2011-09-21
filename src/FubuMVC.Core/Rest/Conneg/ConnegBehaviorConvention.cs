@@ -31,12 +31,14 @@ namespace FubuMVC.Core.Rest.Conneg
 
             observer.RecordCallStatus(firstAction, "Meets criteria {0} for Conneg".ToFormat(_description));
 
-            var node = new ConnegNode{
-                InputType = chain.InputType(),
-                OutputType = chain.Calls.Where(x => x.HasOutput).Select(x => x.OutputType()).LastOrDefault()
-            };
+            throw new NotImplementedException("NWO");
 
-            firstAction.AddBefore(node);
+            //var node = new ConnegNode{
+            //    InputType = chain.InputType(),
+            //    OutputType = chain.Calls.Where(x => x.HasOutput).Select(x => x.OutputType()).LastOrDefault()
+            //};
+
+            //firstAction.AddBefore(node);
         }
     }
 }
