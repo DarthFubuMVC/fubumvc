@@ -126,11 +126,11 @@ namespace FubuMVC.Spark.SparkModel
                 return;
             }
 
-            if(typeCount == 0 && GenericParser.IsGeneric(request.ViewModelType))
+            if (typeCount == 0 && GenericParser.IsGeneric(request.ViewModelType))
             {
                 descriptor.ViewModel = new GenericParser(request.Types.Assemblies).Parse(request.ViewModelType);
                 logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
-                
+
                 return;
             }
 
