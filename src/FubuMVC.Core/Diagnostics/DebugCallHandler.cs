@@ -8,12 +8,10 @@ namespace FubuMVC.Core.Diagnostics
     {
         private readonly IDebugReport _report;
         private readonly IUrlRegistry _urls;
-        private readonly IOutputWriter _outputWriter;
 
-        public DebugCallHandler(IDebugReport report, IUrlRegistry urls, IOutputWriter outputWriter)
+        public DebugCallHandler(IDebugReport report, IUrlRegistry urls)
         {
             _report = report;
-            _outputWriter = outputWriter;
             _urls = urls;
         }
 
