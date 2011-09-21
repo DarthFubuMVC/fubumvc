@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Rest.Conneg
     public class ConnegOutputBehavior<T> : BasicBehavior
     {
         // TODO -- move to MimeTypes when Assets is put in place
-        public static readonly string HttpFormMimetype = "application/x-www-form-urlencoded";
+        public static readonly string Html = "text/html";
 
         private readonly IValueSource<T> _source;
         private readonly IFubuRequest _request;
@@ -29,10 +29,8 @@ namespace FubuMVC.Core.Rest.Conneg
 
         protected override DoNext performInvoke()
         {
-            throw new NotImplementedException();
-
             var mimeTypes = _request.Get<CurrentMimeType>();
-            if (mimeTypes.AcceptTypes.Contains(HttpFormMimetype))
+            if (mimeTypes.AcceptTypes.Contains(Html))
             {
                 return DoNext.Continue;
             }
@@ -52,7 +50,7 @@ namespace FubuMVC.Core.Rest.Conneg
             
         }
 
-        public IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes)
+        public virtual IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes)
         {
             foreach (var acceptType in mimeTypes.AcceptTypes)
             {
