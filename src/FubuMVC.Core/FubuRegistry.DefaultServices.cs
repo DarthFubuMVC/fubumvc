@@ -15,6 +15,7 @@ using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Formatters;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
@@ -203,6 +204,8 @@ namespace FubuMVC.Core
             graph.Services.AddService<IActivator>(typeof (PackageFileActivator));
 
             graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();
+
+            graph.Services.SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
 
             registerActivators(graph);
             registerHtmlConventions(graph);

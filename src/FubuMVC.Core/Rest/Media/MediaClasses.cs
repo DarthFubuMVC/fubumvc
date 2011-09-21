@@ -16,13 +16,6 @@ namespace FubuMVC.Core.Rest.Media
         IEnumerable<string> Mimetypes { get; }
     }
 
-    // this to be consumed by IMediaReader<T>
-    public interface IValueSource<T>
-    {
-        IValues<T> FindValues();
-    }
-
-
 
     public class MediaDefinition<T>
     {
