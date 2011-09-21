@@ -1,38 +1,18 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Formatters;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
-    public enum FormatterUsage
+    public class ConnegInputNode : ConnegNode
     {
-        all,
-        none,
-        selected
-    }
-
-    public class ConnegInputNode : BehaviorNode
-    {
-        private readonly Type _inputType;
         private readonly IList<IMediaReaderNode> _readers = new List<IMediaReaderNode>();
 
-        public ConnegInputNode(Type inputType)
+        public ConnegInputNode(Type inputType) : base(inputType)
         {
-            _inputType = inputType;
             AllowHttpFormPosts = true;
-        }
-
-        public Type InputType
-        {
-            get { return _inputType; }
-        }
-
-        public override BehaviorCategory Category
-        {
-            get { return BehaviorCategory.Process; }
         }
 
         protected override ObjectDef buildObjectDef()
@@ -62,61 +42,16 @@ namespace FubuMVC.Core.Rest.Conneg
                 yield return new ObjectDef(typeof(ModelBindingMediaReader<>), InputType);
             }
 
-            switch (_formatterUsage)
+            foreach (var objectDef in createFormatterObjectDef())
             {
-                case FormatterUsage.selected:
-                    var formatterDef = new ObjectDef(typeof (FormatterMediaReader<>), InputType);
-                    var dependencies = formatterDef.EnumerableDependenciesOf<IFormatter>();
-                    _selectedFormatterTypes.Each(t => dependencies.AddType(t));
-
-                    yield return formatterDef;
-
-                    break;
-
-                case FormatterUsage.all:
-                    yield return new ObjectDef(typeof(FormatterMediaReader<>), InputType);
-                    break;
-            }
-
-            yield break;
-        }
-
-        private FormatterUsage _formatterUsage = FormatterUsage.all;
-        
-        public FormatterUsage FormatterUsage
-        {
-            get
-            {
-                return _formatterUsage;
+                yield return objectDef;
             }
         }
 
-        public void UseAllFormatters()
+       
+        protected override Type formatterActionType()
         {
-            _formatterUsage = FormatterUsage.all;
-            _selectedFormatterTypes.Clear();
-        }
-
-        public void UseNoFormatters()
-        {
-            _formatterUsage = FormatterUsage.none;
-            _selectedFormatterTypes.Clear();
-        }
-
-        private readonly IList<Type> _selectedFormatterTypes = new List<Type>();
-
-        public IEnumerable<Type> SelectedFormatterTypes
-        {
-            get
-            {
-                return _selectedFormatterTypes;
-            }
-        }
-
-        public void UseFormatter<T>() where T : IFormatter
-        {
-            _formatterUsage = FormatterUsage.selected;
-            _selectedFormatterTypes.Add(typeof(T));
+            return typeof (FormatterMediaReader<>);
         }
 
         public bool AllowHttpFormPosts { get; set; }
@@ -138,11 +73,5 @@ namespace FubuMVC.Core.Rest.Conneg
                 return _readers;
             }
         }
-    }
-
-    public interface IMediaReaderNode
-    {
-        Type InputType { get;}
-        ObjectDef ToObjectDef();
     }
 }
