@@ -106,6 +106,7 @@
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Rest\Conneg\ConnegBehaviorConventionTester.cs" />
     <Compile Include="Rest\Conneg\ConnegInputBehaviorTester.cs" />
+    <Compile Include="Rest\Conneg\ConnegInputNodeTester.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputBehaviorTester.cs" />
     <Compile Include="Rest\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Rest\Media\Formatters\XmlFormatterTester.cs" />
