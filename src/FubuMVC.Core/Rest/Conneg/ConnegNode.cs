@@ -54,7 +54,7 @@ namespace FubuMVC.Core.Rest.Conneg
                 if (_formatterUsage == FormatterUsage.selected)
                 {
                     var dependencies = formatterDef.EnumerableDependenciesOf<IFormatter>();
-                    GenericEnumerableExtensions.Each<Type>(_selectedFormatterTypes, t => dependencies.AddType(t));
+                    _selectedFormatterTypes.Each(t => dependencies.AddType(t));
                 }
 
                 yield return formatterDef;
@@ -77,6 +77,25 @@ namespace FubuMVC.Core.Rest.Conneg
         {
             _formatterUsage = FormatterUsage.selected;
             _selectedFormatterTypes.Add(typeof(T));
+        }
+
+        protected abstract IEnumerable<ObjectDef> createBuilderDependencies();
+        protected abstract Type getReaderWriterType();
+        protected abstract Type behaviorType();
+
+        protected override sealed ObjectDef buildObjectDef()
+        {
+            var objectDef = new ObjectDef(behaviorType().MakeGenericType(InputType));
+
+            var mediaReaderType = getReaderWriterType().MakeGenericType(InputType);
+
+
+            var readerDependencies = new ListDependency(typeof(IEnumerable<>).MakeGenericType(mediaReaderType));
+            readerDependencies.AddRange(createBuilderDependencies());
+
+            objectDef.Dependency(readerDependencies);
+
+            return objectDef;
         }
     }
 }
