@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Runtime;
-using System.Linq;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
@@ -14,12 +13,13 @@ namespace FubuMVC.Core.Rest.Conneg
         // TODO -- move to MimeTypes when Assets is put in place
         public static readonly string Html = "text/html";
 
-        private readonly IValueSource<T> _source;
         private readonly IFubuRequest _request;
+        private readonly IValueSource<T> _source;
         private readonly IOutputWriter _writer;
         private readonly IEnumerable<IMediaWriter<T>> _writers;
 
-        public ConnegOutputBehavior(IValueSource<T> source, IFubuRequest request, IOutputWriter writer, IEnumerable<IMediaWriter<T>> writers) : base(PartialBehavior.Executes)
+        public ConnegOutputBehavior(IValueSource<T> source, IFubuRequest request, IOutputWriter writer,
+                                    IEnumerable<IMediaWriter<T>> writers) : base(PartialBehavior.Executes)
         {
             _source = source;
             _request = request;
@@ -46,8 +46,6 @@ namespace FubuMVC.Core.Rest.Conneg
             }
 
             return DoNext.Stop;
-
-            
         }
 
         public virtual IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes)

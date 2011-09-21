@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
-using FubuLocalization;
-using System.Linq;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.Core.Rest.Media.Projections;
 
 namespace FubuMVC.Core.Rest.Media.Atom
@@ -77,17 +77,14 @@ namespace FubuMVC.Core.Rest.Media.Atom
             configure(this);
         }
 
+        private Action<IValues<T>, SyndicationItem> alter
+        {
+            set { _modifications.Add(value); }
+        }
+
         public void ConfigureItem(SyndicationItem item, IValues<T> target)
         {
             _modifications.Each(x => x(target, item));
-        }
-
-        private Action<IValues<T>, SyndicationItem> alter
-        {
-            set
-            {
-                _modifications.Add(value);
-            }
         }
 
         private void modify<TArg>(Expression<Func<T, TArg>> property, Action<SyndicationItem, TArg> modification)
@@ -99,7 +96,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
 
                 if (value != null)
                 {
-                    modification(item, (TArg)value);
+                    modification(item, (TArg) value);
                 }
             };
         }
@@ -118,7 +115,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
         public void UpdatedByProperty(Expression<Func<T, DateTime>> property)
         {
             var accessor = ReflectionHelper.GetAccessor(property);
-            alter = (target, item) => item.LastUpdatedTime = (DateTime)target.ValueFor(accessor);
+            alter = (target, item) => item.LastUpdatedTime = (DateTime) target.ValueFor(accessor);
         }
 
 

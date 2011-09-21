@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Rest.Media;
-using System.Linq;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Rest.Conneg
@@ -12,10 +11,11 @@ namespace FubuMVC.Core.Rest.Conneg
     public class ConnegInputBehavior<T> : BasicBehavior where T : class
     {
         private readonly IEnumerable<IMediaReader<T>> _readers;
-        private readonly IOutputWriter _writer;
         private readonly IFubuRequest _request;
+        private readonly IOutputWriter _writer;
 
-        public ConnegInputBehavior(IEnumerable<IMediaReader<T>> readers, IOutputWriter writer, IFubuRequest request) : base(PartialBehavior.Executes)
+        public ConnegInputBehavior(IEnumerable<IMediaReader<T>> readers, IOutputWriter writer, IFubuRequest request)
+            : base(PartialBehavior.Executes)
         {
             _readers = readers;
             _writer = writer;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
@@ -8,8 +7,8 @@ namespace FubuMVC.Core.Rest.Media.Formatters
     // See the StoryTeller tests for conneg
     public class JsonFormatter : IFormatter
     {
-        private readonly IJsonWriter _writer;
         private readonly IJsonReader _reader;
+        private readonly IJsonWriter _writer;
 
         public JsonFormatter(IJsonWriter writer, IJsonReader reader)
         {
@@ -33,7 +32,6 @@ namespace FubuMVC.Core.Rest.Media.Formatters
             {
                 yield return "application/json";
                 yield return "text/json";
-
             }
         }
     }

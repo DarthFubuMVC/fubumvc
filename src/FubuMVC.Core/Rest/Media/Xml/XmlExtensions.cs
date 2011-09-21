@@ -5,7 +5,6 @@ namespace FubuMVC.Core.Rest.Media.Xml
 {
     public static class XmlExtensions
     {
-
         public static XmlDocument FromFile(this XmlDocument document, string fileName)
         {
             document.Load(fileName);
@@ -14,7 +13,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public static XmlElement WithRoot(this XmlDocument document, string elementName)
         {
-            XmlElement element = document.CreateElement(elementName);
+            var element = document.CreateElement(elementName);
             document.AppendChild(element);
 
             return element;
@@ -22,7 +21,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public static XmlElement WithFormattedText(this XmlElement element, string text)
         {
-            XmlCDataSection section = element.OwnerDocument.CreateCDataSection(text);
+            var section = element.OwnerDocument.CreateCDataSection(text);
             element.AppendChild(section);
 
             return element;
@@ -30,7 +29,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public static XmlElement AddElement(this XmlNode element, string name)
         {
-            XmlElement child = element.OwnerDocument.CreateElement(name);
+            var child = element.OwnerDocument.CreateElement(name);
             element.AppendChild(child);
 
             return child;
@@ -38,13 +37,12 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public static XmlElement AddElement(this XmlNode element, string name, Action<XmlElement> action)
         {
-            XmlElement child = element.OwnerDocument.CreateElement(name);
+            var child = element.OwnerDocument.CreateElement(name);
             element.AppendChild(child);
 
             action(child);
 
             return child;
         }
-
     }
 }
