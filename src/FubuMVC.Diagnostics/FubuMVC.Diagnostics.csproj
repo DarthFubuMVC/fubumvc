@@ -308,7 +308,7 @@
     <Compile Include="Features\Routes\RoutesModel.cs" />
     <Compile Include="Features\Routes\RoutesModelBuilder.cs" />
     <Compile Include="Features\Chains\View\get_Id_handler.cs" />
-    <Compile Include="FubuDiagnosticsRegistry.cs" />
+    <Compile Include="AdvancedDiagnosticsRegistry.cs" />
     <Compile Include="FubuDiagnosticsUrlAttribute.cs" />
     <Compile Include="DiagnosticsException.cs" />
     <Compile Include="IPartialModel.cs" />

@@ -19,14 +19,14 @@ using FubuMVC.Spark;
 
 namespace FubuMVC.Diagnostics
 {
-    public class FubuDiagnosticsRegistry : FubuPackageRegistry
+    public class AdvancedDiagnosticsRegistry : FubuPackageRegistry
     {
-        public FubuDiagnosticsRegistry()
+        public AdvancedDiagnosticsRegistry()
         {
             setupDiagnosticServices();
 
             Applies
-                .ToAssemblyContainingType<FubuDiagnosticsRegistry>()
+                .ToAssemblyContainingType<AdvancedDiagnosticsRegistry>()
                 .ToAssemblyContainingType<BehaviorStart>()
                 .ToAllPackageAssemblies();
 

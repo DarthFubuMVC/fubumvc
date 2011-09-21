@@ -71,7 +71,6 @@ namespace FubuMVC.StructureMap
                         .Use(c => c.GetInstance<IFubuRequest>().Get<CurrentRequest>());
 
                     x.For<IDebugDetector>().Use<DebugDetector>();
-                    x.For<IDebugCallHandler>().Use<DebugCallHandler>();
                 });
             }
 

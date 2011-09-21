@@ -11,7 +11,7 @@ namespace FubuMVC.Diagnostics.Tests
     {
         public static FubuRegistry DiagnosticsRegistry()
         {
-            return new FubuDiagnosticsRegistry();
+            return new AdvancedDiagnosticsRegistry();
         }
 
         public static BehaviorGraph DiagnosticsGraph()
