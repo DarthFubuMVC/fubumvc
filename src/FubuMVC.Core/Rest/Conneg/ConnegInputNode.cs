@@ -15,22 +15,17 @@ namespace FubuMVC.Core.Rest.Conneg
             AllowHttpFormPosts = true;
         }
 
-        protected override ObjectDef buildObjectDef()
+        protected override Type behaviorType()
         {
-            var objectDef = new ObjectDef(typeof (ConnegInputBehavior<>).MakeGenericType(InputType));
-
-            var mediaReaderType = typeof (IMediaReader<>).MakeGenericType(InputType);
-
-
-            var readerDependencies = new ListDependency(typeof(IEnumerable<>).MakeGenericType(mediaReaderType));
-            readerDependencies.AddRange(createBuilderDependencies());
-
-            objectDef.Dependency(readerDependencies);
-
-            return objectDef;
+            return typeof (ConnegInputBehavior<>);
         }
 
-        private IEnumerable<ObjectDef> createBuilderDependencies()
+        protected override Type getReaderWriterType()
+        {
+            return typeof (IMediaReader<>);
+        }
+
+        protected override IEnumerable<ObjectDef> createBuilderDependencies()
         {
             foreach (var node in _readers)
             {
