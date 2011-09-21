@@ -10,13 +10,9 @@ namespace FubuMVC.Core.Runtime
     {
         private readonly Cache<Type, BindResult> _values = new Cache<Type, BindResult>();
 
-        public Guid Id { get; set; }
-
         public FubuRequest(IRequestData data, IObjectResolver resolver)
         {
             _values.OnMissing = (type => resolver.BindModel(type, data));
-
-            Id = Guid.NewGuid();
         }
 
         public T Get<T>() where T : class
