@@ -36,6 +36,16 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
+        public void should_return_null_when_type_cannot_be_found()
+        {
+            const string typeName = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz, DoesNotExist>";
+
+            var type = ClassUnderTest.Parse(typeName);
+
+            type.ShouldBeNull();
+        }
+
+        [Test]
         public void should_detect_if_type_name_is_generic()
         {
             ViewModelTypeFinder.IsGeneric("System.String").ShouldBeFalse();

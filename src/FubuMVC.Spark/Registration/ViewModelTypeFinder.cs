@@ -29,12 +29,7 @@ namespace FubuMVC.Spark.Registration
             
             var getTypeFriendlyName = "{0}`{1}[{2}]".ToFormat(openTypeName, genericArgumentsCount, genericArguments);
 
-            var type = findType(getTypeFriendlyName);
-
-            if (type == null)
-                throw new ArgumentException("Could not find the closed type for {0}.".ToFormat(typeName));
-
-            return type;
+            return findType(getTypeFriendlyName);
         }
 
         private Type findType(string typeName)

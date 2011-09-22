@@ -128,10 +128,14 @@ namespace FubuMVC.Spark.SparkModel
 
             if (typeCount == 0 && ViewModelTypeFinder.IsGeneric(request.ViewModelType))
             {
-                descriptor.ViewModel = new ViewModelTypeFinder(request.Types.Assemblies).Parse(request.ViewModelType);
-                logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
+                var viewModel = new ViewModelTypeFinder(request.Types.Assemblies).Parse(request.ViewModelType);
 
-                return;
+                if(viewModel != null)
+                {
+                    descriptor.ViewModel = viewModel;
+                    logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
+                    return;
+                }
             }
 
             logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
