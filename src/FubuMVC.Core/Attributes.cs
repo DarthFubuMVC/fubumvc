@@ -35,6 +35,7 @@ namespace FubuMVC.Core
     {
     }
 
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
     public class UrlPatternAttribute : Attribute
     {
@@ -61,6 +62,7 @@ namespace FubuMVC.Core
         public string Folder { get { return _folder; } }
     }
 
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
     public class JsonEndpointAttribute : Attribute
     {
@@ -71,11 +73,13 @@ namespace FubuMVC.Core
     /// </summary>
     public interface JsonMessage{}
 
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
     public class HtmlEndpointAttribute : Attribute
     {
     }
 
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
     public class WebFormsEndpointAttribute : Attribute
     {
@@ -89,11 +93,13 @@ namespace FubuMVC.Core
         public Type ViewType { get { return _viewType; } }
     }
 
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class FubuPartialAttribute : Attribute
     {
     }
 
+    // TODO -- change to a ModifyChainAttribute
     // TODO:  If anyone wants it, make it work on a controller too
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class WrapWithAttribute : Attribute
@@ -111,6 +117,7 @@ namespace FubuMVC.Core
         }
     }
 
+    // TODO -- change to a ModifyChainAttribute
     /// <summary>
     /// Just declares 
     /// </summary>
@@ -130,6 +137,7 @@ namespace FubuMVC.Core
         }
     }
 
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class UrlForNewAttribute : Attribute
     {
