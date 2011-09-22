@@ -1,18 +1,13 @@
 ﻿using System;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using System.Collections.Generic;
 
 namespace FubuMVC.Core.Security
 {
-    public abstract class AuthorizationAttribute : Attribute
-    {
-        public abstract void Alter(ActionCall call);
-    }
-
-
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false)]
-    public class AllowRoleAttribute : AuthorizationAttribute
+    public class AllowRoleAttribute : ModifyChainAttribute
     {
         private readonly string[] _roles;
 

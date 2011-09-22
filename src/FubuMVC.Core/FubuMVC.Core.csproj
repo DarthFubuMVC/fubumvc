@@ -255,7 +255,7 @@
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualFile.cs" />
     <Compile Include="Packaging\VirtualPaths\FileSystemVirtualPathProvider.cs" />
     <Compile Include="Packaging\PackageLoadingConfigurationExtensions.cs" />
-    <Compile Include="Registration\Conventions\AuthorizationAttributeConvention.cs" />
+    <Compile Include="Registration\Conventions\ModifyChainAttributeConvention.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConvention.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteMethodBasedUrlPolicy.cs" />
@@ -341,6 +341,7 @@
     <Compile Include="Security\AntiForgery\BinaryAntiForgerySerializer.cs" />
     <Compile Include="Security\AntiForgery\IAntiForgeryEncoder.cs" />
     <Compile Include="Security\AttachAuthorizationPolicy.cs" />
+    <Compile Include="Registration\ModifyChainAttribute.cs" />
     <Compile Include="Security\AuthorizationBehavior.cs" />
     <Compile Include="Security\AuthorizationNode.cs" />
     <Compile Include="Security\AuthorizationPolicy.cs" />

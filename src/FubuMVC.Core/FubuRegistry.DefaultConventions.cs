@@ -51,7 +51,7 @@ namespace FubuMVC.Core
             Policies.Add<UrlRegistryCategoryConvention>();
             Policies.Add<UrlForNewConvention>();
 
-            ApplyConvention<AuthorizationAttributeConvention>();
+            ApplyConvention<ModifyChainAttributeConvention>();
         }
     }
 }
