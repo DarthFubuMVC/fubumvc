@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Security
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class AuthorizedByAttribute : AuthorizationAttribute
+    public class AuthorizedByAttribute : ModifyChainAttribute
     {
         private readonly Type[] _types;
 
