@@ -2,6 +2,7 @@
 
 namespace FubuMVC.Diagnostics
 {
+    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
     public class FubuDiagnosticsUrlAttribute : Attribute
     {
