@@ -83,6 +83,7 @@
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
+    <Compile Include="DiagnosticsExtensionTester.cs" />
     <Compile Include="Features\Chains\when_viewing_a_chain.cs" />
     <Compile Include="Features\Dashboard\DashboardHandlerTester.cs" />
     <Compile Include="Features\Html\Decorators\DisplayPathBuilderTester.cs" />

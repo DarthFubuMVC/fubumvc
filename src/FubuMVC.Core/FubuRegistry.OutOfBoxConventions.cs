@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration.Conventions;
 
 namespace FubuMVC.Core
@@ -36,7 +37,7 @@ namespace FubuMVC.Core
 
         private void includeHandlers(params Type[] markerTypes)
         {
-            markerTypes.Each(markerType => Actions.IncludeTypes(t => t.Namespace.StartsWith(markerType.Namespace)));
+            markerTypes.Each(markerType => Actions.IncludeTypes(t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace)));
             Actions.IncludeMethods(action => action.Method.Name == HandlersUrlPolicy.METHOD);
         }
     }

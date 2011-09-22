@@ -114,7 +114,8 @@ namespace FubuMVC.Core.Registration.Conventions
 
         private void addNamespace(IRouteDefinition route, ActionCall call)
         {
-            var ns = replace(call.HandlerType.Namespace, _ignoredNamespaces).TrimStart('.');
+            var ns = call.HandlerType.Namespace ?? string.Empty; // sanity check
+            ns = replace(ns, _ignoredNamespaces).TrimStart('.');
             ns = ns.Replace('.', '/');
             route.Append(ns);
 
