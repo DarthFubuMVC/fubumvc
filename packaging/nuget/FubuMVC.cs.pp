@@ -1,4 +1,5 @@
 using System.Web.Routing;
+using Bottles;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using StructureMap;
@@ -27,6 +28,9 @@ namespace $rootnamespace$.App_Start
                 // IoC container for the rest of your application
                 .StructureMap(new Container())
                 .Bootstrap(RouteTable.Routes);
+
+			// Ensure that no errors occurred during bootstrapping
+			PackageRegistry.AssertNoFailures();
         }
     }
 }
