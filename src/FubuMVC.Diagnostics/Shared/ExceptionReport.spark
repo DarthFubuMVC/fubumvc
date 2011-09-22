@@ -6,7 +6,6 @@
   ${this.ImageFor('console-line.png').AddClass('indicator')}
   <span class="message">
     <p class="statement">Exception</p>
-    <p class="msg-info">Unhandled exception</p>
     <div class="exception">
       <pre>
         <code>${Model.Text.HtmlEncode()}</code>

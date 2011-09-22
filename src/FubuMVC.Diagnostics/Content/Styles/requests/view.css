@@ -115,3 +115,15 @@ h4.request-identifier
 {
     width:100%;
 }
+
+.exception
+{
+    border: 1px dotted red; 
+}
+
+.exception pre
+{
+    width: auto;
+    background: #fcf0f0; 
+    color: #280b0b;
+}
