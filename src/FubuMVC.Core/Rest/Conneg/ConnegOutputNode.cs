@@ -59,6 +59,11 @@ namespace FubuMVC.Core.Rest.Conneg
         {
             return typeof (ConnegOutputBehavior<>);
         }
+
+        public void JsonOnly()
+        {
+            UseFormatter<JsonFormatter>();
+        }
     }
 
     public interface IMediaWriterNode : IContainerModel
