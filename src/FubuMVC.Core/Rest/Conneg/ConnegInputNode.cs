@@ -74,5 +74,23 @@ namespace FubuMVC.Core.Rest.Conneg
             AllowHttpFormPosts = false;
             UseFormatter<JsonFormatter>();
         }
+
+        public bool Equals(ConnegInputNode other)
+        {
+            if (other == null) return false;
+            return other.InputType.Equals(InputType);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals(obj as ConnegInputNode);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

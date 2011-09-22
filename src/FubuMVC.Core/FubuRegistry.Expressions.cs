@@ -82,7 +82,7 @@ namespace FubuMVC.Core
         {
             get
             {
-                return new MediaExpression(this);
+                return new MediaExpression(this, _connegAttachmentPolicy);
             }
         }
 

@@ -4,6 +4,8 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Behaviors;
@@ -26,10 +28,9 @@ namespace FubuMVC.Tests.StructureMapIoC
 
         #endregion
 
-        public class FakeJsonBehavior : RenderJsonBehavior<Output>
+        public class FakeJsonBehavior : ConnegOutputBehavior<Output>
         {
-            public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data)
-                : base(writer, request)
+            public FakeJsonBehavior(IJsonWriter writer, IFubuRequest request, IRequestData data) : base(null, request, null, new IMediaWriter<Output>[0])
             {
                 Writer = writer;
                 Request = request;

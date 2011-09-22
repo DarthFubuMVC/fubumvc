@@ -76,7 +76,7 @@ namespace FubuMVC.Core.Rest.Conneg
         public void UseFormatter<T>() where T : IFormatter
         {
             _formatterUsage = FormatterUsage.selected;
-            _selectedFormatterTypes.Add(typeof(T));
+            _selectedFormatterTypes.Fill(typeof(T));
         }
 
         protected abstract IEnumerable<ObjectDef> createBuilderDependencies();
@@ -96,6 +96,26 @@ namespace FubuMVC.Core.Rest.Conneg
             objectDef.Dependency(readerDependencies);
 
             return objectDef;
+        }
+
+        public bool Equals(ConnegNode other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._inputType, _inputType) && Equals(other.GetType(), GetType());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (ConnegNode)) return false;
+            return Equals((ConnegNode) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_inputType != null ? _inputType.GetHashCode() : 0);
         }
     }
 }

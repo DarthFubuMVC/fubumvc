@@ -3,6 +3,8 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media.Formatters;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -34,7 +36,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorNode behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.StringifyHtml()).Calls.First().Next;
-            behavior.ShouldBeOfType<RenderJsonNode>();
+            behavior.ShouldBeOfType<ConnegOutputNode>();
         }
     }
 
@@ -42,7 +44,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph.Actions().Each(call => call.AddToEnd(new RenderJsonNode(typeof (object))));
+            graph.Actions().Each(call => call.AddToEnd(new ConnegOutputNode(typeof (object))));
         }
     }
 }

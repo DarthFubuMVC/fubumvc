@@ -1,14 +1,18 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media.Formatters;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Behaviors;
 using FubuMVC.Tests.View.FakeViews;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Conventions
 {
@@ -37,7 +41,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             BehaviorNode behavior =
                 graph.BehaviorFor<JsonOutputAttachmentTesterController>(x => x.Decorated()).Calls.First().Next;
-            behavior.ShouldBeOfType<RenderJsonNode>().ModelType.ShouldEqual(typeof (ViewModel1));
+            behavior.ShouldBeOfType<ConnegOutputNode>().InputType.ShouldEqual(typeof (ViewModel1));
         }
 
         [Test]
@@ -55,7 +59,13 @@ namespace FubuMVC.Tests.Registration.Conventions
             ()
         {
             graph.Behaviors.Count().ShouldEqual(20);
-            graph.Behaviors.Where(chain => chain.Top.Any(x => x is RenderJsonNode)).Select(x => x.Calls.First().Method.Name)
+            var methodNames = graph.Behaviors.Where(chain => chain.Top.Any(x => x is ConnegOutputNode)).Select(x => x.Calls.First().Method.Name);
+
+            Debug.WriteLine("Actual");
+            methodNames.Each(x => Debug.WriteLine(x));
+
+            Debug.WriteLine("-------------------------------------------------------");
+            methodNames
                 .ShouldHaveTheSameElementsAs("Report", "Report2", "WhatNext", "Decorated", "OutputJson1", "OutputJson2", "OutputJson3");
         }
 
@@ -81,34 +91,36 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void methods_that_take_in_a_json_message_class_should_have_the_json_deserialization_behavior_in_front_of_the_action_call()
         {
-            new DeserializeJsonNode(typeof(Json1)).Equals(chainFor(x => x.JsonInput1(null)).FirstCall().Previous).ShouldBeTrue();
-            new DeserializeJsonNode(typeof(Json2)).Equals(chainFor(x => x.JsonInput2(null)).FirstCall().Previous).ShouldBeTrue();
-            new DeserializeJsonNode(typeof(Json3)).Equals(chainFor(x => x.JsonInput3(null)).FirstCall().Previous).ShouldBeTrue();                 
+            chainFor(x => x.JsonInput1(null)).FirstCall().Previous.ShouldBeOfType<ConnegInputNode>().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+            chainFor(x => x.JsonInput2(null)).FirstCall().Previous.ShouldBeOfType<ConnegInputNode>().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+            chainFor(x => x.JsonInput3(null)).FirstCall().Previous.ShouldBeOfType<ConnegInputNode>().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
         }
 
         [Test]
         public void methods_that_do_not_take_in_a_json_message_should_not_have_a_json_deserialization_behavior()
         {
-            chainFor(x => x.NotJson1(null)).Top.Any(x => x is DeserializeJsonNode).ShouldBeFalse();
-            chainFor(x => x.NotJson2(null)).Top.Any(x => x is DeserializeJsonNode).ShouldBeFalse();
-            chainFor(x => x.NotJson3(null)).Top.Any(x => x is DeserializeJsonNode).ShouldBeFalse();
+            chainFor(x => x.NotJson1(null)).Top.Any(x => x is ConnegInputNode).ShouldBeFalse();
+            chainFor(x => x.NotJson2(null)).Top.Any(x => x is ConnegInputNode).ShouldBeFalse();
+            chainFor(x => x.NotJson3(null)).Top.Any(x => x is ConnegInputNode).ShouldBeFalse();
         }
 
         [Test]
         public void methods_that_return_a_json_message_should_output_json()
         {
             BehaviorChain chain = chainFor(x => x.OutputJson1());
-            chain.Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
-            chainFor(x => x.OutputJson2()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
-            chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeTrue();
+            chain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+
+
+            chainFor(x => x.OutputJson2()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeTrue();
+            chainFor(x => x.OutputJson3()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeTrue();
         }
 
         [Test]
         public void methods_that_do_not_return_a_json_message_should_not_output_json()
         {
-            chainFor(x => x.NotOutputJson1()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson2()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
-            chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof(RenderJsonNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson1()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson2()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
+            chainFor(x => x.NotOutputJson3()).Top.Any(x => x.GetType() == typeof(ConnegOutputNode)).ShouldBeFalse();
         }
 
         [Test]

@@ -276,10 +276,17 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void value_source_is_registered()
+        public void values_is_registered()
         {
             var services = new FubuRegistry().BuildGraph().Services;
             services.DefaultServiceFor(typeof (IValues<>)).Type.ShouldEqual(typeof (SimpleValues<>));
+        }
+
+        [Test]
+        public void value_source_is_registered()
+        {
+            var services = new FubuRegistry().BuildGraph().Services;
+            services.DefaultServiceFor(typeof(IValueSource<>)).Type.ShouldEqual(typeof(ValueSource<>));
         }
     }
 }

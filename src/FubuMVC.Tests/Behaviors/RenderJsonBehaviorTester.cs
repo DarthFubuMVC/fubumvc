@@ -176,44 +176,6 @@ namespace FubuMVC.Tests.Behaviors
         }
     }
 
-    [TestFixture]
-    public class when_rendering_a_json_response :
-        InteractionContext<RenderJsonBehavior<JsonOutput>>
-    {
-        private JsonOutput output;        
-        protected override void beforeEach()
-        {
-            output = new JsonOutput
-            {
-                Name = "Max",
-                Age = 6
-            };
-
-            MockFor<IFubuRequest>().Expect(x => x.Get<JsonOutput>()).Return(output);
-            MockFor<IJsonWriter>().Expect(x => x.Write(output));
-            ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
-            ClassUnderTest.Invoke();
-        }
-
-        [Test]
-        public void should_retrieve_the_output_object_from_the_fubu_request()
-        {
-            VerifyCallsFor<IFubuRequest>();
-        }
-
-        [Test]
-        public void should_render_output_via_the_json_writer()
-        {
-            VerifyCallsFor<IJsonWriter>();
-        }
-
-        [Test]
-        public void should_return_donext_continue()
-        {
-            ClassUnderTest.InsideBehavior.AssertWasCalled(x=> x.Invoke());
-        }
-
-    }
 
     public class JsonOutput
     {

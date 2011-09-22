@@ -3,6 +3,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media.Formatters;
 
 namespace FubuMVC.Core.Registration.DSL
 {
@@ -10,7 +12,7 @@ namespace FubuMVC.Core.Registration.DSL
     {
         private readonly Action<BehaviorNode> _registration;
         private Type _outputType;
-
+        
         public ChainedBehaviorExpression(Action<BehaviorNode> registration)
         {
             _registration = registration;
@@ -28,7 +30,10 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ChainedBehaviorExpression OutputToJson()
         {
-            return returnChain(new RenderJsonNode(_outputType));
+            var outputNode = new ConnegOutputNode(_outputType);
+            outputNode.UseFormatter<JsonFormatter>();
+
+            return returnChain(outputNode);
         }
 
         public ChainedBehaviorExpression OutputTo(OutputNode node)

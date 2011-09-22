@@ -132,6 +132,26 @@ namespace FubuMVC.Tests.Rest.Conneg
             outputNode.FormatterUsage.ShouldEqual(FormatterUsage.selected);
             outputNode.Writers.Any().ShouldBeFalse();
         }
+
+        [Test]
+        public void output_json()
+        {
+            theChain.ApplyConneg();
+            theChain.OutputJson();
+
+            theChain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
+        }
+
+        [Test]
+        public void output_xml()
+        {
+            theChain.ApplyConneg();
+            theChain.OutputXml();
+
+            theChain.ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
+        }
+
+        
         
         public class Input1{}
         public class Output1{}
