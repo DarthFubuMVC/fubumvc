@@ -42,6 +42,7 @@ namespace FubuMVC.Core
         private readonly ViewBagConventionRunner _bagRunner;
         private IConfigurationObserver _observer;
         private Func<Type, MethodInfo, ActionCall> _actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
+        private readonly ConnegAttachmentPolicy _connegAttachmentPolicy = new ConnegAttachmentPolicy();
 
         public FubuRegistry()
         {

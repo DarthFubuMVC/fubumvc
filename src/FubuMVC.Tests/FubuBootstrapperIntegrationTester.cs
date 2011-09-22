@@ -66,8 +66,6 @@ namespace FubuMVC.Tests
             routes.Select(x => x.ShouldBeOfType<Route>().RouteHandler as FubuRouteHandler).Each(handler =>
             {
                 var behavior = handler.GetBehavior(new ServiceArguments()).ShouldBeOfType<IActionBehavior>();
-
-                behavior.Invoke();
             });
         }
 

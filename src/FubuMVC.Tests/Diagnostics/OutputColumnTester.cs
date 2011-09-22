@@ -15,7 +15,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void write_with_a_single_output()
         {
             var chain = new BehaviorChain();
-            var node = new RenderJsonNode(typeof (RouteParameter));
+            var node = new OutputNode(typeof (RouteParameter));
             chain.AddToEnd(node);
 
             var tag = new HtmlTag("td");
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void write_with_multiple_outputs()
         {
             var chain = new BehaviorChain();
-            var json = new RenderJsonNode(typeof (RouteParameter));
+            var json = new OutputNode(typeof (RouteParameter));
             chain.AddToEnd(json);
 
             var text = new RenderTextNode<RouteParameter>();

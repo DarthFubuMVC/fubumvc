@@ -5,6 +5,7 @@ using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Rest.Conneg;
 
 namespace FubuMVC.Core
 {
@@ -21,8 +22,7 @@ namespace FubuMVC.Core
         {
             get
             {
-                return output(call => call.AddToEnd(new RenderJsonNode(call.OutputType())),
-                    "Adding json output node to render json");
+                return output(call => call.Chain.OutputJson(), "Adding json output node to render json");
             }
         }
 
