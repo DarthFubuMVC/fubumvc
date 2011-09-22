@@ -104,7 +104,7 @@
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
-    <Compile Include="Rest\Conneg\ConnegBehaviorConventionTester.cs" />
+    <Compile Include="Rest\Conneg\BehaviorChainConnegExtensionsTester.cs" />
     <Compile Include="Rest\Conneg\ConnegInputBehaviorTester.cs" />
     <Compile Include="Rest\Conneg\ConnegInputNodeTester.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputBehaviorTester.cs" />
