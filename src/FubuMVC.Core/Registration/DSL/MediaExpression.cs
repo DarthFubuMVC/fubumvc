@@ -18,16 +18,18 @@ namespace FubuMVC.Core.Registration.DSL
 
         public MediaExpression ApplyContentNegotiationTo(Expression<Func<BehaviorChain, bool>> filter)
         {
-            _fubuRegistry.Policies.Add(new ConnegBehaviorConvention(filter.Compile(), "BehaviorChain meets criteria:  " + filter.ToString()));
-            return this;
+            throw new NotImplementedException();
+            //_fubuRegistry.Policies.Add(new ConnegBehaviorConvention(filter.Compile(), "BehaviorChain meets criteria:  " + filter.ToString()));
+            //return this;
         }
 
         public MediaExpression ApplyContentNegotiationToActions(Expression<Func<ActionCall, bool>> filter)
         {
-            var callPredicate = filter.Compile();
-            Func<BehaviorChain, bool> chainFilter = chain => chain.Calls.Any(callPredicate);
-            _fubuRegistry.Policies.Add(new ConnegBehaviorConvention(chainFilter, "Any action meets " + filter.ToString()));
-            return this;
+            throw new NotImplementedException();
+            //var callPredicate = filter.Compile();
+            //Func<BehaviorChain, bool> chainFilter = chain => chain.Calls.Any(callPredicate);
+            //_fubuRegistry.Policies.Add(new ConnegBehaviorConvention(chainFilter, "Any action meets " + filter.ToString()));
+            //return this;
         }
 
         public MediaExpression Formatter<T>() where T : IFormatter

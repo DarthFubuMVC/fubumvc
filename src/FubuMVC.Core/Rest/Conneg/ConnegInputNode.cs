@@ -68,5 +68,11 @@ namespace FubuMVC.Core.Rest.Conneg
                 return _readers;
             }
         }
+
+        public void JsonOnly()
+        {
+            AllowHttpFormPosts = false;
+            UseFormatter<JsonFormatter>();
+        }
     }
 }
