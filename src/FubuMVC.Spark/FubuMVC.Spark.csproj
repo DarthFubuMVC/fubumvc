@@ -101,7 +101,6 @@
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
     <Compile Include="SparkModel\SparkLogger.cs" />
-    <Compile Include="SparkModel\Utils\PrettyTypeNamesExtensions.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />
@@ -120,6 +119,7 @@
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
