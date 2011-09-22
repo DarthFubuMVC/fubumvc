@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
+
     public class ConnegOutputNode : ConnegNode
     {
         private readonly IList<IMediaWriterNode> _writers = new List<IMediaWriterNode>();

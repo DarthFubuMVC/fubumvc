@@ -4,6 +4,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Rest.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -75,7 +76,7 @@ namespace FubuMVC.Tests.Registration.Expressions
             visitor.Actions += chain =>
                                    {
                                        chain.Top.ShouldBeOfType<ActionCall>();
-                                       chain.Top.Next.ShouldBeOfType<RenderJsonNode>();
+                                       chain.Top.Next.ShouldBeOfType<ConnegOutputNode>();
                                    };
 
             _graph.VisitBehaviors(visitor);

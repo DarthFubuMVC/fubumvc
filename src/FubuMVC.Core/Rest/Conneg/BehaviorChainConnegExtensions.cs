@@ -20,7 +20,7 @@ namespace FubuMVC.Core.Rest.Conneg
             }
 
             var actionOutputType = chain.ActionOutputType();
-            if (chain.ConnegOutputNode() == null && actionOutputType != null)
+            if (chain.ConnegOutputNode() == null && actionOutputType != null && actionOutputType != typeof(void))
             {
                 var outputNode = new ConnegOutputNode(actionOutputType);
                 var action = chain.Last(x => x is ActionCall);
@@ -33,8 +33,13 @@ namespace FubuMVC.Core.Rest.Conneg
             chain.RemoveConneg();
             chain.ApplyConneg();
 
-            chain.ConnegInputNode().JsonOnly();
-            chain.ConnegOutputNode().JsonOnly();
+
+
+            var connegInputNode = chain.ConnegInputNode();
+            if (connegInputNode != null) connegInputNode.JsonOnly();
+
+            var connegOutputNode = chain.ConnegOutputNode();
+            if (connegOutputNode != null) connegOutputNode.JsonOnly();
         }
 
         public static void MakeAsymmetricJson(this BehaviorChain chain)
@@ -56,9 +61,26 @@ namespace FubuMVC.Core.Rest.Conneg
             return chain.FirstOrDefault(x => x is ConnegOutputNode) as ConnegOutputNode;
         }
 
+        public static bool HasConnegOutput(this BehaviorChain chain)
+        {
+            return chain.ConnegOutputNode() != null;
+        }
+
         public static void RemoveConneg(this BehaviorChain chain)
         {
             chain.OfType<ConnegNode>().ToList().Each(x => x.Remove());
+        }
+
+        public static void OutputJson(this BehaviorChain chain)
+        {
+            chain.ApplyConneg();
+            chain.ConnegOutputNode().UseFormatter<JsonFormatter>();
+        }
+
+        public static void OutputXml(this BehaviorChain chain)
+        {
+            chain.ApplyConneg();
+            chain.ConnegOutputNode().UseFormatter<XmlFormatter>();
         }
 
     }

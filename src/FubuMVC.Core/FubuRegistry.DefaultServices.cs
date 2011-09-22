@@ -209,6 +209,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();
 
             graph.Services.SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
+            graph.Services.SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
 
             registerActivators(graph);
             registerHtmlConventions(graph);

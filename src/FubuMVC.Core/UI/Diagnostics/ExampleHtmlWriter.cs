@@ -9,6 +9,7 @@ using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Rest.Conneg;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using HtmlTags;
@@ -42,7 +43,7 @@ namespace FubuMVC.Core.UI.Diagnostics
                 {
                     typeof(RenderHtmlDocumentNode),
                     typeof(RenderHtmlTagNode),
-                    typeof(RenderJsonNode)
+                    typeof(ConnegOutputNode)
                 };
             var table = BehaviorGraphWriter.WriteBehaviorChainTable(_behaviorGraph.Behaviors
                 .Where(b => b.HasOutputBehavior() && !b.ActionOutputType().IsSimple())

@@ -1,8 +1,8 @@
 using System;
-using System.Linq.Expressions;
-using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
-using FubuMVC.Core.Rest.Conneg;
+using System.Linq.Expressions;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Rest.Media.Formatters;
 
 namespace FubuMVC.Core.Registration.DSL
@@ -10,26 +10,26 @@ namespace FubuMVC.Core.Registration.DSL
     public class MediaExpression
     {
         private readonly FubuRegistry _fubuRegistry;
+        private readonly ConnegAttachmentPolicy _policy;
 
-        public MediaExpression(FubuRegistry fubuRegistry)
+        public MediaExpression(FubuRegistry fubuRegistry, ConnegAttachmentPolicy policy)
         {
             _fubuRegistry = fubuRegistry;
+            _policy = policy;
         }
 
         public MediaExpression ApplyContentNegotiationTo(Expression<Func<BehaviorChain, bool>> filter)
         {
-            throw new NotImplementedException();
-            //_fubuRegistry.Policies.Add(new ConnegBehaviorConvention(filter.Compile(), "BehaviorChain meets criteria:  " + filter.ToString()));
-            //return this;
+            _policy.AddFilter("Behavior chain matches " + filter, filter.Compile());
+            return this;
         }
 
         public MediaExpression ApplyContentNegotiationToActions(Expression<Func<ActionCall, bool>> filter)
         {
-            throw new NotImplementedException();
-            //var callPredicate = filter.Compile();
-            //Func<BehaviorChain, bool> chainFilter = chain => chain.Calls.Any(callPredicate);
-            //_fubuRegistry.Policies.Add(new ConnegBehaviorConvention(chainFilter, "Any action meets " + filter.ToString()));
-            //return this;
+            var func = filter.Compile();
+            _policy.AddFilter("Action matches " + filter, chain => chain.Calls.Any(func));
+            
+            return this;
         }
 
         public MediaExpression Formatter<T>() where T : IFormatter

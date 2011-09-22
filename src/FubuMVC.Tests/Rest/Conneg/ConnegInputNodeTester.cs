@@ -185,6 +185,19 @@ namespace FubuMVC.Tests.Rest.Conneg
         }
 
         [Test]
+        public void adding_a_formatter_is_idempotent()
+        {
+            var node = new ConnegInputNode(typeof(Address));
+            node.UseFormatter<JsonFormatter>();
+            node.UseFormatter<JsonFormatter>();
+            node.UseFormatter<JsonFormatter>();
+            node.UseFormatter<JsonFormatter>();
+            node.UseFormatter<JsonFormatter>();
+
+            node.SelectedFormatterTypes.Single().ShouldEqual(typeof(JsonFormatter));
+        }
+
+        [Test]
         public void throw_argument_exception_if_media_reader_node_type_is_wrong()
         {
             var reader = MockRepository.GenerateMock<IMediaReaderNode>();

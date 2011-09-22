@@ -78,7 +78,6 @@
     <Compile Include="AjaxExtensions.cs" />
     <Compile Include="Behaviors\DataContractJsonReader.cs" />
     <Compile Include="Behaviors\DownloadFileBehavior.cs" />
-    <Compile Include="Behaviors\DeserializeJsonBehavior.cs" />
     <Compile Include="Behaviors\IJsonReader.cs" />
     <Compile Include="Behaviors\InterceptExceptionBehavior.cs" />
     <Compile Include="Behaviors\JavaScriptJsonReader.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
+    <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
     <Compile Include="Rest\Conneg\BehaviorChainConnegExtensions.cs" />
     <Compile Include="Rest\Conneg\ConnegInputBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegInputNode.cs" />
@@ -285,7 +285,6 @@
     <Compile Include="Behaviors\NulloBehavior.cs" />
     <Compile Include="Behaviors\OneInOneOutActionInvoker.cs" />
     <Compile Include="Behaviors\OneInZeroOutActionInvoker.cs" />
-    <Compile Include="Behaviors\RenderJsonBehavior.cs" />
     <Compile Include="Behaviors\RenderTextBehavior.cs" />
     <Compile Include="Behaviors\ZeroInOneOutActionInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
@@ -304,7 +303,6 @@
     <Compile Include="Registration\IRouteVisitor.cs" />
     <Compile Include="Registration\IServiceRegistry.cs" />
     <Compile Include="Registration\Nodes\ContinuationNode.cs" />
-    <Compile Include="Registration\Nodes\DeserializeJsonNode.cs" />
     <Compile Include="Registration\Nodes\IMayHaveInputType.cs" />
     <Compile Include="Registration\Nodes\OutputNode.cs" />
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
@@ -459,7 +457,6 @@
     <Compile Include="Registration\ObjectGraph\ValueDependency.cs" />
     <Compile Include="Registration\Nodes\Wrapper.cs" />
     <Compile Include="Registration\Routes\IRouteDefinition.cs" />
-    <Compile Include="Registration\Nodes\RenderJsonNode.cs" />
     <Compile Include="Registration\Routes\RouteDefinition.cs" />
     <Compile Include="Registration\Routes\RouteParameter.cs" />
     <Compile Include="Runtime\FubuRequest.cs" />

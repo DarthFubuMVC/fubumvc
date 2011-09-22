@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -10,6 +11,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Rest.Conneg;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -35,9 +37,9 @@ namespace FubuMVC.Tests.Registration
         public void append_json()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            action.AddToEnd(new RenderJsonNode(action.OutputType()));
+            action.AddToEnd(new OutputNode(action.OutputType()));
 
-            action.Next.ShouldBeOfType<RenderJsonNode>().ModelType.ShouldEqual(action.OutputType());
+            action.Next.ShouldBeOfType<OutputNode>().BehaviorType.ShouldEqual(action.OutputType());
         }
 
         [Test]
@@ -47,7 +49,7 @@ namespace FubuMVC.Tests.Registration
             var wrapper = new Wrapper(typeof (FakeBehavior));
             action.AddAfter(wrapper);
 
-            var next = new RenderJsonNode(typeof (Model2));
+            var next = new OutputNode(typeof (Model2));
 
             action.AddToEnd(next);
 
@@ -61,7 +63,7 @@ namespace FubuMVC.Tests.Registration
         public void append_when_next_is_null()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            var next = new RenderJsonNode(typeof (Model2));
+            var next = new OutputNode(typeof (Model2));
 
             action.AddToEnd(next);
 
@@ -72,7 +74,7 @@ namespace FubuMVC.Tests.Registration
         public void enrich_puts_the_new_chain_node_directly_behind_the_call()
         {
             action = ActionCall.For<ControllerTarget>(x => x.OneInOneOut(null));
-            var next = new RenderJsonNode(typeof (Model2));
+            var next = new OutputNode(typeof (Model2));
 
 
             action.AddToEnd(next);
@@ -214,11 +216,11 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
 
             // first one is ok
-            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
             action.Count().ShouldEqual(1);
 
             // try it again, the second should be ignored
-            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
             action.Count().ShouldEqual(1);
         }
 
@@ -229,26 +231,27 @@ namespace FubuMVC.Tests.Registration
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
 
             // first one is ok
-            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
             action.Count().ShouldEqual(1);
 
             action.AddToEnd(new Wrapper(typeof(Wrapper1)));
 
             // try it again, the second should be ignored
-            action.AddToEnd(new DeserializeJsonNode(typeof(InputModel)));
+            action.AddToEnd(new ConnegInputNode(typeof(InputModel)));
             action.Count().ShouldEqual(2);
-            action.Count(x => x is DeserializeJsonNode).ShouldEqual(1);
+            action.Count(x => x is ConnegInputNode).ShouldEqual(1);
         }
 
         [Test]
         public void add_before_must_be_idempotent()
         {
             var action = ActionCall.For<ControllerTarget>(x => x.BogusMultiInput(null, null));
-            action.AddBefore(new DeserializeJsonNode(typeof(Model1)));
+            action.AddBefore(new ConnegInputNode(typeof(Model1)));
 
             action.PreviousNodes.Count().ShouldEqual(1);
 
-            action.AddBefore(new DeserializeJsonNode(typeof(Model1)));
+            action.AddBefore(new ConnegInputNode(typeof(Model1)));
+
             action.PreviousNodes.Count().ShouldEqual(1);
         }
     }
