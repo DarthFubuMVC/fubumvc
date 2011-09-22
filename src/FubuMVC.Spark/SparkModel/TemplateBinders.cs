@@ -115,7 +115,7 @@ namespace FubuMVC.Spark.SparkModel
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
-            var types = request.Types.TypesMatching(type => type.FullName == request.ViewModelType);
+            var types = request.Types.TypesWithFullName(request.ViewModelType);
             var typeCount = types.Count();
 
             if (typeCount == 1)
@@ -126,9 +126,9 @@ namespace FubuMVC.Spark.SparkModel
                 return;
             }
 
-            if (typeCount == 0 && GenericParser.IsGeneric(request.ViewModelType))
+            if (typeCount == 0 && ViewModelTypeFinder.IsGeneric(request.ViewModelType))
             {
-                descriptor.ViewModel = new GenericParser(request.Types.Assemblies).Parse(request.ViewModelType);
+                descriptor.ViewModel = new ViewModelTypeFinder(request.Types.Assemblies).Parse(request.ViewModelType);
                 logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
 
                 return;

@@ -6,11 +6,11 @@ using FubuCore;
 
 namespace FubuMVC.Spark.Registration
 {
-    public class GenericParser 
+    public class ViewModelTypeFinder 
     {
         private readonly IEnumerable<Assembly> _assemblies;
 
-        public GenericParser(IEnumerable<Assembly> assemblies)
+        public ViewModelTypeFinder(IEnumerable<Assembly> assemblies)
         {
             _assemblies = assemblies;
         }
@@ -23,18 +23,18 @@ namespace FubuMVC.Spark.Registration
             var leftGenericDelimiter = typeName.IndexOf('<');
             var rightGenericDelimiter = typeName.IndexOf('>');
                 
-            var genericArgumentsNames = typeName.Substring(leftGenericDelimiter+1, rightGenericDelimiter - leftGenericDelimiter - 1);
-            var genericArguments = genericArgumentsNames.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(t => findType(t)).ToArray();
-
+            var genericArguments = typeName.Substring(leftGenericDelimiter+1, rightGenericDelimiter - leftGenericDelimiter - 1);
+            var genericArgumentsCount = genericArguments.Split(',').Length;
             var openTypeName = typeName.Substring(0, leftGenericDelimiter);
-            var openTypeNameWithArgCount = openTypeName + "`" + genericArguments.Length;
-            var openType = findType(openTypeNameWithArgCount);
+            
+            var getTypeFriendlyName = "{0}`{1}[{2}]".ToFormat(openTypeName, genericArgumentsCount, genericArguments);
 
-            if (openType == null)
-                throw new ArgumentException("Could not find the open type {0} for your type name {1}.".ToFormat(openTypeNameWithArgCount, typeName));
+            var type = findType(getTypeFriendlyName);
 
-            return openType.MakeGenericType(genericArguments);
+            if (type == null)
+                throw new ArgumentException("Could not find the closed type for {0}.".ToFormat(typeName));
+
+            return type;
         }
 
         private Type findType(string typeName)

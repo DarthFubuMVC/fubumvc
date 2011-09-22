@@ -5,14 +5,14 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel.Binding
 {
     [TestFixture]
-    public class GenericParserTester 
+    public class ViewModelTypeFinderTester 
     {
-        private GenericParser ClassUnderTest;
+        private ViewModelTypeFinder ClassUnderTest;
 
         [SetUp]
         public void beforeEach()
         {
-            ClassUnderTest = new GenericParser(new[] { typeof(Bar).Assembly});
+            ClassUnderTest = new ViewModelTypeFinder(new[] { typeof(Bar).Assembly});
         }
 
         [Test]
@@ -34,12 +34,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
 
             type.ShouldEqual(typeof(Generic<Baz, Bar>));
         }
-        
+
         [Test]
         public void should_detect_if_type_name_is_generic()
         {
-            GenericParser.IsGeneric("System.String").ShouldBeFalse();
-            GenericParser.IsGeneric("System.Collections.List<System.String>").ShouldBeTrue();
+            ViewModelTypeFinder.IsGeneric("System.String").ShouldBeFalse();
+            ViewModelTypeFinder.IsGeneric("System.Collections.List<System.String>").ShouldBeTrue();
         }
     }
 }
