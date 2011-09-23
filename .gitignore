@@ -55,4 +55,4 @@ output/*
 src/packages
 repositories.config
 results
-fubuTemplate/lib/FubuMVC
+fubuTemplate/lib/*
