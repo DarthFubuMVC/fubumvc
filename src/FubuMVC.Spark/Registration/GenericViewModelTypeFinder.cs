@@ -6,19 +6,12 @@ using FubuCore;
 
 namespace FubuMVC.Spark.Registration
 {
-    public class ViewModelTypeFinder 
+    public class GenericViewModelTypeFinder 
     {
-        private readonly IEnumerable<Assembly> _assemblies;
-
-        public ViewModelTypeFinder(IEnumerable<Assembly> assemblies)
-        {
-            _assemblies = assemblies;
-        }
-
-        public Type Parse(string typeName)
+        public Type Parse(string typeName, IEnumerable<Assembly> assemblies)
         {
             if (!IsGeneric(typeName))
-                return findType(typeName);
+                return findType(typeName, assemblies);
 
             var leftGenericDelimiter = typeName.IndexOf('<');
             var rightGenericDelimiter = typeName.IndexOf('>');
@@ -29,12 +22,12 @@ namespace FubuMVC.Spark.Registration
             
             var getTypeFriendlyName = "{0}`{1}[{2}]".ToFormat(openTypeName, genericArgumentsCount, genericArguments);
 
-            return findType(getTypeFriendlyName);
+            return findType(getTypeFriendlyName, assemblies);
         }
 
-        private Type findType(string typeName)
+        private static Type findType(string typeName, IEnumerable<Assembly> assemblies)
         {
-            return _assemblies
+            return assemblies
                 .Select(assembly => assembly.GetType(typeName))
                 .FirstOrDefault(type => type != null);
         }
