@@ -9,6 +9,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Content;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
@@ -130,6 +131,8 @@ namespace FubuMVC.Core
     {
         private void setupServices(BehaviorGraph graph)
         {
+
+            graph.Services.AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
 
             graph.Services.SetServiceIfNone<ITypeResolver, TypeResolver>();
             graph.Services.AddService(new TypeDescriptorCache());

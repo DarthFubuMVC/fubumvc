@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void should_register_the_model_binder_in_the_graph()
         {
-            _graph.Services.ServicesFor<IModelBinder>().Select(x => x.Type).ShouldContain(typeof(ExampleModelBinder));
+            _graph.Services.ServicesFor<IModelBinder>().Where(x => x.Type != null).Select(x => x.Type).ShouldContain(typeof(ExampleModelBinder));
         }
     }
 
