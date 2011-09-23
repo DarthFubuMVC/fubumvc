@@ -97,6 +97,38 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    public class GenericViewModelBinder : ITemplateBinder
+    {
+        public bool CanBind(IBindRequest request)
+        {
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                   && !descriptor.HasViewModel()
+                   && !request.Target.IsPartial()
+                   && request.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.ViewModelType);
+        }
+
+        public void Bind(IBindRequest request)
+        {
+            var logger = request.Logger;
+            var template = request.Target;
+
+            var viewModel = new GenericParser(request.Types.Assemblies).Parse(request.ViewModelType);
+
+            if (viewModel != null)
+            {
+                var descriptor = template.Descriptor.As<ViewDescriptor>();
+                descriptor.ViewModel = viewModel;
+                logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
+                return;
+            }
+
+            logger.Log(template, "Unable to set generic view model type : {0}", request.ViewModelType);
+        }
+    }
+
     public class ViewModelBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -106,7 +138,8 @@ namespace FubuMVC.Spark.SparkModel
             return descriptor != null
                    && !descriptor.HasViewModel()
                    && !request.Target.IsPartial()
-                   && request.ViewModelType.IsNotEmpty();
+                   && request.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.ViewModelType) == false;
         }
 
         public void Bind(IBindRequest request)
@@ -124,18 +157,6 @@ namespace FubuMVC.Spark.SparkModel
                 logger.Log(template, "View model type is : [{0}]", descriptor.ViewModel);
 
                 return;
-            }
-
-            if (typeCount == 0 && GenericParser.IsGeneric(request.ViewModelType))
-            {
-                var viewModel = new GenericParser(request.Types.Assemblies).Parse(request.ViewModelType);
-
-                if(viewModel != null)
-                {
-                    descriptor.ViewModel = viewModel;
-                    logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
-                    return;
-                }
             }
 
             logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);

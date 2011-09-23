@@ -55,29 +55,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-        public void is_able_to_bind_generic_types()
+        public void if_view_model_type_is_generic_nothiudoes_not_exist_nothing_is_assigned()
         {
-            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>";
+            _request.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldEqual(typeof (Generic<Baz>));
-        }
-
-        [Test]
-        public void is_able_to_bind_complex_generic_types()
-        {
-            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz,FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
-            ClassUnderTest.Bind(_request);
-            _descriptor.ViewModel.ShouldEqual(typeof(Generic<Baz,Bar>));
-        }
-
-        [Test]
-        public void it_does_not_try_to_bind_names_that_are_null_or_empty()
-        {
-            _request.ViewModelType = string.Empty;
-            ClassUnderTest.CanBind(_request).ShouldBeFalse();
-
-            _request.ViewModelType = null;
-            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+            _descriptor.ViewModel.ShouldBeNull();
         }
 
         [Test]
@@ -98,6 +80,13 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         public void does_not_bind_partials()
         {
             _request.Target = new Template("_partial.spark", "", "testing");
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
+
+        [Test]
+        public void it_does_not_bind_generic_viewmodels()
+        {
+            _request.ViewModelType = "System.Collections.List<System.String>";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

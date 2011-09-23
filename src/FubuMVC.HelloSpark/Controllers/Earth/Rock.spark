@@ -1,4 +1,4 @@
-﻿<viewdata model="FubuMVC.HelloSpark.Controllers.Earth.EarthViewModel[[System.String]]" />
+﻿<viewdata model="FubuMVC.HelloSpark.Controllers.Earth.EarthViewModel" />
 
 <content:title>Down to Earth!</content:title>
 <content:header>Where are we now?</content:header>

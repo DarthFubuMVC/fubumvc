@@ -2,14 +2,14 @@
 {
     public class EarthController
     {
-        public EarthViewModel<string> Rock(EarthViewModel<string> whereAreWe)
+        public EarthViewModel Rock(EarthViewModel whereAreWe)
         {
             return whereAreWe;
         }
     }
 
-    public class EarthViewModel<T>
+    public class EarthViewModel
     {
-        public T RawUrl { get; set; }
+        public string RawUrl { get; set; }
     }
 }
