@@ -1,0 +1,142 @@
+/*Grid*/
+.ui-jqgrid {border:0;}
+.ui-jqgrid .ui-jqgrid-view {font-size:1em;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;}
+/* caption*/
+.ui-jqgrid .ui-jqgrid-titlebar.ui-widget-header {font-size: 1.4em; border:0; background:none;border-bottom: 2px solid #ccc;}
+.ui-jqgrid .ui-jqgrid-title {margin-left: 0.5em; }
+.ui-jqgrid .ui-jqgrid-titlebar-close {}.ui-jqgrid .ui-jqgrid-titlebar-close span {}
+.ui-jqgrid .ui-jqgrid-titlebar-close:hover {border:1px solid #fff; }
+/* header*/
+.ui-jqgrid .ui-jqgrid-hdiv {background:none}
+.ui-jqgrid .ui-jqgrid-hbox {}
+.ui-jqgrid .ui-jqgrid-htable {}
+.ui-jqgrid .ui-jqgrid-htable th { padding: 9px 10px 10px 10px; height:auto;} .ui-jqgrid .ui-jqgrid-htable th.ui-state-default { background-image:none; background-color:#fff;}
+.ui-jqgrid .ui-jqgrid-htable th div {}
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {text-align:left; font-weight:bold;}
+.ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {border-left:1px solid #ccc; border-right:0px none;border-bottom:1px solid #CCC;} .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr:first-child {border-left:0px none;}
+.ui-th-rtl, .ui-jqgrid .ui-jqgrid-htable th.ui-th-rtl {}
+.ui-jqgrid .ui-th-div-ie {}
+.ui-jqgrid .ui-jqgrid-resize {padding: 0 1px;}
+.ui-jqgrid .ui-grid-ico-sort {} .ui-jqgrid .ui-grid-ico-sort.ui-state-disabled {display:none;}
+.ui-jqgrid .ui-icon-asc {position:absolute; right:1px; margin-top:0px;}
+.ui-jqgrid .ui-icon-desc {position:absolute; right:1px;margin-top:0px;}
+.ui-jqgrid .ui-i-asc {}
+.ui-jqgrid .ui-i-desc {}
+.ui-jqgrid .ui-jqgrid-sortable {}
+.ui-jqgrid tr.ui-search-toolbar th {}
+tr.ui-search-toolbar input {}
+tr.ui-search-toolbar select {}
+/* body */ 
+.ui-jqgrid .ui-jqgrid-bdiv {}
+.ui-jqgrid .ui-jqgrid-btable {}
+.ui-jqgrid tr.jqgrow td { padding: 9px 10px 10px 10px;}
+.ui-jqgrid tr.jqgfirstrow td {}
+.ui-jqgrid tr.jqgroup td {}
+.ui-jqgrid tr.jqfoot td {}
+.ui-jqgrid tr.ui-row-ltr td {border-left:1px solid #ccc; border-right:0px none;} .ui-jqgrid tr.ui-row-ltr td:first-child {border-left: 0px none;}
+.ui-jqgrid tr.ui-row-rtl td {}
+.ui-jqgrid td.jqgrid-rownum {}
+.ui-jqgrid .ui-jqgrid-resize-mark {}
+/* footer */
+.ui-jqgrid .ui-jqgrid-sdiv {}
+.ui-jqgrid .ui-jqgrid-ftable {}
+.ui-jqgrid tr.footrow td {}
+.ui-jqgrid tr.footrow-ltr td {}
+.ui-jqgrid tr.footrow-rtl td {}
+/* Pager*/
+.ui-jqgrid .ui-jqgrid-pager { background:none;border:0;font-size:1.2em; }
+.ui-jqgrid .ui-pager-control {}
+.ui-jqgrid .ui-pg-table {}
+.ui-jqgrid .ui-pg-table td {}
+.ui-jqgrid .ui-pg-button  { }
+.ui-jqgrid .ui-pg-button span {}
+.ui-jqgrid .ui-pg-button:hover {}
+.ui-jqgrid .ui-state-disabled:hover {}
+.ui-jqgrid .ui-pg-input { }
+.ui-jqgrid .ui-pg-selbox {}
+.ui-jqgrid .ui-separator {}
+.ui-jqgrid .ui-paging-info {}
+.ui-jqgrid .ui-jqgrid-pager .ui-pg-div {}
+.ui-jqgrid .ui-jqgrid-pager .ui-pg-button {}
+.ui-jqgrid .ui-jqgrid-pager .ui-pg-div  span.ui-icon {}
+.ui-jqgrid td input, .ui-jqgrid td select .ui-jqgrid td textarea {}
+.ui-jqgrid td textarea {}
+.ui-jqgrid .ui-jqgrid-toppager {}
+/*subgrid*/
+.ui-jqgrid .ui-jqgrid-btable .ui-sgcollapsed span {}
+.ui-jqgrid .ui-subgrid {}
+.ui-jqgrid .ui-subgrid table {}
+.ui-jqgrid .ui-subgrid tr.ui-subtblcell td {}
+.ui-jqgrid .ui-subgrid td.subgrid-data {}
+.ui-jqgrid .ui-subgrid td.subgrid-cell {}
+.ui-jqgrid .ui-th-subgrid {}
+/* loading */
+.ui-jqgrid .loading {}
+.ui-jqgrid .jqgrid-overlay {}
+* html .jqgrid-overlay {}
+* .jqgrid-overlay iframe {}
+/* end loading div */
+/* toolbar */
+.ui-jqgrid .ui-userdata {}
+/*Modal Window */
+.ui-jqdialog { }
+.ui-jqdialog .ui-jqdialog-titlebar {}
+.ui-jqdialog .ui-jqdialog-title {} 
+.ui-jqdialog .ui-jqdialog-titlebar-close {}
+
+.ui-jqdialog .ui-jqdialog-titlebar-close span {}
+.ui-jqdialog .ui-jqdialog-titlebar-close:hover, .ui-jqdialog .ui-jqdialog-titlebar-close:focus { }
+.ui-jqdialog-content, .ui-jqdialog .ui-jqdialog-content { }
+.ui-jqdialog .ui-jqconfirm {}
+/* end Modal window*/
+/* Form edit */
+.ui-jqdialog-content .FormGrid {}
+.ui-jqdialog-content .EditTable { }
+.ui-jqdialog-content .DelTable {}
+.EditTable td input, .EditTable td select, .EditTable td textarea {}
+.EditTable td textarea { }
+.ui-jqdialog-content td.EditButton {}
+.ui-jqdialog-content td.navButton {}
+.ui-jqdialog-content input.FormElement {}
+.ui-jqdialog-content .data-line {}
+
+.ui-jqdialog-content .CaptionTD {}
+.ui-jqdialog-content .DataTD {}
+.ui-jqdialog-content .form-view-data {}
+.fm-button { }
+.fm-button-icon-left { }
+.fm-button-icon-right { }
+.fm-button-icon-left .ui-icon { }
+.fm-button-icon-right .ui-icon {}
+#nData, #pData { }
+/* End Eorm edit */
+/*.ui-jqgrid .edit-cell {}*/
+.ui-jqgrid .selected-row, div.ui-jqgrid .selected-row td {}
+/* Tree Grid */
+.ui-jqgrid .tree-wrap {}
+.ui-jqgrid .tree-minus {}
+.ui-jqgrid .tree-plus {}
+.ui-jqgrid .tree-leaf {}
+.ui-jqgrid .treeclick {}
+/* moda dialog */
+.jqmOverlay { }
+* iframe.jqm {}
+.ui-jqgrid-dnd tr td {}
+/* RTL Support */
+.ui-jqgrid .ui-jqgrid-title-rtl {}
+.ui-jqgrid .ui-jqgrid-hbox-rtl {}
+.ui-jqgrid .ui-jqgrid-resize-ltr {margin-right:-10px;}
+.ui-jqgrid .ui-jqgrid-resize-rtl {}
+.ui-jqgrid .ui-sort-rtl {}
+.ui-jqgrid .tree-wrap-ltr {}
+.ui-jqgrid .tree-wrap-rtl {}
+.ui-jqgrid .ui-ellipsis {}
+.ui-searchFilter { }
+.ui-searchFilter table {}
+.ui-searchFilter table td {}
+.ui-searchFilter table td input, .ui-searchFilter table td select {}
+.ui-searchFilter .ui-state-default { }
+.ui-searchFilter .divider hr {}
+
+/* Selected Column */
+.ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th[aria-selected~=true] {background:#FFF6D9;border-bottom:1px solid #FFC40D;}
