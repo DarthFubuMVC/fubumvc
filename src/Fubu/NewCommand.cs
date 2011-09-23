@@ -16,6 +16,8 @@ namespace Fubu
     [CommandDescription("Creates a new FubuMVC solution", Name = "new")]
     public class NewCommand : FubuCommand<NewCommandInput>
     {
+        // Error code for file exists http://msdn.microsoft.com/en-us/library/aa232676(v=vs.60).aspx
+        public const int DIRECTORY_ALREADY_EXISTS = 58;
         private static readonly string TemplateZip = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "fubuTemplate.zip");
         private static readonly FileSet TopLevelFileSet = new FileSet
                                                               {
@@ -48,6 +50,11 @@ namespace Fubu
             KeywordReplacer.SetTokens(templateKeywords);
 
             var projectPath = Path.Combine(Environment.CurrentDirectory, input.ProjectName);
+            if (FileSystem.DirectoryExists(projectPath))
+            {
+                throw new FubuException(DIRECTORY_ALREADY_EXISTS, "Directory: {0} already exists", projectPath);
+            }
+
             if (string.IsNullOrEmpty(input.GitFlag))
             {
                 Unzip(input.ZipFlag, projectPath);
@@ -87,6 +94,8 @@ namespace Fubu
         public void ParseDirectory(string directory)
         {
             var newDirectoryName = KeywordReplacer.Replace(directory);
+
+            // Need to handle if there is an existing directory here.
             if (directory != newDirectoryName)
             {
                 Console.WriteLine("{0} -> {1}",directory, FileSystem.GetFileName(newDirectoryName));
