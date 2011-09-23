@@ -157,7 +157,8 @@ FUBUTEMPLATE_DIR = 'fubuTemplate'
 namespace :template do
 
   desc "Cleans, Updates, and Zips fubuTemplate"
-  task :build => ["template:clean", "template:update", "template:zip"]
+  task :build => ["template:clean", "template:update", "template:nugetclean", "template:zip"]
+  nuget = "buildsupport/nuget.exe"
 
   desc "Updates and zips default FubuTemplate"
   zip :zip do |zip|
@@ -168,15 +169,24 @@ namespace :template do
 
   desc "Update fubuTemplate dependencies"
   task :update do
-    path = File.join(FUBUTEMPLATE_DIR, "/fubuDependencies.txt")
-    dependencies_dir = File.join(FUBUTEMPLATE_DIR, 'lib/FubuMVC')
-    unless File.exists?(path)
+    packages_config = File.join(FUBUTEMPLATE_DIR, "/packages.config")
+    dependencies_dir = File.join(FUBUTEMPLATE_DIR, 'lib')
+    unless File.exists?(packages_config)
       puts "No fubuDependencies.txt file"
       return
     end
     mkdir_p(dependencies_dir)
-    IO.readlines(path).each do |l|
-      cp "build/#{l.chomp}", "#{dependencies_dir}/#{l.chomp}"
+    # Run nuget here
+    sh "#{nuget} install #{packages_config} -o #{dependencies_dir} -ExcludeVersion"
+  end
+
+  desc "Cleans nuget install downloading source"
+  task :nugetclean, [:dry_run] do |t,args|
+    Dir.chdir(FUBUTEMPLATE_DIR) do
+      files = Dir.glob("lib/**/src")
+      nupkg = Dir.glob("lib/**/*.nupkg")
+      files << nupkg
+      args[:dry_run] ? puts(files) : rm_r(files)
     end
   end
 
