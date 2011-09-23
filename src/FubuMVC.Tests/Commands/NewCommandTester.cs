@@ -143,6 +143,15 @@ namespace FubuMVC.Tests.Commands
             Assert.Throws<FubuException>(execute);
         }
 
+        [Test]
+        public void should_throw_when_target_directory_exists()
+        {
+            fileSystem.Stub(x => x.DirectoryExists(Arg<string>.Is.Anything))
+                .Return(true);
+
+            Assert.Throws<FubuException>(execute);
+        }
+
         private void NoChildDirectories()
         {
             fileSystem.Stub(x => x.ChildDirectoriesFor(Arg<string>.Is.Anything)).Return(new string[0]);
