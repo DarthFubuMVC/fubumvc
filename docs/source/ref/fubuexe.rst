@@ -600,6 +600,40 @@ list something specific
 
 ``-deployment <deployment>`` - The directory where the deployment settings are stored
 
+.. _fubu-new:
+
+new
+---
+
+Creates a new FubuMVC solution (see :ref:`usingfubunew`)
+
+**Arguments**
+
+``projectname`` - This should be the name of the new FubuMVC project you are about to create.
+
+**Flags**
+
+``-g`` - Git repository URL for a FubuMVC template.
+
+
+``-z`` - The path to a zip file containing a FubuMVC template.
+
+Example usage using a Git repository:
+
+.. code-block:: bash
+
+    fubu new -g https://github.com/myrepo/myfubumvctemplate mynewfubumvcproject
+
+To learn how to create your own template in a git repository, see :ref:`fubunew-git`
+
+Example usage using a Zip file:
+
+.. code-block:: bash
+
+    fubu new -z /../template/myfubumvctemplate.zip mynewfubumvcproject
+
+To learn how to create your own template in a zip file, see :ref:`fubunew-zip`
+
 .. _fubu-packages:
 
 packages

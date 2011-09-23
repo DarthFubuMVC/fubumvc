@@ -99,6 +99,7 @@
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Caching\InputModelCacheTester.cs" />
     <Compile Include="Caching\RequestOutputCacheBehaviorTester.cs" />
+    <Compile Include="Commands\NewCommandTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="Conneg\ConnegBehaviorConventionTester.cs" />
@@ -122,9 +123,12 @@
     <Compile Include="Diagnostics\RecordingValueConverterRegistryTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
+    <Compile Include="KeywordReplacerTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
+    <Compile Include="ProcessFactoryTester.cs" />
+    <Compile Include="ProcessWrapperTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
