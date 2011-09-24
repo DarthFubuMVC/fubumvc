@@ -87,6 +87,7 @@
     <Content Include="Content\Styles\chains\view.css" />
     <Content Include="Content\Styles\html\preview.css" />
     <Content Include="Content\Styles\html\selector.css" />
+    <Content Include="Content\Styles\jquery\ui.jqgrid.overrides.css" />
     <Content Include="Content\Styles\requests\view.css" />
     <Content Include="diagnostics.script.config" />
     <None Include=".package-manifest" />
