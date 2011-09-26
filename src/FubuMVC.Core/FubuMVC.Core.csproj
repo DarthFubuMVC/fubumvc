@@ -204,9 +204,13 @@
     <Compile Include="Packaging\PackageSettingsSource.cs" />
     <Compile Include="Packaging\VirtualPaths\VirtualPathProviderActivator.cs" />
     <Compile Include="Packaging\ZipFilePackageLoader.cs" />
+    <Compile Include="Rest\Media\IMediaDocument.cs" />
     <Compile Include="Rest\Media\IMediaReader.cs" />
+    <Compile Include="Rest\Media\IMediaReaderNode.cs" />
+    <Compile Include="Rest\Media\IMediaWriter.cs" />
+    <Compile Include="Rest\Media\IMediaWriterNode.cs" />
     <Compile Include="Rest\Media\IValueSource.cs" />
-    <Compile Include="Rest\Media\MediaClasses.cs" />
+    <Compile Include="Rest\Media\MediaWriterNode.cs" />
     <Compile Include="Rest\Media\MediaDependency.cs" />
     <Compile Include="Rest\Media\MediaWriter.cs" />
     <Compile Include="Rest\Media\ModelBindingMediaReader.cs" />
