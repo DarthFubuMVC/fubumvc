@@ -195,6 +195,7 @@
     <Compile Include="Registration\Scanning\AssemblyScannerTester.cs" />
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Registration\TypePoolTester.cs" />
+    <Compile Include="Rest\Resource_integrated_registration_tester.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />

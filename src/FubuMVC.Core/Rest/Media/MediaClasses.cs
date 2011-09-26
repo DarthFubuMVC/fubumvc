@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Rest.Media.Projections;
 using FubuMVC.Core.Runtime;
-using FubuCore;
 
 namespace FubuMVC.Core.Rest.Media
 {
@@ -14,11 +15,11 @@ namespace FubuMVC.Core.Rest.Media
         void Write(T source, IOutputWriter writer);
     }
 
+    // Fancier stuff?  Later?
+    //public class MediaDefinition<T>
+    //{
 
-    public class MediaDefinition<T>
-    {
-
-    }
+    //}
 
     public interface IMediaDocument
     {
@@ -46,64 +47,29 @@ namespace FubuMVC.Core.Rest.Media
         public MediaWriterNode(Type inputType)
         {
             _inputType = inputType;
+
+            Links = new MediaDependency(typeof(ILinkSource<>), _inputType);
+            Projection = new MediaDependency(typeof(IValueProjection<>), _inputType);
+            Document = new MediaDependency(typeof(IMediaDocument));
         }
 
-
+        public MediaDependency Links { private set; get; }
+        public MediaDependency Projection { private set; get; }
+        public MediaDependency Document { private set; get; }
 
         public ObjectDef ToObjectDef()
         {
-            throw new NotImplementedException();
+            var objectDef = new ObjectDef(typeof (MediaWriter<>).MakeGenericType(_inputType));
+            if (Links.Dependency != null) objectDef.Dependency(Links.Dependency);
+            if (Projection.Dependency != null) objectDef.Dependency(Projection.Dependency);
+            if (Document.Dependency != null) objectDef.Dependency(Document.Dependency);
+
+            return objectDef;
         }
 
         public Type InputType
         {
             get { return _inputType; }
-        }
-    }
-
-    public class MediaDependency
-    {
-        private readonly Type _openInterfaceType;
-        private readonly Type _inputType;
-        private readonly Type _interface;
-        private IDependency _dependency;
-
-        public MediaDependency(Type openInterfaceType, Type inputType)
-        {
-            _openInterfaceType = openInterfaceType;
-            _inputType = inputType;
-
-            _interface = openInterfaceType.MakeGenericType(inputType);
-        }
-
-        public void SetType(Type type)
-        {
-            if (!type.IsConcrete() || !type.CanBeCastTo(_interface))
-            {
-                throw new ArgumentException("Type {0} cannot be plugged into {1}".ToFormat(type.FullName, _interface.FullName));
-            }
-
-            _dependency = new ConfiguredDependency(_interface, type);
-        }
-
-        public void SetType<T>()
-        {
-            SetType(typeof(T));
-        }
-
-        public void SetValue(object value)
-        {
-            if (!value.GetType().CanBeCastTo(_interface))
-            {
-                throw new ArgumentException("Type {0} cannot be plugged into {1}".ToFormat(value.GetType().FullName, _interface.FullName));
-            }
-
-            _dependency = new ValueDependency(_interface, value);
-        }
-
-        public IDependency Dependency
-        {
-            get { return _dependency; }
         }
     }
 }

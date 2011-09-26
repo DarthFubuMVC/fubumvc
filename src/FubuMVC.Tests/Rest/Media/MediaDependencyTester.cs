@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Rest.Media
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() =>
             {
-                theDependency.SetType(typeof(Thing2Doer));
+                theDependency.UseType(typeof(Thing2Doer));
             });
         }
 
@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Rest.Media
         {
             Exception<ArgumentException>.ShouldBeThrownBy(() =>
             {
-                theDependency.SetValue(new Thing2Doer());
+                theDependency.UseValue(new Thing2Doer());
             });
         }
 
@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Rest.Media
         public void set_value_builds_a_value_dependency()
         {
             var doer = new Thing1Doer();
-            theDependency.SetValue(doer);
+            theDependency.UseValue(doer);
 
             theDependency.Dependency.ShouldBeOfType<ValueDependency>()
                 .Value.ShouldBeTheSameAs(doer);
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Rest.Media
         [Test]
         public void set_type_builds_a_configured_dependency()
         {
-            theDependency.SetType(typeof(Thing1Doer));
+            theDependency.UseType(typeof(Thing1Doer));
             theDependency.Dependency.ShouldBeOfType<ConfiguredDependency>()
                 .Definition.Type.ShouldEqual(typeof (Thing1Doer));
         }

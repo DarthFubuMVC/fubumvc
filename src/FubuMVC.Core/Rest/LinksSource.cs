@@ -18,16 +18,16 @@ namespace FubuMVC.Core.Rest
             return _sources.SelectMany(x => x.LinksFor(target, urls));
         }
 
-        public LinkSource<T> LinkToSubject()
+        public LinkSource<T> ToSubject()
         {
-            return LinkTo(v => v);
+            return To(v => v);
         }
 
-        public LinkSource<T> LinkToSubject(Expression<Func<T, object>> identifierProperty)
+        public LinkSource<T> ToSubject(Expression<Func<T, object>> identifierProperty)
         {
             var accessor = identifierProperty.ToAccessor();
 
-            return LinkTo((values, urls) =>
+            return To((values, urls) =>
             {
                 var parameters = new RouteParameters<T>();
                 parameters[accessor.Name] = values.ValueFor(accessor).ToString();
@@ -36,16 +36,16 @@ namespace FubuMVC.Core.Rest
             });
         }
 
-        public LinkSource<T> LinkTo(Func<T, object> subject)
+        public LinkSource<T> To(Func<T, object> subject)
         {
-            return LinkTo((values, urls) =>
+            return To((values, urls) =>
             {
                 var urlSubject = subject(values.Subject);
                 return urls.UrlFor(urlSubject);
             });
         }
 
-        public LinkSource<T> LinkTo(Func<IValues<T>, IUrlRegistry, string> urlSource)
+        public LinkSource<T> To(Func<IValues<T>, IUrlRegistry, string> urlSource)
         {
             var source = new LinkSource<T>(urlSource);
             _sources.Add(source);

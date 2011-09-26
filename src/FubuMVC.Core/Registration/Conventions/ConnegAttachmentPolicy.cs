@@ -28,6 +28,8 @@ namespace FubuMVC.Core.Registration.Conventions
                     chain.ApplyConneg();
                 });
             });
+
+            // TODO -- find all the IResourceRegistration and apply them
         }
 
         public class AttachmentFilter
