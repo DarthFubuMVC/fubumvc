@@ -1,0 +1,11 @@
+.container-fluid > .sidebar {
+    width: 280px;
+}
+
+.container-fluid > .content {
+    margin-left: 300px;
+}
+
+.container-fluid > .sidebar > .well > .form-stacked {
+    padding-left: 0;
+}

@@ -1,10 +1,11 @@
-﻿<viewdata model="FubuMVC.Diagnostics.Features.Chains.ChainModel" />
+﻿<use master="Fluid" />
+<viewdata model="FubuMVC.Diagnostics.Features.Chains.ChainModel" />
 <content:title>Chain ${Model.Chain.UniqueId.ToString()}</content:title>
 <content:head>
   <Stylesheet href="chains/view.css" />
   <Script src="chains/view.js" />
 </content:head>
-<content:main>
+<content:mainContent>
   <h2 class="route">
     <span>Route: ${Model.Chain.Route}</span>
     <if condition="Model.HasConstraints()">
@@ -26,4 +27,4 @@
   <div id="arrow" style="display:none">
     <Image src="down-arrow.png" />
   </div>
-</content:main>
+</content:mainContent>

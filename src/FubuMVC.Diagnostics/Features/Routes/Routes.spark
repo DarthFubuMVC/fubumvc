@@ -1,4 +1,5 @@
-﻿<use namespace="FubuMVC.Core.Registration" />
+﻿<use master="Fluid" />
+<use namespace="FubuMVC.Core.Registration" />
 <use namespace="FubuMVC.Diagnostics.Models.Grids" />
 <use namespace="FubuMVC.Diagnostics.Features.Routes" />
 <viewdata model="FubuMVC.Diagnostics.Features.Routes.RoutesModel" />
@@ -6,7 +7,7 @@
 <content:head>
   <Script src="routes.js" />
 </content:head>
-<content:main>
+<content:mainContent>
 	<h2 id="route-heading">Route Explorer</h2>
   <p class="hint">(Use ctrl+f to apply filters)</p>
   <div id="filters" class="filter-container" data-bind="visible: showFilters()">
@@ -40,4 +41,4 @@
       <span class="ui-button-text">{{= type }}: "{{= value }}"</span>
     </a>
   </script>
-</content:main>
+</content:mainContent>

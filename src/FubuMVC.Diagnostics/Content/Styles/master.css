@@ -20,7 +20,7 @@ h2
 
 h3.subheader, h4.subheader
 {
-    margin-top: -20px;
+    margin-top: -10px;
     font-style: italic;
     padding-left: 10px;
 }
@@ -96,7 +96,7 @@ h4.subheader
     padding: 10px;
 }
 
-pre
+/*pre
 {
     font-size: 12px;
     padding: 0;
@@ -104,16 +104,16 @@ pre
     background: #f0f0f0;
     border-left: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    line-height: 20px; /*--Height of each line of code--*/
+    line-height: 20px;
     width: 800px;
     text-align: left;
-    overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
-    overflow-y: hidden; /*--Hides vertical scroll created by IE--*/
+    overflow: auto; 
+    overflow-y: hidden;
 }
 
 pre code
 {
-    margin: 0 0 0 40px; /*--Left Margin--*/
+    margin: 0 0 0 40px;
     padding: 15px 0;
     display: block;
 }
@@ -124,6 +124,12 @@ pre.blk
     border: medium none;
     color: #FFFFFF;
 }
+
+pre.blk > code
+{
+    background: none;
+    color: #fff;
+}*/
 
 .model-binding .grid
 {
@@ -165,7 +171,7 @@ p
 
 .hint
 {
-    margin-top: -20px;
+    margin-top: -2px;
     font-style: italic;
     padding-left: 10px;
 }

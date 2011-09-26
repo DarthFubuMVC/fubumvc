@@ -1,36 +1,31 @@
-﻿<use master="Application" />
+﻿<use master="TwoColumn" />
 <use namespace="FubuMVC.Core.Registration" />
 <use namespace="FubuMVC.Diagnostics.Features.Html" />
 <content:head>
   <Stylesheet href="html/selector.css" />
   <Script src="html/selector.js" />
 </content:head>
-<content:main>
-  <div class="sidebar">
-    <div class="accordion ui-accordion ui-widget ui-helper-reset" role="tablist">
-      <div>
-        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-top" role="tab" aria-expanded="true" tabindex="0">
-          <a href="javascript:void(0);">Select a View Model:</a>
-        </h3>
-        <form action="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Features.Html.HtmlConventionsPreviewInputModel())}" method="post">
-        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" style="padding-top: 11px; padding-bottom: 11px; display: block; overflow-x: auto; overflow-y: auto; " role="tabpanel">
+<content:leftColumn>
+  <form action="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Features.Html.HtmlConventionsPreviewInputModel())}" method="post" class="form-stacked">
+    <fieldset>
+      <legend>Select a View Model</legend>
+      <div class="clearfix">
+        <div class="input">
           <input type="text" id="filter-value" tabindex="1" name="OutputModel" data-bind="value: filterValue" class="{ url: '${this.Urls.UrlFor(new AutocompleteRequestModel<BehaviorGraph>())}' }" />
-            <button tabindex="2" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" data-bind="click: addFilter" type="submit">
-            <span class="ui-button-text">Go</span>
-          </button>
-          <div class="clear"></div>
         </div>
-        </form>
       </div>
+    </fieldset>
+    <div class="actions">
+      <button tabindex="2" class="btn" data-bind="click: addFilter" type="submit">Go</button>
     </div>
-    <p>
-      <em>
-        Note: <br/> 
-        You can see the conventions applied by selecting one of your view models above, or applied to the <a href="${this.Urls.UrlFor(new HtmlConventionsPreviewRequestModel { OutputModel = typeof(ExampleViewModel).FullName } )}">built-in example model</a>.
-      </em>
-    </p>
-  </div>
-  <div class="content">
-    <use content="pageContent"/>
-  </div>
-</content:main>
+  </form>
+  <p>
+    <em>
+      Note: <br/>
+      You can see the conventions applied by selecting one of your view models above, or applied to the <a href="${this.Urls.UrlFor(new HtmlConventionsPreviewRequestModel { OutputModel = typeof(ExampleViewModel).FullName } )}">built-in example model</a>.
+    </em>
+  </p>
+</content:leftColumn>
+<content:rightColumn>
+  <use content="pageContent"/>
+</content:rightColumn>

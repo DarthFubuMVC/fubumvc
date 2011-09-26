@@ -89,6 +89,7 @@
     <Content Include="Content\Scripts\authorization.js" />
     <Content Include="Content\Styles\bootstrap.min.css" />
     <Content Include="Content\Styles\chains\view.css" />
+    <Content Include="Content\Styles\bootstrap.overrides.css" />
     <Content Include="Content\Styles\html\preview.css" />
     <Content Include="Content\Styles\html\selector.css" />
     <Content Include="Content\Styles\jquery\ui.jqgrid.overrides.css" />
@@ -100,7 +101,9 @@
     <None Include="Features\Html\Preview\Preview.spark" />
     <None Include="Features\Dashboard\Dashboard.spark" />
     <None Include="Features\Packaging\Packaging.spark" />
-    <None Include="Features\Requests\Requests.spark" />
+    <None Include="Features\Requests\Requests.spark">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Features\Routes\Routes.spark">
       <SubType>Designer</SubType>
     </None>

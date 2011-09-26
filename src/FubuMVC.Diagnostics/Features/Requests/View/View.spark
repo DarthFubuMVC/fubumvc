@@ -1,11 +1,15 @@
-﻿  <use namespace="FubuMVC.Diagnostics.Features.Requests" />
+﻿<use master="TwoColumn" />
+<use namespace="FubuMVC.Diagnostics.Features.Requests" />
 <viewdata model="FubuMVC.Diagnostics.Features.Requests.RequestDetailsModel" />
 <content:title>Request ${Model.Report.Id.ToString()}</content:title>
 <content:head>
   <Stylesheet href="requests/view.css" />
   <Script src="requests/view.js" />
 </content:head>
-<content:main>
+<content:leftColumn>
+  
+</content:leftColumn>
+<content:rightColumn>
   <div class="request-info">
     <h2 class="request">
       <span>Request: ${Model.Report.Url}</span>
@@ -60,4 +64,4 @@
       </li>
     </ul>
   </div>
-</content:main>
+</content:rightColumn>
