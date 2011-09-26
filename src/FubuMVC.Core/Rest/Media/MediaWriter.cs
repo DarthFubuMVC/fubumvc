@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Rest.Media
 
         public IEnumerable<string> Mimetypes
         {
-            get { throw new NotImplementedException(); }
+            get { return _document.Mimetypes; }
         }
     }
 }
