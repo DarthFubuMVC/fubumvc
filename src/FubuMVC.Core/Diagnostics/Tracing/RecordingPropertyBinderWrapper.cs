@@ -7,9 +7,9 @@ namespace FubuMVC.Core.Diagnostics.Tracing
     public class RecordingPropertyBinderWrapper : IPropertyBinderCache
     {
         private readonly PropertyBinderCache _inner;
-        private readonly Func<IDebugReport> _report;
+        private readonly IDebugReport _report;
 
-        public RecordingPropertyBinderWrapper(PropertyBinderCache inner, Func<IDebugReport> report)
+        public RecordingPropertyBinderWrapper(PropertyBinderCache inner, IDebugReport report)
         {
             _inner = inner;
             _report = report;
@@ -20,13 +20,13 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             var binder = _inner.BinderFor(property);
             if (binder != null)
             {
-                _report()
-                    .AddBindingDetail(new PropertyBinderSelection
-                                             {
-                                                 BinderType = binder.GetType(),
-                                                 PropertyName = property.Name,
-                                                 PropertyType = property.PropertyType
-                                             });
+                var selection = new PropertyBinderSelection{
+                    BinderType = binder.GetType(),
+                    PropertyName = property.Name,
+                    PropertyType = property.PropertyType
+                };
+
+                _report.AddBindingDetail(selection);
             }
             return binder;
         }

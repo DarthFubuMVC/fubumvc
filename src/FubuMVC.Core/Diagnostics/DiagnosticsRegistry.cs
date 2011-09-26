@@ -1,10 +1,10 @@
 using FubuCore.Binding;
+using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -24,21 +24,20 @@ namespace FubuMVC.Core.Diagnostics
                 .UrlPolicy<DiagnosticUrlPolicy>();
 
             Services(x =>
-                         {
-                             x.SetServiceIfNone<IDebugDetector, DebugDetector>();
-                             x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
-                             x.ReplaceService<IObjectResolver, RecordingObjectResolver>();
-                             x.ReplaceService<IDebugReport, DebugReport>();
-                             x.ReplaceService<IRequestObserver, RequestObserver>();
-                             x.ReplaceService<IRequestData, RecordingRequestData>();
-                             x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
-                             x.ReplaceService<IDebugDetector, DebugDetector>();
-                             x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
-                             x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
-                             x.ReplaceService<IPropertyBinderCache, RecordingPropertyBinderWrapper>();
-                             x.ReplaceService<IModelBinderCache, RecordingModelBinderWrapper>();
-                             x.ReplaceService<IValueConverterRegistry, RecordingValueConverterRegistry>();
-                         });
+            {
+                x.SetServiceIfNone<IDebugDetector, DebugDetector>();
+                x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
+                x.ReplaceService<IObjectResolver, RecordingObjectResolver>();
+                x.ReplaceService<IDebugReport, DebugReport>();
+                x.ReplaceService<IRequestObserver, RequestObserver>();
+                x.ReplaceService<IRequestData, RecordingRequestData>();
+                x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
+                x.ReplaceService<IDebugDetector, DebugDetector>();
+                x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
+                x.ReplaceService<IPropertyBinderCache, RecordingPropertyBinderWrapper>();
+                x.ReplaceService<IModelBinderCache, RecordingModelBinderWrapper>();
+                x.ReplaceService<IValueConverterRegistry, RecordingValueConverterRegistry>();
+            });
         }
     }
 }

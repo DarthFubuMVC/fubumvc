@@ -12,6 +12,7 @@ namespace FubuTestApplication
         {
             IncludeDiagnostics(true);
 
+
             Import<WebFormsEngine>();
             this.UseSpark();
 
@@ -21,7 +22,9 @@ namespace FubuTestApplication
 
 
             Actions.IncludeType<ScriptsHandler>();
+            Actions.IncludeType<TopPage>();
 
+            Routes.HomeIs<TopPage>(x => x.Welcome());
 
             Route("conneg/mirror").Calls<MirrorAction>(x => x.Return(null));
             Route("conneg/buckrogers").Calls<MirrorAction>(x => x.BuckRogers());

@@ -10,15 +10,17 @@ namespace FubuMVC.Tests.Diagnostics
     [TestFixture]
     public class RequestHistoryServiceTester : InteractionContext<RequestHistoryCache>
     {
-        private CurrentRequest _request;
+        private CurrentRequest theCurrentRequest;
         private DiagnosticsConfiguration _configuration;
 
         protected override void beforeEach()
         {
-            _request = new CurrentRequest();
+            theCurrentRequest = new CurrentRequest();
+
+
             _configuration = new DiagnosticsConfiguration {MaxRequests = 60};
 
-            Container.Inject(_request);
+            Container.Inject(theCurrentRequest);
             Container.Inject(_configuration);
         }
 
@@ -26,14 +28,14 @@ namespace FubuMVC.Tests.Diagnostics
         public void only_keeps_maximum_records()
         {
             MockFor<IRequestHistoryCacheFilter>()
-                .Expect(c => c.Exclude(_request))
+                .Expect(c => c.Exclude(theCurrentRequest))
                 .Return(false)
                 .Repeat
                 .Any();
 
             for (int i = 0; i < _configuration.MaxRequests + 10; ++i)
             {
-                ClassUnderTest.AddReport(new DebugReport());
+                ClassUnderTest.AddReport(new DebugReport(), theCurrentRequest);
             }
 
             ClassUnderTest
@@ -45,23 +47,23 @@ namespace FubuMVC.Tests.Diagnostics
         public void keep_the_newest_reports()
         {
             MockFor<IRequestHistoryCacheFilter>()
-                .Expect(c => c.Exclude(_request))
+                .Expect(c => c.Exclude(theCurrentRequest))
                 .Return(false)
                 .Repeat
                 .Any();
 
             for (int i = 0; i < _configuration.MaxRequests; i++)
             {
-                ClassUnderTest.AddReport(new DebugReport());
+                ClassUnderTest.AddReport(new DebugReport(), theCurrentRequest);
             }
 
             var report1 = new DebugReport();
             var report2 = new DebugReport();
             var report3 = new DebugReport();
 
-            ClassUnderTest.AddReport(report1);
-            ClassUnderTest.AddReport(report2);
-            ClassUnderTest.AddReport(report3);
+            ClassUnderTest.AddReport(report1, theCurrentRequest);
+            ClassUnderTest.AddReport(report2, theCurrentRequest);
+            ClassUnderTest.AddReport(report3, theCurrentRequest);
 
             ClassUnderTest
                 .RecentReports()
@@ -73,10 +75,10 @@ namespace FubuMVC.Tests.Diagnostics
         public void should_not_add_report_if_any_filter_excludes()
         {
             MockFor<IRequestHistoryCacheFilter>()
-                .Expect(c => c.Exclude(_request))
+                .Expect(c => c.Exclude(theCurrentRequest))
                 .Return(true);
 
-            ClassUnderTest.AddReport(new DebugReport());
+            ClassUnderTest.AddReport(new DebugReport(), theCurrentRequest);
 
             ClassUnderTest
                 .RecentReports()

@@ -34,12 +34,6 @@ namespace FubuMVC.Tests.StructureMapIoC
                 .Bootstrap();            
         }
 
-        [Test]
-        public void getting_a_behavior_should_be_prefixed_with_a_diagnostic_behavior()
-        {
-            theRoutes.OfType<Route>().First(x => x.RouteHandler is FubuRouteHandler).RouteHandler.As<FubuRouteHandler>().GetBehavior(new ServiceArguments())
-                .ShouldBeOfType<DiagnosticBehavior>();
-        }
 
         [Test]
         public void building_out_a_behavior_chain_should_put_behavior_tracers_around_behaviors()

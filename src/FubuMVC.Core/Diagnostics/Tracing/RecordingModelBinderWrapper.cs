@@ -6,9 +6,9 @@ namespace FubuMVC.Core.Diagnostics.Tracing
     public class RecordingModelBinderWrapper : IModelBinderCache
     {
         private readonly ModelBinderCache _inner;
-        private readonly Func<IDebugReport> _report;
+        private readonly IDebugReport _report;
 
-        public RecordingModelBinderWrapper(ModelBinderCache inner, Func<IDebugReport> report)
+        public RecordingModelBinderWrapper(ModelBinderCache inner, IDebugReport report)
         {
             _inner = inner;
             _report = report;
@@ -19,12 +19,11 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             var binder = _inner.BinderFor(modelType);
             if (binder != null)
             {
-                _report()
-                    .AddBindingDetail(new ModelBinderSelection
-                                          {
-                                              ModelType = modelType,
-                                              BinderType = binder.GetType()
-                                          });
+                _report
+                    .AddBindingDetail(new ModelBinderSelection{
+                        ModelType = modelType,
+                        BinderType = binder.GetType()
+                    });
             }
             return binder;
         }

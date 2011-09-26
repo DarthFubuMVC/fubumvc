@@ -75,7 +75,7 @@ namespace FubuMVC.Core.Runtime
 
         class RecordingState : IOutputState
         {
-            private StringBuilder _builder = new StringBuilder();
+            private readonly StringBuilder _builder = new StringBuilder();
 
             public string RecordedContentType { get; private set; }
 
@@ -90,6 +90,7 @@ namespace FubuMVC.Core.Runtime
                 _builder.Append(renderedOutput);
             }
         }
+
         class NormalState : IOutputState
         {
             public void Write(string contentType, string renderedOutput)

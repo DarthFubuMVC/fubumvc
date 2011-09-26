@@ -5,6 +5,7 @@
   <assembly>FubuMVC.Diagnostics</assembly>
   <assembly>FubuMVC.Spark</assembly>
   <assembly>Spark</assembly>
+  <assembly>Newtonsoft.Json</assembly>
   <DataFileSet Include="*.*">
     <DeepSearch>true</DeepSearch>
   </DataFileSet>

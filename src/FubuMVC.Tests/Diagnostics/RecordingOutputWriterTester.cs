@@ -7,7 +7,6 @@ using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using RecordingOutputWriter = FubuMVC.Core.Diagnostics.RecordingOutputWriter;
 
 namespace FubuMVC.Tests.Diagnostics
 {
@@ -40,7 +39,7 @@ namespace FubuMVC.Tests.Diagnostics
         protected override void beforeEach()
         {
             MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
-            ClassUnderTest.Inner = MockFor<IOutputWriter>();
+
         }
 
 

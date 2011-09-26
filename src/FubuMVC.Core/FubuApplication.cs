@@ -116,10 +116,6 @@ namespace FubuMVC.Core
 
                     // factory HAS to be spun up here.
                     factory = containerFacility.BuildFactory(_registry.Value.DiagnosticLevel);
-                    if (_registry.Value.DiagnosticLevel == DiagnosticLevel.FullRequestTracing)
-                    {
-                        factory = new DiagnosticBehaviorFactory(factory, containerFacility);
-                    }
 
                     return containerFacility.GetAllActivators();
                 });

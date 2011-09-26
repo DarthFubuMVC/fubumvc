@@ -7,20 +7,19 @@ namespace FubuMVC.Core.Diagnostics
     public class RequestHistoryCache : IRequestHistoryCache
     {
         private readonly Queue<IDebugReport> _reports = new Queue<IDebugReport>();
-        private readonly Func<CurrentRequest> _request;
         private readonly IEnumerable<IRequestHistoryCacheFilter> _filters;
         private readonly DiagnosticsConfiguration _configuration;
 
-        public RequestHistoryCache(Func<CurrentRequest> request, IEnumerable<IRequestHistoryCacheFilter> filters, DiagnosticsConfiguration configuration)
+        public RequestHistoryCache(IEnumerable<IRequestHistoryCacheFilter> filters, DiagnosticsConfiguration configuration)
         {
-            _request = request;
             _filters = filters;
             _configuration = configuration;
         }
 
-        public void AddReport(IDebugReport report)
+        // TODO -- let's thin this down from CurrentRequest
+        public void AddReport(IDebugReport report, CurrentRequest request)
         {
-            if(_filters.Any(f => f.Exclude(_request())))
+            if(_filters.Any(f => f.Exclude(request)))
             {
                 return;
             }

@@ -5,64 +5,77 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
 {
-	public class RecordingOutputWriter : IOutputWriter
+    public class RecordingOutputWriter : IOutputWriter
     {
+        private readonly IOutputWriter _inner;
         private readonly IDebugReport _report;
-		private readonly IOutputWriter _inner;
 
         public RecordingOutputWriter(IDebugReport report, IOutputWriter inner)
         {
-        	_report = report;
-        	_inner = inner;
+            _report = report;
+            _inner = inner;
         }
 
-		public void WriteFile(string contentType, string localFilePath, string displayName)
+        public IOutputWriter Inner
         {
-            _report.AddDetails(new FileOutputReport()
-            {
+            get { return _inner; }
+        }
+
+        public void WriteFile(string contentType, string localFilePath, string displayName)
+        {
+            _report.AddDetails(new FileOutputReport{
                 ContentType = contentType,
                 DisplayName = displayName,
                 LocalFilePath = localFilePath
             });
 
-			_inner.WriteFile(contentType, localFilePath, displayName);
+            _inner.WriteFile(contentType, localFilePath, displayName);
         }
 
-		public void Write(string contentType, string renderedOutput)
+        public void Write(string contentType, string renderedOutput)
         {
-            _report.AddDetails(new OutputReport()
-            {
+            _report.AddDetails(new OutputReport{
                 Contents = renderedOutput,
                 ContentType = contentType
             });
 
-			_inner.Write(contentType, renderedOutput);
+            _inner.Write(contentType, renderedOutput);
         }
 
-		public void RedirectToUrl(string url)
+        public void RedirectToUrl(string url)
         {
-            _report.AddDetails(new RedirectReport()
-            {
+            _report.AddDetails(new RedirectReport{
                 Url = url
             });
 
-			_inner.RedirectToUrl(url);
+            _inner.RedirectToUrl(url);
         }
 
-		public void AppendCookie(HttpCookie cookie)
-		{
-			_inner.AppendCookie(cookie);
-		}
-
-		public void WriteResponseCode(HttpStatusCode status)
+        public void AppendCookie(HttpCookie cookie)
         {
-			_report.AddDetails(new HttpStatusReport { Status = status });
-			_inner.WriteResponseCode(status);
+            _inner.AppendCookie(cookie);
         }
 
-	    public RecordedOutput Record(Action action)
-	    {
-	        throw new NotImplementedException();
-	    }
+        public void WriteResponseCode(HttpStatusCode status)
+        {
+            _report.AddDetails(new HttpStatusReport{
+                Status = status
+            });
+            _inner.WriteResponseCode(status);
+        }
+
+        public RecordedOutput Record(Action action)
+        {
+            var recordedOuput = _inner.Record(action);
+
+            _report.AddDetails(new OutputReport
+            {
+                Contents = recordedOuput.Content,
+                ContentType = recordedOuput.RecordedContentType
+            });
+
+
+            return recordedOuput;
+        }
     }
 }
