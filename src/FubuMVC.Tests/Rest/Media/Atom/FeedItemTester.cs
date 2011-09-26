@@ -4,6 +4,7 @@ using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Atom;
 using NUnit.Framework;
 using FubuTestingSupport;
+using FubuCore;
 
 namespace FubuMVC.Tests.Rest.Media.Atom
 {
@@ -27,12 +28,12 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             map2.Title(x => x.Title2);
 
             var item1 = new SyndicationItem();
-            map1.ConfigureItem(item1, target);
+            map1.As<IFeedItem<ItemSubject>>().ConfigureItem(item1, target);
             item1.Title.Text.ShouldEqual(subject.Title);
 
 
             var item2 = new SyndicationItem();
-            map2.ConfigureItem(item2, target);
+            map2.As<IFeedItem<ItemSubject>>().ConfigureItem(item2, target);
             item2.Title.Text.ShouldEqual(subject.Title2);
 
         }
@@ -51,7 +52,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             map1.Title(x => x.Title);
 
             var item1 = new SyndicationItem();
-            map1.ConfigureItem(item1, target);
+            map1.As<IFeedItem<ItemSubject>>().ConfigureItem(item1, target);
             item1.Title.ShouldBeNull();
         }
 
@@ -67,7 +68,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             var map = new FeedItem<ItemSubject>(x => x.Id(o => o.Id));
 
             var item = new SyndicationItem();
-            map.ConfigureItem(item, target);
+            map.As<IFeedItem<ItemSubject>>().ConfigureItem(item, target);
 
             item.Id.ShouldEqual("001");
         }
@@ -85,7 +86,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             var map = new FeedItem<ItemSubject>(x => x.Id(o => o.Number));
 
             var item = new SyndicationItem();
-            map.ConfigureItem(item, target);
+            map.As<IFeedItem<ItemSubject>>().ConfigureItem(item, target);
 
             item.Id.ShouldEqual("333"); 
         }
@@ -104,7 +105,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             var map = new FeedItem<ItemSubject>(x => x.UpdatedByProperty(o => o.Updated));
 
             var item = new SyndicationItem();
-            map.ConfigureItem(item, target);
+            map.As<IFeedItem<ItemSubject>>().ConfigureItem(item, target);
 
             item.LastUpdatedTime.Date.ShouldEqual(subject.Updated.Date);
         }
