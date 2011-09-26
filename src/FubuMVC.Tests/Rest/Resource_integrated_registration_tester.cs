@@ -56,9 +56,12 @@ namespace FubuMVC.Tests.Rest
         public void just_having_a_resource_turns_the_formatters_to_none()
         {
             // Default condition first, before the resource is applied
+            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null)).RemoveConneg();
+            theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null)).ApplyConneg();
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
                 .ConnegOutputNode().FormatterUsage.ShouldEqual(FormatterUsage.all);
-        
+
+            theConnegGraph = new ConnegGraph(theBehaviorGraph);
         
             // Now apply a resource
             new Resource<Address>().As<IResourceRegistration>().Modify(theConnegGraph);
@@ -127,7 +130,7 @@ namespace FubuMVC.Tests.Rest
                 .BehaviorFor<RestController1>(x => x.Find(null))
                 .ConnegOutputNode();
 
-            var writerNode = connegOutput.Writers.Single().As<MediaWriterNode>();
+            var writerNode = connegOutput.Writers.Last().As<MediaWriterNode>();
 
             // Assert the xml media
             var objectDef = writerNode.As<IContainerModel>().ToObjectDef();
@@ -145,6 +148,55 @@ namespace FubuMVC.Tests.Rest
 
             objectDef.DependencyFor<IValueProjection<Address>>().ShouldBeOfType<ValueDependency>()
                 .Value.ShouldBeOfType<Projection<Address>>();
+        }
+
+        [Test]
+        public void conneg_attachement_policy_finds_and_applies_resource_configuration()
+        {
+            var registry = new FubuRegistry();
+            registry.Applies.ToThisAssembly();
+            registry.Actions.IncludeType<RestController1>();
+            registry.Media.ApplyContentNegotiationToActions(x => true);
+
+            var graph = registry.BuildGraph();
+
+            var connegOutput = graph
+                .BehaviorFor<RestController1>(x => x.Find(null))
+                .ConnegOutputNode();
+
+            var writerNode = connegOutput.Writers.Single().As<MediaWriterNode>();
+
+            // Assert the xml media
+            var objectDef = writerNode.As<IContainerModel>().ToObjectDef();
+
+
+            var document = objectDef.DependencyFor<IMediaDocument>().ShouldBeOfType<ConfiguredDependency>();
+            document.DependencyType.ShouldEqual(typeof(IMediaDocument));
+            document.Definition.Type.ShouldEqual(typeof(XmlMediaDocument));
+            document.Definition.DependencyFor<XmlMediaOptions>().ShouldBeOfType<ValueDependency>()
+                .Value.ShouldBeOfType<XmlMediaOptions>().Namespace.ShouldEqual("something.xsd");
+
+            objectDef.DependencyFor<ILinkSource<Address>>().ShouldBeOfType<ValueDependency>()
+                .Value.ShouldNotBeNull();
+
+
+            objectDef.DependencyFor<IValueProjection<Address>>().ShouldBeOfType<ValueDependency>()
+                .Value.ShouldBeOfType<Projection<Address>>();
+
+        }
+
+        public class AddressResource : Resource<Address>
+        {
+            public AddressResource()
+            {
+                WriteToXml(o =>
+                {
+                    o.Namespace = "something.xsd";
+                });
+
+                Links.ToSubject();
+                ProjectValue(x => x.Line1);
+            }
         }
 
 
