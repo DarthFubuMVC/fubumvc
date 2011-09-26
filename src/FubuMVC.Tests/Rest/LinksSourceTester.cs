@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Rest
         [Test]
         public void create_link_by_subject()
         {
-            theLinks.LinkToSubject();
+            theLinks.ToSubject();
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single().Url.ShouldEqual(theUrls.UrlFor(theSubject));
@@ -42,7 +42,7 @@ namespace FubuMVC.Tests.Rest
         [Test]
         public void create_link_by_transforming_the_subject()
         {
-            theLinks.LinkTo(site => new SiteAction(site.Name));
+            theLinks.To(site => new SiteAction(site.Name));
 
             theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
                 .Single().Url.ShouldEqual(theUrls.UrlFor(new SiteAction(theSubject.Name)));
@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Rest
         [Test]
         public void create_link_by_identifier()
         {
-            theLinks.LinkToSubject(x => x.Id);
+            theLinks.ToSubject(x => x.Id);
 
             var parameters = new RouteParameters<Site>();
             parameters[x => x.Id] = theSubject.Id.ToString();

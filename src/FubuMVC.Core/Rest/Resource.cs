@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Rest.Media;
+using FubuMVC.Core.Rest.Media.Formatters;
+using FubuMVC.Core.Rest.Media.Projections;
+using FubuMVC.Core.Rest.Media.Xml;
+
+namespace FubuMVC.Core.Rest
+{
+    public class Resource<T> : IResourceRegistration
+    {
+        private readonly Lazy<LinksSource<T>> _links = new Lazy<LinksSource<T>>(() => new LinksSource<T>());
+        private readonly Lazy<Projection<T>> _projection = new Lazy<Projection<T>>(() => new Projection<T>());
+        private readonly IList<Action<ConnegOutputNode>> _modifications = new List<Action<ConnegOutputNode>>();
+
+        public Resource()
+        {
+            modify = node => node.UseNoFormatters();
+        }
+
+        private Action<ConnegOutputNode> modify
+        {
+            set
+            {
+                _modifications.Add(value);
+            }
+        }
+
+        public LinksSource<T> Links
+        {
+            get { return _links.Value; }
+        }
+
+        public void SerializeToXml()
+        {
+            modify = node => node.UseFormatter<XmlFormatter>();
+        }
+
+        public void SerializeToJson()
+        {
+            modify = node => node.UseFormatter<JsonFormatter>();
+        }
+
+        public void WriteToXml(Action<XmlMediaOptions> configure)
+        {
+            var options = new XmlMediaOptions();
+            configure(options);
+
+            modify = node =>
+            {
+                var writerNode = new MediaWriterNode(typeof(T));
+                writerNode.Document.UseType<XmlMediaDocument>().DependencyByValue(options);
+                if (_links.IsValueCreated) writerNode.Links.UseValue(_links.Value);
+                if (_projection.IsValueCreated) writerNode.Projection.UseValue(_projection.Value);
+
+                node.AddWriter(writerNode);
+            };
+        }
+
+        public AccessorProjection<T> ProjectValue(Expression<Func<T, object>> expression)
+        {
+            return _projection.Value.Value(expression);
+        }
+
+        public void Modify(ConnegGraph graph)
+        {
+            graph.OutputNodesFor<T>().Each(node => _modifications.Each(x => x(node)));
+        }
+    }
+}

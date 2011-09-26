@@ -13,6 +13,7 @@ using System.Linq;
 
 namespace FubuMVC.Tests.Rest.Media.Xml
 {
+
     [TestFixture]
     public class XmlMediaWriterIntegratedTester
     {
@@ -38,9 +39,9 @@ namespace FubuMVC.Tests.Rest.Media.Xml
             var urls = new StubUrlRegistry();
 
             var linkSource = new LinksSource<Address>();
-            linkSource.LinkToSubject().Rel("self");
-            linkSource.LinkTo(a => new AddressAction("change")).Rel("change");
-            linkSource.LinkTo(a => new AddressAction("delete")).Rel("delete");
+            linkSource.ToSubject().Rel("self");
+            linkSource.To(a => new AddressAction("change")).Rel("change");
+            linkSource.To(a => new AddressAction("delete")).Rel("delete");
 
             var media = new MediaWriter<Address>(theDocument, linkSource, urls, projection);
 

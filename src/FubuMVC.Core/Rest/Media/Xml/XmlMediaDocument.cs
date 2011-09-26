@@ -36,6 +36,8 @@ namespace FubuMVC.Core.Rest.Media.Xml
             _options = options;
         }
 
+
+
         public XmlDocument Document
         {
             get { return _document; }
