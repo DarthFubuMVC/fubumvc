@@ -215,7 +215,7 @@
     <Compile Include="Rest\Media\MediaWriter.cs" />
     <Compile Include="Rest\Media\ModelBindingMediaReader.cs" />
     <Compile Include="Rest\Media\Projections\AccessorProjection.cs" />
-    <Compile Include="Rest\Media\Atom\Classes.cs" />
+    <Compile Include="Rest\Media\Atom\AtomClasses.cs" />
     <Compile Include="Rest\Media\FormattedValues.cs" />
     <Compile Include="Rest\Media\ValueSource.cs" />
     <Compile Include="Rest\Media\Xml\AtomXmlLinkWriter.cs" />

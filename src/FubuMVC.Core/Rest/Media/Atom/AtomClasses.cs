@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
     public class Feed<T>
     {
         private readonly IList<Action<SyndicationFeed>> _alterations = new List<Action<SyndicationFeed>>();
-        private readonly IList<SyndicationItemMap<T>> _maps = new List<SyndicationItemMap<T>>();
+        private readonly IList<FeedItem<T>> _maps = new List<FeedItem<T>>();
 
         public SyndicationFeed CreateFeed(DateTime updated, IEnumerable<IValues<T>> targets)
         {
@@ -44,12 +44,12 @@ namespace FubuMVC.Core.Rest.Media.Atom
             throw new NotImplementedException();
         }
 
-        public void Items<TMap>() where TMap : SyndicationItemMap<T>
+        public void Items<TMap>() where TMap : FeedItem<T>
         {
             throw new NotImplementedException();
         }
 
-        public void Items(Action<SyndicationItemMap<T>> configure)
+        public void Items(Action<FeedItem<T>> configure)
         {
             throw new NotImplementedException();
         }
@@ -63,16 +63,16 @@ namespace FubuMVC.Core.Rest.Media.Atom
         }
     }
 
-    public class SyndicationItemMap<T>
+    public class FeedItem<T>
     {
         private readonly IList<Action<IValues<T>, SyndicationItem>> _modifications
             = new List<Action<IValues<T>, SyndicationItem>>();
 
-        public SyndicationItemMap()
+        public FeedItem()
         {
         }
 
-        public SyndicationItemMap(Action<SyndicationItemMap<T>> configure)
+        public FeedItem(Action<FeedItem<T>> configure)
         {
             configure(this);
         }

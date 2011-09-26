@@ -35,6 +35,21 @@ namespace FubuMVC.Tests.Rest
         }
 
         [Test]
+        public void resource_also_references_the_projection()
+        {
+            // A resource is applied by the policy
+            theBehaviorGraph.Services.ServicesFor<IValueProjection<Address>>().Single()
+                .ShouldNotBeNull();
+        }
+
+        [Test]
+        public void resource_also_registers_the_link_source_configuration()
+        {
+            theBehaviorGraph.Services.ServicesFor<ILinkSource<Address>>().Single()
+                .ShouldNotBeNull();
+        }
+
+        [Test]
         public void conneg_graph_can_find_all_the_output_nodes_for_a_type()
         {
             theConnegGraph.OutputNodesFor<Address>().Select(x => x.Previous.As<ActionCall>().Method.Name)
@@ -64,7 +79,7 @@ namespace FubuMVC.Tests.Rest
             theConnegGraph = new ConnegGraph(theBehaviorGraph);
         
             // Now apply a resource
-            new Resource<Address>().As<IResourceRegistration>().Modify(theConnegGraph);
+            new Resource<Address>().As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
             // Default condition first, before the resource is applied
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
@@ -77,7 +92,7 @@ namespace FubuMVC.Tests.Rest
             var resource = new Resource<Address>();
             resource.SerializeToJson();
 
-            resource.As<IResourceRegistration>().Modify(theConnegGraph);
+            resource.As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
                 .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
@@ -96,7 +111,7 @@ namespace FubuMVC.Tests.Rest
             var resource = new Resource<Address>();
             resource.SerializeToXml();
 
-            resource.As<IResourceRegistration>().Modify(theConnegGraph);
+            resource.As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
             theBehaviorGraph.BehaviorFor<RestController1>(x => x.Find(null))
                 .ConnegOutputNode().SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(XmlFormatter));
@@ -124,7 +139,7 @@ namespace FubuMVC.Tests.Rest
             resource.Links.ToSubject();
             resource.ProjectValue(x => x.Line1);
 
-            resource.As<IResourceRegistration>().Modify(theConnegGraph);
+            resource.As<IResourceRegistration>().Modify(theConnegGraph, theBehaviorGraph);
 
             var connegOutput = theBehaviorGraph
                 .BehaviorFor<RestController1>(x => x.Find(null))

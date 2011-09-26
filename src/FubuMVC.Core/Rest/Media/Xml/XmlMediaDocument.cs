@@ -1,11 +1,34 @@
-using System;
 using System.Collections.Generic;
 using System.Xml;
 using FubuCore;
+using FubuMVC.Core.Rest.Media.Projections;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Rest.Media.Xml
 {
+    public interface IXmlMediaWriter<T>
+    {
+        XmlDocument Write(IValues<T> values);
+    }
+
+    public class XmlMediaWriter<T> : MediaWriter<T>, IXmlMediaWriter<T>
+    {
+        public XmlMediaWriter(XmlMediaOptions options, ILinkSource<T> links, IUrlRegistry urls,
+                              IValueProjection<T> projection)
+            : base(new XmlMediaDocument(options), links, urls, projection)
+        {
+        }
+
+        public XmlDocument Write(IValues<T> values)
+        {
+            writeData(values);
+
+            return document.As<XmlMediaDocument>().Document;
+        }
+    }
+
+
     // Needs to be created per request!!!!
     public class XmlMediaDocument : IMediaDocument
     {
@@ -35,7 +58,6 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
             _options = options;
         }
-
 
 
         public XmlDocument Document
