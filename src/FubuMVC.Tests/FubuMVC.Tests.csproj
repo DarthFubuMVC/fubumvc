@@ -145,7 +145,7 @@
     <Compile Include="Rest\Media\Xml\XmlMediaWriterIntegratedTester.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaOptionsTester.cs" />
     <Compile Include="Rest\Projections\AccessorProjectionTester.cs" />
-    <Compile Include="Rest\Media\Atom\SyndicationItemMapTester.cs" />
+    <Compile Include="Rest\Media\Atom\FeedItemTester.cs" />
     <Compile Include="Rest\Projections\FormattedProjectionTargetTester.cs" />
     <Compile Include="Rest\Projections\InMemoryMediaNode.cs" />
     <Compile Include="Rest\LinkSourceTester.cs" />

@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Registration.Conventions
             _types.ShouldScanAssemblies = true;
             _types
                 .TypesMatching(x => x.IsConcreteTypeOf<IResourceRegistration>() && !x.IsOpenGeneric())
-                .Each(t => t.Create<IResourceRegistration>().Modify(connegGraph));
+                .Each(t => t.Create<IResourceRegistration>().Modify(connegGraph, graph));
         }
 
         public class AttachmentFilter

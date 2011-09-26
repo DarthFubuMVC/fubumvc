@@ -8,7 +8,7 @@ using FubuTestingSupport;
 namespace FubuMVC.Tests.Rest.Media.Atom
 {
     [TestFixture]
-    public class SyndicationItemMapTester
+    public class FeedItemTester
     {
         [Test]
         public void set_the_title()
@@ -20,10 +20,10 @@ namespace FubuMVC.Tests.Rest.Media.Atom
 
             var target = new SimpleValues<ItemSubject>(subject);
 
-            var map1 = new SyndicationItemMap<ItemSubject>();
+            var map1 = new FeedItem<ItemSubject>();
             map1.Title(x => x.Title);
 
-            var map2 = new SyndicationItemMap<ItemSubject>();
+            var map2 = new FeedItem<ItemSubject>();
             map2.Title(x => x.Title2);
 
             var item1 = new SyndicationItem();
@@ -47,7 +47,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
 
             var target = new SimpleValues<ItemSubject>(subject);
 
-            var map1 = new SyndicationItemMap<ItemSubject>();
+            var map1 = new FeedItem<ItemSubject>();
             map1.Title(x => x.Title);
 
             var item1 = new SyndicationItem();
@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
 
             var target = new SimpleValues<ItemSubject>(subject);
 
-            var map = new SyndicationItemMap<ItemSubject>(x => x.Id(o => o.Id));
+            var map = new FeedItem<ItemSubject>(x => x.Id(o => o.Id));
 
             var item = new SyndicationItem();
             map.ConfigureItem(item, target);
@@ -82,7 +82,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
 
             var target = new SimpleValues<ItemSubject>(subject);
 
-            var map = new SyndicationItemMap<ItemSubject>(x => x.Id(o => o.Number));
+            var map = new FeedItem<ItemSubject>(x => x.Id(o => o.Number));
 
             var item = new SyndicationItem();
             map.ConfigureItem(item, target);
@@ -101,7 +101,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
 
             var target = new SimpleValues<ItemSubject>(subject);
 
-            var map = new SyndicationItemMap<ItemSubject>(x => x.UpdatedByProperty(o => o.Updated));
+            var map = new FeedItem<ItemSubject>(x => x.UpdatedByProperty(o => o.Updated));
 
             var item = new SyndicationItem();
             map.ConfigureItem(item, target);

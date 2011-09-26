@@ -24,13 +24,23 @@ namespace FubuMVC.Core.Rest.Media
 
         public void Write(IValues<T> source, IOutputWriter writer)
         {
+            writeData(source);
+
+            _document.Write(writer);
+        }
+
+        protected IMediaDocument document
+        {
+            get { return _document; }
+        }
+
+        protected void writeData(IValues<T> source)
+        {
             var links = _links.LinksFor(source, _urls);
             var topNode = _document.Root;
             topNode.WriteLinks(links);
 
             _projection.WriteValue(source, topNode);
-
-            _document.Write(writer);
         }
 
         public void Write(T source, IOutputWriter writer)
