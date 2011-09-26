@@ -1,3 +1,4 @@
+<use master="Fluid" />
 <use namespace="System.Linq" />
 <use namespace="FubuMVC.Diagnostics.Models.Grids" />
 <use namespace="FubuMVC.Diagnostics.Features.Requests" />
@@ -6,7 +7,7 @@
 <content:head>
   <Script src="requests.js" />
 </content:head>
-<content:main>
+<content:mainContent>
   <h2 id="explorer-heading">Request Explorer</h2>
   <p class="hint">(Use ctrl+f to apply filters)</p>
   <div class="ui-widget" id="NoData" style="display:none;">
@@ -43,4 +44,4 @@
       <span class="ui-button-text">{{= type }}: "{{= value }}"</span>
     </a>
   </script>
-</content:main>
+</content:mainContent>

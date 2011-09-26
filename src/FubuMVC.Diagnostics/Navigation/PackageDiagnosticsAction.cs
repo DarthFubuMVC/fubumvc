@@ -1,7 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Diagnostics.Features.Packaging;
-using FubuMVC.Diagnostics.Models;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
@@ -14,7 +13,7 @@ namespace FubuMVC.Diagnostics.Navigation
 
         public override string Text()
         {
-            return "Package Diagnostics";
+            return "Packaging";
         }
 
         protected override object inputModel()

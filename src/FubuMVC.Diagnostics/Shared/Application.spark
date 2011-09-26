@@ -1,35 +1,34 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+	<meta name="description" content="FubuMVC Advanced Diagnostics" />
+    <meta name="author" content="FubuMVC" />
 	<title><use content="title"/> | FubuMVC Diagnostics</title>
 	<Stylesheet href="default.css" />
 	<Script src="diagnostics" />
 	<use content="head"/>
 </head>
 <body>
-<div id="Header">
-	<div class="container">
-		<div id="Logo">
-			<h2>
-				<a href="${this.Urls.UrlFor(new DashboardRequestModel())}">
-					<Image src="logo.png" />
+	<div class="topbar">
+		<div class="topbar-inner">
+			<div class="container-fluid">
+				<a class="brand" href="${this.Urls.UrlFor(new DashboardRequestModel())}">
+					<Image src="fubumvc.png" />
 				</a>
-			</h2>
+				#this.Partial<FubuMVC.Diagnostics.Navigation.NavigationMenu>();
+			</div>
 		</div>
-		#this.Partial<FubuMVC.Diagnostics.Navigation.NavigationMenu>();
-		<div class="clear"></div>
 	</div>
-</div>
-<div id="Content">
-    <div class="container">
-	    <use content="main" />
-    </div>
-</div>
-<div id="Footer">
-	<div class="container">
-		<h4>${this.FubuVersion()}</h4>
+	<div id="Content">
+		<use content="main" />
 	</div>
-</div>
+	<footer>
+		<div class="container">
+			<p>Powered by FubuMVC</p>
+			<h6>${this.FubuVersion()}</h6>
+		</div>
+	</footer>
 <Scripts />
 </body>
 </html>

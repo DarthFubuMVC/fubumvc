@@ -1,0 +1,6 @@
+﻿<use master="Application" />
+<content:main>
+	<div class="container-fluid">
+    <use content="mainContent" />
+	</div>
+</content:main>

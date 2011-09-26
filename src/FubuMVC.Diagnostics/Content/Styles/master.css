@@ -1,22 +1,20 @@
 body
 {
-	color: #504E4E;
-    font-family: arial,myriad pro,sans-serif;
-    font-size: 78%;
-	font-size: 9pt;
-	width:100%;
-	font-weight: normal;
-	background-color:#333333;
+    padding-top: 60px;
 }
 
-h1, h2, h3, h4 
+footer
 {
-	color: #504E4E;
+}
+
+h1, h2, h3, h4
+{
+    color: #504E4E;
 }
 
 h2
 {
-    font-size:2.2em;
+    font-size: 2.2em;
     font-weight: bold;
 }
 
@@ -27,167 +25,101 @@ h3.subheader, h4.subheader
     padding-left: 10px;
 }
 
-h4.subheader {
+h4.subheader
+{
     margin-top: -15px;
-}
-
-#Header
-{
-	background-color:#fff;
-	padding:10px 0 0 0;
-	border-bottom:1px solid #7096AB;
-}
-
-#Header .container
-{
-    padding: 0 0 0 15px;
-}
-
-#Header #Logo
-{
-	float:left;
-}
-
-#Header #Logo h2
-{
-	font-size: 3.5em;
-    font-weight: 700;
-    height: 27px;
-    line-height: 27px;
-}
-
-#Header #Menu
-{
-	padding-top:5px;
-	float:right;
-	list-style: none;
-	margin-right:.5em;
-}
-
-#Header #Menu li
-{
-	float:left;
-	margin-right: 10px;
-}
-
-#Content
-{
-	padding-top:20px;
-	padding-bottom:20px;
-	background: #fff url("../Images/block.png") repeat-x scroll 0 0;
-	min-height:500px;
-}
-
-#Content .container
-{
-    margin-left:10px;
-    margin-right:10px;
-    background:#fff;
-}
-
-#Footer {
-    background-color:#333;
-    border-top: 1px solid #111111;
-    color: #EEEEEE;
-    padding: 40px 0 50px;
-    text-shadow: 0 -1px 0 #000000;
-}
-
-#Footer h4 {
-    font-size: 1.5em;
-    font-weight: 700;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-	color:#fff;
 }
 
 .clear
 {
-	clear:both;
+    clear: both;
 }
 
 .jqgrow:hover
 {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .filter-container h4, .filter-container .filter
 {
-    float:left;
+    float: left;
     margin-right: 10px;
 }
 
 .filter-container h4, .filter-container .ui-button-text
 {
-    font-weight:bold;
-    font-size:12px;
-    line-height:1;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 1;
 }
 
 .filter-container
 {
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 #filter-dialog button
 {
-    width:100%;
+    width: 100%;
 }
 
 #filter-dialog select, #filter-dialog input[type="text"]
 {
     font-size: 12px;
     padding: 5px;
-    line-height:1.4em;
-    float:left;
-    margin-top:0;
-    margin-right:5px;
-    color:#333;
+    line-height: 1.4em;
+    float: left;
+    margin-top: 0;
+    margin-right: 5px;
+    color: #333;
 }
 
 #filter-dialog input[type="text"]
 {
-    width:345px;
-    margin-right:0px;
+    width: 345px;
+    margin-right: 0px;
 }
 
 .ui-widget p
 {
-    margin:0;
+    margin: 0;
     padding: 10px;
 }
 
 .dashboard-notice
 {
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 .dashboard-notice .ui-state-highlight
 {
-    padding:10px;
+    padding: 10px;
 }
 
-pre {
-	font-size: 12px;
-	padding: 0;
-	margin: 0;
-	background: #f0f0f0;
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	line-height: 20px; /*--Height of each line of code--*/
-	width: 800px;
-	text-align:left;
-	overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
-	overflow-Y: hidden;  /*--Hides vertical scroll created by IE--*/
+pre
+{
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    background: #f0f0f0;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    line-height: 20px; /*--Height of each line of code--*/
+    width: 800px;
+    text-align: left;
+    overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
+    overflow-y: hidden; /*--Hides vertical scroll created by IE--*/
 }
 
-pre code {
-	margin: 0 0 0 40px;  /*--Left Margin--*/
-	padding: 15px 0;
-	display: block;
+pre code
+{
+    margin: 0 0 0 40px; /*--Left Margin--*/
+    padding: 15px 0;
+    display: block;
 }
 
-pre.blk {
+pre.blk
+{
     background: url("../Images/pre_code_bg_blk.gif") repeat-y scroll left top transparent;
     border: medium none;
     color: #FFFFFF;
@@ -196,29 +128,17 @@ pre.blk {
 .model-binding .grid
 {
     border: 1px solid #9D9D9D;
-    width:80%;
+    width: 80%;
 }
 
 p
 {
-    margin-top:15px;
+    margin-top: 15px;
 }
 
 .ui-state-notice, .ui-widget-content .ui-state-notice
 {
     background: #FFEE7D;
-}
-
-.sidebar
-{
-    float:left;
-    margin-left:0;
-    width:350px;
-}
-
-.sidebar h3.underline {
-    border-bottom: 1px solid #AAA;
-    padding-bottom: .25em;
 }
 
 .sidebar .notification
@@ -227,21 +147,15 @@ p
     background: #EAF2F5;
 }
 
-.sidebar .notification p {
+.sidebar .notification p
+{
     margin: 0;
     padding: 0;
 }
 
-.sidebar .notification p a {
-    font-weight: bold;
-}
-
-.content
+.sidebar .notification p a
 {
-    float:right;
-    margin-top:-15px;
-    margin-left: -250px;
-    width:75%;
+    font-weight: bold;
 }
 
 .grid pre
@@ -254,4 +168,21 @@ p
     margin-top: -20px;
     font-style: italic;
     padding-left: 10px;
+}
+
+.topbar h3 a, .topbar .brand
+{
+    padding-left: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.chain-visualizer
+{
+    list-style-type: none;
+    margin: 0;
+    margin-top: 10px;
+}
+.chain-visualizer li
+{
+    margin-bottom: 2em;
 }

@@ -1,0 +1,13 @@
+﻿<use master="Application" />
+<content:main>
+	<div class="container-fluid">
+		<div class="sidebar">
+			<div class="well">
+				<use content="leftColumn" />
+			</div>
+		</div>
+		<div class="content">
+			<use content="rightColumn" />
+		</div>
+	</div>
+</content:main>

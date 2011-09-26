@@ -13,7 +13,7 @@ namespace FubuMVC.Diagnostics.Navigation
 
         public override string Text()
         {
-            return "Request Explorer";
+            return "Requests";
         }
 
         protected override object inputModel()
