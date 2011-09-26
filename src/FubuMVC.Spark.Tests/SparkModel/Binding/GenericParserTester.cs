@@ -1,4 +1,7 @@
 using System;
+using System.CodeDom.Compiler;
+using System.Linq;
+using System.Reflection;
 using FubuMVC.Spark.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,8 +16,25 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [SetUp]
         public void beforeEach()
         {
-            ClassUnderTest = new GenericParser(new[] { typeof(Bar).Assembly, typeof(String).Assembly });
+            var duplicatedGenericExtraAssembly = generateAssembly("namespace FubuMVC.Spark.Tests.SparkModel.Binding{public class DuplicatedGeneric<T>{} public class Duplicated{} }");
+
+            ClassUnderTest = new GenericParser(new[] { typeof(Bar).Assembly, typeof(String).Assembly, duplicatedGenericExtraAssembly });
         }
+
+        private static Assembly generateAssembly(string source)
+        {
+            var parms = new CompilerParameters
+            {
+                GenerateExecutable = false,
+                GenerateInMemory = true,
+                IncludeDebugInformation = false
+            };
+
+            return CodeDomProvider
+                .CreateProvider("CSharp")
+                .CompileAssemblyFromSource(parms, source)
+                .CompiledAssembly;
+        } 
 
         [Test]
         public void should_return_null_when_type_is_not_in_assemblies()
@@ -76,5 +96,54 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             GenericParser.IsGeneric("System.String").ShouldBeFalse();
             GenericParser.IsGeneric("System.Collections.List<System.String>").ShouldBeTrue();
         }
+
+        [Test]
+        public void finding_open_type_should_add_error_when_no_matching_type_is_found()
+        {
+            var typeDefinition = new GenericTypeDefinition {OpenTypeName = "NotFound", ArgumentTypeNames = new[] {"System.String"}};
+
+            var result = ClassUnderTest.findOpenType(typeDefinition);
+
+            result.ShouldBeNull();
+            ClassUnderTest.ParseErrors.First().ShouldContain("No generic type matching");
+        }
+
+        [Test]
+        public void finding_open_type_should_add_error_when_multiple_matching_types_are_found()
+        {
+            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Spark.Tests.SparkModel.Binding.DuplicatedGeneric`1", ArgumentTypeNames = new[] { "System.String" } };
+
+            var result = ClassUnderTest.findOpenType(typeDefinition);
+
+            result.ShouldBeNull();
+            ClassUnderTest.ParseErrors.First().ShouldContain("More than one generic types matching");
+        }
+
+        [Test]
+        public void finding_generic_arguments_should_add_error_when_no_matching_type_is_found()
+        {
+            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic`1", ArgumentTypeNames = new[] { "NOTFOUND" } };
+
+            var result = ClassUnderTest.findGenericArgumentTypes(typeDefinition);
+
+            result.ShouldBeNull();
+            ClassUnderTest.ParseErrors.First().ShouldContain("No generic argument type matching");
+        }
+
+        [Test]
+        public void finding_generic_arguments_should_add_error_when_multiple_matching_types_are_found()
+        {
+            var typeDefinition = new GenericTypeDefinition { OpenTypeName = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic`1", ArgumentTypeNames = new[] { "FubuMVC.Spark.Tests.SparkModel.Binding.Duplicated" } };
+
+            var result = ClassUnderTest.findGenericArgumentTypes(typeDefinition);
+
+            result.ShouldBeNull();
+            ClassUnderTest.ParseErrors.First().ShouldContain("More than one generic argument types matching");
+        }
+    }
+
+    public class Duplicated
+    {
+
     }
 }

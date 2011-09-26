@@ -115,17 +115,18 @@ namespace FubuMVC.Spark.SparkModel
             var logger = request.Logger;
             var template = request.Target;
 
-            var viewModel = new GenericParser(request.Types.Assemblies).Parse(request.ViewModelType);
+            var genericParser = new GenericParser(request.Types.Assemblies);
+            var viewModel = genericParser.Parse(request.ViewModelType);
 
             if (viewModel != null)
             {
                 var descriptor = template.Descriptor.As<ViewDescriptor>();
                 descriptor.ViewModel = viewModel;
-                logger.Log(template, "Generic view model type is : [{0}]", descriptor.ViewModel);
+                logger.Log(template, "Generic view model type is : {0}", descriptor.ViewModel);
                 return;
             }
 
-            logger.Log(template, "Unable to set generic view model type : {0}", request.ViewModelType);
+            genericParser.ParseErrors.Each(error => logger.Log(template, error));
         }
     }
 

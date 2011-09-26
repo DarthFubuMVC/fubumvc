@@ -138,5 +138,4 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     {
         
     }
-
 }
