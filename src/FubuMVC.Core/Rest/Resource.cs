@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Rest.Conneg;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Formatters;
@@ -64,9 +65,19 @@ namespace FubuMVC.Core.Rest
             return _projection.Value.Value(expression);
         }
 
-        public void Modify(ConnegGraph graph)
+        public void Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
         {
             graph.OutputNodesFor<T>().Each(node => _modifications.Each(x => x(node)));
+        
+            if (_projection.IsValueCreated)
+            {
+                behaviorGraph.Services.SetServiceIfNone<IValueProjection<T>>(_projection.Value);
+            }
+
+            if (_links.IsValueCreated)
+            {
+                behaviorGraph.Services.SetServiceIfNone<ILinkSource<T>>(_links.Value);
+            }
         }
     }
 }
