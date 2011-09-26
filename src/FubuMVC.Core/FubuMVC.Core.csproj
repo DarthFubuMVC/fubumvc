@@ -93,7 +93,6 @@
     <Compile Include="Rest\Conneg\ConnegOutputBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputNode.cs" />
     <Compile Include="Rest\Conneg\FormatterUsage.cs" />
-    <Compile Include="Rest\Conneg\IMediaReaderNode.cs" />
     <Compile Include="Rest\Media\Formatters\FormatterMediaReader.cs" />
     <Compile Include="Rest\Media\Formatters\FormatterMediaWriter.cs" />
     <Compile Include="Rest\Media\Formatters\IFormatter.cs" />

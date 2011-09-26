@@ -66,9 +66,4 @@ namespace FubuMVC.Core.Rest.Conneg
             UseFormatter<JsonFormatter>();
         }
     }
-
-    public interface IMediaWriterNode : IContainerModel
-    {
-        Type InputType { get; }
-    }
 }

@@ -8,6 +8,7 @@ using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Linq;
 
 namespace FubuMVC.Tests.Rest.Media.Xml
 {
@@ -97,6 +98,21 @@ namespace FubuMVC.Tests.Rest.Media.Xml
             document.Write(writer);
 
             writer.AssertWasCalled(x => x.Write(options.Mimetype, document.Root.As<XmlMediaNode>().Element.OuterXml));
+        }
+
+        [Test]
+        public void should_list_the_mime_type_from_the_xml_options()
+        {
+            var options = new XmlMediaOptions
+            {
+                NodeStyle = XmlNodeStyle.AttributeCentric,
+                Root = "Something",
+                LinkWriter = new StubLinkWriter(),
+                Mimetype = "vnd.dovetail.resource"
+            };
+
+            var document = new XmlMediaDocument(options);
+            document.Mimetypes.Single().ShouldEqual(options.Mimetype);
         }
     }
 

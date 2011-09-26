@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public IEnumerable<string> Mimetypes
         {
-            get { throw new NotImplementedException(); }
+            get { yield return _options.Mimetype; }
         }
     }
 }
