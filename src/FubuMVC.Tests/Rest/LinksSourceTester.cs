@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Rest;
 using FubuMVC.Core.Rest.Media;
@@ -90,7 +91,8 @@ namespace FubuMVC.Tests.Rest
 
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
-            throw new NotImplementedException();
+            return "http://somewhere.com/" + typeof (TController).Name + "/" +
+                   ReflectionHelper.GetMethod(expression).Name;
         }
 
         public string UrlForNew<T>()
