@@ -2,11 +2,11 @@
 {
     public class WaterController
     {
-        public WaterViewModel Spray(WaterInputModel model)
+        public WaterViewModel<string> Spray(WaterInputModel model)
         {
             return model.GotAHose()
-                       ? new WaterViewModel { Do = "Rain on your parade!" }
-                       : new WaterViewModel { Do = "Take a wild guess!" };
+                       ? new WaterViewModel<string> { Do = "Rain on your parade!" }
+                       : new WaterViewModel<string> { Do = "Take a wild guess!" };
         }
     }
 
@@ -18,8 +18,9 @@
         }
     }
 
-    public class WaterViewModel
+    //Note: This view model is generic simply to show you can use generics in spark views
+    public class WaterViewModel<T>
     {
-        public string Do { get; set; }
+        public T Do { get; set; }
     }
 }
