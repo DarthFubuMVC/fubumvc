@@ -5,9 +5,56 @@ using FubuLocalization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Rest.Media.Xml;
 using FubuCore;
+using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Rest.Media.Atom
 {
+
+    public interface IFeedSource<T>
+    {
+        IEnumerable<IValues<T>> GetValues();
+    }
+
+    public class EnumerableFeedSource<TModel, T> : IFeedSource<T> where TModel : class, IEnumerable<T>
+    {
+        private readonly IFubuRequest _request;
+
+        public EnumerableFeedSource(IFubuRequest request)
+        {
+            _request = request;
+        }
+
+        public IEnumerable<IValues<T>> GetValues()
+        {
+            return _request.Get<TModel>().Select(x => new SimpleValues<T>(x));
+        }
+    }
+
+    
+    public class DirectFeedSource<TModel, T> : IFeedSource<T> where TModel : class, IEnumerable<IValues<T>>
+    {
+        private readonly IFubuRequest _request;
+
+        public DirectFeedSource(IFubuRequest request)
+        {
+            _request = request;
+        }
+
+        public IEnumerable<IValues<T>> GetValues()
+        {
+            return _request.Get<TModel>();
+        }
+    }
+    
+
+    public class FeedWriter<T>
+    {
+        
+    }
+
+
+
     public interface IFeedDefinition<T>
     {
         IXmlMediaWriter<T> BuildExtensionWriter();
