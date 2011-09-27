@@ -2,10 +2,15 @@ namespace FubuMVC.Core.Rest
 {
     public class Link
     {
-        public string Url { get; set; }
+        public Link(string url)
+        {
+            Url = url;
+        }
+
+        public string Url { get; private set; }
         public string Rel { get; set; }
         public string Title { get; set; }
 
-        public string Mimetype { get; set; }
+        public string ContentType { get; set; }
     }
 }

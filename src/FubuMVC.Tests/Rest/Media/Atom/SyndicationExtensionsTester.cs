@@ -11,9 +11,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         [Test]
         public void set_the_uri_of_a_syndication_link()
         {
-            var link = new Link{
-                Url = "http://somewhere.com/method"
-            };
+            var link = new Link("http://somewhere.com/method");
 
             link.ToSyndicationLink().Uri.OriginalString.ShouldEqual(link.Url);
         }
@@ -21,10 +19,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         [Test]
         public void sets_the_relationship_type_if_it_exists()
         {
-            var link = new Link
-            {
-                Url = "http://somewhere.com/method"
-            };
+            var link = new Link("http://somewhere.com/method");
  
             link.ToSyndicationLink().RelationshipType.ShouldBeNull();
 
@@ -36,10 +31,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         [Test]
         public void sets_the_title_if_it_exists()
         {
-            var link = new Link
-            {
-                Url = "http://somewhere.com/method"
-            };
+            var link = new Link("http://somewhere.com/method");
 
             link.ToSyndicationLink().Title.ShouldBeNull();
 
@@ -51,16 +43,13 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         [Test]
         public void sets_the_mime_type_if_it_exists()
         {
-            var link = new Link
-            {
-                Url = "http://somewhere.com/method"
-            };
+            var link = new Link("http://somewhere.com/method");
 
             link.ToSyndicationLink().MediaType.ShouldBeNull();
 
-            link.Mimetype = "something";
+            link.ContentType = "something";
 
-            link.ToSyndicationLink().MediaType.ShouldEqual(link.Mimetype); 
+            link.ToSyndicationLink().MediaType.ShouldEqual(link.ContentType); 
         }
     }
 }

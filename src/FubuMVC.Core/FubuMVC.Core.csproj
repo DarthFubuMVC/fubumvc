@@ -94,8 +94,10 @@
     <Compile Include="Rest\Conneg\ConnegOutputBehavior.cs" />
     <Compile Include="Rest\Conneg\ConnegOutputNode.cs" />
     <Compile Include="Rest\Conneg\FormatterUsage.cs" />
+    <Compile Include="Rest\ILinkModifier.cs" />
     <Compile Include="Rest\IResourceRegistration.cs" />
     <Compile Include="Rest\Link.cs" />
+    <Compile Include="Rest\LinkExpression.cs" />
     <Compile Include="Rest\Media\Atom\DirectFeedSource.cs" />
     <Compile Include="Rest\Media\Atom\EnumerableFeedSource.cs" />
     <Compile Include="Rest\Media\Atom\FeedItem.cs" />

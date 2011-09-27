@@ -130,6 +130,8 @@ namespace FubuMVC.Core.Rest.Media.Atom
             throw new NotImplementedException();
         }
 
+        
+
         public void Title(StringToken title)
         {
             alter = feed => feed.Title = title.ToString().ToContent();
@@ -172,7 +174,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
             var syndicationLink = new SyndicationLink(new Uri(link.Url));
             link.Rel.IfNotNull(x => syndicationLink.RelationshipType = x);
             link.Title.IfNotNull(x => syndicationLink.Title = x);
-            link.Mimetype.IfNotNull(x => syndicationLink.MediaType = x);
+            link.ContentType.IfNotNull(x => syndicationLink.MediaType = x);
 
             return syndicationLink;
         }
