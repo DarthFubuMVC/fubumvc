@@ -49,6 +49,7 @@ namespace FubuMVC.Spark
                 composer => composer
                     .AddBinder<ViewDescriptorBinder>()
                     .AddBinder<MasterPageBinder>()
+                    .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
                     .AddBinder<ReachableBindingsBinder>()
                     .Apply<NamespacePolicy>()
