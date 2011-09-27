@@ -9,8 +9,11 @@ namespace FubuMVC.Core.Rest
 {
     public class ConnegGraph
     {
-        private readonly Cache<Type, IList<ConnegInputNode>> _inputNodes = new Cache<Type, IList<ConnegInputNode>>(t => new List<ConnegInputNode>());
-        private readonly Cache<Type, IList<ConnegOutputNode>> _outputNodes = new Cache<Type, IList<ConnegOutputNode>>(t => new List<ConnegOutputNode>());
+        private readonly Cache<Type, IList<ConnegInputNode>> _inputNodes =
+            new Cache<Type, IList<ConnegInputNode>>(t => new List<ConnegInputNode>());
+
+        private readonly Cache<Type, IList<ConnegOutputNode>> _outputNodes =
+            new Cache<Type, IList<ConnegOutputNode>>(t => new List<ConnegOutputNode>());
 
         public ConnegGraph(BehaviorGraph graph)
         {
@@ -24,7 +27,7 @@ namespace FubuMVC.Core.Rest
 
         public IEnumerable<ConnegOutputNode> OutputNodesFor<T>()
         {
-            return _outputNodes[typeof(T)];
+            return _outputNodes[typeof (T)];
         }
 
         public IEnumerable<ConnegInputNode> InputNodesFor<T>()

@@ -13,8 +13,8 @@ namespace FubuMVC.Core.Rest
     public class Resource<T> : IResourceRegistration
     {
         private readonly Lazy<LinksSource<T>> _links = new Lazy<LinksSource<T>>(() => new LinksSource<T>());
-        private readonly Lazy<Projection<T>> _projection = new Lazy<Projection<T>>(() => new Projection<T>());
         private readonly IList<Action<ConnegOutputNode>> _modifications = new List<Action<ConnegOutputNode>>();
+        private readonly Lazy<Projection<T>> _projection = new Lazy<Projection<T>>(() => new Projection<T>());
 
         public Resource()
         {
@@ -23,15 +23,27 @@ namespace FubuMVC.Core.Rest
 
         private Action<ConnegOutputNode> modify
         {
-            set
-            {
-                _modifications.Add(value);
-            }
+            set { _modifications.Add(value); }
         }
 
         public LinksSource<T> Links
         {
             get { return _links.Value; }
+        }
+
+        public void Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
+        {
+            graph.OutputNodesFor<T>().Each(node => _modifications.Each(x => x(node)));
+
+            if (_projection.IsValueCreated)
+            {
+                behaviorGraph.Services.SetServiceIfNone<IValueProjection<T>>(_projection.Value);
+            }
+
+            if (_links.IsValueCreated)
+            {
+                behaviorGraph.Services.SetServiceIfNone<ILinkSource<T>>(_links.Value);
+            }
         }
 
         public void SerializeToXml()
@@ -51,7 +63,7 @@ namespace FubuMVC.Core.Rest
 
             modify = node =>
             {
-                var writerNode = new MediaWriterNode(typeof(T));
+                var writerNode = new MediaWriterNode(typeof (T));
                 writerNode.Document.UseType<XmlMediaDocument>().DependencyByValue(options);
                 if (_links.IsValueCreated) writerNode.Links.UseValue(_links.Value);
                 if (_projection.IsValueCreated) writerNode.Projection.UseValue(_projection.Value);
@@ -63,21 +75,6 @@ namespace FubuMVC.Core.Rest
         public AccessorProjection<T> ProjectValue(Expression<Func<T, object>> expression)
         {
             return _projection.Value.Value(expression);
-        }
-
-        public void Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
-        {
-            graph.OutputNodesFor<T>().Each(node => _modifications.Each(x => x(node)));
-        
-            if (_projection.IsValueCreated)
-            {
-                behaviorGraph.Services.SetServiceIfNone<IValueProjection<T>>(_projection.Value);
-            }
-
-            if (_links.IsValueCreated)
-            {
-                behaviorGraph.Services.SetServiceIfNone<ILinkSource<T>>(_links.Value);
-            }
         }
     }
 }

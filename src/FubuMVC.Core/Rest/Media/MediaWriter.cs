@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Rest.Media.Projections;
 using FubuMVC.Core.Runtime;
@@ -22,25 +21,16 @@ namespace FubuMVC.Core.Rest.Media
             _projection = projection;
         }
 
-        public void Write(IValues<T> source, IOutputWriter writer)
-        {
-            writeData(source);
-
-            _document.Write(writer);
-        }
-
         protected IMediaDocument document
         {
             get { return _document; }
         }
 
-        protected void writeData(IValues<T> source)
+        public void Write(IValues<T> source, IOutputWriter writer)
         {
-            var links = _links.LinksFor(source, _urls);
-            var topNode = _document.Root;
-            topNode.WriteLinks(links);
+            writeData(source);
 
-            _projection.WriteValue(source, topNode);
+            _document.Write(writer);
         }
 
         public void Write(T source, IOutputWriter writer)
@@ -51,6 +41,15 @@ namespace FubuMVC.Core.Rest.Media
         public IEnumerable<string> Mimetypes
         {
             get { return _document.Mimetypes; }
+        }
+
+        protected void writeData(IValues<T> source)
+        {
+            var links = _links.LinksFor(source, _urls);
+            var topNode = _document.Root;
+            topNode.WriteLinks(links);
+
+            _projection.WriteValue(source, topNode);
         }
     }
 }

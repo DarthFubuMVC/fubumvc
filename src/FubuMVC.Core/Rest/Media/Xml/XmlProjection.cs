@@ -5,18 +5,13 @@ using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Rest.Media.Xml
 {
-    public class XmlProjection<T> : XmlMediaOptions, IXmlMediaWriterSource<T> 
+    public class XmlProjection<T> : XmlMediaOptions, IXmlMediaWriterSource<T>
     {
         private readonly Projection<T> _projection = new Projection<T>();
 
         public XmlProjection()
         {
             Root = typeof (T).Name;
-        }
-
-        public AccessorProjection<T> Value(Expression<Func<T, object>> expression)
-        {
-            return _projection.Value(expression);
         }
 
         IXmlMediaWriter<T> IXmlMediaWriterSource<T>.BuildWriter()
@@ -27,6 +22,11 @@ namespace FubuMVC.Core.Rest.Media.Xml
         IXmlMediaWriter<T> IXmlMediaWriterSource<T>.BuildWriterFor(ILinkSource<T> links, IUrlRegistry urls)
         {
             return new XmlMediaWriter<T>(this, links, urls, _projection);
+        }
+
+        public AccessorProjection<T> Value(Expression<Func<T, object>> expression)
+        {
+            return _projection.Value(expression);
         }
     }
 }
