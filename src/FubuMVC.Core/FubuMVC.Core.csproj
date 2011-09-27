@@ -95,6 +95,7 @@
     <Compile Include="Rest\Conneg\ConnegOutputNode.cs" />
     <Compile Include="Rest\Conneg\FormatterUsage.cs" />
     <Compile Include="Rest\IResourceRegistration.cs" />
+    <Compile Include="Rest\Link.cs" />
     <Compile Include="Rest\Media\Atom\FeedItem.cs" />
     <Compile Include="Rest\Media\Formatters\FormatterMediaReader.cs" />
     <Compile Include="Rest\Media\Formatters\FormatterMediaWriter.cs" />
@@ -222,12 +223,16 @@
     <Compile Include="Rest\Media\Xml\AtomXmlLinkWriter.cs" />
     <Compile Include="Rest\Media\Xml\IXmlLinkWriter.cs" />
     <Compile Include="Rest\Media\Xml\IXmlMediaNode.cs" />
+    <Compile Include="Rest\Media\Xml\IXmlMediaWriter.cs" />
+    <Compile Include="Rest\Media\Xml\IXmlMediaWriterSource.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaDocument.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaNode.cs" />
     <Compile Include="Rest\Media\Xml\XmlMediaOptions.cs" />
+    <Compile Include="Rest\Media\Xml\XmlMediaWriter.cs" />
     <Compile Include="Rest\Media\Xml\XmlNodeStyle.cs" />
+    <Compile Include="Rest\Media\Xml\XmlProjection.cs" />
+    <Compile Include="Rest\Media\Xml\XmlProjectionExtensions.cs" />
     <Compile Include="Rest\Resource.cs" />
-    <Compile Include="Rest\RestClasses.cs" />
     <Compile Include="Rest\ILinkSource.cs" />
     <Compile Include="Rest\Media\IMediaNode.cs" />
     <Compile Include="Rest\Media\IValues.cs" />
