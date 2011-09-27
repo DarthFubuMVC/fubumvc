@@ -117,6 +117,7 @@
     <Compile Include="Rest\LinkExpressionTester.cs" />
     <Compile Include="Rest\Media\Atom\FeedSourcesTester.cs" />
     <Compile Include="Rest\Media\Atom\FeedTester.cs" />
+    <Compile Include="Rest\Media\Atom\FeedWriter_integrated_Tester.cs" />
     <Compile Include="Rest\Media\Atom\SyndicationExtensionsTester.cs" />
     <Compile Include="Rest\Media\Formatters\FormatterMediaWriterTester.cs" />
     <Compile Include="Rest\Media\Formatters\XmlFormatterTester.cs" />
