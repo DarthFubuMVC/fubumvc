@@ -13,16 +13,16 @@ namespace FubuMVC.Core.Rest.Media.Xml
         {
         }
 
-        public XmlDocument Write(IValues<T> values)
+        public XmlDocument WriteValues(IValues<T> values)
         {
             writeData(values);
 
             return document.As<XmlMediaDocument>().Document;
         }
 
-        public XmlDocument Write(T subject)
+        public XmlDocument WriteSubject(T subject)
         {
-            return Write(new SimpleValues<T>(subject));
+            return WriteValues(new SimpleValues<T>(subject));
         }
     }
 }

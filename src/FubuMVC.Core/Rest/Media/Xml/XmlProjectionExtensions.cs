@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
     {
         public static XmlDocument Write<T>(this XmlProjection<T> projection, T subject)
         {
-            return projection.As<IXmlMediaWriterSource<T>>().BuildWriter().Write(subject);
+            return projection.As<IXmlMediaWriterSource<T>>().BuildWriter().WriteSubject(subject);
         }
     }
 }

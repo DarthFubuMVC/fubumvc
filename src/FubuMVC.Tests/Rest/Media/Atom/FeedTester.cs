@@ -16,6 +16,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         private IFeedDefinition<ItemSubject> theDefinition;
         private SyndicationFeed theSyndicationFeed;
         private SyndicationItem aSyndicationItem;
+        private ValidStubUrlRegistry theUrls;
 
         [SetUp]
         public void SetUp()
@@ -26,6 +27,8 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             theSyndicationFeed = new SyndicationFeed();
 
             aSyndicationItem = new SyndicationItem();
+
+            theUrls = new ValidStubUrlRegistry();
         }
 
         [Test]
@@ -34,7 +37,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             var token = StringToken.FromKeyString("KEY1", "The default value");
             theFeed.Title(token);
 
-            theDefinition.ConfigureFeed(theSyndicationFeed);
+            theDefinition.ConfigureFeed(theSyndicationFeed, theUrls);
 
             theSyndicationFeed.Title.Text.ShouldEqual(token.ToString());
         }
@@ -45,7 +48,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             var token = StringToken.FromKeyString("KEY1", "The default value");
             theFeed.Description(token);
 
-            theDefinition.ConfigureFeed(theSyndicationFeed);
+            theDefinition.ConfigureFeed(theSyndicationFeed, theUrls);
 
             theSyndicationFeed.Description.Text.ShouldEqual(token.ToString());
         }
