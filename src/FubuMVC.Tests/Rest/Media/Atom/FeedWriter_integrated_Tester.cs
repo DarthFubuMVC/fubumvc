@@ -9,6 +9,7 @@ using FubuMVC.Core.Rest;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Atom;
 using FubuMVC.Core.Rest.Media.Xml;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
@@ -79,18 +80,19 @@ namespace FubuMVC.Tests.Rest.Media.Atom
     {
         private ValidStubUrlRegistry theUrls;
         private SyndicationFeed theResultingFeed;
+        private FeedWriter<FeedTarget> theWriter;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
             theUrls = new ValidStubUrlRegistry();
-            var writer = new FeedWriter<FeedTarget>(
+            theWriter = new FeedWriter<FeedTarget>(
                 new FeedTargetSource(),
                 new FeedWithExtension(),
                 new FeedTargetLinks(),
                 theUrls);
 
-            theResultingFeed = writer.BuildFeed();
+            theResultingFeed = theWriter.BuildFeed();
         }
 
         [Test]
@@ -107,6 +109,16 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             writer.Close();
 
             builder.ToString().ShouldContain("<Item xmlns=\"\"><City>Dallas</City><Name>The second item</Name></Item>");
+        }
+
+        [Test]
+        public void the_resulting_feed_does_manage_to_write_some_xml()
+        {
+            var outputWriter = new InMemoryOutputWriter();
+            theWriter.Write(outputWriter);
+
+            outputWriter.ContentType.ShouldEqual(new FeedWithExtension().ContentType);
+            outputWriter.ToString().ShouldContain("<Item xmlns=\"\"><City>Dallas</City><Name>The second item</Name></Item>");
         }
     }
 
