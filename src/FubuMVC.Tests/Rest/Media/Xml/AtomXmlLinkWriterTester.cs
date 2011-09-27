@@ -16,9 +16,7 @@ namespace FubuMVC.Tests.Rest.Media.Xml
         [SetUp]
         public void SetUp()
         {
-            theLink = new Link{
-                Url = "http://something/else"
-            };
+            theLink = new Link("http://something/else");
         }
 
         private string theResultingXml
@@ -57,8 +55,8 @@ namespace FubuMVC.Tests.Rest.Media.Xml
         [Test]
         public void write_link_with_href_and_type()
         {
-            theLink.Mimetype = "text/xml";
-            theResultingXml.ShouldEqual("<link href=\"{0}\" type=\"{1}\" />".ToFormat(theLink.Url, theLink.Mimetype));
+            theLink.ContentType = "text/xml";
+            theResultingXml.ShouldEqual("<link href=\"{0}\" type=\"{1}\" />".ToFormat(theLink.Url, theLink.ContentType));
         }
 
     }
