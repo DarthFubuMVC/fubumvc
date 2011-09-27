@@ -18,6 +18,11 @@ namespace FubuMVC.Core.Rest.Media.Atom
         private readonly IList<ILinkCreator> _links = new List<ILinkCreator>();
         private IFeedItem<T> _itemConfiguration = new FeedItem<T>();
 
+        public Feed()
+        {
+            // TODO -- move to MimeType constant when Assets goes in
+            ContentType = "application/atom+xml";
+        }
 
         // TODO -- do something with the Updated date
 
