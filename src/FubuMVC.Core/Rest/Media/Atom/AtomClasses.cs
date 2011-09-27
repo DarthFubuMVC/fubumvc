@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.ServiceModel.Syndication;
 using FubuLocalization;
 using FubuMVC.Core.Registration;
@@ -98,6 +99,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
         private readonly IList<Action<SyndicationFeed>> _alterations = new List<Action<SyndicationFeed>>();
         private XmlProjection<T> _extension;
         private IFeedItem<T> _itemConfiguration;
+        private readonly IList<ILinkCreator> _links = new List<ILinkCreator>();
 
         private Action<SyndicationFeed> alter
         {
@@ -114,7 +116,9 @@ namespace FubuMVC.Core.Rest.Media.Atom
 
         void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed, IUrlRegistry urls)
         {
-            // TODO -- put links in here too.
+            feed.Links.Clear();
+            var syndicationLinks = _links.Select(x => x.CreateLink(urls).ToSyndicationLink());
+            feed.Links.AddRange(syndicationLinks);
 
             // TODO -- put something in FubuCore for this.  Too common not to
             _alterations.Each(x => x(feed));
@@ -130,7 +134,23 @@ namespace FubuMVC.Core.Rest.Media.Atom
             throw new NotImplementedException();
         }
 
-        
+        public LinkExpression Link(object target)
+        {
+            return Link(urls => urls.UrlFor(target));
+        }
+
+        public LinkExpression Link<TController>(Expression<Action<TController>> method)
+        {
+            return Link(urls => urls.UrlFor(method));
+        }
+
+        public LinkExpression Link(Func<IUrlRegistry, string> urlsource)
+        {
+            var expression = new LinkExpression(urlsource);
+            _links.Add(expression);
+
+            return expression;
+        }
 
         public void Title(StringToken title)
         {

@@ -4,8 +4,10 @@ using FubuCore;
 using FubuLocalization;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Atom;
+using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace FubuMVC.Tests.Rest.Media.Atom
 {
@@ -82,6 +84,34 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             theDefinition.ConfigureItem(aSyndicationItem, values);
 
             aSyndicationItem.Title.Text.ShouldEqual("Else");
+        }
+
+        [Test]
+        public void write_links()
+        {
+            // Nothing up our sleeve
+            theDefinition.ConfigureFeed(theSyndicationFeed, new StubUrlRegistry());
+            theSyndicationFeed.Links.Any().ShouldBeFalse();
+
+            theFeed.Link(new UrlTarget()).Rel("self");
+            theFeed.Link<UrlTarget>(x => x.Go()).Rel("go");
+
+            theDefinition.ConfigureFeed(theSyndicationFeed, new ValidStubUrlRegistry());
+            theSyndicationFeed.Links.Select(x => x.RelationshipType)
+                .ShouldHaveTheSameElementsAs("self", "go");
+        }
+    }
+
+    public class UrlTarget
+    {
+        public override string ToString()
+        {
+            return "UrlTarget";
+        }
+
+        public void Go()
+        {
+            
         }
     }
 
