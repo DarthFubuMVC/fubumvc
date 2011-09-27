@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         [Test]
         public void configure_item_when_using_an_externally_defined_feed_item()
         {
-            theFeed.Items<ItemSubjectMap>();
+            theFeed.UseItems<ItemSubjectMap>();
             var values = new SimpleValues<ItemSubject>(new ItemSubject(){
                 Title = "Something"
             });
@@ -71,10 +71,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         [Test]
         public void configure_items_when_the_item_map_is_definied_inline()
         {
-            theFeed.Items(x =>
-            {
-                x.Title(o => o.Title);
-            });
+            theFeed.Items.Title(o => o.Title);
 
             var values = new SimpleValues<ItemSubject>(new ItemSubject()
             {
