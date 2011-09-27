@@ -1,0 +1,66 @@
+using FubuMVC.Core.Rest;
+using NUnit.Framework;
+using FubuMVC.Core.Rest.Media.Atom;
+using FubuTestingSupport;
+
+namespace FubuMVC.Tests.Rest.Media.Atom
+{
+    [TestFixture]
+    public class SyndicationExtensionsTester
+    {
+        [Test]
+        public void set_the_uri_of_a_syndication_link()
+        {
+            var link = new Link{
+                Url = "http://somewhere.com/method"
+            };
+
+            link.ToSyndicationLink().Uri.OriginalString.ShouldEqual(link.Url);
+        }
+
+        [Test]
+        public void sets_the_relationship_type_if_it_exists()
+        {
+            var link = new Link
+            {
+                Url = "http://somewhere.com/method"
+            };
+ 
+            link.ToSyndicationLink().RelationshipType.ShouldBeNull();
+
+            link.Rel = "something";
+
+            link.ToSyndicationLink().RelationshipType.ShouldEqual(link.Rel);
+        }
+
+        [Test]
+        public void sets_the_title_if_it_exists()
+        {
+            var link = new Link
+            {
+                Url = "http://somewhere.com/method"
+            };
+
+            link.ToSyndicationLink().Title.ShouldBeNull();
+
+            link.Title = "something";
+
+            link.ToSyndicationLink().Title.ShouldEqual(link.Title);
+        }
+
+        [Test]
+        public void sets_the_mime_type_if_it_exists()
+        {
+            var link = new Link
+            {
+                Url = "http://somewhere.com/method"
+            };
+
+            link.ToSyndicationLink().MediaType.ShouldBeNull();
+
+            link.Mimetype = "something";
+
+            link.ToSyndicationLink().MediaType.ShouldEqual(link.Mimetype); 
+        }
+    }
+}

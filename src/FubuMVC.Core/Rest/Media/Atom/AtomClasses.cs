@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel.Syndication;
 using FubuLocalization;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Rest.Media.Xml;
-using FubuMVC.Core.Urls;
+using FubuCore;
 
 namespace FubuMVC.Core.Rest.Media.Atom
 {
     public interface IFeedDefinition<T>
     {
-        IXmlMediaWriter<T> BuildExtensionWriter(IUrlRegistry urls);
+        IXmlMediaWriter<T> BuildExtensionWriter();
 
         // TODO -- think we need to inject a system date time provider thingie
-        void ConfigureFeed(SyndicationFeed feed, DateTime updated);
+        void ConfigureFeed(SyndicationFeed feed);
         void ConfigureItem(SyndicationItem item, IValues<T> values);
     }
 
@@ -22,26 +21,28 @@ namespace FubuMVC.Core.Rest.Media.Atom
     public class Feed<T> : IResourceRegistration, IFeedDefinition<T>
     {
         private readonly IList<Action<SyndicationFeed>> _alterations = new List<Action<SyndicationFeed>>();
-        private readonly IList<FeedItem<T>> _maps = new List<FeedItem<T>>();
+        private XmlProjection<T> _extension;
+        private IFeedItem<T> _itemConfiguration;
 
-        public void Title(StringToken title)
+        private Action<SyndicationFeed> alter
+        {
+            set { _alterations.Add(value); }
+        }
+
+        IXmlMediaWriter<T> IFeedDefinition<T>.BuildExtensionWriter()
         {
             throw new NotImplementedException();
         }
 
-        public void Description(StringToken description)
+        void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed)
         {
-            throw new NotImplementedException();
+            // TODO -- put something in FubuCore for this.  Too common not to
+            _alterations.Each(x => x(feed));
         }
 
-        public void Items<TMap>() where TMap : FeedItem<T>
+        void IFeedDefinition<T>.ConfigureItem(SyndicationItem item, IValues<T> values)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Items(Action<FeedItem<T>> configure)
-        {
-            throw new NotImplementedException();
+            _itemConfiguration.ConfigureItem(item, values);
         }
 
         void IResourceRegistration.Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
@@ -49,27 +50,51 @@ namespace FubuMVC.Core.Rest.Media.Atom
             throw new NotImplementedException();
         }
 
-        IXmlMediaWriter<T> IFeedDefinition<T>.BuildExtensionWriter(IUrlRegistry urls)
+        public void Title(StringToken title)
         {
-            throw new NotImplementedException();
+            alter = feed => feed.Title = title.ToString().ToContent();
         }
 
-        void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed, DateTime updated)
+        public void Description(StringToken description)
         {
-            throw new NotImplementedException();
+            alter = feed => feed.Description = description.ToString().ToContent();
         }
 
-        void IFeedDefinition<T>.ConfigureItem(SyndicationItem item, IValues<T> values)
+        public void Items<TMap>() where TMap : FeedItem<T>, new()
         {
-            throw new NotImplementedException();
+            _itemConfiguration = new TMap();
+        }
+
+        public void Items(Action<FeedItem<T>> configure)
+        {
+            var itemMap = new FeedItem<T>();
+            configure(itemMap);
+
+            _itemConfiguration = itemMap;
+        }
+
+        public void Extension(Action<XmlProjection<T>> configure)
+        {
+            _extension = new XmlProjection<T>();
+            configure(_extension);
         }
     }
 
-    public static class SyndicationStringExtensions
+    public static class SyndicationExtensions
     {
         public static TextSyndicationContent ToContent(this string text)
         {
             return new TextSyndicationContent(text);
+        }
+
+        public static SyndicationLink ToSyndicationLink(this Link link)
+        {
+            var syndicationLink = new SyndicationLink(new Uri(link.Url));
+            link.Rel.IfNotNull(x => syndicationLink.RelationshipType = x);
+            link.Title.IfNotNull(x => syndicationLink.Title = x);
+            link.Mimetype.IfNotNull(x => syndicationLink.MediaType = x);
+
+            return syndicationLink;
         }
     }
 }
