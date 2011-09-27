@@ -7,50 +7,77 @@ using FubuMVC.Core.Rest.Media.Xml;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using System.Linq;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Rest.Media.Atom
 {
-
-    public interface IFeedSource<T>
+    public class FeedWriter<T> : IMediaWriter<T>
     {
-        IEnumerable<IValues<T>> GetValues();
-    }
+        private readonly IFeedSource<T> _feedSource;
+        private readonly IFeedDefinition<T> _definition;
+        private readonly ILinkSource<T> _links;
+        private readonly IUrlRegistry _urls;
 
-    public class EnumerableFeedSource<TModel, T> : IFeedSource<T> where TModel : class, IEnumerable<T>
-    {
-        private readonly IFubuRequest _request;
-
-        public EnumerableFeedSource(IFubuRequest request)
+        public FeedWriter(IFeedSource<T> feedSource, IFeedDefinition<T> definition, ILinkSource<T> links, IUrlRegistry urls)
         {
-            _request = request;
+            _feedSource = feedSource;
+            _definition = definition;
+            _links = links;
+            _urls = urls;
         }
 
-        public IEnumerable<IValues<T>> GetValues()
-        {
-            return _request.Get<TModel>().Select(x => new SimpleValues<T>(x));
-        }
-    }
 
-    
-    public class DirectFeedSource<TModel, T> : IFeedSource<T> where TModel : class, IEnumerable<IValues<T>>
-    {
-        private readonly IFubuRequest _request;
-
-        public DirectFeedSource(IFubuRequest request)
+        public IEnumerable<string> Mimetypes
         {
-            _request = request;
+            get
+            {
+                yield return _definition.ContentType;
+            }
         }
 
-        public IEnumerable<IValues<T>> GetValues()
+        public void Write(IOutputWriter writer)
         {
-            return _request.Get<TModel>();
-        }
-    }
-    
+            
 
-    public class FeedWriter<T>
-    {
-        
+            var feed = new SyndicationFeed();
+            
+            // TODO -- this should put the links on too
+            _definition.ConfigureFeed(feed, _urls);
+
+            Action<SyndicationItem, IValues<T>> extendItem = (item, values) => { };
+            var extensionWriter = _definition.BuildExtensionWriter();
+            if (extensionWriter != null)
+            {
+                extendItem = (item, values) =>
+                {
+                    var doc = extensionWriter.WriteValues(values);
+                    item.ElementExtensions.Add(doc);
+                };
+            }
+
+
+
+            _feedSource.GetValues().Each(values =>
+            {
+                var item = new SyndicationItem();
+                _definition.ConfigureItem(item, values);
+
+                var links = _links.LinksFor(values, _urls).Select(x => x.ToSyndicationLink());
+                item.Links.AddRange(links);
+
+                extendItem(item, values);
+            });
+        }
+
+        public void Write(IValues<T> source, IOutputWriter writer)
+        {
+            Write(writer);
+        }
+
+        public void Write(T source, IOutputWriter writer)
+        {
+            Write(writer);
+        }
     }
 
 
@@ -60,8 +87,9 @@ namespace FubuMVC.Core.Rest.Media.Atom
         IXmlMediaWriter<T> BuildExtensionWriter();
 
         // TODO -- think we need to inject a system date time provider thingie
-        void ConfigureFeed(SyndicationFeed feed);
+        void ConfigureFeed(SyndicationFeed feed, IUrlRegistry urls);
         void ConfigureItem(SyndicationItem item, IValues<T> values);
+        string ContentType { get; }
     }
 
 
@@ -76,13 +104,18 @@ namespace FubuMVC.Core.Rest.Media.Atom
             set { _alterations.Add(value); }
         }
 
+        // TODO -- test that this monster is set by default to atom pub
+        public string ContentType { get; set; }
+
         IXmlMediaWriter<T> IFeedDefinition<T>.BuildExtensionWriter()
         {
             throw new NotImplementedException();
         }
 
-        void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed)
+        void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed, IUrlRegistry urls)
         {
+            // TODO -- put links in here too.
+
             // TODO -- put something in FubuCore for this.  Too common not to
             _alterations.Each(x => x(feed));
         }
