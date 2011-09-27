@@ -36,38 +36,45 @@ namespace FubuMVC.Core.Rest.Media.Atom
             }
         }
 
+        public virtual SyndicationFeed BuildFeed()
+        {
+            var feed = new SyndicationFeed();
+
+            _definition.ConfigureFeed(feed, _urls);
+            feed.Items = buildItems();
+
+            return feed;
+        }
+
+        private IEnumerable<SyndicationItem> buildItems()
+        {
+            foreach (var values in _feedSource.GetValues())
+            {
+                yield return buildItem(values);
+            }
+        }
+
+        private SyndicationItem buildItem(IValues<T> values)
+        {
+            var item = new SyndicationItem();
+            _definition.ConfigureItem(item, values);
+
+            addLinksForItem(item, values);
+
+            return item;
+        }
+
+        private void addLinksForItem(SyndicationItem item, IValues<T> values)
+        {
+            var links = _links.LinksFor(values, _urls).Select(x => x.ToSyndicationLink());
+            item.Links.AddRange(links);
+        }
+
         public void Write(IOutputWriter writer)
         {
             
+            throw new NotImplementedException();
 
-            var feed = new SyndicationFeed();
-            
-            // TODO -- this should put the links on too
-            _definition.ConfigureFeed(feed, _urls);
-
-            Action<SyndicationItem, IValues<T>> extendItem = (item, values) => { };
-            var extensionWriter = _definition.BuildExtensionWriter();
-            if (extensionWriter != null)
-            {
-                extendItem = (item, values) =>
-                {
-                    var doc = extensionWriter.WriteValues(values);
-                    item.ElementExtensions.Add(doc);
-                };
-            }
-
-
-
-            _feedSource.GetValues().Each(values =>
-            {
-                var item = new SyndicationItem();
-                _definition.ConfigureItem(item, values);
-
-                var links = _links.LinksFor(values, _urls).Select(x => x.ToSyndicationLink());
-                item.Links.AddRange(links);
-
-                extendItem(item, values);
-            });
         }
 
         public void Write(IValues<T> source, IOutputWriter writer)
@@ -85,9 +92,6 @@ namespace FubuMVC.Core.Rest.Media.Atom
 
     public interface IFeedDefinition<T>
     {
-        IXmlMediaWriter<T> BuildExtensionWriter();
-
-        // TODO -- think we need to inject a system date time provider thingie
         void ConfigureFeed(SyndicationFeed feed, IUrlRegistry urls);
         void ConfigureItem(SyndicationItem item, IValues<T> values);
         string ContentType { get; }
@@ -97,9 +101,13 @@ namespace FubuMVC.Core.Rest.Media.Atom
     public class Feed<T> : IResourceRegistration, IFeedDefinition<T>
     {
         private readonly IList<Action<SyndicationFeed>> _alterations = new List<Action<SyndicationFeed>>();
-        private XmlProjection<T> _extension;
-        private IFeedItem<T> _itemConfiguration;
+        private readonly Lazy<XmlProjection<T>> _extension = new Lazy<XmlProjection<T>>(() => new XmlProjection<T>());
+        private IFeedItem<T> _itemConfiguration = new FeedItem<T>();
         private readonly IList<ILinkCreator> _links = new List<ILinkCreator>();
+
+
+        // TODO -- do something with the Updated date
+
 
         private Action<SyndicationFeed> alter
         {
@@ -108,11 +116,6 @@ namespace FubuMVC.Core.Rest.Media.Atom
 
         // TODO -- test that this monster is set by default to atom pub
         public string ContentType { get; set; }
-
-        IXmlMediaWriter<T> IFeedDefinition<T>.BuildExtensionWriter()
-        {
-            throw new NotImplementedException();
-        }
 
         void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed, IUrlRegistry urls)
         {
@@ -127,11 +130,20 @@ namespace FubuMVC.Core.Rest.Media.Atom
         void IFeedDefinition<T>.ConfigureItem(SyndicationItem item, IValues<T> values)
         {
             _itemConfiguration.ConfigureItem(item, values);
+
+
+            if (_extension.IsValueCreated)
+            {
+                var writer = _extension.Value.As<IXmlMediaWriterSource<T>>().BuildWriter();
+                var doc = writer.WriteValues(values);
+
+                item.ElementExtensions.Add(doc.DocumentElement);
+            }
         }
 
         void IResourceRegistration.Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
         {
-            throw new NotImplementedException();
+            
         }
 
         public LinkExpression Link(object target)
@@ -162,23 +174,20 @@ namespace FubuMVC.Core.Rest.Media.Atom
             alter = feed => feed.Description = description.ToString().ToContent();
         }
 
-        public void Items<TMap>() where TMap : FeedItem<T>, new()
+        public void UseItems<TMap>() where TMap : FeedItem<T>, new()
         {
             _itemConfiguration = new TMap();
         }
 
-        public void Items(Action<FeedItem<T>> configure)
+        public FeedItem<T> Items
         {
-            var itemMap = new FeedItem<T>();
-            configure(itemMap);
-
-            _itemConfiguration = itemMap;
+            get { return (FeedItem<T>) _itemConfiguration; }
         }
 
-        public void Extension(Action<XmlProjection<T>> configure)
+
+        public XmlProjection<T> Extension
         {
-            _extension = new XmlProjection<T>();
-            configure(_extension);
+            get { return _extension.Value; }
         }
     }
 
