@@ -17,6 +17,11 @@ namespace FubuMVC.Core.Rest.Media
         {
             return values.ValueFor(expression.ToAccessor());
         }
+
+        public static IValues<T> ToValues<T>(this T subject)
+        {
+            return new SimpleValues<T>(subject);
+        }
     }
 
     public interface IValueStream<T>

@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
             link.Title.IfNotNull(x => element.WithAtt("title", x));
             link.Rel.IfNotNull(x => element.WithAtt("rel", x));
-            link.Mimetype.IfNotNull(x => element.WithAtt("type", x));
+            link.ContentType.IfNotNull(x => element.WithAtt("type", x));
         }
     }
 }
