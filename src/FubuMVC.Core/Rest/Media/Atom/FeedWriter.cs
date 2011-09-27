@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Text;
+using System.Xml;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 
@@ -73,9 +75,17 @@ namespace FubuMVC.Core.Rest.Media.Atom
             item.Links.AddRange(links);
         }
 
-        public void Write(IOutputWriter writer)
+        public void Write(IOutputWriter outputWriter)
         {
-            throw new NotImplementedException();
+            var builder = new StringBuilder();
+            var writer = XmlWriter.Create(builder);
+            var theResultingFeed = BuildFeed();
+            var formatter = new Atom10FeedFormatter(theResultingFeed);
+
+            formatter.WriteTo(writer);
+            writer.Close();
+
+            outputWriter.Write(_definition.ContentType, builder.ToString());
         }
     }
 }
