@@ -1,16 +1,115 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.ServiceModel.Syndication;
 using FubuCore;
 using FubuLocalization;
+using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Atom;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
+using FubuMVC.Core.Rest.Conneg;
 
 namespace FubuMVC.Tests.Rest.Media.Atom
 {
+    [TestFixture]
+    public class when_modifying_resource_nodes_matching_a_feed_target
+    {
+        private BehaviorGraph theGraph;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeType<Controller1>();
+            registry.Media.ApplyContentNegotiationToActions(call => true);
+
+            theGraph = registry.BuildGraph();
+        }
+
+        [Test]
+        public void should_apply_a_media_output_node_to_enumerables_of_the_target_type()
+        {
+            var outputNode = theGraph.BehaviorFor<Controller1>(x => x.M1())
+                .ConnegOutputNode()
+                .Writers.Single()
+                .ShouldBeOfType<FeedWriterNode<TargetClass>>();
+
+            outputNode.FeedSourceType.ShouldEqual(typeof (EnumerableFeedSource<EnumerableOutput, TargetClass>));
+            outputNode.Feed.ShouldBeOfType<TargetClassFeed>();
+        }
+
+        [Test]
+        public void should_apply_a_media_output_node_to_enumerables_of_values_of_the_target_type()
+        {
+            var outputNode = theGraph.BehaviorFor<Controller1>(x => x.M2())
+                .ConnegOutputNode()
+                .Writers.Single()
+                .ShouldBeOfType<FeedWriterNode<TargetClass>>();
+
+            outputNode.FeedSourceType.ShouldEqual(typeof(DirectFeedSource<EnumerableValuesOutput, TargetClass>));
+            outputNode.Feed.ShouldBeOfType<TargetClassFeed>();
+        }
+
+        public class TargetClassFeed : Feed<TargetClass>
+        {
+            public TargetClassFeed()
+            {
+                Debug.WriteLine("I was built");
+            }
+        }
+    
+        public class EnumerableOutput : IEnumerable<TargetClass>
+        {
+            IEnumerator<TargetClass> IEnumerable<TargetClass>.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerator GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class EnumerableValuesOutput : IEnumerable<IValues<TargetClass>>
+        {
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            public IEnumerator<IValues<TargetClass>> GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class TargetClass{}
+
+        public class Controller1
+        {
+            public EnumerableOutput M1()
+            {
+                return new EnumerableOutput();
+            }
+
+            public EnumerableValuesOutput M2()
+            {
+                return null;
+            }
+
+        }
+    }
+
+    
+
+
     [TestFixture]
     public class FeedTester
     {
