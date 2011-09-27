@@ -72,6 +72,28 @@ namespace FubuMVC.Core.Rest.Media.Atom
 
         void IResourceRegistration.Modify(ConnegGraph graph, BehaviorGraph behaviorGraph)
         {
+            modifyForEnumerableOfTargetType(graph);
+
+            modifyForEnumerableOfValuesOfTargetType(graph);
+        }
+
+        private void modifyForEnumerableOfValuesOfTargetType(ConnegGraph graph)
+        {
+            var valueType = typeof(IValues<>).MakeGenericType(typeof(T));
+            var enumerableValueType = typeof(IEnumerable<>).MakeGenericType(valueType);
+            graph.OutputNodesThatCanBeCastTo(enumerableValueType).Each(outputNode =>
+            {
+                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.direct, outputNode.InputType));
+            });
+        }
+
+        private void modifyForEnumerableOfTargetType(ConnegGraph graph)
+        {
+            var enumerableType = typeof(IEnumerable<>).MakeGenericType(typeof(T));
+            graph.OutputNodesThatCanBeCastTo(enumerableType).Each(outputNode =>
+            {
+                outputNode.AddWriter(new FeedWriterNode<T>(this, FeedSourceType.enumerable, outputNode.InputType));
+            });
         }
 
         public LinkExpression Link(object target)

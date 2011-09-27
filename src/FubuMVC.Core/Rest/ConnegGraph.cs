@@ -4,6 +4,7 @@ using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Rest.Conneg;
+using FubuCore;
 
 namespace FubuMVC.Core.Rest
 {
@@ -30,9 +31,21 @@ namespace FubuMVC.Core.Rest
             return _outputNodes[typeof (T)];
         }
 
+        public IEnumerable<ConnegOutputNode> OutputNodesFor(Type type)
+        {
+            return _outputNodes[type];
+        }
+
         public IEnumerable<ConnegInputNode> InputNodesFor<T>()
         {
             return _inputNodes[typeof (T)];
+        }
+
+        public IEnumerable<ConnegOutputNode> OutputNodesThatCanBeCastTo(Type interfaceType)
+        {
+            return _outputNodes.GetAllKeys()
+                .Where(x => x.CanBeCastTo(interfaceType))
+                .SelectMany(x => _outputNodes[x]);
         }
     }
 }

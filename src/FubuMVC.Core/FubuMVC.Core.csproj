@@ -105,6 +105,7 @@
     <Compile Include="Rest\Media\Atom\EnumerableFeedSource.cs" />
     <Compile Include="Rest\Media\Atom\Feed.cs" />
     <Compile Include="Rest\Media\Atom\FeedItem.cs" />
+    <Compile Include="Rest\Media\Atom\FeedWriterNode.cs" />
     <Compile Include="Rest\Media\Atom\IFeedDefinition.cs" />
     <Compile Include="Rest\Media\Atom\IFeedSource.cs" />
     <Compile Include="Rest\Media\Atom\SyndicationExtensions.cs" />
