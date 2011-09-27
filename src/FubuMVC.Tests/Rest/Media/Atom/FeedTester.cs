@@ -34,6 +34,12 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         }
 
         [Test]
+        public void content_type_is_atom_pub_by_default()
+        {
+            theFeed.ContentType.ShouldEqual("application/atom+xml");
+        }
+
+        [Test]
         public void title()
         {
             var token = StringToken.FromKeyString("KEY1", "The default value");
