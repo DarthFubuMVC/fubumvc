@@ -12,8 +12,8 @@ namespace FubuMVC.Core.Rest
 
     public class LinkExpression : ILinkModifier, ILinkCreator
     {
-        private readonly Func<IUrlRegistry, string> _source;
         private readonly IList<Action<Link>> _modifications = new List<Action<Link>>();
+        private readonly Func<IUrlRegistry, string> _source;
 
         public LinkExpression()
         {
@@ -22,6 +22,11 @@ namespace FubuMVC.Core.Rest
         public LinkExpression(Func<IUrlRegistry, string> source)
         {
             _source = source;
+        }
+
+        private Action<Link> modify
+        {
+            set { _modifications.Add(value); }
         }
 
         public Link CreateLink(IUrlRegistry urls)
@@ -33,12 +38,9 @@ namespace FubuMVC.Core.Rest
             return link;
         }
 
-        private Action<Link> modify
+        void ILinkModifier.Modify(Link link)
         {
-            set
-            {
-                _modifications.Add(value);
-            }
+            _modifications.Each(x => x(link));
         }
 
 
@@ -61,9 +63,5 @@ namespace FubuMVC.Core.Rest
         }
 
         // TODO -- use the forthcoming FubuCore extension method
-        void ILinkModifier.Modify(Link link)
-        {
-            _modifications.Each(x => x(link));
-        }
     }
 }

@@ -15,6 +15,13 @@ namespace FubuMVC.Core.Rest.Conneg
             AllowHttpFormPosts = true;
         }
 
+        public bool AllowHttpFormPosts { get; set; }
+
+        public IEnumerable<IMediaReaderNode> Readers
+        {
+            get { return _readers; }
+        }
+
         protected override Type behaviorType()
         {
             return typeof (ConnegInputBehavior<>);
@@ -34,7 +41,7 @@ namespace FubuMVC.Core.Rest.Conneg
 
             if (AllowHttpFormPosts)
             {
-                yield return new ObjectDef(typeof(ModelBindingMediaReader<>), InputType);
+                yield return new ObjectDef(typeof (ModelBindingMediaReader<>), InputType);
             }
 
             foreach (var objectDef in createFormatterObjectDef())
@@ -43,13 +50,11 @@ namespace FubuMVC.Core.Rest.Conneg
             }
         }
 
-       
+
         protected override Type formatterActionType()
         {
             return typeof (FormatterMediaReader<>);
         }
-
-        public bool AllowHttpFormPosts { get; set; }
 
         public void AddReader(IMediaReaderNode node)
         {
@@ -59,14 +64,6 @@ namespace FubuMVC.Core.Rest.Conneg
             }
 
             _readers.Add(node);
-        }
-
-        public IEnumerable<IMediaReaderNode> Readers
-        {
-            get
-            {
-                return _readers;
-            }
         }
 
         public void JsonOnly()

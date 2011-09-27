@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Formatters;
-using System.Linq;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
-
     public class ConnegOutputNode : ConnegNode
     {
         private readonly IList<IMediaWriterNode> _writers = new List<IMediaWriterNode>();
@@ -22,6 +21,11 @@ namespace FubuMVC.Core.Rest.Conneg
             get { return BehaviorCategory.Output; }
         }
 
+        public IEnumerable<IMediaWriterNode> Writers
+        {
+            get { return _writers; }
+        }
+
         public void AddWriter(IMediaWriterNode node)
         {
             if (node.InputType != InputType)
@@ -30,14 +34,6 @@ namespace FubuMVC.Core.Rest.Conneg
             }
 
             _writers.Add(node);
-        }
-
-        public IEnumerable<IMediaWriterNode> Writers
-        {
-            get
-            {
-                return _writers;
-            }
         }
 
         protected override Type formatterActionType()

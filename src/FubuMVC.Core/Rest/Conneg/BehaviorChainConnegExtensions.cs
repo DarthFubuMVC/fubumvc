@@ -1,7 +1,6 @@
-using System;
-using FubuMVC.Core.Registration.Nodes;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Rest.Media.Formatters;
 
 namespace FubuMVC.Core.Rest.Conneg
@@ -20,7 +19,7 @@ namespace FubuMVC.Core.Rest.Conneg
             }
 
             var actionOutputType = chain.ActionOutputType();
-            if (chain.ConnegOutputNode() == null && actionOutputType != null && actionOutputType != typeof(void))
+            if (chain.ConnegOutputNode() == null && actionOutputType != null && actionOutputType != typeof (void))
             {
                 var outputNode = new ConnegOutputNode(actionOutputType);
                 var action = chain.Last(x => x is ActionCall);
@@ -32,7 +31,6 @@ namespace FubuMVC.Core.Rest.Conneg
         {
             chain.RemoveConneg();
             chain.ApplyConneg();
-
 
 
             var connegInputNode = chain.ConnegInputNode();
@@ -82,6 +80,5 @@ namespace FubuMVC.Core.Rest.Conneg
             chain.ApplyConneg();
             chain.ConnegOutputNode().UseFormatter<XmlFormatter>();
         }
-
     }
 }

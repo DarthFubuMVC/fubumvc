@@ -9,8 +9,8 @@ namespace FubuMVC.Core.Rest.Conneg
     public abstract class ConnegNode : BehaviorNode
     {
         private readonly Type _inputType;
-        private FormatterUsage _formatterUsage = FormatterUsage.all;
         private readonly IList<Type> _selectedFormatterTypes = new List<Type>();
+        private FormatterUsage _formatterUsage = FormatterUsage.all;
 
         protected ConnegNode(Type inputType)
         {
@@ -29,18 +29,12 @@ namespace FubuMVC.Core.Rest.Conneg
 
         public FormatterUsage FormatterUsage
         {
-            get
-            {
-                return _formatterUsage;
-            }
+            get { return _formatterUsage; }
         }
 
         public IEnumerable<Type> SelectedFormatterTypes
         {
-            get
-            {
-                return _selectedFormatterTypes;
-            }
+            get { return _selectedFormatterTypes; }
         }
 
         protected abstract Type formatterActionType();
@@ -76,7 +70,7 @@ namespace FubuMVC.Core.Rest.Conneg
         public void UseFormatter<T>() where T : IFormatter
         {
             _formatterUsage = FormatterUsage.selected;
-            _selectedFormatterTypes.Fill(typeof(T));
+            _selectedFormatterTypes.Fill(typeof (T));
         }
 
         protected abstract IEnumerable<ObjectDef> createBuilderDependencies();
@@ -90,7 +84,7 @@ namespace FubuMVC.Core.Rest.Conneg
             var mediaReaderType = getReaderWriterType().MakeGenericType(InputType);
 
 
-            var readerDependencies = new ListDependency(typeof(IEnumerable<>).MakeGenericType(mediaReaderType));
+            var readerDependencies = new ListDependency(typeof (IEnumerable<>).MakeGenericType(mediaReaderType));
             readerDependencies.AddRange(createBuilderDependencies());
 
             objectDef.Dependency(readerDependencies);

@@ -19,11 +19,17 @@ namespace FubuMVC.Core.Rest.Media
             _interface = @interface;
         }
 
+        public IDependency Dependency
+        {
+            get { return _dependency; }
+        }
+
         public ObjectDef UseType(Type type)
         {
             if (!type.IsConcrete() || !type.CanBeCastTo(_interface))
             {
-                throw new ArgumentException("Type {0} cannot be plugged into {1}".ToFormat(type.FullName, _interface.FullName));
+                throw new ArgumentException("Type {0} cannot be plugged into {1}".ToFormat(type.FullName,
+                                                                                           _interface.FullName));
             }
 
             var configuredDependency = new ConfiguredDependency(_interface, type);
@@ -34,22 +40,18 @@ namespace FubuMVC.Core.Rest.Media
 
         public ObjectDef UseType<T>()
         {
-            return UseType(typeof(T));
+            return UseType(typeof (T));
         }
 
         public void UseValue(object value)
         {
             if (!value.GetType().CanBeCastTo(_interface))
             {
-                throw new ArgumentException("Type {0} cannot be plugged into {1}".ToFormat(value.GetType().FullName, _interface.FullName));
+                throw new ArgumentException("Type {0} cannot be plugged into {1}".ToFormat(value.GetType().FullName,
+                                                                                           _interface.FullName));
             }
 
             _dependency = new ValueDependency(_interface, value);
-        }
-
-        public IDependency Dependency
-        {
-            get { return _dependency; }
         }
     }
 }
