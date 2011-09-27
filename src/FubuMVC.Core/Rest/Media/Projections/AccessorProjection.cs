@@ -37,7 +37,5 @@ namespace FubuMVC.Core.Rest.Media.Projections
         {
             return _projectedNodeName;
         }
-
-        
     }
 }

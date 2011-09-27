@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
-using System.Linq;
 
 namespace FubuMVC.Core.Rest.Media.Formatters
 {
     public class FormatterMediaWriter<T> : IMediaWriter<T>
     {
-        private readonly IFubuRequest _request;
         private readonly IEnumerable<IFormatter> _formatters;
+        private readonly IFubuRequest _request;
 
         public FormatterMediaWriter(IFubuRequest request, IEnumerable<IFormatter> formatters)
         {
