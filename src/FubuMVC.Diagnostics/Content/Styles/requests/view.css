@@ -20,7 +20,7 @@
     text-align:center;
 }
 
-ul.children
+li
 {
     list-style-type: none;
 }
@@ -60,7 +60,7 @@ h4.request-identifier
     white-space:normal;
 }
 
-.last .console
+.last .console, .log-viewer .console
 {
     border-bottom:0;
 }
@@ -90,7 +90,7 @@ h4.request-identifier
 
 .console .message p.statement
 {
-    color:#0080ff;
+    font-weight: bold;
 }
 
 .console .message p.msg-info
@@ -126,4 +126,33 @@ h4.request-identifier
     width: auto;
     background: #fcf0f0; 
     color: #280b0b;
+}
+
+.behavior-details .message ul
+{
+    margin-top: 10px;
+}
+
+.behaviors .inner-behavior
+{
+    margin-bottom: 20px;
+}
+
+.chain-visualizer
+{
+    list-style-type: none;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.chain-visualizer li
+{
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+
+.chain-visualizer li.arrow
+{
+    margin-bottom: 0;
 }

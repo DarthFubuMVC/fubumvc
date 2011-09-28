@@ -12,7 +12,7 @@ namespace FubuMVC.Diagnostics.Core.Infrastructure
 	{
 	    public string Serialize(object target)
 	    {
-	        return JsonConvert.SerializeObject(target);
+	        return JsonConvert.SerializeObject(target, Formatting.Indented);
 	    }
 
 	    public T Deserialize<T>(string input)

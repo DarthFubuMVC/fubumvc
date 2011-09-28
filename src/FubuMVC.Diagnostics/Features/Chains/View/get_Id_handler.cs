@@ -9,39 +9,22 @@ namespace FubuMVC.Diagnostics.Features.Chains.View
 {
 	public class get_Id_handler
 	{
-		private readonly BehaviorGraph _graph;
-	    private readonly IHttpConstraintResolver _constraintResolver;
+	    private readonly IChainVisualizerBuilder _visualizer;
 
-		public get_Id_handler(BehaviorGraph graph, IHttpConstraintResolver constraintResolver)
+		public get_Id_handler(IChainVisualizerBuilder visualizer)
 		{
-		    _graph = graph;
-		    _constraintResolver = constraintResolver;
+		    _visualizer = visualizer;
 		}
 
 	    public ChainModel Execute(ChainRequest request)
-		{
-			var chain = _graph.Behaviors.SingleOrDefault(c => c.UniqueId == request.Id);
-			if(chain == null)
+	    {
+	        var visualizer = _visualizer.VisualizerFor(request.Id);
+			if(visualizer == null)
 			{
                 throw new ArgumentException("{0} does not exist".ToFormat(request.Id));
 			}
 
-		    return new ChainModel
-		               {
-		                   Chain = chain,
-                           Constraints = _constraintResolver.Resolve(chain),
-		                   Behaviors = chain.Select(x =>
-		                                                {
-		                                                    var behavior = new BehaviorModel {BehaviorType = x.ToString()};
-		                                                    var call = x as ActionCall;
-                                                            if(call != null)
-                                                            {
-                                                                behavior.Logs = _graph.Observer.GetLog(call);
-                                                            }
-
-		                                                    return behavior;
-		                                                })
-			           };
-		}
+	        return visualizer;
+	    }
 	}
 }

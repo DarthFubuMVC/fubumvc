@@ -4,19 +4,22 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Diagnostics.Features.Chains.View;
 
 namespace FubuMVC.Diagnostics.Features.Requests.View
 {
 	public class get_Id_handler
 	{
 		private readonly IRequestHistoryCache _requestCache;
+	    private readonly IChainVisualizerBuilder _chainVisualizer;
 
-		public get_Id_handler(IRequestHistoryCache requestCache)
+		public get_Id_handler(IRequestHistoryCache requestCache, IChainVisualizerBuilder chainVisualizer)
 		{
-			_requestCache = requestCache;
+		    _requestCache = requestCache;
+		    _chainVisualizer = chainVisualizer;
 		}
 
-		public RequestDetailsModel Execute(RecordedRequestRequestModel request)
+	    public RequestDetailsModel Execute(RecordedRequestRequestModel request)
 		{
 			var report = _requestCache.RecentReports().SingleOrDefault(r => r.Id == request.Id);
 			if(report == null)
@@ -28,6 +31,7 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 		                    {
 		                        Report = report,
 		                        Root = Gather(report),
+                                Chain = _chainVisualizer.VisualizerFor(report.BehaviorId),
 		                        Logs = report
 		                            .Steps
 		                            .Where(s => s.Details is RequestLogEntry)
@@ -66,6 +70,8 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 							{
 								behaviors[behaviorType].AddBefore(s.Details);
 							}
+
+				      	    behaviors[behaviorType].Id = s.Behavior.BehaviorId;
 
 							if(lastBehavior != null && behaviorType != lastBehavior)
 							{

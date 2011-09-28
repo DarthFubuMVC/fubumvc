@@ -16,6 +16,7 @@ namespace FubuMVC.Core.Diagnostics
             BehaviorType = behavior.GetType();
         }
 
+        public Guid BehaviorId { get; set; }
         public Type BehaviorType { get; set; }
         public string Description { get; private set; }
 

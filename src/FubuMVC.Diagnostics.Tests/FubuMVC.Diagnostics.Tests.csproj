@@ -83,6 +83,7 @@
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlsTester.cs" />
     <Compile Include="DiagnosticsExtensionTester.cs" />
+    <Compile Include="Features\Chains\when_building_a_chain_visualizer.cs" />
     <Compile Include="Features\Chains\when_viewing_a_chain.cs" />
     <Compile Include="Features\Dashboard\DashboardHandlerTester.cs" />
     <Compile Include="Features\Html\Decorators\DisplayPathBuilderTester.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Features\Routes\when_getting_value_for_view_column.cs" />
     <Compile Include="Infrastructure\AuthorizationDescriptorTester.cs" />
     <Compile Include="Infrastructure\GridServiceTester.cs" />
+    <Compile Include="Infrastructure\JsonServiceTester.cs" />
     <Compile Include="Infrastructure\RowComparerTester.cs" />
     <Compile Include="Models\SampleGridModel.cs" />
     <Compile Include="Notifications\NoOutputsNotificationPolicyTester.cs" />

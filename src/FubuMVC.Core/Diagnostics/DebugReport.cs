@@ -22,12 +22,14 @@ namespace FubuMVC.Core.Diagnostics
         private ModelBindingReport _currentModelBinding;
 
         public Guid Id { get; private set; }
+        public Guid BehaviorId { get; set; }
 
         public DebugReport()
         {
             Id = Guid.NewGuid();
 
             FormData = new Dictionary<string, object>();
+            Headers = new Dictionary<string, string>();
             Time = DateTime.Now;
         }
 
@@ -40,11 +42,9 @@ namespace FubuMVC.Core.Diagnostics
                 if (context != null && context.Request != null)
                 {
                     Url = context.Request.Url.PathAndQuery;
-                    NameValueCollection formData = context.Request.Form;
-                    formData.AllKeys.Where(x => x != null).Each(key =>
-                    {
-                        FormData.Add(key, formData[key]);
-                    });
+                    HttpMethod = context.Request.HttpMethod;
+                    populateDictionary(context.Request.Form, (key, value) => FormData.Add(key, value));
+                    populateDictionary(context.Request.Headers, (key, value) => Headers.Add(key, value));
                 }
             }
             catch (HttpException)
@@ -53,11 +53,22 @@ namespace FubuMVC.Core.Diagnostics
             }
         }
 
+        private static void populateDictionary(NameValueCollection collection, Action<string, string> action)
+        {
+            if (collection == null) return;
+            collection
+                .AllKeys
+                .Where(x => x != null)
+                .Each(key => action(key, collection[key]));
+        }
+
 
         public string Url { get; set; }
+        public string HttpMethod { get; private set; }
         public DateTime Time { get; set; }
 
         public IDictionary<string, object> FormData { get; private set; }
+        public IDictionary<string, string> Headers { get; private set; }
 
         public IEnumerable<BehaviorStep> Steps
         {

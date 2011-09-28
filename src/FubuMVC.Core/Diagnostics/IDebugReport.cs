@@ -7,6 +7,7 @@ namespace FubuMVC.Core.Diagnostics
     public interface IDebugReport
     {
 		Guid Id { get; }
+        Guid BehaviorId { get; set; }
         BehaviorReport StartBehavior(IActionBehavior behavior);
         void EndBehavior();
         void AddDetails(IBehaviorDetails details);
@@ -15,8 +16,10 @@ namespace FubuMVC.Core.Diagnostics
         void EndModelBinding(object target);
         void AddBindingDetail(IModelBindingDetail binding);
         string Url { get; set; }
+        string HttpMethod { get; }
         DateTime Time { get; set; }
         IDictionary<string, object> FormData { get; }
+        IDictionary<string, string> Headers { get; }
         double ExecutionTime { get; }
         void MarkFinished();
 

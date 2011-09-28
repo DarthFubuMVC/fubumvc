@@ -260,6 +260,7 @@
     <Compile Include="Features\Chains\BehaviorModel.cs" />
     <Compile Include="Features\Chains\ChainModel.cs" />
     <Compile Include="Features\Chains\ChainRequest.cs" />
+    <Compile Include="Features\Chains\View\IChainVisualizerBuilder.cs" />
     <Compile Include="Features\Html\HtmlConventionsPreviewRequestModel.cs" />
     <Compile Include="Features\Html\HtmlConventionsPreviewViewModel.cs" />
     <Compile Include="Features\Html\HtmlConventionsRequestModel.cs" />

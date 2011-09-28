@@ -182,13 +182,3 @@ p
     padding-top: 0;
     padding-bottom: 0;
 }
-.chain-visualizer
-{
-    list-style-type: none;
-    margin: 0;
-    margin-top: 10px;
-}
-.chain-visualizer li
-{
-    margin-bottom: 2em;
-}

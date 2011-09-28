@@ -28,7 +28,8 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 
         private void invoke(Action action)
         {
-            _report.StartBehavior(Inner);
+            var report = _report.StartBehavior(Inner);
+            report.BehaviorId = _report.BehaviorId;
 
             try
             {

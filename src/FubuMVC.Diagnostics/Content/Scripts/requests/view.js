@@ -50,10 +50,13 @@
         viewLogs.hide();
     });
 
-    viewRequests.click(function() {
+    viewRequests.click(function () {
         logViewer.hide();
         requestViewer.show();
         viewLogs.show();
         viewRequests.hide();
     });
+
+    var arrow = $('#chain-arrow').html();
+    $('.chain-visualizer > li:not(:last)').after('<li class="arrow">' + arrow + '</li>');
 });

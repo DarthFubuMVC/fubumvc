@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace FubuMVC.Diagnostics.Features.Chains
@@ -9,7 +10,9 @@ namespace FubuMVC.Diagnostics.Features.Chains
             Logs = new List<string>();
         }
 
+        public Guid Id { get; set; }
         public string BehaviorType { get; set; }
+        public string DisplayType { get; set; }
         public IEnumerable<string> Logs { get; set; }
     }
 }

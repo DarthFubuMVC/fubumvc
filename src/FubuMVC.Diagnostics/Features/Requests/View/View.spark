@@ -7,61 +7,63 @@
   <Script src="requests/view.js" />
 </content:head>
 <content:leftColumn>
-  
+  <h5>Behavior Chain</h5>
+  <if condition="Model.Chain != null">
+    <ul class="chain-visualizer">
+      <li each="var node in Model.Chain.Behaviors">
+        <a href="#" id="Node-${node.Id}" class="btn large">${node.DisplayType}</a>
+      </li>
+    </ul>
+  </if>
+  <else>
+    <span class="label warning">Behavior not found.</span>
+  </else>
+  <div id="chain-arrow" style="display:none">
+    <Image src="down-arrow.png" />
+  </div>
 </content:leftColumn>
 <content:rightColumn>
-  <div class="request-info">
-    <h2 class="request">
-      <span>Request: ${Model.Report.Url}</span>
-    </h2>
-    <h4 class="request-identifier">(Request ${Model.Report.Id.ToString()})</h4>
+  <div class="page-header">
+    <h1>
+      ${Model.Report.Url} <span class="label">(${Model.Report.HttpMethod})</span>
+    </h1>
   </div>
-  <ul class="request-actions">
-    <li>
-      <button type="type" id="ViewRequests" style="display:none;">
-        <span>Back to Request</span>
-      </button>
-    </li>
-    <li>
-      <button type="type" id="ViewLogs">
-        <span>View Logs</span>
-      </button>
-    </li>
-  </ul>
-  <div class="cboth"></div>
-  <ul class="request-details">
-    <li if="Model.Report.FormData.Count != 0">
-      <table class="grid">
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr each="var pair in Model.Report.FormData">
-            <td>${pair.Key}</td>
-            <td>${pair.Value}</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-  </ul>
-  <div id="request-viewer">
-    <h3>Nodes:</h3>
-    <ul id="nodes">
-      <li>
-        #this.PartialFor(Model.Root);
-      </li>
-      <li>&nbsp;</li>
-    </ul>
+  <div class="row page-header">
+    <div class="span12">
+      <ul class="pills" data-pills="pills">
+        <li class="active">
+          <a href="#request-headers">HTTP Headers</a>
+        </li>
+        <li>
+          <a href="#form-data">Form Data</a>
+        </li>
+        <li>
+          <a href="#log-viewer">Console</a>
+        </li>
+      </ul>
+      <div class="pill-content">
+        <div id="request-headers" class="active">
+          <pre class="prettyprint">${Model.Report.Headers.AsJson()}</pre>
+        </div>
+        <div id="form-data">
+          <pre class="prettyprint">${Model.Report.FormData.AsJson()}</pre>
+        </div>
+        <div id="log-viewer" class="log-viewer">
+          <if condition="Model.Logs.Any()">
+            <ul class="children">
+              <li class="behavior-details" each="var log in Model.Logs">
+                <BehaviorDetails details="log"/>
+              </li>
+            </ul>  
+          </if>
+          <else>
+            <pre class="prettyprint">&gt;&nbsp;</pre>
+          </else>
+        </div>
+      </div>
+    </div>
   </div>
-  <div id="log-viewer" style="display:none;">
-    <h3>Logs:</h3>
-    <ul class="children">
-      <li class="behavior-details" each="var log in Model.Logs">
-        <BehaviorDetails details="log"/>
-      </li>
-    </ul>
+  <div class="row fluid behaviors">
+    #this.PartialFor(Model.Root);
   </div>
 </content:rightColumn>

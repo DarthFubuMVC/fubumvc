@@ -74,6 +74,9 @@ namespace FubuMVC.Diagnostics
                              x.SetServiceIfNone<IPropertySourceGenerator, PropertySourceGenerator>();
                              x.SetServiceIfNone<IModelPopulator, ModelPopulator>();
                              x.SetServiceIfNone<ITagGeneratorFactory, TagGeneratorFactory>();
+                             x.SetServiceIfNone<IJsonProvider, JsonProvider>();
+                             x.SetServiceIfNone<Features.Chains.View.IChainVisualizerBuilder, 
+                                 Features.Chains.View.ChainVisualizerBuilder>();
 
                              x.ReplaceService<IDebugCallHandler, DiagnosticsDebugCallHandler>();
 
