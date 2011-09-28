@@ -11,7 +11,7 @@
   <if condition="Model.Chain != null">
     <ul class="chain-visualizer">
       <li each="var node in Model.Chain.Behaviors">
-        <a href="#" id="Node-${node.Id}" class="btn large">${node.DisplayType}</a>
+        <a href="#" id="Node-${node.Id}" class="chain-node btn large">${node.DisplayType}</a>
       </li>
     </ul>
   </if>
@@ -21,6 +21,13 @@
   <div id="chain-arrow" style="display:none">
     <Image src="down-arrow.png" />
   </div>
+  <p>
+    <em>
+      <strong>Note:</strong> <br/>
+      This is a visual representation of the corresponding Behavior Chain -- the configuration model for your request.<br/><br/>
+      <a href="${this.Urls.UrlFor(new FubuMVC.Diagnostics.Features.Chains.ChainRequest { Id = Model.Chain.Chain.UniqueId } )}">Click here</a> to view the details of the configuration.
+    </em>
+  </p>
 </content:leftColumn>
 <content:rightColumn>
   <div class="page-header">
@@ -64,6 +71,18 @@
     </div>
   </div>
   <div class="row fluid behaviors">
+    <a name="behavior-visualizer"></a>
+    <ul id="RequestBreadcrumb" class="breadcrumb">
+    </ul>
     #this.PartialFor(Model.Root);
   </div>
+  <script id="breadcrumbTemplate" type="text/html">
+    <li>
+      {{if isActive()}}
+        <a href="#">{{= Name}}</a>
+      {{else}}
+        {{= Name}}
+      {{/if}}
+    </li>
+  </script>
 </content:rightColumn>

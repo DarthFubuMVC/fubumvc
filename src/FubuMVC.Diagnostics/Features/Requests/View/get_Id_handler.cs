@@ -79,6 +79,7 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 								if(!lastModel.Equals(root))
 								{
 									behaviors[behaviorType].Inner = lastModel;
+								    behaviors[behaviorType].Inner.Id = Guid.NewGuid();
 								}
 							}
 
