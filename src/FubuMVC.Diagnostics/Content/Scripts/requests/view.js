@@ -17,15 +17,50 @@
                 Name: name,
                 Id: id
             };
-            behavior.isActive = ko.dependentObservable(function () {
+            behavior.isActive = function () {
                 return self.currentBehavior() == behavior.Id;
-            }, behavior);
+            };
 
             if (self.currentBehavior() == '') {
                 self.currentBehavior(id);
             }
             this.selectedBehaviors.push(behavior);
         }
+    };
+
+    var batch = false;
+    var resetBreadcrumb = function () {
+        var list = $('#RequestBreadcrumb');
+        list.html('');
+
+        var value = viewModel.selectedBehaviors();
+        for (var i = 0; i < value.length; i++) {
+            var behavior = value[i];
+            var item = '';
+            if (behavior.isActive()) {
+                item = '<li class="active">' + behavior.Name + '</li>';
+            }
+            else {
+                item = '<li><a href="javascript:void(0);" class="{id: \'' + behavior.Id + '\'}">' + behavior.Name + '</a></li>';
+            }
+
+            list.append(item);
+
+            if (i != (value.length - 1)) {
+                list.append('<li> <span class="divider">/</span> </li>');
+            }
+        }
+
+        $('#RequestBreadcrumb > li > a').click(function () {
+            var id = $(this).metadata().id;
+            batch = true;
+            viewModel.selectedBehaviors.remove(function (x) {
+                return x.Id != id;
+            });
+            batch = false;
+
+            viewModel.currentBehavior(id);
+        });
     };
 
     viewModel.currentBehavior.subscribe(function (value) {
@@ -44,28 +79,16 @@
         // update the behavior visualizer
         $('.behavior').hide();
         $('#' + value).show('slow');
+
+        resetBreadcrumb();
     });
 
     viewModel.selectedBehaviors.subscribe(function () {
-        var list = $('#RequestBreadcrumb');
-        list.html('');
-
-        var value = viewModel.selectedBehaviors();
-        for (var i = 0; i < value.length; i++) {
-            var behavior = value[i];
-            var item = '';
-            if (behavior.isActive()) {
-                item = '<li class="active">' + behavior.Name + '</li>';
-            }
-            else {
-                item = '<li><a href="">' + behavior.Name + '</a></li>';
-            }
-
-            list.append(item);
+        if (batch) {
+            return;
         }
+        resetBreadcrumb();
     });
-
-    //ko.applyBindings(viewModel, document.getElementById('RequestBreadcrumb'));
 
     $('.behavior:first').each(function () {
         var self = $(this);
