@@ -13,11 +13,14 @@ namespace FubuMVC.Core.Http
         // look for ',' separated values
         public MimeTypeList(string mimeType)
         {
-            mimeType.ToDelimitedArray(',').Each(x =>
+            if (mimeType != null)
             {
-                var type = x.Split(';').First();
-                _mimeTypes.Add(type);
-            });
+                mimeType.ToDelimitedArray(',').Each(x =>
+                {
+                    var type = x.Split(';').First();
+                    _mimeTypes.Add(type);
+                });
+            }
         }
 
         public void AddMimeType(string mimeType)
