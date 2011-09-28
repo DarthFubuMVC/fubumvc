@@ -6,6 +6,12 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Security
 {
+
+    public abstract class AuthorizationAttribute : ModifyChainAttribute
+    {
+        
+    }
+
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizedByAttribute : ModifyChainAttribute
     {

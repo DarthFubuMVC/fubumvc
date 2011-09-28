@@ -22,7 +22,7 @@ namespace FubuMVC.Core
         {
             get
             {
-                return output(call => call.Chain.OutputJson(), "Adding json output node to render json");
+                return output(call => call.ParentChain().OutputJson(), "Adding json output node to render json");
             }
         }
 
