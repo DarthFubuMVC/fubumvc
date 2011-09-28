@@ -85,6 +85,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        
         internal BehaviorChain Chain
         {
             get; set;

@@ -76,6 +76,17 @@ namespace FubuMVC.Tests.Registration.Nodes
             wrapper.Previous.ShouldBeNull();
         }
 
+        [Test]
+        public void adding_a_node_to_the_end_sets_the_chain_on_the_node()
+        {
+            var chain = new BehaviorChain();
+            var wrapper = new Wrapper(typeof(ObjectDefInstanceTester.FakeJsonBehavior));
+
+            chain.AddToEnd(wrapper);
+
+            wrapper.ParentChain().ShouldBeTheSameAs(chain);
+        }
+
 
         [Test]
         public void appending_a_node_also_sets_the_previous_2()
