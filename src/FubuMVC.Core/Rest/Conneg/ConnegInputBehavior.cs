@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Rest.Conneg
                 return DoNext.Stop;
             }
 
-            var target = reader.Read(mimeTypes.ContentType.First());
+            var target = reader.Read(mimeTypes.ContentType);
             _request.Set(target);
 
             return DoNext.Continue;
@@ -46,7 +46,7 @@ namespace FubuMVC.Core.Rest.Conneg
 
         public IMediaReader<T> ChooseReader(CurrentMimeType mimeTypes)
         {
-            return _readers.FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType.First()));
+            return _readers.FirstOrDefault(x => x.Mimetypes.Contains(mimeTypes.ContentType));
         }
     }
 }
