@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Registration.Conventions
             graph.Actions()
                 .Where(x => x.InputType().CanBeCastTo<JsonMessage>())
                 .ToList()
-                .Each(x => x.Chain.MakeSymmetricJson());
+                .Each(x => x.ParentChain().MakeSymmetricJson());
         }
     }
 }
