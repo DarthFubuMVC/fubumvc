@@ -182,3 +182,11 @@ p
     padding-top: 0;
     padding-bottom: 0;
 }
+
+.alert-message p {
+    margin-top: 0;
+}
+
+.alert-message a, .alert-message a:hover, .alert-message a:active {
+    color: #fff;
+}

@@ -16,5 +16,15 @@ namespace FubuMVC.Diagnostics.Features.Requests
 		// Leave this here for extensibility?
 		public IDebugReport Report { get; set; }
         public ChainModel Chain { get; set; }
+
+        public bool HasErrors()
+        {
+            var visitor = new RecordedRequestBehaviorVisitor();
+            Report
+                .Steps
+                .Each(s => s.Details.AcceptVisitor(visitor));
+
+            return visitor.HasExceptions();
+        }
 	}
 }

@@ -72,6 +72,14 @@
   </div>
   <div class="row fluid behaviors">
     <a name="behavior-visualizer"></a>
+    <div class="alert-message error fade in" data-alert="alert" if="Model.HasErrors()">
+      <a class="close" href="#">x</a>
+      <p>
+        <a href="javascript:void(0);" class="exception-trigger">
+          <strong>Whoops!</strong> An exception occurred during the request.
+        </a>
+      </p>
+    </div>
     <ul id="RequestBreadcrumb" class="breadcrumb">
     </ul>
     #this.PartialFor(Model.Root);

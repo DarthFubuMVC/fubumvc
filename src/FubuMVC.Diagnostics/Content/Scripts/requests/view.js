@@ -10,13 +10,39 @@
 
     var viewModel = {
         currentBehavior: ko.observable(''),
+        previousBehavior: '',
         selectedBehaviors: ko.observableArray([]),
+        findBehavior: function (id) {
+            var values = viewModel.selectedBehaviors();
+            for (var i = 0; i < values.length; i++) {
+                var x = values[i];
+                if (x.Id == id) {
+                    return x;
+                }
+            }
+
+            return null;
+        },
         addBehavior: function (name, id) {
             var self = this;
+            var index = 0;
+
+            var values = viewModel.selectedBehaviors();
+            for (var i = 0; i < values.length; i++) {
+                var x = values[i];
+                if (x.index > index) {
+                    index = x.index;
+                }
+
+                ++index;
+            }
+
             var behavior = {
                 Name: name,
-                Id: id
+                Id: id,
+                index: index
             };
+
             behavior.isActive = function () {
                 return self.currentBehavior() == behavior.Id;
             };
@@ -24,8 +50,10 @@
             if (self.currentBehavior() == '') {
                 self.currentBehavior(id);
             }
+
             this.selectedBehaviors.push(behavior);
-        }
+        },
+        initialized: false
     };
 
     var batch = false;
@@ -53,9 +81,11 @@
 
         $('#RequestBreadcrumb > li > a').click(function () {
             var id = $(this).metadata().id;
+            var selectedBehavior = viewModel.findBehavior(id);
             batch = true;
+            // ok, this doesn't work...this removes ALL instead of everything after it
             viewModel.selectedBehaviors.remove(function (x) {
-                return x.Id != id;
+                return x.index > selectedBehavior.index;
             });
             batch = false;
 
@@ -64,6 +94,9 @@
     };
 
     viewModel.currentBehavior.subscribe(function (value) {
+        if (viewModel.previousBehavior == value && viewModel.initialized) {
+            return;
+        }
 
         var chainNode = $('#Node-' + value);
         if (chainNode.size() != 0) {
@@ -80,6 +113,11 @@
         $('.behavior').hide();
         $('#' + value).show('slow');
 
+        if (!viewModel.initialized) {
+            viewModel.initialized = true;
+        }
+
+        viewModel.previousBehavior = value;
         resetBreadcrumb();
     });
 
@@ -100,5 +138,23 @@
         var id = self.metadata().id;
         viewModel.addBehavior(self.html(), id);
         viewModel.currentBehavior(id);
+    });
+
+    $('.exception-trigger').click(function () {
+        $('.exception:first').each(function () {
+            var self = $(this);
+            self.parents('.behavior').each(function () {
+                var id = $(this).attr('id');
+                var newBehavior = viewModel.currentBehavior() != id;
+                var delay = newBehavior ? 1000 : 0;
+
+                viewModel.currentBehavior(id);
+                setTimeout(function () {
+                    $('html, body').animate({
+                        scrollTop: self.offset().top
+                    }, 1000);
+                }, delay);
+            });
+        });
     });
 });

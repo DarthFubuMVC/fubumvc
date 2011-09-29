@@ -95,6 +95,7 @@
     <Compile Include="Features\Html\PreviewModelTypeResolverTester.cs" />
     <Compile Include="Features\Html\SampleContextModel.cs" />
     <Compile Include="Features\Html\when_previewing_html_conventions.cs" />
+    <Compile Include="Features\Requests\RequestGatheringTester.cs" />
     <Compile Include="Features\Requests\when_filtering_requests.cs" />
     <Compile Include="Features\Routes\GetHandlerTester.cs" />
     <Compile Include="Features\Routes\get_Column_Value_handler_Tester.cs" />

@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core;
 using FubuMVC.HelloWorld.Services;
 
@@ -16,7 +17,6 @@ namespace FubuMVC.HelloWorld.Controllers.Login
         public LoggedInStatusViewModel Status(LoggedInStatusRequest request)
         {
             var status = _session[CurrentLoginStatus.Key] as CurrentLoginStatus;
-
             return new LoggedInStatusViewModel
                 {
                     IsLoggedIn = status != null,
