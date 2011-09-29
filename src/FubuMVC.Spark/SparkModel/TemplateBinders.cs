@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Spark.SparkModel.Utils;
+using FubuMVC.Spark.Registration;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -97,6 +97,39 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    public class GenericViewModelBinder : ITemplateBinder
+    {
+        public bool CanBind(IBindRequest request)
+        {
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+
+            return descriptor != null
+                   && !descriptor.HasViewModel()
+                   && !request.Target.IsPartial()
+                   && request.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.ViewModelType);
+        }
+
+        public void Bind(IBindRequest request)
+        {
+            var logger = request.Logger;
+            var template = request.Target;
+
+            var genericParser = new GenericParser(request.Types.Assemblies);
+            var viewModel = genericParser.Parse(request.ViewModelType);
+
+            if (viewModel != null)
+            {
+                var descriptor = template.Descriptor.As<ViewDescriptor>();
+                descriptor.ViewModel = viewModel;
+                logger.Log(template, "Generic view model type is : {0}", descriptor.ViewModel);
+                return;
+            }
+
+            genericParser.ParseErrors.Each(error => logger.Log(template, error));
+        }
+    }
+
     public class ViewModelBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -106,7 +139,8 @@ namespace FubuMVC.Spark.SparkModel
             return descriptor != null
                    && !descriptor.HasViewModel()
                    && !request.Target.IsPartial()
-                   && request.ViewModelType.IsNotEmpty();
+                   && request.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.ViewModelType) == false;
         }
 
         public void Bind(IBindRequest request)
@@ -115,7 +149,7 @@ namespace FubuMVC.Spark.SparkModel
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
-            var types = request.Types.TypesMatching(type => type.PrettyFullName() == request.ViewModelType);
+            var types = request.Types.TypesWithFullName(request.ViewModelType);
             var typeCount = types.Count();
 
             if (typeCount == 1)

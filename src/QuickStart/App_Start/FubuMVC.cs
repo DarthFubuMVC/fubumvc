@@ -4,7 +4,7 @@ using FubuMVC.StructureMap;
 using StructureMap;
 
 // You can remove the reference to WebActivator by calling the Start() method from your Global.asax Application_Start
-[assembly: WebActivator.PreApplicationStartMethod(typeof(QuickStart.App_Start.AppStartFubuMVC), "Start", callAfterGlobalAppStart: true)]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(QuickStart.App_Start.AppStartFubuMVC), "Start")]
 
 namespace QuickStart.App_Start
 {
