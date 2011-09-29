@@ -53,3 +53,4 @@ output
 output/*
 *.dotCover
 src/packages
+fubuTemplate/lib/*
