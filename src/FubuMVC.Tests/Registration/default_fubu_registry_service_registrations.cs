@@ -37,6 +37,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void http_output_writer_is_registered()
+        {
+            registeredTypeIs<IHttpOutputWriter, AspNetHttpOutputWriter>();
+        }
+
+        [Test]
         public void url_registry_is_registered()
         {
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
@@ -63,7 +69,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void IOutputWriter_is_registered()
         {
-            registeredTypeIs<IOutputWriter, HttpResponseOutputWriter>();
+            registeredTypeIs<IOutputWriter, OutputWriter>();
         }
 
         [Test]

@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Registration.Nodes
                 x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef()));
                 x.For<IWebFormsControlBuilder>().Use<WebFormsControlBuilder>();
                 x.For<IWebFormRenderer>().Use<WebFormRenderer>();
-                x.For<IOutputWriter>().Use<HttpResponseOutputWriter>();
+                x.For<IOutputWriter>().Use<OutputWriter>();
                 x.For<IFubuRequest>().Use<InMemoryFubuRequest>();
                 x.For<IPageActivator>().Use<PageActivator>();
                 x.For<IPageActivationRules>().Use<PageActivationRuleCache>();

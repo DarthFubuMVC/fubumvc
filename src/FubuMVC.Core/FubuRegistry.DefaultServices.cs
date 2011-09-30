@@ -128,11 +128,12 @@ namespace FubuMVC.Core
     {
         private void setupServices(BehaviorGraph graph)
         {
+            graph.Services.SetServiceIfNone<IHttpOutputWriter, AspNetHttpOutputWriter>();
 
             graph.Services.SetServiceIfNone<ITypeResolver, TypeResolver>();
             graph.Services.AddService(new TypeDescriptorCache());
 
-            graph.Services.SetServiceIfNone<IOutputWriter, HttpResponseOutputWriter>();
+            graph.Services.SetServiceIfNone<IOutputWriter, OutputWriter>();
             graph.Services.SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             graph.Services.SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();
             graph.Services.SetServiceIfNone<IJsonWriter, JsonWriter>();

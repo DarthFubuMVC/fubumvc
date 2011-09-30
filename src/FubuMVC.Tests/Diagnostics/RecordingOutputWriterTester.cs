@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void should_use_http_response_output_writer_for_non_debug_calls()
         {
             MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
-            ClassUnderTest.Inner.ShouldBeOfType<HttpResponseOutputWriter>();
+            ClassUnderTest.Inner.ShouldBeOfType<OutputWriter>();
         }
     }
 

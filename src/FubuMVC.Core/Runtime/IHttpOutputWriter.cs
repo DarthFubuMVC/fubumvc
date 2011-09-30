@@ -42,7 +42,7 @@ namespace FubuMVC.Core.Runtime
 
         public void Write(string content)
         {
-            throw new NotImplementedException();
+            response.Write(content);
         }
 
         public void Redirect(string url)

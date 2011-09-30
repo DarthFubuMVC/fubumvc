@@ -424,7 +424,7 @@
     <Compile Include="Registration\Routes\RouteDefinition.cs" />
     <Compile Include="Registration\Routes\RouteParameter.cs" />
     <Compile Include="Runtime\FubuRequest.cs" />
-    <Compile Include="Runtime\HttpResponseOutputWriter.cs" />
+    <Compile Include="Runtime\OutputWriter.cs" />
     <Compile Include="Runtime\IBehaviorFactory.cs" />
     <Compile Include="Runtime\IFubuRequest.cs" />
     <Compile Include="Runtime\InMemoryRequestData.cs" />

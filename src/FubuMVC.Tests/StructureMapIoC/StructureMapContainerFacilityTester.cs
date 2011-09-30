@@ -152,7 +152,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_create_the_basic_services_from_the_container()
         {
-            container.GetInstance<IOutputWriter>().ShouldBeOfType<HttpResponseOutputWriter>();
+            container.GetInstance<IOutputWriter>().ShouldBeOfType<OutputWriter>();
         }
 
         [Test]

@@ -43,4 +43,5 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             _debugCallHandler.Handle();
         }
     }
+
 }

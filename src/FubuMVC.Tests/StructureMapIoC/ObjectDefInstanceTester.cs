@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             var def = new ObjectDef(typeof (FakeJsonBehavior));
             def.DependencyByValue(typeof (IFubuRequest), request);
             var jsonWriter = def.DependencyByType(typeof (IJsonWriter), typeof (AjaxAwareJsonWriter));
-            jsonWriter.DependencyByType(typeof (IOutputWriter), typeof (HttpResponseOutputWriter));
+            jsonWriter.DependencyByType(typeof (IOutputWriter), typeof (OutputWriter));
             jsonWriter.DependencyByType(typeof(IRequestData), typeof(InMemoryRequestData));
             def.DependencyByType(typeof (IRequestData), typeof (InMemoryRequestData));
 
