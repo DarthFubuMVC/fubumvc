@@ -3,10 +3,9 @@ body
     padding-top: 60px;
 }
 
-footer
-{
+#Content {
+    min-height: 600px;
 }
-
 h1, h2, h3, h4
 {
     color: #504E4E;
@@ -189,4 +188,21 @@ p
 
 .alert-message a, .alert-message a:hover, .alert-message a:active {
     color: #fff;
+}
+
+footer {
+    background: #333;
+}
+footer p {
+    color: #BFBFBF;
+}
+footer small {
+    float: right;
+}
+footer dt, footer dd {
+    color: #BFBFBF;
+}
+footer p span {
+    float: left;
+    margin-right: 10px;
 }
