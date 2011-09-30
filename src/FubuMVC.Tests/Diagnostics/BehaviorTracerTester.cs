@@ -17,6 +17,7 @@ namespace FubuMVC.Tests.Diagnostics
         {
             inner = MockFor<IActionBehavior>();
             ClassUnderTest.Inner = inner;
+            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Invoke();
         }
@@ -53,6 +54,7 @@ namespace FubuMVC.Tests.Diagnostics
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(true);
+            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
             ClassUnderTest.Invoke();
@@ -96,6 +98,7 @@ namespace FubuMVC.Tests.Diagnostics
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.Invoke()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
+            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
         }
@@ -121,6 +124,7 @@ namespace FubuMVC.Tests.Diagnostics
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.InvokePartial()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(true);
+            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
             ClassUnderTest.InvokePartial();
@@ -164,6 +168,7 @@ namespace FubuMVC.Tests.Diagnostics
             inner = MockFor<IActionBehavior>();
             inner.Expect(x => x.InvokePartial()).Throw(exception);
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
+            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
         }
@@ -183,6 +188,7 @@ namespace FubuMVC.Tests.Diagnostics
         protected override void beforeEach()
         {
             inner = MockFor<IActionBehavior>();
+            MockFor<IDebugReport>().Stub(x => x.StartBehavior(inner)).Return(new BehaviorReport(inner));
 
             ClassUnderTest.Inner = inner;
             ClassUnderTest.InvokePartial();
