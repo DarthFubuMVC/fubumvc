@@ -124,7 +124,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             MockFor<IDebugReport>().AssertWasCalled(x => x.AddDetails(new OutputReport(){
                 Contents = theRecordedOutput.Content,
-                ContentType = theRecordedOutput.RecordedContentType
+                ContentType = theRecordedOutput.ContentType
             }));
         }
     }

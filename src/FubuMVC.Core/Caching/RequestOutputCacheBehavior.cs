@@ -34,7 +34,7 @@ namespace FubuMVC.Core.Caching
             var model = _request.Get<TInputModel>();
             _cache.WithCache(model,
                 requestModel => _writer.Record(invokation),
-                cachedData => _writer.Write(cachedData.RecordedContentType, cachedData.Content));
+                cachedData => _writer.Write(cachedData.ContentType, cachedData.Content));
         }
     }
 }

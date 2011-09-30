@@ -71,7 +71,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             _report.AddDetails(new OutputReport
             {
                 Contents = recordedOuput.Content,
-                ContentType = recordedOuput.RecordedContentType
+                ContentType = recordedOuput.ContentType
             });
 
 

@@ -37,6 +37,8 @@ namespace FubuMVC.Tests.Registration.Nodes
                 x.For<IPageActivator>().Use<PageActivator>();
                 x.For<IPageActivationRules>().Use<PageActivationRuleCache>();
                 x.For<IServiceLocator>().Use<StructureMapServiceLocator>();
+                x.For<IHttpOutputWriter>().Use<AspNetHttpOutputWriter>();
+                x.For<IFileSystem>().Use<FileSystem>();
             });
 
             behavior = container.GetInstance<IActionBehavior>();

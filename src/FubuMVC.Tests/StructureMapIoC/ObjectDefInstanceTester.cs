@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -54,7 +55,12 @@ namespace FubuMVC.Tests.StructureMapIoC
             def.DependencyByType(typeof (IRequestData), typeof (InMemoryRequestData));
 
             var container =
-                new Container(x => { x.For<IActionBehavior>().Use(new ObjectDefInstance(def)); });
+                new Container(x =>
+                {
+                    x.For<IFileSystem>().Use<FileSystem>();
+                    x.For<IHttpOutputWriter>().Use<AspNetHttpOutputWriter>();
+                    x.For<IActionBehavior>().Use(new ObjectDefInstance(def));
+                });
 
             var jsonBehavior = container.GetInstance<IActionBehavior>().ShouldBeOfType<FakeJsonBehavior>();
             jsonBehavior.Writer.ShouldBeOfType<AjaxAwareJsonWriter>();
