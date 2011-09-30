@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Diagnostics.Core.Infrastructure;
+using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Features.Chains.View
 {
@@ -44,7 +45,8 @@ namespace FubuMVC.Diagnostics.Features.Chains.View
                                                                                {
                                                                                    Id = x.UniqueId,
                                                                                    DisplayType = x.GetType().PrettyPrint(),
-                                                                                   BehaviorType = x.ToString()
+                                                                                   BehaviorType = x.ToString(),
+                                                                                   BehaviorLabel = BuildLabel(x)
                                                                                };
                                                             var call = x as ActionCall;
                                                             if (call != null)
@@ -56,5 +58,32 @@ namespace FubuMVC.Diagnostics.Features.Chains.View
                                                         })
                        };
         }
+
+        //this is hideous but wanted to show an idea.
+        public HtmlTag BuildLabel(BehaviorNode behaviorNode)
+        {
+            var span = new HtmlTag("span").AddClass("label");
+            var pp = behaviorNode.GetType().PrettyPrint();
+            span.Text("behavior");
+            
+            if (pp.StartsWith("WebForm"))
+            {
+                span.Text("View");
+                span.AddClass("notice");
+            }
+            else if (pp.StartsWith("Call"))
+            {
+                span.AddClass("warning");
+                span.Text("continuation");
+            }
+            else if (!behaviorNode.GetType().Name.StartsWith("Fubu"))
+            {
+                span.Text("fubu");
+            }
+            
+            return span;
+        }
     }
+
+ 
 }

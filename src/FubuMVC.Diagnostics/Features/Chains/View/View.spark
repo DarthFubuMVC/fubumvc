@@ -18,7 +18,7 @@
   <ul id="nodes">
     <li each="var behavior in Model.Behaviors">
       <div class="behavior">
-        Behavior: ${behavior.BehaviorType}
+        ${behavior.BehaviorLabel} ${behavior.BehaviorType}
       </div>
       <ul if="behavior.Logs.Any()">
         <li each="var log in behavior.Logs">${log}</li>

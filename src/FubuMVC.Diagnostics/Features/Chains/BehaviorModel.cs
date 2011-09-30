@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HtmlTags;
 
 namespace FubuMVC.Diagnostics.Features.Chains
 {
@@ -14,5 +15,6 @@ namespace FubuMVC.Diagnostics.Features.Chains
         public string BehaviorType { get; set; }
         public string DisplayType { get; set; }
         public IEnumerable<string> Logs { get; set; }
+        public HtmlTag BehaviorLabel { get; set; }
     }
 }
