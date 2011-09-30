@@ -1,23 +1,24 @@
-﻿<use master="Fluid" />
+﻿<use master="Route" />
 <viewdata model="FubuMVC.Diagnostics.Features.Chains.ChainModel" />
 <content:title>Chain ${Model.Chain.UniqueId.ToString()}</content:title>
 <content:head>
   <Stylesheet href="chains/view.css" />
   <Script src="chains/view.js" />
 </content:head>
-<content:mainContent>
+<content:pageContent>
   <h2 class="route">
-    <span>Route: ${Model.Chain.Route}</span>
+    <span>Route:</span> ${Model.Chain.Route}
     <if condition="Model.HasConstraints()">
       <span>(${Model.Constraints})</span>
     </if>
+    <small>(Chain ${Model.Chain.UniqueId.ToString()})</small>
   </h2>
-  <h4 class="chain-identifier">(Chain ${Model.Chain.UniqueId.ToString()})</h4>
+  
   <h3>Nodes:</h3>
   <ul id="nodes">
     <li each="var behavior in Model.Behaviors">
-      <div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-        <span class="ui-button-text">${behavior.BehaviorType}</span>
+      <div class="behavior">
+        Behavior: ${behavior.BehaviorType}
       </div>
       <ul if="behavior.Logs.Any()">
         <li each="var log in behavior.Logs">${log}</li>
@@ -27,4 +28,4 @@
   <div id="arrow" style="display:none">
     <Image src="down-arrow.png" />
   </div>
-</content:mainContent>
+</content:pageContent>

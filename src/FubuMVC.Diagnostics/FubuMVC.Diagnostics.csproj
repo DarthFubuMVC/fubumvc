@@ -164,6 +164,7 @@
     <None Include="Shared\AuthorizationReport.spark" />
     <None Include="Shared\BehaviorStart.spark" />
     <None Include="Shared\BehaviorFinish.spark" />
+    <None Include="Shared\Route.spark" />
     <None Include="Shared\Fluid.spark" />
     <None Include="Shared\TwoColumn.spark" />
     <None Include="Shared\RequestLogEntry.spark" />

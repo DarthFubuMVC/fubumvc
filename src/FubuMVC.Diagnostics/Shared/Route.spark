@@ -1,0 +1,20 @@
+﻿<use master="TwoColumn" />
+<use namespace="FubuMVC.Core.Registration" />
+<use namespace="FubuMVC.Diagnostics.Features.Html" />
+<content:head>
+  <Stylesheet href="html/selector.css" />
+  <Script src="html/selector.js" />
+</content:head>
+<content:leftColumn>
+  <h1>Route Explorer</h1>
+
+  <p>
+    <em>
+      Note: <br/>
+      stuff about routes
+    </em>
+  </p>
+</content:leftColumn>
+<content:rightColumn>
+  <use content="pageContent"/>
+</content:rightColumn>

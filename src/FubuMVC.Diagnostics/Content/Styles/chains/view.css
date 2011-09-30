@@ -6,21 +6,30 @@
 #nodes
 {
     width:600px;
+    margin-left: 0;
 }
 
+#nodes ul {
+    margin-left: 20px;
+}
+#nodes ul li {
+    color: #666;
+}
 #nodes li
 {
     list-style-type: none;
     margin-top:10px;
-    text-align:center;
 }
-
+#nodes .behavior {
+    color: #000;
+}
 h2.route
 {
     margin-bottom:0;
 }
-
-h4.chain-identifier
-{
-    font-style:italic;
+.route span {
+    color: #ccc;
+}
+.arrow {
+    margin-left: 20px;
 }
