@@ -37,6 +37,7 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IPropertyBinderCache, RecordingPropertyBinderWrapper>();
                 x.ReplaceService<IModelBinderCache, RecordingModelBinderWrapper>();
                 x.ReplaceService<IValueConverterRegistry, RecordingValueConverterRegistry>();
+                x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
             });
         }
     }

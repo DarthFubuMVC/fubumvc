@@ -1,27 +1,22 @@
 using System;
 using System.Net;
 using System.Web;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
 {
-    public class RecordingOutputWriter : IOutputWriter
+    public class RecordingOutputWriter : OutputWriter
     {
-        private readonly IOutputWriter _inner;
         private readonly IDebugReport _report;
 
-        public RecordingOutputWriter(IDebugReport report, IOutputWriter inner)
+        public RecordingOutputWriter(IDebugReport report, IDebugDetector detector, IHttpOutputWriter inner, IFileSystem fileSystem)
+            : base(detector.IsDebugCall() ? new NulloHttpOutputWriter() : inner, fileSystem)
         {
             _report = report;
-            _inner = inner;
         }
 
-        public IOutputWriter Inner
-        {
-            get { return _inner; }
-        }
-
-        public void WriteFile(string contentType, string localFilePath, string displayName)
+        public override void WriteFile(string contentType, string localFilePath, string displayName)
         {
             _report.AddDetails(new FileOutputReport{
                 ContentType = contentType,
@@ -29,44 +24,40 @@ namespace FubuMVC.Core.Diagnostics.Tracing
                 LocalFilePath = localFilePath
             });
 
-            _inner.WriteFile(contentType, localFilePath, displayName);
+            base.WriteFile(contentType, localFilePath, displayName);
         }
 
-        public void Write(string contentType, string renderedOutput)
+        public override void Write(string contentType, string renderedOutput)
         {
             _report.AddDetails(new OutputReport{
                 Contents = renderedOutput,
                 ContentType = contentType
             });
 
-            _inner.Write(contentType, renderedOutput);
+            base.Write(contentType, renderedOutput);
         }
 
-        public void RedirectToUrl(string url)
+        public override void RedirectToUrl(string url)
         {
             _report.AddDetails(new RedirectReport{
                 Url = url
             });
 
-            _inner.RedirectToUrl(url);
+            base.RedirectToUrl(url);
         }
 
-        public void AppendCookie(HttpCookie cookie)
-        {
-            _inner.AppendCookie(cookie);
-        }
-
-        public void WriteResponseCode(HttpStatusCode status)
+        
+        public override void WriteResponseCode(HttpStatusCode status)
         {
             _report.AddDetails(new HttpStatusReport{
                 Status = status
             });
-            _inner.WriteResponseCode(status);
+            base.WriteResponseCode(status);
         }
 
-        public RecordedOutput Record(Action action)
+        public override RecordedOutput Record(Action action)
         {
-            var recordedOuput = _inner.Record(action);
+            var recordedOuput = base.Record(action);
 
             _report.AddDetails(new OutputReport
             {

@@ -25,7 +25,12 @@ namespace FubuMVC.Core.Runtime
             _state = new NormalState(_writer);
         }
 
-        public void WriteFile(string contentType, string localFilePath, string displayName)
+        public IHttpOutputWriter Inner
+        {
+            get { return _writer; }
+        }
+
+        public virtual void WriteFile(string contentType, string localFilePath, string displayName)
         {
             _writer.WriteContentType(contentType);
 
@@ -44,7 +49,7 @@ namespace FubuMVC.Core.Runtime
         }
 
 
-        public RecordedOutput Record(Action action)
+        public virtual RecordedOutput Record(Action action)
         {
             var recordingState = new RecordingState();
             _state = recordingState;
@@ -58,22 +63,22 @@ namespace FubuMVC.Core.Runtime
             return recordedOutput;
         }
 
-        public void Write(string contentType, string renderedOutput)
+        public virtual void Write(string contentType, string renderedOutput)
         {
             _state.Write(contentType, renderedOutput);
         }
 
-        public void RedirectToUrl(string url)
+        public virtual void RedirectToUrl(string url)
         {
             _writer.Redirect(url);
         }
 
-        public void AppendCookie(HttpCookie cookie)
+        public virtual void AppendCookie(HttpCookie cookie)
         {
             _writer.AppendCookie(cookie);
         }
 
-        public void WriteResponseCode(HttpStatusCode status)
+        public virtual void WriteResponseCode(HttpStatusCode status)
         {
             _writer.WriteResponseCode(status);
         }

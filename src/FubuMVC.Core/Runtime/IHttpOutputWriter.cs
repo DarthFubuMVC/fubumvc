@@ -17,6 +17,38 @@ namespace FubuMVC.Core.Runtime
         void AppendCookie(HttpCookie cookie);
     }
 
+    public class NulloHttpOutputWriter : IHttpOutputWriter
+    {
+        public void AppendHeader(string key, string value)
+        {
+            
+        }
+
+        public void WriteFile(string file)
+        {
+        }
+
+        public void WriteContentType(string contentType)
+        {
+        }
+
+        public void Write(string content)
+        {
+        }
+
+        public void Redirect(string url)
+        {
+        }
+
+        public void WriteResponseCode(HttpStatusCode status)
+        {
+        }
+
+        public void AppendCookie(HttpCookie cookie)
+        {
+        }
+    }
+
     // Warning -- untestable code ahead
     public class AspNetHttpOutputWriter : IHttpOutputWriter
     {

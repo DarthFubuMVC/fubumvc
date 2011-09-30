@@ -64,12 +64,6 @@ namespace FubuMVC.StructureMap
                         return tracer;
                     });
 
-                    x.For<IOutputWriter>().EnrichAllWith((c, writer) =>
-                    {
-                        if (writer is RecordingOutputWriter) return writer;
-
-                        return new RecordingOutputWriter(c.GetInstance<IDebugReport>(), writer);
-                    });
 
                     x.For<IDebugReport>()
                         .Use<DebugReport>();
