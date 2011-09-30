@@ -7,6 +7,13 @@
 </content:head>
 <content:pageContent>
   <h2 id="explorer-heading">${Model.Type}</h2>
+  <dl>
+    <dt>Namespace</dt>
+    <dd>${Model.Namespace}</dd>
+    <dt>Assembly</dt>
+    <dd>${Model.Assembly}</dd>
+  </dl>
+
   <div if="Model.Links.Any()">
     <p>Follow the links to each property to see an example of each:</p>
     <p>
@@ -20,13 +27,15 @@
     </li>  
   </ul>
   <ul class="property-list" each="var prop in Model.Examples">
-    <li class="example">
-      <h4>${prop.Source}</h4>
-      <fieldset each="var ex in prop.Examples">
-        <legend>${ex.Expression}</legend>
-        <pre class="output blk"><code>${ex.Source}</code></pre>  
-        ${ex.Rendered}
-      </fieldset>
+    <li>
+      <div class="example" each="var ex in prop.Examples">
+        <h4>${prop.Source}</h4>
+        <h5>${ex.Expression}</h5>
+        <pre class="output blk"><code>${ex.Source}</code></pre>
+        <div>
+          ${ex.Rendered}
+        </div>
+      </div>
     </li>
   </ul>
 </content:pageContent>

@@ -12,6 +12,9 @@ namespace FubuMVC.Diagnostics.Features.Html
         }
 
         public string Type { get; set; }
+        public string Namespace { get; set; }
+        public string Assembly { get; set; }
+
         public IEnumerable<PropertyLink> Links { get; set; }
         public IEnumerable<PropertyExample> Examples { get; set; }
     }

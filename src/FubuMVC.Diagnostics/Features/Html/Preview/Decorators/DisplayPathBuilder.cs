@@ -14,7 +14,9 @@ namespace FubuMVC.Diagnostics.Features.Html.Preview.Decorators
                 path = "{0}.{1}".ToFormat(path, context.PropertyChain.Select(p => p.Name).Join("."));
             }
 
-            model.Type = path;
+            model.Type = context.ModelType.Name;
+            model.Namespace = context.ModelType.Namespace;
+            model.Assembly = context.ModelType.Assembly.GetName().Name;
         }
     }
 }
