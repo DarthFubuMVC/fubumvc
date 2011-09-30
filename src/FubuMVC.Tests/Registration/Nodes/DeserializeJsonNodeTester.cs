@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuTestingSupport;
@@ -28,7 +29,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         [Test]
         public void should_build_an_object_def_for_a_json_deserialization_behavior()
         {
-            node.As<IContainerModel>().ToObjectDef().Type.ShouldEqual(typeof(DeserializeJsonBehavior<JsonMessageClass>));
+            node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None).Type.ShouldEqual(typeof(DeserializeJsonBehavior<JsonMessageClass>));
         }
 
         [Test]

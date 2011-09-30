@@ -115,7 +115,7 @@ namespace FubuMVC.Core
                     bakeBehaviorGraphIntoContainer(graph, containerFacility);
 
                     // factory HAS to be spun up here.
-                    factory = containerFacility.BuildFactory(_registry.Value.DiagnosticLevel);
+                    factory = containerFacility.BuildFactory();
 
                     return containerFacility.GetAllActivators();
                 });
@@ -126,9 +126,9 @@ namespace FubuMVC.Core
             return buildRoutes(factory, graph);
         }
 
-        private static void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
+        private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
-            graph.As<IRegisterable>().Register(containerFacility.Register);
+            graph.As<IRegisterable>().Register(_registry.Value.DiagnosticLevel, containerFacility.Register);
         }
 
         private BehaviorGraph buildBehaviorGraph()

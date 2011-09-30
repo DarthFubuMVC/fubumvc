@@ -191,9 +191,10 @@ namespace FubuMVC.Core.Registration.Nodes
             return call == null ? null : call.OutputType();
         }
 
-        void IRegisterable.Register(Action<Type, ObjectDef> callback)
+        void IRegisterable.Register(DiagnosticLevel diagnosticLevel, Action<Type, ObjectDef> callback)
         {
-            callback(typeof (IActionBehavior), Top.As<IContainerModel>().ToObjectDef());
+            // TODO -- put the DiagnosticBehavior around everything
+            callback(typeof (IActionBehavior), Top.As<IContainerModel>().ToObjectDef(diagnosticLevel));
             Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
 

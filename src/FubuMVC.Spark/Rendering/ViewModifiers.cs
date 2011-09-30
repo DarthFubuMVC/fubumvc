@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Activation;
 using Spark;
 using FubuMVC.Core;
@@ -78,10 +79,10 @@ namespace FubuMVC.Spark.Rendering
         private readonly ISparkViewEngine _engine;
         private readonly CurrentRequest _request;
 
-        public SiteResourceAttacher(ISparkViewEngine engine, CurrentRequest request)
+        public SiteResourceAttacher(ISparkViewEngine engine, IFubuRequest request)
         {
             _engine = engine;
-            _request = request;
+            _request = request.Get<CurrentRequest>();
         }
 
         public override IFubuSparkView Modify(IFubuSparkView view)

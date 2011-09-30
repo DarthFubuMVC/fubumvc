@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -27,7 +28,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void build_an_object_def_for_the_type()
         {
-            ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef();
+            ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
             def.Dependencies.Count().ShouldEqual(0);
 
             def.Type.ShouldEqual(typeof (NulloBehavior));
@@ -37,7 +38,7 @@ namespace FubuMVC.Tests.Registration
         public void put_a_dependency_into_the_object_def_for_the_inner_behavior()
         {
             _wrapper.AddAfter(new RenderJsonNode(typeof (Output)));
-            ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef();
+            ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             def.Dependencies.Count().ShouldEqual(1);
 
@@ -49,7 +50,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void the_object_def_name_is_copied_from_the_unique_id_of_the_wrapper()
         {
-            _wrapper.As<IContainerModel>().ToObjectDef().Name.ShouldEqual(_wrapper.UniqueId.ToString());
+            _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None).Name.ShouldEqual(_wrapper.UniqueId.ToString());
         }
     }
 }

@@ -55,9 +55,9 @@ namespace FubuMVC.Tests.StructureMapIoC
             }).BuildGraph();
 
             facility = new StructureMapContainerFacility(container);
-            graph.As<IRegisterable>().Register(facility.Register);
+            graph.As<IRegisterable>().Register(DiagnosticLevel.None, facility.Register);
 
-            factory = facility.BuildFactory(DiagnosticLevel.None);
+            factory = facility.BuildFactory();
         }
 
         #endregion
@@ -144,7 +144,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 Value = registry
             });
 
-            myFacility.BuildFactory(DiagnosticLevel.None);
+            myFacility.BuildFactory();
 
             myContainer.GetInstance<ITypeResolver>().ShouldBeTheSameAs(registry);
         }

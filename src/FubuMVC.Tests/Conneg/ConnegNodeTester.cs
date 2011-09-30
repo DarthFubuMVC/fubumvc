@@ -1,3 +1,4 @@
+using FubuMVC.Core;
 using FubuMVC.Core.Conneg;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -19,7 +20,7 @@ namespace FubuMVC.Tests.Conneg
                 OutputType = typeof (ConnegNodeOutput)
             };
 
-            var objectDef = node.As<IContainerModel>().ToObjectDef();
+            var objectDef = node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             objectDef.Type.ShouldEqual(typeof (ConnegBehavior));
 
@@ -39,7 +40,7 @@ namespace FubuMVC.Tests.Conneg
                 OutputType = null
             };
 
-            var objectDef = node.As<IContainerModel>().ToObjectDef();
+            var objectDef = node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             objectDef.Type.ShouldEqual(typeof(ConnegBehavior));
 
@@ -59,7 +60,7 @@ namespace FubuMVC.Tests.Conneg
                 OutputType = typeof(ConnegNodeOutput)
             };
 
-            var objectDef = node.As<IContainerModel>().ToObjectDef();
+            var objectDef = node.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             objectDef.Type.ShouldEqual(typeof(ConnegBehavior));
 

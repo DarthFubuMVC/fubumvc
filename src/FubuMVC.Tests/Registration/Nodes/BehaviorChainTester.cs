@@ -301,9 +301,9 @@ namespace FubuMVC.Tests.Registration.Nodes
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);
 
-            chain.As<IRegisterable>().Register(facility.Register);
+            chain.As<IRegisterable>().Register(DiagnosticLevel.None, facility.Register);
 
-            facility.BuildFactory(DiagnosticLevel.None);
+            facility.BuildFactory();
 
             Debug.WriteLine(chain.UniqueId);
             Debug.WriteLine(container.WhatDoIHave());
@@ -323,9 +323,9 @@ namespace FubuMVC.Tests.Registration.Nodes
             var container = new Container();
             var facility = new StructureMapContainerFacility(container);
 
-            chain.As<IRegisterable>().Register(facility.Register);
+            chain.As<IRegisterable>().Register(DiagnosticLevel.None, facility.Register);
 
-            facility.BuildFactory(DiagnosticLevel.None);
+            facility.BuildFactory();
 
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();

@@ -1,4 +1,5 @@
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -29,7 +30,7 @@ namespace FubuMVC.Tests.Registration.Nodes
             var render = new WebFormView(path.ViewName);
             var container = new Container(x =>
             {
-                x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef()));
+                x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)));
                 x.For<IWebFormsControlBuilder>().Use<WebFormsControlBuilder>();
                 x.For<IWebFormRenderer>().Use<WebFormRenderer>();
                 x.For<IOutputWriter>().Use<OutputWriter>();

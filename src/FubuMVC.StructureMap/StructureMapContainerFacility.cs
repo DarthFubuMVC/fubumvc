@@ -26,7 +26,6 @@ namespace FubuMVC.StructureMap
 
 
         private bool _initializeSingletonsToWorkAroundSMBug = true;
-        private DiagnosticLevel _diagnosticLevel;
 
         public StructureMapContainerFacility(IContainer container)
         {
@@ -41,40 +40,14 @@ namespace FubuMVC.StructureMap
 
         public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
-            return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId, _diagnosticLevel);
+            return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
         }
 
-        public IBehaviorFactory BuildFactory(DiagnosticLevel diagnosticLevel)
+        public IBehaviorFactory BuildFactory()
         {
             _registry.For<IBehaviorFactory>().Use<PartialBehaviorFactory>();
             _container.Configure(x => x.AddRegistry(_registry));
-            _diagnosticLevel = diagnosticLevel;
 
-            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
-            {
-                _container.Configure(x =>
-                {
-                    x.For<IActionBehavior>().EnrichAllWith((context, behavior) =>
-                    {
-                        if (behavior is BehaviorTracer || behavior is DiagnosticBehavior) return behavior;
-
-                        var tracer = context.GetInstance<BehaviorTracer>();
-                        tracer.Inner = behavior;
-
-                        return tracer;
-                    });
-
-
-                    x.For<IDebugReport>()
-                        .Use<DebugReport>();
-
-                    x.For<IFubuRequest>()
-                        .Use<RecordingFubuRequest>();
-
-                    x.For<CurrentRequest>()
-                        .Use(c => c.GetInstance<IFubuRequest>().Get<CurrentRequest>());
-                });
-            }
 
             if (_initializeSingletonsToWorkAroundSMBug)
             {

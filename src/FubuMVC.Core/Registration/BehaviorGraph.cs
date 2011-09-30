@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Registration
 {
     public interface IRegisterable
     {
-        void Register(Action<Type, ObjectDef> action);
+        void Register(DiagnosticLevel level, Action<Type, ObjectDef> action);
     }
 
     public interface IChainImporter
@@ -101,7 +101,7 @@ namespace FubuMVC.Core.Registration
             });
         }
 
-        void IRegisterable.Register(Action<Type, ObjectDef> action)
+        void IRegisterable.Register(DiagnosticLevel level, Action<Type, ObjectDef> action)
         {
             /*
              * 1.) Loop through each service
@@ -112,7 +112,7 @@ namespace FubuMVC.Core.Registration
 
             _services.Each(action);
 
-            _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(action));
+            _behaviors.OfType<IRegisterable>().Each(chain => chain.Register(level, action));
 
             action(typeof (BehaviorGraph), new ObjectDef{
                 Value = this

@@ -26,6 +26,8 @@ namespace FubuMVC.Spark.Tests.Rendering
 			_fubuSparkView = MockFor<FubuSparkView>();
             _engine = MockFor<ISparkViewEngine>();
             _request = MockFor<CurrentRequest>();
+            MockFor<IFubuRequest>().Stub(x => x.Get<CurrentRequest>()).Return(_request);
+
             _resourcePathManager = MockFor<IResourcePathManager>();
 
             _engine.Stub(x => x.ResourcePathManager).Return(_resourcePathManager);

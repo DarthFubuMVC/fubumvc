@@ -15,8 +15,9 @@ namespace FubuMVC.Core.Registration.Nodes
         /// Generates an ObjectDef object that creates an IoC agnostic
         /// configuration model of the real Behavior objects for this chain
         /// </summary>
+        /// <param name="diagnosticLevel"></param>
         /// <returns></returns>
-        ObjectDef ToObjectDef();
+        ObjectDef ToObjectDef(DiagnosticLevel diagnosticLevel);
     }
 
     /// <summary>
@@ -106,21 +107,22 @@ namespace FubuMVC.Core.Registration.Nodes
         /// Generates an ObjectDef object that creates an IoC agnostic
         /// configuration model of the real Behavior objects for this chain
         /// </summary>
+        /// <param name="diagnosticLevel"></param>
         /// <returns></returns>
-        ObjectDef IContainerModel.ToObjectDef()
+        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
         {
-            ObjectDef objectDef = toObjectDef();
+            ObjectDef objectDef = toObjectDef(diagnosticLevel);
             objectDef.Name = UniqueId.ToString();
 
             return objectDef;
         }
 
-        protected ObjectDef toObjectDef()
+        protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
         {
             ObjectDef objectDef = buildObjectDef();
             if (Next != null)
             {
-                var nextObjectDef = Next.As<IContainerModel>().ToObjectDef();
+                var nextObjectDef = Next.As<IContainerModel>().ToObjectDef(diagnosticLevel);
                 objectDef.DependencyByType<IActionBehavior>(nextObjectDef);
             }
 

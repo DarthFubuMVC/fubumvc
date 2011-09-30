@@ -1,5 +1,6 @@
 using System;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -23,7 +24,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         public void render_text_node_should_add_mime_to_children_on_configure_object()
         {
             var text = new RenderTextNode<RouteParameter>();
-            ObjectDef def = text.As<IContainerModel>().ToObjectDef();
+            ObjectDef def = text.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
             def.Dependencies.ShouldHaveCount(1).ShouldContain(
                 dependency =>
                 {
