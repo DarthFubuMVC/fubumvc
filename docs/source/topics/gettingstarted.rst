@@ -173,7 +173,6 @@ FubuMVC are just methods on concrete `POCO
 application that will be called during an HTTP request like the following:
 
 .. literalinclude:: ../../../src/FubuMVC.GuideApp/Controllers/Home/Home.cs
-   :language: csharp
    :lines: 5-20
    :linenos:
 
@@ -339,7 +338,6 @@ Alright, assuming that we've got a working application, let's add our first
 endpoint to the system. Add a class to your project like this to your project:
 
 .. literalinclude:: ../../../src/QuickStart/SayHelloController.cs
-   :language: csharp
    :lines: 1-11
    :linenos:
 
@@ -357,7 +355,6 @@ to switch to using the HtmlTags library. Add this class to your project and
 compile:
 
 .. literalinclude:: ../../../src/QuickStart/SayHelloController.cs
-   :language: csharp
    :lines: 12-21
    :linenos:
 
@@ -376,7 +373,6 @@ would have to be supplied as part of the URL.
 To implement this endpoint, enter this code and compile:
 
 .. literalinclude:: ../../../src/QuickStart/SayHelloController.cs
-   :language: csharp
    :lines: 47-66
    :linenos:
 
@@ -422,7 +418,6 @@ you started:
 
 .. CODE[1,27]. src/QuickStart/ConfigureFubuMVC.cs
 .. literalinclude:: ../../../src/QuickStart/ConfigureFubuMVC.cs
-   :language: csharp
    :lines: 1-27
    :linenos:
 

@@ -1,4 +1,5 @@
 using FubuMVC.Core;
+using FubuMVC.Spark;
 
 namespace QuickStart
 {
@@ -18,6 +19,8 @@ namespace QuickStart
                 .IgnoreControllerNamesEntirely()
                 .IgnoreMethodSuffix("Html")
                 .RootAtAssemblyNamespace();
+
+            this.UseSpark();
 
             // Match views to action methods by matching
             // on model type, view name, and namespace

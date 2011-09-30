@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Diagnostics", "Fubu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Diagnostics.Tests", "FubuMVC.Diagnostics.Tests\FubuMVC.Diagnostics.Tests.csproj", "{99A53042-2455-464F-A68E-00C401B177C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStart", "QuickStart\QuickStart.csproj", "{66A9D435-DC25-4DE1-99A8-003C54B0111B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -412,6 +414,21 @@ Global
 		{99A53042-2455-464F-A68E-00C401B177C0}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{99A53042-2455-464F-A68E-00C401B177C0}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{99A53042-2455-464F-A68E-00C401B177C0}.Retail|x86.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Release|x86.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{66A9D435-DC25-4DE1-99A8-003C54B0111B}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
