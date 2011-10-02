@@ -29,6 +29,7 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
     }
 
+
     [TestFixture]
     public class BehaviorChainTester
     {
@@ -40,6 +41,11 @@ namespace FubuMVC.Tests.Registration.Nodes
         }
 
         #endregion
+
+
+
+
+
 
         [Test]
         public void append_with_no_behaviors()

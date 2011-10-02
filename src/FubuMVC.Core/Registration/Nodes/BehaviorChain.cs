@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Security;
@@ -18,7 +19,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// authorization rules
     ///   system
     /// </summary>
-    public class BehaviorChain : IRegisterable, IEnumerable<BehaviorNode>
+    public class BehaviorChain : IRegisterable, IContainerModel, IEnumerable<BehaviorNode>
     {
         private BehaviorNode _top;
 
@@ -191,11 +192,39 @@ namespace FubuMVC.Core.Registration.Nodes
             return call == null ? null : call.OutputType();
         }
 
+        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        {
+            return buildObjectDef(diagnosticLevel);
+        }
+
         void IRegisterable.Register(DiagnosticLevel diagnosticLevel, Action<Type, ObjectDef> callback)
         {
-            // TODO -- put the DiagnosticBehavior around everything
-            callback(typeof (IActionBehavior), Top.As<IContainerModel>().ToObjectDef(diagnosticLevel));
+            ObjectDef objectDef = buildObjectDef(diagnosticLevel);
+
+
+            callback(typeof (IActionBehavior), objectDef);
             Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
+        }
+
+        private ObjectDef buildObjectDef(DiagnosticLevel diagnosticLevel)
+        {
+            var topDef = Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
+            
+            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+            {
+                var objectDef = new ObjectDef(typeof (DiagnosticBehavior)){
+                    Name = topDef.Name
+                };
+
+                objectDef.DependencyByType<IActionBehavior>(topDef);
+
+                topDef.Name = Guid.NewGuid().ToString();
+
+                return objectDef;
+            }
+            
+            
+            return topDef;
         }
 
         /// <summary>
