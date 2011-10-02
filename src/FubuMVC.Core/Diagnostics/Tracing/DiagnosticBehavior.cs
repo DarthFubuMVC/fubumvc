@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
 
@@ -8,6 +9,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         private readonly IDebugDetector _detector;
         private readonly IDebugReport _report;
         private readonly IDebugCallHandler _debugCallHandler;
+        private readonly Action _initialize;
 
         public DiagnosticBehavior(IDebugReport report, IDebugDetector detector, IRequestHistoryCache history, IDebugCallHandler debugCallHandler, IFubuRequest request)
         {
@@ -15,13 +17,15 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             _debugCallHandler = debugCallHandler;
             _detector = detector;
 
-            history.AddReport(report, request.Get<CurrentRequest>());
+            _initialize = () => history.AddReport(report, request.Get<CurrentRequest>());
         }
 
         public IActionBehavior Inner { get; set; }
 
         public void Invoke()
         {
+            _initialize();
+
             Inner.Invoke();
 
             write();

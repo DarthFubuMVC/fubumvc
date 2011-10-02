@@ -123,6 +123,7 @@
     <Compile Include="Diagnostics\RecordingValueConverterRegistryTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="Diagnostics\RequestObserverTester.cs" />
+    <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
