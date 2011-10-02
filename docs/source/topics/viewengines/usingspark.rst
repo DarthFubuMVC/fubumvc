@@ -6,8 +6,9 @@ What is Spark?
 --------------
 
 Most .NET developers have used the Web Forms view engine, and more recently the
-Razor view engine. Spark is a view engine where the markup is allowed to
-dominate the flow and for the code to fit seamlessly within the markup.
+Razor view engine. `Spark <http://sparkviewengine.com>`_ is a view engine where
+the markup is allowed to dominate the flow and for the code to fit seamlessly
+within the markup.
 
 Let's get started
 -----------------
