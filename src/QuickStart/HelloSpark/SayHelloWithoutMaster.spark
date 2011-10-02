@@ -1,0 +1,9 @@
+﻿<viewdata model="QuickStart.SparkNoMasterHelloViewModel" />
+<html>
+<head>
+    <title>What's your name?</title>
+</head>
+<body>
+    <h1>My name is ${ Model.Name }</h1>
+</body>
+</html>
