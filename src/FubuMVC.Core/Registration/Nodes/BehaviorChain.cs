@@ -213,7 +213,7 @@ namespace FubuMVC.Core.Registration.Nodes
             if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
             {
                 var objectDef = new ObjectDef(typeof (DiagnosticBehavior)){
-                    Name = topDef.Name
+                    Name = Top.UniqueId.ToString()
                 };
 
                 objectDef.DependencyByType<IActionBehavior>(topDef);

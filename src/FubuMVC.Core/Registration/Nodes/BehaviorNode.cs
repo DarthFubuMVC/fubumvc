@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuCore;
 
@@ -120,11 +121,21 @@ namespace FubuMVC.Core.Registration.Nodes
         protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
         {
             ObjectDef objectDef = buildObjectDef();
+
             if (Next != null)
             {
                 var nextObjectDef = Next.As<IContainerModel>().ToObjectDef(diagnosticLevel);
                 objectDef.DependencyByType<IActionBehavior>(nextObjectDef);
             }
+
+            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+            {
+                var tracerDef = new ObjectDef(typeof (BehaviorTracer));
+                tracerDef.DependencyByType<IActionBehavior>(objectDef);
+
+                return tracerDef;
+            }
+
 
             return objectDef;
         }

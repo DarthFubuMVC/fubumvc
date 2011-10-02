@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void building_out_a_behavior_chain_should_put_behavior_tracers_around_behaviors()
         {
-            theContainer.GetAllInstances<IActionBehavior>().All(x => x is BehaviorTracer).ShouldBeTrue();
+            theContainer.GetAllInstances<IActionBehavior>().All(x => x is DiagnosticBehavior).ShouldBeTrue();
         }
     }
 

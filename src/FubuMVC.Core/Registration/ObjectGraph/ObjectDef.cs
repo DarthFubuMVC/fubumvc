@@ -259,6 +259,30 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             };
         }
 
+        /// <summary>
+        /// Use to find the ObjectDef definition of an explicitly registered
+        /// dependency
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ObjectDef FindDependencyDefinitionFor(Type type)
+        {
+            var dependency = DependencyFor(type) as ConfiguredDependency;
+            return dependency == null ? null : dependency.Definition;
+        }
+
+
+        /// <summary>
+        /// Use to find the ObjectDef definition of an explicitly registered
+        /// dependency
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ObjectDef FindDependencyDefinitionFor<T>()
+        {
+            return FindDependencyDefinitionFor(typeof (T));
+        }
+
         public void ValidatePluggabilityTo(Type dependencyType)
         {
             if (Value == null && Type == null)
@@ -287,7 +311,17 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         /// <returns></returns>
         public IDependency DependencyFor<T>()
         {
-            return Dependencies.FirstOrDefault(x => x.DependencyType == typeof (T));
+            return DependencyFor(typeof (T));
+        }
+
+        /// <summary>
+        /// Locates any explicitly registered dependency for the type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public IDependency DependencyFor(Type type)
+        {
+            return Dependencies.FirstOrDefault(x => x.DependencyType == type);
         }
     }
 }

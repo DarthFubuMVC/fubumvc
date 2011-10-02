@@ -49,8 +49,14 @@ namespace FubuMVC.Tests.Registration.Nodes
             var objectDef = toObjectDef(DiagnosticLevel.FullRequestTracing);
             objectDef.Type.ShouldEqual(typeof (DiagnosticBehavior));
 
-            objectDef.DependencyFor<IActionBehavior>().ShouldBeOfType<ConfiguredDependency>()
-                .Definition.Type.ShouldEqual(typeof (OneInZeroOutActionInvoker<Controller1, Controller1.Input1>));
+
+            objectDef.FindDependencyDefinitionFor<IActionBehavior>()
+                .Type.ShouldEqual(typeof (BehaviorTracer));
+
+            objectDef
+                .FindDependencyDefinitionFor<IActionBehavior>()
+                .FindDependencyDefinitionFor<IActionBehavior>()
+                .Type.ShouldEqual(typeof (OneInZeroOutActionInvoker<Controller1, Controller1.Input1>));
 
             objectDef.Name.ShouldEqual(theOriginalGuid);
         }
