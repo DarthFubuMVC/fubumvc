@@ -171,4 +171,57 @@ namespace FubuMVC.Tests.Rest.Conneg
             MockFor<IFubuRequest>().AssertWasNotCalled(x => x.Set<Address>(null), x => x.IgnoreArguments());
         }
     }
+
+    [TestFixture]
+    public class when_executing_the_conneg_input_action_for_an_unknown_accept_content_type : InteractionContext<ConnegInputBehavior<Address>>
+    {
+        private IMediaReader<Address> reader1;
+        private IMediaReader<Address> reader2;
+        private IMediaReader<Address> reader3;
+        private IMediaReader<Address> reader4;
+        private CurrentMimeType theMimetypes;
+        private IActionBehavior theInnerBehavior;
+
+        private IMediaReader<Address> readerFor(params string[] mimeTypes)
+        {
+            var reader = Services.AddAdditionalMockFor<IMediaReader<Address>>();
+            reader.Stub(x => x.Mimetypes).Return(mimeTypes);
+
+            return reader;
+        }
+
+        protected override void beforeEach()
+        {
+            reader1 = readerFor("text/json", "application/json");
+            reader2 = readerFor("text/xml");
+            reader3 = readerFor("text/xml", "application/xml");
+            reader4 = readerFor("text/html");
+
+            theInnerBehavior = MockFor<IActionBehavior>();
+            ClassUnderTest.InsideBehavior = theInnerBehavior;
+
+            theMimetypes = new CurrentMimeType("text/json", "something/weirdo");
+            MockFor<IFubuRequest>().Stub(x => x.Get<CurrentMimeType>()).Return(theMimetypes);
+
+            ClassUnderTest.Invoke();
+        }
+
+        [Test]
+        public void the_next_behavior_should_not_have_been_called()
+        {
+            theInnerBehavior.AssertWasNotCalled(x => x.Invoke());
+        }
+
+        [Test]
+        public void the_status_code_was_set_to_406()
+        {
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.NotAcceptable));
+        }
+
+        [Test]
+        public void the_address_should_not_have_been_stored_in_the_fubu_request()
+        {
+            MockFor<IFubuRequest>().AssertWasNotCalled(x => x.Set<Address>(null), x => x.IgnoreArguments());
+        }
+    }
 }
