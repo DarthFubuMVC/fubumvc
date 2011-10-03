@@ -41,13 +41,31 @@ namespace FubuMVC.Core.UI.Tags
             AfterPartial.Merge(peer.AfterPartial);
             BeforeEachOfPartial.Merge(peer.BeforeEachOfPartial);
             AfterEachOfPartial.Merge(peer.AfterEachOfPartial);
+
+            if (peer._layoutBuilder != null)
+            {
+                _layoutBuilder = peer._layoutBuilder;
+            }
         }
 
-        private Func<ILabelAndFieldLayout> _layoutBuilder = () => new DefinitionListLabelAndField();
+        private Func<ILabelAndFieldLayout> _layoutBuilder;
+
+        private Func<ILabelAndFieldLayout> layoutBuilder
+        {
+            get
+            {
+                if (_layoutBuilder == null)
+                {
+                    return () => new DefinitionListLabelAndField();
+                }
+
+                return _layoutBuilder;
+            }
+        }
 
         public ILabelAndFieldLayout NewLabelAndFieldLayout()
         {
-            return _layoutBuilder();
+            return layoutBuilder();
         }
 
         public void UseLabelAndFieldLayout<T>() where T : ILabelAndFieldLayout, new()

@@ -192,6 +192,7 @@
     <Compile Include="StructureMapIoC\StubActivator.cs" />
     <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
+    <Compile Include="UI\BootstrapLayout.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
     <Compile Include="UI\DotNotationNamingConventionTester.cs" />
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />

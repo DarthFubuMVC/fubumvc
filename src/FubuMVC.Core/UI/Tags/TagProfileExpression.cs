@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.UI.Forms;
 using FubuMVC.Core.UI.Security;
 
 namespace FubuMVC.Core.UI.Tags
@@ -30,15 +31,21 @@ namespace FubuMVC.Core.UI.Tags
         public TagFactoryExpression Labels { get; private set; }
         public TagFactoryExpression Editors { get; private set; }
         public TagFactoryExpression Displays { get; private set; }
+
+
         public TagFactoryExpression BeforePartial { get; private set; }
         public TagFactoryExpression AfterPartial { get; private set; }
         public PartialTagFactoryExpression BeforeEachOfPartial { get; private set; }
         public PartialTagFactoryExpression AfterEachOfPartial { get; private set; }
 
-        public TagProfileExpression ConfigureProfile(Action<TagProfile> configure)
+        public void UseLabelAndFieldLayout<T>() where T : ILabelAndFieldLayout, new()
         {
-            configure(_profile);
-            return this;
+            _profile.UseLabelAndFieldLayout<T>();
+        }
+
+        public void UseLabelAndFieldLayout(Func<ILabelAndFieldLayout> layoutBuilder)
+        {
+            _profile.UseLabelAndFieldLayout(layoutBuilder);
         }
     }
 }
