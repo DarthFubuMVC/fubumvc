@@ -30,7 +30,6 @@ namespace FubuTestApplication
             Route("conneg/buckrogers").Calls<MirrorAction>(x => x.BuckRogers());
 
             Media.ApplyContentNegotiationToActions(call => call.HandlerType == typeof (MirrorAction));
-            //this.CombineScriptAndCssFiles(); // only here to test the combining - remove this line if its troublesome
         }
     }
 }

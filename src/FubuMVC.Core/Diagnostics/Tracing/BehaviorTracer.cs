@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             catch (Exception ex)
             {
                 _report.MarkException(ex);
-                if (!_debugDetector.IsDebugCall())
+                if (!_debugDetector.IsOutputWritingLatched())
                 {
                     throw;
                 }

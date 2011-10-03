@@ -23,7 +23,7 @@ namespace FubuMVC.Diagnostics.Core.Infrastructure
             _request.Set(requestModel);
             _partialFactory
                 .BuildPartial(requestModel.GetType())
-                .Invoke();
+                .InvokePartial();
         }
     }
 }

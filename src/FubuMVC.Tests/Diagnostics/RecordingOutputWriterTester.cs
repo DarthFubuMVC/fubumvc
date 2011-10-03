@@ -17,8 +17,8 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void should_use_normal_http_output_writer_for_non_debug_calls()
         {
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
-            ClassUnderTest.Inner.ShouldBeTheSameAs(MockFor<IHttpOutputWriter>());
+            MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
+            ClassUnderTest.Writer.ShouldBeTheSameAs(MockFor<IHttpOutputWriter>());
         }
     }
 
@@ -28,8 +28,8 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void should_use_http_response_output_writer_for_non_debug_calls()
         {
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(true);
-            ClassUnderTest.Inner.ShouldBeOfType<NulloHttpOutputWriter>();
+            MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(true);
+            ClassUnderTest.Writer.ShouldBeOfType<NulloHttpOutputWriter>();
         }
     }
 
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Diagnostics
     {
         protected override void beforeEach()
         {
-            MockFor<IDebugDetector>().Stub(x => x.IsDebugCall()).Return(false);
+            MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
 
         }
 

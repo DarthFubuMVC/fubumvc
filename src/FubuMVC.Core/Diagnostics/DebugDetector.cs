@@ -1,3 +1,4 @@
+using System;
 using FubuCore.Binding;
 
 namespace FubuMVC.Core.Diagnostics
@@ -5,19 +6,33 @@ namespace FubuMVC.Core.Diagnostics
     public class DebugDetector : IDebugDetector
     {
         public static readonly string FLAG = "FubuDebug";
-        private readonly IRequestData _request;
+        private readonly Lazy<bool> _test;
+        private bool _latched = true;
 
         public DebugDetector(IRequestData request)
         {
-            _request = request;
+            _test = new Lazy<bool>(() =>
+            {
+                bool returnValue = false;
+                request.Value(FLAG, o => returnValue = true);
+
+                return returnValue;
+            });
         }
 
-        public virtual bool IsDebugCall()
+        public virtual bool IsOutputWritingLatched()
         {
-            bool returnValue = false;
-            _request.Value(FLAG, o => returnValue = true);
+            return IsDebugCall() && _latched;
+        }
 
-            return returnValue;
+        public void UnlatchWriting()
+        {
+            _latched = false;
+        }
+
+        public bool IsDebugCall()
+        {
+            return _test.Value;
         }
     }
 }

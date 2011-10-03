@@ -25,14 +25,25 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void negative_case_when_the_value_is_missing()
         {
-            detector.IsDebugCall().ShouldBeFalse();
+            detector.IsOutputWritingLatched().ShouldBeFalse();
         }
 
         [Test]
         public void positive_case_when_the_value_exists()
         {
             data[DebugDetector.FLAG] = "anything";
-            detector.IsDebugCall().ShouldBeTrue();
+            detector.IsOutputWritingLatched().ShouldBeTrue();
+        }
+
+        [Test]
+        public void unlatch_unlocks_the_writing()
+        {
+            data[DebugDetector.FLAG] = "anything";
+            detector.IsOutputWritingLatched().ShouldBeTrue();
+
+            detector.UnlatchWriting();
+
+            detector.IsOutputWritingLatched().ShouldBeFalse();
         }
     }
 }

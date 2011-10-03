@@ -25,6 +25,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         public void Invoke()
         {
             _initialize();
+            _report.RecordFormData();
 
             Inner.Invoke();
 
@@ -34,8 +35,6 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         public void InvokePartial()
         {
             Inner.InvokePartial();
-
-            write();
         }
 
         private void write()
@@ -43,6 +42,8 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             _report.MarkFinished();
 
             if (!_detector.IsDebugCall()) return;
+
+            _detector.UnlatchWriting();
 
             _debugCallHandler.Handle();
         }

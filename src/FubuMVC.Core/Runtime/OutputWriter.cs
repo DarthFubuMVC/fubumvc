@@ -20,31 +20,31 @@ namespace FubuMVC.Core.Runtime
             revertToNormalWriting();
         }
 
-        private void revertToNormalWriting()
-        {
-            _state = new NormalState(_writer);
-        }
-
-        public IHttpOutputWriter Inner
+        public virtual IHttpOutputWriter Writer
         {
             get { return _writer; }
         }
 
+        private void revertToNormalWriting()
+        {
+            _state = new NormalState(this);
+        }
+
         public virtual void WriteFile(string contentType, string localFilePath, string displayName)
         {
-            _writer.WriteContentType(contentType);
+            Writer.WriteContentType(contentType);
 
 
 
 			if (displayName != null)
 			{
-				_writer.AppendHeader("Content-Disposition", "attachment; filename=\"" + displayName+"\"");
+				Writer.AppendHeader("Content-Disposition", "attachment; filename=\"" + displayName+"\"");
 			}
 
             var fileLength = _fileSystem.FileSizeOf(localFilePath);
 
-			_writer.AppendHeader("Content-Length", fileLength.ToString());
-            _writer.WriteFile(localFilePath);
+			Writer.AppendHeader("Content-Length", fileLength.ToString());
+            Writer.WriteFile(localFilePath);
 
         }
 
@@ -70,17 +70,17 @@ namespace FubuMVC.Core.Runtime
 
         public virtual void RedirectToUrl(string url)
         {
-            _writer.Redirect(url);
+            Writer.Redirect(url);
         }
 
         public virtual void AppendCookie(HttpCookie cookie)
         {
-            _writer.AppendCookie(cookie);
+            Writer.AppendCookie(cookie);
         }
 
         public virtual void WriteResponseCode(HttpStatusCode status)
         {
-            _writer.WriteResponseCode(status);
+            Writer.WriteResponseCode(status);
         }
 
 
@@ -109,17 +109,18 @@ namespace FubuMVC.Core.Runtime
 
         class NormalState : IOutputState
         {
-            private readonly IHttpOutputWriter _writer;
+            private readonly OutputWriter _parent;
 
-            public NormalState(IHttpOutputWriter writer)
+            public NormalState(OutputWriter parent)
             {
-                _writer = writer;
+                _parent = parent;
             }
+
 
             public void Write(string contentType, string renderedOutput)
             {
-                _writer.WriteContentType(contentType);
-                _writer.Write(renderedOutput);
+                _parent.Writer.WriteContentType(contentType);
+                _parent.Writer.Write(renderedOutput);
             }
         }
     }

@@ -29,11 +29,15 @@ namespace FubuMVC.Core.Diagnostics
 
             FormData = new Dictionary<string, object>();
             Time = DateTime.Now;
+        }
 
+        // TODO -- this is a no go for OWIN support
+        public void RecordFormData()
+        {
             try
             {
                 var context = HttpContext.Current;
-                if (context != null)
+                if (context != null && context.Request != null)
                 {
                     Url = context.Request.Url.PathAndQuery;
                     NameValueCollection formData = context.Request.Form;

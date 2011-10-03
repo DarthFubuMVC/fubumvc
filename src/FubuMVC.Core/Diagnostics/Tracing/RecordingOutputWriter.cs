@@ -9,11 +9,26 @@ namespace FubuMVC.Core.Diagnostics.Tracing
     public class RecordingOutputWriter : OutputWriter
     {
         private readonly IDebugReport _report;
+        private readonly IDebugDetector _detector;
 
         public RecordingOutputWriter(IDebugReport report, IDebugDetector detector, IHttpOutputWriter inner, IFileSystem fileSystem)
-            : base(detector.IsDebugCall() ? new NulloHttpOutputWriter() : inner, fileSystem)
+            : base(inner, fileSystem)
         {
             _report = report;
+            _detector = detector;
+        }
+
+        public override IHttpOutputWriter Writer
+        {
+            get
+            {
+                if (_detector.IsOutputWritingLatched())
+                {
+                    return new NulloHttpOutputWriter();
+                }
+
+                return base.Writer;
+            }
         }
 
         public override void WriteFile(string contentType, string localFilePath, string displayName)

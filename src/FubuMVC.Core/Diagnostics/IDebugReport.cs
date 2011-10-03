@@ -21,5 +21,6 @@ namespace FubuMVC.Core.Diagnostics
         void MarkFinished();
 
         IEnumerable<BehaviorStep> Steps { get; }
+        void RecordFormData();
     }
 }

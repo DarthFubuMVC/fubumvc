@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Runtime;
@@ -5,6 +6,7 @@ using FubuMVC.Diagnostics.Features.Requests;
 
 namespace FubuMVC.Diagnostics.Core.Infrastructure
 {
+    [MarkedForTermination]
     public class AdvancedDebugDetector : DebugDetector
     {
         private readonly IFubuRequest _request;
@@ -15,9 +17,9 @@ namespace FubuMVC.Diagnostics.Core.Infrastructure
             _request = request;
         }
 
-        public override bool IsDebugCall()
+        public override bool IsOutputWritingLatched()
         {
-            return base.IsDebugCall() && !_request.Has<RecordedRequestRequestModel>();
+            return base.IsOutputWritingLatched() && !_request.Has<RecordedRequestRequestModel>();
         }
     }
 }

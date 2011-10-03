@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
@@ -210,15 +211,30 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             var topDef = Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
             
-            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
+            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing && !IsPartialOnly)
             {
                 var objectDef = new ObjectDef(typeof (DiagnosticBehavior)){
-                    Name = Top.UniqueId.ToString()
+                    Name = UniqueId.ToString()
                 };
 
                 objectDef.DependencyByType<IActionBehavior>(topDef);
 
                 topDef.Name = Guid.NewGuid().ToString();
+
+                var list = new List<ObjectDef>();
+                var def = topDef;
+                while (def != null)
+                {
+                    list.Add(def);
+                    def = def.FindDependencyDefinitionFor<IActionBehavior>();
+                }
+
+                Debug.WriteLine("CHAIN");
+                list.Each(x => Debug.WriteLine(x.Name));
+                Debug.WriteLine("-----------------------------------------------------------------");
+                
+                
+
 
                 return objectDef;
             }
