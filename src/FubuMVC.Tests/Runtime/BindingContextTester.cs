@@ -14,6 +14,7 @@ using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.Runtime
 {
+    [MarkedForTermination("This SHOULD be in FubuCore")]
     [TestFixture]
     public class BindingContextTester
     {
@@ -30,7 +31,7 @@ namespace FubuMVC.Tests.Runtime
             var smartRequest = MockRepository.GenerateMock<ISmartRequest>();
             locator.Stub(x => x.GetInstance<ISmartRequest>()).Return(smartRequest);
 
-            context = new BindingContext(request, locator);
+            context = new BindingContext(request, locator, new NulloBindingLogger());
         }
 
         [Test]

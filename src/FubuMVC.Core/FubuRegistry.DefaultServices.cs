@@ -203,6 +203,8 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IPackageFiles, PackageFilesCache>();
             graph.Services.AddService<IActivator>(typeof (PackageFileActivator));
 
+            graph.Services.SetServiceIfNone<IBindingLogger, NulloBindingLogger>();
+
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

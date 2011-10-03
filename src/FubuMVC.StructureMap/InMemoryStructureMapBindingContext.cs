@@ -15,7 +15,7 @@ namespace FubuMVC.StructureMap
         }
 
         private InMemoryStructureMapBindingContext(InMemoryRequestData data, IContainer container)
-            : base(data, new StructureMapServiceLocator(container))
+            : base(data, new StructureMapServiceLocator(container), new NulloBindingLogger())
         {
             _data = data;
             _container = container;

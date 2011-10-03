@@ -20,6 +20,7 @@ namespace FubuMVC.StructureMap
             ForSingletonOf<IModelBinderCache>().Use<ModelBinderCache>();
 
             For<IModelBinder>().Use<StandardModelBinder>();
+            For<IBindingLogger>().Use<NulloBindingLogger>();
         }
     }
 }

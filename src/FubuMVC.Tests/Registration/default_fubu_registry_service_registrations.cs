@@ -37,6 +37,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void default_binding_logger_is_nullo()
+        {
+            registeredTypeIs<IBindingLogger, NulloBindingLogger>();
+        }
+
+        [Test]
         public void http_output_writer_is_registered()
         {
             registeredTypeIs<IHttpOutputWriter, AspNetHttpOutputWriter>();

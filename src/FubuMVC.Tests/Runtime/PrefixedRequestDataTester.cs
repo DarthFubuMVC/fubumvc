@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Binding;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -5,6 +6,7 @@ using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.Runtime
 {
+    [MarkedForTermination("Move to FubuCore!")]
     [TestFixture]
     public class PrefixedRequestDataTester
     {
