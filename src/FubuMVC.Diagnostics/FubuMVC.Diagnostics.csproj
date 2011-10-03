@@ -246,7 +246,6 @@
     <Compile Include="Core\Grids\IGridService.cs" />
     <Compile Include="Core\Grids\RequestCacheRowProvider.cs" />
     <Compile Include="Core\Grids\RowComparer.cs" />
-    <Compile Include="Core\Infrastructure\AdvancedDebugDetector.cs" />
     <Compile Include="Core\Infrastructure\DiagnosticsDebugCallHandler.cs" />
     <Compile Include="Core\Infrastructure\HttpConstraintResolver.cs" />
     <Compile Include="Core\Infrastructure\HttpRequest.cs" />
