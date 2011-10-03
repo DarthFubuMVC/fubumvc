@@ -132,7 +132,7 @@ So how do we go about setting up a master page? First we need to create a folder
 named ``Shared`` in the root of our project, then in that directory create a
 file named ``Application.spark``.
 
-.. image:: images\spark_master_page.png
+.. image:: images/spark_master_page.png
    :alt: Application.spark under the Shared\ folder
 
 In this file we can place all our HTML that we'd like each page to have. So we
