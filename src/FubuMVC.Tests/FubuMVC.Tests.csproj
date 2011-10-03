@@ -119,12 +119,10 @@
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
     <Compile Include="Diagnostics\DefaultDiagnosticsConventionsTester.cs" />
     <Compile Include="Diagnostics\ObserverImporterTester.cs" />
-    <Compile Include="Diagnostics\RecordingModelBinderWrapperTester.cs" />
-    <Compile Include="Diagnostics\RecordingPropertyBinderWrapperTester.cs" />
-    <Compile Include="Diagnostics\RecordingValueConverterRegistryTester.cs" />
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="Diagnostics\RequestObserverTester.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorTester.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingBindingLoggerTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />

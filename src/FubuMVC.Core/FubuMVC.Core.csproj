@@ -115,13 +115,11 @@
     <Compile Include="Diagnostics\RequestObserver.cs" />
     <Compile Include="Diagnostics\DebugCallHandler.cs" />
     <Compile Include="Diagnostics\IDebugCallHandler.cs" />
+    <Compile Include="Diagnostics\Tracing\RecordingBindingLogger.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
     <Compile Include="Diagnostics\IObserverImporter.cs" />
     <Compile Include="Diagnostics\HtmlWriting\AuthorizationWriter.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingModelBinderWrapper.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingPropertyBinderWrapper.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingValueConverterRegistry.cs" />
     <Compile Include="Diagnostics\WannaKillAttribute.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DiagnosticHtml.cs" />

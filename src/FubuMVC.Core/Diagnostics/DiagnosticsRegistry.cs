@@ -25,6 +25,7 @@ namespace FubuMVC.Core.Diagnostics
 
             Services(x =>
             {
+                x.SetServiceIfNone<IBindingLogger, RecordingBindingLogger>();
                 x.SetServiceIfNone<IDebugDetector, DebugDetector>();
                 x.SetServiceIfNone<IDebugCallHandler, DebugCallHandler>();
                 x.ReplaceService<IObjectResolver, RecordingObjectResolver>();
@@ -34,9 +35,6 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IFubuRequest, RecordingFubuRequest>();
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
-                x.ReplaceService<IPropertyBinderCache, RecordingPropertyBinderWrapper>();
-                x.ReplaceService<IModelBinderCache, RecordingModelBinderWrapper>();
-                x.ReplaceService<IValueConverterRegistry, RecordingValueConverterRegistry>();
                 x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
             });
         }
