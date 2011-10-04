@@ -3,8 +3,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Conneg;
-using FubuMVC.Core.Rest.Media.Formatters;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Media.Formatters;
 
 namespace FubuMVC.Core.Registration.DSL
 {

@@ -11,7 +11,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
