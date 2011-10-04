@@ -56,6 +56,8 @@ namespace FubuMVC.Core.Runtime
         }
 
 
+
+
         public Stream Input
         {
             get { return _input; } }

@@ -1,5 +1,6 @@
 using System;
 using FubuCore.Binding;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
@@ -20,7 +21,22 @@ namespace FubuMVC.Core.Http
         {
             var contentType = context.ValueAs<string>("Content-Type");
             var acceptType = context.ValueAs<string>("Accept");
-            return new CurrentMimeType(contentType, acceptType);
+            var currentMimeType = new CurrentMimeType(contentType, acceptType);
+
+            // Life just doesn't get to be simple.  What if a jquery plugin, just pulling an example out of 
+            // very thick air, posts json, but with an incorrect mimetype? 
+            if (currentMimeType.ContentType == CurrentMimeType.HttpFormMimetype && context.IsAjaxRequest())
+            {
+                var streamingData = context.Service<IStreamingData>();
+                if (streamingData.CouldBeJson())
+                {
+                    // TODO
+                    currentMimeType.ContentType = "text/json";
+                }
+            }
+
+
+            return currentMimeType;
         }
     }
 }

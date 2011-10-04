@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Rest.Media.Formatters;
+using FubuCore;
 
 namespace FubuMVC.Core.Rest.Conneg
 {
@@ -28,17 +30,31 @@ namespace FubuMVC.Core.Rest.Conneg
             }
         }
 
+        public static void AlterConnegOutput(this BehaviorChain chain, Action<ConnegOutputNode> configure)
+        {
+            var node = chain.ConnegOutputNode();
+            if (node != null)
+            {
+                configure(node);
+            }
+        }
+
+        public static void AlterConnegInput(this BehaviorChain chain, Action<ConnegInputNode> configure)
+        {
+            var node = chain.ConnegInputNode();
+            if (node != null)
+            {
+                configure(node);
+            }
+        }
+
         public static void MakeSymmetricJson(this BehaviorChain chain)
         {
             chain.RemoveConneg();
             chain.ApplyConneg();
 
-
-            var connegInputNode = chain.ConnegInputNode();
-            if (connegInputNode != null) connegInputNode.JsonOnly();
-
-            var connegOutputNode = chain.ConnegOutputNode();
-            if (connegOutputNode != null) connegOutputNode.JsonOnly();
+            chain.AlterConnegInput(x => x.JsonOnly());
+            chain.AlterConnegOutput(x => x.JsonOnly());
         }
 
         public static void MakeAsymmetricJson(this BehaviorChain chain)
@@ -47,7 +63,8 @@ namespace FubuMVC.Core.Rest.Conneg
             chain.ApplyConneg();
 
             chain.ConnegInputNode().UseFormatter<JsonFormatter>();
-            chain.ConnegOutputNode().JsonOnly();
+
+            chain.AlterConnegOutput(x => x.JsonOnly());
         }
 
         public static ConnegInputNode ConnegInputNode(this BehaviorChain chain)
