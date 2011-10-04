@@ -53,7 +53,7 @@ namespace FubuMVC.Core.Rest.Media.Xml
 
         public IEnumerable<string> Mimetypes
         {
-            get { yield return _options.Mimetype; }
+            get { return _options.Mimetype.ToDelimitedArray(','); }
         }
     }
 }
