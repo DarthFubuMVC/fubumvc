@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuCore;
 
 namespace FubuMVC.Core.Rest.Media.Atom
 {
@@ -28,7 +29,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
 
         public IEnumerable<string> Mimetypes
         {
-            get { yield return _definition.ContentType; }
+            get { return _definition.ContentType.ToDelimitedArray(','); }
         }
 
         public void Write(IValues<T> source, IOutputWriter writer)
