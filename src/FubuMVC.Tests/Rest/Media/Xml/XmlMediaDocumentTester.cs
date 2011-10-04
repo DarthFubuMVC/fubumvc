@@ -114,6 +114,21 @@ namespace FubuMVC.Tests.Rest.Media.Xml
             var document = new XmlMediaDocument(options);
             document.Mimetypes.Single().ShouldEqual(options.Mimetype);
         }
+
+        [Test]
+        public void should_list_the_mime_type_from_the_xml_options_if_there_are_multiples()
+        {
+            var options = new XmlMediaOptions
+            {
+                NodeStyle = XmlNodeStyle.AttributeCentric,
+                Root = "Something",
+                LinkWriter = new StubLinkWriter(),
+                Mimetype = "vnd.dovetail.resource,text/xml,application/xml"
+            };
+
+            var document = new XmlMediaDocument(options);
+            document.Mimetypes.ShouldHaveTheSameElementsAs(options.Mimetype.ToDelimitedArray(','));
+        }
     }
 
 
