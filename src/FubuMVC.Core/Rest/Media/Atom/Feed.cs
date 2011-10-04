@@ -43,7 +43,10 @@ namespace FubuMVC.Core.Rest.Media.Atom
             get { return _extension.Value; }
         }
 
-        // TODO -- test that this monster is set by default to atom pub
+        /// <summary>
+        /// Matches the accepted mimetypes in the client request.  Can be a comma delimited
+        /// value for multiple mimetypes.  Default is "application/atom+xml"
+        /// </summary>
         public string ContentType { get; set; }
 
         void IFeedDefinition<T>.ConfigureFeed(SyndicationFeed feed, IUrlRegistry urls)
