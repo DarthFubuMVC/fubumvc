@@ -148,7 +148,7 @@ namespace FubuMVC.Tests.Rest
             var writerNode = connegOutput.Writers.Last().As<MediaWriterNode>();
 
             // Assert the xml media
-            var objectDef = writerNode.As<IContainerModel>().ToObjectDef();
+            var objectDef = writerNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
 
             var document = objectDef.DependencyFor<IMediaDocument>().ShouldBeOfType<ConfiguredDependency>();
@@ -182,7 +182,7 @@ namespace FubuMVC.Tests.Rest
             var writerNode = connegOutput.Writers.Single().As<MediaWriterNode>();
 
             // Assert the xml media
-            var objectDef = writerNode.As<IContainerModel>().ToObjectDef();
+            var objectDef = writerNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
 
             var document = objectDef.DependencyFor<IMediaDocument>().ShouldBeOfType<ConfiguredDependency>();

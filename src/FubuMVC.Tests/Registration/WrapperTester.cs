@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.Registration
         public void put_a_dependency_into_the_object_def_for_the_inner_behavior()
         {
             _wrapper.AddAfter(new ConnegOutputNode(typeof (Output)));
-            ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef();
+            ObjectDef def = _wrapper.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
 
             def.Dependencies.Count().ShouldEqual(1);
 

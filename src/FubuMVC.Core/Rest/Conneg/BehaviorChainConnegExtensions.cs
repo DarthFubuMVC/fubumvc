@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Rest.Media.Formatters;
 
@@ -19,7 +20,7 @@ namespace FubuMVC.Core.Rest.Conneg
             }
 
             var actionOutputType = chain.ActionOutputType();
-            if (chain.ConnegOutputNode() == null && actionOutputType != null && actionOutputType != typeof (void))
+            if (chain.ConnegOutputNode() == null && actionOutputType != null && actionOutputType != typeof (void) && actionOutputType != typeof(HttpStatusCode))
             {
                 var outputNode = new ConnegOutputNode(actionOutputType);
                 var action = chain.Last(x => x is ActionCall);

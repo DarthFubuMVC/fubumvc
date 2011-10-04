@@ -33,7 +33,7 @@ namespace FubuMVC.Core.Rest.Media.Atom
             get; private set;
         }
 
-        public ObjectDef ToObjectDef()
+        public ObjectDef ToObjectDef(DiagnosticLevel level)
         {
             var objectDef = new ObjectDef(typeof (FeedWriter<T>));
             objectDef.DependencyByType(typeof (IFeedSource<T>), FeedSourceType);

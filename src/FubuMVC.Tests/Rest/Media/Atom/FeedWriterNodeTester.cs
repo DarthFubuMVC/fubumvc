@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Rest.Media;
 using FubuMVC.Core.Rest.Media.Atom;
@@ -71,7 +72,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         public void build_object_def_has_correct_feed_writer_type()
         {
             var objectDef = new FeedWriterNode<Address>(new Feed<Address>(), FeedSourceType.enumerable,
-                                                    typeof(AddressEnumerable)).ToObjectDef();
+                                                    typeof(AddressEnumerable)).ToObjectDef(DiagnosticLevel.None);
 
 
             objectDef.Type.ShouldEqual(typeof (FeedWriter<Address>));
@@ -82,7 +83,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
         {
             var theFeed = new Feed<Address>();
             var objectDef = new FeedWriterNode<Address>(theFeed, FeedSourceType.enumerable,
-                                                    typeof(AddressEnumerable)).ToObjectDef();
+                                                    typeof(AddressEnumerable)).ToObjectDef(DiagnosticLevel.None);
         
         
             objectDef.DependencyFor<IFeedDefinition<Address>>()
@@ -95,7 +96,7 @@ namespace FubuMVC.Tests.Rest.Media.Atom
             var theFeed = new Feed<Address>();
             var theNode = new FeedWriterNode<Address>(theFeed, FeedSourceType.enumerable,
                                                              typeof(AddressEnumerable));
-            var objectDef = theNode.ToObjectDef();
+            var objectDef = theNode.ToObjectDef(DiagnosticLevel.None);
 
             objectDef.DependencyFor<IFeedSource<Address>>()
                 .ShouldBeOfType<ConfiguredDependency>()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Rest.Conneg;
@@ -27,7 +28,7 @@ namespace FubuMVC.Tests.Rest.Conneg
             {
                 if (_objectDef == null)
                 {
-                    _objectDef = theOutputNode.As<IContainerModel>().ToObjectDef();
+                    _objectDef = theOutputNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
                 }
 
                 return _objectDef;
@@ -82,13 +83,13 @@ namespace FubuMVC.Tests.Rest.Conneg
             var WriterDef1 = new ObjectDef(typeof(StubAddressWriter));
             var WriterNode1 = MockRepository.GenerateMock<IMediaWriterNode>();
             WriterNode1.Stub(x => x.InputType).Return(typeof (Address));
-            WriterNode1.Stub(x => x.ToObjectDef()).Return(WriterDef1);
+            WriterNode1.Stub(x => x.ToObjectDef(DiagnosticLevel.None)).Return(WriterDef1);
             theOutputNode.AddWriter(WriterNode1);
 
             var WriterDef2 = new ObjectDef(typeof(StubAddressWriter));
             var WriterNode2 = MockRepository.GenerateMock<IMediaWriterNode>();
             WriterNode2.Stub(x => x.InputType).Return(typeof(Address));
-            WriterNode2.Stub(x => x.ToObjectDef()).Return(WriterDef2);
+            WriterNode2.Stub(x => x.ToObjectDef(DiagnosticLevel.None)).Return(WriterDef2);
             theOutputNode.AddWriter(WriterNode2);
 
 

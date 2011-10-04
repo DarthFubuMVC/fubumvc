@@ -62,9 +62,9 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         /// All the Output nodes in this chain
         /// </summary>
-        public IEnumerable<OutputNode> Outputs
+        public IEnumerable<BehaviorNode> Outputs
         {
-            get { return this.OfType<OutputNode>(); }
+            get { return this.Where(x => x.Category == BehaviorCategory.Output); }
         }
 
         /// <summary>
