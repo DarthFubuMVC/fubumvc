@@ -79,6 +79,28 @@ namespace FubuMVC.Diagnostics.Tests.Features.Requests
 
             target
                 .Inner
+                .BehaviorType
+                .ShouldEqual(typeof (ChildBehavior3));
+
+            target
+                .After
+                .ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void should_build_third_nested_behavior()
+        {
+            var target = _model.Inner.Inner.Inner;
+            target
+                .BehaviorType
+                .ShouldEqual(typeof(ChildBehavior3));
+
+            target
+                .Before
+                .ShouldHaveCount(1);
+
+            target
+                .Inner
                 .ShouldBeNull();
 
             target
@@ -98,6 +120,8 @@ namespace FubuMVC.Diagnostics.Tests.Features.Requests
             _report.StartBehavior(new ChildBehavior2());
             _report.StartModelBinding(typeof(StubModel));
             _report.EndModelBinding(new StubModel());
+            _report.StartBehavior(new ChildBehavior3());
+            _report.EndBehavior();
             _report.EndBehavior();
             _report.EndBehavior();
             _report.EndBehavior();
@@ -123,6 +147,10 @@ namespace FubuMVC.Diagnostics.Tests.Features.Requests
         }
 
         public class ChildBehavior2 : StubBehavior
+        {
+        }
+
+        public class ChildBehavior3 : StubBehavior
         {
         }
     }
