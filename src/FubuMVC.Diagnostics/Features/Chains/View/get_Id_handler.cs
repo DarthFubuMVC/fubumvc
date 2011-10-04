@@ -1,9 +1,5 @@
 using System;
-using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Diagnostics.Core.Infrastructure;
 
 namespace FubuMVC.Diagnostics.Features.Chains.View
 {

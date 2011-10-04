@@ -62,6 +62,8 @@ namespace FubuMVC.Diagnostics.Features.Chains.View
         //this is hideous but wanted to show an idea.
         public HtmlTag BuildLabel(BehaviorNode behaviorNode)
         {
+            // TODO -- come back and policize this
+
             var span = new HtmlTag("span").AddClass("label");
             var pp = behaviorNode.GetType().PrettyPrint();
             span.Text("behavior");

@@ -7,11 +7,9 @@
 </content:head>
 <content:leftColumn>
   <h1>Route Explorer</h1>
-
   <p>
     <em>
-      Note: <br/>
-      stuff about routes
+      You are viewing the configuration model of your route.
     </em>
   </p>
 </content:leftColumn>

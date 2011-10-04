@@ -56,13 +56,16 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 
 			                                                      		return model;
 			                                                      	});
-			Type lastBehavior = null;
+			Type lastBehaviorType = null;
 			report
 				.Steps
 				.Each(s =>
 				      	{
 				      		var behaviorType = s.Behavior.BehaviorType;
-							if(behaviors.Has(behaviorType) && behaviorType != lastBehavior)
+				      	    var isSameBehavior = behaviorType == lastBehaviorType;
+				      	    var isBehaviorFinish = s.Details.GetType().CanBeCastTo<BehaviorFinish>();
+
+                            if (behaviors.Has(behaviorType) && (!isSameBehavior || isBehaviorFinish))
 							{
 								behaviors[behaviorType].AddAfter(s.Details);
 							}
@@ -71,19 +74,19 @@ namespace FubuMVC.Diagnostics.Features.Requests.View
 								behaviors[behaviorType].AddBefore(s.Details);
 							}
 
-				      	    behaviors[behaviorType].Id = s.Behavior.BehaviorId;
+                            var currentBehavior = behaviors[behaviorType];
+				      	    currentBehavior.Id = s.Behavior.BehaviorId;
 
-							if(lastBehavior != null && behaviorType != lastBehavior)
-							{
-								var lastModel = behaviors[lastBehavior];
-								if(!lastModel.Equals(root))
+                            if (lastBehaviorType != null && !isSameBehavior && isBehaviorFinish)
+							{   
+								var lastBehavior = behaviors[lastBehaviorType];
+								if(!lastBehavior.Equals(root))
 								{
-									behaviors[behaviorType].Inner = lastModel;
-								    behaviors[behaviorType].Inner.Id = Guid.NewGuid();
+                                    currentBehavior.Inner = lastBehavior;
 								}
 							}
 
-							lastBehavior = behaviorType;
+							lastBehaviorType = behaviorType;
 				      	});
 
 			return root;

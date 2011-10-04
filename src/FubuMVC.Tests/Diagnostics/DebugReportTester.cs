@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Tests.Registration;
 using FubuMVC.Tests.Runtime;
@@ -116,5 +117,33 @@ namespace FubuMVC.Tests.Diagnostics
 
             report.Select(x => x.Description).Count().ShouldEqual(4);
         }
+
+        [Test]
+        public void should_add_final_behavior_finish_step()
+        {
+            report.StartBehavior(new ParentBehavior());
+            report.StartBehavior(new ChildBehavior());
+            report.StartBehavior(new ChildBehavior2());
+            report.EndBehavior();
+            report.EndBehavior();
+            report.EndBehavior();
+
+            report.Steps.ShouldHaveCount(6);
+        }
+
+        public class StubBehavior : IActionBehavior
+        {
+            public void Invoke()
+            {
+            }
+
+            public void InvokePartial()
+            {
+            }
+        }
+
+        public class ParentBehavior : StubBehavior { }
+        public class ChildBehavior : StubBehavior { }
+        public class ChildBehavior2 : StubBehavior { }
     }
 }

@@ -12,7 +12,7 @@ namespace FubuMVC.HelloWorld
     {
         public HelloWorldFubuRegistry()
         {
-            IncludeDiagnostics(diag => diag.LimitRecordingTo(100));
+            IncludeDiagnostics(true);
             // Can also use the default conventions to limit to 50 and exclude all diagnostics urls (e.g., /_fubu) using: 
             // IncludeDiagnostics(true);
 

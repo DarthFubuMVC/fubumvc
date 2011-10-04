@@ -8,10 +8,12 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         private readonly IDebugReport _report;
         private readonly IDebugDetector _debugDetector;
 
-        public BehaviorTracer(IDebugReport report, IDebugDetector debugDetector)
+        public BehaviorTracer(Guid chainId, IDebugReport report, IDebugDetector debugDetector)
         {
             _report = report;
             _debugDetector = debugDetector;
+
+            _report.BehaviorId = chainId;
         }
 
         public IActionBehavior Inner { get; set; }

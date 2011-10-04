@@ -94,15 +94,19 @@ namespace FubuMVC.Core.Diagnostics
         {
             BehaviorReport report = _behaviorStack.Pop();
             report.MarkFinished();
-            AddDetails(new BehaviorFinish { BehaviorType = report.BehaviorType });
+            addDetails(new BehaviorFinish { BehaviorType = report.BehaviorType }, report);
         }
 
         public void AddDetails(IBehaviorDetails details)
         {
             if (_behaviorStack.Count == 0) return;
 
-            BehaviorReport report = _behaviorStack.Peek();
+            var report = _behaviorStack.Peek();
+            addDetails(details, report);
+        }
 
+        private void addDetails(IBehaviorDetails details, BehaviorReport report)
+        {
             _steps.Add(new BehaviorStep
             {
                 Behavior = report,
