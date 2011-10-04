@@ -7,13 +7,19 @@ namespace FubuMVC.Core.Diagnostics.Tracing
     {
         private readonly IDebugReport _report;
         private readonly IDebugDetector _debugDetector;
+        private readonly Guid _behaviorId;
 
-        public BehaviorTracer(Guid chainId, IDebugReport report, IDebugDetector debugDetector)
+        public BehaviorTracer(BehaviorCorrelation correlation, IDebugReport report, IDebugDetector debugDetector)
         {
             _report = report;
             _debugDetector = debugDetector;
 
-            _report.BehaviorId = chainId;
+            if (_report.BehaviorId == Guid.Empty)
+            {
+                _report.BehaviorId = correlation.ChainId;
+            }
+
+            _behaviorId = correlation.BehaviorId;
         }
 
         public IActionBehavior Inner { get; set; }
@@ -31,7 +37,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         private void invoke(Action action)
         {
             var report = _report.StartBehavior(Inner);
-            report.BehaviorId = _report.BehaviorId;
+            report.BehaviorId = _behaviorId;
 
             try
             {

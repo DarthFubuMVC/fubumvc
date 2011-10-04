@@ -83,7 +83,6 @@
             var id = $(this).metadata().id;
             var selectedBehavior = viewModel.findBehavior(id);
             batch = true;
-            // ok, this doesn't work...this removes ALL instead of everything after it
             viewModel.selectedBehaviors.remove(function (x) {
                 return x.index > selectedBehavior.index;
             });
@@ -119,6 +118,28 @@
 
         viewModel.previousBehavior = value;
         resetBreadcrumb();
+    });
+
+    $('.chain-node').click(function () {
+        var self = $(this);
+        if (self.hasClass('primary')) {
+            return;
+        }
+
+        var id = self.attr('id').replace('Node-', '');
+        if (!viewModel.findBehavior(id)) {
+            viewModel.addBehavior($('#' + id + ' > h3').html(), id);
+            viewModel.currentBehavior(id);
+        }
+        else {
+            $('#RequestBreadcrumb > li > a').each(function () {
+                var behaviorId = $(this).metadata().id;
+                if (behaviorId == id) {
+                    $(this).click();
+                }
+            });
+        }
+
     });
 
     viewModel.selectedBehaviors.subscribe(function () {

@@ -115,6 +115,7 @@
     <Compile Include="Diagnostics\RequestObserver.cs" />
     <Compile Include="Diagnostics\DebugCallHandler.cs" />
     <Compile Include="Diagnostics\IDebugCallHandler.cs" />
+    <Compile Include="Diagnostics\Tracing\BehaviorCorrelation.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingBindingLogger.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
