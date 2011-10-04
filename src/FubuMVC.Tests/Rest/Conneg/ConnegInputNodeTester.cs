@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Rest.Conneg;
@@ -26,7 +27,7 @@ namespace FubuMVC.Tests.Rest.Conneg
             {
                 if (_objectDef == null)
                 {
-                    _objectDef = theInputNode.As<IContainerModel>().ToObjectDef();
+                    _objectDef = theInputNode.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None);
                 }
 
                 return _objectDef;

@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Rest.Conneg;
@@ -39,6 +40,15 @@ namespace FubuMVC.Tests.Rest.Conneg
 
             theChain.ConnegInputNode().ShouldBeTheSameAs(inputNode);
             theChain.ConnegOutputNode().ShouldBeTheSameAs(outputNode);
+        }
+
+        [Test]
+        public void do_not_apply_conneg_output_to_method_that_returns_HttpStatusCode()
+        {
+            var chain = BehaviorChain.For<ActionJackson>(x => x.CodeFor(null));
+            chain.ApplyConneg();
+
+            chain.HasConnegOutput().ShouldBeFalse();
         }
 
         [Test]
@@ -166,6 +176,11 @@ namespace FubuMVC.Tests.Rest.Conneg
             public Output1 ZeroInOneOut()
             {
                 return new Output1();
+            }
+
+            public HttpStatusCode CodeFor(Output1 output)
+            {
+                return HttpStatusCode.Unused;
             }
         }
 

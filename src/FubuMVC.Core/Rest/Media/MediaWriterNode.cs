@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Rest.Media
         public MediaDependency Projection { private set; get; }
         public MediaDependency Document { private set; get; }
 
-        public ObjectDef ToObjectDef()
+        public ObjectDef ToObjectDef(DiagnosticLevel level)
         {
             var objectDef = new ObjectDef(typeof (MediaWriter<>).MakeGenericType(_inputType));
 

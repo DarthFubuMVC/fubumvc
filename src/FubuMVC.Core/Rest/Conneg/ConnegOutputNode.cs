@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Rest.Conneg
 
         protected override IEnumerable<ObjectDef> createBuilderDependencies()
         {
-            return _writers.Select(x => x.ToObjectDef())
+            return _writers.Select(x => x.ToObjectDef(DiagnosticLevel.None))
                 .Union(createFormatterObjectDef());
         }
 

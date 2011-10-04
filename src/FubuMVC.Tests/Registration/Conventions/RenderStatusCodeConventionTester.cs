@@ -20,7 +20,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void render_status_behavior_is_attached_to_chains_that_return_a_status_code()
         {
             var graph = new RestfulServicesRegistry().BuildGraph();
-            graph.BehaviorFor<RestfulService>(x => x.Action1(null)).Outputs.Single()
+            var outputs = graph.BehaviorFor<RestfulService>(x => x.Action1(null)).Outputs;
+
+
+            outputs.Single()
                 .ShouldBeOfType<OutputNode>().BehaviorType.ShouldEqual(typeof (RenderStatusCodeBehavior));
         }
 

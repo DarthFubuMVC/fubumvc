@@ -217,6 +217,14 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
+        public virtual string Description
+        {
+            get
+            {
+                return GetType().GetFullName();
+            }
+        }
+
         /// <summary>
         /// Shortcut to put a "wrapping" behavior immediately in front
         /// of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For<T>())

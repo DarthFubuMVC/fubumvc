@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Rest.Conneg;
 using FubuMVC.Diagnostics.Core.Grids.Columns.Routes;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -50,7 +51,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
         [Test]
         public void value_if_actioncall_has_output_node()
         {
-            ClassUnderTest.ValueFor(_graph.BehaviorFor<Test>(x => x.HasOutputNode())).ShouldEqual(new RenderJsonNode(GetType()).Description);
+            ClassUnderTest.ValueFor(_graph.BehaviorFor<Test>(x => x.HasOutputNode())).ShouldEqual(new ConnegOutputNode(GetType()).ToString());
         }
 
         public class Test
@@ -82,7 +83,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
             {
                 graph.Actions()
                     .Where(call => call.Method.Name == "HasOutputNode")
-                    .Each(call => call.AddToEnd(new RenderJsonNode(call.GetType())));
+                    .Each(call => call.AddToEnd(new ConnegOutputNode(call.GetType())));
             }
         }
     }
