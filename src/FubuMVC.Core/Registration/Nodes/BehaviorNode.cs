@@ -133,9 +133,10 @@ namespace FubuMVC.Core.Registration.Nodes
                 var tracerDef = new ObjectDef(typeof (BehaviorTracer));
                 tracerDef.DependencyByType<IActionBehavior>(objectDef);
 
+                var chain = ParentChain();
                 tracerDef.DependencyByValue(new BehaviorCorrelation
                                                 {
-                                                    ChainId = ParentChain().UniqueId,
+                                                    ChainId = chain == null ? Guid.Empty : chain.UniqueId,
                                                     BehaviorId = UniqueId
                                                 });
 

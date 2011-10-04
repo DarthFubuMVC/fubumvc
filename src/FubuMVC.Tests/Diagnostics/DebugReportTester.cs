@@ -52,15 +52,17 @@ namespace FubuMVC.Tests.Diagnostics
             report.StartBehavior(inner);
 
             report.EndBehavior();
+            
 
             var details = new RedirectReport
             {
                 Url = "typeof(FakeBehavior)"
             };
             report.AddDetails(details);
+            report.EndBehavior();
 
-            report.First().ShouldHaveTheSameElementsAs(new BehaviorStart(), new BehaviorFinish(), details);
-            report.Skip(1).First().Count().ShouldEqual(1);
+            report.First().ShouldHaveTheSameElementsAs(new BehaviorStart(), details, new BehaviorFinish());
+            report.Skip(1).First().Count().ShouldEqual(2); // start & finish
         }
 
         [Test]
@@ -79,7 +81,7 @@ namespace FubuMVC.Tests.Diagnostics
             report.MarkException(new ApplicationException("First one is wrong"));
 
             // The first detail is BehaviorStart, the second is BehaviorFinish
-            report.First().Skip(2).First().ShouldBeOfType<ExceptionReport>().Text.ShouldContain("First one is wrong");
+            report.First().Skip(1).First().ShouldBeOfType<ExceptionReport>().Text.ShouldContain("First one is wrong");
             report.Skip(1).First().Count().ShouldEqual(2);
             report.Skip(2).First().Count().ShouldEqual(2);
             report.Last().Skip(1).First().ShouldBeOfType<ExceptionReport>().Text.ShouldContain("NotImplementedException");
