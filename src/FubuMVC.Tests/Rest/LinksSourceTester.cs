@@ -41,6 +41,18 @@ namespace FubuMVC.Tests.Rest
         }
 
         [Test]
+        public void create_a_link_by_using_route_parameters()
+        {
+            theLinks.ToInput<SiteAction>(x => x.Name);
+
+            var parameters = new RouteParameters<SiteAction>();
+            parameters["Name"] = theSubject.Name;
+
+            theLinks.As<ILinkSource<Site>>().LinksFor(theTarget, theUrls)
+                .Single().Url.ShouldEqual(theUrls.UrlFor(parameters));
+        }
+
+        [Test]
         public void create_link_by_transforming_the_subject()
         {
             theLinks.To(site => new SiteAction(site.Name));
