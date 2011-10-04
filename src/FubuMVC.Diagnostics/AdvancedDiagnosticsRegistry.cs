@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -12,6 +13,7 @@ using FubuMVC.Diagnostics.Features.Html.Preview;
 using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
 using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Models;
+using FubuMVC.Diagnostics.Models.Grids;
 using FubuMVC.Diagnostics.Navigation;
 using FubuMVC.Diagnostics.Notifications;
 using FubuMVC.Diagnostics.Partials;
@@ -49,6 +51,9 @@ namespace FubuMVC.Diagnostics
             Output
                 .ToJson
                 .WhenCallMatches(call => call.OutputType().Name.ToLower().Contains("json"));
+
+            Models.IgnoreProperties(prop => prop.PropertyType == typeof(IEnumerable<JsonGridFilter>));
+
         }
 
         private void setupDiagnosticServices()

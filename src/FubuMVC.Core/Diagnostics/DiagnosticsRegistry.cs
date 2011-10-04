@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
@@ -22,6 +23,7 @@ namespace FubuMVC.Core.Diagnostics
 
             Routes
                 .UrlPolicy<DiagnosticUrlPolicy>();
+
 
             Services(x =>
             {

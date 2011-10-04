@@ -33,9 +33,16 @@ namespace FubuMVC.Core
             return result;
         }
 
-        private static bool IsAjaxRequest(object value)
+        private static bool IsAjaxRequest(this object value)
         {
             return XmlHttpRequestValue.Equals(value as string, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public static bool IsAjaxRequest(this IBindingContext context)
+        {
+            var returnValue = false;
+            context.ValueAs<object>(XRequestedWithHeader, val => returnValue = val.IsAjaxRequest());
+            return returnValue;
         }
 
     }
