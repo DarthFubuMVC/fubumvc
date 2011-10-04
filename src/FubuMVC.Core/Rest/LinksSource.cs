@@ -36,6 +36,30 @@ namespace FubuMVC.Core.Rest
             });
         }
 
+        /// <summary>
+        /// Uses a RouteParameter<TInputType> object with the same named properties
+        /// as the T type to construct a Url.  Very useful when the value stream
+        /// you're using doesn't have the actual target type (i.e. NH projections)
+        /// </summary>
+        /// <typeparam name="TInputType"></typeparam>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        public LinkSource<T> ToInput<TInputType>(params Expression<Func<T, object>>[] properties)
+        {
+            var accessors = properties.Select(x => x.ToAccessor());
+
+            return To((values, urls) =>
+            {
+                var parameters = new RouteParameters<TInputType>();
+                accessors.Each(a =>
+                {
+                    parameters[a.Name] = values.ValueFor(a).ToString();
+                });
+
+                return urls.UrlFor(parameters);
+            });
+        }
+
         public LinkSource<T> To(Func<T, object> subject)
         {
             return To((values, urls) =>
