@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.Conventions
 {

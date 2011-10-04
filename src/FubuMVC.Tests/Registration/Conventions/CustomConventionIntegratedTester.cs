@@ -3,8 +3,7 @@ using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Conneg;
-using FubuMVC.Core.Rest.Media.Formatters;
+using FubuMVC.Core.Resources.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
 

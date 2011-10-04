@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.WebForms;
 using NUnit.Framework;
-using FubuMVC.Core.Rest.Conneg;
 using FubuTestingSupport;
 
 namespace FubuMVC.Tests.Registration.Conventions

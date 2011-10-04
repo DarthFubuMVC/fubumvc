@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
 using System.Linq;
-using FubuMVC.Core.Rest;
-using FubuMVC.Core.Rest.Conneg;
 using FubuCore;
+using FubuMVC.Core.Resources;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core.Registration.Conventions
 {

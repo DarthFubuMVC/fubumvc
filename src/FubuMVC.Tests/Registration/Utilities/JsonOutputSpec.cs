@@ -2,9 +2,9 @@ using System;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Conneg;
 using System.Linq;
-using FubuMVC.Core.Rest.Media.Formatters;
+using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Media.Formatters;
 
 namespace FubuMVC.Tests.Registration.Utilities
 {

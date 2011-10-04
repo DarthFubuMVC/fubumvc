@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Media.Formatters;
+using FubuMVC.Core.Resources.Media.Formatters;
 
 namespace FubuMVC.Core.Registration.DSL
 {

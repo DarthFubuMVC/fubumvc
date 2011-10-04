@@ -9,7 +9,7 @@ using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using HtmlTags;

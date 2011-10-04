@@ -5,7 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Diagnostics.Core.Grids.Columns.Routes;
 using FubuTestingSupport;
 using NUnit.Framework;

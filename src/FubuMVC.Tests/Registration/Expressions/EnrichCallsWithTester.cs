@@ -4,7 +4,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Rest.Conneg;
+using FubuMVC.Core.Resources.Conneg;
 using FubuTestingSupport;
 using NUnit.Framework;
 

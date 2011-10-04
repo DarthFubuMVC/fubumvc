@@ -11,7 +11,7 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
-using FubuMVC.Core.Rest.Media;
+using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
