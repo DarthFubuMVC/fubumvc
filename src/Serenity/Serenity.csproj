@@ -73,8 +73,9 @@
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="ApplicationUnderTest.cs" />
     <Compile Include="BrowserType.cs" />
-    <Compile Include="Classes.cs" />
+    <Compile Include="IApplicationUnderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerenityApplications.cs" />
     <Compile Include="SerenitySystem.cs" />
     <Compile Include="WebDriverSettings.cs" />
   </ItemGroup>
