@@ -52,7 +52,7 @@ Hello, Spark!
 -------------
 
 So now that we have Spark wired up, what are some of the things we can do with
-it? Well, let's get started on that right now. Lets start with the `Getting
+it? Well, let's get started on that right now. Lets start with the :doc:`Getting
 Started <../gettingstarted>` guide's basic "Hello, World" and make it use Spark.
 
 We last left off with our controller action looking like this:
