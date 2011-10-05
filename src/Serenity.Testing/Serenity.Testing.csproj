@@ -67,6 +67,10 @@
     <Reference Include="Selenium.WebDriverBackedSelenium">
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium.2.7.0\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
+    <Reference Include="StoryTeller, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StoryTeller\StoryTeller.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -92,6 +96,7 @@
   <ItemGroup>
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="BrowserFixture.cs" />
+    <Compile Include="SerenitySystemTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebDriverSettingsTester.cs" />
   </ItemGroup>
