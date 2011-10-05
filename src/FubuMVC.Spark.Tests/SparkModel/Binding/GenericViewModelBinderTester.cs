@@ -22,12 +22,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _template.Descriptor = _descriptor;
 
             _request = new BindRequest
-                           {
-                               Target = _template,
-                               ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>",
-                               Types = typePool(),
-                               Logger = MockFor<ISparkLogger>()
-                           };
+            {
+                Target = _template,
+                ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>",
+                Types = typePool(),
+                Logger = MockFor<ISparkLogger>()
+            };
         }
 
         [Test]
@@ -53,7 +53,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldBeNull();
         }
-
 
         [Test]
         public void generic_parse_errors_are_logged()
@@ -114,7 +113,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var pool = new TypePool(GetType().Assembly);
 
-            var externalAssemblyDuplicatedType = generateType("namespace FubuMVC.Spark.Tests.SparkModel.Binding{public class DuplicatedGeneric<T>{}}", "FubuMVC.Spark.Tests.SparkModel.Binding.DuplicatedGeneric`1[]");
+            var externalAssemblyDuplicatedType = generateType("namespace FubuMVC.Spark.Tests.SparkModel.Binding{public class DuplicatedGeneric<T>{}}", "FubuMVC.Spark.Tests.SparkModel.Binding.DuplicatedGeneric`1");
 
             pool.AddType<Bar>();
             pool.AddType<Baz>();
@@ -124,8 +123,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             pool.AddType<DuplicatedGeneric<Bar>>();
             pool.AddSource(() => new[] { externalAssemblyDuplicatedType.Assembly, GetType().Assembly });
             pool.AddType(externalAssemblyDuplicatedType);
+
             return pool;
         }
+
         private static Type generateType(string source, string fullName)
         {
             var parms = new CompilerParameters
@@ -141,11 +142,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 .CompiledAssembly;
 
             return compiledAssembly.GetType(fullName);
-        } 
+        }
     }
 
-    public class DuplicatedGeneric<T>
-    {
-
-    }
+    public class DuplicatedGeneric<T> { }
 }
