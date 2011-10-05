@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore.Configuration;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Urls;
@@ -108,33 +107,6 @@ namespace Serenity
         void Teardown();
     }
 
-    // TODO -- Add Safari/who knows what in the future?
-    // Make it open ended so you can just say the type of an IWebDriver class later
-    public enum BrowserType
-    {
-        Firefox,
-        IE,
-        Chrome
-    }
-
-
-    // An application
-    public class ApplicationSettings
-    {
-        public string PhysicalPath { get; set; }
-        public string RootUrl { get; set; }
-
-        public static ApplicationSettings Read(string file)
-        {
-            var settings = SettingsData.ReadFromFile(SettingCategory.core, file);
-            return SettingsProvider.For(settings).SettingsFor<ApplicationSettings>();
-        }
-
-        public static ApplicationSettings ReadByName(string name)
-        {
-            return Read(name + ".application");
-        }
-    }
 
     public class ScreenFixture : Fixture
     {
