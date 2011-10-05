@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
-using FubuMVC.Core.Urls;
-using OpenQA.Selenium;
-using StoryTeller.Engine;
 
 namespace Serenity
 {
@@ -43,30 +40,5 @@ namespace Serenity
         {
             return _primary ?? _applications.GetAll().FirstOrDefault();
         }
-    }
-
-
-    // TODO -- figure out how to ping it
-    public interface IApplicationUnderTest
-    {
-        string Name { get; }
-        IUrlRegistry Urls { get; }
-        IWebDriver Driver { get; }
-
-        T GetInstance<T>();
-        IEnumerable<T> GetAll<T>();
-
-        void Ping();
-
-        void Teardown();
-    }
-
-
-    public class ScreenFixture : Fixture
-    {
-    }
-
-    public abstract class ScreenFixture<T> : Fixture
-    {
     }
 }
