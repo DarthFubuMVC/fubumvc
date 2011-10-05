@@ -71,8 +71,6 @@ namespace Serenity
 
             Driver.Close();
             Driver.SafeDispose();
-
-            
         }
 
         public IWebDriver Driver
