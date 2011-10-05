@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D0765EFA-2B15-4F68-A70F-7946E9B5F134}</ProjectGuid>
+    <ProjectGuid>{5E69E72A-B92F-47BE-B7F7-6E6A926EC90F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FubuMVC.GettingStarted</RootNamespace>
-    <AssemblyName>FubuMVC.GettingStarted</AssemblyName>
+    <RootNamespace>Serenity.Testing</RootNamespace>
+    <AssemblyName>Serenity.Testing</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,27 +31,66 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.2.69\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuTestingSupport">
+      <HintPath>..\packages\FubuTestingSupport.0.9.2.69\lib\FubuTestingSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlTags, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Selenium.WebDriverBackedSelenium">
+      <HintPath>..\packages\Selenium.WebDriverBackedSelenium.2.7.0\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.AutoMocking">
+      <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.7.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.7.0\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiagnosticsTemplateFinder.cs" />
-    <Compile Include="Intro\GettingStartedController.cs" />
-    <Compile Include="GettingStartedExtension.cs" />
-    <Compile Include="Notifications\AddBehaviorChainNotification.cs" />
-    <Compile Include="Notifications\AddBehaviorChainNotificationPolicy.cs" />
+    <Compile Include="BrowserFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,18 +98,13 @@
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
-      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
-      <Name>FubuMVC.Diagnostics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
-      <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
-      <Name>FubuMVC.Spark</Name>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900A0419-3579-4DAE-85BE-71A3E4B34239}</Project>
+      <Name>Serenity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content.htm" />
-    <Content Include="WebContent\Content\images\logo.png" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -80,15 +114,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <EmbeddedResource Include="pak-WebContent.zip" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".package-manifest" />
-    <None Include="Intro\Intro.spark" />
-    <None Include="Notifications\AddBehaviorChain.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
