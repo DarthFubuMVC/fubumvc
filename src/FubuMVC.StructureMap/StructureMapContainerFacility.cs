@@ -76,9 +76,14 @@ namespace FubuMVC.StructureMap
             }
         }
 
-        public T Get<T>() where T : class
+        public T Get<T>()
         {
             return _container.GetInstance<T>();
+        }
+
+        public IEnumerable<T> GetAll<T>()
+        {
+            return _container.GetAllInstances<T>();
         }
 
         public IEnumerable<IActivator> GetAllActivators()
