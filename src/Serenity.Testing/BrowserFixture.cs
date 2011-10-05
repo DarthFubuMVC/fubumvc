@@ -20,6 +20,8 @@ namespace Serenity.Testing
             OpenTo(x => x.Add("div").Text("Hello").Id("hello"));
 
             driver.FindElement(By.Id("hello")).Text.ShouldEqual("Hello");
+
+
         }
     }
 
@@ -65,6 +67,7 @@ namespace Serenity.Testing
         public void FixtureTeardown()
         {
             _driver.Close();
+            _driver.SafeDispose();
         }
     }
 }
