@@ -92,7 +92,8 @@ namespace FubuMVC.Core.Continuations
 
         public void AssertWasTransferedTo<T>(T destination)
         {
-            AssertWasTransferedTo<T>(x => x.Equals(destination));
+            Func<T, bool> predicate = x => x.Equals(destination);
+            AssertWasTransferedTo(predicate);
         }
 
         public void AssertWasTransferedTo<T>(Func<T, bool> predicate)
@@ -103,7 +104,8 @@ namespace FubuMVC.Core.Continuations
 
         public void AssertWasRedirectedTo<T>(T destination)
         {
-            AssertWasRedirectedTo<T>(x => x.Equals(destination));
+            Func<T, bool> predicate = x => x.Equals(destination);
+            AssertWasRedirectedTo(predicate);
         }
 
         public void AssertWasRedirectedTo<T>(Func<T, bool> predicate)
