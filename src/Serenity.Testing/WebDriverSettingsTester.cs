@@ -1,3 +1,4 @@
+using FubuCore;
 using NUnit.Framework;
 using FubuTestingSupport;
 using OpenQA.Selenium.Chrome;
@@ -9,6 +10,23 @@ namespace Serenity.Testing
     [TestFixture]
     public class WebDriverSettingsTester
     {
+
+        [Test]
+        public void read_website_settings_if_there_is_no_file()
+        {
+            new FileSystem().DeleteFile(WebDriverSettings.Filename);
+
+            WebDriverSettings.Read().Browser.ShouldEqual(new WebDriverSettings().Browser);
+        }
+
+        [Test]
+        public void read_website_settings()
+        {
+            new FileSystem().AlterFlatFile(WebDriverSettings.Filename, list => list.Add("WebDriverSettings.Browser=IE"));
+
+            WebDriverSettings.Read().Browser.ShouldEqual(BrowserType.IE);
+        }
+
         [Test]
         public void default_browser_is_firefox()
         {
