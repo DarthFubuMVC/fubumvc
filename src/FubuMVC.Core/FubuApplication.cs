@@ -24,7 +24,7 @@ namespace FubuMVC.Core
     public interface IApplicationSource
     {
         FubuApplication BuildApplication();
-        string Name { get; set; }
+        string Name { get; }
     }
 
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
