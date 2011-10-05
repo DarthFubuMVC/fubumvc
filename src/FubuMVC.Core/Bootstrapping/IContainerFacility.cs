@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Environment;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 
@@ -14,7 +13,8 @@ namespace FubuMVC.Core.Bootstrapping
         void Register(Type serviceType, ObjectDef def);
         IEnumerable<IActivator> GetAllActivators();
         IEnumerable<IInstaller> GetAllInstallers();
-        T Get<T>() where T : class;
+        T Get<T>();
+        IEnumerable<T> GetAll<T>();
     }
 
     public static class ContainerFacilityExtensions

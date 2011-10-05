@@ -21,6 +21,12 @@ namespace FubuMVC.Core
         FullRequestTracing
     }
 
+    public interface IApplicationSource
+    {
+        FubuApplication BuildApplication();
+        string Name { get; set; }
+    }
+
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
     public class FubuApplication : IContainerFacilityExpression
     {
@@ -183,6 +189,20 @@ namespace FubuMVC.Core
         public IEnumerable<IInstaller> GetAllInstallers()
         {
             return _facility.Value.GetAllInstallers();
+        }
+
+        public IContainerFacility Facility
+        {
+            get
+            {
+                if (!_facility.IsValueCreated)
+                {
+                    throw new InvalidOperationException("Application has not yet been bootstrapped.  This operation is only valid after bootstrapping the application");
+                }
+                
+                
+                return _facility.Value;
+            }
         }
     }
 

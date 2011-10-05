@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Urls;
+using OpenQA.Selenium;
 using StoryTeller.Engine;
 
 namespace Serenity
@@ -8,13 +9,14 @@ namespace Serenity
 
 
 
-    public class FubuMvcSystem : BasicSystem
+    public abstract class FubuMvcSystem : BasicSystem
     {
-        private readonly IEnumerable<IApplicationUnderTest> _applications;
+        private readonly IList<IApplicationUnderTest> _applications = new List<IApplicationUnderTest>();
         // The first one should be considered to be the main one
-        public FubuMvcSystem(params IApplicationUnderTest[] applications)
+        
+        public void AddApplication(IApplicationUnderTest application)
         {
-            _applications = applications;
+            _applications.Add(application);
         }
 
         //public override object Get(Type type)
@@ -24,7 +26,8 @@ namespace Serenity
 
         public override void RegisterServices(ITestContext context)
         {
-            throw new NotImplementedException();
+            // TODO -- does need to push in the IApplicationUnderTest
+            throw new NotSupportedException();
         }
 
         public override void SetupEnvironment()
@@ -35,23 +38,12 @@ namespace Serenity
 
         public override void TeardownEnvironment()
         {
-            throw new NotImplementedException();
+            _applications.Each(x => x.Teardown());
         }
 
-        public override void Setup()
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void Teardown()
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void RegisterFixtures(FixtureRegistry registry)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 
 
@@ -67,18 +59,19 @@ namespace Serenity
 
         void Ping();
 
-        // Whatever you want to happen to start.  Nah, make it lazy
+        void Teardown();
 
-        // Whatever you want cleaned up.
-        // Prefer to do this by just registering 
+        IWebDriver Driver { get; }
     }
+
 
     // This will be used to set up the application
     public class WebDriverSettings
     {
         public string BrowserName { get; set;}
     }
-
+    
+    // An application
     public class ApplicationSettings
     {
         public string Name { get; set; }

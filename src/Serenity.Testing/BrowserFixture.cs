@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core;
 using HtmlTags;
 using NUnit.Framework;
 using OpenQA.Selenium;
