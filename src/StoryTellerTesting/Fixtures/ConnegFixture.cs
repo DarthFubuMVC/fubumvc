@@ -21,6 +21,7 @@ namespace IntegrationTesting.Fixtures
         {
             var client = new WebClient();
             client.Headers.Add("content-type", contentType);
+            client.Headers[HttpRequestHeader.Accept] = contentType;
             _lastResponse = client.DownloadString("http://localhost/fubu-testing/conneg/buckrogers");
             _lastResponseContentType = client.ResponseHeaders["content-type"];
         }
@@ -30,6 +31,8 @@ namespace IntegrationTesting.Fixtures
         {
             var client = new WebClient();
             client.Headers.Add("content-type", contentType);
+            client.Headers[HttpRequestHeader.Accept] = contentType;
+
             _lastResponse = client.UploadString("http://localhost/fubu-testing/conneg/mirror", content);
             _lastResponseContentType = client.ResponseHeaders["content-type"];
         }

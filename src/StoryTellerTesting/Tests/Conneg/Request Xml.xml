@@ -2,10 +2,10 @@
 <Test name="Request Xml" lifecycle="Regression">
   <Conneg>
     <RequestNameWithMimeType isStep="True" contentType="text/xml" />
-    <TheResponseText isStep="True" response="&lt;?xml version=&quot;1.0&quot; encoding=&quot;Windows-1252&quot;?&gt;&lt;Output xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;FullName&gt;Buck Rogers&lt;/FullName&gt;&lt;/Output&gt;" />
+    <TheResponseText isStep="True" response="&lt;?xml version=&quot;1.0&quot; encoding=&quot;Windows-1252&quot;?&gt;&lt;Output xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;&lt;FullName&gt;Buck Rogers&lt;/FullName&gt;&lt;/Output&gt;" />
     <TheResponseContentTypeIs isStep="True" responseType="text/xml" />
     <SendToMirror isStep="True" content="&lt;Input&gt;&lt;FirstName&gt;Jeremy&lt;/FirstName&gt;&lt;LastName&gt;Miller&lt;/LastName&gt;&lt;/Input&gt;" contentType="application/xml" />
     <TheResponseContentTypeIs isStep="True" responseType="application/xml" />
-    <TheResponseText isStep="True" response="&lt;?xml version=&quot;1.0&quot; encoding=&quot;Windows-1252&quot;?&gt;&lt;Output xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;FullName&gt;Jeremy Miller&lt;/FullName&gt;&lt;/Output&gt;" />
+    <TheResponseText isStep="True" response="&lt;?xml version=&quot;1.0&quot; encoding=&quot;Windows-1252&quot;?&gt;&lt;Output xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;&lt;FullName&gt;Jeremy Miller&lt;/FullName&gt;&lt;/Output&gt;" />
   </Conneg>
 </Test>

@@ -21,6 +21,9 @@ namespace FubuMVC.Core.Diagnostics.Querying
         public EndpointModel All()
         {
             var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "text/json";
+            client.Headers[HttpRequestHeader.Accept] = "text/json";
+
             var jsonBytes = client.DownloadData(_getAllUrl);
             var json = Encoding.Default.GetString(jsonBytes);
 
