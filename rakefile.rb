@@ -143,8 +143,14 @@ def self.bottles(args)
 end
 
 def self.storyteller(args)
-st = Platform.runtime("lib/storyteller/StoryTellerRunner.exe") 
+st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerRunner.exe")) 
 sh "#{st} #{args}"
+end
+
+desc "Runs the StoryTeller UI"
+task :run_st do
+  st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerUI.exe"))
+  sh st 
 end
 
 def self.fubu(args)

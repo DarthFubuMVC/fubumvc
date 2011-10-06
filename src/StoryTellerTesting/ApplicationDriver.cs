@@ -59,6 +59,8 @@ namespace IntegrationTesting
             var serializer = new JavaScriptSerializer();
             var json = serializer.Serialize(message);
 
+            client.Headers[HttpRequestHeader.ContentType] = "text/json";
+            client.Headers[HttpRequestHeader.Accept] = "text/json";
 
             var response = client.UploadString(url, json);
 

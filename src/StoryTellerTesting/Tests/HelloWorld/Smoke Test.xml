@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Smoke Test" lifecycle="Regression">
+<Test name="Smoke Test" lifecycle="Acceptance">
   <HelloWorld>
     <RouteExists isStep="True" route="home/post" />
     <RouteExists isStep="True" route="integrationtests/run" />
