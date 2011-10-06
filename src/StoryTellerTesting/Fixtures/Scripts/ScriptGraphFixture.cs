@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Bottles.Diagnostics;
-using FubuMVC.Core.Packaging;
 using FubuMVC.Core.UI.Scripts;
 using StoryTeller;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;
-using FluentNHibernate.Utils;
 using System.Linq;
 
 namespace IntegrationTesting.Fixtures.Scripts
@@ -111,13 +109,13 @@ namespace IntegrationTesting.Fixtures.Scripts
         [FormatAs("{name} requires {reqs}")]
         public void Requires(string name, string[] reqs)
         {
-            CollectionExtensions.Each(reqs, x => _graph.Dependency(name, x));
+            reqs.Each(x => _graph.Dependency(name, x));
         }
 
         [FormatAs("{setName} includes {scripts}")]
         public void Includes(string setName, string[] scripts)
         {
-            CollectionExtensions.Each(scripts, s => _graph.AddToSet(setName, s));
+            scripts.Each(s => _graph.AddToSet(setName, s));
         }
 
         [FormatAs("{alias} is {name}")]
@@ -125,5 +123,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         {
             _graph.Alias(name, alias);
         }
+
+
     }
 }
