@@ -1,7 +1,7 @@
 using System.Net;
 using StoryTeller.Engine;
 
-namespace IntegrationTesting.Fixtures
+namespace IntegrationTesting.Fixtures.Resources
 {
     public class ConnegFixture : Fixture
     {
