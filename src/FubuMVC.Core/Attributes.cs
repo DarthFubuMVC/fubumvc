@@ -1,5 +1,8 @@
 using System;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Core
 {
@@ -66,6 +69,31 @@ namespace FubuMVC.Core
     [AttributeUsage(AttributeTargets.Method)]
     public class JsonEndpointAttribute : Attribute
     {
+
+    }
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class AsymmetricJsonAttribute : ModifyChainAttribute
+    {
+        public override void Alter(ActionCall call)
+        {
+            call.ParentChain().MakeAsymmetricJson();
+        }
+    }
+
+    public enum JsonOptions
+    {
+        HtmlAndJson,
+        JsonOnly
+    }
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class SymmetricJsonAttribute : ModifyChainAttribute
+    {
+        public override void Alter(ActionCall call)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /// <summary>

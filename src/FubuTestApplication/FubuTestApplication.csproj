@@ -153,6 +153,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnegActions\ConnegController.cs" />
     <Compile Include="ConnegActions\MirrorAction.cs" />
     <Compile Include="Environments.cs" />
     <Compile Include="FubuTestApplicationRegistry.cs" />

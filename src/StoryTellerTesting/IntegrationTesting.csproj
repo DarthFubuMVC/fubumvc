@@ -60,9 +60,8 @@
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="StoryTeller, Version=1.0.2.51016, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Storyteller.1.0.2.470\lib\net40\StoryTeller.dll</HintPath>
+    <Reference Include="StoryTeller">
+      <HintPath>..\packages\Storyteller.1.0.2.471\lib\net40\StoryTeller.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
@@ -82,7 +81,7 @@
     <Compile Include="ApplicationDriver.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
-    <Compile Include="Fixtures\ConnegFixture.cs" />
+    <Compile Include="Fixtures\Resources\ConnegFixture.cs" />
     <Compile Include="Fixtures\Packages\Package4Fixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />
     <Compile Include="Fixtures\Packages\EnvironmentRunnerFixture.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="Fixtures\Packages\Package1Fixture.cs" />
     <Compile Include="Fixtures\Packages\PackagingFixture.cs" />
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
+    <Compile Include="Fixtures\Resources\MediaConnegFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
     <Compile Include="FubuSystem.cs" />
@@ -121,6 +121,10 @@
     <ProjectReference Include="..\Fubu\Fubu.csproj">
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
       <Name>Fubu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serenity\Serenity.csproj">
+      <Project>{900A0419-3579-4DAE-85BE-71A3E4B34239}</Project>
+      <Name>Serenity</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestPackage1\TestPackage1.csproj">
       <Project>{1F18D6EB-4D9C-407A-BD70-C5D525E377B6}</Project>
