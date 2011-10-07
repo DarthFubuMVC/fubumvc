@@ -109,6 +109,7 @@
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
+    <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Nodes\OutputNodeTester.cs" />
     <Compile Include="Registration\Nodes\RenderHtmlTagNodeTester.cs" />

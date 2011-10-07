@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Conventions
@@ -12,7 +13,7 @@ namespace FubuMVC.Core.Registration.Conventions
 
         private static void analyzeChain(BehaviorChain chain)
         {
-            chain.Calls.Each(call => call.ForAttributes<ModifyChainAttribute>(att => att.Alter(call)));
+            chain.Calls.ToList().Each(call => call.ForAttributes<ModifyChainAttribute>(att => att.Alter(call)));
         }
     }
 }
