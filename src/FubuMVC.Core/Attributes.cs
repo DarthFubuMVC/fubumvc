@@ -92,7 +92,7 @@ namespace FubuMVC.Core
     {
         public override void Alter(ActionCall call)
         {
-            throw new NotImplementedException();
+            call.ParentChain().MakeSymmetricJson();
         }
     }
 
