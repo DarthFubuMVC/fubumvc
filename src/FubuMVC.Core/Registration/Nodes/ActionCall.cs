@@ -27,7 +27,7 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public bool HasOutput { get { return Method.ReturnType != typeof (void); } }
         public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
-        public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
+        public override string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
 
         public void ForAttributes<T>(Action<T> action) where T : Attribute
         {
