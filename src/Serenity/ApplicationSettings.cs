@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 using FubuCore.Configuration;
 
@@ -17,12 +18,18 @@ namespace Serenity
 
         public static ApplicationSettings ReadByName(string name)
         {
-            return Read(name + ".application");
+            var file = name + ".application";
+            file = AppDomain.CurrentDomain.BaseDirectory.AppendPath(file);
+
+            return Read(file);
         }
 
         public void Write()
         {
-            new FileSystem().AlterFlatFile(Name + ".application", list =>
+            var file = Name + ".application";
+            file = AppDomain.CurrentDomain.BaseDirectory.AppendPath(file);
+
+            new FileSystem().AlterFlatFile(file, list =>
             {
                 list.Clear();
 

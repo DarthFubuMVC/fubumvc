@@ -1,23 +1,47 @@
 using System;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Querying;
+using FubuTestApplication;
+using Serenity;
 using StoryTeller.Engine;
+using FubuMVC.StructureMap;
+using StructureMap;
 
 namespace IntegrationTesting
 {
-    public class FubuSystem : ISystem
+    public class FubuTestApplicationSource : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication.For<FubuTestApplicationRegistry>().StructureMap(new Container());
+        }
+
+        public string Name
+        {
+            get { return "FubuTestApplication"; }
+        }
+    }
+
+    public class FubuSystem : SerenitySystem
     {
         public static readonly string TEST_APPLICATION_ROOT = "http://localhost/fubu-testing";
         private CommandRunner _runner;
         private ApplicationDriver _application;
 
-        public object Get(Type type)
+        public FubuSystem()
         {
-            throw new NotImplementedException();
+            AddApplication<FubuTestApplicationSource>();
         }
 
-        public void RegisterServices(ITestContext context)
+        public override object Get(Type type)
         {
+            return null;
+        }
+
+        public override void RegisterServices(ITestContext context)
+        {
+            base.RegisterServices(context);
             var remoteGraph = new RemoteBehaviorGraph(TEST_APPLICATION_ROOT);
             context.Store(remoteGraph);
 
@@ -26,8 +50,10 @@ namespace IntegrationTesting
             context.Store(_application);
         }
 
-        public void SetupEnvironment()
+        public override void SetupEnvironment()
         {
+            base.SetupEnvironment();
+
             // TODO -- make this configurable?
             _runner = new CommandRunner();
             _runner.RunFubu("createvdir src/FubuTestApplication fubu-testing");
@@ -41,8 +67,10 @@ namespace IntegrationTesting
             _application = new ApplicationDriver();
         }
 
-        public void TeardownEnvironment()
+        public override void TeardownEnvironment()
         {
+            base.TeardownEnvironment();
+
             _application.Teardown();
 
             var fileSystem = new FileSystem();
@@ -53,16 +81,16 @@ namespace IntegrationTesting
 			fileSystem.DeleteFile("spark.zip");
         }
 
-        public void Setup()
+        public override void Setup()
         {
         }
 
-        public void Teardown()
+        public override void Teardown()
         {
             _application.Teardown();
         }
 
-        public void RegisterFixtures(FixtureRegistry registry)
+        public override void RegisterFixtures(FixtureRegistry registry)
         {
             registry.AddFixturesFromThisAssembly();
         }

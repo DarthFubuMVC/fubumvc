@@ -28,6 +28,7 @@ namespace Serenity
             _applications.AddApplication(application);
         }
 
+        // TODO -- have a way to do this inline
         public void AddApplication<T>() where T : IApplicationSource, new()
         {
             AddApplication(new T());

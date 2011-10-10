@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using FubuCore;
 using StoryTeller.Assertions;
 
@@ -12,9 +13,11 @@ namespace IntegrationTesting
 
         public CommandRunner()
         {
-            var path = Environment.CurrentDirectory;
+            var path = AppDomain.CurrentDomain.BaseDirectory;
 
             var fileSystem = new FileSystem();
+
+
 
             bool isFound = fileSystem.FileExists(path, @"src\fubu\bin\debug", "fubu.exe");
             while (!isFound)
