@@ -8,6 +8,7 @@ namespace FubuMVC.Core.Registration.Nodes
         Chain,
         Authorization,
         Process,
-        Cache
+        Cache,
+        Conditional
     }
 }

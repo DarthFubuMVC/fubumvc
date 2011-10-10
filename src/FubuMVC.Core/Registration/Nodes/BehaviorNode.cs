@@ -262,6 +262,43 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
+        /// Replaces the BehaviorNode with a ConditionalNode that that will only 
+        /// execute when the provided condition is true.
+        /// </summary>
+        /// <param name="condition">Func&lt;bool&gt; lambda to be evaluated before executing the wrapped node </param>
+        /// <returns>The ConditionalNode with the BehaviorNode wrapped within it</returns>
+        public ConditionalNode ConditionallyRunIf(Func<bool> condition)
+        {
+            var conditional = new ConditionalNode(this, condition);
+            ReplaceWith(conditional);
+            return conditional;
+        }
+        /// <summary>
+        /// Replaces the BehaviorNode with a ConditionalNode that that will only 
+        /// execute when the provided condition is true.
+        /// </summary>
+        /// <param name="condition">Func&lt;T,bool&gt; lambda to be evaluated before executing the wrapped node </param>
+        /// <returns>The ConditionalNode with the BehaviorNode wrapped within it</returns>
+        public ConditionalNode<T> ConditionallyRunIf<T>(Func<T, bool> condition)
+        {
+            var conditional = new ConditionalNode<T>(this, condition);
+            ReplaceWith(conditional);
+            return conditional;
+        }
+        /// <summary>
+        /// Replaces the BehaviorNode with a ConditionalNode that that will only 
+        /// execute when the provided condition is true.
+        /// </summary>
+        /// <returns>The ConditionalNode with the BehaviorNode wrapped within it</returns>
+        public ConditionalNode<T> ConditionallyRunIf<T>() where T : IConditional
+        {
+            var conditional = new ConditionalNode<T>(this, typeof(T));
+            ReplaceWith(conditional);
+            return conditional;
+        }
+      
+        
+        /// <summary>
         /// Adds a new BehaviorNode to the very end of this BehaviorChain
         /// </summary>
         /// <param name="node"></param>

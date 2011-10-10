@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
@@ -64,6 +65,7 @@
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
     <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
     <Content Include="Controllers\Home\Home.aspx" />
+    <Content Include="Controllers\Conditional\Conditional.aspx" />
     <Content Include="Controllers\OutputModels\Index.aspx" />
     <Content Include="Controllers\Products\ProductDisplayPartial.ascx" />
     <Content Include="Controllers\Products\ProductsDisplayView.aspx" />
@@ -98,6 +100,15 @@
     </Compile>
     <Compile Include="Controllers\Login\LoggedInStatusController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\Conditional\Conditional.aspx.cs">
+      <DependentUpon>Conditional.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controllers\Conditional\Conditional.aspx.designer.cs">
+      <DependentUpon>Conditional.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Conditional\ConditionalPolicy.cs" />
+    <Compile Include="Controllers\Conditional\ConditionalController.cs" />
     <Compile Include="Controllers\OutputModels\OutputModelController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
