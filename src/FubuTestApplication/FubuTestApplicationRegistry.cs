@@ -1,9 +1,11 @@
 using FubuMVC.Core;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.UI;
 using FubuMVC.Spark;
 using FubuMVC.WebForms;
 using FubuTestApplication.ConnegActions;
 using FubuCore;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuTestApplication
 {
@@ -34,6 +36,17 @@ namespace FubuTestApplication
 
             Media.ApplyContentNegotiationToActions(call => call.HandlerType == typeof (MirrorAction))
                 .ApplyContentNegotiationToActions(call => call.InputType().CanBeCastTo<ConnegMessage>());
+
+            Configure(graph =>
+            {
+                graph.BehaviorFor<ConnegController>(x => x.Mixed(null)).AddToEnd(Wrapper.For<ConnegMessageOutputter>());
+
+                var chain = graph.BehaviorFor<ConnegController>(x => x.FormatterOnly(null));
+                chain.ApplyConneg();
+                chain.ConnegInputNode().AllowHttpFormPosts = false;
+
+                chain.AddToEnd(Wrapper.For<ConnegMessageOutputter>());
+            });
         }
     }
 }

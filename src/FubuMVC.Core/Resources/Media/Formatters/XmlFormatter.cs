@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -33,7 +34,9 @@ namespace FubuMVC.Core.Resources.Media.Formatters
         public T Read<T>()
         {
             var serializer = new XmlSerializer(typeof (T));
-            return (T) serializer.Deserialize(_streaming.Input);
+            var reader = new StreamReader(_streaming.Input, true);
+
+            return (T) serializer.Deserialize(reader);
         }
 
         public IEnumerable<string> MatchingMimetypes
