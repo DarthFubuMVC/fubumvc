@@ -1,41 +1,48 @@
 using System;
+using FubuMVC.Core;
 
 namespace FubuTestApplication.ConnegActions
 {
     public class ConnegController
     {
-        public SymmetricJson Send(SymmetricJson message)
+        [SymmetricJson]
+        public SymmetricJson SymmetricSend(SymmetricJson message)
         {
+            message.Name = "I was here";
             return message;
         }
 
-        public AsymmetricJson Send(AsymmetricJson message)
+        [AsymmetricJson]
+        public AsymmetricJson AsymmetricSend(AsymmetricJson message)
         {
             return message;
         }
     }
 
-    public abstract class ConnegMessage
+    public interface ConnegMessage
     {
         Guid Id { get; set; } 
     }
 
     public class SymmetricJson : ConnegMessage
     {
+        public Guid Id { get; set;}
+        public string Name { get; set; }
     }
 
     public class AsymmetricJson : ConnegMessage
     {
+        public Guid Id { get; set; }
     }
 
     public class XmlAndJsonMessage : ConnegMessage
     {
-        
+        public Guid Id { get; set; }
     }
 
     public class XmlAndJsonOnlyMessage : ConnegMessage
     {
-        
+        public Guid Id { get; set; }
     }
 
     

@@ -62,7 +62,7 @@ namespace Serenity
         public void Ping()
         {
             var client = new WebClient();
-            client.DownloadDataAsync(new Uri(_settings.RootUrl));
+            if (_settings.RootUrl != null) client.DownloadDataAsync(new Uri(_settings.RootUrl));
         }
 
         public void Teardown()

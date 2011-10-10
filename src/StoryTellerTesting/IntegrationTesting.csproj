@@ -139,6 +139,9 @@
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FubuTestApplication.application">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -8,11 +8,11 @@ using FubuMVC.Core.Packaging;
 
 namespace Fubu
 {
-    internal class Program
+    public class Program
     {
         private static bool success;
 
-        private static int Main(string[] args)
+        public static int Main(string[] args)
         {
             BottleFiles.ContentFolder = FubuMvcPackageFacility.FubuContentFolder;
             BottleFiles.PackagesFolder = FileSystem.Combine("bin", FubuMvcPackageFacility.FubuPackagesFolder);
