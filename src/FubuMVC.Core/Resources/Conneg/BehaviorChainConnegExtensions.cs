@@ -47,6 +47,12 @@ namespace FubuMVC.Core.Resources.Conneg
             }
         }
 
+        public static void UseFormatter<T>(this BehaviorChain chain) where T : IFormatter
+        {
+            chain.AlterConnegInput(node => node.UseFormatter<T>());
+            chain.AlterConnegOutput(node => node.UseFormatter<T>());
+        }
+
         public static void MakeSymmetricJson(this BehaviorChain chain)
         {
             chain.RemoveConneg();

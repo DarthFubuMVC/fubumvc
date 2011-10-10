@@ -3,6 +3,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Core.Resources.Media.Formatters;
 
 namespace FubuMVC.Core
 {
@@ -81,10 +82,69 @@ namespace FubuMVC.Core
         }
     }
 
-    public enum JsonOptions
+
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class ConnegAttribute : ModifyChainAttribute
     {
-        HtmlAndJson,
-        JsonOnly
+        private FormatterOptions _formatters = FormatterOptions.Html | FormatterOptions.Json | FormatterOptions.Xml;
+
+        public ConnegAttribute() : this(FormatterOptions.All)
+        {
+        }
+
+        public ConnegAttribute(FormatterOptions formatters)
+        {
+            _formatters = formatters;
+        }
+
+        public FormatterOptions Formatters
+        {
+            get { return _formatters; }
+            set { _formatters = value; }
+        }
+
+        public override void Alter(ActionCall call)
+        {
+            var chain = call.ParentChain();
+            chain.ApplyConneg();
+
+            if (_formatters == FormatterOptions.All)
+            {
+                chain.AlterConnegInput(node => node.AllowHttpFormPosts = true);
+                return;
+            }
+
+
+
+            if ((_formatters & FormatterOptions.Json) != 0 )
+            {
+                chain.UseFormatter<JsonFormatter>();
+            }
+
+            if ((_formatters & FormatterOptions.Xml) != 0)
+            {
+                chain.UseFormatter<XmlFormatter>();
+            }
+
+            if ((_formatters & FormatterOptions.Html) != 0)
+            {
+                chain.AlterConnegInput(node => node.AllowHttpFormPosts = true);
+            }
+            else
+            {
+                chain.AlterConnegInput(node => node.AllowHttpFormPosts = false);
+            }
+        }
+    }
+
+    [Flags]
+    public enum FormatterOptions
+    {
+        Html = 1,
+        Json = 2,
+        Xml = 4,
+        All = 8
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
