@@ -273,7 +273,6 @@
     <Compile Include="Registration\IServiceRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\BehaviorCategory.cs" />
     <Compile Include="Registration\Nodes\BehaviorSearch.cs" />
-    <Compile Include="Registration\Nodes\ConditionalNode.cs" />
     <Compile Include="Registration\Routes\IRouteInput.cs" />
     <Compile Include="Registration\Routes\RouteParameters.cs" />
     <Compile Include="Packaging\IStandaloneAssemblyFinder.cs" />

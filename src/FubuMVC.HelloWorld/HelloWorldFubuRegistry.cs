@@ -33,7 +33,6 @@ namespace FubuMVC.HelloWorld
 
             Import<WebFormsEngine>();
 
-            Policies.Add<AntiForgeryPolicy>().Add<ConditionalPolicy>();
             Views.TryToAttachWithDefaultConventions();
 
             HtmlConvention<SampleHtmlConventions>();

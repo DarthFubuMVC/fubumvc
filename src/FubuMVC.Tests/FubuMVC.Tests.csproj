@@ -200,8 +200,6 @@
     <Compile Include="Registration\Nodes\BehaviorChain_building_an_object_def.cs" />
     <Compile Include="Registration\Nodes\Behavior_node_ObjectDef_creation_Tester.cs" />
     <Compile Include="Registration\Nodes\RenderTextNodeTester.cs" />
-    <Compile Include="Registration\Nodes\ConditionalNodeIntegration.cs" />
-    <Compile Include="Registration\Nodes\ConditionalNodeTester.cs" />
     <Compile Include="Registration\Nodes\WebFormViewTester.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
