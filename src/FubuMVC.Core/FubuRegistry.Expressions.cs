@@ -279,6 +279,8 @@ namespace FubuMVC.Core
             addExplicit(alteration);
         }
 
+
+
         #region Nested type: RegistryImport
 
         public class RegistryImport

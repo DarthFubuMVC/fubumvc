@@ -8,6 +8,7 @@ using FubuMVC.Core.Urls;
 using FubuTestApplication.ConnegActions;
 using Newtonsoft.Json.Linq;
 using Serenity;
+using Serenity.Endpoints;
 using StoryTeller.Engine;
 
 namespace IntegrationTesting.Fixtures.Resources
@@ -102,8 +103,7 @@ namespace IntegrationTesting.Fixtures.Resources
             {
                 try
                 {
-                    _response.ToXml();
-                    return true;
+                    return _response.ToXml() != null;
                 }
                 catch (Exception)
                 {
