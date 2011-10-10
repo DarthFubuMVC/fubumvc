@@ -21,6 +21,10 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         public override BehaviorCategory Category { get { return BehaviorCategory.Call; } }
+<<<<<<< HEAD
+=======
+        public override string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
+>>>>>>> Removed compiler warnings
 
         public void ForAttributes<T>(Action<T> action) where T : Attribute
         {

@@ -121,7 +121,7 @@ namespace IntegrationTesting.Fixtures.Resources
                     JObject.Parse(_response.ToString());
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }
