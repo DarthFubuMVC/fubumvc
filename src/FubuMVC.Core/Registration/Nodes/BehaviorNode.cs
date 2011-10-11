@@ -3,37 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.ObjectGraph;
-using FubuCore;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
     public interface IContainerModel
     {
         /// <summary>
-        /// Generates an ObjectDef object that creates an IoC agnostic
-        /// configuration model of the real Behavior objects for this chain
+        ///   Generates an ObjectDef object that creates an IoC agnostic
+        ///   configuration model of the real Behavior objects for this chain
         /// </summary>
-        /// <param name="diagnosticLevel"></param>
+        /// <param name = "diagnosticLevel"></param>
         /// <returns></returns>
         ObjectDef ToObjectDef(DiagnosticLevel diagnosticLevel);
     }
 
     /// <summary>
-    /// BehaviorNode models a single Behavior in the FubuMVC configuration model
+    ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
     public abstract class BehaviorNode : IContainerModel, IEnumerable<BehaviorNode>
     {
         private readonly Guid _uniqueId = Guid.NewGuid();
         private BehaviorNode _next;
-        public virtual Guid UniqueId { get { return _uniqueId; } }
+
+        public virtual Guid UniqueId
+        {
+            get { return _uniqueId; }
+        }
+
         public abstract BehaviorCategory Category { get; }
-        
+
         /// <summary>
-        /// The next or "inner" BehaviorNode in this BehaviorChain
+        ///   The next or "inner" BehaviorNode in this BehaviorChain
         /// </summary>
         public BehaviorNode Next
         {
@@ -46,26 +51,48 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// The previous or "outer" BehaviorNode in this BehaviorChain
+        ///   The previous or "outer" BehaviorNode in this BehaviorChain
         /// </summary>
         public BehaviorNode Previous { get; internal set; }
 
+        internal BehaviorChain Chain { get; set; }
+
         /// <summary>
-        /// Carry out an action on any following or "inner" BehaviorNodes
-        /// meeting a given criteria.
+        ///   From innermost to outermost, iterates through the BehaviorNode's
+        ///   before this BehaviorNode in the BehaviorChain
         /// </summary>
-        /// <param name="search"></param>
-        public void ForFollowingBehavior(BehaviorSearch search)
+        public IEnumerable<BehaviorNode> PreviousNodes
         {
-            var follower = this.FirstOrDefault(search.Matching);
-            if (follower != null)
+            get
             {
-                search.OnFound(follower);
+                if (Previous == null) yield break;
+
+                yield return Previous;
+
+                foreach (var node in Previous.PreviousNodes)
+                {
+                    yield return node;
+                }
             }
-            else
-            {
-                search.OnMissing();
-            }
+        }
+
+        public virtual string Description
+        {
+            get { return GetType().GetFullName(); }
+        }
+
+        /// <summary>
+        ///   Generates an ObjectDef object that creates an IoC agnostic
+        ///   configuration model of the real Behavior objects for this chain
+        /// </summary>
+        /// <param name = "diagnosticLevel"></param>
+        /// <returns></returns>
+        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        {
+            var objectDef = toObjectDef(diagnosticLevel);
+            objectDef.Name = UniqueId.ToString();
+
+            return objectDef;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -86,15 +113,28 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        
-        internal BehaviorChain Chain
+        /// <summary>
+        ///   Carry out an action on any following or "inner" BehaviorNodes
+        ///   meeting a given criteria.
+        /// </summary>
+        /// <param name = "search"></param>
+        public void ForFollowingBehavior(BehaviorSearch search)
         {
-            get; set;
+            var follower = this.FirstOrDefault(search.Matching);
+            if (follower != null)
+            {
+                search.OnFound(follower);
+            }
+            else
+            {
+                search.OnMissing();
+            }
         }
 
+
         /// <summary>
-        /// Retrieves the BehaviorChain that contains this
-        /// BehaviorNode.  Does a recursive search up the chain
+        ///   Retrieves the BehaviorChain that contains this
+        ///   BehaviorNode.  Does a recursive search up the chain
         /// </summary>
         /// <returns></returns>
         public BehaviorChain ParentChain()
@@ -106,23 +146,9 @@ namespace FubuMVC.Core.Registration.Nodes
             return Previous.ParentChain();
         }
 
-        /// <summary>
-        /// Generates an ObjectDef object that creates an IoC agnostic
-        /// configuration model of the real Behavior objects for this chain
-        /// </summary>
-        /// <param name="diagnosticLevel"></param>
-        /// <returns></returns>
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
-        {
-            ObjectDef objectDef = toObjectDef(diagnosticLevel);
-            objectDef.Name = UniqueId.ToString();
-
-            return objectDef;
-        }
-
         protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
         {
-            ObjectDef objectDef = buildObjectDef();
+            var objectDef = buildObjectDef();
 
             if (Next != null)
             {
@@ -132,28 +158,33 @@ namespace FubuMVC.Core.Registration.Nodes
 
             if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
             {
-                var tracerDef = new ObjectDef(typeof (BehaviorTracer));
-                tracerDef.DependencyByType<IActionBehavior>(objectDef);
-
-                var chain = ParentChain();
-                tracerDef.DependencyByValue(new BehaviorCorrelation
-                                                {
-                                                    ChainId = chain == null ? Guid.Empty : chain.UniqueId,
-                                                    BehaviorId = UniqueId
-                                                });
-
-                return tracerDef;
+                return createTracerDef(objectDef);
             }
 
 
             return objectDef;
         }
 
+        private ObjectDef createTracerDef(ObjectDef objectDef)
+        {
+            var tracerDef = new ObjectDef(typeof (BehaviorTracer));
+            tracerDef.DependencyByType<IActionBehavior>(objectDef);
+
+            var chain = ParentChain();
+            tracerDef.DependencyByValue(new BehaviorCorrelation
+            {
+                ChainId = chain == null ? Guid.Empty : chain.UniqueId,
+                BehaviorId = UniqueId
+            });
+
+            return tracerDef;
+        }
+
         protected abstract ObjectDef buildObjectDef();
 
         /// <summary>
-        /// Tests whether or not there are *any* output nodes
-        /// after this BehaviorNode
+        ///   Tests whether or not there are *any* output nodes
+        ///   after this BehaviorNode
         /// </summary>
         /// <returns></returns>
         public bool HasAnyOutputBehavior()
@@ -162,26 +193,26 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Inserts the BehaviorNode "node" immediately after this BehaviorNode.
-        /// Any previously following BehaviorNodes will be attached after "node"
+        ///   Inserts the BehaviorNode "node" immediately after this BehaviorNode.
+        ///   Any previously following BehaviorNodes will be attached after "node"
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name = "node"></param>
         public void AddAfter(BehaviorNode node)
         {
-            BehaviorNode next = Next;
+            var next = Next;
             Next = node;
             node.Next = next;
         }
 
         /// <summary>
-        /// Inserts the BehaviorNode "newNode" directly ahead of this BehaviorNode
-        /// in the BehaviorChain.  All other ordering is preserved
+        ///   Inserts the BehaviorNode "newNode" directly ahead of this BehaviorNode
+        ///   in the BehaviorChain.  All other ordering is preserved
         /// </summary>
-        /// <param name="newNode"></param>
+        /// <param name = "newNode"></param>
         public void AddBefore(BehaviorNode newNode)
         {
             Debug.WriteLine("Adding {0} before {1}".ToFormat(newNode.ToString(), this.ToString()));
-            
+
             if (PreviousNodes.Contains(newNode)) return;
 
             newNode.Remove();
@@ -200,37 +231,10 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// From innermost to outermost, iterates through the BehaviorNode's
-        /// before this BehaviorNode in the BehaviorChain
+        ///   Shortcut to put a "wrapping" behavior immediately in front
+        ///   of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For<T>())
         /// </summary>
-        public IEnumerable<BehaviorNode> PreviousNodes
-        {
-            get
-            {
-                if (Previous == null) yield break;
-
-                yield return Previous;
-
-                foreach (var node in Previous.PreviousNodes)
-                {
-                    yield return node;
-                }
-            }
-        }
-
-        public virtual string Description
-        {
-            get
-            {
-                return GetType().GetFullName();
-            }
-        }
-
-        /// <summary>
-        /// Shortcut to put a "wrapping" behavior immediately in front
-        /// of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For<T>())
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name = "T"></typeparam>
         /// <returns></returns>
         public Wrapper WrapWith<T>() where T : IActionBehavior
         {
@@ -239,10 +243,10 @@ namespace FubuMVC.Core.Registration.Nodes
 
 
         /// <summary>
-        /// Shortcut to put a "wrapping" behavior immediately in front of 
-        /// this BehaviorNode.  Equivalent to AddBefore(new Wrapper(behaviorType))
+        ///   Shortcut to put a "wrapping" behavior immediately in front of 
+        ///   this BehaviorNode.  Equivalent to AddBefore(new Wrapper(behaviorType))
         /// </summary>
-        /// <param name="behaviorType"></param>
+        /// <param name = "behaviorType"></param>
         /// <returns></returns>
         public Wrapper WrapWith(Type behaviorType, params Type[] parameterTypes)
         {
@@ -262,62 +266,57 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
-        /// <summary>
-        /// Replaces the BehaviorNode with a ConditionalNode that that will only 
-        /// execute when the provided condition is true.
-        /// </summary>
-        /// <param name="condition">Func&lt;bool&gt; lambda to be evaluated before executing the wrapped node </param>
-        /// <returns>The ConditionalNode with the BehaviorNode wrapped within it</returns>
-        public void ConditionallyRunIf(Func<bool> condition)
+
+
+        public void Condition(Func<bool> condition)
         {
             throw new NotImplementedException();
             //var conditional = new ConditionalNode(this, condition);
             //ReplaceWith(conditional);
             //return conditional;
         }
-        /// <summary>
-        /// Replaces the BehaviorNode with a ConditionalNode that that will only 
-        /// execute when the provided condition is true.
-        /// </summary>
-        /// <param name="condition">Func&lt;T,bool&gt; lambda to be evaluated before executing the wrapped node </param>
-        /// <returns>The ConditionalNode with the BehaviorNode wrapped within it</returns>
-        public void ConditionallyRunIf<T>(Func<T, bool> condition)
+
+
+        public void ConditionByService<T>(Func<T, bool> condition)
         {
             throw new NotImplementedException();
             //var conditional = new ConditionalNode<T>(this, condition);
             //ReplaceWith(conditional);
             //return conditional;
         }
-        /// <summary>
-        /// Replaces the BehaviorNode with a ConditionalNode that that will only 
-        /// execute when the provided condition is true.
-        /// </summary>
-        /// <returns>The ConditionalNode with the BehaviorNode wrapped within it</returns>
-        public void ConditionallyRunIf<T>() where T : IConditional
+
+
+        public void ConditionByModel<T>(Func<T, bool> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Condition<T>() where T : IConditional
         {
             throw new NotImplementedException();
             //var conditional = new ConditionalNode<T>(this, typeof(T));
             //ReplaceWith(conditional);
             //return conditional;
         }
-      
-        
+
+
         /// <summary>
-        /// Adds a new BehaviorNode to the very end of this BehaviorChain
+        ///   Adds a new BehaviorNode to the very end of this BehaviorChain
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name = "node"></param>
         public void AddToEnd(BehaviorNode node)
         {
             // Do not append any duplicates
             if (this.Contains(node)) return;
 
-            BehaviorNode last = this.LastOrDefault() ?? this;
+            var last = this.LastOrDefault() ?? this;
             last.Next = node;
         }
 
         /// <summary>
-        /// Removes only this BehaviorNode from the BehaviorChain.  Any following nodes
-        /// would be attached to the previous BehaviorNode
+        ///   Removes only this BehaviorNode from the BehaviorChain.  Any following nodes
+        ///   would be attached to the previous BehaviorNode
         /// </summary>
         public void Remove()
         {
@@ -341,9 +340,9 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Swaps out this BehaviorNode for the given BehaviorNode
+        ///   Swaps out this BehaviorNode for the given BehaviorNode
         /// </summary>
-        /// <param name="newNode"></param>
+        /// <param name = "newNode"></param>
         public void ReplaceWith(BehaviorNode newNode)
         {
             newNode.Next = Next;
@@ -356,11 +355,9 @@ namespace FubuMVC.Core.Registration.Nodes
             {
                 Chain.SetTop(newNode);
             }
-            
+
             Previous = null;
             Next = null;
         }
-
-
     }
 }

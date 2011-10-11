@@ -78,6 +78,7 @@
     <Compile Include="AjaxExtensions.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />
+    <Compile Include="Behaviors\Conditional\ConditionalObjectDef.cs" />
     <Compile Include="Behaviors\Conditional\IConditional.cs" />
     <Compile Include="Behaviors\Conditional\IConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\IsAjaxRequest.cs" />
