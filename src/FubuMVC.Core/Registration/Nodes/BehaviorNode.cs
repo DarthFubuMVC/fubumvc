@@ -77,19 +77,7 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return GetType().GetFullName(); }
         }
 
-        /// <summary>
-        ///   Generates an ObjectDef object that creates an IoC agnostic
-        ///   configuration model of the real Behavior objects for this chain
-        /// </summary>
-        /// <param name = "diagnosticLevel"></param>
-        /// <returns></returns>
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
-        {
-            var objectDef = toObjectDef(diagnosticLevel);
-            objectDef.Name = UniqueId.ToString();
 
-            return objectDef;
-        }
 
         IEnumerator IEnumerable.GetEnumerator()
         {

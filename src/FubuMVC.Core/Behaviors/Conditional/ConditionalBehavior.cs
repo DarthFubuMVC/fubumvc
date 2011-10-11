@@ -13,6 +13,16 @@ namespace FubuMVC.Core.Behaviors.Conditional
             _condition = condition;
         }
 
+        public IActionBehavior InnerBehavior
+        {
+            get { return _innerBehavior; }
+        }
+
+        public IConditional Condition
+        {
+            get { return _condition; }
+        }
+
         public void Invoke()
         {
             if (_condition.ShouldExecute())

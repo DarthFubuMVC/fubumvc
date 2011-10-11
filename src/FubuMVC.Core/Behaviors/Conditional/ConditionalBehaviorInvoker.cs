@@ -2,18 +2,23 @@ namespace FubuMVC.Core.Behaviors.Conditional
 {
     public class ConditionalBehaviorInvoker : IActionBehavior
     {
-        private readonly IConditionalBehavior _behavior;
+        private readonly IConditionalBehavior _conditionalBehavior;
 
-        public ConditionalBehaviorInvoker(IConditionalBehavior behavior)
+        public ConditionalBehaviorInvoker(IConditionalBehavior conditionalBehavior)
         {
-            _behavior = behavior;
+            _conditionalBehavior = conditionalBehavior;
         }
 
         public IActionBehavior InnerBehavior { get; set; }
 
+        public IConditionalBehavior ConditionalBehavior
+        {
+            get { return _conditionalBehavior; }
+        }
+
         public void Invoke()
         {
-            _behavior.Invoke();
+            _conditionalBehavior.Invoke();
             if (InnerBehavior != null)
             {
                 InnerBehavior.Invoke();
@@ -22,7 +27,7 @@ namespace FubuMVC.Core.Behaviors.Conditional
 
         public void InvokePartial()
         {
-            _behavior.InvokePartial();
+            _conditionalBehavior.InvokePartial();
             if (InnerBehavior != null)
             {
                 InnerBehavior.InvokePartial();

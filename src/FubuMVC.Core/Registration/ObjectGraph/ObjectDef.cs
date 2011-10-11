@@ -159,6 +159,17 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         }
 
         /// <summary>
+        /// Registers a specific concrete type fo the TDependency type
+        /// </summary>
+        /// <typeparam name="TDependency"></typeparam>
+        /// <typeparam name="TConcrete"></typeparam>
+        /// <returns></returns>
+        public ObjectDef DependencyByType<TDependency, TConcrete>()
+        {
+            return DependencyByType(typeof (TDependency), typeof (TConcrete));
+        }
+
+        /// <summary>
         /// Registers a configured dependency for the dependencyType
         /// </summary>
         /// <param name="dependencyType"></param>
