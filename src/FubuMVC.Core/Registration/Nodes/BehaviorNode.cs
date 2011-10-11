@@ -217,25 +217,42 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         
-
+        /// <summary>
+        /// Make the behavior *only* execute if the condition is met
+        /// </summary>
+        /// <param name="condition"></param>
         public void Condition(Func<bool> condition)
         {
             _conditionalDef = ConditionalObjectDef.For(condition);
         }
 
-
+        /// <summary>
+        /// Makes the behavior execute only if the condition against a service
+        /// in the underlying IoC container is true
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
         public void ConditionByService<T>(Func<T, bool> condition)
         {
             _conditionalDef = ConditionalObjectDef.ForService(condition);
         }
 
-
+        /// <summary>
+        /// Makes the behavior execute only if the condition against a model
+        /// object pulled from IFubuRequest is true
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filter"></param>
         public void ConditionByModel<T>(Func<T, bool> filter) where T : class
         {
             _conditionalDef = ConditionalObjectDef.ForModel(filter);
         }
 
-
+        /// <summary>
+        /// Makes the behavior execute only if the custom IConditional evaluates
+        /// true
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void Condition<T>() where T : IConditional
         {
             _conditionalDef = ConditionalObjectDef.For<T>();
