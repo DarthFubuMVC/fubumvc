@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.HelloWorld.Controllers.Conditional

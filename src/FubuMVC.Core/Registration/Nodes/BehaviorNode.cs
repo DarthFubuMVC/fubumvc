@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuCore;
