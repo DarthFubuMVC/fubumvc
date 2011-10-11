@@ -25,15 +25,11 @@ namespace FubuMVC.Core.Registration.Nodes
     /// <summary>
     ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
-    public abstract class BehaviorNode : IContainerModel, IEnumerable<BehaviorNode>
+    public abstract partial class BehaviorNode : IContainerModel, IEnumerable<BehaviorNode>
     {
-        private readonly Guid _uniqueId = Guid.NewGuid();
+        
         private BehaviorNode _next;
 
-        public virtual Guid UniqueId
-        {
-            get { return _uniqueId; }
-        }
 
         public abstract BehaviorCategory Category { get; }
 
@@ -146,41 +142,7 @@ namespace FubuMVC.Core.Registration.Nodes
             return Previous.ParentChain();
         }
 
-        protected ObjectDef toObjectDef(DiagnosticLevel diagnosticLevel)
-        {
-            var objectDef = buildObjectDef();
 
-            if (Next != null)
-            {
-                var nextObjectDef = Next.As<IContainerModel>().ToObjectDef(diagnosticLevel);
-                objectDef.DependencyByType<IActionBehavior>(nextObjectDef);
-            }
-
-            if (diagnosticLevel == DiagnosticLevel.FullRequestTracing)
-            {
-                return createTracerDef(objectDef);
-            }
-
-
-            return objectDef;
-        }
-
-        private ObjectDef createTracerDef(ObjectDef objectDef)
-        {
-            var tracerDef = new ObjectDef(typeof (BehaviorTracer));
-            tracerDef.DependencyByType<IActionBehavior>(objectDef);
-
-            var chain = ParentChain();
-            tracerDef.DependencyByValue(new BehaviorCorrelation
-            {
-                ChainId = chain == null ? Guid.Empty : chain.UniqueId,
-                BehaviorId = UniqueId
-            });
-
-            return tracerDef;
-        }
-
-        protected abstract ObjectDef buildObjectDef();
 
         /// <summary>
         ///   Tests whether or not there are *any* output nodes
@@ -266,38 +228,29 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
-
+        
 
         public void Condition(Func<bool> condition)
         {
-            throw new NotImplementedException();
-            //var conditional = new ConditionalNode(this, condition);
-            //ReplaceWith(conditional);
-            //return conditional;
+            _conditionalDef = ConditionalObjectDef.For(condition);
         }
 
 
         public void ConditionByService<T>(Func<T, bool> condition)
         {
-            throw new NotImplementedException();
-            //var conditional = new ConditionalNode<T>(this, condition);
-            //ReplaceWith(conditional);
-            //return conditional;
+            _conditionalDef = ConditionalObjectDef.ForService(condition);
         }
 
 
-        public void ConditionByModel<T>(Func<T, bool> filter)
+        public void ConditionByModel<T>(Func<T, bool> filter) where T : class
         {
-            throw new NotImplementedException();
+            _conditionalDef = ConditionalObjectDef.ForModel(filter);
         }
 
 
         public void Condition<T>() where T : IConditional
         {
-            throw new NotImplementedException();
-            //var conditional = new ConditionalNode<T>(this, typeof(T));
-            //ReplaceWith(conditional);
-            //return conditional;
+            _conditionalDef = ConditionalObjectDef.For<T>();
         }
 
 
