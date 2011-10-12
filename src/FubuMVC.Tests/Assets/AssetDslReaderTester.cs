@@ -148,6 +148,34 @@ namespace FubuMVC.Tests.Assets
             }).Message.ShouldContain("'wrong' is an invalid verb");
         }
 
+        [Test]
+        public void apply_a_policy_type()
+        {
+            ClassUnderTest.ReadLine("apply policy CombineAllScriptFiles");
+
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.ApplyPolicy("CombineAllScriptFiles"));
+        }
+
+        [Test]
+        public void apply_policy_type_integrated_with_asset_graph()
+        {
+            var graph = new AssetGraph();
+            var reader = new AssetDslReader(graph);
+
+            reader.ReadLine("apply policy " + typeof(AssetGraphTester.FakeComboPolicy).AssemblyQualifiedName);
+
+            graph.PolicyTypes.ShouldHaveTheSameElementsAs(typeof(AssetGraphTester.FakeComboPolicy));
+        }
+
+        [Test]
+        public void apply_policy_type_negative_1()
+        {
+            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.ReadLine("apply something something");
+            });
+        }
+
 
     }
 }

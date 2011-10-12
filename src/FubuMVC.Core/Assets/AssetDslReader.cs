@@ -22,6 +22,9 @@ namespace FubuMVC.Core.Assets
   <script1>
   <script2>
   <script3>
+
+  apply policy <policy type name>
+  
 ";
 
 
@@ -78,6 +81,21 @@ namespace FubuMVC.Core.Assets
             if (key == "ordered")
             {
                 handleOrderedSet(tokens, verb);
+
+                return;
+            }
+
+            // TODO -- time for something more sophisticated here
+            if (key == "apply")
+            {
+                if (verb != "policy")
+                {
+                    throw new InvalidSyntaxException("Invalid usage of 'apply'");
+                }
+
+                var typeName = tokens.Join(",");
+
+                _registration.ApplyPolicy(typeName);
 
                 return;
             }
