@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuCore.Util;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -15,6 +18,63 @@ using FubuCore;
 
 namespace FubuMVC.Tests.Assets
 {
+    [TestFixture]
+    public class when_there_are_combination_candidates_registered : InteractionContext<AssetCombinationBuildingActivator>
+    {
+        private AssetGraph theGraph;
+        private AssetCombinationCache theCache;
+
+        protected override void beforeEach()
+        {
+            theGraph = new AssetGraph();
+            Services.Inject(theGraph);
+
+            theCache = new AssetCombinationCache();
+            Services.Inject<IAssetCombinationCache>(theCache);
+
+            Services.Inject<IAssetPipeline>(new StubAssetPipeline());
+
+            theGraph.AddToCombination("combo1", "a.js");
+            theGraph.AddToCombination("combo1", "b.js");
+            theGraph.AddToCombination("combo1", "c.js");
+
+            theGraph.AddToCombination("combo2", "a.js");
+            theGraph.AddToCombination("combo2", "b.js");
+
+            ClassUnderTest.Activate(new IPackageInfo[0], MockFor<IPackageLog>());
+        }
+
+        [Test]
+        public void should_build_out_combination_candidates()
+        {
+            theCache.OrderedCombinationCandidatesFor(MimeType.Javascript)
+                .Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("combo1", "combo2");
+        }
+
+        [Test]
+        public void should_put_the_right_files_into_combo_candidates()
+        {
+            theCache.OrderedCombinationCandidatesFor(MimeType.Javascript)
+                .First()
+                .Files.Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("a.js", "b.js", "c.js");
+        }
+    }
+
+
+
+    public class StubAssetPipeline : IAssetPipeline
+    {
+        private readonly Cache<string, AssetFile> _files = new Cache<string, AssetFile>(name => new AssetFile(name));
+
+        public AssetFile Find(string path)
+        {
+            return _files[path];
+        }
+    }
+
+
     [TestFixture]
     public class when_there_are_combination_policy_types_in_the_asset_graph : AssetCombinationBuildingActivatorContext
     {

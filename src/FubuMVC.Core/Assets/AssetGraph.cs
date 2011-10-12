@@ -110,9 +110,9 @@ namespace FubuMVC.Core.Assets
             });
         }
 
-        public IEnumerable<CombinationCandidate> BuildCombinationCandidates(IAssetPipeline pipeline)
+        public void ForCombinations(Action<string, IList<string>> combinations)
         {
-            throw new NotImplementedException();
+            _combos.Each(combinations);
         }
 
         public IEnumerable<string> NamesForCombination(string comboName)
@@ -196,6 +196,5 @@ namespace FubuMVC.Core.Assets
         {
             return (IFileDependency) ObjectFor(name);
         }
-
     }
 }

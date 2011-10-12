@@ -76,6 +76,11 @@ namespace FubuMVC.Core.Assets.Combination
             }
         }
 
+        public IList<AssetFile> Files
+        {
+            get { return _files; }
+        }
+
         public string Name
         {
             get { return _name; }
