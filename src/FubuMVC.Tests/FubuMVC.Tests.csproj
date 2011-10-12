@@ -191,15 +191,6 @@
     <Compile Include="Resources\Media\Atom\SyndicationExtensionsTester.cs" />
     <Compile Include="Resources\Media\Formatters\FormatterMediaWriterTester.cs" />
     <Compile Include="Resources\Media\Formatters\XmlFormatterTester.cs" />
-    <Compile Include="Content\ContentFolderServiceTester.cs" />
-    <Compile Include="Content\FolderActivatorTester.cs" />
-    <Compile Include="Content\ContentFilesTester.cs" />
-    <Compile Include="Content\ScriptGraphConfigurationActivatorIntegrationTester.cs" />
-    <Compile Include="Conneg\ConnegBehaviorConventionTester.cs" />
-    <Compile Include="Conneg\ConnegNodeTester.cs" />
-    <Compile Include="Conneg\Conneg_Services_Registration_Tester.cs" />
-    <Compile Include="Conneg\MediaProcessorTester.cs" />
-    <Compile Include="Conneg\XmlFormatterTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
     <Compile Include="CustomExceptionsTester.cs" />
     <Compile Include="Deployers\FubuBottleDestinationTester.cs" />
@@ -531,7 +522,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\Packages\" />
-    <Folder Include="Content\" />
     <Folder Include="Core\" />
     <Folder Include="DSL\" />
     <Folder Include="Results\" />

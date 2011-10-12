@@ -76,6 +76,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensions.cs" />
+    <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalObjectDef.cs" />
@@ -156,7 +157,6 @@
     <Compile Include="Assets\MimetypeRegistrationActivator.cs" />
     <Compile Include="Assets\MissingAssetTagSubject.cs" />
     <Compile Include="Assets\MixedMimetypeException.cs" />
-    <Compile Include="Assets\RequestedAssetNames.cs" />
     <Compile Include="Assets\Tags\AssetTagBuilder.cs" />
     <Compile Include="Assets\Tags\YellowScreenMissingAssetHandler.cs" />
     <Compile Include="Assets\Tags\IAssetTagBuilder.cs" />
@@ -164,7 +164,6 @@
     <Compile Include="Assets\Tags\MissingAssetsException.cs" />
     <Compile Include="Assets\Tags\TraceOnlyMissingAssetHandler.cs" />
     <Compile Include="Assets\Content\ActionType.cs" />
-    <Compile Include="Assets\Content\Classes.cs" />
     <Compile Include="Assets\Content\ITransformerPolicy.cs" />
     <Compile Include="Assets\Content\FileRead.cs" />
     <Compile Include="Assets\Content\TransformerComparer.cs" />
@@ -440,6 +439,7 @@
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Runtime\RecordedOutput.cs" />
     <Compile Include="Runtime\ResponseCaching.cs" />
+    <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />
     <Compile Include="Security\AllowRole.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />

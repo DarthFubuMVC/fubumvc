@@ -12,11 +12,6 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
-<<<<<<< HEAD
-using FubuMVC.Core.Content;
-=======
-using FubuMVC.Core.Conneg;
->>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
@@ -143,6 +138,7 @@ namespace FubuMVC.Core
 
             graph.Services.AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
 
+            graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();
 
             graph.Services.SetServiceIfNone<ITypeResolver, TypeResolver>();
             graph.Services.AddService(new TypeDescriptorCache());
@@ -203,12 +199,7 @@ namespace FubuMVC.Core
 
             graph.Services.AddService<IFormatter, JsonFormatter>();
             graph.Services.AddService<IFormatter, XmlFormatter>();
-<<<<<<< HEAD
 
-=======
-            graph.Services.SetServiceIfNone(typeof (IMediaProcessor<>), typeof (MediaProcessor<>));
-
->>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
             graph.Services.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
 
@@ -219,17 +210,12 @@ namespace FubuMVC.Core
             graph.Services.AddService<IActivator>(typeof (PackageFileActivator));
 
             graph.Services.SetServiceIfNone<IBindingLogger, NulloBindingLogger>();
-            graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();
 
             graph.Services.SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
             graph.Services.SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
 
-<<<<<<< HEAD
 
             registerAssetServices(graph);
-=======
-            registerAssetServices(graph);
->>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
             registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

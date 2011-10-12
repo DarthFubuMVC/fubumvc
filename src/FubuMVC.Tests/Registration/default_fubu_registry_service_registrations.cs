@@ -394,13 +394,6 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
         }
-<<<<<<< HEAD
-
-        [Test]
-        public void setter_binder_is_registered()
-        {
-            registeredTypeIs<ISetterBinder, SetterBinder>();
-        }
 
         [Test]
         public void values_is_registered()
@@ -415,7 +408,11 @@ namespace FubuMVC.Tests.Registration
             var services = new FubuRegistry().BuildGraph().Services;
             services.DefaultServiceFor(typeof(IValueSource<>)).Type.ShouldEqual(typeof(ValueSource<>));
         }
-=======
->>>>>>> CHECKPOINT:  AssetContentHandler is done and registered.  NOW IT'S TIME FOR END TO END TESTING!!!!
+
+        [Test]
+        public void setter_binder_is_registered()
+        {
+            registeredTypeIs<ISetterBinder, SetterBinder>();
+        }
     }
 }
