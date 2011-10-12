@@ -8,5 +8,8 @@ namespace FubuMVC.Core.Assets
         void Extension(string extender, string @base);
         void AddToSet(string setName, string name);
         void Preceeding(string beforeName, string afterName);
+
+        void AddToCombination(string comboName, string names);
+        void ApplyPolicy(string typeName);
     }
 }

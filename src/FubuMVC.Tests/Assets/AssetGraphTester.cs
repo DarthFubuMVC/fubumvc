@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Combination;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -19,6 +22,69 @@ namespace FubuMVC.Tests.Assets
         {
             _compiled = false;
             theGraph = new AssetGraph(); 
+        }
+
+        [Test]
+        public void add_to_combination()
+        {
+            theGraph.AddToCombination("c1", "a.js");
+            theGraph.NamesForCombination("c1").ShouldHaveTheSameElementsAs("a.js");
+
+            theGraph.AddToCombination("c2", "b.js, c.js, d.js");
+            theGraph.NamesForCombination("c2").ShouldHaveTheSameElementsAs("b.js", "c.js", "d.js");
+
+            theGraph.AddToCombination("c3", "b.js,c.js,d.js");
+            theGraph.NamesForCombination("c3").ShouldHaveTheSameElementsAs("b.js", "c.js", "d.js");
+
+        }
+
+        [Test]
+        public void apply_full_assembly_qualified_type_name()
+        {
+            theGraph.ApplyPolicy(typeof(FakeComboPolicy).AssemblyQualifiedName);
+
+            theGraph.PolicyTypes.ShouldHaveTheSameElementsAs(typeof(FakeComboPolicy));
+        }
+
+        [Test]
+        public void apply_can_find_built_in_policy_types_by_name_only()
+        {
+            theGraph.ApplyPolicy(typeof(CombineAllScriptFiles).Name);
+            theGraph.ApplyPolicy(typeof(CombineAllStylesheets).Name);
+
+            theGraph.PolicyTypes.ShouldHaveTheSameElementsAs(typeof(CombineAllScriptFiles), typeof(CombineAllStylesheets));
+        }
+
+        [Test]
+        public void apply_is_a_fill_to_prevent_duplicates()
+        {
+            theGraph.ApplyPolicy(typeof(FakeComboPolicy).AssemblyQualifiedName);
+            theGraph.ApplyPolicy(typeof(FakeComboPolicy).AssemblyQualifiedName);
+            theGraph.ApplyPolicy(typeof(FakeComboPolicy).AssemblyQualifiedName);
+
+            theGraph.PolicyTypes.ShouldHaveTheSameElementsAs(typeof(FakeComboPolicy));
+        }
+
+        [Test]
+        public void apply_will_throw_argument_out_of_range_if_the_type_cannot_be_found()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                theGraph.ApplyPolicy("not a type");
+            });
+        }
+
+        public class FakeComboPolicy : ICombinationPolicy
+        {
+            public MimeType MimeType
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public IEnumerable<AssetFileCombination> DetermineCombinations(AssetTagPlan plan)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         [Test]

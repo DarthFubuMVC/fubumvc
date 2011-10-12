@@ -55,6 +55,14 @@ namespace FubuMVC.Core.Assets
             push = x => x.Preceeding(beforeName, afterName);
         }
 
+        public void AddToCombination(string comboName, string names)
+        {
+            push = x => x.AddToCombination(comboName, names);
+        }
 
+        public void ApplyPolicy(string typeName)
+        {
+            push = x => x.ApplyPolicy(typeName);
+        }
     }
 }

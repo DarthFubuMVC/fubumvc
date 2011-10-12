@@ -84,6 +84,17 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void register_a_set_2()
+        {
+            theExpression.AssetSet("A").Includes("a.js,b.js,c.js")
+                .ShouldBeTheSameAs(theExpression);
+
+            theRegistration.AssertWasCalled(x => x.AddToSet("A", "a.js"));
+            theRegistration.AssertWasCalled(x => x.AddToSet("A", "b.js"));
+            theRegistration.AssertWasCalled(x => x.AddToSet("A", "c.js"));
+        }
+
+        [Test]
         public void register_an_ordered_set()
         {
             theExpression.OrderedSet("crud").Is("a.js, b.js, c.js, d.js")

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Bottles.Diagnostics;
 using FubuCore.Util;
+using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets
 {
@@ -14,6 +16,8 @@ namespace FubuMVC.Core.Assets
         private readonly List<Extension> _extenders = new List<Extension>();
         private readonly List<DependencyRule> _rules = new List<DependencyRule>();
         private readonly List<PreceedingAsset> _preceedings = new List<PreceedingAsset>();
+        private readonly IList<Type> _policyTypes = new List<Type>();
+        private readonly Cache<string, IList<string>> _combos = new Cache<string, IList<string>>(key => new List<string>());
 
         /// <summary>
         /// Use this method in automated tests when you need to set up an
@@ -61,6 +65,11 @@ namespace FubuMVC.Core.Assets
             return 0;
         }
 
+        public IList<Type> PolicyTypes
+        {
+            get { return _policyTypes; }
+        }
+
         public IEnumerable<IFileDependency> AllDependencies()
         {
             return _objects.OfType<IFileDependency>();
@@ -99,6 +108,40 @@ namespace FubuMVC.Core.Assets
                 Before = beforeName,
                 After = afterName
             });
+        }
+
+        public IEnumerable<CombinationCandidate> BuildCombinationCandidates(IAssetPipeline pipeline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> NamesForCombination(string comboName)
+        {
+            return _combos[comboName];
+        }
+
+        public void AddToCombination(string comboName, string names)
+        {
+            _combos[comboName].Fill(names.ToDelimitedArray());
+        }
+
+        public void ApplyPolicy(string typeName)
+        {
+            var type = Type.GetType(typeName, false);
+            if (type == null)
+            {
+                var comboType = typeof(CombineAllScriptFiles);
+                var tryName = "{0}.{1},{2}".ToFormat(comboType.Namespace, typeName, comboType.Assembly.GetName().Name);
+
+                type = Type.GetType(tryName);
+            }
+
+            if (type == null)
+            {
+                throw new ArgumentOutOfRangeException("Type {0} cannot be found".ToFormat(typeName));
+            }
+
+            _policyTypes.Fill(type);
         }
 
         public IEnumerable<IFileDependency> GetAssets(IEnumerable<string> names)
