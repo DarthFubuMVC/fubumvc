@@ -176,6 +176,61 @@ namespace FubuMVC.Tests.Assets
             });
         }
 
+        [Test]
+        public void combine_files_1()
+        {
+            ClassUnderTest.ReadLine("combine a.js, b.js, c.js as abc.js");
 
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "a.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "b.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "c.js"));
+        }
+
+        [Test]
+        public void combine_files_2()
+        {
+            ClassUnderTest.ReadLine("combine a.js, b.js,c.js as abc.js");
+
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "a.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "b.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "c.js"));
+        }
+
+        [Test]
+        public void combine_files_3()
+        {
+            ClassUnderTest.ReadLine("combine a.js,b.js,c.js as abc.js");
+
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "a.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "b.js"));
+            MockFor<IAssetRegistration>().AssertWasCalled(x => x.AddToCombination("abc.js", "c.js"));
+        }
+
+        [Test]
+        public void combine_without_as_throws()
+        {
+            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.ReadLine("combine a.js,b.js,c.js");
+            });
+        }
+
+        [Test]
+        public void combine_without_combo_name_throws()
+        {
+            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.ReadLine("combine a.js,b.js,c.js as");
+            });
+        }
+
+        [Test]
+        public void combine_without_combo_with_mixed_mimetypes_throws()
+        {
+            Exception<InvalidSyntaxException>.ShouldBeThrownBy(() =>
+            {
+                ClassUnderTest.ReadLine("combine a.js,b.css,c.js as combo1");
+            }).Message.ShouldContain("All members of a combination must be of the same type (script or stylesheet)");
+        }
     }
 }

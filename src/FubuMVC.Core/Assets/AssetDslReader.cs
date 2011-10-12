@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FubuCore.CommandLine;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets
 {
@@ -24,7 +25,7 @@ namespace FubuMVC.Core.Assets
   <script3>
 
   apply policy <policy type name>
-  
+  combine <comma delimited names> as <combo name>
 ";
 
 
@@ -81,22 +82,19 @@ namespace FubuMVC.Core.Assets
             if (key == "ordered")
             {
                 handleOrderedSet(tokens, verb);
-
                 return;
             }
 
             // TODO -- time for something more sophisticated here
             if (key == "apply")
             {
-                if (verb != "policy")
-                {
-                    throw new InvalidSyntaxException("Invalid usage of 'apply'");
-                }
+                readPolicy(tokens, verb);
+                return;
+            }
 
-                var typeName = tokens.Join(",");
-
-                _registration.ApplyPolicy(typeName);
-
+            if (key == "combine")
+            {
+                readCombination(tokens, verb);
                 return;
             }
 
@@ -130,6 +128,43 @@ namespace FubuMVC.Core.Assets
                     throw new InvalidSyntaxException(message);
             }
 
+        }
+
+        private void readPolicy(Queue<string> tokens, string verb)
+        {
+            if (verb != "policy")
+            {
+                throw new InvalidSyntaxException("Invalid usage of 'apply'");
+            }
+
+            var typeName = tokens.Join(",");
+
+            _registration.ApplyPolicy(typeName);
+        }
+
+        private void readCombination(Queue<string> tokens, string verb)
+        {
+            var assets = new List<string>(){verb};
+
+            while (tokens.Any() && tokens.Peek() != "as")
+            {
+                assets.Fill(tokens.Dequeue().ToDelimitedArray());
+            }
+
+            if (!tokens.Any() || tokens.Dequeue() != "as" || !tokens.Any())
+            {
+                throw new InvalidSyntaxException("Must supply a combination name");
+            }
+
+            var comboName = tokens.Dequeue();
+
+            var hasMultipleMimetypes = assets.Select(x => MimeType.MimeTypeByFileName(x)).Distinct().Count() > 1;
+            if (hasMultipleMimetypes)
+            {
+                throw new InvalidSyntaxException("All members of a combination must be of the same type (script or stylesheet)");
+            }
+
+            assets.Each(x => _registration.AddToCombination(comboName, x));
         }
 
         private void handleOrderedSet(Queue<string> tokens, string verb)
