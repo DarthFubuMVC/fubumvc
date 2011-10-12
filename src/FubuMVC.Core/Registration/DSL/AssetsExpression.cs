@@ -232,5 +232,30 @@ namespace FubuMVC.Core.Registration.DSL
                 return _parent;
             }
         }
+
+        public CombinationExpression Combination(string combinationName)
+        {
+            return new CombinationExpression(this, combinationName);
+        }
+
+        public class CombinationExpression
+        {
+            private readonly AssetsExpression _parent;
+            private readonly string _name;
+
+            public CombinationExpression(AssetsExpression parent, string name)
+            {
+                _parent = parent;
+                _name = name;
+            }
+
+
+            public AssetsExpression Includes(string commaDelimitedAssetNames)
+            {
+                _parent._registration.Value.AddToCombination(_name, commaDelimitedAssetNames);
+
+                return _parent;
+            }
+        }
     }
 }

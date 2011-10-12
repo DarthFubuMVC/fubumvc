@@ -120,6 +120,15 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void register_a_combination()
+        {
+            theExpression.Combination("something.js").Includes("a.js, b.js, c.js")
+                .ShouldBeTheSameAs(theExpression);
+
+            theRegistration.AssertWasCalled(x => x.AddToCombination("something.js", "a.js, b.js, c.js"));
+        }
+
+        [Test]
         public void should_register_the_recording_registration_as_a_policy_in_behavior_graph()
         {
             var registry = new FubuRegistry();
