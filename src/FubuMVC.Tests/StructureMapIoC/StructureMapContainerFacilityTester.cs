@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -31,7 +32,12 @@ namespace FubuMVC.Tests.StructureMapIoC
         [SetUp]
         public void SetUp()
         {
-            container = new Container(x => x.For<IFileSystem>().Use<FileSystem>());
+            container = new Container(x =>
+            {
+                x.For<IFileSystem>().Use<FileSystem>();
+            });
+
+            container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());
             
 
             graph = new FubuRegistry(x =>
@@ -96,7 +102,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void can_return_all_the_registered_activators_smoke_test()
         {
-            facility.GetAllActivators().Count().ShouldEqual(9);
+            facility.GetAllActivators().Count().ShouldEqual(10);
         }
 
         [Test]

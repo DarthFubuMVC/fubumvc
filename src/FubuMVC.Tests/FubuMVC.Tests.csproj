@@ -100,6 +100,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensionsTester.cs" />
+    <Compile Include="Assets\AssetCombinationBuildingActivatorTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
     <Compile Include="Assets\AssetExpressionUsageTester.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
+    <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />

@@ -11,6 +11,7 @@ using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 
@@ -134,6 +135,9 @@ namespace FubuMVC.Core
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)
         {
             graph.As<IRegisterable>().Register(_registry.Value.DiagnosticLevel, containerFacility.Register);
+
+            // Important to register itself
+            containerFacility.Register(typeof(IContainerFacility), ObjectDef.ForValue(containerFacility));
         }
 
         private BehaviorGraph buildBehaviorGraph()

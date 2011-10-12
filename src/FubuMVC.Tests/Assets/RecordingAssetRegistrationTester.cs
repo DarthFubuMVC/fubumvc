@@ -59,5 +59,21 @@ namespace FubuMVC.Tests.Assets
             IfTheCallsIs(x => x.Preceeding("before.js", "after.js"));
             theUnderlyingRegistration.AssertWasCalled(x => x.Preceeding("before.js", "after.js"));
         }
+
+        [Test]
+        public void combo_delegates()
+        {
+            IfTheCallsIs(x => x.AddToCombination("a.js", "b.js"));
+
+            theUnderlyingRegistration.AssertWasCalled(x => x.AddToCombination("a.js", "b.js"));
+        }
+
+        [Test]
+        public void combo_policy_delegates()
+        {
+            IfTheCallsIs(x => x.ApplyPolicy("CombineEverything"));
+
+            theUnderlyingRegistration.AssertWasCalled(x => x.ApplyPolicy("CombineEverything"));
+        }
     }
 }

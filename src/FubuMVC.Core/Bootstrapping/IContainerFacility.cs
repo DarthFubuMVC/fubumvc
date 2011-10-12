@@ -11,6 +11,9 @@ namespace FubuMVC.Core.Bootstrapping
     {
         IBehaviorFactory BuildFactory();
         void Register(Type serviceType, ObjectDef def);
+
+        void Inject(Type abstraction, Type concretion);
+        
         IEnumerable<IActivator> GetAllActivators();
         IEnumerable<IInstaller> GetAllInstallers();
         T Get<T>();

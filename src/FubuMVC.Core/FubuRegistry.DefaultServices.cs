@@ -261,6 +261,7 @@ namespace FubuMVC.Core
             graph.Services.FillType(typeof (IActivator), typeof (AssetPipelineBuilderActivator));
             graph.Services.FillType(typeof (IActivator), typeof (AssetDeclarationVerificationActivator));
             graph.Services.FillType(typeof (IActivator), typeof (MimetypeRegistrationActivator));
+            graph.Services.FillType(typeof(IActivator), typeof(AssetCombinationBuildingActivator));
             graph.Services.FillType(typeof (IActivator), typeof (AssetPolicyActivator));
         }
 
