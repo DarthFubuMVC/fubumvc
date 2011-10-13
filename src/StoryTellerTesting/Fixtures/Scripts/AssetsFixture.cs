@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using FubuMVC.Core.Diagnostics.Assets;
 using FubuTestApplication;
 using Serenity;
+using Serenity.Endpoints;
 using StoryTeller;
 using StoryTeller.Engine;
 using System.Linq;
+using FubuCore;
 
 namespace IntegrationTesting.Fixtures.Scripts
 {
@@ -26,6 +29,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         public override void SetUp(ITestContext context)
         {
             _driver = context.Retrieve<Serenity.ApplicationDriver>();
+            _endpoints = _driver.GetEndpointDriver();
         }
 
         public IGrammar RequestPageWithAssets()
@@ -36,6 +40,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         }
 
         private AssetTagsState _assetTagState;
+        private EndpointDriver _endpoints;
 
         private void requestPage()
         {
@@ -62,6 +67,23 @@ namespace IntegrationTesting.Fixtures.Scripts
                 .Titled("The styles should be")
                 .Ordered()
                 .Grammar();
+        }
+
+        [FormatAs("The asset names for combination {comboName} should be {names}")]
+        public string[] AssetNamesInCombinationShouldBe(string comboName)
+        {
+            return _endpoints.ReadTextFrom(new AssetNamesRequest{
+                Name = comboName
+            }).ReadLines().ToArray();
+        }
+
+        [FormatAs("The asset sources for combination {comboName} should be {sources}")]
+        public string[] AssetSourcesInCombinationShouldBe(string comboName)
+        {
+            return _endpoints.ReadTextFrom(new AssetSourcesRequest
+            {
+                Name = comboName
+            }).ReadLines().ToArray();
         }
     }
 }

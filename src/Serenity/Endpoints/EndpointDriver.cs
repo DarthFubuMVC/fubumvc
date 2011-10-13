@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Web.Script.Serialization;
@@ -58,6 +59,12 @@ namespace Serenity.Endpoints
 
 
             return request.ToHttpCall();
+        }
+
+        public string ReadTextFrom(object input)
+        {
+            var url = _urls.UrlFor(input);
+            return new WebClient().DownloadString(url);
         }
 
 

@@ -72,6 +72,11 @@ namespace FubuMVC.Tests.Assets
         {
             return _files[path];
         }
+
+        public AssetPath AssetPathOf(AssetFile file)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

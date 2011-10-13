@@ -4,6 +4,7 @@ using System.Linq;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Runtime;
 using OpenQA.Selenium;
+using Serenity.Endpoints;
 
 namespace Serenity
 {
@@ -26,6 +27,11 @@ namespace Serenity
         {
             return new ScreenDriver(_application.Driver);
         }
+
+        public EndpointDriver GetEndpointDriver()
+        {
+            return new EndpointDriver(_application.Urls);
+        }
     }
 
     public class AssetTagsState
@@ -37,11 +43,12 @@ namespace Serenity
     public class ScreenDriver
     {
         private readonly IWebDriver _browser;
-        private readonly Lazy<IWebElement> _head = () => _browser.FindElement(By.TagName("head"));
+        private readonly Lazy<IWebElement> _head;
 
         public ScreenDriver(IWebDriver browser)
         {
             _browser = browser;
+            _head = new Lazy<IWebElement>(() => _browser.FindElement(By.TagName("head")));
         }
 
         private IWebElement head

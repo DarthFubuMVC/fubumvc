@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FubuCore.Binding;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics.Assets;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.Querying;
 using FubuMVC.Core.Diagnostics.Tracing;
@@ -19,6 +20,7 @@ namespace FubuMVC.Core.Diagnostics
             Actions
                 .IncludeTypes(x => x.HasAttribute<FubuDiagnosticsAttribute>())
                 .IncludeType<GraphQuery>()
+                .IncludeType<BasicAssetDiagnostics>()
                 .IncludeType<ScriptWriter>();
 
             Routes

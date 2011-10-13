@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -63,6 +64,12 @@ namespace FubuMVC.Core.Assets.Files
         public AssetFile Find(string path)
         {
             return _memoizedFiles[path];
+        }
+
+        public AssetPath AssetPathOf(AssetFile file)
+        {
+            var package = _allPackages.First(x => x.AllFiles().Contains(file));
+            return new AssetPath(package.PackageName, file.Name, file.Folder);
         }
 
         public PackageAssets AssetsFor(string packageName)
