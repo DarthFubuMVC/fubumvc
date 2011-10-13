@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationDriver.cs" />
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="ApplicationUnderTest.cs" />
     <Compile Include="BrowserType.cs" />

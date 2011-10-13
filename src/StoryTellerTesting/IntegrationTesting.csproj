@@ -91,6 +91,7 @@
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Resources\MediaConnegFixture.cs" />
     <Compile Include="Fixtures\Scripts\AssetPipelineSetupFixture.cs" />
+    <Compile Include="Fixtures\Scripts\AssetsFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
     <Compile Include="FubuSystem.cs" />

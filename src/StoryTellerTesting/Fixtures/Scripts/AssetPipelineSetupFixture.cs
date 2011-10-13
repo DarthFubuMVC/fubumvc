@@ -18,14 +18,6 @@ namespace IntegrationTesting.Fixtures.Scripts
         private string _packageDirectory;
         private FileSystem _fileSystem;
 
-        public AssetPipelineSetupFixture()
-        {
-            this["WriteContents"] = this["WriteLine"]
-                .AsTable("Asset File Contents")
-                .After(flushContents);
-
-            
-        }
 
         public override void SetUp(ITestContext context)
         {
@@ -38,8 +30,6 @@ namespace IntegrationTesting.Fixtures.Scripts
         {
             _runner.RunFubu("packages fubu-testing -removeall");
 
-
-            
             _fileSystem.CreateDirectory(TemporaryPackagesFolder);
             _fileSystem.CleanDirectory(TemporaryPackagesFolder);
         }
@@ -82,6 +72,14 @@ namespace IntegrationTesting.Fixtures.Scripts
         {
             _contents[File].Add(Contents);
         }
+
+        public IGrammar WriteContents()
+        {
+            return this["WriteLine"]
+                .AsTable("Asset File Contents")
+                .After(flushContents);
+        }
+
 
         [Hidden]
         [FormatAs("File {file}")]

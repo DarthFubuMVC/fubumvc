@@ -2,10 +2,12 @@
 using System.Diagnostics;
 using System.Net;
 using System.Web.Script.Serialization;
+using FubuCore;
 using WatiN.Core;
 
 namespace IntegrationTesting
 {
+    [MarkedForTermination("Will be eliminated in favor of WebDriver world")]
     public class ApplicationDriver
     {
         private WatiN.Core.IE _browser;
