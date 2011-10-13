@@ -90,6 +90,7 @@
     <Compile Include="Fixtures\Packages\PackagingFixture.cs" />
     <Compile Include="Fixtures\Packages\PackagingSetupFixture.cs" />
     <Compile Include="Fixtures\Resources\MediaConnegFixture.cs" />
+    <Compile Include="Fixtures\Scripts\AssetPipelineSetupFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptGraphFixture.cs" />
     <Compile Include="Fixtures\Scripts\ScriptLoadingFixture.cs" />
     <Compile Include="FubuSystem.cs" />
@@ -136,6 +137,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fixtures\Assets\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
