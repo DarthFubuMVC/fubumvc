@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration.DSL
 {
-    // TODO -- add Xml comments for this mess
+
     public class AssetsExpression
     {
         private readonly FubuRegistry _registry;
@@ -29,7 +29,11 @@ namespace FubuMVC.Core.Registration.DSL
             });
         }
 
-
+        /// <summary>
+        /// Use the textual Assets DSL to configure asset dependencies and sets
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public AssetsExpression Configure(string text)
         {
             var dslReader = new AssetDslReader(_registration.Value);
@@ -116,6 +120,11 @@ namespace FubuMVC.Core.Registration.DSL
             _registry.Services(x => x.ReplaceService<TInterface, TConcrete>());
         }
 
+        /// <summary>
+        /// Configure dependencies or extensions of a named asset
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <returns></returns>
         public AssetFileExpression Asset(string assetName)
         {
             return new AssetFileExpression(this, assetName);
@@ -134,18 +143,33 @@ namespace FubuMVC.Core.Registration.DSL
                 _registration = _parent._registration.Value;
             }
 
+            /// <summary>
+            /// Register a preceeding relationship
+            /// </summary>
+            /// <param name="afterName"></param>
+            /// <returns></returns>
             public AssetsExpression Preceeds(string afterName)
             {
                 _registration.Preceeding(_assetName, afterName);
                 return _parent;
             }
 
+            /// <summary>
+            /// Register an extension relationship between two assets
+            /// </summary>
+            /// <param name="base"></param>
+            /// <returns></returns>
             public AssetsExpression Extends(string @base)
             {
                 _registration.Extension(_assetName, @base);
                 return _parent;
             }
 
+            /// <summary>
+            /// Specify asset requirements (comma delimited names)
+            /// </summary>
+            /// <param name="commaDelimitedAssetNames"></param>
+            /// <returns></returns>
             public AssetsExpression Requires(string commaDelimitedAssetNames)
             {
                 commaDelimitedAssetNames.ToDelimitedArray().Each(x => _registration.Dependency(_assetName, x));
@@ -153,7 +177,11 @@ namespace FubuMVC.Core.Registration.DSL
             }
         }
 
-
+        /// <summary>
+        /// Creates an asset alias, i.e. "jquery is jquery.1.4.2.min.js"
+        /// </summary>
+        /// <param name="aliasName"></param>
+        /// <returns></returns>
         public AliasExpression Alias(string aliasName)
         {
             return new AliasExpression(this, aliasName);
@@ -177,6 +205,11 @@ namespace FubuMVC.Core.Registration.DSL
             }
         }
 
+        /// <summary>
+        /// Begins the definition of an asset set
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <returns></returns>
         public AssetSetExpression AssetSet(string setName)
         {
             return new AssetSetExpression(this, setName);
@@ -200,6 +233,11 @@ namespace FubuMVC.Core.Registration.DSL
             }
         }
 
+        /// <summary>
+        /// Begins the definition of an ordered asset set
+        /// </summary>
+        /// <param name="setName"></param>
+        /// <returns></returns>
         public OrderedSetExpression OrderedSet(string setName)
         {
             return new OrderedSetExpression(this, setName);
@@ -233,6 +271,11 @@ namespace FubuMVC.Core.Registration.DSL
             }
         }
 
+        /// <summary>
+        /// Starts the definition of an explicitly configured asset combination 
+        /// </summary>
+        /// <param name="combinationName"></param>
+        /// <returns></returns>
         public CombinationExpression Combination(string combinationName)
         {
             return new CombinationExpression(this, combinationName);
