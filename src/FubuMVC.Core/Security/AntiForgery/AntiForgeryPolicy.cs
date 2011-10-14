@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Security.AntiForgery
 {
@@ -13,16 +11,6 @@ namespace FubuMVC.Core.Security.AntiForgery
             graph.Services.SetServiceIfNone<IAntiForgerySerializer, BinaryAntiForgerySerializer>();
             graph.Services.SetServiceIfNone<IAntiForgeryTokenProvider, AntiForgeryTokenProvider>();
             graph.Services.SetServiceIfNone<IAntiForgeryService, AntiForgeryService>();
-            graph.Behaviors.Each(b =>
-                {
-                    ActionCall call = b.FirstCall();
-                    if(call == null)
-                    {
-                        return;
-                    }
-
-                    call.ForAttributes<AntiForgeryTokenAttribute>(a => call.AddBefore(new AntiForgeryNode(a.Salt)));
-                });
         }
     }
 }
