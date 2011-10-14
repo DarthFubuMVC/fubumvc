@@ -55,8 +55,8 @@ namespace FubuMVC.Core.Assets.Files
         {
             ReadAssetType(directory, contentFolder, AssetFolder.styles);
             
-            // TODO -- not yet sure what to do with images
-            //ReadAssetType(directory, contentFolder, AssetType.images);
+
+            ReadAssetType(directory, contentFolder, AssetFolder.images);
             ReadAssetType(directory, contentFolder, AssetFolder.scripts);
         }
 
