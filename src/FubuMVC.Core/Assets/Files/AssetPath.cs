@@ -44,8 +44,7 @@ namespace FubuMVC.Core.Assets.Files
         {
             var name = "";
 
-            // TODO -- make an extension in FubuCore for this
-            if (Package.IsNotEmpty()) name += Package + ":";
+            Package.IfNotNull(x => name += x + ":");
             if (Folder.HasValue) name += Folder + "/";
             
             name += Name;

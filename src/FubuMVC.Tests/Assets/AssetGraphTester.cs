@@ -25,6 +25,25 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void asset_files_key_equals()
+        {
+            var key1 = new AssetGraph.AssetFilesKey(new string[]{"a", "b", "c"});
+            var key2 = new AssetGraph.AssetFilesKey(new string[]{"a", "b", "c"});
+            var key3 = new AssetGraph.AssetFilesKey(new string[]{"a", "c", "b"});
+            var key4 = new AssetGraph.AssetFilesKey(new string[]{"a", "c", "d"});
+
+            key1.ShouldEqual(key2);
+            key2.ShouldEqual(key3);
+            key3.ShouldEqual(key1);
+
+            key1.ShouldNotEqual(key4);
+
+            key1.GetHashCode().ShouldEqual(key2.GetHashCode());
+            key1.GetHashCode().ShouldEqual(key3.GetHashCode());
+            key1.GetHashCode().ShouldNotEqual(key4.GetHashCode());
+        }
+
+        [Test]
         public void add_to_combination()
         {
             theGraph.AddToCombination("c1", "a.js");

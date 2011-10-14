@@ -2,37 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Diagnostics;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Combination;
-using FubuMVC.Core.Assets.Files;
-using FubuCore;
 
 namespace FubuMVC.Core.Assets
 {
     public class AssetGraph : IComparer<IFileDependency>, IAssetRegistration
     {
-        private readonly Cache<string, IRequestedAsset> _objects = new Cache<string, IRequestedAsset>();
-        private readonly Cache<string, AssetSet> _sets = new Cache<string, AssetSet>();
+        private readonly Cache<string, IList<string>> _combos =
+            new Cache<string, IList<string>>(key => new List<string>());
+
+        private readonly Cache<AssetFilesKey, IEnumerable<IFileDependency>> _dependencyCache;
+
         private readonly List<Extension> _extenders = new List<Extension>();
-        private readonly List<DependencyRule> _rules = new List<DependencyRule>();
-        private readonly List<PreceedingAsset> _preceedings = new List<PreceedingAsset>();
+        private readonly Cache<string, IRequestedAsset> _objects = new Cache<string, IRequestedAsset>();
         private readonly IList<Type> _policyTypes = new List<Type>();
-        private readonly Cache<string, IList<string>> _combos = new Cache<string, IList<string>>(key => new List<string>());
-
-        /// <summary>
-        /// Use this method in automated tests when you need to set up an
-        /// AssetGraph
-        /// </summary>
-        /// <param name="configure"></param>
-        /// <returns></returns>
-        public static AssetGraph Build(Action<AssetGraph> configure)
-        {
-            var graph = new AssetGraph();
-            configure(graph);
-            graph.CompileDependencies(new PackageLog());
-
-            return graph;
-        }
+        private readonly List<PreceedingAsset> _preceedings = new List<PreceedingAsset>();
+        private readonly List<DependencyRule> _rules = new List<DependencyRule>();
+        private readonly Cache<string, AssetSet> _sets = new Cache<string, AssetSet>();
 
         public AssetGraph()
         {
@@ -40,39 +28,23 @@ namespace FubuMVC.Core.Assets
                 Name = name
             };
 
-            _sets.OnAddition = (@set) =>
-            {
-                _objects[@set.Name] = @set;
-            };
+            _sets.OnAddition = @set => { _objects[@set.Name] = @set; };
 
 
             _objects.OnMissing = name =>
             {
-                return 
-                    _objects.GetAll().FirstOrDefault(x => x.Matches(name)) 
-                    ?? 
+                return
+                    _objects.GetAll().FirstOrDefault(x => x.Matches(name))
+                    ??
                     new FileDependency(name);
             };
-        }
 
-        public int Compare(IFileDependency x, IFileDependency y)
-        {
-            if (ReferenceEquals(x, y)) return 0;
-
-            if (x.MustBeAfter(y)) return 1;
-            if (y.MustBeAfter(x)) return -1;
-
-            return 0;
+            _dependencyCache = new Cache<AssetFilesKey, IEnumerable<IFileDependency>>(key => new AssetGatherer(this, key.Names).Gather());
         }
 
         public IList<Type> PolicyTypes
         {
             get { return _policyTypes; }
-        }
-
-        public IEnumerable<IFileDependency> AllDependencies()
-        {
-            return _objects.OfType<IFileDependency>();
         }
 
         public void Alias(string name, string alias)
@@ -82,16 +54,15 @@ namespace FubuMVC.Core.Assets
 
         public void Dependency(string dependent, string dependency)
         {
-            _rules.Fill(new DependencyRule()
-                        {
-                            Dependency = dependency,
-                            Dependent = dependent
-                        });
+            _rules.Fill(new DependencyRule{
+                Dependency = dependency,
+                Dependent = dependent
+            });
         }
 
         public void Extension(string extender, string @base)
         {
-            _extenders.Add(new Extension(){
+            _extenders.Add(new Extension{
                 Base = @base,
                 Extender = extender
             });
@@ -104,20 +75,10 @@ namespace FubuMVC.Core.Assets
 
         public void Preceeding(string beforeName, string afterName)
         {
-            _preceedings.Add(new PreceedingAsset(){
+            _preceedings.Add(new PreceedingAsset{
                 Before = beforeName,
                 After = afterName
             });
-        }
-
-        public void ForCombinations(Action<string, IList<string>> combinations)
-        {
-            _combos.Each(combinations);
-        }
-
-        public IEnumerable<string> NamesForCombination(string comboName)
-        {
-            return _combos[comboName];
         }
 
         public void AddToCombination(string comboName, string names)
@@ -130,7 +91,7 @@ namespace FubuMVC.Core.Assets
             var type = Type.GetType(typeName, false);
             if (type == null)
             {
-                var comboType = typeof(CombineAllScriptFiles);
+                var comboType = typeof (CombineAllScriptFiles);
                 var tryName = "{0}.{1},{2}".ToFormat(comboType.Namespace, typeName, comboType.Assembly.GetName().Name);
 
                 type = Type.GetType(tryName);
@@ -144,10 +105,49 @@ namespace FubuMVC.Core.Assets
             _policyTypes.Fill(type);
         }
 
+        public int Compare(IFileDependency x, IFileDependency y)
+        {
+            if (ReferenceEquals(x, y)) return 0;
+
+            if (x.MustBeAfter(y)) return 1;
+            if (y.MustBeAfter(x)) return -1;
+
+            return 0;
+        }
+
+        /// <summary>
+        ///   Use this method in automated tests when you need to set up an
+        ///   AssetGraph
+        /// </summary>
+        /// <param name = "configure"></param>
+        /// <returns></returns>
+        public static AssetGraph Build(Action<AssetGraph> configure)
+        {
+            var graph = new AssetGraph();
+            configure(graph);
+            graph.CompileDependencies(new PackageLog());
+
+            return graph;
+        }
+
+        public IEnumerable<IFileDependency> AllDependencies()
+        {
+            return _objects.OfType<IFileDependency>();
+        }
+
+        public void ForCombinations(Action<string, IList<string>> combinations)
+        {
+            _combos.Each(combinations);
+        }
+
+        public IEnumerable<string> NamesForCombination(string comboName)
+        {
+            return _combos[comboName];
+        }
+
         public IEnumerable<IFileDependency> GetAssets(IEnumerable<string> names)
         {
-            // TODO -- Memoize this.  Seriously.
-            return new AssetGatherer(this, names).Gather();
+            return _dependencyCache[new AssetFilesKey(names)];
         }
 
         public AssetSet AssetSetFor(string someName)
@@ -156,7 +156,6 @@ namespace FubuMVC.Core.Assets
         }
 
 
-        // TODO -- try to find circular dependencies and log to the Package log
         public void CompileDependencies(IPackageLog log)
         {
             _sets.Each(set => set.FindScripts(this));
@@ -196,5 +195,48 @@ namespace FubuMVC.Core.Assets
         {
             return (IFileDependency) ObjectFor(name);
         }
+
+        #region Nested type: AssetFilesKey
+
+        public class AssetFilesKey
+        {
+            private readonly List<string> _names;
+
+            public AssetFilesKey(IEnumerable<string> names)
+            {
+                _names = names.ToList();
+                _names.Sort();
+            }
+
+            public List<string> Names
+            {
+                get { return _names; }
+            }
+
+            public bool Equals(AssetFilesKey other)
+            {
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+
+                if (other._names.Count != _names.Count) return false;
+
+                return !other._names.Where((t, i) => t != _names[i]).Any();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != typeof (AssetFilesKey)) return false;
+                return Equals((AssetFilesKey) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return (_names != null ? _names.Join("-").GetHashCode() : 0);
+            }
+        }
+
+        #endregion
     }
 }
