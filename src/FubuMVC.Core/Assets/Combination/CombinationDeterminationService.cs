@@ -32,12 +32,14 @@ namespace FubuMVC.Core.Assets.Combination
 
         public virtual void TryToReplaceWithCombinations(AssetTagPlan plan)
         {
+            applyPoliciesToDiscoverPotentialCombinations(plan);
+
             TryAllExistingCombinations(plan);
 
-            tryCombinationCandidatesAndPolicies(plan);
+            
         }
 
-        private void tryCombinationCandidatesAndPolicies(AssetTagPlan plan)
+        private void applyPoliciesToDiscoverPotentialCombinations(AssetTagPlan plan)
         {
             var mimeTypePolicies = _policies.Where(x => x.MimeType == plan.MimeType);
             var combinationPolicies = _cache.OrderedCombinationCandidatesFor(plan.MimeType).Union(mimeTypePolicies);
@@ -49,7 +51,7 @@ namespace FubuMVC.Core.Assets.Combination
             policy.DetermineCombinations(plan).Each(combo =>
             {
                 _cache.StoreCombination(plan.MimeType, combo);
-                plan.TryCombination(combo);
+                //plan.TryCombination(combo);
             });
         }
 

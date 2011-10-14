@@ -27,7 +27,10 @@ namespace FubuMVC.Tests.Assets.Combination
 
 
             var thePlan = MockRepository.GenerateMock<AssetTagPlan>(MimeType.Css, new AssetFile[0]);
-            combos.Each(combo => thePlan.Expect(x => x.TryCombination(combo)).Return(true));
+
+            // Leaving this in here.  What I found out in the Storyteller testing is that
+            // we have to apply the combination policy "go find existing combinations" first
+            //combos.Each(combo => thePlan.Expect(x => x.TryCombination(combo)).Return(true));
 
             policy.Stub(x => x.DetermineCombinations(thePlan)).Return(combos);
 

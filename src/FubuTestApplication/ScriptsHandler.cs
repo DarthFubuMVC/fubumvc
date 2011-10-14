@@ -35,11 +35,15 @@ namespace FubuTestApplication
                 Title = "Script Manager Tester"
             };
 
-            request.Mandatories.Split(',').Select(x => x.Trim()).Each(x => this.Script(x));
+
+
+            
+
+            request.Mandatories.Split(',').Select(x => x.Trim()).Each(x => this.Asset(x));
             if (request.Optionals != null)
                 request.Optionals.Split(',').Select(x => x.Trim()).Each(x => this.OptionalScript(x));
 
-            this.WriteScriptTags().AllTags().Each(tag => document.Add(tag));
+            this.WriteAssetTags().AllTags().Each(tag => document.Head.Append(tag));
 
             return document;
         }
