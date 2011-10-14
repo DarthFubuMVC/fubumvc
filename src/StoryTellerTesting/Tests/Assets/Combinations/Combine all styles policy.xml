@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<Test name="Combine all styles policy" lifecycle="Regression">
+  <Assets>
+    <IfTheAssetsAre isStep="True">
+      <AssetPipelineSetup>
+        <ForPackage isStep="True" packageName="pak1" />
+        <WriteContents isStep="True">
+          <Rows>
+            <row isStep="True" File="content/scripts/a.js" Contents="var x = 'a';" />
+            <row isStep="True" File="content/scripts/b.js" Contents="var x = 'b';" />
+            <row isStep="True" File="content/scripts/c.js" Contents="var x = 'c';" />
+            <row isStep="True" File="content/scripts/d.js" Contents="var x = 'd';" />
+            <row isStep="True" File="content/scripts/e.js" Contents="var x = 'e';" />
+            <row isStep="True" File="content/styles/a.css" Contents="/* a */" />
+            <row isStep="True" File="content/styles/b.css" Contents="/* b */" />
+            <row isStep="True" File="content/styles/c.css" Contents="/* c */" />
+            <row isStep="True" File="content/styles/d.css" Contents="/* d */" />
+            <row isStep="True" File="content/styles/e.css" Contents="/* e */" />
+          </Rows>
+        </WriteContents>
+        <WriteFile isStep="True" file="combinations.asset.config">
+          <lines>
+            <row isStep="True" Content="apply policy CombineAllStylesheets" />
+          </lines>
+        </WriteFile>
+      </AssetPipelineSetup>
+    </IfTheAssetsAre>
+    <RequestPageWithAssets isStep="True" names="a.js, b.js, c.js, a.css, b.css, c.css" />
+    <Comment><![CDATA[The naming of the combination is a predictive hash of the file names]]></Comment>
+    <TheCssTagsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="_content/styles/d366fd3d02012a0b2981a8f472515682.css" />
+      </Rows>
+    </TheCssTagsShouldBe>
+    <Comment><![CDATA[Styles should not be combined at all]]></Comment>
+    <Comment><![CDATA[The contents of the combination should contain all of the files]]></Comment>
+    <AssetNamesInCombinationShouldBe isStep="True" comboName="d366fd3d02012a0b2981a8f472515682.css" names="a.css, b.css, c.css" />
+    <Comment><![CDATA[Now, open another page with more files]]></Comment>
+    <RequestPageWithAssets isStep="True" names="a.css, b.css, d.css, e.css" />
+    <TheCssTagsShouldBe isStep="True">
+      <Rows>
+        <row isStep="True" expected="_content/styles/1663e7d566e080156007c5e43b440bd0.css" />
+      </Rows>
+    </TheCssTagsShouldBe>
+    <AssetNamesInCombinationShouldBe isStep="True" comboName="1663e7d566e080156007c5e43b440bd0.css" names="a.css, b.css, d.css, e.css" />
+  </Assets>
+</Test>
