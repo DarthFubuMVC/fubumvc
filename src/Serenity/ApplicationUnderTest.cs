@@ -44,6 +44,11 @@ namespace Serenity
             get { return _source.Name; }
         }
 
+        public string RootUrl
+        {
+            get { return _settings.RootUrl; }
+        }
+
         public T GetInstance<T>()
         {
             return _container.Value.Get<T>();

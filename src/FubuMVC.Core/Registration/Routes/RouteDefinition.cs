@@ -26,7 +26,21 @@ namespace FubuMVC.Core.Registration.Routes
             return Input == null ? _pattern.ToAbsoluteUrl() : Input.CreateTemplate(input, hash);
         }
 
-        public IRouteInput Input { get; set;}
+        private IRouteInput _input;
+        public IRouteInput Input
+        {
+            get { return _input; }
+            set
+            {
+                if (value != null)
+                {
+                    value.Parent = this;
+                }
+
+                _input = value;
+            }
+        }
+
         public void ApplyInputType(Type inputType)
         {
             Input = RouteBuilder.Build(inputType, Pattern).Input;

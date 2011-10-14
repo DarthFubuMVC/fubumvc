@@ -10,6 +10,8 @@ namespace Serenity
         IUrlRegistry Urls { get; }
         IWebDriver Driver { get; }
 
+        string RootUrl { get; }
+
         T GetInstance<T>();
         IEnumerable<T> GetAll<T>();
 

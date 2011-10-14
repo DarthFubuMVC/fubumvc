@@ -1,6 +1,8 @@
+using System.Reflection;
 using FubuCore;
 using NUnit.Framework;
 using FubuTestingSupport;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
@@ -26,6 +28,8 @@ namespace Serenity.Testing
 
             WebDriverSettings.Read().Browser.ShouldEqual(BrowserType.IE);
         }
+
+
 
         [Test]
         public void default_browser_is_firefox()

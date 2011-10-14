@@ -87,5 +87,7 @@ namespace Serenity.Endpoints
             var url = _urls.UrlFor(urlTarget);
             return WebRequest.Create(url);
         }
+
+
     }
 }

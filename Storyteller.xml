@@ -53,6 +53,7 @@ $METHODS$
       </Filters>
     </WorkspaceFilter>
   </Workspaces>
+  <ConfigurationFileName>IntegrationTesting.dll.config</ConfigurationFileName>
   <BinaryFolder>src\StoryTellerTesting\bin\debug</BinaryFolder>
   <TestFolder>src\StoryTellerTesting\Tests</TestFolder>
   <FileName>C:\git\fubumvc\Storyteller.xml</FileName>

@@ -116,6 +116,7 @@
     <None Include="packages.config" />
     <None Include="Serenity.Testing.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

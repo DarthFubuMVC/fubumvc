@@ -8,6 +8,7 @@ using StoryTeller;
 
 namespace IntegrationTesting.Fixtures.Scripts
 {
+    [Hidden]
     public class AssetPipelineSetupFixture : Fixture
     {
         private CommandRunner _runner;
@@ -28,8 +29,10 @@ namespace IntegrationTesting.Fixtures.Scripts
 
         private void removeAnyExistingPackages()
         {
-            _runner.RunFubu("packages fubu-testing -removeall");
+            _runner.RunFubu("link fubu-testing -cleanall");
+            _runner.RunFubu("packages fubu-testing -cleanall -removeall");
 
+            _fileSystem.DeleteDirectory(TemporaryPackagesFolder);
             _fileSystem.CreateDirectory(TemporaryPackagesFolder);
             _fileSystem.CleanDirectory(TemporaryPackagesFolder);
         }
@@ -50,6 +53,8 @@ namespace IntegrationTesting.Fixtures.Scripts
                 Name = packageName
             };
 
+            _runner.RunFubu("link fubu-testing \"" + _packageDirectory + "\"");
+
             _fileSystem.PersistToFile(manifest, _packageDirectory, PackageManifest.FILE);
         }
 
@@ -61,6 +66,9 @@ namespace IntegrationTesting.Fixtures.Scripts
             _contents.Each((file, contents) =>
             {
                 var fileInPackage = _packageDirectory.AppendPath(file);
+
+                _fileSystem.CreateDirectory(fileInPackage.ParentDirectory());
+
                 _fileSystem.AlterFlatFile(fileInPackage, list => list.AddRange(contents));
             });
 
@@ -99,7 +107,7 @@ namespace IntegrationTesting.Fixtures.Scripts
             return Paragraph("Write package file", x =>
             {
                 x += this["ForFile"];
-                x += this["WriteFileLine"].AsTable("The contents are").LeafName("lines");
+                x += this["WriteFileLine"].AsTable("has contents").LeafName("lines");
                 x += flushContents;
             });
         }

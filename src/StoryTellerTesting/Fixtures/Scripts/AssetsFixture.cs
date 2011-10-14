@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Net;
+using FubuCore.Util;
 using FubuMVC.Core.Diagnostics.Assets;
 using FubuTestApplication;
 using Serenity;
 using Serenity.Endpoints;
 using StoryTeller;
+using StoryTeller.Assertions;
 using StoryTeller.Engine;
 using System.Linq;
 using FubuCore;
@@ -12,7 +15,7 @@ namespace IntegrationTesting.Fixtures.Scripts
 {
     public class AssetsFixture : Fixture
     {
-        private readonly IList<string> _requirements = new List<string>();
+        private Cache<string, string> _assetContents;
         private Serenity.ApplicationDriver _driver;
 
         public IGrammar IfTheAssetsAre()
@@ -20,38 +23,35 @@ namespace IntegrationTesting.Fixtures.Scripts
             return Embed<AssetPipelineSetupFixture>("If the asset pipeline is configured as");
         }
 
-        [Hidden]
-        public void RequireFile(string File)
-        {
-            _requirements.Fill(File);
-        }
-
         public override void SetUp(ITestContext context)
         {
             _driver = context.Retrieve<Serenity.ApplicationDriver>();
             _endpoints = _driver.GetEndpointDriver();
+
+            _assetContents = new Cache<string, string>(file =>
+            {
+                var url = _driver.AssetUrlFor(file);
+                return new WebClient().DownloadString(url);
+            });
         }
 
-        public IGrammar RequestPageWithAssets()
-        {
-            return this["RequireFile"]
-                .AsTable("Request a page with these required assets")
-                .After(requestPage);
-        }
 
         private AssetTagsState _assetTagState;
         private EndpointDriver _endpoints;
 
-        private void requestPage()
+        [FormatAs("Request a page that requires assets {names}")]
+        public void RequestPageWithAssets(string[] names)
         {
-            var request = new ScriptRequest{
-                Mandatories = _requirements.Join(",")
+            var request = new ScriptRequest
+            {
+                Mandatories = names.Join(",")
             };
 
             _driver.NavigateTo(request);
 
             _assetTagState = _driver.GetCurrentScreen().GetAssetDeclarations();
         }
+
 
         public IGrammar TheScriptTagsShouldBe()
         {
@@ -72,7 +72,8 @@ namespace IntegrationTesting.Fixtures.Scripts
         [FormatAs("The asset names for combination {comboName} should be {names}")]
         public string[] AssetNamesInCombinationShouldBe(string comboName)
         {
-            return _endpoints.ReadTextFrom(new AssetNamesRequest{
+            return _endpoints.ReadTextFrom(new AssetNamesRequest
+            {
                 Name = comboName
             }).ReadLines().ToArray();
         }
@@ -84,6 +85,17 @@ namespace IntegrationTesting.Fixtures.Scripts
             {
                 Name = comboName
             }).ReadLines().ToArray();
+        }
+
+        [FormatAs("Asset {assetName} should contain the text {content}")]
+        public bool AssetContainsText(string assetName, string content)
+        {
+            var allText = _assetContents[assetName];
+            if (allText.Contains(content)) return true;
+
+            StoryTellerAssert.Fail(allText);
+
+            return false;
         }
     }
 }

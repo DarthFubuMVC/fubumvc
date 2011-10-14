@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Registration.Routes
         List<RouteParameter> QueryParameters { get; }
         Type InputType { get; }
         int Rank { get; }
-        RouteDefinition Parent { get; }
+        RouteDefinition Parent { get; set; }
         string CreateUrlFromInput(object input);
         string CreateUrlFromParameters(RouteParameters parameters);
         void AlterRoute(Route route);

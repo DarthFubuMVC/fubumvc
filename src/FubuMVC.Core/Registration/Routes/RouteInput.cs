@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Registration.Routes
 {
     public class RouteInput<T> : IRouteInput
     {
-        private readonly RouteDefinition _parent;
+        private RouteDefinition _parent;
         private readonly List<RouteParameter> _queryParameters = new List<RouteParameter>();
         private readonly List<RouteParameter> _routeParameters = new List<RouteParameter>();
 
@@ -28,6 +28,7 @@ namespace FubuMVC.Core.Registration.Routes
         public RouteDefinition Parent
         {
             get { return _parent; }
+            set { _parent = value; }
         }
 
         public List<RouteParameter> RouteParameters

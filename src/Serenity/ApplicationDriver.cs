@@ -32,6 +32,11 @@ namespace Serenity
         {
             return new EndpointDriver(_application.Urls);
         }
+
+        public string AssetUrlFor(string file)
+        {
+            return _application.RootUrl + ("/_content/" + file).Replace("//", "/");
+        }
     }
 
     public class AssetTagsState
@@ -63,7 +68,8 @@ namespace Serenity
 
         public AssetTagsState GetAssetDeclarationsFromTheHead()
         {
-            return new AssetTagsState{
+            return new AssetTagsState
+            {
                 Scripts = head.FindElements(By.TagName("script")).ToList(),
                 Styles = head.FindElements(By.TagName("link")).Where(x => x.IsCssLink()).ToList()
             };
@@ -71,7 +77,8 @@ namespace Serenity
 
         public AssetTagsState GetAssetDeclarations()
         {
-            return new AssetTagsState{
+            return new AssetTagsState
+            {
                 Scripts = _browser.FindElements(By.TagName("script")).ToList(),
                 Styles = _browser.FindElements(By.TagName("link")).Where(x => x.IsCssLink()).ToList()
             };
@@ -93,7 +100,7 @@ namespace Serenity
 
         public static string AssetName(this IWebElement element)
         {
-            var parts = element.Href().Split('/').ToList();
+            var parts = (element.Href() ?? element.GetAttribute("src")).Split('/').ToList();
             var index = parts.IndexOf(AssetContentHandler.AssetsUrlFolder);
 
             return parts.Skip(index).Join("/");
