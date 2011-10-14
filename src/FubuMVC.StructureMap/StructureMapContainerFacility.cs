@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Bottles;
+using Bottles.Diagnostics;
 using Bottles.Environment;
 using FubuCore.Binding;
 using FubuMVC.Core;
@@ -19,6 +20,32 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap
 {
+
+    public class SingletonSpinupActivator : IActivator
+    {
+        private readonly IContainer _container;
+
+        public SingletonSpinupActivator(IContainer container)
+        {
+            _container = container;
+        }
+
+        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
+        {
+            // Remove this method when the issue is closed 
+            // http://github.com/structuremap/structuremap/issues#issue/3
+            var allSingletons =
+                _container.Model.PluginTypes.Where(x => x.Lifecycle == InstanceScope.Singleton.ToString());
+            Debug.WriteLine("Found singletons: " + allSingletons.Count());
+            foreach (var pluginType in allSingletons)
+            {
+                var instance = _container.GetInstance(pluginType.PluginType);
+                Debug.WriteLine("Initialized singleton in primary container: " + instance);
+            }
+
+        }
+    }
+
     public class StructureMapContainerFacility : IContainerFacility, IBehaviorFactory
     {
         private readonly IContainer _container;
@@ -47,12 +74,6 @@ namespace FubuMVC.StructureMap
         {
             _registry.For<IBehaviorFactory>().Use<PartialBehaviorFactory>();
             _container.Configure(x => x.AddRegistry(_registry));
-
-
-            if (_initializeSingletonsToWorkAroundSMBug)
-            {
-                initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3();
-            }
 
             return this;
         }
@@ -93,7 +114,15 @@ namespace FubuMVC.StructureMap
 
         public IEnumerable<IActivator> GetAllActivators()
         {
-            return _container.GetAllInstances<IActivator>();
+            foreach (var activator in _container.GetAllInstances<IActivator>())
+            {
+                yield return activator;
+            }
+
+            if (_initializeSingletonsToWorkAroundSMBug)
+            {
+                yield return new SingletonSpinupActivator(_container);
+            }
         }
 
         public IEnumerable<IInstaller> GetAllInstallers()
@@ -126,19 +155,6 @@ namespace FubuMVC.StructureMap
             return this;
         }
 
-        private void initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3()
-        {
-            // Remove this method when the issue is closed 
-            // http://github.com/structuremap/structuremap/issues#issue/3
-            var allSingletons =
-                _container.Model.PluginTypes.Where(x => x.Lifecycle == InstanceScope.Singleton.ToString());
-            Debug.WriteLine("Found singletons: " + allSingletons.Count());
-            foreach (var pluginType in allSingletons)
-            {
-                var instance = _container.GetInstance(pluginType.PluginType);
-                Debug.WriteLine("Initialized singleton in primary container: " + instance);
-            }
-        }
     }
 
     public class PartialBehaviorFactory : IBehaviorFactory
