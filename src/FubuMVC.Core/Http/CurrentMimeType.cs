@@ -1,14 +1,11 @@
-using System;
-using FubuCore;
 using System.Linq;
+using FubuCore;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
     public class CurrentMimeType
     {
-        // TODO -- move to MimeTypes when Assets is put in place
-        public static readonly string HttpFormMimetype = "application/x-www-form-urlencoded";
-
         public CurrentMimeType()
         {
         }
@@ -16,7 +13,7 @@ namespace FubuMVC.Core.Http
         // If contenttype is null, use the url encoded thing
         public CurrentMimeType(string contentType, string acceptType)
         {
-            contentType = contentType ?? HttpFormMimetype;
+            contentType = contentType ?? MimeType.HttpFormMimetype;
             if (contentType.Contains(";"))
             {
                 var parts = contentType.ToDelimitedArray(';');
@@ -29,7 +26,7 @@ namespace FubuMVC.Core.Http
             }
 
             ContentType = contentType;
-            
+
             AcceptTypes = new MimeTypeList(acceptType);
         }
 

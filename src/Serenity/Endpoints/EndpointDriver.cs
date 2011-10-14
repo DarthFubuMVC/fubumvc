@@ -6,6 +6,7 @@ using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using FubuCore;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 
 namespace Serenity.Endpoints
@@ -55,7 +56,7 @@ namespace Serenity.Endpoints
         {
             var request = requestForUrlTarget(subject);
             request.Method = "GET";
-            request.ContentType = CurrentMimeType.HttpFormMimetype;
+            request.ContentType = MimeType.HttpFormMimetype;
 
 
             return request.ToHttpCall();

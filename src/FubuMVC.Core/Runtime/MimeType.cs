@@ -10,6 +10,8 @@ namespace FubuMVC.Core.Runtime
 {
     public class MimeType
     {
+        public static readonly string HttpFormMimetype = "application/x-www-form-urlencoded";
+
         public static MimeType ForFolder(AssetFolder folder)
         {
             return _mimeTypes.GetAll().FirstOrDefault(x => x.Folder().Equals(folder));
@@ -18,7 +20,7 @@ namespace FubuMVC.Core.Runtime
         // This *must* go before the code below
         private static readonly Cache<string, MimeType> _mimeTypes =
             new Cache<string, MimeType>(key => new MimeType(key));
-
+        
         public static readonly MimeType Html = New(MediaTypeNames.Text.Html, ".htm", ".html");
         public static readonly MimeType Json = New("application/json");
         public static readonly MimeType Text = New(MediaTypeNames.Text.Plain, ".txt");

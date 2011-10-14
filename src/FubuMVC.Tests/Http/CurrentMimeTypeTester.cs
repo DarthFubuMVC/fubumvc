@@ -1,4 +1,5 @@
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -11,7 +12,7 @@ namespace FubuMVC.Tests.Http
         public void feeding_in_null_for_contentType_defaults_to_HttpFormMimeType()
         {
             var currentMimeType = new CurrentMimeType(null, null);
-            currentMimeType.ContentType.ShouldEqual(CurrentMimeType.HttpFormMimetype);
+            currentMimeType.ContentType.ShouldEqual(MimeType.HttpFormMimetype);
         }
 
         [Test]

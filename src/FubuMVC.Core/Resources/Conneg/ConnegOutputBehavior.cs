@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Media;
@@ -10,9 +11,6 @@ namespace FubuMVC.Core.Resources.Conneg
 {
     public class ConnegOutputBehavior<T> : BasicBehavior
     {
-        // TODO -- move to MimeTypes when Assets is put in place
-        public static readonly string Html = "text/html";
-
         private readonly IFubuRequest _request;
         private readonly IValueSource<T> _source;
         private readonly IOutputWriter _writer;
@@ -30,7 +28,7 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override DoNext performInvoke()
         {
             var mimeTypes = _request.Get<CurrentMimeType>();
-            if (mimeTypes.AcceptTypes.Contains(Html))
+            if (mimeTypes.AcceptTypes.Contains(MediaTypeNames.Text.Html))
             {
                 return DoNext.Continue;
             }
@@ -54,8 +52,7 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 if (acceptType == "*/*")
                 {
-                    // TODO -- use MimeType.Html after Assets is merged in
-                    return _writers.FirstOrDefault(x => x.Mimetypes.Contains("text/html"))
+                    return _writers.FirstOrDefault(x => x.Mimetypes.Contains(MediaTypeNames.Text.Html))
                            ?? _writers.FirstOrDefault();
                 }
 

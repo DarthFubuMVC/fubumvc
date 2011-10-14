@@ -25,13 +25,12 @@ namespace FubuMVC.Core.Http
 
             // Life just doesn't get to be simple.  What if a jquery plugin, just pulling an example out of 
             // very thick air, posts json, but with an incorrect mimetype? 
-            if (currentMimeType.ContentType == CurrentMimeType.HttpFormMimetype && context.IsAjaxRequest())
+            if (currentMimeType.ContentType == MimeType.HttpFormMimetype && context.IsAjaxRequest())
             {
                 var streamingData = context.Service<IStreamingData>();
                 if (streamingData.CouldBeJson())
                 {
-                    // TODO
-                    currentMimeType.ContentType = "text/json";
+                    currentMimeType.ContentType = MimeType.Json.Value;
                 }
             }
 
