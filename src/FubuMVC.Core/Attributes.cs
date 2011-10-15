@@ -170,12 +170,14 @@ namespace FubuMVC.Core
     {
     }
 
-    // TODO -- change to a ModifyChainAttribute
 
-    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class FubuPartialAttribute : Attribute
+    public class FubuPartialAttribute : ModifyChainAttribute
     {
+        public override void Alter(ActionCall call)
+        {
+            call.ParentChain().IsPartialOnly = true;
+        }
     }
 
 

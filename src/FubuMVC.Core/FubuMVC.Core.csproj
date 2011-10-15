@@ -355,7 +355,6 @@
     <Compile Include="Registration\Conventions\HandlersUrlPolicy.cs" />
     <Compile Include="Registration\Conventions\MethodToUrlBuilder.cs" />
     <Compile Include="Registration\Conventions\MissingRouteInputPolicy.cs" />
-    <Compile Include="Registration\Conventions\PartialRequestConvention.cs" />
     <Compile Include="Registration\DSL\MediaExpression.cs" />
     <Compile Include="Registration\HandlerActionsSet.cs" />
     <Compile Include="Registration\IAssemblyScanner.cs" />
