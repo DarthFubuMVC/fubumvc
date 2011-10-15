@@ -220,9 +220,8 @@ namespace FubuMVC.Core
         }
     }
 
-    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class UrlForNewAttribute : Attribute
+    public class UrlForNewAttribute : ModifyChainAttribute
     {
         private readonly Type _type;
 
@@ -234,6 +233,11 @@ namespace FubuMVC.Core
         public Type Type
         {
             get { return _type; }
+        }
+
+        public override void Alter(ActionCall call)
+        {
+            call.ParentChain().UrlCategory.Creates.Add(Type);
         }
     }
 }

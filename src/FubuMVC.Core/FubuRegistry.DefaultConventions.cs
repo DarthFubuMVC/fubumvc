@@ -48,7 +48,6 @@ namespace FubuMVC.Core
             Policies.Add<JsonMessageInputConvention>();
             _systemPolicies.Add(_connegAttachmentPolicy);
             Policies.Add<UrlRegistryCategoryConvention>();
-            Policies.Add<UrlForNewConvention>();
 
             ApplyConvention<ModifyChainAttributeConvention>();
         }
