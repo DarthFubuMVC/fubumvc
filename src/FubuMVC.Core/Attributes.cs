@@ -4,6 +4,8 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Media.Formatters;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace FubuMVC.Core
 {
@@ -176,10 +178,9 @@ namespace FubuMVC.Core
     {
     }
 
-    // TODO -- change to a ModifyChainAttribute
-    // TODO:  If anyone wants it, make it work on a controller too
+
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class WrapWithAttribute : Attribute
+    public class WrapWithAttribute : ModifyChainAttribute
     {
         private readonly Type[] _behaviorTypes;
 
@@ -191,6 +192,11 @@ namespace FubuMVC.Core
         public Type[] BehaviorTypes
         {
             get { return _behaviorTypes; }
+        }
+
+        public override void Alter(ActionCall call)
+        {
+            _behaviorTypes.Each(x => call.WrapWith(x));
         }
     }
 

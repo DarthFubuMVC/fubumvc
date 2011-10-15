@@ -23,7 +23,6 @@ namespace FubuMVC.Core
             ApplyConvention<PartialRequestConvention>();
 
             addConvention(graph => _routeResolver.ApplyToAll(graph));
-            _conventions.Add(new WrapWithAttributeConvention());
 
 
             _systemPolicies.Add(new AttachAuthorizationPolicy());

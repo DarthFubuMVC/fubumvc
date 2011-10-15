@@ -45,7 +45,8 @@ namespace FubuMVC.Tests.Registration.Conventions
         [Test]
         public void place_wrapper_on_action_with_a_single_attribute()
         {
-            graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithOneAttribute()).First()
+            var chain = graph.BehaviorFor<WrapWithAttributeController>(x => x.MethodWithOneAttribute());
+            chain.First()
                 .ShouldBeOfType<Wrapper>().BehaviorType.ShouldEqual(typeof(Wrapper1));
         }
 
