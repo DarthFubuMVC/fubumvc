@@ -6,12 +6,6 @@ using System.Linq;
 
 namespace FubuMVC.Core.Assets.Content
 {
-    public interface ITransformerPolicyLibrary
-    {
-        IEnumerable<ITransformerPolicy> FindPoliciesFor(AssetFile file);
-        IEnumerable<ITransformerPolicy> FindGlobalPoliciesFor(MimeType mimeType);
-    }
-
     public class TransformerPolicyLibrary : ITransformerPolicyLibrary
     {
         private readonly IList<ITransformerPolicy> _policies = new List<ITransformerPolicy>();
@@ -39,7 +33,6 @@ namespace FubuMVC.Core.Assets.Content
             return _policies.Where(x => x.ActionType == ActionType.Global && x.MimeType == mimeType);
         }
 
-        // TODO -- this thing needs to play in the bootstrapping to get the mimetypes
     
     }
 }

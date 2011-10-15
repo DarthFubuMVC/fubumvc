@@ -77,6 +77,7 @@
     </Compile>
     <Compile Include="AjaxExtensions.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
+    <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />
