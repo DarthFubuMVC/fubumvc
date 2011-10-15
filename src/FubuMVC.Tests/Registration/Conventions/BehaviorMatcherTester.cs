@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
@@ -22,7 +21,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            graph = new BehaviorGraph(null);
             matcher = new BehaviorMatcher((type, methodInfo) => actionCallProvider(type, methodInfo));
 
             pool = new TypePool(null);
@@ -39,7 +37,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         #endregion
 
         private Func<Type, MethodInfo, ActionCall> actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
-        private BehaviorGraph graph;
         private BehaviorMatcher matcher;
         private TypePool pool;
         private IEnumerable<ActionCall> calls;
@@ -47,16 +44,13 @@ namespace FubuMVC.Tests.Registration.Conventions
         private void setFilters(Action action)
         {
             action();
-            matcher.BuildBehaviors(pool, graph);
-            calls = graph.Behaviors.SelectMany(x => x.Calls);
+            calls = matcher.FindActions(pool);
         }
 
         [Test]
         public void scan_with_a_filter_on_controller_implements_interface()
         {
             setFilters(() => { matcher.TypeFilters.Includes += t => t.IsConcreteTypeOf<IPattern>(); });
-
-            graph.Behaviors.Count().ShouldEqual(6);
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(3);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
@@ -68,10 +62,6 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void scan_with_a_filter_on_controller_name()
         {
             setFilters(() => { matcher.TypeFilters.Includes += t => t.Name.EndsWith("Controller"); });
-
-            graph.Behaviors.Each(chain => Debug.WriteLine(chain.Calls.First()));
-
-            graph.Behaviors.Count().ShouldEqual(9);
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(0);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
@@ -88,8 +78,6 @@ namespace FubuMVC.Tests.Registration.Conventions
                 matcher.MethodFilters.Excludes += call => call.Method.Name.Contains("Go");
             });
 
-            graph.Behaviors.Count().ShouldEqual(8);
-
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(2);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(2);
             calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(2);
@@ -101,10 +89,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             setFilters(() => { matcher.TypeFilters.Includes += type => type.IsConcrete(); });
 
-
-            graph.Behaviors.Count().ShouldEqual(12);
             calls.Any(x => x.HandlerType == typeof (IPattern)).ShouldBeFalse();
-
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(3);
             calls.Count(x => x.HandlerType == typeof (OneController)).ShouldEqual(3);
             calls.Count(x => x.HandlerType == typeof (TwoController)).ShouldEqual(3);
@@ -116,10 +101,10 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             actionCallProvider = (type, methodInfo) => new TestActionCall(type, methodInfo);
 
-            matcher.BuildBehaviors(pool, graph);
+            calls = matcher.FindActions(pool);
 
-            graph.Behaviors
-                .Select(x => x.FirstCall()).All(x => x.GetType() == typeof (TestActionCall))
+            calls
+                .All(x => x.GetType() == typeof (TestActionCall))
                 .ShouldBeTrue();
         }
     }

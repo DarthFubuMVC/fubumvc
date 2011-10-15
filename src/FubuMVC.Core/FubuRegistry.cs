@@ -26,7 +26,6 @@ namespace FubuMVC.Core
     /// </example>
     public partial class FubuRegistry
     {
-        private readonly ActionSourceMatcher _actionSourceMatcher = new ActionSourceMatcher();
         private readonly BehaviorMatcher _behaviorMatcher;
 
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
@@ -43,9 +42,12 @@ namespace FubuMVC.Core
         private IConfigurationObserver _observer;
         private Func<Type, MethodInfo, ActionCall> _actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
         private readonly ConnegAttachmentPolicy _connegAttachmentPolicy;
+        private readonly BehaviorAggregator _behaviorAggregator;
+        private readonly List<IActionSource> _actionSources = new List<IActionSource>();
 
         public FubuRegistry()
         {
+            _behaviorAggregator = new BehaviorAggregator(_types, _actionSources);
             _behaviorMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
             _observer = new NulloConfigurationObserver();
             _viewAttacherConvention = new ViewAttacherConvention();

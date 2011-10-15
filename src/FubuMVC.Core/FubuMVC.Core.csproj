@@ -96,6 +96,7 @@
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
+    <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
     <Compile Include="Resources\ConnegGraph.cs" />

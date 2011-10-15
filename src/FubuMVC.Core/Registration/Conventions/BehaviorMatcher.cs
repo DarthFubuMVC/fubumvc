@@ -8,12 +8,11 @@ using FubuMVC.Core.Registration.Nodes;
 namespace FubuMVC.Core.Registration.Conventions
 {
     // TODO:  Blow up if there are no filters of any sort
-    public class BehaviorMatcher
+    public class BehaviorMatcher : IActionSource
     {
         private readonly Func<Type, MethodInfo, ActionCall> _actionCallProvider;
         private readonly CompositeFilter<ActionCall> _methodFilters = new CompositeFilter<ActionCall>();
         private readonly CompositeFilter<Type> _typeFilters = new CompositeFilter<Type>();
-        private BehaviorGraph _graph;
 
         public BehaviorMatcher(Func<Type, MethodInfo, ActionCall> actionCallProvider)
         {
@@ -37,31 +36,15 @@ namespace FubuMVC.Core.Registration.Conventions
             return _methodFilters.HasChanged || _typeFilters.HasChanged;
         }
 
-        public void BuildBehaviors(TypePool pool, BehaviorGraph graph)
+        public IEnumerable<ActionCall> FindActions(TypePool types)
         {
-            _graph = graph;
-
             // Do not do any assembly scanning if no type or method filters are set
-            pool.ShouldScanAssemblies = HasFilters();
-
-            pool.TypesMatching(TypeFilters.Matches).Each(scanMethods);
-            _graph = null;
-        }
-
-
-        private void scanMethods(Type type)
-        {
-            type.GetMethods(BindingFlags.Instance | BindingFlags.Public)
-                .Select(x => _actionCallProvider(type, x))
-                .Where(MethodFilters.Matches)
-                .Each(registerBehavior);
-        }
-
-        private void registerBehavior(ActionCall call)
-        {
-            var chain = new BehaviorChain();
-            chain.AddToEnd(call);
-            _graph.AddChain(chain);
+            types.ShouldScanAssemblies = HasFilters();
+            return types
+                .TypesMatching(TypeFilters.Matches)
+                .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                                        .Select(x => _actionCallProvider(type, x))
+                                        .Where(MethodFilters.Matches));
         }
     }
 }
