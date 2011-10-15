@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration.Nodes;
@@ -86,6 +87,17 @@ namespace FubuMVC.Tests.Security
 
             toBehavior(node).Policies.Single().ShouldBeOfType<AuthorizationPolicy<UrlModel>>()
                 .InnerRule.ShouldBeOfType<UrlModelShouldStartWithJ>();
+        }
+
+        [Test]
+        public void adding_a_type_that_is_not_a_rule()
+        {
+            var node = new AuthorizationNode();
+
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                node.AddRule(GetType());
+            });
         }
 
         [Test]

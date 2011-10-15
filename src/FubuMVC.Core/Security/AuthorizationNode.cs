@@ -66,9 +66,16 @@ namespace FubuMVC.Core.Security
         /// <returns></returns>
         public ObjectDef AddRule(Type ruleType)
         {
-            // TODO -- blow up if this isn't IAuthorizationRule<T>
-            var modelType = ruleType
-                .FindInterfaceThatCloses(typeof(IAuthorizationRule<>))
+            var openRuleType = ruleType
+                .FindInterfaceThatCloses(typeof(IAuthorizationRule<>));
+
+
+            if (openRuleType == null)
+            {
+                throw new ArgumentOutOfRangeException("ruleType", "ruleType must close IAuthorizationRule<T>");
+            }
+
+            var modelType = openRuleType
                 .GetGenericArguments()
                 .First();
 
@@ -88,7 +95,11 @@ namespace FubuMVC.Core.Security
         /// <returns></returns>
         public ObjectDef AddPolicy(Type policyType)
         {
-            // TODO -- blow up if this isn't IAuthorizationPolicy
+            if (!policyType.CanBeCastTo<IAuthorizationPolicy>())
+            {
+                throw new ArgumentOutOfRangeException("policyType", "policyType must be assignable to IAuthorizationPolicy to be used here");
+            }
+
             var objectDef = new ObjectDef(policyType);
             _policies.Add(objectDef);
 
