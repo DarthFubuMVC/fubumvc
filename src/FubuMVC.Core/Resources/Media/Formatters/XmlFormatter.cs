@@ -21,7 +21,6 @@ namespace FubuMVC.Core.Resources.Media.Formatters
         {
             var serializer = new XmlSerializer(typeof (T));
 
-            // TODO -- later, we'll need to get more sophisticated and worry about the Encoding
             var xmlWriter = new XmlTextWriter(_streaming.Output, Encoding.Default){
                 Formatting = Formatting.None
             };
