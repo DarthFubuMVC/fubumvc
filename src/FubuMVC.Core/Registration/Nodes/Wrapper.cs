@@ -1,6 +1,7 @@
 using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuCore;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -10,7 +11,11 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public Wrapper(Type behaviorType)
         {
-            // TODO -- blow up if not an IActionBehavior type, must be concrete
+            if (!behaviorType.CanBeCastTo<IActionBehavior>())
+            {
+                throw new ArgumentOutOfRangeException("behaviorType", "Only types that can be cast to IActionBehavior may be used here");
+            }
+
             _objectDef = new ObjectDef
             {
                 Type = behaviorType

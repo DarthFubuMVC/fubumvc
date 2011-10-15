@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources.Conneg;
+using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Registration.Conventions;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -80,7 +81,7 @@ namespace FubuMVC.Tests.Registration
             action.AddToEnd(next);
 
 
-            var enricher = new Wrapper(typeof (string));
+            var enricher = new Wrapper(typeof (DebugReportTester.StubBehavior));
             action.AddAfter(enricher);
 
             action.Next.ShouldBeTheSameAs(enricher);

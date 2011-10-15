@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core;
@@ -25,6 +26,15 @@ namespace FubuMVC.Tests.Registration
         #endregion
 
         private Wrapper _wrapper;
+
+        [Test]
+        public void ctor_blows_up_if_the_type_is_not_an_action_behavior()
+        {
+            Exception<ArgumentOutOfRangeException>.ShouldBeThrownBy(() =>
+            {
+                new Wrapper(GetType());
+            });
+        }
 
         [Test]
         public void build_an_object_def_for_the_type()
