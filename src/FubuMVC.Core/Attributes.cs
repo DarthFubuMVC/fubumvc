@@ -200,12 +200,9 @@ namespace FubuMVC.Core
         }
     }
 
-    // TODO -- change to a ModifyChainAttribute
-    /// <summary>
-    /// Just declares 
-    /// </summary>
+
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
-    public class UrlRegistryCategoryAttribute : Attribute
+    public class UrlRegistryCategoryAttribute : ModifyChainAttribute
     {
         private readonly string _category;
 
@@ -217,6 +214,11 @@ namespace FubuMVC.Core
         public string Category
         {
             get { return _category; }
+        }
+
+        public override void Alter(ActionCall call)
+        {
+            call.ParentChain().UrlCategory.Category = Category;
         }
     }
 

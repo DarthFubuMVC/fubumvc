@@ -47,7 +47,6 @@ namespace FubuMVC.Core
             _conventions.Add(_bagRunner);
             Policies.Add<JsonMessageInputConvention>();
             _systemPolicies.Add(_connegAttachmentPolicy);
-            Policies.Add<UrlRegistryCategoryConvention>();
 
             ApplyConvention<ModifyChainAttributeConvention>();
         }
