@@ -7,7 +7,6 @@ namespace FubuMVC.WebForms
     {
         public void Configure(FubuRegistry registry)
         {
-            registry.Policies.Add<WebFormsEndpointPolicy>();
             registry.Views.Facility(new WebFormViewFacility());
 
             registry.Services(x =>

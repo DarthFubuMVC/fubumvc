@@ -163,25 +163,12 @@ namespace FubuMVC.Core
     /// </summary>
     public interface JsonMessage{}
 
-    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
     public class HtmlEndpointAttribute : Attribute
     {
     }
 
     // TODO -- change to a ModifyChainAttribute
-    [AttributeUsage(AttributeTargets.Method)]
-    public class WebFormsEndpointAttribute : Attribute
-    {
-        private readonly Type _viewType;
-
-        public WebFormsEndpointAttribute(Type viewType)
-        {
-            _viewType = viewType;
-        }
-
-        public Type ViewType { get { return _viewType; } }
-    }
 
     // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]

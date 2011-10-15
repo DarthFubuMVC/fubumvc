@@ -84,7 +84,7 @@
     <Compile Include="ViewPath.cs" />
     <Compile Include="WebFormExtensions.cs" />
     <Compile Include="WebFormRenderer.cs" />
-    <Compile Include="WebFormsEndpointPolicy.cs" />
+    <Compile Include="WebFormsEndpointAttribute.cs" />
     <Compile Include="WebFormsEngine.cs" />
     <Compile Include="WebFormView.cs" />
     <Compile Include="WebFormViewFacility.cs" />

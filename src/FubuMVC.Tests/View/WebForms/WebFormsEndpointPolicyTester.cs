@@ -14,16 +14,14 @@ using FubuCore.Reflection;
 namespace FubuMVC.Tests.View.WebForms
 {
     [TestFixture]
-    public class when_configuring_WebFormsEndpointPolicy
+    public class when_using_the_WebFormsEndpoint_attribute
     {
         private BehaviorGraph _graph;
         private IConfigurationObserver _observer;
-        private WebFormsEndpointPolicy _policy;
 
         [SetUp]
         public void SetUp()
         {
-            _policy = new WebFormsEndpointPolicy();
             _observer = MockRepository.GenerateStub<IConfigurationObserver>();
             _graph = new FubuRegistry(x =>
                     {
@@ -43,7 +41,6 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void should_append_behavioral_node_to_void_end_point_attributed_calls()
         {
-            _policy.Configure(_graph);
             var token = new WebFormViewToken(typeof(FakeView));
             var actions = _graph.Actions().Where(x => !x.HasAnyOutputBehavior()
                 && x.Method.HasAttribute<WebFormsEndpointAttribute>()).ToList();
@@ -57,7 +54,6 @@ namespace FubuMVC.Tests.View.WebForms
         [Test]
         public void observer_should_record_call_status()
         {
-            _policy.Configure(_graph);
             var token = new WebFormViewToken(typeof(FakeView));
             var actions = _graph.Actions().Where(x => !x.HasAnyOutputBehavior()
                 && x.Method.HasAttribute<WebFormsEndpointAttribute>()).ToList();
