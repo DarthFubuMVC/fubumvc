@@ -10,9 +10,6 @@ namespace FubuMVC.Core.Registration.Routes
     {
         public static object ToFunc(Type concreteType, MethodInfo method)
         {
-            // TODO:  Blow up if there's more than one input argument
-            // TODO:  Blow up if there's not an output
-
             var objects = new MethodCallObjects(concreteType, method);
 
             Type openType = objects.ParameterCount == 2 ? typeof (Func<,>) : typeof (Func<,,>);
@@ -21,9 +18,6 @@ namespace FubuMVC.Core.Registration.Routes
 
         public static object ToAction(Type concreteType, MethodInfo method)
         {
-            // TODO:  Blow up if there's more than one input argument
-            // TODO:  Blow up if there is an output
-
             var objects = new MethodCallObjects(concreteType, method);
 
             Type openType = objects.ParameterCount == 1 ? typeof (Action<>) : typeof (Action<,>);
