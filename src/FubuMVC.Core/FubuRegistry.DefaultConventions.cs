@@ -32,7 +32,6 @@ namespace FubuMVC.Core
             Output.ToHtml
                 .WhenCallMatches(x => x.Method.Name.ToLower().EndsWith("html") && x.OutputType() == typeof (string));
             
-            Output.ToJson.WhenCallMatches(x => x.Method.HasAttribute<JsonEndpointAttribute>());
             Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
 
             Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();

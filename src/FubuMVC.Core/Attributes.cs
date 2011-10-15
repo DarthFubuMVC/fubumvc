@@ -66,11 +66,13 @@ namespace FubuMVC.Core
         public string Folder { get { return _folder; } }
     }
 
-    // TODO -- change to a ModifyChainAttribute
     [AttributeUsage(AttributeTargets.Method)]
-    public class JsonEndpointAttribute : Attribute
+    public class JsonEndpointAttribute : ModifyChainAttribute
     {
-
+        public override void Alter(ActionCall call)
+        {
+            call.ParentChain().OutputJson();
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
