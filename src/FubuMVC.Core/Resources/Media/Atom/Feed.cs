@@ -20,7 +20,6 @@ namespace FubuMVC.Core.Resources.Media.Atom
 
         public Feed()
         {
-            // TODO -- move to MimeType constant when Assets goes in
             ContentType = "application/atom+xml";
         }
 
