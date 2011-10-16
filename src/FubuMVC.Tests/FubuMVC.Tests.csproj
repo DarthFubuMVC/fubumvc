@@ -175,6 +175,7 @@
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
+    <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Nodes\OutputNodeTester.cs" />
@@ -227,7 +228,6 @@
     <Compile Include="Resources\Projections\SimpleValueSource.cs" />
     <Compile Include="Resources\Media\Xml\XmlAttCentricMediaNodeTester.cs" />
     <Compile Include="Resources\Media\Xml\XmlNodeCentricMediaNodeTester.cs" />
-    <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />

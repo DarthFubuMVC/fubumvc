@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
@@ -12,13 +13,13 @@ namespace FubuMVC.Core.Registration.DSL
     {
         private readonly BehaviorMatcher _matcher;
         private readonly TypePool _types;
-        private readonly ActionSourceMatcher _actionSourceMatcher;
+        private readonly IList<IActionSource> _sources;
         
-        public ActionCallCandidateExpression(BehaviorMatcher matcher, TypePool types, ActionSourceMatcher actionSourceMatcher)
+        public ActionCallCandidateExpression(BehaviorMatcher matcher, TypePool types, IList<IActionSource> sources)
         {
             _matcher = matcher;
-            _actionSourceMatcher = actionSourceMatcher;
             _types = types;
+            _sources = sources;
         }
 
         public ActionCallCandidateExpression IncludeClassesSuffixedWithController()
@@ -106,7 +107,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ActionCallCandidateExpression FindWith(IActionSource actionSource)
         {
-            _actionSourceMatcher.AddSource(actionSource);
+            _sources.Fill(actionSource);
             return this;
         }
     }

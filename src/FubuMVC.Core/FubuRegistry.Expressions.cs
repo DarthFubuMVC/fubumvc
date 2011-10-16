@@ -72,7 +72,7 @@ namespace FubuMVC.Core
         /// </summary>
         public ActionCallCandidateExpression Actions
         {
-            get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSourceMatcher); }
+            get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSources); }
         }
 
         /// <summary>

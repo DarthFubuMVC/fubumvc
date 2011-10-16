@@ -15,9 +15,11 @@ namespace FubuMVC.Core
         {
             _bagRunner.Apply(_viewAttacherConvention);
 
+            // Default action sources
+            _actionSources.Add(_behaviorMatcher);
+
             // Add Behaviors First
-            addConvention(graph => _behaviorMatcher.BuildBehaviors(_types, graph));
-            addConvention(graph => _actionSourceMatcher.BuildBehaviors(_types, graph));
+            ApplyConvention(_behaviorAggregator);
 
 
             addConvention(graph => _routeResolver.ApplyToAll(graph));
