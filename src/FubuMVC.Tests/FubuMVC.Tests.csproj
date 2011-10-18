@@ -72,9 +72,6 @@
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
-    <Reference Include="StoryTeller">
-      <HintPath>..\..\lib\StoryTeller\StoryTeller.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
