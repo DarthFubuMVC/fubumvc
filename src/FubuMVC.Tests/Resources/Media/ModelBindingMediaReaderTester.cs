@@ -13,7 +13,7 @@ namespace FubuMVC.Tests.Resources.Media
         [Test]
         public void only_mime_type_is_the_default_form_post()
         {
-            ClassUnderTest.Mimetypes.ShouldHaveTheSameElementsAs("application/x-www-form-urlencoded");
+            ClassUnderTest.Mimetypes.ShouldHaveTheSameElementsAs("application/x-www-form-urlencoded", "multipart/form-data");
         }
 
         [Test]

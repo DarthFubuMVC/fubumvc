@@ -7,6 +7,7 @@ namespace FubuMVC.Core.Resources.Media
     {
         // TODO -- move to MimeTypes when Assets is put in place
         public static readonly string HttpFormMimetype = "application/x-www-form-urlencoded";
+        public static readonly string MultipartMimetype = "multipart/form-data";
 
         private readonly IBindingContext _context;
         private readonly IObjectResolver _resolver;
@@ -25,7 +26,11 @@ namespace FubuMVC.Core.Resources.Media
 
         public IEnumerable<string> Mimetypes
         {
-            get { yield return HttpFormMimetype; }
+            get
+            {
+                yield return HttpFormMimetype;
+                yield return MultipartMimetype;
+            }
         }
     }
 }
