@@ -89,14 +89,16 @@ task :compile => [:restore_if_missing, :clean, :version] do
   #copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "fubu.exe", props[:stage]
   #copyOutputFiles "src/fubu/bin/#{COMPILE_TARGET}", "Bottles*.{dll,pdb,exe}", props[:stage]
 
-  bottles("create-pak fubumvc-deployers build/fubumvc-deployers.zip -target #{COMPILE_TARGET}")
+
+
+  bottles("create-pak src/FubuMVC.Deployers build/fubumvc-deployers.zip -target #{COMPILE_TARGET}")
   
   outputDir = "src/FubuMVC.Diagnostics/bin"
   packer = ILRepack.new :out => "src/FubuMVC.Diagnostics/bin/FubuMVC.Diagnostics.dll", :lib => outputDir
   packer.merge :lib => outputDir, :refs => ['FubuMVC.Diagnostics.dll', 'Newtonsoft.Json.dll']
-  bottles("create-pak fubumvc-diagnostics build/fubumvc-diagnostics.zip -target #{COMPILE_TARGET}")
+  bottles("create-pak src/FubuMVC.Diagnostics build/fubumvc-diagnostics.zip -target #{COMPILE_TARGET}")
   
-  bottles("create-pak getting-started build/basic-getting-started.zip -target #{COMPILE_TARGET}")
+  bottles("create-pak src/FubuMVC.GettingStarted build/basic-getting-started.zip -target #{COMPILE_TARGET}")
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
