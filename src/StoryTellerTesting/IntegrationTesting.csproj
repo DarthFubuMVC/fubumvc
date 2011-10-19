@@ -149,6 +149,10 @@
       <Project>{90DBE31C-948D-47AF-8C17-0056511A7313}</Project>
       <Name>Fubu</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Serenity.Testing\Serenity.Testing.csproj">
+      <Project>{5E69E72A-B92F-47BE-B7F7-6E6A926EC90F}</Project>
+      <Name>Serenity.Testing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serenity\Serenity.csproj">
       <Project>{900A0419-3579-4DAE-85BE-71A3E4B34239}</Project>
       <Name>Serenity</Name>
@@ -182,20 +186,14 @@
       <Link>Castle.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Serenity.Testing\bin\Debug\Selenium.WebDriverBackedSelenium.dll">
-      <Link>Selenium.WebDriverBackedSelenium.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Serenity.Testing\bin\Debug\WebDriver.Support.dll">
-      <Link>WebDriver.Support.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Serenity\bin\Debug\WebDriver.dll">
-      <Link>WebDriver.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy $(SolutionDir)Serenity\$(OutDir)Castle.Core.dll $(TargetDir) /Y
+copy $(SolutionDir)Serenity.Testing\$(OutDir)Selenium.WebDriverBackedSelenium.dll $(TargetDir) /Y
+copy $(SolutionDir)Serenity\$(OutDir)WebDriver.dll $(TargetDir) /Y
+copy $(SolutionDir)Serenity.Testing\$(OutDir)\WebDriver.Support.dll $(TargetDir) /Y</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
