@@ -19,6 +19,7 @@ namespace FubuMVC.Core.UI.Tags
         string CurrentProfile { get; }
         ElementRequest GetRequest(Accessor accessor);
 
+        HtmlTag AfterFormCreate(ElementRequest request);
         HtmlTag BeforePartial(ElementRequest request);
         HtmlTag AfterPartial(ElementRequest request);
         HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
@@ -31,7 +32,7 @@ namespace FubuMVC.Core.UI.Tags
         HtmlTag LabelFor(Expression<Func<T, object>> expression, string profile);
         HtmlTag InputFor(Expression<Func<T, object>> expression);
         HtmlTag InputFor(Expression<Func<T, object>> expression, string profile);
-        
+
         
         HtmlTag DisplayFor(Expression<Func<T, object>> expression);
         HtmlTag DisplayFor(Expression<Func<T, object>> expression, string profile);
@@ -188,6 +189,12 @@ namespace FubuMVC.Core.UI.Tags
         public HtmlTag DisplayFor(Expression<Func<T, object>> expression)
         {
             return buildTag(expression, _profile.Display);
+        }
+
+
+        public HtmlTag AfterFormCreate(ElementRequest request)
+        {
+            return _profile.AfterFormCreate.Build(request);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using FubuMVC.Core.UI.Tags;
+using FubuMVC.Core.Urls;
 using HtmlTags;
 
 namespace FubuMVC.Core.UI.Configuration
@@ -23,6 +24,13 @@ namespace FubuMVC.Core.UI.Configuration
             AfterPartial.Always.BuildBy(req => new NoTag());
             BeforeEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
             AfterEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
+
+            AfterFormCreate.Always.BuildBy(req =>
+                                               {
+                                                   var urlRegistry = req.Get<IUrlRegistry>();
+                                                   var url = urlRegistry.UrlFor(req.Model);
+                                                   return new FormTag(url);
+                                               });
         }
 
         public static string BreakUpCamelCase(string fieldName)
@@ -33,7 +41,7 @@ namespace FubuMVC.Core.UI.Configuration
                     "([0-9])([a-zA-Z])",
                     "([a-zA-Z])([0-9])"
                 };
-            var output = patterns.Aggregate(fieldName, 
+            var output = patterns.Aggregate(fieldName,
                 (current, pattern) => Regex.Replace(current, pattern, "$1 $2", RegexOptions.IgnorePatternWhitespace));
             return output.Replace('_', ' ');
         }

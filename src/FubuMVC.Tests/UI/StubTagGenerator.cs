@@ -67,6 +67,12 @@ namespace FubuMVC.Tests.UI
             return new HtmlTag("span").AddClass("display").Text(request.Accessor.Name);
         }
 
+        public HtmlTag AfterFormCreate(ElementRequest request)
+        {
+            return new FormTag(request.Accessor.Name).AddClass("form");
+        }
+
+
         public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)
         {
             throw new NotImplementedException();
@@ -90,7 +96,7 @@ namespace FubuMVC.Tests.UI
         public ElementRequest GetRequest(Accessor accessor)
         {
             throw new NotImplementedException();
-        }
+        }        
 
         public HtmlTag BeforePartial(ElementRequest request)
         {
