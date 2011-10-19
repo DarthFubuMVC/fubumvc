@@ -2,6 +2,7 @@ using System.Web;
 
 namespace FubuMVC.Diagnostics.Core.Infrastructure
 {
+    // TODO -- change this to ICurrentRequest?
     public class HttpRequest : IHttpRequest
     {
         public string CurrentUrl()

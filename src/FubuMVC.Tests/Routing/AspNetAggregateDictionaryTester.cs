@@ -13,7 +13,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Routing
 {
     [TestFixture]
-    public class AggregateDictionaryTester
+    public class AspNetAggregateDictionaryTester
     {
         #region Setup/Teardown
 
@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Routing
 
         private void assertFound(RequestDataSource source, object value)
         {
-            callback.AssertWasCalled(x => x.Callback(source, value));
+            callback.AssertWasCalled(x => x.Callback(source.ToString(), value));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Routing
         {
             forKey("abc");
 
-            callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Route, null), x => x.IgnoreArguments());
+            callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Route.ToString(), null), x => x.IgnoreArguments());
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace FubuMVC.Tests.Routing
             const string expectedValue = "STUBBED USERAGENT";
             var requestCtx = Do_the_Stupid_ASPNET_Mock_HokeyPokey();
             requestCtx.HttpContext.Request.Stub(r => r.UserAgent).Return(expectedValue);
-            aggregate = new AggregateDictionary(requestCtx);
+            aggregate = new AspNetAggregateDictionary(requestCtx);
 
             forKey("UserAgent");
 
@@ -137,7 +137,7 @@ namespace FubuMVC.Tests.Routing
         {
             var expectedValue = new Uri("http://localhost/foo");
             var requestCtx = Do_the_Stupid_ASPNET_Mock_HokeyPokey();
-            aggregate = new AggregateDictionary(requestCtx);
+            aggregate = new AspNetAggregateDictionary(requestCtx);
 
             forKey("Url");
 
@@ -152,7 +152,7 @@ namespace FubuMVC.Tests.Routing
 
             aggregate.AddDictionary(new Dictionary<string, object> { { "UserAgent", expectedValue } });
             forKey("UserAgent1");
-            callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Other, null), o => o.IgnoreArguments());
+            callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Other.ToString(), null), o => o.IgnoreArguments());
             
             forKey("UserAgent");
             assertFound(RequestDataSource.Other, expectedValue);
@@ -173,7 +173,7 @@ namespace FubuMVC.Tests.Routing
         private bool isSystemProperty<T>(Expression<Func<T, object>> expression)
         {
             var property = ReflectionHelper.GetProperty(expression);
-            return AggregateDictionary.IsSystemProperty(property);
+            return AspNetAggregateDictionary.IsSystemProperty(property);
         }
 
         [Test]
@@ -203,6 +203,6 @@ namespace FubuMVC.Tests.Routing
 
     public interface IDictionaryCallback
     {
-        void Callback(RequestDataSource source, object value);
+        void Callback(string source, object value);
     }
 }

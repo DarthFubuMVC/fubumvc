@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Diagnostics
     {
         public string Key;
         public object Value;
-        public RequestDataSource Source;
+        public string Source;
     }
 
     public class ModelBinderSelection : IModelBindingDetail

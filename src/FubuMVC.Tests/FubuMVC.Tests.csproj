@@ -404,7 +404,7 @@
     <Compile Include="TestController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Routing\AggregateDictionaryTester.cs" />
+    <Compile Include="Routing\AspNetAggregateDictionaryTester.cs" />
     <Compile Include="UI\Address.cs" />
     <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
     <Compile Include="UI\DefaultHtmlConventionsTester.cs" />

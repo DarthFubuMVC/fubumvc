@@ -27,34 +27,6 @@ namespace FubuMVC.Core.Runtime
         }
     }
 
-    //// TODO -- throw that ugly wrapper in here and unit test
-    //public class BinaryCopySessionState : ISessionState
-    //{
-    //    private HttpSessionState _session;
-    //    private BinaryFormatter _formatter;
-
-    //    public BinaryCopySessionState()
-    //    {
-    //        _session = HttpContext.Current.Session;
-    //        _formatter = new BinaryFormatter();
-    //    }
-
-    //    public T Get<T>()
-    //    {
-    //        var key = getKey<T>();
-            
-    //    }
-
-    //    private string getKey<T>()
-    //    {
-    //        return typeof (T).FullName;
-    //    }
-
-    //    public void Set<T>(T value)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 
     public class SimpleSessionState : ISessionState
     {

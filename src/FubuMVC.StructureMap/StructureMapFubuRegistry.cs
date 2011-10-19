@@ -40,6 +40,7 @@ namespace FubuMVC.StructureMap
         {
             For<HttpRequestWrapper>().Use(c => BuildRequestWrapper());
 
+            // TODO -- do we need this?
             //Needed for AssertConfigurationIsValid in global.asax
             For<AggregateDictionary>().Use(
                 ctx =>
@@ -49,7 +50,7 @@ namespace FubuMVC.StructureMap
                         return new AggregateDictionary();
 
                     var context = ctx.GetInstance<HttpContextBase>();
-                    return new AggregateDictionary(context.Request.RequestContext);
+                    return new AspNetAggregateDictionary(context.Request.RequestContext);
                 });
 
             For<HttpContextBase>().Use<HttpContextWrapper>().Ctor<HttpContext>().Is(

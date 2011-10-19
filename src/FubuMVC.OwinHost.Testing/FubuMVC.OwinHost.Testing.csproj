@@ -35,7 +35,7 @@
       <HintPath>..\packages\FubuCore.0.9.2.76\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.2.74\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.2.76\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="Gate">
       <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>

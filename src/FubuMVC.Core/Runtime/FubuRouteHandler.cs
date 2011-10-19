@@ -18,10 +18,15 @@ namespace FubuMVC.Core.Runtime
             _behaviorId = behaviorId;
         }
 
+        public Guid BehaviorId
+        {
+            get { return _behaviorId; }
+        }
+
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            var dictionary = new AggregateDictionary(requestContext);
-            ServiceArguments arguments = new ServiceArguments().With(dictionary);
+            var dictionary = new AspNetAggregateDictionary(requestContext);
+            ServiceArguments arguments = new ServiceArguments().With<AggregateDictionary>(dictionary);
 
             IActionBehavior behavior = GetBehavior(arguments);
 

@@ -12,7 +12,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             _report = report;
         }
 
-        protected override void record(string key, RequestDataSource source, object @object)
+        protected override void record(string key, string source, object @object)
         {
             _report.AddBindingDetail(new ModelBindingKey()
             {
