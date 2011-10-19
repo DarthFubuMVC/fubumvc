@@ -1,8 +1,11 @@
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using HtmlTags;
+using System;
 
 namespace FubuMVC.Core.UI.Configuration
 {
@@ -25,12 +28,34 @@ namespace FubuMVC.Core.UI.Configuration
             BeforeEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
             AfterEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
 
+            AfterFormCreate.If(x =>
+                                   {
+                                       if (x.ModelType.IsGenericType == false)
+                                       {
+                                           return false;
+                                       }
+                                       return x.ModelType.GetGenericTypeDefinition() == typeof(Expression<>);
+                                   })
+            .BuildBy(req =>
+                         {
+                             // this could be less ugly with use of the dynamic keyword, however fubumvc does not
+                             // have the Microsoft.CSharp assembly
+                             // I've used Single instead of first, so it'll explode if IUrlRegistry's method sigs will change :)
+
+                             var expression = (LambdaExpression)req.Model;
+                             var method = typeof(IUrlRegistry).GetMethods().Single(x => x.Name == "UrlFor" && x.IsGenericMethod);
+                             var urlRegistry = req.Get<IUrlRegistry>();
+                             var genericMethod = method.MakeGenericMethod(expression.Parameters[0].Type);
+                             var url = (string)genericMethod.Invoke(urlRegistry, new[] { expression });
+                             return new FormTag(url);
+                         });
+
             AfterFormCreate.Always.BuildBy(req =>
-                                               {
-                                                   var urlRegistry = req.Get<IUrlRegistry>();
-                                                   var url = urlRegistry.UrlFor(req.Model);
-                                                   return new FormTag(url);
-                                               });
+            {
+                var urlRegistry = req.Get<IUrlRegistry>();
+                var url = urlRegistry.UrlFor(req.Model);
+                return new FormTag(url);
+            });
         }
 
         public static string BreakUpCamelCase(string fieldName)

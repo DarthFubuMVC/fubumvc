@@ -251,10 +251,10 @@ namespace FubuMVC.Core.UI
         }
 
 
-        public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
+        public static HtmlTag FormFor<TController>(this IFubuPage page, Expression<Action<TController>> expression)
         {
-            var url = view.Urls.UrlFor(expression);
-            return new FormTag(url);
+            
+            return page.Tags(expression).AfterFormCreate(new ElementRequest(expression, null, page.ServiceLocator)); 
         }
 
 
