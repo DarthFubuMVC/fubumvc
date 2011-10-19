@@ -106,6 +106,7 @@
     <Compile Include="Rendering\ViewEntrySourceTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
+    <Compile Include="SparkActivatorTester.cs" />
     <Compile Include="SparkModel\Binding\GenericParserTester.cs" />
     <Compile Include="SparkModel\Binding\GenericViewModelBinderTester.cs" />
     <Compile Include="SparkModel\Binding\ReachableBindingsBinderTester.cs" />

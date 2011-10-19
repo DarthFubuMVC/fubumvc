@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Web;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -44,6 +45,12 @@ namespace FubuMVC.Spark.Rendering
         public HtmlTag Tag(string tagName)
         {
             return new HtmlTag(tagName);
+        }
+
+        // TODO: delegate to service locator and test coverage.
+        public string H(object value)
+        {
+            return HttpUtility.HtmlEncode(value);
         }
     }
 
