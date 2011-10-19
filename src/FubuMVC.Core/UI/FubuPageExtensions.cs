@@ -236,25 +236,25 @@ namespace FubuMVC.Core.UI
         public static FormTag FormFor(this IFubuPage page, string url)
         {
             url = url.ToAbsoluteUrl();
-            return new FormTag(url);
+
+            return page.Tags(url).FormFor(FormElementRequest.For(url, page.ServiceLocator));
         }
 
         public static HtmlTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
-            var model = new TInputModel();            
-            return page.Tags(model).AfterFormCreate(new ElementRequest(model, null, page.ServiceLocator));
+            var model = new TInputModel();
+            return page.Tags(model).FormFor(FormElementRequest.For(model, page.ServiceLocator));
         }
 
         public static HtmlTag FormFor<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel: class
         {
-            return page.Tags(model).AfterFormCreate(new ElementRequest(model, null, page.ServiceLocator));            
+            return page.Tags(model).FormFor(FormElementRequest.For(model, page.ServiceLocator));            
         }
 
 
         public static HtmlTag FormFor<TController>(this IFubuPage page, Expression<Action<TController>> expression)
         {
-            
-            return page.Tags(expression).AfterFormCreate(new ElementRequest(expression, null, page.ServiceLocator)); 
+            return page.Tags(expression).FormFor(FormElementRequest.For(expression, page.ServiceLocator)); 
         }
 
 

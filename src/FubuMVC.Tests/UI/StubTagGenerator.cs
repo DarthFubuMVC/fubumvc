@@ -67,9 +67,9 @@ namespace FubuMVC.Tests.UI
             return new HtmlTag("span").AddClass("display").Text(request.Accessor.Name);
         }
 
-        public HtmlTag AfterFormCreate(ElementRequest request)
+        public FormTag FormFor(FormElementRequest request)
         {
-            return new FormTag(request.Accessor.Name).AddClass("form");
+            return (FormTag)new FormTag(request.ModelType.Name).AddClass("form");
         }
 
 

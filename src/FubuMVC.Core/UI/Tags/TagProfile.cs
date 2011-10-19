@@ -16,7 +16,7 @@ namespace FubuMVC.Core.UI.Tags
             Editor = new TagFactory();
             BeforePartial = new TagFactory();
             AfterPartial = new TagFactory();
-            AfterFormCreate = new TagFactory();
+            Form = new FormTagFactory();
 
             BeforeEachOfPartial = new PartialTagFactory();
             AfterEachOfPartial = new PartialTagFactory();
@@ -30,7 +30,7 @@ namespace FubuMVC.Core.UI.Tags
         public TagFactory BeforePartial { get; private set; }
         public TagFactory AfterPartial { get; private set; }
 
-        public TagFactory AfterFormCreate { get; private set; }
+        public FormTagFactory Form { get; private set; }
 
         public PartialTagFactory BeforeEachOfPartial { get; private set; }
         public PartialTagFactory AfterEachOfPartial { get; private set; }
@@ -45,7 +45,7 @@ namespace FubuMVC.Core.UI.Tags
             AfterPartial.Merge(peer.AfterPartial);
             BeforeEachOfPartial.Merge(peer.BeforeEachOfPartial);
             AfterEachOfPartial.Merge(peer.AfterEachOfPartial);
-            AfterFormCreate.Merge(peer.AfterFormCreate);
+            Form.Merge(peer.Form);
 
             if (peer._layoutBuilder != null)
             {

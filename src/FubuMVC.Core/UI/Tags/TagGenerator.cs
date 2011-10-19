@@ -19,7 +19,7 @@ namespace FubuMVC.Core.UI.Tags
         string CurrentProfile { get; }
         ElementRequest GetRequest(Accessor accessor);
 
-        HtmlTag AfterFormCreate(ElementRequest request);
+        FormTag FormFor(FormElementRequest request);
         HtmlTag BeforePartial(ElementRequest request);
         HtmlTag AfterPartial(ElementRequest request);
         HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
@@ -192,9 +192,9 @@ namespace FubuMVC.Core.UI.Tags
         }
 
 
-        public HtmlTag AfterFormCreate(ElementRequest request)
+        public FormTag FormFor(FormElementRequest request)
         {
-            return _profile.AfterFormCreate.Build(request);
+            return _profile.Form.Build(request);
         }
     }
 }
