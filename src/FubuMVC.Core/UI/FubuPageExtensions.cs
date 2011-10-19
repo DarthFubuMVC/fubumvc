@@ -258,11 +258,9 @@ namespace FubuMVC.Core.UI
         }
 
 
-        public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
+        public static HtmlTag FormFor(this IFubuPage view, object modelOrUrl)
         {
-            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
-
-            return new FormTag(url);
+            return modelOrUrl is string ? FormFor(view, url: (string) modelOrUrl) : FormFor(view, model: modelOrUrl);
         }
 
         public static string EndForm(this IFubuPage page)
