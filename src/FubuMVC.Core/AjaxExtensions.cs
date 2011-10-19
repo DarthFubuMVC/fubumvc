@@ -11,12 +11,6 @@ namespace FubuMVC.Core
         public const string XmlHttpRequestValue = "XMLHttpRequest";
         public const string XRequestedWithHeader = "X-Requested-With";
 
-        public static bool IsAjaxRequest(this HttpContext context)
-        {
-            var wrapper = new HttpContextWrapper(context);
-            AggregateDictionary dictionary = AggregateDictionary.ForHttpContext(wrapper);
-            return new RequestData(dictionary).IsAjaxRequest();
-        }
 
         public static bool IsAjaxRequest(this IDictionary<string, object> requestInput)
         {

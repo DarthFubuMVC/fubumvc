@@ -37,5 +37,10 @@ namespace FubuMVC.OwinHost
         {
             get { return "~/"; }
         }
+
+        public override string HttpMethod
+        {
+            get { return _request.Method; }
+        }
     }
 }
