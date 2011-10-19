@@ -33,7 +33,10 @@ namespace FubuMVC.Spark
         // We need to get these settings from DSL and defaults
 		private void configureSparkSettings ()
 		{
-			var settings = (SparkSettings)_engine.Settings;            
+			var settings = (SparkSettings)_engine.Settings;
+
+            settings.SetAutomaticEncoding(true);
+
 			settings.AddAssembly (typeof(HtmlTag).Assembly)
                 .AddAssembly (typeof(FubuPageExtensions).Assembly)
                 .AddNamespace (typeof(VirtualPathUtility).Namespace) // System.Web
