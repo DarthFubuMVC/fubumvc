@@ -8,6 +8,7 @@
 	<Stylesheet href="default.css" />
 	<Script src="diagnostics" />
 	<use content="head"/>
+	<Styles />
 </head>
 <body>
 	<div class="topbar">

@@ -13,7 +13,7 @@
   <div id="filters" class="filter-container" data-bind="visible: showFilters()">
     <if condition="Model.Filter != null">
       <script type="application/json">
-        ${Model.Filter.AsJson()}
+        !{Model.Filter.AsJson()}
       </script>
     </if>
     <h4>Filters: </h4>
@@ -25,7 +25,7 @@
   <div id="pager"></div>
   <div id="column-model">
     <script type="application/json">
-      ${Model.ColumnModel.Columns.AsJson()}
+      !{Model.ColumnModel.Columns.AsJson()}
     </script>
   </div>
   <div id="filter-dialog" style="display:none;" title="Filter Routes">

@@ -28,7 +28,7 @@
   <div id="pager"></div>
   <div id="column-model">
     <script type="application/json" if="Model.ColumnModel.Columns.Any()">
-      ${Model.ColumnModel.Columns.AsJson()}
+      !{Model.ColumnModel.Columns.AsJson()}
     </script>
   </div>
   <div id="filter-dialog" style="display:none;" title="Filter Requests">

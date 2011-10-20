@@ -2,7 +2,7 @@
 <use namespace="FubuMVC.Diagnostics.Features.Requests" />
 <viewdata model="FubuMVC.Diagnostics.Features.Requests.BehaviorDetailsModel" />
 <div class="behavior" id="${Model.Id}" style="display:none">
-  <h3>${Model.BehaviorType.PrettyPrint().HtmlEncode()}</h3>
+  <h3>!{Model.BehaviorType.PrettyPrint().HtmlEncode()}</h3>
   <ul class="children">
     <li class="behavior-details" each="var detail in Model.Before">
       <BehaviorDetails details="detail"/>

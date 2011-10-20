@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0"?>
 <bindings>
-  <element name="Stylesheet">this.CSS('@href')</element>
-  <element name="Script">#this.Script('@src');</element>
+  <element name="Stylesheet">#this.Asset('@href');</element>
+  <element name="Script">#this.Asset('@src');</element>
   <element name="Scripts">this.WriteScriptTags()</element>
+  <element name="Styles">this.WriteCssTags()</element>
   <element name="Image">this.ImageFor('@src')</element>
   <element name="Navigation">#this.Partial&lt;FubuMVC.Diagnostics.Navigation.NavigationMenu&gt;();</element>
   <element name="FilterLink">this.LinkTo(new FubuMVC.Diagnostics.Features.Routes.RouteRequestModel { Column = '@column', Value = '@value' }).Text('@text')</element>
