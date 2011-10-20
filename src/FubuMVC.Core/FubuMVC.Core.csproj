@@ -442,6 +442,7 @@
     <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />
     <Compile Include="Security\AllowRole.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryFormConvention.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenAttribute.cs" />

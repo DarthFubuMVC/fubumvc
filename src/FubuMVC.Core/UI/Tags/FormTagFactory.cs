@@ -20,12 +20,12 @@ namespace FubuMVC.Core.UI.Tags
         {
             _builder = req =>
             {
-                var tag = new FormTag(req.Url); 
+                var tag = (FormTag)new FormTag(req.Url).Id(string.Empty); 
                 
                 if (req.InBound)
                 {
                     var method = req.TargetChain.Route.AllowedHttpMethods.OrderBy(x => x != "GET").First();
-                    tag.Method(method);
+                   tag.Method(method);
                 }
 
                 return tag;

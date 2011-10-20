@@ -1,0 +1,12 @@
+[1mdiff --git a/src/FubuMVC.Core/FubuMVC.Core.csproj b/src/FubuMVC.Core/FubuMVC.Core.csproj[m
+[1mindex 51afa09..4336601 100755[m
+[1m--- a/src/FubuMVC.Core/FubuMVC.Core.csproj[m
+[1m+++ b/src/FubuMVC.Core/FubuMVC.Core.csproj[m
+[36m@@ -442,6 +442,7 @@[m
+     <Compile Include="Runtime\SetterBinder.cs" />[m
+     <Compile Include="Runtime\UnknownExtensionException.cs" />[m
+     <Compile Include="Security\AllowRole.cs" />[m
+[32m+[m[32m    <Compile Include="Security\AntiForgery\AntiForgeryFormConvention.cs" />[m[41m[m
+     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />[m
+     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />[m
+     <Compile Include="Security\AntiForgery\AntiForgeryTokenAttribute.cs" />[m
