@@ -172,6 +172,7 @@
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />
+    <Compile Include="Http\CookieTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
