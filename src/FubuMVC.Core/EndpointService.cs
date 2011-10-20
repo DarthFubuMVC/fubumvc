@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Policy;
 using FubuCore.Reflection;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Security;
@@ -62,19 +63,19 @@ namespace FubuMVC.Core
     public class EndpointService : ChainInterrogator<Endpoint>, IEndpointService
     {
         private readonly IChainAuthorizor _authorizor;
+        private readonly ICurrentRequest _request;
 
-        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver) : base(resolver)
+        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, ICurrentRequest request) : base(resolver)
         {
             _authorizor = authorizor;
+            _request = request;
         }
 
         protected override Endpoint createResult(object model, BehaviorChain chain)
         {
-            throw new NotImplementedException();
-
             return new Endpoint(){
                 IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                //Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl()
+                Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_request.ApplicationRoot())
             };
         }
 
