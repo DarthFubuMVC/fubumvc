@@ -31,5 +31,13 @@ namespace FubuMVC.Tests.Urls
             UrlRegistry.DetermineRelativeAssetUrl(file)
                 .ShouldEqual("_content/scripts/shared/jquery.forms.js");
         }
+
+        [Test]
+        public void determine_asset_url_respects_absolute_path()
+        {
+            var registry = new UrlRegistry(null, null, new StubCurrentRequest{TheApplicationRoot = "http://server"});
+            registry.UrlForAsset(AssetFolder.images, "icon.png")
+                .ShouldEqual("http://server/_content/images/icon.png");
+        }
     }
 }

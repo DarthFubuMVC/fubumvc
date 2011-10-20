@@ -35,11 +35,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             return method.Name.ToLower();
         }
 
-        public static string RootUrlFor(MethodInfo method)
-        {
-            throw new NotImplementedException();
-            //return ("~/" + DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method)).ToAbsoluteUrl();
-        }
+
 
     }
 }

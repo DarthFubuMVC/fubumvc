@@ -54,7 +54,8 @@ namespace FubuMVC.Core.Urls
 
         public string UrlForAsset(AssetFolder? folder, string name)
         {
-            throw new NotImplementedException();
+            var relativeUrl = DetermineRelativeAssetUrl(folder, name);
+            return relativeUrl.ToAbsoluteUrl(_request.ApplicationRoot());
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
