@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Media;
@@ -59,7 +61,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 new Container(x =>
                 {
                     x.For<IFileSystem>().Use<FileSystem>();
-                    x.For<IHttpOutputWriter>().Use<AspNetHttpOutputWriter>();
+                    x.For<IHttpWriter>().Use<NulloHttpWriter>();
                     x.For<IActionBehavior>().Use(new ObjectDefInstance(def));
                 });
 

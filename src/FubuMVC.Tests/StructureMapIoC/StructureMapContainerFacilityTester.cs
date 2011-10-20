@@ -38,6 +38,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             {
                 x.For<IFileSystem>().Use<FileSystem>();
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+                x.For<IHttpWriter>().Use(new NulloHttpWriter());
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());

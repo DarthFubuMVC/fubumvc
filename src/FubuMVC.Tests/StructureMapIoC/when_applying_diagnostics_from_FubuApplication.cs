@@ -30,6 +30,8 @@ namespace FubuMVC.Tests.StructureMapIoC
             theContainer = new Container();
             theContainer.Configure(x =>
             {
+                x.For<IHttpWriter>().Use(new NulloHttpWriter());
+
                 x.For<ICurrentRequest>().Use(new StubCurrentRequest{
                     TheApplicationRoot = "http://server"
                 });

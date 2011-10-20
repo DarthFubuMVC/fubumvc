@@ -46,12 +46,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void http_output_writer_is_registered()
-        {
-            registeredTypeIs<IHttpOutputWriter, AspNetHttpOutputWriter>();
-        }
-
-        [Test]
         public void BindingContext_is_registered()
         {
             registeredTypeIs<IBindingContext, BindingContext>();

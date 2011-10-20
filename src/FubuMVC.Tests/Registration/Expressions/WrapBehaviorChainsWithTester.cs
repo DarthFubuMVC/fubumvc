@@ -92,7 +92,11 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void hydrate_through_container_facility_smoke_test()
         {
-            var container = new Container(x => x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>()));
+            var container = new Container(x =>
+            {
+                x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+                x.For<IHttpWriter>().Use(new NulloHttpWriter());
+            });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 

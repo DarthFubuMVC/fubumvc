@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -12,11 +13,11 @@ namespace FubuMVC.Tests.Runtime
     [TestFixture]
     public class OutputWriterTester : InteractionContext<OutputWriter>
     {
-        private IHttpOutputWriter theHttpWriter;
+        private IHttpWriter theHttpWriter;
 
         protected override void beforeEach()
         {
-            theHttpWriter = MockFor<IHttpOutputWriter>();
+            theHttpWriter = MockFor<IHttpWriter>();
         }
 
         [Test]
@@ -66,8 +67,8 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_not_have_written_directly_to_the_http_writer()
         {
-            MockFor<IHttpOutputWriter>().AssertWasNotCalled(x => x.Write(theContent));
-            MockFor<IHttpOutputWriter>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
+            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.Write(theContent));
+            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
         }
 
         [Test]
@@ -99,25 +100,25 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_have_written_the_content_type()
         {
-            MockFor<IHttpOutputWriter>().AssertWasCalled(x => x.WriteContentType(theContentType));
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteContentType(theContentType));
         }
 
         [Test]
         public void should_write_a_content_disposition_header_for_the_display()
         {
-            MockFor<IHttpOutputWriter>().AssertWasCalled(x => x.AppendHeader("Content-Disposition", "attachment; filename=\"The title\""));
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("Content-Disposition", "attachment; filename=\"The title\""));
         }
 
         [Test]
         public void should_write_header_for_content_length()
         {
-            MockFor<IHttpOutputWriter>().AssertWasCalled(x => x.AppendHeader("Content-Length", "123"));
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("Content-Length", "123"));
         }
 
         [Test]
         public void should_actually_you_know_write_the_file_itself()
         {
-            MockFor<IHttpOutputWriter>().AssertWasCalled(x => x.WriteFile(theFilePath));
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteFile(theFilePath));
         }
     }
 }

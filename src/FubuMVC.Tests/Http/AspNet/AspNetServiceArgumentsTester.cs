@@ -48,5 +48,11 @@ namespace FubuMVC.Tests.Http.AspNet
         {
             theArguments.Get<IStreamingData>().ShouldBeOfType<AspNetStreamingData>();
         }
+
+        [Test]
+        public void should_register_an_HttpWriter()
+        {
+            theArguments.Get<IHttpWriter>().ShouldBeOfType<AspNetHttpWriter>();
+        }
     }
 }

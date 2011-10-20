@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
@@ -11,20 +12,20 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         private readonly IDebugReport _report;
         private readonly IDebugDetector _detector;
 
-        public RecordingOutputWriter(IDebugReport report, IDebugDetector detector, IHttpOutputWriter inner, IFileSystem fileSystem)
+        public RecordingOutputWriter(IDebugReport report, IDebugDetector detector, IHttpWriter inner, IFileSystem fileSystem)
             : base(inner, fileSystem)
         {
             _report = report;
             _detector = detector;
         }
 
-        public override IHttpOutputWriter Writer
+        public override IHttpWriter Writer
         {
             get
             {
                 if (_detector.IsOutputWritingLatched())
                 {
-                    return new NulloHttpOutputWriter();
+                    return new NulloHttpWriter();
                 }
 
                 return base.Writer;

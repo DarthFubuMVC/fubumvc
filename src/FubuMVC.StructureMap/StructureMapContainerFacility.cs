@@ -11,6 +11,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
@@ -138,6 +139,9 @@ namespace FubuMVC.StructureMap
         public static IContainer GetBasicFubuContainer(Action<ConfigurationExpression> containerConfiguration)
         {
             var container = new Container(containerConfiguration);
+
+            container.Configure(x => x.For<IHttpWriter>().Use(new NulloHttpWriter()));
+
             FubuApplication.For(() => new FubuRegistry()).StructureMap(container).Bootstrap();
 
             return container;

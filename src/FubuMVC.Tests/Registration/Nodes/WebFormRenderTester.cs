@@ -1,6 +1,8 @@
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View;
@@ -38,8 +40,9 @@ namespace FubuMVC.Tests.Registration.Nodes
                 x.For<IPageActivator>().Use<PageActivator>();
                 x.For<IPageActivationRules>().Use<PageActivationRuleCache>();
                 x.For<IServiceLocator>().Use<StructureMapServiceLocator>();
-                x.For<IHttpOutputWriter>().Use<AspNetHttpOutputWriter>();
+                x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<IFileSystem>().Use<FileSystem>();
+
             });
 
             behavior = container.GetInstance<IActionBehavior>();

@@ -135,8 +135,6 @@ namespace FubuMVC.Core
     {
         private void setupServices(BehaviorGraph graph)
         {
-            graph.Services.SetServiceIfNone<IHttpOutputWriter, AspNetHttpOutputWriter>();
-
             graph.Services.AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
 
             graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();

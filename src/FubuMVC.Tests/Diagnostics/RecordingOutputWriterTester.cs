@@ -3,6 +3,7 @@ using System.Net;
 using System.Web;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void should_use_normal_http_output_writer_for_non_debug_calls()
         {
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(false);
-            ClassUnderTest.Writer.ShouldBeTheSameAs(MockFor<IHttpOutputWriter>());
+            ClassUnderTest.Writer.ShouldBeTheSameAs(MockFor<IHttpWriter>());
         }
     }
 
@@ -29,7 +30,7 @@ namespace FubuMVC.Tests.Diagnostics
         public void should_use_http_response_output_writer_for_non_debug_calls()
         {
             MockFor<IDebugDetector>().Stub(x => x.IsOutputWritingLatched()).Return(true);
-            ClassUnderTest.Writer.ShouldBeOfType<NulloHttpOutputWriter>();
+            ClassUnderTest.Writer.ShouldBeOfType<NulloHttpWriter>();
         }
     }
 
@@ -55,7 +56,7 @@ namespace FubuMVC.Tests.Diagnostics
         	                                   	{
         	                                   		Url = url
         	                                   	});
-			MockFor<IHttpOutputWriter>()
+			MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.Redirect(url));
         }
 
@@ -69,10 +70,10 @@ namespace FubuMVC.Tests.Diagnostics
         		                                   		Contents = "some output",
         		                                   		ContentType = MimeType.Json.ToString()
         		                                   	}));
-			MockFor<IHttpOutputWriter>()
+			MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.Write("some output"));
 
-            MockFor<IHttpOutputWriter>()
+            MockFor<IHttpWriter>()
                 .AssertWasCalled(w => w.WriteContentType(MimeType.Json.ToString()));
         }
 
@@ -87,7 +88,7 @@ namespace FubuMVC.Tests.Diagnostics
         		                                   		DisplayName = "display name",
         		                                   		LocalFilePath = "local file path"
         		                                   	}));
-        	MockFor<IHttpOutputWriter>()
+        	MockFor<IHttpWriter>()
         		.AssertWasCalled(w => w.WriteFile("local file path"));
         }
 
@@ -98,7 +99,7 @@ namespace FubuMVC.Tests.Diagnostics
 			MockFor<IDebugReport>()
 				.AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.Unauthorized }));
 			
-            MockFor<IHttpOutputWriter>()
+            MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.WriteResponseCode(HttpStatusCode.Unauthorized));
 		}
 
@@ -110,7 +111,7 @@ namespace FubuMVC.Tests.Diagnostics
 			ClassUnderTest
 				.AppendCookie(cookie);
 
-			MockFor<IHttpOutputWriter>()
+			MockFor<IHttpWriter>()
 				.AssertWasCalled(w => w.AppendCookie(cookie));
 		}
 

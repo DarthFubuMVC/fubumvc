@@ -184,15 +184,18 @@
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Ajax\AjaxContinuation.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
+    <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentRequest.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
     <Compile Include="Http\CurrentMimeType.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinder.cs" />
+    <Compile Include="Http\HttpOutputWriterExtensions.cs" />
     <Compile Include="Http\ICurrentRequest.cs" />
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\AspNet\AspNetStreamingData.cs" />
+    <Compile Include="Http\NulloHttpWriter.cs" />
     <Compile Include="Http\StreamingDataExtensions.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
@@ -439,7 +442,7 @@
     <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
     <Compile Include="Runtime\FubuSmartRequest.cs" />
     <Compile Include="Runtime\IgnoredRoute.cs" />
-    <Compile Include="Runtime\IHttpOutputWriter.cs" />
+    <Compile Include="Http\IHttpWriter.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\IResponseCaching.cs" />

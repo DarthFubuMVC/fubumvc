@@ -14,6 +14,8 @@ namespace FubuMVC.Core.Http.AspNet
             With<ICurrentRequest>(new AspNetCurrentRequest(requestContext.HttpContext.Request));
 
             With<IStreamingData>(new AspNetStreamingData(requestContext.HttpContext));
+
+            With<IHttpWriter>(new AspNetHttpWriter(requestContext.HttpContext.Response));
         }
     }
 }

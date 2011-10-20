@@ -4,23 +4,24 @@ using System.Net;
 using System.Text;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Runtime
 {
     public class OutputWriter : IOutputWriter
     {
-        private readonly IHttpOutputWriter _writer;
+        private readonly IHttpWriter _writer;
         private readonly IFileSystem _fileSystem;
         private IOutputState _state;
 
-        public OutputWriter(IHttpOutputWriter writer, IFileSystem fileSystem)
+        public OutputWriter(IHttpWriter writer, IFileSystem fileSystem)
         {
             _writer = writer;
             _fileSystem = fileSystem;
             revertToNormalWriting();
         }
 
-        public virtual IHttpOutputWriter Writer
+        public virtual IHttpWriter Writer
         {
             get { return _writer; }
         }
