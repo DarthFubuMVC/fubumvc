@@ -235,8 +235,9 @@ namespace FubuMVC.Core.UI
 
         public static FormTag FormFor(this IFubuPage page, string url)
         {
-            url = url.ToAbsoluteUrl();
-            return new FormTag(url);
+            throw new NotImplementedException();
+            //url = url.ToAbsoluteUrl();
+            //return new FormTag(url);
         }
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()

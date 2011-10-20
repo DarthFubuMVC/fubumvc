@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Diagnostics.Core.Infrastructure;
@@ -22,20 +23,22 @@ namespace FubuMVC.Diagnostics.Navigation
                 .OrderBy(a => a.Rank)
                 .ThenBy(a => a.Text())
                 .Select(a =>
-                            {
-                                var url = a.Url().ToAbsoluteUrl();
-                                if (url.EndsWith("/"))
-                                {
-                                    url = url.TrimEnd('/');
-                                }
+                {
+                    throw new NotImplementedException();
 
-                                return new NavigationMenuItem
-                                           {
-                                               Text = a.Text(),
-                                               Url = a.Url(),
-                                               IsActive = url.Equals(_request.CurrentUrl())
-                                           };
-                            });
+                    return new NavigationMenuItem();
+                    //var url = a.Url().ToAbsoluteUrl();
+                    //if (url.EndsWith("/"))
+                    //{
+                    //    url = url.TrimEnd('/');
+                    //}
+
+                    //return new NavigationMenuItem{
+                    //    Text = a.Text(),
+                    //    Url = a.Url(),
+                    //    IsActive = url.Equals(_request.CurrentUrl())
+                    //};
+                });
         }
     }
 }

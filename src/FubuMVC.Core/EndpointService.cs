@@ -70,9 +70,11 @@ namespace FubuMVC.Core
 
         protected override Endpoint createResult(object model, BehaviorChain chain)
         {
+            throw new NotImplementedException();
+
             return new Endpoint(){
                 IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl()
+                //Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl()
             };
         }
 

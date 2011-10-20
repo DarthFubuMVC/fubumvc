@@ -85,11 +85,6 @@ namespace FubuMVC.Core
         [SkipOverForProvenance]
         public IList<RouteBase> Bootstrap()
         {
-            if (HttpContext.Current != null)
-            {
-                UrlContext.Live();
-            }
-
             _fubuFacility = new FubuMvcPackageFacility();
 
             IBehaviorFactory factory = null;

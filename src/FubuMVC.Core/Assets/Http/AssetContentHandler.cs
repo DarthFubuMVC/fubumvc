@@ -48,8 +48,9 @@ namespace FubuMVC.Core.Assets.Http
 
         public static string DetermineAssetUrl(AssetFolder? folder, string name)
         {
-            var url = "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, folder, name);
-            return url.ToAbsoluteUrl();
+            throw new NotImplementedException();
+            //var url = "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, folder, name);
+            //return url.ToAbsoluteUrl();
         }
     }
 }

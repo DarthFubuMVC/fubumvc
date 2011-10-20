@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 
 namespace FubuMVC.Core.Resources
@@ -6,7 +7,8 @@ namespace FubuMVC.Core.Resources
     {
         public Link(string url)
         {
-            Url = url.ToAbsoluteUrl();
+            throw new NotImplementedException("REDO");
+            //Url = url.ToAbsoluteUrl();
         }
 
         public string Url { get; private set; }

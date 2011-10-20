@@ -60,6 +60,10 @@ namespace FubuMVC.Tests.Resources.Media.Atom
         {
             public TargetClassFeed()
             {
+<<<<<<< HEAD
+=======
+
+>>>>>>> checkpoint:  Introduced ICurrentRequest, eliminated the usage of UrlContext, adjusted UrlRegistry to match, put a lot of throw NIE's into the code as placeholders
             }
         }
     

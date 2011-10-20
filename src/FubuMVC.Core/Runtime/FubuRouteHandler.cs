@@ -4,6 +4,7 @@ using System.Web.Routing;
 using System.Web.SessionState;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http.AspNet;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -25,9 +26,7 @@ namespace FubuMVC.Core.Runtime
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            var dictionary = new AspNetAggregateDictionary(requestContext);
-            ServiceArguments arguments = new ServiceArguments().With<AggregateDictionary>(dictionary);
-
+            var arguments = new AspNetServiceArguments(requestContext);
             IActionBehavior behavior = GetBehavior(arguments);
 
             return new FubuHttpHandler(behavior);

@@ -21,7 +21,8 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             var text = Text(chain);
             if (shouldBeClickable(chain))
             {
-                cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
+                throw new NotImplementedException();
+                //cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
             }
             else
             {

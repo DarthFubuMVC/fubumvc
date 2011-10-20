@@ -160,7 +160,9 @@
     <Content Include="Content\Styles\jquery\jquery-ui-1.8.7.custom.css" />
     <Content Include="Content\Styles\jquery\ui.jqgrid.css" />
     <Content Include="Content\Styles\master.css" />
-    <Content Include="Shared\bindings.xml" />
+    <Content Include="Shared\bindings.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Shared\AuthorizationReport.spark" />
     <None Include="Shared\BehaviorStart.spark" />
     <None Include="Shared\BehaviorFinish.spark" />

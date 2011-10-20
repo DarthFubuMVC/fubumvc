@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Bottles;
@@ -33,7 +34,12 @@ namespace FubuMVC.Spark.SparkModel
 
         public string HostPath
         {
-            get { return _hostPath ?? "~/".ToPhysicalPath(); } 
+            get
+            {
+                
+                throw new NotImplementedException();
+                //return _hostPath ?? "~/".ToPhysicalPath();
+            } 
             set { _hostPath = value; }
         }
 

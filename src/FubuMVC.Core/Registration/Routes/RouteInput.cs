@@ -92,7 +92,7 @@ namespace FubuMVC.Core.Registration.Routes
             _routeParameters.Each(input => url = input.Substitute(parameters, url));
             url = fillQueryInputs(url, input => input.ToQueryString(parameters));
 
-            return url.ToAbsoluteUrl();
+            return url;
         }
 
         public string CreateTemplate(object input, Func<object, object>[] hash)
@@ -110,9 +110,7 @@ namespace FubuMVC.Core.Registration.Routes
                     url = url.Replace("{" + name + "}", rawValue.ToString().UrlEncoded());
                 });
 
-            url = fillQueryInputs(url, i => i.ToQueryString(input));
-
-            return url.ToAbsoluteUrl();
+            return fillQueryInputs(url, i => i.ToQueryString(input));
         }
 
 

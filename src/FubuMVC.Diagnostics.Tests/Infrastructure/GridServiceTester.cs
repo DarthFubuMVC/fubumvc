@@ -168,9 +168,7 @@ namespace FubuMVC.Diagnostics.Tests.Infrastructure
             var graph = ObjectMother.DiagnosticsGraph();
             var queryFilters = new List<JsonGridFilter> { new JsonGridFilter { ColumnName = "InputModel", Values = new List<string> { typeof(DashboardRequestModel).Name } } };
 
-            var urlRegistry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new NulloUrlTemplate());
         	var columns = new List<IGridColumn<BehaviorChain>> {new InputModelColumn()};
-            var columnBuilders = new List<IGridColumnBuilder<BehaviorChain>> {new GridColumnBuilder<BehaviorChain>(columns)};
             var gridFilters = new List<IGridFilter<BehaviorChain>> {new TestInputModelFilter()};
 
             graph

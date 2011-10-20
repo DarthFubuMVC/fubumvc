@@ -1,8 +1,9 @@
 using System.Web;
+using FubuCore;
 
 namespace FubuMVC.Diagnostics.Core.Infrastructure
 {
-    // TODO -- change this to ICurrentRequest?
+    [MarkedForTermination("Need to get rid of this")]
     public class HttpRequest : IHttpRequest
     {
         public string CurrentUrl()

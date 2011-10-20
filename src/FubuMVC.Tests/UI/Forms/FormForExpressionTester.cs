@@ -57,7 +57,6 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void form_for_with_an_url()
         {
-            UrlContext.Stub("some url");
             page.FormFor("some action").Attr("action").ShouldEqual("some url/some action");
         }
 

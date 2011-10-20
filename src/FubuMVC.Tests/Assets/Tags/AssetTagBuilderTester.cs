@@ -17,18 +17,7 @@ namespace FubuMVC.Tests.Assets.Tags
     [TestFixture]
     public class AssetTagBuilderTester : InteractionContext<AssetTagBuilder>
     {
-        protected override void beforeEach()
-        {
-            UrlContext.Stub("http://myapp");
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            UrlContext.Stub();
-        }
-
-        
+       
 
         [Test]
         public void when_writing_a_script_tag()

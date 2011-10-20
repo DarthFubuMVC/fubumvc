@@ -17,12 +17,6 @@ namespace FubuMVC.Tests.Registration
     [TestFixture]
     public class RouteDefinitionTester
     {
-        [SetUp]
-        public void SetUp()
-        {
-            UrlContext.Reset();
-        }
-
         public class SampleViewModel
         {
             public string InPath { get; set; }

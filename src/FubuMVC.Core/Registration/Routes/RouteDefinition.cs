@@ -23,7 +23,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
-            return Input == null ? _pattern.ToAbsoluteUrl() : Input.CreateTemplate(input, hash);
+            return Input == null ? _pattern : Input.CreateTemplate(input, hash);
         }
 
         private IRouteInput _input;

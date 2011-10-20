@@ -10,17 +10,6 @@ namespace FubuMVC.Tests.Assets
     [TestFixture]
     public class AssetFileHandlerTester
     {
-        [SetUp]
-        public void SetUp()
-        {
-            UrlContext.Stub("http://myapp.com");
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            UrlContext.Stub();
-        }
 
 
         [Test]

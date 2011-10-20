@@ -79,9 +79,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\IntegrationTests\IntegrationTestsController.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Controllers\LimitMethods\LimitMethodsController.cs" />
     <Compile Include="Controllers\LimitMethods\QueryGreeting.aspx.cs">
       <DependentUpon>QueryGreeting.aspx</DependentUpon>
@@ -145,7 +142,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controllers\IntegrationTests\RunView.aspx" />
     <Content Include="Controllers\Login\LoggedInStatus.aspx" />
     <Content Include="Controllers\Products\PartPartial.ascx" />
     <Content Include="Controllers\Products\ProductPartial.ascx" />

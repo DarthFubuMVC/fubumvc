@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
@@ -10,11 +11,13 @@ namespace FubuMVC.Core.Urls
 {
     public class UrlRegistry : ChainInterrogator<string>, IUrlRegistry
     {
+        private readonly ICurrentRequest _request;
         private readonly Func<string, string> _templateFunc;
 
-        public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern)
+        public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern, ICurrentRequest request)
             : base(resolver)
         {
+            _request = request;
             _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
@@ -36,13 +39,13 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType);
-            return chain.Route.Input.CreateUrlFromParameters(parameters);
+            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_request.ApplicationRoot());
         }
 
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType, category);
-            return chain.Route.Input.CreateUrlFromParameters(parameters);
+            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_request.ApplicationRoot());
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
@@ -94,7 +97,7 @@ namespace FubuMVC.Core.Urls
 
         protected override string createResult(object model, BehaviorChain chain)
         {
-            return chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl();
+            return chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_request.ApplicationRoot());
         }
 
         public string UrlFor<TInput>(RouteParameters parameters)
@@ -112,7 +115,8 @@ namespace FubuMVC.Core.Urls
         {
             var chain = resolver.FindUnique(model);
 
-            return _templateFunc(chain.Route.CreateTemplate(model, hash));
+            return _templateFunc(chain.Route.CreateTemplate(model, hash))
+                .ToAbsoluteUrl(_request.ApplicationRoot());
         }
 
         /// <summary>

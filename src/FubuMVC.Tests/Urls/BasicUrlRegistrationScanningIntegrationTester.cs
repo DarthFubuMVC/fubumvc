@@ -17,11 +17,10 @@ namespace FubuMVC.Tests.Urls
         [SetUp]
         public void SetUp()
         {
-            UrlContext.Reset();
 
             graph = new FubuRegistry(x => x.Actions.IncludeClassesSuffixedWithController()).BuildGraph();
 
-            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new JQueryUrlTemplate());
+            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new JQueryUrlTemplate(), new StubCurrentRequest{TheApplicationRoot = "http://server/cool"});
         }
 
         #endregion
@@ -127,7 +126,7 @@ namespace FubuMVC.Tests.Urls
             {
                 Name = "Jeremy",
                 Age = 35
-            }).ShouldEqual("special/Jeremy/is/35");
+            }).ShouldEqual("http://server/cool/special/Jeremy/is/35");
         }
 
         [Test]
@@ -136,7 +135,7 @@ namespace FubuMVC.Tests.Urls
             registry.UrlFor(new SpecialModelForDefault()
             {
                 Name = "Frank"
-            }).ShouldEqual("defaultage/Frank/is/10");
+            }).ShouldEqual("http://server/cool/defaultage/Frank/is/10");
         }
 
         [Test]
@@ -146,21 +145,21 @@ namespace FubuMVC.Tests.Urls
             {
                 Name = "Frank",
                 PossiblyEmpty = 36
-            }).ShouldEqual("defaultage/Frank/is/36");
+            }).ShouldEqual("http://server/cool/defaultage/Frank/is/36");
         }
 
         [Test]
         public void has_action_calls_for_actions_with_no_input_args()
         {
             registry.UrlFor<SpecialController>(x => x.NoArgMethod()).ShouldEqual(
-                "fubumvc/tests/urls/special/noargmethod");
-            registry.UrlFor<SpecialController>(x => x.Index()).ShouldEqual("fubumvc/tests/urls/special/index");
+                "http://server/cool/fubumvc/tests/urls/special/noargmethod");
+            registry.UrlFor<SpecialController>(x => x.Index()).ShouldEqual("http://server/cool/fubumvc/tests/urls/special/index");
         }
 
         [Test]
         public void get_templated_url_for_input_model()
         {
-            registry.TemplateFor(new SpecialModel()).ShouldEqual("special/${Name}/is/${Age}");
+            registry.TemplateFor(new SpecialModel()).ShouldEqual("http://server/cool/special/${Name}/is/${Age}");
         }
 
         [Test]
@@ -168,13 +167,13 @@ namespace FubuMVC.Tests.Urls
         {
             // this test is failing but not because the code is wrong... because int defaults to 0 and theres no way to 
             // tell whether it really *should* be 0
-            registry.TemplateFor(new SpecialModel() { Name = "Ryan" }).ShouldEqual("special/Ryan/is/${Age}");
+            registry.TemplateFor(new SpecialModel() { Name = "Ryan" }).ShouldEqual("http://server/cool/special/Ryan/is/${Age}");
         }
 
         [Test]
         public void get_templated_url_with_empty_guid()
         {
-            registry.TemplateFor(new ModelWithGuid()).ShouldEqual("fubumvc/tests/urls/special/inputwithguid/${OtherGuid}/${Id}");
+            registry.TemplateFor(new ModelWithGuid()).ShouldEqual("http://server/cool/fubumvc/tests/urls/special/inputwithguid/${OtherGuid}/${Id}");
         }
 
         [Test]
@@ -185,19 +184,19 @@ namespace FubuMVC.Tests.Urls
             registry.TemplateFor(new ModelWithGuid()
             {
                 OtherGuid = otherguid
-            }).ShouldEqual("fubumvc/tests/urls/special/inputwithguid/" + otherguid.ToString() + "/${Id}");
+            }).ShouldEqual("http://server/cool/fubumvc/tests/urls/special/inputwithguid/" + otherguid.ToString() + "/${Id}");
         }
 
         [Test]
         public void get_templated_url_with_explicit_params()
         {
-            registry.TemplateFor<SpecialModel>(Age => 0).ShouldEqual("special/${Name}/is/0");
+            registry.TemplateFor<SpecialModel>(Age => 0).ShouldEqual("http://server/cool/special/${Name}/is/0");
         }
 
         [Test]
         public void get_templated_url_with_empty_explicit_params()
         {
-            registry.TemplateFor<SpecialModel>().ShouldEqual("special/${Name}/is/${Age}");
+            registry.TemplateFor<SpecialModel>().ShouldEqual("http://server/cool/special/${Name}/is/${Age}");
         }
     }
 

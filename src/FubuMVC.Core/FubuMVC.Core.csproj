@@ -187,6 +187,7 @@
     <Compile Include="Http\AspNet\Classes.cs" />
     <Compile Include="Http\CurrentMimeType.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinder.cs" />
+    <Compile Include="Http\ICurrentRequest.cs" />
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />
     <Compile Include="Http\MimeTypeList.cs" />

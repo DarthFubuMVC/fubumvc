@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
@@ -36,7 +37,8 @@ namespace FubuMVC.Core.Diagnostics.Tracing
 
         public static string RootUrlFor(MethodInfo method)
         {
-            return ("~/" + DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method)).ToAbsoluteUrl();
+            throw new NotImplementedException();
+            //return ("~/" + DIAGNOSTICS_URL_ROOT + "/" + UrlFor(method)).ToAbsoluteUrl();
         }
 
     }

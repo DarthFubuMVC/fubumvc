@@ -4,6 +4,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Urls;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -17,14 +18,13 @@ namespace FubuMVC.Tests.Registration.Conventions
         [SetUp]
         public void SetUp()
         {
-            UrlContext.Stub("");
 
             graph = new FubuRegistry(x =>
             {
                 x.Actions.IncludeTypesNamed(n => n.StartsWith("UrlCategory"));
             }).BuildGraph();
 
-            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new JQueryUrlTemplate());
+            registry = new UrlRegistry(new ChainResolver(new TypeResolver(), graph), new JQueryUrlTemplate(), new StubCurrentRequest{TheApplicationRoot = "http://server/app"});
         }
 
         [Test]

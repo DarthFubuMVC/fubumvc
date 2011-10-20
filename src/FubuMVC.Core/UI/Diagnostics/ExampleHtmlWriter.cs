@@ -31,7 +31,9 @@ namespace FubuMVC.Core.UI.Diagnostics
             _serviceLocator = serviceLocator;
             _urlRegistry = urlRegistry;
             _behaviorGraph = behaviorGraph;
-            _examplePageUrl = "_fubu/html/example".ToAbsoluteUrl();
+            
+            throw new NotImplementedException();
+            //_examplePageUrl = "_fubu/html/example".ToAbsoluteUrl();
         }
 
         [UrlPattern("_fubu/html"), Description("Demonstrates effects of current HTML conventions")]

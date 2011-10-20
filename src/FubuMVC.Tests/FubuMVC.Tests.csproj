@@ -172,6 +172,7 @@
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FubuApplicationTester.cs" />
+    <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
@@ -423,6 +424,7 @@
     <Compile Include="UI\TagFactoryTester.cs" />
     <Compile Include="UI\TagGeneratorTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
+    <Compile Include="Urls\StubCurrentRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="View\FakeViews\A.aspx.cs">
