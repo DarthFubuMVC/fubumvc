@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             var tag = new HtmlTag("td");
 
-            new RouteColumn().WriteBody(chain, null, tag);
+            new RouteColumn("http://server").WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(" -");
         }
@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Diagnostics
             var row = new TableRowTag();
             var tag = row.Cell();
 
-            new RouteColumn().WriteBody(chain, null, tag);
+            new RouteColumn("http://server").WriteBody(chain, null, tag);
 
             tag.FirstChild().Text().ShouldEqual(chain.Route.Pattern);
             row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeFalse();
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Diagnostics
             var row = new TableRowTag();
             var tag = row.Cell();
 
-            new RouteColumn().WriteBody(chain, row, tag);
+            new RouteColumn("http://server.com").WriteBody(chain, row, tag);
 
             row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeTrue();
         }

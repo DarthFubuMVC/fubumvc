@@ -38,19 +38,6 @@ namespace FubuMVC.Core.Assets.Http
             return new AssetHttpHandler(writer, routeValues);
         }
 
-        public static string DetermineAssetUrl(IAssetTagSubject subject)
-        {
-            var folder = subject.Folder;
-            var name = subject.Name;
 
-            return DetermineAssetUrl(folder, name);
-        }
-
-        public static string DetermineAssetUrl(AssetFolder? folder, string name)
-        {
-            throw new NotImplementedException();
-            //var url = "{0}/{1}/{2}".ToFormat(AssetsUrlFolder, folder, name);
-            //return url.ToAbsoluteUrl();
-        }
     }
 }

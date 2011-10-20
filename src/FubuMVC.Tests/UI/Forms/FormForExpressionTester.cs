@@ -1,9 +1,11 @@
 using System;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
@@ -57,7 +59,11 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void form_for_with_an_url()
         {
-            page.FormFor("some action").Attr("action").ShouldEqual("some url/some action");
+            page.Stub(x => x.Get<ICurrentRequest>()).Return(new StubCurrentRequest{
+                TheApplicationRoot = "http://server"
+            });
+
+            page.FormFor("some action").Attr("action").ShouldEqual("http://server/some action");
         }
 
         [Test]

@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Urls
@@ -33,6 +34,8 @@ namespace FubuMVC.Core.Urls
         string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new();
         string UrlFor(Type modelType, RouteParameters parameters);
         string UrlFor(Type modelType, string category, RouteParameters parameters);
+
+        string UrlForAsset(AssetFolder? folder, string name);
     }
 
     public static class UrlRegistryExtensions
@@ -91,6 +94,11 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
         {
             return "url for {0}/{1} with parameters {2}".ToFormat(modelType.FullName, category, parameters);
+        }
+
+        public string UrlForAsset(AssetFolder? folder, string name)
+        {
+            return "url for asset " + name + " in " + folder.ToString();
         }
 
         public string UrlForNew<T>()

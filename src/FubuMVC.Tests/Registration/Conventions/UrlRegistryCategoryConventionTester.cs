@@ -57,7 +57,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         public void finds_and_registers_url_for_new_methods()
         {
             registry.HasNewUrl(typeof(UrlNewTarget)).ShouldBeTrue();
-            registry.UrlForNew(typeof(UrlNewTarget)).ShouldEqual("fubumvc/tests/registration/conventions/urlcategory1/createnewtarget");
+            registry.UrlForNew(typeof(UrlNewTarget)).ShouldEqual("http://server/app/fubumvc/tests/registration/conventions/urlcategory1/createnewtarget");
             
         }
 

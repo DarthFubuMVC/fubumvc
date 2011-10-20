@@ -5,6 +5,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using FubuCore;
@@ -32,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var registry = new RestfulServicesRegistry();
             var writer 
-                = new BehaviorGraphWriter(registry.BuildGraph(), null, null);
+                = new BehaviorGraphWriter(registry.BuildGraph(), null, null, new StubCurrentRequest());
 
             Debug.WriteLine(writer.PrintRoutes());
         }

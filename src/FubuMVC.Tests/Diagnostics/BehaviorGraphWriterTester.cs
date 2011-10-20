@@ -4,6 +4,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Urls;
+using FubuMVC.Tests.Urls;
 using HtmlTags;
 using NUnit.Framework;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace FubuMVC.Tests.Diagnostics
             graph = new FubuRegistry().BuildGraph();
             urls = MockRepository.GenerateMock<IUrlRegistry>();
             
-            writer = new BehaviorGraphWriter(graph, urls, null);
+            writer = new BehaviorGraphWriter(graph, urls, null, new StubCurrentRequest());
         }
 
         #endregion

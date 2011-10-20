@@ -6,6 +6,7 @@ using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
@@ -26,6 +27,9 @@ namespace FubuMVC.Tests.Assets.Tags
                 .Return(new HtmlTag[0])
                 .IgnoreArguments();
 
+            MockFor<IUrlRegistry>().Stub(x => x.UrlForAsset(AssetFolder.scripts, "script.js"))
+                .Return("http://myapp/_content/scripts/script.js");
+
             var file = new AssetFile("script.js", AssetFolder.scripts);
             var plan = AssetTagPlan.For(MimeType.Javascript, file);
 
@@ -41,6 +45,9 @@ namespace FubuMVC.Tests.Assets.Tags
             MockFor<IMissingAssetHandler>().Stub(x => x.BuildTagsAndRecord(null))
                 .Return(new HtmlTag[0])
                 .IgnoreArguments();
+
+            MockFor<IUrlRegistry>().Stub(x => x.UrlForAsset(AssetFolder.styles, "main.css"))
+                .Return("http://myapp/_content/styles/main.css");
 
             var file = new AssetFile("main.css", AssetFolder.styles);
             var plan = AssetTagPlan.For(MimeType.Css, file);

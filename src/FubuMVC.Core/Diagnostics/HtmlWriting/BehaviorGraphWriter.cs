@@ -5,6 +5,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Diagnostics.TextWriting;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
@@ -99,13 +100,15 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
         private readonly IServiceLocator _services;
+        private readonly ICurrentRequest _request;
         private readonly string _diagnosticsNamespace;
 
-        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IServiceLocator services)
+        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IServiceLocator services, ICurrentRequest request)
         {
             _graph = graph;
             _urls = urls;
             _services = services;
+            _request = request;
             _diagnosticsNamespace = GetType().Namespace;
         }
 
@@ -257,7 +260,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             get
             {
-                return new RouteColumn();
+                return new RouteColumn(_request.ApplicationRoot());
             }
         }
 

@@ -1,17 +1,13 @@
-using FubuCore;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Http;
-using NUnit.Framework;
+using FubuMVC.Core.Urls;
 using FubuTestingSupport;
+using NUnit.Framework;
 
-namespace FubuMVC.Tests.Assets
+namespace FubuMVC.Tests.Urls
 {
     [TestFixture]
-    public class AssetFileHandlerTester
+    public class UrlRegistryTester
     {
-
-
         [Test]
         public void determine_asset_url_simple()
         {
@@ -20,8 +16,8 @@ namespace FubuMVC.Tests.Assets
                 Folder = AssetFolder.scripts
             };
 
-            AssetContentHandler.DetermineAssetUrl(file)
-                .ShouldEqual("http://myapp.com/_content/scripts/jquery.forms.js");
+            UrlRegistry.DetermineRelativeAssetUrl(file)
+                .ShouldEqual("_content/scripts/jquery.forms.js");
         }
 
         [Test]
@@ -32,8 +28,8 @@ namespace FubuMVC.Tests.Assets
                 Folder = AssetFolder.scripts
             };
 
-            AssetContentHandler.DetermineAssetUrl(file)
-                .ShouldEqual("http://myapp.com/_content/scripts/shared/jquery.forms.js"); 
+            UrlRegistry.DetermineRelativeAssetUrl(file)
+                .ShouldEqual("_content/scripts/shared/jquery.forms.js");
         }
     }
 }

@@ -5,13 +5,15 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Tests.Registration;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
 using FubuMVC.StructureMap;
 using System.Linq;
+using Model1 = FubuMVC.Tests.Registration.Model1;
 
 namespace FubuMVC.Tests.StructureMapIoC
 {
@@ -25,6 +27,8 @@ namespace FubuMVC.Tests.StructureMapIoC
         public void SetUp()
         {
             theContainer = new Container();
+            theContainer.Configure(x => x.For<ICurrentRequest>().Use(new StubCurrentRequest{TheApplicationRoot = "http://server"}));
+
             theRoutes = FubuApplication.For(() => new FubuRegistry(x =>
             {
                 x.Actions.IncludeType<DiagnosticController>();

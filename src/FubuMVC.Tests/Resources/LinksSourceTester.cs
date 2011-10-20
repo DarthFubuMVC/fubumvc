@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources;
 using FubuMVC.Core.Resources.Media;
@@ -158,6 +159,11 @@ namespace FubuMVC.Tests.Resources
         }
 
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string UrlForAsset(AssetFolder? folder, string name)
         {
             throw new NotImplementedException();
         }

@@ -12,6 +12,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
@@ -58,7 +59,7 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void smoke_test()
         {
-            Debug.WriteLine(new BehaviorGraphWriter(graph, urls, null).PrintRoutes());
+            Debug.WriteLine(new BehaviorGraphWriter(graph, urls, null, new StubCurrentRequest()).PrintRoutes());
         }
     }
 

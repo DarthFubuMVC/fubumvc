@@ -7,6 +7,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
@@ -24,16 +25,17 @@ namespace FubuMVC.Core.UI.Diagnostics
         private readonly IServiceLocator _serviceLocator;
         private readonly IUrlRegistry _urlRegistry;
         private readonly BehaviorGraph _behaviorGraph;
+        private readonly ICurrentRequest _request;
         private readonly string _examplePageUrl;
 
-        public ExampleHtmlWriter(IServiceLocator serviceLocator, IUrlRegistry urlRegistry, BehaviorGraph behaviorGraph)
+        public ExampleHtmlWriter(IServiceLocator serviceLocator, IUrlRegistry urlRegistry, BehaviorGraph behaviorGraph, ICurrentRequest request)
         {
             _serviceLocator = serviceLocator;
             _urlRegistry = urlRegistry;
             _behaviorGraph = behaviorGraph;
-            
-            throw new NotImplementedException();
-            //_examplePageUrl = "_fubu/html/example".ToAbsoluteUrl();
+            _request = request;
+
+            _examplePageUrl = "_fubu/html/example".ToAbsoluteUrl(request.ApplicationRoot());
         }
 
         [UrlPattern("_fubu/html"), Description("Demonstrates effects of current HTML conventions")]
@@ -51,7 +53,7 @@ namespace FubuMVC.Core.UI.Diagnostics
                 .Where(b => b.HasOutputBehavior() && !b.ActionOutputType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
                 .OrderBy(b => b.GetRoutePattern()),
-                new RouteColumn(),
+                new RouteColumn(_request.ApplicationRoot()),
                 new OutputModelColumn(_examplePageUrl),
                 new OutputColumn());
             tags.Add(table);

@@ -4,10 +4,12 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
+using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
 using HtmlTags.Extended.Attributes;
@@ -235,9 +237,8 @@ namespace FubuMVC.Core.UI
 
         public static FormTag FormFor(this IFubuPage page, string url)
         {
-            throw new NotImplementedException();
-            //url = url.ToAbsoluteUrl();
-            //return new FormTag(url);
+            url = url.ToAbsoluteUrl(page.Get<ICurrentRequest>().ApplicationRoot());
+            return new FormTag(url);
         }
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
@@ -298,7 +299,7 @@ namespace FubuMVC.Core.UI
         /// <returns></returns>
         public static string ImageUrl(this IFubuPage viewPage, string imageFilename)
         {
-            return AssetContentHandler.DetermineAssetUrl(AssetFolder.images, imageFilename);
+            return viewPage.Urls.UrlForAsset(AssetFolder.images, imageFilename);
         }
 
         public static HtmlTag AntiForgeryToken(this IFubuPage page, string salt)

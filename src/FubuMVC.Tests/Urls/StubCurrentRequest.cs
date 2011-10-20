@@ -6,8 +6,8 @@ namespace FubuMVC.Tests.Urls
     {
         public string TheRawUrl;
         public string TheRelativeUrl;
-        public string TheApplicationRoot;
-        public string TheHttpMethod;
+        public string TheApplicationRoot = "http://server";
+        public string TheHttpMethod = "GET";
 
         public string RawUrl()
         {

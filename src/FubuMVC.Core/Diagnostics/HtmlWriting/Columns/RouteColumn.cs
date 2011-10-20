@@ -11,6 +11,13 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class RouteColumn : IColumn
     {
+        private readonly string _applicationRoot;
+
+        public RouteColumn(string applicationRoot)
+        {
+            _applicationRoot = applicationRoot;
+        }
+
         public string Header()
         {
             return "Route";
@@ -21,8 +28,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             var text = Text(chain);
             if (shouldBeClickable(chain))
             {
-                throw new NotImplementedException();
-                //cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl()).AddClass("route-link"));
+                cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl(_applicationRoot)).AddClass("route-link"));
             }
             else
             {

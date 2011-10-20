@@ -105,7 +105,6 @@
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
     <Compile Include="Assets\AssetExpressionUsageTester.cs" />
-    <Compile Include="Assets\AssetFileHandlerTester.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivatorIntegrationTester.cs" />
     <Compile Include="Assets\AssetGrouperTester.cs" />
     <Compile Include="Assets\AssetNamesKeyTester.cs" />
@@ -427,6 +426,7 @@
     <Compile Include="Urls\StubCurrentRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
+    <Compile Include="Urls\UrlRegistryTester.cs" />
     <Compile Include="View\FakeViews\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -5,6 +5,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Urls;
 using HtmlTags;
 
 namespace FubuMVC.Core.Assets.Tags
@@ -15,10 +16,12 @@ namespace FubuMVC.Core.Assets.Tags
             _builders = new Cache<MimeType, Func<IAssetTagSubject, string, HtmlTag>>();
 
         private readonly IMissingAssetHandler _missingHandler;
+        private readonly IUrlRegistry _urls;
 
-        public AssetTagBuilder(IMissingAssetHandler missingHandler)
+        public AssetTagBuilder(IMissingAssetHandler missingHandler, IUrlRegistry urls)
         {
             _missingHandler = missingHandler;
+            _urls = urls;
 
             _builders[MimeType.Javascript] = (subject, url) =>
             {
@@ -39,7 +42,7 @@ namespace FubuMVC.Core.Assets.Tags
             var func = _builders[plan.MimeType];
             Func<IAssetTagSubject, HtmlTag> builder = s =>
             {
-                var url = AssetContentHandler.DetermineAssetUrl(s);
+                var url = _urls.UrlForAsset(s.Folder, s.Name);
                 return func(s, url);
             };
 

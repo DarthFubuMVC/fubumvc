@@ -7,8 +7,7 @@ namespace FubuMVC.Core.Resources
     {
         public Link(string url)
         {
-            throw new NotImplementedException("REDO");
-            //Url = url.ToAbsoluteUrl();
+            Url = url;
         }
 
         public string Url { get; private set; }

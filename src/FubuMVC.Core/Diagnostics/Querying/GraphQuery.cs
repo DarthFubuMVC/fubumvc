@@ -3,16 +3,19 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Diagnostics.Querying
 {
     public class GraphQuery
     {
         private readonly BehaviorGraph _graph;
+        private readonly IUrlRegistry _urls;
 
-        public GraphQuery(BehaviorGraph graph)
+        public GraphQuery(BehaviorGraph graph, IUrlRegistry urls)
         {
             _graph = graph;
+            _urls = urls;
         }
 
         [UrlPattern("_fubu/all")]
@@ -26,7 +29,7 @@ namespace FubuMVC.Core.Diagnostics.Querying
         [UrlPattern("_fubu/imageurl/{Name}")]
         public string ImageUrlFor(ImageUrlRequest image)
         {
-            return AssetContentHandler.DetermineAssetUrl(AssetFolder.images, image.Name);
+            return _urls.UrlForAsset(AssetFolder.images, image.Name);
         }
     }
 
