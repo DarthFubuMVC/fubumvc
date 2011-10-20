@@ -1,4 +1,5 @@
 using System.Runtime.Serialization.Json;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors

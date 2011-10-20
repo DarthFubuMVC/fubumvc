@@ -14,6 +14,7 @@ using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
@@ -178,7 +179,6 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
 
 
-            graph.Services.SetServiceIfNone<IStreamingData, StreamingData>();
             graph.Services.SetServiceIfNone<IJsonReader, JavaScriptJsonReader>();
 
             graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();

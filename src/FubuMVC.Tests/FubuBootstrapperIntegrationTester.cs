@@ -7,11 +7,13 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.Tests.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.Tests
@@ -50,7 +52,10 @@ namespace FubuMVC.Tests
                     .Calls<TestController>(c => c.AnotherAction(null)).OutputToJson();
             });
 
-            container = new Container();
+            container = new Container(x =>
+            {
+                x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+            });
 
             routes = FubuApplication.For(registry).StructureMap(container).Bootstrap().Where(r => !r.As<Route>().Url.StartsWith("_content")).ToList();
 

@@ -1,4 +1,5 @@
 using System.Web.Script.Serialization;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors

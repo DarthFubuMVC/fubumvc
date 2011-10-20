@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using FubuMVC.Core.Http;
 using HtmlTags;
 
 namespace FubuMVC.Core.Runtime

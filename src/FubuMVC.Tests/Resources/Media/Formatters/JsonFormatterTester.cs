@@ -1,4 +1,5 @@
 using System.IO;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Resources.Projections;

@@ -4,11 +4,13 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.Tests.Registration.Expressions
@@ -135,7 +137,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void hydrate_through_container_facility_smoke_test()
         {
-            var container = new Container();
+            var container = new Container(x => x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>()));
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 

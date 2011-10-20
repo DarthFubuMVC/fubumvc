@@ -10,6 +10,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 using FubuMVC.StructureMap;
 using System.Linq;
@@ -27,7 +28,14 @@ namespace FubuMVC.Tests.StructureMapIoC
         public void SetUp()
         {
             theContainer = new Container();
-            theContainer.Configure(x => x.For<ICurrentRequest>().Use(new StubCurrentRequest{TheApplicationRoot = "http://server"}));
+            theContainer.Configure(x =>
+            {
+                x.For<ICurrentRequest>().Use(new StubCurrentRequest{
+                    TheApplicationRoot = "http://server"
+                });
+
+                x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+            });
 
             theRoutes = FubuApplication.For(() => new FubuRegistry(x =>
             {

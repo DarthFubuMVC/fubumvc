@@ -7,6 +7,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -20,6 +21,7 @@ using FubuMVC.WebForms;
 using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
+using Rhino.Mocks;
 using StructureMap;
 
 namespace FubuMVC.Tests.StructureMapIoC
@@ -35,6 +37,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             container = new Container(x =>
             {
                 x.For<IFileSystem>().Use<FileSystem>();
+                x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());

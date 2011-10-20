@@ -12,8 +12,8 @@ namespace FubuMVC.Core.Http.AspNet
             With(requestContext.HttpContext);
 
             With<ICurrentRequest>(new AspNetCurrentRequest(requestContext.HttpContext.Request));
+
+            With<IStreamingData>(new AspNetStreamingData(requestContext.HttpContext));
         }
     }
-
-    // Tested manually against FubuTestApplication
 }

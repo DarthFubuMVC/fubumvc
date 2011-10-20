@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Resources.Media.Formatters

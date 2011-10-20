@@ -11,6 +11,8 @@ using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -377,12 +379,6 @@ namespace FubuMVC.Tests.Registration
         public void smart_request_is_registered_as_the_fubu_smart_request()
         {
             registeredTypeIs<ISmartRequest, FubuSmartRequest>();
-        }
-
-        [Test]
-        public void streaming_data_is_registered()
-        {
-            registeredTypeIs<IStreamingData, StreamingData>();
         }
 
         [Test]

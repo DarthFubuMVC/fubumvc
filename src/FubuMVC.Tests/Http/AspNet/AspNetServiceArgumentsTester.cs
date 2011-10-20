@@ -42,5 +42,11 @@ namespace FubuMVC.Tests.Http.AspNet
         {
             theArguments.Get<ICurrentRequest>().ShouldBeOfType<AspNetCurrentRequest>();
         }
+
+        [Test]
+        public void should_register_a_streaming_data_implementation()
+        {
+            theArguments.Get<IStreamingData>().ShouldBeOfType<AspNetStreamingData>();
+        }
     }
 }

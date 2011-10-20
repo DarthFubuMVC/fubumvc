@@ -192,6 +192,8 @@
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />
     <Compile Include="Http\MimeTypeList.cs" />
+    <Compile Include="Http\AspNet\AspNetStreamingData.cs" />
+    <Compile Include="Http\StreamingDataExtensions.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
@@ -442,7 +444,7 @@
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\IResponseCaching.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
-    <Compile Include="Runtime\IStreamingData.cs" />
+    <Compile Include="Http\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Runtime\RecordedOutput.cs" />
