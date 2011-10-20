@@ -5,6 +5,7 @@ using System.Linq;
 using Bottles;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Spark.SparkModel.Scanning;
 
 namespace FubuMVC.Spark.SparkModel
@@ -36,9 +37,8 @@ namespace FubuMVC.Spark.SparkModel
         {
             get
             {
-                
-                throw new NotImplementedException();
-                //return _hostPath ?? "~/".ToPhysicalPath();
+                // TODO -- re-evaluate this
+                return _hostPath ?? FubuMvcPackageFacility.GetApplicationPath();
             } 
             set { _hostPath = value; }
         }
