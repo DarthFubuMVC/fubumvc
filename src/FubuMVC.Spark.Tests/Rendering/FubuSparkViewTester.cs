@@ -19,8 +19,10 @@ namespace FubuMVC.Spark.Tests.Rendering
         {
             _serviceLocator = MockFor<IServiceLocator>();
             _urlRegistry = MockFor<IUrlRegistry>();
+
             ClassUnderTest.ServiceLocator.ShouldBeNull();
             ClassUnderTest.ServiceLocator = _serviceLocator;
+
             _serviceLocator.Stub(x => x.GetInstance(typeof (IUrlRegistry))).Return(_urlRegistry);
         }
 
@@ -84,6 +86,14 @@ namespace FubuMVC.Spark.Tests.Rendering
         public void tag()
         {
             ClassUnderTest.Tag("div").ShouldNotBeNull().TagName().ShouldEqual("div");
+        }
+
+        [Test]
+        public void h_uses_servicelocator_to_get_htmlencoder()
+        {
+            _serviceLocator.Expect(x => x.GetInstance(typeof (IHtmlEncoder))).Return(new DefaultHtmlEncoder());
+            ClassUnderTest.H("MØ").ShouldEqual("M&#216;");
+            _serviceLocator.VerifyAllExpectations();
         }
 
         [Test]

@@ -126,6 +126,8 @@ namespace FubuMVC.Spark
             return types;
         }
 
+        // TODO: Tests that ensure all of these defaults are set.
+
         private static void configureServices(IServiceRegistry services)
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
@@ -149,6 +151,8 @@ namespace FubuMVC.Spark
             services.FillType<IViewModifier, NestedViewOutputActivator>();
             services.FillType<IViewModifier, ViewContentDisposer>();
             services.FillType<IViewModifier, NestedOutputActivation>();
+
+            services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 
             services.SetServiceIfNone(new DefaultViewDefinitionPolicy());
             services.SetServiceIfNone<IViewDefinitionResolver, ViewDefinitionResolver>();

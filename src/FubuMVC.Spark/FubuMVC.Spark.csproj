@@ -64,6 +64,7 @@
     <Compile Include="ITemplateComposerConvention.cs" />
     <Compile Include="ITemplateFinderConvention.cs" />
     <Compile Include="Registration\GenericParser.cs" />
+    <Compile Include="Rendering\IHtmlEncoder.cs" />
     <Compile Include="Rendering\ViewDefinitionPolicy.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />
     <Compile Include="Rendering\ViewDefinition.cs" />

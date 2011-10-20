@@ -47,10 +47,9 @@ namespace FubuMVC.Spark.Rendering
             return new HtmlTag(tagName);
         }
 
-        // TODO: delegate to service locator and test coverage.
         public string H(object value)
         {
-            return HttpUtility.HtmlEncode(value);
+            return Get<IHtmlEncoder>().Encode(value);
         }
     }
 
