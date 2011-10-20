@@ -19,7 +19,11 @@ namespace FubuMVC.Core.UI.Tags
         string CurrentProfile { get; }
         ElementRequest GetRequest(Accessor accessor);
 
-        FormTag FormFor(FormElementRequest request);
+        FormTag FormFor<TController>(Expression<Action<TController>> expression);
+        FormTag FormFor(string url);
+        FormTag FormFor(object model);
+
+
         HtmlTag BeforePartial(ElementRequest request);
         HtmlTag AfterPartial(ElementRequest request);
         HtmlTag AfterEachofPartial(ElementRequest request, int current, int count);
@@ -32,7 +36,6 @@ namespace FubuMVC.Core.UI.Tags
         HtmlTag LabelFor(Expression<Func<T, object>> expression, string profile);
         HtmlTag InputFor(Expression<Func<T, object>> expression);
         HtmlTag InputFor(Expression<Func<T, object>> expression, string profile);
-
         
         HtmlTag DisplayFor(Expression<Func<T, object>> expression);
         HtmlTag DisplayFor(Expression<Func<T, object>> expression, string profile);
@@ -49,13 +52,14 @@ namespace FubuMVC.Core.UI.Tags
         private readonly IElementNamingConvention _namingConvention;
         private readonly IServiceLocator _services;
         private TagProfile _profile;
+        private readonly IFormElementRequestFactory _formElementRequestFactory;
 
-
-        public TagGenerator(TagProfileLibrary library, IElementNamingConvention namingConvention, IServiceLocator services)
+        public TagGenerator(TagProfileLibrary library, IElementNamingConvention namingConvention, IServiceLocator services, IFormElementRequestFactory formElementRequestFactory)
         {
             ElementPrefix = string.Empty;
             
             _library = library;
+            _formElementRequestFactory = formElementRequestFactory;
             _namingConvention = namingConvention;
             _services = services;
 
@@ -192,8 +196,20 @@ namespace FubuMVC.Core.UI.Tags
         }
 
 
-        public FormTag FormFor(FormElementRequest request)
+        public FormTag FormFor<TController>(Expression<Action<TController>> expression)
         {
+            var request = _formElementRequestFactory.Create(expression);
+            return _profile.Form.Build(request);
+        }
+        public FormTag FormFor(string url)
+        {
+            var request = _formElementRequestFactory.Create(url);
+           
+            return _profile.Form.Build(request);
+        }
+        public FormTag FormFor(object model)
+        {
+            var request = _formElementRequestFactory.Create(model);
             return _profile.Form.Build(request);
         }
     }

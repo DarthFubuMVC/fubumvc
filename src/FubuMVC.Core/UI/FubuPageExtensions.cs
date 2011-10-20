@@ -236,31 +236,30 @@ namespace FubuMVC.Core.UI
         public static FormTag FormFor(this IFubuPage page, string url)
         {
             url = url.ToAbsoluteUrl();
-
-            return page.Tags(url).FormFor(FormElementRequest.For(url, page.ServiceLocator));
+           
+            return page.Tags(url).FormFor(url);
         }
 
         public static HtmlTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
             var model = new TInputModel();
-            return page.Tags(model).FormFor(FormElementRequest.For(model, page.ServiceLocator));
+            return page.Tags(model).FormFor(model);
         }
 
         public static HtmlTag FormFor<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel: class
         {
-            return page.Tags(model).FormFor(FormElementRequest.For(model, page.ServiceLocator));            
+            return page.Tags(model).FormFor(model);            
         }
-
 
         public static HtmlTag FormFor<TController>(this IFubuPage page, Expression<Action<TController>> expression)
         {
-            return page.Tags(expression).FormFor(FormElementRequest.For(expression, page.ServiceLocator)); 
+            return page.Tags(expression).FormFor(expression); 
         }
 
 
-        public static HtmlTag FormFor(this IFubuPage view, object modelOrUrl)
+        public static HtmlTag FormFor(this IFubuPage page, object modelOrUrl)
         {
-            return modelOrUrl is string ? FormFor(view, url: (string) modelOrUrl) : FormFor(view, model: modelOrUrl);
+            return modelOrUrl is string ? FormFor(page, url: (string) modelOrUrl) : FormFor(page, model: modelOrUrl);
         }
 
         public static string EndForm(this IFubuPage page)

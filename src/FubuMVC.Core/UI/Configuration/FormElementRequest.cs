@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.Urls;
@@ -42,48 +43,13 @@ namespace FubuMVC.Core.UI.Configuration
             this._services = services;
         }
 
-        public static FormElementRequest For<TController>(Expression<Action<TController>> expression, IServiceLocator services)
-        {
-            var request = new FormElementRequest(services);
-            var chainResolver = services.GetInstance<IChainResolver>();
-            var chain = chainResolver.Find(expression);
-
-            request.Model = Activator.CreateInstance(chain.InputType());
-            request.Url = services.GetInstance<IUrlRegistry>().UrlFor(expression);
-            return request;
-        }
-
-        public static FormElementRequest For(string url, IServiceLocator services)
-        {
-            return new FormElementRequest(url,services);
-        }
-
-        public static FormElementRequest For(object model, IServiceLocator services)
-        {
-            var request = new FormElementRequest(model, services);
-
-            var chainResolver = services.GetInstance<IChainResolver>();
-            var chain = chainResolver.FindUniqueByInputType(model.GetType());
-            var urls = services.GetInstance<IUrlRegistry>();
-            
-            request.TargetChain = chain;
-            request.Url = urls.UrlFor(model);
-
-            return request;
-        }
-
-        public FubuMVC.Core.Registration.Nodes.BehaviorChain TargetChain { get; private set; }
+        public Registration.Nodes.BehaviorChain TargetChain { get; private set; }
 
         public string Url { get; private set; }
 
         public T Get<T>()
         {
             return _services.GetInstance<T>();
-        }
-
-        public virtual ITagGenerator Tags()
-        {
-            return _services.TagsFor(Model);
         }
 
         public T Value<T>()
@@ -93,7 +59,60 @@ namespace FubuMVC.Core.UI.Configuration
 
         public FormDef ToFormDef()
         {
-            return new FormDef { IsInBound = this.InBound, Id = InBound? TargetChain.UniqueId.GetHashCode() : Model.GetHashCode() , ModelType = ModelType};
+            return new FormDef { IsInBound = this.InBound, Id = InBound ? TargetChain.UniqueId.GetHashCode() : Model.GetHashCode(), ModelType = ModelType };
+        }
+
+        public class FormElementRequestFactory : IFormElementRequestFactory
+        {
+            private readonly IChainResolver _chainResolver;
+            private readonly IUrlRegistry _urlRegistry;
+            private readonly IServiceLocator _serviceLocator;
+
+            // TODO - add caching
+            public FormElementRequestFactory(IChainResolver chainResolver, IUrlRegistry urlRegistry,IServiceLocator serviceLocator)
+            {
+                _chainResolver = chainResolver;
+                _urlRegistry = urlRegistry;
+                _serviceLocator = serviceLocator;
+            }
+
+            public FormElementRequest Create<TController>(Expression<Action<TController>> expression)
+            {
+                var request = new FormElementRequest(_serviceLocator);
+                var chain = _chainResolver.Find(expression);
+
+                request.Model = Activator.CreateInstance(chain.InputType());
+                request.Url = _urlRegistry.UrlFor(request.Model);
+                return request;
+            }
+
+            public FormElementRequest Create(string url)
+            {
+                return new FormElementRequest(url, _serviceLocator);
+            }
+
+            public FormElementRequest Create(object model)
+            {
+                var request = new FormElementRequest(model, _serviceLocator);
+
+                var chain = _chainResolver.FindUniqueByInputType(model.GetType());
+
+                request.TargetChain = chain;
+                request.Url = _urlRegistry.UrlFor(model);
+
+                return request;
+            }
+
         }
     }
+
+    public interface IFormElementRequestFactory
+    {
+        FormElementRequest Create<TController>(Expression<Action<TController>> expression);
+
+        FormElementRequest Create(string url);
+
+        FormElementRequest Create(object model);
+    }
+
 }

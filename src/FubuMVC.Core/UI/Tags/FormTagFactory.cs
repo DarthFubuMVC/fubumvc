@@ -14,11 +14,22 @@ namespace FubuMVC.Core.UI.Tags
 
         private readonly IList<IFormElementModifier> _modifiers = new List<IFormElementModifier>();
 
-        private readonly Func<FormElementRequest,FormTag> _builder;
+        private readonly Func<FormElementRequest, FormTag> _builder;
 
         public FormTagFactory()
         {
-            _builder = req => new FormTag(req.Url);
+            _builder = req =>
+            {
+                var tag = new FormTag(req.Url); 
+                
+                if (req.InBound)
+                {
+                    var method = req.TargetChain.Route.AllowedHttpMethods.OrderBy(x => x != "GET").First();
+                    tag.Method(method);
+                }
+
+                return tag;
+            };
             _creators.OnMissing = resolveCreator;
         }
 
@@ -35,7 +46,7 @@ namespace FubuMVC.Core.UI.Tags
             return request =>
             {
                 var tag = buildTag(request);
-                
+
                 modifiers.Each(x => x(request, tag));
 
                 return tag;
@@ -49,7 +60,7 @@ namespace FubuMVC.Core.UI.Tags
 
         public FormTag Build(FormElementRequest request)
         {
-            
+
             return _creators[request.ToFormDef()](request);
         }
 

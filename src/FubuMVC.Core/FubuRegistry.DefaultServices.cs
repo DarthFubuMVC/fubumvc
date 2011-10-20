@@ -295,6 +295,8 @@ namespace FubuMVC.Core
             graph.Services.ReplaceService(library);
             graph.Services.SetServiceIfNone(typeof (ITagGenerator<>), typeof (TagGenerator<>));
             graph.Services.SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
+
+            graph.Services.SetServiceIfNone<IFormElementRequestFactory, FormElementRequest.FormElementRequestFactory>();
         }
     }
 }
