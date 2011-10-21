@@ -149,7 +149,8 @@ namespace FubuMVC.Core
             PackageRegistry.AssertNoFailures();
 
             var routes = buildRoutes(factory, graph);
-        
+            routes.Each(r => RouteTable.Routes.Add(r));
+
             return new FubuRuntime(factory, _facility.Value, routes);
         }
 

@@ -64,9 +64,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Classes.cs" />
+    <Compile Include="OwinAggregateDictionary.cs" />
     <Compile Include="FubuOwinHost.cs" />
     <Compile Include="GateHttpContext.cs" />
+    <Compile Include="OwinCurrentRequest.cs" />
+    <Compile Include="OwinHttpWriter.cs" />
+    <Compile Include="OwinServiceArguments.cs" />
+    <Compile Include="OwinStreamingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
