@@ -29,6 +29,35 @@ namespace FubuMVC.Core
         string Name { get; }
     }
 
+    public class FubuRuntime
+    {
+        private readonly IBehaviorFactory _factory;
+        private readonly IContainerFacility _facility;
+        private readonly IList<RouteBase> _routes;
+
+        public FubuRuntime(IBehaviorFactory factory, IContainerFacility facility, IList<RouteBase> routes)
+        {
+            _factory = factory;
+            _facility = facility;
+            _routes = routes;
+        }
+
+        public IBehaviorFactory Factory
+        {
+            get { return _factory; }
+        }
+
+        public IContainerFacility Facility
+        {
+            get { return _facility; }
+        }
+
+        public IList<RouteBase> Routes
+        {
+            get { return _routes; }
+        }
+    }
+
     // PLEASE NOTE:  This code is primarily tested with the StoryTeller suite for Packaging
     public class FubuApplication : IContainerFacilityExpression
     {
@@ -76,14 +105,9 @@ namespace FubuMVC.Core
             return For(() => new T());
         }
 
-        [SkipOverForProvenance]
-        public void Bootstrap(IList<RouteBase> routes)
-        {
-            Bootstrap().Each(routes.Add);
-        }
 
         [SkipOverForProvenance]
-        public IList<RouteBase> Bootstrap()
+        public FubuRuntime Bootstrap()
         {
             _fubuFacility = new FubuMvcPackageFacility();
 
@@ -124,7 +148,9 @@ namespace FubuMVC.Core
 
             PackageRegistry.AssertNoFailures();
 
-            return buildRoutes(factory, graph);
+            var routes = buildRoutes(factory, graph);
+        
+            return new FubuRuntime(factory, _facility.Value, routes);
         }
 
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)

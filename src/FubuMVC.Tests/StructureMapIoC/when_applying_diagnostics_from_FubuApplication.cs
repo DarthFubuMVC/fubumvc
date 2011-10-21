@@ -45,7 +45,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 x.IncludeDiagnostics(true);
             }))
                 .StructureMap(() => theContainer)
-                .Bootstrap();            
+                .Bootstrap().Routes;            
         }
 
 

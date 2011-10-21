@@ -14,7 +14,7 @@ namespace FubuMVC.HelloSpark
             FubuApplication
                 .For<HelloSparkRegistry>()
                 .StructureMap(() => new Container(SetupContainer))
-                .Bootstrap(RouteTable.Routes);
+                .Bootstrap();
 
             // If there is an error during bootstrapping, it will not automatically be considered
             // fatal and there will be no YSOD.  This is to help during initial debugging and 

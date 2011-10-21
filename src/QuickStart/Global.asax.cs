@@ -24,7 +24,7 @@ namespace QuickStart
                 // that you can use the native registration API's for your
                 // IoC container for the rest of your application
                 .StructureMap(new Container())
-                .Bootstrap(RouteTable.Routes);
+                .Bootstrap();
         }
     }
 

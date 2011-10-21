@@ -57,7 +57,12 @@ namespace FubuMVC.Tests
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
             });
 
-            routes = FubuApplication.For(registry).StructureMap(container).Bootstrap().Where(r => !r.As<Route>().Url.StartsWith("_content")).ToList();
+            routes = FubuApplication.For(registry)
+                .StructureMap(container)
+                .Bootstrap()
+                .Routes
+                .Where(r => !r.As<Route>().Url.StartsWith("_content"))
+                .ToList();
 
             container.Configure(x => x.For<IOutputWriter>().Use(new InMemoryOutputWriter()));
             Debug.WriteLine(container.WhatDoIHave());

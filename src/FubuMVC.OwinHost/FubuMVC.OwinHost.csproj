@@ -64,11 +64,19 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Classes.cs" />
+    <Compile Include="FubuOwinHost.cs" />
     <Compile Include="GateHttpContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
+      <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
+      <Name>FubuMVC.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,7 +17,7 @@ namespace FubuTestApplication
             // TODO -- add smart grid controllers
             FubuApplication.For<FubuTestApplicationRegistry>()
                 .StructureMap(new Container())
-                .Bootstrap(RouteTable.Routes);
+                .Bootstrap();
 
             PackageRegistry.AssertNoFailures();
         }
