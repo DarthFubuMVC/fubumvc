@@ -214,6 +214,8 @@ namespace FubuMVC.Core
 
             graph.Services.AddService<IConverterFamily, AspNetObjectConversionFamily>();
 
+            graph.Services.SetServiceIfNone<IRequestHeaders, RequestHeaders>();
+
             registerAssetServices(graph);
             registerActivators(graph);
             registerHtmlConventions(graph);

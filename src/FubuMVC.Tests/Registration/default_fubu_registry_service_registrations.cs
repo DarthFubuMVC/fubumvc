@@ -406,5 +406,11 @@ namespace FubuMVC.Tests.Registration
         {
             registeredTypeIs<ISetterBinder, SetterBinder>();
         }
+
+        [Test]
+        public void IRequestHeader_is_registered()
+        {
+            registeredTypeIs<IRequestHeaders, RequestHeaders>();
+        }
     }
 }
