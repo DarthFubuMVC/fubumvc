@@ -19,7 +19,7 @@ namespace FubuMVC.Tests.Assets.Tags
                 new MissingAssetTagSubject("script3.js")
             };
 
-            var tags = new TraceOnlyMissingAssetHandler(new StubCurrentRequest{TheApplicationRoot = "http://myserver"}).BuildTagsAndRecord(subjects);
+            var tags = new TraceOnlyMissingAssetHandler(new StubCurrentHttpRequest{TheApplicationRoot = "http://myserver"}).BuildTagsAndRecord(subjects);
             tags.Count().ShouldEqual(3);
 
             tags.First().ToString().ShouldEqual("<script type=\"application/javascript\" src=\"http://myserver/missing/assets/script1.js\"></script>");
@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Assets.Tags
         [Test]
         public void return_no_tags_for_no_missing_assets()
         {
-            new TraceOnlyMissingAssetHandler(new StubCurrentRequest { TheApplicationRoot = "http://myserver" }).BuildTagsAndRecord(new MissingAssetTagSubject[0])
+            new TraceOnlyMissingAssetHandler(new StubCurrentHttpRequest { TheApplicationRoot = "http://myserver" }).BuildTagsAndRecord(new MissingAssetTagSubject[0])
                 .Any().ShouldBeFalse();
         }
     }

@@ -25,17 +25,17 @@ namespace FubuMVC.Core.UI.Diagnostics
         private readonly IServiceLocator _serviceLocator;
         private readonly IUrlRegistry _urlRegistry;
         private readonly BehaviorGraph _behaviorGraph;
-        private readonly ICurrentRequest _request;
+        private readonly ICurrentHttpRequest _httpRequest;
         private readonly string _examplePageUrl;
 
-        public ExampleHtmlWriter(IServiceLocator serviceLocator, IUrlRegistry urlRegistry, BehaviorGraph behaviorGraph, ICurrentRequest request)
+        public ExampleHtmlWriter(IServiceLocator serviceLocator, IUrlRegistry urlRegistry, BehaviorGraph behaviorGraph, ICurrentHttpRequest httpRequest)
         {
             _serviceLocator = serviceLocator;
             _urlRegistry = urlRegistry;
             _behaviorGraph = behaviorGraph;
-            _request = request;
+            _httpRequest = httpRequest;
 
-            _examplePageUrl = "_fubu/html/example".ToAbsoluteUrl(request.ApplicationRoot());
+            _examplePageUrl = "_fubu/html/example".ToAbsoluteUrl(httpRequest.ApplicationRoot());
         }
 
         [UrlPattern("_fubu/html"), Description("Demonstrates effects of current HTML conventions")]
@@ -53,7 +53,7 @@ namespace FubuMVC.Core.UI.Diagnostics
                 .Where(b => b.HasOutputBehavior() && !b.ActionOutputType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
                 .OrderBy(b => b.GetRoutePattern()),
-                new RouteColumn(_request.ApplicationRoot()),
+                new RouteColumn(_httpRequest.ApplicationRoot()),
                 new OutputModelColumn(_examplePageUrl),
                 new OutputColumn());
             tags.Add(table);

@@ -4,11 +4,11 @@ using Gate.Helpers;
 
 namespace FubuMVC.OwinHost
 {
-    public class OwinCurrentRequest : ICurrentRequest
+    public class OwinCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly Request _request;
 
-        public OwinCurrentRequest(Request request)
+        public OwinCurrentHttpRequest(Request request)
         {
             _request = request;
         }

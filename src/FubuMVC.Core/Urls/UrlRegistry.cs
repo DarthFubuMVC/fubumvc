@@ -15,13 +15,13 @@ namespace FubuMVC.Core.Urls
     {
         public static readonly string AssetsUrlFolder = "_content";
 
-        private readonly ICurrentRequest _request;
+        private readonly ICurrentHttpRequest _httpRequest;
         private readonly Func<string, string> _templateFunc;
 
-        public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern, ICurrentRequest request)
+        public UrlRegistry(IChainResolver resolver, IUrlTemplatePattern templatePattern, ICurrentHttpRequest httpRequest)
             : base(resolver)
         {
-            _request = request;
+            _httpRequest = httpRequest;
             _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
@@ -43,19 +43,19 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType);
-            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_request.ApplicationRoot());
+            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_httpRequest.ApplicationRoot());
         }
 
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType, category);
-            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_request.ApplicationRoot());
+            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_httpRequest.ApplicationRoot());
         }
 
         public string UrlForAsset(AssetFolder? folder, string name)
         {
             var relativeUrl = DetermineRelativeAssetUrl(folder, name);
-            return relativeUrl.ToAbsoluteUrl(_request.ApplicationRoot());
+            return relativeUrl.ToAbsoluteUrl(_httpRequest.ApplicationRoot());
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
@@ -107,7 +107,7 @@ namespace FubuMVC.Core.Urls
 
         protected override string createResult(object model, BehaviorChain chain)
         {
-            return chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_request.ApplicationRoot());
+            return chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_httpRequest.ApplicationRoot());
         }
 
         public string UrlFor<TInput>(RouteParameters parameters)
@@ -126,7 +126,7 @@ namespace FubuMVC.Core.Urls
             var chain = resolver.FindUnique(model);
 
             return _templateFunc(chain.Route.CreateTemplate(model, hash))
-                .ToAbsoluteUrl(_request.ApplicationRoot());
+                .ToAbsoluteUrl(_httpRequest.ApplicationRoot());
         }
 
         /// <summary>

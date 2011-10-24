@@ -4,11 +4,11 @@ using System.Web;
 
 namespace FubuMVC.Core.Http.AspNet
 {
-    public class AspNetCurrentRequest : ICurrentRequest
+    public class AspNetCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly HttpRequestBase _request;
 
-        public AspNetCurrentRequest(HttpRequestBase request)
+        public AspNetCurrentHttpRequest(HttpRequestBase request)
         {
             _request = request;
         }

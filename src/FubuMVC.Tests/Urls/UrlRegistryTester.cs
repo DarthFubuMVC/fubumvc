@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void determine_asset_url_respects_absolute_path()
         {
-            var registry = new UrlRegistry(null, null, new StubCurrentRequest{TheApplicationRoot = "http://server"});
+            var registry = new UrlRegistry(null, null, new StubCurrentHttpRequest{TheApplicationRoot = "http://server"});
             registry.UrlForAsset(AssetFolder.images, "icon.png")
                 .ShouldEqual("http://server/_content/images/icon.png");
         }

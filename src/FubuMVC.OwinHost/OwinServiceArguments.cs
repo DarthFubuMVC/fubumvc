@@ -11,7 +11,7 @@ namespace FubuMVC.OwinHost
         {
             With<AggregateDictionary>(new OwinAggregateDictionary(routeData, request));
 
-            With<ICurrentRequest>(new OwinCurrentRequest(request));
+            With<ICurrentHttpRequest>(new OwinCurrentHttpRequest(request));
             With<IStreamingData>(new OwinStreamingData(request, response));
             With<IHttpWriter>(new OwinHttpWriter(response));
         }

@@ -1,6 +1,6 @@
 namespace FubuMVC.Core.Http
 {
-    public interface ICurrentRequest
+    public interface ICurrentHttpRequest
     {
         /// <summary>
         ///   Full url of the request, never contains a trailing /

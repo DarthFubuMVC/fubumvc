@@ -10,11 +10,11 @@ namespace FubuMVC.Core.Assets.Tags
 {
     public class TraceOnlyMissingAssetHandler : IMissingAssetHandler
     {
-        private readonly ICurrentRequest _request;
+        private readonly ICurrentHttpRequest _httpRequest;
 
-        public TraceOnlyMissingAssetHandler(ICurrentRequest request)
+        public TraceOnlyMissingAssetHandler(ICurrentHttpRequest httpRequest)
         {
-            _request = request;
+            _httpRequest = httpRequest;
         }
 
         // TODO -- trace here!!!
@@ -25,7 +25,7 @@ namespace FubuMVC.Core.Assets.Tags
                 var url = "missing/assets/" + s.Name;
                 return new HtmlTag("script")
                     .Attr("type", MimeType.Javascript.Value)
-                    .Attr("src", url.ToAbsoluteUrl(_request.ApplicationRoot()));
+                    .Attr("src", url.ToAbsoluteUrl(_httpRequest.ApplicationRoot()));
             });
         }
     }

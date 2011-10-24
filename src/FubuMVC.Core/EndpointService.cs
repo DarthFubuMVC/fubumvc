@@ -63,19 +63,19 @@ namespace FubuMVC.Core
     public class EndpointService : ChainInterrogator<Endpoint>, IEndpointService
     {
         private readonly IChainAuthorizor _authorizor;
-        private readonly ICurrentRequest _request;
+        private readonly ICurrentHttpRequest _httpRequest;
 
-        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, ICurrentRequest request) : base(resolver)
+        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, ICurrentHttpRequest httpRequest) : base(resolver)
         {
             _authorizor = authorizor;
-            _request = request;
+            _httpRequest = httpRequest;
         }
 
         protected override Endpoint createResult(object model, BehaviorChain chain)
         {
             return new Endpoint(){
                 IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_request.ApplicationRoot())
+                Url = chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_httpRequest.ApplicationRoot())
             };
         }
 

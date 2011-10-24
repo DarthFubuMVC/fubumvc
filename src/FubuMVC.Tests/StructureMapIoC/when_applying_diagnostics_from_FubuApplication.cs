@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             {
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
 
-                x.For<ICurrentRequest>().Use(new StubCurrentRequest{
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest{
                     TheApplicationRoot = "http://server"
                 });
 

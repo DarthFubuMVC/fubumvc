@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -10,12 +10,12 @@ namespace FubuMVC.Diagnostics.Navigation
     public class NavigationMenuBuilder : INavigationMenuBuilder
     {
         private readonly IEnumerable<INavigationItemAction> _actions;
-        private readonly ICurrentRequest _request;
+        private readonly ICurrentHttpRequest _httpRequest;
 
-        public NavigationMenuBuilder(IEnumerable<INavigationItemAction> actions, ICurrentRequest request)
+        public NavigationMenuBuilder(IEnumerable<INavigationItemAction> actions, ICurrentHttpRequest httpRequest)
         {
             _actions = actions;
-            _request = request;
+            _httpRequest = httpRequest;
         }
 
         public IEnumerable<NavigationMenuItem> MenuItems()
@@ -25,7 +25,7 @@ namespace FubuMVC.Diagnostics.Navigation
                 .ThenBy(a => a.Text())
                 .Select(a =>
                 {
-                    var url = a.Url().ToAbsoluteUrl(_request.ApplicationRoot());
+                    var url = a.Url().ToAbsoluteUrl(_httpRequest.ApplicationRoot());
                     if (url.EndsWith("/"))
                     {
                         url = url.TrimEnd('/');
@@ -35,7 +35,7 @@ namespace FubuMVC.Diagnostics.Navigation
                     {
                         Text = a.Text(),
                         Url = a.Url(),
-                        IsActive = url.Equals(_request.RawUrl())
+                        IsActive = url.Equals(_httpRequest.RawUrl())
                     };
                 });
         }

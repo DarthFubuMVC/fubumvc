@@ -192,6 +192,7 @@
     <Compile Include="Resources\Conneg\ConnegOutputBehaviorTester.cs" />
     <Compile Include="Resources\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Resources\Conneg\ConnegOutputNodeTester.cs" />
+    <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
     <Compile Include="Resources\LinkExpressionTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedSourcesTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedTester.cs" />
@@ -428,7 +429,7 @@
     <Compile Include="UI\TagFactoryTester.cs" />
     <Compile Include="UI\TagGeneratorTester.cs" />
     <Compile Include="Urls\BasicUrlRegistrationScanningIntegrationTester.cs" />
-    <Compile Include="Urls\StubCurrentRequest.cs" />
+    <Compile Include="Urls\StubCurrentHttpRequest.cs" />
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="Urls\UrlRegistryTester.cs" />

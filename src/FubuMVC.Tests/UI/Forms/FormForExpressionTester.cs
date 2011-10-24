@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void form_for_with_an_url()
         {
-            page.Stub(x => x.Get<ICurrentRequest>()).Return(new StubCurrentRequest{
+            page.Stub(x => x.Get<ICurrentHttpRequest>()).Return(new StubCurrentHttpRequest{
                 TheApplicationRoot = "http://server"
             });
 

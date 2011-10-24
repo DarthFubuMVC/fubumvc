@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         {
             var registry = new RestfulServicesRegistry();
             var writer 
-                = new BehaviorGraphWriter(registry.BuildGraph(), null, null, new StubCurrentRequest());
+                = new BehaviorGraphWriter(registry.BuildGraph(), null, null, new StubCurrentHttpRequest());
 
             Debug.WriteLine(writer.PrintRoutes());
         }

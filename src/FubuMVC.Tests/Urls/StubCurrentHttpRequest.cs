@@ -2,7 +2,7 @@ using FubuMVC.Core.Http;
 
 namespace FubuMVC.Tests.Urls
 {
-    public class StubCurrentRequest : ICurrentRequest
+    public class StubCurrentHttpRequest : ICurrentHttpRequest
     {
         public string TheRawUrl;
         public string TheRelativeUrl;

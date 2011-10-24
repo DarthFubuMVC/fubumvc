@@ -100,15 +100,15 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
         private readonly IServiceLocator _services;
-        private readonly ICurrentRequest _request;
+        private readonly ICurrentHttpRequest _httpRequest;
         private readonly string _diagnosticsNamespace;
 
-        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IServiceLocator services, ICurrentRequest request)
+        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IServiceLocator services, ICurrentHttpRequest httpRequest)
         {
             _graph = graph;
             _urls = urls;
             _services = services;
-            _request = request;
+            _httpRequest = httpRequest;
             _diagnosticsNamespace = GetType().Namespace;
         }
 
@@ -260,7 +260,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             get
             {
-                return new RouteColumn(_request.ApplicationRoot());
+                return new RouteColumn(_httpRequest.ApplicationRoot());
             }
         }
 

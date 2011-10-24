@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Routing;
 using FubuCore.Binding;
 
@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Http.AspNet
             With<AggregateDictionary>(new AspNetAggregateDictionary(requestContext));
             With(requestContext.HttpContext);
 
-            With<ICurrentRequest>(new AspNetCurrentRequest(requestContext.HttpContext.Request));
+            With<ICurrentHttpRequest>(new AspNetCurrentHttpRequest(requestContext.HttpContext.Request));
 
             With<IStreamingData>(new AspNetStreamingData(requestContext.HttpContext));
 

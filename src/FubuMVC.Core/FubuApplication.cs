@@ -111,7 +111,7 @@ namespace FubuMVC.Core
         [SkipOverForProvenance]
         public FubuRuntime Bootstrap()
         {
-            BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
+            SetupNamingStrategyForHttpHeaders();
 
             _fubuFacility = new FubuMvcPackageFacility();
 
@@ -156,6 +156,11 @@ namespace FubuMVC.Core
             routes.Each(r => RouteTable.Routes.Add(r));
 
             return new FubuRuntime(factory, _facility.Value, routes);
+        }
+
+        public static void SetupNamingStrategyForHttpHeaders()
+        {
+            BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
         }
 
         private void bakeBehaviorGraphIntoContainer(BehaviorGraph graph, IContainerFacility containerFacility)

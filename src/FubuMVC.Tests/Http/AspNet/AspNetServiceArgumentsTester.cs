@@ -40,7 +40,7 @@ namespace FubuMVC.Tests.Http.AspNet
         [Test]
         public void should_register_a_current_request_implementation()
         {
-            theArguments.Get<ICurrentRequest>().ShouldBeOfType<AspNetCurrentRequest>();
+            theArguments.Get<ICurrentHttpRequest>().ShouldBeOfType<AspNetCurrentHttpRequest>();
         }
 
         [Test]

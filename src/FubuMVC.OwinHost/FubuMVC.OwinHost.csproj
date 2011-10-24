@@ -67,7 +67,7 @@
     <Compile Include="OwinAggregateDictionary.cs" />
     <Compile Include="FubuOwinHost.cs" />
     <Compile Include="GateHttpContext.cs" />
-    <Compile Include="OwinCurrentRequest.cs" />
+    <Compile Include="OwinCurrentHttpRequest.cs" />
     <Compile Include="OwinHttpWriter.cs" />
     <Compile Include="OwinServiceArguments.cs" />
     <Compile Include="OwinStreamingData.cs" />

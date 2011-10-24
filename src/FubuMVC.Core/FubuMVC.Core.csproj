@@ -186,7 +186,7 @@
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
-    <Compile Include="Http\AspNet\AspNetCurrentRequest.cs" />
+    <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
     <Compile Include="Http\Cookie.cs" />
@@ -198,7 +198,7 @@
     <Compile Include="Http\HttpRequestHeaders.cs" />
     <Compile Include="Http\HttpResponseHeaders.cs" />
     <Compile Include="Http\ICurrentChain.cs" />
-    <Compile Include="Http\ICurrentRequest.cs" />
+    <Compile Include="Http\ICurrentHttpRequest.cs" />
     <Compile Include="Http\IRequestHeaders.cs" />
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />
