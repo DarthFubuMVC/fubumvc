@@ -193,6 +193,7 @@
     <Compile Include="Http\CurrentMimeType.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinder.cs" />
     <Compile Include="Http\HttpOutputWriterExtensions.cs" />
+    <Compile Include="Http\ICurrentChain.cs" />
     <Compile Include="Http\ICurrentRequest.cs" />
     <Compile Include="Http\MimetypeRequestConditional.cs" />
     <Compile Include="Http\IRequestConditional.cs" />

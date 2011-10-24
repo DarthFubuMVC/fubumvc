@@ -6,9 +6,11 @@ using Bottles;
 using Bottles.Diagnostics;
 using Bottles.Environment;
 using FubuCore;
+using FubuCore.Binding;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -109,6 +111,8 @@ namespace FubuMVC.Core
         [SkipOverForProvenance]
         public FubuRuntime Bootstrap()
         {
+            BindingContext.AddNamingStrategy(HttpRequestHeaders.HeaderDictionaryNameForProperty);
+
             _fubuFacility = new FubuMvcPackageFacility();
 
             IBehaviorFactory factory = null;

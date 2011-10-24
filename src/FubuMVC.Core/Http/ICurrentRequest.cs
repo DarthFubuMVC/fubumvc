@@ -1,51 +1,114 @@
 using System;
-using System.Diagnostics;
 using System.Net;
-using System.Web.Caching;
+using System.Reflection;
 using FubuCore;
-using FubuMVC.Core.Registration.Nodes;
-using System.Linq;
-using System.Collections.Generic;
+using FubuCore.Binding;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Http
 {
-
-
-    public interface ICurrentChain
-    {
-        /// <summary>
-        /// The behavior chain that is currently executing
-        /// </summary>
-        /// <returns></returns>
-        BehaviorChain CurrentChain();
-
-        // This is necessary if we wanna get handle partials too
-        void Push(BehaviorChain chain);
-        void Pop();
-    }
-
     public interface ICurrentRequest
     {
         /// <summary>
-        /// Full url of the request, never contains a trailing /
+        ///   Full url of the request, never contains a trailing /
         /// </summary>
         /// <returns></returns>
         string RawUrl();
 
         /// <summary>
-        /// Url relative to the application
+        ///   Url relative to the application
         /// </summary>
         /// <returns></returns>
         string RelativeUrl();
 
         /// <summary>
-        /// Base root of the application
+        ///   Base root of the application
         /// </summary>
         /// <returns></returns>
         string ApplicationRoot();
 
         string HttpMethod();
     }
+
+    public interface IRequestHeaders
+    {
+        /// <summary>
+        ///   Retrieve the value of a single Header property.  
+        ///   The callback action will only be called if the Header
+        ///   value exists
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "header"></param>
+        /// <param name = "callback"></param>
+        void Value<T>(string header, Action<T> callback);
+
+        /// <summary>
+        ///   Bind an object of type T to the data in the Headers
+        ///   collection
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <returns></returns>
+        T BindToHeaders<T>();
+    }
+
+    public class RequestHeaders : IRequestHeaders
+    {
+        private readonly IObjectConverter _converter;
+        private readonly AggregateDictionary _dictionary;
+        private readonly IObjectResolver _resolver;
+
+        public RequestHeaders(IObjectConverter converter, IObjectResolver resolver, AggregateDictionary dictionary)
+        {
+            _converter = converter;
+            _resolver = resolver;
+            _dictionary = dictionary;
+        }
+
+        public void Value<T>(string header, Action<T> callback)
+        {
+            _dictionary.Value(RequestDataSource.Header.ToString(), header, (name, value) =>
+            {
+                if (value == null)
+                {
+                    callback(default(T));
+                }
+                else
+                {
+                    var converted = _converter.FromString<T>(value.ToString());
+                    callback(converted);
+                }
+            });
+        }
+
+        public T BindToHeaders<T>()
+        {
+            var data = _dictionary.DataFor(RequestDataSource.Header.ToString());
+            var bindResult = _resolver.BindModel(typeof (T), data);
+
+            bindResult.AssertNoProblems(typeof (T));
+
+            return (T) bindResult.Value;
+        }
+    }
+
+    public static class HttpHeaderNameExtensions
+    {
+        public static void Value<T>(this IRequestHeaders headers, HttpRequestHeader header, Action<T> callback)
+        {
+            headers.Value(header.ToName(), callback);
+        }
+
+        public static string ToName(this HttpRequestHeader header)
+        {
+            return HttpRequestHeaders.HeaderNameFor(header);
+        }
+
+        public static string ToName(this HttpResponseHeader header)
+        {
+            return HttpResponseHeaders.HeaderNameFor(header);
+        }
+    }
+
 
     public class HttpGeneralHeaders
     {
@@ -91,7 +154,7 @@ namespace FubuMVC.Core.Http
         public static readonly string Vary = "Vary";
         public static readonly string WwwAuthenticate = "WwwAuthenticate";
 
-        private static readonly FubuCore.Util.Cache<HttpResponseHeader, string> _headerNames = new FubuCore.Util.Cache<HttpResponseHeader, string>();
+        private static readonly Cache<HttpResponseHeader, string> _headerNames = new Cache<HttpResponseHeader, string>();
 
         static HttpResponseHeaders()
         {
@@ -127,15 +190,16 @@ namespace FubuMVC.Core.Http
             _headerNames[HttpResponseHeader.WwwAuthenticate] = WwwAuthenticate;
         }
 
+        protected HttpResponseHeaders()
+        {
+        }
+
         public static string HeaderNameFor(HttpResponseHeader header)
         {
             return _headerNames[header];
         }
-
-        protected HttpResponseHeaders()
-        {
-        }
     }
+
 
     public class HttpRequestHeaders : HttpGeneralHeaders
     {
@@ -166,15 +230,19 @@ namespace FubuMVC.Core.Http
 
         // http 1.0
         public static readonly string KeepAlive = "keep-alive";
-        
 
 
-  
         // Not sure this is still used
         public static readonly string Translate = "Translate";
-        
 
-        private static readonly FubuCore.Util.Cache<HttpRequestHeader, string> _headerNames = new FubuCore.Util.Cache<HttpRequestHeader, string>();
+
+        private static readonly Cache<HttpRequestHeader, string> _headerNames = new Cache<HttpRequestHeader, string>();
+
+        private static readonly Cache<string, string> _propertyAliases = new Cache<string, string>(name =>
+        {
+            var prop = typeof (HttpRequestHeaders).GetField(name, BindingFlags.Static | BindingFlags.Public);
+            return prop == null ? name : (string) prop.GetValue(null);
+        });
 
         static HttpRequestHeaders()
         {
@@ -229,8 +297,10 @@ namespace FubuMVC.Core.Http
         {
             return _headerNames[header];
         }
+
+        public static string HeaderDictionaryNameForProperty(string propertyName)
+        {
+            return _propertyAliases[propertyName];
+        }
     }
-
-
-
 }
