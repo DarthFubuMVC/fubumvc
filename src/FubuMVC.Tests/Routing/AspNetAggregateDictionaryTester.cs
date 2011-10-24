@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuCore.Reflection;
+using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.AspNet;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -44,9 +46,9 @@ namespace FubuMVC.Tests.Routing
             };
 
             aggregate = new AggregateDictionary();
-            aggregate.AddLocator(RequestDataSource.Route, key => dict1.ContainsKey(key) ? dict1[key] : null, () => dict1.Keys);
-            aggregate.AddLocator(RequestDataSource.Request, key => dict2.ContainsKey(key) ? dict2[key] : null, () => dict2.Keys);
-            aggregate.AddLocator(RequestDataSource.Header, key => dict3.ContainsKey(key) ? dict3[key] : null, () => dict3.Keys);
+            aggregate.AddLocator(RequestDataSource.Route.ToString(), key => dict1.ContainsKey(key) ? dict1[key] : null, () => dict1.Keys);
+            aggregate.AddLocator(RequestDataSource.Request.ToString(), key => dict2.ContainsKey(key) ? dict2[key] : null, () => dict2.Keys);
+            aggregate.AddLocator(RequestDataSource.Header.ToString(), key => dict3.ContainsKey(key) ? dict3[key] : null, () => dict3.Keys);
         }
 
         #endregion
@@ -150,7 +152,7 @@ namespace FubuMVC.Tests.Routing
             const string expectedValue = "STUBBED USERAGENT";
             aggregate = new AggregateDictionary();
 
-            aggregate.AddDictionary(new Dictionary<string, object> { { "UserAgent", expectedValue } });
+            aggregate.AddDictionary("Other", new Dictionary<string, object> { { "UserAgent", expectedValue } });
             forKey("UserAgent1");
             callback.AssertWasNotCalled(x => x.Callback(RequestDataSource.Other.ToString(), null), o => o.IgnoreArguments());
             

@@ -1,3 +1,5 @@
+using System;
+using System.Net;
 using System.Web;
 
 namespace FubuMVC.Core.Http.AspNet
@@ -29,6 +31,16 @@ namespace FubuMVC.Core.Http.AspNet
         public string HttpMethod()
         {
             return _request.HttpMethod;
+        }
+
+        public T GetHeader<T>(HttpRequestHeader header)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetHeader<T>(string headerName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

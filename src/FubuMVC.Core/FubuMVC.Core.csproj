@@ -184,8 +184,10 @@
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Ajax\AjaxContinuation.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
+    <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentRequest.cs" />
+    <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
     <Compile Include="Http\Cookie.cs" />
     <Compile Include="Http\CurrentMimeType.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Http\MimeTypeList.cs" />
     <Compile Include="Http\AspNet\AspNetStreamingData.cs" />
     <Compile Include="Http\NulloHttpWriter.cs" />
+    <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Http\StreamingDataExtensions.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
@@ -209,6 +212,7 @@
     <Compile Include="Resources\Conneg\ConnegOutputBehavior.cs" />
     <Compile Include="Resources\Conneg\ConnegOutputNode.cs" />
     <Compile Include="Resources\Conneg\FormatterUsage.cs" />
+    <Compile Include="Resources\Etags\Classes.cs" />
     <Compile Include="Resources\ILinkModifier.cs" />
     <Compile Include="Resources\IResourceRegistration.cs" />
     <Compile Include="Resources\Link.cs" />

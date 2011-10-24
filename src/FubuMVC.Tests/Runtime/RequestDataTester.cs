@@ -17,7 +17,7 @@ namespace FubuMVC.Tests.Runtime
         {
             dictionary = new Dictionary<string, object>();
             aggregate = new AggregateDictionary();
-            aggregate.AddDictionary(dictionary);
+            aggregate.AddDictionary("Other", dictionary);
 
 
             request = new RequestData(aggregate);

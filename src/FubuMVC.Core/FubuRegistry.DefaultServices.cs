@@ -212,6 +212,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone(typeof (IValues<>), typeof (SimpleValues<>));
             graph.Services.SetServiceIfNone(typeof (IValueSource<>), typeof (ValueSource<>));
 
+            graph.Services.AddService<IConverterFamily, AspNetObjectConversionFamily>();
 
             registerAssetServices(graph);
             registerActivators(graph);

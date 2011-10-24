@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Routing;
 using FubuCore.Binding;
+using FubuMVC.Core.Http;
 using Gate.Helpers;
 
 namespace FubuMVC.OwinHost
@@ -19,19 +20,17 @@ namespace FubuMVC.OwinHost
             };
 
 
-            AddLocator(RequestDataSource.Route, locator, () => routeData.Values.Keys);
+            AddLocator(RequestDataSource.Route.ToString(), locator, () => routeData.Values.Keys);
 
             addDictionaryLocator("Query string", request.Query);
             addDictionaryLocator("Form Post", request.Post);
 
             addDictionaryLocator(RequestDataSource.Header.ToString(), request.Headers);
-
-            // TODO -- files?
         }
 
         private void addDictionaryLocator(string name, IDictionary<string, string> dictionary)
         {
-            Func<string, object> locator = key => { return dictionary.ContainsKey(key) ? dictionary[key] : null; };
+            Func<string, object> locator = key => dictionary.ContainsKey(key) ? dictionary[key] : null;
 
             AddLocator(name, locator, () => dictionary.Keys);
         }

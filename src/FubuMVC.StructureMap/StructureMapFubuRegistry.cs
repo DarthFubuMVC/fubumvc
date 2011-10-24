@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Runtime;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap.Configuration.DSL;
