@@ -113,6 +113,7 @@
     <Compile Include="SparkModel\Binding\ViewDescriptorBinderTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
+    <Compile Include="SparkModel\Sharing\SparkDslReaderTester.cs" />
     <Compile Include="SparkModel\TemplateDirectoryProviderTester.cs" />
     <Compile Include="SparkModel\SharedPathBuilderTester.cs" />
     <Compile Include="SparkModel\TemplateComposerTester.cs" />

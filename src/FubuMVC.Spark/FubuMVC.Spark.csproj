@@ -83,6 +83,12 @@
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Descriptors.cs" />
     <Compile Include="SparkModel\FubuSparkConstants.cs" />
+    <Compile Include="SparkModel\Sharing\InvalidSyntaxException.cs" />
+    <Compile Include="SparkModel\Sharing\ISharingPolicy.cs" />
+    <Compile Include="SparkModel\Sharing\ISharingRegistration.cs" />
+    <Compile Include="SparkModel\Sharing\RecordingSharingRegistration.cs" />
+    <Compile Include="SparkModel\Sharing\SharingGraph.cs" />
+    <Compile Include="SparkModel\Sharing\SparkDslReader.cs" />
     <Compile Include="SparkModel\TemplateDirectoryProvider.cs" />
     <Compile Include="SparkModel\SharedPathBuilder.cs" />
     <Compile Include="SparkModel\TemplatePolicies.cs" />
