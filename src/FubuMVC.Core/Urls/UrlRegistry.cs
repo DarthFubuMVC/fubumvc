@@ -23,6 +23,11 @@ namespace FubuMVC.Core.Urls
             return For(model);
         }
 
+        public string UrlFor<TInput>() where TInput : class, new()
+        {
+            return For(new TInput());
+        }
+
         public string UrlFor(object model, string category)
         {
             return For(model, category);

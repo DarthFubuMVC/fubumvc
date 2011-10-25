@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Urls
     {
         string UrlFor(object model);
         string UrlFor(object model, string category);
+        string UrlFor<TInput>() where TInput : class, new();
         string UrlFor<TController>(Expression<Action<TController>> expression);
 
 
@@ -37,15 +38,19 @@ namespace FubuMVC.Core.Urls
 
     public static class UrlRegistryExtensions
     {
-        public static string UrlFor<TInput>(this IUrlRegistry registry, RouteParameters parameters)
+        public static string UrlFor<TInput>(this IUrlRegistry registry) where TInput : class, new()
         {
-            return registry.UrlFor(typeof (TInput), parameters);
+            return registry.UrlFor(new TInput());
         }
 
+        public static string UrlFor<TInput>(this IUrlRegistry registry, RouteParameters parameters)
+        {
+            return registry.UrlFor(typeof(TInput), parameters);
+        }
 
         public static string UrlFor<TInput>(this IUrlRegistry urls, string category, RouteParameters parameters)
         {
-            return urls.UrlFor(typeof (TInput), category, parameters);
+            return urls.UrlFor(typeof(TInput), category, parameters);
         }
 
         public static string UrlFor<T>(this IUrlRegistry registry, Action<RouteParameters<T>> configure)
@@ -61,7 +66,7 @@ namespace FubuMVC.Core.Urls
             var parameters = new RouteParameters<T>();
             configure(parameters);
 
-            return registry.UrlFor(typeof (T), category, parameters);
+            return registry.UrlFor(typeof(T), category, parameters);
         }
     }
 
@@ -73,6 +78,11 @@ namespace FubuMVC.Core.Urls
             return "url for " + model;
         }
 
+        public string UrlFor<TInput>() where TInput : class, new()
+        {
+            return "url for " + new TInput();
+        }
+
         public string UrlFor(object model, string category)
         {
             return UrlFor(model) + ", category=" + category;
@@ -80,7 +90,7 @@ namespace FubuMVC.Core.Urls
 
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
-            return "url for " + typeof (TController).FullName + "." + ReflectionHelper.GetMethod(expression).Name + "()";
+            return "url for " + typeof(TController).FullName + "." + ReflectionHelper.GetMethod(expression).Name + "()";
         }
 
         public string UrlFor(Type modelType, RouteParameters parameters)
@@ -95,7 +105,7 @@ namespace FubuMVC.Core.Urls
 
         public string UrlForNew<T>()
         {
-            return "url for new " + typeof (T).FullName;
+            return "url for new " + typeof(T).FullName;
         }
 
         public string UrlForNew(Type entityType)

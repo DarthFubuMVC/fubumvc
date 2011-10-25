@@ -96,6 +96,11 @@ namespace FubuMVC.Tests.Resources
             return "http://somewhere.com/" + model.ToString();
         }
 
+        public string UrlFor<TInput>() where TInput : class, new()
+        {
+            return "http://somewhere.com/" + (new TInput()).ToString();
+        }
+
         public string UrlFor(object model, string category)
         {
             throw new NotImplementedException();
