@@ -6,7 +6,6 @@ using FubuMVC.Spark.Registration;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    // TODO : Consider applying Cache<,>
 
     public interface IBindRequest
     {
@@ -40,6 +39,7 @@ namespace FubuMVC.Spark.SparkModel
         void Bind(IBindRequest request);
     }
 
+    // NOTE: This one is needed before activation
     public class ViewDescriptorBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -54,6 +54,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    // NOTE: Not needed before activation
     public class MasterPageBinder : ITemplateBinder
     {
         private readonly ISharedTemplateLocator _sharedTemplateLocator;
@@ -97,6 +98,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    // NOTE: This one is needed before activation
     public class GenericViewModelBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -130,6 +132,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    // NOTE: This one is needed before activation
     public class ViewModelBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -170,6 +173,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
+    // NOTE: Not needed before activation
     public class ReachableBindingsBinder : ITemplateBinder
     {
         private readonly ISharedTemplateLocator _sharedTemplateLocator;

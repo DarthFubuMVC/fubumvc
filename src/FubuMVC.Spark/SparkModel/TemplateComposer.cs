@@ -63,7 +63,10 @@ namespace FubuMVC.Spark.SparkModel
                 var binders = _binders.Where(x => x.CanBind(bindRequest));
                 var policies = _policies.Where(x => x.Matches(t));
 
+                // TODO: Register metadata per template such that we can use it in activation.
                 binders.Each(binder => binder.Bind(bindRequest));
+
+
                 policies.Each(policy => policy.Apply(t));
             });
         }

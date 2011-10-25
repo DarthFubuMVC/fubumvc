@@ -16,6 +16,9 @@ using Spark.Caching;
 
 namespace FubuMVC.Spark
 {
+    // Subject for major rip apart: Separate bare template scanning and view attachment from master/bindings concerns.
+    // TODO: Move parts that are possible to IActivator such that we can build up a model per package.
+
     public class SparkEngine : IFubuRegistryExtension
     {
         private static bool _hasScanned;
@@ -48,9 +51,11 @@ namespace FubuMVC.Spark
             _composerConventions.Apply(
                 composer => composer
                     .AddBinder<ViewDescriptorBinder>()
+                    // TODO: Move to Activation
                     .AddBinder<MasterPageBinder>()
                     .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
+                    // TODO: Move to Activation
                     .AddBinder<ReachableBindingsBinder>()
                     .Apply<NamespacePolicy>()
                     .Apply<ViewPathPolicy>());

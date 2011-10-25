@@ -18,7 +18,11 @@ namespace FubuMVC.Spark
 
         public IEnumerable<IViewToken> FindViews(TypePool types, BehaviorGraph graph)
         {
-            // clean up pending
+            // TODO: Make it not filter against view model as the 
+            // default view attacher conventions will do this.
+            // Opens up for returning view with no model in edge cases
+            // and add custom view attacher convention.
+
             return _templateRegistry
                 .AllTemplates()
                 .Where(x => x.Descriptor is ViewDescriptor)
