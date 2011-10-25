@@ -160,9 +160,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         /// <param name = "newNode"></param>
         public void AddBefore(BehaviorNode newNode)
-        {
-            Debug.WriteLine("Adding {0} before {1}".ToFormat(newNode.ToString(), this.ToString()));
-
+        {            
             if (PreviousNodes.Contains(newNode)) return;
 
             newNode.Remove();

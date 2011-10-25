@@ -240,18 +240,10 @@ namespace FubuMVC.Core.Registration.Nodes
                     list.Add(def);
                     def = def.FindDependencyDefinitionFor<IActionBehavior>();
                 }
-
-                Debug.WriteLine("CHAIN");
-                list.Each(x => Debug.WriteLine(x.Name));
-                Debug.WriteLine("-----------------------------------------------------------------");
-                
-                
-
-
+                                                
                 return objectDef;
             }
-            
-            
+                        
             return topDef;
         }
 
