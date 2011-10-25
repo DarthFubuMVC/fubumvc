@@ -45,6 +45,18 @@ namespace FubuMVC.Core.Registration.Routes
 
                 input.AddRouteInput(parameter, false);
             });
+            
+            // Populate the remaining QueryString parameters
+        	var props = inputType.GetProperties();
+        	foreach (var propertyInfo in props)
+        	{
+        		PropertyInfo info = propertyInfo;
+        		if(propertyInfo.HasAttribute<QueryStringAttribute>()
+					&& !input.RouteParameters.Any(p => p.Name == info.Name))
+        		{
+					input.AddQueryInput(propertyInfo);
+        		}
+        	}
         }
 
 
