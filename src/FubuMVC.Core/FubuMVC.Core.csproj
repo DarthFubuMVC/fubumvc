@@ -226,6 +226,9 @@
     <Compile Include="Resources\Conneg\FormatterUsage.cs" />
     <Compile Include="Resources\Etags\Classes.cs" />
     <Compile Include="Http\Headers\Header.cs" />
+    <Compile Include="Resources\Etags\ETaggedRequest.cs" />
+    <Compile Include="Resources\Etags\IEtagCache.cs" />
+    <Compile Include="Resources\Etags\IETagGenerator.cs" />
     <Compile Include="Resources\Etags\ResourcePathAttribute.cs" />
     <Compile Include="Resources\ILinkModifier.cs" />
     <Compile Include="Resources\IResourceRegistration.cs" />

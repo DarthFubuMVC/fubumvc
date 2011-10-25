@@ -1,29 +1,41 @@
+using System;
 using System.Net;
+using System.Reflection;
+using FubuCore.Reflection;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Resources.Etags
 {
-    public interface IEtagCache
+    public class IfNoneMatchNode : ActionCallBase
     {
-        // Can be null
-        string CurrentETag(string resourcePath);
-        void WriteCurrentETag(string resourcePath, string etag);
-    }
+        private static readonly string _methodName =
+            ReflectionHelper.GetProperty<ETagHandler<IfNoneMatchNode>>(x => x.Matches(null)).Name;
 
-    public interface IETagGenerator<T>
-    {
-        string Create(T target);
-    }
+        public IfNoneMatchNode(Type resourceType) : base()
+        {
+            var handlerType = typeof (ETagHandler<>).MakeGenericType(resourceType);
+            var method = handlerType.GetMethod(_methodName);
 
+            setHandlerAndMethod(handlerType, method);
+        }
 
-    public class ETaggedRequest
-    {
-        public string IfNoneMatch { get; set; }
+        public void SetETagGenerator(object handler)
+        {
+            
+        }
 
-        [ResourcePath]
-        public string ResourcePath { get; set; }
+        public void SetETagGeneratorType(Type etagHandlerType)
+        {
+            
+        }
+
+        public override BehaviorCategory Category
+        {
+            get { return BehaviorCategory.Process; }
+        }
     }
 
 

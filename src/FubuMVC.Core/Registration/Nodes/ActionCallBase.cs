@@ -12,21 +12,34 @@ namespace FubuMVC.Core.Registration.Nodes
 {
     public abstract class ActionCallBase : BehaviorNode
     {
-        private readonly Lazy<ObjectDef> _handlerDependencies;
+        private Lazy<ObjectDef> _handlerDependencies;
 
-        public Type HandlerType { get; private set; }
-        public MethodInfo Method { get; private set; }
+        public Type HandlerType { get; protected set; }
+        public MethodInfo Method { get; protected set; }
         public bool HasInput { get { return Method.GetParameters().Length > 0; } }
         public bool HasOutput { get { return Method.ReturnType != typeof (void); } }
         
         public ActionCallBase(Type handlerType, MethodInfo method)
         {
+            Next = null;
+
+
+            setHandlerAndMethod(handlerType, method);
+        }
+
+        protected ActionCallBase()
+        {
+        }
+
+        protected void setHandlerAndMethod(Type handlerType, MethodInfo method)
+        {
             HandlerType = handlerType;
             Method = method;
-            Next = null;
+            
 
             _handlerDependencies = new Lazy<ObjectDef>(() => new ObjectDef(HandlerType));
         }
+
 
         public ObjectDef HandlerDef
         {
