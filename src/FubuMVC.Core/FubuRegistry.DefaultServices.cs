@@ -135,6 +135,7 @@ namespace FubuMVC.Core
     {
         private void setupServices(BehaviorGraph graph)
         {
+            graph.Services.AddService<IModelBinder, FubuTupleBinder>();
             graph.Services.AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
 
             graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();

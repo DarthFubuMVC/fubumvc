@@ -150,20 +150,43 @@ namespace FubuMVC.Core.Resources.Etags
 
         public IEnumerable<Header> Headers
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                foreach (var key in _headers.GetAllKeys())
+                {
+                    yield return new Header(key, _headers[key]);
+                }
+            }
         }
     }
 
+    
+
+
+
     public class ETagHandler<T>
     {
+        private readonly IEtagCache _cache;
+        private readonly IETagGenerator<T> _generator;
+        private readonly IFubuRequest _request;
 
+        public ETagHandler(IEtagCache cache, IETagGenerator<T> generator, IFubuRequest request)
+        {
+            _cache = cache;
+            _generator = generator;
+            _request = request;
+        }
 
         public FubuContinuation Matches(ETaggedRequest request)
         {
             throw new NotImplementedException();
         }
 
-        
+        public HttpHeaderValues CreateETag(T target)
+        {
+            var etagRequest = _request.Get<ETaggedRequest>();
+            throw new NotImplementedException();
+        }
     }
 
 

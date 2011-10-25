@@ -453,6 +453,7 @@
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
     <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
     <Compile Include="Runtime\FubuSmartRequest.cs" />
+    <Compile Include="Runtime\FubuRequestTuple.cs" />
     <Compile Include="Runtime\IgnoredRoute.cs" />
     <Compile Include="Http\IHttpWriter.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />

@@ -193,6 +193,7 @@
     <Compile Include="Resources\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Resources\Conneg\ConnegOutputNodeTester.cs" />
     <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
+    <Compile Include="Resources\Etags\WriteHeadersBehaviorTester.cs" />
     <Compile Include="Resources\LinkExpressionTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedSourcesTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedTester.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />
+    <Compile Include="Runtime\FubuTupleBindingIntegrationTester.cs" />
     <Compile Include="Runtime\OutputWriterTester.cs" />
     <Compile Include="Runtime\MimeTypeTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
