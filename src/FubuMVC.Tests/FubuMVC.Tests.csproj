@@ -194,6 +194,7 @@
     <Compile Include="Resources\Conneg\ConnegOutputBehaviorTester.cs" />
     <Compile Include="Resources\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Resources\Conneg\ConnegOutputNodeTester.cs" />
+    <Compile Include="Resources\Etags\ETagHandlerTester.cs" />
     <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
     <Compile Include="Http\Headers\WriteHeadersBehaviorTester.cs" />
     <Compile Include="Resources\LinkExpressionTester.cs" />
