@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -61,6 +62,11 @@ namespace FubuMVC.Core.Continuations
         {
             IActionBehavior partial = _factory.BuildPartial(call);
             partial.InvokePartial();
+        }
+
+        public void EndWithStatusCode(HttpStatusCode code)
+        {
+            _writer.WriteResponseCode(code);
         }
 
         protected override DoNext performInvoke()

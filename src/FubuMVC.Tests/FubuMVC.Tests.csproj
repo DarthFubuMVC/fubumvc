@@ -341,7 +341,7 @@
     <Compile Include="Configuration\AppSettingsRequestDataTester.cs" />
     <Compile Include="Configuration\FakeSettings.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
-    <Compile Include="Continuations\ContinuationTester.cs" />
+    <Compile Include="Continuations\FubuContinuationTester.cs" />
     <Compile Include="Diagnostics\ActionColumnTester.cs" />
     <Compile Include="Diagnostics\BehaviorGraphWriterTester.cs" />
     <Compile Include="Diagnostics\BehaviorTracerTester.cs" />

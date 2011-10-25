@@ -1,5 +1,8 @@
+using System;
+using System.Net;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -29,6 +32,28 @@ namespace FubuMVC.Tests.Continuations
 
         protected abstract void theContextIs();
     }
+
+    [TestFixture]
+    public class when_ending_with_a_status_code : ContinuationHandlerContext
+    {
+        protected override void theContextIs()
+        {
+            ClassUnderTest.EndWithStatusCode(HttpStatusCode.NotModified);
+        }
+
+        [Test]
+        public void the_inside_behavior_should_not_be_invoked()
+        {
+            theInsideBehavior.AssertWasNotCalled(x => x.Invoke());
+        }
+
+        [Test]
+        public void the_status_code_should_be_written_to_the_output_writer()
+        {
+            MockFor<IOutputWriter>().WriteResponseCode(HttpStatusCode.NotModified);
+        }
+    }
+
 
     [TestFixture]
     public class when_invoking_the_next_behavior : ContinuationHandlerContext

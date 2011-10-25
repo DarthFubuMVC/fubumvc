@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Net;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Continuations
@@ -12,6 +13,7 @@ namespace FubuMVC.Core.Continuations
         private readonly ContinuationType _type;
         private ActionCall _call;
         private object _destination;
+        public HttpStatusCode? _statusCode;
 
         private FubuContinuation(ContinuationType type, Action<IContinuationDirector> configure)
         {
@@ -77,6 +79,14 @@ namespace FubuMVC.Core.Continuations
             {
                 _call = call
             };
+        }
+
+        public static FubuContinuation EndWithStatusCode(HttpStatusCode code)
+        {
+            return new FubuContinuation(ContinuationType.Stop, d => d.EndWithStatusCode(code)){
+                _statusCode = code
+            };
+
         }
 
         public static FubuContinuation NextBehavior()
@@ -145,12 +155,22 @@ namespace FubuMVC.Core.Continuations
                 message += "\n destination call: " + _call.Description;
             }
 
+            if (_statusCode.HasValue )
+            {
+                message += "\n status code:  " + _statusCode.Value.ToString();
+            }
+
             throw new FubuAssertionException(message);
         }
 
         public void Process(IContinuationDirector director)
         {
             _configure(director);
+        }
+
+        public void AssertWasEndedWithStatusCode(HttpStatusCode httpStatusCode)
+        {
+            assertMatches(_type == ContinuationType.Stop && _statusCode.HasValue && _statusCode.Value == httpStatusCode);
         }
     }
 }

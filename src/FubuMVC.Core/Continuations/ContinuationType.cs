@@ -4,6 +4,7 @@ namespace FubuMVC.Core.Continuations
     {
         NextBehavior,
         Redirect,
-        Transfer
+        Transfer,
+        Stop
     }
 }

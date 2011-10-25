@@ -1,3 +1,4 @@
+using System.Net;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Continuations
@@ -9,5 +10,6 @@ namespace FubuMVC.Core.Continuations
         void RedirectToCall(ActionCall call);
         void TransferTo(object input);
         void TransferToCall(ActionCall call);
+        void EndWithStatusCode(HttpStatusCode code);
     }
 }

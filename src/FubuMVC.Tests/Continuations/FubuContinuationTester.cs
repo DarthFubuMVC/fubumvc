@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
@@ -13,7 +14,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Tests.Continuations
 {
     [TestFixture]
-    public class ContinuationTester
+    public class FubuContinuationTester
     {
         #region Setup/Teardown
 
@@ -40,6 +41,17 @@ namespace FubuMVC.Tests.Continuations
 
             continuation.Process(director);
             director.AssertWasCalled(x => x.InvokeNextBehavior());
+        }
+
+        [Test]
+        public void end_with_status_code_calls_to_same_on_continuation_director()
+        {
+            var continuation = FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified);
+
+            continuation.Type.ShouldEqual(ContinuationType.Stop);
+            continuation.Process(director);
+
+            director.AssertWasCalled(x => x.EndWithStatusCode(HttpStatusCode.NotModified));
         }
 
 
@@ -279,6 +291,27 @@ namespace FubuMVC.Tests.Continuations
         {
             var continuation = FubuContinuation.TransferTo<TestModel>();
             continuation.AssertWasTransferedTo<TestModel>(x => x.GetType() == typeof(TestModel));
+        }
+
+        [Test]
+        public void assert_exited_with_status_code()
+        {
+            var continuation = FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified);
+
+            continuation.AssertWasEndedWithStatusCode(HttpStatusCode.NotModified);
+
+
+            shouldFail(() => continuation.AssertWasEndedWithStatusCode(HttpStatusCode.UseProxy));
+        }
+
+        [Test]
+        public void assert_exited_with_status_code_negative()
+        {
+            var continuation = FubuContinuation.RedirectTo<TestModel>();
+
+            shouldFail(() => continuation.AssertWasEndedWithStatusCode(HttpStatusCode.NotModified));
+
+            
         }
 
         public class TestModel
