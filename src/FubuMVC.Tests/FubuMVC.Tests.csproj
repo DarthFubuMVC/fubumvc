@@ -186,6 +186,7 @@
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
+    <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Nodes\OutputNodeTester.cs" />
     <Compile Include="Registration\Nodes\RenderHtmlTagNodeTester.cs" />
     <Compile Include="Resources\Conneg\BehaviorChainConnegExtensionsTester.cs" />

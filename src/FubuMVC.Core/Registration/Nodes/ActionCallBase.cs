@@ -12,6 +12,8 @@ namespace FubuMVC.Core.Registration.Nodes
 {
     public abstract class ActionCallBase : BehaviorNode
     {
+        private readonly Lazy<ObjectDef> _handlerDependencies;
+
         public Type HandlerType { get; private set; }
         public MethodInfo Method { get; private set; }
         public bool HasInput { get { return Method.GetParameters().Length > 0; } }
@@ -22,6 +24,16 @@ namespace FubuMVC.Core.Registration.Nodes
             HandlerType = handlerType;
             Method = method;
             Next = null;
+
+            _handlerDependencies = new Lazy<ObjectDef>(() => new ObjectDef(HandlerType));
+        }
+
+        public ObjectDef HandlerDef
+        {
+            get
+            {
+                return _handlerDependencies.Value;
+            }
         }
 
         public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
@@ -30,7 +42,7 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             if( ! HasInput ) return "";
 
-            return GenericEnumerableExtensions.Join((IEnumerable<string>) Method.GetParameters().Select(p => "{0} {1}".ToFormat(p.ParameterType.Name, p.Name)), ", ");
+            return ((IEnumerable<string>) Method.GetParameters().Select(p => "{0} {1}".ToFormat(p.ParameterType.Name, p.Name))).Join(", ");
         }
 
         public bool Returns<T>()
@@ -38,12 +50,19 @@ namespace FubuMVC.Core.Registration.Nodes
             return OutputType().CanBeCastTo<T>();
         }
 
+        
+
         protected override ObjectDef buildObjectDef()
         {
             Validate();
 
             var objectDef = new ObjectDef(determineHandlerType());
             objectDef.Dependency(createLambda());
+
+            if (_handlerDependencies.IsValueCreated)
+            {
+                objectDef.Dependency(HandlerType, _handlerDependencies.Value);
+            }
 
             return objectDef;
         }
