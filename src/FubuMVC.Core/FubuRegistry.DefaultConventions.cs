@@ -3,6 +3,7 @@ using System.Net;
 using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
@@ -41,6 +42,7 @@ namespace FubuMVC.Core
 
             Policies.Add<AjaxContinuationPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
+            Policies.Add<HeaderWritingPolicy>();
 
             _systemPolicies.Add(new StringOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());

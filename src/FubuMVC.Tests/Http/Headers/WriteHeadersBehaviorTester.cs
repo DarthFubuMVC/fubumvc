@@ -1,12 +1,11 @@
-using System;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Resources.Etags;
+using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Resources.Etags
+namespace FubuMVC.Tests.Http.Headers
 {
     [TestFixture]
     public class WriteHeadersBehaviorTester : InteractionContext<WriteHeadersBehavior>

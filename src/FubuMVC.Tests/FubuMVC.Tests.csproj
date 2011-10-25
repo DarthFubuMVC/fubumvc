@@ -177,6 +177,8 @@
     <Compile Include="Http\CookieTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
+    <Compile Include="Http\Headers\HeaderWritingPolicyIntegratedTester.cs" />
+    <Compile Include="Http\Headers\HttpHeaderValuesTester.cs" />
     <Compile Include="Http\HttpRequestHeadersTester.cs" />
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
@@ -193,7 +195,7 @@
     <Compile Include="Resources\Conneg\Conneg_Services_Registration_Tester.cs" />
     <Compile Include="Resources\Conneg\ConnegOutputNodeTester.cs" />
     <Compile Include="Resources\Etags\ModelBindingETaggedRequestTester.cs" />
-    <Compile Include="Resources\Etags\WriteHeadersBehaviorTester.cs" />
+    <Compile Include="Http\Headers\WriteHeadersBehaviorTester.cs" />
     <Compile Include="Resources\LinkExpressionTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedSourcesTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedTester.cs" />
