@@ -5,9 +5,57 @@ using FubuCore.Util;
 using FubuLocalization;
 using FubuCore;
 using System.Linq;
+using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax
 {
+    public class AjaxContinuationPolicy : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            graph.Behaviors.Where(IsAjaxContinuation)
+                .Each(chain =>
+                {
+                    chain.Calls.Last().AddAfter(new AjaxContinuationNode());
+                });
+        }
+
+        public static bool IsAjaxContinuation(BehaviorChain chain)
+        {
+            var outputType = chain.ActionOutputType();
+            return outputType != null && outputType.CanBeCastTo<AjaxContinuation>();
+        }
+    }
+
+
+    public class AjaxContinuationNode : OutputNode<AjaxContinuationWriter>
+    {
+        
+    }
+
+    public class AjaxContinuationWriter : BasicBehavior
+    {
+        private readonly IJsonWriter _writer;
+        private readonly IFubuRequest _request;
+
+        public AjaxContinuationWriter(IJsonWriter writer, IFubuRequest request) : base(PartialBehavior.Executes)
+        {
+            _writer = writer;
+            _request = request;
+        }
+
+        protected override DoNext performInvoke()
+        {
+            var continuation = _request.Get<AjaxContinuation>();
+            _writer.Write(continuation.ToDictionary(), MimeType.Json.ToString());
+
+            return DoNext.Continue;
+        }
+    }
+
     public class AjaxError
     {
         // error/warning/I don't know.
@@ -69,7 +117,7 @@ namespace FubuMVC.Core.Ajax
 
         // *This* will be serialized to Json so that the resulting blob
         // of json data is easier to work with in JavaScript
-        public IDictionary<string, object> ToDictionary()
+        public virtual IDictionary<string, object> ToDictionary()
         {
             var dict = new Dictionary<string, object>{
                 {"success", Success}
