@@ -97,6 +97,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AjaxExtensionsTester.cs" />
+    <Compile Include="Ajax\AjaxContinuationTester.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivatorTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
