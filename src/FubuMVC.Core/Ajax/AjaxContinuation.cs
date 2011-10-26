@@ -5,67 +5,9 @@ using FubuCore.Util;
 using FubuLocalization;
 using FubuCore;
 using System.Linq;
-using FubuMVC.Core.Behaviors;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Ajax
 {
-    public class AjaxContinuationPolicy : IConfigurationAction
-    {
-        public void Configure(BehaviorGraph graph)
-        {
-            graph.Behaviors.Where(IsAjaxContinuation)
-                .Each(chain =>
-                {
-                    chain.Calls.Last().AddAfter(new AjaxContinuationNode());
-                });
-        }
-
-        public static bool IsAjaxContinuation(BehaviorChain chain)
-        {
-            var outputType = chain.ActionOutputType();
-            return outputType != null && outputType.CanBeCastTo<AjaxContinuation>();
-        }
-    }
-
-
-    public class AjaxContinuationNode : OutputNode<AjaxContinuationWriter>
-    {
-        
-    }
-
-    public class AjaxContinuationWriter : BasicBehavior
-    {
-        private readonly IJsonWriter _writer;
-        private readonly IFubuRequest _request;
-
-        public AjaxContinuationWriter(IJsonWriter writer, IFubuRequest request) : base(PartialBehavior.Executes)
-        {
-            _writer = writer;
-            _request = request;
-        }
-
-        protected override DoNext performInvoke()
-        {
-            var continuation = _request.Get<AjaxContinuation>();
-            _writer.Write(continuation.ToDictionary(), MimeType.Json.ToString());
-
-            return DoNext.Continue;
-        }
-    }
-
-    public class AjaxError
-    {
-        // error/warning/I don't know.
-        public string category { get; set; }
-
-        // Use this to attach the server side validation errors 
-        public string field { get; set; }
-        public string message { get; set; }
-    }
-
     public class AjaxContinuation
     {
         // Probably put some convenience static builder methods here for things like

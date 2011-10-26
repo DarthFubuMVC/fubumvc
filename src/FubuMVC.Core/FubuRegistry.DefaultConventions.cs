@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using FubuCore.Reflection;
+using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -38,7 +39,7 @@ namespace FubuMVC.Core
 
             Output.ToBehavior<RenderStatusCodeBehavior>().WhenTheOutputModelIs<HttpStatusCode>();
 
-            
+            Policies.Add<AjaxContinuationPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
 
             _systemPolicies.Add(new StringOutputPolicy());

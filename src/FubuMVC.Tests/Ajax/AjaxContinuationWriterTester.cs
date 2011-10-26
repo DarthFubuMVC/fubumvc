@@ -21,8 +21,8 @@ namespace FubuMVC.Tests.Ajax
             theDictionary = new Dictionary<string, object>();
             theContinuation.Stub(x => x.ToDictionary()).Return(theDictionary);
 
-            MockFor<IFubuRequest>().Stub(x => x.Get<AjaxContinuation>())
-                .Return(theContinuation);
+            MockFor<IFubuRequest>().Stub(x => x.Find<AjaxContinuation>())
+                .Return(new AjaxContinuation[] { theContinuation });
 
             ClassUnderTest.Invoke();
         }

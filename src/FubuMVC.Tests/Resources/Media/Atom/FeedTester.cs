@@ -60,7 +60,6 @@ namespace FubuMVC.Tests.Resources.Media.Atom
         {
             public TargetClassFeed()
             {
-                Debug.WriteLine("I was built");
             }
         }
     
