@@ -53,6 +53,20 @@ namespace FubuMVC.Tests.Ajax
                 .ShouldBeTrue();
         }
 
+        [Test]
+        public void should_only_apply_behavior_once()
+        {
+            var hostRegistry = new FubuRegistry();
+            var packageRegistry = new FubuPackageRegistry();
+            packageRegistry.Actions.IncludeType<Controller1>();
+            hostRegistry.Import(packageRegistry, string.Empty);
+            theGraph = hostRegistry.BuildGraph();
+
+            chainFor(x => x.BasicContinuation(null))
+                .Where(x => x is AjaxContinuationNode)
+                .ShouldHaveCount(1);
+        }
+
 
 
         public class Input{}
