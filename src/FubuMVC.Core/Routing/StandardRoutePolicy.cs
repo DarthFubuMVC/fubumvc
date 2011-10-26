@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Routing
                 x.Actions += (routeDef, chain) =>
                 {
                     var route = routeDef.ToRoute();
-                    route.RouteHandler = new FubuRouteHandler(factory, chain.UniqueId);
+                    route.RouteHandler = new FubuRouteHandler(factory, chain);
                     routes.Add(route);
                 };
             });

@@ -190,6 +190,7 @@
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArguments.cs" />
     <Compile Include="Http\Cookie.cs" />
+    <Compile Include="Http\CurrentChain.cs" />
     <Compile Include="Http\CurrentMimeType.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinder.cs" />
     <Compile Include="Http\Headers\HeaderWritingPolicy.cs" />

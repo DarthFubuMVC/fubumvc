@@ -13,6 +13,7 @@ using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using StructureMap;

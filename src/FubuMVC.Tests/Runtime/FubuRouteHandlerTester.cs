@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -43,8 +44,8 @@ namespace FubuMVC.Tests.Runtime
                                                            new HttpResponse(Console.Out))),
                     new RouteData());
 
-            behaviorId = Guid.NewGuid();
-            Services.Inject(behaviorId);
+            var chain = new BehaviorChain();
+            Services.Inject(chain);
 
             captured = new CaptureArg();
 

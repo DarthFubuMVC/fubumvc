@@ -66,7 +66,7 @@ namespace FubuMVC.OwinHost
             Console.WriteLine(" ({0})", response.Status);
         }
 
-        private void write404(Response response)
+        private static void write404(Response response)
         {
             response.Status = "404";
             response.Write("Sorry, I can't find this resource");
@@ -77,8 +77,8 @@ namespace FubuMVC.OwinHost
             var arguments = new OwinServiceArguments(routeData, request, response);
 
             // TODO -- maybe smuggle behaviorId out a different way here
-            var behaviorId = routeData.RouteHandler.As<FubuRouteHandler>().BehaviorId;
-            var behavior = _runtime.Factory.BuildBehavior(arguments, behaviorId);
+            var chain = routeData.RouteHandler.As<FubuRouteHandler>().Chain;
+            var behavior = _runtime.Factory.BuildBehavior(arguments, chain, routeData.Values);
 
             try
             {
@@ -96,17 +96,8 @@ namespace FubuMVC.OwinHost
             }
         }
 
-        private FubuRuntime buildRuntime()
-        {
-            RouteTable.Routes.Clear();
-            var application = _source.BuildApplication();
-
-            // TODO -- blow up if any non-FubuRouteHandler's in the system?
-            return application.Bootstrap();
-        }
 
 
     }
 
-    // TODO -- this gets pluggable at some point
 }

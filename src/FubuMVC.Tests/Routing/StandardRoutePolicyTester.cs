@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
@@ -6,6 +6,7 @@ using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -61,7 +62,7 @@ namespace FubuMVC.Tests.Routing
             public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
             {
                 return _behaviorIds.Contains(behaviorId) ? new ActionBehavior(behaviorId) : null;
-            }            
+            }
         }
         public class ActionBehavior : IActionBehavior
         {

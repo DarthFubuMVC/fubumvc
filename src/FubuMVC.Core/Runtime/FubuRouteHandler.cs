@@ -1,40 +1,42 @@
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
 using System.Web.SessionState;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http.AspNet;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Runtime
 {
     public class FubuRouteHandler : IRouteHandler
     {
-        private readonly Guid _behaviorId;
         private readonly IBehaviorFactory _factory;
+        private readonly BehaviorChain _chain;
 
-        public FubuRouteHandler(IBehaviorFactory factory, Guid behaviorId)
+        public FubuRouteHandler(IBehaviorFactory factory, BehaviorChain chain)
         {
             _factory = factory;
-            _behaviorId = behaviorId;
+            _chain = chain;
         }
 
-        public Guid BehaviorId
+        public BehaviorChain Chain
         {
-            get { return _behaviorId; }
+            get { return _chain; }
         }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
             var arguments = new AspNetServiceArguments(requestContext);
-            IActionBehavior behavior = GetBehavior(arguments);
+            IActionBehavior behavior = GetBehavior(arguments, requestContext.RouteData.Values);
 
             return new FubuHttpHandler(behavior);
         }
 
-        public IActionBehavior GetBehavior(ServiceArguments arguments)
+        public IActionBehavior GetBehavior(ServiceArguments arguments, IDictionary<string, object> values)
         {
-            return _factory.BuildBehavior(arguments, _behaviorId);
+            return _factory.BuildBehavior(arguments, _chain, values);
         }
 
         #region Nested type: FubuHttpHandler
