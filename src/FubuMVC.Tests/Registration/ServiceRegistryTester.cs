@@ -106,5 +106,20 @@ namespace FubuMVC.Tests.Registration
             ServiceRegistry.ShouldBeSingleton(typeof (IModelBinderCache)).ShouldBeTrue();
 
         }
+
+        [Test]
+        public void should_be_a_singleton_when_the_concrete_type_has_the_singleton_attribute()
+        {
+            ServiceRegistry.ShouldBeSingleton(typeof(MySingletonService))
+                .ShouldBeTrue();
+        }
+
+        
+
+        [Singleton]
+        public class MySingletonService
+        {
+            
+        }
     }
 }

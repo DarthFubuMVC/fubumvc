@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration
 {
@@ -130,7 +131,13 @@ namespace FubuMVC.Core.Registration
 
         public static bool ShouldBeSingleton(Type type)
         {
-            return type.Name.EndsWith("Cache");
+            return type.Name.EndsWith("Cache") || type.HasAttribute<SingletonAttribute>();
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public class SingletonAttribute : Attribute
+    {
+        
     }
 }
