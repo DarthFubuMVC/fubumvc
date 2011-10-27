@@ -373,6 +373,8 @@
     <Compile Include="Resources\Media\Xml\XmlNodeStyle.cs" />
     <Compile Include="Resources\Media\Xml\XmlProjection.cs" />
     <Compile Include="Resources\Media\Xml\XmlProjectionExtensions.cs" />
+    <Compile Include="Resources\PathBased\ResourcePathBinder.cs" />
+    <Compile Include="Resources\PathBased\ResourcePath.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\ILinkSource.cs" />
     <Compile Include="Resources\Media\IMediaNode.cs" />

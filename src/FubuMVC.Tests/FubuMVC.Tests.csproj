@@ -230,6 +230,8 @@
     <Compile Include="Resources\Media\Xml\XmlMediaWriterIntegratedTester.cs" />
     <Compile Include="Resources\Media\Xml\XmlMediaOptionsTester.cs" />
     <Compile Include="Resources\Media\Xml\XmlProjectionTester.cs" />
+    <Compile Include="Resources\PathBased\ResourcePathBinderTester.cs" />
+    <Compile Include="Resources\PathBased\ResourcePathIntegratedUrlCreationTester.cs" />
     <Compile Include="Resources\Projections\AccessorProjectionTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedItemTester.cs" />
     <Compile Include="Resources\Projections\FormattedProjectionTargetTester.cs" />

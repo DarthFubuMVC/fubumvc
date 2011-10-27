@@ -34,6 +34,30 @@ namespace FubuMVC.Tests.Registration
             public string OptionalInput { get; set; }
         }
 
+        public class MyOwnUrlMaker : IMakeMyOwnUrl
+        {
+            private readonly string _part;
+
+            public MyOwnUrlMaker(string part)
+            {
+                _part = part;
+            }
+
+            public string ToUrlPart()
+            {
+                return _part;
+            }
+        }
+
+        [Test]
+        public void get_route_pattern_with_an_IMakeMyOwnUrl()
+        {
+            var maker = new MyOwnUrlMaker("something/else");
+            var route = new RouteDefinition("folder");
+
+            route.CreateUrlFromInput(maker).ShouldEqual("folder/something/else");
+        }
+
         [Test]
         public void by_default_input_type_returns_null()
         {

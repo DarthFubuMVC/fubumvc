@@ -51,7 +51,7 @@ namespace FubuMVC.Core.Registration.Routes
             get { return _routeParameters.Count; }
         }
 
-        public string CreateUrlFromInput(object input)
+        public virtual string CreateUrlFromInput(object input)
         {
             var url = _parent.Pattern;
 

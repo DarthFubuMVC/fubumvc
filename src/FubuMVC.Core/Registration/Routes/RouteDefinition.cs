@@ -5,9 +5,15 @@ using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.Resources.PathBased;
 
 namespace FubuMVC.Core.Registration.Routes
 {
+    public interface IMakeMyOwnUrl
+    {
+        string ToUrlPart();
+    }
+
     public class RouteDefinition : IRouteDefinition
     {
         public static readonly IEnumerable<string> VERBS = new List<string> { "POST", "GET", "PUT", "DELETE" };
@@ -48,6 +54,12 @@ namespace FubuMVC.Core.Registration.Routes
 
         public string CreateUrlFromInput(object input)
         {
+            if (input is IMakeMyOwnUrl)
+            {
+                return Pattern.TrimEnd('/') + "/" + input.As<IMakeMyOwnUrl>().ToUrlPart().Trim('/');
+            }
+            
+            
             if (input == null)
             {
                 return Pattern;

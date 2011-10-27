@@ -19,9 +19,11 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
@@ -137,6 +139,7 @@ namespace FubuMVC.Core
         {
             graph.Services.AddService<IModelBinder, FubuTupleBinder>();
             graph.Services.AddService<IModelBinder>(new CurrentMimeTypeModelBinder());
+            graph.Services.AddService<IModelBinder>(typeof(ResourcePathBinder));
 
             graph.Services.SetServiceIfNone<ISetterBinder, SetterBinder>();
 
