@@ -3,7 +3,6 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.View;
 using FubuMVC.Diagnostics.Notifications;
@@ -13,10 +12,10 @@ namespace FubuMVC.Diagnostics.Core.Extensions
 {
     public static class PageExtensions
     {
-        public static void Notification<T>(this IFubuPage page, T notification)
+        public static string Notification<T>(this IFubuPage page, T notification)
             where T : class, INotificationModel
         {
-            page.Get<PartialInvoker>().InvokeObject(notification);
+            return page.Get<PartialInvoker>().InvokeObject(notification);
         }
     }
 

@@ -5,32 +5,30 @@ namespace FubuMVC.Core.UI
 {
     public static class PartialExpressionExtensions
     {
-        public static void Partial<TInputModel>(this IFubuPage page) where TInputModel : class
+        public static string Partial<TInputModel>(this IFubuPage page) where TInputModel : class
         {
-            InvokePartial<TInputModel>(page, null);
+            return InvokePartial<TInputModel>(page, null);
         }
 
-        public static void PartialFor(this IFubuPage page, object input)
+        public static string PartialFor(this IFubuPage page, object input)
         {
-            page.Get<PartialInvoker>().InvokeObject(input);
+            return page.Get<IPartialInvoker>().InvokeObject(input);
         }
 
-        public static void Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
+        public static string Partial<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel : class
         {
-            if (typeof (TInputModel) == typeof (object))
+            if (typeof(TInputModel) == typeof(object))
             {
-                page.Get<PartialInvoker>().InvokeObject(model);
+                return page.Get<IPartialInvoker>().InvokeObject(model);
             }
-            else
-            {
-                page.Get<IFubuRequest>().Set(model);
-                InvokePartial<TInputModel>(page, null);
-            }
+
+            page.Get<IFubuRequest>().Set(model);
+            return InvokePartial<TInputModel>(page, null);
         }
 
-        public static void InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
+        public static string InvokePartial<TInputModel>(IFubuPage page, string prefix) where TInputModel : class
         {
-            page.Get<PartialInvoker>().Invoke<TInputModel>();
+            return page.Get<IPartialInvoker>().Invoke<TInputModel>();
         }
     }
 }

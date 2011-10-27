@@ -4,7 +4,7 @@
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div id="login-status">
-        <% this.Partial<LoggedInStatusRequest>(); %>
+        <%= this.Partial<LoggedInStatusRequest>() %>
     </div>
 
     <%:Model.Text%>

@@ -82,7 +82,7 @@
     </div>
     <ul id="RequestBreadcrumb" class="breadcrumb">
     </ul>
-    #this.PartialFor(Model.Root);
+    ${this.PartialFor(Model.Root)}
   </div>
   <script id="breadcrumbTemplate" type="text/html">
     <li>

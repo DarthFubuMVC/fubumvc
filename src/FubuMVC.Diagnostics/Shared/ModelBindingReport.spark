@@ -12,7 +12,7 @@
         <div class="console">
           ${this.ImageFor('console-line.png').AddClass('indicator')}
           <span class="message">
-            #this.Partial((object)detail);
+            ${this.Partial((object)detail)}
           </span>
           <div class="cboth"></div>
         </div>

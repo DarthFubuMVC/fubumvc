@@ -7,7 +7,7 @@
   <h3>Notifications</h3>
   <if condition="Model.Notifications.Any()">
     <for each="var notification in Model.Notifications">
-      #this.Notification(notification);
+      ${this.Notification(notification)}
     </for>
   </if>
   <else>

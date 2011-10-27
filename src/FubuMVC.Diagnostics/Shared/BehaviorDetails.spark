@@ -16,5 +16,5 @@
   </ul>
 </div>
 <if condition="Model.Inner != null">
-  #this.PartialFor(Model.Inner);
+  ${this.PartialFor(Model.Inner)}
 </if>
