@@ -72,6 +72,11 @@ namespace FubuMVC.Core.Assets.Files
             return new AssetPath(package.PackageName, file.Name, file.Folder);
         }
 
+        public AssetFile FindByPath(string path)
+        {
+            return _allPackages.SelectMany(x => x.FindByFilePath(path)).FirstOrDefault();
+        }
+
         public PackageAssets AssetsFor(string packageName)
         {
             return _packages[packageName];

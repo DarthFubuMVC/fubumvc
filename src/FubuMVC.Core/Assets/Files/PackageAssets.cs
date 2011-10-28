@@ -66,5 +66,10 @@ namespace FubuMVC.Core.Assets.Files
         {
             return _files.GetAll().SelectMany(x => x);
         }
+
+        public IEnumerable<AssetFile> FindByFilePath(string path)
+        {
+            return AllFiles().Where(x => x.MatchesFullPath(path));
+        }
     }
 }

@@ -4,5 +4,6 @@ namespace FubuMVC.Core.Assets.Files
     {
         AssetFile Find(string path);
         AssetPath AssetPathOf(AssetFile file);
+        AssetFile FindByPath(string path);
     }
 }

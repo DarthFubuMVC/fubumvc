@@ -71,6 +71,16 @@ namespace FubuMVC.Tests.Assets.Files
         }
 
         [Test]
+        public void find_asset_file_by_path()
+        {
+            var path = AppDirectory.ToFullPath().AppendPath("content", "scripts", "folder1", "script1.js");
+            var file = thePipeline.FindByPath(path);
+
+            file.FullPath.ShouldEqual(path);
+            file.Name.ShouldEqual("folder1/script1.js");
+        }
+
+        [Test]
         public void load_asset_files_from_an_overrides_sub_folder()
         {
             var file = thePipeline.Find("folder1/script1.js");

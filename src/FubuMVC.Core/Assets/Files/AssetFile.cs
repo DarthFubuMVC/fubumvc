@@ -144,5 +144,10 @@ namespace FubuMVC.Core.Assets.Files
         {
             return Name.Split('.').Skip(1).Select(x => "." + x);
         }
+
+        public bool MatchesFullPath(string path)
+        {
+            return string.Equals(FullPath, path, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

@@ -77,6 +77,11 @@ namespace FubuMVC.Tests.Assets
         {
             throw new NotImplementedException();
         }
+
+        public AssetFile FindByPath(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
