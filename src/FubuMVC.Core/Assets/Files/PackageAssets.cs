@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Util;
 
 namespace FubuMVC.Core.Assets.Files
@@ -53,7 +54,7 @@ namespace FubuMVC.Core.Assets.Files
 
         private IEnumerable<AssetFile> matchingType(AssetFolder folder, string name)
         {
-            return _files[folder].Where(x => x.Name == name);
+            return _files[folder].Where(x => x.Name.EqualsIgnoreCase(name));           
         }
 
         public IEnumerable<AssetFile> FilesForAssetType(AssetFolder folder)

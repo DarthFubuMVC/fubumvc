@@ -3,7 +3,32 @@ using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.Assets.Files
-{
+{    
+    [TestFixture]
+    public class when_finding_files_in_the_asset_pipeline
+    {
+        private AssetPipeline _thePipeline;
+        private AssetFile _theFile;
+        private AssetPath _thePath;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _thePipeline = new AssetPipeline();
+            _theFile = new AssetFile("a.js");
+            _thePath = new AssetPath("pak1", "a.js", AssetFolder.scripts);
+            _thePipeline.AddFile(_thePath, _theFile);
+        }
+
+        [Test]
+        public void should_use_case_insensitive_search_when_searching_by_file_only()
+        {            
+            var assetFile = _thePipeline.Find("A.js");
+            assetFile.ShouldNotBeNull();
+            assetFile.Name.ShouldEqual("a.js");            
+        }     
+    }
+
     [TestFixture]
     public class AssetPipelineTester
     {
