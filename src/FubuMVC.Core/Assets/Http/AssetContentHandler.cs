@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using FubuCore;
-using FubuMVC.Core.Assets.Files;
 
 namespace FubuMVC.Core.Assets.Http
 {
@@ -18,18 +16,6 @@ namespace FubuMVC.Core.Assets.Http
             _writerSource = writerSource;
         }
 
-        public Route BuildRoute()
-        {
-            var route = new Route(AssetsUrlFolder, new RouteValueDictionary(), this);
-            for (int i = 0; i < 10; i++)
-            {
-                route.Url += "/{" + i + "}";
-                route.Defaults.Add(i.ToString(), string.Empty);
-            }
-
-            return route;
-        }
-
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
             var writer = _writerSource();
@@ -38,6 +24,16 @@ namespace FubuMVC.Core.Assets.Http
             return new AssetHttpHandler(writer, routeValues);
         }
 
+        public Route BuildRoute()
+        {
+            var route = new Route(AssetsUrlFolder, new RouteValueDictionary(), this);
+            for (var i = 0; i < 10; i++)
+            {
+                route.Url += "/{" + i + "}";
+                route.Defaults.Add(i.ToString(), string.Empty);
+            }
 
+            return route;
+        }
     }
 }

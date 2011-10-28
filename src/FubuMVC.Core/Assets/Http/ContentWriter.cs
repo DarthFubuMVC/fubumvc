@@ -23,6 +23,9 @@ namespace FubuMVC.Core.Assets.Http
         public void WriteContent(IEnumerable<string> routeParts)
         {
             var path = new AssetPath(routeParts);
+
+
+
             if (path.IsImage())
             {
                 _images.WriteImageToOutput(path.ToFullName());

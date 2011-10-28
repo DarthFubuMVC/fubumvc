@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Assets.Http
 
         public void WriteImageToOutput(string name)
         {
-            // TODO -- error handling?  It's sort of coverted by the AssetTagPlan as is
+            // TODO -- error handling?  It's sort of covered by the AssetTagPlan as is
 
             var file = _pipeline.Find(name);
             _writer.WriteFile(file.MimeType.Value, file.FullPath, null);

@@ -40,8 +40,8 @@ namespace FubuMVC.Tests.Resources.PathBased
 
         private ResourcePath findPathByBinding()
         {
-            var locator = new InMemoryServiceLocator();
-            locator.Register(theAggregateDictionary);
+            var locator = new SelfMockingServiceLocator();
+            locator.Stub(theAggregateDictionary);
             var context = new BindingContext(new RequestData(theAggregateDictionary), locator, new NulloBindingLogger());
 
             return (ResourcePath) new ResourcePathBinder().Bind(typeof (ResourcePath), context);

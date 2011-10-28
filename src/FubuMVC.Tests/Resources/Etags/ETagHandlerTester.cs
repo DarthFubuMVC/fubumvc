@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Resources.Etags
                 Target = new ResourceOfSomeKind()
             };
 
-            MockFor<IEtagCache>().Stub(x => x.CurrentETag(theETaggedRequest.ResourcePath))
+            MockFor<IEtagCache>().Stub(x => x.Current(theETaggedRequest.ResourcePath))
                 .Return(theCurrentEtag);
 
             MockFor<IETagGenerator<ResourceOfSomeKind>>().Stub(x => x.Create(null))
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Resources.Etags
         {
             ClassUnderTest.CreateETag(theEtagTuple);
 
-            MockFor<IEtagCache>().AssertWasCalled(x => x.WriteCurrentETag(theETaggedRequest.ResourcePath, theNewEtag));
+            MockFor<IEtagCache>().AssertWasCalled(x => x.Register(theETaggedRequest.ResourcePath, theNewEtag));
         }
 
         [Test]

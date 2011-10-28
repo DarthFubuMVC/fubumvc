@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Resources.PathBased
             get { return _path; }
         }
 
-        public string ToUrlPart()
+        public virtual string ToUrlPart()
         {
             return _path;
         }

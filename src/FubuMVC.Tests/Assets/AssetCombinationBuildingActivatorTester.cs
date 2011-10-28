@@ -82,6 +82,11 @@ namespace FubuMVC.Tests.Assets
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<AssetFile> AllFiles()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

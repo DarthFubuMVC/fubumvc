@@ -81,6 +81,7 @@
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
+    <Compile Include="Assets\Caching\Classes.cs" />
     <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
