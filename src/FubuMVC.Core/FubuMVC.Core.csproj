@@ -228,6 +228,7 @@
     <Compile Include="Resources\Conneg\FormatterUsage.cs" />
     <Compile Include="Resources\Etags\Classes.cs" />
     <Compile Include="Http\Headers\Header.cs" />
+    <Compile Include="Resources\Etags\EtagCache.cs" />
     <Compile Include="Resources\Etags\ETaggedRequest.cs" />
     <Compile Include="Resources\Etags\IEtagCache.cs" />
     <Compile Include="Resources\Etags\IETagGenerator.cs" />

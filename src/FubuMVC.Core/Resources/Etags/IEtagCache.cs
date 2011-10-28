@@ -5,6 +5,6 @@ namespace FubuMVC.Core.Resources.Etags
         // Can be null
         string Current(string resourceHash);
         void Register(string resourceHash, string etag);
-        void Eject(string resourceHash, string etag);
+        void Eject(string resourceHash);
     }
 }

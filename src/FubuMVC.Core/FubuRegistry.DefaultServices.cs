@@ -21,6 +21,7 @@ using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Resources.PathBased;
@@ -175,6 +176,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IAuthorizationPolicyExecutor, AuthorizationPolicyExecutor>();
             graph.Services.SetServiceIfNone<IChainAuthorizor, ChainAuthorizor>();
 
+            graph.Services.SetServiceIfNone<IEtagCache, EtagCache>();
 
             graph.Services.SetServiceIfNone<ICollectionTypeProvider, DefaultCollectionTypeProvider>();
 
