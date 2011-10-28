@@ -60,7 +60,7 @@ namespace Serenity.Testing
             return FubuApplication.For(this).ContainerFacility(() => null);
         }
 
-        public string Name
+        public override string Name
         {
             get { return "Foo"; }
         }
@@ -73,7 +73,7 @@ namespace Serenity.Testing
             return FubuApplication.For(this).ContainerFacility(() => null);
         }
 
-        public string Name
+        public override string Name
         {
             get { return "Bar"; }
         }
