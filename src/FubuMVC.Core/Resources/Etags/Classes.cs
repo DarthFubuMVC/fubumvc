@@ -58,7 +58,7 @@ namespace FubuMVC.Core.Resources.Etags
 
         public FubuContinuation Matches(ETaggedRequest request)
         {
-            return _cache.Current(request.ResourcePath) == request.IfNoneMatch
+            return _cache.Current(request.ResourceHash) == request.IfNoneMatch
                        ? FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified)
                        : FubuContinuation.NextBehavior();
         }
@@ -66,7 +66,7 @@ namespace FubuMVC.Core.Resources.Etags
         public HttpHeaderValues CreateETag(ETagTuple<T> tuple)
         {
             var etag = _generator.Create(tuple.Target);
-            _cache.Register(tuple.Request.ResourcePath, etag);
+            _cache.Register(tuple.Request.ResourceHash, etag);
 
             return new HttpHeaderValues(HttpResponseHeaders.ETag, etag);
         }

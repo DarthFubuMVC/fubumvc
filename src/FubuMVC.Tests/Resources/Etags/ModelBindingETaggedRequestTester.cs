@@ -19,12 +19,12 @@ namespace FubuMVC.Tests.Resources.Etags
         [SetUp]
         public void SetUp()
         {
-            var theHttpRequest = MockRepository.GenerateMock<ICurrentHttpRequest>();
-            theHttpRequest.Stub(x => x.RelativeUrl()).Return("something/else?key=value");
+            var theHttpRequest = MockRepository.GenerateMock<ICurrentChain>();
+            theHttpRequest.Stub(x => x.ResourceHash()).Return("something/else");
 
             var locator = new StructureMapServiceLocator(new Container(x =>
             {
-                x.For<ICurrentHttpRequest>().Use(theHttpRequest);
+                x.For<ICurrentChain>().Use(theHttpRequest);
             }));
 
             FubuApplication.SetupNamingStrategyForHttpHeaders();
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Resources.Etags
         [Test]
         public void bind_the_resource_path()
         {
-            theEtagRequest.ResourcePath.ShouldEqual("something/else");
+            theEtagRequest.ResourceHash.ShouldEqual("something/else");
         }
 
         [Test]

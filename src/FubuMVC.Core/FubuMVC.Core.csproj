@@ -232,7 +232,7 @@
     <Compile Include="Resources\Etags\ETaggedRequest.cs" />
     <Compile Include="Resources\Etags\IEtagCache.cs" />
     <Compile Include="Resources\Etags\IETagGenerator.cs" />
-    <Compile Include="Resources\Etags\ResourcePathAttribute.cs" />
+    <Compile Include="Resources\Etags\ResourceHashAttribute.cs" />
     <Compile Include="Resources\ILinkModifier.cs" />
     <Compile Include="Resources\IResourceRegistration.cs" />
     <Compile Include="Resources\Link.cs" />

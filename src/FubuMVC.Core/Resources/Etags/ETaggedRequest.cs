@@ -4,7 +4,7 @@ namespace FubuMVC.Core.Resources.Etags
     {
         public string IfNoneMatch { get; set; }
 
-        [ResourcePath]
-        public string ResourcePath { get; set; }
+        [ResourceHash]
+        public string ResourceHash { get; set; }
     }
 }
