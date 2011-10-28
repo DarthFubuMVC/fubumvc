@@ -14,6 +14,23 @@ namespace FubuMVC.Tests.Resources.PathBased
             {
                 return null;
             }
+
+            public string get_special(ResourcePath path)
+            {
+                return null;
+            }
+
+            public string SayHello()
+            {
+                return null;
+            }
+        }
+
+        public class SpecialResourcePath : ResourcePath
+        {
+            public SpecialResourcePath(string path) : base(path)
+            {
+            }
         }
 
         [Test]
@@ -26,5 +43,25 @@ namespace FubuMVC.Tests.Resources.PathBased
                 new ResourcePath("something/else"))
                 .ShouldEqual("resource/something/else");
         }
+
+        [Test]
+        public void should_append_the_url_suffix_onto_each_appropriate_route()
+        {
+            var registry = new FubuRegistry();
+            registry.Actions.IncludeType<Controller1>();
+
+            var graph = registry.BuildGraph();
+
+            graph.BehaviorFor<Controller1>(x => x.get_resource(null))
+                .Route.Pattern.ShouldEqual(
+                    "resource/{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}");
+
+            graph.BehaviorFor<Controller1>(x => x.get_special(null))
+                .Route.Pattern.ShouldEqual(
+                    "special/{Part0}/{Part1}/{Part2}/{Part3}/{Part4}/{Part5}/{Part6}/{Part7}/{Part8}/{Part9}");
+
+        }
+
+
     }
 }

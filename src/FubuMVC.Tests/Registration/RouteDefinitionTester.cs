@@ -43,9 +43,9 @@ namespace FubuMVC.Tests.Registration
                 _part = part;
             }
 
-            public string ToUrlPart()
+            public string ToUrlPart(string basePattern)
             {
-                return _part;
+                return basePattern + "/" + _part;
             }
         }
 

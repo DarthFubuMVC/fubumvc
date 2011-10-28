@@ -6,6 +6,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Security;
 using HtmlTags;
 
@@ -43,6 +44,7 @@ namespace FubuMVC.Core
             Policies.Add<AjaxContinuationPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
             Policies.Add<HeaderWritingPolicy>();
+            Policies.Add<ResourcePathRoutePolicy>();
 
             _systemPolicies.Add(new StringOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());

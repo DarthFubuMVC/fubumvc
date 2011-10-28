@@ -5,13 +5,12 @@ using System.Text.RegularExpressions;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Resources.PathBased;
 
 namespace FubuMVC.Core.Registration.Routes
 {
     public interface IMakeMyOwnUrl
     {
-        string ToUrlPart();
+        string ToUrlPart(string basePattern);
     }
 
     public class RouteDefinition : IRouteDefinition
@@ -56,7 +55,7 @@ namespace FubuMVC.Core.Registration.Routes
         {
             if (input is IMakeMyOwnUrl)
             {
-                return Pattern.TrimEnd('/') + "/" + input.As<IMakeMyOwnUrl>().ToUrlPart().Trim('/');
+                return input.As<IMakeMyOwnUrl>().ToUrlPart(Pattern);
             }
             
             
@@ -106,9 +105,12 @@ namespace FubuMVC.Core.Registration.Routes
             {
                 const string capture = @":\w+";
                 var pattern = _pattern;
-                return Regex.Matches(pattern, capture, RegexOptions.IgnorePatternWhitespace)
+                var routeUrl = Regex.Matches(pattern, capture, RegexOptions.IgnorePatternWhitespace)
                     .Cast<Match>()
                     .Aggregate(pattern, (current, match) => current.Replace(match.Value, string.Empty));
+
+
+                return routeUrl;
             }
         }
 
