@@ -27,7 +27,7 @@ namespace FubuMVC.Tests.UI.Forms
             var page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
             page.Stub(x => x.Model).Return(_pageViewModel);
             page.Stub(x => x.ElementPrefix).Return("prefix");
-            page.Stub(x => x.Get<ITagGenerator<ViewModel>>()).Return(new TagGenerator<ViewModel>(new TagProfileLibrary(), null, null));
+            page.Stub(x => x.Get<ITagGenerator<ViewModel>>()).Return(new TagGenerator<ViewModel>(new TagProfileLibrary(), null, null,null));
 
             _generator = page.Tags();
         }
@@ -59,7 +59,7 @@ namespace FubuMVC.Tests.UI.Forms
             fubuRequest.Stub(x => x.Get<InputModel>()).Return(_modelFromFubuRequest);
             page.Stub(x => x.Get<IFubuRequest>()).Return(fubuRequest);
             page.Stub(x => x.ElementPrefix).Return("prefix");
-            page.Stub(x => x.Get<ITagGenerator<InputModel>>()).Return(new TagGenerator<InputModel>(new TagProfileLibrary(), null, null));
+            page.Stub(x => x.Get<ITagGenerator<InputModel>>()).Return(new TagGenerator<InputModel>(new TagProfileLibrary(), null, null,null));
 
             _generator = page.Tags<InputModel>();
         }
@@ -88,7 +88,7 @@ namespace FubuMVC.Tests.UI.Forms
         {
             var page = MockRepository.GenerateMock<IFubuPage<ViewModel>>();
             page.Stub(x => x.ElementPrefix).Return("prefix");
-            page.Stub(x => x.Get<ITagGenerator<InputModel>>()).Return(new TagGenerator<InputModel>(new TagProfileLibrary(), null, null));
+            page.Stub(x => x.Get<ITagGenerator<InputModel>>()).Return(new TagGenerator<InputModel>(new TagProfileLibrary(), null, null,null));
 
             _generator = page.Tags(_givenInstance);
         }
@@ -124,11 +124,14 @@ namespace FubuMVC.Tests.UI.Forms
         public void SetUp()
         {
             _page = MockRepository.GenerateMock<IFubuPage<InputModel>>();
-            _renderer = MockRepository.GenerateStub<IPartialRenderer>();
+            _renderer = MockRepository.GenerateStub<IPartialRenderer>();    
             var serviceLocator = MockRepository.GenerateStub<IServiceLocator>();
             var namingConvention = MockRepository.GenerateStub<IElementNamingConvention>();
+            var formElementRequestFactory = MockRepository.GenerateStub<IFormElementRequestFactory>();
+
+            
             _tags = new TagGenerator<InputModel>(new TagProfileLibrary(), namingConvention,
-                serviceLocator);
+                serviceLocator, formElementRequestFactory);
             
             _viewTypeRegistry = MockRepository.GenerateStub<IPartialViewTypeRegistry>();
             serviceLocator.Stub(s => s.GetInstance<IPartialViewTypeRegistry>()).Return(_viewTypeRegistry);

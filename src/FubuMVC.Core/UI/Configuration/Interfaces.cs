@@ -11,6 +11,7 @@ namespace FubuMVC.Core.UI.Configuration
 
     public delegate void TagModifier(ElementRequest request, HtmlTag tag);
     public delegate void EachPartialTagModifier(ElementRequest request, HtmlTag tag, int index, int total);
+    public delegate void FormTagModifier(FormElementRequest request, FormTag tag);
 
     public interface IElementBuilder
     {
@@ -44,6 +45,11 @@ namespace FubuMVC.Core.UI.Configuration
 
         protected abstract bool matches(AccessorDef def);
         public abstract HtmlTag Build(ElementRequest request, int index, int total);
+    }
+
+    public interface IFormElementModifier
+    {
+        FormTagModifier CreateModifier(FormDef accessorDef);
     }
 
     public interface IElementModifier

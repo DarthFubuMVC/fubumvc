@@ -1,7 +1,11 @@
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using FubuMVC.Core.UI.Tags;
+using FubuMVC.Core.Urls;
 using HtmlTags;
+using System;
 
 namespace FubuMVC.Core.UI.Configuration
 {
@@ -16,13 +20,13 @@ namespace FubuMVC.Core.UI.Configuration
 
             Editors.Always.Modify(AddElementName);
             Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));
-
+            
             Labels.Always.BuildBy(req => new HtmlTag("label").Text(BreakUpCamelCase(req.Accessor.FieldName)));
 
             BeforePartial.Always.BuildBy(req => new NoTag());
             AfterPartial.Always.BuildBy(req => new NoTag());
             BeforeEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
-            AfterEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());
+            AfterEachOfPartial.Always.BuildBy((req, index, count) => new NoTag());           
         }
 
         public static string BreakUpCamelCase(string fieldName)
@@ -33,7 +37,7 @@ namespace FubuMVC.Core.UI.Configuration
                     "([0-9])([a-zA-Z])",
                     "([a-zA-Z])([0-9])"
                 };
-            var output = patterns.Aggregate(fieldName, 
+            var output = patterns.Aggregate(fieldName,
                 (current, pattern) => Regex.Replace(current, pattern, "$1 $2", RegexOptions.IgnorePatternWhitespace));
             return output.Replace('_', ' ');
         }

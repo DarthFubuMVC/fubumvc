@@ -15,11 +15,15 @@ namespace FubuMVC.Core.UI.Tags
             Editors = new TagFactoryExpression(profile.Editor);
             Displays = new TagFactoryExpression(profile.Display);
 
+
+            Form = new FormTagFactoryExpression(profile.Form);
             BeforePartial = new TagFactoryExpression(profile.BeforePartial);
             AfterPartial = new TagFactoryExpression(profile.AfterPartial);
             BeforeEachOfPartial = new PartialTagFactoryExpression(profile.BeforeEachOfPartial);
             AfterEachOfPartial = new PartialTagFactoryExpression(profile.AfterEachOfPartial);
         }
+
+ 
 
         public void DegradeAccessToFields()
         {
@@ -32,7 +36,7 @@ namespace FubuMVC.Core.UI.Tags
         public TagFactoryExpression Editors { get; private set; }
         public TagFactoryExpression Displays { get; private set; }
 
-
+        public FormTagFactoryExpression Form { get; private set; }
         public TagFactoryExpression BeforePartial { get; private set; }
         public TagFactoryExpression AfterPartial { get; private set; }
         public PartialTagFactoryExpression BeforeEachOfPartial { get; private set; }

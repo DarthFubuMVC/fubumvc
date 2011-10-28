@@ -447,6 +447,7 @@
     <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />
     <Compile Include="Security\AllowRole.cs" />
+    <Compile Include="Security\AntiForgery\AntiForgeryFormConvention.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenProvider.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryService.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryTokenAttribute.cs" />
@@ -489,6 +490,7 @@
     <Compile Include="UI\Configuration\AlwaysElementModifier.cs" />
     <Compile Include="UI\Configuration\DefaultHtmlConventions.cs" />
     <Compile Include="UI\Configuration\ElementRequest.cs" />
+    <Compile Include="UI\Configuration\FormElementRequest.cs" />
     <Compile Include="UI\Configuration\Interfaces.cs" />
     <Compile Include="UI\Configuration\LambdaElementBuilder.cs" />
     <Compile Include="UI\Configuration\LambdaElementModifier.cs" />
@@ -533,6 +535,10 @@
     <Compile Include="UI\Security\IFieldAccessRule.cs" />
     <Compile Include="UI\ServiceLocatorExtensions.cs" />
     <Compile Include="UI\ShowEditFieldExpressions.cs" />
+    <Compile Include="UI\Tags\FormLambdaElementModifier.cs" />
+    <Compile Include="UI\Tags\FormTagActionExpression.cs" />
+    <Compile Include="UI\Tags\FormTagFactory.cs" />
+    <Compile Include="UI\Tags\FormTagFactoryExpression.cs" />
     <Compile Include="UI\Tags\PartialLambdaElementModifier.cs" />
     <Compile Include="UI\Tags\PartialTagActionExpression.cs" />
     <Compile Include="UI\Tags\PartialTagFactory.cs" />

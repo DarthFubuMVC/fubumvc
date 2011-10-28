@@ -236,34 +236,30 @@ namespace FubuMVC.Core.UI
         public static FormTag FormFor(this IFubuPage page, string url)
         {
             url = url.ToAbsoluteUrl();
-            return new FormTag(url);
+           
+            return page.Tags(url).FormFor(url);
         }
 
-        public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
+        public static HtmlTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : class, new()
         {
-            var url = page.Urls.UrlFor(new TInputModel());
-            return new FormTag(url);
+            var model = new TInputModel();
+            return page.Tags(model).FormFor(model);
         }
 
-        public static FormTag FormFor<TInputModel>(this IFubuPage page, TInputModel model)
+        public static HtmlTag FormFor<TInputModel>(this IFubuPage page, TInputModel model) where TInputModel: class
         {
-            var url = page.Urls.UrlFor(model);
-            return new FormTag(url);
+            return page.Tags(model).FormFor(model);            
         }
 
-
-        public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
+        public static HtmlTag FormFor<TController>(this IFubuPage page, Expression<Action<TController>> expression)
         {
-            var url = view.Urls.UrlFor(expression);
-            return new FormTag(url);
+            return page.Tags(expression).FormFor(expression); 
         }
 
 
-        public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
+        public static HtmlTag FormFor(this IFubuPage page, object modelOrUrl)
         {
-            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
-
-            return new FormTag(url);
+            return modelOrUrl is string ? FormFor(page, url: (string) modelOrUrl) : FormFor(page, model: modelOrUrl);
         }
 
         public static string EndForm(this IFubuPage page)

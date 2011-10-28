@@ -67,6 +67,7 @@ namespace FubuMVC.Tests.UI
             return new HtmlTag("span").AddClass("display").Text(request.Accessor.Name);
         }
 
+
         public ElementRequest GetRequest<TProperty>(Expression<Func<T, TProperty>> expression)
         {
             throw new NotImplementedException();
@@ -88,6 +89,21 @@ namespace FubuMVC.Tests.UI
         }
 
         public ElementRequest GetRequest(Accessor accessor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public FormTag FormFor<TController>(Expression<Action<TController>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public FormTag FormFor(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public FormTag FormFor(object model)
         {
             throw new NotImplementedException();
         }
