@@ -1,3 +1,6 @@
+using System.Net;
+using FubuMVC.Core.Http;
+
 namespace FubuMVC.Core.Runtime
 {
     public static class OutputWriterExtensions
@@ -15,6 +18,11 @@ namespace FubuMVC.Core.Runtime
         public static void Write(this IOutputWriter writer, MimeType mimeType, string contents)
         {
             writer.Write(mimeType.Value, contents);
+        }
+
+        public static void AppendHeader(this IOutputWriter writer, HttpResponseHeader header, string value)
+        {
+            writer.AppendHeader(HttpResponseHeaders.HeaderNameFor(header), value);
         }
     }
 }
