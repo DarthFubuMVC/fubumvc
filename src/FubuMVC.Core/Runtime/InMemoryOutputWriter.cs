@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
+using FubuCore.Util;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -11,6 +12,7 @@ namespace FubuMVC.Core.Runtime
         private readonly StringBuilder _builder = new StringBuilder();
         private readonly StringWriter _writer;
         private readonly MemoryStream _output = new MemoryStream();
+        private readonly Cache<string, string> _headers = new Cache<string, string>();
 
         public InMemoryOutputWriter()
         {
@@ -41,6 +43,16 @@ namespace FubuMVC.Core.Runtime
 
         public void AppendCookie(HttpCookie cookie)
         {
+        }
+
+        public void AppendHeader(string key, string value)
+        {
+            _headers[key] = value;
+        }
+
+        public Cache<string, string> Headers
+        {
+            get { return _headers; }
         }
 
         public void Write(string contentType, Action<Stream> output)

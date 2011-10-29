@@ -1,19 +1,19 @@
 using System;
-using System.IO;
 using System.Net;
-using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Diagnostics.Tracing
 {
+    // TODO -- eliminate most of the inherited code.  Do most of the work at the IHttpWriter level now
     public class RecordingOutputWriter : OutputWriter
     {
-        private readonly IDebugReport _report;
         private readonly IDebugDetector _detector;
+        private readonly IDebugReport _report;
 
-        public RecordingOutputWriter(IDebugReport report, IDebugDetector detector, IHttpWriter inner, IFileSystem fileSystem)
+        public RecordingOutputWriter(IDebugReport report, IDebugDetector detector, IHttpWriter inner,
+                                     IFileSystem fileSystem)
             : base(inner, fileSystem)
         {
             _report = report;
@@ -63,7 +63,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             base.RedirectToUrl(url);
         }
 
-        
+
         public override void WriteResponseCode(HttpStatusCode status)
         {
             _report.AddDetails(new HttpStatusReport{
@@ -76,8 +76,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         {
             var recordedOuput = base.Record(action);
 
-            _report.AddDetails(new OutputReport
-            {
+            _report.AddDetails(new OutputReport{
                 Contents = recordedOuput.Content,
                 ContentType = recordedOuput.ContentType
             });

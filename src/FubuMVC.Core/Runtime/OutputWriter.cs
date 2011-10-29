@@ -77,6 +77,11 @@ namespace FubuMVC.Core.Runtime
             Writer.AppendCookie(cookie);
         }
 
+        public void AppendHeader(string key, string value)
+        {
+            _state.AppendHeader(key, value);
+        }
+
         public virtual void Write(string contentType, Action<Stream> output)
         {
             _state.Write(contentType, output);
@@ -108,6 +113,11 @@ namespace FubuMVC.Core.Runtime
             _writer.WriteContentType(contentType);
             _writer.Write(action);
         }
+
+        public void AppendHeader(string header, string value)
+        {
+            _writer.AppendHeader(header, value);
+        }
     }
 
     public class RecordingState : IOutputState
@@ -131,11 +141,18 @@ namespace FubuMVC.Core.Runtime
         {
             throw new NotImplementedException();
         }
+
+        public void AppendHeader(string header, string value)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     interface IOutputState
     {
         void Write(string contentType, string renderedOutput);
         void Write(string contentType, Action<Stream> action);
+
+        void AppendHeader(string header, string value);
     }
 }

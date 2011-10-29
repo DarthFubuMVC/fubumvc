@@ -28,10 +28,10 @@ namespace FubuMVC.Tests.Http.Headers
         [Test]
         public void should_write_all_possible_headers()
         {
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("a", "1"));
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("b", "2"));
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("c", "3"));
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("d", "4"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("a", "1"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("b", "2"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("c", "3"));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.AppendHeader("d", "4"));
         }
     }
 }

@@ -54,6 +54,15 @@ namespace FubuMVC.Tests.Runtime
             theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/json"));
             theHttpWriter.AssertWasCalled(x => x.Write(action));
         }
+
+        [Test]
+        public void append_header_writes_directly_to_the_ihttpwriter_in_normal_mode()
+        {
+            ClassUnderTest.AppendHeader("e-tag", "12345");
+
+            theHttpWriter.AssertWasCalled(x => x.AppendHeader("e-tag", "12345"));
+
+        }
     }
 
     [TestFixture]

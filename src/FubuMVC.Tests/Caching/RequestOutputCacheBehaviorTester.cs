@@ -66,6 +66,11 @@ namespace FubuMVC.Tests.Caching
                 throw new NotImplementedException();
             }
 
+            public void AppendHeader(string key, string value)
+            {
+                throw new NotImplementedException();
+            }
+
             public void Write(string contentType, Action<Stream> output)
             {
                 throw new NotImplementedException();

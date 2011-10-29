@@ -7,10 +7,10 @@ namespace FubuMVC.Core.Http.Headers
 {
     public class WriteHeadersBehavior : BasicBehavior
     {
-        private readonly IHttpWriter _writer;
+        private readonly IOutputWriter _writer;
         private readonly IFubuRequest _request;
 
-        public WriteHeadersBehavior(IHttpWriter writer, IFubuRequest request)
+        public WriteHeadersBehavior(IOutputWriter writer, IFubuRequest request)
             : base(PartialBehavior.Executes)
         {
             _writer = writer;
