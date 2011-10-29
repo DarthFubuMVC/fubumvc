@@ -81,10 +81,10 @@ namespace FubuMVC.Tests.Caching
                 throw new NotImplementedException();
             }
 
-            public RecordedOutput Record(Action action)
+            public OldRecordedOutput Record(Action action)
             {
                 action();
-                return new RecordedOutput("","");
+                return new OldRecordedOutput("","");
             }
         }
 

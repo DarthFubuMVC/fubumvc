@@ -181,7 +181,7 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
-            public RecordedOutput Record(Action action)
+            public OldRecordedOutput Record(Action action)
             {
                 throw new NotImplementedException();
             }

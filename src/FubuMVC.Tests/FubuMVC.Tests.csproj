@@ -178,6 +178,7 @@
     <Compile Include="Http\CurrentChainTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
+    <Compile Include="Http\Headers\HeaderTester.cs" />
     <Compile Include="Http\Headers\HeaderWritingPolicyIntegratedTester.cs" />
     <Compile Include="Http\Headers\HttpHeaderValuesTester.cs" />
     <Compile Include="Http\HttpRequestHeadersTester.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Runtime\FubuTupleBindingIntegrationTester.cs" />
     <Compile Include="Runtime\OutputWriterTester.cs" />
     <Compile Include="Runtime\MimeTypeTester.cs" />
+    <Compile Include="Caching\RecordedOutputTester.cs" />
     <Compile Include="Security\AllowRoleTester.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryBehaviorTester.cs" />
     <Compile Include="Security\AntiForgery\AntiForgeryServiceTester.cs" />

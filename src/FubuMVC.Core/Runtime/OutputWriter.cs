@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Web;
 using FubuCore;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Runtime
@@ -48,18 +48,19 @@ namespace FubuMVC.Core.Runtime
         }
 
 
-        public virtual RecordedOutput Record(Action action)
+        public virtual OldRecordedOutput Record(Action action)
         {
-            var recordingState = new RecordingState();
-            _state = recordingState;
+            throw new NotImplementedException("Not built yet");
+            //var recordingState = new RecordedOutput();
+            //_state = recordingState;
 
-            action();
+            //action();
 
-            var recordedOutput = new RecordedOutput(recordingState.ContentType, recordingState.Content);
+            //var recordedOutput = new OldRecordedOutput(recordingState.ContentType, recordingState.Content);
 
-            revertToNormalWriting();
+            //revertToNormalWriting();
 
-            return recordedOutput;
+            //return recordedOutput;
         }
 
         public virtual void Write(string contentType, string renderedOutput)
@@ -117,34 +118,6 @@ namespace FubuMVC.Core.Runtime
         public void AppendHeader(string header, string value)
         {
             _writer.AppendHeader(header, value);
-        }
-    }
-
-    public class RecordingState : IOutputState
-    {
-        private readonly StringBuilder _builder = new StringBuilder();
-
-        public string ContentType { get; private set; }
-
-        public string Content
-        {
-            get { return _builder.ToString(); }
-        }
-
-        public void Write(string contentType, string renderedOutput)
-        {
-            ContentType = contentType;
-            _builder.Append(renderedOutput);
-        }
-
-        public void Write(string contentType, Action<Stream> action)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AppendHeader(string header, string value)
-        {
-            throw new NotImplementedException();
         }
     }
 

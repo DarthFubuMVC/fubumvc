@@ -31,10 +31,10 @@ namespace FubuMVC.Core.Runtime
 
         public string ContentType { get; set; }
 
-        public RecordedOutput Record(Action action)
+        public OldRecordedOutput Record(Action action)
         {
             action();
-            return new RecordedOutput("","");
+            return new OldRecordedOutput("","");
         }
 
         public void RedirectToUrl(string url)

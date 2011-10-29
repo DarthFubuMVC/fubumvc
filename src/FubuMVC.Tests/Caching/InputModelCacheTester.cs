@@ -12,7 +12,7 @@ namespace FubuMVC.Tests.Caching
     public class InputModelCacheTester : InteractionContext<RequestOutputCache<TestObj>>
     {
         private bool generatorWasCalled;
-        private Func<TestObj, RecordedOutput> recordAction;
+        private Func<TestObj, OldRecordedOutput> recordAction;
         private TestObj theModel;
         string theKey = "Brandon";
         bool wasCalled = false;
@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Caching
             recordAction = obj =>
             {
                 generatorWasCalled = true;
-                return new RecordedOutput("test/html", "View:{0}".ToFormat(obj.Name));
+                return new OldRecordedOutput("test/html", "View:{0}".ToFormat(obj.Name));
             };
 
         }
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Caching
         public void should_generate_data_on_cache_miss()
         {
             
-            var theValue = new RecordedOutput("test/html", "View:Brandon");
+            var theValue = new OldRecordedOutput("test/html", "View:Brandon");
             
 
             MockFor<ICacheProvider>().Stub(cp => cp.Get(theKey)).Return(null);
@@ -65,7 +65,7 @@ namespace FubuMVC.Tests.Caching
         [Test]
         public void should_not_generate_data_on_cache_hit()
         {
-            var theValue = new RecordedOutput("test/html", "View:Brandon");
+            var theValue = new OldRecordedOutput("test/html", "View:Brandon");
 
             MockFor<ICacheProvider>().Stub(cp => cp.Get(theKey)).Return(theValue);
 

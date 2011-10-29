@@ -184,6 +184,11 @@
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Ajax\AjaxContinuation.cs" />
+    <Compile Include="Caching\IRecordedHttpOutput.cs" />
+    <Compile Include="Caching\IRecordedOutput.cs" />
+    <Compile Include="Caching\SetContentType.cs" />
+    <Compile Include="Caching\WriteStream.cs" />
+    <Compile Include="Caching\WriteText.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
@@ -479,7 +484,8 @@
     <Compile Include="Http\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
-    <Compile Include="Runtime\RecordedOutput.cs" />
+    <Compile Include="Runtime\OldRecordedOutput.cs" />
+    <Compile Include="Caching\RecordedOutput.cs" />
     <Compile Include="Runtime\ResponseCaching.cs" />
     <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />

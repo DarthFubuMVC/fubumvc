@@ -70,21 +70,21 @@ namespace FubuMVC.Tests.Runtime
     {
         private string theContent;
         private string theContentType;
-        private RecordedOutput theRecordedOutput;
+        private OldRecordedOutput _theOldRecordedOutput;
 
         protected override void beforeEach()
         {
             theContent = "some content";
             theContentType = "text/xml";
 
-            theRecordedOutput = ClassUnderTest.Record(() => { ClassUnderTest.Write(theContentType, theContent); });
+            _theOldRecordedOutput = ClassUnderTest.Record(() => { ClassUnderTest.Write(theContentType, theContent); });
         }
 
         [Test]
         public void recorded_output_should_have_what_was_written()
         {
-            theRecordedOutput.Content.ShouldEqual(theContent);
-            theRecordedOutput.ContentType.ShouldEqual(theContentType);
+            _theOldRecordedOutput.Content.ShouldEqual(theContent);
+            _theOldRecordedOutput.ContentType.ShouldEqual(theContentType);
         }
 
         [Test]

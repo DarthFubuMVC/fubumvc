@@ -1,6 +1,11 @@
+using System;
+using System.Net;
+using FubuMVC.Core.Caching;
+using FubuMVC.Core.Runtime;
+
 namespace FubuMVC.Core.Http.Headers
 {
-    public class Header
+    public class Header : IRecordedHttpOutput
     {
         public string Name { get; set; }
         public string Value { get; set; }
@@ -10,6 +15,22 @@ namespace FubuMVC.Core.Http.Headers
             Name = name;
             Value = value;
         }
+
+        public Header(HttpResponseHeader header, string value) : this(HttpResponseHeaders.HeaderNameFor(header), value)
+        {
+            
+        }
+
+        public void Write(IOutputWriter writer)
+        {
+            writer.AppendHeader(Name, Value);
+        }
+
+        public void Replay(IHttpWriter writer)
+        {
+            writer.AppendHeader(Name, Value);
+        }
+
 
         public bool Equals(Header other)
         {
@@ -33,6 +54,7 @@ namespace FubuMVC.Core.Http.Headers
                 return ((Name != null ? Name.GetHashCode() : 0)*397) ^ (Value != null ? Value.GetHashCode() : 0);
             }
         }
+
 
         public override string ToString()
         {

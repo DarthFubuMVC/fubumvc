@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Caching
 {
     public interface IRequestOutputCache<TInputModel>
     {
-        void WithCache(TInputModel model, Func<TInputModel, RecordedOutput> cacheMissAction, Action<RecordedOutput> cachedDataAction);
+        void WithCache(TInputModel model, Func<TInputModel, OldRecordedOutput> cacheMissAction, Action<OldRecordedOutput> cachedDataAction);
     }
 
     public class RequestOutputCache<TInputModel> : IRequestOutputCache<TInputModel>
@@ -20,10 +20,10 @@ namespace FubuMVC.Core.Caching
             _options = options;
         }
 
-        public void WithCache(TInputModel model, Func<TInputModel, RecordedOutput> cacheMissAction, Action<RecordedOutput> cachedDataAction)
+        public void WithCache(TInputModel model, Func<TInputModel, OldRecordedOutput> cacheMissAction, Action<OldRecordedOutput> cachedDataAction)
         {
             var key = _options.KeyMaker(model);
-            var result = _cacheProvider.Get(key).As<RecordedOutput>();
+            var result = _cacheProvider.Get(key).As<OldRecordedOutput>();
 
             if(result == null)
             {

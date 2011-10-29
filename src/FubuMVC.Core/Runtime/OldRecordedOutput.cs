@@ -1,8 +1,8 @@
 namespace FubuMVC.Core.Runtime
 {
-    public class RecordedOutput
+    public class OldRecordedOutput
     {
-        public RecordedOutput(string recordedContentType, string recordedOutput)
+        public OldRecordedOutput(string recordedContentType, string recordedOutput)
         {
             Content = recordedOutput;
             ContentType = recordedContentType;
@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Runtime
         public string Content { get; private set; }
         public string ContentType { get; private set; }
 
-        public bool Equals(RecordedOutput other)
+        public bool Equals(OldRecordedOutput other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -22,8 +22,8 @@ namespace FubuMVC.Core.Runtime
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (RecordedOutput)) return false;
-            return Equals((RecordedOutput) obj);
+            if (obj.GetType() != typeof (OldRecordedOutput)) return false;
+            return Equals((OldRecordedOutput) obj);
         }
 
         public override int GetHashCode()

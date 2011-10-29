@@ -72,7 +72,7 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             base.WriteResponseCode(status);
         }
 
-        public override RecordedOutput Record(Action action)
+        public override OldRecordedOutput Record(Action action)
         {
             var recordedOuput = base.Record(action);
 

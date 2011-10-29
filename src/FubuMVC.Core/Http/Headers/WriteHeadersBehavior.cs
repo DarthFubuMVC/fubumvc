@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core.Http.Headers
 {
@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Http.Headers
         {
             _request.Find<IHaveHeaders>()
                 .SelectMany(x => x.Headers)
-                .Each(x => _writer.AppendHeader(x.Name, x.Value));
+                .Each(x => x.Write(_writer));
 
             return DoNext.Continue;
         }
