@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Web;
 using FubuMVC.Core.Behaviors;
@@ -61,6 +62,11 @@ namespace FubuMVC.Tests.Caching
             }
 
             public void AppendCookie(HttpCookie cookie)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Write(string contentType, Action<Stream> output)
             {
                 throw new NotImplementedException();
             }

@@ -1,5 +1,6 @@
 using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Tests.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -10,12 +11,15 @@ namespace FubuMVC.Tests.Resources.Media.Formatters
     {
         private InMemoryStreamingData streamingData;
         private XmlFormatter theFormatter;
+        private InMemoryOutputWriter writer;
 
         [SetUp]
         public void SetUp()
         {
             streamingData = new InMemoryStreamingData();
-            theFormatter = new XmlFormatter(streamingData);
+            writer = new InMemoryOutputWriter();
+            
+            theFormatter = new XmlFormatter(streamingData, writer);
         }
 
         [Test]
@@ -46,8 +50,7 @@ namespace FubuMVC.Tests.Resources.Media.Formatters
 
             theFormatter.Write(xmlInput, "text/xml");
 
-            streamingData.RewindOutput();
-            streamingData.CopyOutputToInputForTesting();
+            streamingData.CopyOutputToInputForTesting(writer.OutputStream());
 
             var xmlOutput = theFormatter.Read<XmlFormatterModel>();
             xmlOutput.ShouldNotBeTheSameAs(xmlInput);

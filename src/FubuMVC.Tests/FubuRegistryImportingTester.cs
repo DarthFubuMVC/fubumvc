@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -190,7 +191,12 @@ namespace FubuMVC.Tests
         		throw new NotImplementedException();
         	}
 
-        	public void WriteResponseCode(HttpStatusCode status)
+            public void Write(string contentType, Action<Stream> output)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void WriteResponseCode(HttpStatusCode status)
             {
                 throw new NotImplementedException();
             }

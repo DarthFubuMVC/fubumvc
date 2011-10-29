@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Net;
 using System.Web;
 
@@ -31,6 +33,10 @@ namespace FubuMVC.Core.Http
         }
 
         public void AppendCookie(HttpCookie cookie)
+        {
+        }
+
+        public void Write(Action<Stream> output)
         {
         }
     }

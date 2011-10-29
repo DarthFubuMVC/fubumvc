@@ -28,14 +28,12 @@ namespace FubuMVC.Core.Runtime
 
         private void revertToNormalWriting()
         {
-            _state = new NormalState(this);
+            _state = new NormalState(_writer);
         }
 
         public virtual void WriteFile(string contentType, string localFilePath, string displayName)
         {
             Writer.WriteContentType(contentType);
-
-
 
 			if (displayName != null)
 			{
@@ -79,50 +77,65 @@ namespace FubuMVC.Core.Runtime
             Writer.AppendCookie(cookie);
         }
 
+        public virtual void Write(string contentType, Action<Stream> output)
+        {
+            _state.Write(contentType, output);
+        }
+
         public virtual void WriteResponseCode(HttpStatusCode status)
         {
             Writer.WriteResponseCode(status);
         }
+    }
 
+    public class NormalState : IOutputState
+    {
+        private readonly IHttpWriter _writer;
 
-        interface IOutputState
+        public NormalState(IHttpWriter writer)
         {
-            void Write(string contentType, string renderedOutput);
+            _writer = writer;
         }
 
-        class RecordingState : IOutputState
+        public void Write(string contentType, string renderedOutput)
         {
-            private readonly StringBuilder _builder = new StringBuilder();
-
-            public string ContentType { get; private set; }
-
-            public string Content
-            {
-                get { return _builder.ToString(); }
-            }
-
-            public void Write(string contentType, string renderedOutput)
-            {
-                ContentType = contentType;
-                _builder.Append(renderedOutput);
-            }
+            _writer.WriteContentType(contentType);
+            _writer.Write(renderedOutput);
         }
 
-        class NormalState : IOutputState
+        public void Write(string contentType, Action<Stream> action)
         {
-            private readonly OutputWriter _parent;
-
-            public NormalState(OutputWriter parent)
-            {
-                _parent = parent;
-            }
-
-
-            public void Write(string contentType, string renderedOutput)
-            {
-                _parent.Writer.WriteContentType(contentType);
-                _parent.Writer.Write(renderedOutput);
-            }
+            _writer.WriteContentType(contentType);
+            _writer.Write(action);
         }
+    }
+
+    public class RecordingState : IOutputState
+    {
+        private readonly StringBuilder _builder = new StringBuilder();
+
+        public string ContentType { get; private set; }
+
+        public string Content
+        {
+            get { return _builder.ToString(); }
+        }
+
+        public void Write(string contentType, string renderedOutput)
+        {
+            ContentType = contentType;
+            _builder.Append(renderedOutput);
+        }
+
+        public void Write(string contentType, Action<Stream> action)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    interface IOutputState
+    {
+        void Write(string contentType, string renderedOutput);
+        void Write(string contentType, Action<Stream> action);
     }
 }

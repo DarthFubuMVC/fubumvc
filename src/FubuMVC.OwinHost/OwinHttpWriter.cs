@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Web;
 using FubuCore;
@@ -41,6 +42,7 @@ namespace FubuMVC.OwinHost
             _response.Write(content);
         }
 
+        // TODO -- dunno how to do this one off hand
         public void Redirect(string url)
         {
             throw new NotImplementedException();
@@ -54,6 +56,18 @@ namespace FubuMVC.OwinHost
         public void AppendCookie(HttpCookie cookie)
         {
             throw new NotImplementedException();
+        }
+
+        public void Write(Action<Stream> output)
+        {
+            Action complete = () => { };
+            var stream = new OutputStream((segment, continuation) =>
+            {
+                _response.BinaryWrite(segment);
+                return true;
+            }, complete);
+
+            output(stream);
         }
     }
 }

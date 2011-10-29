@@ -16,24 +16,5 @@ namespace FubuMVC.Core.Http.AspNet
         {
             get { return _context.Request.InputStream; }
         }
-
-        public Stream Output
-        {
-            get { return _context.Response.OutputStream; } 
-        }
-
-        public string OutputContentType
-        {
-            get
-            {
-                return _context.Response.ContentType;
-            }
-            set
-            {
-                _context.Response.ContentType = value;
-            }
-        }
-
-
     }
 }

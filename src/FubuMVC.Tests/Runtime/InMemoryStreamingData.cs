@@ -1,31 +1,14 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using FubuMVC.Core.Http;
 using HtmlTags;
 
-namespace FubuMVC.Core.Runtime
+namespace FubuMVC.Tests.Runtime
 {
     public class InMemoryStreamingData : IStreamingData
     {
         private Stream _input;
-        private Stream _output;
-
-        public InMemoryStreamingData()
-        {
-            _output = new MemoryStream();
-        }
-
-        public void RewindOutput()
-        {
-            _output.Position = 0;
-        }
-
-        public void CopyOutputToInputForTesting()
-        {
-            _input = _output;
-        }
 
         public void XmlInputIs(object target)
         {
@@ -63,10 +46,11 @@ namespace FubuMVC.Core.Runtime
         {
             get { return _input; } }
 
-        public Stream Output
-        {
-            get { return _output; } }
 
-        public string OutputContentType { get; set; }
+        public void CopyOutputToInputForTesting(Stream outputStream)
+        {
+            _input = outputStream;
+            _input.Position = 0;
+        }
     }
 }

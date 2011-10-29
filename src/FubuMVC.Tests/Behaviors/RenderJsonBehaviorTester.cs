@@ -18,6 +18,7 @@ namespace FubuMVC.Tests.Behaviors
         private InMemoryRequestData requestData;
         private string mimeType;
         private string rawOutput;
+        private InMemoryOutputWriter theOutputWriter;
 
         protected override void beforeEach()
         {
@@ -30,15 +31,8 @@ namespace FubuMVC.Tests.Behaviors
             requestData = new InMemoryRequestData();
             Services.Inject<IRequestData>(requestData);
 
-            mimeType = null;
-            rawOutput = null;
-
-            MockFor<IOutputWriter>().Stub(x => x.Write(null, null)).IgnoreArguments().Do(
-                new Action<string, string>((t, o) =>
-                {
-                    mimeType = t;
-                    rawOutput = o;
-                }));
+            theOutputWriter = new InMemoryOutputWriter();
+            Services.Inject<IOutputWriter>(theOutputWriter);
 
             requestData["X-Requested-With"] = "XMLHttpRequest";
 
@@ -50,8 +44,9 @@ namespace FubuMVC.Tests.Behaviors
         public void should_write_json_serialized_string_to_the_output_writer_regardless_of_request_headers()
         {
             string json = JsonUtil.ToJson(output);
-            mimeType.ShouldEqual(MimeType.Json.ToString());
-            rawOutput.ShouldEqual(json);
+            theOutputWriter.ContentType.ShouldEqual(MimeType.Json.ToString());
+
+            theOutputWriter.ToString().TrimEnd().ShouldEqual(json);
         }
     }
 
@@ -60,8 +55,7 @@ namespace FubuMVC.Tests.Behaviors
     {
         private JsonOutput output;
         private InMemoryRequestData requestData;
-        private string mimeType;
-        private string rawOutput;
+        private InMemoryOutputWriter theOutputWriter;
 
         protected override void beforeEach()
         {
@@ -74,15 +68,9 @@ namespace FubuMVC.Tests.Behaviors
             requestData = new InMemoryRequestData();
             Services.Inject<IRequestData>(requestData);
 
-            mimeType = null;
-            rawOutput = null;
+            theOutputWriter = new InMemoryOutputWriter();
+            Services.Inject<IOutputWriter>(theOutputWriter);
 
-            MockFor<IOutputWriter>().Stub(x => x.Write(null, null)).IgnoreArguments().Do(
-                new Action<string, string>((t, o) =>
-                {
-                    mimeType = t;
-                    rawOutput = o;
-                }));
 
             requestData["X-Requested-With"] = "XMLHttpRequest";
 
@@ -93,7 +81,7 @@ namespace FubuMVC.Tests.Behaviors
         [Test]
         public void mime_type_should_match_what_it_was_told_to_do()
         {
-            mimeType.ShouldEqual("application/json");
+            theOutputWriter.ContentType.ShouldEqual("application/json");
         }
     }
 
@@ -127,8 +115,7 @@ namespace FubuMVC.Tests.Behaviors
     {
         private JsonOutput output;
         private InMemoryRequestData requestData;
-        private string mimeType;
-        private string rawOutput;
+        private InMemoryOutputWriter theOutputWriter;
 
         protected override void beforeEach()
         {
@@ -141,15 +128,8 @@ namespace FubuMVC.Tests.Behaviors
             requestData = new InMemoryRequestData();
             Services.Inject<IRequestData>(requestData);
 
-            mimeType = null;
-            rawOutput = null;
-
-            MockFor<IOutputWriter>().Stub(x => x.Write(null, null)).IgnoreArguments().Do(
-                new Action<string, string>((t, o) =>
-                {
-                    mimeType = t;
-                    rawOutput = o;
-                }));
+            theOutputWriter = new InMemoryOutputWriter();
+            Services.Inject<IOutputWriter>(theOutputWriter);
 
             requestData["X-Requested-With"] = "XMLHttpRequest";
 
@@ -160,19 +140,18 @@ namespace FubuMVC.Tests.Behaviors
         public void should_detect_ajax_request_with_case_insensitivity()
         {
             requestData["X-Requested-With"] = "xmlHtTpReQuest";
-            mimeType = null;
 
             ClassUnderTest.Write(output);
 
-            mimeType.ShouldEqual(MimeType.Json.ToString());
+            theOutputWriter.ContentType.ShouldEqual(MimeType.Json.ToString());
         }
         
         [Test]
         public void should_write_json_serialized_string_to_the_output_writer()
         {
             string json = JsonUtil.ToJson(output);
-            mimeType.ShouldEqual(MimeType.Json.ToString());
-            rawOutput.ShouldEqual(json);
+            theOutputWriter.ContentType.ShouldEqual(MimeType.Json.ToString());
+            theOutputWriter.ToString().TrimEnd().ShouldEqual(json);
         }
     }
 

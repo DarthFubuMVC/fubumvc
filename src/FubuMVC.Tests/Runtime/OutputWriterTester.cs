@@ -1,6 +1,6 @@
 using System;
+using System.IO;
 using System.Net;
-using System.Web;
 using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
@@ -21,6 +21,14 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void redirect_to_a_url_delegates()
+        {
+            ClassUnderTest.RedirectToUrl("http://somewhere.com");
+
+            theHttpWriter.AssertWasCalled(x => x.Redirect("http://somewhere.com"));
+        }
+
+        [Test]
         public void write_in_normal_mode_delegates_to_http_writer()
         {
             ClassUnderTest.Write("text/json", "{}");
@@ -30,19 +38,21 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
-        public void redirect_to_a_url_delegates()
-        {
-            ClassUnderTest.RedirectToUrl("http://somewhere.com");
-
-            theHttpWriter.AssertWasCalled(x => x.Redirect("http://somewhere.com"));
-        }
-
-        [Test]
         public void write_response_code_delegates()
         {
             ClassUnderTest.WriteResponseCode(HttpStatusCode.UseProxy);
 
             theHttpWriter.AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.UseProxy));
+        }
+
+        [Test]
+        public void write_by_stream_delegates_to_the_http_writer_in_normal_mode()
+        {
+            Action<Stream> action = stream => { };
+            ClassUnderTest.Write("text/json", action);
+
+            theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/json"));
+            theHttpWriter.AssertWasCalled(x => x.Write(action));
         }
     }
 
@@ -58,17 +68,7 @@ namespace FubuMVC.Tests.Runtime
             theContent = "some content";
             theContentType = "text/xml";
 
-            theRecordedOutput = ClassUnderTest.Record(() =>
-            {
-                ClassUnderTest.Write(theContentType, theContent);
-            });
-        }
-
-        [Test]
-        public void should_not_have_written_directly_to_the_http_writer()
-        {
-            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.Write(theContent));
-            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
+            theRecordedOutput = ClassUnderTest.Record(() => { ClassUnderTest.Write(theContentType, theContent); });
         }
 
         [Test]
@@ -76,6 +76,13 @@ namespace FubuMVC.Tests.Runtime
         {
             theRecordedOutput.Content.ShouldEqual(theContent);
             theRecordedOutput.ContentType.ShouldEqual(theContentType);
+        }
+
+        [Test]
+        public void should_not_have_written_directly_to_the_http_writer()
+        {
+            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.Write(theContent));
+            MockFor<IHttpWriter>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
         }
     }
 
@@ -98,6 +105,12 @@ namespace FubuMVC.Tests.Runtime
         }
 
         [Test]
+        public void should_actually_you_know_write_the_file_itself()
+        {
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteFile(theFilePath));
+        }
+
+        [Test]
         public void should_have_written_the_content_type()
         {
             MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteContentType(theContentType));
@@ -106,19 +119,14 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void should_write_a_content_disposition_header_for_the_display()
         {
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("Content-Disposition", "attachment; filename=\"The title\""));
+            MockFor<IHttpWriter>().AssertWasCalled(
+                x => x.AppendHeader("Content-Disposition", "attachment; filename=\"The title\""));
         }
 
         [Test]
         public void should_write_header_for_content_length()
         {
             MockFor<IHttpWriter>().AssertWasCalled(x => x.AppendHeader("Content-Length", "123"));
-        }
-
-        [Test]
-        public void should_actually_you_know_write_the_file_itself()
-        {
-            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteFile(theFilePath));
         }
     }
 }

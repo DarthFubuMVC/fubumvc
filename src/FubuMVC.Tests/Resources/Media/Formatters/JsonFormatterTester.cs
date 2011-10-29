@@ -1,5 +1,3 @@
-using System.IO;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Media.Formatters;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Tests.Resources.Projections;
@@ -12,11 +10,6 @@ namespace FubuMVC.Tests.Resources.Media.Formatters
     [TestFixture]
     public class JsonFormatterTester : InteractionContext<JsonFormatter>
     {
-        protected override void beforeEach()
-        {
-            MockFor<IStreamingData>().Stub(x => x.Output).Return(new MemoryStream());
-        }
-
         [Test]
         public void has_the_right_mime_types()
         {

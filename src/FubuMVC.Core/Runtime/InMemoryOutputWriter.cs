@@ -10,6 +10,7 @@ namespace FubuMVC.Core.Runtime
     {
         private readonly StringBuilder _builder = new StringBuilder();
         private readonly StringWriter _writer;
+        private readonly MemoryStream _output = new MemoryStream();
 
         public InMemoryOutputWriter()
         {
@@ -42,6 +43,12 @@ namespace FubuMVC.Core.Runtime
         {
         }
 
+        public void Write(string contentType, Action<Stream> output)
+        {
+            ContentType = contentType;
+            output(_output);
+        }
+
         public void WriteResponseCode(HttpStatusCode status)
         {
         }
@@ -49,6 +56,12 @@ namespace FubuMVC.Core.Runtime
         public override string ToString()
         {
             return _builder.ToString();
+        }
+
+        public Stream OutputStream()
+        {
+            _output.Position = 0;
+            return _output;
         }
     }
 }

@@ -1,9 +1,10 @@
+using System;
+using System.IO;
 using System.Net;
 using System.Web;
 
 namespace FubuMVC.Core.Http
 {
-    // TODO -- move this to the new Http folder after ReST is applied
     public interface IHttpWriter
     {
         void AppendHeader(string key, string value);
@@ -13,7 +14,8 @@ namespace FubuMVC.Core.Http
         void Redirect(string url);
         void WriteResponseCode(HttpStatusCode status);
         void AppendCookie(HttpCookie cookie);
+
+        void Write(Action<Stream> output);
     }
 
-    // Warning -- untestable code ahead
 }

@@ -12,23 +12,26 @@ namespace FubuMVC.Core.Resources.Media.Formatters
     public class XmlFormatter : IFormatter
     {
         private readonly IStreamingData _streaming;
+        private readonly IOutputWriter _writer;
 
-        public XmlFormatter(IStreamingData streaming)
+        public XmlFormatter(IStreamingData streaming, IOutputWriter writer)
         {
             _streaming = streaming;
+            _writer = writer;
         }
 
         public void Write<T>(T target, string mimeType)
         {
             var serializer = new XmlSerializer(typeof (T));
+            _writer.Write(mimeType, stream =>
+            {
+                var xmlWriter = new XmlTextWriter(stream, Encoding.Default)
+                {
+                    Formatting = Formatting.None
+                };
 
-            var xmlWriter = new XmlTextWriter(_streaming.Output, Encoding.Default){
-                Formatting = Formatting.None
-            };
-
-            serializer.Serialize(xmlWriter, target);
-
-            _streaming.OutputContentType = mimeType;
+                serializer.Serialize(xmlWriter, target);
+            });
         }
 
         public T Read<T>()
