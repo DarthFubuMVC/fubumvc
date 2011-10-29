@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using FubuCore;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 
@@ -72,14 +73,15 @@ namespace FubuMVC.Core.Diagnostics.Tracing
             base.WriteResponseCode(status);
         }
 
-        public override OldRecordedOutput Record(Action action)
+        public override IRecordedOutput Record(Action action)
         {
             var recordedOuput = base.Record(action);
 
-            _report.AddDetails(new OutputReport{
-                Contents = recordedOuput.Content,
-                ContentType = recordedOuput.ContentType
-            });
+            // TODO -- put this back!
+            //_report.AddDetails(new OutputReport{
+            //    Contents = recordedOuput.Content,
+            //    ContentType = recordedOuput.ContentType
+            //});
 
 
             return recordedOuput;

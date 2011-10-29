@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using FubuMVC.Core.Caching;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -17,7 +18,7 @@ namespace FubuMVC.Core.Runtime
         void Write(string contentType, Action<Stream> output);
 
         void WriteResponseCode(HttpStatusCode status);
-        OldRecordedOutput Record(Action action);
+        IRecordedOutput Record(Action action);
     }
 
    

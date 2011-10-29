@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using FubuCore.Util;
+using FubuMVC.Core.Caching;
 
 namespace FubuMVC.Core.Runtime
 {
@@ -31,10 +32,11 @@ namespace FubuMVC.Core.Runtime
 
         public string ContentType { get; set; }
 
-        public OldRecordedOutput Record(Action action)
+        public IRecordedOutput Record(Action action)
         {
+            throw new NotImplementedException("isn't really built");
             action();
-            return new OldRecordedOutput("","");
+            return new RecordedOutput();
         }
 
         public void RedirectToUrl(string url)

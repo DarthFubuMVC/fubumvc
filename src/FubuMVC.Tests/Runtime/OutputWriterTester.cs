@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using FubuCore;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -70,21 +71,23 @@ namespace FubuMVC.Tests.Runtime
     {
         private string theContent;
         private string theContentType;
-        private OldRecordedOutput _theOldRecordedOutput;
+        private RecordedOutput theRecordedOutput;
 
         protected override void beforeEach()
         {
             theContent = "some content";
             theContentType = "text/xml";
 
-            _theOldRecordedOutput = ClassUnderTest.Record(() => { ClassUnderTest.Write(theContentType, theContent); });
+            theRecordedOutput = ClassUnderTest.Record(() =>
+            {
+                ClassUnderTest.Write(theContentType, theContent);
+            }).As<RecordedOutput>();
         }
 
         [Test]
         public void recorded_output_should_have_what_was_written()
         {
-            _theOldRecordedOutput.Content.ShouldEqual(theContent);
-            _theOldRecordedOutput.ContentType.ShouldEqual(theContentType);
+            theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(new SetContentType(theContentType), new WriteText(theContent));
         }
 
         [Test]

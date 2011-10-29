@@ -259,9 +259,6 @@
     <Compile Include="Caching\AspNetRuntimeCacheProvider.cs" />
     <Compile Include="Caching\CacheOptions.cs" />
     <Compile Include="Caching\ICacheProvider.cs" />
-    <Compile Include="Caching\IRequestOutputCache.cs" />
-    <Compile Include="Caching\RequestOutputCacheBehavior.cs" />
-    <Compile Include="Caching\RequestOutputCacheNode.cs" />
     <Compile Include="Registration\DSL\AssetsExpression.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivator.cs" />
     <Compile Include="Continuations\ContinuationHandler.cs" />
@@ -484,7 +481,6 @@
     <Compile Include="Http\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
-    <Compile Include="Runtime\OldRecordedOutput.cs" />
     <Compile Include="Caching\RecordedOutput.cs" />
     <Compile Include="Runtime\ResponseCaching.cs" />
     <Compile Include="Runtime\SetterBinder.cs" />

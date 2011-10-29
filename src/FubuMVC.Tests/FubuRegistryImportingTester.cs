@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Caching;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
@@ -181,7 +182,7 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
-            public OldRecordedOutput Record(Action action)
+            public IRecordedOutput Record(Action action)
             {
                 throw new NotImplementedException();
             }

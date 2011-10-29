@@ -44,23 +44,24 @@ namespace FubuMVC.Core.Runtime
 
 			Writer.AppendHeader("Content-Length", fileLength.ToString());
             Writer.WriteFile(localFilePath);
-
         }
 
 
-        public virtual OldRecordedOutput Record(Action action)
+        public virtual IRecordedOutput Record(Action action)
         {
-            throw new NotImplementedException("Not built yet");
-            //var recordingState = new RecordedOutput();
-            //_state = recordingState;
+            var output = new RecordedOutput();
+            _state = output;
 
-            //action();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                revertToNormalWriting();
+            }
 
-            //var recordedOutput = new OldRecordedOutput(recordingState.ContentType, recordingState.Content);
-
-            //revertToNormalWriting();
-
-            //return recordedOutput;
+            return output;
         }
 
         public virtual void Write(string contentType, string renderedOutput)
