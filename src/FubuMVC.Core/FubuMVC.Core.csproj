@@ -231,10 +231,12 @@
     <Compile Include="Resources\Conneg\ConnegOutputBehavior.cs" />
     <Compile Include="Resources\Conneg\ConnegOutputNode.cs" />
     <Compile Include="Resources\Conneg\FormatterUsage.cs" />
-    <Compile Include="Resources\Etags\Classes.cs" />
+    <Compile Include="Resources\Etags\IfNoneMatchNode.cs" />
     <Compile Include="Http\Headers\Header.cs" />
     <Compile Include="Resources\Etags\EtagCache.cs" />
     <Compile Include="Resources\Etags\ETaggedRequest.cs" />
+    <Compile Include="Resources\Etags\ETagHandler.cs" />
+    <Compile Include="Resources\Etags\ETagTuple.cs" />
     <Compile Include="Resources\Etags\IEtagCache.cs" />
     <Compile Include="Resources\Etags\IETagGenerator.cs" />
     <Compile Include="Resources\Etags\ResourceHashAttribute.cs" />

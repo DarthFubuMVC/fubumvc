@@ -30,8 +30,7 @@ namespace FubuMVC.Core.Http
                     dict.Add(pair.Key, pair.Value == null ? string.Empty : pair.Value.ToString());
                 });
 
-                var name = dict.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join(";");
-                return MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(name)).Select(b => b.ToString("x2")).Join("");
+                return dict.Select(x => "{0}={1}".ToFormat(x.Key, x.Value)).Join(";").ToHash();
             });
         }
 

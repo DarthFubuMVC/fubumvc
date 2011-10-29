@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using FubuCore;
 
 namespace FubuMVC.Core.Assets
 {
@@ -18,13 +19,7 @@ namespace FubuMVC.Core.Assets
             _hashcode = new Lazy<int>(() =>
             {
                 var combined = names.Join("*");
-                var encodedStream = Encoding.UTF8.GetBytes(combined);
-
-                return MD5
-                    .Create()
-                    .ComputeHash(encodedStream)
-                    .Select(b => b.ToString("x2")).Join("")
-                    .GetHashCode();
+                return combined.ToHash().GetHashCode();
             });
         }
 
