@@ -1,53 +1,11 @@
 using System;
-using Bottles;
-using Bottles.Diagnostics;
+using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core.Assets.Caching
 {
-
-    public interface IAssetFileChangeListener
-    {
-        void Changed(AssetFile file);
-    }
-
-
-    // TODO -- make this editable somewhere
-    public class AssetFileMonitoringSettings
-    {
-        public AssetFileMonitoringSettings()
-        {
-            MonitoringIntervalTime = 5000;
-        }
-
-        public double MonitoringIntervalTime { get; set; }
-    }
-
-
-    public class AssetFileWatchingActivator : IActivator
-    {
-        private readonly IAssetFileWatcher _watcher;
-
-        public AssetFileWatchingActivator(IAssetFileWatcher watcher)
-        {
-            _watcher = watcher;
-        }
-
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
-        {
-            _watcher.StartWatchingAll();
-        }
-    }
-
-    public interface IAssetFileWatcher
-    {
-        void StartWatchingAll();
-        void StopWatching();
-    }
-
     [Singleton]
     public class AssetFileWatcher : IAssetFileWatcher, IDisposable
     {
