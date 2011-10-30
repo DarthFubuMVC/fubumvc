@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
@@ -164,6 +165,7 @@ namespace FubuMVC.Tests.Registration
             activators[3].Type.ShouldEqual(typeof (MimetypeRegistrationActivator));
             activators[4].Type.ShouldEqual(typeof(AssetCombinationBuildingActivator));
             activators[5].Type.ShouldEqual(typeof (AssetPolicyActivator));
+            activators[6].Type.ShouldEqual(typeof(AssetFileWatchingActivator));
             
         }
 

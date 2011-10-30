@@ -112,6 +112,8 @@
     <Compile Include="Assets\AssetTagPlanCacheTester.cs" />
     <Compile Include="Assets\AssetTagPlannerTester.cs" />
     <Compile Include="Assets\AssetTagWriterTester.cs" />
+    <Compile Include="Assets\Caching\AssetContentCacheTester.cs" />
+    <Compile Include="Assets\Caching\AssetFileWatchingActivatorTester.cs" />
     <Compile Include="Assets\Combination\AssetFileCombinationTester.cs" />
     <Compile Include="Assets\Combination\AssetTagPlanTester.cs" />
     <Compile Include="Assets\Combination\AssetCombinationCacheTester.cs" />

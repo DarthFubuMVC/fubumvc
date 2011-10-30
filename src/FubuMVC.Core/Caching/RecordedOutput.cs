@@ -4,6 +4,7 @@ using System.IO;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
+using System.Linq;
 
 namespace FubuMVC.Core.Caching
 {
@@ -45,6 +46,23 @@ namespace FubuMVC.Core.Caching
         public void Replay(IHttpWriter writer)
         {
             _outputs.Each(x => x.Replay(writer));
+        }
+
+        public void ForHeader(string headerName, Action<string> action)
+        {
+            var header = _outputs.OfType<Header>().Where(x => x.Matches(headerName)).FirstOrDefault();
+            if (header != null)
+            {
+                action(header.Value);
+            }
+        }
+
+        public string GetHeaderValue(string headerName)
+        {
+            string returnValue = null;
+            ForHeader(headerName, val => returnValue = val);
+
+            return returnValue;
         }
 
         public void AddOutput(IRecordedHttpOutput output)

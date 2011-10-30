@@ -19,6 +19,7 @@ namespace FubuMVC.Core.Runtime
 
         void WriteResponseCode(HttpStatusCode status);
         IRecordedOutput Record(Action action);
+        void Replay(IRecordedOutput output);
     }
 
    

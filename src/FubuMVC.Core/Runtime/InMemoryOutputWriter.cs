@@ -39,6 +39,11 @@ namespace FubuMVC.Core.Runtime
             return new RecordedOutput();
         }
 
+        public void Replay(IRecordedOutput output)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RedirectToUrl(string url)
         {
         }

@@ -64,6 +64,14 @@ namespace FubuMVC.Core.Runtime
             return output;
         }
 
+        public void Replay(IRecordedOutput output)
+        {
+            // We're routing the replay thru IOutputWriter to 
+            // make unit testing easier, I think it gives a cleaner
+            // dependency graph, and it makes request tracing work.
+            output.Replay(Writer);
+        }
+
         public virtual void Write(string contentType, string renderedOutput)
         {
             _state.Write(contentType, renderedOutput);

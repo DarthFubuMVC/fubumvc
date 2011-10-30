@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Xml;
 using FubuMVC.Core.Caching;
@@ -22,6 +23,39 @@ namespace FubuMVC.Tests.Caching
         {
             theHttpWriter = MockRepository.GenerateMock<IHttpWriter>();
             theRecordedOutput = new RecordedOutput();
+        }
+
+        [Test]
+        public void get_header_value()
+        {
+            theRecordedOutput.GetHeaderValue(HttpResponseHeaders.ETag).ShouldBeNull();
+
+            theRecordedOutput.AppendHeader(HttpResponseHeaders.ETag, "12345");
+
+            theRecordedOutput.GetHeaderValue(HttpResponseHeaders.ETag).ShouldEqual("12345");
+        }
+
+        [Test]
+        public void for_header_and_the_header_does_not_exist()
+        {
+            Action<string> action = s =>
+            {
+                Assert.Fail("I should not have been called.");
+            };
+
+            theRecordedOutput.ForHeader("Vary", action);
+            
+        }
+
+        [Test]
+        public void for_header_positive_calls_the_continuation_with_the_header_value()
+        {
+            theRecordedOutput.AppendHeader("Vary", "something");
+            var action = MockRepository.GenerateMock<Action<string>>();
+
+            theRecordedOutput.ForHeader("Vary", action);
+
+            action.AssertWasCalled(x => x.Invoke("something"));
         }
 
         [Test]

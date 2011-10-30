@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
@@ -55,6 +56,8 @@ namespace FubuMVC.Core
             _connegAttachmentPolicy = new ConnegAttachmentPolicy(_types);
 
             setupDefaultConventionsAndPolicies();
+
+            Import<AssetServicesRegistry>();
         }
 
 
@@ -163,6 +166,8 @@ namespace FubuMVC.Core
 
             _policies.Configure(graph);
             _systemPolicies.Configure(graph);
+
+            
 
             return graph;
         }

@@ -5,12 +5,6 @@ using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Combination;
-using FubuMVC.Core.Assets.Content;
-using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Http;
-using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
@@ -222,55 +216,10 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IRequestHeaders, RequestHeaders>();
 
-            registerAssetServices(graph);
-            registerActivators(graph);
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);
         }
 
-        // TODO -- this is stupid.  Put some helper methods in here and clean this up.
-        private void registerAssetServices(BehaviorGraph graph)
-        {
-            var pipeline = new AssetPipeline();
-            graph.Services.SetServiceIfNone<IAssetPipeline>(pipeline);
-            graph.Services.SetServiceIfNone<IAssetFileRegistration>(pipeline);
-
-            graph.Services.SetServiceIfNone(new AssetGraph());
-
-            graph.Services.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
-
-            graph.Services.SetServiceIfNone<ICombinationDeterminationService, CombinationDeterminationService>();
-
-            graph.Services.SetServiceIfNone<IAssetCombinationCache, AssetCombinationCache>();
-            graph.Services.SetServiceIfNone<IAssetDependencyFinder, AssetDependencyFinderCache>();
-            graph.Services.SetServiceIfNone<IAssetTagPlanner, AssetTagPlanner>();
-            graph.Services.SetServiceIfNone<IAssetTagBuilder, AssetTagBuilder>();
-            graph.Services.SetServiceIfNone<IAssetRequirements, AssetRequirements>();
-
-            graph.Services.SetServiceIfNone<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
-
-            graph.Services.SetServiceIfNone<IAssetTagPlanCache, AssetTagPlanCache>();
-
-            graph.Services.SetServiceIfNone<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
-
-            graph.Services.SetServiceIfNone<IContentPlanner, ContentPlanner>();
-            graph.Services.SetServiceIfNone<IContentPlanCache, ContentPlanCache>();
-            graph.Services.SetServiceIfNone<IContentPlanExecutor, ContentPlanExecutor>();
-            graph.Services.SetServiceIfNone<IImageWriter, ImageWriter>();
-            graph.Services.SetServiceIfNone<IContentPipeline, ContentPipeline>();
-            graph.Services.SetServiceIfNone<IContentWriter, ContentWriter>();
-        }
-
-
-        private void registerActivators(BehaviorGraph graph)
-        {
-            graph.Services.FillType(typeof (IActivator), typeof (AssetGraphConfigurationActivator));
-            graph.Services.FillType(typeof (IActivator), typeof (AssetPipelineBuilderActivator));
-            graph.Services.FillType(typeof (IActivator), typeof (AssetDeclarationVerificationActivator));
-            graph.Services.FillType(typeof (IActivator), typeof (MimetypeRegistrationActivator));
-            graph.Services.FillType(typeof(IActivator), typeof(AssetCombinationBuildingActivator));
-            graph.Services.FillType(typeof (IActivator), typeof (AssetPolicyActivator));
-        }
 
         private void registerAuthorizationServices(BehaviorGraph graph)
         {

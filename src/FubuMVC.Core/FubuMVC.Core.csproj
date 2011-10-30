@@ -81,7 +81,9 @@
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
-    <Compile Include="Assets\Caching\Classes.cs" />
+    <Compile Include="Assets\AssetServicesRegistry.cs" />
+    <Compile Include="Assets\Caching\AssetCachingClasses.cs" />
+    <Compile Include="Assets\Caching\AssetContentCache.cs" />
     <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Ajax\AjaxContinuation.cs" />
+    <Compile Include="Caching\CachingClasses.cs" />
     <Compile Include="Caching\IRecordedHttpOutput.cs" />
     <Compile Include="Caching\IRecordedOutput.cs" />
     <Compile Include="Caching\SetContentType.cs" />

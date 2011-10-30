@@ -8,39 +8,12 @@ using System.Collections.Generic;
 
 namespace FubuMVC.Core.Assets.Caching
 {
-    /* Issues,
-     * 
-     * 1.) Register IAssetFileWatcher
-     * 2.) Register the AssetFileWatchingActivator
-     * 3.) 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     */
 
     public interface IAssetFileChangeListener
     {
         void Changed(AssetFile file);
     }
 
-    public class AssetContentCache
-    {
-        public void EjectByFile(AssetFile file)
-        {
-            throw new NotImplementedException();
-        }
-
-
-    }
 
     // TODO -- make this editable somewhere
     public class AssetFileMonitoringSettings
@@ -76,7 +49,7 @@ namespace FubuMVC.Core.Assets.Caching
     }
 
     [Singleton]
-    public class AssetFileWatcher : IAssetFileWatcher
+    public class AssetFileWatcher : IAssetFileWatcher, IDisposable
     {
         private readonly IAssetPipeline _pipeline;
         private readonly IAssetFileChangeListener _listener;
@@ -106,6 +79,11 @@ namespace FubuMVC.Core.Assets.Caching
         {
             _watcher.Stop();
             _watcher = null;
+        }
+
+        public void Dispose()
+        {
+            StopWatching();
         }
     }
 }

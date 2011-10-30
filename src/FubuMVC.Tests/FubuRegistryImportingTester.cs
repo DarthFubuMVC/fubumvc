@@ -187,6 +187,11 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
+            public void Replay(IRecordedOutput output)
+            {
+                throw new NotImplementedException();
+            }
+
             public void AppendCookie(HttpCookie cookie)
         	{
         		throw new NotImplementedException();

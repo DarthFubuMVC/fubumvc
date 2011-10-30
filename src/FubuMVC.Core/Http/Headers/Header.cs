@@ -60,5 +60,10 @@ namespace FubuMVC.Core.Http.Headers
         {
             return string.Format("Name: {0}, Value: {1}", Name, Value);
         }
+
+        public bool Matches(string headerName)
+        {
+            return string.Equals(Name, headerName, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }
