@@ -168,6 +168,7 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
+    <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
