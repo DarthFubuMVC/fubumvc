@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuCore.Util;
 
@@ -43,6 +44,11 @@ namespace FubuMVC.Core.Http.Headers
                     yield return new Header(key, _headers[key]);
                 }
             }
+        }
+
+        public static HttpHeaderValues ForETag(string etag)
+        {
+            return new HttpHeaderValues(HttpResponseHeaders.ETag, etag);
         }
     }
 }

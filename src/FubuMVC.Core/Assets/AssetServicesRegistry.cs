@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Bottles;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Combination;
@@ -7,6 +8,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Resources.Etags;
 
 namespace FubuMVC.Core.Assets
 {
@@ -47,6 +49,8 @@ namespace FubuMVC.Core.Assets
             registry.SetServiceIfNone<IContentPipeline, ContentPipeline>();
 
             registry.SetServiceIfNone<IContentWriter, ContentWriter>();
+
+            registry.SetServiceIfNone<IETagGenerator<IEnumerable<AssetFile>>, AssetFileEtagGenerator>();
 
             // TODO -- make this pluggable
             var cache = new AssetContentCache();

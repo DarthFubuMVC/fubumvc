@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuCore;
@@ -51,6 +52,9 @@ namespace FubuMVC.Core.Assets.Files
 
             return name;
         }
+
+        [ResourceHash]
+        public string ResourceHash { get; set; }
 
         public string Name { get; private set; }
         public string Package { get; private set; }

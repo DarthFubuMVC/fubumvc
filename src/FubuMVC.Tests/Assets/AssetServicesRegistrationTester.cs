@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Bottles;
 using FubuMVC.Core;
@@ -9,6 +10,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Resources.Etags;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -164,6 +166,12 @@ namespace FubuMVC.Tests.Assets
         public void content_writer_is_registered()
         {
             registeredTypeIs<IContentWriter, ContentWriter>();
+        }
+
+        [Test]
+        public void the_etag_generator_for_asset_files_is_registered()
+        {
+            registeredTypeIs<IETagGenerator<IEnumerable<AssetFile>>, AssetFileEtagGenerator>();
         }
     }
 }

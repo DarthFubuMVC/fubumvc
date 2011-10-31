@@ -9,7 +9,12 @@ using FubuMVC.Core.Resources.Etags;
 
 namespace FubuMVC.Core.Assets.Caching
 {
-    public class AssetContentCache : IEtagCache, IOutputCache, IAssetFileChangeListener
+    public interface IAssetContentCache
+    {
+        void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files);
+    }
+
+    public class AssetContentCache : IEtagCache, IOutputCache, IAssetFileChangeListener, IAssetContentCache
     {
         private readonly Cache<AssetFile, IList<string>> _fileToResourceLinks = new Cache<AssetFile, IList<string>>(file => new List<string>());
         private readonly Cache<string, IRecordedOutput> _outputs = new Cache<string, IRecordedOutput>();
@@ -17,7 +22,7 @@ namespace FubuMVC.Core.Assets.Caching
 
         public void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files)
         {
-            files.Each(x => _fileToResourceLinks[x].Add(resourceHash));
+            files.Each(x => _fileToResourceLinks[x].Fill(resourceHash));
         }
 
         public IRecordedOutput Retrieve(string resourceHash, Func<IRecordedOutput> cacheMiss)
