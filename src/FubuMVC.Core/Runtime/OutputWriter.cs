@@ -28,28 +28,18 @@ namespace FubuMVC.Core.Runtime
 
         private void revertToNormalWriting()
         {
-            _state = new NormalState(_writer);
+            _state = new NormalState(_writer, _fileSystem);
         }
 
         public virtual void WriteFile(string contentType, string localFilePath, string displayName)
         {
-            Writer.WriteContentType(contentType);
-
-			if (displayName != null)
-			{
-				Writer.AppendHeader("Content-Disposition", "attachment; filename=\"" + displayName+"\"");
-			}
-
-            var fileLength = _fileSystem.FileSizeOf(localFilePath);
-
-			Writer.AppendHeader("Content-Length", fileLength.ToString());
-            Writer.WriteFile(localFilePath);
+            _state.WriteFile(contentType, localFilePath, displayName);
         }
 
 
         public virtual IRecordedOutput Record(Action action)
         {
-            var output = new RecordedOutput();
+            var output = new RecordedOutput(_fileSystem);
             _state = output;
 
             try
@@ -101,40 +91,5 @@ namespace FubuMVC.Core.Runtime
         {
             Writer.WriteResponseCode(status);
         }
-    }
-
-    public class NormalState : IOutputState
-    {
-        private readonly IHttpWriter _writer;
-
-        public NormalState(IHttpWriter writer)
-        {
-            _writer = writer;
-        }
-
-        public void Write(string contentType, string renderedOutput)
-        {
-            _writer.WriteContentType(contentType);
-            _writer.Write(renderedOutput);
-        }
-
-        public void Write(string contentType, Action<Stream> action)
-        {
-            _writer.WriteContentType(contentType);
-            _writer.Write(action);
-        }
-
-        public void AppendHeader(string header, string value)
-        {
-            _writer.AppendHeader(header, value);
-        }
-    }
-
-    interface IOutputState
-    {
-        void Write(string contentType, string renderedOutput);
-        void Write(string contentType, Action<Stream> action);
-
-        void AppendHeader(string header, string value);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Runtime;
@@ -10,7 +11,13 @@ namespace FubuMVC.Core.Caching
 {
     public class RecordedOutput : IOutputState, IRecordedOutput
     {
+        private readonly IFileSystem _fileSystem;
         private readonly IList<IRecordedHttpOutput> _outputs = new List<IRecordedHttpOutput>();
+
+        public RecordedOutput(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
 
         private IRecordedHttpOutput output
         {
@@ -41,6 +48,11 @@ namespace FubuMVC.Core.Caching
         public void AppendHeader(string header, string value)
         {
             output = new Header(header, value);
+        }
+
+        public void WriteFile(string contentType, string localFilePath, string displayName)
+        {
+            output = WriteFileRecord.Create(_fileSystem, localFilePath, contentType, displayName);
         }
 
         public void Replay(IHttpWriter writer)

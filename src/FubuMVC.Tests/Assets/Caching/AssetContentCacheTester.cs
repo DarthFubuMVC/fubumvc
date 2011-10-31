@@ -29,7 +29,7 @@ namespace FubuMVC.Tests.Assets.Caching
 
         private IRecordedOutput getOutputWithEtag(string etag)
         {
-            var output = new RecordedOutput();
+            var output = new RecordedOutput(null);
             output.AppendHeader(HttpResponseHeaders.ETag, etag);
 
             return output;

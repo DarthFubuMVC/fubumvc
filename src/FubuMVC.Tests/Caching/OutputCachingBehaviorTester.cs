@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Caching
                 .Return(theResource);
 
             Services.PartialMockTheClassUnderTest();
-            theGeneratedOutput = new RecordedOutput();
+            theGeneratedOutput = new RecordedOutput(null);
             ClassUnderTest.Expect(x => x.CreateOuput(theResource, ClassUnderTest.Invoker))
                 .Return(theGeneratedOutput);
 
@@ -110,7 +110,7 @@ namespace FubuMVC.Tests.Caching
     {
         public StubOutputWriter() : base(new NulloHttpWriter(), null)
         {
-            Output = new RecordedOutput();
+            Output = new RecordedOutput(null);
 
         }
 

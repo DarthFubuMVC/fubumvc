@@ -5,20 +5,23 @@ namespace FubuMVC.Core.Http
 {
     public class HttpResponseHeaders : HttpGeneralHeaders
     {
-        public static readonly string AcceptRanges = "AcceptRanges";
+        public static readonly string AcceptRanges = "Accept-Ranges";
         public static readonly string Age = "Age";
-        public static readonly string ContentLength = "ContentLength";
-        public static readonly string ContentMd5 = "ContentMd5";
-        public static readonly string ContentType = "ContentType";
+        public static readonly string ContentLength = "Content-Length";
+        public static readonly string ContentMd5 = "Content-Md5";
+        public static readonly string ContentType = "Content-Type";
         public static readonly string ETag = "ETag";
         public static readonly string KeepAlive = "KeepAlive";
         public static readonly string Location = "Location";
-        public static readonly string ProxyAuthenticate = "ProxyAuthenticate";
-        public static readonly string RetryAfter = "RetryAfter";
+        public static readonly string ProxyAuthenticate = "Proxy-Authenticate";
+        public static readonly string ProxyAuthorize = "Proxy-Authorize";
+        public static readonly string RetryAfter = "Retry-After";
         public static readonly string Server = "Server";
-        public static readonly string SetCookie = "SetCookie";
+        public static readonly string SetCookie = "Set-Cookie";
         public static readonly string Vary = "Vary";
-        public static readonly string WwwAuthenticate = "WwwAuthenticate";
+        public static readonly string WwwAuthenticate = "WWW-Authenticate";
+
+        public static readonly string ContentDisposition = "Content-Disposition";
 
         private static readonly Cache<HttpResponseHeader, string> _headerNames = new Cache<HttpResponseHeader, string>();
 

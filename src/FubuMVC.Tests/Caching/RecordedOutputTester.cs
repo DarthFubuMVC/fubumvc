@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Xml;
+using FubuCore;
 using FubuMVC.Core.Caching;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
@@ -22,7 +23,7 @@ namespace FubuMVC.Tests.Caching
         public void SetUp()
         {
             theHttpWriter = MockRepository.GenerateMock<IHttpWriter>();
-            theRecordedOutput = new RecordedOutput();
+            theRecordedOutput = new RecordedOutput(new FileSystem());
         }
 
         [Test]
@@ -152,6 +153,22 @@ namespace FubuMVC.Tests.Caching
             writeStream.Replay(recordingWriter);
 
             recordingWriter.AllText().Trim().ShouldEqual("Hello!");
+        }
+
+        [Test]
+        public void write_file()
+        {
+            new FileSystem().WriteStringToFile("text.txt", "some text");
+
+            theRecordedOutput.WriteFile("text/plain", "text.txt", "This is cool");
+
+            theRecordedOutput.Replay(theHttpWriter);
+
+            theHttpWriter.AssertWasCalled(x => x.WriteContentType("text/plain"));
+            theHttpWriter.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentDisposition, "attachment; filename=\"This is cool\""));
+            theHttpWriter.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, "9"));
+
+            theHttpWriter.AssertWasCalled(x => x.WriteFile("text.txt"));
         }
     }
 }

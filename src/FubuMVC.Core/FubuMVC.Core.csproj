@@ -189,6 +189,7 @@
     <Compile Include="Caching\OutputCachingBehavior.cs" />
     <Compile Include="Caching\OutputCachingNode.cs" />
     <Compile Include="Caching\SetContentType.cs" />
+    <Compile Include="Caching\WriteFileRecord.cs" />
     <Compile Include="Caching\WriteStream.cs" />
     <Compile Include="Caching\WriteText.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
@@ -480,10 +481,12 @@
     <Compile Include="Runtime\IgnoredRoute.cs" />
     <Compile Include="Http\IHttpWriter.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
+    <Compile Include="Runtime\IOutputState.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Http\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
+    <Compile Include="Runtime\NormalState.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Caching\RecordedOutput.cs" />
     <Compile Include="Runtime\SetterBinder.cs" />
