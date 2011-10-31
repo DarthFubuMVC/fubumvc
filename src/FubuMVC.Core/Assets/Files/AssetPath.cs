@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Runtime;
 using FubuCore;
 
 namespace FubuMVC.Core.Assets.Files
 {
-    public class AssetPath
+    public class AssetPath : ResourcePath
     {
         public AssetPath(IEnumerable<string> pathParts) : this(pathParts.Join("/"))
         {
         }
 
-        public AssetPath(string path)
+        public AssetPath(string path) : base(path)
         {
             if (path.Contains(":"))
             {
@@ -30,7 +30,7 @@ namespace FubuMVC.Core.Assets.Files
             readPath(path);
         }
 
-        public AssetPath(string package, string name, AssetFolder? folder)
+        public AssetPath(string package, string name, AssetFolder? folder) : base(name)
         {
             if (package == null) throw new ArgumentNullException("package");
             if (name == null) throw new ArgumentNullException("name");

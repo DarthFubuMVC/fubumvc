@@ -109,6 +109,7 @@
     <Compile Include="Assets\AssetGrouperTester.cs" />
     <Compile Include="Assets\AssetNamesKeyTester.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
+    <Compile Include="Assets\AssetServicesRegistrationTester.cs" />
     <Compile Include="Assets\AssetTagPlanCacheTester.cs" />
     <Compile Include="Assets\AssetTagPlannerTester.cs" />
     <Compile Include="Assets\AssetTagWriterTester.cs" />
@@ -146,9 +147,7 @@
     <Compile Include="Assets\Files\AssetPipelineTester.cs" />
     <Compile Include="Assets\Files\PackageAssetsTester.cs" />
     <Compile Include="Assets\Http\ContentPipelineTester.cs" />
-    <Compile Include="Assets\Http\ContentPlanExecutorTester.cs" />
     <Compile Include="Assets\Http\ContentWriterTester.cs" />
-    <Compile Include="Assets\Http\ImageWriterTester.cs" />
     <Compile Include="Assets\MimetypeRegistrationActivatorTester.cs" />
     <Compile Include="Assets\MissingAssetTagSubjectTester.cs" />
     <Compile Include="Assets\RecordingAssetRegistrationTester.cs" />

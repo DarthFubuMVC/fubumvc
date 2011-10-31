@@ -89,6 +89,7 @@
     <Compile Include="Assets\Caching\IAssetFileChangeListener.cs" />
     <Compile Include="Assets\Caching\IAssetFileWatcher.cs" />
     <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
+    <Compile Include="Assets\Content\IContentPlanCache.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvoker.cs" />
@@ -104,7 +105,6 @@
     <Compile Include="Assets\AssetDependency.cs" />
     <Compile Include="Assets\AssetDependencyFinderCache.cs" />
     <Compile Include="Assets\AssetPolicyActivator.cs" />
-    <Compile Include="Assets\Http\AssetContentHandler.cs" />
     <Compile Include="Assets\AssetGraph.cs" />
     <Compile Include="Assets\AssetNamesKey.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivator.cs" />
@@ -131,7 +131,6 @@
     <Compile Include="Assets\Content\Combination.cs" />
     <Compile Include="Assets\Content\ContentPlanCache.cs" />
     <Compile Include="Assets\Content\ContentPlanner.cs" />
-    <Compile Include="Assets\Content\IContentPlanCache.cs" />
     <Compile Include="Assets\Content\IContentPlanner.cs" />
     <Compile Include="Assets\Content\IContentPlanVisitor.cs" />
     <Compile Include="Assets\Content\ITransformer.cs" />
@@ -153,14 +152,7 @@
     <Compile Include="Assets\Files\IAssetPipeline.cs" />
     <Compile Include="Assets\Files\PackageAssets.cs" />
     <Compile Include="Assets\Content\ContentPipeline.cs" />
-    <Compile Include="Assets\Http\AssetHttpHandler.cs" />
-    <Compile Include="Assets\Http\ContentPlanExecutor.cs" />
     <Compile Include="Assets\Http\ContentWriter.cs" />
-    <Compile Include="Assets\Http\IContentPlanExecutor.cs" />
-    <Compile Include="Assets\Http\IContentWriter.cs" />
-    <Compile Include="Assets\Http\IImageWriter.cs" />
-    <Compile Include="Assets\Http\ImageWriter.cs" />
-    <Compile Include="Assets\Http\ProcessContentAction.cs" />
     <Compile Include="Assets\IAssetDependencyFinder.cs" />
     <Compile Include="Assets\IAssetRegistration.cs" />
     <Compile Include="Assets\IAssetTagPlanCache.cs" />
@@ -230,6 +222,7 @@
     <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
     <Compile Include="Registration\Nodes\BehaviorNode.ObjectDef.cs" />
+    <Compile Include="Registration\Nodes\Process.cs" />
     <Compile Include="Resources\ConnegGraph.cs" />
     <Compile Include="Resources\Conneg\BehaviorChainConnegExtensions.cs" />
     <Compile Include="Resources\Conneg\ConnegInputBehavior.cs" />
@@ -485,13 +478,11 @@
     <Compile Include="Http\IHttpWriter.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />
     <Compile Include="Runtime\IPartialFactory.cs" />
-    <Compile Include="Runtime\IResponseCaching.cs" />
     <Compile Include="Runtime\ISessionState.cs" />
     <Compile Include="Http\IStreamingData.cs" />
     <Compile Include="Runtime\IJsonWriter.cs" />
     <Compile Include="Runtime\OutputWriterExtensions.cs" />
     <Compile Include="Caching\RecordedOutput.cs" />
-    <Compile Include="Runtime\ResponseCaching.cs" />
     <Compile Include="Runtime\SetterBinder.cs" />
     <Compile Include="Runtime\UnknownExtensionException.cs" />
     <Compile Include="Security\AllowRole.cs" />

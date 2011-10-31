@@ -190,12 +190,6 @@ namespace FubuMVC.Core
             // Build route objects from route definitions on graph + add packaging routes
             _facility.Value.Get<IRoutePolicy>().BuildRoutes(graph, factory).Each(routes.Add);
 
-
-
-
-            var contentHandler = new AssetContentHandler(() => _facility.Value.Get<IContentWriter>());
-            routes.Add(contentHandler.BuildRoute());
-
             return routes;
         }
 

@@ -44,9 +44,8 @@ namespace FubuMVC.Core.Assets
 
             registry.SetServiceIfNone<IContentPlanner, ContentPlanner>();
             registry.SetServiceIfNone<IContentPlanCache, ContentPlanCache>();
-            registry.SetServiceIfNone<IContentPlanExecutor, ContentPlanExecutor>();
-            registry.SetServiceIfNone<IImageWriter, ImageWriter>();
             registry.SetServiceIfNone<IContentPipeline, ContentPipeline>();
+
             registry.SetServiceIfNone<IContentWriter, ContentWriter>();
 
             // TODO -- make this pluggable

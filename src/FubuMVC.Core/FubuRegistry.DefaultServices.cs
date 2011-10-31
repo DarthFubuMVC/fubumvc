@@ -143,7 +143,6 @@ namespace FubuMVC.Core
 
 
             graph.Services.SetServiceIfNone<IOutputWriter, OutputWriter>();
-            graph.Services.SetServiceIfNone<IResponseCaching, ResponseCaching>();
 
             graph.Services.SetServiceIfNone<IUrlRegistry, UrlRegistry>();
             graph.Services.SetServiceIfNone<IUrlTemplatePattern, NulloUrlTemplate>();

@@ -129,5 +129,10 @@ namespace FubuMVC.Tests.Assets.Caching
         {
             return _files;
         }
+
+        public AssetFile Find(AssetPath path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

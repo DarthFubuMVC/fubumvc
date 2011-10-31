@@ -1,49 +1,61 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Assets.Http
 {
+    public interface IContentWriter
+    {
+        IEnumerable<AssetFile> Write(AssetPath asset);
+    }
+
     public class ContentWriter : IContentWriter
     {
-        private readonly IImageWriter _images;
-        private readonly IContentPlanExecutor _executor;
-        private readonly IResponseCaching _caching;
+        private readonly IAssetPipeline _pipeline;
+        private readonly IContentPlanCache _cache;
+        private readonly IContentPipeline _contentPipeline;
         private readonly IOutputWriter _writer;
 
-        public ContentWriter(IImageWriter images, IContentPlanExecutor executor, IResponseCaching caching, IOutputWriter writer)
+        public ContentWriter(IAssetPipeline pipeline, IContentPlanCache cache, IContentPipeline contentPipeline,
+                             IOutputWriter writer)
         {
-            _images = images;
-            _executor = executor;
-            _caching = caching;
+            _pipeline = pipeline;
+            _cache = cache;
+            _contentPipeline = contentPipeline;
             _writer = writer;
         }
 
-        public void WriteContent(IEnumerable<string> routeParts)
+        public IEnumerable<AssetFile> Write(AssetPath asset)
         {
-            var path = new AssetPath(routeParts);
-
-
-
-            if (path.IsImage())
+            if (asset.IsImage())
             {
-                _images.WriteImageToOutput(path.ToFullName());
+                return writeBinary(asset);
             }
-            else
-            {
-                // TODO -- have to deal with the [package]:scripts/
-                // think it'll just be testing
-                _executor.Execute(path, (contents, files) =>
-                {
-                    _caching.CacheRequestAgainstFileChanges(files.Select(x => x.FullPath));
-                    _writer.Write(files.First().MimeType, contents);
-                });
-            }
-
             
+            // TODO -- have to deal with the [package]:scripts/
+            // think it'll just be testing
+            return writeTextualAsset(asset);
         }
 
-        
+        private IEnumerable<AssetFile> writeTextualAsset(AssetPath asset)
+        {
+            var source = _cache.SourceFor(asset);
+            var contents = source.GetContent(_contentPipeline);
+
+            _writer.Write(source.Files.First().MimeType, contents);
+
+            return source.Files;
+        }
+
+        private IEnumerable<AssetFile> writeBinary(AssetPath asset)
+        {
+            var file = _pipeline.Find(asset);
+            _writer.WriteFile(file.MimeType, file.FullPath, null);
+
+            return new AssetFile[]{file};
+        }
     }
 }

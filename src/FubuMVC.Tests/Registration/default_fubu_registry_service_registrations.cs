@@ -3,19 +3,10 @@ using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Caching;
-using FubuMVC.Core.Assets.Combination;
-using FubuMVC.Core.Assets.Content;
-using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Http;
-using FubuMVC.Core.Assets.Tags;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Runtime;
@@ -41,21 +32,9 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void default_binding_logger_is_nullo()
-        {
-            registeredTypeIs<IBindingLogger, NulloBindingLogger>();
-        }
-
-        [Test]
         public void BindingContext_is_registered()
         {
             registeredTypeIs<IBindingContext, BindingContext>();
-        }
-
-        [Test]
-        public void ContentPipeline_is_registered()
-        {
-            registeredTypeIs<IContentPipeline, ContentPipeline>();
         }
 
         [Test]
@@ -101,21 +80,15 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void IResponseCaching_is_registered()
+        public void IRequestHeader_is_registered()
         {
-            registeredTypeIs<IResponseCaching, ResponseCaching>();
+            registeredTypeIs<IRequestHeaders, RequestHeaders>();
         }
 
         [Test]
         public void ISecurityContext_is_registered()
         {
             registeredTypeIs<ISecurityContext, WebSecurityContext>();
-        }
-
-        [Test]
-        public void ImageWriter_is_configured()
-        {
-            registeredTypeIs<IImageWriter, ImageWriter>();
         }
 
 
@@ -132,86 +105,6 @@ namespace FubuMVC.Tests.Registration
                 .Any(x => x.Type == typeof (PackageFileActivator)).ShouldBeTrue();
         }
 
-        [Test]
-        public void asset_combination_cache_is_registered_as_a_singleton()
-        {
-            registeredTypeIs<IAssetCombinationCache, AssetCombinationCache>();
-            ServiceRegistry.ShouldBeSingleton(typeof (AssetCombinationCache)).ShouldBeTrue();
-        }
-
-        [Test]
-        public void asset_dependency_finder_should_be_registered_as_a_singleton()
-        {
-            registeredTypeIs<IAssetDependencyFinder, AssetDependencyFinderCache>();
-            ServiceRegistry.ShouldBeSingleton(typeof (AssetDependencyFinderCache))
-                .ShouldBeTrue();
-        }
-
-        [Test]
-        public void asset_graph_and_pipeline_activators_are_registered_in_the_correct_order()
-        {
-            var activators = new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>().ToList();
-
-            activators.Any(x => x.Type == typeof (AssetGraphConfigurationActivator)).ShouldBeTrue();
-            activators.Any(x => x.Type == typeof (AssetPipelineBuilderActivator)).ShouldBeTrue();
-            activators.Any(x => x.Type == typeof (AssetDeclarationVerificationActivator)).ShouldBeTrue();
-            activators.Any(x => x.Type == typeof (AssetPolicyActivator)).ShouldBeTrue();
-
-            activators.RemoveAll(x => !x.Type.Namespace.Contains(typeof (AssetGraph).Namespace));
-
-            activators[0].Type.ShouldEqual(typeof (AssetGraphConfigurationActivator));
-            activators[1].Type.ShouldEqual(typeof (AssetPipelineBuilderActivator));
-            activators[2].Type.ShouldEqual(typeof (AssetDeclarationVerificationActivator));
-            activators[3].Type.ShouldEqual(typeof (MimetypeRegistrationActivator));
-            activators[4].Type.ShouldEqual(typeof(AssetCombinationBuildingActivator));
-            activators[5].Type.ShouldEqual(typeof (AssetPolicyActivator));
-            activators[6].Type.ShouldEqual(typeof(AssetFileWatchingActivator));
-            
-        }
-
-        [Test]
-        public void asset_pipeline_is_registered_as_both_IAssetPipeline_and_IAssetFileRegistration_as_the_same_instance()
-        {
-            var services = new FubuRegistry().BuildGraph().Services;
-            var pipeline1 = services.DefaultServiceFor<IAssetPipeline>().Value.ShouldBeOfType<AssetPipeline>();
-            var pipeline2 = services.DefaultServiceFor<IAssetFileRegistration>().Value.ShouldBeOfType<AssetPipeline>();
-
-            pipeline1.ShouldNotBeNull();
-            pipeline2.ShouldNotBeNull();
-
-            pipeline1.ShouldBeTheSameAs(pipeline2);
-        }
-
-        [Test]
-        public void asset_requirements_are_registered()
-        {
-            registeredTypeIs<IAssetRequirements, AssetRequirements>();
-        }
-
-        [Test]
-        public void asset_tag_builder_is_registered()
-        {
-            registeredTypeIs<IAssetTagBuilder, AssetTagBuilder>();
-        }
-
-        [Test]
-        public void asset_tag_plan_cache_is_registered_as_a_singleton()
-        {
-            registeredTypeIs<IAssetTagPlanCache, AssetTagPlanCache>();
-            ServiceRegistry.ShouldBeSingleton(typeof (AssetTagPlanCache)).ShouldBeTrue();
-        }
-
-        [Test]
-        public void asset_tag_planner_is_registered()
-        {
-            registeredTypeIs<IAssetTagPlanner, AssetTagPlanner>();
-        }
-
-        [Test]
-        public void asset_tag_write_is_registered()
-        {
-            registeredTypeIs<IAssetTagWriter, AssetTagWriter>();
-        }
 
         [Test]
         public void authorization_preview_service_is_registered()
@@ -220,46 +113,22 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void by_default_the_missing_asset_handler_is_traceonle()
-        {
-            registeredTypeIs<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
-        }
-
-        [Test]
         public void chain_authorizor_is_registered()
         {
             registeredTypeIs<IChainAuthorizor, ChainAuthorizor>();
         }
 
-        [Test]
-        public void combination_determination_service_is_registered()
-        {
-            registeredTypeIs<ICombinationDeterminationService, CombinationDeterminationService>();
-        }
-
-        [Test]
-        public void content_plan_cache_is_registered_as_a_singleton()
-        {
-            registeredTypeIs<IContentPlanCache, ContentPlanCache>();
-            ServiceRegistry.ShouldBeSingleton(typeof (ContentPlanCache));
-        }
-
-        [Test]
-        public void content_plan_executor_is_registered()
-        {
-            registeredTypeIs<IContentPlanExecutor, ContentPlanExecutor>();
-        }
-
-        [Test]
-        public void content_planner_is_registered()
-        {
-            registeredTypeIs<IContentPlanner, ContentPlanner>();
-        }
 
         [Test]
         public void default_authorization_failure_handler_is_registered()
         {
             registeredTypeIs<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+        }
+
+        [Test]
+        public void default_binding_logger_is_nullo()
+        {
+            registeredTypeIs<IBindingLogger, NulloBindingLogger>();
         }
 
         [Test]
@@ -296,18 +165,6 @@ namespace FubuMVC.Tests.Registration
         public void file_system_is_registered()
         {
             registeredTypeIs<IFileSystem, FileSystem>();
-        }
-
-        [Test]
-        public void icontent_writer_is_registered()
-        {
-            registeredTypeIs<IContentWriter, ContentWriter>();
-        }
-
-        [Test]
-        public void iscriptwriter_is_registered_to_the_basic_writer()
-        {
-            registeredTypeIs<IAssetTagWriter, AssetTagWriter>();
         }
 
         [Test]
@@ -359,16 +216,9 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void script_graph_is_registered()
+        public void setter_binder_is_registered()
         {
-            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<AssetGraph>().Value.ShouldNotBeNull();
-        }
-
-        [Test]
-        public void should_be_a_script_configuration_activator_registered_as_a_service()
-        {
-            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
-                .Any(x => x.Type == typeof (AssetGraphConfigurationActivator)).ShouldBeTrue();
+            registeredTypeIs<ISetterBinder, SetterBinder>();
         }
 
         [Test]
@@ -378,15 +228,16 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void transformer_library_is_registered()
-        {
-            registeredTypeIs<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
-        }
-
-        [Test]
         public void url_registry_is_registered()
         {
             registeredTypeIs<IUrlRegistry, UrlRegistry>();
+        }
+
+        [Test]
+        public void value_source_is_registered()
+        {
+            var services = new FubuRegistry().BuildGraph().Services;
+            services.DefaultServiceFor(typeof (IValueSource<>)).Type.ShouldEqual(typeof (ValueSource<>));
         }
 
         [Test]
@@ -394,25 +245,6 @@ namespace FubuMVC.Tests.Registration
         {
             var services = new FubuRegistry().BuildGraph().Services;
             services.DefaultServiceFor(typeof (IValues<>)).Type.ShouldEqual(typeof (SimpleValues<>));
-        }
-
-        [Test]
-        public void value_source_is_registered()
-        {
-            var services = new FubuRegistry().BuildGraph().Services;
-            services.DefaultServiceFor(typeof(IValueSource<>)).Type.ShouldEqual(typeof(ValueSource<>));
-        }
-
-        [Test]
-        public void setter_binder_is_registered()
-        {
-            registeredTypeIs<ISetterBinder, SetterBinder>();
-        }
-
-        [Test]
-        public void IRequestHeader_is_registered()
-        {
-            registeredTypeIs<IRequestHeaders, RequestHeaders>();
         }
     }
 }

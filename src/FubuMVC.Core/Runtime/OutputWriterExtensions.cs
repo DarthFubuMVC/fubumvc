@@ -20,6 +20,11 @@ namespace FubuMVC.Core.Runtime
             writer.Write(mimeType.Value, contents);
         }
 
+        public static void WriteFile(this IOutputWriter writer, MimeType contentType, string localFilePath, string displayName)
+        {
+            writer.WriteFile(contentType.Value, localFilePath, displayName);
+        }
+
         public static void AppendHeader(this IOutputWriter writer, HttpResponseHeader header, string value)
         {
             writer.AppendHeader(HttpResponseHeaders.HeaderNameFor(header), value);
