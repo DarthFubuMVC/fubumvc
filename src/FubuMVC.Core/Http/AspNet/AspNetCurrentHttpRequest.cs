@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Web;
+using FubuCore;
 
 namespace FubuMVC.Core.Http.AspNet
 {
@@ -23,9 +24,21 @@ namespace FubuMVC.Core.Http.AspNet
             return _request.PathInfo;
         }
 
-        public string ApplicationRoot()
+        public string ToFullUrl(string url)
         {
-            return _request.ApplicationPath.TrimEnd('/');
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
+            if (url.IsEmpty())
+            {
+                url = "~/";
+            }
+            else
+            {
+                url = "~/" + url.TrimStart('/');
+            }
+
+            
+
+            return VirtualPathUtility.ToAbsolute(url).TrimEnd('/');
         }
 
         public string HttpMethod()

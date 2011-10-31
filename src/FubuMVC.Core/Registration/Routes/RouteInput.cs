@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Registration.Routes
         private readonly List<RouteParameter> _queryParameters = new List<RouteParameter>();
         private readonly List<RouteParameter> _routeParameters = new List<RouteParameter>();
 
+
         public RouteInput(RouteDefinition parent)
         {
             _parent = parent;
@@ -114,12 +115,14 @@ namespace FubuMVC.Core.Registration.Routes
         }
 
 
+
         public void AlterRoute(Route route)
         {
             var defaults = new RouteValueDictionary();
 
-            _routeParameters.Where(r => r.DefaultValue != null).Each(
-                input => defaults.Add(input.Name, input.DefaultValue));
+            _routeParameters
+                .Where(r => r.DefaultValue != null)
+                .Each(input => defaults.Add(input.Name, input.DefaultValue));
 
             route.Defaults = defaults;
         }

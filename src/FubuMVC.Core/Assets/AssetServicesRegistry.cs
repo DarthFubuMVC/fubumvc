@@ -36,6 +36,7 @@ namespace FubuMVC.Core.Assets
                 BehaviorChain chain = createAssetContentChain(graph);
 
                 addETagSupport(chain);
+                chain.AddToEnd(new ContinuationNode());
                 addCaching(chain);
                 addWritingAction(chain);
             });

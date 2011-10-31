@@ -15,10 +15,11 @@ namespace FubuMVC.Core.Http
         string RelativeUrl();
 
         /// <summary>
-        ///   Base root of the application
+        /// Gets the full url
         /// </summary>
+        /// <param name="url"></param>
         /// <returns></returns>
-        string ApplicationRoot();
+        string ToFullUrl(string url);
 
         string HttpMethod();
     }

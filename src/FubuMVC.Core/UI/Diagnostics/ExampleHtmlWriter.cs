@@ -35,7 +35,7 @@ namespace FubuMVC.Core.UI.Diagnostics
             _behaviorGraph = behaviorGraph;
             _httpRequest = httpRequest;
 
-            _examplePageUrl = "_fubu/html/example".ToAbsoluteUrl(httpRequest.ApplicationRoot());
+            _examplePageUrl = httpRequest.ToFullUrl("_fubu/html/example");
         }
 
         [UrlPattern("_fubu/html"), Description("Demonstrates effects of current HTML conventions")]
@@ -53,7 +53,7 @@ namespace FubuMVC.Core.UI.Diagnostics
                 .Where(b => b.HasOutputBehavior() && !b.ActionOutputType().IsSimple())
                 .Where(b => b.Outputs.Select(o => o.GetType()).Except(ignoredModels).Any() )
                 .OrderBy(b => b.GetRoutePattern()),
-                new RouteColumn(_httpRequest.ApplicationRoot()),
+                new RouteColumn(_httpRequest),
                 new OutputModelColumn(_examplePageUrl),
                 new OutputColumn());
             tags.Add(table);

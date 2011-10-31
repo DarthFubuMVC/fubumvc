@@ -1,21 +1,17 @@
-using System;
-using System.Web.Routing;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.Routes;
 using HtmlTags;
-using System.Linq;
-using FubuCore;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class RouteColumn : IColumn
     {
-        private readonly string _applicationRoot;
+        private readonly ICurrentHttpRequest _request;
 
-        public RouteColumn(string applicationRoot)
+        public RouteColumn(ICurrentHttpRequest request)
         {
-            _applicationRoot = applicationRoot;
+            _request = request;
         }
 
         public string Header()
@@ -28,7 +24,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             var text = Text(chain);
             if (shouldBeClickable(chain))
             {
-                cell.Append(new LinkTag(text, chain.Route.Pattern.ToAbsoluteUrl(_applicationRoot)).AddClass("route-link"));
+                cell.Append(new LinkTag(text, _request.ToFullUrl(chain.Route.Pattern)).AddClass("route-link"));
             }
             else
             {
@@ -40,6 +36,23 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             }
         }
 
+        public string Text(BehaviorChain chain)
+        {
+            if (chain.Route == null) return " -";
+
+            var pattern = chain.Route.Pattern;
+            if (pattern == string.Empty)
+            {
+                pattern = "(default)";
+            }
+
+            //var httpMethodConstraint = chain.Route.Constraints.Where(kv => kv.Key == RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT).Select(kv => kv.Value).FirstOrDefault() as HttpMethodConstraint;
+            //var methodList = httpMethodConstraint == null ? string.Empty : "[" + httpMethodConstraint.AllowedMethods.Join(",") + "] ";
+            //return methodList + pattern;
+
+            return pattern;
+        }
+
         private bool shouldBeClickable(BehaviorChain chain)
         {
             if (chain.IsPartialOnly) return false;
@@ -48,24 +61,6 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
             if (chain.Route == null) return false;
 
             return chain.Route.RespondsToGet();
-
-        }
-
-        public string Text(BehaviorChain chain)
-        {
-            if (chain.Route == null) return " -";
-
-            var pattern = chain.Route.Pattern;
-            if( pattern == string.Empty)
-            {
-                pattern = "(default)";
-            }
-            
-            //var httpMethodConstraint = chain.Route.Constraints.Where(kv => kv.Key == RouteConstraintPolicy.HTTP_METHOD_CONSTRAINT).Select(kv => kv.Value).FirstOrDefault() as HttpMethodConstraint;
-            //var methodList = httpMethodConstraint == null ? string.Empty : "[" + httpMethodConstraint.AllowedMethods.Join(",") + "] ";
-            //return methodList + pattern;
-
-            return pattern;
         }
     }
 }

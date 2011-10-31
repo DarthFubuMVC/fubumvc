@@ -9,6 +9,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.StructureMap;
+using FubuMVC.Tests.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -97,6 +98,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest("http://server"));
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();

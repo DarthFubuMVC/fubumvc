@@ -3,6 +3,7 @@ using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Caching;
+using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -100,6 +101,13 @@ namespace FubuMVC.Tests.Assets.Http
         {
             theChain.OfType<Process>().Any(x => x.BehaviorType == typeof (WriteHeadersBehavior))
                 .ShouldBeTrue();
+        }
+
+        [Test]
+        public void there_is_a_fubu_continuation_handler_right_after_the_etag_handler()
+        {
+            theChain.First().ShouldBeOfType<IfNoneMatchNode>()
+                .Next.ShouldBeOfType<ContinuationNode>();
         }
     }
 }

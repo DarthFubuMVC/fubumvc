@@ -8,6 +8,7 @@ using FubuMVC.Core.Resources.PathBased;
 using FubuTestingSupport;
 using NUnit.Framework;
 using SpecificationExtensions = FubuTestingSupport.SpecificationExtensions;
+using FubuCore;
 
 namespace FubuMVC.Tests.Resources.PathBased
 {
@@ -16,10 +17,13 @@ namespace FubuMVC.Tests.Resources.PathBased
     {
         private AggregateDictionary theAggregateDictionary;
         private Dictionary<string, object> theRouteValues;
+        private StandardModelBinder theBinder;
 
         [SetUp]
         public void SetUp()
         {
+            theBinder = StandardModelBinder.Basic().As<StandardModelBinder>();
+
             theAggregateDictionary = new AggregateDictionary();
 
             var otherDictionary = new Dictionary<string, object>();
@@ -44,7 +48,7 @@ namespace FubuMVC.Tests.Resources.PathBased
             locator.Stub(theAggregateDictionary);
             var context = new BindingContext(new RequestData(theAggregateDictionary), locator, new NulloBindingLogger());
 
-            return (ResourcePath) new ResourcePathBinder().Bind(typeof (ResourcePath), context);
+            return (ResourcePath)new ResourcePathBinder(theBinder).Bind(typeof(ResourcePath), context);
         }
 
         [Test]
@@ -58,21 +62,21 @@ namespace FubuMVC.Tests.Resources.PathBased
         [Test]
         public void matches_subclass_of_resource_path()
         {
-            new ResourcePathBinder().Matches(typeof(SpecialPath))
+            new ResourcePathBinder(theBinder).Matches(typeof(SpecialPath))
                 .ShouldBeTrue();
         }
 
         [Test]
         public void matches_ResourcePath_itself()
         {
-            new ResourcePathBinder().Matches(typeof(ResourcePath))
+            new ResourcePathBinder(theBinder).Matches(typeof(ResourcePath))
                 .ShouldBeTrue();
         }
 
         [Test]
         public void does_not_match_on_a_non_resource_path_class()
         {
-            new ResourcePathBinder().Matches(GetType())
+            new ResourcePathBinder(theBinder).Matches(GetType())
                 .ShouldBeFalse();
         }
 

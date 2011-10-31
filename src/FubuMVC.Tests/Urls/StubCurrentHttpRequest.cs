@@ -1,4 +1,5 @@
 using FubuMVC.Core.Http;
+using FubuCore;
 
 namespace FubuMVC.Tests.Urls
 {
@@ -19,9 +20,9 @@ namespace FubuMVC.Tests.Urls
             return TheRelativeUrl;
         }
 
-        public string ApplicationRoot()
+        public string ToFullUrl(string url)
         {
-            return TheApplicationRoot;
+            return url.ToAbsoluteUrl(TheApplicationRoot);
         }
 
         public string HttpMethod()

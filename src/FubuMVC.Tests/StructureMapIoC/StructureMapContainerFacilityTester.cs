@@ -15,6 +15,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
+using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Packaging;
 using FubuMVC.Tests.Registration;
 using FubuMVC.WebForms;
@@ -40,6 +41,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest("http://server"));
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());

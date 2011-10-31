@@ -10,6 +10,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
+using FubuMVC.Tests.Diagnostics;
 using FubuMVC.Tests.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -56,6 +57,8 @@ namespace FubuMVC.Tests
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<ICurrentChain>().Use(new CurrentChain(null, null));
+                x.For<ICurrentHttpRequest>().Use(new StubCurrentHttpRequest("http://server"));
+                
             });
 
             routes = FubuApplication.For(registry)

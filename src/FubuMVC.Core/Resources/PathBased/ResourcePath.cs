@@ -25,5 +25,6 @@ namespace FubuMVC.Core.Resources.PathBased
             var baseUrl = basePattern.Contains(UrlSuffix) ? basePattern.Replace(UrlSuffix, "") : basePattern;
             return (baseUrl + "/" + _path).Trim('/').Replace("//", "/");
         }
+
     }
 }

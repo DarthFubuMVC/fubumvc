@@ -1,3 +1,4 @@
+using System;
 using FubuCore;
 using FubuMVC.Core.Http;
 using Gate.Helpers;
@@ -7,10 +8,12 @@ namespace FubuMVC.OwinHost
     public class OwinCurrentHttpRequest : ICurrentHttpRequest
     {
         private readonly Request _request;
+        private readonly Lazy<string> _baseUrl;
 
         public OwinCurrentHttpRequest(Request request)
         {
             _request = request;
+            _baseUrl = new Lazy<string>(() => _request.HostWithPort + "/" + _request.PathBase.TrimEnd('/'));
         }
 
         public string RawUrl()
@@ -23,10 +26,9 @@ namespace FubuMVC.OwinHost
             return _request.Path;
         }
 
-        public string ApplicationRoot()
+        public string ToFullUrl(string url)
         {
-            // TODO move to a lazy
-            return _request.HostWithPort + "/" + _request.PathBase.TrimEnd('/');
+            return url.ToAbsoluteUrl(_baseUrl.Value);
         }
 
         public string HttpMethod()

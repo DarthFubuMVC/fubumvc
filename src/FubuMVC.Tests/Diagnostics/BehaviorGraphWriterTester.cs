@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Diagnostics
             graph = new FubuRegistry().BuildGraph();
             urls = MockRepository.GenerateMock<IUrlRegistry>();
             
-            writer = new BehaviorGraphWriter(graph, urls, null, new StubCurrentHttpRequest());
+            writer = new BehaviorGraphWriter(graph, urls, null, new StubCurrentHttpRequest("http://server"));
         }
 
         #endregion

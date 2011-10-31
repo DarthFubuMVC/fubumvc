@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using HtmlTags;
@@ -25,7 +23,7 @@ namespace FubuMVC.Core.Assets.Tags
                 var url = "missing/assets/" + s.Name;
                 return new HtmlTag("script")
                     .Attr("type", MimeType.Javascript.Value)
-                    .Attr("src", url.ToAbsoluteUrl(_httpRequest.ApplicationRoot()));
+                    .Attr("src", _httpRequest.ToFullUrl(url));
             });
         }
     }

@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuMVC.Core.Http;
-using FubuMVC.Diagnostics.Core.Infrastructure;
 
 namespace FubuMVC.Diagnostics.Navigation
 {
@@ -25,14 +22,13 @@ namespace FubuMVC.Diagnostics.Navigation
                 .ThenBy(a => a.Text())
                 .Select(a =>
                 {
-                    var url = a.Url().ToAbsoluteUrl(_httpRequest.ApplicationRoot());
+                    var url = _httpRequest.ToFullUrl(a.Url());
                     if (url.EndsWith("/"))
                     {
                         url = url.TrimEnd('/');
                     }
 
-                    return new NavigationMenuItem
-                    {
+                    return new NavigationMenuItem{
                         Text = a.Text(),
                         Url = a.Url(),
                         IsActive = url.Equals(_httpRequest.RawUrl())

@@ -43,19 +43,23 @@ namespace FubuMVC.Core.Urls
         public string UrlFor(Type modelType, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType);
-            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_httpRequest.ApplicationRoot());
+            string url = chain.Route.Input.CreateUrlFromParameters(parameters);
+
+            return _httpRequest.ToFullUrl(url);
         }
 
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
         {
             var chain = resolver.FindUniqueByInputType(modelType, category);
-            return chain.Route.Input.CreateUrlFromParameters(parameters).ToAbsoluteUrl(_httpRequest.ApplicationRoot());
+            string url = chain.Route.Input.CreateUrlFromParameters(parameters);
+
+            return _httpRequest.ToFullUrl(url);
         }
 
         public string UrlForAsset(AssetFolder? folder, string name)
         {
             var relativeUrl = DetermineRelativeAssetUrl(folder, name);
-            return relativeUrl.ToAbsoluteUrl(_httpRequest.ApplicationRoot());
+            return _httpRequest.ToFullUrl(relativeUrl);
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
@@ -107,7 +111,8 @@ namespace FubuMVC.Core.Urls
 
         protected override string createResult(object model, BehaviorChain chain)
         {
-            return chain.Route.CreateUrlFromInput(model).ToAbsoluteUrl(_httpRequest.ApplicationRoot());
+            string urlFromInput = chain.Route.CreateUrlFromInput(model);
+            return _httpRequest.ToFullUrl(urlFromInput);
         }
 
         public string UrlFor<TInput>(RouteParameters parameters)
@@ -125,8 +130,8 @@ namespace FubuMVC.Core.Urls
         {
             var chain = resolver.FindUnique(model);
 
-            return _templateFunc(chain.Route.CreateTemplate(model, hash))
-                .ToAbsoluteUrl(_httpRequest.ApplicationRoot());
+            string url = _templateFunc(chain.Route.CreateTemplate(model, hash));
+            return _httpRequest.ToFullUrl(url);
         }
 
         /// <summary>

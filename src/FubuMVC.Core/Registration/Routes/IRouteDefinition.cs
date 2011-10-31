@@ -30,6 +30,7 @@ namespace FubuMVC.Core.Registration.Routes
         string CreateUrlFromInput(object input);
         void AddHttpMethodConstraint(string method);
         bool RespondsToGet();
+        void RegisterRouteCustomization(Action<Route> action);
     }
 
     public static class RouteDefinitionExtensions

@@ -260,7 +260,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             get
             {
-                return new RouteColumn(_httpRequest.ApplicationRoot());
+                return new RouteColumn(_httpRequest);
             }
         }
 

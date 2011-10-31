@@ -1,15 +1,48 @@
+using System;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Diagnostics.HtmlWriting.Columns;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Routes;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
+using FubuCore;
 
 namespace FubuMVC.Tests.Diagnostics
 {
+    public class StubCurrentHttpRequest : ICurrentHttpRequest
+    {
+        private readonly string _baseUrl;
+
+        public StubCurrentHttpRequest(string baseUrl)
+        {
+            _baseUrl = baseUrl;
+        }
+
+        public string RawUrl()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RelativeUrl()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ToFullUrl(string url)
+        {
+            return url.ToAbsoluteUrl(_baseUrl);
+        }
+
+        public string HttpMethod()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     [TestFixture]
     public class RouteColumnTester
     {
@@ -20,7 +53,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             var tag = new HtmlTag("td");
 
-            new RouteColumn("http://server").WriteBody(chain, null, tag);
+            new RouteColumn(new StubCurrentHttpRequest("http://server")).WriteBody(chain, null, tag);
 
             tag.Text().ShouldEqual(" -");
         }
@@ -34,7 +67,7 @@ namespace FubuMVC.Tests.Diagnostics
             var row = new TableRowTag();
             var tag = row.Cell();
 
-            new RouteColumn("http://server").WriteBody(chain, null, tag);
+            new RouteColumn(new StubCurrentHttpRequest("http://server")).WriteBody(chain, null, tag);
 
             tag.FirstChild().Text().ShouldEqual(chain.Route.Pattern);
             row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeFalse();
@@ -49,7 +82,7 @@ namespace FubuMVC.Tests.Diagnostics
             var row = new TableRowTag();
             var tag = row.Cell();
 
-            new RouteColumn("http://server.com").WriteBody(chain, row, tag);
+            new RouteColumn(new StubCurrentHttpRequest("http://server")).WriteBody(chain, row, tag);
 
             row.HasClass(BehaviorGraphWriter.FUBU_INTERNAL_CLASS).ShouldBeTrue();
         }

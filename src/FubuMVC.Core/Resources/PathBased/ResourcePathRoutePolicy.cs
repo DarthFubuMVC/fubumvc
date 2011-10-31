@@ -15,6 +15,21 @@ namespace FubuMVC.Core.Resources.PathBased
                     if (!x.Route.Pattern.Contains(ResourcePath.UrlSuffix))
                     {
                         x.Route.Append(ResourcePath.UrlSuffix);
+                    
+                    
+                        x.Route.RegisterRouteCustomization(r =>
+                        {
+                            r.Defaults.Add("Part0", null);
+                            r.Defaults.Add("Part1", null);
+                            r.Defaults.Add("Part2", null);
+                            r.Defaults.Add("Part3", null);
+                            r.Defaults.Add("Part4", null);
+                            r.Defaults.Add("Part5", null);
+                            r.Defaults.Add("Part6", null);
+                            r.Defaults.Add("Part7", null);
+                            r.Defaults.Add("Part8", null);
+                            r.Defaults.Add("Part9", null);
+                        });
                     }
                     
                 });

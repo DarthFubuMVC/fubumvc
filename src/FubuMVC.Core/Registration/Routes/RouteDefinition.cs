@@ -15,10 +15,19 @@ namespace FubuMVC.Core.Registration.Routes
 
     public class RouteDefinition : IRouteDefinition
     {
-        public static readonly IEnumerable<string> VERBS = new List<string> { "POST", "GET", "PUT", "DELETE" };
+        public static readonly IEnumerable<string> VERBS = new List<string>{
+            "POST",
+            "GET",
+            "PUT",
+            "DELETE"
+        };
+
         public static readonly string HTTP_METHOD_CONSTRAINT = "HttpMethods";
+        private readonly IList<Action<Route>> _alterations = new List<Action<Route>>();
 
         private readonly Cache<string, IRouteConstraint> _constraints = new Cache<string, IRouteConstraint>();
+        private readonly IList<string> _httpMethods = new List<string>();
+        private IRouteInput _input;
         private string _pattern;
 
         public RouteDefinition(string pattern)
@@ -26,12 +35,31 @@ namespace FubuMVC.Core.Registration.Routes
             _pattern = pattern;
         }
 
+        public string PatternWithoutDefaultValues
+        {
+            get
+            {
+                const string capture = @":\w+";
+                var pattern = _pattern;
+                var routeUrl = Regex.Matches(pattern, capture, RegexOptions.IgnorePatternWhitespace)
+                    .Cast<Match>()
+                    .Aggregate(pattern, (current, match) => current.Replace(match.Value, string.Empty));
+
+
+                return routeUrl;
+            }
+        }
+
+        public void RegisterRouteCustomization(Action<Route> action)
+        {
+            _alterations.Add(action);
+        }
+
         public virtual string CreateTemplate(object input, Func<object, object>[] hash)
         {
             return Input == null ? _pattern : Input.CreateTemplate(input, hash);
         }
 
-        private IRouteInput _input;
         public IRouteInput Input
         {
             get { return _input; }
@@ -57,8 +85,8 @@ namespace FubuMVC.Core.Registration.Routes
             {
                 return input.As<IMakeMyOwnUrl>().ToUrlPart(Pattern);
             }
-            
-            
+
+
             if (input == null)
             {
                 return Pattern;
@@ -85,6 +113,8 @@ namespace FubuMVC.Core.Registration.Routes
                 Input.AlterRoute(route);
             }
 
+            _alterations.Each(x => x(route));
+
             return route;
         }
 
@@ -97,21 +127,6 @@ namespace FubuMVC.Core.Registration.Routes
         public string Pattern
         {
             get { return _pattern; }
-        }
-
-        public string PatternWithoutDefaultValues
-        {
-            get
-            {
-                const string capture = @":\w+";
-                var pattern = _pattern;
-                var routeUrl = Regex.Matches(pattern, capture, RegexOptions.IgnorePatternWhitespace)
-                    .Cast<Match>()
-                    .Aggregate(pattern, (current, match) => current.Replace(match.Value, string.Empty));
-
-
-                return routeUrl;
-            }
         }
 
         public void RemoveLastPatternPart()
@@ -128,10 +143,7 @@ namespace FubuMVC.Core.Registration.Routes
 
         public Indexer<string, IRouteConstraint> Constraints
         {
-            get
-            {
-                return new Indexer<string, IRouteConstraint>(x => _constraints[x], (key, v) => _constraints[key] = v);
-            }
+            get { return new Indexer<string, IRouteConstraint>(x => _constraints[x], (key, v) => _constraints[key] = v); }
         }
 
         public void AddHttpMethodConstraint(string method)
@@ -149,13 +161,6 @@ namespace FubuMVC.Core.Registration.Routes
             get { return _httpMethods; }
         }
 
-        private readonly IList<string> _httpMethods = new List<string>();
-
-        public IEnumerable<string> GetHttpMethodConstraints()
-        {
-            return _httpMethods.OrderBy(x => x);
-        }
-
         public void Prepend(string prefix)
         {
             if (prefix.IsEmpty()) return;
@@ -164,6 +169,11 @@ namespace FubuMVC.Core.Registration.Routes
             if (_pattern.StartsWith(prefix)) return;
 
             _pattern = prefix.TrimEnd('/') + "/" + _pattern;
+        }
+
+        public IEnumerable<string> GetHttpMethodConstraints()
+        {
+            return _httpMethods.OrderBy(x => x);
         }
 
         protected RouteValueDictionary getConstraints()
