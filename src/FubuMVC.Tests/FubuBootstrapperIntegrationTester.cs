@@ -55,6 +55,7 @@ namespace FubuMVC.Tests
             container = new Container(x =>
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+                x.For<ICurrentChain>().Use(new CurrentChain(null, null));
             });
 
             routes = FubuApplication.For(registry)
@@ -93,7 +94,7 @@ namespace FubuMVC.Tests
         [Test]
         public void should_have_registered_behaviors_in_the_container()
         {
-            container.GetAllInstances<IActionBehavior>().Count.ShouldEqual(6);
+            container.GetAllInstances<IActionBehavior>().Count.ShouldBeGreaterThan(6);
         }
 
         [Test]

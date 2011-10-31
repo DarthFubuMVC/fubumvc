@@ -1,5 +1,6 @@
 using System.Linq;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration;
@@ -38,7 +39,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                     .Calls<TestController>(c => c.ThirdAction(null)).OutputToJson();
             });
 
-            _graph = registry.BuildGraph();
+            _graph = registry.BuildLightGraph();
         }
 
         private FubuRegistry registry;
@@ -73,6 +74,8 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
+            visitor.Filters += chain => chain.Calls.Any(call => call.HandlerType != typeof(ContentWriter));
+
             visitor.Actions += chain =>
                                    {
                                        chain.Top.ShouldBeOfType<ActionCall>();

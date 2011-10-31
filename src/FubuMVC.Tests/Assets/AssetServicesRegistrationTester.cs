@@ -173,5 +173,12 @@ namespace FubuMVC.Tests.Assets
         {
             registeredTypeIs<IETagGenerator<IEnumerable<AssetFile>>, AssetFileEtagGenerator>();
         }
+
+        [Test]
+        public void asset_content_cache_is_registered()
+        {
+            new FubuRegistry().BuildGraph().Services.DefaultServiceFor<IAssetContentCache>()
+                .Value.ShouldBeOfType<AssetContentCache>();
+        }
     }
 }

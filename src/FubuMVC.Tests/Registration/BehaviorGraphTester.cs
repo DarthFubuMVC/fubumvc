@@ -55,7 +55,7 @@ namespace FubuMVC.Tests.Registration
             var graph = new FubuRegistry(x =>
             {
                 x.Applies.ToAssemblyContainingType<OneController>();
-                x.Policies.WrapBehaviorChainsWith<BasicBehavior>();
+                x.Policies.WrapBehaviorChainsWith<WrappingBehavior2>();
                 x.Policies.WrapBehaviorChainsWith<WrappingBehavior>();
             }).BuildGraph();
 

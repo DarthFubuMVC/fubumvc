@@ -173,8 +173,14 @@ namespace FubuMVC.Core
         /// <typeparam name="T"></typeparam>
         public void Import<T>() where T : IFubuRegistryExtension, new()
         {
+            if (_importedTypes.Contains(typeof(T))) return;
+
             new T().Configure(this);
+
+            _importedTypes.Add(typeof(T));
         }
+
+        private readonly IList<Type> _importedTypes = new List<Type>();
 
         /// <summary>
         /// Imports the specified <see cref="FubuRegistry"/>. 
@@ -300,7 +306,7 @@ namespace FubuMVC.Core
 
             public void ImportInto(IChainImporter graph)
             {
-                graph.Import(Registry.BuildGraph(), b =>
+                graph.Import(Registry.BuildLightGraph(), b =>
                 {
                     b.PrependToUrl(Prefix);
                     b.Origin = Registry.Name;

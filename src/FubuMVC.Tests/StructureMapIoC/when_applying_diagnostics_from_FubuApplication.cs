@@ -37,6 +37,8 @@ namespace FubuMVC.Tests.StructureMapIoC
                 });
 
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
+
+                x.For<ICurrentChain>().Use(new CurrentChain(null, null));
             });
 
             theRoutes = FubuApplication.For(() => new FubuRegistry(x =>

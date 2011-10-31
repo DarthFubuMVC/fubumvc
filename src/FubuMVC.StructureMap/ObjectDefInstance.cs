@@ -21,8 +21,15 @@ namespace FubuMVC.StructureMap
 
         void IDependencyVisitor.Configured(ConfiguredDependency dependency)
         {
-            var child = new ObjectDefInstance(dependency.Definition);
-            Child(dependency.DependencyType).Is(child);
+            if (dependency.Definition.Value != null)
+            {
+                Child(dependency.DependencyType).Is(dependency.Definition.Value);
+            }
+            else
+            {
+                var child = new ObjectDefInstance(dependency.Definition);
+                Child(dependency.DependencyType).Is(child);
+            }
         }
 
         void IDependencyVisitor.List(ListDependency dependency)

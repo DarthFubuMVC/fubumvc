@@ -76,6 +76,13 @@ namespace FubuMVC.Tests.Diagnostics
         }
     }
 
+    public class WrappingBehavior2 : WrappingBehavior
+    {
+        public WrappingBehavior2(PartialBehavior partialBehavior) : base(partialBehavior)
+        {
+        }
+    }
+
     [TestFixture]
     public class include_diagnostics_integration_tester
     {

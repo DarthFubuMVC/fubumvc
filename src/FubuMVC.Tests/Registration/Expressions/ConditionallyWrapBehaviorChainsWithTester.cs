@@ -2,6 +2,7 @@ using System.Linq;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
@@ -79,6 +80,8 @@ namespace FubuMVC.Tests.Registration.Expressions
         {
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
             visitor.Filters += chain => chain.Calls.Any(call => call.Method.Name != "SomeAction");
+            visitor.Filters += chain => chain.Calls.Any(call => call.HandlerType != typeof (AssetWriter));
+
             visitor.Actions += chain => chain.Top.ShouldBeOfType<ActionCall>();
 
             _graph.VisitBehaviors(visitor);
@@ -141,11 +144,12 @@ namespace FubuMVC.Tests.Registration.Expressions
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
+                x.For<ICurrentChain>().Use(new CurrentChain(null, null));
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
-            container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
+            container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
 
             var behaviors = container.GetAllInstances<IActionBehavior>().ToArray();
             behaviors[0].ShouldBeOfType<ConditionallyWrapBehaviorChainsWithTester.FakeUnitOfWorkBehavior>().Inner.

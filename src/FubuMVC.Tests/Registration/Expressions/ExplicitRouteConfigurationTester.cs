@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration.Expressions
                 registry.Route("some/pattern")
                     .Calls<InputController>(c => c.DoSomething(null)).OutputToJson();
             })
-                    .BuildGraph();
+                    .BuildLightGraph();
 
             _graph.Behaviors.ShouldHaveCount(1);
             _config.Configure(_graph);

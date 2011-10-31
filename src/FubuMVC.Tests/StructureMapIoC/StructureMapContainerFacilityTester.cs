@@ -39,6 +39,7 @@ namespace FubuMVC.Tests.StructureMapIoC
                 x.For<IFileSystem>().Use<FileSystem>();
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
+                x.For<ICurrentChain>().Use(new CurrentChain(null, null));
             });
 
             container.Configure(x => x.For<IContainerFacility>().Use<StructureMapContainerFacility>());
@@ -177,7 +178,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_pull_all_of_the_route_behaviors_out_of_the_container()
         {
-            container.GetAllInstances<IActionBehavior>().Count.ShouldEqual(3);
+            container.GetAllInstances<IActionBehavior>().Count.ShouldBeGreaterThan(3);
         }
 
         [Test]

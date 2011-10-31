@@ -51,19 +51,19 @@ namespace FubuMVC.Tests.Resources.Etags
             ClassUnderTest.Matches(theETaggedRequest).AssertWasContinuedToNextBehavior();
         }
 
-        [Test]
-        public void create_an_etag_writes_the_new_etag()
-        {
-            ClassUnderTest.CreateETag(theEtagTuple);
+        //[Test]
+        //public void create_an_etag_writes_the_new_etag()
+        //{
+        //    ClassUnderTest.CreateETag(theEtagTuple);
 
-            MockFor<IEtagCache>().AssertWasCalled(x => x.Register(theETaggedRequest.ResourceHash, theNewEtag));
-        }
+        //    MockFor<IEtagCache>().AssertWasCalled(x => x.Register(theETaggedRequest.ResourceHash, theNewEtag));
+        //}
 
-        [Test]
-        public void registers_an_etag_header()
-        {
-            ClassUnderTest.CreateETag(theEtagTuple).Headers.ShouldHaveTheSameElementsAs(new Header(HttpResponseHeaders.ETag, theNewEtag));
-        }
+        //[Test]
+        //public void registers_an_etag_header()
+        //{
+        //    ClassUnderTest.CreateETag(theEtagTuple).Headers.ShouldHaveTheSameElementsAs(new Header(HttpResponseHeaders.ETag, theNewEtag));
+        //}
 
 
         public class ResourceOfSomeKind{}

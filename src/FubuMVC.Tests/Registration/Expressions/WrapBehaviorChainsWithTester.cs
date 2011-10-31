@@ -74,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Expressions
         [Test]
         public void all_behaviors_chains_should_start_with_the_declared_behavior()
         {
-            BehaviorGraph graph = registry.BuildGraph();
+            BehaviorGraph graph = registry.BuildLightGraph();
 
             graph.Behaviors.Count().ShouldEqual(3);
             var visitor = new BehaviorVisitor(new NulloConfigurationObserver(), "");
@@ -96,11 +96,12 @@ namespace FubuMVC.Tests.Registration.Expressions
             {
                 x.For<IStreamingData>().Use(MockRepository.GenerateMock<IStreamingData>());
                 x.For<IHttpWriter>().Use(new NulloHttpWriter());
+                x.For<ICurrentChain>().Use(new CurrentChain(null, null));
             });
 
             FubuApplication.For(() => registry).StructureMap(container).Bootstrap();
 
-            container.Model.InstancesOf<IActionBehavior>().Count().ShouldEqual(3);
+            container.Model.InstancesOf<IActionBehavior>().Count().ShouldBeGreaterThan(3);
 
             container.GetAllInstances<IActionBehavior>().Each(
                 x => { x.ShouldBeOfType<FakeUnitOfWorkBehavior>().Inner.ShouldNotBeNull(); });

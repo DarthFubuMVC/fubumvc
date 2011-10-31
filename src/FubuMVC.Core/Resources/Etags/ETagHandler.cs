@@ -10,10 +10,11 @@ namespace FubuMVC.Core.Resources.Etags
         private readonly IEtagCache _cache;
         private readonly IETagGenerator<T> _generator;
 
-        public ETagHandler(IEtagCache cache, IETagGenerator<T> generator)
+        //, IETagGenerator<T> generator
+        public ETagHandler(IEtagCache cache)
         {
             _cache = cache;
-            _generator = generator;
+            //_generator = generator;
         }
 
         public FubuContinuation Matches(ETaggedRequest request)
@@ -23,12 +24,13 @@ namespace FubuMVC.Core.Resources.Etags
                        : FubuContinuation.NextBehavior();
         }
 
-        public HttpHeaderValues CreateETag(ETagTuple<T> tuple)
-        {
-            var etag = _generator.Create(tuple.Target);
-            _cache.Register(tuple.Request.ResourceHash, etag);
+        // This needs to be in a different class.  Unit te
+        //public HttpHeaderValues CreateETag(ETagTuple<T> tuple)
+        //{
+        //    var etag = _generator.Create(tuple.Target);
+        //    _cache.Register(tuple.Request.ResourceHash, etag);
 
-            return new HttpHeaderValues(HttpResponseHeaders.ETag, etag);
-        }
+        //    return new HttpHeaderValues(HttpResponseHeaders.ETag, etag);
+        //}
     }
 }

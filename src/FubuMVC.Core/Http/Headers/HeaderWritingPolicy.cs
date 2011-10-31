@@ -19,7 +19,7 @@ namespace FubuMVC.Core.Http.Headers
             chains.Each(chain =>
             {
                 var action = chain.Calls.Last();
-                action.AddAfter(Wrapper.For<WriteHeadersBehavior>());
+                action.AddAfter(Process.For<WriteHeadersBehavior>());
             });
         }
     }

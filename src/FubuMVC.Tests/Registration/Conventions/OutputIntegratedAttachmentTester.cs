@@ -58,7 +58,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             only_the_behaviors_with_an_output_model_reflecting_the_json_criteria_specified_in_the_registry_are_output_to_json
             ()
         {
-            graph.Behaviors.Count().ShouldEqual(20);
+            graph.Behaviors.Count().ShouldBeGreaterThan(20);
             var methodNames = graph.Behaviors.Where(chain => chain.Top.Any(x => x is ConnegOutputNode)).Select(x => x.Calls.First().Method.Name);
 
             Debug.WriteLine("Actual");

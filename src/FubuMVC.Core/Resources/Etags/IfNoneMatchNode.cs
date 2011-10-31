@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Resources.Etags
     public class IfNoneMatchNode : ActionCallBase
     {
         private static readonly string _methodName =
-            ReflectionHelper.GetProperty<ETagHandler<IfNoneMatchNode>>(x => x.Matches(null)).Name;
+            ReflectionHelper.GetMethod<ETagHandler<IfNoneMatchNode>>(x => x.Matches(null)).Name;
 
         public IfNoneMatchNode(Type resourceType) : base()
         {

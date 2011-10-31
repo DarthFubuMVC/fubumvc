@@ -282,6 +282,17 @@ namespace FubuMVC.Core.Registration.ObjectGraph
             return dependency == null ? null : dependency.Definition;
         }
 
+        /// <summary>
+        /// If a dependency is set by a value, this method
+        /// can be used to find that value.  Mostly for testing purposes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T FindDependencyValueFor<T>()
+        {
+            var dependency = DependencyFor(typeof(T)) as ValueDependency;
+            return (T) (dependency == null ? null : dependency.Value);
+        }
 
         /// <summary>
         /// Use to find the ObjectDef definition of an explicitly registered

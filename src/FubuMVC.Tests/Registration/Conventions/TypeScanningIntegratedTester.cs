@@ -36,8 +36,10 @@ namespace FubuMVC.Tests.Registration.Conventions
                 x.Actions.ExcludeNonConcreteTypes().ForTypesOf<IRouter>(o => { o.Include(c => c.Go()); });
             }).BuildGraph();
 
-            IEnumerable<string> calls = graph.Behaviors.Select(x => x.Calls.First().Method).Select(m =>
-                "{0} - {1}".ToFormat(m.DeclaringType.Name, m.Name));
+            IEnumerable<string> calls = graph.Behaviors
+                .Where(x => x.FirstCall().HandlerType.Assembly != typeof(BehaviorGraph).Assembly)
+                .Select(x => x.Calls.First().Method)
+                .Select(m => "{0} - {1}".ToFormat(m.DeclaringType.Name, m.Name));
 
             calls.ShouldHaveTheSameElementsAs("Router1 - Go", "Router2 - Go", "Router3 - Go");
         }
@@ -54,7 +56,9 @@ namespace FubuMVC.Tests.Registration.Conventions
 
             graph.Behaviors.Count().ShouldBeGreaterThan(0);
 
-            graph.Behaviors.Each(x =>
+            graph.Behaviors
+                .Where(x => x.FirstCall().HandlerType.Assembly != typeof(BehaviorGraph).Assembly)
+                .Each(x =>
             {
                 x.Calls.First().HandlerType.Name.EndsWith("Controller");
                 x.Calls.First().HandlerType.Assembly.ShouldEqual(typeof (ClassInAnotherAssembly).Assembly);

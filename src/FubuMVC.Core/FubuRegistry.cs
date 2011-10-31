@@ -57,7 +57,7 @@ namespace FubuMVC.Core
 
             setupDefaultConventionsAndPolicies();
 
-            Import<AssetServicesRegistry>();
+            
         }
 
 
@@ -143,6 +143,13 @@ namespace FubuMVC.Core
         /// </summary>
         /// <returns></returns>
         public BehaviorGraph BuildGraph()
+        {
+            Import<AssetServicesRegistry>();
+
+            return BuildLightGraph();
+        }
+
+        public BehaviorGraph BuildLightGraph()
         {
             var graph = new BehaviorGraph(_observer);
 
