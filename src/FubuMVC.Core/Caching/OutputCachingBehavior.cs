@@ -22,33 +22,38 @@ namespace FubuMVC.Core.Caching
             _writer = writer;
             _currentChain = currentChain;
             _etagCache = etagCache;
+
+            Invoker = x => x.Invoke();
+            PartialInvoker = x => x.InvokePartial();
         }
+
+        public Action<IActionBehavior> Invoker { get; private set; }
+        public Action<IActionBehavior> PartialInvoker { get; private set; }
 
         public void Invoke()
         {
-            generateOutput(x => x.Invoke());
+            generateOutput(Invoker);
         }
 
         public void InvokePartial()
         {
-            generateOutput(x => x.InvokePartial());
+            generateOutput(PartialInvoker);
         }
 
-        private void generateOutput(Action<IActionBehavior> generateContent)
+        public virtual IRecordedOutput CreateOuput(string resourceHash, Action<IActionBehavior> innerInvocation)
+        {
+            var newOutput = _writer.Record(() => innerInvocation(_inner));
+            newOutput.ForHeader(HttpResponseHeaders.ETag, etag => _etagCache.Register(resourceHash, etag));
+
+            return newOutput;
+        }
+
+        private void generateOutput(Action<IActionBehavior> innerInvocation)
         {
             var resourceHash = _currentChain.ResourceHash();
-            
-            Action contentGeneration = () => generateContent(_inner);
-            
-            Func<IRecordedOutput> cacheMiss = () =>
-            {
-                var newOutput =_writer.Record(contentGeneration);
-                newOutput.ForHeader(HttpResponseHeaders.ETag, etag => _etagCache.Register(resourceHash, etag));
 
-                return newOutput;
-            };
+            var output = _cache.Retrieve(resourceHash, () => CreateOuput(resourceHash, innerInvocation));
 
-            var output = _cache.Retrieve(resourceHash, cacheMiss);
             _writer.Replay(output);
         }
     }

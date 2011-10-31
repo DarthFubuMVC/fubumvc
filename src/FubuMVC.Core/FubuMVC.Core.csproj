@@ -183,10 +183,10 @@
     <Compile Include="Behaviors\RenderStatusCodeBehavior.cs" />
     <Compile Include="Behaviors\StopwatchBehavior.cs" />
     <Compile Include="Ajax\AjaxContinuation.cs" />
-    <Compile Include="Caching\CachingClasses.cs" />
     <Compile Include="Caching\IOutputCache.cs" />
     <Compile Include="Caching\IRecordedHttpOutput.cs" />
     <Compile Include="Caching\IRecordedOutput.cs" />
+    <Compile Include="Caching\OutputCachingBehavior.cs" />
     <Compile Include="Caching\OutputCachingNode.cs" />
     <Compile Include="Caching\SetContentType.cs" />
     <Compile Include="Caching\WriteStream.cs" />

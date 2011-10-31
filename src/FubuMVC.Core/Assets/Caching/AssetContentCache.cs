@@ -84,7 +84,7 @@ namespace FubuMVC.Core.Assets.Caching
 
         public void Register(string resourceHash, string etag)
         {
-            throw new NotSupportedException();
+            
         }
 
         public void Eject(string resourceHash)
