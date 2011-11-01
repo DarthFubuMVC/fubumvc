@@ -220,6 +220,42 @@ namespace FubuMVC.Core
             registerAuthorizationServices(graph);
         }
 
+            graph.Services.SetServiceIfNone(new AssetLogs());
+
+            graph.Services.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
+
+            graph.Services.SetServiceIfNone<ICombinationDeterminationService, CombinationDeterminationService>();
+
+            graph.Services.SetServiceIfNone<IAssetCombinationCache, AssetCombinationCache>();
+            graph.Services.SetServiceIfNone<IAssetDependencyFinder, AssetDependencyFinderCache>();
+            graph.Services.SetServiceIfNone<IAssetTagPlanner, AssetTagPlanner>();
+            graph.Services.SetServiceIfNone<IAssetTagBuilder, AssetTagBuilder>();
+            graph.Services.SetServiceIfNone<IAssetRequirements, AssetRequirements>();
+
+            graph.Services.SetServiceIfNone<IMissingAssetHandler, TraceOnlyMissingAssetHandler>();
+
+            graph.Services.SetServiceIfNone<IAssetTagPlanCache, AssetTagPlanCache>();
+
+            graph.Services.SetServiceIfNone<ITransformerPolicyLibrary, TransformerPolicyLibrary>();
+
+            graph.Services.SetServiceIfNone<IContentPlanner, ContentPlanner>();
+            graph.Services.SetServiceIfNone<IContentPlanCache, ContentPlanCache>();
+            graph.Services.SetServiceIfNone<IContentPlanExecutor, ContentPlanExecutor>();
+            graph.Services.SetServiceIfNone<IImageWriter, ImageWriter>();
+            graph.Services.SetServiceIfNone<IContentPipeline, ContentPipeline>();
+            graph.Services.SetServiceIfNone<IContentWriter, ContentWriter>();
+        }
+
+
+        private void registerActivators(BehaviorGraph graph)
+        {
+            graph.Services.FillType(typeof (IActivator), typeof (AssetGraphConfigurationActivator));
+            graph.Services.FillType(typeof (IActivator), typeof (AssetPipelineBuilderActivator));
+            graph.Services.FillType(typeof (IActivator), typeof (AssetDeclarationVerificationActivator));
+            graph.Services.FillType(typeof (IActivator), typeof (MimetypeRegistrationActivator));
+            graph.Services.FillType(typeof(IActivator), typeof(AssetCombinationBuildingActivator));
+            graph.Services.FillType(typeof (IActivator), typeof (AssetPolicyActivator));
+        }
 
         private void registerAuthorizationServices(BehaviorGraph graph)
         {
