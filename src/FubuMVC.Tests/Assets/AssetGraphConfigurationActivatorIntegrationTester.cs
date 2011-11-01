@@ -5,6 +5,7 @@ using System.Linq;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Diagnostics;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace FubuMVC.Tests.Assets
 
 
             assets = new AssetGraph();
-            activator = new AssetGraphConfigurationActivator(assets, new FileSystem());
+            activator = new AssetGraphConfigurationActivator(assets, new FileSystem(), new AssetLogs());
 
             log = new PackageLog();
         }

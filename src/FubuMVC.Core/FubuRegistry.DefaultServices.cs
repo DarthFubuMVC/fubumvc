@@ -5,6 +5,7 @@ using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuCore.Reflection;
+using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
