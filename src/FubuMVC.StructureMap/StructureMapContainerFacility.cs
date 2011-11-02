@@ -115,15 +115,14 @@ namespace FubuMVC.StructureMap
         }
 
         public IEnumerable<IActivator> GetAllActivators()
-        {
+        {  
+            if (_initializeSingletonsToWorkAroundSMBug)
+            {
+                new SingletonSpinupActivator(_container).Activate(null, null);
+            }
             foreach (var activator in _container.GetAllInstances<IActivator>())
             {
                 yield return activator;
-            }
-
-            if (_initializeSingletonsToWorkAroundSMBug)
-            {
-                yield return new SingletonSpinupActivator(_container);
             }
         }
 
