@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace FubuMVC.Core.Assets.Diagnostics
 {
+    [DebuggerDisplay("Log For: {Name}: {Logs.Count} entries")]
     public class AssetLog
     {
         public AssetLog(string name)
