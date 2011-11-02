@@ -90,6 +90,7 @@
     <Compile Include="Assets\Caching\IAssetFileWatcher.cs" />
     <Compile Include="Assets\Content\ITransformerPolicyLibrary.cs" />
     <Compile Include="Assets\Content\IContentPlanCache.cs" />
+    <Compile Include="Assets\Http\AssetEtagInvocationFilter.cs" />
     <Compile Include="Assets\Http\AssetWriter.cs" />
     <Compile Include="Assets\RecordingAssetRegistration.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehavior.cs" />
