@@ -42,6 +42,12 @@ namespace FubuMVC.Tests.Assets.Http
         }
 
         [Test]
+        public void the_chain_should_have_an_asset_etag_invocation_filter()
+        {
+            theChain.Filters.Single().ShouldBeOfType<AssetEtagInvocationFilter>();
+        }
+
+        [Test]
         public void route_pattern_should_be_the_same()
         {
             theChain.Route.Pattern.ShouldEqual("_content/" + ResourcePath.UrlSuffix);
@@ -54,25 +60,6 @@ namespace FubuMVC.Tests.Assets.Http
             theChain.Route.CreateUrlFromInput(new AssetPath("scripts/f1/file1.js")).ShouldEqual("_content/scripts/f1/file1.js");
             theChain.Route.CreateUrlFromInput(new AssetPath("scripts/f1/f2/file1.js")).ShouldEqual("_content/scripts/f1/f2/file1.js");
             theChain.Route.CreateUrlFromInput(new AssetPath("scripts/f1/f2/f3/file1.js")).ShouldEqual("_content/scripts/f1/f2/f3/file1.js");
-        }
-
-        [Test]
-        public void first_behavior_should_be_the_IfNoneMatchNode()
-        {
-            theChain.First().ShouldBeOfType<IfNoneMatchNode>()
-                .HandlerType.ShouldEqual(typeof(ETagHandler<AssetPath>));
-        }
-
-        [Test]
-        public void the_etag_cache_should_be_an_AssetContentCache()
-        {
-            var etagCache = theChain.First().ShouldBeOfType<IfNoneMatchNode>()
-                .HandlerDef.FindDependencyValueFor<IEtagCache>();
-
-
-            etagCache
-                .ShouldNotBeNull()
-                .ShouldBeOfType<AssetContentCache>();
         }
 
         [Test]
@@ -90,10 +77,6 @@ namespace FubuMVC.Tests.Assets.Http
             cachingNode.ETagCache.Value.ShouldBeTheSameAs(theContentCache);
             cachingNode.OutputCache.Value.ShouldBeTheSameAs(theContentCache);
 
-            var etagCache = theChain.First().ShouldBeOfType<IfNoneMatchNode>()
-                .HandlerDef.FindDependencyValueFor<IEtagCache>();
-
-            etagCache.ShouldBeTheSameAs(theContentCache);
         }
 
         [Test]
@@ -103,11 +86,5 @@ namespace FubuMVC.Tests.Assets.Http
                 .ShouldBeTrue();
         }
 
-        [Test]
-        public void there_is_a_fubu_continuation_handler_right_after_the_etag_handler()
-        {
-            theChain.First().ShouldBeOfType<IfNoneMatchNode>()
-                .Next.ShouldBeOfType<ContinuationNode>();
-        }
     }
 }

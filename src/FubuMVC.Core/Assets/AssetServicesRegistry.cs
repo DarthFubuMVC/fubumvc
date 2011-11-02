@@ -30,24 +30,12 @@ namespace FubuMVC.Core.Assets
 
             registry.Configure(graph =>
             {
-                
-
-
                 BehaviorChain chain = createAssetContentChain(graph);
+                chain.Filters.Add(new AssetEtagInvocationFilter(_assetCache));
 
-                addETagSupport(chain);
-                chain.AddToEnd(new ContinuationNode());
                 addCaching(chain);
                 addWritingAction(chain);
             });
-        }
-
-        private void addETagSupport(BehaviorChain chain)
-        {
-            var ifNoneMatchNode = new IfNoneMatchNode(typeof(AssetPath));
-            ifNoneMatchNode.HandlerDef.DependencyByValue<IEtagCache>(_assetCache);
-
-            chain.AddToEnd(ifNoneMatchNode);
         }
 
         private void addWritingAction(BehaviorChain chain)
