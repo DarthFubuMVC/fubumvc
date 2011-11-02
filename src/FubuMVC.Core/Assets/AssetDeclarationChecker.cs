@@ -16,9 +16,9 @@ namespace FubuMVC.Core.Assets
 
         private readonly IAssetPipeline _pipeline;
         private readonly IPackageLog _log;
-        private readonly AssetLogs _assetLogs;
+        private readonly AssetLogsCache _assetLogs;
 
-        public AssetDeclarationChecker(IAssetPipeline pipeline, IPackageLog log, AssetLogs assetLogs)
+        public AssetDeclarationChecker(IAssetPipeline pipeline, IPackageLog log, AssetLogsCache assetLogs)
         {
             _pipeline = pipeline;
             _log = log;
@@ -41,7 +41,7 @@ namespace FubuMVC.Core.Assets
 
 
         // For testing purposes only
-        public static string GetErrorMessage(string name, AssetLogs logs)
+        public static string GetErrorMessage(string name, AssetLogsCache logs)
         {
             var logsBuilder = new StringBuilder("Unable to locate asset named {0}".ToFormat(name));
 

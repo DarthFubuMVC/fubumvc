@@ -5,10 +5,10 @@ namespace FubuMVC.Core.Assets.Diagnostics
     public class AssetRegistrationDiagnostics : IAssetRegistration
     {
         private readonly IAssetRegistration _inner;
-        private readonly AssetLogs _logs;
+        private readonly AssetLogsCache _logs;
         private string _provenance;
 
-        public AssetRegistrationDiagnostics(IAssetRegistration inner, AssetLogs logs)
+        public AssetRegistrationDiagnostics(IAssetRegistration inner, AssetLogsCache logs)
         {
             _inner = inner;
             _logs = logs;
