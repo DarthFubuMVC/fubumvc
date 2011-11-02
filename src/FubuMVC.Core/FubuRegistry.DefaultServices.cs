@@ -220,7 +220,8 @@ namespace FubuMVC.Core
             registerAuthorizationServices(graph);
         }
 
-            graph.Services.SetServiceIfNone(new AssetLogs());
+            graph.Services.SetServiceIfNone(new AssetLogsCache());
+            
 
             graph.Services.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
 
