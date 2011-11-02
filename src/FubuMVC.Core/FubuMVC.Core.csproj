@@ -476,8 +476,11 @@
     <Compile Include="Registration\TypePool.cs" />
     <Compile Include="Registration\DSL\RouteConventionExpression.cs" />
     <Compile Include="Registration\Conventions\StringOutputPolicy.cs" />
+    <Compile Include="Runtime\BehaviorInvoker.cs" />
     <Compile Include="Runtime\FubuSmartRequest.cs" />
     <Compile Include="Runtime\FubuRequestTuple.cs" />
+    <Compile Include="Runtime\IBehaviorInvocationFilter.cs" />
+    <Compile Include="Runtime\IBehaviorInvoker.cs" />
     <Compile Include="Runtime\IgnoredRoute.cs" />
     <Compile Include="Http\IHttpWriter.cs" />
     <Compile Include="Runtime\InMemoryOutputWriter.cs" />

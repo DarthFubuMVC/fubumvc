@@ -415,9 +415,7 @@
     <Compile Include="Runtime\InMemoryStreamingData.cs" />
     <Compile Include="Runtime\PrefixedRequestDataTester.cs" />
     <Compile Include="Runtime\RequestDataTester.cs" />
-    <Compile Include="Runtime\FubuHttpHandlerTester.cs" />
     <Compile Include="Runtime\FubuRequestTester.cs" />
-    <Compile Include="Runtime\FubuRouteHandlerTester.cs" />
     <Compile Include="Runtime\PartialFactoryTester.cs" />
     <Compile Include="SessionState\FlashProviderTester.cs" />
     <Compile Include="SessionState\RequestDataProviderTester.cs" />

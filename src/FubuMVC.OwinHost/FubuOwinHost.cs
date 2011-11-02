@@ -72,17 +72,15 @@ namespace FubuMVC.OwinHost
             response.Write("Sorry, I can't find this resource");
         }
 
-        private void executeRoute(Request request, RouteData routeData, Response response, Action<Exception> fault)
+        private static void executeRoute(Request request, RouteData routeData, Response response, Action<Exception> fault)
         {
             var arguments = new OwinServiceArguments(routeData, request, response);
 
-            // TODO -- maybe smuggle behaviorId out a different way here
-            var chain = routeData.RouteHandler.As<FubuRouteHandler>().Chain;
-            var behavior = _runtime.Factory.BuildBehavior(arguments, chain, routeData.Values);
+            var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
 
             try
             {
-                behavior.Invoke();
+                invoker.Invoke(arguments, routeData.Values);
             }
             catch (Exception ex)
             {

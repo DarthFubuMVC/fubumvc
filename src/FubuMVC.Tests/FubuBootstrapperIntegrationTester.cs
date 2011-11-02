@@ -78,14 +78,6 @@ namespace FubuMVC.Tests
         private Container container;
         private IList<RouteBase> routes;
 
-        [Test]
-        public void each_route_can_resolve_its_behavior()
-        {
-            routes.Select(x => x.ShouldBeOfType<Route>().RouteHandler as FubuRouteHandler).Each(handler =>
-            {
-                var behavior = handler.GetBehavior(new ServiceArguments(), new Dictionary<string, object>()).ShouldBeOfType<IActionBehavior>();
-            });
-        }
 
         [Test]
         public void should_have_a_route_in_the_RouteCollection_with_a_Fubu_RouteHandler_for_each_route_in_the_registry()
