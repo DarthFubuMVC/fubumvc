@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 
 namespace FubuMVC.Core.Assets.Diagnostics
 {
+    [DebuggerDisplay("Asset Logs ( {Entries.Count} Entries)")]
     public class AssetLogsCache
     {
         public AssetLogsCache()

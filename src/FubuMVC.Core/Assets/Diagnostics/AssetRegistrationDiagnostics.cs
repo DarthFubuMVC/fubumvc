@@ -19,6 +19,9 @@ namespace FubuMVC.Core.Assets.Diagnostics
             _logs.FindByName(name)
                 .Add(_provenance, "Added alias {0}".ToFormat(alias));
 
+            _logs.FindByName(alias)
+                .Add(_provenance, "Is an alias for {0}".ToFormat(name));
+
             _inner.Alias(name, alias);
         }
 
@@ -27,6 +30,9 @@ namespace FubuMVC.Core.Assets.Diagnostics
             _logs.FindByName(dependent)
                 .Add(_provenance, "Registered dependency {0}".ToFormat(dependency));
 
+            _logs.FindByName(dependency)
+                .Add(_provenance, "Is dependent on {0}".ToFormat(dependent));
+
             _inner.Dependency(dependent, dependency);
         }
 
@@ -34,6 +40,9 @@ namespace FubuMVC.Core.Assets.Diagnostics
         {
            _logs.FindByName(@base)
                 .Add(_provenance, "Extending with {0}".ToFormat(extender));
+
+            _logs.FindByName(extender)
+                .Add(_provenance, "Extends {0}".ToFormat(@base));
 
             _inner.Extension(extender, @base);
         }
@@ -64,6 +73,10 @@ namespace FubuMVC.Core.Assets.Diagnostics
         {
             _logs.FindByName(comboName)
                 .Add(_provenance, "Combining {0} into me.".ToFormat(names));
+
+            _logs.FindByName(names)
+                .Add(_provenance, "was combined into {0}".ToFormat(comboName));
+
             _inner.AddToCombination(comboName, names);
         }
 
@@ -71,6 +84,7 @@ namespace FubuMVC.Core.Assets.Diagnostics
         {
             _logs.FindByName(typeName)
                 .Add(_provenance, "Applying policy {0}".ToFormat(typeName));
+
             _inner.ApplyPolicy(typeName);
         }
 
