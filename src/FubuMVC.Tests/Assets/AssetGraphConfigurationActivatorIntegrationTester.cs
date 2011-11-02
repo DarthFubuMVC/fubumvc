@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Assets
 
 
             assets = new AssetGraph();
-            activator = new AssetGraphConfigurationActivator(assets, new FileSystem(), new AssetLogs());
+            activator = new AssetGraphConfigurationActivator(assets, new FileSystem(), new AssetLogsCache());
 
             log = new PackageLog();
         }

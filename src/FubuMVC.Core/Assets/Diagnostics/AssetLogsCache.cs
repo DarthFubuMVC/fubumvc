@@ -4,9 +4,9 @@ using FubuCore;
 
 namespace FubuMVC.Core.Assets.Diagnostics
 {
-    public class AssetLogs
+    public class AssetLogsCache
     {
-        public AssetLogs()
+        public AssetLogsCache()
         {
             Entries = new List<AssetLog>();
         }

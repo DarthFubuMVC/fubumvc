@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Assets
         private readonly IFileSystem _fileSystem;
         private readonly AssetRegistrationDiagnostics _diagnostics;
 
-        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem, AssetLogs logs)
+        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem, AssetLogsCache logs)
         {
             _assets = assets;
             _fileSystem = fileSystem;

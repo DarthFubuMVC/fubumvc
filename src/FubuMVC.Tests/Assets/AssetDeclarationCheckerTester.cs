@@ -21,7 +21,7 @@ namespace FubuMVC.Tests.Assets
         {
             AssetDeclarationVerificationActivator.Latched = false;
  
-            var logs = new AssetLogs();
+            var logs = new AssetLogsCache();
 
             logs.FindByName(theAssetName)
                 .Add(_provenance, "Test log message 1");
@@ -48,7 +48,7 @@ namespace FubuMVC.Tests.Assets
 
             ClassUnderTest.VerifyFileDependency(theAssetName);
 
-            var expectedMessage = AssetDeclarationChecker.GetErrorMessage(theAssetName, MockFor<AssetLogs>());
+            var expectedMessage = AssetDeclarationChecker.GetErrorMessage(theAssetName, MockFor<AssetLogsCache>());
 
             Console.Write(expectedMessage);
 
@@ -63,7 +63,7 @@ namespace FubuMVC.Tests.Assets
 
             ClassUnderTest.VerifyFileDependency(theAssetName);
 
-            var expectedMessage = AssetDeclarationChecker.GetErrorMessage(theAssetName, MockFor<AssetLogs>());
+            var expectedMessage = AssetDeclarationChecker.GetErrorMessage(theAssetName, MockFor<AssetLogsCache>());
 
 
             MockFor<IPackageLog>().AssertWasCalled(x => x.MarkFailure(expectedMessage));
