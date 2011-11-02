@@ -3,6 +3,7 @@ using Bottles;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Assets.Combination;
 using FubuMVC.Core.Assets.Content;
+using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Assets.Tags;
@@ -77,6 +78,7 @@ namespace FubuMVC.Core.Assets
             registry.SetServiceIfNone<IAssetFileRegistration>(pipeline);
 
             registry.SetServiceIfNone(new AssetGraph());
+            registry.SetServiceIfNone(new AssetLogsCache());
 
             registry.SetServiceIfNone<IAssetTagWriter, AssetTagWriter>();
 
