@@ -12,15 +12,5 @@ namespace FubuMVC.Core.Runtime
         IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId);
     }
 
-    public static class BehaviorFactoryExtensions
-    {
-        public static IActionBehavior BuildBehavior(this IBehaviorFactory factory, ServiceArguments arguments, BehaviorChain chain, IDictionary<string, object> routeValues)
-        {
-            var currentChain = new CurrentChain(chain, routeValues);
 
-            arguments.Set(typeof(ICurrentChain), currentChain);
-
-            return factory.BuildBehavior(arguments, chain.UniqueId);
-        }
-    }
 }

@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.136\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.137\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
       <HintPath>..\packages\Bottles.Deployment.0.9.1.137\lib\Bottles.Deployment.dll</HintPath>

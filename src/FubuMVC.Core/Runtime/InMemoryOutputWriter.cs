@@ -35,8 +35,8 @@ namespace FubuMVC.Core.Runtime
         public IRecordedOutput Record(Action action)
         {
             throw new NotImplementedException("isn't really built");
-            action();
-            return new RecordedOutput(null);
+            //action();
+            //return new RecordedOutput(null);
         }
 
         public void Replay(IRecordedOutput output)

@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.136\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.137\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployers.Iis">
       <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.137\lib\Bottles.Deployers.Iis.dll</HintPath>
@@ -294,6 +294,7 @@
     <Compile Include="Resources\Resource_integrated_registration_tester.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
+    <Compile Include="Runtime\BehaviorInvokerTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />
     <Compile Include="Runtime\FubuTupleBindingIntegrationTester.cs" />
     <Compile Include="Runtime\OutputWriterTester.cs" />

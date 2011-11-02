@@ -9,6 +9,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -23,11 +24,22 @@ namespace FubuMVC.Core.Registration.Nodes
     public class BehaviorChain : IRegisterable, IContainerModel, IEnumerable<BehaviorNode>
     {
         private BehaviorNode _top;
+        private IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
 
         public BehaviorChain()
         {
             Authorization = new AuthorizationNode();
             UrlCategory = new UrlCategory();
+        }
+
+        /// <summary>
+        /// Ordered list of IBehaviorInvocationFilter's that can be used
+        /// to apply guard conditions at runtime *before* the behaviors
+        /// are created
+        /// </summary>
+        public IList<IBehaviorInvocationFilter> Filters
+        {
+            get { return _filters; }
         }
 
         public Guid UniqueId
