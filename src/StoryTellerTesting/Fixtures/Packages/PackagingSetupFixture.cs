@@ -15,7 +15,7 @@ namespace IntegrationTesting.Fixtures.Packages
 
         public override void SetUp(ITestContext context)
         {
-            _runner.RunFubu("packages fubu-testing -removeall");
+            NoPackages();
         }
 
         public override void TearDown()

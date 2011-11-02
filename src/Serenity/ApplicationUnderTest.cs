@@ -4,6 +4,7 @@ using System.Net;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Bootstrapping;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
 
@@ -26,7 +27,16 @@ namespace Serenity
             _container = new Lazy<IContainerFacility>(() =>
             {
                 var app = _source.BuildApplication();
+
+                app.ModifyRegistry(r => r.Services(x =>
+                {
+                    x.ReplaceService<ICurrentHttpRequest>(new StubCurrentHttpRequest{
+                        ApplicationRoot = _settings.RootUrl
+                    });
+                }));
+
                 app.Bootstrap();
+
 
                 return app.Facility;
             });
@@ -81,6 +91,34 @@ namespace Serenity
         public IWebDriver Driver
         {
             get { return _driver.Value; }
+        }
+    }
+
+    public class StubCurrentHttpRequest : ICurrentHttpRequest
+    {
+        public string TheRawUrl;
+        public string TheRelativeUrl;
+        public string ApplicationRoot = "http://server";
+        public string TheHttpMethod = "GET";
+
+        public string RawUrl()
+        {
+            return TheRawUrl;
+        }
+
+        public string RelativeUrl()
+        {
+            return TheRelativeUrl;
+        }
+
+        public string ToFullUrl(string url)
+        {
+            return url.ToAbsoluteUrl(ApplicationRoot);
+        }
+
+        public string HttpMethod()
+        {
+            return TheHttpMethod;
         }
     }
 }

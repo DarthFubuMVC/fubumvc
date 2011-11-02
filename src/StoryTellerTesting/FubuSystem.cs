@@ -56,6 +56,7 @@ namespace IntegrationTesting
 
             // TODO -- make this configurable?
             _runner = new CommandRunner();
+            _runner.RunFubu("alias fubu-testing src/FubuTestApplication");
             _runner.RunFubu("createvdir src/FubuTestApplication fubu-testing");
 
             _runner.RunFubu("create-pak pak1 pak1.zip -f");

@@ -189,10 +189,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy $(SolutionDir)Serenity\$(OutDir)Castle.Core.dll $(TargetDir) /Y
-copy $(SolutionDir)Serenity.Testing\$(OutDir)Selenium.WebDriverBackedSelenium.dll $(TargetDir) /Y
-copy $(SolutionDir)Serenity\$(OutDir)WebDriver.dll $(TargetDir) /Y
-copy $(SolutionDir)Serenity.Testing\$(OutDir)\WebDriver.Support.dll $(TargetDir) /Y</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -29,8 +29,7 @@ namespace FubuMVC.Tests.Resources.Etags
                 Target = new ResourceOfSomeKind()
             };
 
-            MockFor<IEtagCache>().Stub(x => x.Current(theETaggedRequest.ResourceHash))
-                .Return(theCurrentEtag);
+
 
             MockFor<IETagGenerator<ResourceOfSomeKind>>().Stub(x => x.Create(null))
                 .Return(theNewEtag)
@@ -40,6 +39,9 @@ namespace FubuMVC.Tests.Resources.Etags
         [Test]
         public void when_matching_a_request_that_has_the_current_etag_should_stop_with_a_NotModified_status_code()
         {
+            MockFor<IEtagCache>().Stub(x => x.Current(theETaggedRequest.ResourceHash))
+                .Return(theCurrentEtag);
+
             theETaggedRequest.IfNoneMatch = theCurrentEtag;
             ClassUnderTest.Matches(theETaggedRequest).AssertWasEndedWithStatusCode(HttpStatusCode.NotModified);
         }
@@ -47,7 +49,20 @@ namespace FubuMVC.Tests.Resources.Etags
         [Test]
         public void when_matching_a_request_that_has_a_different_etag_than_the_current_just_continuje()
         {
+            MockFor<IEtagCache>().Stub(x => x.Current(theETaggedRequest.ResourceHash))
+                .Return(theCurrentEtag);
+
             theETaggedRequest.IfNoneMatch = "something different than the current etag";
+            ClassUnderTest.Matches(theETaggedRequest).AssertWasContinuedToNextBehavior();
+        }
+
+        [Test]
+        public void when_the_current_etag_is_null_and_no_etag_was_sent_to_the_server()
+        {
+            MockFor<IEtagCache>().Stub(x => x.Current(theETaggedRequest.ResourceHash))
+                .Return(null);
+
+            theETaggedRequest.IfNoneMatch = null;
             ClassUnderTest.Matches(theETaggedRequest).AssertWasContinuedToNextBehavior();
         }
 

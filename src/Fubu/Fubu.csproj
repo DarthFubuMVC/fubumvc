@@ -75,6 +75,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CreateDeploymentCommand.cs" />
+    <Compile Include="IncludeWebContentCommand.cs" />
     <Compile Include="InstallPackageCommand.cs" />
     <Compile Include="InstallPackageInput.cs" />
     <Compile Include="PackagesCommand.cs" />

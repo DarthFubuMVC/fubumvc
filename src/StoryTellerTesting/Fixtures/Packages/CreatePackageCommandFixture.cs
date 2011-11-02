@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Bottles.Exploding;
 using Bottles.Zipping;
@@ -36,6 +37,20 @@ namespace IntegrationTesting.Fixtures.Packages
             _runner.RunFubu(command);
         }
 
+        [FormatAs("include-web-content {folder} -webforms")]
+        public void AddWebFormsContent(string folder)
+        {
+            var command = "include-web-content {0} -webforms".ToFormat(folder);
+            _runner.RunFubu(command);
+        }
+
+        [FormatAs("include-web-content {folder} -config")]
+        public void AddConfigFiles(string folder)
+        {
+            var command = "include-web-content {0} -config".ToFormat(folder);
+            _runner.RunFubu(command);
+        }
+
         [FormatAs("create-pak {name} {zipFile}")]
         public void CreatePackage(string name, string zipFile)
         {
@@ -56,6 +71,8 @@ namespace IntegrationTesting.Fixtures.Packages
         {
             var tempPath = Path.GetTempPath();
             var zipDirectory = Path.Combine(tempPath, "zip-contents");
+
+            Debug.WriteLine("Exploding the zip file {0} to {1}", zipFileName.ToFullPath(), zipDirectory);
 
             new ZipFileService(new FileSystem())
                 .ExtractTo(zipFileName, zipDirectory, ExplodeOptions.DeleteDestination);

@@ -1,7 +1,6 @@
 using System.Net;
+using FubuCore;
 using FubuMVC.Core.Continuations;
-using FubuMVC.Core.Http;
-using FubuMVC.Core.Http.Headers;
 
 namespace FubuMVC.Core.Resources.Etags
 {
@@ -19,7 +18,8 @@ namespace FubuMVC.Core.Resources.Etags
 
         public FubuContinuation Matches(ETaggedRequest request)
         {
-            return _cache.Current(request.ResourceHash) == request.IfNoneMatch
+            var current = _cache.Current(request.ResourceHash);
+            return current.IsNotEmpty() && current == request.IfNoneMatch
                        ? FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified)
                        : FubuContinuation.NextBehavior();
         }

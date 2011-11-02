@@ -28,7 +28,9 @@ namespace Fubu
             var exploder = BuildExploder();
 
             if (input.CleanAllFlag)
+            {
                 exploder.CleanAll(input.AppFolder);
+            }
             
 
             if (input.ExplodeFlag)
@@ -45,6 +47,10 @@ namespace Fubu
                 var packageFolder = BottleFiles.GetApplicationPackagesDirectory(input.AppFolder);
                 Console.WriteLine("Removing all package files and directories from the application at " + packageFolder);
                 new FileSystem().DeleteDirectory(packageFolder);
+
+                var otherFolder = input.AppFolder.AppendPath("fubu-content");
+                Console.WriteLine("Removing all package files and directories from the application at " + otherFolder);
+                new FileSystem().DeleteDirectory(otherFolder);
             }
 
             // TODO -- this needs to be redone

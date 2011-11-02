@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Web.Script.Serialization;
 using FubuCore;
+using StoryTeller.Assertions;
 using WatiN.Core;
 
 namespace IntegrationTesting
@@ -71,8 +72,7 @@ namespace IntegrationTesting
 
         public string InvokeString(string url)
         {
-            var client = new WebClient();
-            return client.DownloadString(url);
+            return new WebClient().DownloadString(url);
         }
 
         public IE Browser
