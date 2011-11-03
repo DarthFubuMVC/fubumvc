@@ -104,5 +104,10 @@ namespace FubuMVC.Core.Runtime
             var extension = Path.GetExtension(name);
             return _mimeTypes.GetAll().FirstOrDefault(x => x.HasExtension(extension));
         }
+
+        public IEnumerable<string> Extensions
+        {
+            get { return _extensions; }
+        }
     }
 }

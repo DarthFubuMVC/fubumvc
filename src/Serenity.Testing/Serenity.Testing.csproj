@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="BrowserFixture.cs" />
+    <Compile Include="Jasmine\SpecificationTester.cs" />
     <Compile Include="SerenitySystemTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebDriverSettingsTester.cs" />

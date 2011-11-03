@@ -149,5 +149,10 @@ namespace FubuMVC.Core.Assets.Files
         {
             return string.Equals(FullPath, path, StringComparison.InvariantCultureIgnoreCase);
         }
+
+        public string LibraryName()
+        {
+            return Name.Split('/').Last();
+        }
     }
 }
