@@ -1,4 +1,3 @@
-using System;
 using FubuMVC.Core.Registration.ObjectGraph;
 using StructureMap.Pipeline;
 using System.Linq;

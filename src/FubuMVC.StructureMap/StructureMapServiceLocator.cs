@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 

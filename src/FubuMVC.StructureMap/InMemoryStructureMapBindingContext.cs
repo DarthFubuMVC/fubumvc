@@ -1,4 +1,3 @@
-
 using FubuCore.Binding;
 using StructureMap;
 using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
