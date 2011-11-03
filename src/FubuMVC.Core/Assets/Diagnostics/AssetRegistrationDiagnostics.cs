@@ -28,10 +28,10 @@ namespace FubuMVC.Core.Assets.Diagnostics
         public void Dependency(string dependent, string dependency)
         {
             _logs.FindByName(dependent)
-                .Add(_provenance, "Registered dependency {0}".ToFormat(dependency));
+                .Add(_provenance, "requires {0}".ToFormat(dependency));
 
             _logs.FindByName(dependency)
-                .Add(_provenance, "Is dependent on {0}".ToFormat(dependent));
+                .Add(_provenance, "supports {0}".ToFormat(dependent));
 
             _inner.Dependency(dependent, dependency);
         }
