@@ -27,7 +27,7 @@ namespace $rootnamespace$.App_Start
                 // that you can use the native registration API's for your
                 // IoC container for the rest of your application
                 .StructureMap(new Container())
-                .Bootstrap(RouteTable.Routes);
+                .Bootstrap();
 
 			// Ensure that no errors occurred during bootstrapping
 			PackageRegistry.AssertNoFailures();

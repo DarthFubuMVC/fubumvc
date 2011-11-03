@@ -54,3 +54,4 @@ output/*
 *.dotCover
 src/packages
 repositories.config
+results
