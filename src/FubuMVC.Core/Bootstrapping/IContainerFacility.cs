@@ -19,15 +19,4 @@ namespace FubuMVC.Core.Bootstrapping
         T Get<T>();
         IEnumerable<T> GetAll<T>();
     }
-
-    public static class ContainerFacilityExtensions
-    {
-        public static void SpinUp(this IContainerFacility facility)
-        {
-    
-        }
-    }
-
-    
-
 }

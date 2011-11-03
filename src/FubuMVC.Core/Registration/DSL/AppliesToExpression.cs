@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using Bottles;
-using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Registration.DSL
 {
