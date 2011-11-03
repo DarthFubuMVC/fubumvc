@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Bottles.Diagnostics;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using NUnit.Framework;
@@ -56,6 +57,37 @@ pak2:scripts/specs/f1/lib8.spec.js
 
 "specs/f1/lib8.spec.js"
                 );
+
+        }
+
+        [Test]
+        public void makes_asset_graph_dependencies_between_files()
+        {
+            theFiles.LoadAssets(@"
+scripts/lib1.js
+scripts/lib2.js
+scripts/lib3.js
+scripts/specs/something.js
+scripts/specs/lib1.spec.js
+scripts/specs/lib2.spec.js
+scripts/specs/lib3.spec.js
+");
+
+
+            var graph = new SpecificationGraph(thePipeline);
+
+            graph.FindSpec("specs/lib1.spec.js").Libraries.Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("lib1.js");
+
+
+            graph.FindSpec("specs/lib2.spec.js").Libraries.Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("lib2.js");
+
+
+            graph.FindSpec("specs/lib3.spec.js").Libraries.Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("lib3.js");
+
+            graph.FindSpec("specs/something.js").Libraries.Any().ShouldBeFalse();
 
         }
     }

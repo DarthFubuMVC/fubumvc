@@ -12,6 +12,7 @@ namespace Serenity.Jasmine
         private readonly string _contentFolder;
         private readonly string _subject;
         private readonly static IList<string> _ignoredExtensions = new List<string>();
+        private readonly IList<AssetFile> _libraries = new List<AssetFile>();
 
         static Specification()
         {
@@ -105,6 +106,16 @@ namespace Serenity.Jasmine
             }
 
             return string.Equals(_subject, DetermineLibraryName(other), StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public void AddLibrary(AssetFile file)
+        {
+            _libraries.Add(file);
+        }
+
+        public IEnumerable<AssetFile> Libraries
+        {
+            get { return _libraries; }
         }
     }
 }

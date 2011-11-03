@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuCore;
+using FubuMVC.Core.Runtime;
 
 namespace Serenity.Jasmine
 {
@@ -21,8 +23,12 @@ namespace Serenity.Jasmine
         {
             var folder = _packages[package.PackageName];
 
-            package
+            var javascriptFiles = package
                 .AllFiles()
+                .Where(x => x.MimeType == MimeType.Javascript).ToList();
+
+
+            javascriptFiles
                 .Where(Specification.IsSpecification)
                 .GroupBy(x => x.ContentFolder())
                 .Each(group =>
@@ -34,6 +40,15 @@ namespace Serenity.Jasmine
 
                     folder.AddSpecs(group);
                 });
+
+            var specs = AllSpecifications.ToList();
+            javascriptFiles.RemoveAll(file => specs.Any(x => x.File == file));
+            specs.Each(spec =>
+            {
+                // Brute force baby!  No elegance needed here.
+                // Ten bucks says this is a perf problem down the line
+                javascriptFiles.Where(file => spec.DependsOn(file)).Each(file => spec.AddLibrary(file));
+            });
         }
 
         public IEnumerable<Specification> AllSpecifications
@@ -51,6 +66,13 @@ namespace Serenity.Jasmine
                 return _packages;
             }
         }
+
+        public Specification FindSpec(string name)
+        {
+            return AllSpecifications.FirstOrDefault(x => x.File.Name == name);
+        }
+
+        
     }
 
     public class SpecificationFolder
