@@ -125,7 +125,6 @@
     <Compile Include="Assets\Combination\CombineAllStyleSheetsTester.cs" />
     <Compile Include="Assets\Combination\ScriptFileCombinationTester.cs" />
     <Compile Include="Assets\Combination\StyleFileCombinationTester.cs" />
-    <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\Content\CombinationTester.cs" />
     <Compile Include="Assets\Content\ContentPlanCacheTester.cs" />
     <Compile Include="Assets\Content\ContentPlanExpectation.cs" />

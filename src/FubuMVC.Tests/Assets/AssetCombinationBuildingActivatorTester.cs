@@ -92,6 +92,11 @@ namespace FubuMVC.Tests.Assets
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<PackageAssets> AllPackages
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
 

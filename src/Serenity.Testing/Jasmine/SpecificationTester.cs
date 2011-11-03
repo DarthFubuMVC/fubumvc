@@ -23,6 +23,14 @@ namespace Serenity.Testing.Jasmine
         }
 
         [Test]
+        public void is_specification()
+        {
+            Specification.IsSpecification(new AssetFile("specs/something.js")).ShouldBeTrue();
+            Specification.IsSpecification(new AssetFile("specs/folder/something.js")).ShouldBeTrue();
+            Specification.IsSpecification(new AssetFile("folder/something.spec.js")).ShouldBeFalse();
+        }
+
+        [Test]
         public void determine_library_name()
         {
             Specification.DetermineLibraryName(new AssetFile("lib1.js")).ShouldEqual("lib1");

@@ -98,6 +98,8 @@
   <ItemGroup>
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="BrowserFixture.cs" />
+    <Compile Include="Jasmine\PackageSpecificationsTester.cs" />
+    <Compile Include="Jasmine\SpecificationGraphTester.cs" />
     <Compile Include="Jasmine\SpecificationTester.cs" />
     <Compile Include="SerenitySystemTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

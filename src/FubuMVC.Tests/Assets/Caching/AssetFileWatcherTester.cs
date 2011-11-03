@@ -134,5 +134,10 @@ namespace FubuMVC.Tests.Assets.Caching
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<PackageAssets> AllPackages
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="Ajax\AjaxContinuationWriter.cs" />
     <Compile Include="Ajax\AjaxError.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
+    <Compile Include="Assets\AssetFileDataMother.cs" />
     <Compile Include="Assets\AssetServicesRegistry.cs" />
     <Compile Include="Assets\Caching\AssetContentCache.cs" />
     <Compile Include="Assets\Caching\AssetFileMonitoringSettings.cs" />

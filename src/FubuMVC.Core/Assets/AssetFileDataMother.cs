@@ -1,11 +1,10 @@
 using System;
-using System.IO;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Files;
 
-namespace FubuMVC.Tests.Assets
+namespace FubuMVC.Core.Assets
 {
     public class AssetFileDataMother
     {
@@ -32,6 +31,11 @@ namespace FubuMVC.Tests.Assets
         {
             if (line.Trim().IsEmpty()) return;
 
+            if (!line.Contains("="))
+            {
+                line = Guid.NewGuid().ToString() + "=" + line;
+            }
+
             var parts = line.Split('=');
             var key = parts.First();
             var stringPath = parts.Last();
@@ -42,10 +46,15 @@ namespace FubuMVC.Tests.Assets
             }
 
             var path = new AssetPath(stringPath);
+            if (path.Package.IsEmpty())
+            {
+                path = new AssetPath("application:" + stringPath);
+            }
 
             var file = new AssetFile(path.Name){
                 Override = @override
             };
+
 
             _files[key] = file;
 

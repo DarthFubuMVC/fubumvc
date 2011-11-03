@@ -90,7 +90,9 @@
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
+    <Compile Include="Jasmine\Specification.cs" />
     <Compile Include="Jasmine\SpecificationGraph.cs" />
+    <Compile Include="Jasmine\SpecPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerenityApplications.cs" />
     <Compile Include="SerenitySystem.cs" />

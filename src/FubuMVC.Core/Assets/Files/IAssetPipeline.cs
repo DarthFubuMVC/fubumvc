@@ -9,5 +9,6 @@ namespace FubuMVC.Core.Assets.Files
         AssetFile FindByPath(string path);
         IEnumerable<AssetFile> AllFiles();
         AssetFile Find(AssetPath path);
+        IEnumerable<PackageAssets> AllPackages { get; }
     }
 }

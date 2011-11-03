@@ -1,121 +1,88 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Assets.Files;
 using System.Linq;
-using FubuMVC.Core.Runtime;
+using FubuCore.Util;
+using FubuMVC.Core.Assets.Files;
+using FubuCore;
 
 namespace Serenity.Jasmine
 {
-    public class Specification
-    {
-        private readonly string _contentFolder;
-        private readonly string _subject;
-        private readonly static IList<string> _ignoredExtensions = new List<string>();
-
-        static Specification()
-        {
-            RebuildIgnoredExtensions();
-        }
-
-        public static IEnumerable<string> IgnoredExtensions
-        {
-            get { return _ignoredExtensions; }
-        }
-
-        public static void IgnoreExtension(string extension)
-        {
-            _ignoredExtensions.Add(extension);
-        }
-
-        public static void RebuildIgnoredExtensions()
-        {
-            _ignoredExtensions.Clear();
-
-            _ignoredExtensions.AddRange(MimeType.Javascript.Extensions);
-            _ignoredExtensions.Add(".spec");
-        }
-
-        public static string DetermineLibraryName(AssetFile file)
-        {
-            var libraryNameParts = file.LibraryName().Split('.').ToList();
-            while (libraryNameParts.Any() && _ignoredExtensions.Contains("." + libraryNameParts.Last()))
-            {
-                libraryNameParts.RemoveAt(libraryNameParts.Count - 1);
-            }
-
-            return libraryNameParts.Join(".");
-        }
-
-        public Specification(string name) : this(new AssetFile(name))
-        {
-
-        }
-
-        public Specification(AssetFile file)
-        {
-            File = file;
-
-            string fileContentFolder = file.ContentFolder();
-            if (fileContentFolder == null || fileContentFolder == "specs")
-            {
-                _contentFolder = null;
-            }
-            else
-            {
-                var list = fileContentFolder.Split('/').ToList();
-                list.Remove("specs");
-
-                _contentFolder = list.Join("/");
-            }
-
-            var libraryName = file.LibraryName();
-            var libraryParts = libraryName.Split('.').ToList();
-            var index = libraryParts.IndexOf("spec");
-
-
-            _subject = libraryParts.Take(index).Join(".");
-        }
-
-        public string Subject
-        {
-            get { return _subject; }
-        }
-
-
-        public string ContentFolder
-        {
-            get { return _contentFolder; }
-        }
-
-        public AssetFile File { get; private set;}
-        public AssetPath Path { get; set;}
-
-        public bool DependsOn(AssetFile other)
-        {
-            if (!string.Equals(_contentFolder, other.ContentFolder(), StringComparison.InvariantCultureIgnoreCase))
-            {
-                return false;
-            }
-
-            return string.Equals(_subject, DetermineLibraryName(other), StringComparison.InvariantCultureIgnoreCase);
-        }
-    }
-
     public class SpecificationGraph
     {
-        
+        private readonly Cache<string, SpecificationFolder> _packages 
+            = new Cache<string, SpecificationFolder>(name => new SpecificationFolder(name));
+
+        public SpecificationGraph(IAssetPipeline pipeline)
+        {
+            pipeline.AllPackages.Each(AddSpecs);
+        }
+
+        public void AddSpecs(PackageAssets package)
+        {
+            var folder = _packages[package.PackageName];
+
+            package
+                .AllFiles()
+                .Where(Specification.IsSpecification)
+                .GroupBy(x => x.ContentFolder())
+                .Each(group =>
+                {
+                    if (!group.Key.IsEmpty())
+                    {
+                        folder = folder.ChildFolderFor(new SpecPath(group.Key));
+                    }
+
+                    folder.AddSpecs(group);
+                });
+        }
+
+        public IEnumerable<Specification> AllSpecifications
+        {
+            get
+            {
+                return _packages.OrderBy(x => x.FullName).SelectMany(x => x.AllSpecifications);
+            }
+        }
+
+        public IEnumerable<SpecificationFolder> Folders
+        {
+            get
+            {
+                return _packages;
+            }
+        }
     }
 
     public class SpecificationFolder
     {
+        private readonly Cache<string, SpecificationFolder> _children;
+        private readonly string _name;
+        private readonly SpecificationFolder _parent;
         private readonly IList<Specification> _specifications = new List<Specification>();
-        private readonly IList<SpecificationFolder> _children = new List<SpecificationFolder>();
 
-        public void AddSpec(AssetFile file, AssetPath path)
+        public SpecificationFolder(string name)
         {
-            _specifications.Add(new Specification(file){
-                Path = path
-            });
+            _name = name;
+
+            _children = new Cache<string, SpecificationFolder>(path => new SpecificationFolder(path, this));
+        }
+
+        public SpecificationFolder(string name, SpecificationFolder parent) : this(name)
+        {
+            _parent = parent;
+        }
+
+        public SpecificationFolder Parent
+        {
+            get { return _parent; }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                return _parent == null ? _name : _parent.FullName + "/" + _name;
+            }
         }
 
         public IEnumerable<Specification> Specifications
@@ -127,8 +94,39 @@ namespace Serenity.Jasmine
         {
             get
             {
-                return _specifications.Union(_children.SelectMany(x => x.Specifications));
+                foreach (var folder in _children)
+                {
+                    foreach (var spec in folder.AllSpecifications)
+                    {
+                        yield return spec;
+                    }
+                }
+
+                foreach (var spec in _specifications)
+                {
+                    yield return spec;
+                }
+
             }
+        }
+
+        public SpecificationFolder ChildFolderFor(string name)
+        {
+            return ChildFolderFor(new SpecPath(name));
+        }
+
+        public SpecificationFolder ChildFolderFor(SpecPath path)
+        {
+            return path.Parts.Count == 1 
+                ? _children[path.TopFolder] 
+                : _children[path.TopFolder].ChildFolderFor(path.ChildPath());
+        }
+
+
+        public void AddSpecs(IEnumerable<AssetFile> assetFiles)
+        {
+            var specs = assetFiles.Select(x => new Specification(x));
+            _specifications.AddRange(specs);
         }
     }
 }
