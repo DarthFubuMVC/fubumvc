@@ -5,6 +5,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Assets.Files;
 using NUnit.Framework;
 using System.Linq;
@@ -83,7 +84,7 @@ namespace FubuMVC.Tests.Assets
             writeFile("a.js");
 
             thePipeline = new AssetPipeline();
-            var activator = new AssetPipelineBuilderActivator(thePipeline);
+            var activator = new AssetPipelineBuilderActivator(thePipeline,new AssetLogsCache());
             theLog = new PackageLog();
             activator.Activate(_packages, theLog);
 
