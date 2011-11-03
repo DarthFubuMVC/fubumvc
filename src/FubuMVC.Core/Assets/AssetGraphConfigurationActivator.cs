@@ -4,6 +4,7 @@ using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
+using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Core.Assets
@@ -12,11 +13,13 @@ namespace FubuMVC.Core.Assets
     {
         private readonly AssetGraph _assets;
         private readonly IFileSystem _fileSystem;
+        private readonly AssetRegistrationDiagnostics _diagnostics;
 
-        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem)
+        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem, AssetLogsCache logs)
         {
             _assets = assets;
             _fileSystem = fileSystem;
+            _diagnostics = new AssetRegistrationDiagnostics(_assets, logs);
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
@@ -30,10 +33,11 @@ namespace FubuMVC.Core.Assets
         public void ReadScriptConfig(string folder, IPackageLog log)
         {
             log.Trace("Trying to read *script.config / *asset.config files from {0}", folder);
-            var files = _fileSystem.FindFiles(folder, new FileSet(){
-                Include = "*.script.config;*.asset.config",
-                DeepSearch = false
-            });
+            var files = _fileSystem.FindFiles(folder, new FileSet()
+                                                      {
+                                                          Include = "*.script.config;*.asset.config",
+                                                          DeepSearch = false
+                                                      });
 
             if (!files.Any())
             {
@@ -46,7 +50,8 @@ namespace FubuMVC.Core.Assets
 
         public void ReadFile(string file, IPackageLog log)
         {
-            var reader = new AssetDslReader(_assets);
+            _diagnostics.SetCurrentProvenance(file);
+            var reader = new AssetDslReader(_diagnostics);
             log.Trace("  Reading script directives from {0}", file);
             log.TrapErrors(() =>
             {
@@ -55,7 +60,7 @@ namespace FubuMVC.Core.Assets
                     if (text.Trim().IsEmpty()) return;
 
                     log.TrapErrors(() => reader.ReadLine(text));
-                }); 
+                });
             });
         }
     }

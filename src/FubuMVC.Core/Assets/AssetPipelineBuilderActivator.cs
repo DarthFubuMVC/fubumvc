@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
+using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Packaging;
 
@@ -11,9 +12,9 @@ namespace FubuMVC.Core.Assets
     {
         private readonly IAssetFileRegistration _pipeline;
 
-        public AssetPipelineBuilderActivator(IAssetFileRegistration pipeline)
+        public AssetPipelineBuilderActivator(IAssetFileRegistration pipeline, AssetLogsCache assetLogsCache)
         {
-            _pipeline = pipeline;
+            _pipeline = new RecordingAssetFileRegistrator(pipeline, assetLogsCache);
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
@@ -50,6 +51,24 @@ namespace FubuMVC.Core.Assets
         public override string ToString()
         {
             return "Building the AssetPipeline from the application and package content folders";
+        }
+    }
+
+    public class RecordingAssetFileRegistrator : IAssetFileRegistration
+    {
+        private readonly IAssetFileRegistration _inner;
+        private readonly AssetLogsCache _assetLogsCache;
+
+        public RecordingAssetFileRegistrator(IAssetFileRegistration inner, AssetLogsCache assetLogsCache)
+        {
+            _inner = inner;
+            _assetLogsCache = assetLogsCache;
+        }
+
+        public void AddFile(AssetPath path, AssetFile file)
+        {
+            _assetLogsCache.FindByName(file.Name).Add(path.Package,"Adding {0} to IAssetPipeline".ToFormat(file.FullPath));
+            _inner.AddFile(path, file);
         }
     }
 }
