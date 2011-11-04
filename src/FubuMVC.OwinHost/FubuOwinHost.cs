@@ -22,6 +22,10 @@ namespace FubuMVC.OwinHost
         private IScheduler _scheduler;
         private IServer _server;
 
+        public FubuOwinHost(IApplicationSource source) : this(source, new SchedulerDelegate())
+        {
+        }
+
         public FubuOwinHost(IApplicationSource source, ISchedulerDelegate schedulerDelegate)
         {
             _source = source;
