@@ -5,6 +5,7 @@ using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Files;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System.Text;
 
 namespace FubuMVC.Tests.Assets.Content
 {
@@ -123,15 +124,16 @@ namespace FubuMVC.Tests.Assets.Content
             plan.AcceptVisitor(previewer);
 
             previewer.WriteToDebug();
-
-            previewer.ToFullDescription().ShouldEqual(@"
-Combination
-  FileRead:a.js
-  Combination
-    FileRead:b.js
-    FileRead:c.js
-  FileRead:d.js
-".Trim());
+			
+			var expected = new StringBuilder()
+				.AppendLine("Combination")
+				.AppendLine("  FileRead:a.js")
+				.AppendLine("  Combination")
+				.AppendLine("    FileRead:b.js")
+				.AppendLine("    FileRead:c.js")					
+				.Append("  FileRead:d.js");					
+					
+            previewer.ToFullDescription().ShouldEqual(expected);
         }
     }
 }

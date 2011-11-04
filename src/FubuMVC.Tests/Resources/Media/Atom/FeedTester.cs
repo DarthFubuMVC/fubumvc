@@ -158,6 +158,7 @@ namespace FubuMVC.Tests.Resources.Media.Atom
         }
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void configure_item_when_using_an_externally_defined_feed_item()
         {
             theFeed.UseItems<ItemSubjectMap>();

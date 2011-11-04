@@ -15,10 +15,9 @@ namespace FubuMVC.Tests.Assets
     {
         string theAssetName = "folder/a.js";
         private string _provenance = "test_provenance";
-
-        [SetUp]
-        public void SetUp()
-        {
+		
+		protected override void beforeEach ()
+		{
             AssetDeclarationVerificationActivator.Latched = false;
  
             var logs = new AssetLogsCache();

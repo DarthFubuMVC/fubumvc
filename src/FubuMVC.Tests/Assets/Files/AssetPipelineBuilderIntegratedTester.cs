@@ -85,7 +85,7 @@ namespace FubuMVC.Tests.Assets.Files
         {
             var file = thePipeline.Find("folder1/script1.js");
             file.Override.ShouldBeTrue();
-            file.FullPath.ShouldContain(@"pak1\content\scripts\overrides\folder1\script1.js");
+            file.FullPath.ShouldContain(FileSystem.Combine("pak1","content","scripts", "overrides","folder1", "script1.js"));
         }
 
         [Test]
