@@ -11,6 +11,8 @@ namespace FubuTestApplication
         {
             IncludeDiagnostics(true);
             Actions.IncludeType<OwinActions>();
+
+            Routes.HomeIs<OwinActions>(x => x.Home());
         }
 
         public FubuApplication BuildApplication()
@@ -24,6 +26,11 @@ namespace FubuTestApplication
         public string get_say_hello()
         {
             return "Hello, world!";
+        }
+
+        public string Home()
+        {
+            return "This is home";
         }
     }
 }

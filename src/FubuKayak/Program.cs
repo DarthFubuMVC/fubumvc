@@ -13,6 +13,7 @@ namespace FubuKayak
 
             var host = new FubuOwinHost(new OwinApplication(), new SchedulerDelegate());
             host.RunApplication(5500);
+            
         }
     }
 }

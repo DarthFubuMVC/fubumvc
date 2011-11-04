@@ -12,34 +12,57 @@ using Kayak;
 
 namespace FubuMVC.OwinHost
 {
-    
-
-    // TODO -- Deal with recycling.  Look at the SchedulerDelegate
     public class FubuOwinHost
     {
         private readonly IApplicationSource _source;
-        private readonly ISchedulerDelegate _scheduler;
+        private readonly ISchedulerDelegate _schedulerDelegate;
         private FubuRuntime _runtime;
+        private IPEndPoint _listeningEndpoint;
+        private AppDelegate _applicationDelegate;
+        private IScheduler _scheduler;
+        private IServer _server;
 
-        public FubuOwinHost(IApplicationSource source, ISchedulerDelegate scheduler)
+        public FubuOwinHost(IApplicationSource source, ISchedulerDelegate schedulerDelegate)
         {
             _source = source;
-            _scheduler = scheduler;
+            _schedulerDelegate = schedulerDelegate;
         }
 
         public void RunApplication(int port)
         {
-            _runtime = _source.BuildApplication().Bootstrap();
-            
-            var ep = new IPEndPoint(IPAddress.Any, 5500);
-            Console.WriteLine("Listening on " + ep);
-            KayakGate.Start(_scheduler, ep, builder =>
-            {
-                builder
-                    .RescheduleCallbacks()
-                    .Run(ExecuteRequest);
-            });
+            _listeningEndpoint = new IPEndPoint(IPAddress.Any, 5500);
+            Console.WriteLine("Listening on " + _listeningEndpoint);
+
+            _applicationDelegate = AppBuilder.BuildConfiguration(x => x.RescheduleCallbacks().Run(ExecuteRequest));
+
+            _scheduler = KayakScheduler.Factory.Create(_schedulerDelegate);
+            _server = KayakServer.Factory.CreateGate(_applicationDelegate, _scheduler, null);
+
+
+            Start();
         }
+
+        public void Start()
+        {
+            RouteTable.Routes.Clear();
+            _runtime = _source.BuildApplication().Bootstrap();
+            using (_server.Listen(_listeningEndpoint))
+            {
+                _scheduler.Start();
+            }
+        }
+
+        public void Stop()
+        {
+            _scheduler.Stop();
+        }
+
+        public void Recycle()
+        {
+            Stop();
+            Start();
+        }
+
 
         public void ExecuteRequest(IDictionary<string, object> env, ResultDelegate result, Action<Exception> fault)
         {

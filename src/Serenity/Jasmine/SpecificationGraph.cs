@@ -28,6 +28,24 @@ namespace Serenity.Jasmine
                 .Where(x => x.MimeType == MimeType.Javascript).ToList();
 
 
+            addSpecs(javascriptFiles, folder);
+            associateSpecs(javascriptFiles);
+        }
+
+        private void associateSpecs(List<AssetFile> javascriptFiles)
+        {
+            var specs = AllSpecifications.ToList();
+            javascriptFiles.RemoveAll(file => specs.Any(x => x.File == file));
+            specs.Each(spec =>
+            {
+                // Brute force baby!  No elegance needed here.
+                // Ten bucks says this is a perf problem down the line
+                javascriptFiles.Where(file => spec.DependsOn(file)).Each(file => spec.AddLibrary(file));
+            });
+        }
+
+        private static void addSpecs(List<AssetFile> javascriptFiles, SpecificationFolder folder)
+        {
             javascriptFiles
                 .Where(Specification.IsSpecification)
                 .GroupBy(x => x.ContentFolder())
@@ -40,15 +58,6 @@ namespace Serenity.Jasmine
 
                     folder.AddSpecs(group);
                 });
-
-            var specs = AllSpecifications.ToList();
-            javascriptFiles.RemoveAll(file => specs.Any(x => x.File == file));
-            specs.Each(spec =>
-            {
-                // Brute force baby!  No elegance needed here.
-                // Ten bucks says this is a perf problem down the line
-                javascriptFiles.Where(file => spec.DependsOn(file)).Each(file => spec.AddLibrary(file));
-            });
         }
 
         public IEnumerable<Specification> AllSpecifications
