@@ -44,6 +44,7 @@ namespace FubuMVC.Tests.Assets.Caching
         }
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void big_integrated_smoke_test()
         {
             var pipeline = new StubAssetPipeline();

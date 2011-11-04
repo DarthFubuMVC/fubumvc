@@ -79,6 +79,7 @@ namespace FubuMVC.Tests.Configuration
         }
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void fetch_a_simple_object()
         {
             // This data is pulled from the FubuMVC.Tests.dll.config file
