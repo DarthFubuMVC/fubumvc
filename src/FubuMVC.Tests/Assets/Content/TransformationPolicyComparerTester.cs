@@ -78,6 +78,7 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void order_with_must_be_after_rules_if_extension_and_action_do_not_catch()
         {
             generate2.AddMustBeAfterRule(p => p == generate);

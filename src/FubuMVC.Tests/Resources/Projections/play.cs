@@ -12,6 +12,7 @@ namespace FubuMVC.Tests.Resources.Projections
     public class play
     {
         [Test]
+		[Platform(Exclude="Mono")]
         public void try_it_out()
         {
             var doc = new XmlDocument().WithRoot("root").WithAtt("a", "1");

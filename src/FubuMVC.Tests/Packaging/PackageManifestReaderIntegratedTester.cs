@@ -51,6 +51,7 @@ namespace FubuMVC.Tests.Packaging
 
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void load_a_package_info_from_a_manifest_file_when_given_the_folder()
         {
             // the reader is rooted at the folder location of the main app
@@ -78,6 +79,7 @@ namespace FubuMVC.Tests.Packaging
         }
 
 		[Test]
+		[Platform(Exclude="Mono")]
 		public void load_packages_by_assembly()
 		{
 			var includes = new PackageManifest();

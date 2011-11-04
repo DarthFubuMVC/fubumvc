@@ -94,6 +94,7 @@ namespace FubuMVC.Tests.Resources.Media.Atom
         }
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void the_resulting_feed_should_have_the_extensions()
         {
             var extension = theResultingFeed.Items.ElementAt(0).ElementExtensions.Single().ShouldBeOfType<SyndicationElementExtension>();
@@ -110,6 +111,7 @@ namespace FubuMVC.Tests.Resources.Media.Atom
         }
 
         [Test]
+		[Platform(Exclude="Mono")]
         public void the_resulting_feed_does_manage_to_write_some_xml()
         {
             var outputWriter = new InMemoryOutputWriter();

@@ -16,18 +16,17 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
     public class when_getting_value_for_view_column : InteractionContext<ViewColumn>
     {
         private BehaviorGraph _graph;
-
-        [SetUp]
-        public void setup()
-        {
+		
+		protected override void beforeEach()
+		{
             _graph = new FubuRegistry(registry =>
-                                             {
-                                                 registry.Applies.ToThisAssembly();
-                                                 registry.Actions.IncludeType<Test>();
-                                                 registry.Actions.IncludeMethods(c => (new[] { "Index", "Continuation", "ZeroModelOut", "HasOutputNode" }).Contains(c.Method.Name));
-                                                 registry.ApplyConvention<OutputNodeConvention>();
-                                             })
-                .BuildGraph();
+             {
+                 registry.Applies.ToThisAssembly();
+                 registry.Actions.IncludeType<Test>();
+                 registry.Actions.IncludeMethods(c => (new[] { "Index", "Continuation", "ZeroModelOut", "HasOutputNode" }).Contains(c.Method.Name));
+                 registry.ApplyConvention<OutputNodeConvention>();
+				
+             }).BuildGraph();
         }
 
         [Test]

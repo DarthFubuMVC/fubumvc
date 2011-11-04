@@ -92,7 +92,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         public void h_uses_servicelocator_to_get_htmlencoder()
         {
             _serviceLocator.Expect(x => x.GetInstance(typeof (IHtmlEncoder))).Return(new DefaultHtmlEncoder());
-            ClassUnderTest.H("MØ").ShouldEqual("M&#216;");
+            ClassUnderTest.H("<div>").ShouldEqual("&lt;div&gt;");
             _serviceLocator.VerifyAllExpectations();
         }
 
