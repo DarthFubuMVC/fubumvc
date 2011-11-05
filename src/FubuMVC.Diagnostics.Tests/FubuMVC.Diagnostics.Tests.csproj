@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ActionCallExtensionsTester.cs" />
+    <Compile Include="Configuration\RemoveBasicDiagnosticsTester.cs" />
     <Compile Include="DiagnosticsCallWithAttribute.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsEndpointUrlPolicyTester.cs" />
     <Compile Include="Configuration\Policies\DiagnosticsUrlAttributePolicyTester.cs" />

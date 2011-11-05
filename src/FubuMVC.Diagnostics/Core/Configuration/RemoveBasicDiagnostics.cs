@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -9,20 +10,16 @@ namespace FubuMVC.Diagnostics.Core.Configuration
     {
         public void Configure(BehaviorGraph graph)
         {
-            graph
-                .Behaviors
-                .Where(chain =>
-                           {
-                               var call = chain.FirstCall();
-                               if (call != null)
-                               {
-                                   return call.IsInternalFubuAction();
-                               }
+            graph.Behaviors.Where(chain =>
+            {
+                var call = chain.FirstCall();
 
-                               return false;
-                           })
-                .ToList()
-                .Each(graph.RemoveChain);
+                return call != null 
+                    && call.IsInternalFubuAction()
+                    && call.HandlerType != typeof(AssetWriter);
+                
+            }).ToList()
+            .Each(graph.RemoveChain);
         }
     }
 }
