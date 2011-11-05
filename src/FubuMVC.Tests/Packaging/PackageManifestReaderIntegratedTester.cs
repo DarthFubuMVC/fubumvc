@@ -40,25 +40,20 @@ namespace FubuMVC.Tests.Packaging
             reader = new PackageManifestReader(fileSystem, folder => folder);
         }
 
-
-
         [TearDown]
         public void TearDown()
         {
             new FileSystem().DeleteFile(FileSystem.Combine(theApplicationDirectory, PackageManifest.FILE));
         }
 
-
-
         [Test]
-		[Platform(Exclude="Mono")]
         public void load_a_package_info_from_a_manifest_file_when_given_the_folder()
         {
             // the reader is rooted at the folder location of the main app
             var package = reader.LoadFromFolder("../../../TestPackage1".ToFullPath());
 
             var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
-            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
+            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
             assemblyLoader.LoadAssembliesFromPackage(package);
 
             var loadedAssemblies = assemblyLoader.Assemblies.ToArray();
@@ -79,7 +74,6 @@ namespace FubuMVC.Tests.Packaging
         }
 
 		[Test]
-		[Platform(Exclude="Mono")]
 		public void load_packages_by_assembly()
 		{
 			var includes = new PackageManifest();
@@ -92,8 +86,8 @@ namespace FubuMVC.Tests.Packaging
             new FileSystem().PersistToFile(links, theApplicationDirectory, LinkManifest.FILE);
 
 			var assemblyLoader = new AssemblyLoader(new PackagingDiagnostics());
-            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(File.ReadAllBytes(file));
-
+            assemblyLoader.AssemblyFileLoader = file => Assembly.Load(Path.GetFileNameWithoutExtension(file));
+			
 			var package = linkedFolderReader.Load(new PackageLog()).Single();
 			assemblyLoader.LoadAssembliesFromPackage(package);
 
