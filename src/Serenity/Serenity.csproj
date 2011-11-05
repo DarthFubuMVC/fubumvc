@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="WebContent\jasmine.asset.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\lib\chromedriver.exe">
@@ -186,6 +187,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="WebContent\content\scripts\jasmine-html.js" />
+    <Content Include="WebContent\content\scripts\jasmine.css" />
+    <Content Include="WebContent\content\scripts\jasmine.js" />
+    <Content Include="WebContent\content\scripts\jasmine_favicon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -195,4 +200,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
 </Project>

@@ -176,7 +176,9 @@
     <Content Include="sets.script.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="main.script.config" />
+    <Content Include="main.script.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
