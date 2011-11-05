@@ -192,6 +192,7 @@
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
+    <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />

@@ -231,6 +231,7 @@
     <Compile Include="Http\RequestDataSource.cs" />
     <Compile Include="Http\RequestHeaders.cs" />
     <Compile Include="Http\StreamingDataExtensions.cs" />
+    <Compile Include="Packaging\ContentOnlyPackageInfo.cs" />
     <Compile Include="Registration\BehaviorAggregator.cs" />
     <Compile Include="Registration\Conventions\ConnegAttachmentPolicy.cs" />
     <Compile Include="Registration\Nodes\ActionCallBase.cs" />
