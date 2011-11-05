@@ -44,7 +44,6 @@ namespace FubuMVC.Tests.Assets.Caching
         }
 
         [Test]
-		[Platform(Exclude="Mono")]
         public void big_integrated_smoke_test()
         {
             var pipeline = new StubAssetPipeline();
@@ -62,7 +61,9 @@ namespace FubuMVC.Tests.Assets.Caching
                 var file3 = pipeline.AddFile("3");
                 var file4 = pipeline.AddFile("4");
                 var file5 = pipeline.AddFile("5");
-            
+				
+				Thread.Sleep(1001);
+				
                 watcher.StartWatchingAll();
 
                 listener.AssertWasNotCalled(x => x.Changed(null), x => x.IgnoreArguments());
@@ -83,9 +84,7 @@ namespace FubuMVC.Tests.Assets.Caching
             {
                 watcher.StopWatching();
             }
-        }
-
-        
+        }        
     }
 
     public class StubAssetPipeline : IAssetPipeline
