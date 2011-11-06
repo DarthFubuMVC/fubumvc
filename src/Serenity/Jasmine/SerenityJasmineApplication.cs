@@ -11,9 +11,12 @@ using System.Linq;
 
 namespace Serenity.Jasmine
 {
+    public interface ISerenityJasmineApplication
+    {
+        void AddContentFolder(string contentFolder);
+    }
 
-
-    public class SerenityJasmineApplication : IApplicationSource, IPackageLoader
+    public class SerenityJasmineApplication : IApplicationSource, IPackageLoader, ISerenityJasmineApplication
     {
         private readonly IList<string> _contentFolders = new List<string>();
 

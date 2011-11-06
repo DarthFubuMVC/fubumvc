@@ -44,6 +44,10 @@ namespace Serenity.Jasmine
         private void buildApplication()
         {
             _application = new SerenityJasmineApplication();
+            var configLoader = new ConfigFileLoader(_input.SerenityFile, _application);
+            configLoader.ReadFile();
+
+
             var applicationSettings = new ApplicationSettings(){
                 RootUrl = "http://localhost:" + _input.PortFlag
             };

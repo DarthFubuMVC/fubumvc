@@ -1,0 +1,3 @@
+﻿include:TestPackage1
+include:TestPackage2
+include:TestPackage3

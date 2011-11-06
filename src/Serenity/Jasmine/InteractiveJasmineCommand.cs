@@ -11,6 +11,7 @@ namespace Serenity.Jasmine
     {
         public override bool Execute(InteractiveJasmineInput input)
         {
+            // TODO -- tighten up the defensive programming against bad input
             var runner = new JasmineRunner(input);
             runner.Run();
 

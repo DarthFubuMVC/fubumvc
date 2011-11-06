@@ -127,6 +127,7 @@
       <Link>chromedriver.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="jasmine.txt" />
     <Content Include="Jasmine\TestPackage1\content\scripts\specs\PlayerSpec.js" />
     <Content Include="Jasmine\TestPackage1\content\scripts\specs\SpecHelper.js" />
   </ItemGroup>
