@@ -48,6 +48,11 @@ namespace FubuMVC.OwinHost
 
         public void Start()
         {
+            if (_listeningEndpoint == null)
+            {
+                throw new InvalidOperationException("Start() can only be called after RunApplication() and Stop()");
+            }
+
             RouteTable.Routes.Clear();
             _runtime = _source.BuildApplication().Bootstrap();
             using (_server.Listen(_listeningEndpoint))

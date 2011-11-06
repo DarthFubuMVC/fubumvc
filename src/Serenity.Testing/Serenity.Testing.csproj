@@ -127,6 +127,12 @@
       <Link>chromedriver.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Jasmine\TestPackage1\content\scripts\specs\PlayerSpec.js" />
+    <Content Include="Jasmine\TestPackage1\content\scripts\specs\SpecHelper.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Jasmine\TestPackage2\" />
+    <Folder Include="Jasmine\TestPackage3\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

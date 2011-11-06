@@ -99,7 +99,13 @@
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
+    <Compile Include="Jasmine\InteractiveJasmineCommand.cs" />
+    <Compile Include="Jasmine\InteractiveJasmineInput.cs" />
     <Compile Include="Jasmine\JasminePages.cs" />
+    <Compile Include="Jasmine\JasmineRunner.cs" />
+    <Compile Include="Jasmine\NulloCombinationDeterminationService.cs" />
+    <Compile Include="Jasmine\SerenityJasmineApplication.cs" />
+    <Compile Include="Jasmine\SerenityJasmineRegistry.cs" />
     <Compile Include="Jasmine\Specification.cs" />
     <Compile Include="Jasmine\SpecificationGraph.cs" />
     <Compile Include="Jasmine\SpecPath.cs" />
@@ -187,6 +193,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="WebContent\content\scripts\jquery-1.7.min.js" />
     <Content Include="WebContent\content\scripts\jasmine-html.js" />
     <Content Include="WebContent\content\scripts\jasmine.css" />
     <Content Include="WebContent\content\scripts\jasmine.js" />
