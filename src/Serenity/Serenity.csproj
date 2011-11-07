@@ -108,6 +108,7 @@
     <Compile Include="Jasmine\SerenityJasmineApplication.cs" />
     <Compile Include="Jasmine\SerenityJasmineRegistry.cs" />
     <Compile Include="Jasmine\Specification.cs" />
+    <Compile Include="Jasmine\SpecificationFolder.cs" />
     <Compile Include="Jasmine\SpecificationGraph.cs" />
     <Compile Include="Jasmine\SpecPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

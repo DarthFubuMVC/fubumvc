@@ -1,19 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Assets.Files;
+using FubuMVC.Core.Resources.PathBased;
 
 namespace Serenity.Jasmine
 {
-    public class SpecPath
+    public class SpecPath : ResourcePath
     {
         private readonly IList<string> _parts;
 
-        public SpecPath(IList<string> parts)
+
+
+        public SpecPath(IList<string> parts) : base(parts.Join("/"))
         {
             _parts = parts;
         }
 
-        public SpecPath(string packageName, string assetName)
+        public SpecPath(string packageName, string assetName) : base(packageName + "/" + assetName)
         {
             _parts = new List<string>{
                 packageName
@@ -22,7 +26,7 @@ namespace Serenity.Jasmine
             _parts.AddRange(assetName.Split('/'));
         }
 
-        public SpecPath(string fullPath)
+        public SpecPath(string fullPath) : base(fullPath)
         {
             _parts = new List<string>();
 
@@ -31,7 +35,7 @@ namespace Serenity.Jasmine
             _parts.AddRange(path.Name.Split('/'));
         }
 
-        private string fullname
+        public string FullName
         {
             get
             {
@@ -43,7 +47,7 @@ namespace Serenity.Jasmine
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(other.fullname, fullname);
+            return Equals(other.FullName, FullName);
         }
 
         public override bool Equals(object obj)
@@ -56,7 +60,7 @@ namespace Serenity.Jasmine
 
         public override int GetHashCode()
         {
-            return (fullname != null ? fullname.GetHashCode() : 0);
+            return (_parts != null ? FullName.GetHashCode() : 0);
         }
 
         public string TopFolder
@@ -73,6 +77,14 @@ namespace Serenity.Jasmine
         {
             return new SpecPath(_parts.Skip(1).ToList());
         }
+
+        public SpecPath Append(string libraryName)
+        {
+            var list = new List<string>(_parts);
+            list.Add(libraryName);
+            return new SpecPath(list);
+        }
+
 
     }
 }

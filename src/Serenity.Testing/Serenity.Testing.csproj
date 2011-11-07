@@ -99,6 +99,7 @@
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="BrowserFixture.cs" />
     <Compile Include="Jasmine\PackageSpecificationsTester.cs" />
+    <Compile Include="Jasmine\SpecificationGraphIntegratedTester.cs" />
     <Compile Include="Jasmine\SpecificationGraphTester.cs" />
     <Compile Include="Jasmine\SpecificationTester.cs" />
     <Compile Include="SerenitySystemTester.cs" />
@@ -130,9 +131,16 @@
     <Content Include="jasmine.txt" />
     <Content Include="Jasmine\TestPackage1\content\scripts\specs\PlayerSpec.js" />
     <Content Include="Jasmine\TestPackage1\content\scripts\specs\SpecHelper.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\folder2\spec7.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\folder2\spec8.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\folder2\spec6.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\spec4.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\spec5.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\spec3.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\spec2.js" />
+    <Content Include="Jasmine\TestPackage2\content\scripts\specs\spec1.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Jasmine\TestPackage2\" />
     <Folder Include="Jasmine\TestPackage3\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

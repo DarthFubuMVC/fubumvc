@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuCore.Util;
@@ -29,14 +31,14 @@ namespace Serenity.Jasmine
 
         public void AddSpecs(PackageAssets package)
         {
-            var folder = _packages[package.PackageName];
+            var packageFolder = _packages[package.PackageName];
 
             var javascriptFiles = package
                 .AllFiles()
                 .Where(x => x.MimeType == MimeType.Javascript).ToList();
 
 
-            addSpecs(javascriptFiles, folder);
+            addSpecs(javascriptFiles, packageFolder);
             associateSpecs(javascriptFiles);
         }
 
@@ -52,98 +54,63 @@ namespace Serenity.Jasmine
             });
         }
 
-        private static void addSpecs(IEnumerable<AssetFile> javascriptFiles, SpecificationFolder folder)
+        private static void addSpecs(IEnumerable<AssetFile> javascriptFiles, SpecificationFolder packageFolder)
         {
             javascriptFiles
                 .Where(Specification.IsSpecification)
-                .GroupBy(x => x.ContentFolder())
+                .GroupBy(DetermineSpecContentFolder)
                 .Each(group =>
                 {
+                    var folder = packageFolder;
+
                     if (!group.Key.IsEmpty())
                     {
-                        folder = folder.ChildFolderFor(new SpecPath(group.Key));
+                        folder = packageFolder.ChildFolderFor(new SpecPath(group.Key));
                     }
 
                     folder.AddSpecs(group);
                 });
         }
 
-        public Specification FindSpec(string name)
+        public Specification FindSpecByFullName(string name)
         {
             return AllSpecifications.FirstOrDefault(x => x.File.Name == name);
         }
-    }
 
-    public class SpecificationFolder
-    {
-        private readonly Cache<string, SpecificationFolder> _children;
-        private readonly string _name;
-        private readonly SpecificationFolder _parent;
-        private readonly IList<Specification> _specifications = new List<Specification>();
-
-        public SpecificationFolder(string name)
+        public Specification FindSpecByLibraryName(string name)
         {
-            _name = name;
-
-            _children = new Cache<string, SpecificationFolder>(path => new SpecificationFolder(path, this));
+            return AllSpecifications.FirstOrDefault(x => x.LibraryName == name);
         }
 
-        public SpecificationFolder(string name, SpecificationFolder parent) : this(name)
+        public ISpecNode FindSpecs(SpecPath path)
         {
-            _parent = parent;
+            string fullName = path.FullName;
+            return AllNodes.FirstOrDefault(x => x.FullName == fullName);
         }
 
-        public SpecificationFolder Parent
+        public static string DetermineSpecContentFolder(AssetFile file)
         {
-            get { return _parent; }
+            var contentFolder = file.ContentFolder();
+            var list = contentFolder.Split('/').ToList();
+            list.RemoveAll(x => x == "specs");
+
+            return list.Join("/");
         }
 
-        public string FullName
-        {
-            get { return _parent == null ? _name : _parent.FullName + "/" + _name; }
-        }
-
-        public IEnumerable<Specification> Specifications
-        {
-            get { return _specifications; }
-        }
-
-        public IEnumerable<Specification> AllSpecifications
+        public IEnumerable<ISpecNode> AllNodes
         {
             get
             {
-                foreach (var folder in _children)
+                foreach (var package in _packages)
                 {
-                    foreach (var spec in folder.AllSpecifications)
+                    yield return package;
+
+                    foreach (var node in package.AllNodes)
                     {
-                        yield return spec;
+                        yield return node;
                     }
                 }
-
-                foreach (var spec in _specifications)
-                {
-                    yield return spec;
-                }
             }
-        }
-
-        public SpecificationFolder ChildFolderFor(string name)
-        {
-            return ChildFolderFor(new SpecPath(name));
-        }
-
-        public SpecificationFolder ChildFolderFor(SpecPath path)
-        {
-            return path.Parts.Count == 1
-                       ? _children[path.TopFolder]
-                       : _children[path.TopFolder].ChildFolderFor(path.ChildPath());
-        }
-
-
-        public void AddSpecs(IEnumerable<AssetFile> assetFiles)
-        {
-            var specs = assetFiles.Select(x => new Specification(x));
-            _specifications.AddRange(specs);
         }
     }
 }

@@ -76,18 +76,18 @@ scripts/specs/lib3.spec.js
 
             var graph = new SpecificationGraph(thePipeline);
 
-            graph.FindSpec("specs/lib1.spec.js").Libraries.Select(x => x.Name)
+            graph.FindSpecByFullName("specs/lib1.spec.js").Libraries.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("lib1.js");
 
 
-            graph.FindSpec("specs/lib2.spec.js").Libraries.Select(x => x.Name)
+            graph.FindSpecByFullName("specs/lib2.spec.js").Libraries.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("lib2.js");
 
 
-            graph.FindSpec("specs/lib3.spec.js").Libraries.Select(x => x.Name)
+            graph.FindSpecByFullName("specs/lib3.spec.js").Libraries.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("lib3.js");
 
-            graph.FindSpec("specs/something.js").Libraries.Any().ShouldBeFalse();
+            graph.FindSpecByFullName("specs/something.js").Libraries.Any().ShouldBeFalse();
 
         }
     }

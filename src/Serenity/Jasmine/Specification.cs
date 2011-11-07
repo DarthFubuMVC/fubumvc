@@ -7,12 +7,14 @@ using FubuCore;
 
 namespace Serenity.Jasmine
 {
-    public class Specification
+    public class Specification : ISpecNode
     {
         private readonly string _contentFolder;
         private readonly string _subject;
         private readonly static IList<string> _ignoredExtensions = new List<string>();
         private readonly IList<AssetFile> _libraries = new List<AssetFile>();
+        private readonly string _libraryName;
+        private readonly Lazy<string> _fullname;
 
         static Specification()
         {
@@ -55,11 +57,13 @@ namespace Serenity.Jasmine
 
         public Specification(string name) : this(new AssetFile(name))
         {
-
+            
         }
 
         public Specification(AssetFile file)
         {
+            _fullname = new Lazy<string>(() => Parent.FullName + "/" + _libraryName);
+
             File = file;
 
             string fileContentFolder = file.ContentFolder();
@@ -75,13 +79,22 @@ namespace Serenity.Jasmine
                 _contentFolder = list.Join("/");
             }
 
-            var libraryName = file.LibraryName();
-            var libraryParts = libraryName.Split('.').ToList();
+            _libraryName = file.LibraryName();
+            var libraryParts = _libraryName.Split('.').ToList();
             var index = libraryParts.IndexOf("spec");
 
 
             _subject = libraryParts.Take(index).Join(".");
+
+            
         }
+
+        public string LibraryName
+        {
+            get { return _libraryName; }
+        }
+
+        public SpecificationFolder Parent { get; set; }
 
         public string Subject
         {
@@ -116,6 +129,31 @@ namespace Serenity.Jasmine
         public IEnumerable<AssetFile> Libraries
         {
             get { return _libraries; }
+        }
+
+        public SpecPath Path()
+        {
+            return Parent.Path().Append(_libraryName);
+        }
+
+        public string FullName
+        {
+            get { return _fullname.Value; }
+        }
+
+        ISpecNode ISpecNode.Parent()
+        {
+            return Parent;
+        }
+
+        public IEnumerable<Specification> AllSpecifications
+        {
+            get { yield return this; }
+        }
+
+        public IEnumerable<ISpecNode> AllNodes
+        {
+            get { yield break; }
         }
     }
 }
