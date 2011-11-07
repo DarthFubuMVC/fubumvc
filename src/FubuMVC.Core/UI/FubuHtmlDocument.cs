@@ -42,6 +42,11 @@ namespace FubuMVC.Core.UI
             get { return _services.GetInstance<IUrlRegistry>(); }
         }
 
+        public void WriteAssetsToHead()
+        {
+            Head.Append(this.WriteAssetTags());
+        }
+
         public void WriteScriptsToBody()
         {
             Body.Append(this.WriteScriptTags());

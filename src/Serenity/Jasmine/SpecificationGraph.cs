@@ -1,22 +1,30 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore.Util;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Files;
 using FubuCore;
+using FubuCore.Util;
+using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
 
 namespace Serenity.Jasmine
 {
     public class SpecificationGraph
     {
-        private readonly Cache<string, SpecificationFolder> _packages 
+        private readonly Cache<string, SpecificationFolder> _packages
             = new Cache<string, SpecificationFolder>(name => new SpecificationFolder(name));
 
         public SpecificationGraph(IAssetPipeline pipeline)
         {
             pipeline.AllPackages.Each(AddSpecs);
+        }
+
+        public IEnumerable<Specification> AllSpecifications
+        {
+            get { return _packages.OrderBy(x => x.FullName).SelectMany(x => x.AllSpecifications); }
+        }
+
+        public IEnumerable<SpecificationFolder> Folders
+        {
+            get { return _packages; }
         }
 
         public void AddSpecs(PackageAssets package)
@@ -40,11 +48,11 @@ namespace Serenity.Jasmine
             {
                 // Brute force baby!  No elegance needed here.
                 // Ten bucks says this is a perf problem down the line
-                javascriptFiles.Where(file => spec.DependsOn(file)).Each(file => spec.AddLibrary(file));
+                javascriptFiles.Where(spec.DependsOn).Each(spec.AddLibrary);
             });
         }
 
-        private static void addSpecs(List<AssetFile> javascriptFiles, SpecificationFolder folder)
+        private static void addSpecs(IEnumerable<AssetFile> javascriptFiles, SpecificationFolder folder)
         {
             javascriptFiles
                 .Where(Specification.IsSpecification)
@@ -60,28 +68,10 @@ namespace Serenity.Jasmine
                 });
         }
 
-        public IEnumerable<Specification> AllSpecifications
-        {
-            get
-            {
-                return _packages.OrderBy(x => x.FullName).SelectMany(x => x.AllSpecifications);
-            }
-        }
-
-        public IEnumerable<SpecificationFolder> Folders
-        {
-            get
-            {
-                return _packages;
-            }
-        }
-
         public Specification FindSpec(string name)
         {
             return AllSpecifications.FirstOrDefault(x => x.File.Name == name);
         }
-
-        
     }
 
     public class SpecificationFolder
@@ -110,10 +100,7 @@ namespace Serenity.Jasmine
 
         public string FullName
         {
-            get
-            {
-                return _parent == null ? _name : _parent.FullName + "/" + _name;
-            }
+            get { return _parent == null ? _name : _parent.FullName + "/" + _name; }
         }
 
         public IEnumerable<Specification> Specifications
@@ -137,7 +124,6 @@ namespace Serenity.Jasmine
                 {
                     yield return spec;
                 }
-
             }
         }
 
@@ -148,9 +134,9 @@ namespace Serenity.Jasmine
 
         public SpecificationFolder ChildFolderFor(SpecPath path)
         {
-            return path.Parts.Count == 1 
-                ? _children[path.TopFolder] 
-                : _children[path.TopFolder].ChildFolderFor(path.ChildPath());
+            return path.Parts.Count == 1
+                       ? _children[path.TopFolder]
+                       : _children[path.TopFolder].ChildFolderFor(path.ChildPath());
         }
 
 
