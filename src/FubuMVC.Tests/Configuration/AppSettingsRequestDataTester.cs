@@ -11,7 +11,6 @@ using StructureMap;
 namespace FubuMVC.Tests.Configuration
 {
     [TestFixture]
-	[Platform(Exclude="Mono")]
     public class AppSettingsRequestDataTester
     {
         #region Setup/Teardown
@@ -66,7 +65,6 @@ namespace FubuMVC.Tests.Configuration
     }
 
     [TestFixture]
-	[Platform(Exclude="Mono")]
     public class AppSettingsProviderIntegratedTester
     {
         private AppSettingsProvider provider;
