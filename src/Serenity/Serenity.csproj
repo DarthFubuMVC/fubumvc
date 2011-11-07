@@ -107,6 +107,8 @@
     <Compile Include="Jasmine\NulloCombinationDeterminationService.cs" />
     <Compile Include="Jasmine\SerenityJasmineApplication.cs" />
     <Compile Include="Jasmine\SerenityJasmineRegistry.cs" />
+    <Compile Include="Jasmine\SpecAssetRequirements.cs" />
+    <Compile Include="Jasmine\SpecHierarchyBuilder.cs" />
     <Compile Include="Jasmine\Specification.cs" />
     <Compile Include="Jasmine\SpecificationFolder.cs" />
     <Compile Include="Jasmine\SpecificationGraph.cs" />
@@ -195,6 +197,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="WebContent\content\scripts\jasmine-runner.js" />
     <Content Include="WebContent\content\scripts\jquery-1.7.min.js" />
     <Content Include="WebContent\content\scripts\jasmine-html.js" />
     <Content Include="WebContent\content\scripts\jasmine.css" />

@@ -1,3 +1,13 @@
+beforeEach(function () {
+    this.addMatchers({
+        toBePlaying: function (expectedSong) {
+            var player = this.actual;
+            return player.currentlyPlayingSong === expectedSong &&
+             player.isPlaying;
+        }
+    });
+});
+
 describe("Player", function() {
   var player;
   var song;

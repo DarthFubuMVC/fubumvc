@@ -117,6 +117,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Jasmine\TestPackage1\player.asset.config" />
     <None Include="packages.config" />
     <None Include="Serenity.Testing.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -130,8 +131,9 @@
     </Content>
     <Content Include="HTMLPage1.htm" />
     <Content Include="jasmine.txt" />
+    <Content Include="Jasmine\TestPackage1\content\scripts\Player.js" />
+    <Content Include="Jasmine\TestPackage1\content\scripts\Song.js" />
     <Content Include="Jasmine\TestPackage1\content\scripts\specs\PlayerSpec.js" />
-    <Content Include="Jasmine\TestPackage1\content\scripts\specs\SpecHelper.js" />
     <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\folder2\spec7.js" />
     <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\folder2\spec8.js" />
     <Content Include="Jasmine\TestPackage2\content\scripts\specs\folder1\folder2\spec6.js" />

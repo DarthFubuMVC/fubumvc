@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Bottles;
 using Bottles.Assemblies;
 using FubuCore;
 using FubuCore.Util;
@@ -13,21 +10,17 @@ namespace Serenity.Jasmine
 {
     public class SpecificationGraph : ISpecNode
     {
-        public static bool IsSpecPackage(PackageAssets package)
-        {
-            if (package.PackageName == "application") return false;
-
-            if (package.PackageName == AssemblyPackageInfo.CreateFor(typeof(SpecificationGraph).Assembly).Name) return false;
-
-            return true;
-        }
-
         private readonly Cache<string, SpecificationFolder> _packages
             = new Cache<string, SpecificationFolder>(name => new SpecificationFolder(name));
 
         public SpecificationGraph(IAssetPipeline pipeline)
         {
             pipeline.AllPackages.Where(IsSpecPackage).Each(AddSpecs);
+        }
+
+        public IEnumerable<SpecificationFolder> Folders
+        {
+            get { return _packages; }
         }
 
         public SpecPath Path()
@@ -40,9 +33,57 @@ namespace Serenity.Jasmine
             get { return _packages.OrderBy(x => x.FullName).SelectMany(x => x.AllSpecifications); }
         }
 
-        public IEnumerable<SpecificationFolder> Folders
+        public IEnumerable<ISpecNode> AllNodes
         {
-            get { return _packages; }
+            get
+            {
+                foreach (var package in _packages)
+                {
+                    yield return package;
+
+                    foreach (var node in package.AllNodes)
+                    {
+                        yield return node;
+                    }
+                }
+            }
+        }
+
+        public string FullName
+        {
+            get { return string.Empty; }
+        }
+
+        public IEnumerable<ISpecNode> ImmediateChildren
+        {
+            get
+            {
+                foreach (var package in _packages)
+                {
+                    yield return package;
+                }
+                ;
+            }
+        }
+
+        public ISpecNode Parent()
+        {
+            return null;
+        }
+
+        public void AcceptVisitor(ISpecVisitor visitor)
+        {
+            visitor.Graph(this);
+        }
+
+        public static bool IsSpecPackage(PackageAssets package)
+        {
+            if (package.PackageName == "application") return false;
+
+            if (package.PackageName == AssemblyPackageInfo.CreateFor(typeof (SpecificationGraph).Assembly).Name)
+                return false;
+
+            return true;
         }
 
         public void AddSpecs(PackageAssets package)
@@ -102,7 +143,7 @@ namespace Serenity.Jasmine
         {
             if (path.FullName.IsEmpty()) return this;
 
-            string fullName = path.FullName;
+            var fullName = path.FullName;
             return AllNodes.FirstOrDefault(x => x.FullName == fullName);
         }
 
@@ -113,47 +154,6 @@ namespace Serenity.Jasmine
             list.RemoveAll(x => x == "specs");
 
             return list.Join("/");
-        }
-
-        public IEnumerable<ISpecNode> AllNodes
-        {
-            get
-            {
-                foreach (var package in _packages)
-                {
-                    yield return package;
-
-                    foreach (var node in package.AllNodes)
-                    {
-                        yield return node;
-                    }
-                }
-            }
-        }
-
-        public string FullName
-        {
-            get { return string.Empty; }
-        }
-
-        public IEnumerable<ISpecNode> ImmediateChildren
-        {
-            get {
-                foreach (var package in _packages)
-                {
-                    yield return package;
-                }; 
-            }
-        }
-
-        public ISpecNode Parent()
-        {
-            return null;
-        }
-
-        public void AcceptVisitor(ISpecVisitor visitor)
-        {
-            visitor.Graph(this);
         }
     }
 }
