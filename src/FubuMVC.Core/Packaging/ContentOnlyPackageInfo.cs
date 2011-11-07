@@ -9,10 +9,12 @@ namespace FubuMVC.Core.Packaging
     public class ContentOnlyPackageInfo : IPackageInfo
     {
         private readonly string _directory;
+        private readonly string _name;
 
-        public ContentOnlyPackageInfo(string directory)
+        public ContentOnlyPackageInfo(string directory, string name)
         {
             _directory = directory;
+            _name = name;
             Role = BottleRoles.Module;
         }
 
@@ -42,7 +44,7 @@ namespace FubuMVC.Core.Packaging
 
         public string Name
         {
-            get { return _directory; }
+            get { return _name; }
         }
 
         public string Role { get; set; }

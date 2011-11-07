@@ -141,9 +141,19 @@ namespace Serenity.Jasmine
             get { return _fullname.Value; }
         }
 
+        public IEnumerable<ISpecNode> ImmediateChildren
+        {
+            get { yield break; }
+        }
+
         ISpecNode ISpecNode.Parent()
         {
             return Parent;
+        }
+
+        public void AcceptVisitor(ISpecVisitor visitor)
+        {
+            visitor.Specification(this);
         }
 
         public IEnumerable<Specification> AllSpecifications

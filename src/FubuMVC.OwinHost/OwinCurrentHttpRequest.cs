@@ -13,7 +13,9 @@ namespace FubuMVC.OwinHost
         public OwinCurrentHttpRequest(Request request)
         {
             _request = request;
-            _baseUrl = new Lazy<string>(() => _request.HostWithPort + "/" + _request.PathBase.TrimEnd('/'));
+
+            // TODO -- Owin and protocol?
+            _baseUrl = new Lazy<string>(() => "http://" + _request.HostWithPort + "/" + _request.PathBase.TrimEnd('/'));
         }
 
         public string RawUrl()

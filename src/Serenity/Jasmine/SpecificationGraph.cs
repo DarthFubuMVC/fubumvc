@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Bottles;
+using Bottles.Assemblies;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Assets.Files;
@@ -9,14 +11,28 @@ using FubuMVC.Core.Runtime;
 
 namespace Serenity.Jasmine
 {
-    public class SpecificationGraph
+    public class SpecificationGraph : ISpecNode
     {
+        public static bool IsSpecPackage(PackageAssets package)
+        {
+            if (package.PackageName == "application") return false;
+
+            if (package.PackageName == AssemblyPackageInfo.CreateFor(typeof(SpecificationGraph).Assembly).Name) return false;
+
+            return true;
+        }
+
         private readonly Cache<string, SpecificationFolder> _packages
             = new Cache<string, SpecificationFolder>(name => new SpecificationFolder(name));
 
         public SpecificationGraph(IAssetPipeline pipeline)
         {
-            pipeline.AllPackages.Each(AddSpecs);
+            pipeline.AllPackages.Where(IsSpecPackage).Each(AddSpecs);
+        }
+
+        public SpecPath Path()
+        {
+            return new SpecPath(new List<string>());
         }
 
         public IEnumerable<Specification> AllSpecifications
@@ -82,8 +98,10 @@ namespace Serenity.Jasmine
             return AllSpecifications.FirstOrDefault(x => x.LibraryName == name);
         }
 
-        public ISpecNode FindSpecs(SpecPath path)
+        public ISpecNode FindSpecNode(SpecPath path)
         {
+            if (path.FullName.IsEmpty()) return this;
+
             string fullName = path.FullName;
             return AllNodes.FirstOrDefault(x => x.FullName == fullName);
         }
@@ -111,6 +129,31 @@ namespace Serenity.Jasmine
                     }
                 }
             }
+        }
+
+        public string FullName
+        {
+            get { return string.Empty; }
+        }
+
+        public IEnumerable<ISpecNode> ImmediateChildren
+        {
+            get {
+                foreach (var package in _packages)
+                {
+                    yield return package;
+                }; 
+            }
+        }
+
+        public ISpecNode Parent()
+        {
+            return null;
+        }
+
+        public void AcceptVisitor(ISpecVisitor visitor)
+        {
+            visitor.Graph(this);
         }
     }
 }

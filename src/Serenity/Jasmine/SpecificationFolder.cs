@@ -6,6 +6,13 @@ using FubuMVC.Core.Assets.Files;
 
 namespace Serenity.Jasmine
 {
+    public interface ISpecVisitor
+    {
+        void Specification(Specification spec);
+        void Folder(SpecificationFolder folder);
+        void Graph(SpecificationGraph graph);
+    }
+
     public interface ISpecNode
     {
         SpecPath Path();
@@ -13,7 +20,15 @@ namespace Serenity.Jasmine
         IEnumerable<ISpecNode> AllNodes { get; }
         string FullName { get; }
 
+
+        IEnumerable<ISpecNode> ImmediateChildren
+        { 
+            get;
+        }
+
         ISpecNode Parent();
+
+        void AcceptVisitor(ISpecVisitor visitor);
     }
 
     public class SpecificationFolder : ISpecNode
@@ -45,9 +60,30 @@ namespace Serenity.Jasmine
             get { return _parent == null ? _name : _parent.FullName + "/" + _name; }
         }
 
+        public IEnumerable<ISpecNode> ImmediateChildren
+        {
+            get
+            {
+                foreach (var folder in _children)
+                {
+                    yield return folder;
+                }
+
+                foreach (var specification in _specifications)
+                {
+                    yield return specification;
+                }
+            }
+        }
+
         ISpecNode ISpecNode.Parent()
         {
             return Parent;
+        }
+
+        public void AcceptVisitor(ISpecVisitor visitor)
+        {
+            visitor.Folder(this);
         }
 
         public IEnumerable<Specification> Specifications

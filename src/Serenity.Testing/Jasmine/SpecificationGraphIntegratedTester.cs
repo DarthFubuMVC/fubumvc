@@ -61,16 +61,17 @@ Pak2/spec3.js
             theGraph.AllNodes.Select(x => x.FullName).ShouldHaveTheSameElementsAs(expectedValues);
         }
 
+
         [Test]
         public void find_specs_by_path()
         {
-            ISpecNode findSpecs = theGraph.FindSpecs(new SpecPath("Pak2/folder1/folder2"));
+            ISpecNode findSpecs = theGraph.FindSpecNode(new SpecPath("Pak2/folder1/folder2"));
             findSpecs.ShouldNotBeNull();
 
 
             findSpecs.AllSpecifications.Select(x => x.LibraryName).ShouldHaveTheSameElementsAs("spec6.js", "spec7.js", "spec8.js");
-            theGraph.FindSpecs(new SpecPath("Pak2/folder1")).AllSpecifications.Select(x => x.LibraryName).ShouldHaveTheSameElementsAs("spec6.js", "spec7.js", "spec8.js", "spec4.js", "spec5.js");
-            theGraph.FindSpecs(new SpecPath("Pak2")).AllSpecifications.Select(x => x.LibraryName).ShouldHaveTheSameElementsAs("spec6.js", "spec7.js", "spec8.js", "spec4.js", "spec5.js", "spec1.js", "spec2.js", "spec3.js");
+            theGraph.FindSpecNode(new SpecPath("Pak2/folder1")).AllSpecifications.Select(x => x.LibraryName).ShouldHaveTheSameElementsAs("spec6.js", "spec7.js", "spec8.js", "spec4.js", "spec5.js");
+            theGraph.FindSpecNode(new SpecPath("Pak2")).AllSpecifications.Select(x => x.LibraryName).ShouldHaveTheSameElementsAs("spec6.js", "spec7.js", "spec8.js", "spec4.js", "spec5.js", "spec1.js", "spec2.js", "spec3.js");
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core;
@@ -47,7 +48,7 @@ namespace Serenity.Jasmine
             return _contentFolders.Select(x =>
             {
                 log.Trace("Loading content package from " + x);
-                return new ContentOnlyPackageInfo(x);
+                return new ContentOnlyPackageInfo(x, Path.GetFileName(x));
             });
         }
     }

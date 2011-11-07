@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Packaging
         public void SetUp()
         {
             new FileSystem().CreateDirectory("content-package");
-            thePackage = new ContentOnlyPackageInfo("content-package");
+            thePackage = new ContentOnlyPackageInfo("content-package", "content-package");
         }
 
         [Test]
