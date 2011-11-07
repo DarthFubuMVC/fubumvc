@@ -1,4 +1,4 @@
-﻿using FubuMVC.OwinHost;
+using FubuMVC.OwinHost;
 using FubuTestApplication;
 
 namespace FubuKayak
@@ -12,7 +12,7 @@ namespace FubuKayak
             // Have to spin up a separate AppDomain?  Ick-y
 
             var host = new FubuOwinHost(new OwinApplication(), new SchedulerDelegate());
-            host.RunApplication(5500);
+            host.RunApplication(5500, r => { });
             
         }
     }

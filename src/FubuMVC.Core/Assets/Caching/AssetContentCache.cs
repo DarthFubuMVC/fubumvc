@@ -12,6 +12,7 @@ namespace FubuMVC.Core.Assets.Caching
     public interface IAssetContentCache
     {
         void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files);
+        void FlushAll();
     }
 
     public class AssetContentCache : IEtagCache, IOutputCache, IAssetFileChangeListener, IAssetContentCache
@@ -23,6 +24,11 @@ namespace FubuMVC.Core.Assets.Caching
         public void LinkFilesToResource(string resourceHash, IEnumerable<AssetFile> files)
         {
             files.Each(x => _fileToResourceLinks[x].Fill(resourceHash));
+        }
+
+        public void FlushAll()
+        {
+            write = () => _outputs.ClearAll();
         }
 
         public IRecordedOutput Retrieve(string resourceHash, Func<IRecordedOutput> cacheMiss)

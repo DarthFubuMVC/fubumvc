@@ -7,6 +7,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Runtime;
@@ -183,6 +184,8 @@ namespace FubuMVC.Tests.Registration
         public void package_files_are_registered()
         {
             registeredTypeIs<IPackageFiles, PackageFilesCache>();
+
+            ServiceRegistry.ShouldBeSingleton(typeof (PackageFilesCache));
         }
 
         [Test]

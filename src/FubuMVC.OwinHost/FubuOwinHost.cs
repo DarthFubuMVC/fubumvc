@@ -21,6 +21,8 @@ namespace FubuMVC.OwinHost
         private AppDelegate _applicationDelegate;
         private IScheduler _scheduler;
         private IServer _server;
+        private int _port;
+        private bool _latched;
 
         public FubuOwinHost(IApplicationSource source) : this(source, new SchedulerDelegate())
         {
@@ -32,9 +34,12 @@ namespace FubuMVC.OwinHost
             _schedulerDelegate = schedulerDelegate;
         }
 
-        public void RunApplication(int port)
+        public void RunApplication(int port, Action<FubuRuntime> activation)
         {
-            _listeningEndpoint = new IPEndPoint(IPAddress.Any, 5500);
+            _port = port;
+
+
+            _listeningEndpoint = new IPEndPoint(IPAddress.Any, _port);
             Console.WriteLine("Listening on " + _listeningEndpoint);
 
             _applicationDelegate = AppBuilder.BuildConfiguration(x => x.RescheduleCallbacks().Run(ExecuteRequest));
@@ -42,23 +47,24 @@ namespace FubuMVC.OwinHost
             _scheduler = KayakScheduler.Factory.Create(_schedulerDelegate);
             _server = KayakServer.Factory.CreateGate(_applicationDelegate, _scheduler, null);
 
-
-            Start();
-        }
-
-        public void Start()
-        {
             if (_listeningEndpoint == null)
             {
                 throw new InvalidOperationException("Start() can only be called after RunApplication() and Stop()");
             }
 
-            RouteTable.Routes.Clear();
-            _runtime = _source.BuildApplication().Bootstrap();
+            rebuildFubuMVCApplication(activation);
+
             using (_server.Listen(_listeningEndpoint))
             {
                 _scheduler.Start();
             }
+        }
+
+        private void rebuildFubuMVCApplication(Action<FubuRuntime> activation)
+        {
+            RouteTable.Routes.Clear();
+            _runtime = _source.BuildApplication().Bootstrap();
+            activation(_runtime);
         }
 
         public void Stop()
@@ -66,15 +72,18 @@ namespace FubuMVC.OwinHost
             _scheduler.Stop();
         }
 
-        public void Recycle()
+        public void Recycle(Action<FubuRuntime> activation)
         {
-            Stop();
-            Start();
+            _latched = true;
+            rebuildFubuMVCApplication(activation);
+            _latched = false;
         }
 
 
         public void ExecuteRequest(IDictionary<string, object> env, ResultDelegate result, Action<Exception> fault)
         {
+            if (_latched) return;
+
             var request = new Request(env);
             var response = new Response(result);
 
@@ -126,8 +135,10 @@ namespace FubuMVC.OwinHost
             }
         }
 
-
-
+        public FubuRuntime Runtime
+        {
+            get { return _runtime; }
+        }
     }
 
 }
