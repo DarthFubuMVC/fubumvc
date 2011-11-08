@@ -100,8 +100,8 @@
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
     <Compile Include="Jasmine\ConfigFileLoader.cs" />
-    <Compile Include="Jasmine\InteractiveJasmineCommand.cs" />
-    <Compile Include="Jasmine\InteractiveJasmineInput.cs" />
+    <Compile Include="Jasmine\JasmineCommand.cs" />
+    <Compile Include="Jasmine\JasmineInput.cs" />
     <Compile Include="Jasmine\JasminePages.cs" />
     <Compile Include="Jasmine\JasmineRunner.cs" />
     <Compile Include="Jasmine\NulloCombinationDeterminationService.cs" />

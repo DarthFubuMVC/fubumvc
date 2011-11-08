@@ -30,10 +30,10 @@ namespace Serenity.Testing.Jasmine
 scripts/lib1.js
 scripts/lib2.js
 scripts/lib3.js
-scripts/specs/something.js
-scripts/specs/lib1.spec.js
-scripts/specs/lib2.spec.js
-scripts/specs/lib3.spec.js
+pak1:scripts/specs/something.js
+pak1:scripts/specs/lib1.spec.js
+pak1:scripts/specs/lib2.spec.js
+pak1:scripts/specs/lib3.spec.js
 pak1:scripts/specs/lib4.spec.js
 pak1:scripts/specs/lib5.spec.js
 pak1:scripts/specs/lib6.spec.js
@@ -42,14 +42,16 @@ pak2:scripts/specs/f1/lib8.spec.js
 ");
 
             var graph = new SpecificationGraph(thePipeline);
-            graph.AllSpecifications.Select(x => x.File.Name).Each(x => Debug.WriteLine(x));
+
+            
             graph.AllSpecifications.Select(x => x.File.Name)
                 .ShouldHaveTheSameElementsAs(
-"specs/something.js",
+                "f1/specs/lib7.spec.js",
+                "specs/something.js",
 "specs/lib1.spec.js",
 "specs/lib2.spec.js",
 "specs/lib3.spec.js",
-"f1/specs/lib7.spec.js",
+
 "specs/lib4.spec.js",
 
 "specs/lib5.spec.js",
@@ -64,30 +66,30 @@ pak2:scripts/specs/f1/lib8.spec.js
         public void makes_asset_graph_dependencies_between_files()
         {
             theFiles.LoadAssets(@"
-scripts/lib1.js
-scripts/lib2.js
-scripts/lib3.js
-scripts/specs/something.js
-scripts/specs/lib1.spec.js
-scripts/specs/lib2.spec.js
-scripts/specs/lib3.spec.js
+pak1:scripts/lib1.js
+pak1:scripts/lib2.js
+pak1:scripts/lib3.js
+pak1:scripts/specs/something.js
+pak1:scripts/specs/lib1.spec.js
+pak1:scripts/specs/lib2.spec.js
+pak1:scripts/specs/lib3.spec.js
 ");
 
 
             var graph = new SpecificationGraph(thePipeline);
 
-            graph.FindSpecByFullName("specs/lib1.spec.js").Libraries.Select(x => x.Name)
+            graph.FindSpecByFullName("pak1/lib1.spec.js").Libraries.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("lib1.js");
 
 
-            graph.FindSpecByFullName("specs/lib2.spec.js").Libraries.Select(x => x.Name)
+            graph.FindSpecByFullName("pak1/lib2.spec.js").Libraries.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("lib2.js");
 
 
-            graph.FindSpecByFullName("specs/lib3.spec.js").Libraries.Select(x => x.Name)
+            graph.FindSpecByFullName("pak1/lib3.spec.js").Libraries.Select(x => x.Name)
                 .ShouldHaveTheSameElementsAs("lib3.js");
 
-            graph.FindSpecByFullName("specs/something.js").Libraries.Any().ShouldBeFalse();
+            graph.FindSpecByFullName("pak1/something.js").Libraries.Any().ShouldBeFalse();
 
         }
     }

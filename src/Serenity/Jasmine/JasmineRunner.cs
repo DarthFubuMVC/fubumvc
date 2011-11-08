@@ -1,44 +1,113 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
 using Bottles;
 using FubuCore;
+using FubuCore.CommandLine;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.OwinHost;
+using OpenQA.Selenium;
+using System.Linq;
 
 namespace Serenity.Jasmine
 {
     public class JasmineRunner : ISpecFileListener
     {
-        private readonly InteractiveJasmineInput _input;
-        private readonly Thread _kayakLoop;
+        private readonly JasmineInput _input;
+        private Thread _kayakLoop;
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
         private SerenityJasmineApplication _application;
         private ApplicationUnderTest _applicationUnderTest;
         private FubuOwinHost _host;
         private AssetFileWatcher _watcher;
+        private ApplicationDriver _driver;
 
 
-        public JasmineRunner(InteractiveJasmineInput input)
+        public JasmineRunner(JasmineInput input)
         {
             _input = input;
-            var threadStart = new ThreadStart(run);
-            _kayakLoop = new Thread(threadStart);
+
         }
 
-        // TODO -- this will get changed to Run(file), or we'll bring file thru a ctor
-        public void Run()
+        public void OpenInteractive()
         {
             buildApplication();
+
+            var threadStart = new ThreadStart(run);
+            _kayakLoop = new Thread(threadStart);
             _kayakLoop.Start();
 
 
             // TODO -- make a helper method for this
-            _applicationUnderTest.Driver.Navigate().GoToUrl(_applicationUnderTest.RootUrl);
+            _driver.NavigateToHome();
 
             _reset.WaitOne();
+        }
+
+        public bool RunAllSpecs()
+        {
+            var title = "Running Jasmine specs for project at " + _input.SerenityFile;
+            Console.WriteLine(title);
+            var line = "".PadRight(title.Length, '-');
+
+            Console.WriteLine(line);
+
+            buildApplication();
+            var returnValue = true;
+
+            _host = new FubuOwinHost(_application);
+            _host.RunApplication(_input.PortFlag, runtime =>
+            {
+                _driver.NavigateTo<JasminePages>(x => x.AllSpecs());
+
+                var browser = _applicationUnderTest.Driver;
+                var failures = browser.FindElements(By.CssSelector("div.suite.failed"));
+
+
+                if (failures.Any())
+                {
+                    returnValue = false;
+
+                    Console.WriteLine(line);
+                    writeFailures(failures);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(line);
+                writeTotals(browser);
+
+                _host.Stop();
+
+                browser.Quit();
+            });
+
+
+            return returnValue;
+        }
+
+        private static void writeTotals(IWebDriver browser)
+        {
+            var totals = browser.FindElement(By.CssSelector("div.jasmine_reporter a.description")).Text;
+            
+            Console.WriteLine(totals);
+        }
+
+        private static void writeFailures(IEnumerable<IWebElement> failures)
+        {
+
+
+            failures.Each(suite =>
+            {
+                Console.WriteLine(suite.FindElement(By.CssSelector("a.description")).Text);
+
+                suite.FindElements(By.CssSelector("div.spec.failed a.description")).Each(spec =>
+                {
+                    Console.WriteLine("    " + spec.Text);
+                });
+            });
         }
 
         private void run()
@@ -93,7 +162,11 @@ namespace Serenity.Jasmine
             var browserBuilder = _input.GetBrowserBuilder();
 
             _applicationUnderTest = new ApplicationUnderTest(_application, applicationSettings, browserBuilder);
+
+            _driver = new ApplicationDriver(_applicationUnderTest);
         }
+
+
     }
 
     public class AssetFileWatcher

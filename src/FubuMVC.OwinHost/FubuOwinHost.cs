@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
@@ -16,13 +17,13 @@ namespace FubuMVC.OwinHost
     {
         private readonly IApplicationSource _source;
         private readonly ISchedulerDelegate _schedulerDelegate;
-        private FubuRuntime _runtime;
         private IPEndPoint _listeningEndpoint;
         private AppDelegate _applicationDelegate;
         private IScheduler _scheduler;
         private IServer _server;
         private int _port;
         private bool _latched;
+        private IDisposable _kayakListenerDisposer;
 
         public FubuOwinHost(IApplicationSource source) : this(source, new SchedulerDelegate())
         {
@@ -33,6 +34,8 @@ namespace FubuMVC.OwinHost
             _source = source;
             _schedulerDelegate = schedulerDelegate;
         }
+
+        public bool Verbose { get; set; }
 
         public void RunApplication(int port, Action<FubuRuntime> activation)
         {
@@ -52,31 +55,44 @@ namespace FubuMVC.OwinHost
                 throw new InvalidOperationException("Start() can only be called after RunApplication() and Stop()");
             }
 
-            rebuildFubuMVCApplication(activation);
+            var runtime = rebuildFubuMVCApplication();
 
-            using (_server.Listen(_listeningEndpoint))
-            {
+            _kayakListenerDisposer = _server.Listen(_listeningEndpoint);
+                _scheduler.Post(() => ThreadPool.QueueUserWorkItem(o => activation(runtime)));
                 _scheduler.Start();
-            }
+
+
+            
         }
 
-        private void rebuildFubuMVCApplication(Action<FubuRuntime> activation)
+        private FubuRuntime rebuildFubuMVCApplication()
         {
             RouteTable.Routes.Clear();
-            _runtime = _source.BuildApplication().Bootstrap();
-            activation(_runtime);
+            return _source.BuildApplication().Bootstrap();
         }
 
         public void Stop()
         {
-            _scheduler.Stop();
+            try
+            {
+                _scheduler.Stop();
+
+            }
+            catch (Exception)
+            {
+                // That's right, shut this puppy down
+            }
+
+            _server.SafeDispose();
         }
 
         public void Recycle(Action<FubuRuntime> activation)
         {
             _latched = true;
-            rebuildFubuMVCApplication(activation);
+            var runtime = rebuildFubuMVCApplication();
             _latched = false;
+
+            activation(runtime);
         }
 
 
@@ -87,7 +103,7 @@ namespace FubuMVC.OwinHost
             var request = new Request(env);
             var response = new Response(result);
 
-            Console.Write("Received " + request.Path);
+            if (Verbose) Console.WriteLine("Received " + request.Path);
 
             var context = new GateHttpContext(request);
             var routeData = RouteTable.Routes.GetRouteData(context);
@@ -104,7 +120,7 @@ namespace FubuMVC.OwinHost
         
             // TODO -- return 404 if the route is not found
 
-            Console.WriteLine(" ({0})", response.Status);
+            if (Verbose) Console.WriteLine(" ({0})", response.Status);
         }
 
         private static void write404(Response response)
@@ -135,10 +151,6 @@ namespace FubuMVC.OwinHost
             }
         }
 
-        public FubuRuntime Runtime
-        {
-            get { return _runtime; }
-        }
     }
 
 }

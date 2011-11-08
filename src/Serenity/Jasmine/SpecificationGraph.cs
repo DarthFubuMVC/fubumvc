@@ -131,7 +131,7 @@ namespace Serenity.Jasmine
 
         public Specification FindSpecByFullName(string name)
         {
-            return AllSpecifications.FirstOrDefault(x => x.File.Name == name);
+            return AllSpecifications.FirstOrDefault(x => x.FullName == name);
         }
 
         public Specification FindSpecByLibraryName(string name)

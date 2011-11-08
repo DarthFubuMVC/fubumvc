@@ -42,7 +42,6 @@ namespace Serenity.Testing.Jasmine
         {
             var expectedValues =
                 @"
-application
 Pak2
 Pak2/folder1
 Pak2/folder1/folder2

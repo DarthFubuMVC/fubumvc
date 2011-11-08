@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -24,6 +25,12 @@ namespace Serenity
             _application.Driver.Navigate().GoToUrl(url);
         }
 
+        public void NavigateTo<T>(Expression<Action<T>> expression)
+        {
+            var url = _application.Urls.UrlFor(expression);
+            _application.Driver.Navigate().GoToUrl(url);
+        }
+
         public ScreenDriver GetCurrentScreen()
         {
             return new ScreenDriver(_application.Driver);
@@ -37,6 +44,11 @@ namespace Serenity
         public string AssetUrlFor(string file)
         {
             return _application.RootUrl + ("/_content/" + file).Replace("//", "/");
+        }
+
+        public void NavigateToHome()
+        {
+            _application.Driver.Navigate().GoToUrl(_application.RootUrl);
         }
     }
 
