@@ -6,6 +6,10 @@ using System.Reflection;
 
 namespace FubuMVC.Core.Registration
 {
+    /// <summary>
+    /// Bundle several assemblies and types to be treated as a single pool of types which can be
+    /// queried and iterated over.
+    /// </summary>
     public class TypePool
     {
         private readonly Assembly _defaultAssembly;
@@ -15,16 +19,27 @@ namespace FubuMVC.Core.Registration
         private bool _ignoreCallingAssembly;
         private readonly IList<Func<IEnumerable<Assembly>>> _sources = new List<Func<IEnumerable<Assembly>>>();
 
+        /// <summary>
+        /// Construct a type pool
+        /// </summary>
+        /// <param name="defaultAssembly">The default assembly, typically the calling assembly</param>
         public TypePool(Assembly defaultAssembly)
         {
             _defaultAssembly = defaultAssembly;
         }
 
+        /// <summary>
+        /// Ignore the assembly provided as default assemlbly in the constructor when enumerating assemblies
+        /// of this type pool
+        /// </summary>
         public void IgnoreCallingAssembly()
         {
             _ignoreCallingAssembly = true;
         }
 
+        /// <summary>
+        /// Register a function as a source of assemblies
+        /// </summary>
         public void AddSource(Func<IEnumerable<Assembly>> source)
         {
             _sources.Add(source);
@@ -48,26 +63,40 @@ namespace FubuMVC.Core.Registration
             }
         }
 
+        /// <summary>
+        /// Controls output of <see cref="TypesMatching"/>
+        /// and <see cref="TypesWithFullName"/>
+        /// </summary>
         public bool ShouldScanAssemblies { get; set; }
 
-
-
-
+        /// <summary>
+        /// Register an assembly with this typepool
+        /// </summary>
         public void AddAssembly(Assembly assembly)
         {
             _assemblies.Add(assembly);
         }
 
+        /// <summary>
+        /// Adds a type to this pool if it has not already been added
+        /// </summary>
         public void AddType(Type type)
         {
             _types.Fill(type);
         }
 
+        /// <summary>
+        /// Adds a type to this pool if it has not already been added
+        /// </summary>
         public void AddType<T>()
         {
             AddType(typeof (T));
         }
 
+        /// <summary>
+        /// Enumerates all assemblies provided either directly or
+        /// through assembly sources (<see cref="AddSource"/>)
+        /// </summary>
         public IEnumerable<Assembly> Assemblies
         {
             get
@@ -86,22 +115,38 @@ namespace FubuMVC.Core.Registration
             }
         }
 
-        // TODO -- diagnostics on type discovery!!!!
+        /// <summary>
+        /// Enumerate types that match the given filter.
+        /// The type pool considers all types added directly and
+        /// all exported typed from added assemblies, provided <see cref="ShouldScanAssemblies"/>
+        /// is set to true
+        /// </summary>
+        /// <param name="filter">a filter to control type output</param>
         public IEnumerable<Type> TypesMatching(Func<Type, bool> filter)
         {
+            // TODO -- diagnostics on type discovery!!!!
             return types.Where(filter).Distinct();
         }
 
+        /// <summary>
+        /// Specialize <see cref="TypesMatching"/> with regard to the type name
+        /// </summary>
         public IEnumerable<Type> TypesWithFullName(string fullName)
         {
             return TypesMatching(t => t.FullName == fullName);
         }
 
+        /// <summary>
+        /// Check whether some assembly is contained in this type pool
+        /// </summary>
         public bool HasAssembly(Assembly assembly)
         {
             return _assemblies.Contains(assembly);
         }
 
+        /// <summary>
+        /// Add a number of assemblies to this type pool
+        /// </summary>
         public void AddAssemblies(IEnumerable<Assembly> assemblies)
         {
             _assemblies.AddRange(assemblies);

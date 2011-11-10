@@ -380,8 +380,6 @@ namespace FubuMVC.Core.Registration
         /// <summary>
         ///   Finds all the BehaviorChain's for the designated handler T
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
         public HandlerActionsSet ActionsForHandler<T>()
         {
             return ActionsForHandler(typeof (T));
@@ -390,8 +388,6 @@ namespace FubuMVC.Core.Registration
         /// <summary>
         ///   Finds all the BehaviorChain's for the designated handlerType
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
         public HandlerActionsSet ActionsForHandler(Type handlerType)
         {
             var actions = FirstActions().Where(x => x.HandlerType == handlerType);

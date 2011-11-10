@@ -182,8 +182,6 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Shortcut to put a "wrapping" behavior immediately in front
         ///   of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For<T>())
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
         public Wrapper WrapWith<T>() where T : IActionBehavior
         {
             return WrapWith(typeof (T));
@@ -194,8 +192,6 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Shortcut to put a "wrapping" behavior immediately in front of 
         ///   this BehaviorNode.  Equivalent to AddBefore(new Wrapper(behaviorType))
         /// </summary>
-        /// <param name = "behaviorType"></param>
-        /// <returns></returns>
         public Wrapper WrapWith(Type behaviorType, params Type[] parameterTypes)
         {
             if (behaviorType.IsOpenGeneric())
