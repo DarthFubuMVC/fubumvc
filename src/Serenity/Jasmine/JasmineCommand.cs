@@ -21,8 +21,6 @@ namespace Serenity.Jasmine
             {
                 if (!runner.RunAllSpecs())
                 {
-                    Console.WriteLine("any key will do");
-                    Console.ReadLine();
                     throw new ApplicationException("Jasmine specs failed!");
                 }
             }
