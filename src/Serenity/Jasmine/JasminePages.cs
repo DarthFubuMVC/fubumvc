@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.UI;
 using HtmlTags;
+using FubuCore;
 
 namespace Serenity.Jasmine
 {
@@ -13,6 +15,14 @@ namespace Serenity.Jasmine
         private readonly SpecHierarchyBuilder _builder;
         private readonly SpecAssetRequirements _requirements;
         private readonly FubuHtmlDocument _document;
+        private static string _header;
+
+        static JasminePages()
+        {
+            _header =
+                Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof (JasminePages), "Header.htm").
+                    ReadAllText();
+        }
 
         public JasminePages(SpecificationGraph specifications, SpecHierarchyBuilder builder, SpecAssetRequirements requirements, FubuHtmlDocument document)
         {
@@ -20,13 +30,14 @@ namespace Serenity.Jasmine
             _builder = builder;
             _requirements = requirements;
             _document = document;
+
+            _document.Body.Append(new HtmlTag("div").Text(_header).Encoded(false));
+
         }
 
         public HtmlDocument Home()
         {
             _document.Title = Title;
-
-            _document.Add("h1").Text(Title);
 
             var tag = _builder.CompleteHierarchy();
             _document.Add(tag);

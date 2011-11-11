@@ -15,7 +15,18 @@ namespace FubuMVC.Core.Assets
         private readonly IFileSystem _fileSystem;
         private readonly AssetRegistrationDiagnostics _diagnostics;
 
+<<<<<<< HEAD
         public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem, AssetLogsCache logs)
+=======
+        private static readonly IList<string> _configurationFiles = new List<string>();
+
+        public static IEnumerable<string> ConfigurationFiles
+        {
+            get { return _configurationFiles; }
+        }
+
+        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem)
+>>>>>>> adding a crude header to the jasmine runner, recording where the asset config files are
         {
             _assets = assets;
             _fileSystem = fileSystem;
@@ -24,6 +35,8 @@ namespace FubuMVC.Core.Assets
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
+            _configurationFiles.Clear();
+
             ReadScriptConfig(FubuMvcPackageFacility.GetApplicationPath(), log);
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadScriptConfig(folder, log)));
 
@@ -50,8 +63,11 @@ namespace FubuMVC.Core.Assets
 
         public void ReadFile(string file, IPackageLog log)
         {
+
             _diagnostics.SetCurrentProvenance(file);
             var reader = new AssetDslReader(_diagnostics);
+            _configurationFiles.Fill(file.ToFullPath());
+
             log.Trace("  Reading script directives from {0}", file);
             log.TrapErrors(() =>
             {

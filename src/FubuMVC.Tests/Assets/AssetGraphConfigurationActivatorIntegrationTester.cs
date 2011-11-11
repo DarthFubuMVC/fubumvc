@@ -72,6 +72,26 @@ g requires h
         }
 
         [Test]
+        public void the_files_were()
+        {
+            new FileSystem().WriteStringToFile("something.script.config",
+                                               @"
+jquery is jquery.1.4.2.js
+a includes b,c,d
+");
+
+            new FileSystem().WriteStringToFile("else.script.config", @"
+f extends d
+g requires h
+");
+
+            activator.ReadScriptConfig(".", log);
+
+            AssetGraphConfigurationActivator.ConfigurationFiles.ShouldContain("something.script.config".ToFullPath());
+            AssetGraphConfigurationActivator.ConfigurationFiles.ShouldContain("else.script.config".ToFullPath());
+        }
+
+        [Test]
         public void read_a_directory_2()
         {
             new FileSystem().WriteStringToFile("something.asset.config",
