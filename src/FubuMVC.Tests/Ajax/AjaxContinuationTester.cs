@@ -29,6 +29,16 @@ namespace FubuMVC.Tests.Ajax
         }
 
         [Test]
+        public void refresh_is_placed_int_the_dictionary()
+        {
+            theContinuation.ShouldRefresh = false;
+            theContinuation.ToDictionary()["refresh"].As<bool>().ShouldBeFalse();
+
+            theContinuation.ShouldRefresh = true;
+            theContinuation.ToDictionary()["refresh"].As<bool>().ShouldBeTrue();
+        }
+
+        [Test]
         public void message_is_placed_into_the_dictionary_if_it_exists()
         {
             theContinuation.ToDictionary().ContainsKey("message").ShouldBeFalse();

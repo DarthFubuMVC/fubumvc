@@ -57,12 +57,15 @@ namespace FubuMVC.Core.Ajax
         public bool Success { get; set; }
         public string Message { get; set; }
 
+        public bool ShouldRefresh { get; set; }
+
         // *This* will be serialized to Json so that the resulting blob
         // of json data is easier to work with in JavaScript
         public virtual IDictionary<string, object> ToDictionary()
         {
             var dict = new Dictionary<string, object>{
-                {"success", Success}
+                {"success", Success},
+                {"refresh", ShouldRefresh}
             };
 
             Message.IfNotNull(x => dict.Add("message", x));
