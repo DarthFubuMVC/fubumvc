@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Security.AccessControl;
 using System.Web;
 using FubuCore;
 using FubuCore.Util;
@@ -29,7 +30,10 @@ namespace FubuMVC.OwinHost
 
         public void WriteFile(string file)
         {
-            throw new NotImplementedException();
+            using (var fileStream = new FileStream(file, FileMode.Open))
+            {
+                Write(stream => fileStream.CopyTo(stream, 64000));
+            }
         }
 
         public void WriteContentType(string contentType)
