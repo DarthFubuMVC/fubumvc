@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bottles.Assemblies;
@@ -64,6 +65,11 @@ namespace Serenity.Jasmine
                 }
                 ;
             }
+        }
+
+        public string TreeClass
+        {
+            get { return "folder"; }
         }
 
         public ISpecNode Parent()

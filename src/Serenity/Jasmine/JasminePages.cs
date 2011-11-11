@@ -31,6 +31,7 @@ namespace Serenity.Jasmine
             _requirements = requirements;
             _document = document;
 
+            _requirements.WriteAssetsInto(_document, new Specification[0]);
             _document.Body.Append(new HtmlTag("div").Text(_header).Encoded(false));
 
         }

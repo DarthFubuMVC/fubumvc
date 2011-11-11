@@ -146,6 +146,11 @@ namespace Serenity.Jasmine
             get { yield break; }
         }
 
+        public string TreeClass
+        {
+            get { return "file"; }
+        }
+
         ISpecNode ISpecNode.Parent()
         {
             return Parent;

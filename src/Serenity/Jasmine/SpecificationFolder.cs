@@ -26,6 +26,8 @@ namespace Serenity.Jasmine
             get;
         }
 
+        string TreeClass { get; }
+
         ISpecNode Parent();
 
         void AcceptVisitor(ISpecVisitor visitor);
@@ -74,6 +76,11 @@ namespace Serenity.Jasmine
                     yield return specification;
                 }
             }
+        }
+
+        public string TreeClass
+        {
+            get { return "folder"; }
         }
 
         ISpecNode ISpecNode.Parent()

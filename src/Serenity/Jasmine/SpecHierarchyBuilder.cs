@@ -17,24 +17,34 @@ namespace Serenity.Jasmine
             _urls = urls;
         }
 
-        public HtmlTag TopTag()
+        public HtmlTag TopTag(HtmlTag topChild)
         {
+            if (topChild.TagName() != "ul")
+            {
+                throw new ArgumentOutOfRangeException("Only ul tags are valid here:  \n" + topChild.ToString());
+            }
+
             var topUrl = _urls.UrlFor<JasminePages>(x => x.AllSpecs());
             return new HtmlTag("ul", tag =>
             {
+                tag.Id("all-specs-node").AddClass("filetree");
+
                 var link = new LinkTag("All Specs", topUrl, "all-specs");
-                tag.Add("li").Append(link);
+                var li = tag.Add("li");
+                li.Add("span").AddClass("folder").Append(link);
+
+                li.Append(topChild);
             });
         }
 
         public HtmlTag CompleteHierarchy()
         {
-            var top = TopTag();
-
-            var builder = new ChildTagBuilder(this, top.Add("ul"));
+            var topChild = new HtmlTag("ul");
+            var builder = new ChildTagBuilder(this, topChild);
             builder.AddChildren(_graph);
 
-            return top;
+            return TopTag(topChild);
+        
         }
 
         public HtmlTag BuildInPlaceHierarchyFor(ISpecNode node)
@@ -57,11 +67,10 @@ namespace Serenity.Jasmine
 
             if (node is SpecificationGraph)
             {
-                return new HtmlTag("ul", x => x.Append(currentTag));
+                return new HtmlTag("ul").Append(currentTag).Id("all-specs-node").AddClass("filetree");
             }
 
-            var topTag = TopTag();
-            topTag.Add("ul").Append(currentTag);
+            var topTag = TopTag(new HtmlTag("ul").Append(currentTag) );
 
             return topTag;
         }
@@ -73,7 +82,7 @@ namespace Serenity.Jasmine
                 var url = _urls.UrlFor(node.Path());
                 var link = new LinkTag(node.Path().Parts.Last(), url);
 
-                tag.Append(link);
+                tag.Add("span").AddClass("file").Append(link);
             });
         }
 
@@ -82,25 +91,31 @@ namespace Serenity.Jasmine
             return new HtmlTag("li", x =>
             {
                 string text = node.Path().Parts.LastOrDefault() ?? "All Specs";
-                x.Add("span").AddClass("active").Text(text);
+                x.Add("span").AddClass("active").Text(text).AddClass(node.TreeClass);
             });
         }
 
         public HtmlTag BuildFolderTag(SpecificationFolder folder)
         {
             var folderTag = new HtmlTag("li");
-            var specPath = folder.Path();
-            var url = _urls.UrlFor(specPath);
+            var link = linkTagForFolder(folder);
 
-            var link = new LinkTag(specPath.Parts.Last(), url, "folder");
-            folderTag.Append(link);
+            folderTag.Add("span").AddClass("folder").Append(link);
 
             var ul = folderTag.Add("ul");
+
             var builder = new ChildTagBuilder(this, ul);
             folder.ImmediateChildren.Each(x => x.AcceptVisitor(builder));
 
 
             return folderTag;
+        }
+
+        private LinkTag linkTagForFolder(SpecificationFolder folder)
+        {
+            var specPath = folder.Path();
+            var url = _urls.UrlFor(specPath);
+            return new LinkTag(specPath.Parts.Last(), url);
         }
 
         #region Nested type: ChildTagBuilder
@@ -112,6 +127,11 @@ namespace Serenity.Jasmine
 
             public ChildTagBuilder(SpecHierarchyBuilder builder, HtmlTag parent)
             {
+                if (parent.TagName() != "ul")
+                {
+                    throw new ArgumentOutOfRangeException("Only ul tags are valid here:  \n" + parent.ToString());
+                }
+
                 _builder = builder;
                 _parent = parent;
             }
