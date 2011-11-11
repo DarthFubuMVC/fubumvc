@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Jasmine\TestPackage1\player.asset.config" />
+    <None Include="Jasmine\TestPackage2\fake.asset.config" />
     <None Include="packages.config" />
     <None Include="Serenity.Testing.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

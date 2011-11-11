@@ -7,6 +7,7 @@ using Bottles;
 using FubuCore;
 using FubuCore.CommandLine;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Caching;
 using FubuMVC.OwinHost;
 using OpenQA.Selenium;
@@ -143,6 +144,11 @@ namespace Serenity.Jasmine
 
         void ISpecFileListener.Added()
         {
+            Recycle();
+        }
+
+        public void Recycle()
+        {
             _host.Recycle(watchAssetFiles);
             _applicationUnderTest.Driver.Navigate().Refresh();
         }
@@ -192,6 +198,14 @@ namespace Serenity.Jasmine
                     {
                         addContentFolder(contentFolder, listener);
                     }
+
+                    var watcher = new FileSystemWatcher(dir, "*.config");
+                    watcher.Changed += (x, y) => listener.Recycle();
+                    watcher.Deleted += (x, y) => listener.Recycle();
+                    watcher.EnableRaisingEvents = true;
+                    watcher.IncludeSubdirectories = true;
+                
+                    _watchers.Add(watcher);
                 });
             });
         }
@@ -199,9 +213,10 @@ namespace Serenity.Jasmine
         private void addContentFolder(string dir, ISpecFileListener listener)
         {
             var watcher = new FileSystemWatcher(dir);
-            watcher.Changed += (x, y) =>
+            watcher.Changed += (x, file) =>
             {
-                Console.WriteLine("Detected a change to " + y.FullPath);
+                Console.WriteLine("Detected a change to " + file.FullPath);
+
                 _cache.FlushAll();
                 listener.Changed();
             };
@@ -232,5 +247,6 @@ namespace Serenity.Jasmine
         void Changed();
         void Deleted();
         void Added();
+        void Recycle();
     }
 }
