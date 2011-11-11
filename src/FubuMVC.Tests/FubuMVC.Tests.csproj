@@ -34,22 +34,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.156\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.137\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployers.Iis">
-      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.156\lib\Bottles.Deployers.Iis.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.137\lib\Bottles.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
-      <HintPath>..\packages\Bottles.Deployment.0.9.1.156\lib\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployment.0.9.1.137\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.2.96\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.2.93\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.2.96\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.2.85\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.2.96\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.2.85\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
@@ -171,12 +171,9 @@
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
-    <Compile Include="Commands\NewCommandTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
-    <Compile Include="AppSettings\AppSettingsProviderIntegratedTester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
-    <Compile Include="Continuations\RedirectToMethodsTester.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamilyTester.cs" />
@@ -192,6 +189,10 @@
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
+    <Compile Include="Localization\LabelBuilderTester.cs" />
+    <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
+    <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
+    <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
@@ -228,7 +229,6 @@
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorTester.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingBindingLoggerTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
-    <Compile Include="KeywordReplacerTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
     <Compile Include="Packaging\ZipFilePackageLoaderTester.cs" />
@@ -255,8 +255,6 @@
     <Compile Include="Resources\Projections\SimpleValueSource.cs" />
     <Compile Include="Resources\Media\Xml\XmlAttCentricMediaNodeTester.cs" />
     <Compile Include="Resources\Media\Xml\XmlNodeCentricMediaNodeTester.cs" />
-    <Compile Include="ProcessFactoryTester.cs" />
-    <Compile Include="ProcessWrapperTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
     <Compile Include="Registration\Conventions\AllowRoleAttributeTester.cs" />
@@ -361,8 +359,8 @@
     <Compile Include="Behaviors\RenderJsonBehaviorTester.cs" />
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
     <Compile Include="Behaviors\RenderTextBehaviorTester.cs" />
-    <Compile Include="AppSettings\AppSettingsRequestDataTester.cs" />
-    <Compile Include="AppSettings\FakeSettings.cs" />
+    <Compile Include="Configuration\AppSettingsRequestDataTester.cs" />
+    <Compile Include="Configuration\FakeSettings.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\FubuContinuationTester.cs" />
     <Compile Include="Diagnostics\ActionColumnTester.cs" />

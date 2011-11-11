@@ -172,6 +172,20 @@ namespace FubuMVC.Core
             _importedTypes.Add(typeof(T));
         }
 
+        /// <summary>
+        /// Imports the declarations of an IFubuRegistryExtension
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void Import<T>(Action<T> configuration) where T : IFubuRegistryExtension, new()
+        {
+            var extension = new T();
+            configuration(extension);
+
+            extension.Configure(this);
+
+            _importedTypes.Add(typeof(T));
+        }
+
         private readonly IList<Type> _importedTypes = new List<Type>();
 
         /// <summary>
