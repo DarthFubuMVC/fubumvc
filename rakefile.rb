@@ -24,7 +24,7 @@ BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 props = { :stage => BUILD_DIR, :artifacts => ARTIFACTS }
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test, "template:build"]
+task :default => [:compile, :unit_test]
 
 desc "Target used for the CI server"
 task :ci => [:update_all_dependencies, :default, "template:build", :history, :publish]
