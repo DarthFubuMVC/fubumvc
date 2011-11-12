@@ -1,6 +1,5 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Spark;
-using FUBUPROJECTNAME.Controllers.Home;
 
 namespace FUBUPROJECTNAME
 {
@@ -17,15 +16,12 @@ namespace FUBUPROJECTNAME
                 .IncludeClassesSuffixedWithController();
 
             Routes
-                .HomeIs<HomeController>(c => c.Welcome())
                 .IgnoreControllerNamespaceEntirely();
-			
+
             this.UseSpark();
 
             Views
                 .TryToAttachWithDefaultConventions();
-
-            HtmlConvention<FUBUPROJECTSHORTNAMEHtmlConventions>();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Fubu
     {
         // Error code for file exists http://msdn.microsoft.com/en-us/library/aa232676(v=vs.60).aspx
         public const int DIRECTORY_ALREADY_EXISTS = 58;
-        private static readonly string TemplateZip = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "fubuTemplate.zip");
+        private static readonly string TemplateZip = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "defaultTemplate.zip");
         private static readonly FileSet TopLevelFileSet = new FileSet
                                                               {
                                                                   DeepSearch = false,

@@ -158,47 +158,61 @@ end
 
 def self.fubu(args)
   fubu = Platform.runtime("src/fubu/bin/#{COMPILE_TARGET}/fubu.exe")
-  sh "#{fubu} #{args}" 
+  sh "#{fubu} #{args}"
 end
 
-FUBUTEMPLATE_DIR = 'fubuTemplate'
+FUBUTEMPLATE_DIR = 'fubuTemplates'
 namespace :template do
 
-  desc "Cleans, Updates, and Zips fubuTemplate"
-  task :build => ["template:clean", "template:update", "template:nugetclean", "template:zip"]
-  nuget = "buildsupport/nuget.exe"
+  desc 'Cleans, Updates, and Zips Fubu templates'
+  task :build => ['template:clean', 'template:update', 'template:slimdown_nuget_pkgs', 'template:zip_all', 'template:build_artifacts_cleanup']
+  nuget = 'buildsupport/nuget.exe'
 
-  desc "Updates and zips default FubuTemplate"
-  zip :zip do |zip|
-    zip.directories_to_zip = [FUBUTEMPLATE_DIR]
-    zip.output_file = 'fubuTemplate.zip'
+
+  desc 'Updates and zips default Fubu templates'
+  task :zip_all do
+    # first clear out old templates
+    Dir['build/*Template.zip'].each {|zip_file| rm_rf zip_file}
+
+    Dir["#{FUBUTEMPLATE_DIR}/*/"].each do |template_dir|
+      Rake::Task['template:zip'].execute template_dir
+    end
+  end
+
+  zip :zip do |zip, subdir|
+    folder_name = File.basename subdir
+    zip.directories_to_zip = [subdir]
+    zip.output_file = "#{folder_name}Template.zip"
     zip.output_path = ['build']
   end
 
-  desc "Update fubuTemplate dependencies"
+  desc 'Update Fubu templates dependencies'
   task :update do
-    packages_config = File.join(FUBUTEMPLATE_DIR, "/packages.config")
-    dependencies_dir = File.join(FUBUTEMPLATE_DIR, 'lib')
-    unless File.exists?(packages_config)
-      puts "No fubuDependencies.txt file"
-      return
+    Dir["#{FUBUTEMPLATE_DIR}/*/"].each do |template_dir|
+      packages_config = File.join(template_dir, 'src/FUBUPROJECTNAME/packages.config')
+      dependencies_dir = File.join(template_dir, 'src/packages')
+      unless File.exists?(packages_config)
+        puts "No packages.config file for brining in dependencies into template #{template_dir}"
+        return
+      end
+      mkdir_p(dependencies_dir)
+      # Run nuget here
+      sh "#{nuget} install #{packages_config} -o #{dependencies_dir} -ExcludeVersion"
+      cp_r "#{template_dir}src/packages/FubuMVC/content/fubu-content/", "#{template_dir}src/FUBUPROJECTNAME/fubu-content"
     end
-    mkdir_p(dependencies_dir)
-    # Run nuget here
-    sh "#{nuget} install #{packages_config} -o #{dependencies_dir} -ExcludeVersion"
   end
 
-  desc "Cleans nuget install downloading source"
-  task :nugetclean, [:dry_run] do |t,args|
+  desc 'Cleans nuget install downloading source'
+  task :slimdown_nuget_pkgs, [:dry_run] do |t, args|
     Dir.chdir(FUBUTEMPLATE_DIR) do
-      files = Dir.glob("lib/**/src")
-      nupkg = Dir.glob("lib/**/*.nupkg")
+      files = Dir.glob('*/src/packages/**/src')
+      nupkg = Dir.glob('*/src/packages/**/*.nupkg')
       files << nupkg
       args[:dry_run] ? puts(files) : rm_r(files)
     end
   end
 
-  desc "Cleans matching files in fubuTemplateIgnore.txt"
+  desc 'Cleans matching files in fubuTemplateIgnore.txt'
   task :clean, [:dry_run] do |t, args|
     Dir.chdir(FUBUTEMPLATE_DIR) do
       files = IO.readlines('fubuTemplateIgnore.txt')
@@ -206,6 +220,16 @@ namespace :template do
               .flatten
               .uniq
       args[:dry_run] ? puts(files) : rm_r(files)
+    end
+  end
+
+  task :build_artifacts_cleanup do
+    Dir["#{FUBUTEMPLATE_DIR}/*/src/"].each do |template_dir|
+      nuget_pkg_dirs = File.join(template_dir, 'packages/*/')
+      fubu_content_dir = File.join(template_dir, 'FUBUPROJECTNAME/fubu-content')
+
+      Dir[nuget_pkg_dirs].each {|nuget_pkg_dir| rm_rf nuget_pkg_dir}
+      rm_rf fubu_content_dir
     end
   end
 end

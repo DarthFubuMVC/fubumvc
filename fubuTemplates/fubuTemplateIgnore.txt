@@ -3,4 +3,3 @@ obj
 *.suo
 *ReSharper*
 *.user
-FubuMVC/*.dll
