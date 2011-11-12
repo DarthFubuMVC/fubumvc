@@ -215,10 +215,7 @@ namespace :template do
   desc 'Cleans matching files in fubuTemplateIgnore.txt'
   task :clean, [:dry_run] do |t, args|
     Dir.chdir(FUBUTEMPLATE_DIR) do
-      files = IO.readlines('fubuTemplateIgnore.txt')
-              .map{|l| Dir["**/#{l.chomp}"]}
-              .flatten
-              .uniq
+      files = IO.readlines('fubuTemplateIgnore.txt').map{|l| Dir["**/#{l.chomp}"]}.flatten.uniq
       args[:dry_run] ? puts(files) : rm_r(files)
     end
   end
