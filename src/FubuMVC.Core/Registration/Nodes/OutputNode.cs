@@ -5,6 +5,11 @@ using HtmlTags;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
+    /// <summary>
+    /// Output Nodes mark a kind of <see cref="BehaviorNode"/> that encloses an <see cref="IActionBehavior"/>
+    /// whose responsibility it is to output the end result of a behavior chain (identified by <see cref="BehaviorCategory.Output"/>)
+    /// <seealso cref="BehaviorCategory" />
+    /// </summary>
     public class OutputNode : BehaviorNode
     {
         private readonly Type _behaviorType;

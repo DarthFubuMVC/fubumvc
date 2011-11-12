@@ -15,11 +15,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// </summary>
     public class ActionCall : ActionCallBase, IMayHaveInputType
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="handlerType"></param>
-        /// <param name="method"></param>
+        
         public ActionCall(Type handlerType, MethodInfo method) : base(handlerType, method)
         {
         }

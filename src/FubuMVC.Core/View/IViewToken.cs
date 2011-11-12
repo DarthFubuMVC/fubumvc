@@ -3,6 +3,9 @@ using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.View
 {
+    /// <summary>
+    /// A handle to a view (e.g. a Webforms or Spark View)
+    /// </summary>
     public interface IViewToken
     {
         BehaviorNode ToBehavioralNode();
