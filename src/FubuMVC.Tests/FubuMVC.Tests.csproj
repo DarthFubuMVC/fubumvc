@@ -175,6 +175,7 @@
     <Compile Include="Commands\NewCommandTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
+    <Compile Include="AppSettings\AppSettingsProviderIntegratedTester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
@@ -359,8 +360,8 @@
     <Compile Include="Behaviors\RenderJsonBehaviorTester.cs" />
     <Compile Include="Behaviors\BehaviorTestContext.cs" />
     <Compile Include="Behaviors\RenderTextBehaviorTester.cs" />
-    <Compile Include="Configuration\AppSettingsRequestDataTester.cs" />
-    <Compile Include="Configuration\FakeSettings.cs" />
+    <Compile Include="AppSettings\AppSettingsRequestDataTester.cs" />
+    <Compile Include="AppSettings\FakeSettings.cs" />
     <Compile Include="Continuations\ContinuationHandlerTester.cs" />
     <Compile Include="Continuations\FubuContinuationTester.cs" />
     <Compile Include="Diagnostics\ActionColumnTester.cs" />
