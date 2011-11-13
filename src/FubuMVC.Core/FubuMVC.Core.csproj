@@ -196,7 +196,7 @@
     <Compile Include="Caching\SetContentType.cs" />
     <Compile Include="Caching\WriteFileRecord.cs" />
     <Compile Include="Caching\WriteStream.cs" />
-    <Compile Include="Caching\WriteText.cs" />
+    <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />

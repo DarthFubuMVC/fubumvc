@@ -32,7 +32,7 @@ namespace FubuMVC.Core.Caching
         public void Write(string contentType, string renderedOutput)
         {
             output = new SetContentType(contentType);
-            output = new WriteText(renderedOutput);
+            output = new WriteTextOutput(renderedOutput);
         }
 
         public void Write(string contentType, Action<Stream> action)
@@ -75,6 +75,13 @@ namespace FubuMVC.Core.Caching
             ForHeader(headerName, val => returnValue = val);
 
             return returnValue;
+        }
+
+        public string GetText()
+        {
+            var writer = new StringWriter();
+            _outputs.OfType<IRecordedTextOutput>().Each(o => o.WriteText(writer));
+            return writer.ToString();
         }
 
         public void AddOutput(IRecordedHttpOutput output)

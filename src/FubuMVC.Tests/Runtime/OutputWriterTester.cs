@@ -87,7 +87,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void recorded_output_should_have_what_was_written()
         {
-            theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(new SetContentType(theContentType), new WriteText(theContent));
+            theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(new SetContentType(theContentType), new WriteTextOutput(theContent));
         }
 
         [Test]

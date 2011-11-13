@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using FubuCore;
@@ -61,18 +62,14 @@ namespace FubuMVC.Tests.Caching
 
         [Test]
         public void the_replay_method_calls_all_the_recorded_outputs_in_order()
-        {
+        {            
             var output1 = MockRepository.GenerateMock<IRecordedHttpOutput>();
             var output2 = MockRepository.GenerateMock<IRecordedHttpOutput>();
             var output3 = MockRepository.GenerateMock<IRecordedHttpOutput>();
             var output4 = MockRepository.GenerateMock<IRecordedHttpOutput>();
             var output5 = MockRepository.GenerateMock<IRecordedHttpOutput>();
-        
-            theRecordedOutput.AddOutput(output1);
-            theRecordedOutput.AddOutput(output2);
-            theRecordedOutput.AddOutput(output3);
-            theRecordedOutput.AddOutput(output4);
-            theRecordedOutput.AddOutput(output5);
+
+            addOutputs(output1, output2, output3, output4, output5);
         
             theRecordedOutput.Replay(theHttpWriter);
 
@@ -84,16 +81,35 @@ namespace FubuMVC.Tests.Caching
         }
 
         [Test]
+        public void the_get_text_method_calls_relevant_outputs_in_order()
+        {
+            var output1 = MockRepository.GenerateMock<IRecordedHttpOutput>();
+            var output2 = MockRepository.GenerateMock<IRecordedTextOutput>();
+            var output3 = MockRepository.GenerateMock<IRecordedHttpOutput>();
+            var output4 = MockRepository.GenerateMock<IRecordedTextOutput>();
+
+            addOutputs(output1, output2, output3, output4);
+
+            theRecordedOutput.GetText();
+
+            output2.AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
+            output4.AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
+        }
+
+        [Test]
+        public void the_get_text_method_appends_text_output_in_order()
+        {            
+            addOutputs(new WriteTextOutput("hep"), new WriteTextOutput("hey"));
+            theRecordedOutput.GetText().ShouldEqual("hephey");
+        }
+
+        [Test]
         public void write_stream()
         {
             var document = new XmlDocument();
             document.WithRoot("root");
 
-            theRecordedOutput.Write("text/xml", stream =>
-            {
-                document.Save(stream);
-            });
-
+            theRecordedOutput.Write("text/xml", document.Save);
             theRecordedOutput.Outputs.First().ShouldEqual(new SetContentType("text/xml"));
 
             var writeStream = theRecordedOutput.Outputs.Last().ShouldBeOfType<WriteStream>();
@@ -116,7 +132,7 @@ namespace FubuMVC.Tests.Caching
 
             theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(
                 new SetContentType("text/json"),
-                new WriteText("{}")
+                new WriteTextOutput("{}")
                 );
         }
 
@@ -130,12 +146,20 @@ namespace FubuMVC.Tests.Caching
         }
 
         [Test]
-        public void WriteText_replay_writes_the_text_to_the_HttpWriter()
+        public void WriteTextOutput_replay_writes_the_text_to_the_HttpWriter()
         {
-            var writeText = new WriteText("something");
+            var writeText = new WriteTextOutput("something");
             writeText.Replay(theHttpWriter);
 
             theHttpWriter.AssertWasCalled(x => x.Write("something"));
+        }
+
+        public void WriteTextOutput_writetext_writes_the_text_to_the_stringwriter()
+        {
+            var writer = new StringWriter();
+            var writeText = new WriteTextOutput("jambalay");
+            writeText.WriteText(writer);
+            writer.ToString().ShouldEqual("jambalay");
         }
 
         [Test]
@@ -169,6 +193,11 @@ namespace FubuMVC.Tests.Caching
             theHttpWriter.AssertWasCalled(x => x.AppendHeader(HttpResponseHeaders.ContentLength, "9"));
 
             theHttpWriter.AssertWasCalled(x => x.WriteFile("text.txt"));
+        }
+
+        private void addOutputs(params IRecordedHttpOutput[] outputs)
+        {
+            outputs.Each(theRecordedOutput.AddOutput);
         }
     }
 }

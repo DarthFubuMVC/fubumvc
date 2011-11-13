@@ -8,5 +8,6 @@ namespace FubuMVC.Core.Caching
         void Replay(IHttpWriter writer);
         void ForHeader(string headerName, Action<string> action);
         string GetHeaderValue(string headerName);
+        string GetText();
     }
 }
