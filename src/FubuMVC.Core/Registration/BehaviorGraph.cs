@@ -23,6 +23,9 @@ namespace FubuMVC.Core.Registration
         void Import(BehaviorGraph graph, Action<BehaviorChain> alternation);
     }
 
+    /// <summary>
+    /// The complete behavior model of a fubu application
+    /// </summary>
     public class BehaviorGraph : IRegisterable, IChainImporter
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
@@ -363,8 +366,6 @@ namespace FubuMVC.Core.Registration
         ///   Finds the Id of the BehaviorChain containing
         ///   the ActionCall
         /// </summary>
-        /// <param name = "call"></param>
-        /// <returns></returns>
         public Guid IdForCall(ActionCall call)
         {
             var chain = Behaviors.FirstOrDefault(x => x.FirstCall().Equals(call));
@@ -378,10 +379,8 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        ///   Finds all the BehaviorChain's for the designated handler T
+        ///   Finds all the BehaviorChains for the designated handler T
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
         public HandlerActionsSet ActionsForHandler<T>()
         {
             return ActionsForHandler(typeof (T));
@@ -390,8 +389,6 @@ namespace FubuMVC.Core.Registration
         /// <summary>
         ///   Finds all the BehaviorChain's for the designated handlerType
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
         public HandlerActionsSet ActionsForHandler(Type handlerType)
         {
             var actions = FirstActions().Where(x => x.HandlerType == handlerType);

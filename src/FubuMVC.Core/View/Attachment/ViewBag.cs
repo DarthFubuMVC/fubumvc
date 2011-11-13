@@ -5,6 +5,9 @@ using FubuCore.Util;
 
 namespace FubuMVC.Core.View.Attachment
 {
+    /// <summary>
+    /// Represent a collection of <see cref="IViewToken"/>s.
+    /// </summary>
     public class ViewBag
     {
         private readonly IEnumerable<IViewToken> _views;

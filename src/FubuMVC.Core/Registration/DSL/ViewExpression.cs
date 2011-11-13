@@ -22,10 +22,8 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Registers a view facility
+        /// Register a view facility.
         /// </summary>
-        /// <param name="facility"></param>
-        /// <returns></returns>
         public ViewExpression Facility(IViewFacility facility)
         {
             _viewAttacher.AddFacility(facility);
@@ -33,17 +31,15 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Configures actionless views for view tokens matching the specified predicate.
+        /// Configure actionless views for view tokens matching the specified filter
         /// </summary>
-        /// <param name="viewTokenFilter"></param>
-        /// <returns></returns>
         public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter)
         {
             return RegisterActionLessViews(viewTokenFilter, chain => { chain.IsPartialOnly = true; });
         }
 
         /// <summary>
-        /// Configures actionless views for view tokens matching the specified predicate.
+        /// Specify which views should be treated as actionless views.
         /// </summary>
         /// <param name="viewTokenFilter"></param>
         /// <param name="configureChain">Continuation for configuring each generated <see cref="BehaviorChain"/></param>
@@ -55,10 +51,8 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Configures the view attachment mechanism.
+        /// Fine-tune the view attachment instead of using <see cref="TryToAttachWithDefaultConventions"/>
         /// </summary>
-        /// <param name="configure"></param>
-        /// <returns></returns>
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
         {
             var expression = new ViewsForActionFilterExpression(_viewAttacherConvention);
@@ -85,9 +79,8 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Instructs the view attachment mechanism to include views from all packages.
+        /// Instruct the view attachment mechanism to include views from all packages.
         /// </summary>
-        /// <returns></returns>
         public ViewExpression TryToAttachViewsInPackages()
         {
             _registry.ConfigureImports(i =>
@@ -111,10 +104,9 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Define a view activation policy
+        /// Define a view activation policy for views matching the filter.
+        /// <seealso cref="IfTheInputModelOfTheViewMatches"/>
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
         public PageActivationExpression IfTheViewTypeMatches(Func<Type, bool> filter)
         {
             Action<IPageActivationSource> registration = source => _registry.Services(x => x.AddService<IPageActivationSource>(source));
@@ -122,10 +114,10 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
-        /// Define a view activation policy by matching on the input type of a view
+        /// Define a view activation policy by matching on the input type of a view.
+        /// A view activation element implements <see cref="IPageActivationAction"/> and takes part in setting up a View instance correctly
+        /// at runtime.
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
         public PageActivationExpression IfTheInputModelOfTheViewMatches(Func<Type, bool> filter)
         {
             Func<Type, bool> combined = type =>

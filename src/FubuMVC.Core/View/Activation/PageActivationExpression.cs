@@ -14,16 +14,27 @@ namespace FubuMVC.Core.View.Activation
             _filter = filter;
         }
 
+        /// <summary>
+        /// For the given set of views, specify a <see cref="IPageActivationAction"/> instance
+        /// </summary>
         public void ActivateBy(IPageActivationAction action)
         {
             _registration(new LambdaPageActivationSource(_filter, type => action));
         }
 
+        /// <summary>
+        /// For the given set of views, access the instantiated <see cref="IFubuPage"/>
+        /// </summary>
+        /// <param name="action"></param>
         public void ActivateBy(Action<IFubuPage> action)
         {
             ActivateBy(new LambdaPageActivationAction(action));
         }
 
+        /// <summary>
+        /// For the given set of views, specify any service T from the services known at runtime.
+        /// It subsequently gets the chance to interact with the <see cref="IFubuPage"/> instance.
+        /// </summary>
         public void ActivateBy<T>(Action<T, IFubuPage> action)
         {
             ActivateBy(new LambdaPageActivationAction((s, p) => action(s.GetInstance<T>(), p)));                
