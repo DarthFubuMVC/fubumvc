@@ -15,7 +15,7 @@
     <tags>web framework mvc</tags>
     <dependencies>
       <dependency id="FubuMVC.References"/>
-      <dependency id="WebActivator" version="1.1" />
+      <dependency id="WebActivator" version="1.5" />
     </dependencies>
   </metadata>
   <files>
