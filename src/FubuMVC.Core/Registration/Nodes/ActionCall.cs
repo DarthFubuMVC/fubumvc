@@ -7,8 +7,15 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
+    /// <summary>
+    /// A Fubu-specific representation of a method that can be treated as 
+    /// Action. Such a method must adhere to a number of rules e.g. the one-model-in one-model-out pattern.
+    /// If you are unsure whether you method is eligible, you can instantiate an ActionCall and
+    /// call <see cref="ActionCallBase.Validate"/>
+    /// </summary>
     public class ActionCall : ActionCallBase, IMayHaveInputType
     {
+        
         public ActionCall(Type handlerType, MethodInfo method) : base(handlerType, method)
         {
         }

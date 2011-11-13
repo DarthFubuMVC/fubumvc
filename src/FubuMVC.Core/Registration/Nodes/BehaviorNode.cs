@@ -54,7 +54,7 @@ namespace FubuMVC.Core.Registration.Nodes
         internal BehaviorChain Chain { get; set; }
 
         /// <summary>
-        ///   From innermost to outermost, iterates through the BehaviorNode's
+        ///   From innermost to outermost, iterates through the BehaviorNodes
         ///   before this BehaviorNode in the BehaviorChain
         /// </summary>
         public IEnumerable<BehaviorNode> PreviousNodes
@@ -182,8 +182,6 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Shortcut to put a "wrapping" behavior immediately in front
         ///   of this BehaviorNode.  Equivalent to AddBefore(Wrapper.For<T>())
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <returns></returns>
         public Wrapper WrapWith<T>() where T : IActionBehavior
         {
             return WrapWith(typeof (T));
@@ -194,8 +192,6 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Shortcut to put a "wrapping" behavior immediately in front of 
         ///   this BehaviorNode.  Equivalent to AddBefore(new Wrapper(behaviorType))
         /// </summary>
-        /// <param name = "behaviorType"></param>
-        /// <returns></returns>
         public Wrapper WrapWith(Type behaviorType, params Type[] parameterTypes)
         {
             if (behaviorType.IsOpenGeneric())
@@ -239,8 +235,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// Makes the behavior execute only if the condition against a model
         /// object pulled from IFubuRequest is true
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="filter"></param>
         public void ConditionByModel<T>(Func<T, bool> filter) where T : class
         {
             _conditionalDef = ConditionalObjectDef.ForModel(filter);
@@ -250,7 +244,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// Makes the behavior execute only if the custom IConditional evaluates
         /// true
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public void Condition<T>() where T : IConditional
         {
             _conditionalDef = ConditionalObjectDef.For<T>();
@@ -260,7 +253,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   Adds a new BehaviorNode to the very end of this BehaviorChain
         /// </summary>
-        /// <param name = "node"></param>
         public void AddToEnd(BehaviorNode node)
         {
             // Do not append any duplicates
@@ -298,7 +290,6 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <summary>
         ///   Swaps out this BehaviorNode for the given BehaviorNode
         /// </summary>
-        /// <param name = "newNode"></param>
         public void ReplaceWith(BehaviorNode newNode)
         {
             newNode.Next = Next;

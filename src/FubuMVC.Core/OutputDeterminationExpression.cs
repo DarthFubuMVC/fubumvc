@@ -18,6 +18,9 @@ namespace FubuMVC.Core
             _registry = registry;
         }
 
+        /// <summary>
+        /// Start setting up Json output for behavior chains
+        /// </summary>
         public ActionCallFilterExpression ToJson
         {
             get
@@ -26,6 +29,10 @@ namespace FubuMVC.Core
             }
         }
 
+        /// <summary>
+        /// Start setting up Html output for behavior chains. Output models are rendered as HTML by calling ToString on it.
+        /// Note that fubumvc has a default activated by which a string returned by an action is interpreted and output as HTML
+        /// </summary>
         public ActionCallFilterExpression ToHtml
         {
             get
@@ -37,6 +44,9 @@ namespace FubuMVC.Core
             }
         }
 
+        /// <summary>
+        /// Provide any instance deriving from <see cref="OutputNode"/> for some <see cref="ActionCall"/>
+        /// </summary>
         public ActionCallFilterExpression To(Func<ActionCall, OutputNode> func)
         {
             return output(action =>
@@ -55,6 +65,9 @@ namespace FubuMVC.Core
             }, "Adding output nodes from per-call function");
         }
 
+        /// <summary>
+        /// Specify a type deriving from <see cref="OutputNode"/> to handle output
+        /// </summary>
         public ActionCallFilterExpression To<T>() where T : OutputNode, new()
         {
             return output(action => action.AddToEnd(new T()), "Adding output node '{0}'".ToFormat(typeof (T).Name));

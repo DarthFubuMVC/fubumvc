@@ -298,8 +298,6 @@ namespace FubuMVC.Core.Registration.ObjectGraph
         /// Use to find the ObjectDef definition of an explicitly registered
         /// dependency
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public ObjectDef FindDependencyDefinitionFor<T>()
         {
             return FindDependencyDefinitionFor(typeof (T));
