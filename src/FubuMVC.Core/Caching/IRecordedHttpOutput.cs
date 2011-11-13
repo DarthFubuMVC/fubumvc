@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Caching
         void Replay(IHttpWriter writer);
     }
 
-    public interface IRecordedTextOutput : IRecordedHttpOutput
+    public interface IRecordedTextOutput
     {
         void WriteText(StringWriter writer);
     }

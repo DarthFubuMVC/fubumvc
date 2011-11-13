@@ -3,7 +3,7 @@ using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Caching
 {
-    public class WriteTextOutput : IRecordedTextOutput
+    public class WriteTextOutput : IRecordedHttpOutput, IRecordedTextOutput
     {
         private readonly string _text;
 

@@ -84,16 +84,25 @@ namespace FubuMVC.Tests.Caching
         public void the_get_text_method_calls_relevant_outputs_in_order()
         {
             var output1 = MockRepository.GenerateMock<IRecordedHttpOutput>();
-            var output2 = MockRepository.GenerateMock<IRecordedTextOutput>();
+            var output2 = MockRepository.GenerateMock<IRecordedHttpOutput, IRecordedTextOutput>();
             var output3 = MockRepository.GenerateMock<IRecordedHttpOutput>();
-            var output4 = MockRepository.GenerateMock<IRecordedTextOutput>();
+            var output4 = MockRepository.GenerateMock<IRecordedHttpOutput, IRecordedTextOutput>();
 
             addOutputs(output1, output2, output3, output4);
-
             theRecordedOutput.GetText();
 
-            output2.AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
-            output4.AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
+            output2.As<IRecordedTextOutput>().AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
+            output4.As<IRecordedTextOutput>().AssertWasCalled(x => x.WriteText(Arg<StringWriter>.Is.NotNull));
+        }
+
+        [Test]
+        public void the_get_text_method_returns_empty_string_when_no_text()
+        {
+            var output = MockRepository.GenerateMock<IRecordedHttpOutput>();
+            
+            addOutputs(output);
+            
+            theRecordedOutput.GetText().ShouldBeEmpty();
         }
 
         [Test]
