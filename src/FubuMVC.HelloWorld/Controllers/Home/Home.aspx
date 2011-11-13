@@ -15,7 +15,7 @@
      <br />
     Number of files attached: <%: Model.NumberOfFiles %>
     <br />
-    <form method="post" enctype="multipart/form-data" action="<%= Urls.UrlFor(new HomeFilesModel()) %>">
+    <form method="post" enctype="multipart/form-data" action="<%= Urls.UrlFor<HomeFilesModel>() %>">
     <br />
     File 1:  <input type="file" name="homefiles" />
     <br />
