@@ -6,33 +6,6 @@ using FubuMVC.Core.Assets.Files;
 
 namespace Serenity.Jasmine
 {
-    public interface ISpecVisitor
-    {
-        void Specification(Specification spec);
-        void Folder(SpecificationFolder folder);
-        void Graph(SpecificationGraph graph);
-    }
-
-    public interface ISpecNode
-    {
-        SpecPath Path();
-        IEnumerable<Specification> AllSpecifications { get; }
-        IEnumerable<ISpecNode> AllNodes { get; }
-        string FullName { get; }
-
-
-        IEnumerable<ISpecNode> ImmediateChildren
-        { 
-            get;
-        }
-
-        string TreeClass { get; }
-
-        ISpecNode Parent();
-
-        void AcceptVisitor(ISpecVisitor visitor);
-    }
-
     public class SpecificationFolder : ISpecNode
     {
         private readonly Cache<string, SpecificationFolder> _children;
@@ -50,6 +23,18 @@ namespace Serenity.Jasmine
         public SpecificationFolder(string name, SpecificationFolder parent) : this(name)
         {
             _parent = parent;
+        }
+
+        public void ApplyHelpers()
+        {
+            var helper = _specifications.FirstOrDefault(x => x.LibraryName == Specification.HelperName);
+            if (helper != null)
+            {
+                _specifications.Remove(helper);
+                AllSpecifications.Each(x => x.AddLibrary(helper.File));
+            }
+
+            _children.Each(x => x.ApplyHelpers());
         }
 
         public SpecificationFolder Parent

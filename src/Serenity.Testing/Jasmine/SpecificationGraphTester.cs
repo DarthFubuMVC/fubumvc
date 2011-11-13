@@ -63,6 +63,53 @@ pak2:scripts/specs/f1/lib8.spec.js
         }
 
         [Test]
+        public void applies_helpers()
+        {
+            theFiles.LoadAssets(@"
+scripts/lib1.js
+scripts/lib2.js
+scripts/lib3.js
+pak1:scripts/specs/jasmine.helper.js
+pak1:scripts/specs/something.js
+pak1:scripts/specs/lib1.spec.js
+pak1:scripts/specs/lib2.spec.js
+pak1:scripts/specs/lib3.spec.js
+pak1:scripts/specs/lib4.spec.js
+pak1:scripts/specs/lib5.spec.js
+pak1:scripts/specs/f1/jasmine.helper.js
+pak1:scripts/specs/f1/lib6.spec.js
+pak1:scripts/specs/f1/lib7.spec.js
+pak2:scripts/specs/f1/lib8.spec.js
+");
+
+            var graph = new SpecificationGraph(thePipeline);
+
+
+            graph.AllSpecifications.Select(x => x.File.Name)
+                .ShouldHaveTheSameElementsAs(
+                "specs/f1/lib6.spec.js",
+                "specs/f1/lib7.spec.js",
+                "specs/something.js",
+"specs/lib1.spec.js",
+"specs/lib2.spec.js",
+"specs/lib3.spec.js",
+
+"specs/lib4.spec.js",
+
+"specs/lib5.spec.js",
+"specs/f1/lib8.spec.js"
+                );
+
+
+            graph.FindSpecByFullName("pak1/lib1.spec.js")
+                .Libraries.Single().Name.ShouldEqual("specs/jasmine.helper.js");
+
+            graph.FindSpecByFullName("pak1/f1/lib6.spec.js")
+                .Libraries.Select(x => x.Name).ShouldHaveTheSameElementsAs("specs/jasmine.helper.js", "specs/f1/jasmine.helper.js");
+
+        }
+
+        [Test]
         public void makes_asset_graph_dependencies_between_files()
         {
             theFiles.LoadAssets(@"

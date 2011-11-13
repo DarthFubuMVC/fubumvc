@@ -17,6 +17,8 @@ namespace Serenity.Jasmine
         public SpecificationGraph(IAssetPipeline pipeline)
         {
             pipeline.AllPackages.Where(IsSpecPackage).Each(AddSpecs);
+
+            _packages.Each(x => x.ApplyHelpers());
         }
 
         public IEnumerable<SpecificationFolder> Folders

@@ -100,6 +100,8 @@
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
     <Compile Include="Jasmine\ConfigFileLoader.cs" />
+    <Compile Include="Jasmine\ISpecNode.cs" />
+    <Compile Include="Jasmine\ISpecVisitor.cs" />
     <Compile Include="Jasmine\JasmineCommand.cs" />
     <Compile Include="Jasmine\JasmineInput.cs" />
     <Compile Include="Jasmine\JasminePages.cs" />

@@ -16,6 +16,8 @@ namespace Serenity.Jasmine
         private readonly string _libraryName;
         private readonly Lazy<string> _fullname;
 
+        public static readonly string HelperName = "jasmine.helper.js"; 
+
         static Specification()
         {
             RebuildIgnoredExtensions();
@@ -52,7 +54,10 @@ namespace Serenity.Jasmine
 
         public static bool IsSpecification(AssetFile file)
         {
-            return file.MimeType == MimeType.Javascript && file.ContentFolder().IsNotEmpty() && file.ContentFolder().Split('/').Contains("specs");
+            if (file.MimeType != MimeType.Javascript) return false;
+            if (file.ContentFolder().IsEmpty()) return false;
+            
+            return file.ContentFolder().Split('/').Contains("specs");
         }
 
         public Specification(string name) : this(new AssetFile(name))
