@@ -64,7 +64,7 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_for_a_inferred_model_simple_case()
         {
-            urls.UrlFor<Model1>().ShouldEqual("Fubu/one/m1");
+            urls.UrlFor<Model1>().ShouldEqual("http://server/fubu/one/m1");
         }
 
         [Test]
