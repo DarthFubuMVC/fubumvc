@@ -92,6 +92,14 @@ namespace FubuMVC.Tests.Urls
 			urls.UrlFor(model).ShouldEqual("Fubu/qs/test?Param=42");
 		}
 
+		[Test]
+		public void retrieve_a_url_for_a_model_that_has_mixed_inputs()
+		{
+			var model = new ModelWithQueryStringAndRouteInput() { Param = 42, RouteParam = 23};
+
+			urls.UrlFor(model).ShouldEqual("Fubu/qsandroute/test/23?Param=42");
+		}
+
     	[Test]
         public void retrieve_url_by_input_type_with_parameters()
         {
@@ -259,6 +267,10 @@ namespace FubuMVC.Tests.Urls
 		public void get_qs_test(ModelWithQueryStringInput input)
 		{
 		}
+
+		public void get_qsandroute_test_RouteParam(ModelWithQueryStringAndRouteInput input)
+		{
+		}
 	}
 
     public class ModelWithInputs
@@ -302,5 +314,13 @@ namespace FubuMVC.Tests.Urls
 	{
 		[QueryString]
 		public int Param { get; set; }
+	}
+
+	public class ModelWithQueryStringAndRouteInput
+	{
+		[QueryString]
+		public int Param { get; set; }
+
+		public int RouteParam { get; set; }
 	}
 }
