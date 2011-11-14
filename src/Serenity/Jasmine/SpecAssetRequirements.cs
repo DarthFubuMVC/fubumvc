@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Assets;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.UI;
 
 namespace Serenity.Jasmine
@@ -22,11 +21,11 @@ namespace Serenity.Jasmine
 
             RegisterSpecifications(specs);
             document.WriteAssetsToHead();
-
         }
 
         public void RegisterRequirements(IEnumerable<Specification> specs)
         {
+            _requirements.Require("core");
             _requirements.Require("jasmine");
 
             specs.SelectMany(x => x.Libraries).Each(lib => _requirements.Require(lib.Name));

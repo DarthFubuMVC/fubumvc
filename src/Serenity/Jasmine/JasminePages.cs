@@ -5,6 +5,7 @@ using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.UI;
 using HtmlTags;
 using FubuCore;
+using System.Linq;
 
 namespace Serenity.Jasmine
 {
@@ -15,7 +16,7 @@ namespace Serenity.Jasmine
         private readonly SpecHierarchyBuilder _builder;
         private readonly SpecAssetRequirements _requirements;
         private readonly FubuHtmlDocument _document;
-        private static string _header;
+        private static readonly string _header;
 
         static JasminePages()
         {
@@ -76,6 +77,13 @@ namespace Serenity.Jasmine
             _document.Add("hr");
 
             _requirements.WriteAssetsInto(_document, node.AllSpecifications);
+
+            var fileSystem = new FileSystem();
+            node.AllSpecifications.SelectMany(x => x.HtmlFiles).Each(file =>
+            {
+                var html = fileSystem.ReadStringFromFile(file.FullPath);
+                _document.Add("div").Text(html).Encoded(false);
+            });
         }
     }
 }
