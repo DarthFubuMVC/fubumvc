@@ -31,6 +31,7 @@ namespace FubuMVC.Tests.Urls
             var registry = new FubuRegistry();
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
+        	registry.Actions.IncludeType<QueryStringTestController>();
             registry.Actions.ExcludeMethods(x => x.Method.Name.Contains("Ignore"));
 
             registry.Routes
@@ -86,7 +87,23 @@ namespace FubuMVC.Tests.Urls
             }).ShouldEqual("http://server/fubu/find/Jeremy");
         }
 
-        [Test]
+		[Test]
+		public void retrieve_a_url_for_a_model_that_has_querystring_inputs()
+		{
+			var model = new ModelWithQueryStringInput() { Param = 42 };
+
+			urls.UrlFor(model).ShouldEqual("Fubu/qs/test?Param=42");
+		}
+
+		[Test]
+		public void retrieve_a_url_for_a_model_that_has_mixed_inputs()
+		{
+			var model = new ModelWithQueryStringAndRouteInput() { Param = 42, RouteParam = 23};
+
+			urls.UrlFor(model).ShouldEqual("Fubu/qsandroute/test/23?Param=42");
+		}
+
+    	[Test]
         public void retrieve_url_by_input_type_with_parameters()
         {
             var parameters = new RouteParameters<ModelWithInputs>();
@@ -270,6 +287,17 @@ namespace FubuMVC.Tests.Urls
         public void M4(UrlModel model) { }
     }
 
+	public class QueryStringTestController
+	{
+		public void get_qs_test(ModelWithQueryStringInput input)
+		{
+		}
+
+		public void get_qsandroute_test_RouteParam(ModelWithQueryStringAndRouteInput input)
+		{
+		}
+	}
+
     public class ModelWithInputs
     {
         public string Name { get; set; }
@@ -307,5 +335,17 @@ namespace FubuMVC.Tests.Urls
     {
     }
 
+	public class ModelWithQueryStringInput
+	{
+		[QueryString]
+		public int Param { get; set; }
+	}
 
+	public class ModelWithQueryStringAndRouteInput
+	{
+		[QueryString]
+		public int Param { get; set; }
+
+		public int RouteParam { get; set; }
+	}
 }
