@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using FubuCore.Reflection;
@@ -47,16 +48,16 @@ namespace FubuMVC.Core.Registration.Routes
             });
             
             // Populate the remaining QueryString parameters
-        	var props = inputType.GetProperties();
-        	foreach (var propertyInfo in props)
-        	{
-        		PropertyInfo info = propertyInfo;
-        		if(propertyInfo.HasAttribute<QueryStringAttribute>()
+			var props = inputType.GetProperties();
+			foreach (var propertyInfo in props)
+			{
+				PropertyInfo info = propertyInfo;
+				if (propertyInfo.HasAttribute<QueryStringAttribute>()
 					&& !input.RouteParameters.Any(p => p.Name == info.Name))
-        		{
+				{
 					input.AddQueryInput(propertyInfo);
-        		}
-        	}
+				}
+			}
         }
 
 
