@@ -254,6 +254,8 @@ namespace FubuMVC.Tests.Continuations
             var fubuRequest = MockRepository.GenerateStub<IFubuRequest>();
             var continuation = FubuContinuation.TransferTo(new object());
             fubuRequest.Stub(r => r.Get<FubuContinuation>()).Return(continuation);
+            fubuRequest.Stub(r => r.Find<IRedirectable>()).Return(new IRedirectable[0]);
+
             var partialFactory = MockRepository.GenerateStub<IPartialFactory>();
             var partialBehavior = MockRepository.GenerateStub<IActionBehavior>();
             partialFactory.Stub(f => f.BuildPartial(typeof(object))).Return(partialBehavior);

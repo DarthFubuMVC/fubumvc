@@ -199,6 +199,7 @@
     <Compile Include="Caching\WriteFileRecord.cs" />
     <Compile Include="Caching\WriteStream.cs" />
     <Compile Include="Caching\WriteTextOutput.cs" />
+    <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />

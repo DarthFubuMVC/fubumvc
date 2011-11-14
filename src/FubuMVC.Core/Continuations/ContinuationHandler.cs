@@ -4,6 +4,7 @@ using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using System.Linq;
 
 namespace FubuMVC.Core.Continuations
 {
@@ -71,8 +72,20 @@ namespace FubuMVC.Core.Continuations
 
         protected override DoNext performInvoke()
         {
-            _request.Get<FubuContinuation>().Process(this);
+            var continuation = FindContinuation();
+            continuation.Process(this);
             return DoNext.Stop;
+        }
+
+        public FubuContinuation FindContinuation()
+        {
+            var redirectable = _request.Find<IRedirectable>().FirstOrDefault();
+            if (redirectable != null)
+            {
+                return redirectable.RedirectTo ?? FubuContinuation.NextBehavior();
+            }
+
+            return _request.Get<FubuContinuation>();
         }
     }
 }

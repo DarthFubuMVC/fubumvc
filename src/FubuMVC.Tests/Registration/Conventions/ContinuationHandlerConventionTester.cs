@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -64,6 +65,24 @@ namespace FubuMVC.Tests.Registration.Conventions
             {
                 LastNameEntered = input.Name;
             }
+
+            public Redirectable RedirectedMethod()
+            {
+                return new Redirectable();
+            }
+
+            public class Redirectable : IRedirectable
+            {
+                public FubuContinuation RedirectTo { get; set; }
+            }
+        }
+
+        [Test]
+        public void should_attach_continuation_handlers_to_actions_that_return_an_IRedirectable()
+        {
+            graph.BehaviorFor<ContinuationHandlerController>(x => x.RedirectedMethod())
+                .Any(x => x is ContinuationNode)
+                .ShouldBeTrue();
         }
 
         [Test]

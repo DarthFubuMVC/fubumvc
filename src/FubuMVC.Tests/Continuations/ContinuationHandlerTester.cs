@@ -34,6 +34,54 @@ namespace FubuMVC.Tests.Continuations
     }
 
     [TestFixture]
+    public class finding_the_fubu_continuation : InteractionContext<ContinuationHandler>
+    {
+        private InMemoryFubuRequest theRequest;
+        private FubuContinuation theContinuation;
+
+        protected override void beforeEach()
+        {
+            theRequest = new InMemoryFubuRequest();
+
+            theContinuation = FubuContinuation.EndWithStatusCode(HttpStatusCode.NotModified);
+            theRequest.Set(theContinuation);
+
+            Services.Inject<IFubuRequest>(theRequest);
+        }
+
+        [Test]
+        public void find_the_continuation_if_there_is_a_redirectable()
+        {
+            var redirectable = new StubRedirectable(){RedirectTo = FubuContinuation.NextBehavior()};
+            theRequest.Set(redirectable);
+
+            ClassUnderTest.FindContinuation().ShouldBeTheSameAs(redirectable.RedirectTo);
+        }
+
+        [Test]
+        public void if_the_redirectable_does_not_have_a_continuation_assume_NextBehavior()
+        {
+            theRequest.Set(new StubRedirectable{RedirectTo = null});
+
+            ClassUnderTest.FindContinuation().AssertWasContinuedToNextBehavior();
+        }
+
+        [Test]
+        public void find_the_continuation_without_the_presence_of_an_IRedirectable()
+        {
+            ClassUnderTest.FindContinuation().ShouldBeTheSameAs(theContinuation);
+        }
+
+        public class StubRedirectable : IRedirectable
+        {
+            public FubuContinuation RedirectTo
+            {
+                get; set;
+            }
+        }
+    }
+
+    [TestFixture]
     public class when_ending_with_a_status_code : ContinuationHandlerContext
     {
         protected override void theContextIs()
