@@ -2,6 +2,7 @@ using FubuMVC.Core.Assets.Files;
 using NUnit.Framework;
 using Serenity.Jasmine;
 using FubuTestingSupport;
+using System.Linq;
 
 namespace Serenity.Testing.Jasmine
 {
@@ -124,6 +125,23 @@ namespace Serenity.Testing.Jasmine
         public void can_use_ignored_extensions_to_be_more_exact_in_matching()
         {
             isDependency("specs/jquery.spec.js", "jquery.forms.js").ShouldBeFalse();
+        }
+
+        [Test]
+        public void select_html_files()
+        {
+            var spec = new Specification("somelib.spec.js");
+
+            var files = new System.Collections.Generic.List<AssetFile>(){
+                new AssetFile("not.fixture.html"),
+                new AssetFile("somelib.css"),
+                new AssetFile("somelib.fixture.html")
+            };
+
+            spec.SelectHtmlFiles(files);
+            spec.HtmlFiles.Select(x => x.Name)
+                .ShouldHaveTheSameElementsAs("somelib.fixture.html");
+        
         }
     }
 }

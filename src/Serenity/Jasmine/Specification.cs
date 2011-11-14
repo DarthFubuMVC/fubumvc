@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Runtime;
@@ -15,6 +16,7 @@ namespace Serenity.Jasmine
         private readonly IList<AssetFile> _libraries = new List<AssetFile>();
         private readonly string _libraryName;
         private readonly Lazy<string> _fullname;
+        private readonly IList<AssetFile> _htmlFiles = new List<AssetFile>();
 
         public static readonly string HelperName = "jasmine.helper.js"; 
 
@@ -86,13 +88,23 @@ namespace Serenity.Jasmine
 
             _libraryName = file.LibraryName();
             var libraryParts = _libraryName.Split('.').ToList();
+            
             var index = libraryParts.IndexOf("spec");
-
-
-            _subject = libraryParts.Take(index).Join(".");
+            if (index > -1)
+            {
+                _subject = libraryParts.Take(index).Join(".");
+            }
+            else
+            {
+                _subject = libraryParts.Where(x => !_ignoredExtensions.Contains("." + x)).Join(".");
+            }
+            
+            
 
             
         }
+
+
 
         public string LibraryName
         {
@@ -174,6 +186,27 @@ namespace Serenity.Jasmine
         public IEnumerable<ISpecNode> AllNodes
         {
             get { yield break; }
+        }
+
+        public void AddHtmlFile(AssetFile file)
+        {
+            _htmlFiles.Add(file);
+        }
+
+        public static readonly string FixtureHtmlSuffix = ".fixture.html"; 
+
+        public void SelectHtmlFiles(IEnumerable<AssetFile> files)
+        {
+            var libName = _subject + FixtureHtmlSuffix;
+
+            Debug.WriteLine("I'm looking for " + libName);
+
+            files.Where(x => x.LibraryName() == libName).Each(_htmlFiles.Add);
+        }
+
+        public IEnumerable<AssetFile> HtmlFiles
+        {
+            get { return _htmlFiles; }
         }
     }
 }

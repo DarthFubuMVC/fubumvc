@@ -31,6 +31,7 @@ scripts/lib1.js
 scripts/lib2.js
 scripts/lib3.js
 pak1:scripts/specs/something.js
+pak1:scripts/specs/something.fixture.html
 pak1:scripts/specs/lib1.spec.js
 pak1:scripts/specs/lib2.spec.js
 pak1:scripts/specs/lib3.spec.js
@@ -59,6 +60,9 @@ pak2:scripts/specs/f1/lib8.spec.js
 
 "specs/f1/lib8.spec.js"
                 );
+
+            graph.FindSpecByLibraryName("something.js")
+                .HtmlFiles.Single().LibraryName().ShouldEqual("something.fixture.html");
 
         }
 

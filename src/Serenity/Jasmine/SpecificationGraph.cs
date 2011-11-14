@@ -102,9 +102,18 @@ namespace Serenity.Jasmine
                 .AllFiles()
                 .Where(x => x.MimeType == MimeType.Javascript).ToList();
 
+            
 
             addSpecs(javascriptFiles, packageFolder);
             associateSpecs(javascriptFiles);
+
+            associateHtmlFiles(package, packageFolder);
+        }
+
+        private static void associateHtmlFiles(PackageAssets package, SpecificationFolder packageFolder)
+        {
+            var htmlFiles = package.AllFiles().Where(x => x.MimeType == MimeType.Html).ToList();
+            packageFolder.AllSpecifications.Each(x => x.SelectHtmlFiles(htmlFiles));
         }
 
         private void associateSpecs(List<AssetFile> javascriptFiles)
@@ -116,6 +125,7 @@ namespace Serenity.Jasmine
                 // Brute force baby!  No elegance needed here.
                 // Ten bucks says this is a perf problem down the line
                 javascriptFiles.Where(spec.DependsOn).Each(spec.AddLibrary);
+                
             });
         }
 
