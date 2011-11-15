@@ -92,7 +92,7 @@ namespace FubuMVC.Tests.Urls
 		{
 			var model = new ModelWithQueryStringInput() { Param = 42 };
 
-			urls.UrlFor(model).ShouldEqual("Fubu/qs/test?Param=42");
+            urls.UrlFor(model).ShouldEqual("http://server/fubu/qs/test?Param=42");
 		}
 
 		[Test]
@@ -100,7 +100,7 @@ namespace FubuMVC.Tests.Urls
 		{
 			var model = new ModelWithQueryStringAndRouteInput() { Param = 42, RouteParam = 23};
 
-			urls.UrlFor(model).ShouldEqual("Fubu/qsandroute/test/23?Param=42");
+            urls.UrlFor(model).ShouldEqual("http://server/fubu/qsandroute/test/23?Param=42");
 		}
 
     	[Test]
