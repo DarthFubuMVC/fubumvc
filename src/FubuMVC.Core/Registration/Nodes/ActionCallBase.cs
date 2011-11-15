@@ -6,7 +6,6 @@ using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
-using GenericEnumerableExtensions = System.Collections.Generic.GenericEnumerableExtensions;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -49,7 +48,7 @@ namespace FubuMVC.Core.Registration.Nodes
             }
         }
 
-        public string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
+        public override string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
 
         private string getInputParameters()
         {

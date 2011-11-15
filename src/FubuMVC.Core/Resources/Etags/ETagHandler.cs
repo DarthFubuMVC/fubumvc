@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Resources.Etags
     public class ETagHandler<T>
     {
         private readonly IEtagCache _cache;
-        private readonly IETagGenerator<T> _generator;
+        //private readonly IETagGenerator<T> _generator;
 
         //, IETagGenerator<T> generator
         public ETagHandler(IEtagCache cache)

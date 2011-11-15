@@ -16,8 +16,6 @@ namespace FubuMVC.Tests.Behaviors
     {
         private JsonOutput output;
         private InMemoryRequestData requestData;
-        private string mimeType;
-        private string rawOutput;
         private InMemoryOutputWriter theOutputWriter;
 
         protected override void beforeEach()

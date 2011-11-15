@@ -88,6 +88,16 @@ namespace FubuMVC.Tests.View
             {
                 return obj.GetType() == GetType();
             }
+
+            public bool Equals(TestViewToken other)
+            {
+                return !ReferenceEquals(null, other);
+            }
+
+            public override int GetHashCode()
+            {
+                return 0;
+            }
         }
 
         public class TestViewFacility : IViewFacility
