@@ -1,22 +1,20 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using FubuMVC.Core.Assets.Files;
+using FubuCore;
 using FubuMVC.Core.UI;
 using HtmlTags;
-using FubuCore;
-using System.Linq;
 
 namespace Serenity.Jasmine
 {
     public class JasminePages
     {
         private const string Title = "Serenity Jasmine Runner";
-        private readonly SpecificationGraph _specifications;
-        private readonly SpecHierarchyBuilder _builder;
-        private readonly SpecAssetRequirements _requirements;
-        private readonly FubuHtmlDocument _document;
         private static readonly string _header;
+        private readonly SpecHierarchyBuilder _builder;
+        private readonly FubuHtmlDocument _document;
+        private readonly SpecAssetRequirements _requirements;
+        private readonly SpecificationGraph _specifications;
 
         static JasminePages()
         {
@@ -25,16 +23,16 @@ namespace Serenity.Jasmine
                     ReadAllText();
         }
 
-        public JasminePages(SpecificationGraph specifications, SpecHierarchyBuilder builder, SpecAssetRequirements requirements, FubuHtmlDocument document)
+        public JasminePages(SpecificationGraph specifications, SpecHierarchyBuilder builder,
+                            SpecAssetRequirements requirements, FubuHtmlDocument document)
         {
             _specifications = specifications;
             _builder = builder;
             _requirements = requirements;
             _document = document;
 
-            
-            _document.Body.Append(new HtmlTag("div").Text(_header).Encoded(false));
 
+            _document.Body.Append(new HtmlTag("div").Text(_header).Encoded(false));
         }
 
         public HtmlDocument Home()
@@ -72,7 +70,6 @@ namespace Serenity.Jasmine
         private void writeNode(ISpecNode node)
         {
             var tag = _builder.BuildInPlaceHierarchyFor(node);
-
 
 
             _document.Add(tag);

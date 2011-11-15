@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>Serenity</id>
+    <version>0.0.0</version>
+    <authors>Jeremy D. Miller</authors>
+    <owners>Jeremy D. Miller</owners>
+    <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://mvc.fubu-project.org/</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Giving you piece of mind by making it easy to integrate both Storyteller and Jasmine testing into your FubuMVC applications</description>
+    <tags>web framework specification fubumvc</tags>
+    <dependencies>
+
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\*.exe" target="tools" />
+  </files>
+</package>
