@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Assets;
@@ -34,6 +35,12 @@ namespace Serenity.Jasmine
         public void RegisterSpecifications(IEnumerable<Specification> specs)
         {
             specs.Each(spec => _requirements.Require(spec.File.Name));
+        }
+
+        public void WriteBasicAssetsInto(FubuHtmlDocument document)
+        {
+            _requirements.Require("jquery", "jquery.treeview.js", "jasmine.treeview.css");
+            document.WriteAssetsToHead();
         }
     }
 }

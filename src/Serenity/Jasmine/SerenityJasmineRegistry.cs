@@ -7,6 +7,8 @@ namespace Serenity.Jasmine
     {
         public SerenityJasmineRegistry()
         {
+            IncludeDiagnostics(true);
+
             Actions.IncludeType<JasminePages>();
             Routes.HomeIs<JasminePages>(x => x.Home());
 

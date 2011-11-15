@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using FubuCore;
 using System.Linq;
+using FubuCore.CommandLine;
 
 namespace Serenity.Jasmine
 {
@@ -21,7 +22,15 @@ namespace Serenity.Jasmine
         public void ReadFile()
         {
             Console.WriteLine("Reading directives from " + _file);
-            new FileSystem().ReadTextFile(_file, ReadText);
+
+
+            var fileSystem = new FileSystem();
+            if (!fileSystem.FileExists(_file))
+            {
+                throw new CommandFailureException("Designated serenity/jasmine file at {0} does not exist".ToFormat(_file));
+            }
+
+            fileSystem.ReadTextFile(_file, ReadText);
         }
 
         public void ReadText(string text)

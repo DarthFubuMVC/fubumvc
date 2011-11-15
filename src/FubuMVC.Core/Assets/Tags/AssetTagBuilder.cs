@@ -38,6 +38,13 @@ namespace FubuMVC.Core.Assets.Tags
 
         public IEnumerable<HtmlTag> Build(AssetTagPlan plan)
         {
+            // This will happen when a user tries to request an asset set
+            // with no assets -- think optional sets
+            if (!plan.Subjects.Any())
+            {
+                return new HtmlTag[0];
+            }
+
             var missingSubjects = plan.RemoveMissingAssets();
             var func = _builders[plan.MimeType];
             Func<IAssetTagSubject, HtmlTag> builder = s =>
