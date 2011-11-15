@@ -109,6 +109,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controllers\Family\FamilyController.cs" />
+    <Compile Include="Controllers\TagElement\ViewlessController.cs" />
     <Compile Include="Controllers\ThreePassRendering\ThreePassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

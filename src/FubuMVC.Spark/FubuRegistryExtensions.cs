@@ -4,7 +4,7 @@ using FubuMVC.Core;
 
 namespace FubuMVC.Spark
 {
-    public static class FubuRegistryExtensions
+	public static class FubuRegistryExtensions
     {
         public static void UseSpark(this FubuRegistry fubuRegistry)
         {
@@ -15,9 +15,12 @@ namespace FubuMVC.Spark
         {
             var spark = new SparkEngine();
             configure(spark);
-            spark
-                .As<IFubuRegistryExtension>()
-                .Configure(fubuRegistry);
+        	spark
+        		.As<IFubuRegistryExtension>()
+        		.Configure(fubuRegistry);
+
+            //patch HtmlDocument and HtmlTag output types to use Spark aware outputs
+			fubuRegistry.Policies.Add<SparkHtmlOutputPolicy>();
         }
     }
 }

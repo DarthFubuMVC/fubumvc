@@ -1,3 +1,5 @@
 ﻿<viewdata model="FubuMVC.HelloSpark.Controllers.Air.BreatheViewModel" />
 
 <h2>${Model.Text}</h2>
+
+#this.Partial(new FubuMVC.HelloSpark.Controllers.TagElement.TagRequest("h3", "partial text"));
