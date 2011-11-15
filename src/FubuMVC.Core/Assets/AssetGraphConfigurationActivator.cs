@@ -15,9 +15,6 @@ namespace FubuMVC.Core.Assets
         private readonly IFileSystem _fileSystem;
         private readonly AssetRegistrationDiagnostics _diagnostics;
 
-<<<<<<< HEAD
-        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem, AssetLogsCache logs)
-=======
         private static readonly IList<string> _configurationFiles = new List<string>();
 
         public static IEnumerable<string> ConfigurationFiles
@@ -25,8 +22,9 @@ namespace FubuMVC.Core.Assets
             get { return _configurationFiles; }
         }
 
-        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem)
->>>>>>> adding a crude header to the jasmine runner, recording where the asset config files are
+
+
+        public AssetGraphConfigurationActivator(AssetGraph assets, IFileSystem fileSystem, AssetLogsCache logs)
         {
             _assets = assets;
             _fileSystem = fileSystem;

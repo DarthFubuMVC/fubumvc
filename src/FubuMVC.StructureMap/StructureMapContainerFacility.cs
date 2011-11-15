@@ -88,6 +88,7 @@ namespace FubuMVC.StructureMap
             {
                 new SingletonSpinupActivator(_container).Activate(null, null);
             }
+
             foreach (var activator in _container.GetAllInstances<IActivator>())
             {
                 yield return activator;
