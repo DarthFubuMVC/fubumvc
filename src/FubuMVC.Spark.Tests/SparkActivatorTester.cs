@@ -1,14 +1,17 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core.UI;
+using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
 using Spark;
+using System.Collections.Generic;
 
 namespace FubuMVC.Spark.Tests
 {
@@ -46,11 +49,15 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void default_namespaces_are_set()
         {
-            _settings.UseNamespaces.ShouldHaveTheSameElementsAs(new[]
+            var useNamespaces = _settings.UseNamespaces;
+            useNamespaces.Each(x => Debug.WriteLine(x));
+
+            useNamespaces.ShouldHaveTheSameElementsAs(new[]
             { 
                 typeof(VirtualPathUtility).Namespace,
                 typeof(FubuRegistryExtensions).Namespace,
                 typeof(FubuPageExtensions).Namespace,
+                typeof(ContentExtensionGraph).Namespace,
                 typeof(HtmlTag).Namespace
             });
         }
