@@ -28,6 +28,7 @@ namespace FubuMVC.Core
     public partial class FubuRegistry
     {
         private readonly BehaviorMatcher _behaviorMatcher;
+        private readonly BehaviorMatcher _handlerMatcher;
 
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
@@ -50,6 +51,7 @@ namespace FubuMVC.Core
         {
             _behaviorAggregator = new BehaviorAggregator(_types, _actionSources);
             _behaviorMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
+            _handlerMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
             _observer = new NulloConfigurationObserver();
             _viewAttacherConvention = new ViewAttacherConvention();
             _bagRunner = new ViewBagConventionRunner(_types);

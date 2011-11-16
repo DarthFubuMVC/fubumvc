@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.DSL;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core
 {
@@ -33,12 +36,24 @@ namespace FubuMVC.Core
 
             Routes
                 .UrlPolicy(policyBuilder(markerTypes));
+
+            Actions.FindWith(_handlerMatcher);
         }
 
         private void includeHandlers(params Type[] markerTypes)
         {
-            markerTypes.Each(markerType => Actions.IncludeTypes(t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace)));
-            Actions.IncludeMethods(action => action.Method.Name == HandlersUrlPolicy.METHOD);
+            markerTypes.Each(markerType => includeTypes(_handlerMatcher, t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace)));
+            includeMethods(_handlerMatcher, action => action.Method.Name == HandlersUrlPolicy.METHOD);
+        }
+
+        private void includeTypes(BehaviorMatcher matcher, Expression<Func<Type, bool>> filter)
+        {
+            matcher.TypeFilters.Includes += filter;
+        }
+
+        private void includeMethods(BehaviorMatcher matcher, Expression<Func<ActionCall, bool>> filter)
+        {
+            matcher.MethodFilters.Includes += filter;
         }
     }
 }
