@@ -12,6 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder>
     {
         private BindRequest _request;
+        private Parsing _parsing;
         private ITemplate _template;
         private ViewDescriptor _descriptor;
 
@@ -21,10 +22,15 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _descriptor = new ViewDescriptor(_template);
             _template.Descriptor = _descriptor;
 
+            _parsing = new Parsing
+            {
+                ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>"                               
+            };
+
             _request = new BindRequest
             {
                 Target = _template,
-                ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>",
+                Parsing = _parsing,
                 Types = typePool(),
                 Logger = MockFor<ISparkLogger>()
             };
@@ -33,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_generic_view_model_type_exists_in_different_assemblies_nothing_is_assigned()
         {
-            _request.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.DuplicatedGeneric<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
+            _parsing.ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.DuplicatedGeneric<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
 
             _descriptor.ViewModel.ShouldBeNull();
@@ -49,7 +55,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_view_model_type_does_not_exist_nothing_is_assigned()
         {
-            _request.ViewModelType = "x.y.jazz<bar>";
+            _parsing.ViewModelType = "x.y.jazz<bar>";
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldBeNull();
         }
@@ -57,7 +63,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void generic_parse_errors_are_logged()
         {
-            _request.ViewModelType = "x.y.jazz<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
+            _parsing.ViewModelType = "x.y.jazz<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
             MockFor<ISparkLogger>()
                 .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull));
@@ -66,10 +72,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void it_does_not_try_to_bind_names_that_are_null_or_empty()
         {
-            _request.ViewModelType = string.Empty;
+            _parsing.ViewModelType = string.Empty;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
 
-            _request.ViewModelType = null;
+            _parsing.ViewModelType = null;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
@@ -97,7 +103,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void does_not_bind_non_generics()
         {
-            _request.ViewModelType = "System.String";
+            _parsing.ViewModelType = "System.String";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

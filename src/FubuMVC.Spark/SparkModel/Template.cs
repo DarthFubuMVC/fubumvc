@@ -1,7 +1,14 @@
-﻿namespace FubuMVC.Spark.SparkModel
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FubuCore.Util;
+
+namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplate
     {
+        Guid Id { get; }
+
         string FilePath { get; }
         string RootPath { get; }
         string Origin { get; }
@@ -14,11 +21,16 @@
     {
         public Template(string filePath, string rootPath, string origin)
         {
+            Id = Guid.NewGuid();
+
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
+
             Descriptor = new NulloDescriptor();
         }
+
+        public Guid Id { get; private set; }
 
         public string FilePath { get; private set; }
         public string RootPath { get; private set; }
@@ -30,6 +42,52 @@
 	    public override string ToString()
         {
             return FilePath;
+        }
+    }
+
+    public class Parsing
+    {
+        public Parsing()
+        {
+            Namespaces = Enumerable.Empty<string>();
+        }
+
+        public string ViewModelType { get; set; }
+        public string Master { get; set; }
+        public IEnumerable<string> Namespaces { get; set; }
+    }
+
+    public interface IParsingRegistrations
+    {
+        Parsing ParsingFor(ITemplate template);
+    }
+
+    public class ParsingGraph : IParsingRegistrations
+    {
+        private readonly Cache<Guid, Parsing> _parsings = new Cache<Guid, Parsing>();
+        private readonly IChunkLoader _chunkLoader;
+
+        public ParsingGraph() : this(new ChunkLoader()){}
+        public ParsingGraph(IChunkLoader chunkLoader)
+        {
+            _chunkLoader = chunkLoader;
+        }
+
+        public void Process(ITemplate template)
+        {
+            var chunk = _chunkLoader.Load(template).ToList();
+
+            _parsings[template.Id] = new Parsing
+            {
+               Master = chunk.Master(),
+               ViewModelType = chunk.ViewModel(),
+               Namespaces = chunk.Namespaces()
+            };
+        }
+
+        public Parsing ParsingFor(ITemplate template)
+        {
+            return _parsings[template.Id];
         }
     }
 }

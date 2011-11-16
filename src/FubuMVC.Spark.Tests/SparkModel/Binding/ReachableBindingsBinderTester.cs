@@ -39,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             {
                 TemplateRegistry = new TemplateRegistry(new[] { _template }.Union(_bindings)),
                 Target = _template,
-                ViewModelType = typeof (ProductModel).FullName,
+                Parsing = new Parsing {ViewModelType = typeof (ProductModel).FullName},
                 Logger = _logger,
             };
 

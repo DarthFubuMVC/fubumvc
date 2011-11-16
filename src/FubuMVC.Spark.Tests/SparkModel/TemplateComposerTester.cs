@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Spark.Compiler;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {
@@ -42,8 +40,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _template2 = new Template("tmpl2.spark", "z", "o2");
             _templateRegistry = new TemplateRegistry {_template1, _template2};
 
-            var chunkLoader = MockFor<IChunkLoader>();
-            chunkLoader.Stub(x => x.Load(Arg<Template>.Is.Anything)).Return(Enumerable.Empty<Chunk>());
+            var parsingRegistrations = MockFor<IParsingRegistrations>();
+            parsingRegistrations.Stub(x => x.ParsingFor(Arg<Template>.Is.Anything)).Return(new Parsing());
 
             Services.Inject(_types);
             configurePolicies();

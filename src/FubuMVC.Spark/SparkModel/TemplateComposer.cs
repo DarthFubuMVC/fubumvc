@@ -14,14 +14,14 @@ namespace FubuMVC.Spark.SparkModel
     {
         private readonly IList<ITemplateBinder> _binders = new List<ITemplateBinder>();
         private readonly IList<ITemplatePolicy> _policies = new List<ITemplatePolicy>();
-        private readonly TypePool _types;
-        private readonly IChunkLoader _chunkLoader;
 
-        public TemplateComposer(TypePool types) : this(types, new ChunkLoader()) { }
-        public TemplateComposer(TypePool types, IChunkLoader chunkLoader)
+        private readonly TypePool _types; 
+        private readonly IParsingRegistrations _parsings;
+
+        public TemplateComposer(TypePool types, IParsingRegistrations parsings)
         {
             _types = types;
-            _chunkLoader = chunkLoader;
+            _parsings = parsings;
         }
 
         public TemplateComposer AddBinder<T>() where T : ITemplateBinder, new()
@@ -58,32 +58,21 @@ namespace FubuMVC.Spark.SparkModel
         {
             templates.AllTemplates().Each(t =>
             {
-                var bindRequest = createBindRequest(t, templates);
+                var bindRequest = new BindRequest
+                {
+                    Target = t,
+                    Parsing = _parsings.ParsingFor(t),
+                    Types = _types,
+                    TemplateRegistry = templates,
+                    Logger = SparkLogger.Default()
+                };
 
                 var binders = _binders.Where(x => x.CanBind(bindRequest));
                 var policies = _policies.Where(x => x.Matches(t));
-
-                // TODO: Register metadata per template such that we can use it in activation.
+                
                 binders.Each(binder => binder.Bind(bindRequest));
-
-
                 policies.Each(policy => policy.Apply(t));
             });
-        }
-
-        private BindRequest createBindRequest(ITemplate template, ITemplateRegistry templateRegistry)
-        {
-            var chunks = _chunkLoader.Load(template);
-            return new BindRequest
-            {
-                Target = template,
-                Types = _types,
-                TemplateRegistry = templateRegistry,
-                Master = chunks.Master(),
-                ViewModelType = chunks.ViewModel(),
-                Namespaces = chunks.Namespaces(),
-                Logger = SparkLogger.Default()
-            };
         }
     }    
 }

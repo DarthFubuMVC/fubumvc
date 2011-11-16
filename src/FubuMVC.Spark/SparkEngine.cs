@@ -11,6 +11,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
+using FubuMVC.Spark.SparkModel.Sharing;
 using Spark;
 using Spark.Caching;
 
@@ -22,6 +23,7 @@ namespace FubuMVC.Spark
     public class SparkEngine : IFubuRegistryExtension
     {
         private static bool _hasScanned;
+        private static readonly ParsingGraph _parseGraph = new ParsingGraph();
         private static readonly TemplateRegistry _templateRegistry = new TemplateRegistry();
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
 
@@ -35,7 +37,7 @@ namespace FubuMVC.Spark
         {
             _logger = getLogger();
             _finder = new TemplateFinder();
-            _composer = new TemplateComposer(_types.Value);
+            _composer = new TemplateComposer(_types.Value, _parseGraph);
 
             setupFinderDefaults();
             setupComposerDefaults();
@@ -84,6 +86,7 @@ namespace FubuMVC.Spark
             _logger.Trace(ConsoleColor.Green, msg);
 
             findTemplates();
+            parseTemplates();
             composeTemplates();
 
             _hasScanned = true;
@@ -100,6 +103,11 @@ namespace FubuMVC.Spark
             _templateRegistry.Clear();
             _templateRegistry.AddRange(_finder.FindInHost());
             _templateRegistry.AddRange(_finder.FindInPackages());
+        }
+
+        private void parseTemplates()
+        {
+            _templateRegistry.Each(t => _parseGraph.Process(t));
         }
 
         private void composeTemplates()
@@ -133,9 +141,12 @@ namespace FubuMVC.Spark
         private static void configureServices(IServiceRegistry services)
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
+            services.SetServiceIfNone(_parseGraph);
+
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
             services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
 
+            services.FillType<IActivator, SharingGraphActivator>();
             services.FillType<IActivator, SparkActivator>();
 
             services.FillType<IRenderStrategy, NestedRenderStrategy>();

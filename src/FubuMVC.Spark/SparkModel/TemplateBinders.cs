@@ -10,10 +10,7 @@ namespace FubuMVC.Spark.SparkModel
     public interface IBindRequest
     {
         ITemplate Target { get; }
-
-        string Master { get; }
-        string ViewModelType { get; }
-        IEnumerable<string> Namespaces { get; }
+        Parsing Parsing { get; }
 
         TypePool Types { get; }
         ITemplateRegistry TemplateRegistry { get; }
@@ -23,12 +20,9 @@ namespace FubuMVC.Spark.SparkModel
     public class BindRequest : IBindRequest
     {
         public ITemplate Target { get; set; }
-
-        public string Master { get; set; }
-        public string ViewModelType { get; set; }
-        public IEnumerable<string> Namespaces { get; set; }
-
+        public Parsing Parsing { get; set; }
         public TypePool Types { get; set; }
+
         public ITemplateRegistry TemplateRegistry { get; set; }
         public ISparkLogger Logger { get; set; }
     }
@@ -71,19 +65,20 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var parsing = request.Parsing;
 
             return descriptor != null
                 && descriptor.Master == null
-                && (request.ViewModelType.IsNotEmpty() || request.Master.IsNotEmpty())
+                && (parsing.ViewModelType.IsNotEmpty() || parsing.Master.IsNotEmpty())
                 && !request.Target.IsPartial()
-                && request.Master != string.Empty;
+                && parsing.Master != string.Empty;
         }
 
         public void Bind(IBindRequest request)
         {
             var template = request.Target;
             var tracer = request.Logger;
-            var masterName = request.Master ?? MasterName;
+            var masterName = request.Parsing.Master ?? MasterName;
 
             var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
 
@@ -104,12 +99,13 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var parsing = request.Parsing;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
                    && !request.Target.IsPartial()
-                   && request.ViewModelType.IsNotEmpty()
-                   && GenericParser.IsGeneric(request.ViewModelType);
+                   && parsing.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(parsing.ViewModelType);
         }
 
         public void Bind(IBindRequest request)
@@ -118,7 +114,7 @@ namespace FubuMVC.Spark.SparkModel
             var template = request.Target;
 
             var genericParser = new GenericParser(request.Types.Assemblies);
-            var viewModel = genericParser.Parse(request.ViewModelType);
+            var viewModel = genericParser.Parse(request.Parsing.ViewModelType);
 
             if (viewModel != null)
             {
@@ -138,12 +134,13 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var parsing = request.Parsing;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
                    && !request.Target.IsPartial()
-                   && request.ViewModelType.IsNotEmpty()
-                   && GenericParser.IsGeneric(request.ViewModelType) == false;
+                   && parsing.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(parsing.ViewModelType) == false;
         }
 
         public void Bind(IBindRequest request)
@@ -152,7 +149,7 @@ namespace FubuMVC.Spark.SparkModel
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
-            var types = request.Types.TypesWithFullName(request.ViewModelType);
+            var types = request.Types.TypesWithFullName(request.Parsing.ViewModelType);
             var typeCount = types.Count();
 
             if (typeCount == 1)
@@ -163,7 +160,7 @@ namespace FubuMVC.Spark.SparkModel
                 return;
             }
 
-            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
+            logger.Log(template, "Unable to set view model type : {0}", request.Parsing.ViewModelType);
 
             if (typeCount > 1)
             {

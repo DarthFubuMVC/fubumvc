@@ -13,6 +13,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     {
         private BindRequest _request;
         private ITemplate _template;
+        private Parsing _parsing;
         private ViewDescriptor _descriptor;
 
         protected override void beforeEach()
@@ -21,10 +22,15 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _descriptor = new ViewDescriptor(_template);
             _template.Descriptor = _descriptor;
 
+            _parsing = new Parsing
+            {
+                ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Baz"
+            };
+
             _request = new BindRequest
             {
                 Target = _template,
-                ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Baz",
+                Parsing = _parsing,
                 Types = typePool(),
                 Logger = MockFor<ISparkLogger>()
             };
@@ -33,7 +39,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_view_model_type_fullname_exists_in_different_assemblies_nothing_is_assigned()
         {
-            _request.ViewModelType = typeof(Bar).FullName;
+            _parsing.ViewModelType = typeof(Bar).FullName;
             ClassUnderTest.Bind(_request);
 
             _descriptor.ViewModel.ShouldBeNull();
@@ -49,7 +55,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_view_model_type_does_not_exist_nothing_is_assigned()
         {
-            _request.ViewModelType = "x.y.jazz";
+            _parsing.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldBeNull();
         }
@@ -57,7 +63,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_view_model_type_is_generic_nothiudoes_not_exist_nothing_is_assigned()
         {
-            _request.ViewModelType = "x.y.jazz";
+            _parsing.ViewModelType = "x.y.jazz";
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldBeNull();
         }
@@ -86,7 +92,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void it_does_not_bind_generic_viewmodels()
         {
-            _request.ViewModelType = "System.Collections.List<System.String>";
+            _parsing.ViewModelType = "System.Collections.List<System.String>";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
@@ -125,7 +131,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 .CompileAssemblyFromSource(parms, source)
                 .CompiledAssembly
                 .GetType(fullName);
-        } 
+        }
     }
 
     public class Bar { }

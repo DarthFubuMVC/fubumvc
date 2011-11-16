@@ -12,6 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>
     {
         private BindRequest _request;
+        private Parsing _parsing;
         private TemplateRegistry _templateRegistry;
 
         const string Host = FubuSparkConstants.HostOrigin;
@@ -33,15 +34,20 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         protected override void beforeEach()
-        {           
+        {
             Services.Inject<ISharedTemplateLocator>(new SharedTemplateLocator());
-            _request = new BindRequest 
-			{ 
-				TemplateRegistry = _templateRegistry = createTemplates(), 
-				Master = "application", 
-				Logger = MockFor<ISparkLogger>(),
-                ViewModelType = typeof(ProductModel).FullName
-			};
+            _parsing = new Parsing
+            {
+                Master = "application",
+                ViewModelType = typeof(ProductModel).FullName                               
+            };
+
+            _request = new BindRequest
+            {
+                Parsing = _parsing,
+                TemplateRegistry = _templateRegistry = createTemplates(),
+                Logger = MockFor<ISparkLogger>()
+            };
         }
 
         private TemplateRegistry createTemplates()
@@ -62,9 +68,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 newTemplate(_hostRoot, Host, false, "Features", "Mixer", "Shared", "application.spark"), // 9
                 newTemplate(_hostRoot, Host, true, "Features", "roundkick.spark"), // 10
                 newTemplate(_hostRoot, Host, true, "Handlers", "Products", "details.spark"), // 11
-				newTemplate(_hostRoot, Host, false, "Shared", "bindings.xml"), // 12
+                newTemplate(_hostRoot, Host, false, "Shared", "bindings.xml"), // 12
                 newTemplate(_hostRoot, Host, false, "Shared", "_Partial.spark"), // 13
-				newTemplate(_hostRoot, Host, false, "Shared", "application.spark") // 14
+                newTemplate(_hostRoot, Host, false, "Shared", "application.spark") // 14
             };
         }
 
@@ -84,7 +90,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var template = _templateRegistry.First();
             _request.Target = template;
-            
+
             ClassUnderTest.Bind(_request);
             _templateRegistry.ElementAt(2).ShouldEqual(template.Descriptor.As<ViewDescriptor>().Master);
         }
@@ -94,7 +100,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var template = _templateRegistry.ElementAt(3);
             _request.Target = template;
-            
+
             ClassUnderTest.Bind(_request);
             template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templateRegistry.ElementAt(5));
         }
@@ -104,7 +110,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             var template = _templateRegistry.ElementAt(6);
             _request.Target = template;
-            
+
             ClassUnderTest.Bind(_request);
             template.Descriptor.As<ViewDescriptor>().Master.ShouldEqual(_templateRegistry.Last());
         }
@@ -130,14 +136,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         }
 
         [Test]
-		public void	if_explicit_empty_master_then_binder_is_not_applied()
+        public void if_explicit_empty_master_then_binder_is_not_applied()
         {
             var template = _templateRegistry.ElementAt(3);
-            _request.Master = string.Empty;
+            _parsing.Master = string.Empty;
             _request.Target = template;
 
-			ClassUnderTest.CanBind(_request).ShouldBeFalse();	
-		}
+            ClassUnderTest.CanBind(_request).ShouldBeFalse();
+        }
 
         [Test]
         public void if_descriptor_is_not_viewdescriptor_then_binder_is_not_applied()
@@ -151,11 +157,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         public void if_view_model_type_is_empty_and_master_is_not_set_then_binder_is_not_applied()
         {
             var template = _templateRegistry.ElementAt(11);
-            _request.ViewModelType = string.Empty;
+            _parsing.ViewModelType = string.Empty;
             _request.Target = template;
-            _request.Master = "";
+            _parsing.Master = "";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
-            _request.Master = null;
+            _parsing.Master = null;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
@@ -181,6 +187,5 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             _request.Target = _templateRegistry.ElementAt(13);
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
-
     }
 }
