@@ -216,7 +216,7 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IRequestHeaders, RequestHeaders>();
 
-            registerHtmlConventions(graph);
+            
             registerAuthorizationServices(graph);
         }
 
