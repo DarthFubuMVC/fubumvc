@@ -34,6 +34,9 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.3.98\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags, Version=1.0.0.51, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlTags.1.0.0.51\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -47,25 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiagnosticsTemplateFinder.cs" />
-    <Compile Include="Intro\GettingStartedController.cs" />
-    <Compile Include="GettingStartedExtension.cs" />
-    <Compile Include="Notifications\AddBehaviorChainNotification.cs" />
-    <Compile Include="Notifications\AddBehaviorChainNotificationPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartingController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Diagnostics\FubuMVC.Diagnostics.csproj">
-      <Project>{A1DEB080-5A9A-44B4-A10B-84DA9BD07AF5}</Project>
-      <Name>FubuMVC.Diagnostics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
-      <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
-      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -84,11 +75,6 @@
     <EmbeddedResource Include="pak-WebContent.zip" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".package-manifest" />
-    <None Include="Intro\Intro.spark" />
-    <None Include="Notifications\AddBehaviorChain.spark">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@
     <file src="FubuMVC.cs.pp" target="content\App_Start" />
     <file src="ConfigureFubuMVC.cs.pp" target="content" />
     <file src="web.config.transform" target="content" />
-    <file src="..\..\build\basic-getting-started.zip" target="content\fubu-content" />
+    <file src="..\..\src\FubuMVC.GettingStarted\bin\release\FubuMVC.GettingStarted.dll" target="content\fubu-content" />
 	<file src="..\..\build\fubumvc-diagnostics.zip" target="content\fubu-content" />	
     <file src="..\..\lib\Microsoft.Web.Infrastructure\Microsoft.Web.Infrastructure.dll" target="lib"/>
   </files>
