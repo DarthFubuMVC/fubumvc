@@ -72,10 +72,7 @@ namespace FubuMVC.Tests.Localization
             var list = graphWithBasicLocalizationAsIs.Services.ServicesFor<IActivator>().Select(x => x.Type).ToList();
 
             list.ShouldContain(typeof(RegisterXmlDirectoryLocalizationStorage));
-            list.ShouldContain(typeof(SpinUpLocalizationCaches));
-
-            list.IndexOf(typeof (RegisterXmlDirectoryLocalizationStorage))
-                .ShouldBeLessThan(list.IndexOf(typeof (SpinUpLocalizationCaches)));
+            list.ShouldNotContain(typeof(SpinUpLocalizationCaches));
         }
 
         [Test]
@@ -95,8 +92,7 @@ namespace FubuMVC.Tests.Localization
             list.ShouldContain(typeof(StubLocalizationActivator));
             list.ShouldContain(typeof(SpinUpLocalizationCaches));
 
-            list.IndexOf(typeof(StubLocalizationActivator))
-                .ShouldBeLessThan(list.IndexOf(typeof(SpinUpLocalizationCaches)));
+
         }
 
         [Test]
@@ -118,6 +114,7 @@ namespace FubuMVC.Tests.Localization
             graph.Services.DefaultServiceFor<ILocalizationStorage>().Type.ShouldEqual(
                 typeof (InMemoryLocalizationStorage));
         }
+
 
         public class StubLocalizationActivator : IActivator
         {

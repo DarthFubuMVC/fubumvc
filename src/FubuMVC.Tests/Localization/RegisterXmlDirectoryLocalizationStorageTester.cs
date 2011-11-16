@@ -11,6 +11,8 @@ using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
+using StructureMap;
 
 namespace FubuMVC.Tests.Localization
 {
@@ -31,6 +33,9 @@ namespace FubuMVC.Tests.Localization
             theFacility = new StubContainerFacility();
             Services.Inject<IContainerFacility>(theFacility);
 
+            var spinup = Services.Container.GetInstance<SpinUpLocalizationCaches>();
+            theFacility.Container.Inject(spinup);
+
             ClassUnderTest.Activate(thePackages, new PackageLog());
         }
 
@@ -41,6 +46,18 @@ namespace FubuMVC.Tests.Localization
                 <XmlDirectoryLocalizationStorage>();
         
             theStorage.Directories.ShouldHaveTheSameElementsAs(FubuMvcPackageFacility.GetApplicationPath(), "dir1", "dir2", "dir3");
+        }
+
+        [Test]
+        public void should_load_the_caches()
+        {
+            MockFor<ILocalizationProviderFactory>().AssertWasCalled(x => x.LoadAll(null), x => x.Constraints(Rhino.Mocks.Constraints.Is.NotNull()));
+        }
+
+        [Test]
+        public void should_apply_the_factory_to_localization_manager()
+        {
+            MockFor<ILocalizationProviderFactory>().AssertWasCalled(x => x.ApplyToLocalizationManager());
         }
     }
 
@@ -76,12 +93,21 @@ namespace FubuMVC.Tests.Localization
 
         public T Get<T>()
         {
-            throw new NotImplementedException();
+            return _container.GetInstance<T>();
         }
 
         public IEnumerable<T> GetAll<T>()
         {
             throw new NotImplementedException();
         }
+
+        private readonly Container _container = new Container();
+
+        public Container Container
+        {
+            get { return _container; }
+        }
+
+
     }
 }

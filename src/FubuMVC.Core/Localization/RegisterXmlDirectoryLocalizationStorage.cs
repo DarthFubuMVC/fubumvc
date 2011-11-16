@@ -29,6 +29,9 @@ namespace FubuMVC.Core.Localization
             var storage = new XmlDirectoryLocalizationStorage(list);
 
             _facility.Register(typeof(ILocalizationStorage), ObjectDef.ForValue(storage));
+
+            _facility.Get<SpinUpLocalizationCaches>().Activate(packages, log);
         }
     }
+
 }

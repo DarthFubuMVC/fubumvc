@@ -45,13 +45,17 @@ namespace FubuMVC.Core.Localization
                 {
                     x.AddService<IActivator, RegisterXmlDirectoryLocalizationStorage>();
                 }
+                else
+                {
+                    x.AddService<IActivator, SpinUpLocalizationCaches>();
+                }
 
                 if (_localizationLoader != null)
                 {
                     x.AddService(typeof (IActivator), _localizationLoader);
                 }
 
-                x.AddService<IActivator, SpinUpLocalizationCaches>();
+                
             });
 
             

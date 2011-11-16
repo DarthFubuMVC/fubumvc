@@ -28,6 +28,26 @@ namespace FubuMVC.StructureMap
         {
             _container = container;
             _registry = new StructureMapFubuRegistry();
+
+            _registration = (serviceType, def) =>
+            {
+                if (def.Value == null)
+                {
+                    _registry.For(serviceType).Add(new ObjectDefInstance(def));
+                }
+                else
+                {
+                    _registry.For(serviceType).Add(new ObjectInstance(def.Value)
+                    {
+                        Name = def.Name
+                    });
+                }
+
+                if (ServiceRegistry.ShouldBeSingleton(serviceType))
+                {
+                    _registry.For(serviceType).Singleton();
+                }
+            };
         }
 
         public IContainer Container
@@ -45,26 +65,28 @@ namespace FubuMVC.StructureMap
             _registry.For<IBehaviorFactory>().Use<PartialBehaviorFactory>();
             _container.Configure(x => x.AddRegistry(_registry));
 
+            _registration = (serviceType, def) =>
+            {
+                if (def.Value != null)
+                {
+                    _container.Configure(x => x.For(serviceType).Add(def.Value));
+                }
+                else
+                {
+                    _container.Configure(x => x.For(serviceType).Add(new ObjectDefInstance(def)));
+                }
+
+                
+            };
+
             return this;
         }
 
+        private Action<Type, ObjectDef> _registration; 
+
         public void Register(Type serviceType, ObjectDef def)
         {
-            if (def.Value == null)
-            {
-                _registry.For(serviceType).Add(new ObjectDefInstance(def));
-            }
-            else
-            {
-                _registry.For(serviceType).Add(new ObjectInstance(def.Value){
-                    Name = def.Name
-                });
-            }
-
-            if (ServiceRegistry.ShouldBeSingleton(serviceType))
-            {
-                _registry.For(serviceType).Singleton();
-            }
+            _registration(serviceType, def);
         }
 
         public void Inject(Type abstraction, Type concretion)
@@ -84,14 +106,14 @@ namespace FubuMVC.StructureMap
 
         public IEnumerable<IActivator> GetAllActivators()
         {  
-            if (_initializeSingletonsToWorkAroundSMBug)
-            {
-                new SingletonSpinupActivator(_container).Activate(null, null);
-            }
-
             foreach (var activator in _container.GetAllInstances<IActivator>())
             {
                 yield return activator;
+            }
+
+            if (_initializeSingletonsToWorkAroundSMBug)
+            {
+                new SingletonSpinupActivator(_container).Activate(null, null);
             }
         }
 
