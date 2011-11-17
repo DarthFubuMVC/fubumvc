@@ -175,6 +175,7 @@
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FubuApplicationTester.cs" />
+    <Compile Include="FubuRegistryWithTypesTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamilyTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />

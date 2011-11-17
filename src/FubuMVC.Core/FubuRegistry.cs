@@ -136,9 +136,23 @@ namespace FubuMVC.Core
             return BuildLightGraph();
         }
 
+        private readonly IList<Action<TypePool>> _scanningOperations = new List<Action<TypePool>>();
+
+        /// <summary>
+        /// Access the TypePool with all the assemblies represented in the AppliesTo expressions
+        /// to make conventional registrations of any kind
+        /// </summary>
+        /// <param name="configuration"></param>
+        public void WithTypes(Action<TypePool> configuration)
+        {
+            _scanningOperations.Add(configuration);
+        }
+
         public BehaviorGraph BuildLightGraph()
         {
             var graph = new BehaviorGraph(_observer);
+
+            _scanningOperations.Each(x => x(_types));
 
             // Service registrations from imports
             allServiceRegistrations().Each(x => x(graph.Services));
