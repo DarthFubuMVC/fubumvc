@@ -14,7 +14,6 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.DSL;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Resources.Media;
@@ -216,12 +215,12 @@ namespace FubuMVC.Core
 
             graph.Services.SetServiceIfNone<IRequestHeaders, RequestHeaders>();
 
-            
+            registerHtmlConventions(graph);
             registerAuthorizationServices(graph);
         }
 
 
-        private void registerAuthorizationServices(BehaviorGraph graph)
+        private static void registerAuthorizationServices(BehaviorGraph graph)
         {
             graph.Services.SetServiceIfNone<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
             graph.Services.SetServiceIfNone<IFieldAccessService, FieldAccessService>();
@@ -236,21 +235,12 @@ namespace FubuMVC.Core
             }
         }
 
-        private void registerHtmlConventions(BehaviorGraph graph)
+        private static void registerHtmlConventions(BehaviorGraph graph)
         {
-            var library = new TagProfileLibrary();
-
-            graph.Services.FindAllValues<HtmlConventionRegistry>()
-                .Each(library.ImportRegistry);
-
-            library.ImportRegistry(new DefaultHtmlConventions());
-
-            library.Seal();
-
-            graph.Services.ClearAll<HtmlConventionRegistry>();
-            graph.Services.ReplaceService(library);
             graph.Services.SetServiceIfNone(typeof (ITagGenerator<>), typeof (TagGenerator<>));
             graph.Services.SetServiceIfNone<IElementNamingConvention, DefaultElementNamingConvention>();
+
+            graph.Services.AddService<IActivator, HtmlConventionsActivator>();
         }
     }
 }

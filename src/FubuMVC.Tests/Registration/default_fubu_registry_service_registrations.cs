@@ -106,6 +106,13 @@ namespace FubuMVC.Tests.Registration
                 .Any(x => x.Type == typeof (PackageFileActivator)).ShouldBeTrue();
         }
 
+        [Test]
+        public void an_activator_for_HtmlConventionActivator_is_registered()
+        {
+            new FubuRegistry().BuildGraph().Services.ServicesFor<IActivator>()
+                .Any(x => x.Type == typeof(HtmlConventionsActivator)).ShouldBeTrue();
+        }
+
 
         [Test]
         public void authorization_preview_service_is_registered()

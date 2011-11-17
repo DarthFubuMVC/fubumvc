@@ -176,7 +176,7 @@ namespace FubuMVC.Core
             _policies.Configure(graph);
             _systemPolicies.Configure(graph);
 
-            registerHtmlConventions(graph);
+            
 
             return graph;
         }

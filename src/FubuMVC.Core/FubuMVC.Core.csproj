@@ -200,6 +200,7 @@
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
+    <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
