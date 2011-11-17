@@ -76,7 +76,6 @@ namespace FubuMVC.Core
         void HtmlConvention(Action<HtmlConventionRegistry> configure);
         void StringConversions<T>() where T : DisplayConversionRegistry, new();
         void StringConversions(Action<DisplayConversionRegistry> configure);
-        void ActionCallProvider(Func<Type, MethodInfo, ActionCall> actionCallProvider);
         BehaviorGraph BuildGraph();
     }
 

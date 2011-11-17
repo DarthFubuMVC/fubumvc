@@ -22,7 +22,7 @@ namespace FubuMVC.Diagnostics.Tests.Notifications
                                              {
                                                  registry.Applies.ToThisAssembly();
                                                  registry.Actions.IncludeType<Test>();
-                                                 registry.Actions.IncludeMethods(c => c.Method.Name == "Index" || c.Method.Name == "Continuation");
+                                                 registry.Actions.IncludeMethods(method => method.Name == "Index" || method.Name == "Continuation");
                                              })
                 .BuildLightGraph();
             

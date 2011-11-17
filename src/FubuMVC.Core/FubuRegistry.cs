@@ -27,9 +27,6 @@ namespace FubuMVC.Core
     /// </example>
     public partial class FubuRegistry
     {
-        private readonly BehaviorMatcher _behaviorMatcher;
-        private readonly BehaviorMatcher _handlerMatcher;
-
         private readonly List<IConfigurationAction> _conventions = new List<IConfigurationAction>();
         private readonly List<IConfigurationAction> _explicits = new List<IConfigurationAction>();
         private readonly List<RegistryImport> _imports = new List<RegistryImport>();
@@ -42,7 +39,7 @@ namespace FubuMVC.Core
         private readonly ViewAttacherConvention _viewAttacherConvention;
         private readonly ViewBagConventionRunner _bagRunner;
         private IConfigurationObserver _observer;
-        private Func<Type, MethodInfo, ActionCall> _actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
+        
         private readonly ConnegAttachmentPolicy _connegAttachmentPolicy;
         private readonly BehaviorAggregator _behaviorAggregator;
         private readonly List<IActionSource> _actionSources = new List<IActionSource>();
@@ -50,8 +47,6 @@ namespace FubuMVC.Core
         public FubuRegistry()
         {
             _behaviorAggregator = new BehaviorAggregator(_types, _actionSources);
-            _behaviorMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
-            _handlerMatcher = new BehaviorMatcher((type, methodInfo) => _actionCallProvider(type, methodInfo));
             _observer = new NulloConfigurationObserver();
             _viewAttacherConvention = new ViewAttacherConvention();
             _bagRunner = new ViewBagConventionRunner(_types);
@@ -66,16 +61,6 @@ namespace FubuMVC.Core
         public FubuRegistry(Action<FubuRegistry> configure) : this()
         {
             configure(this);
-        }
-
-        /// <summary>
-        /// Provide a custom builder for action calls.
-        /// This is for advanced usage to override the default new ActionCall(type, method) usage.
-        /// </summary>
-        /// <param name="actionCallProvider"></param>
-        public void ActionCallProvider(Func<Type, MethodInfo, ActionCall> actionCallProvider)
-        {
-            _actionCallProvider = actionCallProvider;
         }
 
         /// <summary>

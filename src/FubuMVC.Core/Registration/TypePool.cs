@@ -18,6 +18,7 @@ namespace FubuMVC.Core.Registration
         private bool _scanned;
         private bool _ignoreCallingAssembly;
         private readonly IList<Func<IEnumerable<Assembly>>> _sources = new List<Func<IEnumerable<Assembly>>>();
+        
 
         /// <summary>
         /// Construct a type pool
@@ -45,13 +46,16 @@ namespace FubuMVC.Core.Registration
             _sources.Add(source);
         }
 
-        private IList<Type> types
+        private IEnumerable<Type> types
         {
             get
             {
-                if (!_scanned && ShouldScanAssemblies)
+                if (!_scanned)
                 {
                     _scanned = true;
+
+
+
 
                     // TODO:  Good exception message when an assembly blows up on 
                     // GetExportedTypes()

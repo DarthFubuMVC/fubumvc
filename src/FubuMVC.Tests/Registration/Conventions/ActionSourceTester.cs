@@ -14,14 +14,14 @@ using NUnit.Framework;
 namespace FubuMVC.Tests.Registration.Conventions
 {
     [TestFixture]
-    public class BehaviorMatcherTester
+    public class ActionSourceTester
     {
         #region Setup/Teardown
 
         [SetUp]
         public void SetUp()
         {
-            matcher = new BehaviorMatcher((type, methodInfo) => actionCallProvider(type, methodInfo));
+            matcher = new ActionSource(new ActionMethodFilter());
 
             pool = new TypePool(null);
             pool.IgnoreCallingAssembly();
@@ -36,8 +36,7 @@ namespace FubuMVC.Tests.Registration.Conventions
 
         #endregion
 
-        private Func<Type, MethodInfo, ActionCall> actionCallProvider = (type, methodInfo) => new ActionCall(type, methodInfo);
-        private BehaviorMatcher matcher;
+        private ActionSource matcher;
         private TypePool pool;
         private IEnumerable<ActionCall> calls;
 
@@ -75,7 +74,7 @@ namespace FubuMVC.Tests.Registration.Conventions
             setFilters(() =>
             {
                 matcher.TypeFilters.Includes += type => type.IsConcrete();
-                matcher.MethodFilters.Excludes += call => call.Method.Name.Contains("Go");
+                matcher.CallFilters.Excludes += call => call.Method.Name.Contains("Go");
             });
 
             calls.Count(x => x.HandlerType == typeof (DifferentPatternClass)).ShouldEqual(2);
@@ -96,17 +95,6 @@ namespace FubuMVC.Tests.Registration.Conventions
             calls.Count(x => x.HandlerType == typeof (ThreeController)).ShouldEqual(3);
         }
 
-        [Test]
-        public void can_set_a_different_action_call_provider()
-        {
-            actionCallProvider = (type, methodInfo) => new TestActionCall(type, methodInfo);
-
-            calls = matcher.FindActions(pool);
-
-            calls
-                .All(x => x.GetType() == typeof (TestActionCall))
-                .ShouldBeTrue();
-        }
     }
 
     public class SimpleInputModel

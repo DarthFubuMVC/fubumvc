@@ -23,7 +23,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Routes
              {
                  registry.Applies.ToThisAssembly();
                  registry.Actions.IncludeType<Test>();
-                 registry.Actions.IncludeMethods(c => (new[] { "Index", "Continuation", "ZeroModelOut", "HasOutputNode" }).Contains(c.Method.Name));
+                 registry.Actions.IncludeMethods(method => (new[] { "Index", "Continuation", "ZeroModelOut", "HasOutputNode" }).Contains(method.Name));
                  registry.ApplyConvention<OutputNodeConvention>();
 				
              }).BuildGraph();

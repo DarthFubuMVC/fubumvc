@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
@@ -9,6 +10,7 @@ using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Urls
 {
@@ -32,7 +34,7 @@ namespace FubuMVC.Tests.Urls
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
         	registry.Actions.IncludeType<QueryStringTestController>();
-            registry.Actions.ExcludeMethods(x => x.Method.Name.Contains("Ignore"));
+            registry.Actions.ExcludeMethods(x => x.Name.Contains("Ignore"));
 
             registry.Routes
                 .IgnoreControllerFolderName()
@@ -136,6 +138,8 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_by_action_negative_case()
         {
+            graph.Actions().Each(x => Debug.WriteLine(x.Description));
+
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 urls.UrlFor<OneController>(x => x.Ignored());

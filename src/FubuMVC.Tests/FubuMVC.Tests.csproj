@@ -194,6 +194,7 @@
     <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
+    <Compile Include="Registration\ActionMethodFilterTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
@@ -381,7 +382,7 @@
     <Compile Include="Registration\BehaviorGraphTester.cs">
     </Compile>
     <Compile Include="Registration\BehaviorVisitorTester.cs" />
-    <Compile Include="Registration\Conventions\BehaviorMatcherTester.cs" />
+    <Compile Include="Registration\Conventions\ActionSourceTester.cs" />
     <Compile Include="Registration\Conventions\ContinuationHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\DefaultRouteInputTypeBasedUrlPolicyTester.cs" />
     <Compile Include="Registration\Conventions\CustomConventionIntegratedTester.cs" />

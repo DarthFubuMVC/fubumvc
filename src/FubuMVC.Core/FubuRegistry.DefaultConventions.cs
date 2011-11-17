@@ -12,14 +12,11 @@ using HtmlTags;
 
 namespace FubuMVC.Core
 {
-    public partial class FubuRegistry : IFubuRegistry
+    public partial class FubuRegistry
     {
         private void setupDefaultConventionsAndPolicies()
         {
             _bagRunner.Apply(_viewAttacherConvention);
-
-            // Default action sources
-            _actionSources.Add(_behaviorMatcher);
 
             // Add Behaviors First
             ApplyConvention(_behaviorAggregator);

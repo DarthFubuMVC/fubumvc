@@ -200,6 +200,10 @@
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
+    <Compile Include="Registration\ActionMethodFilter.cs" />
+    <Compile Include="Registration\ActionSource.cs" />
+    <Compile Include="Registration\SingleTypeActionSource.cs" />
+    <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
@@ -463,7 +467,6 @@
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
     <Compile Include="FubuRegistry.Expressions.cs" />
     <Compile Include="Registration\BehaviorVisitor.cs" />
-    <Compile Include="Registration\Conventions\BehaviorMatcher.cs" />
     <Compile Include="Registration\Conventions\IChainConvention.cs" />
     <Compile Include="Registration\Conventions\IRouteInputPolicy.cs" />
     <Compile Include="Registration\Conventions\IUrlPolicy.cs" />

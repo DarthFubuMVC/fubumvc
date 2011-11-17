@@ -4,21 +4,26 @@ using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.DSL
 {
     public class ActionCallCandidateExpression
     {
-        private readonly BehaviorMatcher _matcher;
-        private readonly TypePool _types;
         private readonly IList<IActionSource> _sources;
-        
-        public ActionCallCandidateExpression(BehaviorMatcher matcher, TypePool types, IList<IActionSource> sources)
+        private readonly ActionMethodFilter _methodFilter;
+        private readonly Lazy<ActionSource> _mainSource;
+
+        public ActionCallCandidateExpression(IList<IActionSource> sources, ActionMethodFilter methodFilter)
         {
-            _matcher = matcher;
-            _types = types;
+            _methodFilter = methodFilter;
+            _mainSource = new Lazy<ActionSource>(() =>
+            {
+                var source = new ActionSource(_methodFilter);
+                sources.Insert(0, source);
+
+                return source;
+            });
+
             _sources = sources;
         }
 
@@ -35,7 +40,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ActionCallCandidateExpression ExcludeTypes(Expression<Func<Type, bool>> filter)
         {
-            _matcher.TypeFilters.Excludes += filter;
+            _mainSource.Value.TypeFilters.Excludes += filter;
             return this;
         }
 
@@ -57,7 +62,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ActionCallCandidateExpression IncludeTypes(Expression<Func<Type, bool>> filter)
         {
-            _matcher.TypeFilters.Includes += filter;
+            _mainSource.Value.IncludeTypes(filter);
             return this;
         }
 
@@ -72,36 +77,37 @@ namespace FubuMVC.Core.Registration.DSL
         /// <summary>
         /// Actions that match on the provided filter will be added to the runtime. 
         /// </summary>
-        public ActionCallCandidateExpression IncludeMethods(Expression<Func<ActionCall, bool>> filter)
+        public ActionCallCandidateExpression IncludeMethods(Expression<Func<MethodInfo, bool>> filter)
         {
-            _matcher.MethodFilters.Includes += filter;
+            _methodFilter.Includes += filter;
             return this;
         }
 
         /// <summary>
         /// Actions that match on the provided filter will NOT be added to the runtime. 
         /// </summary>
-        public ActionCallCandidateExpression ExcludeMethods(Expression<Func<ActionCall, bool>> filter)
+        public ActionCallCandidateExpression ExcludeMethods(Expression<Func<MethodInfo, bool>> filter)
         {
-            _matcher.MethodFilters.Excludes += filter;
+            _methodFilter.Excludes += filter;
             return this;
         }
 
         public ActionCallCandidateExpression IgnoreMethodsDeclaredBy<T>()
         {
-            return ExcludeMethods(call => call.Method.DeclaringType == typeof (T));
+            _methodFilter.IgnoreMethodsDeclaredBy<T>();
+            return this;
         }
 
         public ActionCallCandidateExpression ForTypesOf<T>(Action<TypeMethodPolicy<T>> configure)
         {
-            _matcher.TypeFilters.Includes += type => type.IsConcreteTypeOf<T>();
+            _mainSource.Value.TypeFilters.Includes += type => type.IsConcreteTypeOf<T>();
 
             var filter = new CompositeFilter<MethodInfo>();
 
             var policy = new TypeMethodPolicy<T>(filter);
             configure(policy);
 
-            _matcher.MethodFilters.Excludes +=
+            _mainSource.Value.CallFilters.Excludes +=
                 call => call.HandlerType.IsConcreteTypeOf<T>() && !filter.Matches(call.Method);
 
             return this;
@@ -110,7 +116,7 @@ namespace FubuMVC.Core.Registration.DSL
 
         public ActionCallCandidateExpression ExcludeNonConcreteTypes()
         {
-            _matcher.TypeFilters.Excludes += type => !type.IsConcrete();
+            _mainSource.Value.TypeFilters.Excludes += type => !type.IsConcrete();
             return this;
         }
 
@@ -119,9 +125,7 @@ namespace FubuMVC.Core.Registration.DSL
         /// </summary>
         public ActionCallCandidateExpression IncludeType<T>()
         {
-            _types.AddType(typeof (T));
-            _matcher.TypeFilters.Includes += type => type == typeof (T);
-            return this;
+            return FindWith(new SingleTypeActionSource(typeof (T), _methodFilter));
         }
 
         /// <summary>

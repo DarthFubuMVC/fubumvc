@@ -67,12 +67,14 @@ namespace FubuMVC.Core
             get { return new AppliesToExpression(_types); }
         }
 
+        
+        private readonly ActionMethodFilter _methodFilter = new ActionMethodFilter();
         /// <summary>
         /// Entry point to configuring how actions are found. Actions are the nuclei of behavior chains.
         /// </summary>
         public ActionCallCandidateExpression Actions
         {
-            get { return new ActionCallCandidateExpression(_behaviorMatcher, _types, _actionSources); }
+            get { return new ActionCallCandidateExpression(_actionSources, _methodFilter); }
         }
 
         /// <summary>
@@ -233,7 +235,7 @@ namespace FubuMVC.Core
                 _diagnosticLevel = DiagnosticLevel.None;
                 Actions
                     .ExcludeTypes(t => t.HasAttribute<FubuDiagnosticsAttribute>())
-                    .ExcludeMethods(call => call.Method.HasAttribute<FubuDiagnosticsAttribute>());
+                    .ExcludeMethods(method => method.HasAttribute<FubuDiagnosticsAttribute>());
             }
         }
 

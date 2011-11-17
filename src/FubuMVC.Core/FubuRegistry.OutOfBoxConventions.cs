@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
-using FubuMVC.Core.Registration.DSL;
-using FubuMVC.Core.Registration.Nodes;
+using System.Linq;
 
 namespace FubuMVC.Core
 {
@@ -28,32 +29,61 @@ namespace FubuMVC.Core
 
         public void ApplyHandlerConventions(Func<Type[], HandlersUrlPolicy> policyBuilder, params Type[] markerTypes)
         {
-            markerTypes
-                .Each(t => Applies
-                               .ToAssembly(t.Assembly));
+            markerTypes.Each(t => Applies.ToAssembly(t.Assembly));
 
-            includeHandlers(markerTypes);
+            var source = new HandlerActionSource(markerTypes);
+            if (!_actionSources.Contains(source))
+            {
+                Routes.UrlPolicy(policyBuilder(markerTypes));
 
-            Routes
-                .UrlPolicy(policyBuilder(markerTypes));
-
-            Actions.FindWith(_handlerMatcher);
+                Actions.FindWith(source);
+            }
         }
 
-        private void includeHandlers(params Type[] markerTypes)
+        public class HandlerActionSource : ActionSource
         {
-            markerTypes.Each(markerType => includeTypes(_handlerMatcher, t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace)));
-            includeMethods(_handlerMatcher, action => action.Method.Name == HandlersUrlPolicy.METHOD);
-        }
+            private readonly IEnumerable<Type> _markerTypes;
 
-        private void includeTypes(BehaviorMatcher matcher, Expression<Func<Type, bool>> filter)
-        {
-            matcher.TypeFilters.Includes += filter;
-        }
+            public HandlerActionSource(IEnumerable<Type> markerTypes) : base(new ActionMethodFilter())
+            {
+                markerTypes.Each<Type>(markerType =>
+                {
+                    TypeFilters.Includes += t => t.Namespace.IsNotEmpty() && t.Namespace.StartsWith(markerType.Namespace);
+                });
 
-        private void includeMethods(BehaviorMatcher matcher, Expression<Func<ActionCall, bool>> filter)
-        {
-            matcher.MethodFilters.Includes += filter;
+                MethodFilters.Includes += m => m.Name == HandlersUrlPolicy.METHOD;
+
+                _markerTypes = markerTypes;
+            }
+
+            public bool Equals(HandlerActionSource other)
+            {
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                
+                if (other._markerTypes.Count() != _markerTypes.Count()) return false;
+
+                for (int i = 0; i < _markerTypes.Count(); i++)
+                {
+                    if (other._markerTypes.ElementAt(i) != _markerTypes.ElementAt(i)) return false;
+                    
+                }
+
+                return true;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != typeof (HandlerActionSource)) return false;
+                return Equals((HandlerActionSource) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return (_markerTypes != null ? _markerTypes.GetHashCode() : 0);
+            }
         }
     }
 }
