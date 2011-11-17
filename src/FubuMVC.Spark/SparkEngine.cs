@@ -110,10 +110,7 @@ namespace FubuMVC.Spark
 
         private static TypePool getTypes()
         {
-            var types = new TypePool(FubuRegistry.FindTheCallingAssembly())
-            {
-                ShouldScanAssemblies = true
-            };
+            var types = new TypePool(FubuRegistry.FindTheCallingAssembly());
 
             var filter = new CompositeFilter<Assembly>();
 

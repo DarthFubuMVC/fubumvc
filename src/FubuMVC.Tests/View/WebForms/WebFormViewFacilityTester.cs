@@ -22,9 +22,7 @@ namespace FubuMVC.Tests.View.WebForms
         [SetUp]
         public void SetUp()
         {
-            var pool = new TypePool(null){
-                ShouldScanAssemblies = true
-            };
+            var pool = new TypePool(null);
             pool.AddAssembly(Assembly.GetExecutingAssembly());
 
             views = new WebFormViewFacility().FindViews(pool, new BehaviorGraph());

@@ -23,7 +23,6 @@ namespace FubuMVC.Core.View.Attachment
 
         public void Configure(BehaviorGraph graph)
         {
-            _types.ShouldScanAssemblies = true;
             var views = new List<IViewToken>();
 
             foreach (var facility in _facilities)

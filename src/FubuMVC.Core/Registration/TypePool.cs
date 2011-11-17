@@ -68,12 +68,6 @@ namespace FubuMVC.Core.Registration
         }
 
         /// <summary>
-        /// Controls output of <see cref="TypesMatching"/>
-        /// and <see cref="TypesWithFullName"/>
-        /// </summary>
-        public bool ShouldScanAssemblies { get; set; }
-
-        /// <summary>
         /// Register an assembly with this typepool
         /// </summary>
         public void AddAssembly(Assembly assembly)

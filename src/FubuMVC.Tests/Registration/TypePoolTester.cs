@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void should_return_all_types_with_full_name()
         {
-            var pool = new TypePool(GetType().Assembly) {ShouldScanAssemblies = true };
+            var pool = new TypePool(GetType().Assembly);
             
             pool.AddType(generateType("namespace FubuMVC.Core{public class Endpoint{}}", "FubuMVC.Core.Endpoint"));
             pool.AddType(typeof(Core.Endpoint));

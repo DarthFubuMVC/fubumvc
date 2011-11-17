@@ -269,6 +269,8 @@ namespace FubuMVC.Core
             });
         }
 
+
+
         /// <summary>
         /// Gets the level of diagnostics specified for this <see cref="FubuRegistry"/>
         /// </summary>

@@ -15,7 +15,7 @@ namespace FubuMVC.Core.Registration
 
 		public AssemblyScanner()
 		{
-			_types = new TypePool(GetType().Assembly) { ShouldScanAssemblies = true};
+			_types = new TypePool(GetType().Assembly);
 			_typeFilters = new CompositeFilter<Type>();
 
 			IncludeTypes(t => true);

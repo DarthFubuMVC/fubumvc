@@ -13,9 +13,7 @@ namespace FubuMVC.Core
         {
             if (!PackageRegistry.PackageAssemblies.Any()) return new IFubuRegistryExtension[0];
 
-            var pool = new TypePool(null){
-                ShouldScanAssemblies = true
-            };
+            var pool = new TypePool(null);
 
             pool.AddAssemblies(PackageRegistry.PackageAssemblies);
 
