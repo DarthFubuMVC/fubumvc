@@ -51,6 +51,18 @@ namespace FubuMVC.Core.Registration.DSL
         }
 
         /// <summary>
+        /// Specify which views should be treated as actionless views.
+        /// </summary>
+        /// <param name="viewTokenFilter"></param>
+        /// <param name="configureChain">Continuation for configuring each generated <see cref="BehaviorChain"/>, depending on the corresponding view token</param>
+        /// <returns></returns>
+		public ViewExpression RegisterActionLessViews(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain, IViewToken> configureChain)
+        {
+            _viewAttacher.Apply(new ActionLessViewConvention(viewTokenFilter, configureChain));
+            return this;          
+        }
+
+        /// <summary>
         /// Fine-tune the view attachment instead of using <see cref="TryToAttachWithDefaultConventions"/>
         /// </summary>
         public ViewExpression TryToAttach(Action<ViewsForActionFilterExpression> configure)
@@ -147,9 +159,15 @@ namespace FubuMVC.Core.Registration.DSL
     public class ActionLessViewConvention : IViewBagConvention
     {
         private readonly Func<IViewToken, bool> _viewTokenFilter;
-        private readonly Action<BehaviorChain> _configureChain;
+        private readonly Action<BehaviorChain, IViewToken> _configureChain;
 
         public ActionLessViewConvention(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain> configureChain)
+        {
+            _viewTokenFilter = viewTokenFilter;
+            _configureChain = (chain, token) => configureChain(chain);
+        }
+
+		public ActionLessViewConvention(Func<IViewToken, bool> viewTokenFilter, Action<BehaviorChain, IViewToken> configureChain)
         {
             _viewTokenFilter = viewTokenFilter;
             _configureChain = configureChain;
@@ -166,7 +184,7 @@ namespace FubuMVC.Core.Registration.DSL
                               var output = token.ToBehavioralNode();
                               chain.AddToEnd(output);
 
-                              _configureChain(chain);
+                              _configureChain(chain, token);
                           });
         }
     }

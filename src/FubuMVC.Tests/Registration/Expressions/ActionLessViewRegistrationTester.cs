@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.View;
 using FubuMVC.Tests.Urls;
 using FubuMVC.WebForms;
@@ -42,6 +43,31 @@ namespace FubuMVC.Tests.Registration.Expressions
             theBehaviorGraph.BehaviorFor(typeof(Model3)).IsPartialOnly.ShouldBeTrue();
         }
     }
+
+	[TestFixture]
+    public class ActionLessViewRegistrationWithIViewToken
+	{
+        private BehaviorGraph theBehaviorGraph;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var registry = new FubuRegistry();
+            registry.Import<WebFormsEngine>();
+
+            registry.Views.RegisterActionLessViews(token => token.ViewType.Name.StartsWith("FakeView"), (chain, token) => chain.Route = new RouteDefinition(token.Name));
+
+            theBehaviorGraph = registry.BuildGraph();
+        }
+
+		[Test]
+		public void chain_is_configured_depending_on_token()
+		{
+			var behavior = theBehaviorGraph.BehaviorFor(typeof (InputModel));
+			behavior.Route.Pattern.ShouldEqual(typeof (FakeView1).Name);
+		}
+		
+	}
 
     public class FakeView1 : FubuPage<InputModel>{}
     public class FakeView2 : FubuPage<TestInputModel> { }
