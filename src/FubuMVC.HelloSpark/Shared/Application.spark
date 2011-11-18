@@ -17,5 +17,8 @@
         <div>no footer by default</div>
       </use>
     </div>
+    
+    <p>You can always !{this.LinkTo<FubuMVC.HelloSpark.Controllers.Air.AirRequest>().Text("go home")}.
+    </p>
   </body>
 </html>
