@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Urls
 
 
             registry.ResolveTypes(x => x.AddStrategy<UrlModelForwarder>());
-
+            registry.Routes.HomeIs<DefaultModel>();
 
             graph = registry.BuildGraph();
 
@@ -62,6 +62,12 @@ namespace FubuMVC.Tests.Urls
         public void retrieve_a_url_for_a_model_simple_case()
         {
             urls.UrlFor(new Model1()).ShouldEqual("http://server/fubu/one/m1");
+        }
+        
+        [Test]
+        public void retrieve_a_url_for_the_default_model()
+        {
+            urls.UrlFor(new DefaultModel()).ShouldEqual("http://server/fubu");
         }
 
         [Test]
@@ -279,6 +285,11 @@ namespace FubuMVC.Tests.Urls
 
         [UrlRegistryCategory("different")]
         public void M4(UrlModel model) { }
+
+        public string Default(DefaultModel model)
+        {
+            return "welcome to the default view";
+        }
     }
 
     public class TwoController
@@ -313,6 +324,7 @@ namespace FubuMVC.Tests.Urls
     public class Model5{}
     public class Model6{}
     public class Model7{}
+    public class DefaultModel { }
     public class ModelWithNoChain{}
     public class ModelWithoutNewUrl{}
 

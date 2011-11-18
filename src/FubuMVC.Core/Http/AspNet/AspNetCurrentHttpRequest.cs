@@ -36,9 +36,9 @@ namespace FubuMVC.Core.Http.AspNet
                 url = "~/" + url.TrimStart('/');
             }
 
+            var absoluteUrl = VirtualPathUtility.ToAbsolute(url);
             
-
-            return VirtualPathUtility.ToAbsolute(url).TrimEnd('/');
+            return (absoluteUrl != "/") ? absoluteUrl.TrimEnd('/') : absoluteUrl;
         }
 
         public string HttpMethod()

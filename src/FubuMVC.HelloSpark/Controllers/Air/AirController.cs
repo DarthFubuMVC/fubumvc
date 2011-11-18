@@ -1,10 +1,12 @@
-﻿namespace FubuMVC.HelloSpark.Controllers.Air
+﻿using FubuCore;
+
+namespace FubuMVC.HelloSpark.Controllers.Air
 {
     public class AirController
     {
-        public AirViewModel TakeABreath()
+        public AirViewModel TakeABreath(AirRequest request)
         {
-            return new AirViewModel { Text = "Take a breath?" };
+            return new AirViewModel { Text = "Take a {0} breath?".ToFormat(request.Type) };
         }
 
         public BreatheViewModel Breathe(AirInputModel model)
@@ -15,6 +17,16 @@
 
             return result;
         }
+    }
+
+    public class AirRequest
+    {
+        public AirRequest()
+        {
+            Type = "deep";
+        }
+
+        public string Type { get; set; }
     }
 
     public class AirInputModel
