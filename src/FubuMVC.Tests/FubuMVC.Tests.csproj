@@ -195,6 +195,7 @@
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
+    <Compile Include="Registration\Conventions\ApplyingACustomViewBagConvention.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />

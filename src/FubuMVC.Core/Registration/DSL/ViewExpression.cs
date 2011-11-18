@@ -128,6 +128,20 @@ namespace FubuMVC.Core.Registration.DSL
 
             return IfTheViewTypeMatches(combined);
         }
+
+		public ViewExpression ApplyConvention<TConvention>()
+            where TConvention : IViewBagConvention, new() 
+		{
+				return ApplyConvention(new TConvention());
+		}
+
+		public ViewExpression ApplyConvention<TConvention>(TConvention convention)
+            where TConvention : IViewBagConvention 
+		{
+			_viewAttacher.Apply(convention);
+
+			return this;
+		}
     }
 
     public class ActionLessViewConvention : IViewBagConvention
