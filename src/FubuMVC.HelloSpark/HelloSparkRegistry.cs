@@ -22,7 +22,7 @@ namespace FubuMVC.HelloSpark
             ApplyHandlerConventions();
 
             Routes
-                .HomeIs<AirController>(c => c.TakeABreath())
+                .HomeIs<AirRequest>()
                 .IgnoreControllerNamespaceEntirely()
                 .IgnoreMethodSuffix("Command")
                 .IgnoreMethodSuffix("Query")
