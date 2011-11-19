@@ -42,12 +42,18 @@ namespace Serenity
 
         public override void SetupEnvironment()
         {
-            _applications.Each(x => x.Ping());
+            foreach (var app in _applications)
+            {
+                app.Ping();
+            }
         }
 
         public override void TeardownEnvironment()
         {
-            _applications.Each(x => x.Teardown());
+            foreach (var app in _applications)
+            {
+                app.Teardown();
+            }
         }
     }
 }
