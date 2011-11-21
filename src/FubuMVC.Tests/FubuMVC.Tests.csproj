@@ -191,11 +191,14 @@
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
+    <Compile Include="KeywordReplacerTester.cs" />
     <Compile Include="Localization\LabelBuilderTester.cs" />
     <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
     <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
+    <Compile Include="ProcessFactoryTester.cs" />
+    <Compile Include="ProcessWrapperTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\ApplyingACustomViewBagConvention.cs" />

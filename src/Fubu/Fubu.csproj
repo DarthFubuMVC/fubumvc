@@ -75,11 +75,19 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CreateDeploymentCommand.cs" />
+    <Compile Include="IKeywordReplacer.cs" />
     <Compile Include="IncludeWebContentCommand.cs" />
     <Compile Include="InstallPackageCommand.cs" />
     <Compile Include="InstallPackageInput.cs" />
+    <Compile Include="IProcess.cs" />
+    <Compile Include="IProcessFactory.cs" />
+    <Compile Include="KeywordReplacer.cs" />
+    <Compile Include="NewCommand.cs" />
+    <Compile Include="NewCommandInput.cs" />
     <Compile Include="PackagesCommand.cs" />
     <Compile Include="PackagesInput.cs" />
+    <Compile Include="ProcessFactory.cs" />
+    <Compile Include="ProcessWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />

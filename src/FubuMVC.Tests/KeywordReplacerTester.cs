@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Fubu;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -75,6 +76,20 @@ namespace FubuMVC.Tests
             ClassUnderTest.SetTokens(tokens);
             var actualText = ClassUnderTest.Replace(replacementText);
             actualText.ShouldEqual(expectedText);
+        }
+
+        [Test]
+        public void should_cache_guid_replacements()
+        {
+            var replacementText = "GUID1,GUID1,GUID1,GUID2";
+            var actualText = ClassUnderTest.Replace(replacementText);
+
+            var values = actualText.Split(new[] {','}, StringSplitOptions.None);
+            var first = values[0];
+            Guid.Parse(first);
+            values[1].ShouldEqual(first);
+            values[2].ShouldEqual(first);
+            values[3].ShouldNotEqual(first);
         }
     }
 }
