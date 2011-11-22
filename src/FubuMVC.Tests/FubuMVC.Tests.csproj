@@ -176,6 +176,7 @@
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FubuApplicationTester.cs" />
     <Compile Include="FubuRegistryWithTypesTester.cs" />
+    <Compile Include="Http\AspNet\AspNetCurrentHttpRequestTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamilyTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />

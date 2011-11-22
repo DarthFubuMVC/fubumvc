@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Diagnostics.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerenityRunner", "SerenityRunner\SerenityRunner.csproj", "{FC5172BC-C96A-4656-B87B-36978B19AD85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTesting", "StoryTellerTesting\IntegrationTesting.csproj", "{022C7B24-4417-493F-9F70-E3F4035FBEDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -513,6 +515,21 @@ Global
 		{FC5172BC-C96A-4656-B87B-36978B19AD85}.Retail|Mixed Platforms.Build.0 = Release|x86
 		{FC5172BC-C96A-4656-B87B-36978B19AD85}.Retail|x86.ActiveCfg = Release|x86
 		{FC5172BC-C96A-4656-B87B-36978B19AD85}.Retail|x86.Build.0 = Release|x86
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Release|x86.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{022C7B24-4417-493F-9F70-E3F4035FBEDA}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

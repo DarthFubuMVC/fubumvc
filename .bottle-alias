@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <aliases xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Aliases>
-    <alias name="fubu-testing" folder="C:\code\fubumvc\src\FubuTestApplication" />
+    <alias name="fubu-testing" folder="D:\home\oss\fubumvc\src\FubuTestApplication" />
     <alias name="pak1" folder="src/TestPackage1" />
     <alias name="pak3" folder="src/TestPackage3" />
     <alias name="pak2" folder="src/TestPackage2" />
+    <alias name="helloworld" folder="d:\home\oss\fubumvc\src\FubuMVC.HelloWorld" />
+    <alias name="hellofubuspark" folder="d:\home\oss\fubumvc\src\FubuMVC.HelloFubuSpark" />
   </Aliases>
 </aliases>
