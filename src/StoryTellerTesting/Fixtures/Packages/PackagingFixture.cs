@@ -43,7 +43,7 @@ namespace IntegrationTesting.Fixtures.Packages
         {
             var url = _remoteGraph.GetImageUrl(name);
             var client = new WebClient();
-            var bytes = client.DownloadData("http://localhost/" + url);
+            var bytes = client.DownloadData("http://localhost" + url);
             
             StoryTellerAssert.Fail(bytes.Length < 500, "Not enough data detected for the image.  Did it really load?");
 

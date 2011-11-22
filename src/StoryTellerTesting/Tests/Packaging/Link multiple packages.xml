@@ -4,7 +4,7 @@
   <Packaging>
     <SetUp isStep="True">
       <PackagingSetup>
-        <NoPackages isStep="True" />
+        <Comment><![CDATA[Fixture setup clears all packages]]></Comment>
       </PackagingSetup>
     </SetUp>
     <NoActionsForAssembly isStep="True" assemblyName="TestPackage1" />
@@ -24,10 +24,14 @@
         <Run isStep="True" commandLine="link fubu-testing pak2" />
       </PackagingSetup>
     </SetUp>
-    <ActionsForAssemblyArePresent isStep="True" assemblyName="TestPackage1" />
+    <NoActionsForAssembly isStep="True" assemblyName="TestPackage1" />
     <ActionsForAssemblyArePresent isStep="True" assemblyName="TestPackage2" />
     <SetUp isStep="True">
       <PackagingSetup>
+        <Run isStep="True" commandLine="init-pak src/TestPackage1 pak1" />
+        <Run isStep="True" commandLine="link fubu-testing pak1" />
+        <Run isStep="True" commandLine="init-pak src/TestPackage2 pak2" />
+        <Run isStep="True" commandLine="link fubu-testing pak2" />
         <Run isStep="True" commandLine="link fubu-testing pak1 -remove" />
       </PackagingSetup>
     </SetUp>

@@ -2,7 +2,6 @@
 <Test name="Smoke Test" lifecycle="Acceptance">
   <HelloWorld>
     <RouteExists isStep="True" route="home/post" />
-    <RouteExists isStep="True" route="integrationtests/run" />
     <RouteExists isStep="True" route="login/login" />
     <RouteExists isStep="True" route="login/logoff" />
     <RouteExists isStep="True" route="secret/showprofile" />
