@@ -20,6 +20,7 @@ namespace FubuMVC.Core.Registration
         {
             _sources
                 .SelectMany(src => src.FindActions(_types))
+				.Distinct()
                 .Each(call =>
                           {
                               var chain = new BehaviorChain();
