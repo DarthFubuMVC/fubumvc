@@ -6,6 +6,7 @@ using FubuMVC.WebForms;
 using FubuTestApplication.ConnegActions;
 using FubuCore;
 using FubuMVC.Core.Resources.Conneg;
+using FubuTestApplication.CurrentRequest;
 
 namespace FubuTestApplication
 {
@@ -33,6 +34,8 @@ namespace FubuTestApplication
 
             Route("conneg/mirror").Calls<MirrorAction>(x => x.Return(null));
             Route("conneg/buckrogers").Calls<MirrorAction>(x => x.BuckRogers());
+
+            Route("currentrequest/get").Calls<CurrentRequestAction>(x => x.Get(null));
 
             Media.ApplyContentNegotiationToActions(call => call.HandlerType == typeof (MirrorAction))
                 .ApplyContentNegotiationToActions(call => call.InputType().CanBeCastTo<ConnegMessage>());

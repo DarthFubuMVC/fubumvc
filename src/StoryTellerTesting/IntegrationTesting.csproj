@@ -102,6 +102,7 @@
     <Compile Include="ApplicationDriver.cs" />
     <Compile Include="CommandRunner.cs" />
     <Compile Include="debugger.cs" />
+    <Compile Include="Fixtures\Aspnet\AspnetCurrentRequestFixture.cs" />
     <Compile Include="Fixtures\Resources\ConnegFixture.cs" />
     <Compile Include="Fixtures\Packages\Package4Fixture.cs" />
     <Compile Include="Fixtures\Packages\CreatePackageCommandFixture.cs" />

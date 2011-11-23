@@ -21,24 +21,26 @@ namespace FubuMVC.Core.Http.AspNet
 
         public string RelativeUrl()
         {
-            return _request.PathInfo;
+            return _request.AppRelativeCurrentExecutionFilePath;
         }
 
         public string ToFullUrl(string url)
         {
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
-            if (url.IsEmpty())
+            if (url.IsEmpty()){ url = "~/"; }
+
+            var urlParts = url.Split(new[] { '?' }, 2);
+            var baseUrl = urlParts[0];
+            
+            if (!VirtualPathUtility.IsAbsolute(baseUrl))
             {
-                url = "~/";
-            }
-            else
-            {
-                url = "~/" + url.TrimStart('/');
+                baseUrl = VirtualPathUtility.Combine("~", baseUrl);
             }
 
-            var absoluteUrl = VirtualPathUtility.ToAbsolute(url);
+            var absoluteUrl = VirtualPathUtility.ToAbsolute(baseUrl);
             
-            return (absoluteUrl != "/") ? absoluteUrl.TrimEnd('/') : absoluteUrl;
+            if (urlParts.Length > 1) absoluteUrl += ("?" + urlParts[1]);
+            return absoluteUrl;
         }
 
         public string HttpMethod()
