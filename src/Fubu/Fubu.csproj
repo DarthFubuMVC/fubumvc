@@ -91,6 +91,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />
+    <Compile Include="TemplatePlan.cs" />
+    <Compile Include="ValidateTargetPathStep.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
