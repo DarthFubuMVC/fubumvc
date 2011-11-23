@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Registration.Conventions
         public void Configure(BehaviorGraph graph)
         {
             graph.Actions()
-                .Where(x => x.InputType().CanBeCastTo<JsonMessage>())
+                .Where(x => x.InputType().CanBeCastTo<JsonMessage>() && !x.ParentChain().IsPartialOnly)
                 .ToList()
                 .Each(x => x.ParentChain().MakeAsymmetricJson());
         }
