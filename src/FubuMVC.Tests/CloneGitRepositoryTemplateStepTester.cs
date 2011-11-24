@@ -21,7 +21,8 @@ namespace FubuMVC.Tests
             _context = new TemplatePlanContext
                            {
                                TargetPath = "Test",
-                               Input = _input
+                               Input = _input,
+                               TempDir = Guid.NewGuid().ToString()
                            };
         }
 
@@ -56,7 +57,7 @@ namespace FubuMVC.Tests
 
             info.UseShellExecute.ShouldBeFalse();
             info.FileName.ShouldEqual("git");
-            info.Arguments.ShouldEqual("clone {0} {1}".ToFormat(_input.GitFlag, _context.TargetPath));
+            info.Arguments.ShouldEqual("clone {0} {1}".ToFormat(_input.GitFlag, _context.TempDir));
 
             VerifyCallsFor<IProcess>();
         }

@@ -41,17 +41,6 @@ namespace FubuMVC.Tests
         }
 
         [Test]
-        public void should_always_add_validate_target_path_step()
-        {
-            executeCommand();
-
-            _plan
-                .Steps
-                .OfType<ValidateTargetPathStep>()
-                .ShouldHaveCount(1);
-        }
-
-        [Test]
         public void should_add_unzip_step_if_not_using_git()
         {
             executeCommand();

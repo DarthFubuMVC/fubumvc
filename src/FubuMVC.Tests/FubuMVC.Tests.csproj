@@ -464,7 +464,6 @@
     <Compile Include="Urls\UrlRegistryIntegrationTester.cs" />
     <Compile Include="UI\LambdaElementSourceTester.cs" />
     <Compile Include="Urls\UrlRegistryTester.cs" />
-    <Compile Include="ValidateTargetPathStepTester.cs" />
     <Compile Include="View\FakeViews\A.aspx.cs">
       <DependentUpon>A.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

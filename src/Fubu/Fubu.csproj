@@ -74,6 +74,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CloneGitRepositoryTemplateStep.cs" />
+    <Compile Include="ContentReplacerTemplateStep.cs" />
     <Compile Include="CreateDeploymentCommand.cs" />
     <Compile Include="IKeywordReplacer.cs" />
     <Compile Include="IncludeWebContentCommand.cs" />
@@ -94,7 +96,7 @@
     <Compile Include="RestartCommand.cs" />
     <Compile Include="SolutionFileService.cs" />
     <Compile Include="TemplatePlan.cs" />
-    <Compile Include="ValidateTargetPathStep.cs" />
+    <Compile Include="UnzipTemplateStep.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">

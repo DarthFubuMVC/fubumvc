@@ -30,8 +30,6 @@ namespace Fubu
         public override bool Execute(NewCommandInput input)
         {
             var plan = new TemplatePlan();
-            //plan.AddStep(new ValidateTargetPathStep(FileSystem));
-
             var findContentStep = input.GitFlag.IsNotEmpty()
                                       ? (ITemplateStep) new CloneGitRepositoryTemplateStep(ProcessFactory)
                                       : new UnzipTemplateStep(ZipService);
