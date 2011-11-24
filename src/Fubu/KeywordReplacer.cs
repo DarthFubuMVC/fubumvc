@@ -67,7 +67,7 @@ namespace Fubu
 
     public class GuidKeywordPolicy : IKeywordPolicy
     {
-        public static readonly Regex GuidExpression = new Regex("GUID([0-9]*)", RegexOptions.Compiled);
+        public static readonly Regex GuidExpression = new Regex("GUID([0-9]+)", RegexOptions.Compiled);
 
         private readonly Cache<string, string> _guids;
 
