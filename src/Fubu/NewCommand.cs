@@ -14,6 +14,9 @@ namespace Fubu
             ZipService = new ZipFileService(FileSystem);
             KeywordReplacer = new KeywordReplacer();
             ProcessFactory = new ProcessFactory();
+            PlanExecutor = new TemplatePlanExecutor(FileSystem);
+            SolutionFileService = new SolutionFileService(FileSystem);
+            CsProjGatherer = new CsProjGatherer(FileSystem);
         }
 
         public IFileSystem FileSystem { get; set; }
@@ -21,11 +24,13 @@ namespace Fubu
         public IKeywordReplacer KeywordReplacer { get; set; }
         public IProcessFactory ProcessFactory { get; set; }
         public ITemplatePlanExecutor PlanExecutor { get; set; }
+        public ISolutionFileService SolutionFileService { get; set; }
+        public ICsProjGatherer CsProjGatherer { get; set; }
 
         public override bool Execute(NewCommandInput input)
         {
             var plan = new TemplatePlan();
-            plan.AddStep(new ValidateTargetPathStep(FileSystem));
+            //plan.AddStep(new ValidateTargetPathStep(FileSystem));
 
             var findContentStep = input.GitFlag.IsNotEmpty()
                                       ? (ITemplateStep) new CloneGitRepositoryTemplateStep(ProcessFactory)
@@ -34,7 +39,12 @@ namespace Fubu
             plan.AddStep(findContentStep);
             plan.AddStep(new ContentReplacerTemplateStep(KeywordReplacer, FileSystem));
             
-            PlanExecutor.Execute(plan);
+            if(input.SolutionFlag.IsNotEmpty())
+            {
+                plan.AddStep(new SolutionModifierTemplateStep(SolutionFileService, CsProjGatherer));
+            }
+            
+            PlanExecutor.Execute(input, plan);
             Console.WriteLine("Solution {0} created", input.ProjectName);
             return true;
         }

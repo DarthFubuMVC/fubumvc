@@ -21,12 +21,8 @@ namespace Fubu
 
     public class TemplatePlanContext
     {
+        public string TempDir { get; set; }
         public string TargetPath { get; set; }
         public NewCommandInput Input { get; set; }
-    }
-
-    public interface ITemplatePlanExecutor
-    {
-        void Execute(TemplatePlan plan);
     }
 }

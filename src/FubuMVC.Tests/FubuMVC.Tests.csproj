@@ -333,6 +333,7 @@
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="StructureMapIoC\StubActivator.cs" />
     <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
+    <Compile Include="TemplatePlanExecutorTester.cs" />
     <Compile Include="TemplatePlanTester.cs" />
     <Compile Include="UI\AssetFilePageExtensionsTester.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />

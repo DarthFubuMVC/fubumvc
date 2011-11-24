@@ -114,6 +114,10 @@ namespace Fubu
             if (directory != newDirectoryName)
             {
                 Console.WriteLine("{0} -> {1}", directory, _fileSystem.GetFileName(newDirectoryName));
+                if (_fileSystem.DirectoryExists(newDirectoryName))
+                {
+                    _fileSystem.DeleteDirectory(newDirectoryName);
+                }
                 _fileSystem.MoveDirectory(directory, newDirectoryName);
                 directory = newDirectoryName;
             }
@@ -136,6 +140,10 @@ namespace Fubu
             if (file != newFileName)
             {
                 Console.WriteLine("{0} -> {1}", file, Path.GetFileName(newFileName));
+                if (_fileSystem.FileExists(newFileName))
+                {
+                    _fileSystem.DeleteFile(newFileName);
+                }
                 _fileSystem.MoveFile(file, newFileName);
             }
         }

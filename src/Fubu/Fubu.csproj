@@ -81,6 +81,7 @@
     <Compile Include="InstallPackageInput.cs" />
     <Compile Include="IProcess.cs" />
     <Compile Include="IProcessFactory.cs" />
+    <Compile Include="ITemplatePlanExecutor.cs" />
     <Compile Include="KeywordReplacer.cs" />
     <Compile Include="NewCommand.cs" />
     <Compile Include="NewCommandInput.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />
+    <Compile Include="SolutionFileService.cs" />
     <Compile Include="TemplatePlan.cs" />
     <Compile Include="ValidateTargetPathStep.cs" />
   </ItemGroup>

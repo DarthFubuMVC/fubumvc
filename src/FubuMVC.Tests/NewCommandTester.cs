@@ -30,11 +30,11 @@ namespace FubuMVC.Tests
         private void executeCommand()
         {
             MockFor<ITemplatePlanExecutor>()
-                .Expect(e => e.Execute(null))
+                .Expect(e => e.Execute(null, null))
                 .IgnoreArguments()
                 .WhenCalled(mi =>
                                 {
-                                    _plan = (TemplatePlan) mi.Arguments[0];
+                                    _plan = (TemplatePlan) mi.Arguments[1];
                                 });
 
             ClassUnderTest.Execute(_input);

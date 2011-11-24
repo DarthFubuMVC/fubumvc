@@ -32,4 +32,14 @@ namespace FubuMVC.Tests
             ClassUnderTest.Execute(context);
         }
     }
+
+    [TestFixture]
+    public class SolutionFileServiceTester
+    {
+        [Test]
+        public void should_append_project()
+        {
+            
+        }
+    }
 }
