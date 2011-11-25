@@ -39,12 +39,13 @@ namespace Fubu
             
             plan.AddStep(findContentStep);
             plan.AddStep(new ReplaceKeywords(KeywordReplacer, FileSystem));
-            plan.AddStep(new MoveContent(FileSystem));
-
+            
             if(input.SolutionFlag.IsNotEmpty())
             {
                 plan.AddStep(new ModifySolution(SolutionFileService, CsProjGatherer));
             }
+
+            plan.AddStep(new MoveContent(FileSystem));
 
             var hasErrors = false;
             PlanExecutor.Execute(input, plan, ctx =>
@@ -55,13 +56,13 @@ namespace Fubu
                                                       hasErrors = true;
                                                   });
 
-            if (!hasErrors)
+            if (hasErrors)
             {
-                Console.WriteLine("Solution {0} created", input.ProjectName);
-                return true;
+                return false;
             }
 
-            return false;
+            Console.WriteLine("Solution {0} created", input.ProjectName);
+            return true;
         }
     }
 }

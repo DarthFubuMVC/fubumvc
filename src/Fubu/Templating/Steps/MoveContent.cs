@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using FubuCore;
 
 namespace Fubu.Templating.Steps
@@ -10,7 +13,7 @@ namespace Fubu.Templating.Steps
                                                               {
                                                                   DeepSearch = false,
                                                                   Include = "*.*",
-                                                                  Exclude = "*.exe;*.dll"
+                                                                  Exclude = "*.exe;*.dll,.git"
                                                               };
 
         private readonly IFileSystem _fileSystem;
@@ -40,12 +43,19 @@ namespace Fubu.Templating.Steps
                 .ChildDirectoriesFor(context.TempDir)
                 .Each(directory =>
                           {
-                              var destination = Path.Combine(context.TargetPath, _fileSystem.GetFileName(directory));
-                              if (_fileSystem.DirectoryExists(destination)) _fileSystem.DeleteDirectory(destination);
+                              var destinationName = _fileSystem.GetFileName(directory);
+                              if(destinationName == ".git")
+                              {
+                                  return;
+                              }
+
+                              var destination = Path.Combine(context.TargetPath, destinationName);
+                              if (_fileSystem.DirectoryExists(destination))
+                              {
+                                  _fileSystem.DeleteDirectory(destination);
+                              }
                               _fileSystem.MoveDirectory(directory, destination);
                           });
-
-            _fileSystem.DeleteDirectory(context.TempDir);
         }
     }
 }

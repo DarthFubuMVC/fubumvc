@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using FubuCore;
 
 namespace Fubu.Templating.Steps
@@ -23,9 +22,8 @@ namespace Fubu.Templating.Steps
         public void Execute(TemplatePlanContext context)
         {
             var solutionFile = context.Input.SolutionFlag;
-            var solutionDir = Path.GetDirectoryName(Path.GetFullPath(solutionFile));
             _projGatherer
-                .GatherProjects(solutionDir)
+                .GatherProjects(context.TempDir)
                 .Each(project => _solutionFileService.AddProject(solutionFile, project));
         }
     }

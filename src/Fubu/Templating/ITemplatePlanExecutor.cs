@@ -44,6 +44,7 @@ namespace Fubu.Templating
             catch (Exception exc)
             {
                 context.RegisterError(exc.Message);
+                context.RegisterError(exc.StackTrace);
             }
 
             continuation(context);

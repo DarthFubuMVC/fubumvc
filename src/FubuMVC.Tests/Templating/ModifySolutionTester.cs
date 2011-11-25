@@ -17,7 +17,8 @@ namespace FubuMVC.Tests.Templating
         public void should_add_each_project_found()
         {
             var solutionFile = FileSystem.Combine("Templating", "data", "myproject.txt");
-            var solutionDir = Path.GetDirectoryName(Path.GetFullPath(solutionFile));
+            var input = new NewCommandInput { SolutionFlag = solutionFile };
+            var context = new TemplatePlanContext { Input = input, TempDir = "Test" };
 
             var projects = new List<CsProj>();
             for(var i = 0; i < 5; i++)
@@ -26,14 +27,13 @@ namespace FubuMVC.Tests.Templating
             }
 
             MockFor<ICsProjGatherer>()
-                .Expect(g => g.GatherProjects(solutionDir))
+                .Expect(g => g.GatherProjects(context.TempDir))
                 .Return(projects);
 
             projects.Each(project => MockFor<ISolutionFileService>()
                                          .Expect(s => s.AddProject(solutionFile, project)));
 
-            var input = new NewCommandInput {SolutionFlag = solutionFile};
-            var context = new TemplatePlanContext {Input = input};
+            
 
             ClassUnderTest.Execute(context);
 
