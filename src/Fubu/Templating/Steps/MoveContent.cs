@@ -56,6 +56,19 @@ namespace Fubu.Templating.Steps
                               }
                               _fileSystem.MoveDirectory(directory, destination);
                           });
+
+            var info = new DirectoryInfo(context.TempDir);
+            info
+                .EnumerateDirectories(".git")
+                .First()
+                .EnumerateFiles("*.*", SearchOption.AllDirectories)
+                .Each(fileInfo =>
+                          {
+                              fileInfo.IsReadOnly = false;
+                          });
+            info.Attributes &= ~FileAttributes.ReadOnly;
+
+            _fileSystem.DeleteDirectory(context.TempDir);
         }
     }
 }

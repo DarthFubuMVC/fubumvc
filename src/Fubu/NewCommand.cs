@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bottles.Zipping;
 using Fubu.Templating;
 using Fubu.Templating.Steps;
@@ -53,7 +54,7 @@ namespace Fubu
                                                       Console.ForegroundColor = ConsoleColor.Red;
                                                       ctx.Errors.Each(error => Console.WriteLine(error));
                                                       Console.ForegroundColor = ConsoleColor.White;
-                                                      hasErrors = true;
+                                                      hasErrors = ctx.Errors.Any();
                                                   });
 
             if (hasErrors)
