@@ -1,8 +1,8 @@
-using Fubu;
+using Fubu.Templating;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests
+namespace FubuMVC.Tests.Templating
 {
     [TestFixture]
     public class TemplatePlanTester
@@ -26,6 +26,11 @@ namespace FubuMVC.Tests
 
         public class TestStep : ITemplateStep
         {
+            public string Describe(TemplatePlanContext context)
+            {
+                return "";
+            }
+
             public void Execute(TemplatePlanContext context)
             {
             }

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Bottles.Zipping;
+using Fubu.Templating;
+using Fubu.Templating.Steps;
 using FubuCore;
 using FubuCore.CommandLine;
 
@@ -31,20 +34,34 @@ namespace Fubu
         {
             var plan = new TemplatePlan();
             var findContentStep = input.GitFlag.IsNotEmpty()
-                                      ? (ITemplateStep) new CloneGitRepositoryTemplateStep(ProcessFactory)
-                                      : new UnzipTemplateStep(ZipService);
+                                      ? (ITemplateStep) new CloneGitRepository(ProcessFactory)
+                                      : new UnzipTemplate(ZipService);
             
             plan.AddStep(findContentStep);
-            plan.AddStep(new ContentReplacerTemplateStep(KeywordReplacer, FileSystem));
-            
+            plan.AddStep(new ReplaceKeywords(KeywordReplacer, FileSystem));
+            plan.AddStep(new MoveContent(FileSystem));
+
             if(input.SolutionFlag.IsNotEmpty())
             {
-                plan.AddStep(new SolutionModifierTemplateStep(SolutionFileService, CsProjGatherer));
+                plan.AddStep(new ModifySolution(SolutionFileService, CsProjGatherer));
             }
-            
-            PlanExecutor.Execute(input, plan);
-            Console.WriteLine("Solution {0} created", input.ProjectName);
-            return true;
+
+            var hasErrors = false;
+            PlanExecutor.Execute(input, plan, ctx =>
+                                                  {
+                                                      Console.ForegroundColor = ConsoleColor.Red;
+                                                      ctx.Errors.Each(error => Console.WriteLine(error));
+                                                      Console.ForegroundColor = ConsoleColor.White;
+                                                      hasErrors = true;
+                                                  });
+
+            if (!hasErrors)
+            {
+                Console.WriteLine("Solution {0} created", input.ProjectName);
+                return true;
+            }
+
+            return false;
         }
     }
 }

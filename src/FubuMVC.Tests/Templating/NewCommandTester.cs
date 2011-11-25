@@ -1,12 +1,14 @@
 using System.Linq;
 using Bottles.Zipping;
 using Fubu;
+using Fubu.Templating;
+using Fubu.Templating.Steps;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests
+namespace FubuMVC.Tests.Templating
 {
     [TestFixture]
     public class NewCommandTester : InteractionContext<NewCommand>
@@ -16,10 +18,8 @@ namespace FubuMVC.Tests
 
         protected override void beforeEach()
         {
-            _input = new NewCommandInput
-                         {
-                             ProjectName = "Test"
-                         };
+            _input = new NewCommandInput { ProjectName = "Test" };
+
             ClassUnderTest.FileSystem = MockFor<IFileSystem>();
             ClassUnderTest.ZipService = MockFor<IZipFileService>();
             ClassUnderTest.KeywordReplacer = MockFor<IKeywordReplacer>();
@@ -30,7 +30,7 @@ namespace FubuMVC.Tests
         private void executeCommand()
         {
             MockFor<ITemplatePlanExecutor>()
-                .Expect(e => e.Execute(null, null))
+                .Expect(e => e.Execute(null, null, null))
                 .IgnoreArguments()
                 .WhenCalled(mi =>
                                 {
@@ -47,11 +47,11 @@ namespace FubuMVC.Tests
 
             _plan
                 .Steps
-                .ShouldContain(s => s.GetType() == typeof(UnzipTemplateStep));
+                .ShouldContain(s => s.GetType() == typeof(UnzipTemplate));
 
             _plan
                 .Steps
-                .OfType<CloneGitRepositoryTemplateStep>()
+                .OfType<CloneGitRepository>()
                 .ShouldHaveCount(0);
         }
 
@@ -64,24 +64,35 @@ namespace FubuMVC.Tests
 
             _plan
                 .Steps
-                .OfType<CloneGitRepositoryTemplateStep>()
+                .OfType<CloneGitRepository>()
                 .ShouldHaveCount(1);
 
             _plan
                 .Steps
-                .OfType<UnzipTemplateStep>()
+                .OfType<UnzipTemplate>()
                 .ShouldHaveCount(0);
         }
 
         [Test]
-        public void should_add_content_replacement_step()
+        public void should_add_replace_keywords_step()
         {
             executeCommand();
 
             _plan
                 .Steps
-                .Last()
-                .ShouldBeOfType<ContentReplacerTemplateStep>();
+                .OfType<ReplaceKeywords>()
+                .ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void should_add_move_content_step()
+        {
+            executeCommand();
+
+            _plan
+                .Steps
+                .OfType<MoveContent>()
+                .ShouldHaveCount(1);
         }
     }
 }

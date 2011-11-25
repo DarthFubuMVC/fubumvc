@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Fubu
+namespace Fubu.Templating
 {
     public interface IKeywordReplacer
     {

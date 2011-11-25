@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Fubu;
+using Fubu.Templating;
 using FubuTestingSupport;
 using NUnit.Framework;
 
-namespace FubuMVC.Tests
+namespace FubuMVC.Tests.Templating
 {
     public class KeywordReplacerTester : InteractionContext<KeywordReplacer>
     {

@@ -1,16 +1,18 @@
 using System;
 using System.Diagnostics;
 using Fubu;
+using Fubu.Templating;
+using Fubu.Templating.Steps;
 using FubuCore;
 using FubuMVC.Core;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests
+namespace FubuMVC.Tests.Templating
 {
     [TestFixture]
-    public class CloneGitRepositoryTemplateStepTester : InteractionContext<CloneGitRepositoryTemplateStep>
+    public class CloneGitRepositoryTester : InteractionContext<CloneGitRepository>
     {
         private NewCommandInput _input;
         private TemplatePlanContext _context;

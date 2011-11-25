@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using FubuCore;
 
-namespace Fubu
+namespace Fubu.Templating
 {
     public interface ITemplatePlanExecutor
     {
-        void Execute(NewCommandInput input, TemplatePlan plan);
+        void Execute(NewCommandInput input, TemplatePlan plan, Action<TemplatePlanContext> continuation);
     }
 
     public class TemplatePlanExecutor : ITemplatePlanExecutor
@@ -19,7 +19,7 @@ namespace Fubu
             _fileSystem = fileSystem;
         }
 
-        public void Execute(NewCommandInput input, TemplatePlan plan)
+        public void Execute(NewCommandInput input, TemplatePlan plan, Action<TemplatePlanContext> continuation)
         {
             var context = new TemplatePlanContext
                               {
@@ -33,11 +33,20 @@ namespace Fubu
                                  ? input.ProjectName
                                  : input.OutputFlag;
             context.TargetPath = Path.Combine(Environment.CurrentDirectory, targetPath);
+            plan.Preview(context);
 
-            plan
-                .Steps
-                .Each(step => step.Execute(context));
+            try
+            {
+                plan
+                    .Steps
+                    .Each(step => step.Execute(context));
+            }
+            catch (Exception exc)
+            {
+                context.RegisterError(exc.Message);
+            }
 
+            continuation(context);
             _fileSystem.DeleteDirectory(context.TempDir);
         }
 

@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using FubuCore;
 
-namespace Fubu
+namespace Fubu.Templating.Steps
 {
-    public class ContentReplacerTemplateStep : ITemplateStep
+    public class ReplaceKeywords : ITemplateStep
     {
         private static readonly FileSet TopLevelFileSet = new FileSet
                                                               {
@@ -18,10 +18,15 @@ namespace Fubu
         private readonly IKeywordReplacer _keywordReplacer;
         private readonly IFileSystem _fileSystem;
 
-        public ContentReplacerTemplateStep(IKeywordReplacer keywordReplacer, IFileSystem fileSystem)
+        public ReplaceKeywords(IKeywordReplacer keywordReplacer, IFileSystem fileSystem)
         {
             _keywordReplacer = keywordReplacer;
             _fileSystem = fileSystem;
+        }
+
+        public string Describe(TemplatePlanContext context)
+        {
+            return "Replace all keywords in file content and file names";
         }
 
         public void Execute(TemplatePlanContext context)
@@ -30,7 +35,7 @@ namespace Fubu
             _keywordReplacer.SetToken("FUBUPROJECTSHORTNAME", context.Input.ProjectName.Split('.').Last());
             _keywordReplacer.SetToken("FACEFACE-FACE-FACE-FACE-FACEFACEFACE", Guid.NewGuid().ToString().ToUpper());
 
-            ParseDirectory(context.TargetPath);
+            ParseDirectory(context.TempDir);
         }
 
         public void ParseDirectory(string directory)
@@ -41,10 +46,6 @@ namespace Fubu
             if (directory != newDirectoryName)
             {
                 Console.WriteLine("{0} -> {1}", directory, _fileSystem.GetFileName(newDirectoryName));
-                if (_fileSystem.DirectoryExists(newDirectoryName))
-                {
-                    _fileSystem.DeleteDirectory(newDirectoryName);
-                }
                 _fileSystem.MoveDirectory(directory, newDirectoryName);
                 directory = newDirectoryName;
             }
@@ -67,10 +68,6 @@ namespace Fubu
             if (file != newFileName)
             {
                 Console.WriteLine("{0} -> {1}", file, Path.GetFileName(newFileName));
-                if (_fileSystem.FileExists(newFileName))
-                {
-                    _fileSystem.DeleteFile(newFileName);
-                }
                 _fileSystem.MoveFile(file, newFileName);
             }
         }

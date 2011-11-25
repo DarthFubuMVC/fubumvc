@@ -171,7 +171,6 @@
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
-    <Compile Include="CloneGitRepositoryTemplateStepTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
     <Compile Include="Commands\usage_graph_smoke_tester.cs" />
     <Compile Include="ConnegAttributeTester.cs" />
@@ -192,12 +191,10 @@
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
-    <Compile Include="KeywordReplacerTester.cs" />
     <Compile Include="Localization\LabelBuilderTester.cs" />
     <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
     <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
     <Compile Include="Localization\SpinUpLocalizationCachesTester.cs" />
-    <Compile Include="NewCommandTester.cs" />
     <Compile Include="Packaging\ContentOnlyPackageInfoTester.cs" />
     <Compile Include="ProcessFactoryTester.cs" />
     <Compile Include="ProcessWrapperTester.cs" />
@@ -333,8 +330,15 @@
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="StructureMapIoC\StubActivator.cs" />
     <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
-    <Compile Include="TemplatePlanExecutorTester.cs" />
-    <Compile Include="TemplatePlanTester.cs" />
+    <Compile Include="Templating\CloneGitRepositoryTester.cs" />
+    <Compile Include="Templating\CsProjGathererTester.cs" />
+    <Compile Include="Templating\KeywordReplacerTester.cs" />
+    <Compile Include="Templating\ModifySolutionTester.cs" />
+    <Compile Include="Templating\NewCommandTester.cs" />
+    <Compile Include="Templating\SolutionFileServiceTester.cs" />
+    <Compile Include="Templating\TemplatePlanExecutorTester.cs" />
+    <Compile Include="Templating\TemplatePlanTester.cs" />
+    <Compile Include="Templating\UnzipTemplateTester.cs" />
     <Compile Include="UI\AssetFilePageExtensionsTester.cs" />
     <Compile Include="UI\AuthorizationOnPageExtensionsTester.cs" />
     <Compile Include="UI\BootstrapLayout.cs" />
@@ -362,7 +366,6 @@
     <Compile Include="UI\Security\FieldAccessServiceIntegratedTester.cs" />
     <Compile Include="UI\Security\FieldAccessRightsTester.cs" />
     <Compile Include="UI\TagProfileTester.cs" />
-    <Compile Include="UnzipTemplateStepTester.cs" />
     <Compile Include="UrlExtensionsTester.cs" />
     <Compile Include="Behaviors\ActionInvokersTester.cs" />
     <Compile Include="Behaviors\DownloadFileBehaviorTester.cs" />
@@ -544,6 +547,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templating\data\example1\example1.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templating\data\myproject.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="View\FakeViews\A.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

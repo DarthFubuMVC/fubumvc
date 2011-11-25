@@ -1,15 +1,20 @@
 using FubuCore;
 using FubuMVC.Core;
 
-namespace Fubu
+namespace Fubu.Templating.Steps
 {
-    public class CloneGitRepositoryTemplateStep : ITemplateStep
+    public class CloneGitRepository : ITemplateStep
     {
         private readonly IProcessFactory _processFactory;
 
-        public CloneGitRepositoryTemplateStep(IProcessFactory processFactory)
+        public CloneGitRepository(IProcessFactory processFactory)
         {
             _processFactory = processFactory;
+        }
+
+        public string Describe(TemplatePlanContext context)
+        {
+            return "Clone git repository from {0}".ToFormat(context.Input.GitFlag);
         }
 
         public void Execute(TemplatePlanContext context)

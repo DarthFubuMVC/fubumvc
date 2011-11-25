@@ -3,14 +3,16 @@ using System.IO;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using Fubu;
+using Fubu.Templating;
+using Fubu.Templating.Steps;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests
+namespace FubuMVC.Tests.Templating
 {
     [TestFixture]
-    public class UnzipTemplateStepTester : InteractionContext<UnzipTemplateStep>
+    public class UnzipTemplateTester : InteractionContext<UnzipTemplate>
     {
         private NewCommandInput _input;
         private TemplatePlanContext _context;
@@ -29,8 +31,8 @@ namespace FubuMVC.Tests
         public void should_unzip_from_default_template_if_none_is_specified()
         {
             MockFor<IZipFileService>()
-                .Expect(s => s.ExtractTo(UnzipTemplateStep.TemplateZip,
-                                         _context.TargetPath, ExplodeOptions.PreserveDestination));
+                .Expect(s => s.ExtractTo(UnzipTemplate.TemplateZip,
+                                         _context.TempDir, ExplodeOptions.PreserveDestination));
 
             ClassUnderTest.Execute(_context);
 
@@ -43,7 +45,7 @@ namespace FubuMVC.Tests
             _input.ZipFlag = "test.zip";
             var input = Path.Combine(Environment.CurrentDirectory, _input.ZipFlag);
             MockFor<IZipFileService>()
-                .Expect(s => s.ExtractTo(input, _context.TargetPath, ExplodeOptions.PreserveDestination));
+                .Expect(s => s.ExtractTo(input, _context.TempDir, ExplodeOptions.PreserveDestination));
 
             ClassUnderTest.Execute(_context);
 

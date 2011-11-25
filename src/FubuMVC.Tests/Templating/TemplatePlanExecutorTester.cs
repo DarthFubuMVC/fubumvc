@@ -1,12 +1,13 @@
 using System;
 using System.IO;
 using Fubu;
+using Fubu.Templating;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests
+namespace FubuMVC.Tests.Templating
 {
     [TestFixture]
     public class TemplatePlanExecutorTester : InteractionContext<TemplatePlanExecutor>
@@ -37,7 +38,7 @@ namespace FubuMVC.Tests
                                     _context = (TemplatePlanContext) mi.Arguments[0];
                                 });
 
-            ClassUnderTest.Execute(_input, _plan);
+            ClassUnderTest.Execute(_input, _plan, ctx => { });
         }
 
         [Test]
@@ -104,6 +105,44 @@ namespace FubuMVC.Tests
         {
             execute();
             VerifyCallsFor<ITemplateStep>();
+        }
+
+        [Test]
+        public void should_register_error_for_an_exception_thrown_in_a_step()
+        {
+            var error = "123";
+            _plan.AddStep(MockFor<ITemplateStep>());
+
+            MockFor<ITemplateStep>()
+                .Expect(s => s.Execute(null))
+                .IgnoreArguments()
+                .WhenCalled(mi =>
+                                {
+                                    _context = (TemplatePlanContext) mi.Arguments[0];
+                                    throw new ArgumentException(error);
+                                });
+
+            ClassUnderTest.Execute(_input, _plan, ctx => { });
+
+            _context
+                .Errors
+                .ShouldContain(error);
+        }
+
+        [Test]
+        public void should_invoke_callback_on_context()
+        {
+            _plan.AddStep(MockFor<ITemplateStep>());
+
+            MockFor<ITemplateStep>()
+                .Expect(s => s.Execute(null))
+                .IgnoreArguments()
+                .WhenCalled(mi =>
+                                {
+                                    _context = (TemplatePlanContext) mi.Arguments[0];
+                                });
+
+            ClassUnderTest.Execute(_input, _plan, ctx => ctx.ShouldEqual(_context));
         }
     }
 }
