@@ -84,11 +84,12 @@ namespace FubuMVC.Tests.Templating
             info
                 .EnumerateDirectories(".git")
                 .First()
-                .EnumerateFiles("*.*", SearchOption.AllDirectories)
+                .EnumerateFiles("*", SearchOption.AllDirectories)
                 .Each(fileInfo =>
-                {
-                    fileInfo.IsReadOnly = false;
-                });
+                          {
+                              Console.WriteLine("Setting {0} to readonly", fileInfo.Name);
+                              fileInfo.IsReadOnly = false;
+                          });
             info.Attributes &= ~FileAttributes.ReadOnly;
 
             _fileSystem.DeleteDirectory(dir);
