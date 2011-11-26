@@ -61,7 +61,7 @@ namespace Fubu.Templating.Steps
             info
                 .EnumerateDirectories(".git")
                 .First()
-                .EnumerateFiles("*.*", SearchOption.AllDirectories)
+                .EnumerateFiles("*", SearchOption.AllDirectories)
                 .Each(fileInfo =>
                           {
                               fileInfo.IsReadOnly = false;
