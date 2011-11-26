@@ -65,17 +65,17 @@ namespace FubuMVC.Tests.Templating
                 .ShouldBeTrue();
 
             var solutionContents = _fileSystem.ReadStringFromFile(solutionFile);
-            var lines = solutionContents.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
-            var guid = _command.KeywordReplacer.Replace("GUID1");
-            lines[2].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"MyProject\", \"MyProject\\MyProject.csproj\", \"{" + guid +  "}\"");
-            lines[3].ShouldEqual("EndProject");
-
-            // and then cleanup
+            // cleanup first
             killTempDir(tmpDir);
             _fileSystem.DeleteDirectory("Templating", "sample", "MyProject");
             _fileSystem.DeleteDirectory("Templating", "sample", "MyProject.Tests");
             _fileSystem.WriteStringToFile(solutionFile, oldContents);
+
+            var lines = solutionContents.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var guid = _command.KeywordReplacer.Replace("GUID1");
+            lines[2].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"MyProject\", \"MyProject\\MyProject.csproj\", \"{" + guid +  "}\"");
+            lines[3].ShouldEqual("EndProject");            
         }
 
         private void killTempDir(string dir)
@@ -87,11 +87,16 @@ namespace FubuMVC.Tests.Templating
                 .EnumerateFiles("*", SearchOption.AllDirectories)
                 .Each(fileInfo =>
                           {
-                              Console.WriteLine("Setting {0} to readonly", fileInfo.Name);
                               fileInfo.IsReadOnly = false;
                           });
-            info.Attributes &= ~FileAttributes.ReadOnly;
+            new DirectoryInfo(FileSystem.Combine(dir, ".git", "objects", "pack"))
+                .EnumerateFiles("*", SearchOption.AllDirectories)
+                .Each(fileInfo =>
+                {
+                    fileInfo.IsReadOnly = false;
+                });
 
+            info.Attributes &= ~FileAttributes.ReadOnly;
             _fileSystem.DeleteDirectory(dir);
         }
     }

@@ -66,6 +66,13 @@ namespace Fubu.Templating.Steps
                           {
                               fileInfo.IsReadOnly = false;
                           });
+
+            new DirectoryInfo(FileSystem.Combine(context.TempDir, ".git", "objects", "pack"))
+                .EnumerateFiles("*", SearchOption.AllDirectories)
+                .Each(fileInfo =>
+                {
+                    fileInfo.IsReadOnly = false;
+                });
             info.Attributes &= ~FileAttributes.ReadOnly;
 
             _fileSystem.DeleteDirectory(context.TempDir);
