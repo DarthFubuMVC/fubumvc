@@ -67,11 +67,24 @@ namespace FubuMVC.Tests.Templating
         }
 
         [Test]
-        public void should_set_target_directory_to_project_name_if_output_is_not_specified()
+        public void should_set_target_directory_to_project_name_if_output_is_not_specified_and_solution_is_not_specified()
         {
             execute();
 
             _context.TargetPath.ShouldEqual(Path.Combine(Environment.CurrentDirectory, _input.ProjectName));
+        }
+
+        [Test]
+        public void should_set_target_directory_to_solution_directory_if_solution_is_specified_and_output_is_not()
+        {
+            _input.SolutionFlag = "src/Test.sln";
+            MockFor<IFileSystem>()
+                .Expect(s => s.GetDirectory(_input.SolutionFlag))
+                .Return("src");
+
+            execute();
+
+            _context.TargetPath.ShouldEqual(Path.Combine(Environment.CurrentDirectory, "src"));
         }
 
         [Test]

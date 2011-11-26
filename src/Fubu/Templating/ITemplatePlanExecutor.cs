@@ -29,10 +29,18 @@ namespace Fubu.Templating
 
             _fileSystem.CreateDirectory(context.TempDir);
 
-            var targetPath = input.OutputFlag.IsEmpty()
-                                 ? input.ProjectName
-                                 : input.OutputFlag;
+            var targetPath = input.ProjectName;
+            if(input.OutputFlag.IsNotEmpty())
+            {
+                targetPath = input.OutputFlag;
+            }
+            else if(input.SolutionFlag.IsNotEmpty())
+            {
+                targetPath = _fileSystem.GetDirectory(input.SolutionFlag);
+            }
+
             context.TargetPath = Path.Combine(Environment.CurrentDirectory, targetPath);
+            
             plan.Preview(context);
 
             try
