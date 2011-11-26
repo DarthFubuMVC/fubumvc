@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using FubuCore;
 
 namespace Fubu.Templating.Steps
@@ -58,24 +55,26 @@ namespace Fubu.Templating.Steps
                           });
 
             var info = new DirectoryInfo(context.TempDir);
-            info
-                .EnumerateDirectories(".git")
-                .First()
-                .EnumerateFiles("*", SearchOption.AllDirectories)
-                .Each(fileInfo =>
-                          {
-                              fileInfo.IsReadOnly = false;
-                          });
+            info.SafeDelete();
+        }
+    }
 
-            new DirectoryInfo(FileSystem.Combine(context.TempDir, ".git", "objects", "pack"))
-                .EnumerateFiles("*", SearchOption.AllDirectories)
-                .Each(fileInfo =>
-                {
-                    fileInfo.IsReadOnly = false;
-                });
+    public static class DirectoryExtensions
+    {
+        public static void SafeDelete(this FileSystemInfo info)
+        {
             info.Attributes &= ~FileAttributes.ReadOnly;
+            var d = info as DirectoryInfo;
+            if (d != null)
+            {
+                var files = d.GetFileSystemInfos("*", SearchOption.TopDirectoryOnly);
+                foreach(var f in files)
+                {
+                    f.SafeDelete();
+                }
+            }
 
-            _fileSystem.DeleteDirectory(context.TempDir);
+            info.Delete();
         }
     }
 }

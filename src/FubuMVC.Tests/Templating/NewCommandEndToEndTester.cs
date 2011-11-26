@@ -5,6 +5,7 @@ using System.Linq;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using Fubu;
+using Fubu.Templating.Steps;
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -67,7 +68,8 @@ namespace FubuMVC.Tests.Templating
             var solutionContents = _fileSystem.ReadStringFromFile(solutionFile);
 
             // cleanup first
-            killTempDir(tmpDir);
+            var info = new DirectoryInfo(tmpDir);
+            info.SafeDelete();
             _fileSystem.DeleteDirectory("Templating", "sample", "MyProject");
             _fileSystem.DeleteDirectory("Templating", "sample", "MyProject.Tests");
             _fileSystem.WriteStringToFile(solutionFile, oldContents);
@@ -76,28 +78,6 @@ namespace FubuMVC.Tests.Templating
             var guid = _command.KeywordReplacer.Replace("GUID1");
             lines[2].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"MyProject\", \"MyProject\\MyProject.csproj\", \"{" + guid +  "}\"");
             lines[3].ShouldEqual("EndProject");            
-        }
-
-        private void killTempDir(string dir)
-        {
-            var info = new DirectoryInfo(dir);
-            info
-                .EnumerateDirectories(".git")
-                .First()
-                .EnumerateFiles("*", SearchOption.AllDirectories)
-                .Each(fileInfo =>
-                          {
-                              fileInfo.IsReadOnly = false;
-                          });
-            new DirectoryInfo(FileSystem.Combine(dir, ".git", "objects", "pack"))
-                .EnumerateFiles("*", SearchOption.AllDirectories)
-                .Each(fileInfo =>
-                {
-                    fileInfo.IsReadOnly = false;
-                });
-
-            info.Attributes &= ~FileAttributes.ReadOnly;
-            _fileSystem.DeleteDirectory(dir);
         }
     }
 }
