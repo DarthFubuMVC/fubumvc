@@ -39,7 +39,7 @@ EndGlobal";
             service.AddProject(solutionFile, project);
 
             solutionContents = system.ReadStringFromFile(solutionFile);
-            var lines = solutionContents.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = service.SplitSolution(solutionContents);
 
             lines[4].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"Test\", \"example1\\example1.csproj\", \"{123}\"");
             lines[5].ShouldEqual("EndProject");

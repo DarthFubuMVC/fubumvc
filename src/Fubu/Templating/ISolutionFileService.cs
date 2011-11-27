@@ -25,7 +25,7 @@ namespace Fubu.Templating
             var replacedContents = new StringBuilder();
             var appended = false;
 
-            var lines = solutionContents.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = SplitSolution(solutionContents);
             lines.Each(line =>
             {
                 if (line.Equals("Global") && !appended)
@@ -42,6 +42,12 @@ namespace Fubu.Templating
             });
 
             _fileSystem.WriteStringToFile(slnFile, replacedContents.ToString());
+        }
+
+        public string[] SplitSolution(string solutionContents)
+        {
+            // We're anticipating csproj files from VS not MonoDevelop. Let's revisit that one
+            return solutionContents.Split(new[] { "\r\n" }, StringSplitOptions.None);
         }
     }
 }
