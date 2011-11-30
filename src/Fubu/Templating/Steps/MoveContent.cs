@@ -6,12 +6,7 @@ namespace Fubu.Templating.Steps
 {
     public class MoveContent : ITemplateStep
     {
-        private static readonly FileSet TopLevelFileSet = new FileSet
-                                                              {
-                                                                  DeepSearch = false,
-                                                                  Include = "*.*",
-                                                                  Exclude = "*.exe;*.dll,.git"
-                                                              };
+        public static readonly string FubuIgnoreFile = ".fubuignore";
 
         private readonly IFileSystem _fileSystem;
 
@@ -27,8 +22,26 @@ namespace Fubu.Templating.Steps
 
         public void Execute(TemplatePlanContext context)
         {
+            var fileSet = new FileSet
+                                   {
+                                       DeepSearch = false,
+                                       Include = "*.*",
+                                       Exclude = "*.exe;*.dll;.git;{0};".ToFormat(FubuIgnoreFile)
+                                   };
+            var fubuIgnore = FileSystem.Combine(context.TempDir, FubuIgnoreFile);
+            if(_fileSystem.FileExists(fubuIgnore))
+            {
+                _fileSystem
+                    .ReadStringFromFile(fubuIgnore)
+                    .SplitOnNewLine()
+                    .Each(ignore =>
+                              {
+                                  fileSet.Exclude += "{0};".ToFormat(ignore);
+                              });
+            }
+
             _fileSystem
-                .FindFiles(context.TempDir, TopLevelFileSet)
+                .FindFiles(context.TempDir, fileSet)
                 .Each(from =>
                           {
                               var destination = Path.Combine(context.TargetPath, _fileSystem.GetFileName(from));

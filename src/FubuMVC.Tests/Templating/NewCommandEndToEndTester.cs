@@ -64,6 +64,15 @@ namespace FubuMVC.Tests.Templating
                 .FileExists("Templating", "sample", "MyProject.Tests", "MyProject.Tests.csproj")
                 .ShouldBeTrue();
 
+            // .fubuignore
+            _fileSystem
+                .FileExists("Templating", "sample", MoveContent.FubuIgnoreFile)
+                .ShouldBeFalse();
+
+            _fileSystem
+                .FileExists("Templating", "sample", "ignored.txt")
+                .ShouldBeFalse();
+
             var solutionContents = _fileSystem.ReadStringFromFile(solutionFile);
 
             // cleanup first
@@ -76,7 +85,7 @@ namespace FubuMVC.Tests.Templating
             var lines = ((SolutionFileService) _command.SolutionFileService).SplitSolution(solutionContents);
             var guid = _command.KeywordReplacer.Replace("GUID1");
             lines[2].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"MyProject\", \"MyProject\\MyProject.csproj\", \"{" + guid +  "}\"");
-            lines[3].ShouldEqual("EndProject");            
+            lines[3].ShouldEqual("EndProject");
         }
     }
 }

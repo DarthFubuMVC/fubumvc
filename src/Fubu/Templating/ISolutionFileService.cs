@@ -12,9 +12,6 @@ namespace Fubu.Templating
 
     public class SolutionFileService : ISolutionFileService
     {
-        private static readonly string[] Splitters = {
-                                                         "\r\n", "\n"
-                                                     };
         private readonly IFileSystem _fileSystem;
 
         public SolutionFileService(IFileSystem fileSystem)
@@ -49,7 +46,18 @@ namespace Fubu.Templating
 
         public string[] SplitSolution(string solutionContents)
         {
-            return solutionContents.Split(Splitters, StringSplitOptions.None);
+            return solutionContents.SplitOnNewLine();
+        }
+    }
+
+    public static class EnvironmentalStringExtensions
+    {
+        private static readonly string[] Splitters = {
+                                                         "\r\n", "\n"
+                                                     };
+        public static string[] SplitOnNewLine(this string value)
+        {
+            return value.Split(Splitters, StringSplitOptions.None);
         }
     }
 }
