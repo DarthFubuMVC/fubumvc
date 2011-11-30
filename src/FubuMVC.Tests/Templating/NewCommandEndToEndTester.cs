@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Bottles.Exploding;
 using Bottles.Zipping;
 using Fubu;
+using Fubu.Templating;
 using Fubu.Templating.Steps;
 using FubuCore;
 using FubuTestingSupport;
@@ -74,7 +73,7 @@ namespace FubuMVC.Tests.Templating
             _fileSystem.DeleteDirectory("Templating", "sample", "MyProject.Tests");
             _fileSystem.WriteStringToFile(solutionFile, oldContents);
 
-            var lines = solutionContents.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = ((SolutionFileService) _command.SolutionFileService).SplitSolution(solutionContents);
             var guid = _command.KeywordReplacer.Replace("GUID1");
             lines[2].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"MyProject\", \"MyProject\\MyProject.csproj\", \"{" + guid +  "}\"");
             lines[3].ShouldEqual("EndProject");            

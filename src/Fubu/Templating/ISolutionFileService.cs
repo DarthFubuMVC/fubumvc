@@ -12,6 +12,9 @@ namespace Fubu.Templating
 
     public class SolutionFileService : ISolutionFileService
     {
+        private static readonly string[] Splitters = {
+                                                         "\r\n", "\n"
+                                                     };
         private readonly IFileSystem _fileSystem;
 
         public SolutionFileService(IFileSystem fileSystem)
@@ -46,8 +49,7 @@ namespace Fubu.Templating
 
         public string[] SplitSolution(string solutionContents)
         {
-            // We're anticipating csproj files from VS not MonoDevelop. Let's revisit that one
-            return solutionContents.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            return solutionContents.Split(Splitters, StringSplitOptions.None);
         }
     }
 }
