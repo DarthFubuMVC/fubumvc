@@ -44,9 +44,7 @@ namespace Serenity.Jasmine
 
         public Func<IWebDriver> GetBrowserBuilder()
         {
-            return new WebDriverSettings{
-                Browser = BrowserFlag
-            }.DriverBuilder();
+            return WebDriverSettings.DriverBuilder(BrowserFlag);
         }
     }
 }

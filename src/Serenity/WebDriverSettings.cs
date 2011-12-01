@@ -10,6 +10,7 @@ namespace Serenity
     public class WebDriverSettings
     {
         public static readonly string Filename = "browser.settings"; 
+        private static readonly Lazy<WebDriverSettings> _settings = new Lazy<WebDriverSettings>(Read);
 
         public WebDriverSettings()
         {
@@ -25,9 +26,22 @@ namespace Serenity
             return SettingsProvider.For(settings).SettingsFor<WebDriverSettings>();
         }
 
-        public Func<IWebDriver> DriverBuilder()
+        public static WebDriverSettings Current
         {
-            switch (Browser)
+            get
+            {
+                return _settings.Value;
+            }
+        }
+
+        public static Func<IWebDriver> DriverBuilder()
+        {
+            return DriverBuilder(Current.Browser);
+        }
+
+        public static Func<IWebDriver> DriverBuilder(BrowserType browserType)
+        {
+            switch (browserType)
             {
                 case BrowserType.Chrome:
                     return () => new ChromeDriver();

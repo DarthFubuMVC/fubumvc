@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using FubuMVC.Core;
 using OpenQA.Selenium;
 using StoryTeller.Engine;
@@ -13,7 +12,7 @@ namespace Serenity
 
         public SerenitySystem()
         {
-            _browserBuilder = WebDriverSettings.Read().DriverBuilder();
+            _browserBuilder = WebDriverSettings.DriverBuilder();
         }
 
         public SerenityApplications Applications
