@@ -1,36 +1,55 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Bottles;
 using FubuCore;
-using FubuCore.CommandLine;
+using FubuKayak;
 using FubuMVC.Core;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Caching;
-using FubuMVC.OwinHost;
 using OpenQA.Selenium;
-using System.Linq;
 
 namespace Serenity.Jasmine
 {
     public class JasmineRunner : ISpecFileListener
     {
         private readonly JasmineInput _input;
-        private Thread _kayakLoop;
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
         private SerenityJasmineApplication _application;
         private ApplicationUnderTest _applicationUnderTest;
-        private FubuOwinHost _host;
-        private AssetFileWatcher _watcher;
         private ApplicationDriver _driver;
+        private FubuKayakRunner _host;
+        private Thread _kayakLoop;
+        private AssetFileWatcher _watcher;
 
 
         public JasmineRunner(JasmineInput input)
         {
             _input = input;
+        }
 
+        void ISpecFileListener.Changed()
+        {
+            _applicationUnderTest.Driver.Navigate().Refresh();
+        }
+
+        void ISpecFileListener.Deleted()
+        {
+            _host.Recycle(watchAssetFiles);
+            // TODO -- make a helper method for this
+            _applicationUnderTest.Driver.Navigate().GoToUrl(_applicationUnderTest.RootUrl);
+        }
+
+        void ISpecFileListener.Added()
+        {
+            Recycle();
+        }
+
+        public void Recycle()
+        {
+            _host.Recycle(watchAssetFiles);
+            _applicationUnderTest.Driver.Navigate().Refresh();
         }
 
         public void OpenInteractive()
@@ -59,7 +78,7 @@ namespace Serenity.Jasmine
             buildApplication();
             var returnValue = true;
 
-            _host = new FubuOwinHost(_application);
+            _host = new FubuKayakRunner(_application);
             _host.RunApplication(_input.PortFlag, runtime =>
             {
                 _driver.NavigateTo<JasminePages>(x => x.AllSpecs());
@@ -92,28 +111,24 @@ namespace Serenity.Jasmine
         private static void writeTotals(IWebDriver browser)
         {
             var totals = browser.FindElement(By.CssSelector("div.jasmine_reporter a.description")).Text;
-            
+
             Console.WriteLine(totals);
         }
 
         private static void writeFailures(IEnumerable<IWebElement> failures)
         {
-
-
             failures.Each(suite =>
             {
                 Console.WriteLine(suite.FindElement(By.CssSelector("a.description")).Text);
 
-                suite.FindElements(By.CssSelector("div.spec.failed a.description")).Each(spec =>
-                {
-                    Console.WriteLine("    " + spec.Text);
-                });
+                suite.FindElements(By.CssSelector("div.spec.failed a.description")).Each(
+                    spec => { Console.WriteLine("    " + spec.Text); });
             });
         }
 
         private void run()
         {
-            _host = new FubuOwinHost(_application);
+            _host = new FubuKayakRunner(_application);
             _host.RunApplication(_input.PortFlag, watchAssetFiles);
 
             _reset.Set();
@@ -124,33 +139,8 @@ namespace Serenity.Jasmine
             if (_watcher == null)
             {
                 _watcher = runtime.Facility.Get<AssetFileWatcher>();
-                _watcher.StartWatching(this); 
+                _watcher.StartWatching(this);
             }
-
-
-        }
-
-        void ISpecFileListener.Changed()
-        {
-            _applicationUnderTest.Driver.Navigate().Refresh();
-        }
-
-        void ISpecFileListener.Deleted()
-        {
-            _host.Recycle(watchAssetFiles);
-            // TODO -- make a helper method for this
-            _applicationUnderTest.Driver.Navigate().GoToUrl(_applicationUnderTest.RootUrl);
-        }
-
-        void ISpecFileListener.Added()
-        {
-            Recycle();
-        }
-
-        public void Recycle()
-        {
-            _host.Recycle(watchAssetFiles);
-            _applicationUnderTest.Driver.Navigate().Refresh();
         }
 
 
@@ -171,15 +161,13 @@ namespace Serenity.Jasmine
 
             _driver = new ApplicationDriver(_applicationUnderTest);
         }
-
-
     }
 
     public class AssetFileWatcher
     {
         private readonly IAssetContentCache _cache;
-        private readonly IList<FileSystemWatcher> _watchers = new List<FileSystemWatcher>();
         private readonly IFileSystem _fileSystem = new FileSystem();
+        private readonly IList<FileSystemWatcher> _watchers = new List<FileSystemWatcher>();
 
         public AssetFileWatcher(IAssetContentCache cache)
         {
@@ -188,7 +176,6 @@ namespace Serenity.Jasmine
 
         public void StartWatching(ISpecFileListener listener)
         {
-
             PackageRegistry.Packages.Each(pak =>
             {
                 pak.ForFolder(BottleFiles.WebContentFolder, dir =>
@@ -204,7 +191,7 @@ namespace Serenity.Jasmine
                     watcher.Deleted += (x, y) => listener.Recycle();
                     watcher.EnableRaisingEvents = true;
                     watcher.IncludeSubdirectories = true;
-                
+
                     _watchers.Add(watcher);
                 });
             });

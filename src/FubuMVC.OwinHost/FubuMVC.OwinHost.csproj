@@ -40,12 +40,6 @@
     <Reference Include="Gate.Helpers">
       <HintPath>..\..\lib\gate\Gate.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="Gate.Kayak">
-      <HintPath>..\packages\Gate.Kayak.0.1.4\lib\Gate.Kayak.dll</HintPath>
-    </Reference>
-    <Reference Include="Kayak">
-      <HintPath>..\packages\Kayak.0.7.2\lib\Kayak.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -64,15 +58,14 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="OwinAggregateDictionary.cs" />
     <Compile Include="FubuOwinHost.cs" />
+    <Compile Include="OwinAggregateDictionary.cs" />
     <Compile Include="GateHttpContext.cs" />
     <Compile Include="OwinCurrentHttpRequest.cs" />
     <Compile Include="OwinHttpWriter.cs" />
     <Compile Include="OwinServiceArguments.cs" />
     <Compile Include="OwinStreamingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchedulerDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

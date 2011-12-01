@@ -121,6 +121,10 @@
     <Compile Include="WebDriverSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
+      <Project>{3C9279B1-DDDF-4E6A-B95A-6276942882EC}</Project>
+      <Name>FubuKayak</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>

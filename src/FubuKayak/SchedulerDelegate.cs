@@ -1,7 +1,7 @@
 using System;
 using Kayak;
 
-namespace FubuMVC.OwinHost
+namespace FubuKayak
 {
     public class SchedulerDelegate : ISchedulerDelegate
     {
