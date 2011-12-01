@@ -19,7 +19,7 @@ namespace Serenity.Jasmine
         private SerenityJasmineApplication _application;
         private ApplicationUnderTest _applicationUnderTest;
         private ApplicationDriver _driver;
-        private FubuKayakRunner _host;
+        private FubuKayakApplication _kayak;
         private Thread _kayakLoop;
         private AssetFileWatcher _watcher;
 
@@ -36,7 +36,7 @@ namespace Serenity.Jasmine
 
         void ISpecFileListener.Deleted()
         {
-            _host.Recycle(watchAssetFiles);
+            _kayak.Recycle(watchAssetFiles);
             // TODO -- make a helper method for this
             _applicationUnderTest.Driver.Navigate().GoToUrl(_applicationUnderTest.RootUrl);
         }
@@ -48,7 +48,7 @@ namespace Serenity.Jasmine
 
         public void Recycle()
         {
-            _host.Recycle(watchAssetFiles);
+            _kayak.Recycle(watchAssetFiles);
             _applicationUnderTest.Driver.Navigate().Refresh();
         }
 
@@ -78,8 +78,8 @@ namespace Serenity.Jasmine
             buildApplication();
             var returnValue = true;
 
-            _host = new FubuKayakRunner(_application);
-            _host.RunApplication(_input.PortFlag, runtime =>
+            _kayak = new FubuKayakApplication(_application);
+            _kayak.RunApplication(_input.PortFlag, runtime =>
             {
                 _driver.NavigateTo<JasminePages>(x => x.AllSpecs());
 
@@ -99,7 +99,7 @@ namespace Serenity.Jasmine
                 Console.WriteLine(line);
                 writeTotals(browser);
 
-                _host.Stop();
+                _kayak.Stop();
 
                 browser.Quit();
             });
@@ -115,21 +115,22 @@ namespace Serenity.Jasmine
             Console.WriteLine(totals);
         }
 
+
         private static void writeFailures(IEnumerable<IWebElement> failures)
         {
             failures.Each(suite =>
             {
                 Console.WriteLine(suite.FindElement(By.CssSelector("a.description")).Text);
 
-                suite.FindElements(By.CssSelector("div.spec.failed a.description")).Each(
-                    spec => { Console.WriteLine("    " + spec.Text); });
+                suite.FindElements(By.CssSelector("div.spec.failed a.description"))
+                    .Each(spec => Console.WriteLine("    " + spec.Text));
             });
         }
 
         private void run()
         {
-            _host = new FubuKayakRunner(_application);
-            _host.RunApplication(_input.PortFlag, watchAssetFiles);
+            _kayak = new FubuKayakApplication(_application);
+            _kayak.RunApplication(_input.PortFlag, watchAssetFiles);
 
             _reset.Set();
         }
