@@ -11,13 +11,14 @@ namespace StoryTellerTestHarness
         [TestFixtureSetUp]
         public void SetupRunner()
         {
-            runner = new ProjectTestRunner(@"C:\git\fubumvc\Storyteller.xml");
+            runner = new ProjectTestRunner(@"C:\code\fubumvc\Storyteller.xml");
+            runner.Project.TimeoutInSeconds = 0;
         }
 
         [Test]
         public void Invoke_a_Json_endpoint_from_a_package()
         {
-            runner.RunAndAssertTest("FastPack/Grids/Query options for a grid with strings and numbers");
+            runner.RunAndAssertTest("Packaging/Zip File Mechanics/Invoke a Json endpoint from a package from Zip");
         }
 
         [TestFixtureTearDown]

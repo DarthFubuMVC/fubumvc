@@ -86,6 +86,8 @@ namespace IntegrationTesting
                 var processOutput = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
 
+                Debug.WriteLine(processOutput);
+
                 if (process.ExitCode != 0)
                 {
                     StoryTellerAssert.Fail("Command failed! -- " + commandLine + "\n" + processOutput);

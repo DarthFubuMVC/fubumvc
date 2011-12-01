@@ -1,5 +1,7 @@
 ﻿using System;
 using FubuMVC.Core.Diagnostics.Querying;
+using OpenQA.Selenium;
+using Serenity;
 using StoryTeller;
 using StoryTeller.Engine;
 using TestPackage1;
@@ -34,9 +36,9 @@ namespace IntegrationTesting.Fixtures.Packages
                 Name = name
             };
 
-            var response =
-                _application.InvokeJson<JsonSerializedMessage>("http://localhost/fubu-testing/testpackage1/json/sendmessage", message);
-
+            var httpResponse = _application.GetEndpointDriver().PostJson(message);
+            
+            var response= httpResponse.ReadAsJson<JsonSerializedMessage>();
 
             return response.Name == name;
         }
@@ -44,19 +46,20 @@ namespace IntegrationTesting.Fixtures.Packages
         [FormatAs("Can successfully invoke a string endpoint from this package")]
         public bool InvokeStringEndpoint()
         {
-            return _application.InvokeString("http://localhost/fubu-testing/testpackage1/string/sayhello") == "Hello";
+            var url = "http://localhost/fubu-testing/testpackage1/string/sayhello";
+            return _application.GetEndpointDriver().GetHtml(url).Source() == "Hello";
         }
 
         [FormatAs("Open the browser to {url}")]
         public void OpenPage(string url)
         {
-            _application.NavigateTo(url);
+            _application.NavigateToUrl(url);
         }
 
         [FormatAs("The text of the 'name' span in the page should be {name}")]
         public string TextOfNameElementShouldBe()
         {
-            return _application.Browser.Element("name").Text;
+            return _application.Driver.FindElement(By.Id("name")).Text;
         }
     }
 }

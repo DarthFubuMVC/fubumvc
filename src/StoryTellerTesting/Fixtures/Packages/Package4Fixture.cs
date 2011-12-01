@@ -1,4 +1,6 @@
 ﻿using FubuMVC.Core.Diagnostics.Querying;
+using OpenQA.Selenium;
+using Serenity;
 using StoryTeller;
 using StoryTeller.Engine;
 
@@ -28,7 +30,7 @@ namespace IntegrationTesting.Fixtures.Packages
         [FormatAs("The text of the 'message' h1 in the page should be {message}")]
         public string TextOfMessageHeadingShouldBe()
         {
-            return _application.Browser.Element("message").Text;
+            return _application.Driver.FindElement(By.Id("message")).Text;
         }
     }
 }

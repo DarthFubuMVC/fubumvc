@@ -11,13 +11,13 @@ namespace StoryTellerTestHarness
         [TestFixtureSetUp]
         public void SetupRunner()
         {
-            runner = new ProjectTestRunner(@"C:\git\fubumvc\Storyteller.xml");
+            runner = new ProjectTestRunner(@"C:\code\fubumvc\Storyteller.xml");
         }
 
         [Test]
-        public void Request_json()
+        public void Simple_explicit_combination()
         {
-            runner.RunAndAssertTest("Conneg/Request json");
+            runner.RunAndAssertTest("Assets/Combinations/Simple explicit combination");
         }
 
         [TestFixtureTearDown]

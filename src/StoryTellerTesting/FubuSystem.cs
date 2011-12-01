@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.Querying;
@@ -14,7 +15,10 @@ namespace IntegrationTesting
     {
         public FubuApplication BuildApplication()
         {
-            return FubuApplication.For<FubuTestApplicationRegistry>().StructureMap(new Container());
+            return FubuApplication
+                .For<FubuTestApplicationRegistry>()
+                .StructureMap(new Container())
+                .Packages(x => x.Assembly(typeof(TestPackage1.JsonSerializedMessage).Assembly));
         }
 
         public string Name
@@ -27,7 +31,6 @@ namespace IntegrationTesting
     {
         public static readonly string TEST_APPLICATION_ROOT = "http://localhost/fubu-testing";
         private CommandRunner _runner;
-        private ApplicationDriver _application;
 
         public FubuSystem()
         {
@@ -46,8 +49,6 @@ namespace IntegrationTesting
             context.Store(remoteGraph);
 
             context.Store(_runner);
-
-            context.Store(_application);
         }
 
         public override void SetupEnvironment()
@@ -64,15 +65,13 @@ namespace IntegrationTesting
             _runner.RunFubu("create-pak pak3 pak3.zip -f");
 			_runner.RunFubu("create-pak pak4 pak4.zip -f");
 			_runner.RunFubu("create-pak spark spark.zip -f");
-
-            _application = new ApplicationDriver();
         }
 
         public override void TeardownEnvironment()
         {
             base.TeardownEnvironment();
 
-            _application.Teardown();
+            
 
             var fileSystem = new FileSystem();
             fileSystem.DeleteFile("pak1.zip");
@@ -88,7 +87,7 @@ namespace IntegrationTesting
 
         public override void Teardown()
         {
-            _application.Teardown();
+            
         }
 
         public override void RegisterFixtures(FixtureRegistry registry)

@@ -1,8 +1,11 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Xml;
+using HtmlTags;
 
 namespace Serenity.Endpoints
 {
@@ -68,6 +71,16 @@ namespace Serenity.Endpoints
         {
 
             return _body;
+        }
+
+        public string Source()
+        {
+            return _body;
+        }
+
+        public T ReadAsJson<T>()
+        {
+            return new JavaScriptSerializer().Deserialize<T>(_body);
         }
     }
 }

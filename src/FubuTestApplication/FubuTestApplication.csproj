@@ -56,6 +56,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\images\icon-add-alt.png" />
     <Content Include="content\images\grid\cd_run.gif" />
     <Content Include="content\images\grid\dirty.gif" />
     <Content Include="content\images\grid\down.gif" />

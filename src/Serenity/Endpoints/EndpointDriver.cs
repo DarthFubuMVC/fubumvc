@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
+using System.Web;
 using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using FubuCore;
@@ -36,10 +38,13 @@ namespace Serenity.Endpoints
         {
             return post(target, contentType, accept, stream =>
             {
-                var json = new JavaScriptSerializer().Serialize(target);
-                var writer = new StreamWriter(stream);
+                var serializer = new JavaScriptSerializer();
+                
 
-                writer.Write(json);
+                var json = serializer.Serialize(target);
+                var bytes = Encoding.Default.GetBytes(json);
+                
+                stream.Write(bytes, 0, bytes.Length);
             });
         }
 
@@ -62,6 +67,16 @@ namespace Serenity.Endpoints
             return request.ToHttpCall();
         }
 
+        public HttpResponse GetHtml(string url)
+        {
+            var request = WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = MimeType.HttpFormMimetype;
+
+
+            return request.ToHttpCall();
+        }
+
         public string ReadTextFrom(object input)
         {
             var url = _urls.UrlFor(input);
@@ -76,9 +91,12 @@ namespace Serenity.Endpoints
             request.ContentType = contentType;
 
             request.Method = "POST";
-            request.Headers[HttpRequestHeader.Accept] = accept;
 
-            setRequest(request.GetRequestStream());
+            request.As<HttpWebRequest>().Accept = accept;
+
+            var stream = request.GetRequestStream();
+            setRequest(stream);
+            stream.Close();
 
             return request.ToHttpCall();
         }

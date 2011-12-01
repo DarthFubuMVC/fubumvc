@@ -19,7 +19,15 @@ namespace FubuMVC.Core.Packaging.VirtualPaths
 
             HostingEnvironment.RegisterVirtualPathProvider(provider);
 
-            packages.Each(x => x.ForFolder(BottleFiles.WebContentFolder, provider.RegisterContentDirectory));
+            packages.Each(x =>
+            {
+                x.ForFolder(BottleFiles.WebContentFolder, directory =>  
+                {
+                    log.Trace("Adding the bottle directory {0} to the virtual directory provider", directory);
+                    provider.RegisterContentDirectory(directory);
+                }
+            );
+            });
         }
 
         public override string ToString()

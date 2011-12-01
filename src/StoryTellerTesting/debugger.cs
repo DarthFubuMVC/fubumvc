@@ -27,24 +27,7 @@ namespace IntegrationTesting
             assembly.GetExportedTypes().Each(x => Debug.WriteLine(x.FullName));
         }
 
-        [Test]
-        public void can_do_something_with_web_driver()
-        {
-            var settings = new WebDriverSettings()
-            {
-                Browser = BrowserType.Firefox
-            };
 
-            using (var browser = settings.DriverBuilder()())
-            {
-                browser.Navigate().GoToUrl("http://cnn.com");
-                var head = browser.FindElement(By.TagName("head"));
-                head.TagName.ShouldEqual("head");
-
-
-                browser.Close();
-            }
-        }
 
         [Test]
         public void try_to_load_asset_fixture()

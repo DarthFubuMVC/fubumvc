@@ -45,7 +45,7 @@ namespace IntegrationTesting.Fixtures.Packages
             var client = new WebClient();
             var bytes = client.DownloadData("http://localhost" + url);
             
-            StoryTellerAssert.Fail(bytes.Length < 500, "Not enough data detected for the image.  Did it really load?");
+            StoryTellerAssert.Fail(bytes.Length < 100, "Not enough data detected for the image.  Did it really load?");
 
             return client.ResponseHeaders[HttpResponseHeader.ContentType];
         }

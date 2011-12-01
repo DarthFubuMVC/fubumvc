@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core.Assets.Http;
@@ -22,6 +23,13 @@ namespace Serenity
         public void NavigateTo(object target)
         {
             var url = _application.Urls.UrlFor(target);
+
+            NavigateToUrl(url);
+        }
+
+        public void NavigateToUrl(string url)
+        {
+            Debug.WriteLine("Navigating to " + url);
             _application.Driver.Navigate().GoToUrl(url);
         }
 
@@ -49,6 +57,14 @@ namespace Serenity
         public void NavigateToHome()
         {
             _application.Driver.Navigate().GoToUrl(_application.RootUrl);
+        }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return _application.Driver;
+            }
         }
     }
 

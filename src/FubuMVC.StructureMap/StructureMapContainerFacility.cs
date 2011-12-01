@@ -113,7 +113,7 @@ namespace FubuMVC.StructureMap
 
             if (_initializeSingletonsToWorkAroundSMBug)
             {
-                new SingletonSpinupActivator(_container).Activate(null, null);
+                yield return new SingletonSpinupActivator(_container);
             }
         }
 
