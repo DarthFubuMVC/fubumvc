@@ -1,8 +1,9 @@
 using System;
+using System.IO;
 using FubuCore;
 using FubuCore.Configuration;
 
-namespace Serenity
+namespace FubuMVC.Core
 {
     public class ApplicationSettings
     {
@@ -12,16 +13,36 @@ namespace Serenity
 
         public static ApplicationSettings Read(string file)
         {
-            var settings = SettingsData.ReadFromFile(SettingCategory.core, file);
-            return SettingsProvider.For(settings).SettingsFor<ApplicationSettings>();
+            var settingsData = SettingsData.ReadFromFile(SettingCategory.core, file);
+            var settings = SettingsProvider.For(settingsData).SettingsFor<ApplicationSettings>();
+
+            settings.ParentFolder = file.ToFullPath().ParentDirectory();
+
+            return settings;
         }
+
+        public string ParentFolder { get; set; }
 
         public static ApplicationSettings ReadByName(string name)
         {
-            var file = name + ".application";
+            var file = name + ".application.config";
             file = AppDomain.CurrentDomain.BaseDirectory.AppendPath(file);
 
             return Read(file);
+        }
+
+        public string GetApplicationFolder()
+        {
+            if (PhysicalPath.IsEmpty())
+            {
+                return ParentFolder.IsEmpty()
+                           ? AppDomain.CurrentDomain.BaseDirectory
+                           : ParentFolder;
+            }
+
+            if (Path.IsPathRooted(PhysicalPath)) return PhysicalPath;
+
+            return ParentFolder.ToFullPath().AppendPath(PhysicalPath);
         }
 
         public void Write()

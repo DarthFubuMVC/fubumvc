@@ -3,7 +3,4 @@
   <Role>module</Role>
   <Name>pak1</Name>
   <assembly>TestPackage1</assembly>
-  <ContentFileSet Include="*.as*x;*.master;Content\*.*">
-    <DeepSearch>true</DeepSearch>
-  </ContentFileSet>
 </package>

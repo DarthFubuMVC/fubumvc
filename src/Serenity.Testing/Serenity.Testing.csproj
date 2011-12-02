@@ -96,7 +96,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="BrowserFixture.cs" />
     <Compile Include="Jasmine\PackageSpecificationsTester.cs" />
     <Compile Include="Jasmine\SpecificationGraphIntegratedTester.cs" />
