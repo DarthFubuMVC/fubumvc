@@ -103,6 +103,7 @@
     <Compile Include="Ajax\AjaxContinuationWriterTester.cs" />
     <Compile Include="ApplicationSettingsTester.cs" />
     <Compile Include="Applications\ApplicationRunnerTester.cs" />
+    <Compile Include="Applications\ApplicationSourceFinderTester.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivatorTester.cs" />
     <Compile Include="Assets\AssetDeclarationCheckerTester.cs" />
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
