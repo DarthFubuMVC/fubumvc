@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Templating
             _commandInput = new NewCommandInput();
         }
 
-        [Test]
+        [Test, Explicit]
         public void clone_git_repo_and_append_to_existing_solution()
         {
             var tmpDir = FileSystem.Combine("Templating", Guid.NewGuid().ToString());
