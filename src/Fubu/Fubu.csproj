@@ -74,6 +74,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ApplicationSourceTypeFinder.cs" />
     <Compile Include="Applications\Classes.cs" />
     <Compile Include="CreateDeploymentCommand.cs" />
     <Compile Include="IncludeWebContentCommand.cs" />
