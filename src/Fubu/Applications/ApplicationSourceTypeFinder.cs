@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core;
-using TypeExtensions = FubuCore.TypeExtensions;
 
 namespace Fubu.Applications
 {
@@ -15,7 +15,7 @@ namespace Fubu.Applications
             return AssembliesFromApplicationBaseDirectory(
                 assem => assem.GetCustomAttributes(typeof (FubuAppAttribute), true).Any())
                 .SelectMany(x => x.GetExportedTypes())
-                .Where(x => TypeExtensions.CanBeCastTo<IApplicationSource>(x) && TypeExtensions.IsConcreteWithDefaultCtor(x));
+                .Where(x => x.CanBeCastTo<IApplicationSource>() && x.IsConcreteWithDefaultCtor());
         }
         
 

@@ -74,8 +74,19 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ApplicationRunner.cs" />
+    <Compile Include="Applications\ApplicationSourceFinder.cs" />
     <Compile Include="Applications\ApplicationSourceTypeFinder.cs" />
-    <Compile Include="Applications\Classes.cs" />
+    <Compile Include="Applications\ApplicationStartResponse.cs" />
+    <Compile Include="Applications\ApplicationStartStatus.cs" />
+    <Compile Include="Applications\KayakApplicationDomain.cs" />
+    <Compile Include="Applications\FileChangeEventCategory.cs" />
+    <Compile Include="Applications\FubuMvcApplicationFileWatcher.cs" />
+    <Compile Include="Applications\IApplicationDomain.cs" />
+    <Compile Include="Applications\IApplicationSourceFinder.cs" />
+    <Compile Include="Applications\IApplicationSourceTypeFinder.cs" />
+    <Compile Include="Applications\KayakCommand.cs" />
+    <Compile Include="Applications\RecycleResponse.cs" />
     <Compile Include="CreateDeploymentCommand.cs" />
     <Compile Include="IncludeWebContentCommand.cs" />
     <Compile Include="InstallPackageCommand.cs" />
