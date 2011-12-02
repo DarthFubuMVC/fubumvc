@@ -74,6 +74,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\Classes.cs" />
     <Compile Include="CreateDeploymentCommand.cs" />
     <Compile Include="IncludeWebContentCommand.cs" />
     <Compile Include="InstallPackageCommand.cs" />
@@ -112,6 +113,10 @@
     <Compile Include="Templating\TemplatePlanContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">
+      <Project>{3C9279B1-DDDF-4E6A-B95A-6276942882EC}</Project>
+      <Name>FubuKayak</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
@@ -119,6 +124,10 @@
     <ProjectReference Include="..\FubuMVC.Deployers\FubuMVC.Deployers.csproj">
       <Project>{15052F0B-098A-4115-BD7B-E66657FCE73A}</Project>
       <Name>FubuMVC.Deployers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
+      <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
+      <Name>FubuMVC.OwinHost</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

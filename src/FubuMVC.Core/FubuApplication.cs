@@ -24,7 +24,6 @@ namespace FubuMVC.Core
 
     public interface IApplicationSource
     {
-        string Name { get; }
         FubuApplication BuildApplication();
     }
 

@@ -5,11 +5,18 @@ using FubuCore.Configuration;
 
 namespace FubuMVC.Core
 {
+    [Serializable]
     public class ApplicationSettings
     {
+        public ApplicationSettings()
+        {
+            Port = 5500;
+        }
+
         public string PhysicalPath { get; set; }
         public string RootUrl { get; set; }
         public string Name { get; set; }
+        public int Port { get; set; }
 
         // Needs to be an assembly qualified name of a class implementing IApplicationSource
         public string ApplicationSourceName { get; set; }

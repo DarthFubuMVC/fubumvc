@@ -22,7 +22,7 @@ namespace Serenity
 
         public void AddApplication(IApplicationSource source)
         {
-            var settings = ApplicationSettings.ReadByName(source.Name);
+            var settings = ApplicationSettings.ReadByName(source.GetType().Name);
             var application = new ApplicationUnderTest(source, settings, _browserBuilder);
             _applications.AddApplication(application);
         }

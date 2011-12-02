@@ -51,7 +51,7 @@ namespace Serenity
 
         public string Name
         {
-            get { return _source.Name; }
+            get { return _source.GetType().Name; }
         }
 
         public string RootUrl
