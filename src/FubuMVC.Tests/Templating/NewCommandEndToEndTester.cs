@@ -43,6 +43,7 @@ namespace FubuMVC.Tests.Templating
             _commandInput.ProjectName = "MyProject";
             _commandInput.SolutionFlag = solutionFile;
             _commandInput.OutputFlag = solutionDir;
+            _commandInput.RakeFlag = "init.rb";
 
             _command
                 .Execute(_commandInput)
@@ -72,6 +73,10 @@ namespace FubuMVC.Tests.Templating
             _fileSystem
                 .FileExists("Templating", "sample", "ignored.txt")
                 .ShouldBeFalse();
+
+            _fileSystem
+                .FileExists("Templating", "sample", "MyProject.xml")
+                .ShouldBeTrue();
 
             var solutionContents = _fileSystem.ReadStringFromFile(solutionFile);
 

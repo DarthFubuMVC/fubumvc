@@ -12,7 +12,7 @@ namespace Fubu
                 throw new ArgumentNullException("configure");
             }
 
-            var processInfo = new ProcessStartInfo();
+            var processInfo = new ProcessStartInfo {RedirectStandardError = true, RedirectStandardOutput = true};
             configure(processInfo);
 
             return new ProcessWrapper(processInfo);

@@ -102,6 +102,7 @@
     <Compile Include="Templating\Steps\MoveContent.cs" />
     <Compile Include="Templating\Steps\ReplaceKeywords.cs" />
     <Compile Include="Templating\Steps\ModifySolution.cs" />
+    <Compile Include="Templating\Steps\RunRakeFile.cs" />
     <Compile Include="Templating\Steps\UnzipTemplate.cs" />
     <Compile Include="Templating\TemplatePlan.cs" />
     <Compile Include="Templating\TemplatePlanContext.cs" />
@@ -121,6 +122,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="Templating\Steps\rakerunner.rb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

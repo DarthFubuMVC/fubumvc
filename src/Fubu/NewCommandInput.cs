@@ -5,6 +5,10 @@ namespace Fubu
 {
     public class NewCommandInput
     {
+        [FlagAlias("r")]
+        [Description("A rakefile to execute after the templating has completed")]
+        public string RakeFlag { get; set; }
+
         [FlagAlias("z")]
         [Description("A zip file containing a FubuMVC project template")]
         public string ZipFlag { get; set; }

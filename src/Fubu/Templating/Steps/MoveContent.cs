@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FubuCore;
 
 namespace Fubu.Templating.Steps
@@ -26,7 +27,7 @@ namespace Fubu.Templating.Steps
                                    {
                                        DeepSearch = false,
                                        Include = "*.*",
-                                       Exclude = "*.exe;*.dll;.git;{0};".ToFormat(FubuIgnoreFile)
+                                       Exclude = "*.exe;*.dll;.git;*{0};".ToFormat(FubuIgnoreFile)
                                    };
             var fubuIgnore = FileSystem.Combine(context.TempDir, FubuIgnoreFile);
             if(_fileSystem.FileExists(fubuIgnore))
@@ -40,8 +41,10 @@ namespace Fubu.Templating.Steps
                               });
             }
 
+            var excludedFiles = fileSet.ExcludedFilesFor(context.TempDir);
             _fileSystem
                 .FindFiles(context.TempDir, fileSet)
+                .Where(file => !excludedFiles.Contains(file))
                 .Each(from =>
                           {
                               var destination = Path.Combine(context.TargetPath, _fileSystem.GetFileName(from));

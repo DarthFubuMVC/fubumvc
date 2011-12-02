@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 
 namespace Fubu
 {
@@ -26,6 +27,13 @@ namespace Fubu
         public int ExitCode
         {
             get { return WrappedProcess.ExitCode; }
+        }
+
+        public string GetErrors()
+        {
+            return WrappedProcess
+                .StandardError
+                .ReadToEnd();
         }
     }
 }

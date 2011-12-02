@@ -5,5 +5,7 @@ namespace Fubu
         bool Start();
         void WaitForExit();
         int ExitCode { get; }
+
+        string GetErrors();
     }
 }

@@ -46,6 +46,11 @@ namespace Fubu
                 plan.AddStep(new ModifySolution(SolutionFileService, CsProjGatherer));
             }
 
+            if(input.RakeFlag.IsNotEmpty())
+            {
+                plan.AddStep(new RunRakeFile(ProcessFactory, FileSystem));
+            }
+
             plan.AddStep(new MoveContent(FileSystem));
 
             var hasErrors = false;
