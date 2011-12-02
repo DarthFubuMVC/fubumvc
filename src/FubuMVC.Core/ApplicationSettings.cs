@@ -11,6 +11,9 @@ namespace FubuMVC.Core
         public string RootUrl { get; set; }
         public string Name { get; set; }
 
+        // Needs to be an assembly qualified name of a class implementing IApplicationSource
+        public string ApplicationSourceName { get; set; }
+
         public static ApplicationSettings Read(string file)
         {
             var settingsData = SettingsData.ReadFromFile(SettingCategory.core, file);

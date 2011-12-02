@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.Routing;
 using Bottles;
 using Bottles.Diagnostics;
 using Bottles.Environment;
 using FubuCore;
 using FubuCore.Binding;
-using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Bootstrapping;
-using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
@@ -27,14 +24,14 @@ namespace FubuMVC.Core
 
     public interface IApplicationSource
     {
-        FubuApplication BuildApplication();
         string Name { get; }
+        FubuApplication BuildApplication();
     }
 
     public class FubuRuntime
     {
-        private readonly IBehaviorFactory _factory;
         private readonly IContainerFacility _facility;
+        private readonly IBehaviorFactory _factory;
         private readonly IList<RouteBase> _routes;
 
         public FubuRuntime(IBehaviorFactory factory, IContainerFacility facility, IList<RouteBase> routes)
@@ -65,15 +62,30 @@ namespace FubuMVC.Core
     {
         private readonly Lazy<IContainerFacility> _facility;
         private readonly List<Action<IPackageFacility>> _packagingDirectives = new List<Action<IPackageFacility>>();
+        private readonly Lazy<FubuRegistry> _registry;
         private readonly List<Action<FubuRegistry>> _registryModifications = new List<Action<FubuRegistry>>();
         private Func<IContainerFacility> _facilitySource;
         private FubuMvcPackageFacility _fubuFacility;
-        private readonly Lazy<FubuRegistry> _registry;
 
         private FubuApplication(Func<FubuRegistry> registryBuilder)
         {
             _registry = new Lazy<FubuRegistry>(registryBuilder);
             _facility = new Lazy<IContainerFacility>(() => _facilitySource());
+        }
+
+        public IContainerFacility Facility
+        {
+            get
+            {
+                if (!_facility.IsValueCreated)
+                {
+                    throw new InvalidOperationException(
+                        "Application has not yet been bootstrapped.  This operation is only valid after bootstrapping the application");
+                }
+
+
+                return _facility.Value;
+            }
         }
 
         FubuApplication IContainerFacilityExpression.ContainerFacility(IContainerFacility facility)
@@ -168,7 +180,7 @@ namespace FubuMVC.Core
             graph.As<IRegisterable>().Register(_registry.Value.DiagnosticLevel, containerFacility.Register);
 
             // Important to register itself
-            containerFacility.Register(typeof(IContainerFacility), ObjectDef.ForValue(containerFacility));
+            containerFacility.Register(typeof (IContainerFacility), ObjectDef.ForValue(containerFacility));
         }
 
         private BehaviorGraph buildBehaviorGraph()
@@ -217,20 +229,6 @@ namespace FubuMVC.Core
         public IEnumerable<IInstaller> GetAllInstallers()
         {
             return _facility.Value.GetAllInstallers();
-        }
-
-        public IContainerFacility Facility
-        {
-            get
-            {
-                if (!_facility.IsValueCreated)
-                {
-                    throw new InvalidOperationException("Application has not yet been bootstrapped.  This operation is only valid after bootstrapping the application");
-                }
-                
-                
-                return _facility.Value;
-            }
         }
     }
 

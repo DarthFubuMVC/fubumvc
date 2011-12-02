@@ -1,18 +1,13 @@
 using System;
-using FubuMVC.Core.Behaviors;
+using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Media.Formatters;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core
 {
-
-
-
-
     [AttributeUsage(AttributeTargets.Property)]
     public class RouteInputAttribute : Attribute
     {
@@ -27,10 +22,7 @@ namespace FubuMVC.Core
 
         public object DefaultObject
         {
-            set
-            {
-                DefaultValue = value.ToString();
-            }
+            set { DefaultValue = value.ToString(); }
         }
 
         public string DefaultValue { get; set; }
@@ -52,7 +44,10 @@ namespace FubuMVC.Core
             _pattern = pattern.Trim();
         }
 
-        public string Pattern { get { return _pattern; } }
+        public string Pattern
+        {
+            get { return _pattern; }
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class)]
@@ -65,7 +60,10 @@ namespace FubuMVC.Core
             _folder = folder;
         }
 
-        public string Folder { get { return _folder; } }
+        public string Folder
+        {
+            get { return _folder; }
+        }
     }
 
     [AttributeUsage(AttributeTargets.Method)]
@@ -85,7 +83,6 @@ namespace FubuMVC.Core
             call.ParentChain().MakeAsymmetricJson();
         }
     }
-
 
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
@@ -120,8 +117,7 @@ namespace FubuMVC.Core
             }
 
 
-
-            if ((_formatters & FormatterOptions.Json) != 0 )
+            if ((_formatters & FormatterOptions.Json) != 0)
             {
                 chain.UseFormatter<JsonFormatter>();
             }
@@ -161,9 +157,11 @@ namespace FubuMVC.Core
     }
 
     /// <summary>
-    /// This is a marker interface that denotes a Json Endpoint
+    ///   This is a marker interface that denotes a Json Endpoint
     /// </summary>
-    public interface JsonMessage{}
+    public interface JsonMessage
+    {
+    }
 
     [AttributeUsage(AttributeTargets.Method)]
     public class HtmlEndpointAttribute : Attribute
@@ -242,6 +240,32 @@ namespace FubuMVC.Core
         public override void Alter(ActionCall call)
         {
             call.ParentChain().UrlCategory.Creates.Add(Type);
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class FubuModuleAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class FubuAppAttribute : Attribute
+    {
+        private Type _type;
+
+        public Type ApplicationSourceType
+        {
+            get { return _type; }
+            set
+            {
+                if (!value.CanBeCastTo<IApplicationSource>() || !value.IsConcreteWithDefaultCtor())
+                {
+                    throw new ArgumentOutOfRangeException("ApplicationSourceType",
+                                                          "ApplicationSourceType must be a concrete class of IApplicationSource with a no-arg constructor");
+                }
+
+                _type = value;
+            }
         }
     }
 }
