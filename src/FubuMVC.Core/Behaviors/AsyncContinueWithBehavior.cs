@@ -17,17 +17,22 @@ namespace FubuMVC.Core.Behaviors
 
         public void Invoke()
         {
-            var task = _fubuRequest.Get<Task<T>>();
-            task.ContinueWith(x =>
-            {
-                _fubuRequest.Set(x.Result);
-                Inner.Invoke();
-            }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
+            InnerInvoke(x => x.Invoke());
         }
 
         public void InvokePartial()
         {
-            throw new NotImplementedException("Not implemented");
+            InnerInvoke(x => x.InvokePartial());
+        }
+
+        private void InnerInvoke(Action<IActionBehavior> behaviorAction)
+        {
+            var task = _fubuRequest.Get<Task<T>>();
+            task.ContinueWith(x =>
+            {
+                _fubuRequest.Set(x.Result);
+                behaviorAction(Inner);
+            }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
         }
     }
 }
