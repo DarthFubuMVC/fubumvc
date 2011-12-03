@@ -233,9 +233,6 @@ namespace FubuMVC.Core
             else
             {
                 _diagnosticLevel = DiagnosticLevel.None;
-                Actions
-                    .ExcludeTypes(t => t.HasAttribute<FubuDiagnosticsAttribute>())
-                    .ExcludeMethods(method => method.HasAttribute<FubuDiagnosticsAttribute>());
             }
         }
 

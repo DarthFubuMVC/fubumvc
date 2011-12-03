@@ -169,6 +169,7 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\ITargetController.cs" />
     <Compile Include="Behaviors\RenderStatusCodeBehaviorTester.cs" />
+    <Compile Include="Bugs\DoubleActionRegistrationWhenDiagnosticsIsOnTester.cs" />
     <Compile Include="Caching\OuputCachingNodeTester.cs" />
     <Compile Include="Caching\OutputCachingBehaviorTester.cs" />
     <Compile Include="Commands\PackagesCommandTester.cs" />
