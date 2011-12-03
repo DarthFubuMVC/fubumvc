@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Binding;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 
@@ -27,8 +29,16 @@ namespace FubuMVC.Core.Runtime
                 return;
             }
 
-            var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
-            behavior.Invoke();
+            var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId).As<IEntrypointActionBehavior>();
+            Invoke(behavior);
+        }
+
+        protected virtual void Invoke(IEntrypointActionBehavior behavior)
+        {
+            using (behavior)
+            {
+                behavior.Invoke();
+            }
         }
     }
 }

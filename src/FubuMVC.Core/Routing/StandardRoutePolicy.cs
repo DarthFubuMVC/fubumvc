@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Routing;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Runtime;
@@ -16,7 +17,10 @@ namespace FubuMVC.Core.Routing
                 x.Actions += (routeDef, chain) =>
                 {
                     var route = routeDef.ToRoute();
-                    route.RouteHandler = new FubuRouteHandler(new BehaviorInvoker(factory, chain));
+                    if(chain.Calls.Any(c => c.IsAsync))
+                        route.RouteHandler = new FubuAsyncRouteHandler(new AsyncBehaviorInvoker(factory, chain));
+                    else
+                        route.RouteHandler = new FubuRouteHandler(new BehaviorInvoker(factory, chain));
                     routes.Add(route);
                 };
             });
