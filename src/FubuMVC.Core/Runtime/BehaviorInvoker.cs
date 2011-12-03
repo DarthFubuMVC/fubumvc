@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
@@ -19,7 +20,7 @@ namespace FubuMVC.Core.Runtime
             _chain = chain;
         }
 
-        public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues)
+        public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues, Action onComplete)
         {
             var currentChain = new CurrentChain(_chain, routeValues);
             arguments.Set(typeof(ICurrentChain), currentChain);
@@ -30,15 +31,16 @@ namespace FubuMVC.Core.Runtime
             }
 
             var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId).As<IEntrypointActionBehavior>();
-            Invoke(behavior);
+            Invoke(behavior, onComplete);
         }
 
-        protected virtual void Invoke(IEntrypointActionBehavior behavior)
+        protected virtual void Invoke(IEntrypointActionBehavior behavior, Action onComplete)
         {
             using (behavior)
             {
                 behavior.Invoke();
             }
+            onComplete();
         }
     }
 }

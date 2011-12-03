@@ -9,7 +9,7 @@ using FubuMVC.Core.Http.AspNet;
 
 namespace FubuMVC.Core.Runtime
 {
-    public class FubuAsyncRouteHandler : IRouteHandler
+    public class FubuAsyncRouteHandler : IFubuRouteHandler
     {
         private readonly IBehaviorInvoker _invoker;
 
@@ -22,6 +22,11 @@ namespace FubuMVC.Core.Runtime
         {
             var arguments = new AspNetServiceArguments(requestContext);
             return new FubuAsyncHttpHandler(_invoker, arguments, requestContext.RouteData.Values);
+        }
+
+        public IBehaviorInvoker Invoker
+        {
+            get { return _invoker; }
         }
 
         public class FubuAsyncHttpHandler : IHttpAsyncHandler, IRequiresSessionState
@@ -49,8 +54,8 @@ namespace FubuMVC.Core.Runtime
 
             public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
             {
-                var task = Task.Factory.StartNew(() => _invoker.Invoke(_arguments, _routeData))
-                    .ContinueWith(x => cb(x));
+                Task task = null;
+                task = Task.Factory.StartNew(() => _invoker.Invoke(_arguments, _routeData, () => cb(task)));
                 return task;
             }
 

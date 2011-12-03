@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core.Runtime;
@@ -68,18 +69,23 @@ namespace FubuMVC.OwinHost
             var arguments = new OwinServiceArguments(routeData, request, response);
             var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
 
-            try
+            var task = Task.Factory.StartNew(() => invoker.Invoke(arguments, routeData.Values, response.Finish));
+            task.ContinueWith(x =>
             {
-                invoker.Invoke(arguments, routeData.Values);
-            }
-            catch (Exception ex)
-            {
-                write500(response, ex);
-            }
-            finally
-            {
-                response.Finish();
-            }
+                try
+                {
+                    x.Wait();
+                }
+                catch (Exception ex)
+                {
+                    write500(response, ex);
+                }
+                finally
+                {
+                    response.Finish();
+                }
+            });
+
         }
 
         private static void write500(Response response, Exception ex)

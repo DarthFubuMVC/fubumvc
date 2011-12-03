@@ -1,15 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
 using System.Web.SessionState;
 using FubuCore.Binding;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http.AspNet;
 
 namespace FubuMVC.Core.Runtime
 {
-    public class FubuRouteHandler : IRouteHandler
+    public class FubuRouteHandler : IFubuRouteHandler
     {
         private readonly IBehaviorInvoker _invoker;
 
@@ -17,7 +15,6 @@ namespace FubuMVC.Core.Runtime
         {
             _invoker = invoker;
         }
-
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
@@ -47,7 +44,7 @@ namespace FubuMVC.Core.Runtime
 
             public void ProcessRequest(HttpContext context)
             {
-                _invoker.Invoke(_arguments, _routeData);
+                _invoker.Invoke(_arguments, _routeData, () => { });
             }
 
             public bool IsReusable { get { return false; } }

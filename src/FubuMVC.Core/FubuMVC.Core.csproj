@@ -228,6 +228,7 @@
     <Compile Include="Runtime\AspNetPassthroughConverter.cs" />
     <Compile Include="Runtime\AsyncBehaviorInvoker.cs" />
     <Compile Include="Runtime\FubuAsyncRouteHandler.cs" />
+    <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
