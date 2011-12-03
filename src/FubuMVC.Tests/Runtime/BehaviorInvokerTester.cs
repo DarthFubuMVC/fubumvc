@@ -34,7 +34,7 @@ namespace FubuMVC.Tests.Runtime
             theRouteData = new Dictionary<string, object>();
 
             theArguments = new ServiceArguments();
-            theBehavior = MockRepository.GenerateMock<IActionBehavior>();
+            theBehavior = MockRepository.GenerateMock<IEntrypointActionBehavior>();
 
             theFactory.Stub(x => x.BuildBehavior(theArguments, theChain.UniqueId))
                 .Return(theBehavior);
