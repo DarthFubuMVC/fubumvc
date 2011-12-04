@@ -49,16 +49,20 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
-            expectedOutput = new Output();
-            var task = Task<Output>.Factory.StartNew(() =>
+            var testTask = new Task(() =>
             {
-                throw new Exception("Failed!");
+                expectedOutput = new Output();
+                var task = Task<Output>.Factory.StartNew(() =>
+                {
+                    throw new Exception("Failed!");
+                });
+
+                MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
+
+                typeof (AggregateException).ShouldBeThrownBy(task.Wait);
+                ClassUnderTest.Invoke();
             });
-
-            MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
-
-            typeof(AggregateException).ShouldBeThrownBy(task.Wait);
-            ClassUnderTest.Invoke();
+            testTask.RunSynchronously();
         }
 
         [Test]
@@ -79,15 +83,19 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            var task = Task.Factory.StartNew(() =>
+            var testTask = new Task(() =>
             {
-                throw new Exception("Failed!");
+                var task = Task.Factory.StartNew(() =>
+                {
+                    throw new Exception("Failed!");
+                });
+
+                MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
+
+                typeof (AggregateException).ShouldBeThrownBy(task.Wait);
+                ClassUnderTest.Invoke();
             });
-
-            MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
-
-            typeof(AggregateException).ShouldBeThrownBy(task.Wait);
-            ClassUnderTest.Invoke();
+            testTask.RunSynchronously();
         }
 
         [Test]
@@ -102,12 +110,16 @@ namespace FubuMVC.Tests.Behaviors
     {
         protected override void beforeEach()
         {
-            var task = Task.Factory.StartNew(() => { });
+            var testTask = new Task(() =>
+            {
+                var task = Task.Factory.StartNew(() => { });
 
-            MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
+                MockFor<IFubuRequest>().Expect(x => x.Get<Task>()).Return(task);
 
-            task.Wait();
-            ClassUnderTest.Invoke();
+                task.Wait();
+                ClassUnderTest.Invoke();
+            });
+            testTask.RunSynchronously();
         }
 
         [Test]
