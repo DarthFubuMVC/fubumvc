@@ -118,7 +118,7 @@ namespace FubuMVC.Core.Registration.Nodes
                         Method.ReturnType);
             }
 
-            if (HasOutput && !HasInput)
+            if (HasOutput && !HasInput && OutputType() != typeof(Task))
             {
                 return typeof(ZeroInOneOutActionInvoker<,>)
                     .MakeGenericType(
