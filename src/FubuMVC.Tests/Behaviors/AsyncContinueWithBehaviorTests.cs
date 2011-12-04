@@ -16,12 +16,16 @@ namespace FubuMVC.Tests.Behaviors
         protected override void beforeEach()
         {
             expectedOutput = new Output();
-            var task = Task<Output>.Factory.StartNew(() => expectedOutput);
+            var testTask = new Task(() =>
+            {
+                var task = new Task<Output>(() => expectedOutput);
+                task.RunSynchronously();
 
-            MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
+                MockFor<IFubuRequest>().Expect(x => x.Get<Task<Output>>()).Return(task);
 
-            task.Wait();
-            ClassUnderTest.Invoke();
+                ClassUnderTest.Invoke();
+            });
+            testTask.RunSynchronously();
         }
 
         [Test]
@@ -45,6 +49,7 @@ namespace FubuMVC.Tests.Behaviors
 
         protected override void beforeEach()
         {
+            expectedOutput = new Output();
             var task = Task<Output>.Factory.StartNew(() =>
             {
                 throw new Exception("Failed!");
