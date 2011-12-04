@@ -44,7 +44,7 @@ namespace FubuMVC.Core.Runtime
 
             public void ProcessRequest(HttpContext context)
             {
-                _invoker.Invoke(_arguments, _routeData, () => { });
+                _invoker.Invoke(_arguments, _routeData);
             }
 
             public bool IsReusable { get { return false; } }

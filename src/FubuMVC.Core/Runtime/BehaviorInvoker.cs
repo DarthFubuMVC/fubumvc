@@ -20,6 +20,11 @@ namespace FubuMVC.Core.Runtime
             _chain = chain;
         }
 
+        public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues)
+        {
+            Invoke(arguments, routeValues, () => { });
+        }
+
         public void Invoke(ServiceArguments arguments, IDictionary<string, object> routeValues, Action onComplete)
         {
             var currentChain = new CurrentChain(_chain, routeValues);
