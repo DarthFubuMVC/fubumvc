@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
@@ -11,11 +10,10 @@ namespace FubuMVC.Core.Runtime
         {
         }
 
-        protected override void Invoke(IEntrypointActionBehavior behavior, Action onComplete)
+        protected override void Invoke(IEntrypointActionBehavior behavior)
         {
             Task.Factory.StartNew(behavior.Invoke, TaskCreationOptions.AttachedToParent)
-                .ContinueWith(x => behavior.Dispose(), TaskContinuationOptions.AttachedToParent)
-                .ContinueWith(x => onComplete(), TaskContinuationOptions.AttachedToParent);
+                .ContinueWith(x => behavior.Dispose(), TaskContinuationOptions.AttachedToParent);
         }
     }
 }
