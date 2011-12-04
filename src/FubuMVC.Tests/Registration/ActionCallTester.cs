@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
@@ -101,6 +102,14 @@ namespace FubuMVC.Tests.Registration
         public void to_object_def_throws_when_has_no_return_and_no_input()
         {
             action = ActionCall.For<ControllerTarget>(x => x.ZeroInZeroOut());
+            Exception<FubuException>.ShouldBeThrownBy(() => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
+                .ErrorCode.ShouldEqual(1005);
+        }
+
+        [Test]
+        public void to_object_def_throws_when_has_task_with_no_result_and_no_input()
+        {
+            action = ActionCall.For<ControllerTarget>(x => x.ZeroInTaskNoResultOut());
             Exception<FubuException>.ShouldBeThrownBy(() => action.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None))
                 .ErrorCode.ShouldEqual(1005);
         }
@@ -434,6 +443,11 @@ namespace FubuMVC.Tests.Registration
         public string LastNameEntered;
 
         public void ZeroInZeroOut(){}
+
+        public Task ZeroInTaskNoResultOut()
+        {
+            return new Task(() => { });
+        }
 
         public Model1 ZeroInOneOut()
         {
