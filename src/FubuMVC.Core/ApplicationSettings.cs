@@ -11,6 +11,7 @@ namespace FubuMVC.Core
         public ApplicationSettings()
         {
             Port = 5500;
+            ParentFolder = AppDomain.CurrentDomain.BaseDirectory;
         }
 
         public string PhysicalPath { get; set; }
@@ -57,17 +58,59 @@ namespace FubuMVC.Core
 
         public void Write()
         {
-            var file = Name + ".application";
-            file = AppDomain.CurrentDomain.BaseDirectory.AppendPath(file);
+            var file = GetFileName();
 
             new FileSystem().AlterFlatFile(file, list =>
             {
                 list.Clear();
 
-                list.Add("ApplicationSettings.PhysicalPath=" + PhysicalPath);
-                list.Add("ApplicationSettings.PhysicalPath=" + PhysicalPath);
-                list.Add("ApplicationSettings.PhysicalPath=" + PhysicalPath);
+                if (PhysicalPath != null) list.Add("ApplicationSettings.PhysicalPath=" + PhysicalPath);
+                if (ApplicationSourceName != null)
+                    list.Add("ApplicationSettings.ApplicationSourceName=" + ApplicationSourceName);
+                list.Add("ApplicationSettings.Port=" + Port);
+                if (Name != null) list.Add("ApplicationSettings.Name=" + Name);
+                if (RootUrl != null) list.Add("ApplicationSettings.RootUrl=" + RootUrl);
             });
+        }
+
+        
+
+        public string GetFileName()
+        {
+            var file = GetFileNameFor(Name);
+            return ParentFolder.AppendPath(file);
+        }
+
+        public static string GetFileNameFor(string applicationName)
+        {
+            return applicationName + ".application.config";
+        }
+
+        public static ApplicationSettings For<T>() where T : IApplicationSource
+        {
+            return new ApplicationSettings{
+                ApplicationSourceName = typeof(T).AssemblyQualifiedName,
+                Name = typeof(T).Name.Replace("Application", ""),
+                RootUrl = "http://localhost/" + typeof(T).Name.Replace("Application", "").ToLower()
+
+            };
+        }
+
+        public static FileSet FileSearch()
+        {
+            return new FileSet{
+                DeepSearch = true,
+                Include = "*.application.config"
+            };
+        }
+
+        public static FileSet FileSearch(string applicationName)
+        {
+            return new FileSet
+            {
+                DeepSearch = true,
+                Include = GetFileNameFor(applicationName)
+            };
         }
     }
 }

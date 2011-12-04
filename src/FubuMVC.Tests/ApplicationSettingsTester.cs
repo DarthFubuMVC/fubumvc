@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuMVC.Core;
+using KayakTestApplication;
 using NUnit.Framework;
 using FubuTestingSupport;
 
@@ -64,6 +65,31 @@ namespace FubuMVC.Tests
             settings.GetApplicationFolder().ShouldEqual(settings.ParentFolder.AppendPath(settings.PhysicalPath));
 
 
+        }
+
+        [Test]
+        public void generate_default_settings_for_an_application()
+        {
+            var settings1 = ApplicationSettings.For<KayakApplication>();
+            settings1.Name.ShouldEqual("Kayak");
+            settings1.Port.ShouldEqual(5500);
+            settings1.RootUrl.ShouldEqual("http://localhost/kayak");
+            settings1.ApplicationSourceName.ShouldEqual(typeof (KayakApplication).AssemblyQualifiedName);
+        }
+
+        [Test]
+        public void write_and_read()
+        {
+            var settings1 = ApplicationSettings.For<KayakApplication>();
+            settings1.Port = 5501;
+            
+            settings1.Write();
+
+            var settings2 = ApplicationSettings.ReadByName(settings1.Name);
+            settings1.Name.ShouldEqual(settings2.Name);
+            settings1.Port.ShouldEqual(settings2.Port);
+            settings1.RootUrl.ShouldEqual(settings2.RootUrl);
+            settings1.ApplicationSourceName.ShouldEqual(settings2.ApplicationSourceName);
         }
 
 
