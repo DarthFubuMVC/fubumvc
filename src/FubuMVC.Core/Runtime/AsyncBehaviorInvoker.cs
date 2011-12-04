@@ -14,11 +14,8 @@ namespace FubuMVC.Core.Runtime
         protected override void Invoke(IEntrypointActionBehavior behavior, Action onComplete)
         {
             Task.Factory.StartNew(behavior.Invoke, TaskCreationOptions.AttachedToParent)
-            .ContinueWith(x =>
-            {
-                behavior.Dispose();
-                onComplete();
-            }, TaskContinuationOptions.AttachedToParent);
+                .ContinueWith(x => behavior.Dispose(), TaskContinuationOptions.AttachedToParent)
+                .ContinueWith(x => onComplete(), TaskContinuationOptions.AttachedToParent);
         }
     }
 }

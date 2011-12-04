@@ -1,5 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using FubuMVC.Core.Continuations;
+using FubuMVC.HelloSpark.Controllers.Air;
 
 namespace FubuMVC.HelloSpark.Controllers.Earth
 {
@@ -14,8 +16,23 @@ namespace FubuMVC.HelloSpark.Controllers.Earth
         {
             return Task<EarthViewModelAsync>.Factory.StartNew(() =>
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
                 return new EarthViewModelAsync{RawUrl = whereAreWe.RawUrl};
+            }, TaskCreationOptions.AttachedToParent);
+        }
+
+        public Task RockAsyncNoResult(EarthAsyncNoResultInputModel input)
+        {
+            return Task.Factory.StartNew(() => Thread.Sleep(1000), 
+                TaskCreationOptions.AttachedToParent);
+        }
+
+        public Task<FubuContinuation> RockAsyncRedirect()
+        {
+            return Task<FubuContinuation>.Factory.StartNew(() =>
+            {
+                Thread.Sleep(1000);
+                return FubuContinuation.RedirectTo<AirRequest>();
             }, TaskCreationOptions.AttachedToParent);
         }
     }
@@ -31,6 +48,11 @@ namespace FubuMVC.HelloSpark.Controllers.Earth
     }
 
     public class EarthAsyncInputModel
+    {
+        public string RawUrl { get; set; }
+    }
+
+    public class EarthAsyncNoResultInputModel
     {
         public string RawUrl { get; set; }
     }

@@ -54,8 +54,8 @@ namespace FubuMVC.Core.Runtime
 
             public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
             {
-                Task task = null;
-                task = Task.Factory.StartNew(() => _invoker.Invoke(_arguments, _routeData, () => cb(task)));
+                var task = Task.Factory.StartNew(() => _invoker.Invoke(_arguments, _routeData));
+                task.ContinueWith(x => cb(task));
                 return task;
             }
 

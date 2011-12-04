@@ -8,5 +8,9 @@ namespace FubuMVC.Core.Registration.Nodes
         public AsyncContinueWithNode(Type outputType) : base(typeof(AsyncContinueWithBehavior<>).MakeGenericType(outputType))
         {
         }
+
+        public AsyncContinueWithNode() : base(typeof(AsyncContinueWithBehavior))
+        {
+        }
     }
 }

@@ -4,16 +4,36 @@ using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
 {
-    public class AsyncContinueWithBehavior<T> : IActionBehavior where T : class
+    public class AsyncContinueWithBehavior<T> : AsyncContinueWithBehavior where T : class
     {
-        private readonly IFubuRequest _fubuRequest;
-
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner) : base(fubuRequest, inner)
         {
-            _fubuRequest = fubuRequest;
         }
 
-        public IActionBehavior Inner { get; set; }
+        protected override void InnerInvoke(Action<IActionBehavior> behaviorAction)
+        {
+            var task = FubuRequest.Get<Task<T>>();
+            task.ContinueWith(x =>
+            {
+                FubuRequest.Set(task.Result);
+                behaviorAction(Inner);
+            }, TaskContinuationOptions.NotOnFaulted | TaskContinuationOptions.AttachedToParent);
+        }
+    }
+
+    public class AsyncContinueWithBehavior : IActionBehavior
+    {
+        private readonly IFubuRequest _fubuRequest;
+        private readonly IActionBehavior _inner;
+
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner)
+        {
+            _fubuRequest = fubuRequest;
+            _inner = inner;
+        }
+
+        public IFubuRequest FubuRequest { get { return _fubuRequest; } }
+        public IActionBehavior Inner { get { return _inner; } }
 
         public void Invoke()
         {
@@ -25,13 +45,13 @@ namespace FubuMVC.Core.Behaviors
             InnerInvoke(x => x.InvokePartial());
         }
 
-        private void InnerInvoke(Action<IActionBehavior> behaviorAction)
+        protected virtual void InnerInvoke(Action<IActionBehavior> behaviorAction)
         {
-            var task = _fubuRequest.Get<Task<T>>();
+            var task = FubuRequest.Get<Task>();
             task.ContinueWith(x =>
             {
-                _fubuRequest.Set(x.Result);
-                behaviorAction(Inner);
+                if (Inner != null)
+                    behaviorAction(Inner);
             }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
         }
     }
