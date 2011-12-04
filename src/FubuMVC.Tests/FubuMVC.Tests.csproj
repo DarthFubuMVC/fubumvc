@@ -165,6 +165,7 @@
     <Compile Include="Assets\Content\TransformationPolicyComparerTester.cs" />
     <Compile Include="Assets\Content\TransformerPolicyLibraryTester.cs" />
     <Compile Include="Assets\Content\TransformerPolicyTester.cs" />
+    <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />
