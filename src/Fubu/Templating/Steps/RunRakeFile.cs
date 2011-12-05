@@ -19,7 +19,12 @@ namespace Fubu.Templating.Steps
 
         public string Describe(TemplatePlanContext context)
         {
-            return "rake {0}".ToFormat(context.Input.RakeFlag);
+            return "rake {0}".ToFormat(getRakeFile(context));
+        }
+
+        private string getRakeFile(TemplatePlanContext context)
+        {
+            return _fileSystem.GetFullPath(FileSystem.Combine(context.TempDir, context.Input.RakeFlag));
         }
 
         public void Execute(TemplatePlanContext context)
@@ -34,14 +39,15 @@ namespace Fubu.Templating.Steps
                 }
             }
 
+            var rakeFile = getRakeFile(context);
             var rakeProcess = _processFactory
                 .Create(s =>
                             {
                                 s.FileName = "ruby";
                                 s.UseShellExecute = false;
-                                s.WorkingDirectory = context.TempDir;
+                                s.WorkingDirectory = context.TargetPath;
                                 s.EnvironmentVariables.Add("FUBUPROJECTNAME", context.Input.ProjectName);
-                                s.Arguments = "{0} --rakefile {1}".ToFormat(tempFile, context.Input.RakeFlag);
+                                s.Arguments = "{0} --rakefile {1}".ToFormat(tempFile, rakeFile);
                             });
 
             rakeProcess.Start();

@@ -11,33 +11,37 @@ using NUnit.Framework;
 
 namespace FubuMVC.Tests.Templating
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class NewCommandEndToEndTester
     {
         private NewCommand _command;
         private FileSystem _fileSystem;
         private ZipFileService _zipService;
         private NewCommandInput _commandInput;
+        private string tmpDir;
+        private string repoZip;
+        private string solutionFile;
+        private string solutionDir;
+        private string oldContents;
+        private bool _commandResult;
+        private string newSolutionContents;
 
-        [SetUp]
-        public void before_each()
+        [TestFixtureSetUp]
+        public void before_all()
         {
+            // setup
             _command = new NewCommand();
             _fileSystem = new FileSystem();
             _zipService = new ZipFileService(_fileSystem);
             _commandInput = new NewCommandInput();
-        }
 
-        [Test, Explicit]
-        public void clone_git_repo_and_append_to_existing_solution()
-        {
-            var tmpDir = FileSystem.Combine("Templating", Guid.NewGuid().ToString());
-            var repoZip = FileSystem.Combine("Templating", "repo.zip");
+            tmpDir = FileSystem.Combine("Templating", Guid.NewGuid().ToString());
+            repoZip = FileSystem.Combine("Templating", "repo.zip");
             _zipService.ExtractTo(repoZip, tmpDir, ExplodeOptions.DeleteDestination);
 
-            var solutionFile = FileSystem.Combine("Templating", "sample", "myproject.txt");
-            var oldContents = _fileSystem.ReadStringFromFile(solutionFile);
-            var solutionDir = _fileSystem.GetDirectory(solutionFile);
+            solutionFile = FileSystem.Combine("Templating", "sample", "myproject.txt");
+            oldContents = _fileSystem.ReadStringFromFile(solutionFile);
+            solutionDir = _fileSystem.GetDirectory(solutionFile);
 
             _commandInput.GitFlag = "file:///{0}".ToFormat(_fileSystem.GetFullPath(tmpDir).Replace("\\", "/"));
             _commandInput.ProjectName = "MyProject";
@@ -45,10 +49,33 @@ namespace FubuMVC.Tests.Templating
             _commandInput.OutputFlag = solutionDir;
             _commandInput.RakeFlag = "init.rb";
 
-            _command
-                .Execute(_commandInput)
-                .ShouldBeTrue();
+            _commandResult = _command.Execute(_commandInput);
 
+            newSolutionContents = _fileSystem.ReadStringFromFile(solutionFile);
+
+            // auto-rake?
+
+            // file execution via -e? (e.g., cmd, bat, sh)
+        }
+
+        [TestFixtureTearDown]
+        public void after_all()
+        {
+            new DirectoryInfo(tmpDir).SafeDelete();
+            _fileSystem.DeleteDirectory("Templating", "sample", "MyProject");
+            _fileSystem.DeleteDirectory("Templating", "sample", "MyProject.Tests");
+            _fileSystem.WriteStringToFile(solutionFile, oldContents);
+        }
+
+        [Test]
+        public void should_be_successful()
+        {
+            _commandResult.ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_create_projects()
+        {
             _fileSystem
                 .DirectoryExists("Templating", "sample", "MyProject")
                 .ShouldBeTrue();
@@ -64,8 +91,13 @@ namespace FubuMVC.Tests.Templating
             _fileSystem
                 .FileExists("Templating", "sample", "MyProject.Tests", "MyProject.Tests.csproj")
                 .ShouldBeTrue();
+        }
 
-            // .fubuignore
+        [Test]
+        public void should_ignore_files_specified_in_fubuignore()
+        {
+            // these exist in the repo but shouldn't be copied over because they are specified in .fubuignore
+
             _fileSystem
                 .FileExists("Templating", "sample", MoveContent.FubuIgnoreFile)
                 .ShouldBeFalse();
@@ -73,24 +105,28 @@ namespace FubuMVC.Tests.Templating
             _fileSystem
                 .FileExists("Templating", "sample", "ignored.txt")
                 .ShouldBeFalse();
+        }
 
-            _fileSystem
-                .FileExists("Templating", "sample", "MyProject.xml")
-                .ShouldBeTrue();
+        [Test]
+        public void should_invoke_rake_callback()
+        {
+            // written to the file via the rake callback
+            splitSolutionContents()
+                .ShouldContain("Hello, World!");
+        }
 
-            var solutionContents = _fileSystem.ReadStringFromFile(solutionFile);
-
-            // cleanup first
-            var info = new DirectoryInfo(tmpDir);
-            info.SafeDelete();
-            _fileSystem.DeleteDirectory("Templating", "sample", "MyProject");
-            _fileSystem.DeleteDirectory("Templating", "sample", "MyProject.Tests");
-            _fileSystem.WriteStringToFile(solutionFile, oldContents);
-
-            var lines = ((SolutionFileService) _command.SolutionFileService).SplitSolution(solutionContents);
+        [Test]
+        public void should_append_new_projects_to_existing_solution()
+        {
+            var lines = splitSolutionContents();
             var guid = _command.KeywordReplacer.Replace("GUID1");
             lines[2].ShouldEqual("Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"MyProject\", \"MyProject\\MyProject.csproj\", \"{" + guid +  "}\"");
             lines[3].ShouldEqual("EndProject");
+        }
+
+        private string[] splitSolutionContents()
+        {
+            return ((SolutionFileService)_command.SolutionFileService).SplitSolution(newSolutionContents);
         }
     }
 }
