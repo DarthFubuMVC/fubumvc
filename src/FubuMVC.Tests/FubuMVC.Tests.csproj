@@ -319,6 +319,7 @@
     <Compile Include="Resources\ValidStubUrlRegistry.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />
+    <Compile Include="Runtime\AsyncBehaviorInvokerTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\BehaviorInvokerTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />
