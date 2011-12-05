@@ -6,6 +6,7 @@ using Serenity.Fixtures;
 using StoryTeller.Assertions;
 using StoryTeller.Domain;
 using FubuTestingSupport;
+using HtmlTags.Extended.Attributes;
 
 namespace Serenity.Testing.Fixtures
 {
@@ -19,6 +20,13 @@ namespace Serenity.Testing.Fixtures
 
             document.Add(new TextboxTag("disabled", "something").Attr("disabled", true));
             document.Add(new TextboxTag("hidden", "something").Style("display", "none"));
+
+            document.Add(new SelectTag(tag =>
+            {
+                tag.Option("a", "a");
+                tag.Option("b", 2).Id("b");
+                tag.Option("c", 3).Id("c");
+            }).Name("select1"));
         }
 
         private EnterValueGrammar grammarForName(string name)
@@ -33,6 +41,28 @@ namespace Serenity.Testing.Fixtures
             };
 
             return new EnterValueGrammar(def);
+        }
+
+        [Test]
+        public void select_value_in_select_tag_by_display_first()
+        {
+            grammarForName("select1").Execute(new Step().With("data", "b"));
+
+            theDriver.FindElement(By.Name("select1")).FindElement(By.Id("b")).Selected.ShouldBeTrue();
+
+            grammarForName("select1").Execute(new Step().With("data", "c"));
+            theDriver.FindElement(By.Name("select1")).FindElement(By.Id("c")).Selected.ShouldBeTrue();
+        }
+
+        [Test]
+        public void select_value_in_select_tag_by_value_second()
+        {
+            grammarForName("select1").Execute(new Step().With("data", "2"));
+
+            theDriver.FindElement(By.Name("select1")).FindElement(By.Id("b")).Selected.ShouldBeTrue();
+
+            grammarForName("select1").Execute(new Step().With("data", "3"));
+            theDriver.FindElement(By.Name("select1")).FindElement(By.Id("c")).Selected.ShouldBeTrue();
         }
 
         [Test]

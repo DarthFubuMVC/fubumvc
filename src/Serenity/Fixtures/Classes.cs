@@ -25,6 +25,7 @@ namespace Serenity.Fixtures
 
         public void EnterData(IWebElement element, object data)
         {
+
             throw new NotImplementedException();
         }
 
@@ -58,10 +59,44 @@ namespace Serenity.Fixtures
         }
     }
 
+    public class SelectElementHandler : IElementHandler
+    {
+        public bool Matches(IWebElement element)
+        {
+            return element.TagName.ToLower() == "select";
+        }
+
+        public void EnterData(IWebElement element, object data)
+        {
+            foreach (var option in element.FindElements(By.TagName("option")))
+            {
+                if (option.Text == data.ToString())
+                {
+                    option.Click();
+                    return;
+                }
+            }
+
+            foreach (var option in element.FindElements(By.TagName("option")))
+            {
+                if (option.GetAttribute("value") == data.ToString())
+                {
+                    option.Click();
+                    return;
+                }
+            }
+        }
+
+        public string GetData(IWebElement element)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public static class ElementHandlers
     {
         private static readonly IList<IElementHandler> _handlers = new List<IElementHandler>();
-        private static readonly IList<IElementHandler> _defaultHandlers = new List<IElementHandler>{new TextboxElementHandler(), new DefaultElementHandler()};
+        private static readonly IList<IElementHandler> _defaultHandlers = new List<IElementHandler>{new SelectElementHandler(), new TextboxElementHandler(), new DefaultElementHandler()};
 
         public static IList<IElementHandler> Handlers
         {
