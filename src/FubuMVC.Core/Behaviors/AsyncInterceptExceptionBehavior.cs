@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FubuMVC.Core.Behaviors
 {
     public abstract class AsyncInterceptExceptionBehavior<T> : IActionBehavior where T : Exception
     {
-        public IActionBehavior Inner { get; set; }
+        public IActionBehavior InsideBehavior { get; set; }
 
         public void Invoke()
         {
@@ -19,7 +21,10 @@ namespace FubuMVC.Core.Behaviors
 
         private void InnerInvoke(Action<IActionBehavior> behaviorAction)
         {
-            var task = Task.Factory.StartNew(() => behaviorAction(Inner));
+			if (InsideBehavior == null)
+				throw new FubuAssertionException("When intercepting exceptions you must have an inside behavior. Otherwise, there would be nothing to intercept.");
+
+            var task = Task.Factory.StartNew(() => behaviorAction(InsideBehavior));
             task.ContinueWith(x =>
             {
                 try
@@ -27,15 +32,28 @@ namespace FubuMVC.Core.Behaviors
                     //this will allow a catching an exception rather than inspecting task data
                     x.Wait();
                 }
-                catch (T exception)
+                catch (AggregateException e)
                 {
-                    if (!ShouldHandle(exception))
-                        throw;
-                    Handle(exception);
+                    //Multiple exceptions can occur, this will allow behavior chain to handle
+                    //in the same way
+                    var aggregateException = e.Flatten();
+                    var remaining = TryHandle(aggregateException.InnerExceptions);
+                    if(remaining.Any())
+                        throw new AggregateException(remaining);
                 }
             }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.OnlyOnFaulted);
         }
 
+        public IEnumerable<Exception> TryHandle(IEnumerable<Exception> exceptions)
+        {
+            foreach (var exception in exceptions.OfType<T>())
+            {
+                if (ShouldHandle(exception))
+                    Handle(exception);
+                else
+                    yield return exception;
+            }
+        }
 
         public virtual bool ShouldHandle(T exception)
 		{
