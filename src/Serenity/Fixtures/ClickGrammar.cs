@@ -13,6 +13,7 @@ namespace Serenity.Fixtures
     {
         public static readonly string DisabledElementMessage = "Found the element, but it was disabled and could not be clicked";
         public static readonly string HiddenElementMessage = "Found the element, but it was not visible and should not be clicked";
+        public static readonly string NonexistentElementMessage = "Could not find the element";
 
         private readonly Func<IWebElement> _finder;
         private Action _afterClick = () => { };
@@ -43,16 +44,23 @@ namespace Serenity.Fixtures
         public override void Execute(IStep containerStep, ITestContext context)
         {
             if (BeforeClick != null) BeforeClick();
-        
 
-            var element = _finder();
 
-            assertCondition(element.Enabled, DisabledElementMessage);  
-            assertCondition(element.Displayed, HiddenElementMessage);
+            try
+            {
+                var element = _finder();
 
-            element.Click();
+                assertCondition(element.Enabled, DisabledElementMessage);
+                assertCondition(element.Displayed, HiddenElementMessage);
 
-            _afterClick();
+                element.Click();
+
+                _afterClick();
+            }
+            catch (NoSuchElementException)
+            {
+                assertCondition(false, NonexistentElementMessage);
+            }
         }
 
         private void assertCondition(bool condition, string message)

@@ -14,6 +14,7 @@ using TestContext = StoryTeller.Engine.TestContext;
 
 namespace Serenity.Testing.Fixtures
 {
+    [TestFixture]
     public class ClickGrammerTester : ScreenManipulationTester
     {
         protected override void configureDocument(HtmlDocument doc)
@@ -31,6 +32,15 @@ namespace Serenity.Testing.Fixtures
             return new ClickGrammar("Clicking " + id, () => theDriver.FindElement(By.Id(id))){
                 FinderDescription="#" + id
             };
+        }
+
+        [Test]
+        public void click_element_that_does_not_exist_should_throw_descriptive_exception()
+        {
+            Exception<StorytellerAssertionException>.ShouldBeThrownBy(() =>
+            {
+                grammarForId("notexistent").Execute();
+            }).ShouldContainErrorMessage(ClickGrammar.NonexistentElementMessage);
         }
 
         [Test]
@@ -123,6 +133,19 @@ namespace Serenity.Testing.Fixtures
 
             document.WriteToFile("screenfixture.htm");
 
+            try
+            {
+                startDriver();
+            }
+            catch (Exception)
+            {
+                Thread.Sleep(2000);
+                startDriver();
+            }
+        }
+
+        private void startDriver()
+        {
             theDriver = WebDriverSettings.DriverBuilder()();
             theDriver.Navigate().GoToUrl("file:///" + "screenfixture.htm".ToFullPath());
             theFixture = new StubScreenFixture(theDriver);
