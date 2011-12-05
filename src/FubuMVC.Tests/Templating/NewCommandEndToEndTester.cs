@@ -107,8 +107,9 @@ namespace FubuMVC.Tests.Templating
         public void should_invoke_rake_callback()
         {
             // written to the file via the rake callback
+            // FUBU_PROJECT_NAME gets loaded as a constant => fubu new FUBUPROJECTNAME
             splitSolutionContents()
-                .ShouldContain("Hello, World!");
+                .ShouldContain("Hello, {0}".ToFormat(_commandInput.ProjectName));
         }
 
         [Test]

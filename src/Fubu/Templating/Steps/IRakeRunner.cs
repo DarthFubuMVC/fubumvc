@@ -27,10 +27,15 @@ namespace Fubu.Templating.Steps
             var tempFile = FileSystem.Combine(context.TempDir, "{0}.rb".ToFormat(Guid.NewGuid()));
             using (var runner = GetType().Assembly.GetManifestResourceStream(GetType(), "rakerunner.rb"))
             {
-                using (var stream = File.Create(tempFile))
+                using (var fileStream = File.Create(tempFile))
                 {
-                    runner.CopyTo(stream);
-                    stream.Close();
+                    runner.CopyTo(fileStream);
+                    using (var writer = new StreamWriter(fileStream))
+                    {
+                        writer.WriteLine("FUBU_PROJECT_NAME = \"{0}\"".ToFormat(context.Input.ProjectName));
+                        writer.WriteLine("Rake.application.run");
+                        writer.Close();
+                    }
                 }
             }
 
