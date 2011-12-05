@@ -27,7 +27,7 @@ namespace Fubu.Templating.Steps
                                    {
                                        DeepSearch = false,
                                        Include = "*.*",
-                                       Exclude = "*.exe;*.dll;.git;*{0};".ToFormat(FubuIgnoreFile)
+                                       Exclude = "*.exe;*.dll;.git;{0};{1};".ToFormat(FubuIgnoreFile, AutoRunFubuRake.FubuRakeFile)
                                    };
             var fubuIgnore = FileSystem.Combine(context.TempDir, FubuIgnoreFile);
             if(_fileSystem.FileExists(fubuIgnore))
@@ -69,28 +69,6 @@ namespace Fubu.Templating.Steps
                               }
                               _fileSystem.MoveDirectory(directory, destination);
                           });
-
-            var info = new DirectoryInfo(context.TempDir);
-            info.SafeDelete();
-        }
-    }
-
-    public static class DirectoryExtensions
-    {
-        public static void SafeDelete(this FileSystemInfo info)
-        {
-            info.Attributes &= ~FileAttributes.ReadOnly;
-            var d = info as DirectoryInfo;
-            if (d != null)
-            {
-                var files = d.GetFileSystemInfos("*", SearchOption.TopDirectoryOnly);
-                foreach(var f in files)
-                {
-                    f.SafeDelete();
-                }
-            }
-
-            info.Delete();
         }
     }
 }

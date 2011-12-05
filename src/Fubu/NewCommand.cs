@@ -21,6 +21,7 @@ namespace Fubu
             PlanExecutor = new TemplatePlanExecutor(FileSystem);
             SolutionFileService = new SolutionFileService(FileSystem);
             CsProjGatherer = new CsProjGatherer(FileSystem);
+            RakeRunner = new RakeRunner(ProcessFactory, FileSystem);
         }
 
         public IFileSystem FileSystem { get; set; }
@@ -30,6 +31,7 @@ namespace Fubu
         public ITemplatePlanExecutor PlanExecutor { get; set; }
         public ISolutionFileService SolutionFileService { get; set; }
         public ICsProjGatherer CsProjGatherer { get; set; }
+        public IRakeRunner RakeRunner { get; set; }
 
         public override bool Execute(NewCommandInput input)
         {
@@ -46,12 +48,15 @@ namespace Fubu
                 plan.AddStep(new ModifySolution(SolutionFileService, CsProjGatherer));
             }
 
-            if(input.RakeFlag.IsNotEmpty())
+            plan.AddStep(new MoveContent(FileSystem));
+
+            if (input.RakeFlag.IsNotEmpty())
             {
-                plan.AddStep(new RunRakeFile(ProcessFactory, FileSystem));
+                plan.AddStep(new RunRakeFile(FileSystem, RakeRunner));
             }
 
-            plan.AddStep(new MoveContent(FileSystem));
+            plan.AddStep(new AutoRunFubuRake(FileSystem, RakeRunner));
+            plan.AddStep(new RemoveTemporaryContent());
 
             var hasErrors = false;
             PlanExecutor.Execute(input, plan, ctx =>

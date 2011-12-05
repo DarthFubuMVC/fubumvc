@@ -98,8 +98,12 @@
     <Compile Include="Templating\ITemplateStep.cs" />
     <Compile Include="Templating\KeywordReplacer.cs" />
     <Compile Include="Templating\ISolutionFileService.cs" />
+    <Compile Include="Templating\Steps\AutoRunFubuRake.cs" />
     <Compile Include="Templating\Steps\CloneGitRepository.cs" />
+    <Compile Include="Templating\Steps\DirectoryExtensions.cs" />
+    <Compile Include="Templating\Steps\IRakeRunner.cs" />
     <Compile Include="Templating\Steps\MoveContent.cs" />
+    <Compile Include="Templating\Steps\RemoveTemporaryContent.cs" />
     <Compile Include="Templating\Steps\ReplaceKeywords.cs" />
     <Compile Include="Templating\Steps\ModifySolution.cs" />
     <Compile Include="Templating\Steps\RunRakeFile.cs" />

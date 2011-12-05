@@ -52,10 +52,6 @@ namespace FubuMVC.Tests.Templating
             _commandResult = _command.Execute(_commandInput);
 
             newSolutionContents = _fileSystem.ReadStringFromFile(solutionFile);
-
-            // auto-rake?
-
-            // file execution via -e? (e.g., cmd, bat, sh)
         }
 
         [TestFixtureTearDown]
@@ -113,6 +109,22 @@ namespace FubuMVC.Tests.Templating
             // written to the file via the rake callback
             splitSolutionContents()
                 .ShouldContain("Hello, World!");
+        }
+
+        [Test]
+        public void should_invoke_auto_rake_callback()
+        {
+            // .fuburake file is conventionally picked up as a rake callback
+            splitSolutionContents()
+                .ShouldContain("From .fuburake");
+        }
+
+        [Test]
+        public void should_not_copy_fuburake()
+        {
+            _fileSystem
+                .FileExists("Templating", "sample", AutoRunFubuRake.FubuRakeFile)
+                .ShouldBeFalse();
         }
 
         [Test]
