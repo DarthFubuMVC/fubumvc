@@ -1,5 +1,7 @@
+using System.Threading;
 using KayakTestApplication;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using TestContext = StoryTeller.Engine.TestContext;
 using FubuTestingSupport;
 
@@ -11,7 +13,7 @@ namespace Serenity.Testing
         private ApplicationDriver theDriver;
         private InProcessSerenitySystem<KayakApplication> theSystem;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             var context = new TestContext();
@@ -22,7 +24,7 @@ namespace Serenity.Testing
             theDriver = context.Retrieve<ApplicationDriver>();
         }
 
-        [TearDown]
+        [TestFixtureTearDown]
         public void TearDown()
         {
             theSystem.TeardownEnvironment();
@@ -33,6 +35,13 @@ namespace Serenity.Testing
         {
             theDriver.NavigateToHome();
             theDriver.Driver.PageSource.ShouldContain("Hello, it's");
+        }
+
+        [Test]
+        public void can_activate_a_spark_screen_proving_that_the_file_system_paths_are_correct()
+        {
+            theDriver.NavigateToUrl("http://localhost:5500/say/Jeremy");
+            theDriver.Driver.FindElement(By.TagName("h1")).Text.ShouldEqual("My name is Jeremy");
         }
     }
 }

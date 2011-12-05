@@ -80,7 +80,7 @@ namespace FubuMVC.Core
 
             if (Path.IsPathRooted(PhysicalPath)) return PhysicalPath;
 
-            return ParentFolder.ToFullPath().AppendPath(PhysicalPath);
+            return ParentFolder.ToFullPath().AppendPath(PhysicalPath).ToFullPath();
         }
 
         public void Write()

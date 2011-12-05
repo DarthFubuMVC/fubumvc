@@ -3,6 +3,7 @@ using System.Threading;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
+using FubuMVC.Core.Packaging;
 using OpenQA.Selenium;
 using StoryTeller.Engine;
 
@@ -29,14 +30,18 @@ namespace Serenity
 
         public override void SetupEnvironment()
         {
+            var settings = ApplicationSettings.ReadFor<T>();
+            FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
+
             // TODO -- add some diagnostics here
             var runtime = new T().BuildApplication().Bootstrap();
-            var settings = ApplicationSettings.ReadFor<T>();
+            
 
             _listener = new Listener(settings.Port);
             _reset = _listener.StartOnNewThread(runtime, () => { });
 
             settings.RootUrl = "http://localhost:" + settings.Port;
+            
 
             _application = new ApplicationUnderTest(runtime, settings, _browserBuilder);
 
