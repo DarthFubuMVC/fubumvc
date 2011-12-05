@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserFixture.cs" />
+    <Compile Include="debugging.cs" />
+    <Compile Include="InProcessSerenitySystemTester.cs" />
     <Compile Include="Jasmine\PackageSpecificationsTester.cs" />
     <Compile Include="Jasmine\SpecificationGraphIntegratedTester.cs" />
     <Compile Include="Jasmine\SpecificationGraphTester.cs" />
@@ -109,6 +111,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KayakTestApplication\KayakTestApplication.csproj">
+      <Project>{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}</Project>
+      <Name>KayakTestApplication</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serenity\Serenity.csproj">
       <Project>{900A0419-3579-4DAE-85BE-71A3E4B34239}</Project>

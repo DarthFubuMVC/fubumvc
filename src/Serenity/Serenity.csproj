@@ -99,6 +99,7 @@
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
+    <Compile Include="InProcessSerenitySystem.cs" />
     <Compile Include="Jasmine\ConfigFileLoader.cs" />
     <Compile Include="Jasmine\ISpecNode.cs" />
     <Compile Include="Jasmine\ISpecVisitor.cs" />

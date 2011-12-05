@@ -36,10 +36,37 @@ namespace FubuMVC.Core
 
         public static ApplicationSettings ReadByName(string name)
         {
-            var file = name + ".application.config";
-            file = AppDomain.CurrentDomain.BaseDirectory.AppendPath(file);
+            var file = GetFileNameFor(name);
+            var parentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            file = parentDirectory.AppendPath(file);
 
-            return Read(file);
+            if (File.Exists(file))
+            {
+                return Read(file);
+            }
+
+            parentDirectory = parentDirectory.ParentDirectory();
+            file = parentDirectory.AppendPath(file);
+
+            if (File.Exists(file))
+            {
+                return Read(file);
+            }
+
+            parentDirectory = parentDirectory.ParentDirectory();
+            file = parentDirectory.AppendPath(file);
+
+            if (File.Exists(file))
+            {
+                return Read(file);
+            }
+
+            throw new ArgumentOutOfRangeException("Cannot find the requested file for " + GetFileNameFor(name) + " in the current directory or two parents");
+        }
+
+        public static ApplicationSettings ReadFor<T>() where T : IApplicationSource
+        {
+            return ReadByName(typeof (T).Name.Replace("Application", ""));
         }
 
         public string GetApplicationFolder()

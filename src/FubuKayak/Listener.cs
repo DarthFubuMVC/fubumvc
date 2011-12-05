@@ -49,6 +49,22 @@ namespace FubuKayak
             _scheduler.Start();
         }
 
+        public ManualResetEvent StartOnNewThread(FubuRuntime runtime, Action action)
+        {
+            var reset = new ManualResetEvent(false);
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                Start(runtime, () =>
+                {
+                    action();
+                    reset.Set();
+                });
+            });
+
+            return reset;
+        }
+
         public void Stop()
         {
             try
