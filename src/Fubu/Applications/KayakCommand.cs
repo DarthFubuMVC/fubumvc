@@ -25,14 +25,23 @@ namespace Fubu.Applications
         public override bool Execute(KayakInput input)
         {
             var settings = FindSettings(input);
-            if (settings == null) return false;
-
+            if (settings == null)
+            {
+                Console.WriteLine("Unable to determine how to launch the application");
+                return false;
+            }
 
             settings.Port = input.PortFlag;
             var domain = new KayakApplicationDomain();
             var response = domain.Start(settings);
 
             response.WriteReport(settings);
+
+            if (response.Status == ApplicationStartStatus.Started)
+            {
+                Console.WriteLine("Press any key to stop the Kayak listener");
+                Console.ReadLine();
+            }
 
             return true;
         }

@@ -27,7 +27,7 @@ namespace KayakTestApplication
     {
         public string Hello()
         {
-            return "Hello!";
+            return "Hello, it's " + DateTime.Now;
         }
     }
 }

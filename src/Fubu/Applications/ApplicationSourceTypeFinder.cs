@@ -23,16 +23,9 @@ namespace Fubu.Applications
         // TODO -- this is all ripped from StructureMap, but put in FubuCore
         public IEnumerable<Assembly> AssembliesFromApplicationBaseDirectory(Predicate<Assembly> assemblyFilter)
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory.AppendPath(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
 
-            AssembliesFromPath(baseDirectory, assemblyFilter);
-            string binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
-            if (Directory.Exists(binPath))
-            {
-                return AssembliesFromPath(binPath, assemblyFilter);
-            }
-
-            return new Assembly[0];
+            return AssembliesFromPath(baseDirectory, assemblyFilter);
         }
 
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Bottles;
 using FubuKayak;
 using FubuMVC.Core;
@@ -21,7 +22,7 @@ namespace Fubu.Applications
             _sourceFinder = sourceFinder;
         }
 
-        public ApplicationStartResponse StartApplication(ApplicationSettings settings)
+        public ApplicationStartResponse StartApplication(ApplicationSettings settings, ManualResetEvent reset)
         {
             var response = new ApplicationStartResponse();
 
@@ -34,8 +35,10 @@ namespace Fubu.Applications
                 }
                 else
                 {
-                    StartApplication(source, settings);
+                    StartApplication(source, settings, reset);
                     response.ApplicationSourceName = source.GetType().AssemblyQualifiedName;
+
+                    reset.WaitOne();
                     determineBottleFolders(response);
                 }
             }
@@ -46,6 +49,21 @@ namespace Fubu.Applications
             }
 
             return response;
+        }
+
+        public virtual void StartApplication(IApplicationSource source, ApplicationSettings settings, ManualResetEvent reset)
+        {
+            FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
+            _kayakApplication = new FubuKayakApplication(source);
+// Put a thread here
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Need to make this capture the package registry failures cleanly
+                _kayakApplication.RunApplication(settings.Port, r => reset.Set());
+            });
+
+
         }
 
         private static void determineBottleFolders(ApplicationStartResponse response)
@@ -79,14 +97,7 @@ namespace Fubu.Applications
             }
         }
 
-        public virtual void StartApplication(IApplicationSource source, ApplicationSettings settings)
-        {
-            FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
-            _kayakApplication = new FubuKayakApplication(source);
 
-            // Need to make this capture the package registry failures cleanly
-            _kayakApplication.RunApplication(settings.Port, r => { });
-        }
 
 
         public void Dispose()

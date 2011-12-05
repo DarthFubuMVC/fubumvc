@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Fubu.Applications;
 using FubuMVC.Core;
 using FubuTestingSupport;
@@ -26,7 +27,7 @@ namespace FubuMVC.Tests.Applications
                 .Return(null);
 
 
-            theResponse = ClassUnderTest.StartApplication(theSettings);
+            theResponse = ClassUnderTest.StartApplication(theSettings, null);
         }
 
         [Test]
@@ -43,16 +44,18 @@ namespace FubuMVC.Tests.Applications
         private ApplicationSettings theSettings;
         private ApplicationStartResponse theResponse;
         private NotImplementedException theException;
+        private ManualResetEvent theReset;
 
         protected override void beforeEach()
         {
+            theReset = new ManualResetEvent(false);
             theSettings = new ApplicationSettings();
             theSource = MockFor<IApplicationSource>();
 
             theException = new NotImplementedException();
 
             Services.PartialMockTheClassUnderTest();
-            ClassUnderTest.Expect(x => x.StartApplication(theSource, theSettings))
+            ClassUnderTest.Expect(x => x.StartApplication(theSource, theSettings, theReset))
                 .Throw(theException);
 
             MockFor<IApplicationSourceFinder>().Stub(x => x.FindSource(null, null))
@@ -61,7 +64,7 @@ namespace FubuMVC.Tests.Applications
                 .Throw(theException);
 
 
-            theResponse = ClassUnderTest.StartApplication(theSettings);
+            theResponse = ClassUnderTest.StartApplication(theSettings, null);
         }
 
         [Test]
@@ -85,16 +88,17 @@ namespace FubuMVC.Tests.Applications
         private ApplicationSettings theSettings;
         private ApplicationStartResponse theResponse;
         private NotImplementedException theException;
+        private ManualResetEvent theReset;
 
         protected override void beforeEach()
         {
             theSettings = new ApplicationSettings();
             theSource = MockFor<IApplicationSource>();
-
             theException = new NotImplementedException();
 
             Services.PartialMockTheClassUnderTest();
-            ClassUnderTest.Expect(x => x.StartApplication(theSource, theSettings))
+            ClassUnderTest.Expect(x => x.StartApplication(theSource, theSettings, null))
+                .Constraints(Is.Same(theSource), Is.Same(theSettings), Is.TypeOf<ManualResetEvent>())
                 .Throw(theException);
 
             MockFor<IApplicationSourceFinder>().Stub(x => x.FindSource(null, null))
@@ -103,7 +107,7 @@ namespace FubuMVC.Tests.Applications
                 .Return(theSource);
 
 
-            theResponse = ClassUnderTest.StartApplication(theSettings);
+            theResponse = ClassUnderTest.StartApplication(theSettings, new ManualResetEvent(true));
         }
 
         [Test]
@@ -126,14 +130,16 @@ namespace FubuMVC.Tests.Applications
         private IApplicationSource theSource;
         private ApplicationSettings theSettings;
         private ApplicationStartResponse theResponse;
+        private ManualResetEvent theReset;
 
         protected override void beforeEach()
         {
             theSettings = new ApplicationSettings();
             theSource = MockFor<IApplicationSource>();
+            theReset = new ManualResetEvent(true);
 
             Services.PartialMockTheClassUnderTest();
-            ClassUnderTest.Expect(x => x.StartApplication(theSource, theSettings));
+            ClassUnderTest.Expect(x => x.StartApplication(theSource, theSettings, theReset));
 
             MockFor<IApplicationSourceFinder>().Stub(x => x.FindSource(null, null))
                 .Constraints(Is.Same(theSettings),
@@ -141,7 +147,7 @@ namespace FubuMVC.Tests.Applications
                 .Return(theSource);
 
 
-            theResponse = ClassUnderTest.StartApplication(theSettings);
+            theResponse = ClassUnderTest.StartApplication(theSettings, theReset);
         }
 
         [Test]

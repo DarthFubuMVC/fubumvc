@@ -1,8 +1,15 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading;
+using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.OwinHost;
 
 namespace Fubu.Applications
 {
+    
+
     public class KayakApplicationDomain : IApplicationDomain
     {
         private AppDomain _domain;
@@ -20,10 +27,10 @@ namespace Fubu.Applications
             _currentSettings = settings;
 
 
-            return startAppDomain(settings);
+            return createAppDomain(settings);
         }
 
-        private ApplicationStartResponse startAppDomain(ApplicationSettings settings)
+        private ApplicationStartResponse createAppDomain(ApplicationSettings settings)
         {
             var setup = new AppDomainSetup
                         {
@@ -32,7 +39,16 @@ namespace Fubu.Applications
                             ShadowCopyFiles = "true",
                             PrivateBinPath = "bin",
                             ApplicationBase = settings.PhysicalPath
+                            
                         };
+
+            copyAssembly("FubuKayak", setup);
+            copyAssembly<ApplicationRunner>(setup);
+            copyAssembly<FubuOwinHost>(setup);
+            copyAssembly("Kayak", setup);
+            copyAssembly("Gate", setup);
+            copyAssembly("Gate.Helpers", setup);
+            copyAssembly("Gate.Kayak", setup);
 
             Console.WriteLine("Starting a new AppDomain at " + setup.ApplicationBase);
 
@@ -43,12 +59,35 @@ namespace Fubu.Applications
                 (ApplicationRunner)
                 _domain.CreateInstanceAndUnwrap(proxyType.Assembly.FullName, proxyType.FullName);
 
-            var response = _runner.StartApplication(settings);
+            var resetEvent = new ManualResetEvent(false);
+            var response = _runner.StartApplication(settings, resetEvent);
 
-            setupWatchers(settings, response);
+            if (response.Status == ApplicationStartStatus.Started)
+            {
+                setupWatchers(settings, response);
+            }
 
             return response;
         }
+
+        private static void copyAssembly(string name, AppDomainSetup setup)
+        {
+            var assembly = Assembly.Load(name);
+            copyAssembly(assembly, setup);
+        }
+
+        private static void copyAssembly<T>(AppDomainSetup setup)
+        {
+            var assembly = typeof (T).Assembly;
+            copyAssembly(assembly, setup);
+        }
+
+        private static void copyAssembly(Assembly assembly, AppDomainSetup setup)
+        {
+            var assemblyLocation = assembly.Location;
+            new FileSystem().Copy(assemblyLocation, setup.ApplicationBase.AppendPath("bin"));
+        }
+
 
         private void setupWatchers(ApplicationSettings settings, ApplicationStartResponse response)
         {
@@ -81,7 +120,7 @@ namespace Fubu.Applications
         public void RecycleDomain()
         {
             Teardown();
-            var response = startAppDomain(_currentSettings);
+            var response = createAppDomain(_currentSettings);
             response.WriteReport(_currentSettings);
         }
 

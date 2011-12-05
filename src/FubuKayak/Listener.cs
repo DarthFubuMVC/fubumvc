@@ -43,6 +43,7 @@ namespace FubuKayak
 
         public void Start(FubuRuntime runtime, Action action)
         {
+            Console.WriteLine("Starting to listen for requests at http://localhost:" + _listeningEndpoint.Port);
             _kayakListenerDisposer = _server.Listen(_listeningEndpoint);
             _scheduler.Post(() => ThreadPool.QueueUserWorkItem(o => action()));
             _scheduler.Start();
@@ -52,8 +53,9 @@ namespace FubuKayak
         {
             try
             {
-                _scheduler.Stop();
+                Console.WriteLine("Stopping the Kayak scheduler");
 
+                _scheduler.Stop();
             }
             catch (Exception)
             {

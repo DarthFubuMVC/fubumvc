@@ -16,7 +16,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,7 +26,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -87,10 +87,6 @@
     <ProjectReference Include="..\FubuMVC.OwinHost\FubuMVC.OwinHost.csproj">
       <Project>{EA10DF80-FD95-4172-BC18-DB0DFB279844}</Project>
       <Name>FubuMVC.OwinHost</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FubuTestApplication\FubuTestApplication.csproj">
-      <Project>{8FFDBE50-4E00-4940-BC8F-7AF85278B247}</Project>
-      <Name>FubuTestApplication</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

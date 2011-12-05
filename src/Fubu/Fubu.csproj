@@ -47,11 +47,24 @@
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.3.98\lib\FubuCore.dll</HintPath>
     </Reference>
+    <Reference Include="Gate, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
+    </Reference>
+    <Reference Include="Gate.Helpers, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\gate\Gate.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Gate.Kayak, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gate.Kayak.0.1.4\lib\Gate.Kayak.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.51\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Kayak, Version=0.7.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kayak.0.7.2\lib\Kayak.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Engine" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
