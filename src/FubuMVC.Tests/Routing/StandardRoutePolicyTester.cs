@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core;
@@ -41,7 +42,13 @@ namespace FubuMVC.Tests.Routing
         [Test]
         public void it_assigns_routehandler_on_route()
         {
-            _routes.Each(r => r.RouteHandler.ShouldBeOfType<FubuRouteHandler>());
+            _routes.Each(r => r.RouteHandler.ShouldBeOfType<IFubuRouteHandler>());
+        }
+
+        [Test]
+        public void when_returns_task_it_will_use_async_handler()
+        {
+            _routes.Select(r => r.RouteHandler).OfType<FubuAsyncRouteHandler>().ShouldHaveCount(1);
         }
 
         private BehaviorGraph setupActions()
@@ -51,6 +58,7 @@ namespace FubuMVC.Tests.Routing
             registry.Route("a/m2").Calls<Action1>(a => a.M2());
             registry.Route("b/m1").Calls<Action2>(b => b.M1());
             registry.Route("b/m2").Calls<Action2>(b => b.M2());
+            registry.Route("c/m1async").Calls<Action3>(b => b.M1Async());
             return registry.BuildGraph();
         }
 
@@ -80,6 +88,13 @@ namespace FubuMVC.Tests.Routing
         {
             public void M1() { }
             public void M2() { }
+        }
+        public class Action3
+        {
+            public Task<object> M1Async()
+            {
+                return null;
+            }
         }
     }
 }
