@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\styles.css" />
+    <None Include="Controllers\Earth\RockPartialAsync.spark" />
     <None Include="Controllers\Earth\RockAsync.spark" />
     <None Include="Controllers\ThreePassRendering\ThreePassSample.spark" />
     <None Include="Controllers\ThreePassRendering\Shared\Application.spark" />

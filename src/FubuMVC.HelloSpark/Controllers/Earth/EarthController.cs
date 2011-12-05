@@ -35,6 +35,15 @@ namespace FubuMVC.HelloSpark.Controllers.Earth
                 return FubuContinuation.RedirectTo<AirRequest>();
             }, TaskCreationOptions.AttachedToParent);
         }
+
+        public Task<EarthAsyncPartialViewModel> RockPartialAsync(EarthAsyncPartialInputModel input)
+        {
+            return Task<EarthAsyncPartialViewModel>.Factory.StartNew(() =>
+            {
+                Thread.Sleep(1000);
+                return new EarthAsyncPartialViewModel {Message = "Slept for a while and returned partial model"};
+            }, TaskCreationOptions.AttachedToParent);
+        }
     }
 
     public class EarthViewModel
@@ -55,5 +64,14 @@ namespace FubuMVC.HelloSpark.Controllers.Earth
     public class EarthAsyncNoResultInputModel
     {
         public string RawUrl { get; set; }
+    }
+
+    public class EarthAsyncPartialViewModel
+    {
+        public string Message { get; set; }
+    }
+
+    public class EarthAsyncPartialInputModel
+    {
     }
 }

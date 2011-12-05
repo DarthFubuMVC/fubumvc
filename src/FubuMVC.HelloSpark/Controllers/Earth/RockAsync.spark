@@ -12,6 +12,8 @@ ${this.Partial<LocationViewModel>()}
 ${this.Partial<LocationViewModel>()}
 </h1>
 
+${this.Partial<EarthAsyncPartialInputModel>()}
+
 <div>Using DisplayFor: !{this.DisplayFor(m => m.RawUrl)}</div>
 
 <content:footer>That's right baby!</content:footer>
