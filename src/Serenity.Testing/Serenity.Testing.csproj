@@ -98,6 +98,8 @@
   <ItemGroup>
     <Compile Include="BrowserFixture.cs" />
     <Compile Include="debugging.cs" />
+    <Compile Include="Fixtures\ClickGrammerTester.cs" />
+    <Compile Include="Fixtures\EnterDataTester.cs" />
     <Compile Include="Fixtures\ScreenFixtureCommonGrammarsTester.cs" />
     <Compile Include="InProcessSerenitySystemTester.cs" />
     <Compile Include="Jasmine\PackageSpecificationsTester.cs" />

@@ -99,6 +99,7 @@
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
     <Compile Include="Fixtures\Classes.cs" />
     <Compile Include="Fixtures\ClickGrammar.cs" />
+    <Compile Include="Fixtures\EnterValueGrammar.cs" />
     <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="Fixtures\SimpleElementGesture.cs" />
     <Compile Include="IApplicationUnderTest.cs" />

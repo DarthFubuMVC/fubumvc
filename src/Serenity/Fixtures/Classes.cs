@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
 using FubuCore;
-using StoryTeller.Engine;
+using System.Linq;
 
 namespace Serenity.Fixtures
 {
@@ -12,7 +12,7 @@ namespace Serenity.Fixtures
     public interface IElementHandler
     {
         bool Matches(IWebElement element);
-        void EnterData(IWebElement element, string data);
+        void EnterData(IWebElement element, object data);
         string GetData(IWebElement element);
     }
 
@@ -23,10 +23,33 @@ namespace Serenity.Fixtures
             return true;
         }
 
-        public void EnterData(IWebElement element, string data)
+        public void EnterData(IWebElement element, object data)
         {
             throw new NotImplementedException();
-            //element.As<OpenQA.Selenium.>()
+        }
+
+        public string GetData(IWebElement element)
+        {
+            return element.Text;
+        }
+    }
+
+    public class TextboxElementHandler : IElementHandler
+    {
+        public bool Matches(IWebElement element)
+        {
+            // TODO --- Change to psuedo CSS class?  Less repeated logic
+            return element.TagName.ToLower() == "input" && element.GetAttribute("type").ToLower() == "text";
+        }
+
+        public void EnterData(IWebElement element, object data)
+        {
+            while (element.GetAttribute("value").IsNotEmpty())
+            {
+                element.SendKeys(Keys.Backspace);
+            }
+
+            element.SendKeys(data as string ?? string.Empty);
         }
 
         public string GetData(IWebElement element)
@@ -35,20 +58,19 @@ namespace Serenity.Fixtures
         }
     }
 
-    public class EnterValueGrammar : SimpleElementGesture
+    public static class ElementHandlers
     {
-        public EnterValueGrammar(GestureConfig def) : base(def)
+        private static readonly IList<IElementHandler> _handlers = new List<IElementHandler>();
+        private static readonly IList<IElementHandler> _defaultHandlers = new List<IElementHandler>{new TextboxElementHandler(), new DefaultElementHandler()};
+
+        public static IList<IElementHandler> Handlers
         {
+            get { return _handlers; }
         }
 
-        protected override void execute(IWebElement element, IDictionary<string, object> cellValues)
+        public static IElementHandler FindHandler(IWebElement element)
         {
-            throw new NotImplementedException();
-        }
-
-        public override IList<Cell> GetCells()
-        {
-            return new List<Cell>();
+            return _handlers.Union(_defaultHandlers).First(x => x.Matches(element));
         }
     }
 }
