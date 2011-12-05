@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FubuCore;
 using OpenQA.Selenium;
 using StoryTeller.Engine;
 using System.Collections.Generic;
@@ -54,6 +55,16 @@ namespace Serenity.Fixtures
 
                 return _searchContexts.Peek();
             }
+        }
+
+        protected void pushSearchContext(ISearchContext context)
+        {
+            _searchContexts.Push(context);
+        }
+
+        protected void popSearchContext(ISearchContext context)
+        {
+            _searchContexts.Pop();
         }
 
 
