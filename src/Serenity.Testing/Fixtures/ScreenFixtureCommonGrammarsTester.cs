@@ -29,9 +29,13 @@ namespace Serenity.Testing.Fixtures
 
         private ClickGrammar grammarForId(string id)
         {
-            return new ClickGrammar("Clicking " + id, () => theDriver.FindElement(By.Id(id))){
-                FinderDescription="#" + id
+            var config = new GestureConfig{
+                Finder = () => theDriver.FindElement(By.Id(id)),
+                FinderDescription = "#" + id,
+                Template = "Clicking " + id
             };
+
+            return new ClickGrammar(config);
         }
 
         [Test]
@@ -65,21 +69,18 @@ namespace Serenity.Testing.Fixtures
         public void use_location_in_disabled_message_if_it_exists()
         {
             var grammar = grammarForId("disabled");
-            grammar.FinderDescription.IsNotEmpty().ShouldBeTrue();
+            grammar.Config.FinderDescription.IsNotEmpty().ShouldBeTrue();
 
             Exception<StorytellerAssertionException>.ShouldBeThrownBy(() =>
             {
                 grammar.Execute();
-            }).ShouldContainErrorMessage(grammar.FinderDescription);
+            }).ShouldContainErrorMessage(grammar.Config.FinderDescription);
         }
 
         [Test]
         public void check_click_grammar_happy_path()
         {
-            var grammar = new ClickGrammar(
-                "the click grammar",
-                () => theDriver.FindElement(By.Id("happyPath"))){
-                };
+            var grammar = grammarForId("happyPath");
 
             grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
 
@@ -91,11 +92,8 @@ namespace Serenity.Testing.Fixtures
         {
             Action action = () => theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
 
-            var grammar = new ClickGrammar(
-                "the click grammar",
-                () => theDriver.FindElement(By.Id("happyPath"))){
-                    AfterClick = action
-                };
+            var grammar = grammarForId("happyPath");
+            grammar.Config.AfterClick = action;
 
             grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
         }
@@ -103,12 +101,9 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void before_click_is_called_before_trying_to_click()
         {
-            var grammar = new ClickGrammar(
-                "the click grammar",
-                () => theDriver.FindElement(By.Id("happyPath")));
-
+            var grammar = grammarForId("happyPath");
             var wasCalled = false;
-            grammar.BeforeClick = () =>
+            grammar.Config.BeforeClick = () =>
             {
                 wasCalled = true;
                 theDriver.FindElement(By.Id("clickTarget")).Text.ShouldBeEmpty();
