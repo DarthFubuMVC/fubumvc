@@ -1,0 +1,11 @@
+﻿<use namespace="KayakTestApplication" />
+<viewdata model="KayakTestApplication.NameModel" />
+
+<html>
+	<head><title>Saying my name</title></head>
+	<body>
+		<h1>My name is ${Model.Name}</h1>
+
+
+	</body>
+</html>

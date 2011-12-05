@@ -97,6 +97,7 @@
     <Compile Include="Endpoints\EndpointInvocation.cs" />
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
+    <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
     <Compile Include="Jasmine\ConfigFileLoader.cs" />
     <Compile Include="Jasmine\ISpecNode.cs" />

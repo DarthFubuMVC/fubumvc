@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuCore.CommandLine;
@@ -36,6 +37,16 @@ namespace Fubu.Applications
             var response = domain.Start(settings);
 
             response.WriteReport(settings);
+
+            var url = "http://localhost:" + settings.Port;
+            if (input.UrlFlag.IsNotEmpty())
+            {
+                url += input.UrlFlag;
+                url = url.Replace("//", "/");
+            }
+
+            Console.WriteLine("Opening default browser to " + url);
+            Process.Start(url);
 
             if (response.Status == ApplicationStartStatus.Started)
             {
@@ -104,8 +115,8 @@ namespace Fubu.Applications
                 Console.WriteLine(
                     "Did not find any *.application.config file, \nwill try to determine the application source by scanning assemblies");
                 return new ApplicationSettings{
-                    PhysicalPath = input.Location,
-                    ParentFolder = input.Location
+                    PhysicalPath = input.Location.ToFullPath(),
+                    ParentFolder = input.Location.ToFullPath()
                 };
             }
 

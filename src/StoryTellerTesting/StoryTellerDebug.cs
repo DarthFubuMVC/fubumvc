@@ -18,7 +18,7 @@ namespace StoryTellerTestHarness
         [Test]
         public void Invoke_a_Json_endpoint_from_a_package()
         {
-            runner.RunAndAssertTest("Packaging/Zip File Mechanics/Invoke a Json endpoint from a package from Zip");
+            runner.RunAndAssertTest("Assets/Loading Scripts/Load configuration from a package");
         }
 
         [TestFixtureTearDown]

@@ -2,6 +2,7 @@ using System;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using StructureMap;
+using FubuMVC.Spark;
 
 namespace KayakTestApplication
 {
@@ -20,7 +21,19 @@ namespace KayakTestApplication
         public KayakRegistry()
         {
             Route("").Calls<SayHelloController>(x => x.Hello());
+
+            Actions.IncludeClassesSuffixedWithController();
+            this.UseSpark();
+
+            IncludeDiagnostics(true);
+
+            Views.TryToAttachWithDefaultConventions();
         }
+    }
+
+    public class NameModel
+    {
+        public string Name { get; set; }
     }
 
     public class SayHelloController
@@ -28,6 +41,11 @@ namespace KayakTestApplication
         public string Hello()
         {
             return "Hello, it's " + DateTime.Now;
+        }
+
+        public NameModel get_say_Name(NameModel model)
+        {
+            return model;
         }
     }
 }

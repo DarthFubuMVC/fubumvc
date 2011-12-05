@@ -11,7 +11,7 @@ using StructureMap;
 
 namespace IntegrationTesting
 {
-    public class FubuTestApplicationSource : IApplicationSource
+    public class FubuTestApplication : IApplicationSource
     {
         public FubuApplication BuildApplication()
         {
@@ -34,7 +34,7 @@ namespace IntegrationTesting
 
         public FubuSystem()
         {
-            AddApplication<FubuTestApplicationSource>();
+            AddApplication<FubuTestApplication>();
         }
 
         public override object Get(Type type)

@@ -5,6 +5,11 @@ using StoryTeller.Engine;
 
 namespace Serenity
 {
+    public class InProcessSerenitySystem : SerenitySystem
+    {
+        
+    }
+
     public class SerenitySystem : BasicSystem
     {
         private readonly SerenityApplications _applications = new SerenityApplications();
