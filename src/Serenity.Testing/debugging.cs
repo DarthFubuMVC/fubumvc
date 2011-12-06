@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using System.Threading;
 using FubuMVC.Core;
 using KayakTestApplication;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using TestContext = StoryTeller.Engine.TestContext;
 
 namespace Serenity.Testing
@@ -31,6 +33,12 @@ namespace Serenity.Testing
             Thread.Sleep(5000);
 
             system.TeardownEnvironment();
+        }
+
+        [Test]
+        public void what_does_by_to_string_look_like()
+        {
+            Debug.WriteLine(By.ClassName("something"));
         }
     }
 }

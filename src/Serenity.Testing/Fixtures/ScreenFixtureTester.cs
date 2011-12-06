@@ -6,6 +6,7 @@ using HtmlTags;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Serenity.Fixtures;
+using Serenity.Fixtures.Grammars;
 using Serenity.Fixtures.Handlers;
 using StoryTeller;
 using System.Linq;
@@ -23,8 +24,62 @@ namespace Serenity.Testing.Fixtures
         protected override void configureDocument(HtmlDocument document)
         {
             document.Add("input").Attr("type", "text").Name("Direction");
+            document.Add("input").Attr("type", "text").Name("Blank")
+                .Attr("onclick", "document.getElementById('clickTarget').innerHTML = 'clicked'");
+
+            document.Add("div").Id("clickTarget");
+            document.Add("button").Id("happyPath").Text("Hey there!").Attr("onclick", "document.getElementById('clickTarget').innerHTML = 'clicked'");
 
         }
+
+        [Test]
+        public void exercise_click_by_specific_selector()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            fixture.PushElementContext(theDriver);
+
+            var grammar = fixture.Click(selector: By.Id("happyPath"));
+            grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
+
+            theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
+        }
+
+        [Test]
+        public void exercise_click_by_id()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            fixture.PushElementContext(theDriver);
+
+            var grammar = fixture.Click(id: "happyPath");
+            grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
+
+            theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
+        }
+
+        [Test]
+        public void exercise_click_by_name()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            fixture.PushElementContext(theDriver);
+
+            var grammar = fixture.Click(name: "Blank");
+            grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
+
+            theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
+        }
+
+        [Test]
+        public void exercise_click_by_css()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            fixture.PushElementContext(theDriver);
+
+            var grammar = fixture.Click(css: "#happyPath");
+            grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
+
+            theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
+        }
+
 
         [Test]
         public void exercise_enter_value_grammar()
@@ -77,6 +132,37 @@ namespace Serenity.Testing.Fixtures
     public class ScreenFixtureTester
     {
 
+    }
+
+    [TestFixture]
+    public class when_creating_a_click_grammar
+    {
+        [Test]
+        public void by_css_no_label_no_template()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            var grammar = fixture.Click(css: ".big").As<ClickGrammar>();
+
+            grammar.Template.ShouldEqual("Click CssSelector: .big");
+        }
+
+        [Test]
+        public void by_css_with_a_label_but_no_template()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            var grammar = fixture.Click(css: ".big", label:"the big thing").As<ClickGrammar>();
+
+            grammar.Template.ShouldEqual("Click the big thing");
+        }
+
+        [Test]
+        public void by_css_with_a_template()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            var grammar = fixture.Click(css: ".big", template: "launch the something").As<ClickGrammar>();
+
+            grammar.Template.ShouldEqual("launch the something");
+        }
     }
 
     [TestFixture]

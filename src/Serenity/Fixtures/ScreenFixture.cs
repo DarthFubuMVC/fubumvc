@@ -39,7 +39,24 @@ namespace Serenity.Fixtures
             }
         }
 
-        
+        public IGrammar Click(By selector = null, string id = null, string css = null, string name = null, string label = null, string template = null)
+        {
+            var by = selector ?? id.ById() ?? css.ByCss() ?? name.ByName();
+
+            if (by == null) throw new InvalidOperationException("Must specify either the selector, css, or name property");
+
+            label = label ?? by.ToString().Replace("By.", "");
+
+            var config = new GestureConfig
+            {
+                Template = template ?? "Click " + label,
+                Description = "Click " + label,
+                Finder = () => SearchContext.FindElement(by),
+                FinderDescription = by.ToString()
+            };
+
+            return new ClickGrammar(config);
+        }
 
         public void PushElementContext(ISearchContext context)
         {
@@ -95,13 +112,35 @@ namespace Serenity.Fixtures
 
             config.Template = "The text of " + config.Label + " should be {" + config.CellName + "}";
             config.Description = "Check data for property " + expression.ToAccessor().Name;
-
+            
             return new CheckValueGrammar(config);
         }
+
+
 
         public GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
         {
             return GestureConfig.ByProperty(() => SearchContext, expression);
         }
+
+    }
+
+    public static class WebDriverExtensions
+    {
+        public static By ByCss(this string css)
+        {
+            return css.IsEmpty() ? null : By.CssSelector(css);
+        } 
+
+        public static By ByName(this string name)
+        {
+            return name.IsEmpty() ? null : By.Name(name);
+        }
+
+        public static By ById(this string id)
+        {
+            return id.IsEmpty() ? null : By.Id(id);
+        }
+
     }
 }
