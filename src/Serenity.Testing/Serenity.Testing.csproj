@@ -37,8 +37,11 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.3.98\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore, Version=0.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FubuCore.0.9.3.101\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FubuLocalization.0.9.3.101\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.3.98\lib\FubuTestingSupport.dll</HintPath>
@@ -101,8 +104,9 @@
     <Compile Include="Fixtures\Grammars\CheckValueGrammarTester.cs" />
     <Compile Include="Fixtures\Grammars\ClickGrammerTester.cs" />
     <Compile Include="Fixtures\Grammars\EnterValueGrammarTester.cs" />
-    <Compile Include="Fixtures\Grammars\ScreenFixtureCommonGrammarsTester.cs" />
+    <Compile Include="Fixtures\ScreenFixtureCommonGrammarsTester.cs" />
     <Compile Include="Fixtures\Handlers\SelectElementHandlerTester.cs" />
+    <Compile Include="Fixtures\ScreenFixtureTester.cs" />
     <Compile Include="InProcessSerenitySystemTester.cs" />
     <Compile Include="Jasmine\PackageSpecificationsTester.cs" />
     <Compile Include="Jasmine\SpecificationGraphIntegratedTester.cs" />

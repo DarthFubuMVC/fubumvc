@@ -37,8 +37,11 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.3.98\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore, Version=0.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FubuCore.0.9.3.101\lib\FubuCore.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FubuLocalization.0.9.3.101\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="Gate">
       <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
@@ -97,6 +100,8 @@
     <Compile Include="Endpoints\EndpointInvocation.cs" />
     <Compile Include="Endpoints\HttpResponse.cs" />
     <Compile Include="Endpoints\WebRequestResponseExtensions.cs" />
+    <Compile Include="Fixtures\DateTimeExtensions.cs" />
+    <Compile Include="Fixtures\Grammars\GestureConfig.cs" />
     <Compile Include="Fixtures\Handlers\BasicMatchingHandler.cs" />
     <Compile Include="Fixtures\Grammars\CheckValueGrammar.cs" />
     <Compile Include="Fixtures\Grammars\ClickGrammar.cs" />

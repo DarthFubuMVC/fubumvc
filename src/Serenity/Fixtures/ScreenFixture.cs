@@ -1,36 +1,18 @@
 using System;
 using System.Collections;
+using System.Linq.Expressions;
 using FubuCore;
+using FubuLocalization;
 using OpenQA.Selenium;
+using Serenity.Fixtures.Grammars;
+using StoryTeller;
 using StoryTeller.Engine;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore.Reflection;
 
 namespace Serenity.Fixtures
 {
-    public static class DateTimeExtensions
-    {
-        public static TimeSpan Minutes(this int number)
-        {
-            return new TimeSpan(0, 0, number, 0);
-        }
-
-        public static TimeSpan Hours(this int number)
-        {
-            return new TimeSpan(0, number, 0, 0);
-        }
-
-        public static TimeSpan Days(this int number)
-        {
-            return new TimeSpan(number, 0, 0, 0);
-        }
-
-        public static TimeSpan Seconds(this int number)
-        {
-            return new TimeSpan(0, 0, number);
-        }
-    }
-
     public class ScreenFixture : Fixture
     {
         private IApplicationUnderTest _application;
@@ -57,12 +39,14 @@ namespace Serenity.Fixtures
             }
         }
 
-        protected void pushSearchContext(ISearchContext context)
+        
+
+        public void PushElementContext(ISearchContext context)
         {
             _searchContexts.Push(context);
         }
 
-        protected void popSearchContext(ISearchContext context)
+        protected void PopElementContext(ISearchContext context)
         {
             _searchContexts.Pop();
         }
@@ -77,5 +61,47 @@ namespace Serenity.Fixtures
         
     }
 
-    public class ScreenFixture<T> : ScreenFixture{}
+    public class ScreenFixture<T> : ScreenFixture
+    {
+        public IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        {
+            label = label ?? LocalizationManager.GetHeader(expression);
+
+            // TODO -- later on, use the naming convention from fubu instead of pretending
+            // that this rule is always true
+            var config = GestureForProperty(expression);
+            if (key.IsNotEmpty())
+            {
+                config.CellName = key;
+            }
+
+            config.Template = "Enter {" + config.CellName + "} for " + label;
+            config.Description = "Enter data for property " + expression.ToAccessor().Name;
+
+            return new EnterValueGrammar(config);
+        }
+
+        public IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        {
+            label = label ?? LocalizationManager.GetHeader(expression);
+
+            // TODO -- later on, use the naming convention from fubu instead of pretending
+            // that this rule is always true
+            var config = GestureForProperty(expression);
+            if (key.IsNotEmpty())
+            {
+                config.CellName = key;
+            }
+
+            config.Template = "The text of " + label + " should be {" + config.CellName + "}";
+            config.Description = "Check data for property " + expression.ToAccessor().Name;
+
+            return new CheckValueGrammar(config);
+        }
+
+        public GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
+        {
+            return GestureConfig.ByProperty(() => SearchContext, expression);
+        }
+    }
 }
