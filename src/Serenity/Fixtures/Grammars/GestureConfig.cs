@@ -16,6 +16,7 @@ namespace Serenity.Fixtures.Grammars
         public Action BeforeClick = () => { };
         public Action AfterClick = () => { };
         public string FinderDescription;
+        public string Label = string.Empty;
 
         public static GestureConfig ByName(Func<ISearchContext> findContext, string name)
         {
@@ -26,7 +27,8 @@ namespace Serenity.Fixtures.Grammars
                     return context.FindElement(By.Name(name)) ?? context.FindElement(By.Id(name));
                 },
                 FinderDescription = "Name/Id = '{0}'".ToFormat(name),
-                CellName = name
+                CellName = name,
+                Label = name
             };
         }
 

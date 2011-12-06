@@ -63,10 +63,8 @@ namespace Serenity.Fixtures
 
     public class ScreenFixture<T> : ScreenFixture
     {
-        public IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        private GestureConfig getGesture(Expression<Func<T, object>> expression, string label = null, string key = null)
         {
-            label = label ?? LocalizationManager.GetHeader(expression);
-
             // TODO -- later on, use the naming convention from fubu instead of pretending
             // that this rule is always true
             var config = GestureForProperty(expression);
@@ -75,7 +73,17 @@ namespace Serenity.Fixtures
                 config.CellName = key;
             }
 
-            config.Template = "Enter {" + config.CellName + "} for " + label;
+            config.Label = label ?? LocalizationManager.GetHeader(expression);
+
+            return config;
+        }
+
+
+        public IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        {
+            var config = getGesture(expression, label, key);
+
+            config.Template = "Enter {" + config.CellName + "} for " + config.Label;
             config.Description = "Enter data for property " + expression.ToAccessor().Name;
 
             return new EnterValueGrammar(config);
@@ -83,17 +91,9 @@ namespace Serenity.Fixtures
 
         public IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
         {
-            label = label ?? LocalizationManager.GetHeader(expression);
+            var config = getGesture(expression, label, key);
 
-            // TODO -- later on, use the naming convention from fubu instead of pretending
-            // that this rule is always true
-            var config = GestureForProperty(expression);
-            if (key.IsNotEmpty())
-            {
-                config.CellName = key;
-            }
-
-            config.Template = "The text of " + label + " should be {" + config.CellName + "}";
+            config.Template = "The text of " + config.Label + " should be {" + config.CellName + "}";
             config.Description = "Check data for property " + expression.ToAccessor().Name;
 
             return new CheckValueGrammar(config);
