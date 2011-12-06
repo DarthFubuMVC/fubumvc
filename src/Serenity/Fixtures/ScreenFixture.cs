@@ -6,6 +6,7 @@ using FubuLocalization;
 using OpenQA.Selenium;
 using Serenity.Fixtures.Grammars;
 using StoryTeller;
+using StoryTeller.Assertions;
 using StoryTeller.Engine;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,14 @@ namespace Serenity.Fixtures
         public void PushElementContext(ISearchContext context)
         {
             _searchContexts.Push(context);
+        }
+
+        public void PushElementContext(By selector)
+        {
+            var element = SearchContext.FindElement(selector);
+            StoryTellerAssert.Fail(element == null, () => "Unable to find element with " + selector);
+
+            PushElementContext(element);
         }
 
         protected void PopElementContext(ISearchContext context)
@@ -121,25 +130,6 @@ namespace Serenity.Fixtures
         public GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
         {
             return GestureConfig.ByProperty(() => SearchContext, expression);
-        }
-
-    }
-
-    public static class WebDriverExtensions
-    {
-        public static By ByCss(this string css)
-        {
-            return css.IsEmpty() ? null : By.CssSelector(css);
-        } 
-
-        public static By ByName(this string name)
-        {
-            return name.IsEmpty() ? null : By.Name(name);
-        }
-
-        public static By ById(this string id)
-        {
-            return id.IsEmpty() ? null : By.Id(id);
         }
 
     }

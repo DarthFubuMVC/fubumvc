@@ -114,6 +114,7 @@
     <Compile Include="Fixtures\ScreenFixture.cs" />
     <Compile Include="Fixtures\Handlers\SelectElementHandler.cs" />
     <Compile Include="Fixtures\Grammars\SimpleElementGesture.cs" />
+    <Compile Include="Fixtures\WebDriverExtensions.cs" />
     <Compile Include="IApplicationUnderTest.cs" />
     <Compile Include="InProcessSerenitySystem.cs" />
     <Compile Include="Jasmine\ConfigFileLoader.cs" />
