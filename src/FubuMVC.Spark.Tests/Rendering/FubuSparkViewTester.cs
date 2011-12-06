@@ -1,3 +1,5 @@
+using System;
+using System.Web;
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -94,6 +96,23 @@ namespace FubuMVC.Spark.Tests.Rendering
             _serviceLocator.Expect(x => x.GetInstance(typeof (IHtmlEncoder))).Return(new DefaultHtmlEncoder());
             ClassUnderTest.H("<div>").ShouldEqual("&lt;div&gt;");
             _serviceLocator.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void html_does_not_encode_value()
+        {
+            const string encodedValue = "&lt;div&gt;";
+            var result = ClassUnderTest.HTML(encodedValue);
+            result.ToString().ShouldEqual(encodedValue);
+            result.ToHtmlString().ShouldEqual(encodedValue);
+        }
+
+        [Test]
+        public void html_handles_null_value()
+        {
+            var result = ClassUnderTest.HTML(null);
+            result.ToString().ShouldEqual(null);
+            result.ToHtmlString().ShouldEqual(null);
         }
 
         [Test]
