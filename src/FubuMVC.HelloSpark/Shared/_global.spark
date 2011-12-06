@@ -2,3 +2,4 @@
 <use namespace="FubuMVC.HelloSpark.Controllers.Water" />
 <use namespace="FubuMVC.HelloSpark.Controllers.Earth" />
 <use namespace="FubuMVC.HelloSpark.Controllers.Location" />
+<use namespace="FubuMVC.HelloSpark.Controllers.Sleep" />

@@ -1,0 +1,5 @@
+﻿<viewdata model="FubuMVC.HelloSpark.Controllers.Sleep.PartialSleepViewModel" />
+
+<h1>
+    ${Model.Message}
+</h1>

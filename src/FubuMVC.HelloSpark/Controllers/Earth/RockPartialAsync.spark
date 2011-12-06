@@ -1,5 +1,0 @@
-﻿<viewdata model="FubuMVC.HelloSpark.Controllers.Earth.EarthAsyncPartialViewModel" />
-
-<h1>
-    ${Model.Message}
-</h1>
