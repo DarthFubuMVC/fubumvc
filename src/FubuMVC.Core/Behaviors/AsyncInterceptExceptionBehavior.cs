@@ -46,12 +46,13 @@ namespace FubuMVC.Core.Behaviors
 
         public IEnumerable<Exception> TryHandle(IEnumerable<Exception> exceptions)
         {
-            foreach (var exception in exceptions.OfType<T>())
+            foreach (var ex in exceptions)
             {
-                if (ShouldHandle(exception))
+                var exception = ex as T;
+                if (exception != null && ShouldHandle(exception))
                     Handle(exception);
                 else
-                    yield return exception;
+                    yield return ex;
             }
         }
 
