@@ -6,7 +6,7 @@ namespace FubuMVC.Core.Behaviors
 {
     public class AsyncContinueWithBehavior<T> : AsyncContinueWithBehavior where T : class
     {
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner) : base(fubuRequest, inner)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest) : base(fubuRequest)
         {
         }
 
@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Behaviors
             task.ContinueWith(x =>
             {
                 FubuRequest.Set(task.Result);
-                behaviorAction(Inner);
+                behaviorAction(InsideBehavior);
             }, TaskContinuationOptions.NotOnFaulted | TaskContinuationOptions.AttachedToParent);
         }
     }
@@ -24,16 +24,14 @@ namespace FubuMVC.Core.Behaviors
     public class AsyncContinueWithBehavior : IActionBehavior
     {
         private readonly IFubuRequest _fubuRequest;
-        private readonly IActionBehavior _inner;
 
-        public AsyncContinueWithBehavior(IFubuRequest fubuRequest, IActionBehavior inner)
+        public AsyncContinueWithBehavior(IFubuRequest fubuRequest)
         {
             _fubuRequest = fubuRequest;
-            _inner = inner;
         }
 
         public IFubuRequest FubuRequest { get { return _fubuRequest; } }
-        public IActionBehavior Inner { get { return _inner; } }
+        public IActionBehavior InsideBehavior { get; set; }
 
         public void Invoke()
         {
@@ -50,8 +48,8 @@ namespace FubuMVC.Core.Behaviors
             var task = FubuRequest.Get<Task>();
             task.ContinueWith(x =>
             {
-                if (Inner != null)
-                    behaviorAction(Inner);
+                if (InsideBehavior != null)
+                    behaviorAction(InsideBehavior);
             }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.NotOnFaulted);
         }
     }
