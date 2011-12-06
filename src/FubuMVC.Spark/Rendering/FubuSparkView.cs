@@ -56,6 +56,11 @@ namespace FubuMVC.Spark.Rendering
         {
             return Get<IHtmlEncoder>().Encode(value);
         }
+
+        public HtmlString HTML(object value)
+        {
+            return new HtmlString(value != null ? value.ToString() : null);
+        }
     }
 
     public abstract class FubuSparkView<TViewModel> : FubuSparkView, IFubuPage<TViewModel> where TViewModel : class
