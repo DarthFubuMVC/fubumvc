@@ -130,7 +130,7 @@ namespace FubuMVC.Core.Http.AspNet
                 yield return key;
             }
 
-            foreach (var key in request.Form.AllKeys)
+            foreach (var key in request.Form.AllKeys.Where(x => x != null))
             {
                 yield return key;
             }
