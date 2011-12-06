@@ -415,7 +415,120 @@ namespace FubuMVC.Tests.Registration
         }
     }
 
-  
+    [TestFixture]
+    public class when_building_the_invocation_for_one_model_in_task_with_no_output_out : InvocationBuildingContext
+    {
+        public when_building_the_invocation_for_one_model_in_task_with_no_output_out()
+            : base(x => x.OneInTaskWithNoOutputOut(null))
+        {
+        }
+
+        [Test]
+        public void should_have_a_dependency_for_the_function()
+        {
+            theObjectDef.Dependencies.Count().ShouldEqual(1);
+            IDependency dependency = theObjectDef.Dependencies.First();
+
+            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Model1, Task>));
+        }
+
+        [Test]
+        public void the_dependency_function_invokes_the_correct_function()
+        {
+            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
+                .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Task>>();
+
+            var target = new ControllerTarget();
+            var task = func(target, new Model1
+            {
+                Name = "Corey"
+            });
+            task.RunSynchronously();
+
+            target.LastNameEntered.ShouldEqual("Corey");
+        }
+
+        [Test]
+        public void the_type_should_be_OMIOMO()
+        {
+            theObjectDef.Type.ShouldEqual(typeof (OneInOneOutActionInvoker<ControllerTarget, Model1, Task>));
+        }
+    }
+
+    [TestFixture]
+    public class when_building_the_invocation_for_zero_model_in_task_with_output_out : InvocationBuildingContext
+    {
+        public when_building_the_invocation_for_zero_model_in_task_with_output_out()
+            : base(x => x.ZeroInTaskWithOutputOut())
+        {
+        }
+
+        [Test]
+        public void should_have_a_dependency_for_the_function()
+        {
+            theObjectDef.Dependencies.Count().ShouldEqual(1);
+            IDependency dependency = theObjectDef.Dependencies.First();
+
+            dependency.DependencyType.ShouldEqual(typeof (Func<ControllerTarget, Task<Model2>>));
+        }
+
+        [Test]
+        public void the_dependency_function_invokes_the_correct_function()
+        {
+            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
+                .Value.ShouldBeOfType<Func<ControllerTarget, Task<Model2>>>();
+
+            var target = new ControllerTarget();
+            var task = func(target);
+            task.RunSynchronously(); 
+            task.Result.Name.ShouldEqual("ZeroInTaskWithOutputOut");
+        }
+
+        [Test]
+        public void the_type_should_be_OMIOMO()
+        {
+            theObjectDef.Type.ShouldEqual(typeof (ZeroInOneOutActionInvoker<ControllerTarget, Task<Model2>>));
+        }
+    }
+
+    [TestFixture]
+    public class when_building_the_invocation_for_one_model_in_one_task_with_model_out : InvocationBuildingContext
+    {
+        public when_building_the_invocation_for_one_model_in_one_task_with_model_out()
+            : base(x => x.OneInTaskWithOutputOut(null))
+        {
+        }
+
+        [Test]
+        public void should_have_a_dependency_for_the_function()
+        {
+            theObjectDef.Dependencies.Count().ShouldEqual(1);
+            IDependency dependency = theObjectDef.Dependencies.First();
+
+            dependency.DependencyType.ShouldEqual(typeof(Func<ControllerTarget, Model1, Task<Model2>>));
+        }
+
+        [Test]
+        public void the_dependency_function_invokes_the_correct_function()
+        {
+            var func = theObjectDef.Dependencies.First().ShouldBeOfType<ValueDependency>()
+                .Value.ShouldBeOfType<Func<ControllerTarget, Model1, Task<Model2>>>();
+
+            var target = new ControllerTarget();
+            var task = func(target, new Model1
+            {
+                Name = "Corey"
+            });
+            task.RunSynchronously();
+            task.Result.Name.ShouldEqual("Corey");
+        }
+
+        [Test]
+        public void the_type_should_be_OMIOMO()
+        {
+            theObjectDef.Type.ShouldEqual(typeof(OneInOneOutActionInvoker<ControllerTarget, Model1, Task<Model2>>));
+        }
+    }
 
     public class ValidActionWithOneMethod
     {
@@ -447,6 +560,21 @@ namespace FubuMVC.Tests.Registration
         public Task ZeroInTaskNoResultOut()
         {
             return new Task(() => { });
+        }
+
+        public Task<Model2> OneInTaskWithOutputOut(Model1 input)
+        {
+            return new Task<Model2>(() => new Model2{Name = input.Name});
+        }
+
+        public Task<Model2> ZeroInTaskWithOutputOut()
+        {
+            return new Task<Model2>(() => new Model2{Name = "ZeroInTaskWithOutputOut"});
+        }
+
+        public Task OneInTaskWithNoOutputOut(Model1 input)
+        {
+            return new Task(() => { LastNameEntered = input.Name; });
         }
 
         public Model1 ZeroInOneOut()
