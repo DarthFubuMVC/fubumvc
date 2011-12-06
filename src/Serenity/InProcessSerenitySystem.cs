@@ -24,31 +24,41 @@ namespace Serenity
 
         public override void RegisterServices(ITestContext context)
         {
-            context.Store<IApplicationUnderTest>(_application);
-            context.Store(new ApplicationDriver(_application));
+            if (_application != null)
+            {
+                context.Store<IApplicationUnderTest>(_application);
+                context.Store(new ApplicationDriver(_application));
+            }
         }
 
-        public override void SetupEnvironment()
+        public sealed override void Setup()
         {
-            var settings = ApplicationSettings.ReadFor<T>();
-            FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
+            if (_application == null)
+            {
+                var settings = ApplicationSettings.ReadFor<T>();
+                FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
 
-            // TODO -- add some diagnostics here
-            var runtime = new T().BuildApplication().Bootstrap();
-            
+                // TODO -- add some diagnostics here
+                var runtime = new T().BuildApplication().Bootstrap();
 
-            _listener = new Listener(settings.Port);
-            _reset = _listener.StartOnNewThread(runtime, () => { });
 
-            settings.RootUrl = "http://localhost:" + settings.Port;
-            
+                _listener = new Listener(settings.Port);
+                _reset = _listener.StartOnNewThread(runtime, () => { });
 
-            _application = new ApplicationUnderTest(runtime, settings, _browserBuilder);
+                settings.RootUrl = "http://localhost:" + settings.Port;
 
-            _reset.WaitOne();
+                _application = new ApplicationUnderTest(runtime, settings, _browserBuilder);
+
+                _reset.WaitOne();
+            }
+
+            beforeExecutingTest(_application);
         }
 
-
+        protected virtual void beforeExecutingTest(ApplicationUnderTest application)
+        {
+                
+        }
 
         public T Get<T>()
         {
@@ -84,9 +94,12 @@ namespace Serenity
 
         public override void TeardownEnvironment()
         {
-            _application.Teardown();
-            _listener.Stop();
-            _listener.SafeDispose();
+            if (_application != null) _application.Teardown();
+            if (_listener != null)
+            {
+                _listener.Stop();
+                _listener.SafeDispose();
+            }
         }
     }
 }

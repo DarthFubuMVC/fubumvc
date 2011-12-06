@@ -131,7 +131,23 @@ namespace Serenity.Testing.Fixtures
     [TestFixture]
     public class ScreenFixtureTester
     {
+        [Test]
+        public void editable_element_adds_check_value_grammar()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            fixture.EditableElement(x => x.Direction);
 
+            fixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
+        }
+
+        [Test]
+        public void editable_element_adds_enter_value_grammar()
+        {
+            var fixture = new ScreenFixture<ViewModel>();
+            fixture.EditableElement(x => x.Direction);
+
+            fixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
+        }
     }
 
     [TestFixture]

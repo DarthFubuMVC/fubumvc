@@ -18,7 +18,7 @@ namespace Serenity.Testing
         {
             var context = new TestContext();
             theSystem = new InProcessSerenitySystem<KayakApplication>();
-            theSystem.SetupEnvironment();
+            theSystem.Setup();
             theSystem.RegisterServices(context);
 
             theDriver = context.Retrieve<ApplicationDriver>();

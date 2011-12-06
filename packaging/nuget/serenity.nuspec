@@ -16,8 +16,32 @@
     </dependencies>
   </metadata>
   <files>
+
+    <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\*.exe" target="lib\net40" />
+
+    <file src="..\..\src\SerenityRunner\bin\release\FubuKayak.*" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\FubuMVC.OwinHost.*" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\Kayak.*" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\Gate.*" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\Gate.Kayak.*" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\Gate.Helpers.*" target="lib\net40" />
+
+
+
+
+
     <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\*.exe" target="tools" />
+
+    <file src="..\..\src\SerenityRunner\bin\release\FubuKayak.*" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\FubuMVC.OwinHost.*" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\Kayak.*" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\Gate.*" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\Gate.Kayak.*" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\Gate.Helpers.*" target="tools" />
+
   </files>
 </package>

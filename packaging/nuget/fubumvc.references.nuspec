@@ -25,6 +25,15 @@
     <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
 
     <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
+
+    <file src="..\..\src\fubu\bin\release\FubuKayak.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\FubuMVC.OwinHost.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\Kayak.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\Gate.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\Gate.Kayak.*" target="tools" />
+    <file src="..\..\src\fubu\bin\release\Gate.Helpers.*" target="tools" />
+
+
     <file src="..\..\src\fubu\bin\release\FubuCore.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuMVC.Core.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\StructureMap.dll" target="tools" />	

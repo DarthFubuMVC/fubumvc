@@ -19,11 +19,16 @@ namespace Serenity.Fixtures
         private IApplicationUnderTest _application;
         private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
 
-        public override void SetUp(ITestContext context)
+        public sealed override void SetUp(ITestContext context)
         {
             // TODO -- later, make this thing be able to swap up the application under test
             _application = context.Retrieve<IApplicationUnderTest>();
-            
+
+            beforeRunning();
+        }
+
+        protected virtual void beforeRunning()
+        {
         }
 
         // TODO -- we'll need to push/pop this stuff shortly
@@ -84,6 +89,11 @@ namespace Serenity.Fixtures
             get { return _application; }
         }
 
+        public IWebDriver Driver
+        {
+            get { return _application.Driver; }
+        }
+
         
     }
 
@@ -131,6 +141,17 @@ namespace Serenity.Fixtures
         {
             return GestureConfig.ByProperty(() => SearchContext, expression);
         }
+
+        public void EditableElement(Expression<Func<T, object>> expression, string label = null)
+        {
+            var accessor = expression.ToAccessor();
+            var name = accessor.Name;
+
+            this["Check" + name] = CheckScreenValue(expression, label);
+            this["Enter" + name] = EnterScreenValue(expression, label);
+        }
+
+        //public void EditableElements(params)
 
     }
 }
