@@ -98,9 +98,11 @@
   <ItemGroup>
     <Compile Include="BrowserFixture.cs" />
     <Compile Include="debugging.cs" />
-    <Compile Include="Fixtures\ClickGrammerTester.cs" />
-    <Compile Include="Fixtures\EnterDataTester.cs" />
-    <Compile Include="Fixtures\ScreenFixtureCommonGrammarsTester.cs" />
+    <Compile Include="Fixtures\Grammars\CheckValueGrammarTester.cs" />
+    <Compile Include="Fixtures\Grammars\ClickGrammerTester.cs" />
+    <Compile Include="Fixtures\Grammars\EnterValueGrammarTester.cs" />
+    <Compile Include="Fixtures\Grammars\ScreenFixtureCommonGrammarsTester.cs" />
+    <Compile Include="Fixtures\Handlers\SelectElementHandlerTester.cs" />
     <Compile Include="InProcessSerenitySystemTester.cs" />
     <Compile Include="Jasmine\PackageSpecificationsTester.cs" />
     <Compile Include="Jasmine\SpecificationGraphIntegratedTester.cs" />
