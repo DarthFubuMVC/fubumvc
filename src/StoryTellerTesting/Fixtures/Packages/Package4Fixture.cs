@@ -1,4 +1,4 @@
-﻿using FubuMVC.Core.Diagnostics.Querying;
+using FubuMVC.Core.Diagnostics.Querying;
 using OpenQA.Selenium;
 using Serenity;
 using StoryTeller;
@@ -9,12 +9,12 @@ namespace IntegrationTesting.Fixtures.Packages
     public class Package4Fixture : Fixture
     {
         private readonly RemoteBehaviorGraph _remoteGraph;
-        private readonly ApplicationDriver _application;
+        private readonly NavigationDriver _navigation;
 
-		public Package4Fixture(RemoteBehaviorGraph remoteGraph, ApplicationDriver application)
+		public Package4Fixture(RemoteBehaviorGraph remoteGraph, NavigationDriver navigation)
         {
             _remoteGraph = remoteGraph;
-            _application = application;
+            _navigation = navigation;
 
             Title = "For TestPackage4 - Spark (Assembly 'TestPackage4')";
 
@@ -24,13 +24,13 @@ namespace IntegrationTesting.Fixtures.Packages
         [FormatAs("Open the browser to {url}")]
         public void OpenPage(string url)
         {
-            _application.NavigateTo(url);
+            _navigation.NavigateTo(url);
         }
 
         [FormatAs("The text of the 'message' h1 in the page should be {message}")]
         public string TextOfMessageHeadingShouldBe()
         {
-            return _application.Driver.FindElement(By.Id("message")).Text;
+            return _navigation.Driver.FindElement(By.Id("message")).Text;
         }
     }
 }

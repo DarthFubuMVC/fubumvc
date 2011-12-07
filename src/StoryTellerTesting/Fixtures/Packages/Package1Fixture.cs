@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FubuMVC.Core.Diagnostics.Querying;
 using OpenQA.Selenium;
 using Serenity;
@@ -11,12 +11,12 @@ namespace IntegrationTesting.Fixtures.Packages
     public class Package1Fixture : Fixture
     {
         private readonly RemoteBehaviorGraph _remoteGraph;
-        private readonly ApplicationDriver _application;
+        private readonly NavigationDriver _navigation;
 
-        public Package1Fixture(RemoteBehaviorGraph remoteGraph, ApplicationDriver application)
+        public Package1Fixture(RemoteBehaviorGraph remoteGraph, NavigationDriver navigation)
         {
             _remoteGraph = remoteGraph;
-            _application = application;
+            _navigation = navigation;
 
             Title = "For TestPackage1 (Assembly 'TestPackage1')";
         }
@@ -36,7 +36,7 @@ namespace IntegrationTesting.Fixtures.Packages
                 Name = name
             };
 
-            var httpResponse = _application.GetEndpointDriver().PostJson(message);
+            var httpResponse = _navigation.GetEndpointDriver().PostJson(message);
             
             var response= httpResponse.ReadAsJson<JsonSerializedMessage>();
 
@@ -47,19 +47,19 @@ namespace IntegrationTesting.Fixtures.Packages
         public bool InvokeStringEndpoint()
         {
             var url = "http://localhost/fubu-testing/testpackage1/string/sayhello";
-            return _application.GetEndpointDriver().GetHtml(url).Source() == "Hello";
+            return _navigation.GetEndpointDriver().GetHtml(url).Source() == "Hello";
         }
 
         [FormatAs("Open the browser to {url}")]
         public void OpenPage(string url)
         {
-            _application.NavigateToUrl(url);
+            _navigation.NavigateToUrl(url);
         }
 
         [FormatAs("The text of the 'name' span in the page should be {name}")]
         public string TextOfNameElementShouldBe()
         {
-            return _application.Driver.FindElement(By.Id("name")).Text;
+            return _navigation.Driver.FindElement(By.Id("name")).Text;
         }
     }
 }

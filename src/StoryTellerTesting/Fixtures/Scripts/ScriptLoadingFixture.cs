@@ -10,11 +10,11 @@ namespace IntegrationTesting.Fixtures.Scripts
 {
     public class ScriptLoadingFixture : Fixture
     {
-        private readonly ApplicationDriver _application;
+        private readonly NavigationDriver _navigation;
 
-        public ScriptLoadingFixture(ApplicationDriver application)
+        public ScriptLoadingFixture(NavigationDriver navigation)
         {
-            _application = application;
+            _navigation = navigation;
             this["SetUp"] = Embed<PackagingSetupFixture>("If the packaging setup is");
         }
 
@@ -24,12 +24,12 @@ namespace IntegrationTesting.Fixtures.Scripts
             var request = new ScriptRequest{
                 Mandatories = scriptNames.Join(",")
             };
-            _application.NavigateTo(request);
+            _navigation.NavigateTo(request);
         }
 
         private IEnumerable<string> getLoadedScriptNames()
         {
-            return _application.GetCurrentScreen().GetAssetDeclarations().Scripts.Select(x => x.GetAttribute("src").Replace("http://localhost", ""));
+            return _navigation.GetCurrentScreen().GetAssetDeclarations().Scripts.Select(x => x.GetAttribute("src").Replace("http://localhost", ""));
         }
 
         public IGrammar TheScriptsShouldBe()
@@ -40,7 +40,7 @@ namespace IntegrationTesting.Fixtures.Scripts
         [FormatAs("A 'Get' to url {url} contains the text {content}")]
         public bool RequestContainsString(string url, string content)
         {
-            return _application.GetEndpointDriver().GetHtml(url).Source().Contains(content);
+            return _navigation.GetEndpointDriver().GetHtml(url).Source().Contains(content);
         }
     }
 }

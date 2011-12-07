@@ -18,7 +18,7 @@ namespace Serenity.Jasmine
         private readonly ManualResetEvent _reset = new ManualResetEvent(false);
         private SerenityJasmineApplication _application;
         private ApplicationUnderTest _applicationUnderTest;
-        private ApplicationDriver _driver;
+        private NavigationDriver _driver;
         private FubuKayakApplication _kayak;
         private Thread _kayakLoop;
         private AssetFileWatcher _watcher;
@@ -160,7 +160,7 @@ namespace Serenity.Jasmine
 
             _applicationUnderTest = new ApplicationUnderTest(_application, applicationSettings, browserBuilder);
 
-            _driver = new ApplicationDriver(_applicationUnderTest);
+            _driver = new NavigationDriver(_applicationUnderTest);
         }
     }
 

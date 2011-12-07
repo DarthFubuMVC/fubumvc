@@ -26,7 +26,7 @@ namespace Serenity.Testing
             system.SetupEnvironment();
             system.RegisterServices(context);
 
-            var driver = context.Retrieve<ApplicationDriver>();
+            var driver = context.Retrieve<NavigationDriver>();
 
             driver.NavigateToHome();
 

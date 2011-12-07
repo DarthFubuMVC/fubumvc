@@ -34,7 +34,7 @@ namespace Serenity
             if (_application != null)
             {
                 context.Store<IApplicationUnderTest>(_application);
-                context.Store(new ApplicationDriver(_application));
+                context.Store(new NavigationDriver(_application));
             }
         }
 

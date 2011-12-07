@@ -48,6 +48,20 @@ namespace Serenity.Testing.FakeSystem
             testResult.Counts.ShouldEqual(1, 0, 0, 0); 
         }
 
+
+        [Test]
+        public void run_more_complicated_test_negative()
+        {
+            var test = new Test("Try it");
+            var section = Section.For<NameScreenFixture>()
+                .WithStep("GoTo", "name:Jeremy")
+                .WithStep("CheckName", "Name:Max");
+            test.Add(section);
+
+            var testResult = theRunner.RunTest(test);
+            testResult.Counts.ShouldEqual(0, 1, 0, 0);
+        }
+
         [TestFixtureTearDown]
         public void Teardown()
         {
@@ -66,7 +80,7 @@ namespace Serenity.Testing.FakeSystem
         public void GoTo(string name)
         {
             // Add to ScreenFixture
-            var driver = new ApplicationDriver(Application);
+            var driver = new NavigationDriver(Application);
             driver.NavigateTo(new TextModel{Name = name});
         }
     }

@@ -16,7 +16,7 @@ namespace IntegrationTesting.Fixtures.Scripts
     public class AssetsFixture : Fixture
     {
         private Cache<string, string> _assetContents;
-        private Serenity.ApplicationDriver _driver;
+        private Serenity.NavigationDriver _driver;
 
         public IGrammar IfTheAssetsAre()
         {
@@ -25,7 +25,7 @@ namespace IntegrationTesting.Fixtures.Scripts
 
         public override void SetUp(ITestContext context)
         {
-            _driver = context.Retrieve<Serenity.ApplicationDriver>();
+            _driver = context.Retrieve<Serenity.NavigationDriver>();
             _endpoints = _driver.GetEndpointDriver();
 
             _assetContents = new Cache<string, string>(file =>

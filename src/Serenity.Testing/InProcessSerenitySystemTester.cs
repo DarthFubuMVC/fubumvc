@@ -10,7 +10,7 @@ namespace Serenity.Testing
     [TestFixture]
     public class InProcessSerenitySystemTester
     {
-        private ApplicationDriver theDriver;
+        private NavigationDriver theDriver;
         private InProcessSerenitySystem<KayakApplication> theSystem;
 
         [TestFixtureSetUp]
@@ -21,7 +21,7 @@ namespace Serenity.Testing
             theSystem.Setup();
             theSystem.RegisterServices(context);
 
-            theDriver = context.Retrieve<ApplicationDriver>();
+            theDriver = context.Retrieve<NavigationDriver>();
         }
 
         [TestFixtureTearDown]

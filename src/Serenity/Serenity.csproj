@@ -92,7 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDriver.cs" />
+    <Compile Include="NavigationDriver.cs" />
     <Compile Include="ApplicationUnderTest.cs" />
     <Compile Include="BrowserType.cs" />
     <Compile Include="Endpoints\EndpointDriver.cs" />
