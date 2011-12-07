@@ -32,13 +32,18 @@ namespace Serenity.Testing.Fixtures
 
         }
 
+
+
+        private IGrammar grammarNamed(string name)
+        {
+            var fixture = new FakeFixture(theDriver);
+            return fixture[name];
+        }
+
         [Test]
         public void exercise_click_by_specific_selector()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
-
-            var grammar = fixture.Click(selector: By.Id("happyPath"));
+            var grammar = grammarNamed("selector");
             grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
 
             theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
@@ -47,10 +52,7 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void exercise_click_by_id()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
-
-            var grammar = fixture.Click(id: "happyPath");
+            var grammar = grammarNamed("id");
             grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
 
             theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
@@ -59,10 +61,7 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void exercise_click_by_name()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
-
-            var grammar = fixture.Click(name: "Blank");
+            var grammar = grammarNamed("name");
             grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
 
             theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
@@ -71,23 +70,21 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void exercise_click_by_css()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
-
-            var grammar = fixture.Click(css: "#happyPath");
+            var grammar = grammarNamed("css");
             grammar.Execute().Counts.ShouldEqual(0, 0, 0, 0);
 
             theDriver.FindElement(By.Id("clickTarget")).Text.ShouldEqual("clicked");
         }
 
 
+
+
         [Test]
         public void exercise_enter_value_grammar()
         {
             var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
 
-            theGrammar = fixture.EnterScreenValue(x => x.Direction);
+            theGrammar = grammarNamed("EnterDirection");
 
             theGrammar.Execute(new Step().With("Direction", "North"));
 
@@ -98,10 +95,7 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void exercise_enter_value_grammar_with_overriden_key()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
-
-            theGrammar = fixture.EnterScreenValue(x => x.Direction, key:"dir");
+            theGrammar = grammarNamed("EnterDirection2");
 
             theGrammar.Execute(new Step().With("dir", "North"));
 
@@ -109,14 +103,30 @@ namespace Serenity.Testing.Fixtures
                 .GetAttribute("value").ShouldEqual("North");
         }
 
+        public class FakeFixture : ScreenFixture<ViewModel>
+        {
+
+            public FakeFixture(ISearchContext context)
+            {
+                PushElementContext(context);
+
+                this["selector"] = Click(selector: By.Id("happyPath"));
+                this["css"] = Click(css: "#happyPath");
+                this["id"] = Click(id: "happyPath");
+                this["name"] = Click(name: "Blank");
+
+                this["EnterDirection"] = EnterScreenValue(x => x.Direction);
+                this["EnterDirection2"] = EnterScreenValue(x => x.Direction, key: "dir");
+                this["CheckDirection"] = CheckScreenValue(x => x.Direction);
+            }
+        }
+
         [Test]
         public void exercise_check_value_grammar()
         {
             new TextboxElementHandler().EnterData(theDriver.FindElement(By.Name("Direction")), "South");
 
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.PushElementContext(theDriver);
-            var grammar = fixture.CheckScreenValue(x => x.Direction);
+            var grammar = grammarNamed("CheckDirection");
 
             grammar.Execute(new Step().With("Direction", "South"))
                 .Counts.ShouldEqual(1, 0, 0, 0);
@@ -131,33 +141,52 @@ namespace Serenity.Testing.Fixtures
     [TestFixture]
     public class ScreenFixtureTester
     {
+        private TheFixture theFixture;
+
+        public class TheFixture : ScreenFixture<ViewModel>
+        {
+            public TheFixture()
+            {
+                EditableElement(x => x.Direction);
+            }
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            theFixture = new TheFixture();
+        }
+
         [Test]
         public void editable_element_adds_check_value_grammar()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.EditableElement(x => x.Direction);
-
-            fixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
+            theFixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
         }
 
         [Test]
         public void editable_element_adds_enter_value_grammar()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            fixture.EditableElement(x => x.Direction);
-
-            fixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
+            theFixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
         }
     }
 
     [TestFixture]
     public class when_creating_a_click_grammar
     {
+        public class ClickFixture : ScreenFixture
+        {
+            public ClickFixture()
+            {
+                this["click1"] = Click(css: ".big").As<ClickGrammar>();
+                this["click2"] = Click(css: ".big", label: "the big thing");
+                this["click3"] = Click(css: ".big", template: "launch the something");
+            }
+        }
+
         [Test]
         public void by_css_no_label_no_template()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            var grammar = fixture.Click(css: ".big").As<ClickGrammar>();
+            var grammar = new ClickFixture()["click1"].As<ClickGrammar>();
 
             grammar.Template.ShouldEqual("Click CssSelector: .big");
         }
@@ -165,8 +194,7 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void by_css_with_a_label_but_no_template()
         {
-            var fixture = new ScreenFixture<ViewModel>();
-            var grammar = fixture.Click(css: ".big", label:"the big thing").As<ClickGrammar>();
+            var grammar = new ClickFixture()["click2"].As<ClickGrammar>();
 
             grammar.Template.ShouldEqual("Click the big thing");
         }
@@ -175,7 +203,7 @@ namespace Serenity.Testing.Fixtures
         public void by_css_with_a_template()
         {
             var fixture = new ScreenFixture<ViewModel>();
-            var grammar = fixture.Click(css: ".big", template: "launch the something").As<ClickGrammar>();
+            var grammar = new ClickFixture()["click3"].As<ClickGrammar>();
 
             grammar.Template.ShouldEqual("launch the something");
         }
@@ -186,6 +214,14 @@ namespace Serenity.Testing.Fixtures
     {
         private LineGrammar theGrammar;
 
+        public class CheckGrammarFixture : ScreenFixture<ViewModel>
+        {
+            public CheckGrammarFixture()
+            {
+                this["CheckDirection"] = CheckScreenValue(x => x.Direction);
+            }
+        }
+
         [SetUp]
         public void SetUp()
         {
@@ -193,7 +229,7 @@ namespace Serenity.Testing.Fixtures
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             LocalizationManager.Stub();
 
-            theGrammar = new ScreenFixture<ViewModel>().CheckScreenValue(x => x.Direction) as LineGrammar;
+            theGrammar = new CheckGrammarFixture()["CheckDirection"] as LineGrammar;
         }
 
         [Test]
@@ -220,14 +256,22 @@ namespace Serenity.Testing.Fixtures
     {
         private LineGrammar theGrammar;
 
+        public class EnterGrammarFixture : ScreenFixture<ViewModel>
+        {
+            public EnterGrammarFixture()
+            {
+                this["EnterDirection"] = EnterScreenValue(x => x.Direction);
+            }
+        }
+
         [SetUp]
         public void SetUp()
         {
             // Leave this here!
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             LocalizationManager.Stub();
-            
-            theGrammar = new ScreenFixture<ViewModel>().EnterScreenValue(x => x.Direction) as LineGrammar;
+
+            theGrammar = new EnterGrammarFixture()["EnterDirection"] as LineGrammar;
         }
 
         [Test]

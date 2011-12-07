@@ -118,6 +118,12 @@ task :unit_test => :compile do
   runner.executeTests ['FubuMVC.Tests', 'FubuMVC.WebForms.Testing', 'FubuMVC.Spark.Tests']
 end
 
+desc "Runs the unit tests for Serenity"
+task :serenity_test => :compile do
+  runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
+  runner.executeTests ['Serenity.Testing']
+end
+
 
 desc "Runs the StoryTeller suite of end to end tests.  IIS must be running first"
 task :storyteller => [:compile] do

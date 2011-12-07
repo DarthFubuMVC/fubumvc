@@ -104,6 +104,7 @@
     <Compile Include="Fixtures\Grammars\CheckValueGrammarTester.cs" />
     <Compile Include="Fixtures\Grammars\ClickGrammerTester.cs" />
     <Compile Include="Fixtures\Grammars\EnterValueGrammarTester.cs" />
+    <Compile Include="FakeSystem\IntegratedTester.cs" />
     <Compile Include="Fixtures\ScreenFixtureCommonGrammarsTester.cs" />
     <Compile Include="Fixtures\Handlers\SelectElementHandlerTester.cs" />
     <Compile Include="Fixtures\ScreenFixtureTester.cs" />
@@ -120,6 +121,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
+      <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
+      <Name>FubuMVC.StructureMap</Name>
     </ProjectReference>
     <ProjectReference Include="..\KayakTestApplication\KayakTestApplication.csproj">
       <Project>{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}</Project>

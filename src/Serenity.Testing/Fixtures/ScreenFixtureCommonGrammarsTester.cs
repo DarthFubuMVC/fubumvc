@@ -12,7 +12,7 @@ using TestContext = StoryTeller.Engine.TestContext;
 
 namespace Serenity.Testing.Fixtures
 {
-    public abstract class ScreenManipulationTester
+    public abstract class ScreenManipulationTester : ScreenFixture
     {
         [SetUp]
         public void SetUp()

@@ -3,13 +3,15 @@ using System.Threading;
 using FubuCore;
 using FubuKayak;
 using FubuMVC.Core;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.Registration.ObjectGraph;
 using OpenQA.Selenium;
 using StoryTeller.Engine;
 
 namespace Serenity
 {
-    public class InProcessSerenitySystem<T> : BasicSystem where T : IApplicationSource, new()
+    public class InProcessSerenitySystem<TSystem> : BasicSystem where TSystem : IApplicationSource, new()
     {
         private readonly Func<IWebDriver> _browserBuilder;
         private Listener _listener;
@@ -20,6 +22,11 @@ namespace Serenity
         public InProcessSerenitySystem()
         {
             _browserBuilder = WebDriverSettings.DriverBuilder();
+        }
+
+        protected virtual ApplicationSettings findApplicationSettings()
+        {
+            return ApplicationSettings.ReadFor<TSystem>();
         }
 
         public override void RegisterServices(ITestContext context)
@@ -35,12 +42,14 @@ namespace Serenity
         {
             if (_application == null)
             {
-                var settings = ApplicationSettings.ReadFor<T>();
+                var settings = findApplicationSettings();
                 FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
 
                 // TODO -- add some diagnostics here
-                var runtime = new T().BuildApplication().Bootstrap();
-
+                var runtime = new TSystem().BuildApplication().Bootstrap();
+                runtime.Facility.Register(typeof (ICurrentHttpRequest), ObjectDef.ForValue(new StubCurrentHttpRequest(){
+                    ApplicationRoot = "http://localhost:" + settings.Port
+                }));
 
                 _listener = new Listener(settings.Port);
                 _reset = _listener.StartOnNewThread(runtime, () => { });
@@ -67,7 +76,13 @@ namespace Serenity
 
         public override object Get(Type type)
         {
-            var getter = typeof(Getter<>).CloseAndBuildAs<IGetter>(_application);
+            if (type == typeof(IApplicationUnderTest))
+            {
+                return _application;
+            }
+            
+            var getterType = typeof (Getter<>).MakeGenericType(type);
+            var getter = Activator.CreateInstance(getterType, _application).As<IGetter>();
 
             return getter.Get();
         }
@@ -92,7 +107,7 @@ namespace Serenity
             }
         }
 
-        public override void TeardownEnvironment()
+        public sealed override void TeardownEnvironment()
         {
             if (_application != null) _application.Teardown();
             if (_listener != null)
@@ -100,6 +115,13 @@ namespace Serenity
                 _listener.Stop();
                 _listener.SafeDispose();
             }
+
+            shutDownSystem();
+        }
+
+        protected virtual void shutDownSystem()
+        {
+            
         }
     }
 }

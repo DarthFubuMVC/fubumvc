@@ -31,8 +31,7 @@ namespace Serenity.Fixtures
         {
         }
 
-        // TODO -- we'll need to push/pop this stuff shortly
-        public ISearchContext SearchContext
+        protected ISearchContext SearchContext
         {
             get
             {
@@ -45,7 +44,7 @@ namespace Serenity.Fixtures
             }
         }
 
-        public IGrammar Click(By selector = null, string id = null, string css = null, string name = null, string label = null, string template = null)
+        protected IGrammar Click(By selector = null, string id = null, string css = null, string name = null, string label = null, string template = null)
         {
             var by = selector ?? id.ById() ?? css.ByCss() ?? name.ByName();
 
@@ -64,12 +63,12 @@ namespace Serenity.Fixtures
             return new ClickGrammar(config);
         }
 
-        public void PushElementContext(ISearchContext context)
+        protected void PushElementContext(ISearchContext context)
         {
             _searchContexts.Push(context);
         }
 
-        public void PushElementContext(By selector)
+        protected void PushElementContext(By selector)
         {
             var element = SearchContext.FindElement(selector);
             StoryTellerAssert.Fail(element == null, () => "Unable to find element with " + selector);
@@ -84,12 +83,12 @@ namespace Serenity.Fixtures
 
 
 
-        public IApplicationUnderTest Application
+        protected IApplicationUnderTest Application
         {
             get { return _application; }
         }
 
-        public IWebDriver Driver
+        protected IWebDriver Driver
         {
             get { return _application.Driver; }
         }
@@ -115,7 +114,7 @@ namespace Serenity.Fixtures
         }
 
 
-        public IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        protected IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
         {
             var config = getGesture(expression, label, key);
 
@@ -125,7 +124,7 @@ namespace Serenity.Fixtures
             return new EnterValueGrammar(config);
         }
 
-        public IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        protected IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
         {
             var config = getGesture(expression, label, key);
 
@@ -137,12 +136,12 @@ namespace Serenity.Fixtures
 
 
 
-        public GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
+        protected GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
         {
             return GestureConfig.ByProperty(() => SearchContext, expression);
         }
 
-        public void EditableElement(Expression<Func<T, object>> expression, string label = null)
+        protected void EditableElement(Expression<Func<T, object>> expression, string label = null)
         {
             var accessor = expression.ToAccessor();
             var name = accessor.Name;
