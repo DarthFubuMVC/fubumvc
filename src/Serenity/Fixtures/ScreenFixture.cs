@@ -1,35 +1,22 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuLocalization;
 using OpenQA.Selenium;
 using Serenity.Fixtures.Grammars;
 using StoryTeller;
 using StoryTeller.Assertions;
 using StoryTeller.Engine;
-using System.Collections.Generic;
-using System.Linq;
-using FubuCore.Reflection;
 
 namespace Serenity.Fixtures
 {
     public class ScreenFixture : Fixture
     {
-        private IApplicationUnderTest _application;
         private readonly Stack<ISearchContext> _searchContexts = new Stack<ISearchContext>();
-
-        public sealed override void SetUp(ITestContext context)
-        {
-            // TODO -- later, make this thing be able to swap up the application under test
-            _application = context.Retrieve<IApplicationUnderTest>();
-
-            beforeRunning();
-        }
-
-        protected virtual void beforeRunning()
-        {
-        }
+        private IApplicationUnderTest _application;
 
         protected ISearchContext SearchContext
         {
@@ -44,16 +31,44 @@ namespace Serenity.Fixtures
             }
         }
 
-        protected IGrammar Click(By selector = null, string id = null, string css = null, string name = null, string label = null, string template = null)
+        protected IApplicationUnderTest Application
+        {
+            get { return _application; }
+        }
+
+        protected NavigationDriver Navigation
+        {
+            get { return new NavigationDriver(_application); }
+        }
+
+        protected IWebDriver Driver
+        {
+            get { return _application.Driver; }
+        }
+
+        public override sealed void SetUp(ITestContext context)
+        {
+            // TODO -- later, make this thing be able to swap up the application under test
+            _application = context.Retrieve<IApplicationUnderTest>();
+
+            beforeRunning();
+        }
+
+        protected virtual void beforeRunning()
+        {
+        }
+
+        protected IGrammar Click(By selector = null, string id = null, string css = null, string name = null,
+                                 string label = null, string template = null)
         {
             var by = selector ?? id.ById() ?? css.ByCss() ?? name.ByName();
 
-            if (by == null) throw new InvalidOperationException("Must specify either the selector, css, or name property");
+            if (by == null)
+                throw new InvalidOperationException("Must specify either the selector, css, or name property");
 
             label = label ?? by.ToString().Replace("By.", "");
 
-            var config = new GestureConfig
-            {
+            var config = new GestureConfig{
                 Template = template ?? "Click " + label,
                 Description = "Click " + label,
                 Finder = () => SearchContext.FindElement(by),
@@ -80,20 +95,6 @@ namespace Serenity.Fixtures
         {
             _searchContexts.Pop();
         }
-
-
-
-        protected IApplicationUnderTest Application
-        {
-            get { return _application; }
-        }
-
-        protected IWebDriver Driver
-        {
-            get { return _application.Driver; }
-        }
-
-        
     }
 
     public class ScreenFixture<T> : ScreenFixture
@@ -114,7 +115,8 @@ namespace Serenity.Fixtures
         }
 
 
-        protected IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        protected IGrammar EnterScreenValue(Expression<Func<T, object>> expression, string label = null,
+                                            string key = null)
         {
             var config = getGesture(expression, label, key);
 
@@ -124,16 +126,16 @@ namespace Serenity.Fixtures
             return new EnterValueGrammar(config);
         }
 
-        protected IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null, string key = null)
+        protected IGrammar CheckScreenValue(Expression<Func<T, object>> expression, string label = null,
+                                            string key = null)
         {
             var config = getGesture(expression, label, key);
 
             config.Template = "The text of " + config.Label + " should be {" + config.CellName + "}";
             config.Description = "Check data for property " + expression.ToAccessor().Name;
-            
+
             return new CheckValueGrammar(config);
         }
-
 
 
         protected GestureConfig GestureForProperty(Expression<Func<T, object>> expression)
@@ -151,6 +153,5 @@ namespace Serenity.Fixtures
         }
 
         //public void EditableElements(params)
-
     }
 }
