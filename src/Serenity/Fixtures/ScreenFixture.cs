@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuLocalization;
@@ -150,6 +151,20 @@ namespace Serenity.Fixtures
 
             this["Check" + name] = CheckScreenValue(expression, label);
             this["Enter" + name] = EnterScreenValue(expression, label);
+        }
+
+        protected void EditableElementsForAllImmediateProperties()
+        {
+            typeof (T)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(x => x.CanRead && x.CanWrite)
+                .Each(prop =>
+                {
+                    var accessor = new SingleProperty(prop);
+                    var expression = accessor.ToExpression<T>();
+
+                    EditableElement(expression);
+                });
         }
 
         //public void EditableElements(params)

@@ -138,6 +138,13 @@ namespace Serenity.Testing.Fixtures
     }
 
 
+    public class ViewModel
+    {
+        public string Direction { get; set; }
+        public int Age { get; set; }
+        public bool Selected { get; set; }
+    }
+
     [TestFixture]
     public class ScreenFixtureTester
     {
@@ -167,6 +174,27 @@ namespace Serenity.Testing.Fixtures
         public void editable_element_adds_enter_value_grammar()
         {
             theFixture["CheckDirection"].ShouldBeOfType<CheckValueGrammar>();
+        }
+
+        public class EditableFixture : ScreenFixture<ViewModel>
+        {
+            public EditableFixture()
+            {
+                EditableElementsForAllImmediateProperties();
+            }
+        }
+
+        [Test]
+        public void editable_elements_for_all_immediate_properties()
+        {
+            var fixture = new EditableFixture();
+
+            fixture.HasGrammar("CheckDirection").ShouldBeTrue();
+            fixture.HasGrammar("EnterDirection").ShouldBeTrue();
+            fixture.HasGrammar("CheckAge").ShouldBeTrue();
+            fixture.HasGrammar("EnterAge").ShouldBeTrue();
+            fixture.HasGrammar("CheckSelected").ShouldBeTrue();
+            fixture.HasGrammar("EnterSelected").ShouldBeTrue();
         }
     }
 
@@ -293,8 +321,5 @@ namespace Serenity.Testing.Fixtures
         }
     }
 
-    public class ViewModel
-    {
-        public string Direction { get; set; }
-    }
+
 }
