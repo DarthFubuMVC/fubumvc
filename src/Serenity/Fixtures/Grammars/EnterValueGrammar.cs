@@ -21,7 +21,7 @@ namespace Serenity.Fixtures.Grammars
             assertCondition(element.Displayed, HiddenElementMessage);
 
             var data = cellValues[Config.CellName];
-            ElementHandlers.FindHandler(element).EnterData(element, data);
+            ElementHandlers.FindHandler(element).EnterData(CurrentContext, element, data);
         }
 
         public override IList<Cell> GetCells()

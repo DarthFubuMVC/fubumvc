@@ -15,7 +15,7 @@ namespace Serenity.Fixtures.Handlers
             return element.TagName.ToLower() == "select";
         }
 
-        public void EnterData(IWebElement element, object data)
+        public void EnterData(ISearchContext context, IWebElement element, object data)
         {
             var options = findOptions(element);
             foreach (var option in options)
@@ -51,7 +51,7 @@ namespace Serenity.Fixtures.Handlers
             return element.FindElements(By.TagName("option"));
         }
 
-        public string GetData(IWebElement element)
+        public string GetData(ISearchContext context, IWebElement element)
         {
             var selected = findSelected(element);
 

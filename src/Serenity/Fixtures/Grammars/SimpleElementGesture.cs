@@ -21,7 +21,13 @@ namespace Serenity.Fixtures.Grammars
             _config = config;
         }
 
-
+        public ISearchContext CurrentContext
+        {
+            get
+            {
+                return _config.FindContext();
+            }
+        }
 
         public override string Description
         {

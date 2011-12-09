@@ -10,13 +10,13 @@ namespace Serenity.Fixtures.Handlers
             return true;
         }
 
-        public void EnterData(IWebElement element, object data)
+        public void EnterData(ISearchContext context, IWebElement element, object data)
         {
 
             throw new NotImplementedException();
         }
 
-        public string GetData(IWebElement element)
+        public string GetData(ISearchContext context, IWebElement element)
         {
             return element.Text;
         }

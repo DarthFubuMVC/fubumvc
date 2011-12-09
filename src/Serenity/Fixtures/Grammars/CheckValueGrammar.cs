@@ -42,7 +42,7 @@ namespace Serenity.Fixtures.Grammars
                 context.IncrementWrongs();
             }
 
-            context.ResultsFor(step).SetActual(_cell.Key, handler.GetData(element));
+            context.ResultsFor(step).SetActual(_cell.Key, handler.GetData(CurrentContext, element));
         }
 
 

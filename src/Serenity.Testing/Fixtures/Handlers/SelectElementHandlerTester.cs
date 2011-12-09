@@ -93,13 +93,13 @@ namespace Serenity.Testing.Fixtures.Handlers
         [Test]
         public void get_data_with_selected_option_with_both_value_and_text()
         {
-            theHandler.GetData(select1).ShouldEqual("b=2");
+            theHandler.GetData(null, select1).ShouldEqual("b=2");
         }
 
         [Test]
         public void get_data_with_selected_option_that_has_only_text()
         {
-            theHandler.GetData(select3).ShouldEqual("b=b");
+            theHandler.GetData(null, select3).ShouldEqual("b=b");
         }
 
         [Test]

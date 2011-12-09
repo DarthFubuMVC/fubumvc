@@ -124,7 +124,7 @@ namespace Serenity.Testing.Fixtures
         [Test]
         public void exercise_check_value_grammar()
         {
-            new TextboxElementHandler().EnterData(theDriver.FindElement(By.Name("Direction")), "South");
+            new TextboxElementHandler().EnterData(null, theDriver.FindElement(By.Name("Direction")), "South");
 
             var grammar = grammarNamed("CheckDirection");
 

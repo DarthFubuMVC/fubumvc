@@ -11,7 +11,7 @@ namespace Serenity.Fixtures.Handlers
             return element.TagName.ToLower() == "input" && element.GetAttribute("type").ToLower() == "text";
         }
 
-        public void EnterData(IWebElement element, object data)
+        public void EnterData(ISearchContext context, IWebElement element, object data)
         {
             while (element.GetAttribute("value").IsNotEmpty())
             {
@@ -21,7 +21,7 @@ namespace Serenity.Fixtures.Handlers
             element.SendKeys(data as string ?? string.Empty);
         }
 
-        public string GetData(IWebElement element)
+        public string GetData(ISearchContext context, IWebElement element)
         {
             return element.GetAttribute("value");
         }

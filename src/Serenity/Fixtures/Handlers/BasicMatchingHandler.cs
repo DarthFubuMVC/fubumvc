@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using StoryTeller.Engine;
 
 namespace Serenity.Fixtures.Handlers
@@ -16,7 +16,7 @@ namespace Serenity.Fixtures.Handlers
 
         public bool MatchesData(IWebElement element, object expected)
         {
-            return _context.Matches(expected, _inner.GetData(element));
+            return _context.Matches(expected, _inner.GetData(null, element));
         }
     }
 }
