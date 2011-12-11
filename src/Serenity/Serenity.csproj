@@ -137,6 +137,7 @@
     <Compile Include="SerenityApplications.cs" />
     <Compile Include="SerenitySystem.cs" />
     <Compile Include="WebDriverSettings.cs" />
+    <Compile Include="WebElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuKayak\FubuKayak.csproj">

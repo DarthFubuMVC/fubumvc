@@ -16,7 +16,7 @@ namespace Serenity
         private readonly Func<IWebDriver> _browserBuilder;
         private Listener _listener;
         private ApplicationUnderTest _application;
-        private ManualResetEvent _reset;
+        private Thread _listeningThread;
 
 
         public InProcessSerenitySystem()
@@ -51,17 +51,33 @@ namespace Serenity
                     ApplicationRoot = "http://localhost:" + settings.Port
                 }));
 
-                _listener = new Listener(settings.Port);
-                _reset = _listener.StartOnNewThread(runtime, () => { });
+
+                var reset = startListener(settings, runtime);
 
                 settings.RootUrl = "http://localhost:" + settings.Port;
 
                 _application = new ApplicationUnderTest(runtime, settings, _browserBuilder);
 
-                _reset.WaitOne();
+                reset.WaitOne();
             }
 
             beforeExecutingTest(_application);
+        }
+
+        private ManualResetEvent startListener(ApplicationSettings settings, FubuRuntime runtime)
+        {
+            var reset = new ManualResetEvent(false);
+
+            _listeningThread = new Thread(o =>
+            {
+                _listener = new Listener(settings.Port);
+                _listener.Start(runtime, () => reset.Set());
+            });
+
+            _listeningThread.Name = "Serenity:Kayak:Thread";
+            _listeningThread.Start();
+
+            return reset;
         }
 
         protected virtual void beforeExecutingTest(ApplicationUnderTest application)

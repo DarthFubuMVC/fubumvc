@@ -11,8 +11,8 @@ namespace Serenity.Fixtures.Grammars
     public abstract class SimpleElementGesture : LineGrammar
     {
         private readonly GestureConfig _config;
-        public static readonly string DisabledElementMessage = "Found the element, but it was disabled and could not be clicked";
-        public static readonly string HiddenElementMessage = "Found the element, but it was not visible and should not be clicked";
+        public static readonly string DisabledElementMessage = "Found the element, but it was disabled and could not be manipulated";
+        public static readonly string HiddenElementMessage = "Found the element, but it was not visible and should not be manipulated";
         public static readonly string NonexistentElementMessage = "Could not find the element";
 
 

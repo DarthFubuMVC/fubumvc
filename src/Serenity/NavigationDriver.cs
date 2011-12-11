@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuMVC.Core.Assets.Http;
-using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
 using Serenity.Endpoints;
 
@@ -114,33 +112,6 @@ namespace Serenity
                 Scripts = _browser.FindElements(By.TagName("script")).ToList(),
                 Styles = _browser.FindElements(By.TagName("link")).Where(x => x.IsCssLink()).ToList()
             };
-        }
-    }
-
-    public static class WebElementExtensions
-    {
-        public static bool IsCssLink(this IWebElement element)
-        {
-            return element.TagName == "link" &&
-                   element.GetMimeType() == MimeType.Css;
-        }
-
-        public static string Href(this IWebElement element)
-        {
-            return element.GetAttribute("href");
-        }
-
-        public static string AssetName(this IWebElement element)
-        {
-            var parts = (element.Href() ?? element.GetAttribute("src")).Split('/').ToList();
-            var index = parts.IndexOf(UrlRegistry.AssetsUrlFolder);
-
-            return parts.Skip(index).Join("/");
-        }
-
-        public static MimeType GetMimeType(this IWebElement element)
-        {
-            return MimeType.MimeTypeByFileName(element.Href());
         }
     }
 }

@@ -18,7 +18,11 @@ namespace Serenity.Fixtures.Grammars
         protected override void execute(IWebElement element, IDictionary<string, object> cellValues, IStep step, ITestContext context)
         {
             assertCondition(element.Enabled, DisabledElementMessage);
-            assertCondition(element.Displayed, HiddenElementMessage);
+
+            // TODO -- start a convenience class for extensions on IWebElement
+            bool isShown = element.Displayed || element.IsHiddenInput();
+
+            assertCondition(isShown, HiddenElementMessage);
 
             var data = cellValues[Config.CellName];
             ElementHandlers.FindHandler(element).EnterData(CurrentContext, element, data);

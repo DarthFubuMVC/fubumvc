@@ -92,7 +92,8 @@ namespace Serenity.Fixtures
             PushElementContext(element);
         }
 
-        protected void PopElementContext(ISearchContext context)
+        
+        protected void PopElementContext()
         {
             _searchContexts.Pop();
         }

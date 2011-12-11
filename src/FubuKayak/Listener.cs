@@ -19,6 +19,7 @@ namespace FubuKayak
         private readonly IScheduler _scheduler;
         private readonly IServer _server;
         private IDisposable _kayakListenerDisposer;
+        private Thread _listeningThread;
 
         public Listener(int port) : this(new IPEndPoint(IPAddress.Any, port), new SchedulerDelegate())
         {
@@ -44,6 +45,9 @@ namespace FubuKayak
         public void Start(FubuRuntime runtime, Action action)
         {
             Console.WriteLine("Starting to listen for requests at http://localhost:" + _listeningEndpoint.Port);
+
+            Console.WriteLine("Listening on Thread " + Thread.CurrentThread.Name);
+
             _kayakListenerDisposer = _server.Listen(_listeningEndpoint);
             _scheduler.Post(() => ThreadPool.QueueUserWorkItem(o => action()));
             _scheduler.Start();
@@ -53,7 +57,7 @@ namespace FubuKayak
         {
             var reset = new ManualResetEvent(false);
 
-            ThreadPool.QueueUserWorkItem(o =>
+            _listeningThread = new Thread(o =>
             {
                 Start(runtime, () =>
                 {
@@ -61,6 +65,9 @@ namespace FubuKayak
                     reset.Set();
                 });
             });
+
+            _listeningThread.Name = "Serenity:Kayak:Thread";
+            _listeningThread.Start();
 
             return reset;
         }
@@ -71,6 +78,7 @@ namespace FubuKayak
             {
                 Console.WriteLine("Stopping the Kayak scheduler");
 
+                
                 _scheduler.Stop();
             }
             catch (Exception)
