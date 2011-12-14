@@ -48,9 +48,6 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure">
-      <HintPath>..\..\lib\Microsoft.Web.Infrastructure\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="Spark">
       <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
     </Reference>
