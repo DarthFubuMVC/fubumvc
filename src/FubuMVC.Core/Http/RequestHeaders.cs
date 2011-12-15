@@ -1,6 +1,6 @@
 using System;
-using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Conversion;
 
 namespace FubuMVC.Core.Http
 {

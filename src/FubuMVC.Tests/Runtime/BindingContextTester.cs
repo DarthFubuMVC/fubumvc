@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Conversion;
 using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuMVC.StructureMap;

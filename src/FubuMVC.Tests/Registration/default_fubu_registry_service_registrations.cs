@@ -2,6 +2,7 @@ using System.Linq;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Conversion;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;

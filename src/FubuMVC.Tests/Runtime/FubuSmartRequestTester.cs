@@ -1,6 +1,7 @@
 using System;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Conversion;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -18,13 +19,16 @@ namespace FubuMVC.Tests.Runtime
         private SmartRequest theRequest;
         private InMemoryFubuRequest theFubuRequest;
         private ObjectConverter objectConverter;
+        private ConverterLibrary theConverterLibrary;
 
         [SetUp]
         public void SetUp()
         {
             theFubuRequest = new InMemoryFubuRequest();
             theData = new InMemoryRequestData();
-            objectConverter = new ObjectConverter();
+
+            theConverterLibrary = new ConverterLibrary();
+            objectConverter = new ObjectConverter(null, theConverterLibrary);
             theRequest = new FubuSmartRequest(theData, objectConverter, theFubuRequest);
         }
 
@@ -47,7 +51,7 @@ namespace FubuMVC.Tests.Runtime
         [Test]
         public void do_not_convert_the_type_if_it_is_already_in_the_correct_type()
         {
-            objectConverter.RegisterConverter<Blob>(b => new Blob());
+            theConverterLibrary.RegisterConverter<Blob>(b => new Blob());
             var theBlob = new Blob();
             theData["blob"] = theBlob;
             theRequest.Value<Blob>("blob").ShouldBeTheSameAs(theBlob);

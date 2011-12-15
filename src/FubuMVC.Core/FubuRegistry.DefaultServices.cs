@@ -4,6 +4,7 @@ using System.Reflection;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Conversion;
 using FubuCore.Reflection;
 using FubuMVC.Core.Assets.Diagnostics;
 using FubuMVC.Core.Behaviors;
