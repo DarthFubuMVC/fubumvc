@@ -4,9 +4,11 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources.Media.Formatters;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
+using FubuMVC.Core.Resources.Conneg;
 
 namespace FubuMVC.Tests.Ajax
 {
@@ -43,6 +45,14 @@ namespace FubuMVC.Tests.Ajax
             chainFor(x => x.BasicContinuation(null))
                 .Any(x => x is AjaxContinuationNode)
                 .ShouldBeTrue();
+        }
+
+        [Test]
+        public void should_have_a_conneg_input_node_with_json_or_http_post_input()
+        {
+            var connegInput = chainFor(x => x.BasicContinuation(null)).ConnegInputNode();
+            connegInput.AllowHttpFormPosts.ShouldBeTrue();
+            connegInput.SelectedFormatterTypes.ShouldHaveTheSameElementsAs(typeof(JsonFormatter));
         }
 
         [Test]
