@@ -127,15 +127,6 @@ namespace FubuMVC.Tests.Urls
         }
 
         [Test]
-        public void retrieve_a_url_for_a_model_and_category_negative_case()
-        {
-            Exception<FubuException>.ShouldBeThrownBy(() =>
-            {
-                urls.UrlFor(new Model3(), "not a real category");
-            });
-        }
-
-        [Test]
         public void retrieve_a_url_by_action()
         {
             urls.UrlFor<OneController>(x => x.M2()).ShouldEqual("http://server/fubu/one/m2");

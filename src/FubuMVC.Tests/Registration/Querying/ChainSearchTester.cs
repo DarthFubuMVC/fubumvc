@@ -1,5 +1,6 @@
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;
@@ -247,6 +248,47 @@ namespace FubuMVC.Tests.Registration.Querying
                     Category = "something"
                 }
             };
+
+            var chain2 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = Categories.DEFAULT
+                }
+            };
+
+            var chain3 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = null
+                }
+            };
+
+            var chains = new BehaviorChain[] { chain1, chain2, chain3 };
+
+            search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain1);
+        }
+
+        [Test]
+        public void find_by_category_strict_with_multiple_chains_by_method()
+        {
+            var search = new ChainSearch
+            {
+                CategoryMode = CategorySearchMode.Strict,
+                CategoryOrHttpMethod = "POST"
+            };
+
+            var chain1 = new BehaviorChain
+            {
+                Route = new RouteDefinition("whatever"),
+                UrlCategory =
+                {
+                    Category = "something"
+                }
+            };
+
+            chain1.Route.AllowedHttpMethods.Add("POST");
 
             var chain2 = new BehaviorChain
             {

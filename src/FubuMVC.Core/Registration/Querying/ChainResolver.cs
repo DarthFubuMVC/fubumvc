@@ -85,30 +85,18 @@ namespace FubuMVC.Core.Registration.Querying
             }
 
 
-            if (category != null)
-            {
-                chains = chains.Where(x => x.UrlCategory.Category == category);
-            }
-            else
-            {
-                var candidates = chains.Where(x => x.UrlCategory.Category == Categories.DEFAULT);
+            var search = new ChainSearch{
+                CategoryOrHttpMethod = category
+            };
 
-                if (candidates.Count() == 1)
-                {
-                    chains = candidates;
-                }
-                else
-                {
-                    chains = chains.Where(x => x.UrlCategory.Category == null);
-                }
-            }
-                
-                
-                
+            chains = search.FindForCategory(chains);
 
             if (!chains.Any())
+            {
                 throw new FubuException(2104, "No behavior chains are registered for {0}, category {1}", modelType.FullName,
                                         category);
+            }
+
             if (chains.Count() > 1)
             {
                 if (category == null)

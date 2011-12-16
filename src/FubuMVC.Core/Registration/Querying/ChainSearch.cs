@@ -8,6 +8,7 @@ namespace FubuMVC.Core.Registration.Querying
 {
     public class ChainSearch
     {
+        // TODO -- add method here too
         public Type Type;
         public string CategoryOrHttpMethod = Categories.DEFAULT;
         public CategorySearchMode CategoryMode = CategorySearchMode.Relaxed;
@@ -39,7 +40,7 @@ namespace FubuMVC.Core.Registration.Querying
                 return chains.Where(x => x.UrlCategory.Category == null);
             }
 
-            throw new NotImplementedException();
+            return chains.Where(x => x.MatchesCategoryOrHttpMethod(CategoryOrHttpMethod));
         }
     }
 }
