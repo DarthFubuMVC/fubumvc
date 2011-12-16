@@ -243,27 +243,27 @@ namespace FubuMVC.Core.UI
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
         {
-            var url = page.Urls.UrlFor(new TInputModel());
+            var url = page.Urls.UrlFor(new TInputModel(), category:"POST");
             return new FormTag(url);
         }
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page, TInputModel model)
         {
-            var url = page.Urls.UrlFor(model);
+            var url = page.Urls.UrlFor(model, category:"POST");
             return new FormTag(url);
         }
 
 
         public static FormTag FormFor<TController>(this IFubuPage view, Expression<Action<TController>> expression)
         {
-            var url = view.Urls.UrlFor(expression);
+            var url = view.Urls.UrlFor(expression, category:"POST");
             return new FormTag(url);
         }
 
 
         public static FormTag FormFor(this IFubuPage view, object modelOrUrl)
         {
-            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl);
+            var url = modelOrUrl as string ?? view.Urls.UrlFor(modelOrUrl, category:"POST");
 
             return new FormTag(url);
         }

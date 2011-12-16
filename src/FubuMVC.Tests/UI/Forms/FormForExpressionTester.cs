@@ -39,7 +39,7 @@ namespace FubuMVC.Tests.UI.Forms
         {
             var model = new AddressViewModel();
 
-            urls.Stub(x => x.UrlFor(model)).Return("the url for the action");
+            urls.Stub(x => x.UrlFor(model, "POST")).Return("the url for the action");
 
             var tag = page.FormFor(model);
 
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.UI.Forms
         [Test]
         public void form_for_with_a_new_input_model()
         {
-            urls.Stub(x => x.UrlFor(Arg<AddressViewModel>.Is.Anything)).Return("the url for the action");
+            urls.Stub(x => x.UrlFor(Arg<AddressViewModel>.Is.Anything, Arg<string>.Is.Equal("POST"))).Return("the url for the action");
 
             var tag = page.FormFor<AddressViewModel>();
 
@@ -83,7 +83,7 @@ namespace FubuMVC.Tests.UI.Forms
         public void form_for_from_controller_expression()
         {
             Expression<Action<AddressController>> expression = c => c.Address();
-            urls.Stub(x => x.UrlFor(expression)).Return("the url for the action");
+            urls.Stub(x => x.UrlFor(expression, "POST")).Return("the url for the action");
             page.FormFor(expression).Attr("action").ShouldEqual("the url for the action");
         }
 
