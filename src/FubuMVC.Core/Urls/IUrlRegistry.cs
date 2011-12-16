@@ -8,31 +8,25 @@ using FubuMVC.Core.Registration.Routes;
 
 namespace FubuMVC.Core.Urls
 {
-    // This service is injected into your IoC tool of choice as a singleton
-    // to give you access to url's in a type safe way
-    // Please note that this implementation in no way, shape, or form
-    // locks you into a rigid url structure
     public interface IUrlRegistry
     {
-        string UrlFor(object model);
-        string UrlFor(object model, string category);
+        string UrlFor(object model, string category = null);
+        
         string UrlFor<TInput>() where TInput : class, new();
-        string UrlFor<TController>(Expression<Action<TController>> expression);
-
-
-        string UrlForNew<T>();
-        string UrlForNew(Type entityType);
-        bool HasNewUrl<T>();
-        bool HasNewUrl(Type type);
-
-
-        // Not sure these two methods won't get axed
-        string UrlForPropertyUpdate(object model);
-        string UrlForPropertyUpdate(Type type);
+        
 
         string UrlFor(Type handlerType, MethodInfo method);
+        string UrlFor<TController>(Expression<Action<TController>> expression);
+
+        string UrlForNew(Type entityType);
+
+        bool HasNewUrl(Type type);
+
+        
         string TemplateFor(object model);
         string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new();
+
+
         string UrlFor(Type modelType, RouteParameters parameters);
         string UrlFor(Type modelType, string category, RouteParameters parameters);
 
@@ -41,6 +35,31 @@ namespace FubuMVC.Core.Urls
 
     public static class UrlRegistryExtensions
     {
+
+
+        public static string UrlForNew<T>(this IUrlRegistry registry)
+        {
+            return registry.UrlForNew(typeof (T));
+        }
+
+        public static bool HasNewUrl<T>(this IUrlRegistry registry)
+        {
+            return registry.HasNewUrl(typeof(T));
+        }
+
+        [Obsolete("This is an ancient Dovetail hack.  Getting eliminated whenever the DT guys say it's okay")]
+        public static string UrlForPropertyUpdate(this IUrlRegistry registry, object model)
+        {
+            return registry.UrlFor(model, Categories.PROPERTY_EDIT);
+        }
+
+        [Obsolete("TEMPORARY HACK")]
+        public static string UrlForPropertyUpdate(this IUrlRegistry registry, Type type)
+        {
+            var o = Activator.CreateInstance(type);
+            return registry.UrlForPropertyUpdate(o);
+        }
+
         public static string UrlFor<TInput>(this IUrlRegistry registry) where TInput : class, new()
         {
             return registry.UrlFor(new TInput());
@@ -76,24 +95,20 @@ namespace FubuMVC.Core.Urls
     // This is just to have a predictable stub for unit testing
     public class StubUrlRegistry : IUrlRegistry
     {
-        public string UrlFor(object model)
-        {
-            return "url for " + model;
-        }
 
         public string UrlFor<TInput>() where TInput : class, new()
         {
             return "url for " + new TInput();
         }
 
-        public string UrlFor(object model, string category)
+        public string UrlFor(object model, string category = null)
         {
-            return UrlFor(model) + ", category=" + category;
-        }
+            if (category.IsEmpty())
+            {
+                return "url for {0}".ToFormat(model);
+            }
 
-        public string UrlFor<TController>(Expression<Action<TController>> expression)
-        {
-            return "url for " + typeof(TController).FullName + "." + ReflectionHelper.GetMethod(expression).Name + "()";
+            return "url for {0}, category {1}".ToFormat(model, category);
         }
 
         public string UrlFor(Type modelType, RouteParameters parameters)
@@ -111,9 +126,9 @@ namespace FubuMVC.Core.Urls
             return "url for asset " + name + " in " + folder.ToString();
         }
 
-        public string UrlForNew<T>()
+        public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
-            return "url for new " + typeof(T).FullName;
+            return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression));
         }
 
         public string UrlForNew(Type entityType)
@@ -121,24 +136,9 @@ namespace FubuMVC.Core.Urls
             return "url for new " + entityType.FullName;
         }
 
-        public bool HasNewUrl<T>()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool HasNewUrl(Type type)
         {
             throw new NotImplementedException();
-        }
-
-        public string UrlForPropertyUpdate(object model)
-        {
-            return "url for property update: " + model;
-        }
-
-        public string UrlForPropertyUpdate(Type type)
-        {
-            return "url for property update: " + type.FullName;
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)

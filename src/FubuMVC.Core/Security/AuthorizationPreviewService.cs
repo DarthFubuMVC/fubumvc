@@ -78,7 +78,7 @@ namespace FubuMVC.Core.Security
 
         public bool IsAuthorizedForNew(Type entityType)
         {
-            return ForNew(entityType) == AuthorizationRight.Allow;
+            return forNew(entityType) == AuthorizationRight.Allow;
         }
 
         public bool IsAuthorizedForPropertyUpdate(object model)

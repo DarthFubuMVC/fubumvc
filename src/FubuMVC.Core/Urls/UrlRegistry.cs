@@ -26,24 +26,14 @@ namespace FubuMVC.Core.Urls
             _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
-        public string UrlFor(object model)
-        {
-            return For(model);
-        }
-
         public string UrlFor<TInput>() where TInput : class, new()
         {
             return For(new TInput());
         }
 
-        public string UrlFor(object model, string category)
+        public string UrlFor(object model, string category = null)
         {
             return For(model, category);
-        }
-
-        public string UrlFor<TController>(Expression<Action<TController>> expression)
-        {
-            return findAnswerFromResolver(null, r => r.Find(typeof(TController), ReflectionHelper.GetMethod(expression)));
         }
 
         public string UrlFor(Type modelType, RouteParameters parameters)
@@ -73,6 +63,11 @@ namespace FubuMVC.Core.Urls
             return For(handlerType, method);
         }
 
+        public string UrlFor<TController>(Expression<Action<TController>> expression)
+        {
+            return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression));
+        }
+
         public string TemplateFor(object model)
         {
             return buildUrlTemplate(model, null);
@@ -83,37 +78,18 @@ namespace FubuMVC.Core.Urls
             return buildUrlTemplate(new TModel(), hash);
         }
 
-        public string UrlForNew<T>()
-        {
-            return UrlForNew(typeof (T));
-        }
-
         public string UrlForNew(Type entityType)
         {
-            return ForNew(entityType);
+            return forNew(entityType);
         }
 
-        public bool HasNewUrl<T>()
-        {
-            return HasNewUrl(typeof (T));
-        }
 
         public bool HasNewUrl(Type type)
         {
             return resolver.FindCreatorOf(type) != null;
         }
 
-        public string UrlForPropertyUpdate(object model)
-        {
-            return UrlFor(model, Categories.PROPERTY_EDIT);
-        }
 
-        [Obsolete("TEMPORARY HACK")]
-        public string UrlForPropertyUpdate(Type type)
-        {
-            var o = Activator.CreateInstance(type);
-            return UrlForPropertyUpdate(o);
-        }
 
         protected override string createResult(object model, BehaviorChain chain)
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ServiceModel.Configuration;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Behaviors;
@@ -187,27 +188,27 @@ namespace FubuMVC.Tests.UI.Forms
         public void SetUp()
         {
             _page = MockRepository.GenerateMock<IFubuPage>();
-            _urls = MockRepository.GenerateStub<IUrlRegistry>();
+            _urls = new StubUrlRegistry();
+
+            
+
             _page.Expect(p => p.Urls).Return(_urls);
             _model = new InputModel();
-            _urls.Stub(u => u.UrlFor(Arg<InputModel>.Is.NotNull)).Return("some url");
+            //_urls.Stub(u => u.UrlFor(Arg<InputModel>.Is.NotNull)).Return("some url");
         }
 
         [Test]
         public void should_return_formatted_link_variable()
         {
-            _page.LinkVariable("variable", _model).ShouldEqual("var {0} = '{1}';".ToFormat("variable", "some url"));
-            _urls.AssertWasCalled(u=>u.UrlFor(_model));
+            _page.LinkVariable("variable", _model).ShouldEqual("var {0} = '{1}';".ToFormat("variable", "url for FubuMVC.Tests.UI.Forms.InputModel"));
             _page.VerifyAllExpectations();
         }
 
         [Test]
         public void should_return_formatted_link_variable_of_new_model()
         {
-            _page.LinkVariable<InputModel>("variable").ShouldEqual("var {0} = '{1}';".ToFormat("variable", "some url"));
-            _urls.AssertWasNotCalled(u => u.UrlFor(_model));
+            _page.LinkVariable<InputModel>("variable").ShouldEqual("var {0} = '{1}';".ToFormat("variable", "url for FubuMVC.Tests.UI.Forms.InputModel"));
             _page.VerifyAllExpectations();
-            _urls.AssertWasCalled(u => u.UrlFor(Arg<InputModel>.Is.NotNull));
         }
     }
 

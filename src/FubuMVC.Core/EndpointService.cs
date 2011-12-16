@@ -102,7 +102,7 @@ namespace FubuMVC.Core
 
         public Endpoint EndpointForNew(Type entityType)
         {
-            return ForNew(entityType);
+            return forNew(entityType);
         }
 
         public bool HasNewEndpoint<T>()
@@ -112,7 +112,7 @@ namespace FubuMVC.Core
 
         public bool HasNewEndpoint(Type type)
         {
-            return HasNew(type);
+            return hasNew(type);
         }
 
         public Endpoint EndpointFor(Type handlerType, MethodInfo method)

@@ -11,6 +11,7 @@ using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Tests.Resources.Media.Atom
 {

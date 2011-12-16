@@ -92,28 +92,19 @@ namespace FubuMVC.Tests.Resources
 
     public class ValidStubUrlRegistry : IUrlRegistry
     {
-        public string UrlFor(object model)
+
+        public string UrlFor(object model, string category = null)
         {
-            return "http://somewhere.com/" + model.ToString();
+            var url = "http://somewhere.com/" + model.ToString();
+            if (category.IsNotEmpty())
+            {
+                url += "/" + category;
+            }
+
+            return url;
         }
 
         public string UrlFor<TInput>() where TInput : class, new()
-        {
-            return "http://somewhere.com/" + (new TInput()).ToString();
-        }
-
-        public string UrlFor(object model, string category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlFor<TController>(Expression<Action<TController>> expression)
-        {
-            return "http://somewhere.com/" + typeof (TController).Name + "/" +
-                   ReflectionHelper.GetMethod(expression).Name;
-        }
-
-        public string UrlForNew<T>()
         {
             throw new NotImplementedException();
         }
@@ -123,29 +114,14 @@ namespace FubuMVC.Tests.Resources
             throw new NotImplementedException();
         }
 
-        public bool HasNewUrl<T>()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool HasNewUrl(Type type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlForPropertyUpdate(object model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlForPropertyUpdate(Type type)
         {
             throw new NotImplementedException();
         }
 
         public string UrlFor(Type handlerType, MethodInfo method)
         {
-            throw new NotImplementedException();
+            return "http://somewhere.com/" + handlerType.Name + "/" + method.Name;
         }
 
         public string TemplateFor(object model)
@@ -166,6 +142,11 @@ namespace FubuMVC.Tests.Resources
         public string UrlFor(Type modelType, string category, RouteParameters parameters)
         {
             throw new NotImplementedException();
+        }
+
+        public string UrlFor<TController>(Expression<Action<TController>> expression)
+        {
+            return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression));
         }
 
         public string UrlForAsset(AssetFolder? folder, string name)
