@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.Querying
 {
@@ -14,6 +12,7 @@ namespace FubuMVC.Core.Registration.Querying
         BehaviorChain FindUnique(object model, string category = null);
         BehaviorChain Find(Type handlerType, MethodInfo method);
         BehaviorChain FindCreatorOf(Type type);
+
         void RootAt(string baseUrl);
         IChainForwarder FindForwarder(object model, string category = null);
         BehaviorChain FindUniqueByInputType(Type modelType, string category = null);
@@ -38,18 +37,5 @@ namespace FubuMVC.Core.Registration.Querying
         Any,
         InputModelOnly,
         HandlerOnly
-    }
-
-    public class ChainSearch
-    {
-        public Type Type;
-        public string Category = Categories.DEFAULT;
-        public CategorySearchMode CategoryMode = CategorySearchMode.Relaxed;
-        public TypeSearchMode TypeMode = TypeSearchMode.Any;
-
-        public string Description()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

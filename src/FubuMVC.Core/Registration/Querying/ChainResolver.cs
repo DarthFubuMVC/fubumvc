@@ -26,17 +26,22 @@ namespace FubuMVC.Core.Registration.Querying
         // we possibly need an alternative that finds by category
         public BehaviorChain Find<T>(Expression<Action<T>> expression)
         {
-            var chains = _behaviorGraph.ChainsFor(typeof(T), ReflectionHelper.GetMethod(expression));
+            return Find(typeof (T), ReflectionHelper.GetMethod(expression));
+        }
+
+        public BehaviorChain Find(Type handlerType, MethodInfo method)
+        {
+            var chains = _behaviorGraph.ChainsFor(handlerType, method);
             if (chains.Count() > 1)
             {
-                throw new FubuException(2108, "More than one behavior chain registered for {0}.{1}()", typeof(T).FullName, ReflectionHelper.GetMethod(expression).Name);
+                throw new FubuException(2108, "More than one behavior chain registered for {0}.{1}()", handlerType.FullName, method.Name);
             }
 
 
             var chain = chains.SingleOrDefault();
             if (chain == null)
             {
-                throw new FubuException(2108, "No behavior chain registered for {0}.{1}()", typeof(T).FullName, ReflectionHelper.GetMethod(expression).Name);
+                throw new FubuException(2108, "No behavior chain registered for {0}.{1}()", handlerType.FullName, method.Name);
             }
 
             return chain;
@@ -67,38 +72,6 @@ namespace FubuMVC.Core.Registration.Querying
             return FindUniqueByInputType(modelType, category);
         }
 
-        // Make this return an IEnumerable
-        //public BehaviorChain FindUniqueByInputType(Type modelType)
-        //{
-        //    var chains = findChainsByType(modelType);
-        //    switch (chains.Count())
-        //    {
-        //        case 0:
-                    
-
-        //        case 1:
-        //            return chains.Single();
-
-        //        default:
-        //            var defaultChain = chains.FirstOrDefault(x => x.UrlCategory.Category == Categories.DEFAULT);
-        //            if (defaultChain == null)
-        //            {
-        //                if (chains.Count(x => x.UrlCategory.Category.IsEmpty()) == 1)
-        //                {
-        //                    defaultChain = chains.First(x => x.UrlCategory.Category.IsEmpty());
-        //                }
-        //            }
-
-        //            if (defaultChain != null)
-        //            {
-        //                return defaultChain;
-        //            }
-
-        //            throw new FubuException(2103,
-        //                                    "More than one chain is registered for {0} and none is marked as the default.\nConsult the route/behavior diagnostics",
-        //                                    modelType.FullName);
-        //    }
-        //}
 
 
 
@@ -152,10 +125,7 @@ namespace FubuMVC.Core.Registration.Querying
             return chains.Single();
         }
 
-        public BehaviorChain Find(Type handlerType, MethodInfo method)
-        {
-            return _behaviorGraph.ChainsFor(handlerType, method).SingleOrDefault();
-        }
+
 
         public BehaviorChain FindCreatorOf(Type type)
         {
