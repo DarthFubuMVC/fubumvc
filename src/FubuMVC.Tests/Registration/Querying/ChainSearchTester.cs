@@ -422,7 +422,7 @@ namespace FubuMVC.Tests.Registration.Querying
             new ChainSearch{
                 Type = typeof (SingleActionController),
                 TypeMode = TypeSearchMode.InputModelOnly
-            }.FindCandidates(theGraph).Single().Any().ShouldBeFalse();
+            }.FindCandidatesByType(theGraph).Single().Any().ShouldBeFalse();
         }
 
         [Test]
@@ -431,7 +431,7 @@ namespace FubuMVC.Tests.Registration.Querying
             var chains = new ChainSearch{
                 Type = typeof (SingleActionController),
                 TypeMode = TypeSearchMode.Any
-            }.FindCandidates(theGraph).SelectMany(x => x);
+            }.FindCandidatesByType(theGraph).SelectMany(x => x);
 
             chains.Each(x => Debug.WriteLine(x.FirstCall().Description));
 
@@ -447,7 +447,7 @@ namespace FubuMVC.Tests.Registration.Querying
             new ChainSearch{
                 TypeMode = TypeSearchMode.HandlerOnly,
                 Type = typeof (SimpleInputModel)
-            }.FindCandidates(theGraph).Single().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
+            }.FindCandidatesByType(theGraph).Single().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
         }
 
         [Test]
@@ -462,7 +462,7 @@ namespace FubuMVC.Tests.Registration.Querying
             Debug.WriteLine(chainSearch);
 
 
-            chainSearch.FindCandidates(theGraph).Single().Select(x => x.FirstCall().Description)
+            chainSearch.FindCandidatesByType(theGraph).Single().Select(x => x.FirstCall().Description)
             .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
         }
 
@@ -472,7 +472,7 @@ namespace FubuMVC.Tests.Registration.Querying
             var candidates = new ChainSearch{
                 TypeMode = TypeSearchMode.Any,
                 Type = typeof (SimpleInputModel)
-            }.FindCandidates(theGraph);
+            }.FindCandidatesByType(theGraph);
 
             candidates.Count().ShouldEqual(2);
 
@@ -490,7 +490,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 TypeMode = TypeSearchMode.Any,
                 Type = typeof(SimpleInputModel),
                 MethodName = "DoSomething"
-            }.FindCandidates(theGraph);
+            }.FindCandidatesByType(theGraph);
 
 
 
@@ -506,7 +506,7 @@ namespace FubuMVC.Tests.Registration.Querying
                 TypeMode = TypeSearchMode.Any,
                 Type = typeof(SimpleInputModel),
                 MethodName = "Query"
-            }.FindCandidates(theGraph);
+            }.FindCandidatesByType(theGraph);
 
 
 

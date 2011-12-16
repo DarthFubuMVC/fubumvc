@@ -8,22 +8,23 @@ namespace FubuMVC.Core.Registration.Querying
 {
     public interface IChainResolver
     {
-        BehaviorChain Find(Type handlerType, MethodInfo method);
+        BehaviorChain Find(Type handlerType, MethodInfo method, string category = null);
 
         BehaviorChain FindUnique(object model, string category = null);
+        BehaviorChain FindUniqueByInputType(Type modelType, string category = null);
         
         BehaviorChain FindCreatorOf(Type type);
 
         void RootAt(string baseUrl);
         IChainForwarder FindForwarder(object model, string category = null);
-        BehaviorChain FindUniqueByInputType(Type modelType, string category = null);
+        
     }
 
     public static class ChainResolverExtensions
     {
-        public static BehaviorChain Find<T>(this IChainResolver resolver, Expression<Action<T>> expression)
+        public static BehaviorChain Find<T>(this IChainResolver resolver, Expression<Action<T>> expression, string category = null)
         {
-            return resolver.Find(typeof (T), ReflectionHelper.GetMethod(expression));
+            return resolver.Find(typeof (T), ReflectionHelper.GetMethod(expression), category);
         }
     }
 

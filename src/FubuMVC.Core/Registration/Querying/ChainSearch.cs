@@ -17,7 +17,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         public override string ToString()
         {
-            return string.Format("Type: {0}, CategoryOrHttpMethod: {1}, CategoryMode: {2}, TypeMode: {3}, MethodName: {4}", Type, CategoryOrHttpMethod, CategoryMode, TypeMode, MethodName);
+            return string.Format("Type: {0}, CategoryOrHttpMethod: {1}, CategoryMode: {2}, TypeMode: {3}, MethodName: {4}", Type.FullName, CategoryOrHttpMethod ?? "None", CategoryMode, TypeMode, MethodName);
         }
 
         public bool Equals(ChainSearch other)
@@ -48,7 +48,20 @@ namespace FubuMVC.Core.Registration.Querying
             }
         }
 
-        public IEnumerable<IEnumerable<BehaviorChain>> FindCandidates(BehaviorGraph graph)
+
+        public IEnumerable<BehaviorChain> FindCandidates(BehaviorGraph graph)
+        {
+            foreach (var level in FindCandidatesByType(graph))
+            {
+                var candidates = FindForCategory(level);
+                if (candidates.Any()) return candidates;
+            }
+
+            return new BehaviorChain[0];
+        }
+
+
+        public IEnumerable<IEnumerable<BehaviorChain>> FindCandidatesByType(BehaviorGraph graph)
         {
             Func<IEnumerable<BehaviorChain>, IEnumerable<BehaviorChain>> methodFilter = chains => chains;
             if (MethodName.IsNotEmpty())

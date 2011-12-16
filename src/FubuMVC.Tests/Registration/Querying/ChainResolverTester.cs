@@ -30,8 +30,6 @@ namespace FubuMVC.Tests.Registration.Querying
                 x.Actions.IncludeType<ChainResolverController>();
             }).BuildGraph();
 
-            graph.Behaviors.Each(x => Debug.WriteLine(x.FirstCallDescription()));
-
             typeResolver = new TypeResolver();
             typeResolver.AddStrategy<ProxyDetector>();
 
@@ -74,7 +72,7 @@ namespace FubuMVC.Tests.Registration.Querying
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 resolver.FindUnique(new InputModelThatDoesNotMatchAnyExistingBehaviors());
-            }).ErrorCode.ShouldEqual(2102);
+            }).ErrorCode.ShouldEqual(2104);
         }
         
         [Test]
@@ -83,7 +81,7 @@ namespace FubuMVC.Tests.Registration.Querying
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 resolver.FindUnique(new ChainResolverInput1());
-            }).ErrorCode.ShouldEqual(2103);
+            }).ErrorCode.ShouldEqual(2108);
         }
 
         [Test]
@@ -114,12 +112,12 @@ namespace FubuMVC.Tests.Registration.Querying
         }
 
         [Test]
-        public void find_by_controller_action_failure_throws_2106()
+        public void find_by_controller_action_failure_throws_2104()
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 resolver.Find<ControllerThatIsNotRegistered>(x => x.Go());
-            }).ErrorCode.ShouldEqual(2108);
+            }).ErrorCode.ShouldEqual(2104);
         }
 
         [Test]
@@ -156,7 +154,7 @@ namespace FubuMVC.Tests.Registration.Querying
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 resolver.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall();
-            }).ErrorCode.ShouldEqual(2105);
+            }).ErrorCode.ShouldEqual(2108);
         }
 
         [Test]
@@ -210,6 +208,16 @@ namespace FubuMVC.Tests.Registration.Querying
             forwarder.FindChain(resolver, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
         }
 
+        [Test]
+        public void find_chain_by_http_method()
+        {
+            resolver.FindUniqueByInputType(typeof (ChainResolverInput4), "POST")
+                .FirstCall().Description.ShouldContain("post_input");
+
+            resolver.FindUniqueByInputType(typeof(ChainResolverInput4), "GET")
+                .FirstCall().Description.ShouldContain("get_input");
+        }
+
     }
 
     public class InputModelThatDoesNotMatchAnyExistingBehaviors{}
@@ -233,11 +241,15 @@ namespace FubuMVC.Tests.Registration.Querying
         public void M7(ChainResolverInput2 input){}
         public void M8(ChainResolverInput3 input){}
         public void M9(UniqueInput input){}
+
+        public void post_input(ChainResolverInput4 input){}
+        public void get_input(ChainResolverInput4 input){}
     }
 
     public class ChainResolverInput1{}
     public class ChainResolverInput2{}
     public class ChainResolverInput3{}
+    public class ChainResolverInput4{}
     public class UniqueInput{}
     public class ForwardedModel{}
 

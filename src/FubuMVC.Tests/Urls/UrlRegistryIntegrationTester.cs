@@ -152,13 +152,13 @@ namespace FubuMVC.Tests.Urls
         }
 
         [Test]
-        public void url_for_handler_type_and_method_negative_case_should_throw_208()
+        public void url_for_handler_type_and_method_negative_case_should_throw_204()
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 var method = ReflectionHelper.GetMethod<OneController>(x => x.Ignored());
                 urls.UrlFor(typeof (OneController), method);
-            }).ErrorCode.ShouldEqual(2108);
+            }).ErrorCode.ShouldEqual(2104);
         }
 
         [Test]
