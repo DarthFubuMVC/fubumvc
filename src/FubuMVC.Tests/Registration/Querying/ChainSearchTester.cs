@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using FubuMVC.Core;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
@@ -5,6 +8,7 @@ using FubuMVC.Core.Urls;
 using NUnit.Framework;
 using FubuTestingSupport;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace FubuMVC.Tests.Registration.Querying
 {
@@ -396,5 +400,183 @@ namespace FubuMVC.Tests.Registration.Querying
 
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain3);
         }
+
+
+
     }
+
+    [TestFixture]
+    public class finding_behavior_chains_by_type_only
+    {
+        private BehaviorGraph theGraph;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theGraph = new FakeRegistry().BuildGraph();
+        }
+
+        [Test]
+        public void find_candidates_by_input_model_only_when_its_strict()
+        {
+            new ChainSearch{
+                Type = typeof (SingleActionController),
+                TypeMode = TypeSearchMode.InputModelOnly
+            }.FindCandidates(theGraph).Single().Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void find_candidates_by_type_fall_back_to_handler_type_if_possible()
+        {
+            var chains = new ChainSearch{
+                Type = typeof (SingleActionController),
+                TypeMode = TypeSearchMode.Any
+            }.FindCandidates(theGraph).SelectMany(x => x);
+
+            chains.Each(x => Debug.WriteLine(x.FirstCall().Description));
+
+            chains.Single()
+                .FirstCall().Description.ShouldEqual("SingleActionController.DoSomething(InputModel model) : void");
+        }
+
+        [Test]
+        public void find_by_handler_type_only()
+        {
+            theGraph.Actions().Each(x => Debug.WriteLine(x.Description));
+
+            new ChainSearch{
+                TypeMode = TypeSearchMode.HandlerOnly,
+                Type = typeof (SimpleInputModel)
+            }.FindCandidates(theGraph).Single().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
+        }
+
+        [Test]
+        public void find_by_input_model_only()
+        {
+
+            new ChainSearch
+            {
+                TypeMode = TypeSearchMode.InputModelOnly,
+                Type = typeof(SimpleInputModel)
+            }.FindCandidates(theGraph).Single().Select(x => x.FirstCall().Description)
+            .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
+        }
+
+        [Test]
+        public void find_by_any_looks_at_input_model_first_then_handler_type_second()
+        {
+            var candidates = new ChainSearch{
+                TypeMode = TypeSearchMode.Any,
+                Type = typeof (SimpleInputModel)
+            }.FindCandidates(theGraph);
+
+            candidates.Count().ShouldEqual(2);
+
+            candidates.First().Select(x => x.FirstCall().Description)
+                .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
+
+            candidates.Last().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
+        }
+
+        [Test]
+        public void find_by_method_if_it_exists()
+        {
+            var candidates = new ChainSearch
+            {
+                TypeMode = TypeSearchMode.Any,
+                Type = typeof(SimpleInputModel),
+                MethodName = "DoSomething"
+            }.FindCandidates(theGraph);
+
+
+
+            candidates.First().Any().ShouldBeFalse();
+            candidates.Last().Single().FirstCall().Description.ShouldEqual("SimpleInputModel.DoSomething(InputModel2 model) : void");
+        }
+
+        [Test]
+        public void find_by_method_if_it_exists_2()
+        {
+            var candidates = new ChainSearch
+            {
+                TypeMode = TypeSearchMode.Any,
+                Type = typeof(SimpleInputModel),
+                MethodName = "Query"
+            }.FindCandidates(theGraph);
+
+
+
+            candidates.First().Select(x => x.FirstCall().Description)
+                .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel");
+
+            candidates.Last().Any().ShouldBeFalse();
+        }
+
+
+        public class FakeRegistry : FubuRegistry
+        {
+            public FakeRegistry()
+            {
+                Actions
+                    .IncludeType<OneController>()
+                    .IncludeType<SimpleInputModel>()
+                    .IncludeType<TwoController>()
+                    .IncludeType<SingleActionController>();
+            }
+        }
+
+
+        public class InputModel2{}
+        public class SimpleInputModel
+        {
+            public void DoSomething(InputModel2 model){}
+        }
+
+        public class SimpleOutputModel
+        {
+        }
+
+        public class OneController
+        {
+            public void Go()
+            {
+            }
+
+            public SimpleOutputModel Report()
+            {
+                return new SimpleOutputModel();
+            }
+
+            public SimpleOutputModel Query(SimpleInputModel model)
+            {
+                return new SimpleOutputModel();
+            }
+        }
+
+        public class TwoController
+        {
+            public void Go()
+            {
+            }
+
+            public SimpleOutputModel Report()
+            {
+                return new SimpleOutputModel();
+            }
+
+            public SimpleOutputModel NotQuery(SimpleInputModel model)
+            {
+                return new SimpleOutputModel();
+            }
+        }
+
+        public class InputModel1 { }
+
+        public class SingleActionController
+        {
+            public void DoSomething(InputModel model) { }
+        }
+    }
+
+
 }

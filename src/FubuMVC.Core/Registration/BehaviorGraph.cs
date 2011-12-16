@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
@@ -23,20 +24,28 @@ namespace FubuMVC.Core.Registration
         void Import(BehaviorGraph graph, Action<BehaviorChain> alternation);
     }
 
+
+
+
     /// <summary>
     /// The complete behavior model of a fubu application
     /// </summary>
     public class BehaviorGraph : IRegisterable, IChainImporter
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
+
+        [MarkedForTermination]
         private readonly Cache<Type, ChainGroup> _chainsForMethod;
 
+        [MarkedForTermination]
         private readonly Cache<Type, IEnumerable<BehaviorChain>> _chainsForType =
             new Cache<Type, IEnumerable<BehaviorChain>>();
 
+        [MarkedForTermination]
         private readonly Cache<Type, Cache<string, IEnumerable<BehaviorChain>>> _chainsForTypeAndCategory =
             new Cache<Type, Cache<string, IEnumerable<BehaviorChain>>>();
 
+        [MarkedForTermination]
         private readonly Cache<Type, BehaviorChain> _creators;
 
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
