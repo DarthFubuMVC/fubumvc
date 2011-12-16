@@ -212,6 +212,7 @@
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Nodes\OutputNodeTester.cs" />
     <Compile Include="Registration\Nodes\RenderHtmlTagNodeTester.cs" />
+    <Compile Include="Registration\Querying\ChainSearchTester.cs" />
     <Compile Include="Resources\Conneg\BehaviorChainConnegExtensionsTester.cs" />
     <Compile Include="Resources\Conneg\ConnegInputBehaviorTester.cs" />
     <Compile Include="Resources\Conneg\ConnegInputNodeTester.cs" />

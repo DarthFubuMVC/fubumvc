@@ -63,20 +63,6 @@ namespace FubuMVC.Tests.Registration.Querying
         }
 
         [Test]
-        public void find_chains_per_input_model()
-        {
-            resolver.Find(new ChainResolverInput1()).Select(x => x.FirstCall().Method.Name)
-                .ShouldHaveTheSameElementsAs("M2", "M3", "M4");
-        }
-
-        [Test]
-        public void find_chains_per_input_model_respects_the_type_resolution()
-        {
-            resolver.Find(new Proxy<ChainResolverInput1>()).Select(x => x.FirstCall().Method.Name)
-                .ShouldHaveTheSameElementsAs("M2", "M3", "M4");
-        }
-
-        [Test]
         public void find_unique_success()
         {
             resolver.FindUnique(new UniqueInput()).FirstCall().Method.Name.ShouldEqual("M9");
