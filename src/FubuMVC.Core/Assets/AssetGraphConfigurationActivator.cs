@@ -44,10 +44,10 @@ namespace FubuMVC.Core.Assets
         public void ReadScriptConfig(string folder, IPackageLog log)
         {
             log.Trace("Trying to read *script.config / *asset.config files from {0}", folder);
-            var files = _fileSystem.FindFiles(folder, new FileSet()
+            var files = _fileSystem.FindFiles(folder, new FileSet
                                                       {
                                                           Include = "*.script.config;*.asset.config",
-                                                          DeepSearch = false
+                                                          DeepSearch = true
                                                       });
 
             if (!files.Any())
