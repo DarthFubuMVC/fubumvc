@@ -339,7 +339,6 @@
     <Compile Include="Templating\CloneGitRepositoryTester.cs" />
     <Compile Include="Templating\CsProjGathererTester.cs" />
     <Compile Include="Templating\KeywordReplacerTester.cs" />
-    <Compile Include="Templating\ModifySolutionTester.cs" />
     <Compile Include="Templating\NewCommandEndToEndTester.cs" />
     <Compile Include="Templating\NewCommandTester.cs" />
     <Compile Include="Templating\SolutionFileServiceTester.cs" />

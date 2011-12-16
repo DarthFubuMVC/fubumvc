@@ -116,6 +116,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestartCommand.cs" />
     <Compile Include="Templating\CsProj.cs" />
+    <Compile Include="Templating\EnvironmentalStringExtensions.cs" />
     <Compile Include="Templating\GuidKeywordPolicy.cs" />
     <Compile Include="Templating\ICsProjGatherer.cs" />
     <Compile Include="Templating\IKeywordPolicy.cs" />
