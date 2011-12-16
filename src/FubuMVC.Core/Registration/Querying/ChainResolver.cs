@@ -22,13 +22,6 @@ namespace FubuMVC.Core.Registration.Querying
             _behaviorGraph = behaviorGraph;
         }
 
-        // TODO -- This really needs to change to returning an IEnumerable and
-        // we possibly need an alternative that finds by category
-        public BehaviorChain Find<T>(Expression<Action<T>> expression)
-        {
-            return Find(typeof (T), ReflectionHelper.GetMethod(expression));
-        }
-
         public BehaviorChain Find(Type handlerType, MethodInfo method)
         {
             var chains = _behaviorGraph.ChainsFor(handlerType, method);

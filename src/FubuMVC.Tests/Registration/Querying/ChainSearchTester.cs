@@ -453,12 +453,16 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_by_input_model_only()
         {
+            var chainSearch = new ChainSearch
+                              {
+                                  TypeMode = TypeSearchMode.InputModelOnly,
+                                  Type = typeof(SimpleInputModel)
+                              };
 
-            new ChainSearch
-            {
-                TypeMode = TypeSearchMode.InputModelOnly,
-                Type = typeof(SimpleInputModel)
-            }.FindCandidates(theGraph).Single().Select(x => x.FirstCall().Description)
+            Debug.WriteLine(chainSearch);
+
+
+            chainSearch.FindCandidates(theGraph).Single().Select(x => x.FirstCall().Description)
             .ShouldHaveTheSameElementsAs("OneController.Query(SimpleInputModel model) : SimpleOutputModel", "TwoController.NotQuery(SimpleInputModel model) : SimpleOutputModel");
         }
 

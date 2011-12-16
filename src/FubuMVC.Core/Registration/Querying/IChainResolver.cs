@@ -1,21 +1,30 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Querying
 {
     public interface IChainResolver
     {
-        BehaviorChain Find<T>(Expression<Action<T>> expression);
+        BehaviorChain Find(Type handlerType, MethodInfo method);
 
         BehaviorChain FindUnique(object model, string category = null);
-        BehaviorChain Find(Type handlerType, MethodInfo method);
+        
         BehaviorChain FindCreatorOf(Type type);
 
         void RootAt(string baseUrl);
         IChainForwarder FindForwarder(object model, string category = null);
         BehaviorChain FindUniqueByInputType(Type modelType, string category = null);
+    }
+
+    public static class ChainResolverExtensions
+    {
+        public static BehaviorChain Find<T>(this IChainResolver resolver, Expression<Action<T>> expression)
+        {
+            return resolver.Find(typeof (T), ReflectionHelper.GetMethod(expression));
+        }
     }
 
     public enum CategorySearchMode

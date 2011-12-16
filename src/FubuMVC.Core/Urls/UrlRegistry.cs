@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using FubuCore.Reflection;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Http;
@@ -42,7 +43,7 @@ namespace FubuMVC.Core.Urls
 
         public string UrlFor<TController>(Expression<Action<TController>> expression)
         {
-            return findAnswerFromResolver(null, r => r.Find(expression));
+            return findAnswerFromResolver(null, r => r.Find(typeof(TController), ReflectionHelper.GetMethod(expression)));
         }
 
         public string UrlFor(Type modelType, RouteParameters parameters)

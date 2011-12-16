@@ -15,9 +15,37 @@ namespace FubuMVC.Core.Registration.Querying
         public TypeSearchMode TypeMode = TypeSearchMode.Any;
         public string MethodName;
 
-        public string Description()
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return string.Format("Type: {0}, CategoryOrHttpMethod: {1}, CategoryMode: {2}, TypeMode: {3}, MethodName: {4}", Type, CategoryOrHttpMethod, CategoryMode, TypeMode, MethodName);
+        }
+
+        public bool Equals(ChainSearch other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Type, Type) && Equals(other.CategoryOrHttpMethod, CategoryOrHttpMethod) && Equals(other.CategoryMode, CategoryMode) && Equals(other.TypeMode, TypeMode) && Equals(other.MethodName, MethodName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (ChainSearch)) return false;
+            return Equals((ChainSearch) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = (Type != null ? Type.GetHashCode() : 0);
+                result = (result*397) ^ (CategoryOrHttpMethod != null ? CategoryOrHttpMethod.GetHashCode() : 0);
+                result = (result*397) ^ CategoryMode.GetHashCode();
+                result = (result*397) ^ TypeMode.GetHashCode();
+                result = (result*397) ^ (MethodName != null ? MethodName.GetHashCode() : 0);
+                return result;
+            }
         }
 
         public IEnumerable<IEnumerable<BehaviorChain>> FindCandidates(BehaviorGraph graph)
