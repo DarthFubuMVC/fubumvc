@@ -86,7 +86,7 @@ namespace FubuMVC.Core.Registration.Querying
             return Find(new ChainSearch{
                 Type = handlerType,
                 TypeMode = TypeSearchMode.HandlerOnly,
-                MethodName = method.Name,
+                MethodName = method == null ? null : method.Name,
                 CategoryOrHttpMethod = category
             });
         }
@@ -114,7 +114,7 @@ namespace FubuMVC.Core.Registration.Querying
         }
 
 
-        public BehaviorChain FindUniqueByInputType(Type modelType, string category = null)
+        public BehaviorChain FindUniqueByType(Type modelType, string category = null)
         {
             return Find(new ChainSearch
             {

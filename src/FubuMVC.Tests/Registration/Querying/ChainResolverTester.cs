@@ -211,10 +211,10 @@ namespace FubuMVC.Tests.Registration.Querying
         [Test]
         public void find_chain_by_http_method()
         {
-            _resolutionCache.FindUniqueByInputType(typeof (ChainResolverInput4), "POST")
+            _resolutionCache.FindUniqueByType(typeof (ChainResolverInput4), "POST")
                 .FirstCall().Description.ShouldContain("post_input");
 
-            _resolutionCache.FindUniqueByInputType(typeof(ChainResolverInput4), "GET")
+            _resolutionCache.FindUniqueByType(typeof(ChainResolverInput4), "GET")
                 .FirstCall().Description.ShouldContain("get_input");
         }
 

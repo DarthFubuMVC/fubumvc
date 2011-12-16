@@ -26,9 +26,26 @@ namespace FubuMVC.Core.Urls
             _templateFunc = (s) => { return s.Replace("{", templatePattern.Start).Replace("}", templatePattern.End); };
         }
 
-        public string UrlFor<TInput>() where TInput : class, new()
+        // TODO -- find a less shitastic way to do this
+        public string UrlFor<TInput>(string categoryOrHttpMethod = null) where TInput : class
         {
-            return For(new TInput());
+            var type = typeof (TInput);
+            try
+            {
+                if (type.IsConcreteWithDefaultCtor())
+                {
+                    var model = Activator.CreateInstance(type);
+                    return For(model, categoryOrHttpMethod);
+                }
+            }
+
+
+            catch (FubuException) // Yeah, I know
+            {
+                return For(type, null, categoryOrHttpMethod);
+            }
+
+            return For(type, null, categoryOrHttpMethod);
         }
 
         public string UrlFor(object model, string category = null)
@@ -36,17 +53,9 @@ namespace FubuMVC.Core.Urls
             return For(model, category);
         }
 
-        public string UrlFor(Type modelType, RouteParameters parameters)
+        public string UrlFor(Type modelType, RouteParameters parameters, string categoryOrHttpMethod = null)
         {
-            var chain = resolver.FindUniqueByInputType(modelType);
-            string url = chain.Route.Input.CreateUrlFromParameters(parameters);
-
-            return _httpRequest.ToFullUrl(url);
-        }
-
-        public string UrlFor(Type modelType, string category, RouteParameters parameters)
-        {
-            var chain = resolver.FindUniqueByInputType(modelType, category);
+            var chain = resolver.FindUniqueByType(modelType, categoryOrHttpMethod);
             string url = chain.Route.Input.CreateUrlFromParameters(parameters);
 
             return _httpRequest.ToFullUrl(url);
@@ -58,24 +67,24 @@ namespace FubuMVC.Core.Urls
             return _httpRequest.ToFullUrl(relativeUrl);
         }
 
-        public string UrlFor(Type handlerType, MethodInfo method)
+        public string UrlFor(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)
         {
-            return For(handlerType, method);
+            return For(handlerType, method, categoryOrHttpMethod);
         }
 
-        public string UrlFor<TController>(Expression<Action<TController>> expression)
+        public string UrlFor<TController>(Expression<Action<TController>> expression, string categoryOrHttpMethod)
         {
-            return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression));
+            return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression), categoryOrHttpMethod);
         }
 
-        public string TemplateFor(object model)
+        public string TemplateFor(object model, string categoryOrHttpMethod = null)
         {
-            return buildUrlTemplate(model, null);
+            return buildUrlTemplate(model, categoryOrHttpMethod, null);
         }
 
         public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
         {
-            return buildUrlTemplate(new TModel(), hash);
+            return buildUrlTemplate(new TModel(), null, hash);
         }
 
         public string UrlForNew(Type entityType)
@@ -102,15 +111,15 @@ namespace FubuMVC.Core.Urls
             return UrlFor(typeof (TInput), parameters);
         }
 
-        public string UrlFor<TInput>(RouteParameters parameters, string category)
+        public string UrlFor<TInput>(RouteParameters parameters, string categoryOrHttpMethod = null)
         {
             var modelType = typeof (TInput);
-            return UrlFor(modelType, category, parameters);
+            return UrlFor(modelType, parameters, categoryOrHttpMethod);
         }
 
-        private string buildUrlTemplate(object model, params Func<object, object>[] hash)
+        private string buildUrlTemplate(object model, string categoryOrHttpMethod, Func<object, object>[] hash)
         {
-            var chain = resolver.FindUnique(model);
+            var chain = resolver.FindUnique(model, categoryOrHttpMethod);
 
             string url = _templateFunc(chain.Route.CreateTemplate(model, hash));
             return _httpRequest.ToFullUrl(url);

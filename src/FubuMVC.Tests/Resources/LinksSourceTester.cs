@@ -1,14 +1,9 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using FubuCore;
-using FubuCore.Reflection;
-using FubuMVC.Core.Assets.Files;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Resources;
 using FubuMVC.Core.Resources.Media;
-using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -87,71 +82,6 @@ namespace FubuMVC.Tests.Resources
             {
                 return string.Format("site action for {0}", _name);
             }
-        }
-    }
-
-    public class ValidStubUrlRegistry : IUrlRegistry
-    {
-
-        public string UrlFor(object model, string category = null)
-        {
-            var url = "http://somewhere.com/" + model.ToString();
-            if (category.IsNotEmpty())
-            {
-                url += "/" + category;
-            }
-
-            return url;
-        }
-
-        public string UrlFor<TInput>() where TInput : class, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlForNew(Type entityType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasNewUrl(Type type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlFor(Type handlerType, MethodInfo method)
-        {
-            return "http://somewhere.com/" + handlerType.Name + "/" + method.Name;
-        }
-
-        public string TemplateFor(object model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string TemplateFor<TModel>(params Func<object, object>[] hash) where TModel : class, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlFor(Type modelType, RouteParameters parameters)
-        {
-            return "http://something.com/{0}/{1}".ToFormat(modelType.Name, parameters);
-        }
-
-        public string UrlFor(Type modelType, string category, RouteParameters parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string UrlFor<TController>(Expression<Action<TController>> expression)
-        {
-            return UrlFor(typeof(TController), ReflectionHelper.GetMethod(expression));
-        }
-
-        public string UrlForAsset(AssetFolder? folder, string name)
-        {
-            throw new NotImplementedException();
         }
     }
 }

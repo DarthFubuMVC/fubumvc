@@ -24,7 +24,7 @@ namespace Serenity.Jasmine
                 throw new ArgumentOutOfRangeException("Only ul tags are valid here:  \n" + topChild.ToString());
             }
 
-            var topUrl = _urls.UrlFor<JasminePages>(x => x.AllSpecs());
+            var topUrl = _urls.UrlFor<JasminePages>(x => x.AllSpecs(), null);
             return new HtmlTag("ul", tag =>
             {
                 tag.Id("all-specs-node").AddClass("filetree");

@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             var document = DiagnosticHtml.BuildDocument(_urls, "Script Graph Query");
             document.Push("div").AddClass("script-query");
             
-            document.Push("form").Attr("action", _urls.UrlFor<ScriptWriter>(x => x.QueryScripts(null)));
+            document.Push("form").Attr("action", _urls.UrlFor<ScriptWriter>(x => x.QueryScripts(null), null));
             
             document.Add("b").Text("For requested script names (comma-delimited):  ");
             document.Add(new TextboxTag("Scripts", queryNames.Join(", ")).Id("script-names-text"));

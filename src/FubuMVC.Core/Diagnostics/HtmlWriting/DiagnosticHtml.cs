@@ -26,7 +26,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
             var mainDiv = new HtmlTag("div").AddClass("main");
             mainDiv.Add("h2").Text("FubuMVC Diagnostics").Append(buildVersionTag());
             var navBar = mainDiv.Add("div").AddClass("homelink");
-            if (urls != null) navBar.Append(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index())));
+            if (urls != null) navBar.Append(new LinkTag("Home", urls.UrlFor<BehaviorGraphWriter>(w => w.Index(), null)));
             navBar.Add("span").Text(" > " + title);
             document.Add(mainDiv);
 

@@ -33,7 +33,7 @@ namespace Serenity
 
         public void NavigateTo<T>(Expression<Action<T>> expression)
         {
-            var url = _application.Urls.UrlFor(expression);
+            var url = _application.Urls.UrlFor(expression, null);
             _application.Driver.Navigate().GoToUrl(url);
         }
 

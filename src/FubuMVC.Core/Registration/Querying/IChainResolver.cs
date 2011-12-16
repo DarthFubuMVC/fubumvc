@@ -11,7 +11,7 @@ namespace FubuMVC.Core.Registration.Querying
         BehaviorChain Find(Type handlerType, MethodInfo method, string category = null);
 
         BehaviorChain FindUnique(object model, string category = null);
-        BehaviorChain FindUniqueByInputType(Type modelType, string category = null);
+        BehaviorChain FindUniqueByType(Type modelType, string category = null);
         
         BehaviorChain FindCreatorOf(Type type);
 

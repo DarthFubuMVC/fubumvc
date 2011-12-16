@@ -51,7 +51,7 @@ namespace FubuMVC.Tests.Resources.Media.Atom
         public void applied_feed_level_links()
         {
             theResultingFeed.Links.Select(x => x.Uri.OriginalString)
-                .ShouldHaveTheSameElementsAs(theUrls.UrlFor(new FeedRoot()), theUrls.UrlFor<FeedRoot>(x => x.Go()));
+                .ShouldHaveTheSameElementsAs(theUrls.UrlFor(new FeedRoot()), theUrls.UrlFor<FeedRoot>(x => x.Go(), null));
 
             theResultingFeed.Links.First().RelationshipType.ShouldEqual("root");
         }

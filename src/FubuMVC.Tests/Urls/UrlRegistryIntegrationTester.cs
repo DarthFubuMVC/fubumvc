@@ -8,6 +8,7 @@ using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Urls;
+using FubuMVC.Tests.Registration.Querying;
 using FubuTestingSupport;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace FubuMVC.Tests.Urls
             registry.Actions.IncludeType<OneController>();
             registry.Actions.IncludeType<TwoController>();
         	registry.Actions.IncludeType<QueryStringTestController>();
+        	registry.Actions.IncludeType<OnlyOneActionController>();
             registry.Actions.ExcludeMethods(x => x.Name.Contains("Ignore"));
 
             registry.Routes
@@ -53,9 +55,18 @@ namespace FubuMVC.Tests.Urls
         }
 
         [Test]
+        public void find_by_handler_type_if_only_one_method()
+        {
+            graph.Actions().Each(x => Debug.WriteLine(x.Description));
+
+            urls.UrlFor<OnlyOneActionController>()
+                .ShouldEqual("http://server/fubu/onlyoneaction/go");
+        }
+
+        [Test]
         public void retrieve_by_controller_action_even_if_it_has_an_input_model()
         {
-            urls.UrlFor<OneController>(x => x.M1(null)).ShouldEqual("http://server/fubu/one/m1");
+            urls.UrlFor<OneController>(x => x.M1(null), null).ShouldEqual("http://server/fubu/one/m1");
         }
 
         [Test]
@@ -73,7 +84,7 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_for_a_inferred_model_simple_case()
         {
-            urls.UrlFor<Model1>().ShouldEqual("http://server/fubu/one/m1");
+            urls.UrlFor<Model1>((string) null).ShouldEqual("http://server/fubu/one/m1");
         }
 
         [Test]
@@ -129,7 +140,7 @@ namespace FubuMVC.Tests.Urls
         [Test]
         public void retrieve_a_url_by_action()
         {
-            urls.UrlFor<OneController>(x => x.M2()).ShouldEqual("http://server/fubu/one/m2");
+            urls.UrlFor<OneController>(x => x.M2(), null).ShouldEqual("http://server/fubu/one/m2");
         }
 
         [Test]
@@ -139,7 +150,7 @@ namespace FubuMVC.Tests.Urls
 
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                urls.UrlFor<OneController>(x => x.Ignored());
+                urls.UrlFor<OneController>(x => x.Ignored(), null);
             });
         }
 
@@ -148,7 +159,7 @@ namespace FubuMVC.Tests.Urls
         {
             var method = ReflectionHelper.GetMethod<OneController>(x => x.M3());
 
-            urls.UrlFor(typeof(OneController), method).ShouldEqual("http://server/fubu/one/m3");
+            urls.UrlFor(typeof(OneController), method, null).ShouldEqual("http://server/fubu/one/m3");
         }
 
         [Test]
@@ -157,7 +168,7 @@ namespace FubuMVC.Tests.Urls
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
                 var method = ReflectionHelper.GetMethod<OneController>(x => x.Ignored());
-                urls.UrlFor(typeof (OneController), method);
+                urls.UrlFor(typeof (OneController), method, null);
             }).ErrorCode.ShouldEqual(2104);
         }
 
@@ -293,6 +304,13 @@ namespace FubuMVC.Tests.Urls
         public void M4(UrlModel model) { }
     }
 
+    public class OnlyOneActionController
+    {
+        public void Go(Model8 input)
+        {
+        }
+    }
+
 	public class QueryStringTestController
 	{
 		public void get_qs_test(ModelWithQueryStringInput input)
@@ -315,6 +333,7 @@ namespace FubuMVC.Tests.Urls
     public class Model5{}
     public class Model6{}
     public class Model7{}
+    public class Model8{}
     public class DefaultModel { }
     public class ModelWithNoChain{}
     public class ModelWithoutNewUrl{}

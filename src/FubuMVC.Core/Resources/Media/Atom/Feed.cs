@@ -105,7 +105,7 @@ namespace FubuMVC.Core.Resources.Media.Atom
 
         public LinkExpression Link<TController>(Expression<Action<TController>> method)
         {
-            return Link(urls => urls.UrlFor(method));
+            return Link(urls => urls.UrlFor(method, null));
         }
 
         public LinkExpression Link(Func<IUrlRegistry, string> urlsource)

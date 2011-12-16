@@ -310,6 +310,7 @@
     <Compile Include="Registration\system_policy_for_authorization.cs" />
     <Compile Include="Registration\TypePoolTester.cs" />
     <Compile Include="Resources\Resource_integrated_registration_tester.cs" />
+    <Compile Include="Resources\ValidStubUrlRegistry.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\BehaviorInvokerTester.cs" />

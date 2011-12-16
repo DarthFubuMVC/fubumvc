@@ -185,7 +185,7 @@ namespace FubuMVC.Tests.Continuations
             theUrl = "some/path/1";
             call = ActionCall.For<ControllerTarget>(x => x.ZeroInOneOut());
 
-            MockFor<IUrlRegistry>().Expect(x => x.UrlFor(call.HandlerType, call.Method)).Return(theUrl);
+            MockFor<IUrlRegistry>().Expect(x => x.UrlFor(call.HandlerType, call.Method, null)).Return(theUrl);
 
             ProcessContinuation(FubuContinuation.RedirectTo<ControllerTarget>(x => x.ZeroInOneOut()));
         }
