@@ -34,20 +34,6 @@ namespace FubuMVC.Core.Registration
     {
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
-        [MarkedForTermination]
-        private readonly Cache<Type, ChainGroup> _chainsForMethod;
-
-        [MarkedForTermination]
-        private readonly Cache<Type, IEnumerable<BehaviorChain>> _chainsForType =
-            new Cache<Type, IEnumerable<BehaviorChain>>();
-
-        [MarkedForTermination]
-        private readonly Cache<Type, Cache<string, IEnumerable<BehaviorChain>>> _chainsForTypeAndCategory =
-            new Cache<Type, Cache<string, IEnumerable<BehaviorChain>>>();
-
-        [MarkedForTermination]
-        private readonly Cache<Type, BehaviorChain> _creators;
-
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
         private readonly IServiceRegistry _services = new ServiceRegistry();
 
@@ -56,18 +42,6 @@ namespace FubuMVC.Core.Registration
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
             Observer = observer;
 
-            _chainsForType.OnMissing = findChainsByType;
-
-            _chainsForTypeAndCategory.OnMissing =
-                type =>
-                new Cache<string, IEnumerable<BehaviorChain>>(
-                    category => { return ChainsFor(type).Where(x => x.UrlCategory.Category == category).ToList(); });
-
-            _chainsForMethod = new Cache<Type, ChainGroup>(type => new ChainGroup(type, this));
-
-            _creators =
-                new Cache<Type, BehaviorChain>(
-                    type => { return Behaviors.SingleOrDefault(x => x.UrlCategory.Creates.Contains(type)); });
         }
 
         public BehaviorGraph() : this(new NulloConfigurationObserver())
@@ -294,8 +268,6 @@ namespace FubuMVC.Core.Registration
         public void RemoveChain(BehaviorChain chain)
         {
             _behaviors.Remove(chain);
-            _chainsForType.ClearAll();
-            _chainsForTypeAndCategory.ClearAll();
         }
 
         /// <summary>
@@ -417,58 +389,12 @@ namespace FubuMVC.Core.Registration
                 .Select(group => new HandlerActionsSet(group, group.Key));
         }
 
-        private IEnumerable<BehaviorChain> findChainsByType(Type modelType)
-        {
-            return Behaviors.Where(x => x.InputType() == modelType).ToList();
-        }
-
-        public IEnumerable<BehaviorChain> ChainsFor(Type modelType)
-        {
-            return _chainsForType[modelType];
-        }
-
-        public IEnumerable<BehaviorChain> ChainsFor(Type modelType, string category)
-        {
-            return _chainsForTypeAndCategory[modelType][category];
-        }
-
-        public IEnumerable<BehaviorChain> ChainsFor(Type handlerType, MethodInfo method)
-        {
-            return _chainsForMethod[handlerType].ChainsFor(method);
-        }
-
-        public BehaviorChain ChainThatCreates(Type type)
-        {
-            return _creators[type];
-        }
-
         public BehaviorChain FindHomeChain()
         {
             return Behaviors.FirstOrDefault(x => x.Route != null && x.Route.Pattern == string.Empty);
         }
     }
 
-    public class ChainGroup
-    {
-        private readonly Cache<string, IEnumerable<BehaviorChain>> _chains;
-
-        public ChainGroup(Type handlerType, BehaviorGraph graph)
-        {
-            _chains = new Cache<string, IEnumerable<BehaviorChain>>(method =>
-            {
-                return graph.Behaviors.Where(x => x.FirstCall() != null).Where(x =>
-                {
-                    var call = x.FirstCall();
-                    return call.HandlerType == handlerType && call.Method.Name == method;
-                }).ToList();
-            });
-        }
-
-        public IEnumerable<BehaviorChain> ChainsFor(MethodInfo method)
-        {
-            return _chains[method.Name];
-        }
-    }
 
     public class SortByRouteRankIterator : IRouteIterator
     {

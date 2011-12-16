@@ -20,7 +20,7 @@ namespace FubuMVC.Tests.Registration.Querying
     {
         private BehaviorGraph graph;
         private TypeResolver typeResolver;
-        private ChainResolver resolver;
+        private ChainResolutionCache _resolutionCache;
 
         [SetUp]
         public void SetUp()
@@ -33,13 +33,13 @@ namespace FubuMVC.Tests.Registration.Querying
             typeResolver = new TypeResolver();
             typeResolver.AddStrategy<ProxyDetector>();
 
-            resolver = new ChainResolver(typeResolver, graph);
+            _resolutionCache = new ChainResolutionCache(typeResolver, graph);
         }
 
         [Test]
         public void has_new_negative()
         {
-            resolver.FindCreatorOf(typeof (Entity1)).ShouldBeNull();
+            _resolutionCache.FindCreatorOf(typeof (Entity1)).ShouldBeNull();
         }
 
         [Test]
@@ -49,21 +49,21 @@ namespace FubuMVC.Tests.Registration.Querying
             chain.UrlCategory.Creates.Add(typeof(Entity1));
             chain.UrlCategory.Creates.Add(typeof(Entity2));
 
-            resolver.FindCreatorOf(typeof (Entity1)).FirstCall().Method.Name.ShouldEqual("M6");
-            resolver.FindCreatorOf(typeof (Entity2)).FirstCall().Method.Name.ShouldEqual("M6");
-            resolver.FindCreatorOf(typeof (Entity3)).ShouldBeNull();
+            _resolutionCache.FindCreatorOf(typeof (Entity1)).FirstCall().Method.Name.ShouldEqual("M6");
+            _resolutionCache.FindCreatorOf(typeof (Entity2)).FirstCall().Method.Name.ShouldEqual("M6");
+            _resolutionCache.FindCreatorOf(typeof (Entity3)).ShouldBeNull();
         }
 
         [Test]
         public void find_creator_negative()
         {
-            resolver.FindCreatorOf(typeof(Entity1)).ShouldBeNull();
+            _resolutionCache.FindCreatorOf(typeof(Entity1)).ShouldBeNull();
         }
 
         [Test]
         public void find_unique_success()
         {
-            resolver.FindUnique(new UniqueInput()).FirstCall().Method.Name.ShouldEqual("M9");
+            _resolutionCache.FindUnique(new UniqueInput()).FirstCall().Method.Name.ShouldEqual("M9");
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Registration.Querying
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                resolver.FindUnique(new InputModelThatDoesNotMatchAnyExistingBehaviors());
+                _resolutionCache.FindUnique(new InputModelThatDoesNotMatchAnyExistingBehaviors());
             }).ErrorCode.ShouldEqual(2104);
         }
         
@@ -80,7 +80,7 @@ namespace FubuMVC.Tests.Registration.Querying
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                resolver.FindUnique(new ChainResolverInput1());
+                _resolutionCache.FindUnique(new ChainResolverInput1());
             }).ErrorCode.ShouldEqual(2108);
         }
 
@@ -90,7 +90,7 @@ namespace FubuMVC.Tests.Registration.Querying
             graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
                 .UrlCategory.Category = Categories.DEFAULT;
 
-            resolver.FindUnique(new ChainResolverInput1()).FirstCall().Method.Name.ShouldEqual("M3");
+            _resolutionCache.FindUnique(new ChainResolverInput1()).FirstCall().Method.Name.ShouldEqual("M3");
         }
 
         [Test]
@@ -102,13 +102,13 @@ namespace FubuMVC.Tests.Registration.Querying
             graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
                 .UrlCategory.Category = Categories.EDIT;
 
-            resolver.FindUnique(new ChainResolverInput1()).FirstCall().Method.Name.ShouldEqual("M4");
+            _resolutionCache.FindUnique(new ChainResolverInput1()).FirstCall().Method.Name.ShouldEqual("M4");
         }
 
         [Test]
         public void find_by_controller_action_success()
         {
-            resolver.Find<ChainResolverController>(x => x.M1()).FirstCall().Method.Name.ShouldEqual("M1");
+            _resolutionCache.Find<ChainResolverController>(x => x.M1()).FirstCall().Method.Name.ShouldEqual("M1");
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace FubuMVC.Tests.Registration.Querying
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                resolver.Find<ControllerThatIsNotRegistered>(x => x.Go());
+                _resolutionCache.Find<ControllerThatIsNotRegistered>(x => x.Go());
             }).ErrorCode.ShouldEqual(2104);
         }
 
@@ -129,8 +129,8 @@ namespace FubuMVC.Tests.Registration.Querying
             graph.BehaviorFor<ChainResolverController>(x => x.M3(null))
                 .UrlCategory.Category = Categories.EDIT;
 
-            resolver.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall().Method.Name.ShouldEqual("M2");
-            resolver.FindUnique(new ChainResolverInput1(), Categories.EDIT).FirstCall().Method.Name.ShouldEqual("M3");
+            _resolutionCache.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall().Method.Name.ShouldEqual("M2");
+            _resolutionCache.FindUnique(new ChainResolverInput1(), Categories.EDIT).FirstCall().Method.Name.ShouldEqual("M3");
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace FubuMVC.Tests.Registration.Querying
         {
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                resolver.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall();
+                _resolutionCache.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall();
             }).ErrorCode.ShouldEqual(2104);
         }
 
@@ -153,14 +153,14 @@ namespace FubuMVC.Tests.Registration.Querying
 
             Exception<FubuException>.ShouldBeThrownBy(() =>
             {
-                resolver.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall();
+                _resolutionCache.FindUnique(new ChainResolverInput1(), Categories.NEW).FirstCall();
             }).ErrorCode.ShouldEqual(2108);
         }
 
         [Test]
         public void find_unique_should_respect_the_type_resolution()
         {
-            resolver.FindUnique(new Proxy<UniqueInput>()).FirstCall().Method.Name.ShouldEqual("M9");
+            _resolutionCache.FindUnique(new Proxy<UniqueInput>()).FirstCall().Method.Name.ShouldEqual("M9");
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace FubuMVC.Tests.Registration.Querying
             graph.BehaviorFor<ChainResolverController>(x => x.M2(null))
                 .UrlCategory.Category = Categories.NEW;
 
-            resolver.FindUnique(new Proxy<ChainResolverInput1>(), Categories.NEW)
+            _resolutionCache.FindUnique(new Proxy<ChainResolverInput1>(), Categories.NEW)
                 .FirstCall().Method.Name.ShouldEqual("M2");
         }
 
@@ -177,7 +177,7 @@ namespace FubuMVC.Tests.Registration.Querying
         public void find_by_handler_type_and_method_positive_case()
         {
             var method = ReflectionHelper.GetMethod<ChainResolverController>(x => x.M7(null));
-            resolver.Find(typeof(ChainResolverController), method).FirstCall().Method.ShouldEqual(method);
+            _resolutionCache.Find(typeof(ChainResolverController), method).FirstCall().Method.ShouldEqual(method);
         }
 
         [Test]
@@ -185,15 +185,15 @@ namespace FubuMVC.Tests.Registration.Querying
         {
             graph.Forward<ForwardedModel>(m => new UniqueInput());
 
-            var forwarder = resolver.FindForwarder(new ForwardedModel());
+            var forwarder = _resolutionCache.FindForwarder(new ForwardedModel());
             forwarder.ShouldNotBeNull();
-            forwarder.FindChain(resolver, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
+            forwarder.FindChain(_resolutionCache, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
         }
 
         [Test]
         public void find_forwarder_is_null_with_no_forwarders_registered()
         {
-            resolver.FindForwarder(new ForwardedModel()).ShouldBeNull();
+            _resolutionCache.FindForwarder(new ForwardedModel()).ShouldBeNull();
         }
 
         [Test]
@@ -203,18 +203,18 @@ namespace FubuMVC.Tests.Registration.Querying
             graph.Forward<ForwardedModel>(m => new ChainResolverInput1(), Categories.NEW);
             graph.Forward<ForwardedModel>(m => new ChainResolverInput1(), Categories.EDIT);
 
-            var forwarder = resolver.FindForwarder(new ForwardedModel());
+            var forwarder = _resolutionCache.FindForwarder(new ForwardedModel());
             forwarder.ShouldNotBeNull();
-            forwarder.FindChain(resolver, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
+            forwarder.FindChain(_resolutionCache, new ForwardedModel()).Chain.FirstCall().Method.Name.ShouldEqual("M9");
         }
 
         [Test]
         public void find_chain_by_http_method()
         {
-            resolver.FindUniqueByInputType(typeof (ChainResolverInput4), "POST")
+            _resolutionCache.FindUniqueByInputType(typeof (ChainResolverInput4), "POST")
                 .FirstCall().Description.ShouldContain("post_input");
 
-            resolver.FindUniqueByInputType(typeof(ChainResolverInput4), "GET")
+            _resolutionCache.FindUniqueByInputType(typeof(ChainResolverInput4), "GET")
                 .FirstCall().Description.ShouldContain("get_input");
         }
 

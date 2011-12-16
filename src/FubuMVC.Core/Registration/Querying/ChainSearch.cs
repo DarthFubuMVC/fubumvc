@@ -72,7 +72,7 @@ namespace FubuMVC.Core.Registration.Querying
 
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.InputModelOnly)
             {
-                yield return methodFilter(graph.ChainsFor(Type));
+                yield return methodFilter(graph.Behaviors.Where(chain => chain.Calls.Any(x => x.InputType() == Type)));
             }
 
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.HandlerOnly)

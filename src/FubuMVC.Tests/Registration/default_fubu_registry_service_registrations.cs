@@ -143,7 +143,8 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void default_chain_resolver_is_registered()
         {
-            registeredTypeIs<IChainResolver, ChainResolver>();
+            ServiceRegistry.ShouldBeSingleton(typeof(ChainResolutionCache)).ShouldBeTrue();
+            registeredTypeIs<IChainResolver, ChainResolutionCache>();
         }
 
         [Test]

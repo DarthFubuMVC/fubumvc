@@ -486,7 +486,7 @@
     <Compile Include="Registration\Nodes\RenderTextNode.cs" />
     <Compile Include="Registration\Nodes\UrlCategory.cs" />
     <Compile Include="Registration\ObjectGraph\ListDependency.cs" />
-    <Compile Include="Registration\Querying\ChainResolver.cs" />
+    <Compile Include="Registration\Querying\ChainResolutionCache.cs" />
     <Compile Include="Registration\Querying\ChainForwarder.cs" />
     <Compile Include="Registration\Querying\IChainResolver.cs" />
     <Compile Include="Registration\RouteVisitor.cs" />

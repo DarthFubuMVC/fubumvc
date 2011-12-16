@@ -155,22 +155,6 @@ namespace FubuMVC.Tests.Registration
                 .ShouldNotContain(chain);
         }
 
-        [Test]
-        public void should_remove_chain_from_caches()
-        {
-            var graph = new FubuRegistry(x =>
-            {
-                x.Applies.ToThisAssembly();
-                x.Actions.IncludeClassesSuffixedWithController();
-            }).BuildGraph();
-
-            var chain = graph.ChainsFor(typeof (MyRequestModel)).First();
-            graph.RemoveChain(chain);
-
-            graph
-                .ChainsFor(typeof(MyRequestModel))
-                .ShouldNotContain(chain);
-        }
     }
 
 

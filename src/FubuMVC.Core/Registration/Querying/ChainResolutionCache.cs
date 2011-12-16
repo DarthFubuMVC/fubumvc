@@ -3,21 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
+using FubuCore.Util;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Registration.Querying
 {
-    // TODO --- need to make this a singleton and add memoization here
-    public class ChainResolver : IChainResolver
+    public class ChainResolutionCache : IChainResolver
     {
+        private readonly Cache<ChainSearch, Func<BehaviorChain>> _results = new Cache<ChainSearch, Func<BehaviorChain>>();
+        private readonly Cache<Type, BehaviorChain> _creators = new Cache<Type, BehaviorChain>();
+
         private readonly BehaviorGraph _behaviorGraph;
         private readonly ITypeResolver _typeResolver;
 
-        public ChainResolver(ITypeResolver typeResolver, BehaviorGraph behaviorGraph)
+        public ChainResolutionCache(ITypeResolver typeResolver, BehaviorGraph behaviorGraph)
         {
             _typeResolver = typeResolver;
             _behaviorGraph = behaviorGraph;
+
+            _results.OnMissing = find;
+
+            _creators.OnMissing = type =>
+            {
+                return behaviorGraph.Behaviors.SingleOrDefault(x => x.UrlCategory.Creates.Contains(type));
+            };
+        }
+
+        private Func<BehaviorChain> find(ChainSearch search)
+        {
+            var candidates = search.FindCandidates(_behaviorGraph);
+
+            var count = candidates.Count();
+            switch (count)
+            {
+                case 1:
+                    var chain = candidates.Single();
+                    return () => chain;
+
+                case 0:
+                    return () =>
+                    {
+                        throw new FubuException(2104, "No behavior chains are registered matching criteria:  " + search);
+                    };
+
+                default:
+                    var message = "More than one behavior chain matching criteria:  " + search;
+                    message += "\nMatches:";
+
+                    candidates.Each(x =>
+                    {
+                        // TODO -- BehaviorChain needs a Description or a better ToString()
+
+                        var description = "\n";
+                        if (x.Route != null)
+                        {
+                            description += x.Route.Pattern + "  ";
+                        }
+
+                        if (x.FirstCall() != null)
+                        {
+                            description += " -- " + x.FirstCall().Description;
+                        }
+
+                        message += description;
+                    });
+
+                    return () =>
+                    {
+                        throw new FubuException(2108, message);
+                    };
+            }
+        }
+
+        public BehaviorChain Find(ChainSearch search)
+        {
+            return _results[search]();
         }
 
         public BehaviorChain Find(Type handlerType, MethodInfo method, string category = null)
@@ -66,7 +127,7 @@ namespace FubuMVC.Core.Registration.Querying
 
         public BehaviorChain FindCreatorOf(Type type)
         {
-            return _behaviorGraph.ChainThatCreates(type);
+            return _creators[type];
         }
 
         public void RootAt(string baseUrl)
@@ -86,43 +147,6 @@ namespace FubuMVC.Core.Registration.Querying
             return _behaviorGraph.Forwarders.SingleOrDefault(f => f.Category == category && f.InputType == modelType);
         }
 
-        public BehaviorChain Find(ChainSearch search)
-        {
-            var candidates = search.FindCandidates(_behaviorGraph);
 
-            var count = candidates.Count();
-            switch (count)
-            {
-                case 1:
-                    return candidates.Single();
-
-                case 0:
-                    throw new FubuException(2104, "No behavior chains are registered matching criteria:  " + search);
-
-                default:
-                    var message = "More than one behavior chain matching criteria:  " + search;
-                    message += "\nMatches:";
-
-                    candidates.Each(x =>
-                    {
-                        // TODO -- BehaviorChain needs a Description or a better ToString()
-
-                        var description = "\n";
-                        if (x.Route != null)
-                        {
-                            description += x.Route.Pattern + "  ";
-                        }
-
-                        if (x.FirstCall() != null)
-                        {
-                            description += " -- " + x.FirstCall().Description;
-                        }
-
-                        message += description;
-                    });
-
-                    throw new FubuException(2108, message);
-            }
-        }
     }
 }
