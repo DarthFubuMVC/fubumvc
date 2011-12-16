@@ -22,7 +22,8 @@ namespace FubuMVC.Core.Registration.Querying
         {
             if (CategoryMode == CategorySearchMode.Strict)
             {
-                return chains.Where(x => x.UrlCategory.Category == (CategoryOrHttpMethod ?? Categories.DEFAULT));
+                var category = CategoryOrHttpMethod ?? Categories.DEFAULT;
+                return chains.Where(x => x.MatchesCategoryOrHttpMethod(category));
             }
 
             if (chains.Count() == 1)
@@ -32,7 +33,7 @@ namespace FubuMVC.Core.Registration.Querying
 
             if (CategoryOrHttpMethod == null)
             {
-                var candidates = chains.Where(x => x.UrlCategory.Category == Categories.DEFAULT);
+                var candidates = chains.Where(x => x.MatchesCategoryOrHttpMethod(Categories.DEFAULT));
                 if (candidates.Count() > 0) return candidates;
 
                 return chains.Where(x => x.UrlCategory.Category == null);

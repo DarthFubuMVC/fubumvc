@@ -230,5 +230,129 @@ namespace FubuMVC.Tests.Registration.Querying
 
             search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain3);
         }
+
+        [Test]
+        public void find_by_category_strict_with_multiple_chains_1()
+        {
+            var search = new ChainSearch
+            {
+                CategoryMode = CategorySearchMode.Strict,
+                CategoryOrHttpMethod = "something"
+            };
+
+            var chain1 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = "something"
+                }
+            };
+
+            var chain2 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = Categories.DEFAULT
+                }
+            };
+
+            var chain3 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = null
+                }
+            };
+
+            var chains = new BehaviorChain[] { chain1, chain2, chain3 };
+
+            search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain1);
+        }
+
+        [Test]
+        public void find_by_category_strict_with_multiple_chains_2()
+        {
+            var search = new ChainSearch
+            {
+                CategoryMode = CategorySearchMode.Strict,
+                CategoryOrHttpMethod = "something"
+            };
+
+            var chain1 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = "different"
+                }
+            };
+
+            var chain2 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = Categories.DEFAULT
+                }
+            };
+
+            var chain3 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = "else"
+                }
+            };
+
+            var chains = new BehaviorChain[] { chain1, chain2, chain3 };
+
+            search.FindForCategory(chains).Any().ShouldBeFalse();
+        }
+
+
+        [Test]
+        public void find_by_category_strict_with_only_one_chain_that_does_not_match_still_returns_nothing()
+        {
+            var search = new ChainSearch
+            {
+                CategoryMode = CategorySearchMode.Strict,
+                CategoryOrHttpMethod = "something"
+            };
+
+
+
+            var chain3 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = null
+                }
+            };
+
+            var chains = new BehaviorChain[] { chain3 };
+
+            search.FindForCategory(chains).Any().ShouldBeFalse();
+        }
+
+        [Test]
+        public void find_by_category_relaxed_with_only_one_chain()
+        {
+            var search = new ChainSearch
+            {
+                CategoryMode = CategorySearchMode.Relaxed,
+                CategoryOrHttpMethod = "something"
+            };
+
+
+            var chain3 = new BehaviorChain
+            {
+                UrlCategory =
+                {
+                    Category = null
+                }
+            };
+
+            var chains = new BehaviorChain[] { chain3 };
+
+            search.FindForCategory(chains).ShouldHaveTheSameElementsAs(chain3);
+        }
     }
 }

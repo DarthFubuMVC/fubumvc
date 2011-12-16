@@ -47,7 +47,19 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return Top == null ? Guid.Empty : Top.UniqueId; }
         }
 
+        /// <summary>
+        /// Does this chain match by either UrlCategory or by Http method?
+        /// </summary>
+        /// <param name="categoryOrHttpMethod"></param>
+        /// <returns></returns>
+        public bool MatchesCategoryOrHttpMethod(string categoryOrHttpMethod)
+        {
+            if (UrlCategory.Category.IsNotEmpty() && UrlCategory.Category.Equals(categoryOrHttpMethod, StringComparison.OrdinalIgnoreCase)) return true;
 
+            if (Route == null) return false;
+
+            return Route.AllowedHttpMethods.Select(x => x.ToUpper()).Contains(categoryOrHttpMethod.ToUpper());
+        }
 
         /// <summary>
         /// The outermost BehaviorNode in the chain

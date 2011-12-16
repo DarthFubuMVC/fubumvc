@@ -6,6 +6,7 @@ using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Security;
 using FubuMVC.FakeControllers;
 using FubuMVC.StructureMap;
@@ -346,6 +347,51 @@ namespace FubuMVC.Tests.Registration.Nodes
 
             container.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString())
                 .ShouldNotBeNull().ShouldBeOfType<EndPointAuthorizor>();
+        }
+
+        
+    }
+
+    [TestFixture]
+    public class BehaviorChainMatchesCategoryOrHttpMethodTester
+    {
+        private BehaviorChain theChain;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theChain = new BehaviorChain();
+        }
+
+        [Test]
+        public void positive_on_category()
+        {
+            theChain.UrlCategory.Category = "something";
+
+            theChain.MatchesCategoryOrHttpMethod("something").ShouldBeTrue();
+        }
+
+        [Test]
+        public void negative_on_category()
+        {
+            theChain.UrlCategory.Category = "else";
+
+            theChain.MatchesCategoryOrHttpMethod("something").ShouldBeFalse();
+        }
+
+        [Test]
+        public void postive_on_http_verb()
+        {
+            theChain.UrlCategory.Category = "something";
+            theChain.Route = new RouteDefinition("something");
+            theChain.Route.AllowedHttpMethods.Add("POST");
+            theChain.Route.AllowedHttpMethods.Add("GET");
+
+            theChain.MatchesCategoryOrHttpMethod("PUT").ShouldBeFalse();
+            theChain.MatchesCategoryOrHttpMethod("DELETE").ShouldBeFalse();
+            theChain.MatchesCategoryOrHttpMethod("GET").ShouldBeTrue();
+            theChain.MatchesCategoryOrHttpMethod("POST").ShouldBeTrue();
+            theChain.MatchesCategoryOrHttpMethod("something").ShouldBeTrue();
         }
     }
 }
