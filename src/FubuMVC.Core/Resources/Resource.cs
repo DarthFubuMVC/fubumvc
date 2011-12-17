@@ -72,7 +72,7 @@ namespace FubuMVC.Core.Resources
             };
         }
 
-        public AccessorProjection<T> ProjectValue(Expression<Func<T, object>> expression)
+        public AccessorProjection<T, TValue> ProjectValue<TValue>(Expression<Func<T, TValue>> expression)
         {
             return _projection.Value.Value(expression);
         }

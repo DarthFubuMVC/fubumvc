@@ -12,42 +12,56 @@ namespace FubuMVC.Core.Resources.Media.Projections
 
     public class SingleValueProjection<T> : IValueProjection<T>
     {
-        private string _attributeName;
-        private Func<IProjectionContext<T>, object> _source;
-
         public SingleValueProjection(string attributeName, Func<IProjectionContext<T>, object> source)
         {
-            _attributeName = attributeName;
-            _source = source;
+            this.attributeName = attributeName;
+            this.source = source;
         }
 
-        protected string attributeName
-        {
-            get { return _attributeName; }
-            set { _attributeName = value; }
-        }
+        protected string attributeName { get; set; }
+
+        protected Func<IProjectionContext<T>, object> source { get; set; }
 
         public void WriteValue(IProjectionContext<T> target, IMediaNode node)
         {
-            node.SetAttribute(_attributeName, _source(target));
+            node.SetAttribute(attributeName, source(target));
         }
     }
 
     // TODO -- add the option to make this formatted
-    public class AccessorProjection<T> : SingleValueProjection<T>
+    public class AccessorProjection<T, TValue> : SingleValueProjection<T>
     {
+        private readonly Accessor _accessor;
+
         public AccessorProjection(Accessor accessor) : base(accessor.Name, context => context.ValueFor(accessor))
         {
+            _accessor = accessor;
         }
 
-        public static AccessorProjection<T> For(Expression<Func<T, object>> expression)
+        public static AccessorProjection<T, TValue> For(Expression<Func<T, TValue>> expression)
         {
-            return new AccessorProjection<T>(expression.ToAccessor());
+            return new AccessorProjection<T, TValue>(ReflectionHelper.GetAccessor(expression));
         }
 
-        public AccessorProjection<T> Name(string value)
+        public AccessorProjection<T, TValue> Name(string value)
         {
             attributeName = value;
+            return this;
+        }
+
+        public AccessorProjection<T, TValue> FormattedBy(Func<TValue, string> formatting)
+        {
+            source = context =>
+            {
+                var raw = context.ValueFor(_accessor);
+                if (raw == null)
+                {
+                    return string.Empty;
+                }
+
+                return formatting((TValue)raw);
+            };
+
             return this;
         }
 
@@ -67,9 +81,9 @@ namespace FubuMVC.Core.Resources.Media.Projections
             _values.Each(x => x.WriteValue(target, node));
         }
 
-        public AccessorProjection<T> Value(Expression<Func<T, object>> expression)
+        public AccessorProjection<T, TValue> Value<TValue>(Expression<Func<T, TValue>> expression)
         {
-            var value = new AccessorProjection<T>(expression.ToAccessor());
+            var value = new AccessorProjection<T, TValue>(ReflectionHelper.GetAccessor(expression));
             _values.Add(value);
 
             return value;
@@ -101,6 +115,39 @@ namespace FubuMVC.Core.Resources.Media.Projections
                 var projection = new SingleValueProjection<T>(_attributeName, source);
                 _parent._values.Add(projection);
             }
+
+            public PropertyExpression<TValue> ValueFrom<TValue>(Expression<Func<T, TValue>> expression)
+            {
+                return new PropertyExpression<TValue>(this, ReflectionHelper.GetAccessor(expression));
+            }
+
+            public class PropertyExpression<TValue>
+            {
+                private readonly SingleLineExpression _parent;
+                private readonly Accessor _accessor;
+
+                public PropertyExpression(SingleLineExpression parent, Accessor accessor)
+                {
+                    _parent = parent;
+                    _accessor = accessor;
+                }
+
+                public void Use(Func<TValue, string> source)
+                {
+                    _parent.Use(context =>
+                    {
+                        var raw = context.ValueFor(_accessor);
+                        if (raw == null)
+                        {
+                            return string.Empty;
+                        }
+
+                        return source((TValue) raw);
+                    });
+                }
+            }
         }
+
+
     }
 }

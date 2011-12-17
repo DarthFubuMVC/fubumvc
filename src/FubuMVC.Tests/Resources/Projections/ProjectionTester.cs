@@ -57,6 +57,18 @@ namespace FubuMVC.Tests.Resources.Projections
 
             aNode.Element.GetAttribute("anything").ShouldEqual("aaa" + anAddress.Line1);
         }
+
+        [Test]
+        public void project_with_the_for_attribute_and_func_to_massage_the_data()
+        {
+            var projection = new Projection<Address>();
+
+            projection.ForAttribute("anything").ValueFrom(x => x.Line1).Use(value => "aaa" + value);
+
+            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
+
+            aNode.Element.GetAttribute("anything").ShouldEqual("aaa" + anAddress.Line1);
+        }
     }
 
 

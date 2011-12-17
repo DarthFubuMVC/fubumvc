@@ -9,14 +9,14 @@ namespace FubuMVC.Tests.Resources.Projections
     [TestFixture]
     public class AccessorProjectionTester
     {
-        private AccessorProjection<ValueTarget> theAccessorProjection;
+        private AccessorProjection<ValueTarget, int> theAccessorProjection;
         private SimpleValues<ValueTarget> _theValues;
         private XmlAttCentricMediaNode theMediaNode;
 
         [SetUp]
         public void SetUp()
         {
-            theAccessorProjection = AccessorProjection<ValueTarget>.For(x => x.Age);
+            theAccessorProjection = AccessorProjection<ValueTarget, int>.For(x => x.Age);
             _theValues = new SimpleValues<ValueTarget>(new ValueTarget
             {
                 Age = 37
@@ -41,6 +41,15 @@ namespace FubuMVC.Tests.Resources.Projections
             theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("CurrentAge").ShouldEqual("37");
+        }
+
+        [Test]
+        public void project_the_property_with_formatting()
+        {
+            theAccessorProjection.FormattedBy(age => "*" + age + "*");
+            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
+
+            theMediaNode.Element.GetAttribute("Age").ShouldEqual("*37*");
         }
     }
 

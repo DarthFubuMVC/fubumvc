@@ -24,7 +24,7 @@ namespace FubuMVC.Core.Resources.Media.Xml
             return new XmlMediaWriter<T>(this, links, urls, _projection);
         }
 
-        public AccessorProjection<T> Value(Expression<Func<T, object>> expression)
+        public AccessorProjection<T, TValue> Value<TValue>(Expression<Func<T, TValue>> expression)
         {
             return _projection.Value(expression);
         }
