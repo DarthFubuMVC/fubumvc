@@ -249,6 +249,7 @@
     <Compile Include="Resources\Media\Formatters\JsonFormatterTester.cs" />
     <Compile Include="Resources\Media\MediaDependencyTester.cs" />
     <Compile Include="Resources\Media\ModelBindingMediaReaderTester.cs" />
+    <Compile Include="Resources\Media\ProjectionContextTester.cs" />
     <Compile Include="Resources\Media\ValueSourceTester.cs" />
     <Compile Include="Resources\Media\Xml\AtomXmlLinkWriterTester.cs" />
     <Compile Include="Resources\Media\Xml\XmlMediaDocumentTester.cs" />

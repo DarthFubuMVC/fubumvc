@@ -206,6 +206,7 @@
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
+    <Compile Include="Resources\Media\ProjectionContext.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
@@ -388,7 +389,6 @@
     <Compile Include="Resources\Media\ModelBindingMediaReader.cs" />
     <Compile Include="Resources\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Resources\Media\Atom\FeedWriter.cs" />
-    <Compile Include="Resources\Media\FormattedValues.cs" />
     <Compile Include="Resources\Media\ValueSource.cs" />
     <Compile Include="Resources\Media\Xml\AtomXmlLinkWriter.cs" />
     <Compile Include="Resources\Media\Xml\IXmlLinkWriter.cs" />
