@@ -74,5 +74,10 @@ namespace FubuMVC.Core.Resources.Media.Projections
 
             return value;
         }
+
+        public void Include<TProjection>() where TProjection : IValueProjection<T>
+        {
+            _values.Add(new DelegatingProjection<T, TProjection>());
+        }
     }
 }

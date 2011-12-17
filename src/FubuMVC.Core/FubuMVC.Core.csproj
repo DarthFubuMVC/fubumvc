@@ -208,6 +208,7 @@
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Resources\Media\DictionaryMediaNode.cs" />
     <Compile Include="Resources\Media\ProjectionContext.cs" />
+    <Compile Include="Resources\Media\Projections\DelegatingProjection.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
