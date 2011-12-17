@@ -338,6 +338,8 @@
     <Compile Include="StructureMapIoC\when_applying_diagnostics_from_FubuApplication.cs" />
     <Compile Include="Templating\CloneGitRepositoryTester.cs" />
     <Compile Include="Templating\CsProjGathererTester.cs" />
+    <Compile Include="Templating\GitAliasRegistryTester.cs" />
+    <Compile Include="Templating\GitAliasTokenTester.cs" />
     <Compile Include="Templating\KeywordReplacerTester.cs" />
     <Compile Include="Templating\NewCommandEndToEndTester.cs" />
     <Compile Include="Templating\NewCommandTester.cs" />

@@ -37,7 +37,7 @@ namespace Fubu
         {
             var plan = new TemplatePlan();
             var findContentStep = input.GitFlag.IsNotEmpty()
-                                      ? (ITemplateStep) new CloneGitRepository(ProcessFactory)
+                                      ? (ITemplateStep) new CloneGitRepository(ProcessFactory, FileSystem)
                                       : new UnzipTemplate(ZipService);
             
             plan.AddStep(findContentStep);

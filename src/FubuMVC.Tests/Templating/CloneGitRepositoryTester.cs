@@ -1,5 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using Fubu;
 using Fubu.Templating;
 using Fubu.Templating.Steps;
@@ -16,6 +19,7 @@ namespace FubuMVC.Tests.Templating
     {
         private NewCommandInput _input;
         private TemplatePlanContext _context;
+        private GitAliasRegistry _registry;
 
         protected override void beforeEach()
         {
@@ -26,6 +30,11 @@ namespace FubuMVC.Tests.Templating
                                Input = _input,
                                TempDir = Guid.NewGuid().ToString()
                            };
+            _registry = new GitAliasRegistry();
+            var dir = AppDomain.CurrentDomain.BaseDirectory;
+            MockFor<IFileSystem>()
+                .Expect(f => f.LoadFromFile<GitAliasRegistry>(dir, GitAliasRegistry.ALIAS_FILE))
+                .Return(_registry);
         }
 
         [Test]
@@ -33,15 +42,37 @@ namespace FubuMVC.Tests.Templating
         {
             _input.GitFlag = "git://test.git";
 
+            var info = execute();
+
+            info.UseShellExecute.ShouldBeFalse();
+            info.FileName.ShouldEqual("git");
+            info.Arguments.ShouldEqual("clone {0} {1}".ToFormat(_input.GitFlag, _context.TempDir));
+
+            VerifyCallsFor<IProcess>();
+        }
+
+        [Test]
+        public void should_lookup_alias_if_available()
+        {
+            var token = _registry.Aliases.First();
+            _input.GitFlag = token.Name;
+
+            execute()
+                .Arguments
+                .ShouldEqual("clone {0} {1}".ToFormat(token.Url, _context.TempDir));
+        }
+
+        private ProcessStartInfo execute()
+        {
             var info = new ProcessStartInfo();
             MockFor<IProcessFactory>()
                 .Expect(f => f.Create(p => { }))
                 .IgnoreArguments()
                 .WhenCalled(mi =>
-                                {
-                                    var configure = (Action<ProcessStartInfo>) mi.Arguments[0];
-                                    configure(info);
-                                })
+                {
+                    var configure = (Action<ProcessStartInfo>)mi.Arguments[0];
+                    configure(info);
+                })
                 .Return(MockFor<IProcess>());
 
             MockFor<IProcess>()
@@ -57,11 +88,7 @@ namespace FubuMVC.Tests.Templating
 
             ClassUnderTest.Execute(_context);
 
-            info.UseShellExecute.ShouldBeFalse();
-            info.FileName.ShouldEqual("git");
-            info.Arguments.ShouldEqual("clone {0} {1}".ToFormat(_input.GitFlag, _context.TempDir));
-
-            VerifyCallsFor<IProcess>();
+            return info;
         }
 
         [Test]
