@@ -206,6 +206,7 @@
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
+    <Compile Include="Resources\Media\DictionaryMediaNode.cs" />
     <Compile Include="Resources\Media\ProjectionContext.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />

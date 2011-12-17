@@ -230,6 +230,7 @@
     <Compile Include="Resources\Media\Atom\FeedWriterNodeTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedWriter_integrated_Tester.cs" />
     <Compile Include="Resources\Media\Atom\SyndicationExtensionsTester.cs" />
+    <Compile Include="Resources\Media\DictionaryMediaNodeTester.cs" />
     <Compile Include="Resources\Media\Formatters\FormatterMediaWriterTester.cs" />
     <Compile Include="Resources\Media\Formatters\XmlFormatterTester.cs" />
     <Compile Include="CurrentRequestTester.cs" />
