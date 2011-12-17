@@ -1,3 +1,5 @@
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Resources.Media.Xml;
@@ -53,6 +55,25 @@ namespace FubuMVC.Tests.Resources.Projections
             theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual("*37*");
+        }
+
+        [Test]
+        public void project_the_property_with_formatting_thru_display_formatter()
+        {
+            var services = MockRepository.GenerateMock<IServiceLocator>();
+            var formatter = MockRepository.GenerateMock<IDisplayFormatter>();
+            services.Stub(x => x.GetInstance<IDisplayFormatter>()).Return(formatter);
+
+            var accessor = ReflectionHelper.GetAccessor<ValueTarget>(x => x.Age);
+            var theFormattedValue = "*37*";
+
+            formatter.Stub(x => x.GetDisplayForValue(accessor, 37)).Return(theFormattedValue);
+
+            theAccessorProjection.Formatted();
+
+            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(services, _theValues), theMediaNode);
+
+            theMediaNode.Element.GetAttribute("Age").ShouldEqual(theFormattedValue);
         }
 
         [Test]

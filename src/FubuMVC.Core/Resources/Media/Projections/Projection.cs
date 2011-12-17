@@ -29,7 +29,6 @@ namespace FubuMVC.Core.Resources.Media.Projections
         }
     }
 
-    // TODO -- add the option to make this formatted
     public class AccessorProjection<T, TValue> : SingleValueProjection<T>
     {
         private readonly Accessor _accessor;
@@ -47,6 +46,16 @@ namespace FubuMVC.Core.Resources.Media.Projections
         public AccessorProjection<T, TValue> Name(string value)
         {
             attributeName = value;
+            return this;
+        }
+
+        public AccessorProjection<T, TValue> Formatted()
+        {
+            source = context =>
+            {
+                return context.FormattedValueOf(_accessor);
+            };
+
             return this;
         }
 
