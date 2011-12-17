@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using FubuCore;
 
@@ -31,7 +32,7 @@ namespace Fubu.Templating
         public void RegisterPostSolutionConfiguration(string projectGuid, string config)
         {
             var id = "{" + projectGuid + "}";
-            _postSolution.Fill("{0}.{1}".ToFormat(id, config));
+            _postSolution.Fill("\t\t{0}.{1}".ToFormat(id, config));
         }
 
         public void RegisterPostSolutionConfigurations(string projectGuid, params string[] configs)
@@ -49,31 +50,6 @@ namespace Fubu.Templating
             _fileSystem = fileSystem;
         }
 
-        public void AddProject(string slnFile, CsProj project)
-        {
-            var solutionContents = _fileSystem.ReadStringFromFile(slnFile);
-            var replacedContents = new StringBuilder();
-            var appended = false;
-
-            var lines = SplitSolution(solutionContents);
-            lines.Each(line =>
-            {
-                if (line.Equals("Global") && !appended)
-                {
-                    var projectGuid = "{" + project.ProjectGuid + "}";
-                    var projectType = "Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\")";
-                    replacedContents.AppendLine("{0} = \"{1}\", \"{2}\", \"{3}\"".ToFormat(projectType,
-                        project.Name, project.RelativePath, projectGuid));
-                    replacedContents.AppendLine("EndProject");
-                    appended = true;
-                }
-
-                replacedContents.AppendLine(line);
-            });
-
-            _fileSystem.WriteStringToFile(slnFile, replacedContents.ToString());
-        }
-
         public string[] SplitSolution(string solutionContents)
         {
             return solutionContents.SplitOnNewLine();
@@ -82,31 +58,107 @@ namespace Fubu.Templating
         public void Save(Sln solution)
         {
             var solutionContents = _fileSystem.ReadStringFromFile(solution.FileName);
-            var replacedContents = new StringBuilder();
-            var appended = false;
+            var solutionBuilder = new StringBuilder();
+            var modifiers = new List<ISolutionFileModifier>
+                                {
+                                    new AddProjectsModifier(solution),
+                                    new AddConfigurationsModifier(solution),
+                                    new AppendLineModifier()
+                                };
 
             var lines = SplitSolution(solutionContents);
             lines.Each(line =>
-            {
-                if (line.Equals("Global") && !appended)
-                {
-                    solution
-                        .Projects
-                        .Each(project =>
-                                  {
-                                      var projectGuid = "{" + project.ProjectGuid + "}";
-                                      var projectType = "Project(\"{" + project.ProjectType + "}\")";
-                                      replacedContents.AppendLine("{0} = \"{1}\", \"{2}\", \"{3}\"".ToFormat(projectType,
-                                          project.Name, project.RelativePath, projectGuid));
-                                      replacedContents.AppendLine("EndProject");
-                                  });
-                    appended = true;
-                }
+                           {
+                               var filteredModifiers = modifiers.Where(m => m.Matches(line));
+                               foreach(var m in filteredModifiers)
+                               {
+                                   if(!m.Modify(line, solutionBuilder))
+                                   {
+                                       break;
+                                   }
+                               }
+                           });
 
-                replacedContents.AppendLine(line);
-            });
+            _fileSystem.WriteStringToFile(solution.FileName, solutionBuilder.ToString());
+        }
+    }
 
-            _fileSystem.WriteStringToFile(solution.FileName, replacedContents.ToString());
+    public interface ISolutionFileModifier
+    {
+        bool Matches(string line);
+        bool Modify(string line, StringBuilder builder);
+    }
+
+    public class AppendLineModifier : ISolutionFileModifier
+    {
+        public bool Matches(string line)
+        {
+            return true;
+        }
+
+        public bool Modify(string line, StringBuilder builder)
+        {
+            builder.AppendLine(line);
+            return true;
+        }
+    }
+
+    public class AddProjectsModifier : ISolutionFileModifier
+    {
+        private bool _appended;
+        private readonly Sln _solution;
+
+        public AddProjectsModifier(Sln solution)
+        {
+            _solution = solution;
+        }
+
+        public bool Matches(string line)
+        {
+            return line.Equals("Global") && !_appended;
+        }
+
+        public bool Modify(string line, StringBuilder builder)
+        {
+            _solution
+                .Projects
+                .Each(project =>
+                          {
+                              var projectGuid = "{" + project.ProjectGuid + "}";
+                              var projectType = "Project(\"{" + project.ProjectType + "}\")";
+                              builder.AppendLine("{0} = \"{1}\", \"{2}\", \"{3}\"".ToFormat(projectType,
+                                                                                            project.Name,
+                                                                                            project.RelativePath,
+                                                                                            projectGuid));
+                              builder.AppendLine("EndProject");
+                          });
+            
+            _appended = true;
+            return true;
+        }
+    }
+
+    public class AddConfigurationsModifier : ISolutionFileModifier
+    {
+        private readonly Sln _solution;
+
+        public AddConfigurationsModifier(Sln solution)
+        {
+            _solution = solution;
+        }
+
+        public bool Matches(string line)
+        {
+            return line.EndsWith("GlobalSection(ProjectConfigurationPlatforms) = postSolution");
+        }
+
+        public bool Modify(string line, StringBuilder builder)
+        {
+            builder.AppendLine(line);
+            _solution
+                .PostSolutionConfiguration
+                .Each(config => builder.AppendLine(config));
+            return false;
         }
     }
 }
