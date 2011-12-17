@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
+using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Resources.Media.Projections
 {
@@ -60,6 +61,31 @@ namespace FubuMVC.Core.Resources.Media.Projections
                 }
 
                 return formatting((TValue)raw);
+            };
+
+            return this;
+        }
+
+        public AccessorProjection<T, TValue> WriteUrlFor(Func<TValue, object> inputBuilder)
+        {
+            return WriteUrlFor((urls, value) =>
+            {
+                var inputModel = inputBuilder(value);
+                return urls.UrlFor(inputModel);
+            });
+        }
+
+        public AccessorProjection<T, TValue> WriteUrlFor(Func<IUrlRegistry, TValue, string> urlFinder)
+        {
+            source = context =>
+            {
+                var raw = context.ValueFor(_accessor);
+                if (raw == null)
+                {
+                    return string.Empty;
+                }
+
+                return urlFinder(context.Urls, (TValue)raw);
             };
 
             return this;

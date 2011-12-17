@@ -1,8 +1,11 @@
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Resources.Media.Xml;
+using FubuMVC.Core.Urls;
 using FubuTestingSupport;
+using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Resources.Projections
 {
@@ -51,11 +54,41 @@ namespace FubuMVC.Tests.Resources.Projections
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual("*37*");
         }
+
+        [Test]
+        public void write_url_for_model()
+        {
+            var urls = new StubUrlRegistry();
+            var services = MockRepository.GenerateMock<IServiceLocator>();
+            services.Stub(x => x.GetInstance<IUrlRegistry>()).Return(urls);
+
+            theAccessorProjection.WriteUrlFor(age => new CreateValueTarget{
+                Name = age.ToString()
+            });
+
+            var expectedUrl = urls.UrlFor(new CreateValueTarget{
+                Name = "37"
+            });
+
+            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(services, _theValues), theMediaNode);
+
+            theMediaNode.Element.GetAttribute("Age").ShouldEqual(expectedUrl);
+        }
     }
 
     public class ValueTarget
     {
         public string Name { get; set; }
         public int Age { get; set; }
+    }
+
+    public class CreateValueTarget
+    {
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("CreateValueTarget: {0}", Name);
+        }
     }
 }
