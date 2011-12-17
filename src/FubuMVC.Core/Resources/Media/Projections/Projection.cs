@@ -79,5 +79,28 @@ namespace FubuMVC.Core.Resources.Media.Projections
         {
             _values.Add(new DelegatingProjection<T, TProjection>());
         }
+
+        public SingleLineExpression ForAttribute(string attributeName)
+        {
+            return new SingleLineExpression(attributeName, this);
+        }
+
+        public class SingleLineExpression
+        {
+            private readonly string _attributeName;
+            private readonly Projection<T> _parent;
+
+            public SingleLineExpression(string attributeName, Projection<T> parent)
+            {
+                _attributeName = attributeName;
+                _parent = parent;
+            }
+
+            public void Use(Func<IProjectionContext<T>, object> source)
+            {
+                var projection = new SingleValueProjection<T>(_attributeName, source);
+                _parent._values.Add(projection);
+            }
+        }
     }
 }

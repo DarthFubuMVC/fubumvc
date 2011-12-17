@@ -45,6 +45,18 @@ namespace FubuMVC.Tests.Resources.Projections
             aNode.Element.GetAttribute("State").ShouldEqual(anAddress.State);
             aNode.Element.GetAttribute("ZipCode").ShouldEqual(anAddress.ZipCode);
         }
+
+        [Test]
+        public void project_with_the_for_attribute_method()
+        {
+            var projection = new Projection<Address>();
+
+            projection.ForAttribute("anything").Use(context => "aaa" + context.ValueFor(x => x.Line1));
+
+            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
+
+            aNode.Element.GetAttribute("anything").ShouldEqual("aaa" + anAddress.Line1);
+        }
     }
 
 
