@@ -23,4 +23,32 @@ namespace FubuMVC.Core.Http
 
         string HttpMethod();
     }
+
+    public class StandInCurrentHttpRequest : ICurrentHttpRequest
+    {
+        public string TheRawUrl;
+        public string TheRelativeUrl;
+        public string ApplicationRoot = "http://server";
+        public string TheHttpMethod = "GET";
+
+        public string RawUrl()
+        {
+            return TheRawUrl;
+        }
+
+        public string RelativeUrl()
+        {
+            return TheRelativeUrl;
+        }
+
+        public string ToFullUrl(string url)
+        {
+            return url;
+        }
+
+        public string HttpMethod()
+        {
+            return TheHttpMethod;
+        }
+    }
 }

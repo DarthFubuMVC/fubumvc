@@ -9,12 +9,41 @@ using FubuMVC.Core.Security;
 
 namespace FubuMVC.Core
 {
+    /// <summary>
+    /// Combines the functionality of IUrlRegistry and IAuthorizationPreviewService to both resolve Url's and 
+    /// test authorization rules for a behavior chain / endpoint in the system
+    /// </summary>
     public interface IEndpointService
     {
+        /// <summary>
+        /// Find an Endpoint for the given input model and category or http method
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="categoryOrHttpMethod"></param>
+        /// <returns></returns>
         Endpoint EndpointFor(object model, string categoryOrHttpMethod = null);
+
+        /// <summary>
+        /// Find an Endpoint for the given handler type, method, and category/http method
+        /// </summary>
+        /// <typeparam name="TController"></typeparam>
+        /// <param name="expression"></param>
+        /// <param name="categoryOrHttpMethod"></param>
+        /// <returns></returns>
         Endpoint EndpointFor<TController>(Expression<Action<TController>> expression, string categoryOrHttpMethod = null);
 
+        /// <summary>
+        /// Finds the endpoint that would create a new instance of entityType
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         Endpoint EndpointForNew<T>();
+
+        /// <summary>
+        /// Finds the endpoint that would create a new instance of entityType
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <returns></returns>
         Endpoint EndpointForNew(Type entityType);
         bool HasNewEndpoint<T>();
         bool HasNewEndpoint(Type type);

@@ -34,6 +34,12 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
+        public void standin_current_http_request_is_used_as_the_default()
+        {
+            registeredTypeIs<ICurrentHttpRequest, StandInCurrentHttpRequest>();
+        }
+
+        [Test]
         public void BindingContext_is_registered()
         {
             registeredTypeIs<IBindingContext, BindingContext>();
