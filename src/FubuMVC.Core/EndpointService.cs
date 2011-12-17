@@ -1,29 +1,25 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Security.Policy;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Security;
-using FubuMVC.Core.Urls;
-using FubuCore;
 
 namespace FubuMVC.Core
 {
     public interface IEndpointService
     {
-        Endpoint EndpointFor(object model);
-        Endpoint EndpointFor(object model, string category);
-        Endpoint EndpointFor<TController>(Expression<Action<TController>> expression);
+        Endpoint EndpointFor(object model, string categoryOrHttpMethod = null);
+        Endpoint EndpointFor<TController>(Expression<Action<TController>> expression, string categoryOrHttpMethod = null);
 
         Endpoint EndpointForNew<T>();
         Endpoint EndpointForNew(Type entityType);
         bool HasNewEndpoint<T>();
         bool HasNewEndpoint(Type type);
 
-        Endpoint EndpointFor(Type handlerType, MethodInfo method);
+        Endpoint EndpointFor(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null);
     }
 
     public class Endpoint
@@ -65,34 +61,22 @@ namespace FubuMVC.Core
         private readonly IChainAuthorizor _authorizor;
         private readonly ICurrentHttpRequest _httpRequest;
 
-        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, ICurrentHttpRequest httpRequest) : base(resolver)
+        public EndpointService(IChainAuthorizor authorizor, IChainResolver resolver, ICurrentHttpRequest httpRequest)
+            : base(resolver)
         {
             _authorizor = authorizor;
             _httpRequest = httpRequest;
         }
 
-        protected override Endpoint createResult(object model, BehaviorChain chain)
+        public Endpoint EndpointFor(object model, string categoryOrHttpMethod = null)
         {
-            string urlFromInput = chain.Route.CreateUrlFromInput(model);
-            return new Endpoint(){
-                IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
-                Url = _httpRequest.ToFullUrl(urlFromInput)
-            };
+            return For(model, categoryOrHttpMethod);
         }
 
-        public Endpoint EndpointFor(object model)
+        public Endpoint EndpointFor<TController>(Expression<Action<TController>> expression,
+                                                 string categoryOrHttpMethod = null)
         {
-            return For(model);
-        }
-
-        public Endpoint EndpointFor(object model, string category)
-        {
-            return For(model, category);
-        }
-
-        public Endpoint EndpointFor<TController>(Expression<Action<TController>> expression)
-        {
-            return EndpointFor(typeof (TController), ReflectionHelper.GetMethod(expression));
+            return EndpointFor(typeof (TController), ReflectionHelper.GetMethod(expression), categoryOrHttpMethod);
         }
 
         public Endpoint EndpointForNew<T>()
@@ -115,9 +99,18 @@ namespace FubuMVC.Core
             return hasNew(type);
         }
 
-        public Endpoint EndpointFor(Type handlerType, MethodInfo method)
+        public Endpoint EndpointFor(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)
         {
-            return For(handlerType, method);
+            return For(handlerType, method, categoryOrHttpMethod);
+        }
+
+        protected override Endpoint createResult(object model, BehaviorChain chain)
+        {
+            var urlFromInput = chain.Route.CreateUrlFromInput(model);
+            return new Endpoint{
+                IsAuthorized = _authorizor.Authorize(chain, model) == AuthorizationRight.Allow,
+                Url = _httpRequest.ToFullUrl(urlFromInput)
+            };
         }
     }
 }

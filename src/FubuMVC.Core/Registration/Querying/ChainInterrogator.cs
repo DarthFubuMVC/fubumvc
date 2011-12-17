@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Registration.Querying
             return findAnswerFromResolver(model, finder);
         }
 
-        protected T For(object model, string category = null)
+        protected T For(object model, string categoryOrMethod = null)
         {
             if (model == null)
             {
@@ -46,15 +46,15 @@ namespace FubuMVC.Core.Registration.Querying
 
             return processForwarder(
                 model, 
-                () => resolver.FindForwarder(model, category),
-                r => r.FindUnique(model, category));
+                () => resolver.FindForwarder(model, categoryOrMethod),
+                r => r.FindUnique(model, categoryOrMethod));
         }
 
-        protected T For(Type handlerType, MethodInfo method, string category = null)
+        protected T For(Type handlerType, MethodInfo method, string categoryOrHttpMethod = null)
         {
             return findAnswerFromResolver(null, r =>
             {
-                var chain = r.Find(handlerType, method, category);
+                var chain = r.Find(handlerType, method, categoryOrHttpMethod);
                 if (chain == null)
                 {
                     throw new FubuException(2108, "No behavior chain registered for {0}.{1}()", handlerType.FullName, method.Name);
