@@ -387,7 +387,6 @@
     <Compile Include="Resources\Media\MediaDependency.cs" />
     <Compile Include="Resources\Media\MediaWriter.cs" />
     <Compile Include="Resources\Media\ModelBindingMediaReader.cs" />
-    <Compile Include="Resources\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Resources\Media\Atom\FeedWriter.cs" />
     <Compile Include="Resources\Media\ValueSource.cs" />
     <Compile Include="Resources\Media\Xml\AtomXmlLinkWriter.cs" />
@@ -409,7 +408,6 @@
     <Compile Include="Resources\ILinkSource.cs" />
     <Compile Include="Resources\Media\IMediaNode.cs" />
     <Compile Include="Resources\Media\IValues.cs" />
-    <Compile Include="Resources\Media\Projections\IValueProjection.cs" />
     <Compile Include="Resources\LinkSource.cs" />
     <Compile Include="Resources\LinksSource.cs" />
     <Compile Include="Resources\Media\Projections\Projection.cs" />

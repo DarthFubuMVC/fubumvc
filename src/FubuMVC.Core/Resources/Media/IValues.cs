@@ -21,6 +21,7 @@ namespace FubuMVC.Core.Resources.Media
     }
 
     // TODO -- might want something besides IDisplayFormatter
+    [MarkedForTermination("Pulling inside something else instead")]
     public class FormattedValues<T> : IValues<T>
     {
         private readonly IDisplayFormatter _formatter;
