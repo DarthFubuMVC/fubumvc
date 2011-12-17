@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Resources
     {
         private readonly Lazy<LinksSource<T>> _links = new Lazy<LinksSource<T>>(() => new LinksSource<T>());
         private readonly IList<Action<ConnegOutputNode>> _modifications = new List<Action<ConnegOutputNode>>();
-        private readonly Lazy<Projection<T>> _projection = new Lazy<Projection<T>>(() => new Projection<T>());
+        private readonly Lazy<Projection<T>> _projection = new Lazy<Projection<T>>(() => new Projection<T>(DisplayFormatting.RawValues));
 
         public Resource()
         {

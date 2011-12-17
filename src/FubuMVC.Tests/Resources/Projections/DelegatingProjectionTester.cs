@@ -36,7 +36,7 @@ namespace FubuMVC.Tests.Resources.Projections
 
             context.Stub(x => x.Service<FakeProjector>()).Return(stub);
 
-            var projection = new Projection<ProjectionModel>();
+            var projection = new Projection<ProjectionModel>(DisplayFormatting.RawValues);
             projection.Include<FakeProjector>();
 
             var theNode = new DictionaryMediaNode();

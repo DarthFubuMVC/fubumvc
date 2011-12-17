@@ -25,7 +25,7 @@ namespace FubuMVC.Tests.Resources.Media.Xml
         [SetUp]
         public void SetUp()
         {
-            var projection = new Projection<Address>();
+            var projection = new Projection<Address>(DisplayFormatting.RawValues);
             projection.Value(x => x.Address1);
             projection.Value(x => x.Address2);
             projection.Value(x => x.City);

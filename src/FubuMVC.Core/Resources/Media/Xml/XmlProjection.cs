@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Resources.Media.Xml
 {
     public class XmlProjection<T> : XmlMediaOptions, IXmlMediaWriterSource<T>
     {
-        private readonly Projection<T> _projection = new Projection<T>();
+        private readonly Projection<T> _projection = new Projection<T>(DisplayFormatting.RawValues);
 
         public XmlProjection()
         {

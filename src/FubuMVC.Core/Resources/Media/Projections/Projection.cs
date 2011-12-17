@@ -106,10 +106,27 @@ namespace FubuMVC.Core.Resources.Media.Projections
         }
     }
 
+    public enum DisplayFormatting
+    {
+        UseDisplayFormatting,
+        RawValues
+    }
+
     public class Projection<T> : IValueProjection<T>
     {
+        private DisplayFormatting _formatting;
         private readonly IList<IValueProjection<T>> _values = new List<IValueProjection<T>>();
 
+        public Projection(DisplayFormatting formatting)
+        {
+            _formatting = formatting;
+        }
+
+        public DisplayFormatting Formatting
+        {
+            get { return _formatting; }
+            set { _formatting = value; }
+        }
 
         void IValueProjection<T>.WriteValue(IProjectionContext<T> target, IMediaNode node)
         {
@@ -119,6 +136,12 @@ namespace FubuMVC.Core.Resources.Media.Projections
         public AccessorProjection<T, TValue> Value<TValue>(Expression<Func<T, TValue>> expression)
         {
             var value = new AccessorProjection<T, TValue>(ReflectionHelper.GetAccessor(expression));
+            if (_formatting == DisplayFormatting.UseDisplayFormatting)
+            {
+                value.Formatted();
+            }
+            
+            
             _values.Add(value);
 
             return value;

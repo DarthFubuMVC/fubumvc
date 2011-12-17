@@ -1,9 +1,12 @@
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Resources.Media.Xml;
 using FubuTestingSupport;
+using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Resources.Projections
 {
@@ -31,7 +34,7 @@ namespace FubuMVC.Tests.Resources.Projections
         [Test]
         public void write_a_node_with_multiple_properties()
         {
-            var projection = new Projection<Address>();
+            var projection = new Projection<Address>(DisplayFormatting.RawValues);
             projection.Value(x => x.Line1);
             projection.Value(x => x.City);
             projection.Value(x => x.State);
@@ -49,7 +52,7 @@ namespace FubuMVC.Tests.Resources.Projections
         [Test]
         public void project_with_the_for_attribute_method()
         {
-            var projection = new Projection<Address>();
+            var projection = new Projection<Address>(DisplayFormatting.RawValues);
 
             projection.ForAttribute("anything").Use(context => "aaa" + context.ValueFor(x => x.Line1));
 
@@ -61,13 +64,33 @@ namespace FubuMVC.Tests.Resources.Projections
         [Test]
         public void project_with_the_for_attribute_and_func_to_massage_the_data()
         {
-            var projection = new Projection<Address>();
+            var projection = new Projection<Address>(DisplayFormatting.RawValues);
 
             projection.ForAttribute("anything").ValueFrom(x => x.Line1).Use(value => "aaa" + value);
 
             projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
 
             aNode.Element.GetAttribute("anything").ShouldEqual("aaa" + anAddress.Line1);
+        }
+
+        [Test]
+        public void project_the_property_with_formatting_thru_display_formatter()
+        {
+            var projection = new Projection<Address>(DisplayFormatting.UseDisplayFormatting);
+            projection.Value(x => x.Line1);
+
+            var services = MockRepository.GenerateMock<IServiceLocator>();
+            var formatter = MockRepository.GenerateMock<IDisplayFormatter>();
+            services.Stub(x => x.GetInstance<IDisplayFormatter>()).Return(formatter);
+
+            var accessor = ReflectionHelper.GetAccessor<Address>(x => x.Line1);
+            var theFormattedValue = "formatted value";
+
+            formatter.Stub(x => x.GetDisplayForValue(accessor, anAddress.Line1)).Return(theFormattedValue);
+
+            var node = new DictionaryMediaNode();
+            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(services, aTarget), node);
+            node.Values["Line1"].ShouldEqual(theFormattedValue);
         }
     }
 
