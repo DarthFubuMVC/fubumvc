@@ -40,6 +40,7 @@ namespace Fubu.Templating.Steps
 
         public void ParseDirectory(string directory)
         {
+            if (_fileSystem.GetFileName(directory) == ".git") return;
             var newDirectoryName = _keywordReplacer.Replace(directory);
 
             // Need to handle if there is an existing directory here.
