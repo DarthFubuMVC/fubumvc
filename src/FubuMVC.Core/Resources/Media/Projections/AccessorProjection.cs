@@ -16,7 +16,7 @@ namespace FubuMVC.Core.Resources.Media.Projections
             Name(accessor.Name);
         }
 
-        public void WriteValue(IValues<T> target, IMediaNode node)
+        public void WriteValue(IProjectionContext<T> target, IMediaNode node)
         {
             var value = target.ValueFor(_accessor);
             node.SetAttribute(Name(), value);

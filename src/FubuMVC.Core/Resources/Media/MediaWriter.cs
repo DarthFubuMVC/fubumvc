@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
+using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.Resources.Media
 {
@@ -10,15 +11,16 @@ namespace FubuMVC.Core.Resources.Media
         private readonly IMediaDocument _document;
         private readonly ILinkSource<T> _links;
         private readonly IValueProjection<T> _projection;
+        private readonly IServiceLocator _services;
         private readonly IUrlRegistry _urls;
 
-        public MediaWriter(IMediaDocument document, ILinkSource<T> links, IUrlRegistry urls,
-                           IValueProjection<T> projection)
+        public MediaWriter(IMediaDocument document, ILinkSource<T> links, IUrlRegistry urls, IValueProjection<T> projection, IServiceLocator services)
         {
             _document = document;
             _links = links;
             _urls = urls;
             _projection = projection;
+            _services = services;
         }
 
         protected IMediaDocument document
@@ -49,7 +51,8 @@ namespace FubuMVC.Core.Resources.Media
             var topNode = _document.Root;
             topNode.WriteLinks(links);
 
-            _projection.WriteValue(source, topNode);
+            // TODO -- use the new projection runner later
+            _projection.WriteValue(new ProjectionContext<T>(_services, source), topNode);
         }
     }
 }

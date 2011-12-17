@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Resources.Media.Xml
             linkSource.To(a => new AddressAction("change")).Rel("change");
             linkSource.To(a => new AddressAction("delete")).Rel("delete");
 
-            var media = new MediaWriter<Address>(theDocument, linkSource, urls, projection);
+            var media = new MediaWriter<Address>(theDocument, linkSource, urls, projection, null);
 
 
             theAddress = new Address(){

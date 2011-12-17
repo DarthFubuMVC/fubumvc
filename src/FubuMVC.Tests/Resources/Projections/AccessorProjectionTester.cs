@@ -28,7 +28,7 @@ namespace FubuMVC.Tests.Resources.Projections
         [Test]
         public void project_the_property_with_default_node_name()
         {
-            theAccessorProjection.WriteValue(_theValues, theMediaNode);
+            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual("37");
         }
@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Resources.Projections
         {
             theAccessorProjection.Name("CurrentAge");
 
-            theAccessorProjection.WriteValue(_theValues, theMediaNode);
+            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("CurrentAge").ShouldEqual("37");
         }

@@ -37,8 +37,8 @@ namespace FubuMVC.Tests.Resources.Projections
             projection.Value(x => x.State);
             projection.Value(x => x.ZipCode);
 
-            
-            projection.As<IValueProjection<Address>>().WriteValue(aTarget, aNode);
+
+            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
 
             aNode.Element.GetAttribute("Line1").ShouldEqual(anAddress.Line1);
             aNode.Element.GetAttribute("City").ShouldEqual(anAddress.City);

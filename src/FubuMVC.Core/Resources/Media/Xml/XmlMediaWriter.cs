@@ -9,7 +9,7 @@ namespace FubuMVC.Core.Resources.Media.Xml
     {
         public XmlMediaWriter(XmlMediaOptions options, ILinkSource<T> links, IUrlRegistry urls,
                               IValueProjection<T> projection)
-            : base(new XmlMediaDocument(options), links, urls, projection)
+            : base(new XmlMediaDocument(options), links, urls, projection, null)
         {
         }
 

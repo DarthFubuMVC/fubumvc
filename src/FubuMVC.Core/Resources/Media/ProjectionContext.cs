@@ -18,8 +18,8 @@ namespace FubuMVC.Core.Resources.Media
             _services = services;
             _values = values;
 
-            _urls = new Lazy<IUrlRegistry>(services.GetInstance<IUrlRegistry>);
-            _formatter = new Lazy<IDisplayFormatter>(services.GetInstance<IDisplayFormatter>);
+            _urls = new Lazy<IUrlRegistry>(() => services.GetInstance<IUrlRegistry>());
+            _formatter = new Lazy<IDisplayFormatter>(() => services.GetInstance<IDisplayFormatter>());
         }
 
         public ProjectionContext(IServiceLocator services, T subject) : this(services, new SimpleValues<T>(subject))

@@ -10,7 +10,7 @@ namespace FubuMVC.Core.Resources.Media.Projections
         private readonly IList<IValueProjection<T>> _values = new List<IValueProjection<T>>();
 
 
-        void IValueProjection<T>.WriteValue(IValues<T> target, IMediaNode node)
+        void IValueProjection<T>.WriteValue(IProjectionContext<T> target, IMediaNode node)
         {
             _values.Each(x => x.WriteValue(target, node));
         }
