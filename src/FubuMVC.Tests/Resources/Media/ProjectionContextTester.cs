@@ -23,6 +23,25 @@ namespace FubuMVC.Tests.Resources.Media
         }
 
         [Test]
+        public void formatted_value_of_extension_method_1()
+        {
+            var formatter = MockFor<IDisplayFormatter>();
+            MockFor<IServiceLocator>().Stub(x => x.GetInstance<IDisplayFormatter>()).Return(formatter);
+
+            var accessor = ReflectionHelper.GetAccessor<ProjectionModel>(x => x.Name);
+
+            var theRawValue = "Jeremy";
+            MockFor<IValues<ProjectionModel>>().Stub(x => x.ValueFor(accessor))
+                .Return(theRawValue);
+
+            var theFormattedValue = "*Jeremy*";
+            formatter.Stub(x => x.GetDisplayForValue(accessor, theRawValue)).Return(theFormattedValue);
+
+            ClassUnderTest.FormattedValueOf(accessor).ShouldEqual(theFormattedValue);
+            ClassUnderTest.FormattedValueOf(x => x.Name).ShouldEqual(theFormattedValue);
+        }
+
+        [Test]
         public void value_for_delegates_to_the_inner_values()
         {
             var accessor = ReflectionHelper.GetAccessor<ProjectionModel>(x => x.Name);

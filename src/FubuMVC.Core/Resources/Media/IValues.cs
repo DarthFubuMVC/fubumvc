@@ -20,6 +20,19 @@ namespace FubuMVC.Core.Resources.Media
         IDisplayFormatter Formatter { get; }
     }
 
+    public static class ProjectionContextExtensions
+    {
+        public static string FormattedValueOf<T>(this IProjectionContext<T> context, Accessor accessor)
+        {
+            return context.Formatter.GetDisplayForValue(accessor, context.ValueFor(accessor));
+        }
+
+        public static string FormattedValueOf<T>(this IProjectionContext<T> context, Expression<Func<T, object>> expression)
+        {
+            return context.FormattedValueOf(expression.ToAccessor());
+        }
+    }
+
     // TODO -- might want something besides IDisplayFormatter
     [MarkedForTermination("Pulling inside something else instead")]
     public class FormattedValues<T> : IValues<T>
