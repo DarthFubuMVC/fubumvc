@@ -67,6 +67,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerenityRunner", "SerenityRunner\SerenityRunner.csproj", "{FC5172BC-C96A-4656-B87B-36978B19AD85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KayakTestApplication", "KayakTestApplication\KayakTestApplication.csproj", "{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Razor", "FubuMVC.Razor\FubuMVC.Razor.csproj", "{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90ECB723-0F2C-40A1-9055-6B78675CF85E}"
 EndProject
@@ -533,6 +534,21 @@ Global
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{68CC89AB-EE8B-4B2D-9BA0-8B0FBF460446}.Retail|x86.ActiveCfg = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Release|x86.ActiveCfg = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
