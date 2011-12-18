@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
 
@@ -7,8 +6,6 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplate
     {
-        Guid Id { get; }
-
         string FilePath { get; }
         string RootPath { get; }
         string Origin { get; }
@@ -21,16 +18,12 @@ namespace FubuMVC.Spark.SparkModel
     {
         public Template(string filePath, string rootPath, string origin)
         {
-            Id = Guid.NewGuid();
-
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
 
             Descriptor = new NulloDescriptor();
         }
-
-        public Guid Id { get; private set; }
 
         public string FilePath { get; private set; }
         public string RootPath { get; private set; }
@@ -62,13 +55,13 @@ namespace FubuMVC.Spark.SparkModel
         Parsing ParsingFor(ITemplate template);
     }
 
-    public class ParsingGraph : IParsingRegistrations
+    public class Parsings : IParsingRegistrations
     {
-        private readonly Cache<Guid, Parsing> _parsings = new Cache<Guid, Parsing>();
+        private readonly Cache<string, Parsing> _parsings = new Cache<string, Parsing>();
         private readonly IChunkLoader _chunkLoader;
 
-        public ParsingGraph() : this(new ChunkLoader()){}
-        public ParsingGraph(IChunkLoader chunkLoader)
+        public Parsings() : this(new ChunkLoader()){}
+        public Parsings(IChunkLoader chunkLoader)
         {
             _chunkLoader = chunkLoader;
         }
@@ -77,7 +70,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var chunk = _chunkLoader.Load(template).ToList();
 
-            _parsings[template.Id] = new Parsing
+            _parsings[template.FilePath] = new Parsing
             {
                Master = chunk.Master(),
                ViewModelType = chunk.ViewModel(),
@@ -87,7 +80,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public Parsing ParsingFor(ITemplate template)
         {
-            return _parsings[template.Id];
+            return _parsings[template.FilePath];
         }
     }
 }

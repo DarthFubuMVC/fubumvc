@@ -23,7 +23,7 @@ namespace FubuMVC.Spark
     public class SparkEngine : IFubuRegistryExtension
     {
         private static bool _hasScanned;
-        private static readonly ParsingGraph _parseGraph = new ParsingGraph();
+        private static readonly Parsings _parsings = new Parsings();
         private static readonly TemplateRegistry _templateRegistry = new TemplateRegistry();
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
 
@@ -37,7 +37,7 @@ namespace FubuMVC.Spark
         {
             _logger = getLogger();
             _finder = new TemplateFinder();
-            _composer = new TemplateComposer(_types.Value, _parseGraph);
+            _composer = new TemplateComposer(_types.Value, _parsings);
 
             setupFinderDefaults();
             setupComposerDefaults();
@@ -53,12 +53,8 @@ namespace FubuMVC.Spark
             _composerConventions.Apply(
                 composer => composer
                     .AddBinder<ViewDescriptorBinder>()
-                    // TODO: Move to Activation
-                    .AddBinder<MasterPageBinder>()
                     .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
-                    // TODO: Move to Activation
-                    .AddBinder<ReachableBindingsBinder>()
                     .Apply<NamespacePolicy>()
                     .Apply<ViewPathPolicy>());
         }
@@ -107,7 +103,7 @@ namespace FubuMVC.Spark
 
         private void parseTemplates()
         {
-            _templateRegistry.Each(t => _parseGraph.Process(t));
+            _templateRegistry.Each(t => _parsings.Process(t));
         }
 
         private void composeTemplates()
@@ -141,13 +137,22 @@ namespace FubuMVC.Spark
         private static void configureServices(IServiceRegistry services)
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
-            services.SetServiceIfNone(_parseGraph);
+            services.SetServiceIfNone<IParsingRegistrations>(_parsings);
+            services.SetServiceIfNone(new SharingGraph());
 
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
             services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
 
             services.FillType<IActivator, SharingGraphActivator>();
+            services.FillType<IActivator, SharingAttacherActivator>();
             services.FillType<IActivator, SparkActivator>();
+
+            services.FillType<ISharingAttacher, MasterAttacher>();
+            services.FillType<ISharingAttacher, BindingsAttacher>();
+
+            services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
+            services.SetServiceIfNone<ITemplateDirectoryProvider, TemplateDirectoryProvider>();
+            services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
 
             services.FillType<IRenderStrategy, NestedRenderStrategy>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();

@@ -70,6 +70,7 @@
     <Compile Include="Rendering\ViewDefinition.cs" />
     <Compile Include="Rendering\ViewDefinitionResolver.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
+    <Compile Include="SparkModel\MasterAttacher.cs" />
     <Compile Include="SparkModel\Sharing\SharingGraphActivator.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Registration\Nodes\SparkViewNode.cs" />

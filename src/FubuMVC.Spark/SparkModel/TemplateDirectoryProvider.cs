@@ -1,63 +1,55 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using FubuMVC.Spark.SparkModel.Sharing;
 
 namespace FubuMVC.Spark.SparkModel
 {
     public interface ITemplateDirectoryProvider
     {
-        IEnumerable<string> SharedPathsOf(ITemplate template, ITemplateRegistry templateRegistry);
-        IEnumerable<string> ReachablesOf(ITemplate template, ITemplateRegistry templateRegistry);
+        IEnumerable<string> SharedPathsOf(ITemplate template);
+        IEnumerable<string> ReachablesOf(ITemplate template);
     }
 
     public class TemplateDirectoryProvider : ITemplateDirectoryProvider
     {
         private readonly ISharedPathBuilder _builder;
+        private readonly ITemplateRegistry _templates;
+        private readonly ISharingGraph _graph;
 
-        public TemplateDirectoryProvider() : this(new SharedPathBuilder()) { }
-        public TemplateDirectoryProvider(ISharedPathBuilder builder)
+        public TemplateDirectoryProvider(ISharedPathBuilder builder, ITemplateRegistry templates, ISharingGraph graph)
         {
             _builder = builder;
+            _templates = templates;
+            _graph = graph;
         }
 
-        public IEnumerable<string> SharedPathsOf(ITemplate template, ITemplateRegistry templateRegistry)
+        public IEnumerable<string> SharedPathsOf(ITemplate template)
         {
-            return getDirectories(template, templateRegistry, false);
+            return getDirectories(template, false).ToList();
         }
 
-        public IEnumerable<string> ReachablesOf(ITemplate template, ITemplateRegistry templateRegistry)
+        public IEnumerable<string> ReachablesOf(ITemplate template)
         {
-            return getDirectories(template, templateRegistry, true);
+            return getDirectories(template, true).ToList();
         }
 
-        private IEnumerable<string> getDirectories(ITemplate template, ITemplateRegistry templateRegistry, bool includeDirectAncestor)
+        private IEnumerable<string> getDirectories(ITemplate template, bool includeDirectAncestor)
         {
-            foreach (var directory in _builder.BuildBy(template.FilePath, template.RootPath, includeDirectAncestor))
-            {
-                yield return directory;
-            }
+            var directories = new List<string>();
 
-            if (template.FromHost())
-            {
-                yield break;
-            }
+            var locals = _builder.BuildBy(template.FilePath, template.RootPath, includeDirectAncestor);            
+            directories.AddRange(locals);
 
-            var hostTemplate = templateRegistry.FromHost().FirstOrDefault();
-            if (hostTemplate == null)
+            _graph.SharingsFor(template.Origin).Each(sh =>
             {
-                yield break;
-            }
+                var root = _templates.ByOrigin(sh).FirstValue(t => t.RootPath);
+                if (root == null) return;
 
-            var hostRoot = hostTemplate.RootPath;
-            if (includeDirectAncestor)
-            {
-                yield return hostRoot;
-            }
+                var sharings = _builder.BuildBy(root);
+                directories.AddRange(sharings);                                                                                                                    
+            });
 
-            foreach (var sharedFolder in _builder.SharedFolderNames)
-            {
-                yield return Path.Combine(hostRoot, sharedFolder);
-            }
+            return directories;
         }
     }
 }

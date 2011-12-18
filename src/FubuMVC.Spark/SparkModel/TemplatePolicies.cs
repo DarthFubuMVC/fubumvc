@@ -10,7 +10,6 @@ namespace FubuMVC.Spark.SparkModel
         void Apply(ITemplate template);
     }
 
-    // NOTE: This one is needed before activation
     public class NamespacePolicy : ITemplatePolicy
     {
         public bool Matches(ITemplate template)
@@ -38,7 +37,6 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    // NOTE: This one is needed before activation
     public class ViewPathPolicy : ITemplatePolicy
     {
         private readonly Cache<string, string> _cache;

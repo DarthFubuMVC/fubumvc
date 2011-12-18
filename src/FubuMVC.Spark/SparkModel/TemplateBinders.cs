@@ -33,7 +33,6 @@ namespace FubuMVC.Spark.SparkModel
         void Bind(IBindRequest request);
     }
 
-    // NOTE: This one is needed before activation
     public class ViewDescriptorBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -48,52 +47,6 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    // NOTE: Not needed before activation
-    public class MasterPageBinder : ITemplateBinder
-    {
-        private readonly ISharedTemplateLocator _sharedTemplateLocator;
-        private const string FallbackMaster = "Application";
-        public string MasterName { get; set; }
-
-        public MasterPageBinder() : this(new SharedTemplateLocator()) { }
-        public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
-        {
-            _sharedTemplateLocator = sharedTemplateLocator;
-            MasterName = FallbackMaster;
-        }
-
-        public bool CanBind(IBindRequest request)
-        {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-            var parsing = request.Parsing;
-
-            return descriptor != null
-                && descriptor.Master == null
-                && (parsing.ViewModelType.IsNotEmpty() || parsing.Master.IsNotEmpty())
-                && !request.Target.IsPartial()
-                && parsing.Master != string.Empty;
-        }
-
-        public void Bind(IBindRequest request)
-        {
-            var template = request.Target;
-            var tracer = request.Logger;
-            var masterName = request.Parsing.Master ?? MasterName;
-
-            var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
-
-            if (master == null)
-            {
-                tracer.Log(template, "Expected master page [{0}] not found.", masterName);
-                return;
-            }
-
-            template.Descriptor.As<ViewDescriptor>().Master = master;
-            tracer.Log(template, "Master page [{0}] found at {1}", masterName, master.FilePath);
-        }
-    }
-
-    // NOTE: This one is needed before activation
     public class GenericViewModelBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -128,7 +81,6 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    // NOTE: This one is needed before activation
     public class ViewModelBinder : ITemplateBinder
     {
         public bool CanBind(IBindRequest request)
@@ -167,43 +119,6 @@ namespace FubuMVC.Spark.SparkModel
                 var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
                 logger.Log(template, "Type ambiguity on: {0}", candidates);
             }
-        }
-    }
-
-    // NOTE: Not needed before activation
-    public class ReachableBindingsBinder : ITemplateBinder
-    {
-        private readonly ISharedTemplateLocator _sharedTemplateLocator;
-        private const string FallbackBindingsName = "bindings";
-        public string BindingsName { get; set; }
-
-        public ReachableBindingsBinder() : this(new SharedTemplateLocator()) { }
-        public ReachableBindingsBinder(ISharedTemplateLocator sharedTemplateLocator)
-        {
-            _sharedTemplateLocator = sharedTemplateLocator;
-            BindingsName = FallbackBindingsName;
-        }
-
-        public bool CanBind(IBindRequest request)
-        {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-
-            return descriptor != null && descriptor.Bindings.Count() == 0;
-        }
-
-        public void Bind(IBindRequest request)
-        {
-            var target = request.Target;
-            var logger = request.Logger;
-            var templates = request.TemplateRegistry;
-            var descriptor = target.Descriptor.As<ViewDescriptor>();
-
-            var bindings = _sharedTemplateLocator.LocateBindings(BindingsName, target, templates);
-            bindings.Each(template =>
-            {
-                descriptor.AddBinding(template);
-                logger.Log(target, "Binding attached : {0}", template.FilePath);
-            });
         }
     }
 }

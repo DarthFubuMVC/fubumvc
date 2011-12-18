@@ -9,7 +9,7 @@ namespace FubuMVC.Spark.SparkModel
 	public interface ISharedPathBuilder
     {
         IEnumerable<string> BuildBy(string path, string root, bool includeDirectAncestor);
-        IEnumerable<string> SharedFolderNames { get; }
+	    IEnumerable<string> BuildBy(string directoryPath);
     }
 	
     public class SharedPathBuilder : ISharedPathBuilder
@@ -24,9 +24,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public IEnumerable<string> BuildBy(string path, string root, bool includeDirectAncestor)
         {
-            return buildBy(path, root, includeDirectAncestor)
-                .ToList()
-                .Distinct();
+            return buildBy(path, root, includeDirectAncestor).ToList().Distinct();
         }
 
         private IEnumerable<string> buildBy(string path, string root, bool includeDirectAncestor)
@@ -42,17 +40,17 @@ namespace FubuMVC.Spark.SparkModel
                 {
                     yield return path;
                 }
-                foreach (var sharedFolder in _sharedFolderNames)
+                foreach (var sharedPath in BuildBy(path))
                 {
-                    yield return Path.Combine(path, sharedFolder);
+                    yield return sharedPath;
                 }
 
             } while (path.IsNotEmpty() && path.PathRelativeTo(root).IsNotEmpty());            
         } 
 
-        public IEnumerable<string> SharedFolderNames
+        public IEnumerable<string> BuildBy(string directoryPath)
         {
-            get { return _sharedFolderNames; }
+            return _sharedFolderNames.Select(s => Path.Combine(directoryPath, s)).Distinct();
         }
     }
 }

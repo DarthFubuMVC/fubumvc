@@ -109,7 +109,7 @@
     <Compile Include="SparkActivatorTester.cs" />
     <Compile Include="SparkModel\Binding\GenericParserTester.cs" />
     <Compile Include="SparkModel\Binding\GenericViewModelBinderTester.cs" />
-    <Compile Include="SparkModel\Binding\ReachableBindingsBinderTester.cs" />
+    <Compile Include="SparkModel\Binding\BindingsAttacherTester.cs" />
     <Compile Include="SparkModel\Binding\ViewDescriptorBinderTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />

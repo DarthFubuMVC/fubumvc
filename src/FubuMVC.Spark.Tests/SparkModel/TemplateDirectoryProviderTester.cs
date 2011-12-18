@@ -1,147 +1,175 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Spark.SparkModel;
+using FubuMVC.Spark.SparkModel.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
-using Spark;
 
 namespace FubuMVC.Spark.Tests.SparkModel
 {
+
     [TestFixture]
-    public class TemplateDirectoryProviderTester : InteractionContext<TemplateDirectoryProvider>
+    public class template_directory_provider_without_sharings : InteractionContext<TemplateDirectoryProvider>
     {
+        private ITemplate _template;
+        private IEnumerable<string> _paths;
+
+        protected override void beforeEach()
+        {
+            _paths = new[] {"a", "b", "c"};
+            _template = new Template("filepath", "rootpath", "origin");
+
+            MockFor<ISharingGraph>()
+                .Stub(x => x.SharingsFor(Arg<string>.Is.Anything))
+                .Return(Enumerable.Empty<string>());
+
+            created_builder(false);
+        }
+
+        private void created_builder(bool includeDirectAncestors)
+        {
+            var builder = MockRepository.GenerateMock<ISharedPathBuilder>();
+            
+            builder
+                .Expect(x => x.BuildBy(_template.FilePath, _template.RootPath, includeDirectAncestors))
+                .Return(_paths);                        
+            
+            Container.Inject(builder);
+        }
+
+        [Test]
+        public void when_no_sharing_exists_only_local_paths_are_returned()
+        {
+            ClassUnderTest.SharedPathsOf(_template).SequenceEqual(_paths).ShouldBeTrue();
+        }
+
+        [Test]
+        public void the_shared_path_builder_is_given_proper_args_when_sharedpaths_of()
+        {
+            ClassUnderTest.SharedPathsOf(_template);
+            MockFor<ISharedPathBuilder>().VerifyAllExpectations();
+        }
+
+        [Test]
+        public void the_shared_path_builder_is_given_proper_args_when_reachables_of()
+        {
+            created_builder(true);
+            ClassUnderTest.ReachablesOf(_template);
+            MockFor<ISharedPathBuilder>().VerifyAllExpectations();
+        }
+    }
+
+    public class template_directory_provider_with_sharings : InteractionContext<TemplateDirectoryProvider>
+    {
+        private const string Shared = "S";
         private string _root;
-        private ISharedPathBuilder _builder;
-        private ITemplate _item;
-        private ITemplate _packageItem;
-        private TemplateRegistry _items;
+        private string _pak1Root;
+        private string _pak2Root;
+
+        private TemplateRegistry _templates;
+        private SharingGraph _graph;
 
         protected override void beforeEach()
         {
             _root = AppDomain.CurrentDomain.BaseDirectory;
+            _pak1Root = FileSystem.Combine(_root, "Packs", "Pak1");
+            _pak2Root = FileSystem.Combine(_root, "Packs", "Pak2");
 
-            _item = new Template(getPath("Actions", "Home", "home.spark"), _root, FubuSparkConstants.HostOrigin);
-            _packageItem = new Template(getPath("Packages", "Package1", "Actions", "Home", "home.spark"), _root, "Package1");
-
-            _items = new TemplateRegistry { _item, _packageItem };
-
-            _builder = MockFor<ISharedPathBuilder>();
-            _builder.Stub(x => x.SharedFolderNames).Return(new[] { Constants.Shared });
-
-        }
-
-        private string getPath(params string[] parts)
-        {
-            return Path.Combine(_root, Path.Combine(parts));
-        }
-
-        [Test]
-        public void the_shared_path_builder_returns_the_directories_from_the_item_root_and_file_path()
-        {
-            var paths = Enumerable.Empty<string>();
-            _builder
-                .Expect(x => x.BuildBy(_item.FilePath, _item.RootPath, false))
-                .Return(paths);
-
-            ClassUnderTest.SharedPathsOf(_item, _items).ToList();
-            _builder.VerifyAllExpectations();
-        }
-
-        [Test]
-        public void output_contains_the_items_returned_by_the_shared_path_builder()
-        {
-            var paths = new[] { getPath("Shared"), getPath("Views", "Shared") };
-            _builder
-                .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
-                .Return(paths);
-
-            ClassUnderTest.SharedPathsOf(_item, _items)
-                .Each(x => paths.ShouldContain(x));
-        }
-
-        [Test]
-        public void when_the_item_origin_is_host_output_equals_shared_path_builder()
-        {
-            var paths = new[] { getPath("Shared"), getPath("Views", "Shared") };
-            _builder
-                .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
-                .Return(paths);
-
-            ClassUnderTest.SharedPathsOf(_item, _items)
-                .SequenceEqual(paths).ShouldBeTrue();
-        }
-
-        [Test]
-        public void when_the_item_origin_is_not_host_but_no_host_item_exists_output_equals_shared_path_builder()
-        {
-            var paths = new[] { 
-                getPath("Packages", "Package1"), 
-                getPath("Packages", "Package1", "Shared"), 
-                getPath("Packages", "Package1", "Actions"),
-                getPath("Packages", "Package1", "Actions", "Shared"),
+            _templates = new TemplateRegistry
+            {
+                new Template(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, FubuSparkConstants.HostOrigin), 
+                new Template(FileSystem.Combine(_pak1Root, "Actions", "Home", "home.spark"), _pak1Root, "Pak1"),
+                new Template(FileSystem.Combine(_pak2Root, "Home", "home.spark"), _pak2Root, "Pak2")
             };
-            _builder
-                .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
-                .Return(paths);
-            _items = new TemplateRegistry(_items.Where(x => x != _item).ToList());
 
-            ClassUnderTest.SharedPathsOf(_packageItem, _items)
-                .SequenceEqual(paths).ShouldBeTrue();
+            _graph = new SharingGraph();
+            _graph.Dependency("Pak1", "Pak2");
+            _graph.Dependency("Pak2", FubuSparkConstants.HostOrigin);
+            _graph.Dependency(FubuSparkConstants.HostOrigin, "Pak3");
+
+            Container.Inject<ISharedPathBuilder>(new SharedPathBuilder(new []{Shared}));
+            Container.Inject<ISharingGraph>(_graph);
+            Container.Inject<ITemplateRegistry>(_templates);
         }
 
         [Test]
-        public void when_the_item_origin_is_not_host_output_contains_shared_folders_from_host()
+        public void locals_and_sharings_are_combined_1()
         {
-            var rootShared = getPath("Shared");
-            var paths = new[] { 
-                getPath("Packages", "Package1"), 
-                getPath("Packages", "Package1", "Shared"), 
-                getPath("Packages", "Package1", "Actions"),
-                getPath("Packages", "Package1", "Actions", "Shared"),
+            var expected = new List<string>
+            {
+                FileSystem.Combine(_pak1Root, "Actions", "Home", Shared),
+                FileSystem.Combine(_pak1Root, "Actions", Shared),
+                FileSystem.Combine(_pak1Root, Shared),
+                FileSystem.Combine(_pak2Root, Shared)                                   
             };
-            _builder
-                .Stub(x => x.BuildBy(null, null, false))
-                .IgnoreArguments().Return(paths);
 
-            ClassUnderTest.SharedPathsOf(_packageItem, _items)
-                .ShouldEqual(paths.Union(new[] { rootShared }));
+            ClassUnderTest.SharedPathsOf(_templates[1]).ShouldHaveTheSameElementsAs(expected);
         }
 
         [Test]
-        public void reachables_returns_the_shared_directories_from_the_builder()
+        public void locals_and_sharings_are_combined_2()
         {
-            var paths = new[] { _root, getPath("Shared"), getPath("Views"), getPath("Views", "Shared") };
-            _builder
-                .Expect(x => x.BuildBy(_item.FilePath, _item.RootPath, true))
-                .Return(paths);
-
-            var reachables = ClassUnderTest.ReachablesOf(_item, _items).ToList();
-            reachables.ShouldEqual(paths);
-            _builder.VerifyAllExpectations();
-        }
-
-        [Test]
-        public void reachables_returns_the_shared_directories_from_the_builder_and_the_root_reachables_when_is_not_a_root_template()
-        {
-            var paths = new[] { 
-                getPath("Packages", "Package1"), 
-                getPath("Packages", "Package1", "Shared"), 
-                getPath("Packages", "Package1", "Actions"),
-                getPath("Packages", "Package1", "Actions", "Shared"),
+            var expected = new List<string>
+            {
+                FileSystem.Combine(_pak2Root, "Home", Shared),
+                FileSystem.Combine(_pak2Root, Shared),
+                FileSystem.Combine(_root, Shared)                                   
             };
-            var rootReachables = new[] { _root, getPath("Shared") };
 
-            _builder
-                .Expect(x => x.BuildBy(_packageItem.FilePath, _packageItem.RootPath, true))
-                .Return(paths);
-
-            var reachables = ClassUnderTest.ReachablesOf(_packageItem, _items).ToList();
-            reachables.ShouldEqual(paths.Union(rootReachables));
-            _builder.VerifyAllExpectations();
+            ClassUnderTest.SharedPathsOf(_templates[2]).ShouldHaveTheSameElementsAs(expected);
         }
 
+        [Test]
+        public void locals_and_sharings_are_combined_3()
+        {
+            var expected = new List<string>
+            {
+                FileSystem.Combine(_pak1Root, "Actions", "Home"),
+                FileSystem.Combine(_pak1Root, "Actions", "Home", Shared),
+                FileSystem.Combine(_pak1Root, "Actions"),
+                FileSystem.Combine(_pak1Root, "Actions", Shared),
+                FileSystem.Combine(_pak1Root),
+                FileSystem.Combine(_pak1Root, Shared),
+                FileSystem.Combine(_pak2Root, Shared)                                   
+            };
+
+            ClassUnderTest.ReachablesOf(_templates[1]).ShouldHaveTheSameElementsAs(expected);
+        }
+
+        [Test]
+        public void locals_and_sharings_are_combined_4()
+        {
+            var expected = new List<string>
+            {
+                FileSystem.Combine(_pak2Root, "Home"),
+                FileSystem.Combine(_pak2Root, "Home", Shared),
+                FileSystem.Combine(_pak2Root),
+                FileSystem.Combine(_pak2Root, Shared),
+                FileSystem.Combine(_root, Shared)                                   
+            };
+
+            ClassUnderTest.ReachablesOf(_templates[2]).ShouldHaveTheSameElementsAs(expected);
+        }
+
+        [Test]
+        public void locals_and_sharings_are_combined_5()
+        {
+            var expected = new List<string>
+            {
+                FileSystem.Combine(_root, "Actions", "Home"),
+                FileSystem.Combine(_root, "Actions", "Home", Shared),
+                FileSystem.Combine(_root, "Actions"),
+                FileSystem.Combine(_root, "Actions", Shared),                               
+                _root,                               
+                FileSystem.Combine(_root, Shared)                               
+            };
+
+            ClassUnderTest.ReachablesOf(_templates[0]).ShouldHaveTheSameElementsAs(expected);
+        }
+
+        // TODO: More UT
     }
 }

@@ -3,7 +3,14 @@ using System.Linq;
 
 namespace FubuMVC.Spark.SparkModel.Sharing
 {
-    public class SharingGraph : ISharingRegistration
+    public interface ISharingGraph
+    {
+        IEnumerable<string> SharingsFor(string provenance);
+    }
+
+    // TODO: UT
+
+    public class SharingGraph : ISharingRegistration, ISharingGraph
     {
         private readonly List<GlobalDependency> _globals = new List<GlobalDependency>();
         private readonly List<DependencyRule> _dependencyRules = new List<DependencyRule>(); 
@@ -35,13 +42,33 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         public IEnumerable<string> SharingsFor(string provenance)
         {
             return _dependencyRules
-                .Where(r => r.Dependent == provenance)
+                .Where(r => r.Dependent == provenance && r.Dependency != provenance)
                 .Select(r => r.Dependency);
         } 
 
         public class GlobalDependency
         {            
             public string Dependency { get; set; }
+
+            public bool Equals(GlobalDependency other)
+            {
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return Equals(other.Dependency, Dependency);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != typeof (GlobalDependency)) return false;
+                return Equals((GlobalDependency) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return (Dependency != null ? Dependency.GetHashCode() : 0);
+            }
         }
 
         public class DependencyRule

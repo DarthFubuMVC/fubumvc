@@ -5,40 +5,41 @@ namespace FubuMVC.Spark.SparkModel
 {
     public interface ISharedTemplateLocator
     {
-        ITemplate LocateMaster(string masterName, ITemplate fromTemplate, ITemplateRegistry templateRegistry);
-        IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate, ITemplateRegistry templateRegistry); 
+        ITemplate LocateMaster(string masterName, ITemplate fromTemplate);
+        IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate); 
     }
 
     public class SharedTemplateLocator : ISharedTemplateLocator
     {
         private readonly ITemplateDirectoryProvider _provider;
+        private readonly ITemplateRegistry _templates;
 
-        public SharedTemplateLocator() : this(new TemplateDirectoryProvider()) { }
-        public SharedTemplateLocator(ITemplateDirectoryProvider provider)
+        public SharedTemplateLocator(ITemplateDirectoryProvider provider, ITemplateRegistry templates)
         {
             _provider = provider;
+            _templates = templates;
         }
 
-        public ITemplate LocateMaster(string masterName, ITemplate fromTemplate, ITemplateRegistry templateRegistry)
+        public ITemplate LocateMaster(string masterName, ITemplate fromTemplate)
         {
-            return locateTemplates(masterName, fromTemplate, templateRegistry, true)
+            return locateTemplates(masterName, fromTemplate, true)
                 .Where(x => x.IsSparkView())
                 .FirstOrDefault();
         }
 
-        public IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate, ITemplateRegistry templateRegistry)
+        public IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate)
         {
-            return locateTemplates(bindingName, fromTemplate, templateRegistry, false)
+            return locateTemplates(bindingName, fromTemplate, false)
                 .Where(x => x.IsXml());
         }
 
-        private IEnumerable<ITemplate> locateTemplates(string name, ITemplate fromTemplate, ITemplateRegistry templateRegistry, bool sharedsOnly)
+        private IEnumerable<ITemplate> locateTemplates(string name, ITemplate fromTemplate, bool sharedsOnly)
         {
             var directories = sharedsOnly 
-                ? _provider.SharedPathsOf(fromTemplate, templateRegistry) 
-                : _provider.ReachablesOf(fromTemplate, templateRegistry);
+                ? _provider.SharedPathsOf(fromTemplate) 
+                : _provider.ReachablesOf(fromTemplate);
 
-            return templateRegistry.ByNameUnderDirectories(name, directories);
+            return _templates.ByNameUnderDirectories(name, directories);
         }
     }
 }

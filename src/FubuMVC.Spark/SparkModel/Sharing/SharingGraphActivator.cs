@@ -22,6 +22,13 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         {
             ReadSparkConfig(FubuSparkConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadSparkConfig(p.Name, folder, log)));
+
+            // add recorded ones here, or split out to separate activator.
+
+            _sharingGraph.Global(FubuSparkConstants.HostOrigin);
+
+            var provenances = packages.Select(p => p.Name).Union(new[] {FubuSparkConstants.HostOrigin}).ToArray();
+            _sharingGraph.CompileDependencies(provenances);
         }
 
         public void ReadSparkConfig(string provenance, string folder, IPackageLog log)
