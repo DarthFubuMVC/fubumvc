@@ -262,7 +262,6 @@
     <Compile Include="Resources\Projections\AccessorProjectionTester.cs" />
     <Compile Include="Resources\Media\Atom\FeedItemTester.cs" />
     <Compile Include="Resources\Projections\DelegatingProjectionTester.cs" />
-    <Compile Include="Resources\Projections\FormattedProjectionTargetTester.cs" />
     <Compile Include="Resources\Projections\InMemoryMediaNode.cs" />
     <Compile Include="Resources\LinkSourceTester.cs" />
     <Compile Include="Resources\LinksSourceTester.cs" />
