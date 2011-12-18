@@ -207,8 +207,16 @@
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Resources\Media\DictionaryMediaNode.cs" />
+    <Compile Include="Resources\Media\IProjectionContext.cs" />
+    <Compile Include="Resources\Media\IValueStream.cs" />
     <Compile Include="Resources\Media\ProjectionContext.cs" />
+    <Compile Include="Resources\Media\ProjectionContextExtensions.cs" />
+    <Compile Include="Resources\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Resources\Media\Projections\DelegatingProjection.cs" />
+    <Compile Include="Resources\Media\Projections\DisplayFormatting.cs" />
+    <Compile Include="Resources\Media\Projections\IValueProjection.cs" />
+    <Compile Include="Resources\Media\Projections\SingleValueProjection.cs" />
+    <Compile Include="Resources\Media\ValuesExtensions.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
