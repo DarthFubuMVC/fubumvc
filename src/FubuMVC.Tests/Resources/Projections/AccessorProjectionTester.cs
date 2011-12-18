@@ -33,7 +33,7 @@ namespace FubuMVC.Tests.Resources.Projections
         [Test]
         public void project_the_property_with_default_node_name()
         {
-            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
+            theAccessorProjection.Write(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual("37");
         }
@@ -43,7 +43,7 @@ namespace FubuMVC.Tests.Resources.Projections
         {
             theAccessorProjection.Name("CurrentAge");
 
-            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
+            theAccessorProjection.Write(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("CurrentAge").ShouldEqual("37");
         }
@@ -52,7 +52,7 @@ namespace FubuMVC.Tests.Resources.Projections
         public void project_the_property_with_formatting()
         {
             theAccessorProjection.FormattedBy(age => "*" + age + "*");
-            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
+            theAccessorProjection.Write(new ProjectionContext<ValueTarget>(null, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual("*37*");
         }
@@ -71,7 +71,7 @@ namespace FubuMVC.Tests.Resources.Projections
 
             theAccessorProjection.Formatted();
 
-            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(services, _theValues), theMediaNode);
+            theAccessorProjection.Write(new ProjectionContext<ValueTarget>(services, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual(theFormattedValue);
         }
@@ -91,7 +91,7 @@ namespace FubuMVC.Tests.Resources.Projections
                 Name = "37"
             });
 
-            theAccessorProjection.WriteValue(new ProjectionContext<ValueTarget>(services, _theValues), theMediaNode);
+            theAccessorProjection.Write(new ProjectionContext<ValueTarget>(services, _theValues), theMediaNode);
 
             theMediaNode.Element.GetAttribute("Age").ShouldEqual(expectedUrl);
         }

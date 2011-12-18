@@ -214,7 +214,8 @@
     <Compile Include="Resources\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Resources\Media\Projections\DelegatingProjection.cs" />
     <Compile Include="Resources\Media\Projections\DisplayFormatting.cs" />
-    <Compile Include="Resources\Media\Projections\IValueProjection.cs" />
+    <Compile Include="Resources\Media\Projections\IProjectionRunner.cs" />
+    <Compile Include="Resources\Media\Projections\IProjection.cs" />
     <Compile Include="Resources\Media\Projections\SingleValueProjection.cs" />
     <Compile Include="Resources\Media\ValuesExtensions.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />

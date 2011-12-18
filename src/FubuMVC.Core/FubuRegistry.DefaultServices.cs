@@ -19,6 +19,7 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Formatters;
+using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Resources.PathBased;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
@@ -216,6 +217,11 @@ namespace FubuMVC.Core
             graph.Services.AddService<IConverterFamily, AspNetObjectConversionFamily>();
 
             graph.Services.SetServiceIfNone<IRequestHeaders, RequestHeaders>();
+
+
+
+            graph.Services.SetServiceIfNone<IProjectionRunner, ProjectionRunner>();
+            graph.Services.SetServiceIfNone(typeof(IProjectionRunner<>), typeof(ProjectionRunner<>));
 
             registerHtmlConventions(graph);
             registerAuthorizationServices(graph);

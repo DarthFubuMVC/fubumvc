@@ -5,10 +5,10 @@ using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Resources.Media.Projections
 {
-    public class Projection<T> : IValueProjection<T>
+    public class Projection<T> : IProjection<T>
     {
         private DisplayFormatting _formatting;
-        private readonly IList<IValueProjection<T>> _values = new List<IValueProjection<T>>();
+        private readonly IList<IProjection<T>> _values = new List<IProjection<T>>();
 
         public Projection(DisplayFormatting formatting)
         {
@@ -21,9 +21,9 @@ namespace FubuMVC.Core.Resources.Media.Projections
             set { _formatting = value; }
         }
 
-        void IValueProjection<T>.WriteValue(IProjectionContext<T> target, IMediaNode node)
+        void IProjection<T>.Write(IProjectionContext<T> context, IMediaNode node)
         {
-            _values.Each(x => x.WriteValue(target, node));
+            _values.Each(x => x.Write(context, node));
         }
 
         public AccessorProjection<T, TValue> Value<TValue>(Expression<Func<T, TValue>> expression)
@@ -40,7 +40,7 @@ namespace FubuMVC.Core.Resources.Media.Projections
             return value;
         }
 
-        public void Include<TProjection>() where TProjection : IValueProjection<T>
+        public void Include<TProjection>() where TProjection : IProjection<T>
         {
             _values.Add(new DelegatingProjection<T, TProjection>());
         }

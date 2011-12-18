@@ -266,6 +266,7 @@
     <Compile Include="Resources\LinkSourceTester.cs" />
     <Compile Include="Resources\LinksSourceTester.cs" />
     <Compile Include="Resources\Projections\play.cs" />
+    <Compile Include="Resources\Projections\ProjectionRunnerTester.cs" />
     <Compile Include="Resources\Projections\ProjectionTester.cs" />
     <Compile Include="Resources\Projections\SimpleValueSource.cs" />
     <Compile Include="Resources\Media\Xml\XmlAttCentricMediaNodeTester.cs" />

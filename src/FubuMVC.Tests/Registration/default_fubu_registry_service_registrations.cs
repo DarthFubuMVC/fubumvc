@@ -11,6 +11,7 @@ using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Resources.Media;
+using FubuMVC.Core.Resources.Media.Projections;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.SessionState;
@@ -263,6 +264,21 @@ namespace FubuMVC.Tests.Registration
         {
             var services = new FubuRegistry().BuildGraph().Services;
             services.DefaultServiceFor(typeof (IValues<>)).Type.ShouldEqual(typeof (SimpleValues<>));
+        }
+
+
+
+        [Test]
+        public void projection_runner_is_registered()
+        {
+            registeredTypeIs<IProjectionRunner, ProjectionRunner>();
+        }
+
+        [Test]
+        public void generic_projection_runner_is_registered()
+        {
+            var services = new FubuRegistry().BuildGraph().Services;
+            services.DefaultServiceFor(typeof(IProjectionRunner<>)).Type.ShouldEqual(typeof(ProjectionRunner<>));
         }
     }
 }

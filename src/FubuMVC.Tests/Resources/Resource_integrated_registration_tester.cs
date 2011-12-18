@@ -38,7 +38,7 @@ namespace FubuMVC.Tests.Resources
         public void resource_also_references_the_projection()
         {
             // A resource is applied by the policy
-            theBehaviorGraph.Services.ServicesFor<IValueProjection<Address>>().Single()
+            theBehaviorGraph.Services.ServicesFor<IProjection<Address>>().Single()
                 .ShouldNotBeNull();
         }
 
@@ -161,7 +161,7 @@ namespace FubuMVC.Tests.Resources
                 .Value.ShouldBeTheSameAs(resource.Links);
 
 
-            objectDef.DependencyFor<IValueProjection<Address>>().ShouldBeOfType<ValueDependency>()
+            objectDef.DependencyFor<IProjection<Address>>().ShouldBeOfType<ValueDependency>()
                 .Value.ShouldBeOfType<Projection<Address>>();
         }
 
@@ -195,7 +195,7 @@ namespace FubuMVC.Tests.Resources
                 .Value.ShouldNotBeNull();
 
 
-            objectDef.DependencyFor<IValueProjection<Address>>().ShouldBeOfType<ValueDependency>()
+            objectDef.DependencyFor<IProjection<Address>>().ShouldBeOfType<ValueDependency>()
                 .Value.ShouldBeOfType<Projection<Address>>();
 
         }

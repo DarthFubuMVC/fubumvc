@@ -46,5 +46,13 @@ namespace FubuMVC.Core.Resources.Media
         {
             throw new NotSupportedException();
         }
+
+        public static IDictionary<string, object> Write(Action<IMediaNode> configuration)
+        {
+            var node = new DictionaryMediaNode();
+            configuration(node);
+
+            return node.Values;
+        }
     }
 }

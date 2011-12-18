@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Resources.Projections
             projection.Value(x => x.ZipCode);
 
 
-            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
+            projection.As<IProjection<Address>>().Write(new ProjectionContext<Address>(null, aTarget), aNode);
 
             aNode.Element.GetAttribute("Line1").ShouldEqual(anAddress.Line1);
             aNode.Element.GetAttribute("City").ShouldEqual(anAddress.City);
@@ -56,7 +56,7 @@ namespace FubuMVC.Tests.Resources.Projections
 
             projection.ForAttribute("anything").Use(context => "aaa" + context.ValueFor(x => x.Line1));
 
-            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
+            projection.As<IProjection<Address>>().Write(new ProjectionContext<Address>(null, aTarget), aNode);
 
             aNode.Element.GetAttribute("anything").ShouldEqual("aaa" + anAddress.Line1);
         }
@@ -68,7 +68,7 @@ namespace FubuMVC.Tests.Resources.Projections
 
             projection.ForAttribute("anything").ValueFrom(x => x.Line1).Use(value => "aaa" + value);
 
-            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(null, aTarget), aNode);
+            projection.As<IProjection<Address>>().Write(new ProjectionContext<Address>(null, aTarget), aNode);
 
             aNode.Element.GetAttribute("anything").ShouldEqual("aaa" + anAddress.Line1);
         }
@@ -89,7 +89,7 @@ namespace FubuMVC.Tests.Resources.Projections
             formatter.Stub(x => x.GetDisplayForValue(accessor, anAddress.Line1)).Return(theFormattedValue);
 
             var node = new DictionaryMediaNode();
-            projection.As<IValueProjection<Address>>().WriteValue(new ProjectionContext<Address>(services, aTarget), node);
+            projection.As<IProjection<Address>>().Write(new ProjectionContext<Address>(services, aTarget), node);
             node.Values["Line1"].ShouldEqual(theFormattedValue);
         }
     }

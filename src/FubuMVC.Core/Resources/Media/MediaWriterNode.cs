@@ -13,7 +13,7 @@ namespace FubuMVC.Core.Resources.Media
             _inputType = inputType;
 
             Links = new MediaDependency(typeof (ILinkSource<>), _inputType);
-            Projection = new MediaDependency(typeof (IValueProjection<>), _inputType);
+            Projection = new MediaDependency(typeof (IProjection<>), _inputType);
             Document = new MediaDependency(typeof (IMediaDocument));
         }
 

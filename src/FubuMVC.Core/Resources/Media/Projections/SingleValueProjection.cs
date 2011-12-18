@@ -2,7 +2,7 @@ using System;
 
 namespace FubuMVC.Core.Resources.Media.Projections
 {
-    public class SingleValueProjection<T> : IValueProjection<T>
+    public class SingleValueProjection<T> : IProjection<T>
     {
         public SingleValueProjection(string attributeName, Func<IProjectionContext<T>, object> source)
         {
@@ -14,9 +14,9 @@ namespace FubuMVC.Core.Resources.Media.Projections
 
         protected Func<IProjectionContext<T>, object> source { get; set; }
 
-        public void WriteValue(IProjectionContext<T> target, IMediaNode node)
+        public void Write(IProjectionContext<T> context, IMediaNode node)
         {
-            node.SetAttribute(attributeName, source(target));
+            node.SetAttribute(attributeName, source(context));
         }
     }
 }

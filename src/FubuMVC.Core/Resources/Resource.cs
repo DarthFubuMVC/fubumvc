@@ -37,7 +37,7 @@ namespace FubuMVC.Core.Resources
 
             if (_projection.IsValueCreated)
             {
-                behaviorGraph.Services.SetServiceIfNone<IValueProjection<T>>(_projection.Value);
+                behaviorGraph.Services.SetServiceIfNone<IProjection<T>>(_projection.Value);
             }
 
             if (_links.IsValueCreated)

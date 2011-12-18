@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Resources.Projections
             var projection = new DelegatingProjection<ProjectionModel, FakeProjector>();
             var theNode = new DictionaryMediaNode();
 
-            projection.WriteValue(context, theNode);
+            projection.Write(context, theNode);
 
             stub.theTarget.ShouldBeTheSameAs(context);
             stub.theNode.ShouldBeTheSameAs(theNode);
@@ -41,7 +41,7 @@ namespace FubuMVC.Tests.Resources.Projections
 
             var theNode = new DictionaryMediaNode();
 
-            projection.As<IValueProjection<ProjectionModel>>().WriteValue(context, theNode);
+            projection.As<IProjection<ProjectionModel>>().Write(context, theNode);
 
             stub.theTarget.ShouldBeTheSameAs(context);
             stub.theNode.ShouldBeTheSameAs(theNode);
@@ -52,14 +52,14 @@ namespace FubuMVC.Tests.Resources.Projections
             
         }
 
-        public class FakeProjector : IValueProjection<ProjectionModel>
+        public class FakeProjector : IProjection<ProjectionModel>
         {
             public IProjectionContext<ProjectionModel> theTarget;
             public IMediaNode theNode;
 
-            public void WriteValue(IProjectionContext<ProjectionModel> target, IMediaNode node)
+            public void Write(IProjectionContext<ProjectionModel> context, IMediaNode node)
             {
-                theTarget = target;
+                theTarget = context;
                 theNode = node;
             }
         }
