@@ -21,6 +21,8 @@ namespace FubuMVC.Core
             // Add Behaviors First
             ApplyConvention(_behaviorAggregator);
 
+            // Needs to go before routing conventions
+            ApplyConvention<PartialOnlyConvention>();
 
             addConvention(graph => _routeResolver.ApplyToAll(graph));
 

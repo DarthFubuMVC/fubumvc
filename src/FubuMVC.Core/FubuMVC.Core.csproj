@@ -203,6 +203,7 @@
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
+    <Compile Include="Registration\Conventions\PartialOnlyConvention.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
