@@ -184,7 +184,6 @@
     <Compile Include="FubuRegistryWithTypesTester.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequestTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
-    <Compile Include="Http\AspNet\ASPNetObjectConversionFamilyTester.cs" />
     <Compile Include="Http\AspNet\AspNetServiceArgumentsTester.cs" />
     <Compile Include="Http\CookieTester.cs" />
     <Compile Include="Http\CurrentChainTester.cs" />
@@ -316,6 +315,7 @@
     <Compile Include="Resources\Resource_integrated_registration_tester.cs" />
     <Compile Include="Resources\ValidStubUrlRegistry.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
+    <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\BehaviorInvokerTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />

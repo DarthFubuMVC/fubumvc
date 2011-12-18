@@ -219,6 +219,7 @@
     <Compile Include="Resources\Media\Projections\IProjection.cs" />
     <Compile Include="Resources\Media\Projections\SingleValueProjection.cs" />
     <Compile Include="Resources\Media\ValuesExtensions.cs" />
+    <Compile Include="Runtime\AspNetPassthroughConverter.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />

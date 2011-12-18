@@ -133,6 +133,8 @@ namespace FubuMVC.Core
     {
         private void setupServices(BehaviorGraph graph)
         {
+            graph.Services.AddService<IConverterFamily, AspNetPassthroughConverter>();
+
             graph.Services.AddService<ICurrentHttpRequest, StandInCurrentHttpRequest>();
 
             graph.Services.AddService<IModelBinder, FubuTupleBinder>();
