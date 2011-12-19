@@ -8,5 +8,7 @@ namespace FubuMVC.Core.Resources.Media
         TService Service<TService>();
         IUrlRegistry Urls { get; }
         IDisplayFormatter Formatter { get; }
+
+        IProjectionContext<TChild> ContextFor<TChild>(TChild child);
     }
 }

@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using FubuMVC.Core;
+using HtmlTags;
 using KayakTestApplication;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using TestContext = StoryTeller.Engine.TestContext;
 
 namespace Serenity.Testing
@@ -11,13 +12,6 @@ namespace Serenity.Testing
     [TestFixture, Explicit]
     public class debugging
     {
-        [Test]
-        public void write_source()
-        {
-            var settings = ApplicationSettings.For<KayakTestApplication.KayakApplication>();
-            settings.Write();
-        }
-
         [Test]
         public void start_an_inprocess_system_without_blowing_up()
         {
@@ -38,7 +32,26 @@ namespace Serenity.Testing
         [Test]
         public void what_does_by_to_string_look_like()
         {
-            Debug.WriteLine(By.ClassName("something"));
+            var dictionary = new Dictionary<string, object>();
+            var list = new List<Dictionary<string, object>>();
+            for (var i = 0; i < 5; i++)
+            {
+                var dict = new Dictionary<string, object>();
+                dict.Add("key", i);
+                dict.Add("name", "somebody");
+                list.Add(dict);
+            }
+
+            dictionary.Add("nodes", list);
+
+            Debug.WriteLine(JsonUtil.ToJson(dictionary));
+        }
+
+        [Test]
+        public void write_source()
+        {
+            var settings = ApplicationSettings.For<KayakApplication>();
+            settings.Write();
         }
     }
 }

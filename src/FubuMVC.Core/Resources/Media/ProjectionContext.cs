@@ -26,6 +26,14 @@ namespace FubuMVC.Core.Resources.Media
         {
         }
 
+        private ProjectionContext(IServiceLocator services, IValues<T> values, Lazy<IUrlRegistry> urls, Lazy<IDisplayFormatter> formatter)
+        {
+            _services = services;
+            _values = values;
+            _urls = urls;
+            _formatter = formatter;
+        }
+
         public T Subject
         {
             get { return _values.Subject; }
@@ -49,6 +57,11 @@ namespace FubuMVC.Core.Resources.Media
         public IDisplayFormatter Formatter
         {
             get { return _formatter.Value; }
+        }
+
+        public IProjectionContext<TChild> ContextFor<TChild>(TChild child)
+        {
+            return new ProjectionContext<TChild>(_services, new SimpleValues<TChild>(child), _urls, _formatter);
         }
     }
 }

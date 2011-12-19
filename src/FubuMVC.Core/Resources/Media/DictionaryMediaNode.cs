@@ -47,6 +47,14 @@ namespace FubuMVC.Core.Resources.Media
             throw new NotSupportedException();
         }
 
+        public IMediaNodeList AddList(string nodeName, string leafName)
+        {
+            var list = new DictionaryMediaNodeList();
+            SetAttribute(nodeName, list.List);
+
+            return list;
+        }
+
         public static IDictionary<string, object> Write(Action<IMediaNode> configuration)
         {
             var node = new DictionaryMediaNode();

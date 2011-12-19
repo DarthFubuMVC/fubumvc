@@ -90,10 +90,33 @@ namespace FubuMVC.Tests.Resources.Media
             MockFor<IServiceLocator>().AssertWasCalled(x => x.GetInstance<IDisplayFormatter>(), x => x.Repeat.Once()); 
         }
 
+        [Test]
+        public void create_a_context_for_a_different_type()
+        {
+            var formatter = MockFor<IDisplayFormatter>();
+            MockFor<IServiceLocator>().Stub(x => x.GetInstance<IDisplayFormatter>()).Return(formatter);
+
+            var stub = new StubUrlRegistry();
+            MockFor<IServiceLocator>().Stub(x => x.GetInstance<IUrlRegistry>()).Return(stub);
+
+            var different = new DifferentTarget();
+
+            var context = ClassUnderTest.ContextFor(different);
+
+            context.Urls.ShouldBeTheSameAs(stub);
+            context.Formatter.ShouldBeTheSameAs(formatter);
+            context.Subject.ShouldBeTheSameAs(different);
+        }
+
 
         public class ProjectionModel
         {
             public string Name { get; set; }
+        }
+
+        public class DifferentTarget
+        {
+            
         }
     }
 

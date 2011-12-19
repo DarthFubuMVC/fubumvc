@@ -99,6 +99,46 @@ namespace FubuMVC.Core.Resources.Media.Projections
             }
         }
 
+        public EnumerableExpression<TChild> Enumerable<TChild>(Expression<Func<T, IEnumerable<TChild>>> expression)
+        {
+            var enumerable = EnumerableProjection<T, TChild>.For(expression);
+            _values.Add(enumerable);
 
+            return new EnumerableExpression<TChild>(enumerable);
+        }
+
+        public class EnumerableExpression<TChild>
+        {
+            private readonly EnumerableProjection<T, TChild> _enumerable;
+
+            public EnumerableExpression(EnumerableProjection<T, TChild> enumerable)
+            {
+                _enumerable = enumerable;
+            }
+
+            public EnumerableExpression<TChild> NodeName(string nodeName)
+            {
+                _enumerable.NodeName = nodeName;
+                return this;
+            }
+
+            public EnumerableExpression<TChild> LeafName(string leafName)
+            {
+                _enumerable.LeafName = leafName;
+                return this;
+            }
+
+            public EnumerableExpression<TChild> UseProjection<TProjection>() where TProjection : IProjection<TChild>
+            {
+                _enumerable.UseProjection<TProjection>();
+                return this;
+            }
+
+            public EnumerableExpression<TChild> DefineProjection(Action<Projection<TChild>> configuration)
+            {
+                _enumerable.DefineProjection(configuration);
+                return this;
+            }
+        }
     }
 }

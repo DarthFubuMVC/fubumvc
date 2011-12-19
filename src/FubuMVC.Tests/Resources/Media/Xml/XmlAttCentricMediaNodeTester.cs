@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using FubuMVC.Core.Resources.Media.Xml;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -41,6 +42,19 @@ namespace FubuMVC.Tests.Resources.Media.Xml
         {
             var node = XmlAttCentricMediaNode.ForRoot("root");
             node.AddChild("childA").As<XmlMediaNode>().LinkWriter.ShouldBeTheSameAs(node.LinkWriter);
+        }
+
+        [Test]
+        public void writing_a_list()
+        {
+            var node = XmlAttCentricMediaNode.ForRoot("root");
+            var list = node.AddList("node", "leaf");
+            list.Add().SetAttribute("name", "Rand");
+            list.Add().SetAttribute("name", "Perrin");
+            list.Add().SetAttribute("name", "Mat");
+
+            node.Element.OuterXml.ShouldEqual("<root><node><leaf name=\"Rand\" /><leaf name=\"Perrin\" /><leaf name=\"Mat\" /></node></root>");
+        
         }
     }
 }

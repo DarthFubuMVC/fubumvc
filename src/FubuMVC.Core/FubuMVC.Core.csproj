@@ -208,6 +208,7 @@
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Resources\Media\DictionaryMediaNode.cs" />
+    <Compile Include="Resources\Media\DictionaryMediaNodeList.cs" />
     <Compile Include="Resources\Media\IProjectionContext.cs" />
     <Compile Include="Resources\Media\IValueStream.cs" />
     <Compile Include="Resources\Media\ProjectionContext.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Resources\Media\Projections\AccessorProjection.cs" />
     <Compile Include="Resources\Media\Projections\DelegatingProjection.cs" />
     <Compile Include="Resources\Media\Projections\DisplayFormatting.cs" />
+    <Compile Include="Resources\Media\Projections\EnumerableProjection.cs" />
     <Compile Include="Resources\Media\Projections\IProjectionRunner.cs" />
     <Compile Include="Resources\Media\Projections\IProjection.cs" />
     <Compile Include="Resources\Media\Projections\SingleValueProjection.cs" />
