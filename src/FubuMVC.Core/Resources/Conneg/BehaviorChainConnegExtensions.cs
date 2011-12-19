@@ -67,9 +67,38 @@ namespace FubuMVC.Core.Resources.Conneg
             chain.RemoveConneg();
             chain.ApplyConneg();
 
-            chain.ConnegInputNode().UseFormatter<JsonFormatter>();
+            chain.AlterConnegInput(x => x.UseFormatter<JsonFormatter>());
 
             chain.AlterConnegOutput(x => x.JsonOnly());
+        }
+
+        public static bool IsAsymmetricJson(this BehaviorChain chain)
+        {
+            if (chain.ConnegInputNode() == null && chain.ConnegOutputNode() == null) return false;
+
+            if (chain.ActionOutputType() != null)
+            {
+                var output = chain.ConnegOutputNode();
+                if (output.SelectedFormatterTypes.Count() != 1) return false;
+
+                if (output.SelectedFormatterTypes.Single() != typeof(JsonFormatter)) return false;
+            }
+
+            if (chain.InputType() != null)
+            {
+                var input = chain.ConnegInputNode();
+
+                if (!input.AllowHttpFormPosts)
+                {
+                    return false;
+                }
+                
+                if (input.SelectedFormatterTypes.Count() != 1) return false;
+
+                if (input.SelectedFormatterTypes.Single() != typeof(JsonFormatter)) return false;
+            }
+
+            return true;
         }
 
         public static ConnegInputNode ConnegInputNode(this BehaviorChain chain)
@@ -103,5 +132,7 @@ namespace FubuMVC.Core.Resources.Conneg
             chain.ApplyConneg();
             chain.ConnegOutputNode().UseFormatter<XmlFormatter>();
         }
+
+
     }
 }

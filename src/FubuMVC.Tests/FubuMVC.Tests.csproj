@@ -205,6 +205,7 @@
     <Compile Include="ProcessWrapperTester.cs" />
     <Compile Include="Registration\ActionMethodFilterTester.cs" />
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
+    <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\ApplyingACustomViewBagConvention.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
@@ -362,6 +363,7 @@
     <Compile Include="UI\FormLineExpressionBuilderTester.cs" />
     <Compile Include="UI\HtmlTagExtensionsTester.cs" />
     <Compile Include="UI\ImageExpressionTester.cs" />
+    <Compile Include="UI\ImageForExtensionMethodTester.cs" />
     <Compile Include="UI\PartialInvokerTester.cs" />
     <Compile Include="Assets\AssetDslReaderTester.cs" />
     <Compile Include="Assets\AssetGraphTester.cs" />

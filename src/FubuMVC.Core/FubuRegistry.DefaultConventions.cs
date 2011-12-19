@@ -29,11 +29,14 @@ namespace FubuMVC.Core
 
             _systemPolicies.Add(new AttachAuthorizationPolicy());
 
+            ApplyConvention<DictionaryOutputConvention>();
+
             Output.ToHtml.WhenCallMatches(x => x.Method.HasAttribute<HtmlEndpointAttribute>());
             Output.ToHtml
                 .WhenCallMatches(x => x.Method.Name.ToLower().EndsWith("html") && x.OutputType() == typeof (string));
             
             Output.ToJson.WhenTheOutputModelIs<JsonMessage>();
+            
 
             Output.To<RenderHtmlDocumentNode>().WhenTheOutputModelIs<HtmlDocument>();
             Output.To<RenderHtmlTagNode>().WhenTheOutputModelIs<HtmlTag>();

@@ -4,13 +4,11 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuLocalization;
 using FubuMVC.Core.Assets.Files;
-using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
-using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
 using HtmlTags.Extended.Attributes;
@@ -20,13 +18,27 @@ namespace FubuMVC.Core.UI
     public static class FubuPageExtensions
     {
         /// <summary>
-        /// Just returns the localized header text for a property of the view model
+        /// Writes an <image> tag for the named assetName using the url from the asset pipeline
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="page"></param>
-        /// <param name="expression"></param>
+        /// <param name="assetName"></param>
         /// <returns></returns>
-        public static string HeaderText<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression) where T : class
+        public static HtmlTag ImageFor(this IFubuPage page, string assetName)
+        {
+            var url = page.Urls.UrlForAsset(AssetFolder.images, assetName);
+            return new HtmlTag("img").Attr("src", url);
+        }
+
+
+        /// <summary>
+        ///   Just returns the localized header text for a property of the view model
+        /// </summary>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "page"></param>
+        /// <param name = "expression"></param>
+        /// <returns></returns>
+        public static string HeaderText<T>(this IFubuPage<T> page, Expression<Func<T, object>> expression)
+            where T : class
         {
             return LocalizationManager.GetHeader(expression);
         }
@@ -256,7 +268,7 @@ namespace FubuMVC.Core.UI
 
         public static FormTag FormFor<TInputModel>(this IFubuPage page) where TInputModel : new()
         {
-            var url = page.Urls.UrlFor(new TInputModel(), categoryOrHttpMethod:"POST");
+            var url = page.Urls.UrlFor(new TInputModel(), categoryOrHttpMethod: "POST");
             return new FormTag(url);
         }
 

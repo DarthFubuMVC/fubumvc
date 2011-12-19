@@ -24,12 +24,6 @@ namespace FubuMVC.Diagnostics.Core.Extensions
         private const string sourceControlUrlBase = "http://github.com/DarthFubuMVC/fubumvc/";
         private const string sourceControlUrlFormat = sourceControlUrlBase + "commit/{0}";
 
-        public static HtmlTag ImageFor(this IFubuPage page, string path)
-        {
-            var url = page.Urls.UrlForAsset(AssetFolder.images, path);
-            return new HtmlTag("img").Attr("src", url);
-        }
-
         public static HtmlTag FubuVersion(this IFubuPage page)
         {
             var fubuAssembly = typeof (FubuRegistry).Assembly;
