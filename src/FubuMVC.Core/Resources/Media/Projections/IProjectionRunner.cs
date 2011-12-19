@@ -54,6 +54,7 @@ namespace FubuMVC.Core.Resources.Media.Projections
 
         IDictionary<string, object> ProjectToJson(IProjection<T> projection, IValues<T> values);
         IDictionary<string, object> ProjectToJson<TProjection>(IValues<T> values) where TProjection : IProjection<T>;
+        IDictionary<string, object> ProjectToJson<TProjection>(T subject) where TProjection : IProjection<T>;
     }
 
     public class ProjectionRunner<T> : IProjectionRunner<T>
@@ -93,6 +94,11 @@ namespace FubuMVC.Core.Resources.Media.Projections
         public IDictionary<string, object> ProjectToJson<TProjection>(IValues<T> values) where TProjection : IProjection<T>
         {
             return DictionaryMediaNode.Write(node => Run<TProjection>(values, node));
+        }
+
+        public IDictionary<string, object> ProjectToJson<TProjection>(T subject) where TProjection : IProjection<T>
+        {
+            return ProjectToJson<TProjection>(new SimpleValues<T>(subject));
         }
     }
 

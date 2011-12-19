@@ -14,7 +14,7 @@ namespace FubuMVC.Core.Resources.Media.Projections
         public string NodeName;
         public string LeafName = typeof(TChild).Name;
 
-        public static EnumerableProjection<TParent, TChild> For<TParent, TChild>(Expression<Func<TParent, IEnumerable<TChild>>> expression)
+        public static EnumerableProjection<TParent, TChild> For(Expression<Func<TParent, IEnumerable<TChild>>> expression)
         {
             var accessor = ReflectionHelper.GetAccessor(expression);
 
