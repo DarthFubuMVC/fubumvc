@@ -35,14 +35,14 @@ namespace FubuMVC.Core.Resources.Media.Projections
             return this;
         }
 
-        public AccessorProjection<T, TValue> FormattedBy(Func<TValue, string> formatting)
+        public AccessorProjection<T, TValue> FormattedBy(Func<TValue, object> formatting)
         {
             source = context =>
             {
                 var raw = context.ValueFor(_accessor);
                 if (raw == null)
                 {
-                    return string.Empty;
+                    return null;
                 }
 
                 return formatting((TValue)raw);
