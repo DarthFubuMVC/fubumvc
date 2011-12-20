@@ -42,7 +42,7 @@
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.3.103\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.4.104\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.3.98\lib\FubuTestingSupport.dll</HintPath>

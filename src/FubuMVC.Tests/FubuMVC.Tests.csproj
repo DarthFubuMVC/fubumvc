@@ -43,10 +43,10 @@
       <HintPath>..\packages\Bottles.Deployment.0.9.1.163\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.3.103\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.4.104\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.3.103\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.4.104\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.3.98\lib\FubuTestingSupport.dll</HintPath>
