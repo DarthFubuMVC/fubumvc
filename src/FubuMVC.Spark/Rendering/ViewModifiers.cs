@@ -112,7 +112,7 @@ namespace FubuMVC.Spark.Rendering
             // proactively dispose named content. pools spoolwriter pages. avoids finalizers.
             disposer.PostRender += x => x.Content.Values.Each(c => c.Close());
             disposer.PostRender += x => x.Content.Clear();
-            
+
             return disposer;
         }
     }

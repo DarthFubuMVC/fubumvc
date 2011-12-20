@@ -22,7 +22,7 @@ namespace FubuMVC.Spark.SparkModel
         private CompositeAction<ScanRequest> _requestConfig;
         private CompositeAction<ScanRequest> _hostExcludes;
         private string _hostPath;
-        
+
         public TemplateFinder() : this(new FileScanner(), PackageRegistry.Packages) { }
         public TemplateFinder(IFileScanner fileScanner, IEnumerable<IPackageInfo> packages)
         {
@@ -44,7 +44,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public string HostPath
         {
-            get { return _hostPath ?? "~/".ToPhysicalPath(); } 
+            get { return _hostPath ?? "~/".ToPhysicalPath(); }
             set { _hostPath = value; }
         }
 
@@ -53,15 +53,15 @@ namespace FubuMVC.Spark.SparkModel
             var templates = new List<ITemplate>();
             var root = new SparkRoot
             {
-                Origin = FubuSparkConstants.HostOrigin, 
+                Origin = FubuSparkConstants.HostOrigin,
                 Path = HostPath
             };
 
             var request = buildRequest(templates, root);
             _hostExcludes.Do(request);
-            
+
             _fileScanner.Scan(request);
-            
+
             return templates;
         }
 
@@ -70,9 +70,9 @@ namespace FubuMVC.Spark.SparkModel
             var templates = new List<ITemplate>();
             var roots = packageRoots(_packages).ToArray();
             var request = buildRequest(templates, roots);
-            
+
             _fileScanner.Scan(request);
-            
+
             return templates;
         }
 
@@ -120,16 +120,16 @@ namespace FubuMVC.Spark.SparkModel
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);
-            
+
             sparkRoots.Each(r => request.AddRoot(r.Path));
             request.AddHandler(fileFound =>
             {
                 var origin = sparkRoots.First(x => x.Path == fileFound.Root).Origin;
-                var sparkFile = new Template(fileFound.Path, fileFound.Root, origin);                
+                var sparkFile = new Template(fileFound.Path, fileFound.Root, origin);
                 templates.Add(sparkFile);
             });
 
             return request;
         }
-    }      
+    }
 }

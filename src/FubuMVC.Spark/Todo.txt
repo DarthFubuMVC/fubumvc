@@ -11,7 +11,7 @@
 
  - Do a deep search for files in one pass, then untangle the namespaces and folders by rooting the file path at the top.
  - Discover *all* possible Spark view tokens by scanning the file system first.
- - Derive the "namespace" from its location from the root + use assembly name from view model for toplevel.  
+ - Derive the "namespace" from its location from the root + use assembly name from view model for toplevel.
 
 Mate up ActionCall's and ViewTokens:
 

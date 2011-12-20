@@ -4,7 +4,7 @@
 <content:header>Where are we now?</content:header>
 
 <h2>Via Spark Partial: <WhereAreWe /></h2>
-<h2>Via Fubu Partial: 
+<h2>Via Fubu Partial:
 #this.Partial<LocationViewModel>();
 </h2>
 <h2>I can't hear you!</h2>

@@ -17,10 +17,10 @@ namespace FubuMVC.HelloSpark
                 .Bootstrap(RouteTable.Routes);
 
             // If there is an error during bootstrapping, it will not automatically be considered
-            // fatal and there will be no YSOD.  This is to help during initial debugging and 
+            // fatal and there will be no YSOD.  This is to help during initial debugging and
             // troubleshooting package loading. Normally, however, you want a YSOD if there is
             // a bootstrapping failure or a package-loading failure. This next line ensures that.
-            PackageRegistry.AssertNoFailures(); 
+            PackageRegistry.AssertNoFailures();
         }
 
         private static void SetupContainer(ConfigurationExpression x)

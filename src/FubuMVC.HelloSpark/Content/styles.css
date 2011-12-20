@@ -13,15 +13,15 @@
 
 .spark-journey
 {
-	background-color:SkyBlue; 
+	background-color:SkyBlue;
 	float:left;
 	padding:4px;
-	margin: 4px 0px;	
+	margin: 4px 0px;
 }
 
 .fubu-journey
 {
-	background-color:Aqua; 
+	background-color:Aqua;
 	float:right;
 	padding:4px;
 	margin: 4px 0px;
@@ -33,7 +33,7 @@
 	clear:both;
 	font-size:14px;
 	text-align:center;
-	padding:4px;	
+	padding:4px;
 	margin: 4px 0px;
 }
 
@@ -43,7 +43,7 @@
 	clear:both;
 	text-align:center;
 	font-size:14px;
-	padding:4px;	
+	padding:4px;
 	margin: 4px 0px;
 }
 
@@ -53,5 +53,5 @@
 	clear:both;
 	font-size:14px;
 	text-align:center;
-	padding:4px;	
+	padding:4px;
 }

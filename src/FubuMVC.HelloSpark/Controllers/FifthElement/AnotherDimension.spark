@@ -5,14 +5,14 @@
 <content:head><link href="~/Content/styles.css" rel="stylesheet" type="text/css" /></content:head>
 
 <div class="spark-journey">
-    Journey with Spark: 
+    Journey with Spark:
         <SparkJourney region="'Unknown Region'" attempt="1" trajectory="'Aimless'" /><br />
         <SparkJourney region="'Black Hole Orbit'" attempt="2" trajectory="'Too Steep'" /><br />
         <SparkJourney region="'Black Hole Orbit'" attempt="3" trajectory="'Optimal'" />
 </div>
 
 <div class="fubu-journey">
-    Journey with Fubu: 
+    Journey with Fubu:
         <FubuJourney region="Unknown Region" attempt="1" trajectory="Aimless" /><br />
         <FubuJourney region="Black Hole Orbit" attempt="2" trajectory="Too Steep" /><br />
         <FubuJourney region="Black Hole Orbit" attempt="3" trajectory="Optimal" />

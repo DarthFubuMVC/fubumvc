@@ -16,28 +16,28 @@ $.extend({
       var settings = $.extend({},this.defaults,opts);
       // check for empty string in single property
       if ( !settings.single.length ) settings.single = 'metadata';
-      
+
       var data = $.data(elem, settings.single);
       // returned cached data if it already exists
       if ( data ) return data;
-      
+
       data = "{}";
-      
+
       var getData = function(data) {
         if(typeof data != "string") return data;
-        
+
         if( data.indexOf('{') < 0 ) {
           data = eval("(" + data + ")");
         }
       }
-      
+
       var getObject = function(data) {
         if(typeof data != "string") return data;
-        
+
         data = eval("(" + data + ")");
         return data;
       }
-      
+
       if ( settings.type == "html5" ) {
         var object = {};
         $( elem.attributes ).each(function() {
@@ -63,7 +63,7 @@ $.extend({
         }
         object = getObject(data.indexOf("{") < 0 ? "{" + data + "}" : data);
       }
-      
+
       $.data( elem, settings.single, object );
       return object;
     }

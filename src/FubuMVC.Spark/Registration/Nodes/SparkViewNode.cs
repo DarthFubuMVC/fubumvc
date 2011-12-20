@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Registration.Nodes
         {
             var renderer = def.DependencyByType(typeof (IViewRenderer), typeof (ViewRenderer));
             var viewDefinition = new ViewDefinition(createSparkDescriptor(true), createSparkDescriptor(false));
-            
+
             var viewEntrySource =
                 renderer.DependencyByType(typeof (IRenderAction), typeof (RenderAction))
                 .DependencyByType(typeof(IViewFactory), typeof(ViewFactory))

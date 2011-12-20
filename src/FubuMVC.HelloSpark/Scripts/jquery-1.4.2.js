@@ -3647,7 +3647,7 @@ delegate = function(event) {
 
         var isXML = function(elem) {
             // documentElement is verified for cases where it doesn't yet exist
-            // (such as loading iframes in IE - #4833) 
+            // (such as loading iframes in IE - #4833)
             var documentElement = (elem ? elem.ownerDocument || elem : 0).documentElement;
             return documentElement ? documentElement.nodeName !== "HTML" : false;
         };
@@ -4694,7 +4694,7 @@ delegate = function(event) {
                     return null;
                 }
 
-                if (elem == document) elem = document.body; 
+                if (elem == document) elem = document.body;
                 var computedStyle = defaultView.getComputedStyle(elem, null);
 
                 if (computedStyle) {

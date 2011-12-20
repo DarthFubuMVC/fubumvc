@@ -1,6 +1,6 @@
 @SETLOCAL
 @set rakeversion=""
-@FOR /f "tokens=2" %%a in ('rake --version') do @set rakeversion=%%a 
+@FOR /f "tokens=2" %%a in ('rake --version') do @set rakeversion=%%a
 @IF /I NOT "%rakeversion%" EQU "version " (
 @ENDLOCAL
 @ECHO *** Installing Rake

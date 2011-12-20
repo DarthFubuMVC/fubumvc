@@ -6,7 +6,7 @@ namespace FubuMVC.Spark.SparkModel
     public interface ISharedTemplateLocator
     {
         ITemplate LocateMaster(string masterName, ITemplate fromTemplate, ITemplateRegistry templateRegistry);
-        IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate, ITemplateRegistry templateRegistry); 
+        IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate, ITemplateRegistry templateRegistry);
     }
 
     public class SharedTemplateLocator : ISharedTemplateLocator
@@ -34,8 +34,8 @@ namespace FubuMVC.Spark.SparkModel
 
         private IEnumerable<ITemplate> locateTemplates(string name, ITemplate fromTemplate, ITemplateRegistry templateRegistry, bool sharedsOnly)
         {
-            var directories = sharedsOnly 
-                ? _provider.SharedPathsOf(fromTemplate, templateRegistry) 
+            var directories = sharedsOnly
+                ? _provider.SharedPathsOf(fromTemplate, templateRegistry)
                 : _provider.ReachablesOf(fromTemplate, templateRegistry);
 
             return templateRegistry.ByNameUnderDirectories(name, directories);

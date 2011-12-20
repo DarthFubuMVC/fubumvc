@@ -1,6 +1,6 @@
 /*
  * QUnit - jQuery unit testrunner
- * 
+ *
  * http://docs.jquery.com/QUnit
  *
  * Copyright (c) 2008 John Resig, Jörn Zaefferer
@@ -35,7 +35,7 @@ var _config = {
 	beforeEach : null,
 	afterEach : null,
 	asyncTimeout: 2 // seconds for async timeout
-	
+
 };
 
 _config.filters = location.search.length > 1 && //restrict modules/tests by get parameters
@@ -45,13 +45,13 @@ var isLocal = !!(window.location.protocol == 'file:');
 
 $(function() {
 	$('#userAgent').html(navigator.userAgent);
-	runTest();	
+	runTest();
 });
 
 function qUnitTesting( testsCallback ){
     $(document).ready(function(){
         testsCallback(_config);
-        allTestsDone();        
+        allTestsDone();
     });
 }
 
@@ -99,7 +99,7 @@ function validTest( name ) {
 	while( i-- ){
 		var filter = filters[i],
 			not = filter.charAt(0) == '!';
-		if( not ) 
+		if( not )
 			filter = filter.slice(1);
 		if( name.indexOf(filter) != -1 )
 			return !not;
@@ -110,7 +110,7 @@ function validTest( name ) {
 }
 
 function runTest() {
-	_config.blocking = false;	
+	_config.blocking = false;
 	_config.fixture = document.getElementById('main').innerHTML;
 	_config.ajaxSettings = $.ajaxSettings;
 }
@@ -118,7 +118,7 @@ function runTest() {
 function allTestsDone(){
     synchronize(function(){
         updateStats();
-        $("<div>").attr("id", "TESTRESULTS").html(""+_config.stats.bad).hide().appendTo("body");        
+        $("<div>").attr("id", "TESTRESULTS").html(""+_config.stats.bad).hide().appendTo("body");
     });
 }
 
@@ -137,17 +137,17 @@ function updateStats(){
 function test(name, callback, nowait) {
 	if(_config.currentModule)
 		name = _config.currentModule + " module: " + name;
-		
+
     var beforeEach = _config.beforeEach || function(){}
     var afterEach = _config.afterEach || function(){}
-		
+
 	if ( !validTest(name) )
 		return;
-		
+
 	synchronize(function() {
 		_config.Test = [];
 		_config.currentTestName = name;
-		try {		    
+		try {
 			beforeEach(name);
 			callback();
 			afterEach(name);
@@ -171,15 +171,15 @@ function test(name, callback, nowait) {
 				console.warn(reset.toString());
 			}
 		}
-		
+
 		// don't output pause tests
 		if(nowait) return;
-		
+
 		if(_config.expected && _config.expected != _config.Test.length) {
 			_config.Test.push( [ false, "Expected " + _config.expected + " assertions, but " + _config.Test.length + " were run" ] );
 		}
 		_config.expected = null;
-		
+
 		var good = 0, bad = 0;
 		var ol = document.createElement("ol");
 		ol.style.display = "none";
@@ -189,7 +189,7 @@ function test(name, callback, nowait) {
 			li.className = _config.Test[i][0] ? "pass" : "fail";
 			li.innerHTML = _config.Test[i][1];
 			ol.appendChild( li );
-			
+
 			_config.stats.all++;
 			if ( !_config.Test[i][0] ) {
 				state = "fail";
@@ -200,10 +200,10 @@ function test(name, callback, nowait) {
 			    _config.stats.good++;
 			}
 		}
-	
+
 		var li = document.createElement("li");
 		li.className = state;
-	
+
 		var b = document.createElement("strong");
 		b.innerHTML = name + " <b style='color:black;'>(<b class='fail'>" + bad + "</b>, <b class='pass'>" + good + "</b>, " + _config.Test.length + ")</b>";
 		b.onclick = function(){
@@ -222,9 +222,9 @@ function test(name, callback, nowait) {
 		});
 		li.appendChild( b );
 		li.appendChild( ol );
-	
-		document.getElementById("tests").appendChild( li );		
-	});	
+
+		document.getElementById("tests").appendChild( li );
+	});
 }
 
 // call on start of module test to prepend name to all tests
@@ -269,7 +269,7 @@ function isSet(a, b, msg) {
 		ret = false;
 	if ( !ret )
 		_config.Test.push( [ ret, msg + " expected: " + serialArray(b) + " result: " + serialArray(a) ] );
-	else 
+	else
 		_config.Test.push( [ ret, msg ] );
 }
 
@@ -278,7 +278,7 @@ function isSet(a, b, msg) {
  */
 function isObj(a, b, msg) {
 	var ret = true;
-	
+
 	if ( a && b ) {
 		for ( var i in a )
 			if ( a[i] != b[i] )
@@ -295,7 +295,7 @@ function isObj(a, b, msg) {
 
 function serialArray( a ) {
 	var r = [];
-	
+
 	if ( a && a.length )
         for ( var i = 0; i < a.length; i++ ) {
             var str = a[i].nodeName;

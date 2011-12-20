@@ -69,7 +69,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             });
         }
 
-        [Test] 
+        [Test]
         public void when_spark_has_master_it_is_extracted()
         {
             ClassUnderTest.Load(_spark1).Master().ShouldEqual("Fubu");

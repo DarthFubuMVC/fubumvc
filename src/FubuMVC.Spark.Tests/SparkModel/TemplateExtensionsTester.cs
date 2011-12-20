@@ -20,7 +20,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             var bottomPath = Path.Combine(rootPath, "Finding", "Sherlock", "Homes.spark");
             var middlePath = Path.Combine(rootPath, "Dining", "Philosophers.spark");
             var topPath = Path.Combine(rootPath, "Livelock.spark");
-            
+
             _bottomTemplate = new Template(bottomPath, rootPath, "chuck");
             _middleTemplate = new Template(middlePath, rootPath, "chuck");
             _topTemplate = new Template(topPath, rootPath, "chuck");
@@ -57,21 +57,21 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _topTemplate.DirectoryPath().ShouldEqual(_topTemplate.RootPath);
         }
-		
+
 		[Test]
         public void is_partial_returns_true_if_file_starts_with_underscore_and_ends_with_dot_spark()
         {
 			new Template("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
 			new Template("_Template.htm", "", "").IsPartial().ShouldBeFalse();
         }
-		
+
 		[Test]
         public void is_spark_view_returns_true_if_file_ends_with_dot_spark()
         {
 			_bottomTemplate.IsSparkView().ShouldBeTrue();
 			new Template("bindings.xml", "", "").IsSparkView().ShouldBeFalse();
         }
-		
+
 		[Test]
         public void is_xml_returns_true_if_file_ends_with_xml()
         {
