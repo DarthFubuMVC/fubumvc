@@ -29,7 +29,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
             {
                 new Template(Path.Combine("App", "Shared", "application.spark"), "App", FubuSparkConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App", FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App", FubuSparkConstants.HostOrigin)
+                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App", FubuSparkConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", FubuSparkConstants.HostOrigin)
             };
 
             MockFor<ITemplateDirectoryProvider>()
@@ -41,15 +42,23 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void locate_master_returns_template_that_match_first_shared_directory_and_name()
         {
-            var master = ClassUnderTest.LocateMaster("application", _template);
-            master.ShouldNotBeNull().ShouldEqual(_templates[2]);
+            ClassUnderTest.LocateMaster("application", _template)
+                .ShouldNotBeNull()
+                .ShouldEqual(_templates[2]);
         }
 
         [Test]
         public void if_not_exists_locate_master_returns_null()
         {
-            var master = ClassUnderTest.LocateMaster("admin", _template);
-            master.ShouldBeNull();
+            ClassUnderTest.LocateMaster("admin", _template)
+                .ShouldBeNull();
+        }
+
+        [Test]
+        public void locate_master_only_considers_spark_views()
+        {
+            ClassUnderTest.LocateMaster("site", _template)
+                .ShouldBeNull();
         }
     }
 
@@ -67,7 +76,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 Path.Combine("App", "Views", "Shared"),
                 Path.Combine("App", "Views"),
                 Path.Combine("App", "Shared"),
-                Path.Combine("App")
+                "App"
             };
 
             _templates = new TemplateRegistry
@@ -101,10 +110,18 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
 
         [Test]
-        public void if_not_exists_locate_bindings_returns_empty_list()
+        public void locate_bindings_returns_empty_list_if_none_exist()
         {
-            var bindings = ClassUnderTest.LocateBindings("sparkbindings", _template);
-            bindings.ShouldNotBeNull().ShouldHaveCount(0);
-        }        
+            ClassUnderTest.LocateBindings("sparkbindings", _template)
+                .ShouldNotBeNull()
+                .ShouldHaveCount(0);
+        }      
+  
+        [Test]
+        public void locate_bindings_only_considers_xml_files()
+        {
+            ClassUnderTest.LocateBindings("application", _template)
+                .ShouldHaveCount(0);
+        }
     }
 }

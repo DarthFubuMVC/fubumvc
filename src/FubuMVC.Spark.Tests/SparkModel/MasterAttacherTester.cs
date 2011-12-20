@@ -146,7 +146,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
     }
 
-    // TODO: Move to lower level of what can be used in this mess.
+    // UPRADE: Move to some other lower place of what can be used from this, make sure coverage is same.
 
     //[TestFixture]
     //public class MasterPageBinderTester : InteractionContext<MasterAttacher>

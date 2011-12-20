@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Spark.SparkModel;
@@ -10,46 +9,32 @@ namespace FubuMVC.Spark.Tests.SparkModel
 {
     public class BindingsAttacherTester : InteractionContext<BindingsAttacher>
     {
-        private ISharedTemplateLocator _sharedTemplateLocator;
         private ITemplate _template;
         private IAttachRequest _request;
-        private IList<ITemplate> _bindings;
-        private ISparkLogger _logger;
+        private TemplateRegistry _templates;
 
         protected override void beforeEach()
         {
-            var repo = new MockRepository();
+            _templates = new TemplateRegistry();
+            _template = new Template("/App/Views/Fubu.spark", "/App/Views", FubuSparkConstants.HostOrigin)
+            {
+                Descriptor = new ViewDescriptor(_template)                                
+            };
 
-            _bindings = new List<ITemplate>();
-            _bindings.AddRange(Enumerable.Range(1, 5).Select(x => repo.DynamicMock<ITemplate>()));
-
-            _logger = MockFor<ISparkLogger>();
-            _sharedTemplateLocator = MockFor<ISharedTemplateLocator>();
-
-            _template = MockFor<ITemplate>();
-            _template.Stub(x => x.Descriptor).PropertyBehavior();
-            _template.Stub(x => x.FilePath).Return("Fubu.spark");
-            _template.Stub(x => x.RootPath).Return("/App/Views");
-            _template.Stub(x => x.Origin).Return("Host");
-            _template.Descriptor = new ViewDescriptor(_template);
-
-            ClassUnderTest.BindingsName = "bindings";
+            _templates.Add(_template);
+            _templates.AddRange(Enumerable.Range(1, 5).Select(x => MockRepository.GenerateMock<ITemplate>()));
 
             _request = new AttachRequest
             {
                 Template = _template,
-                Logger = _logger,
+                Logger = MockFor<ISparkLogger>(),
             };
 
-            _sharedTemplateLocator
+            MockFor<ISharedTemplateLocator>()
                 .Expect(x => x.LocateBindings(ClassUnderTest.BindingsName, _template))
-                .Return(_bindings);
+                .Return(_templates);
 
-            _logger
-                .Expect(x => x.Log(Arg.Is(_template), Arg<string>.Is.Anything, Arg<string>.Is.Anything))
-                .Repeat.Times(_bindings.Count);
-
-            Container.Inject<ITemplateRegistry>(new TemplateRegistry(new[] { _template }.Union(_bindings)));
+            Container.Inject<ITemplateRegistry>(_templates);
         }
 
         [Test]
@@ -62,9 +47,9 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void add_each_binding_to_the_descriptor()
         {
             ClassUnderTest.Attach(_request);
-            _sharedTemplateLocator.VerifyAllExpectations();
-            _template.Descriptor.As<ViewDescriptor>().Bindings.ShouldEqual(_bindings);
 
+            _template.Descriptor.As<ViewDescriptor>().Bindings.ShouldEqual(_templates);
+            MockFor<ISharedTemplateLocator>().VerifyAllExpectations();
         }
 
         [Test]
@@ -84,8 +69,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void logger_is_used()
         {
-            ClassUnderTest.Attach(_request);
-            _logger.VerifyAllExpectations();
+            MockFor<ISparkLogger>()
+                .Expect(x => x.Log(Arg.Is(_template), Arg<string>.Is.Anything))
+                .Repeat.Times(_templates.Count);
+
+            ClassUnderTest.Attach(_request); 
+            MockFor<ISparkLogger>().VerifyAllExpectations();
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Bottles.Diagnostics;
 using FubuCore;
@@ -53,6 +51,13 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _graph.SharingsFor("Pak2.Core").ShouldHaveTheSameElementsAs("Pak2.Design", "Pak2.Bindings", "Pak1");
             _graph.SharingsFor("Pak2.Design").ShouldHaveTheSameElementsAs("Pak2.Core");
             _graph.SharingsFor("Pak2.Bindings").ShouldHaveTheSameElementsAs("Pak2.Core");
+        }
+
+        [Test]
+        public void read_a_directory_2()
+        {
+
+            
         }
 
         [Test]

@@ -138,7 +138,10 @@ namespace FubuMVC.Spark
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
             services.SetServiceIfNone<IParsingRegistrations>(_parsings);
-            services.SetServiceIfNone(new SharingGraph());
+            
+            var graph = new SharingGraph();
+            services.SetServiceIfNone(graph);
+            services.SetServiceIfNone<ISharingGraph>(graph);
 
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
             services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));

@@ -36,7 +36,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
             log.Trace("Looking for *spark.config in {0}", folder);
             var configs = _fileSystem.FindFiles(folder, new FileSet
             {
-                Include = "*spark.config",
+                Include = "*spark.config;spark.config",
                 DeepSearch = false
             });
 
