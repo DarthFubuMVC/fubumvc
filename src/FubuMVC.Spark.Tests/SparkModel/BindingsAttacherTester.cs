@@ -69,12 +69,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void logger_is_used()
         {
-            MockFor<ISparkLogger>()
-                .Expect(x => x.Log(Arg.Is(_template), Arg<string>.Is.Anything))
-                .Repeat.Times(_templates.Count);
-
             ClassUnderTest.Attach(_request); 
-            MockFor<ISparkLogger>().VerifyAllExpectations();
+            MockFor<ISparkLogger>().AssertWasCalled(x => 
+                x.Log(Arg.Is(_template), Arg<string>.Is.Anything), 
+                x => x.Repeat.Times(_templates.Count));
         }
     }
 }
