@@ -72,7 +72,8 @@ namespace FubuMVC.Core.Registration.Querying
 
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.InputModelOnly)
             {
-                yield return methodFilter(graph.Behaviors.Where(chain => chain.Calls.Any(x => x.InputType() == Type)));
+                // TODO -- it's right here.  Need to use anything that has input
+                yield return methodFilter(graph.Behaviors.Where(chain => chain.InputType() == Type));
             }
 
             if (TypeMode == TypeSearchMode.Any || TypeMode == TypeSearchMode.HandlerOnly)

@@ -330,5 +330,25 @@ namespace FubuMVC.Core.Registration.Nodes
             return this.Where(x => x is Wrapper).Cast<Wrapper>().Any(x => x.BehaviorType == behaviorType);
         }
 
+        public override string ToString()
+        {
+            if (Route != null)
+            {
+                var description = Route.Pattern;
+                if (Route.AllowedHttpMethods.Any())
+                {
+                    description += " (" + Route.AllowedHttpMethods.Join(", ") + ")";
+                }
+
+                return description;
+            }
+
+            if (Calls.Any())
+            {
+                return Calls.Select(x => x.Description).Join(", ");
+            }
+
+            return this.Select(x => x.Description).Join(" --> ");
+        }
     }
 }

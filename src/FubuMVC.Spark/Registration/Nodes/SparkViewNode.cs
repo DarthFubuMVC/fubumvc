@@ -35,5 +35,10 @@ namespace FubuMVC.Spark.Registration.Nodes
         {
             return _descriptor.ViewModel;
         }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }
