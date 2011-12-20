@@ -6,7 +6,7 @@ using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Spark.Tests.SparkModel.Binding
+namespace FubuMVC.Spark.Tests.SparkModel
 {
     public class BindingsAttacherTester : InteractionContext<BindingsAttacher>
     {

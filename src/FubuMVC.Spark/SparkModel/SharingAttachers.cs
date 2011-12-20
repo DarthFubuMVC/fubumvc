@@ -1,49 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using Bottles;
-using Bottles.Diagnostics;
 using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public class SharingAttacherActivator : IActivator
-    {
-        private readonly ITemplateRegistry _templates;
-        private readonly IEnumerable<ISharingAttacher> _attachers;
-
-        public SharingAttacherActivator(ITemplateRegistry templates, IEnumerable<ISharingAttacher> attachers)
-        {
-            _templates = templates;
-            _attachers = attachers;
-        }
-
-        public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
-        {
-            _templates.AllTemplates().Each(t =>
-            {                
-                var context = new AttachRequest
-                {
-                    Template = t,
-                    Logger = SparkLogger.Default()
-                };
-
-                _attachers.Where(a => a.CanAttach(context)).Each(a => a.Attach(context));
-            });
-        }
-    }
-
-    public interface IAttachRequest
-    {
-        ITemplate Template { get; }
-        ISparkLogger Logger { get; }
-    }
-
-    public class AttachRequest : IAttachRequest
-    {
-        public ITemplate Template { get; set; }
-        public ISparkLogger Logger { get; set; }
-    }
-
     public interface ISharingAttacher
     {
         bool CanAttach(IAttachRequest request);
@@ -71,9 +31,11 @@ namespace FubuMVC.Spark.SparkModel
             var descriptor = request.Template.Descriptor as ViewDescriptor;
             var parsing = _registrations.ParsingFor(request.Template);
 
-            return descriptor != null && descriptor.Master == null
+            return descriptor != null
+                && descriptor.Master == null
                 && (descriptor.HasViewModel() || parsing.Master.IsNotEmpty())
-                && !request.Template.IsPartial() && parsing.Master != string.Empty;            
+                && !request.Template.IsPartial()
+                && parsing.Master != string.Empty;
         }
 
         public void Attach(IAttachRequest request)
@@ -86,12 +48,14 @@ namespace FubuMVC.Spark.SparkModel
 
             if (master == null)
             {
-                tracer.Log(template, "Expected master page [{0}] not found.", masterName);
+                var notFound = "Expected master page [{0}] not found.".ToFormat(masterName);
+                tracer.Log(template, notFound);
                 return;
             }
 
             template.Descriptor.As<ViewDescriptor>().Master = master;
-            tracer.Log(template, "Master page [{0}] found at {1}", masterName, master.FilePath);
+            var found = "Master page [{0}] found at {1}".ToFormat(masterName, master.FilePath);
+            tracer.Log(template, found);
         }
     }
 
@@ -111,7 +75,9 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanAttach(IAttachRequest request)
         {
             var descriptor = request.Template.Descriptor as ViewDescriptor;
-            return descriptor != null && descriptor.Bindings.Count() == 0;
+            
+            return descriptor != null 
+                && descriptor.Bindings.Count() == 0;
         }
 
         public void Attach(IAttachRequest request)
@@ -123,7 +89,8 @@ namespace FubuMVC.Spark.SparkModel
             _templateLocator.LocateBindings(BindingsName, target).Each(template =>
             {
                 descriptor.AddBinding(template);
-                logger.Log(target, "Binding attached : {0}", template.FilePath);
+                var msg = "Binding attached : {0}".ToFormat(template.FilePath);
+                logger.Log(target, msg);
             });
         }
     }
