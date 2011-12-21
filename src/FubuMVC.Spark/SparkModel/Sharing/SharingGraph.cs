@@ -8,8 +8,6 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         IEnumerable<string> SharingsFor(string provenance);
     }
 
-    // TODO: UT
-
     public class SharingGraph : ISharingRegistration, ISharingGraph
     {
         private readonly List<GlobalDependency> _globals = new List<GlobalDependency>();
@@ -42,7 +40,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         public IEnumerable<string> SharingsFor(string provenance)
         {
             return _dependencyRules
-                .Where(r => r.Dependent == provenance && r.Dependency != provenance)
+                .Where(r => r.Dependent == provenance)
                 .Select(r => r.Dependency);
         } 
 

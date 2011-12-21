@@ -54,13 +54,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
         }
 
         [Test]
-        public void read_a_directory_2()
-        {
-
-            
-        }
-
-        [Test]
         public void read_a_file()
         {
             var config = new StringBuilder();
