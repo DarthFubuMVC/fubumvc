@@ -10,7 +10,6 @@ namespace FubuMVC.Core
         public string ApplicationPath { get; set; }
         public string AppRelativeCurrentExecutionFilePath { get; set; }
         public string ContentEncoding { get; set; }
-        public int ContentLength { get; set; }
         public string ContentType { get; set; }
         public string CurrentExecutionFilePath { get; set; }
         public string FilePath { get; set; }

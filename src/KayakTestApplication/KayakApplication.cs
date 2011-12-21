@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using StructureMap;
@@ -46,6 +47,11 @@ namespace KayakTestApplication
         public NameModel get_say_Name(NameModel model)
         {
             return model;
+        }
+
+        public IDictionary<string, object> post_name(NameModel model)
+        {
+            return new Dictionary<string, object>{{"name", model.Name}};
         }
     }
 }

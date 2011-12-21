@@ -1,22 +1,25 @@
 using System;
 using System.IO;
 using FubuMVC.Core.Http;
-using Gate.Helpers;
 
 namespace FubuMVC.OwinHost
 {
     public class OwinStreamingData : IStreamingData
     {
-        private readonly Request _request;
+        private readonly MemoryStream _stream;
 
-        public OwinStreamingData(Request request)
+        public OwinStreamingData(OwinRequestBody request)
         {
-            _request = request;
+            _stream = request.Stream ?? new MemoryStream();
         }
 
         public Stream Input
         {
-            get { return new InputStream(_request.Body); }
+            get
+            {
+                _stream.Position = 0;
+                return _stream;
+            }
         }
     }
 }

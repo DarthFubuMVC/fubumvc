@@ -1,6 +1,4 @@
-using System;
 using System.Web;
-using Gate.Helpers;
 
 namespace FubuMVC.OwinHost
 {
@@ -8,9 +6,9 @@ namespace FubuMVC.OwinHost
     {
         private readonly GateHttpRequest _request;
 
-        public GateHttpContext(Request request)
+        public GateHttpContext(string path, string method)
         {
-            _request = new GateHttpRequest(request);
+            _request = new GateHttpRequest(path, method);
         }
 
         public override HttpRequestBase Request
@@ -21,16 +19,18 @@ namespace FubuMVC.OwinHost
 
     public class GateHttpRequest : HttpRequestBase
     {
-        private readonly Request _request;
+        private readonly string _method;
+        private readonly string _path;
 
-        public GateHttpRequest(Request request)
+        public GateHttpRequest(string path, string method)
         {
-            _request = request;
+            _path = path;
+            _method = method;
         }
 
         public override string PathInfo
         {
-            get { return _request.Path.TrimStart('/'); }
+            get { return _path.TrimStart('/'); }
         }
 
         public override string AppRelativeCurrentExecutionFilePath
@@ -40,7 +40,7 @@ namespace FubuMVC.OwinHost
 
         public override string HttpMethod
         {
-            get { return _request.Method; }
+            get { return _method; }
         }
     }
 }

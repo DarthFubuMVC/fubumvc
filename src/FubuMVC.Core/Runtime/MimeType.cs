@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Runtime
     public class MimeType
     {
         public static readonly string HttpFormMimetype = "application/x-www-form-urlencoded";
+        public static readonly string MultipartMimetype = "multipart/form-data";
 
         public static MimeType ForFolder(AssetFolder folder)
         {

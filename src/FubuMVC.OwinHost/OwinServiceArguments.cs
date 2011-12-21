@@ -1,18 +1,17 @@
 using System.Web.Routing;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
-using Gate.Helpers;
 
 namespace FubuMVC.OwinHost
 {
     public class OwinServiceArguments : ServiceArguments
     {
-        public OwinServiceArguments(RouteData routeData, Request request, Response response)
+        public OwinServiceArguments(RouteData routeData, OwinRequestBody body, Response response)
         {
-            With<AggregateDictionary>(new OwinAggregateDictionary(routeData, request));
+            With<AggregateDictionary>(new OwinAggregateDictionary(routeData, body));
 
-            With<ICurrentHttpRequest>(new OwinCurrentHttpRequest(request));
-            With<IStreamingData>(new OwinStreamingData(request));
+            With<ICurrentHttpRequest>(new OwinCurrentHttpRequest(body));
+            With<IStreamingData>(new OwinStreamingData(body));
             With<IHttpWriter>(new OwinHttpWriter(response));
         }
     }

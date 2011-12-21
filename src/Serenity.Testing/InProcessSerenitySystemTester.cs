@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Threading;
 using KayakTestApplication;
 using NUnit.Framework;
@@ -42,6 +43,17 @@ namespace Serenity.Testing
         {
             theDriver.NavigateToUrl("http://localhost:5500/say/Jeremy");
             theDriver.Driver.FindElement(By.TagName("h1")).Text.ShouldEqual("My name is Jeremy");
+        }
+
+        [Test]
+        public void can_post()
+        {
+            var driver = theDriver.GetEndpointDriver();
+            var response = driver.PostJson(new NameModel{
+                Name = "Jeremy"
+            });
+
+            Debug.WriteLine(response.ToString());
         }
     }
 }

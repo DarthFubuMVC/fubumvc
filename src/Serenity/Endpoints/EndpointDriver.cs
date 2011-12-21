@@ -87,7 +87,7 @@ namespace Serenity.Endpoints
 
         private HttpResponse post(object urlTarget, string contentType, string accept, Action<Stream> setRequest)
         {
-            WebRequest request = requestForUrlTarget(urlTarget);
+            WebRequest request = requestForUrlTarget(urlTarget, "POST");
             request.ContentType = contentType;
 
             request.Method = "POST";
@@ -101,9 +101,9 @@ namespace Serenity.Endpoints
             return request.ToHttpCall();
         }
 
-        private WebRequest requestForUrlTarget(object urlTarget)
+        private WebRequest requestForUrlTarget(object urlTarget, string categoryOrHttpMethod = null)
         {
-            var url = _urls.UrlFor(urlTarget);
+            var url = _urls.UrlFor(urlTarget, categoryOrHttpMethod);
             return WebRequest.Create(url);
         }
 

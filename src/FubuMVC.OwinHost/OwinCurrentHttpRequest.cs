@@ -1,31 +1,30 @@
 using System;
 using FubuCore;
 using FubuMVC.Core.Http;
-using Gate.Helpers;
 
 namespace FubuMVC.OwinHost
 {
     public class OwinCurrentHttpRequest : ICurrentHttpRequest
     {
-        private readonly Request _request;
         private readonly Lazy<string> _baseUrl;
+        private OwinRequestBody _body;
 
-        public OwinCurrentHttpRequest(Request request)
+        public OwinCurrentHttpRequest(OwinRequestBody body)
         {
-            _request = request;
+            _body = body;
 
             // TODO -- Owin and protocol?
-            _baseUrl = new Lazy<string>(() => "http://" + _request.HostWithPort + "/" + _request.PathBase.TrimEnd('/'));
+            _baseUrl = new Lazy<string>(() => "http://" + _body.HostWithPort + "/" + _body.PathBase.TrimEnd('/'));
         }
 
         public string RawUrl()
         {
-            return _request.Path.ToAbsoluteUrl(_request.PathBase);
+            return _body.Path.ToAbsoluteUrl(_body.PathBase);
         }
 
         public string RelativeUrl()
         {
-            return _request.Path;
+            return _body.Path;
         }
 
         public string ToFullUrl(string url)
@@ -35,7 +34,7 @@ namespace FubuMVC.OwinHost
 
         public string HttpMethod()
         {
-            return _request.Method;
+            return _body.Method;
         }
     }
 }

@@ -85,9 +85,6 @@ namespace FubuKayak
             {
                 // That's right, shut this puppy down
             }
-
-            _server.SafeDispose();
-            _kayakListenerDisposer.SafeDispose();
         }
 
         public void Dispose()

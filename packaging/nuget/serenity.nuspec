@@ -28,7 +28,7 @@
     <file src="..\..\src\SerenityRunner\bin\release\Kayak.*" target="lib\net40" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.*" target="lib\net40" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.Kayak.*" target="lib\net40" />
-    <file src="..\..\src\SerenityRunner\bin\release\Gate.Helpers.*" target="lib\net40" />
+
 
 
 
