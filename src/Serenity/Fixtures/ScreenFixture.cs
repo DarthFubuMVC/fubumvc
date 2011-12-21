@@ -92,6 +92,10 @@ namespace Serenity.Fixtures
             PushElementContext(element);
         }
 
+        protected void waitForElement(By elementSearch, int millisecondPolling = 500, int timeoutInMilliseconds = 5000)
+        {
+            Wait.Until(() => SearchContext.FindElement(elementSearch) != null, millisecondPolling, timeoutInMilliseconds);
+        }
         
         protected void PopElementContext()
         {
