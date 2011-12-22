@@ -31,8 +31,6 @@ namespace FubuMVC.Spark.SparkModel.Sharing
             var key = queue.Dequeue();
             var verb = queue.Dequeue();
 
-            // refactor this to look up operations
-
             if (key == "import")
             {
                 readImport(queue, verb, provenance);

@@ -7,28 +7,23 @@ using FubuMVC.Core.Packaging;
 
 namespace FubuMVC.Spark.SparkModel.Sharing
 {
-    public class SharingGraphActivator : IActivator
+    public class SharingConfigActivator : IActivator
     {
-        private readonly SharingGraph _sharingGraph;
+        private readonly SharingGraph _graph;
         private readonly IFileSystem _fileSystem;
+        private readonly SharingRegistrationDiagnostics _diagnostics;
 
-        public SharingGraphActivator(SharingGraph sharingGraph, IFileSystem fileSystem)
+        public SharingConfigActivator(SharingGraph graph, IFileSystem fileSystem, SharingLogsCache logs)
         {
-            _sharingGraph = sharingGraph;
+            _graph = graph;
             _fileSystem = fileSystem;
+            _diagnostics = new SharingRegistrationDiagnostics(_graph, logs);
         }
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             ReadSparkConfig(FubuSparkConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadSparkConfig(p.Name, folder, log)));
-
-            // add recorded ones here, or split out to separate activator.
-
-            _sharingGraph.Global(FubuSparkConstants.HostOrigin);
-
-            var provenances = packages.Select(p => p.Name).Union(new[] {FubuSparkConstants.HostOrigin}).ToArray();
-            _sharingGraph.CompileDependencies(provenances);
         }
 
         public void ReadSparkConfig(string provenance, string folder, IPackageLog log)
@@ -51,7 +46,9 @@ namespace FubuMVC.Spark.SparkModel.Sharing
 
         public void ReadFile(string provenance, string file, IPackageLog log)
         {
-            var reader = new SparkDslReader(_sharingGraph);
+            _diagnostics.SetCurrentProvenance(provenance);
+            var reader = new SparkDslReader(_diagnostics);
+
             log.Trace("  Reading spark directives from {0}", file);
             log.TrapErrors(() =>
             {

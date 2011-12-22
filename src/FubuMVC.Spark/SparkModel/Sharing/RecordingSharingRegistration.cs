@@ -14,12 +14,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
             set { _registrations.Add(value); }
         }
 
-        public void Apply(IPackageLog log, SharingGraph graph)
-        {
-            Replay(graph);
-        }
-
-        public void Replay(ISharingRegistration registration)
+        public void Apply(IPackageLog log, ISharingRegistration registration)
         {
             _registrations.Each(x => x(registration));
         }

@@ -72,7 +72,7 @@
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
     <Compile Include="SparkModel\SharingAttachers.cs" />
     <Compile Include="SparkModel\SharingAttacherActivator.cs" />
-    <Compile Include="SparkModel\Sharing\SharingGraphActivator.cs" />
+    <Compile Include="SparkModel\Sharing\SharingConfigActivator.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Registration\Nodes\SparkViewNode.cs" />
     <Compile Include="Rendering\RenderStrategies.cs" />
@@ -91,6 +91,9 @@
     <Compile Include="SparkModel\Sharing\ISharingRegistration.cs" />
     <Compile Include="SparkModel\Sharing\RecordingSharingRegistration.cs" />
     <Compile Include="SparkModel\Sharing\SharingGraph.cs" />
+    <Compile Include="SparkModel\Sharing\Logging.cs" />
+    <Compile Include="SparkModel\Sharing\SharingPolicyActivator.cs" />
+    <Compile Include="SparkModel\Sharing\SharingRegistrationDiagnostics.cs" />
     <Compile Include="SparkModel\Sharing\SparkDslReader.cs" />
     <Compile Include="SparkModel\TemplateDirectoryProvider.cs" />
     <Compile Include="SparkModel\SharedPathBuilder.cs" />

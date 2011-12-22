@@ -146,7 +146,10 @@ namespace FubuMVC.Spark
             services.SetServiceIfNone<ISparkViewEngine>(new SparkViewEngine());
             services.SetServiceIfNone<ICacheService>(new DefaultCacheService(HttpRuntime.Cache));
 
-            services.FillType<IActivator, SharingGraphActivator>();
+            services.SetServiceIfNone(new SharingLogsCache());
+
+            services.FillType<IActivator, SharingConfigActivator>();
+            services.FillType<IActivator, SharingPolicyActivator>();
             services.FillType<IActivator, SharingAttacherActivator>();
             services.FillType<IActivator, SparkActivator>();
 

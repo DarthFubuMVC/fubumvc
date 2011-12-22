@@ -10,12 +10,13 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 {
     [TestFixture]
-    public class SharingGraphActivatorTester
+    public class SharingConfigActivatorTester
     {
         private SharingGraph _graph;
-        private SharingGraphActivator _activator;
-        private IPackageLog _log;
+        private SharingConfigActivator _activator;
+        private IPackageLog _packageLog;
         private IFileSystem _fileSystem;
+        private SharingLogsCache _sharingLogs;
 
         [SetUp]
         public void beforeEach()
@@ -24,9 +25,10 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 
             _graph = new SharingGraph();
             _fileSystem = new FileSystem();
-            _log = new PackageLog();
-         
-            _activator = new SharingGraphActivator(_graph, _fileSystem);
+            _packageLog = new PackageLog();
+            _sharingLogs = new SharingLogsCache();
+
+            _activator = new SharingConfigActivator(_graph, _fileSystem, _sharingLogs);
         }
 
 
@@ -43,7 +45,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _fileSystem.WriteStringToFile("imports.spark.config", imports.ToString());
             _fileSystem.WriteStringToFile("exports.spark.config", exports.ToString());
 
-            _activator.ReadSparkConfig("Pak2.Core", ".", _log);
+            _activator.ReadSparkConfig("Pak2.Core", ".", _packageLog);
             
             _graph.CompileDependencies("Pak1", "Pak2.Core", "Pak2.Design", "Pak2.Bindings");
 
@@ -61,7 +63,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             config.AppendLine("export to Z");
 
             _fileSystem.WriteStringToFile("spark.config", config.ToString());
-            _activator.ReadFile("Prov", "spark.config", _log);
+            _activator.ReadFile("Prov", "spark.config", _packageLog);
 
             _graph.CompileDependencies("Prov", "X", "Y", "M");
 
