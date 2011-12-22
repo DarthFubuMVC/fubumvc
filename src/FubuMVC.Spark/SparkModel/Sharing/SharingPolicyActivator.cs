@@ -49,6 +49,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
             _graph.CompileDependencies(provenances);            
         }
 
+        // I would rather have this as a ISharingPolicy, but don't know how to ensure it is applied last.
         public void RegisterAppGlobal(IPackageLog log)
         {
             log.Trace("Registering application as global sharing.");
