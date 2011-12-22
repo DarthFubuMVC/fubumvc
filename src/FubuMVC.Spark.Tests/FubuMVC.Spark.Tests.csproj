@@ -113,6 +113,7 @@
     <Compile Include="SparkModel\Binding\ViewDescriptorBinderTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
+    <Compile Include="SparkModel\Sharing\RecordingSharingRegistrationTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingGraphTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingRegistrationDiagnosticsTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingsGraphActivatorTester.cs" />
