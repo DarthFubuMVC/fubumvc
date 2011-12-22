@@ -2,7 +2,6 @@ using FubuCore;
 
 namespace FubuMVC.Spark.SparkModel.Sharing
 {
-    // UT
     public class SharingRegistrationDiagnostics : ISharingRegistration
     {
         private string _provenance = string.Empty;
