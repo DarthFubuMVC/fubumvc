@@ -26,18 +26,21 @@ namespace FubuMVC.Spark.SparkModel.Sharing
             _policies.Each(p =>
             {
                 var policyName = p.ToString();
-
+                
                 log.Trace("Applying policy [{0}].", policyName);                
-                _diagnostics.SetCurrentProvenance(policyName);
+                _diagnostics.SetCurrentProvenance(policyName);                
                 
                 p.Apply(log, _diagnostics);
             });
 
-            log.Trace("Registering App as global sharing.");
+            log.Trace("Registering application as global sharing.");
+
+            _diagnostics.SetCurrentProvenance(FubuSparkConstants.HostOrigin);
             _diagnostics.Global(FubuSparkConstants.HostOrigin);
             
             var provenances = packages.Select(p => p.Name).Union(new[] { FubuSparkConstants.HostOrigin }).ToArray();
             log.Trace("Compiling dependencies for [{0}]", provenances.Join(", "));
+            
             _graph.CompileDependencies(provenances);
         }
 
