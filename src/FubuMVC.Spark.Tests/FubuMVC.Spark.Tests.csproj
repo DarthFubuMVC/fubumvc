@@ -115,6 +115,7 @@
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
     <Compile Include="SparkModel\Sharing\RecordingSharingRegistrationTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingGraphTester.cs" />
+    <Compile Include="SparkModel\Sharing\SharingPolicyActivatorTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingRegistrationDiagnosticsTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingsGraphActivatorTester.cs" />
     <Compile Include="SparkModel\Sharing\SparkDslReaderTester.cs" />
