@@ -13,7 +13,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         public string Message { get; set; }
     }
 
-    [DebuggerDisplay("Log For: {Name}: {Logs.Count} entries")]
+    [DebuggerDisplay("Log For: {Name}: {System.Linq.Enumerable.Count(Logs)} entries")]
     public class SharingLog
     {
         private readonly IList<SharingLogEntry> _logs; 
