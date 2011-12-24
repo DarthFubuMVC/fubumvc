@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Runtime;
+﻿using System.Text;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -22,5 +23,12 @@ namespace FubuMVC.Spark.Tests.Rendering
             ClassUnderTest.Write("Hello World");
             _outputWriter.VerifyAllExpectations();
         }
+
+        [Test]
+        public void encoding_is_default_encoding()
+        {
+            ClassUnderTest.Encoding.ShouldEqual(Encoding.Default);
+        }
+
     }
 }

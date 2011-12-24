@@ -40,10 +40,10 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class BasicViewModifier : IViewModifier
+    public abstract class BasicViewModifier : IViewModifier
     {
         public virtual bool Applies(IFubuSparkView view) { return true; }
-        public virtual IFubuSparkView Modify(IFubuSparkView view) { return view; }
+        public abstract IFubuSparkView Modify(IFubuSparkView view);
     }
 
     public class PageActivation : BasicViewModifier

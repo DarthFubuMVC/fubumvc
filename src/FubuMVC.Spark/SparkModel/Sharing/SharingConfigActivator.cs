@@ -50,15 +50,15 @@ namespace FubuMVC.Spark.SparkModel.Sharing
             var reader = new SparkDslReader(_diagnostics);
 
             log.Trace("  Reading spark directives from {0}", file);
-            log.TrapErrors(() =>
+            log.TrapErrors(() => _fileSystem.ReadTextFile(file, text =>
             {
-                _fileSystem.ReadTextFile(file, text =>
+                if (text.Trim().IsEmpty())
                 {
-                    if (text.Trim().IsEmpty()) return;
+                    return;
+                }
 
-                    log.TrapErrors(() => reader.ReadLine(text, provenance));
-                });
-            });
+                log.TrapErrors(() => reader.ReadLine(text, provenance));
+            }));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
         {
             ClassUnderTest.ReadLine("import from Pak1", "Pak2");
             ClassUnderTest.ReadLine("import from Pak2.Design, Pak2.Bindings", "Pak2.Core");
+            ClassUnderTest.ReadLine("  import from Pak3   ", "Pak4");
         }
 
         [Test]
@@ -44,6 +45,13 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
                 ClassUnderTest.ReadLine("import X, Y", "Z");
             }).ShouldContainErrorMessage("Invalid verb 'X'");
         }
+
+        [Test]
+        public void trims_the_text_before_reading_it()
+        {
+            MockFor<ISharingRegistration>().AssertWasCalled(x => x.Dependency("Pak4", "Pak3"));
+        }
+
     }
 
     [TestFixture]
@@ -56,6 +64,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             ClassUnderTest.ReadLine("export to Pak1, Pak2", "Pak3");
             ClassUnderTest.ReadLine("export to all, Pak2", "Pak3");
             ClassUnderTest.ReadLine("export to Pak2, all", "Pak3");
+            ClassUnderTest.ReadLine("   export to Pak4   ", "Pak5");
         }
         
         [Test]
@@ -101,6 +110,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
                 ClassUnderTest.ReadLine("export X, Y", "Z");
             }).ShouldContainErrorMessage("Invalid verb 'X'");
         }
+
+        [Test]
+        public void trims_the_text_before_reading_it()
+        {
+            MockFor<ISharingRegistration>().AssertWasCalled(x => x.Dependency("Pak4", "Pak5"));
+        }
     }
 
     [TestFixture]
@@ -109,10 +124,11 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
         protected override void beforeEach()
         {
             ClassUnderTest.ReadLine("#comment here", "Ozzy");
+            ClassUnderTest.ReadLine(" ", "PakABC");
         }
 
         [Test]
-        public void should_be_possible_to_comment_on_reads()
+        public void comments_and_empty_lines_are_ignored()
         {
             MockFor<ISharingRegistration>().AssertWasNotCalled(x => x.Dependency(Arg<string>.Is.Anything, Arg<string>.Is.Anything));
             MockFor<ISharingRegistration>().AssertWasNotCalled(x => x.Global(Arg<string>.Is.Anything));
@@ -135,5 +151,6 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
                 ClassUnderTest.ReadLine("import from", "Z");
             }).ShouldContainErrorMessage("Not enough tokens");
         }
+
     }
 }

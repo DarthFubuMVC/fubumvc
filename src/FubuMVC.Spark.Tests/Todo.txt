@@ -1,7 +1,0 @@
-Tests needed in SparkModel:
- 
- - SparkActivator
-
-More coverage needed for:
-
- - SparkScanner

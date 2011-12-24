@@ -1,5 +1,4 @@
 using System.Linq;
-using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -12,13 +11,15 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate _template;
         private IAttachRequest _request;
         private TemplateRegistry _templates;
+        private ViewDescriptor _viewDescriptor;
 
         protected override void beforeEach()
         {
             _templates = new TemplateRegistry();
+            _viewDescriptor = new ViewDescriptor(_template);
             _template = new Template("/App/Views/Fubu.spark", "/App/Views", FubuSparkConstants.HostOrigin)
             {
-                Descriptor = new ViewDescriptor(_template)                                
+                Descriptor = _viewDescriptor                                
             };
 
             _templates.Add(_template);
@@ -48,7 +49,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             ClassUnderTest.Attach(_request);
 
-            _template.Descriptor.As<ViewDescriptor>().Bindings.ShouldEqual(_templates);
+            _viewDescriptor.Bindings.ShouldEqual(_templates);
             MockFor<ISharedTemplateLocator>().VerifyAllExpectations();
         }
 
@@ -62,7 +63,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         [Test]
         public void does_not_attempt_add_bindings_if_prior_processed()
         {
-            _template.Descriptor.As<ViewDescriptor>().AddBinding(MockFor<ITemplate>());
+            _viewDescriptor.AddBinding(MockFor<ITemplate>());
             ClassUnderTest.CanAttach(_request).ShouldBeFalse();
         }
 

@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using FubuCore;
 using FubuMVC.Spark.Registration.Nodes;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -29,7 +28,7 @@ namespace FubuMVC.Spark.Tests
             
             _template.Descriptor = _descriptor;
 
-            _token = new SparkViewToken(_template.Descriptor.As<ViewDescriptor>());
+            _token = new SparkViewToken(_descriptor);
         }
 
         [Test]

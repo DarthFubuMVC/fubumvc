@@ -140,6 +140,19 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             result.ShouldBeNull();
             ClassUnderTest.ParseErrors.First().ShouldContain("More than one generic argument types matching");
         }
+
+        [Test]
+        public void if_type_is_not_generic_returns_null()
+        {
+            ClassUnderTest.Parse("System.String").ShouldBeNull();
+        }
+
+        [Test]
+        public void if_type_is_not_generic_then_register_error()
+        {
+            ClassUnderTest.Parse("System.String");
+            ClassUnderTest.ParseErrors.ShouldHaveCount(1).First().ShouldEqual("Type System.String does not appear to be generic.");
+        }
     }
 
     public class Duplicated

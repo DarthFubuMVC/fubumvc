@@ -132,8 +132,6 @@ namespace FubuMVC.Spark
             return types;
         }
 
-        // TODO: Tests that ensure all of these defaults are set.
-
         private static void configureServices(IServiceRegistry services)
         {
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);

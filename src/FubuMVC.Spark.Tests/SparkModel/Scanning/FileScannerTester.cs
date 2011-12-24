@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel.Scanning
 {
     [TestFixture]
-    public class SparkScannerTester : InteractionContext<FileScanner>
+    public class FileScannerTester : InteractionContext<FileScanner>
     {
         private IList<ITemplate> _scanResult;
 

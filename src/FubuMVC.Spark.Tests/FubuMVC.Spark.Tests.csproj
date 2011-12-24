@@ -86,6 +86,7 @@
     <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
     <Compile Include="Rendering\ContentActivationTester.cs" />
     <Compile Include="Rendering\CacheAttacherTester.cs" />
+    <Compile Include="Rendering\DefaultViewDefinitionPolicyTester.cs" />
     <Compile Include="Rendering\FubuSparkViewDecoratorTester.cs" />
     <Compile Include="Rendering\NestedOutputActivationTester.cs" />
     <Compile Include="Rendering\NestedViewOutputActivatorTester.cs" />
@@ -107,12 +108,15 @@
     <Compile Include="Rendering\ViewFactoryTester.cs" />
     <Compile Include="Rendering\ViewOutputTester.cs" />
     <Compile Include="SparkActivatorTester.cs" />
+    <Compile Include="SparkEngineTester.cs" />
     <Compile Include="SparkModel\Binding\GenericParserTester.cs" />
     <Compile Include="SparkModel\Binding\GenericViewModelBinderTester.cs" />
     <Compile Include="SparkModel\BindingsAttacherTester.cs" />
     <Compile Include="SparkModel\Binding\ViewDescriptorBinderTester.cs" />
     <Compile Include="SparkModel\FubuBindingProviderTester.cs" />
     <Compile Include="SparkModel\Policies\ViewPathPolicyTester.cs" />
+    <Compile Include="SparkModel\Sharing\DependencyRuleTester.cs" />
+    <Compile Include="SparkModel\Sharing\GlobalDependencyTester.cs" />
     <Compile Include="SparkModel\Sharing\RecordingSharingRegistrationTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingGraphTester.cs" />
     <Compile Include="SparkModel\Sharing\SharingPolicyActivatorTester.cs" />
@@ -127,7 +131,7 @@
     <Compile Include="SparkModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="SparkModel\ViewFolder\BasicTester.cs" />
     <Compile Include="SparkModel\Policies\NamespacePolicyTester.cs" />
-    <Compile Include="SparkModel\Scanning\SparkScannerTester.cs" />
+    <Compile Include="SparkModel\Scanning\FileScannerTester.cs" />
     <Compile Include="SparkModel\TemplateFinderTester.cs" />
     <Compile Include="SparkModel\TemplateExtensionsTester.cs" />
     <Compile Include="SparkModel\ChunkLoaderTester.cs" />
@@ -135,7 +139,7 @@
     <Compile Include="SparkModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="SparkViewFacilityTester.cs" />
     <Compile Include="SparkViewTokenTester.cs" />
-    <Compile Include="SparkModel\Scanning\SparkRequestExtensionsTester.cs" />
+    <Compile Include="SparkModel\Scanning\ScanRequestTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -224,7 +228,6 @@
     <None Include="Templates\Views\file.bar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\Shared\_footer.spark">

@@ -1,51 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using FubuCore;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Spark.Tests.SparkModel.Policies
 {
     [TestFixture]
     public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy>
     {
-        [Test]
-        public void when_origin_is_host_prefix_is_emtpy()
+        private ITemplate _template;
+        private string _origin;
+        protected override void beforeEach()
         {
-            var item = new Template("", "", FubuSparkConstants.HostOrigin);
-            ClassUnderTest.Apply(item);
-            item.ViewPath.ShouldBeEmpty();
+            _origin = FubuSparkConstants.HostOrigin;
+            _template = MockFor<ITemplate>();
+            _template.Stub(x => x.Origin).Return(null).WhenCalled(x => x.ReturnValue = _origin);
+            _template.Stub(x => x.RootPath).Return("root");
+            _template.Stub(x => x.FilePath).Return(FileSystem.Combine("root", "view.spark"));
+            _template.Stub(x => x.ViewPath).PropertyBehavior();
         }
 
         [Test]
-        public void when_origin_is_not_host_prefix_is_not_emtpy()
+        public void when_origin_is_host_viewpath_is_not_prefixed()
         {
-            var item = new Template("", "", "Foo");
-            ClassUnderTest.Apply(item);
-            item.ViewPath.ShouldNotBeEmpty();
+            ClassUnderTest.Apply(_template);
+            _template.ViewPath.ShouldEqual("view.spark");
         }
 
         [Test]
-        public void the_items_of_the_same_origin_have_the_same_prefix()
+        public void when_origin_is_not_host_view_path_is_prefixed()
         {
-            var baz1 = new Template("", "", "Baz");
-            var baz2 = new Template("", "", "Baz");
-            var bar1 = new Template("", "", "Bar");
-            var bar2 = new Template("", "", "Bar");
-
-            new[] { baz1, baz2, bar1, bar2 }.Each(x => ClassUnderTest.Apply(x));
-
-            baz1.ViewPath.ShouldEqual(baz2.ViewPath);
-            bar1.ViewPath.ShouldEqual(bar2.ViewPath);
-            baz1.ViewPath.ShouldNotEqual(bar1.ViewPath);
+            _origin = "Foo";
+            ClassUnderTest.Apply(_template);
+            _template.ViewPath.ShouldEqual(FileSystem.Combine("_" + _origin, "view.spark"));
         }
-		
+
 		[Test]
         public void it_matches_when_viewpath_is_empty()
+		{
+		    _template.ViewPath = null;
+            ClassUnderTest.Matches(_template).ShouldBeTrue();
+        }
+
+        [Test]
+        public void it_does_not_matches_when_viewpath_is_not_empty()
         {
-            var item = new Template("", "", "Foo");
-			ClassUnderTest.Matches(item).ShouldBeTrue();
-            ClassUnderTest.Apply(item);
-			ClassUnderTest.Matches(item).ShouldBeFalse();
+            _template.ViewPath = "someone/else/did/this";
+            ClassUnderTest.Matches(_template).ShouldBeFalse();
         }
     }
 }
