@@ -195,6 +195,7 @@
             type: "POST",
             url: grid().metadata().url,
             data: JSON.stringify(params),
+			contentType: "application/json",
             dataType: "json",
             success: function(data) {
                 grid()[0].addJSONData(data);
