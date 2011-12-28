@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using FubuCore;
 using FubuMVC.Core;
@@ -10,6 +11,9 @@ using Kayak;
 
 namespace FubuKayak
 {
+
+
+
     public class Listener : IDisposable
     {
         private readonly FubuOwinHost _host = new FubuOwinHost();
@@ -85,6 +89,8 @@ namespace FubuKayak
             {
                 // That's right, shut this puppy down
             }
+
+            _kayakListenerDisposer.SafeDispose();
         }
 
         public void Dispose()

@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.OwinHost;
 using OpenQA.Selenium;
 using StoryTeller.Engine;
 
@@ -43,6 +44,9 @@ namespace Serenity
             if (_application == null)
             {
                 var settings = findApplicationSettings();
+
+                settings.Port = PortFinder.FindPort(settings.Port);
+
                 FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
 
                 // TODO -- add some diagnostics here

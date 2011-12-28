@@ -66,6 +66,7 @@
     <Compile Include="OwinRequestBody.cs" />
     <Compile Include="OwinServiceArguments.cs" />
     <Compile Include="OwinStreamingData.cs" />
+    <Compile Include="PortFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamDataReader.cs" />
   </ItemGroup>
