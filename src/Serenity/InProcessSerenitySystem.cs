@@ -1,29 +1,14 @@
 using System;
-using System.Threading;
 using FubuCore;
-using FubuKayak;
 using FubuMVC.Core;
-using FubuMVC.Core.Http;
-using FubuMVC.Core.Packaging;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.OwinHost;
-using OpenQA.Selenium;
 using StoryTeller.Engine;
 
 namespace Serenity
 {
     public class InProcessSerenitySystem<TSystem> : BasicSystem where TSystem : IApplicationSource, new()
     {
-        private readonly Func<IWebDriver> _browserBuilder;
-        private Listener _listener;
-        private ApplicationUnderTest _application;
-        private Thread _listeningThread;
-
-
-        public InProcessSerenitySystem()
-        {
-            _browserBuilder = WebDriverSettings.DriverBuilder();
-        }
+        private IApplicationUnderTest _application;
 
         protected virtual ApplicationSettings findApplicationSettings()
         {
@@ -34,59 +19,28 @@ namespace Serenity
         {
             if (_application != null)
             {
-                context.Store<IApplicationUnderTest>(_application);
+                context.Store(_application);
                 context.Store(new NavigationDriver(_application));
             }
         }
 
-        public sealed override void Setup()
+        public override sealed void Setup()
         {
             if (_application == null)
             {
                 var settings = findApplicationSettings();
-
                 settings.Port = PortFinder.FindPort(settings.Port);
-
-                FubuMvcPackageFacility.PhysicalRootPath = settings.GetApplicationFolder();
-
-                // TODO -- add some diagnostics here
-                var runtime = new TSystem().BuildApplication().Bootstrap();
-                runtime.Facility.Register(typeof (ICurrentHttpRequest), ObjectDef.ForValue(new StubCurrentHttpRequest(){
-                    ApplicationRoot = "http://localhost:" + settings.Port
-                }));
-
-
-                var reset = startListener(settings, runtime);
-
                 settings.RootUrl = "http://localhost:" + settings.Port;
 
-                _application = new ApplicationUnderTest(runtime, settings, _browserBuilder);
-
-                reset.WaitOne();
+                _application = new InProcessApplicationUnderTest<TSystem>(settings);
             }
 
             beforeExecutingTest(_application);
         }
 
-        private ManualResetEvent startListener(ApplicationSettings settings, FubuRuntime runtime)
+
+        protected virtual void beforeExecutingTest(IApplicationUnderTest application)
         {
-            var reset = new ManualResetEvent(false);
-
-            _listeningThread = new Thread(o =>
-            {
-                _listener = new Listener(settings.Port);
-                _listener.Start(runtime, () => reset.Set());
-            });
-
-            _listeningThread.Name = "Serenity:Kayak:Thread";
-            _listeningThread.Start();
-
-            return reset;
-        }
-
-        protected virtual void beforeExecutingTest(ApplicationUnderTest application)
-        {
-                
         }
 
         public T Get<T>()
@@ -96,20 +50,26 @@ namespace Serenity
 
         public override object Get(Type type)
         {
-            if (type == typeof(IApplicationUnderTest))
+            if (type == typeof (IApplicationUnderTest))
             {
                 return _application;
             }
-            
+
             var getterType = typeof (Getter<>).MakeGenericType(type);
             var getter = Activator.CreateInstance(getterType, _application).As<IGetter>();
 
             return getter.Get();
         }
 
-        public interface IGetter
+        public override sealed void TeardownEnvironment()
         {
-            object Get();
+            if (_application != null) _application.Teardown();
+
+            shutDownSystem();
+        }
+
+        protected virtual void shutDownSystem()
+        {
         }
 
         public class Getter<T> : IGetter
@@ -127,21 +87,10 @@ namespace Serenity
             }
         }
 
-        public sealed override void TeardownEnvironment()
+        public interface IGetter
         {
-            if (_application != null) _application.Teardown();
-            if (_listener != null)
-            {
-                _listener.Stop();
-                _listener.SafeDispose();
-            }
-
-            shutDownSystem();
+            object Get();
         }
 
-        protected virtual void shutDownSystem()
-        {
-            
-        }
     }
 }

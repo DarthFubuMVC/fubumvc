@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InProcessApplicationUnderTest.cs" />
     <Compile Include="NavigationDriver.cs" />
     <Compile Include="ApplicationUnderTest.cs" />
     <Compile Include="BrowserType.cs" />
