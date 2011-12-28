@@ -55,5 +55,12 @@ namespace Serenity.Testing
 
             Debug.WriteLine(response.ToString());
         }
+
+        [Test]
+        public void can_get_with_no_body()
+        {
+            theDriver.GetEndpointDriver().ReadTextFrom<SayHelloController>(x => x.Hello())
+                .ShouldStartWith("Hello");
+        }
     }
 }

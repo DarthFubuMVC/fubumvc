@@ -18,13 +18,12 @@ namespace FubuMVC.OwinHost
         Action<Exception>, //error
         Action, //complete
         Action>; //cancel
-
-    using BodyDelegate = System.Func<System.Func<System.ArraySegment<byte>, // data
-                                     System.Action,                         // continuation
-                                     bool>,                                 // continuation will be invoked
-                                     System.Action<System.Exception>,       // onError
-                                     System.Action,                         // on Complete
-                                     System.Action>;                        // cancel
+    using BodyDelegate = Func<Func<ArraySegment<byte>, // data
+        Action, // continuation
+        bool>, // continuation will be invoked
+        Action<Exception>, // onError
+        Action, // on Complete
+        Action>; // cancel
 
     public class FubuOwinHost
     {
@@ -34,9 +33,6 @@ namespace FubuMVC.OwinHost
         {
             var environment = new Environment(env);
             var response = new Response(result);
-
-
-
 
 
             if (Verbose) Console.WriteLine("Received {0} - {1}", environment.Method, environment.Path);
@@ -49,32 +45,41 @@ namespace FubuMVC.OwinHost
             }
             else
             {
-                var bodyDelegate = (BodyDelegate) environment["owin.RequestBody"];
                 var request = new OwinRequestBody(environment);
 
-                var bodyBuilder = request.GetRequestBodyBuilder();
-                bodyDelegate(bodyBuilder, fault, () =>
+                var bodyDelegate = environment["owin.RequestBody"] as BodyDelegate;
+                if (bodyDelegate == null)
                 {
-                    var arguments = new OwinServiceArguments(routeData, request, response);
-                    var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
-
-                    try
-                    {
-                        invoker.Invoke(arguments, routeData.Values);
-                    }
-                    catch (Exception ex)
-                    {
-                        write500(response, ex);
-                    }
-                    finally
-                    {
-                        response.Finish();
-                    }
-                });
+                    executeRoute(routeData, response, request);
+                }
+                else
+                {
+                    var bodyBuilder = request.GetRequestBodyBuilder();
+                    bodyDelegate(bodyBuilder, fault, () => executeRoute(routeData, response, request));
+                }
             }
 
 
             if (Verbose) Console.WriteLine(" ({0})", response.Status);
+        }
+
+        private static void executeRoute(RouteData routeData, Response response, OwinRequestBody request)
+        {
+            var arguments = new OwinServiceArguments(routeData, request, response);
+            var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
+
+            try
+            {
+                invoker.Invoke(arguments, routeData.Values);
+            }
+            catch (Exception ex)
+            {
+                write500(response, ex);
+            }
+            finally
+            {
+                response.Finish();
+            }
         }
 
         private static void write500(Response response, Exception ex)
@@ -101,8 +106,8 @@ namespace FubuMVC.OwinHost
     // TODO -- make this a lot smaller and bring over the UT's
     public class Response
     {
-        readonly ResultDelegate _result;
-        readonly Spool _spool = new Spool(true);
+        private readonly ResultDelegate _result;
+        private readonly Spool _spool = new Spool(true);
 
         public Response(ResultDelegate result)
         {
@@ -117,24 +122,24 @@ namespace FubuMVC.OwinHost
         public IDictionary<string, string> Headers { get; set; }
         public Encoding Encoding { get; set; }
 
-        string GetHeader(string name)
+        public string ContentType
+        {
+            get { return GetHeader("Content-Type"); }
+            set { SetHeader("Content-Type", value); }
+        }
+
+        private string GetHeader(string name)
         {
             string value;
             return Headers.TryGetValue(name, out value) ? value : null;
         }
 
-        void SetHeader(string name, string value)
+        private void SetHeader(string name, string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 Headers.Remove(value);
             else
                 Headers[name] = value;
-        }
-
-        public string ContentType
-        {
-            get { return GetHeader("Content-Type"); }
-            set { SetHeader("Content-Type", value); }
         }
 
         public Response Write(string text)
@@ -184,9 +189,9 @@ namespace FubuMVC.OwinHost
 
                     body(this, error, _spool.PushComplete);
 
-                    for (; ; )
+                    for (;;)
                     {
-                        var count = new[] { 0 };
+                        var count = new[]{0};
                         _spool.Pull(new ArraySegment<byte>(buffer), count, null);
                         if (count[0] == 0)
                             break;
@@ -203,7 +208,12 @@ namespace FubuMVC.OwinHost
 
     public class Spool
     {
-        readonly bool _eagerPull;
+        private static readonly ArraySegment<byte> Empty = new ArraySegment<byte>(new byte[0], 0, 0);
+        private readonly AsyncOp _asyncPull = new AsyncOp();
+        private readonly AsyncOp _asyncPush = new AsyncOp();
+        private readonly Buffer _buffer = new Buffer();
+        private readonly bool _eagerPull;
+        private bool _complete;
 
         public Spool()
         {
@@ -361,7 +371,7 @@ namespace FubuMVC.OwinHost
         }
 
 
-        static void Drain(
+        private static void Drain(
             ArraySegment<byte> source,
             ArraySegment<byte> destination,
             Action<ArraySegment<byte>, ArraySegment<byte>, int> result)
@@ -370,17 +380,18 @@ namespace FubuMVC.OwinHost
             if (copied == 0) return;
             Array.Copy(source.Array, source.Offset, destination.Array, destination.Offset, copied);
             result(
-                source.Count == copied ? Empty : new ArraySegment<byte>(source.Array, source.Offset + copied, source.Count - copied),
-                destination.Count == copied ? Empty : new ArraySegment<byte>(destination.Array, destination.Offset + copied, destination.Count - copied),
+                source.Count == copied
+                    ? Empty
+                    : new ArraySegment<byte>(source.Array, source.Offset + copied, source.Count - copied),
+                destination.Count == copied
+                    ? Empty
+                    : new ArraySegment<byte>(destination.Array, destination.Offset + copied, destination.Count - copied),
                 copied);
         }
 
-        static readonly ArraySegment<byte> Empty = new ArraySegment<byte>(new byte[0], 0, 0);
+        #region Nested type: AsyncOp
 
-        readonly AsyncOp _asyncPush = new AsyncOp();
-        readonly AsyncOp _asyncPull = new AsyncOp();
-
-        class AsyncOp
+        private class AsyncOp
         {
             public AsyncOp()
             {
@@ -393,11 +404,11 @@ namespace FubuMVC.OwinHost
             public Action Continuation { get; set; }
         }
 
+        #endregion
 
-        readonly Buffer _buffer = new Buffer();
-        bool _complete;
+        #region Nested type: Buffer
 
-        class Buffer
+        private class Buffer
         {
             public Buffer()
             {
@@ -424,5 +435,7 @@ namespace FubuMVC.OwinHost
                 result(new ArraySegment<byte>(data.Array, data.Offset + copied, data.Count - copied), copied);
             }
         }
+
+        #endregion
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Net;
 using System.Text;
 using System.Web;
@@ -80,6 +81,12 @@ namespace Serenity.Endpoints
         public string ReadTextFrom(object input)
         {
             var url = _urls.UrlFor(input);
+            return new WebClient().DownloadString(url);
+        }
+
+        public string ReadTextFrom<T>(Expression<Action<T>> expression)
+        {
+            var url = _urls.UrlFor(expression);
             return new WebClient().DownloadString(url);
         }
 

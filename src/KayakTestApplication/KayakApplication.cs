@@ -21,7 +21,7 @@ namespace KayakTestApplication
     {
         public KayakRegistry()
         {
-            Route("").Calls<SayHelloController>(x => x.Hello());
+            Routes.HomeIs<SayHelloController>(x => x.Hello());
 
             Actions.IncludeClassesSuffixedWithController();
             this.UseSpark();
