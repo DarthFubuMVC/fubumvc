@@ -7,6 +7,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Urls;
+using Microsoft.Practices.ServiceLocation;
 using OpenQA.Selenium;
 using FubuCore;
 
@@ -105,6 +106,11 @@ namespace Serenity
         public T GetInstance<T>()
         {
             return _runtime.Value.Facility.Get<T>();
+        }
+
+        public object GetInstance(Type type)
+        {
+            return _runtime.Value.Facility.Get<IServiceLocator>().GetInstance(type);
         }
 
         public IEnumerable<T> GetAll<T>()

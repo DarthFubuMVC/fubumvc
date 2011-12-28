@@ -8,7 +8,19 @@ namespace Serenity
 {
     public class InProcessSerenitySystem<TSystem> : BasicSystem where TSystem : IApplicationSource, new()
     {
-        private IApplicationUnderTest _application;
+        private readonly Lazy<IApplicationUnderTest> _application;
+
+        public InProcessSerenitySystem()
+        {
+            _application = new Lazy<IApplicationUnderTest>(() =>
+            {
+                var settings = findApplicationSettings();
+                settings.Port = PortFinder.FindPort(settings.Port);
+                settings.RootUrl = "http://localhost:" + settings.Port;
+
+                return new InProcessApplicationUnderTest<TSystem>(settings);
+            });
+        }
 
         protected virtual ApplicationSettings findApplicationSettings()
         {
@@ -17,25 +29,17 @@ namespace Serenity
 
         public override void RegisterServices(ITestContext context)
         {
-            if (_application != null)
+            if (_application.IsValueCreated)
             {
-                context.Store(_application);
-                context.Store(new NavigationDriver(_application));
+                context.Store(_application.Value);
+                context.Store(new NavigationDriver(_application.Value));
             }
         }
 
         public override sealed void Setup()
         {
-            if (_application == null)
-            {
-                var settings = findApplicationSettings();
-                settings.Port = PortFinder.FindPort(settings.Port);
-                settings.RootUrl = "http://localhost:" + settings.Port;
 
-                _application = new InProcessApplicationUnderTest<TSystem>(settings);
-            }
-
-            beforeExecutingTest(_application);
+            beforeExecutingTest(_application.Value);
         }
 
 
@@ -45,7 +49,7 @@ namespace Serenity
 
         public T Get<T>()
         {
-            return _application.GetInstance<T>();
+            return _application.Value.GetInstance<T>();
         }
 
         public override object Get(Type type)
@@ -55,15 +59,12 @@ namespace Serenity
                 return _application;
             }
 
-            var getterType = typeof (Getter<>).MakeGenericType(type);
-            var getter = Activator.CreateInstance(getterType, _application).As<IGetter>();
-
-            return getter.Get();
+            return _application.Value.GetInstance(type);
         }
 
         public override sealed void TeardownEnvironment()
         {
-            if (_application != null) _application.Teardown();
+            if (_application.IsValueCreated) _application.Value.Teardown();
 
             shutDownSystem();
         }
@@ -72,25 +73,6 @@ namespace Serenity
         {
         }
 
-        public class Getter<T> : IGetter
-        {
-            private readonly IApplicationUnderTest _container;
-
-            public Getter(IApplicationUnderTest container)
-            {
-                _container = container;
-            }
-
-            public object Get()
-            {
-                return _container.GetInstance<T>();
-            }
-        }
-
-        public interface IGetter
-        {
-            object Get();
-        }
 
     }
 }

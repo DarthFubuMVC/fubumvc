@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FubuMVC.Core.Urls;
 using OpenQA.Selenium;
@@ -13,6 +14,7 @@ namespace Serenity
         string RootUrl { get; }
 
         T GetInstance<T>();
+        object GetInstance(Type type);
         IEnumerable<T> GetAll<T>();
 
         void Ping();

@@ -1,17 +1,25 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using FubuCore.Conversion;
 using FubuMVC.Core;
 using HtmlTags;
 using KayakTestApplication;
 using NUnit.Framework;
 using TestContext = StoryTeller.Engine.TestContext;
+using FubuTestingSupport;
 
 namespace Serenity.Testing
 {
     [TestFixture, Explicit]
     public class debugging
     {
+        [Test]
+        public void load_the_object_converter()
+        {
+            new ObjectConverter().ShouldNotBeNull();
+        }
+
         [Test]
         public void start_an_inprocess_system_without_blowing_up()
         {

@@ -44,9 +44,6 @@
     <Reference Include="Gate">
       <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
     </Reference>
-    <Reference Include="Gate.Helpers">
-      <HintPath>..\..\lib\gate\Gate.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="Gate.Kayak">
       <HintPath>..\packages\Gate.Kayak.0.1.4\lib\Gate.Kayak.dll</HintPath>
     </Reference>

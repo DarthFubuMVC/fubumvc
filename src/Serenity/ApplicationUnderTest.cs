@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Urls;
+using Microsoft.Practices.ServiceLocation;
 using OpenQA.Selenium;
 
 namespace Serenity
@@ -17,6 +18,7 @@ namespace Serenity
         private readonly Lazy<IWebDriver> _driver;
         private readonly Lazy<IContainerFacility> _container;
         private readonly Lazy<IUrlRegistry> _urls;
+        private readonly Lazy<IServiceLocator> _services;
 
 
         public ApplicationUnderTest(FubuRuntime runtime, ApplicationSettings settings, Func<IWebDriver> createWebDriver)
@@ -62,6 +64,8 @@ namespace Serenity
                 urls.As<UrlRegistry>().RootAt(_rootUrl);
                 return urls;
             });
+
+            _services = new Lazy<IServiceLocator>(() => _container.Value.Get<IServiceLocator>());
         }
 
         public string Name
@@ -77,6 +81,11 @@ namespace Serenity
         public T GetInstance<T>()
         {
             return _container.Value.Get<T>();
+        }
+
+        public object GetInstance(Type type)
+        {
+            return _services.Value.GetInstance(type);
         }
 
         public IEnumerable<T> GetAll<T>()
