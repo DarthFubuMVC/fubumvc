@@ -5,7 +5,7 @@ using System.Web.Razor.Parser.SyntaxTree;
 using FubuMVC.Razor.FileSystem;
 using CSharpRazorCodeLanguage = RazorEngine.Compilation.CSharp.CSharpRazorCodeLanguage;
 
-namespace FubuMVC.Razor.Parsing
+namespace FubuMVC.Razor.RazorEngine.Parsing
 {
     public class ViewLoader : IViewLoader
     {

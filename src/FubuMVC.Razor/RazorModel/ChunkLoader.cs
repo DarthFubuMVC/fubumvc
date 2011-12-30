@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Razor.Parser.SyntaxTree;
 using FubuCore.Util;
 using FubuMVC.Razor.FileSystem;
-using FubuMVC.Razor.Parsing;
+using FubuMVC.Razor.RazorEngine.Parsing;
 using RazorEngine.Spans;
 
 namespace FubuMVC.Razor.RazorModel

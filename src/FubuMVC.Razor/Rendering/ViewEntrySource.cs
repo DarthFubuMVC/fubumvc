@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuMVC.Razor.RazorEngine;
 using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor.Rendering

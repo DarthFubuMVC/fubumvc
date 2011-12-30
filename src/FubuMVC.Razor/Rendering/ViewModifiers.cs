@@ -3,6 +3,8 @@ using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core;
+using FubuMVC.Razor.RazorEngine;
+
 namespace FubuMVC.Razor.Rendering
 {
     public interface IViewModifier

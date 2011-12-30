@@ -17,7 +17,7 @@ using IActivator = Bottles.IActivator;
 
 namespace FubuMVC.Razor
 {
-    public class RazorEngine : IFubuRegistryExtension
+    public class RazorEngineRegistry : IFubuRegistryExtension
     {
         private static bool _hasScanned;
         private static readonly TemplateRegistry _templateRegistry = new TemplateRegistry();
@@ -29,7 +29,7 @@ namespace FubuMVC.Razor
         private readonly IList<ITemplateFinderConvention> _finderConventions = new List<ITemplateFinderConvention>();
         private readonly IList<ITemplateComposerConvention> _composerConventions = new List<ITemplateComposerConvention>();
 
-        public RazorEngine()
+        public RazorEngineRegistry()
         {
             _logger = getLogger();
             _finder = new TemplateFinder();
@@ -101,7 +101,7 @@ namespace FubuMVC.Razor
         private void composeTemplates()
         {
             var composer = _composer as TemplateComposer;
-            if(composer != null)
+            if (composer != null)
             {
                 _composerConventions.Each(c => c.Configure(composer));
             }
@@ -158,25 +158,25 @@ namespace FubuMVC.Razor
                 : new PackageLog();
         }
 
-        public RazorEngine FindWith(ITemplateFinder finder)
+        public RazorEngineRegistry FindWith(ITemplateFinder finder)
         {
             _finder = finder;
             return this;
         }
 
-        public RazorEngine ConfigureFinder(ITemplateFinderConvention convention)
+        public RazorEngineRegistry ConfigureFinder(ITemplateFinderConvention convention)
         {
             _finderConventions.Fill(convention);
             return this;
         }
 
-        public RazorEngine ComposeWith(ITemplateComposer composer)
+        public RazorEngineRegistry ComposeWith(ITemplateComposer composer)
         {
             _composer = composer;
             return this;
         }
 
-        public RazorEngine ConfigureComposer(ITemplateComposerConvention convention)
+        public RazorEngineRegistry ConfigureComposer(ITemplateComposerConvention convention)
         {
             _composerConventions.Fill(convention);
             return this;
@@ -197,36 +197,36 @@ namespace FubuMVC.Razor
             return source;
         }
 
-        public static RazorEngine ConfigureFinder<TConvention>(this RazorEngine Razor)
+        public static RazorEngineRegistry ConfigureFinder<TConvention>(this RazorEngineRegistry Razor)
             where TConvention : ITemplateFinderConvention, new()
         {
             return Razor.ConfigureFinder(new TConvention());
         }
 
-        public static RazorEngine ConfigureFinder(this RazorEngine Razor, Action<TemplateFinder> configure)
+        public static RazorEngineRegistry ConfigureFinder(this RazorEngineRegistry Razor, Action<TemplateFinder> configure)
         {
             return Razor.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
         }
 
-        public static RazorEngine FindWith<TFinder>(this RazorEngine Razor)
+        public static RazorEngineRegistry FindWith<TFinder>(this RazorEngineRegistry Razor)
             where TFinder : ITemplateFinder, new()
         {
             return Razor.FindWith(new TFinder());
         }
 
-        public static RazorEngine ComposeWith<TComposer>(this RazorEngine Razor)
+        public static RazorEngineRegistry ComposeWith<TComposer>(this RazorEngineRegistry Razor)
             where TComposer : ITemplateComposer, new()
         {
             return Razor.ComposeWith(new TComposer());
         }
 
-        public static RazorEngine ConfigureComposer<TConvention>(this RazorEngine Razor)
+        public static RazorEngineRegistry ConfigureComposer<TConvention>(this RazorEngineRegistry Razor)
             where TConvention : ITemplateComposerConvention, new()
         {
             return Razor.ConfigureComposer(new TConvention());
         }
 
-        public static RazorEngine ConfigureComposer(this RazorEngine Razor, Action<TemplateComposer> configure)
+        public static RazorEngineRegistry ConfigureComposer(this RazorEngineRegistry Razor, Action<TemplateComposer> configure)
         {
             return Razor.ConfigureComposer(new LambdaTemplateComposerConvention(configure));
         }

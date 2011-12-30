@@ -11,9 +11,9 @@ namespace FubuMVC.Razor
             fubuRegistry.UseRazor(s => { });
         }
 
-        public static void UseRazor(this FubuRegistry fubuRegistry, Action<RazorEngine> configure)
+        public static void UseRazor(this FubuRegistry fubuRegistry, Action<RazorEngineRegistry> configure)
         {
-            var Razor = new RazorEngine();
+            var Razor = new RazorEngineRegistry();
             configure(Razor);
             Razor
                 .As<IFubuRegistryExtension>()
