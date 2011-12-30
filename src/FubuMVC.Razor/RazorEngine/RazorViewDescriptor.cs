@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FubuMVC.Razor
+namespace FubuMVC.Razor.RazorEngine
 {
     public class RazorViewDescriptor
     {

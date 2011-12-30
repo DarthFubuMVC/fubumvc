@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FubuMVC.Razor.RazorEngine;
 
 namespace FubuMVC.Razor.Rendering
 {

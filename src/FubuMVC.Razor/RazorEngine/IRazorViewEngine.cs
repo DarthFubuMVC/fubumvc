@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Razor
+﻿namespace FubuMVC.Razor.RazorEngine
 {
     public interface IRazorViewEngine
     {

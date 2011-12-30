@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Razor.Parser.SyntaxTree;
 using RazorEngine.Templating;
 
-namespace FubuMVC.Razor.Compiler
+namespace FubuMVC.Razor.RazorEngine.Compiler
 {
     public abstract class ViewCompiler
     {

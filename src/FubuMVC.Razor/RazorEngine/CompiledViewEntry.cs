@@ -1,10 +1,10 @@
 ﻿using System;
-using FubuMVC.Razor.Compiler;
-using FubuMVC.Razor.Parsing;
+using FubuMVC.Razor.RazorEngine.Compiler;
+using FubuMVC.Razor.RazorEngine.Parsing;
 using RazorEngine.Compilation;
 using RazorEngine.Templating;
 
-namespace FubuMVC.Razor
+namespace FubuMVC.Razor.RazorEngine
 {
     public class CompiledViewEntry : IRazorViewEntry
     {

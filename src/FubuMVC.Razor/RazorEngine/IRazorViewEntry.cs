@@ -1,7 +1,7 @@
 ﻿using System;
 using RazorEngine.Templating;
 
-namespace FubuMVC.Razor
+namespace FubuMVC.Razor.RazorEngine
 {
     public interface IRazorViewEntry
     {
