@@ -8,10 +8,11 @@ bin
 deploy
 deploy/*
 src/CommonAssemblyInfo.cs
-_ReSharper.*
 *.csproj.user
-*.resharper.user
-*.ReSharper.user
+_ReSharper.*
+*.[Rr]e[Ss]harper.user
+src/FubuMVC.*.ReSharper
+*.DotSettings.user
 *.suo
 *.cache
 ~$*
@@ -19,7 +20,6 @@ _ReSharper.*
 .fubu-alias
 .fubu-includes
 .fubu-manifest
-src/FubuMVC.5.1.ReSharper
 editor.htm
 testEditor.css
 TestResult.xml
@@ -33,9 +33,7 @@ test-results
 fubu-content
 spark.zip
 deployment/bottles/*.zip
-src/FubuMVC.6.0.ReSharper
 _combined/
-src/FubuMVC.6.0.ReSharper
 storyteller
 deploymentplan.html
 src/Spark.Web.FubuMVC/
