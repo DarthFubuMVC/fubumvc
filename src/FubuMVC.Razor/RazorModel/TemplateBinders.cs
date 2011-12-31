@@ -2,6 +2,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
+using FubuMVC.Razor.RazorEngine.Parsing;
 using FubuMVC.Razor.Registration;
 
 namespace FubuMVC.Razor.RazorModel
@@ -17,10 +18,12 @@ namespace FubuMVC.Razor.RazorModel
         TypePool Types { get; }
         ITemplateRegistry TemplateRegistry { get; }
         IRazorLogger Logger { get; }
+        IViewLoader ViewLoader { get; set; }
     }
 
     public class BindRequest : IBindRequest
     {
+        public IViewLoader ViewLoader { get; set; }
         public ITemplate Target { get; set; }
 
         public string Master { get; set; }
@@ -52,10 +55,26 @@ namespace FubuMVC.Razor.RazorModel
         }
     }
 
+    public class ViewLoaderBinder : ITemplateBinder
+    {
+        public bool CanBind(IBindRequest request)
+        {
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            return descriptor != null
+                   && descriptor.ViewLoader == null;
+        }
+
+        public void Bind(IBindRequest request)
+        {
+            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            descriptor.ViewLoader = request.ViewLoader;
+        }
+    }
+
     public class MasterPageBinder : ITemplateBinder
     {
         private readonly ISharedTemplateLocator _sharedTemplateLocator;
-        private const string FallbackMaster = "Application";
+        private const string FallbackMaster = "_Layout";
         public string MasterName { get; set; }
 
         public MasterPageBinder() : this(new SharedTemplateLocator()) { }
@@ -165,42 +184,6 @@ namespace FubuMVC.Razor.RazorModel
                 var candidates = types.Select(x => x.AssemblyQualifiedName).Join(", ");
                 logger.Log(template, "Type ambiguity on: {0}", candidates);
             }
-        }
-    }
-
-    public class ReachableBindingsBinder : ITemplateBinder
-    {
-        private readonly ISharedTemplateLocator _sharedTemplateLocator;
-        private const string FallbackBindingsName = "bindings";
-        public string BindingsName { get; set; }
-
-        public ReachableBindingsBinder() : this(new SharedTemplateLocator()) { }
-        public ReachableBindingsBinder(ISharedTemplateLocator sharedTemplateLocator)
-        {
-            _sharedTemplateLocator = sharedTemplateLocator;
-            BindingsName = FallbackBindingsName;
-        }
-
-        public bool CanBind(IBindRequest request)
-        {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-
-            return descriptor != null && descriptor.Bindings.Count() == 0;
-        }
-
-        public void Bind(IBindRequest request)
-        {
-            var target = request.Target;
-            var logger = request.Logger;
-            var templates = request.TemplateRegistry;
-            var descriptor = target.Descriptor.As<ViewDescriptor>();
-
-            var bindings = _sharedTemplateLocator.LocateBindings(BindingsName, target, templates);
-            bindings.Each(template =>
-            {
-                descriptor.AddBinding(template);
-                logger.Log(target, "Binding attached : {0}", template.FilePath);
-            });
         }
     }
 }

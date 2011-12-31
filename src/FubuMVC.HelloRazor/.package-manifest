@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Role>application</Role>
+  <Name>FubuMVC.HelloSpark</Name>
+  <include>..\FubuMVC.Diagnostics</include>
+</package>

@@ -9,6 +9,7 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Razor.RazorEngine;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
 using RazorEngine.Configuration;
@@ -52,7 +53,7 @@ namespace FubuMVC.Razor
                     .AddBinder<MasterPageBinder>()
                     .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
-                    .AddBinder<ReachableBindingsBinder>()
+                    .AddBinder<ViewLoaderBinder>()
                     .Apply<NamespacePolicy>()
                     .Apply<ViewPathPolicy>());
         }
@@ -129,8 +130,9 @@ namespace FubuMVC.Razor
         private static void configureServices(IServiceRegistry services)
         {
             var configuration = new TemplateServiceConfiguration();
+            configuration.BaseTemplateType = typeof(FubuRazorView);
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
-            services.SetServiceIfNone<ITemplateService>(new TemplateService(configuration));
+            services.AddService<ITemplateServiceWrapper>(new TemplateServiceWrapper(new TemplateService(configuration)));
             services.SetServiceIfNone<ITemplateServiceConfiguration>(configuration);
 
             services.FillType<IActivator, RazorActivator>();
@@ -139,6 +141,7 @@ namespace FubuMVC.Razor
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
+            services.SetServiceIfNone<IRazorViewEntryFactory, RazorViewEntryFactory>();
             services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
 
@@ -146,9 +149,6 @@ namespace FubuMVC.Razor
             services.FillType<IViewModifier, SiteResourceAttacher>();
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
-
-            services.SetServiceIfNone(new DefaultViewDefinitionPolicy());
-            services.SetServiceIfNone<IViewDefinitionResolver, ViewDefinitionResolver>();
         }
 
         private IPackageLog getLogger()

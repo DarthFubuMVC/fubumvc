@@ -15,13 +15,13 @@ namespace FubuMVC.Razor.RazorModel
         private readonly IList<ITemplateBinder> _binders = new List<ITemplateBinder>();
         private readonly IList<ITemplatePolicy> _policies = new List<ITemplatePolicy>();
         private readonly TypePool _types;
-        private readonly IChunkLoader _chunkLoader;
+        private readonly IViewLoaderLocator _viewLoaderLocator;
 
-        public TemplateComposer(TypePool types) : this(types, new ChunkLoader()) { }
-        public TemplateComposer(TypePool types, IChunkLoader chunkLoader)
+        public TemplateComposer(TypePool types) : this(types, new ViewLoaderLocator()) { }
+        public TemplateComposer(TypePool types, IViewLoaderLocator viewLoaderLocator)
         {
             _types = types;
-            _chunkLoader = chunkLoader;
+            _viewLoaderLocator = viewLoaderLocator;
         }
 
         public TemplateComposer AddBinder<T>() where T : ITemplateBinder, new()
@@ -70,7 +70,8 @@ namespace FubuMVC.Razor.RazorModel
 
         private BindRequest createBindRequest(ITemplate template, ITemplateRegistry templateRegistry)
         {
-            var chunks = _chunkLoader.Load(template);
+            var viewLoader = _viewLoaderLocator.Locate(template);
+            var chunks = viewLoader.Load(template.FilePath);
             return new BindRequest
             {
                 Target = template,
@@ -79,7 +80,8 @@ namespace FubuMVC.Razor.RazorModel
                 Master = chunks.Master(),
                 ViewModelType = chunks.ViewModel(),
                 Namespaces = chunks.Namespaces(),
-                Logger = RazorLogger.Default()
+                Logger = RazorLogger.Default(),
+                ViewLoader = viewLoader
             };
         }
     }    

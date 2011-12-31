@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Razor;
+using System.Web.Razor.Parser;
 using System.Web.Razor.Parser.SyntaxTree;
 using FubuMVC.Razor.FileSystem;
+using RazorEngine.Compilation;
 using CSharpRazorCodeLanguage = RazorEngine.Compilation.CSharp.CSharpRazorCodeLanguage;
 
 namespace FubuMVC.Razor.RazorEngine.Parsing
@@ -18,12 +21,28 @@ namespace FubuMVC.Razor.RazorEngine.Parsing
         {
             _viewFile = ViewFolder.GetViewSource(path);
             _lastModified = _viewFile.LastModified;
+
+            IEnumerable<Span> result = null;
+
+            OpenReader(reader =>
+            {
+                var engine =
+                    new RazorTemplateEngine(
+                        new global::RazorEngine.Compilation.RazorEngineHost(new CSharpRazorCodeLanguage(false),
+                                                                            () => new HtmlMarkupParser()));
+                var parseResults = engine.ParseTemplate(reader);
+                result =  parseResults.Document.Flatten();
+            });
+
+            return result;
+        }
+
+        private void OpenReader(Action<StreamReader> action)
+        {
             using(var fileStream = _viewFile.OpenViewStream())
             using(var reader = new StreamReader(fileStream))
             {
-                var engine = new RazorTemplateEngine(new RazorEngineHost(new CSharpRazorCodeLanguage(true)));
-                var parseResults = engine.ParseTemplate(reader);
-                return parseResults.Document.Flatten();
+                action(reader);
             }
         }
 
@@ -31,11 +50,14 @@ namespace FubuMVC.Razor.RazorEngine.Parsing
         {
             return _viewFile.LastModified == _lastModified;
         }
+
+        public IViewFile ViewFile { get { return _viewFile; } }
     }
 
     public interface IViewLoader
     {
         IEnumerable<Span> Load(string path);
         bool IsCurrent();
+        IViewFile ViewFile { get; }
     }
 }

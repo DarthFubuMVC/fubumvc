@@ -28,9 +28,7 @@ namespace FubuMVC.Razor
     {
         public void Configure(TemplateFinder finder)
         {
-            finder.IncludeFile("*Razor");
-            // TODO: This is not automatically synched with what the attacher looks for.
-            finder.IncludeFile("bindings.xml");
+            finder.IncludeFile("*cshtml");
 
             finder.ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
             finder.ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder, FubuMvcPackageFacility.FubuContentFolder);

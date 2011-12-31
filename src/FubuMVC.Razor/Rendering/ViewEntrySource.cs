@@ -14,30 +14,20 @@ namespace FubuMVC.Razor.Rendering
     {
         private readonly IViewEntryProviderCache _provider;
         private readonly ViewDescriptor _descriptor;
-        private readonly IViewDefinitionResolver _resolver;
-        public ViewEntrySource(ViewDescriptor descriptor, IViewEntryProviderCache provider, IViewDefinitionResolver resolver)
+        public ViewEntrySource(ViewDescriptor descriptor, IViewEntryProviderCache provider)
         {
             _descriptor = descriptor;
             _provider = provider;
-            _resolver = resolver;
         }
 
         public IRazorViewEntry GetViewEntry()
         {
-            return getViewEntry(x => x.ViewDescriptor);
+            return _provider.GetViewEntry(_descriptor);
         }
 
         public IRazorViewEntry GetPartialViewEntry()
         {
-            return getViewEntry(x => x.PartialDescriptor);
-        }
-
-        private IRazorViewEntry getViewEntry(Func<ViewDefinition, RazorViewDescriptor> sparkDescriptorSelector)
-        {
-            var definition = _resolver.Resolve(_descriptor);
-            var razorDescriptor = sparkDescriptorSelector(definition);
-            return _provider.GetViewEntry(razorDescriptor);
+            return _provider.GetViewEntry(_descriptor);
         }
     }
-
 }

@@ -1,42 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Razor.Parser.SyntaxTree;
+using FubuMVC.Razor.RazorModel;
+using FubuMVC.Razor.Rendering;
 using RazorEngine.Templating;
+using ITemplate = RazorEngine.Templating.ITemplate;
 
 namespace FubuMVC.Razor.RazorEngine.Compiler
 {
-    public abstract class ViewCompiler
+    public class ViewCompiler
     {
-        protected ViewCompiler()
+        public ViewCompiler()
         {
             GeneratedViewId = Guid.NewGuid();
         }
 
-        public string BaseClass { get; set; }
-        public RazorViewDescriptor Descriptor { get; set; }
-        public string ViewClassFullName { get; set; }
+        public Guid GeneratedViewId { get; private set; }
+        public ITemplateService TemplateService { get; set; }
+        public ViewDescriptor Descriptor { get; set; }
 
-        public string SourceCode { get; set; }
-        public Type CompiledType { get; set; }
-        public Guid GeneratedViewId { get; set; }
-
-        public bool Debug { get; set; }
         public IEnumerable<string> UseNamespaces { get; set; }
-        public IEnumerable<string> UseAssemblies { get; set; }
-
-        public string TargetNamespace
-        {
-            get { return Descriptor == null ? null : Descriptor.TargetNamespace; }
-        }
-
-        public abstract void CompileView(IEnumerable<IList<Span>> viewTemplates, IEnumerable<IList<Span>> allResources);
-
-        public abstract void GenerateSourceCode(IEnumerable<IList<Span>> viewTemplates,
-                                                IEnumerable<IList<Span>> allResources);
 
         public ITemplate CreateInstance()
         {
-            return (ITemplate) Activator.CreateInstance(CompiledType);
+            var currentDescriptor = Descriptor;
+            var sourceCode = currentDescriptor.ViewLoader.ViewFile.GetSourceCode();
+            var returnTemplate = (IMayHaveLayout)TemplateService.CreateTemplate(sourceCode);
+            returnTemplate.TemplateService = TemplateService;
+            while(currentDescriptor.Master != null)
+            {
+                currentDescriptor = (ViewDescriptor)currentDescriptor.Master.Descriptor;
+                var layoutTemplate = (IMayHaveLayout)TemplateService.CreateTemplate(currentDescriptor.ViewLoader.ViewFile.GetSourceCode());
+                returnTemplate.Layout = layoutTemplate;
+            }
+            return returnTemplate;
         }
     }
 }

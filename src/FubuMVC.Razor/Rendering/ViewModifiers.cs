@@ -62,12 +62,12 @@ namespace FubuMVC.Razor.Rendering
 
     public class SiteResourceAttacher : BasicViewModifier
     {
-        private readonly IRazorViewEngine _engine;
+        private readonly IRazorViewEntryFactory _entryFactory;
         private readonly CurrentRequest _request;
 
-        public SiteResourceAttacher(IRazorViewEngine engine, IFubuRequest request)
+        public SiteResourceAttacher(IRazorViewEntryFactory entryFactory, IFubuRequest request)
         {
-            _engine = engine;
+            _entryFactory = entryFactory;
             _request = request.Get<CurrentRequest>();
         }
 
@@ -88,7 +88,7 @@ namespace FubuMVC.Razor.Rendering
             //TODO handle resource path
 
             return string.Empty;
-            //return _engine.ResourcePathManager.GetResourcePath(siteRoot, path);
+            //return _entryFactory.ResourcePathManager.GetResourcePath(siteRoot, path);
         }
     }
 }
