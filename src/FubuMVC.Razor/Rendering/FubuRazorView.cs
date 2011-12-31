@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Text;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -9,7 +11,7 @@ using RazorEngine.Templating;
 
 namespace FubuMVC.Razor.Rendering
 {
-    public abstract class FubuRazorView : TemplateBase, IFubuRazorView
+    public abstract class FubuRazorView : TemplateBase, IFubuRazorView, IMayHaveLayout
     {
         private readonly Cache<Type, object> _services = new Cache<Type, object>();
 
@@ -30,9 +32,15 @@ namespace FubuMVC.Razor.Rendering
             return (T)ServiceLocator.GetInstance(typeof(T));
         }
 
-        public void Write(object content)
+        public virtual void Run()
         {
-            //Output.Write(content);
+            var result = ((ITemplate) this).Run(new ExecuteContext());
+            ServiceLocator.GetInstance<IOutputWriter>().WriteHtml(result);
+        }
+
+        protected override ITemplate ResolveLayout(string name)
+        {
+            return Layout;
         }
 
         public IUrlRegistry Urls
@@ -54,6 +62,8 @@ namespace FubuMVC.Razor.Rendering
             //return Get<IHtmlEncoder>().Encode(value);
             return null;
         }
+
+        public ITemplate Layout { get; set; }
     }
 
     public abstract class FubuRazorView<TViewModel> : FubuRazorView, IFubuPage<TViewModel> where TViewModel : class
@@ -73,6 +83,12 @@ namespace FubuMVC.Razor.Rendering
             Model = model;
         }
 
+        public override void Run()
+        {
+            SetModel(ServiceLocator.GetInstance<IFubuRequest>());
+            base.Run();
+        }
+
         public TViewModel Model { get; set; }
 
         public object GetModel()
@@ -87,8 +103,8 @@ namespace FubuMVC.Razor.Rendering
         //Dictionary<string, string> OnceTable { set; get; }
         //Dictionary<string, object> Globals { set; get; }
         //TextWriter Output { get; set; }
-        
-        void Execute();
+
+        void Run();
         //Guid GeneratedViewId { get; }
 
         Func<string, string> SiteResource { get; set; }
@@ -116,10 +132,10 @@ namespace FubuMVC.Razor.Rendering
         public CompositeAction<IFubuRazorView> PreRender { get; set; }
         public CompositeAction<IFubuRazorView> PostRender { get; set; }
 
-        public void Execute()
+        public void Run()
         {
             PreRender.Do(_view);
-            _view.Execute();
+            _view.Run();
             PostRender.Do(_view);
         }
 
@@ -160,5 +176,10 @@ namespace FubuMVC.Razor.Rendering
         {
             _view.Write(content);
         }
+    }
+
+    public interface IMayHaveLayout : ITemplate
+    {
+        ITemplate Layout { get; set; }
     }
 }

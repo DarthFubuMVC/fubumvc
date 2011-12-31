@@ -9,14 +9,6 @@ namespace FubuMVC.Razor.RazorModel
         public TemplateRegistry() {}
         public TemplateRegistry(IEnumerable<ITemplate> templates) : base(templates) { }
 
-        public IEnumerable<ITemplate> BindingsForView(string viewPath)
-        {
-            return this
-                .Where(x => x.ViewPath == viewPath && x.Descriptor is ViewDescriptor)
-                .SelectMany(x => x.Descriptor.As<ViewDescriptor>().Bindings)
-                .ToList();
-        }
-
         public IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories)
         {
             return directories
@@ -46,7 +38,6 @@ namespace FubuMVC.Razor.RazorModel
 
     public interface ITemplateRegistry
     {
-        IEnumerable<ITemplate> BindingsForView(string viewPath);
         IEnumerable<ITemplate> ByNameUnderDirectories(string name, IEnumerable<string> directories);
         IEnumerable<ITemplate> AllTemplates();
         IEnumerable<ITemplate> ByOrigin(string origin);

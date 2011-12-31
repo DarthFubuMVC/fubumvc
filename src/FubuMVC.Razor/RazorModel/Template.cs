@@ -31,5 +31,25 @@
         {
             return FilePath;
         }
+
+        public bool Equals(Template other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.FilePath, FilePath);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Template)) return false;
+            return Equals((Template) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (FilePath != null ? FilePath.GetHashCode() : 0);
+        }
     }
 }
