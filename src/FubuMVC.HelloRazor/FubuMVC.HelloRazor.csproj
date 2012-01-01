@@ -141,4 +141,10 @@
   <ItemGroup>
     <Content Include="Shared\_Layout.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controllers\Home\HelloPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Shared\_Html.cshtml" />
+  </ItemGroup>
 </Project>
