@@ -62,8 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITemplateServiceWrapper.cs" />
-    <Compile Include="FileSystem\FileSystemViewFile.cs" />
-    <Compile Include="FileSystem\FileSystemViewFolder.cs" />
+    <Compile Include="RazorModel\FileSystemViewFile.cs" />
     <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="ITemplateComposerConvention.cs" />
     <Compile Include="ITemplateFinderConvention.cs" />

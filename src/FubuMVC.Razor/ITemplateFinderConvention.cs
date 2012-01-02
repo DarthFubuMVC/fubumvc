@@ -29,6 +29,7 @@ namespace FubuMVC.Razor
         public void Configure(TemplateFinder finder)
         {
             finder.IncludeFile("*cshtml");
+            finder.IncludeFile("*vbhtml");
 
             finder.ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder);
             finder.ExcludeHostDirectory(FubuMvcPackageFacility.FubuPackagesFolder, FubuMvcPackageFacility.FubuContentFolder);
