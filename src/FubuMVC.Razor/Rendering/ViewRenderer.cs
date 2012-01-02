@@ -6,6 +6,7 @@ namespace FubuMVC.Razor.Rendering
     public interface IViewRenderer
     {
         void Render();
+        void RenderPartial();
     }
 
     public class ViewRenderer : IViewRenderer
@@ -22,6 +23,11 @@ namespace FubuMVC.Razor.Rendering
         public void Render()
         {
             _strategies.First(x => x.Applies()).Invoke(_renderAction);
+        }
+
+        public void RenderPartial()
+        {
+            _strategies.First(x => x.Applies()).InvokePartial(_renderAction);
         }
     }
 }

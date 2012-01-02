@@ -25,11 +25,6 @@ namespace FubuMVC.Razor.RazorModel
             return Path.GetFileNameWithoutExtension(template.FilePath);
         }
 
-        public static bool IsPartial(this ITemplate template)
-		{
-            return Path.GetFileName(template.FilePath).StartsWith("_") && template.IsRazorView();
-        }
-
         public static bool IsRazorView(this ITemplate template)
 		{
             return Path.GetExtension(template.FilePath).EqualsIgnoreCase(".cshtml");
