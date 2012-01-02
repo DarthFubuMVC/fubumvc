@@ -3,7 +3,6 @@ using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Activation;
 using FubuMVC.Core;
-using FubuMVC.Razor.RazorEngine;
 
 namespace FubuMVC.Razor.Rendering
 {
@@ -60,35 +59,35 @@ namespace FubuMVC.Razor.Rendering
         }
     }
 
-    public class SiteResourceAttacher : BasicViewModifier
-    {
-        private readonly IRazorViewEntryFactory _entryFactory;
-        private readonly CurrentRequest _request;
+    //public class SiteResourceAttacher : BasicViewModifier
+    //{
+    //    private readonly IRazorViewEntryFactory _entryFactory;
+    //    private readonly CurrentRequest _request;
 
-        public SiteResourceAttacher(IRazorViewEntryFactory entryFactory, IFubuRequest request)
-        {
-            _entryFactory = entryFactory;
-            _request = request.Get<CurrentRequest>();
-        }
+    //    public SiteResourceAttacher(IRazorViewEntryFactory entryFactory, IFubuRequest request)
+    //    {
+    //        _entryFactory = entryFactory;
+    //        _request = request.Get<CurrentRequest>();
+    //    }
 
-        public override IFubuRazorView Modify(IFubuRazorView view)
-        {
-            return view.Modify(v => v.SiteResource = SiteResource);
-        }
+    //    public override IFubuRazorView Modify(IFubuRazorView view)
+    //    {
+    //        return view.Modify(v => v.SiteResource = SiteResource);
+    //    }
 
-        public string SiteResource(string path)
-        {
-            var appPath = _request.ApplicationPath;
-            var siteRoot = string.Empty;
-            if (appPath.IsNotEmpty() && !string.Equals(appPath, "/"))
-            {
-                siteRoot = "/{0}".ToFormat(appPath.Trim('/'));
-            }
+    //    public string SiteResource(string path)
+    //    {
+    //        var appPath = _request.ApplicationPath;
+    //        var siteRoot = string.Empty;
+    //        if (appPath.IsNotEmpty() && !string.Equals(appPath, "/"))
+    //        {
+    //            siteRoot = "/{0}".ToFormat(appPath.Trim('/'));
+    //        }
 
-            //TODO handle resource path
+    //        //TODO handle resource path
 
-            return string.Empty;
-            //return _entryFactory.ResourcePathManager.GetResourcePath(siteRoot, path);
-        }
-    }
+    //        return string.Empty;
+    //        //return _entryFactory.ResourcePathManager.GetResourcePath(siteRoot, path);
+    //    }
+    //}
 }

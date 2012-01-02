@@ -34,8 +34,9 @@
     <Reference Include="Bottles">
       <HintPath>..\packages\Bottles.0.9.1.163\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.3.98\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore, Version=0.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FubuCore.0.9.4.104\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.0.0.51\lib\4.0\HtmlTags.dll</HintPath>
@@ -61,27 +62,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITemplateServiceWrapper.cs" />
-    <Compile Include="RazorEngine\CompiledViewEntry.cs" />
-    <Compile Include="RazorEngine\Compiler\ViewCompiler.cs" />
     <Compile Include="FileSystem\FileSystemViewFile.cs" />
     <Compile Include="FileSystem\FileSystemViewFolder.cs" />
     <Compile Include="FubuRegistryExtensions.cs" />
-    <Compile Include="RazorEngine\IRazorViewEntryFactory.cs" />
-    <Compile Include="RazorEngine\IRazorViewEntry.cs" />
     <Compile Include="ITemplateComposerConvention.cs" />
     <Compile Include="ITemplateFinderConvention.cs" />
-    <Compile Include="RazorEngine\Parsing\ViewLoader.cs" />
+    <Compile Include="Registration\ViewParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RazorEngine\RazorViewEntryFactory.cs" />
     <Compile Include="Registration\GenericParser.cs" />
     <Compile Include="Registration\Nodes\RazorViewNode.cs" />
     <Compile Include="Rendering\FubuRazorView.cs" />
     <Compile Include="Rendering\IHtmlEncoder.cs" />
-    <Compile Include="Rendering\NestedOutput.cs" />
     <Compile Include="Rendering\RenderAction.cs" />
     <Compile Include="Rendering\RenderStrategies.cs" />
-    <Compile Include="Rendering\ViewEntryProviderCache.cs" />
-    <Compile Include="Rendering\ViewEntrySource.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewModifiers.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
@@ -108,7 +101,6 @@
     <Compile Include="RazorModel\TemplateFinder.cs" />
     <Compile Include="RazorModel\TemplatePolicies.cs" />
     <Compile Include="RazorModel\TemplateRegistry.cs" />
-    <Compile Include="RazorModel\TemplateViewFolder.cs" />
     <Compile Include="RazorViewFacility.cs" />
     <Compile Include="RazorViewToken.cs" />
     <Compile Include="TemplateServiceWrapper.cs" />
@@ -123,6 +115,7 @@
       <Name>FubuMVC.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

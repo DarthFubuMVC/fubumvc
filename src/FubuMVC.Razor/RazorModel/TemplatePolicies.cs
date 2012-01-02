@@ -10,32 +10,32 @@ namespace FubuMVC.Razor.RazorModel
         void Apply(ITemplate template);
     }
 
-    public class NamespacePolicy : ITemplatePolicy
-    {
-        public bool Matches(ITemplate template)
-        {
-            var descriptor = template.Descriptor as ViewDescriptor;
+    //public class NamespacePolicy : ITemplatePolicy
+    //{
+    //    public bool Matches(ITemplate template)
+    //    {
+    //        var descriptor = template.Descriptor as ViewDescriptor;
 						
-            return descriptor != null
-				&& descriptor.HasViewModel() 
-				&& descriptor.Namespace.IsEmpty();
-        }
+    //        return descriptor != null
+    //            && descriptor.HasViewModel() 
+    //            && descriptor.Namespace.IsEmpty();
+    //    }
 
-        public void Apply(ITemplate template)
-        {
-            var relativePath = template.RelativePath();
-            var relativeNamespace = Path.GetDirectoryName(relativePath);
-            var descriptor = template.Descriptor.As<ViewDescriptor>();
-            var nspace = descriptor.ViewModel.Assembly.GetName().Name;
+    //    public void Apply(ITemplate template)
+    //    {
+    //        var relativePath = template.RelativePath();
+    //        var relativeNamespace = Path.GetDirectoryName(relativePath);
+    //        var descriptor = template.Descriptor.As<ViewDescriptor>();
+    //        var nspace = descriptor.ViewModel.Assembly.GetName().Name;
 			
-            if (relativeNamespace.IsNotEmpty())
-            {
-                nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
-            }
+    //        if (relativeNamespace.IsNotEmpty())
+    //        {
+    //            nspace += "." + relativeNamespace.Replace(Path.DirectorySeparatorChar, '.');
+    //        }
 			
-            descriptor.Namespace = nspace;
-        }
-    }
+    //        descriptor.Namespace = nspace;
+    //    }
+    //}
 
     public class ViewPathPolicy : ITemplatePolicy
     {

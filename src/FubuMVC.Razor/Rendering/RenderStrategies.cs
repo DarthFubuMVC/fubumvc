@@ -15,25 +15,6 @@ namespace FubuMVC.Razor.Rendering
         public void Invoke(IRenderAction action) { action.Render(); }
     }
 
-    public class NestedRenderStrategy : IRenderStrategy
-    {
-        private readonly NestedOutput _nestedOutput;
-        public NestedRenderStrategy(NestedOutput nestedOutput)
-        {
-		    _nestedOutput = nestedOutput;
-        }
-
-        public bool Applies()
-        {
-            return _nestedOutput.IsActive();
-        }
-
-        public void Invoke(IRenderAction action)
-        {
-            action.RenderPartial();
-        }
-    }
-
     public class AjaxRenderStrategy : IRenderStrategy
     {
         private readonly IRequestData _requestData;		

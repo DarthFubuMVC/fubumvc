@@ -1,10 +1,14 @@
-﻿namespace FubuMVC.Razor.RazorModel
+﻿using System;
+
+namespace FubuMVC.Razor.RazorModel
 {
     public interface ITemplate
     {
         string FilePath { get; }
         string RootPath { get; }
         string Origin { get; }
+        bool IsCurrent();
+        Guid GeneratedViewId { get; }
 		
         string ViewPath { get; set; }
         IRazorDescriptor Descriptor { get; set; }
@@ -17,15 +21,22 @@
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
+            GeneratedViewId = Guid.NewGuid();
             Descriptor = new NulloDescriptor();
         }
 
         public string FilePath { get; private set; }
         public string RootPath { get; private set; }
         public string Origin { get; private set; }
+        public Guid GeneratedViewId { get; private set; }
 		
         public string ViewPath { get; set; }
         public IRazorDescriptor Descriptor { get; set; }
+
+        public bool IsCurrent()
+        {
+            return Descriptor.IsCurrent();
+        }
 
 	    public override string ToString()
         {

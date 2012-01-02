@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
+using FubuMVC.Razor.Registration;
 
 namespace FubuMVC.Razor.RazorModel
 {
@@ -70,8 +71,9 @@ namespace FubuMVC.Razor.RazorModel
 
         private BindRequest createBindRequest(ITemplate template, ITemplateRegistry templateRegistry)
         {
-            var viewLoader = _viewLoaderLocator.Locate(template);
-            var chunks = viewLoader.Load(template.FilePath);
+            var viewFile = _viewLoaderLocator.Locate(template);
+            var parser = new ViewParser(viewFile);
+            var chunks = parser.Parse();
             return new BindRequest
             {
                 Target = template,
@@ -81,7 +83,7 @@ namespace FubuMVC.Razor.RazorModel
                 ViewModelType = chunks.ViewModel(),
                 Namespaces = chunks.Namespaces(),
                 Logger = RazorLogger.Default(),
-                ViewLoader = viewLoader
+                ViewFile = viewFile
             };
         }
     }    
