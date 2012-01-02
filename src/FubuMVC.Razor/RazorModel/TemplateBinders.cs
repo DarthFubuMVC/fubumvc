@@ -91,7 +91,6 @@ namespace FubuMVC.Razor.RazorModel
             return descriptor != null
                 && descriptor.Master == null
                 && (request.ViewModelType.IsNotEmpty() || request.Master.IsNotEmpty())
-                && !request.Target.IsPartial()
                 && request.Master != string.Empty;
         }
 
@@ -122,7 +121,6 @@ namespace FubuMVC.Razor.RazorModel
 
             return descriptor != null
                    && !descriptor.HasViewModel()
-                   && !request.Target.IsPartial()
                    && request.ViewModelType.IsNotEmpty()
                    && GenericParser.IsGeneric(request.ViewModelType);
         }
@@ -155,7 +153,6 @@ namespace FubuMVC.Razor.RazorModel
 
             return descriptor != null
                    && !descriptor.HasViewModel()
-                   && !request.Target.IsPartial()
                    && request.ViewModelType.IsNotEmpty()
                    && GenericParser.IsGeneric(request.ViewModelType) == false;
         }

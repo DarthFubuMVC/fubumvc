@@ -1,22 +1,31 @@
-﻿using FubuMVC.Core;
-using FubuMVC.Core.Behaviors;
+﻿using FubuMVC.Core.Behaviors;
 using FubuMVC.Razor.Rendering;
 
 namespace FubuMVC.Razor
 {
-    public class RenderRazorBehavior : BasicBehavior
+    public class RenderRazorBehavior : IActionBehavior
     {
         private readonly IViewRenderer _renderer;
+
         public RenderRazorBehavior(IViewRenderer renderer)
-            : base(PartialBehavior.Executes)
         {
             _renderer = renderer;
         }
 
-        protected override DoNext performInvoke()
+        public IActionBehavior InsideBehavior { get; set; }
+
+        public void Invoke()
         {
             _renderer.Render();
-            return DoNext.Continue;
+            if(InsideBehavior != null)
+                InsideBehavior.Invoke();
+        }
+
+        public void InvokePartial()
+        {
+            _renderer.RenderPartial();
+            if(InsideBehavior != null)
+                InsideBehavior.InvokePartial();
         }
     }
 }

@@ -47,7 +47,7 @@ namespace FubuMVC.Razor.Rendering
         public virtual void Render()
         {
             var result = ((ITemplate) this).Run(new ExecuteContext());
-            ServiceLocator.GetInstance<IOutputWriter>().WriteHtml(result);
+            Get<IOutputWriter>().WriteHtml(result);
         }
 
         public virtual void RenderPartial()
@@ -66,7 +66,17 @@ namespace FubuMVC.Razor.Rendering
             return Get<IHtmlEncoder>().Encode(value);
         }
 
-        public ITemplate Layout { get; set; }
+        private ITemplate _layout;
+        public ITemplate Layout
+        {
+            get { return _layout; }
+            set
+            {
+                _layout = value;
+                if (_Layout == null)
+                    _Layout = _layout.GetType().ToString();
+            }
+        }
     }
 
     public abstract class FubuRazorView<TViewModel> : FubuRazorView, IFubuPage<TViewModel> where TViewModel : class
