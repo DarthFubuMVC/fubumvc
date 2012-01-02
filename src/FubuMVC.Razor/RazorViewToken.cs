@@ -38,7 +38,7 @@ namespace FubuMVC.Razor
 
         public string Folder
         {
-            get { return _descriptor.Namespace; }
+            get { return string.Empty; }
         }
         public override string ToString()
         {

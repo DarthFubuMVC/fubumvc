@@ -4,40 +4,32 @@ using System.Linq;
 using System.Web.Razor.Parser.SyntaxTree;
 using FubuCore.Util;
 using FubuMVC.Razor.FileSystem;
-using FubuMVC.Razor.RazorEngine.Parsing;
 using RazorEngine.Spans;
 
 namespace FubuMVC.Razor.RazorModel
 {
     public interface IViewLoaderLocator
     {
-        IViewLoader Locate(ITemplate template);
+        IViewFile Locate(ITemplate template);
     }
 
     public class ViewLoaderLocator : IViewLoaderLocator
     {
-        private readonly Func<string, IViewFolder> _viewFolder;
-        private readonly Cache<string, IViewLoader> _loaders;
+        private readonly Cache<string, IViewFile> _loaders;
 
-        public ViewLoaderLocator() : this(path => new FileSystemViewFolder(path)) { }
-        public ViewLoaderLocator(Func<string, IViewFolder> viewFolder)
+        public ViewLoaderLocator()
         {
-            _viewFolder = viewFolder;
-
-            _loaders = new Cache<string, IViewLoader>(defaultLoaderByRoot);
+            _loaders = new Cache<string, IViewFile>(defaultLoaderByRoot);
         }
 
-        public IViewLoader Locate(ITemplate template)
+        public IViewFile Locate(ITemplate template)
         {
             return _loaders[template.FilePath];
         }
 
-        private ViewLoader defaultLoaderByRoot(string root)
+        private IViewFile defaultLoaderByRoot(string filePath)
         {
-            return new ViewLoader
-            {
-                ViewFolder = _viewFolder(root),
-            };
+            return new FileSystemViewFile(filePath);
         }
     }
 

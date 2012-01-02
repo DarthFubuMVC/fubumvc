@@ -1,7 +1,4 @@
-﻿using FubuMVC.Core.Runtime;
-using RazorEngine.Templating;
-
-namespace FubuMVC.Razor.Rendering
+﻿namespace FubuMVC.Razor.Rendering
 {
     public interface IRenderAction
     {
@@ -20,12 +17,12 @@ namespace FubuMVC.Razor.Rendering
 
         public void Render()
         {
-            _viewFactory.GetView().Run();
+            _viewFactory.GetView().Render();
         }
 
         public void RenderPartial()
         {
-            _viewFactory.GetPartialView().Run();
+            _viewFactory.GetView().RenderPartial();
         }
     }
 }

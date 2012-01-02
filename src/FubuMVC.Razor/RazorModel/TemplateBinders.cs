@@ -2,7 +2,7 @@
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
-using FubuMVC.Razor.RazorEngine.Parsing;
+using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.Registration;
 
 namespace FubuMVC.Razor.RazorModel
@@ -18,12 +18,12 @@ namespace FubuMVC.Razor.RazorModel
         TypePool Types { get; }
         ITemplateRegistry TemplateRegistry { get; }
         IRazorLogger Logger { get; }
-        IViewLoader ViewLoader { get; set; }
+        IViewFile ViewFile { get; set; }
     }
 
     public class BindRequest : IBindRequest
     {
-        public IViewLoader ViewLoader { get; set; }
+        public IViewFile ViewFile { get; set; }
         public ITemplate Target { get; set; }
 
         public string Master { get; set; }
@@ -61,13 +61,13 @@ namespace FubuMVC.Razor.RazorModel
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
             return descriptor != null
-                   && descriptor.ViewLoader == null;
+                   && descriptor.ViewFile == null;
         }
 
         public void Bind(IBindRequest request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
-            descriptor.ViewLoader = request.ViewLoader;
+            descriptor.ViewFile = request.ViewFile;
         }
     }
 

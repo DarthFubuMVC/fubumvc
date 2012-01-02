@@ -19,9 +19,8 @@ namespace FubuMVC.Razor.Registration.Nodes
         {
             var renderer = def.DependencyByType(typeof (IViewRenderer), typeof (ViewRenderer));
 
-            var viewEntrySource = renderer.DependencyByType(typeof(IRenderAction), typeof(RenderAction))
-                .DependencyByType(typeof(IViewFactory), typeof(ViewFactory))
-                .DependencyByType(typeof(IViewEntrySource), typeof(ViewEntrySource));
+            var viewEntrySource = renderer.DependencyByType(typeof (IRenderAction), typeof (RenderAction))
+                .DependencyByType(typeof (IViewFactory), typeof (ViewFactory));
 
             viewEntrySource.DependencyByValue(_descriptor);
         }

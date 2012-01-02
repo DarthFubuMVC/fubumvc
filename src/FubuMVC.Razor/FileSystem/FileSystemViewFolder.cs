@@ -18,7 +18,6 @@ namespace FubuMVC.Razor.FileSystem
             get { return _basePath; }
         }
 
-
         public IViewFile GetViewSource(string path)
         {
             string fullPath = Path.Combine(_basePath, path);
@@ -46,9 +45,7 @@ namespace FubuMVC.Razor.FileSystem
     public interface IViewFolder
     {
         IViewFile GetViewSource(string path);
-
         IList<string> ListViews(string path);
-
         bool HasView(string path);
     }
 }

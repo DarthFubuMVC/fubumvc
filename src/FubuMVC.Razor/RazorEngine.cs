@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
-using FubuMVC.Razor.RazorEngine;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
 using RazorEngine.Configuration;
@@ -54,7 +52,7 @@ namespace FubuMVC.Razor
                     .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
                     .AddBinder<ViewLoaderBinder>()
-                    .Apply<NamespacePolicy>()
+                    //.Apply<NamespacePolicy>()
                     .Apply<ViewPathPolicy>());
         }
 
@@ -137,16 +135,13 @@ namespace FubuMVC.Razor
 
             services.FillType<IActivator, RazorActivator>();
 
-            services.FillType<IRenderStrategy, NestedRenderStrategy>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
-            services.SetServiceIfNone<IRazorViewEntryFactory, RazorViewEntryFactory>();
-            services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
 
             services.FillType<IViewModifier, PageActivation>();
-            services.FillType<IViewModifier, SiteResourceAttacher>();
+            //services.FillType<IViewModifier, SiteResourceAttacher>();
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
         }
@@ -197,38 +192,38 @@ namespace FubuMVC.Razor
             return source;
         }
 
-        public static RazorEngineRegistry ConfigureFinder<TConvention>(this RazorEngineRegistry Razor)
+        public static RazorEngineRegistry ConfigureFinder<TConvention>(this RazorEngineRegistry razor)
             where TConvention : ITemplateFinderConvention, new()
         {
-            return Razor.ConfigureFinder(new TConvention());
+            return razor.ConfigureFinder(new TConvention());
         }
 
-        public static RazorEngineRegistry ConfigureFinder(this RazorEngineRegistry Razor, Action<TemplateFinder> configure)
+        public static RazorEngineRegistry ConfigureFinder(this RazorEngineRegistry razor, Action<TemplateFinder> configure)
         {
-            return Razor.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
+            return razor.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
         }
 
-        public static RazorEngineRegistry FindWith<TFinder>(this RazorEngineRegistry Razor)
+        public static RazorEngineRegistry FindWith<TFinder>(this RazorEngineRegistry razor)
             where TFinder : ITemplateFinder, new()
         {
-            return Razor.FindWith(new TFinder());
+            return razor.FindWith(new TFinder());
         }
 
-        public static RazorEngineRegistry ComposeWith<TComposer>(this RazorEngineRegistry Razor)
+        public static RazorEngineRegistry ComposeWith<TComposer>(this RazorEngineRegistry razor)
             where TComposer : ITemplateComposer, new()
         {
-            return Razor.ComposeWith(new TComposer());
+            return razor.ComposeWith(new TComposer());
         }
 
-        public static RazorEngineRegistry ConfigureComposer<TConvention>(this RazorEngineRegistry Razor)
+        public static RazorEngineRegistry ConfigureComposer<TConvention>(this RazorEngineRegistry razor)
             where TConvention : ITemplateComposerConvention, new()
         {
-            return Razor.ConfigureComposer(new TConvention());
+            return razor.ConfigureComposer(new TConvention());
         }
 
-        public static RazorEngineRegistry ConfigureComposer(this RazorEngineRegistry Razor, Action<TemplateComposer> configure)
+        public static RazorEngineRegistry ConfigureComposer(this RazorEngineRegistry razor, Action<TemplateComposer> configure)
         {
-            return Razor.ConfigureComposer(new LambdaTemplateComposerConvention(configure));
+            return razor.ConfigureComposer(new LambdaTemplateComposerConvention(configure));
         }
     }
 }

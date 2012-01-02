@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using System.Text;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -11,7 +9,7 @@ using RazorEngine.Templating;
 
 namespace FubuMVC.Razor.Rendering
 {
-    public abstract class FubuRazorView : TemplateBase, IFubuRazorView, IMayHaveLayout
+    public abstract class FubuRazorView : TemplateBase, IFubuRazorView
     {
         private readonly Cache<Type, object> _services = new Cache<Type, object>();
 
@@ -32,12 +30,6 @@ namespace FubuMVC.Razor.Rendering
             return (T)ServiceLocator.GetInstance(typeof(T));
         }
 
-        public virtual void Run()
-        {
-            var result = ((ITemplate) this).Run(new ExecuteContext());
-            ServiceLocator.GetInstance<IOutputWriter>().WriteHtml(result);
-        }
-
         protected override ITemplate ResolveLayout(string name)
         {
             return Layout;
@@ -52,6 +44,18 @@ namespace FubuMVC.Razor.Rendering
 
         string IFubuPage.ElementPrefix { get; set; }
 
+        public virtual void Render()
+        {
+            var result = ((ITemplate) this).Run(new ExecuteContext());
+            ServiceLocator.GetInstance<IOutputWriter>().WriteHtml(result);
+        }
+
+        public virtual void RenderPartial()
+        {
+            _Layout = null;
+            Render();
+        }
+
         public HtmlTag Tag(string tagName)
         {
             return new HtmlTag(tagName);
@@ -59,8 +63,7 @@ namespace FubuMVC.Razor.Rendering
 
         public string H(object value)
         {
-            //return Get<IHtmlEncoder>().Encode(value);
-            return null;
+            return Get<IHtmlEncoder>().Encode(value);
         }
 
         public ITemplate Layout { get; set; }
@@ -83,10 +86,16 @@ namespace FubuMVC.Razor.Rendering
             Model = model;
         }
 
-        public override void Run()
+        public override void Render()
         {
             SetModel(ServiceLocator.GetInstance<IFubuRequest>());
-            base.Run();
+            base.Render();
+        }
+
+        public override void RenderPartial()
+        {
+            SetModel(ServiceLocator.GetInstance<IFubuRequest>());
+            base.RenderPartial();
         }
 
         public TViewModel Model { get; set; }
@@ -99,14 +108,9 @@ namespace FubuMVC.Razor.Rendering
 
     public interface IFubuRazorView : IFubuPage
     {
-        //Dictionary<string, TextWriter> Content { set; get; }
-        //Dictionary<string, string> OnceTable { set; get; }
-        //Dictionary<string, object> Globals { set; get; }
-        //TextWriter Output { get; set; }
-
-        void Run();
-        //Guid GeneratedViewId { get; }
-
+        void Render();
+        void RenderPartial();
+        ITemplate Layout { get; set; }
         Func<string, string> SiteResource { get; set; }
     }
 
@@ -117,69 +121,5 @@ namespace FubuMVC.Razor.Rendering
             modify(view);
             return view;
         }
-    }
-
-    public class FubuRazorViewDecorator : IFubuRazorView
-    {
-        private readonly IFubuRazorView _view;
-        public FubuRazorViewDecorator(IFubuRazorView view)
-        {
-            _view = view;
-            PreRender = new CompositeAction<IFubuRazorView>();
-            PostRender = new CompositeAction<IFubuRazorView>();
-        }
-
-        public CompositeAction<IFubuRazorView> PreRender { get; set; }
-        public CompositeAction<IFubuRazorView> PostRender { get; set; }
-
-        public void Run()
-        {
-            PreRender.Do(_view);
-            _view.Run();
-            PostRender.Do(_view);
-        }
-
-        public Func<string, string> SiteResource
-        {
-            get { return _view.SiteResource; }
-            set { _view.SiteResource = value; }
-        }
-
-        public string ElementPrefix
-        {
-            get { return _view.ElementPrefix; }
-            set { _view.ElementPrefix = value; }
-        }
-
-        public IServiceLocator ServiceLocator
-        {
-            get { return _view.ServiceLocator; }
-            set { _view.ServiceLocator = value; }
-        }
-
-        public IUrlRegistry Urls
-        {
-            get { return _view.Urls; }
-        }
-
-        public T Get<T>()
-        {
-            return _view.Get<T>();
-        }
-
-        public T GetNew<T>()
-        {
-            return _view.GetNew<T>();
-        }
-
-        public void Write(object content)
-        {
-            _view.Write(content);
-        }
-    }
-
-    public interface IMayHaveLayout : ITemplate
-    {
-        ITemplate Layout { get; set; }
     }
 }

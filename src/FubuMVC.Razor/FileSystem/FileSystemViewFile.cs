@@ -26,22 +26,24 @@ namespace FubuMVC.Razor.FileSystem
 
         public string GetSourceCode()
         {
-            var currentModified = LastModified;
-            if (_source != null && _lastModified == currentModified)
-                return _source;
             using(var fileStream = OpenViewStream())
             using(var reader = new StreamReader(fileStream))
             {
                 _source = reader.ReadToEnd();
             }
-            _lastModified = currentModified;
             return _source;
+        }
+
+        public bool IsCurrent()
+        {
+            return _lastModified == LastModified;
         }
     }
 
     public interface IViewFile
     {
         long LastModified { get; }
+        bool IsCurrent();
         Stream OpenViewStream();
         string GetSourceCode();
     }
