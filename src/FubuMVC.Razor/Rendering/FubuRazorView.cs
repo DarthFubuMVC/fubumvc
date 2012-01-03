@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
@@ -61,9 +62,12 @@ namespace FubuMVC.Razor.Rendering
             return new HtmlTag(tagName);
         }
 
-        public string H(object value)
+        public override void Write(object value)
         {
-            return Get<IHtmlEncoder>().Encode(value);
+            if(value is IHtmlString)
+                base.Write(new EncodedString(value));
+            else
+                base.Write(value);
         }
 
         private ITemplate _layout;

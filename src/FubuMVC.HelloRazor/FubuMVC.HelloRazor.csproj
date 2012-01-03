@@ -69,9 +69,9 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\styles.css" />
+    <Content Include="content\styles\styles.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\jquery-1.4.2.js" />
+    <Content Include="content\scripts\jquery-1.4.2.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
