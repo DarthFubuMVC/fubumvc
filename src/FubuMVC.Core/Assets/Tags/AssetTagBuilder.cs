@@ -26,7 +26,8 @@ namespace FubuMVC.Core.Assets.Tags
             _builders[MimeType.Javascript] = (subject, url) =>
             {
                 return new HtmlTag("script")
-                    .Attr("type", MimeType.Javascript.Value)
+                    // http://stackoverflow.com/a/1288319/75194 
+                    .Attr("type", "text/javascript")
                     .Attr("src", url);
             };
 
