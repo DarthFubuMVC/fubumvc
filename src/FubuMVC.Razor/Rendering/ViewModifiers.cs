@@ -59,6 +59,26 @@ namespace FubuMVC.Razor.Rendering
         }
     }
 
+    public class LayoutActivation : BasicViewModifier
+    {
+        private readonly IPageActivator _pageActivator;
+
+        public LayoutActivation(IPageActivator pageActivator)
+        {
+            _pageActivator = pageActivator;
+        }
+
+        public override IFubuRazorView Modify(IFubuRazorView view)
+        {
+            if (view.Layout != null)
+            {
+                view.Layout.As<IFubuRazorView>().ServiceLocator = view.ServiceLocator;
+                Modify(view.Layout.As<IFubuRazorView>());
+            }
+            return view;
+        }
+    }
+
     //public class SiteResourceAttacher : BasicViewModifier
     //{
     //    private readonly IRazorViewEntryFactory _entryFactory;

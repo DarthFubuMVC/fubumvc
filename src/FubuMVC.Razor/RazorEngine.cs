@@ -141,9 +141,8 @@ namespace FubuMVC.Razor
             services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
 
             services.FillType<IViewModifier, PageActivation>();
+            services.FillType<IViewModifier, LayoutActivation>();
             //services.FillType<IViewModifier, SiteResourceAttacher>();
-
-            services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
         }
 
         private IPackageLog getLogger()
