@@ -45,16 +45,16 @@ namespace FubuMVC.Razor.Rendering
 
         string IFubuPage.ElementPrefix { get; set; }
 
-        public virtual void Render()
+        void IFubuRazorView.Render()
         {
             var result = ((ITemplate) this).Run(new ExecuteContext());
             Get<IOutputWriter>().WriteHtml(result);
         }
 
-        public virtual void RenderPartial()
+        void IFubuRazorView.RenderPartial()
         {
             _Layout = null;
-            Render();
+            ((IFubuRazorView)this).Render();
         }
 
         public HtmlTag Tag(string tagName)
@@ -83,7 +83,7 @@ namespace FubuMVC.Razor.Rendering
         }
     }
 
-    public abstract class FubuRazorView<TViewModel> : FubuRazorView, IFubuPage<TViewModel> where TViewModel : class
+    public abstract class FubuRazorView<TViewModel> : FubuRazorView, IFubuRazorView, IFubuPage<TViewModel> where TViewModel : class
     {
         public void SetModel(IFubuRequest request)
         {
@@ -100,16 +100,17 @@ namespace FubuMVC.Razor.Rendering
             Model = model;
         }
 
-        public override void Render()
+        void IFubuRazorView.Render()
         {
             SetModel(ServiceLocator.GetInstance<IFubuRequest>());
-            base.Render();
+            var result = ((ITemplate) this).Run(new ExecuteContext());
+            Get<IOutputWriter>().WriteHtml(result);
         }
 
-        public override void RenderPartial()
+        void IFubuRazorView.RenderPartial()
         {
-            SetModel(ServiceLocator.GetInstance<IFubuRequest>());
-            base.RenderPartial();
+            _Layout = null;
+            ((IFubuRazorView)this).Render();
         }
 
         public TViewModel Model { get; set; }
