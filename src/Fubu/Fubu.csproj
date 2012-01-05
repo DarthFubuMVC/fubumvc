@@ -50,10 +50,6 @@
     <Reference Include="Gate, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
     </Reference>
-    <Reference Include="Gate.Helpers, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\gate\Gate.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="Gate.Kayak, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gate.Kayak.0.1.4\lib\Gate.Kayak.dll</HintPath>
     </Reference>
