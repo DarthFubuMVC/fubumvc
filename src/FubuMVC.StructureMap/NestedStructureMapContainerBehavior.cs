@@ -6,11 +6,12 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap
 {
-    public class NestedStructureMapContainerBehavior : IActionBehavior
+    public class NestedStructureMapContainerBehavior : IEntrypointActionBehavior
     {
         private readonly ServiceArguments _arguments;
         private readonly Guid _behaviorId;
         private readonly IContainer _container;
+        private IContainer _nested;
 
         public NestedStructureMapContainerBehavior(IContainer container, ServiceArguments arguments, Guid behaviorId)
         {
@@ -19,22 +20,24 @@ namespace FubuMVC.StructureMap
             _behaviorId = behaviorId;
         }
 
-
         public void Invoke()
         {
-            using (var nested = _container.GetNestedContainer())
-            {
-                nested.Configure(x => _arguments.EachService((type, value) => x.For(type).Use(value)));
-                var behavior = nested.GetInstance<IActionBehavior>(_behaviorId.ToString());
+            _nested = _container.GetNestedContainer();
+            _nested.Configure(x => _arguments.EachService((type, value) => x.For(type).Use(value)));
+            var behavior = _nested.GetInstance<IActionBehavior>(_behaviorId.ToString());
 
-                behavior.Invoke();
-            }
+            behavior.Invoke();
         }
 
         public void InvokePartial()
         {
             // This should never be called
             throw new NotSupportedException();
+        }
+
+        public void Dispose()
+        {
+            _nested.Dispose();
         }
     }
 

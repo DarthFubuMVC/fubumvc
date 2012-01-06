@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\styles.css" />
+    <None Include="Controllers\Sleep\PartialSleepAsync.spark" />
+    <None Include="Controllers\Sleep\RemAsync.spark" />
     <None Include="Controllers\ThreePassRendering\ThreePassSample.spark" />
     <None Include="Controllers\ThreePassRendering\Shared\Application.spark" />
     <None Include="Controllers\ThreePassRendering\Shared\_Sidebar.spark" />
@@ -109,6 +111,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controllers\Family\FamilyController.cs" />
+    <Compile Include="Controllers\Sleep\SleepController.cs" />
     <Compile Include="Controllers\ThreePassRendering\ThreePassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

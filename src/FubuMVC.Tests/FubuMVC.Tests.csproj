@@ -165,6 +165,8 @@
     <Compile Include="Assets\Content\TransformationPolicyComparerTester.cs" />
     <Compile Include="Assets\Content\TransformerPolicyLibraryTester.cs" />
     <Compile Include="Assets\Content\TransformerPolicyTester.cs" />
+    <Compile Include="Behaviors\AsyncContinueWithBehaviorTests.cs" />
+    <Compile Include="Behaviors\AsyncInterceptExceptionBehaviorTester.cs" />
     <Compile Include="Behaviors\BasicBehaviorTester.cs" />
     <Compile Include="Behaviors\Conditional\building_conditional_behaviors_from_object_defs_testing.cs" />
     <Compile Include="Behaviors\Conditional\ConditionalBehaviorInvokerTester.cs" />
@@ -207,6 +209,7 @@
     <Compile Include="Registration\BehaviorAggregatorTester.cs" />
     <Compile Include="Registration\Conventions\actions_that_return_IDictionary_are_json.cs" />
     <Compile Include="Registration\Conventions\ApplyingACustomViewBagConvention.cs" />
+    <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConventionTester.cs" />
     <Compile Include="Registration\Conventions\JsonAttributeTesting.cs" />
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
@@ -316,6 +319,7 @@
     <Compile Include="Resources\ValidStubUrlRegistry.cs" />
     <Compile Include="Routing\StandardRoutePolicyTester.cs" />
     <Compile Include="Runtime\AspNetPassthroughConverterTester.cs" />
+    <Compile Include="Runtime\AsyncBehaviorInvokerTester.cs" />
     <Compile Include="Runtime\BasicSessionTester.cs" />
     <Compile Include="Runtime\BehaviorInvokerTester.cs" />
     <Compile Include="Runtime\FubuSmartRequestTester.cs" />

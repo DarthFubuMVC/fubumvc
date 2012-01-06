@@ -33,3 +33,4 @@
 !{this.LinkTo<FireInputModel>().Text("Light her up!")}
 !{this.LinkTo<WaterInputModel>().Text("Cool her down!")} 
 !{this.LinkTo<EarthViewModel>().Text("Go to ground!")} 
+!{this.LinkTo<RemInputModel>().Text("Get some sleep!")}

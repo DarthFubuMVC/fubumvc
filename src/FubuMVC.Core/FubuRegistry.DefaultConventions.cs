@@ -45,6 +45,7 @@ namespace FubuMVC.Core
 
             Policies.Add<AjaxContinuationPolicy>();
             Policies.Add<ContinuationHandlerConvention>();
+            Policies.Add<AsyncContinueWithHandlerConvention>();
             Policies.Add<HeaderWritingPolicy>();
             Policies.Add<ResourcePathRoutePolicy>();
 

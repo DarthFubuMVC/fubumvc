@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -47,6 +48,8 @@ namespace FubuMVC.Core.Registration.Nodes
                 return _handlerDependencies.Value;
             }
         }
+
+        public bool IsAsync { get { return Method.ReturnType.CanBeCastTo<Task>(); } }
 
         public override string Description { get { return "{0}.{1}({2}) : {3}".ToFormat(HandlerType.Name, Method.Name, getInputParameters(), HasOutput ? Method.ReturnType.Name : "void"); } }
 
@@ -115,7 +118,7 @@ namespace FubuMVC.Core.Registration.Nodes
                         Method.ReturnType);
             }
 
-            if (HasOutput && !HasInput)
+            if (HasOutput && !HasInput && OutputType() != typeof(Task))
             {
                 return typeof(ZeroInOneOutActionInvoker<,>)
                     .MakeGenericType(
@@ -143,9 +146,19 @@ namespace FubuMVC.Core.Registration.Nodes
             return new ValueDependency(lambda.GetType(), lambda);
         }
 
+        private Type getOutputTypeOrVoidTaskResult()
+        {
+            var genericArguments = Method.ReturnType.GetGenericArguments();
+            if (genericArguments.Length == 0)
+                return Method.ReturnType;
+            return genericArguments.First();
+        }
+
         public Type OutputType()
         {
-            return Method.ReturnType;
+            return Method.ReturnType.CanBeCastTo<Task>()
+                       ? getOutputTypeOrVoidTaskResult()
+                       : Method.ReturnType;
         }
 
         public Type InputType()
