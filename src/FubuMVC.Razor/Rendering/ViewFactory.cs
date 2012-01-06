@@ -29,13 +29,18 @@ namespace FubuMVC.Razor.Rendering
             return view;
         }
 
-        public IFubuRazorView CreateInstance()
+        private IFubuRazorView CreateInstance()
         {
-            var currentDescriptor = _viewDescriptor;
-            if (!_templateService.HasTemplate(currentDescriptor.Template.GeneratedViewId.ToString()) || !currentDescriptor.IsCurrent())
+            if (shouldCreateNewInstance())
                 return CompileNewInstance();
 
             return CreateExistingInstance();
+        }
+
+        private bool shouldCreateNewInstance()
+        {
+            return !_templateService.HasTemplate(_viewDescriptor.Template.GeneratedViewId.ToString()) 
+                || !_viewDescriptor.IsCurrent();
         }
 
         private IFubuRazorView CreateExistingInstance()

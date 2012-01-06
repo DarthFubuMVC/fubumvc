@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Registration;
+using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.Registration;
 
 namespace FubuMVC.Razor.RazorModel
@@ -17,12 +18,14 @@ namespace FubuMVC.Razor.RazorModel
         private readonly IList<ITemplatePolicy> _policies = new List<ITemplatePolicy>();
         private readonly TypePool _types;
         private readonly IViewLoaderLocator _viewLoaderLocator;
+        private readonly Func<IViewFile, IViewParser> _viewParser;
 
-        public TemplateComposer(TypePool types) : this(types, new ViewLoaderLocator()) { }
-        public TemplateComposer(TypePool types, IViewLoaderLocator viewLoaderLocator)
+        public TemplateComposer(TypePool types) : this(types, new ViewLoaderLocator(), viewFile => new ViewParser(viewFile)) { }
+        public TemplateComposer(TypePool types, IViewLoaderLocator viewLoaderLocator, Func<IViewFile, IViewParser> viewParser)
         {
             _types = types;
             _viewLoaderLocator = viewLoaderLocator;
+            _viewParser = viewParser;
         }
 
         public TemplateComposer AddBinder<T>() where T : ITemplateBinder, new()
@@ -72,7 +75,7 @@ namespace FubuMVC.Razor.RazorModel
         private BindRequest createBindRequest(ITemplate template, ITemplateRegistry templateRegistry)
         {
             var viewFile = _viewLoaderLocator.Locate(template);
-            var parser = new ViewParser(viewFile);
+            var parser = _viewParser(viewFile);
             var chunks = parser.Parse();
             return new BindRequest
             {
