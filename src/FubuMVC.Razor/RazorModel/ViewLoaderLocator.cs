@@ -15,10 +15,16 @@ namespace FubuMVC.Razor.RazorModel
 
     public class ViewLoaderLocator : IViewLoaderLocator
     {
+        private readonly Func<string, IViewFile> _viewFile;
         private readonly Cache<string, IViewFile> _loaders;
 
-        public ViewLoaderLocator()
+        public ViewLoaderLocator() : this(x => new FileSystemViewFile(x))
         {
+        }
+
+        public ViewLoaderLocator(Func<string, IViewFile> viewFile)
+        {
+            _viewFile = viewFile;
             _loaders = new Cache<string, IViewFile>(defaultLoaderByRoot);
         }
 
@@ -29,7 +35,7 @@ namespace FubuMVC.Razor.RazorModel
 
         private IViewFile defaultLoaderByRoot(string filePath)
         {
-            return new FileSystemViewFile(filePath);
+            return _viewFile(filePath);
         }
     }
 

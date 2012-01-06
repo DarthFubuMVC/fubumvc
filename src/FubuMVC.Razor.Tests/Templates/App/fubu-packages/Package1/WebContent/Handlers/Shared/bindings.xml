@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<bindings>
+  <element name="hello">"Hi from Package1"</element>
+</bindings>
