@@ -6,7 +6,7 @@ using StructureMap.Pipeline;
 
 namespace FubuMVC.StructureMap
 {
-    public class NestedStructureMapContainerBehavior : IEntrypointActionBehavior
+    public class NestedStructureMapContainerBehavior : IActionBehavior, IDisposable
     {
         private readonly ServiceArguments _arguments;
         private readonly Guid _behaviorId;
