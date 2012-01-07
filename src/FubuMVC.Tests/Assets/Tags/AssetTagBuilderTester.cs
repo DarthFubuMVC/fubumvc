@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Assets.Tags
 
             var tag = ClassUnderTest.Build(plan).Single();
 
-            tag.ToString().ShouldEqual("<script type=\"application/javascript\" src=\"http://myapp/_content/scripts/script.js\"></script>");
+            tag.ToString().ShouldEqual("<script type=\"text/javascript\" src=\"http://myapp/_content/scripts/script.js\"></script>");
         
         }
 
