@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
@@ -29,15 +29,23 @@ namespace FubuMVC.Core.Runtime
                 return;
             }
 
-            var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId).As<IEntrypointActionBehavior>();
+            var behavior = _factory.BuildBehavior(arguments, _chain.UniqueId);
             Invoke(behavior);
         }
 
-        protected virtual void Invoke(IEntrypointActionBehavior behavior)
+        protected virtual void Invoke(IActionBehavior behavior)
         {
-            using (behavior)
+            try
             {
                 behavior.Invoke();
+            }
+            finally
+            {
+                var disposable = behavior as IDisposable;
+                if(disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
     }
