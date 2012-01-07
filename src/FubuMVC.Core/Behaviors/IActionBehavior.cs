@@ -10,11 +10,4 @@ namespace FubuMVC.Core.Behaviors
         void Invoke();
         void InvokePartial();
     }
-
-    /// <summary>
-    /// Serves as the entry behavior for a chain.
-    /// </summary>
-    public interface IEntrypointActionBehavior : IActionBehavior, IDisposable
-    {
-    }
 }
