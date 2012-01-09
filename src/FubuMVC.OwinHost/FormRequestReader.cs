@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FubuCore;
 
 namespace FubuMVC.OwinHost
 {
@@ -31,12 +32,15 @@ namespace FubuMVC.OwinHost
 
         public static IDictionary<string, string> Parse(string queryString)
         {
-            // TODO: this is wrong in many, many ways
-            return (queryString ?? "").Split("&".ToCharArray())
-                .Select(item => item.Split("=".ToCharArray(), 2))
-                .Where(item => item.Length == 2)
-                .GroupBy(item => item[0], item => Decode(item[1]), StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(g => g.Key, g => string.Join(",", g.ToArray()), StringComparer.OrdinalIgnoreCase);
+            var dictionary = new Dictionary<string, string>();
+            var values = (queryString ?? "").Split('&');
+            values.Each(x =>
+            {
+                var parts = x.Split('=');
+                dictionary.Add(parts.First().UrlDecode(), parts.Last().UrlDecode());
+            });
+
+            return dictionary;
 
         }
 
