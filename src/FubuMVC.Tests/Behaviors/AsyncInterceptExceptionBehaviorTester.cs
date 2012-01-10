@@ -12,6 +12,7 @@ namespace FubuMVC.Tests.Behaviors
     public class AsyncInterceptExceptionBehaviorTester
     {
         [Test]
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void should_invoke_inside_behavior()
         {
             var insideBehavior = new AsyncDoNothingBehavior();
@@ -51,6 +52,7 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void when_matching_exception_is_thrown_by_inside_behavior_it_should_be_handled()
         {
             var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
@@ -65,6 +67,7 @@ namespace FubuMVC.Tests.Behaviors
         }
 
         [Test]
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
         public void when_exception_should_not_be_handled_the_handle_method_should_not_be_invoked()
         {
             var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
