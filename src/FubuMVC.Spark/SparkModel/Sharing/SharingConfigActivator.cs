@@ -22,8 +22,8 @@ namespace FubuMVC.Spark.SparkModel.Sharing
 
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            ReadSparkConfig(FubuSparkConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadSparkConfig(p.Name, folder, log)));
+            ReadSparkConfig(FubuSparkConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
         }
 
         public void ReadSparkConfig(string provenance, string folder, IPackageLog log)
