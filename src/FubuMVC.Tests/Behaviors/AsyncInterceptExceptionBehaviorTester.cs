@@ -1,137 +1,153 @@
 ﻿using System;
-using System.Net;
 using System.Threading.Tasks;
-using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Behaviors
 {
     [TestFixture]
-    public class AsyncInterceptExceptionBehaviorTester
+    public class when_an_exception_is_thrown_and_should_not_be_handled : InteractionContext<AsyncInterceptExceptionBehavior>
     {
-        [Test]
-        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
-        public void should_invoke_inside_behavior()
+        private IExceptionHandler _exceptionHandler;
+        private IExceptionHandlingObserver _observer;
+        private AggregateException _exception;
+        private ArgumentException _argumentException;
+
+        protected override void beforeEach()
         {
-            var insideBehavior = new AsyncDoNothingBehavior();
-            var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
-            {
-                InsideBehavior = insideBehavior
-            };
-
-            var testTask = new Task(cut.Invoke);
-            testTask.RunSynchronously();
-
-            insideBehavior.Invoked.ShouldBeTrue();
-        }
-
-        [Test]
-        public void when_no_exception_is_thrown_none_should_be_handled()
-        {
-            var insideBehavior = new AsyncDoNothingBehavior();
-            var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
-            {
-                InsideBehavior = insideBehavior
-            };
-
-            var testTask = new Task(cut.Invoke);
-            testTask.RunSynchronously();
-
-            cut.ShouldHandleCalled.ShouldBeFalse();
-            cut.HandledException.ShouldBeNull();
-        }
-
-        [Test]
-        public void invoke_should_throw_an_exception_when_no_inside_behavior_is_set()
-        {
-            var interceptExceptionBehavior = new AsyncTestInterceptExceptionBehavior<ArgumentException>();
-
-            typeof(FubuAssertionException).ShouldBeThrownBy(interceptExceptionBehavior.Invoke);
+            _argumentException = new ArgumentException("Failed");
+            _exceptionHandler = MockFor<IExceptionHandler>();
+            _observer = MockFor<IExceptionHandlingObserver>();
+            _exceptionHandler.Expect(x => x.ShouldHandle(_argumentException)).Return(false);
+            ClassUnderTest.InsideBehavior = new AsyncThrowingBehavior(_argumentException);
+            var testTask = new Task(() => ClassUnderTest.Invoke());
+            testTask.Start();
+            _exception = Assert.Throws<AggregateException>(testTask.Wait);
         }
 
         [Test]
         [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
-        public void when_matching_exception_is_thrown_by_inside_behavior_it_should_be_handled()
+        public void should_not_call_handle()
         {
-            var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
-            {
-                InsideBehavior = new AsyncThrowingBehavior<ArgumentException>()
-            };
-
-            var testTask = new Task(cut.Invoke);
-            testTask.RunSynchronously();
-
-            cut.HandledException.ShouldBeOfType<ArgumentException>();
+            _exceptionHandler.VerifyAllExpectations();
         }
 
         [Test]
         [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
-        public void when_exception_should_not_be_handled_the_handle_method_should_not_be_invoked()
+        public void should_not_be_observed_as_handled()
         {
-            var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
-            {
-                InsideBehavior = new AsyncThrowingBehavior<ArgumentException>()
-            };
-            cut.SetShouldHandle(false);
-            var testTask = new Task(cut.Invoke);
-            testTask.RunSynchronously();
-            cut.ShouldHandleCalled.ShouldBeTrue();
-            cut.HandledException.ShouldBeNull();
+            _observer.VerifyAllExpectations();
         }
 
         [Test]
-        public void when_non_matching_exception_is_thrown_should_handled_should_not_be_invoked()
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
+        public void should_have_the_correct_exception()
         {
-            var cut = new AsyncTestInterceptExceptionBehavior<ArgumentException>
-            {
-                InsideBehavior = new AsyncThrowingBehavior<WebException>()
-            };
-            cut.SetShouldHandle(false);
-            var testTask = new Task(cut.Invoke);
-            testTask.RunSynchronously();
-            cut.ShouldHandleCalled.ShouldBeFalse();
-            cut.HandledException.ShouldBeNull();
+            _exception.InnerExceptions.Contains(_argumentException);
         }
     }
 
-    public class AsyncTestInterceptExceptionBehavior<T> : AsyncInterceptExceptionBehavior<T>
-        where T : Exception
+    [TestFixture]
+    public class when_an_exception_is_thrown_and_should_be_handled : InteractionContext<AsyncInterceptExceptionBehavior>
     {
+        private IExceptionHandler _exceptionHandler;
+        private IExceptionHandlingObserver _observer;
+        private AggregateException _exception;
+        private ArgumentException _argumentException;
 
-        private bool shouldHandle = true;
-        public T HandledException { get; private set; }
-        public bool ShouldHandleCalled { get; private set; }
-
-        public void SetShouldHandle(bool value)
+        protected override void beforeEach()
         {
-            shouldHandle = value;
+            _argumentException = new ArgumentException("Failed");
+            _exceptionHandler = MockFor<IExceptionHandler>();
+            _observer = MockFor<IExceptionHandlingObserver>();
+            _observer.Expect(x => x.RecordHandled(_argumentException));
+            _exceptionHandler.Expect(x => x.ShouldHandle(_argumentException)).Return(true);
+            _exceptionHandler.Expect(x => x.Handle(_argumentException));
+            ClassUnderTest.InsideBehavior = new AsyncThrowingBehavior(_argumentException);
+            var testTask = new Task(() => ClassUnderTest.Invoke());
+            testTask.Start();
+            _exception = Assert.Throws<AggregateException>(testTask.Wait);
         }
 
-        public override bool ShouldHandle(T exception)
+        [Test]
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
+        public void should_call_handle()
         {
-            ShouldHandleCalled = true;
-            return shouldHandle;
+            _exceptionHandler.VerifyAllExpectations();
         }
 
-        public override void Handle(T exception)
+        [Test]
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
+        public void should_be_observed_as_handled()
         {
-            HandledException = exception;
+            _observer.VerifyAllExpectations();
+        }
+
+        [Test]
+        [Platform(Exclude = "Mono", Reason = "Incomplete Mono implementation")]
+        public void should_have_the_correct_exception()
+        {
+            _exception.InnerExceptions.Contains(_argumentException);
         }
     }
 
-    public class AsyncThrowingBehavior<T> : IActionBehavior
-        where T : Exception, new()
+    [TestFixture]
+    public class when_no_exception_is_thrown : InteractionContext<AsyncInterceptExceptionBehavior>
     {
+        private IExceptionHandler _exceptionHandler;
+        private IExceptionHandlingObserver _observer;
+        private DoNothingBehavior _insideBehavior;
+
+        protected override void beforeEach()
+        {
+            _insideBehavior = new DoNothingBehavior();
+            _exceptionHandler = MockFor<IExceptionHandler>();
+            _observer = MockFor<IExceptionHandlingObserver>();
+            ClassUnderTest.InsideBehavior = _insideBehavior;
+            var testTask = new Task(() => ClassUnderTest.Invoke());
+            testTask.Start();
+            testTask.Wait();
+        }
+
+        [Test]
+        public void should_not_call_handle()
+        {
+            _exceptionHandler.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void should_not_be_observed_as_handled()
+        {
+            _observer.VerifyAllExpectations();
+        }
+
+        [Test]
+        public void inside_behavior_should_be_invoked()
+        {
+            _insideBehavior.Invoked.ShouldBeTrue();
+        }
+    }
+
+    public class AsyncThrowingBehavior : IActionBehavior
+    {
+        private readonly Exception _exception;
+
+        public AsyncThrowingBehavior(Exception exception)
+        {
+            _exception = exception;
+        }
+
         public void Invoke()
         {
-            Task.Factory.StartNew(() => { throw new T();}, TaskCreationOptions.AttachedToParent);
+            Task.Factory.StartNew(() => { throw _exception; }, TaskCreationOptions.AttachedToParent);
         }
 
         public void InvokePartial()
         {
-            Task.Factory.StartNew(() => { throw new T();}, TaskCreationOptions.AttachedToParent);
+            Task.Factory.StartNew(() => { throw _exception; }, TaskCreationOptions.AttachedToParent);
         }
     }
 

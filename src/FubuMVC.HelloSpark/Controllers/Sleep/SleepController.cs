@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using FubuCore;
 using FubuMVC.Core.Continuations;
@@ -46,7 +47,25 @@ namespace FubuMVC.HelloSpark.Controllers.Sleep
                 };
             }, TaskCreationOptions.AttachedToParent);
         }
+
+        public Task HandleExceptionAsync(HandleExceptionAsyncInput input)
+        {
+            throw new Exception();
+        }
+
+        public Task DontHandleExceptionAsync(DontHandleExceptionAsyncInput input)
+        {
+            throw new DontHandleException();
+        }
     }
+
+    public class HandleExceptionAsyncInput
+    {
+    }
+
+    public class DontHandleExceptionAsyncInput
+    {
+    }  
 
     public class RemViewModel
     {

@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Behaviors
 {
-    public abstract class AsyncInterceptExceptionBehavior<T> : IActionBehavior where T : Exception
+    public class AsyncInterceptExceptionBehavior : IActionBehavior
     {
+        private readonly IEnumerable<IExceptionHandler> _exceptionHandlers;
+        private readonly IExceptionHandlingObserver _exceptionHandlingObserver;
+
+        public AsyncInterceptExceptionBehavior(IEnumerable<IExceptionHandler> exceptionHandlers, IExceptionHandlingObserver exceptionHandlingObserver)
+        {
+            _exceptionHandlers = exceptionHandlers;
+            _exceptionHandlingObserver = exceptionHandlingObserver;
+        }
+
         public IActionBehavior InsideBehavior { get; set; }
 
         public void Invoke()
         {
-            InnerInvoke(x => x.Invoke());
-        }
+            if (InsideBehavior == null)
+                throw new FubuAssertionException("When intercepting exceptions you must have an inside behavior. Otherwise, there would be nothing to intercept.");
 
-        public void InvokePartial()
-        {
-            InnerInvoke(x => x.InvokePartial());
-        }
-
-        private void InnerInvoke(Action<IActionBehavior> behaviorAction)
-        {
-			if (InsideBehavior == null)
-				throw new FubuAssertionException("When intercepting exceptions you must have an inside behavior. Otherwise, there would be nothing to intercept.");
-
-            var task = Task.Factory.StartNew(() => behaviorAction(InsideBehavior));
+            var task = Task.Factory.StartNew(() => InsideBehavior.Invoke(), TaskCreationOptions.AttachedToParent);
             task.ContinueWith(x =>
             {
                 try
@@ -34,33 +34,27 @@ namespace FubuMVC.Core.Behaviors
                 }
                 catch (AggregateException e)
                 {
-                    //Multiple exceptions can occur, this will allow behavior chain to handle
-                    //in the same way
                     var aggregateException = e.Flatten();
-                    var remaining = TryHandle(aggregateException.InnerExceptions);
-                    if(remaining.Any())
-                        throw new AggregateException(remaining);
+                    aggregateException.InnerExceptions.Each(TryHandle);
                 }
-            }, TaskContinuationOptions.AttachedToParent | TaskContinuationOptions.OnlyOnFaulted);
+            }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.AttachedToParent);
         }
 
-        public IEnumerable<Exception> TryHandle(IEnumerable<Exception> exceptions)
+        public void InvokePartial()
         {
-            foreach (var ex in exceptions)
-            {
-                var exception = ex as T;
-                if (exception != null && ShouldHandle(exception))
-                    Handle(exception);
-                else
-                    yield return ex;
-            }
+            InsideBehavior.InvokePartial();
         }
 
-        public virtual bool ShouldHandle(T exception)
-		{
-			return true;
-		}
+        private void TryHandle(Exception exception)
+        {
+            var handlers =_exceptionHandlers.Where(x => x.ShouldHandle(exception)).ToList();
+            if(handlers.Count == 0)
+            {
+                return;
+            }
 
-		public abstract void Handle(T exception);
+            handlers.Each(x => x.Handle(exception));
+            _exceptionHandlingObserver.RecordHandled(exception);
+        }
     }
 }

@@ -110,6 +110,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AsyncErrorHandling.cs" />
     <Compile Include="Controllers\Family\FamilyController.cs" />
     <Compile Include="Controllers\Sleep\SleepController.cs" />
     <Compile Include="Controllers\ThreePassRendering\ThreePassController.cs" />

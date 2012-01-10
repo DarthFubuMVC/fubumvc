@@ -54,16 +54,18 @@ namespace FubuMVC.Core.Runtime
 
             public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
             {
-                var task = Task.Factory.StartNew(() => _invoker.Invoke(_arguments, _routeData));
-                task.ContinueWith(x => cb(task));
+                var exceptionHandlingObserver = new ExceptionHandlingObserver();
+                _arguments.Set(typeof(IExceptionHandlingObserver), exceptionHandlingObserver);
+                var task = Task.Factory.StartNew(state => _invoker.Invoke(_arguments, _routeData), exceptionHandlingObserver);
+                task.ContinueWith(x => cb(x));
                 return task;
             }
 
             public void EndProcessRequest(IAsyncResult result)
             {
                 var task = (Task) result;
-                //So any unobserved exceptions or results don't kill the process.
-                task.Wait();
+                var exceptionHandlingObserver = (IExceptionHandlingObserver) result.AsyncState;
+                task.FinishProcessingTask(exceptionHandlingObserver);
             }
         }
     }
