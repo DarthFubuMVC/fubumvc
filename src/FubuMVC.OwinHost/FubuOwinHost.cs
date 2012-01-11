@@ -69,12 +69,16 @@ namespace FubuMVC.OwinHost
             var arguments = new OwinServiceArguments(routeData, request, response);
             var invoker = routeData.RouteHandler.As<FubuRouteHandler>().Invoker;
 
+            var exceptionHandlingObserver = new ExceptionHandlingObserver();
+            arguments.Set(typeof(IExceptionHandlingObserver), exceptionHandlingObserver);
+
             var task = Task.Factory.StartNew(() => invoker.Invoke(arguments, routeData.Values));
+
             task.ContinueWith(x =>
             {
                 try
                 {
-                    x.Wait();
+                    x.FinishProcessingTask(exceptionHandlingObserver);
                 }
                 catch (Exception ex)
                 {

@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security.AntiForgery;
 using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Core.Urls;
@@ -39,7 +40,11 @@ namespace FubuMVC.HelloSpark
 
             HtmlConvention<SampleHtmlConventions>();
 						
-            Services(s => s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>());
+            Services(s =>
+            {
+                s.FillType<IExceptionHandler, AsyncExceptionHandler>();
+                s.ReplaceService<IUrlTemplatePattern, JQueryUrlTemplate>();
+            });
 
             this.Extensions()
                 .For<AirViewModel>("extension-placeholder", x => "<p>Rendered from content extension.</p>");
