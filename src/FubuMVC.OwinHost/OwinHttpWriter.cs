@@ -45,10 +45,10 @@ namespace FubuMVC.OwinHost
             _response.Write(content);
         }
 
-        // TODO -- dunno how to do this one off hand
         public void Redirect(string url)
         {
-            throw new NotImplementedException();
+            // TODO: This is a hack, better way to accomplish this?
+            _response.Write(string.Format("<html><head><meta HTTP-EQUIV='refresh' CONTENT='0;URL={0}' ></head><body /></html>", url));
         }
 
         public void WriteResponseCode(HttpStatusCode status)
