@@ -48,7 +48,9 @@ namespace FubuMVC.OwinHost
         public void Redirect(string url)
         {
             // TODO: This is a hack, better way to accomplish this?
-            _response.Write(string.Format("<html><head><meta HTTP-EQUIV='refresh' CONTENT='0;URL={0}' ></head><body /></html>", url));
+            _response.Status = Convert.ToString((int)HttpStatusCode.Redirect);
+            _response.Headers.Add("Location", url);
+            _response.Write(string.Format("<html><head><title>302 Found</title></head><body><h1>Found</h1><p>The document has moved <a href='{0}'>here</a>.</p></body></html>", url));
         }
 
         public void WriteResponseCode(HttpStatusCode status)
