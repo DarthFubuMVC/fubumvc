@@ -28,12 +28,14 @@ namespace FubuMVC.Core.Resources.Conneg
         protected override DoNext performInvoke()
         {
             var mimeTypes = _request.Get<CurrentMimeType>();
-            if (mimeTypes.AcceptTypes.Contains(MediaTypeNames.Text.Html))
+
+            var writer = SelectWriter(mimeTypes);
+
+            if (writer == null && isHtmlMimeType(mimeTypes))
             {
                 return DoNext.Continue;
             }
 
-            var writer = SelectWriter(mimeTypes);
             if (writer == null)
             {
                 _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
@@ -46,16 +48,16 @@ namespace FubuMVC.Core.Resources.Conneg
             return DoNext.Stop;
         }
 
+        private static bool isHtmlMimeType(CurrentMimeType mimeTypes)
+        {
+            return mimeTypes.AcceptTypes.Contains(MediaTypeNames.Text.Html)
+                   || mimeTypes.AcceptTypes.Contains("*/*");
+        }
+
         public virtual IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes)
         {
             foreach (var acceptType in mimeTypes.AcceptTypes)
             {
-                if (acceptType == "*/*")
-                {
-                    return _writers.FirstOrDefault(x => x.Mimetypes.Contains(MediaTypeNames.Text.Html))
-                           ?? _writers.FirstOrDefault();
-                }
-
                 var writer = _writers.FirstOrDefault(x => x.Mimetypes.Contains(acceptType));
                 if (writer != null) return writer;
             }
