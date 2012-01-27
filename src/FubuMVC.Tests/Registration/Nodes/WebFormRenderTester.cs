@@ -1,3 +1,4 @@
+using System.Web;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
@@ -35,6 +36,7 @@ namespace FubuMVC.Tests.Registration.Nodes
                 x.For<IActionBehavior>().Use(new ObjectDefInstance(render.As<IContainerModel>().ToObjectDef(DiagnosticLevel.None)));
                 x.For<IWebFormsControlBuilder>().Use<WebFormsControlBuilder>();
                 x.For<IWebFormRenderer>().Use<WebFormRenderer>();
+                x.For<HttpContextBase>().Use(() => new FakeHttpContext());
                 x.For<IOutputWriter>().Use<OutputWriter>();
                 x.For<IFubuRequest>().Use<InMemoryFubuRequest>();
                 x.For<IPageActivator>().Use<PageActivator>();

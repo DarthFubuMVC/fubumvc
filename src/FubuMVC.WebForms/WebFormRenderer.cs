@@ -9,10 +9,12 @@ namespace FubuMVC.WebForms
     public class WebFormRenderer : IWebFormRenderer
     {
         private readonly IOutputWriter _outputWriter;
+        private readonly HttpContextBase _httpContext;
 
-        public WebFormRenderer(IOutputWriter writer)
+        public WebFormRenderer(IOutputWriter writer, HttpContextBase httpContext)
         {
             _outputWriter = writer;
+            _httpContext = httpContext;
         }
 
         public void RenderControl(Control control)
@@ -40,7 +42,7 @@ namespace FubuMVC.WebForms
         public virtual string ExecuteHandler(IHttpHandler handler)
         {
             var writer = new StringWriter();
-            HttpContext.Current.Server.Execute(handler, writer, true);
+            _httpContext.Server.Execute(handler, writer, true);
             writer.Flush();
 
             // See if this can just write out to the buffer

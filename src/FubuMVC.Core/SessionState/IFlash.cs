@@ -12,10 +12,17 @@ namespace FubuMVC.Core.SessionState
     public class FlashProvider : IFlash
     {
         public const string FLASH_KEY = "fubuFlash";
-        private HttpSessionStateBase _session;
 
-        public HttpSessionStateBase Session { get { return _session ?? (_session = new HttpSessionStateWrapper(HttpContext.Current.Session)); } set { _session = value; } }
+        public FlashProvider()
+        {
+        }
 
+        public FlashProvider(HttpContextBase httpContext)
+        {
+            Session = httpContext.Session;
+        }
+
+        public HttpSessionStateBase Session { get; set; }
 
         public void Flash(object flashObject)
         {

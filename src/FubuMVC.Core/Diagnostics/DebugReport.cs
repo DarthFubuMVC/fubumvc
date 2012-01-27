@@ -16,6 +16,7 @@ namespace FubuMVC.Core.Diagnostics
 
     public class DebugReport : TimedReport, IEnumerable<BehaviorReport>, IDebugReport
     {
+        private readonly HttpContextBase _httpContext;
         private readonly IList<BehaviorReport> _behaviors = new List<BehaviorReport>();
         private readonly Stack<BehaviorReport> _behaviorStack = new Stack<BehaviorReport>();
         private readonly IList<BehaviorStep> _steps = new List<BehaviorStep>();
@@ -33,18 +34,22 @@ namespace FubuMVC.Core.Diagnostics
             Time = DateTime.Now;
         }
 
+        public DebugReport(HttpContextBase httpContext) : this()
+        {
+            _httpContext = httpContext;
+        }
+
         // TODO -- this is a no go for OWIN support
         public void RecordFormData()
         {
             try
             {
-                var context = HttpContext.Current;
-                if (context != null && context.Request != null)
+                if (_httpContext != null && _httpContext.Request != null)
                 {
-                    Url = context.Request.Url.PathAndQuery;
-                    HttpMethod = context.Request.HttpMethod;
-                    populateDictionary(context.Request.Form, (key, value) => FormData.Add(key, value));
-                    populateDictionary(context.Request.Headers, (key, value) => Headers.Add(key, value));
+                    Url = _httpContext.Request.Url.PathAndQuery;
+                    HttpMethod = _httpContext.Request.HttpMethod;
+                    populateDictionary(_httpContext.Request.Form, (key, value) => FormData.Add(key, value));
+                    populateDictionary(_httpContext.Request.Headers, (key, value) => Headers.Add(key, value));
                 }
             }
             catch (HttpException)

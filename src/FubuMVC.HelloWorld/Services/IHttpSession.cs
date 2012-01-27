@@ -10,15 +10,22 @@ namespace FubuMVC.HelloWorld.Services
 
     public class CurrentHttpContextSession : IHttpSession
     {
+        private readonly HttpContextBase _httpContext;
+
+        public CurrentHttpContextSession(HttpContextBase httpContext)
+        {
+            _httpContext = httpContext;
+        }
+
         public void Clear()
         {
-            HttpContext.Current.Session.Clear();
+            _httpContext.Session.Clear();
         }
 
         public object this[string key]
         {
-            get { return HttpContext.Current.Session [key]; }
-            set { HttpContext.Current.Session[key] = value; }
+            get { return _httpContext.Session [key]; }
+            set { _httpContext.Session[key] = value; }
         }
     }
 }

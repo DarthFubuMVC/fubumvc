@@ -6,11 +6,11 @@ namespace FubuMVC.Core.Web.Security
 {
     public class WebSecurityContext : ISecurityContext
     {
-        private readonly HttpContext _context;
+        private readonly HttpContextBase _context;
 
-        public WebSecurityContext()
+        public WebSecurityContext(HttpContextBase httpContext)
         {
-            _context = HttpContext.Current;
+            _context = httpContext;
         }
 
 
