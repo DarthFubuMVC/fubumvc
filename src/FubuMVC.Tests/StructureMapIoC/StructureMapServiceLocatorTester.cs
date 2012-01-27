@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using FubuMVC.Core.Security;
 using FubuMVC.Core.Web.Security;
 using FubuMVC.StructureMap;
@@ -25,6 +26,7 @@ namespace FubuMVC.Tests.StructureMapIoC
             container = new Container(x =>
             {
                 x.For<ISecurityContext>().Use(_mockSecurityContext);
+                x.For<HttpContextBase>().Use(new FakeHttpContext());
                 x.For<ISecurityContext>().AddInstances(
                     s => s.Type<WebSecurityContext>().Named(_testInstanceKey));
             });

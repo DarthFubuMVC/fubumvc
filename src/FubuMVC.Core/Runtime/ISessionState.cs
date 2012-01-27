@@ -30,11 +30,11 @@ namespace FubuMVC.Core.Runtime
 
     public class SimpleSessionState : ISessionState
     {
-        private readonly HttpSessionState _session;
+        private readonly HttpSessionStateBase _session;
 
-        public SimpleSessionState()
+        public SimpleSessionState(HttpContextBase httpContext)
         {
-            _session = HttpContext.Current.Session;
+            _session = httpContext.Session;
         }
 
         private string getKey<T>()

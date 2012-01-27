@@ -16,6 +16,13 @@ namespace FubuMVC.WebForms
     // Untestable ASP.NET code to follow....
     public class WebFormsControlBuilder : IWebFormsControlBuilder
     {
+        private readonly HttpContextBase _httpContext;
+
+        public WebFormsControlBuilder(HttpContextBase httpContext)
+        {
+            _httpContext = httpContext;
+        }
+
         public virtual Control LoadControlFromVirtualPath(string virtualPath, Type mustImplementInterfaceType)
         {
             return (Control) BuildManager.CreateInstanceFromVirtualPath(virtualPath, mustImplementInterfaceType);
@@ -23,7 +30,7 @@ namespace FubuMVC.WebForms
 
         public void ExecuteControl(IHttpHandler handler, TextWriter writer)
         {
-            HttpContext.Current.Server.Execute(handler, writer, true);
+            _httpContext.Server.Execute(handler, writer, true);
         }
     }
 }

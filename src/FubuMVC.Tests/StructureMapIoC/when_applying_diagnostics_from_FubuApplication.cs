@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Routing;
 using FubuCore;
 using FubuCore.Binding;
@@ -48,6 +49,8 @@ namespace FubuMVC.Tests.StructureMapIoC
             }))
                 .StructureMap(() => theContainer)
                 .Bootstrap().Routes;            
+            
+            theContainer.Configure(x => x.For<HttpContextBase>().Use(new FakeHttpContext()));
         }
 
 
