@@ -1,6 +1,7 @@
 ﻿<html>
   <head>
     <title><use content="title">Default Title</use></title>
+    <Asset name="styles" />
     <use content="head" />
   </head>
   <body>

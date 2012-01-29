@@ -1,6 +1,6 @@
 ﻿<viewdata model="FubuMVC.HelloSpark.Controllers.Air.AirViewModel" />
 <content:head>
-    <script type="text/javascript" src="../../Scripts/jquery-1.4.2.js"></script>
+    <Asset name="jquery" />
     <script type="text/javascript">
       $(document).ready(function () {
       var renderView = function (data) {
