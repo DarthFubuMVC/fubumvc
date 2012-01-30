@@ -1,10 +1,10 @@
 namespace FubuMVC.Core.Resources.Media.Projections
 {
-    public class DelegatingProjection<T, TProjection> : IProjection<T> where TProjection : IProjection<T>
+    public class DelegatingProjection<T, TProjection> : IProjection<T> where TProjection : IProjection<T>, new()
     {
         public void Write(IProjectionContext<T> context, IMediaNode node)
         {
-            context.Service<TProjection>().Write(context, node);
+            new TProjection().Write(context, node);
         }
     }
 }

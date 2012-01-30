@@ -7,7 +7,7 @@ using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace FubuMVC.Tests.Resources.Media
+namespace FubuMVC.Tests.Resources.Media.Projections
 {
     [TestFixture]
     public class ProjectionContextTester : InteractionContext<ProjectionContext<ProjectionContextTester.ProjectionModel>> 

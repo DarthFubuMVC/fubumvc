@@ -10,6 +10,13 @@ namespace FubuMVC.Core.Resources.Media.Projections
         private DisplayFormatting _formatting;
         private readonly IList<IProjection<T>> _values = new List<IProjection<T>>();
 
+        /// <summary>
+        /// Uses raw value formatting
+        /// </summary>
+        public Projection() : this(DisplayFormatting.RawValues)
+        {
+        }
+
         public Projection(DisplayFormatting formatting)
         {
             _formatting = formatting;
@@ -22,6 +29,11 @@ namespace FubuMVC.Core.Resources.Media.Projections
         }
 
         void IProjection<T>.Write(IProjectionContext<T> context, IMediaNode node)
+        {
+            write(context, node);
+        }
+
+        protected void write(IProjectionContext<T> context, IMediaNode node)
         {
             _values.Each(x => x.Write(context, node));
         }
@@ -40,9 +52,17 @@ namespace FubuMVC.Core.Resources.Media.Projections
             return value;
         }
 
-        public void Include<TProjection>() where TProjection : IProjection<T>
+        public void Include<TProjection>() where TProjection : IProjection<T>, new()
         {
             _values.Add(new DelegatingProjection<T, TProjection>());
+        }
+
+        public ChildProjection<T, TChild> Child<TChild>(Expression<Func<T, TChild>> expression) where TChild : class
+        {
+            var child = new ChildProjection<T, TChild>(expression, _formatting);
+            _values.Add(child);
+
+            return child;
         }
 
         public SingleLineExpression ForAttribute(string attributeName)
@@ -140,5 +160,8 @@ namespace FubuMVC.Core.Resources.Media.Projections
                 return this;
             }
         }
+
+
+        
     }
 }

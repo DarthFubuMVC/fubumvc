@@ -4,7 +4,7 @@ using FubuMVC.Tests.Resources.Projections;
 using NUnit.Framework;
 using FubuTestingSupport;
 
-namespace FubuMVC.Tests.Resources.Media
+namespace FubuMVC.Tests.Resources.Media.Projections
 {
     [TestFixture]
     public class ValueSourceTester

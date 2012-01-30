@@ -41,7 +41,7 @@
       <HintPath>..\packages\Bottles.Deployment.0.9.1.172\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.4.106\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.4.109\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization.0.9.4.106\lib\FubuLocalization.dll</HintPath>
@@ -219,6 +219,7 @@
     <Compile Include="Resources\Media\ProjectionContext.cs" />
     <Compile Include="Resources\Media\ProjectionContextExtensions.cs" />
     <Compile Include="Resources\Media\Projections\AccessorProjection.cs" />
+    <Compile Include="Resources\Media\Projections\ChildProjection.cs" />
     <Compile Include="Resources\Media\Projections\DelegatingProjection.cs" />
     <Compile Include="Resources\Media\Projections\DisplayFormatting.cs" />
     <Compile Include="Resources\Media\Projections\EnumerableProjection.cs" />
