@@ -27,6 +27,11 @@ namespace FubuMVC.Core.Resources.Media.Projections
             return this;
         }
 
+        public ChildProjection<TParent, TChild> With(Action<IProjectionContext<TChild>, IMediaNode> explicitWriting)
+        {
+            return Configure(x => x.WriteWith(explicitWriting));
+        }
+
         public ChildProjection<TParent, TChild> With<TProjection>() where TProjection : IProjection<TChild>, new()
         {
             Include<TProjection>();

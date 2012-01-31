@@ -32,6 +32,20 @@ namespace FubuMVC.Tests.Resources.Projections
         }
 
         [Test]
+        public void write_node_with_inline_writer()
+        {
+            var projection = new Projection<Address>(DisplayFormatting.RawValues);
+            projection.WriteWith((context, node) =>
+            {
+                node.AddChild("address").SetAttribute("description", "I was here");
+            });
+
+            projection.As<IProjection<Address>>().Write(new ProjectionContext<Address>(null, aTarget), aNode);
+
+            aNode.Element.InnerXml.ShouldEqual("<address description=\"I was here\" />");
+        }
+
+        [Test]
         public void write_a_node_with_multiple_properties()
         {
             var projection = new Projection<Address>(DisplayFormatting.RawValues);

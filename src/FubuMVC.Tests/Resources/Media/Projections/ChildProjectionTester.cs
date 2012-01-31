@@ -41,6 +41,26 @@ namespace FubuMVC.Tests.Resources.Media.Projections
         }
 
         [Test]
+        public void explicit_writing()
+        {
+            theParent.Child = new Child
+            {
+                Age = 38,
+                Name = "Jeremy"
+            };
+
+            theProjection.Child(x => x.Child).WriteWith((c, n) =>
+            {
+                n.SetAttribute("age", c.ValueFor(x => x.Age));
+                n.SetAttribute("name", c.ValueFor(x => x.Name));
+            });
+
+            var child = theDictionary.Child("Child");
+            child["age"].ShouldEqual(38);
+            child["name"].ShouldEqual("Jeremy");
+        }
+
+        [Test]
         public void child_projection_when_the_child_is_null()
         {
             theParent.Child = null;

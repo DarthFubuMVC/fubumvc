@@ -70,6 +70,11 @@ namespace FubuMVC.Core.Resources.Media.Projections
             return new SingleLineExpression(attributeName, this);
         }
 
+        public void WriteWith(Action<IProjectionContext<T>, IMediaNode> writer)
+        {
+            _values.Add(new LambdaProjection<T>(writer));
+        }
+
         public class SingleLineExpression
         {
             private readonly string _attributeName;
