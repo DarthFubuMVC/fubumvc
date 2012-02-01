@@ -22,5 +22,31 @@ namespace FubuMVC.Tests.Http
             currentMimeType.ContentType.ShouldEqual("application/x-www-form-urlencoded");
             currentMimeType.Charset.ShouldEqual("UTF-8");
         }
+
+        [Test]
+        public void accepts_html_negative()
+        {
+            var currentMimeType = new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", null);
+            currentMimeType.AcceptsHtml().ShouldBeFalse();
+        }
+
+        [Test]
+        public void accepts_html_positive()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html").AcceptsHtml().ShouldBeTrue();
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/json, text/html").AcceptsHtml().ShouldBeTrue();
+        }
+
+        [Test]
+        public void accepts_any_negative()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html").AcceptsAny().ShouldBeFalse();
+        }
+
+        [Test]
+        public void accepts_any_positive()
+        {
+            new CurrentMimeType("application/x-www-form-urlencoded; charset=UTF-8", "text/html, */*").AcceptsAny().ShouldBeTrue();
+        }
     }
 }

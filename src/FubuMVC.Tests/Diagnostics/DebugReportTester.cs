@@ -18,7 +18,7 @@ namespace FubuMVC.Tests.Diagnostics
         [SetUp]
         public void SetUp()
         {
-            report = new DebugReport();
+            report = new DebugReport(null, null);
             inner = new FakeBehavior();
         }
 

@@ -31,9 +31,13 @@ namespace FubuMVC.Core.Resources.Conneg
 
             var writer = SelectWriter(mimeTypes);
 
-            if (writer == null && isHtmlMimeType(mimeTypes))
+            if (writer == null && InsideBehavior != null)
             {
-                return DoNext.Continue;
+                // TODO -- want this to be smarter later
+                if (mimeTypes.AcceptsHtml() || mimeTypes.AcceptsAny())
+                {
+                    return DoNext.Continue;
+                }   
             }
 
             if (writer == null)
@@ -48,11 +52,7 @@ namespace FubuMVC.Core.Resources.Conneg
             return DoNext.Stop;
         }
 
-        private static bool isHtmlMimeType(CurrentMimeType mimeTypes)
-        {
-            return mimeTypes.AcceptTypes.Contains(MediaTypeNames.Text.Html)
-                   || mimeTypes.AcceptTypes.Contains("*/*");
-        }
+
 
         public virtual IMediaWriter<T> SelectWriter(CurrentMimeType mimeTypes)
         {
@@ -60,6 +60,11 @@ namespace FubuMVC.Core.Resources.Conneg
             {
                 var writer = _writers.FirstOrDefault(x => x.Mimetypes.Contains(acceptType));
                 if (writer != null) return writer;
+            }
+
+            if (mimeTypes.AcceptsAny() && InsideBehavior == null)
+            {
+                return _writers.First();
             }
 
             return null;

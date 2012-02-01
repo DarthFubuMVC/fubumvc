@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace FubuMVC.Core
 {
+    [Obsolete("Humongous PITA, Jeremy needs to provide instructions on what to do with this instead")]
     public class CurrentRequest
     {
         //public string[] AcceptTypes{ get; set;}
@@ -24,8 +25,8 @@ namespace FubuMVC.Core
         public string RawUrl { get; set; }
         public string RequestType { get; set; }
         public int TotalBytes { get; set; }
-        public Uri Url { get; set; }
-        public Uri UrlReferrer { get; set; }
+        public string Url { get; set; }
+        public string UrlReferrer { get; set; }
         public string UserAgent { get; set; }
         public string UserHostAddress { get; set; }
         public string UserHostName { get; set; }

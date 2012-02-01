@@ -41,18 +41,6 @@ namespace FubuMVC.StructureMap
         {
             For<HttpRequestWrapper>().Use(c => BuildRequestWrapper());
 
-            // TODO -- do we need this?
-            //Needed for AssertConfigurationIsValid in global.asax
-            For<AggregateDictionary>().Use(
-                ctx =>
-                {
-                    //TODO: This should be unnecesary. AggregateDictionary should always come from the current request - not created by the container
-                    if (HttpContext.Current == null)
-                        return new AggregateDictionary();
-
-                    var context = ctx.GetInstance<HttpContextBase>();
-                    return new AspNetAggregateDictionary(context.Request.RequestContext);
-                });
 
             For<HttpContextBase>().Use<HttpContextWrapper>().Ctor<HttpContext>().Is(
                 x => x.ConstructedBy(BuildContextWrapper));

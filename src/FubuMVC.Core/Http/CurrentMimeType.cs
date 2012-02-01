@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Runtime;
@@ -34,5 +35,15 @@ namespace FubuMVC.Core.Http
         public MimeTypeList AcceptTypes { get; set; }
 
         public string Charset { get; set; }
+
+        public bool AcceptsHtml()
+        {
+            return AcceptTypes.Contains(MimeType.Html.ToString());
+        }
+
+        public bool AcceptsAny()
+        {
+            return AcceptTypes.Contains("*/*");
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace FubuMVC.Tests.Diagnostics
 
             for (int i = 0; i < _configuration.MaxRequests + 10; ++i)
             {
-                ClassUnderTest.AddReport(new DebugReport(), theCurrentRequest);
+                ClassUnderTest.AddReport(new DebugReport(null, null), theCurrentRequest);
             }
 
             ClassUnderTest
@@ -54,12 +54,12 @@ namespace FubuMVC.Tests.Diagnostics
 
             for (int i = 0; i < _configuration.MaxRequests; i++)
             {
-                ClassUnderTest.AddReport(new DebugReport(), theCurrentRequest);
+                ClassUnderTest.AddReport(new DebugReport(null, null), theCurrentRequest);
             }
 
-            var report1 = new DebugReport();
-            var report2 = new DebugReport();
-            var report3 = new DebugReport();
+            var report1 = new DebugReport(null, null);
+            var report2 = new DebugReport(null, null);
+            var report3 = new DebugReport(null, null);
 
             ClassUnderTest.AddReport(report1, theCurrentRequest);
             ClassUnderTest.AddReport(report2, theCurrentRequest);
@@ -78,7 +78,7 @@ namespace FubuMVC.Tests.Diagnostics
                 .Expect(c => c.Exclude(theCurrentRequest))
                 .Return(true);
 
-            ClassUnderTest.AddReport(new DebugReport(), theCurrentRequest);
+            ClassUnderTest.AddReport(new DebugReport(null, null), theCurrentRequest);
 
             ClassUnderTest
                 .RecentReports()

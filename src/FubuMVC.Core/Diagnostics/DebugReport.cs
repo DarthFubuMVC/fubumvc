@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
+using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Diagnostics
 {
@@ -16,6 +18,8 @@ namespace FubuMVC.Core.Diagnostics
 
     public class DebugReport : TimedReport, IEnumerable<BehaviorReport>, IDebugReport
     {
+        private readonly AggregateDictionary _dictionary;
+        private readonly ICurrentHttpRequest _request;
         private readonly IList<BehaviorReport> _behaviors = new List<BehaviorReport>();
         private readonly Stack<BehaviorReport> _behaviorStack = new Stack<BehaviorReport>();
         private readonly IList<BehaviorStep> _steps = new List<BehaviorStep>();
@@ -24,8 +28,10 @@ namespace FubuMVC.Core.Diagnostics
         public Guid Id { get; private set; }
         public Guid BehaviorId { get; set; }
 
-        public DebugReport()
+        public DebugReport(AggregateDictionary dictionary, ICurrentHttpRequest request)
         {
+            _dictionary = dictionary;
+            _request = request;
             Id = Guid.NewGuid();
 
             FormData = new Dictionary<string, object>();
@@ -34,35 +40,25 @@ namespace FubuMVC.Core.Diagnostics
         }
 
 
-        // TODO -- this is a no go for OWIN support
         public void RecordFormData()
         {
             try
             {
-                // TODO -- put this back.
-                //if (_httpContext != null && _httpContext.Request != null)
-                //{
-                //    Url = _httpContext.Request.Url.PathAndQuery;
-                //    HttpMethod = _httpContext.Request.HttpMethod;
-                //    populateDictionary(_httpContext.Request.Form, (key, value) => FormData.Add(key, value));
-                //    populateDictionary(_httpContext.Request.Headers, (key, value) => Headers.Add(key, value));
-                //}
+                // TODO -- Be nice to have better stuff in FubuCore
+                var requestData = _dictionary.DataFor(RequestDataSource.Request.ToString());
+                requestData.GetKeys().ToList().Each(key => FormData.Add(key, requestData.Value(key)));
+
+                var requestData2 = _dictionary.DataFor(RequestDataSource.Header.ToString());
+                requestData2.GetKeys().ToList().Each(key => Headers.Add(key, (requestData2.Value(key) ?? string.Empty).ToString()));
+
+                Url = _request.RawUrl();
+                HttpMethod = _request.HttpMethod();
             }
             catch (HttpException)
             {
                 //Just needs to be here so we can do assert configuration is valid.
             }
         }
-
-        private static void populateDictionary(NameValueCollection collection, Action<string, string> action)
-        {
-            if (collection == null) return;
-            collection
-                .AllKeys
-                .Where(x => x != null)
-                .Each(key => action(key, collection[key]));
-        }
-
 
         public string Url { get; set; }
         public string HttpMethod { get; private set; }

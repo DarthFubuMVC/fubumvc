@@ -22,7 +22,7 @@ namespace FubuMVC.Tests.Resources.Conneg
     }
 
     [TestFixture]
-    public class when_the_accept_type_includes_html_just_pass_on : conneg_output_behavior
+    public class when_the_accept_type_includes_html_and_there_is_an_inside_behavior_just_pass_on : conneg_output_behavior
     {
         private CurrentMimeType theCurrentMimeType;
         protected override void beforeEach()
@@ -42,6 +42,29 @@ namespace FubuMVC.Tests.Resources.Conneg
             MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
         }
     }
+
+    [TestFixture]
+    public class when_the_accept_type_includes_html_and_there_is_not_an_inside_behavior_fail_with_406 : conneg_output_behavior
+    {
+        private CurrentMimeType theCurrentMimeType;
+        protected override void beforeEach()
+        {
+            theCurrentMimeType = new CurrentMimeType("somethig", "else,text/html");
+            MockFor<IFubuRequest>().Stub(x => x.Get<CurrentMimeType>()).Return(theCurrentMimeType);
+            writerFor("text/xml");
+
+            ClassUnderTest.InsideBehavior = null;
+
+            ClassUnderTest.Invoke();
+        }
+
+        [Test]
+        public void should_set_The_status_code_to_NotAcceptable()
+        {
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.NotAcceptable));
+        }
+    }
+
 
     [TestFixture]
     public class when_the_accept_type_is_wildcard_just_pass_on : conneg_output_behavior
@@ -199,6 +222,45 @@ namespace FubuMVC.Tests.Resources.Conneg
 
             ClassUnderTest.SelectWriter(new CurrentMimeType("", "weird/html,wild/json"))
                 .ShouldBeNull();
+        }
+
+        [Test]
+        public void inside_behavior_is_null_and_wild_card_is_accepted()
+        {
+            var w1 = writerFor("text/json", "application/json");
+            var w2 = writerFor("text/xml");
+            var w3 = writerFor("text/html");
+
+            ClassUnderTest.InsideBehavior = null;
+
+            ClassUnderTest.SelectWriter(new CurrentMimeType("", "weird/html,wild/json,*/*"))
+                .ShouldBeTheSameAs(w1);
+        }
+
+        [Test]
+        public void inside_behavior_is_not_null_and_wild_card_is_accepted()
+        {
+            var w1 = writerFor("text/json", "application/json");
+            var w2 = writerFor("text/xml");
+            var w3 = writerFor("text/html");
+
+            ClassUnderTest.InsideBehavior = MockRepository.GenerateMock<IActionBehavior>();
+
+            ClassUnderTest.SelectWriter(new CurrentMimeType("", "weird/html,wild/json,*/*"))
+                .ShouldBeNull();
+        }
+
+        [Test]
+        public void uses_specific_accept_type_first()
+        {
+            var w1 = writerFor("text/json", "application/json");
+            var w2 = writerFor("text/xml");
+            var w3 = writerFor("text/html");
+
+            ClassUnderTest.InsideBehavior = null;
+
+            ClassUnderTest.SelectWriter(new CurrentMimeType("", "weird/html,text/xml,*/*"))
+                .ShouldBeTheSameAs(w2);
         }
     }
 }

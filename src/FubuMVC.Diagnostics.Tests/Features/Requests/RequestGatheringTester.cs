@@ -1,4 +1,4 @@
-﻿using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Diagnostics.Features.Requests;
 using FubuMVC.Diagnostics.Features.Requests.View;
@@ -18,7 +18,7 @@ namespace FubuMVC.Diagnostics.Tests.Features.Requests
         public void setup()
         {
             _handler = new get_Id_handler(null, null);
-            _report = new DebugReport();
+            _report = new DebugReport(null, null);
             _model = getModel();
         }
 

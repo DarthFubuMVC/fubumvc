@@ -32,7 +32,7 @@ namespace FubuMVC.Tests.Behaviors.Conditional
             NextBehaviorWasInvoked = false;
 
             theContainer = new Container();
-            theContainer.Inject<IDebugReport>(new DebugReport());
+            theContainer.Inject<IDebugReport>(new DebugReport(null, null));
             theContainer.Inject(MockRepository.GenerateMock<IDebugDetector>());
 
             theRequest = new InMemoryFubuRequest();
