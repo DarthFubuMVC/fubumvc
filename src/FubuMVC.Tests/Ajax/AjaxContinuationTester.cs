@@ -87,5 +87,18 @@ namespace FubuMVC.Tests.Ajax
             continuation.Success.ShouldBeFalse();
             continuation.Message.ShouldEqual(token.ToString());
         }
+
+        [Test]
+        public void has_data_should_return_false_if_the_key_is_not_present()
+        {
+            theContinuation.HasData("keyThatIsNotInData").ShouldBeFalse();
+        }
+
+        [Test]
+        public void has_data_should_return_true_if_the_key_is_present()
+        {
+            theContinuation["keyThatIsInData"] = "foo";
+            theContinuation.HasData("keyThatIsInData").ShouldBeTrue();
+        }
     }
 }
