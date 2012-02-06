@@ -8,7 +8,7 @@ namespace FubuMVC.Tests.Registration.Conventions.Handlers
     {
         public static ActionCall HandlerCall()
         {
-            return ActionCall.For<GetHandler>(h => h.Execute(new CreatePostRequestModel()));
+            return ActionCall.For<get_handler>(h => h.Execute(new CreatePostRequestModel()));
         }
         public static ActionCall ComplexHandlerCall()
         {
@@ -28,6 +28,11 @@ namespace FubuMVC.Tests.Registration.Conventions.Handlers
         public static ActionCall HandlerWithRouteInput()
         {
             return ActionCall.For<get_Year_Month_Title_handler>(h => h.Execute(new ViewPostRequestModel()));
+        }
+
+        public static ActionCall VerbHandler()
+        {
+            return ActionCall.For<Handlers.Posts.Sub.Route.PostHandler>(h => h.Execute(new Handlers.Posts.Sub.Route.ViewPostHandlerRequestModel()));
         }
     }
 }
