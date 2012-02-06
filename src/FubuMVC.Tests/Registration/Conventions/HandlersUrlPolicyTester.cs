@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Diagnostics;
+﻿using System.Linq;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Tests.Registration.Conventions.Handlers;
@@ -67,7 +68,7 @@ namespace FubuMVC.Tests.Registration.Conventions
         }
 
         [Test]
-        public void should_contrain_routes_by_MethodToUrlBuilder_if_they_match()
+        public void should_constrain_routes_by_MethodToUrlBuilder_if_they_match()
         {
             var input = _policy.Build(HandlersObjectMother.HandlerWithRouteInput()).Input;
             var parameters = new RouteParameters();
@@ -78,6 +79,22 @@ namespace FubuMVC.Tests.Registration.Conventions
             input
                 .CreateUrlFromParameters(parameters)
                 .ShouldEqual("posts/2011/7/hello-world");
+        }
+
+        [Test]
+        public void should_add_querystrings_to_route_for_handler_convention()
+        {
+            _policy
+                .Build(HandlersObjectMother.HandlerCall())
+                .Input.QueryParameters.First().Name.ShouldEqual("Input");
+        }
+
+        [Test]
+        public void should_apply_input_types_for_verb_handler_convention()
+        {
+            var input = _policy.Build(HandlersObjectMother.VerbHandler()).Input;
+            
+            input.QueryParameters.First().Name.ShouldEqual("Optional");
         }
     }
 }

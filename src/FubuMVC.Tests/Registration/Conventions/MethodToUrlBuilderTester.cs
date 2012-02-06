@@ -76,6 +76,7 @@ namespace FubuMVC.Tests.Registration.Conventions
     {
         private List<string> theProperties;
         private RouteDefinition theRoute;
+        private string baseRoute;
 
         [SetUp]
         public void SetUp()
@@ -149,6 +150,18 @@ namespace FubuMVC.Tests.Registration.Conventions
             theRoute.Pattern.ShouldEqual("path/{Input1}/folder");
         }
 
+        [Test]
+        public void http_verb_only_should_not_modify_route()
+        {
+            const string originalRoute = "base/route";
+            theRoute.Append(originalRoute);
+       
+            MethodToUrlBuilder.Alter(theRoute, "get", theProperties, x => Debug.WriteLine(x));
+
+            theRoute.Pattern.ShouldEqual(originalRoute);
+            theRoute.AllowedHttpMethods.ShouldContain("GET");
+        }
+        
         [Test]
         public void multiple_substitutions()
         {
