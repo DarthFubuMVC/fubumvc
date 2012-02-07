@@ -80,19 +80,7 @@ namespace FubuMVC.Core.Security
         {
             return forNew(entityType) == AuthorizationRight.Allow;
         }
-
-        public bool IsAuthorizedForPropertyUpdate(object model)
-        {
-            return IsAuthorized(model, Categories.PROPERTY_EDIT);
-        }
-
-        [Obsolete("TEMPORARY HACK")]
-        public bool IsAuthorizedForPropertyUpdate(Type type)
-        {
-            object o = Activator.CreateInstance(type);
-            return IsAuthorizedForPropertyUpdate(o);
-        }
-
+        
         public bool IsAuthorized(Type handlerType, MethodInfo method)
         {
             return For(handlerType, method) == AuthorizationRight.Allow;

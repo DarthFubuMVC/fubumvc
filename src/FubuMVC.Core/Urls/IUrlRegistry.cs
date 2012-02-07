@@ -123,20 +123,7 @@ namespace FubuMVC.Core.Urls
         {
             return registry.HasNewUrl(typeof(T));
         }
-
-        [Obsolete("This is an ancient Dovetail hack.  Getting eliminated whenever the DT guys say it's okay")]
-        public static string UrlForPropertyUpdate(this IUrlRegistry registry, object model)
-        {
-            return registry.UrlFor(model, Categories.PROPERTY_EDIT);
-        }
-
-        [Obsolete("This is an ancient Dovetail hack.  Getting eliminated whenever the DT guys say it's okay")]
-        public static string UrlForPropertyUpdate(this IUrlRegistry registry, Type type)
-        {
-            var o = Activator.CreateInstance(type);
-            return registry.UrlForPropertyUpdate(o);
-        }
-
+        
         /// <summary>
         /// Resolve a url for a model type, but using a RouteParameters object to define route substitutions.
         /// </summary>

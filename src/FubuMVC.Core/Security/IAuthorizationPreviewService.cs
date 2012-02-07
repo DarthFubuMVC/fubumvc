@@ -12,13 +12,7 @@ namespace FubuMVC.Core.Security
 
         bool IsAuthorizedForNew<T>();
         bool IsAuthorizedForNew(Type entityType);
-
-        [Obsolete("Removing soon.  Hack for Dovetail")]
-        bool IsAuthorizedForPropertyUpdate(object model);
-
-        [Obsolete("Removing soon.  Hack for Dovetail")]
-        bool IsAuthorizedForPropertyUpdate(Type type);
-
+        
         bool IsAuthorized(Type handlerType, MethodInfo method);
     }
 }
