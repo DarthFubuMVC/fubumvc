@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITemplateServiceWrapper.cs" />
+    <Compile Include="FubuTemplateService.cs" />
     <Compile Include="RazorModel\FileSystemViewFile.cs" />
     <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="ITemplateComposerConvention.cs" />
@@ -102,7 +102,6 @@
     <Compile Include="RazorModel\TemplateRegistry.cs" />
     <Compile Include="RazorViewFacility.cs" />
     <Compile Include="RazorViewToken.cs" />
-    <Compile Include="TemplateServiceWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />

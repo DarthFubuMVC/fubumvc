@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using FubuMVC.Razor.FileSystem;
 
 namespace FubuMVC.Razor.RazorModel
@@ -7,8 +6,12 @@ namespace FubuMVC.Razor.RazorModel
     public interface IRazorDescriptor
     {
         string Name { get; }
+        Type ViewModel { get; set; }
         bool IsCurrent();
+        string RelativePath();
         ITemplate Template { get; }
+        ITemplate Master { get; }
+        IViewFile ViewFile { get; }
     }
 
     public class ViewDescriptor : IRazorDescriptor
@@ -39,10 +42,11 @@ namespace FubuMVC.Razor.RazorModel
 
         public bool IsCurrent()
         {
-            var isCurrent = Master == null
-                                ? ViewFile.IsCurrent()
-                                : ViewFile.IsCurrent() && Master.Descriptor.IsCurrent();
-            return isCurrent;
+            return ViewFile.IsCurrent();
+            //var isCurrent = Master == null
+            //                    ? ViewFile.IsCurrent()
+            //                    : ViewFile.IsCurrent() && Master.Descriptor.IsCurrent();
+            //return isCurrent;
         }
 
         public override int GetHashCode()
@@ -72,7 +76,24 @@ namespace FubuMVC.Razor.RazorModel
     {
         public string Name { get { return "Template"; } }
 
+        public Type ViewModel { get; set; }
+
+        public string RelativePath()
+        {
+            return null;
+        }
+
         public ITemplate Template
+        {
+            get { return null; }
+        }
+
+        public ITemplate Master
+        {
+            get { return null; }
+        }
+
+        public IViewFile ViewFile
         {
             get { return null; }
         }

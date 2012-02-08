@@ -7,9 +7,11 @@ using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.RazorModel.Scanning;
 using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
+using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using Rhino.Mocks;
 using ITemplate = FubuMVC.Razor.RazorModel.ITemplate;
 
 namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
@@ -25,6 +27,8 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         private readonly TemplateRegistry _appTemplateRegistry;
 
         private readonly ITemplateServiceWrapper _templateService;
+
+        private IServiceLocator _serviceLocator;
 
         public ExtendedTester()
         {
@@ -53,11 +57,13 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             allTemplates.Each(viewPathPolicy.Apply);
 
             var config = new TemplateServiceConfiguration {BaseTemplateType = typeof (FubuRazorView)};
-            _templateService = new TemplateServiceWrapper(new TemplateService(config));
+            _templateService = new TemplateServiceWrapper(new FubuTemplateService(allTemplates, new TemplateService(config)));
 
             _pak1TemplateRegistry = new TemplateRegistry(allTemplates.ByOrigin(Package1));
             _pak2TemplateRegistry = new TemplateRegistry(allTemplates.ByOrigin(Package2));
             _appTemplateRegistry = new TemplateRegistry(allTemplates.FromHost());
+
+            _serviceLocator = MockRepository.GenerateMock<IServiceLocator>();
         }
 
         [Test]
@@ -93,8 +99,8 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         [Test]
         public void the_correct_number_of_templates_are_resolved()
         {
-            _appTemplateRegistry.ShouldHaveCount(11);
-            _pak1TemplateRegistry.ShouldHaveCount(11);
+            _appTemplateRegistry.ShouldHaveCount(10);
+            _pak1TemplateRegistry.ShouldHaveCount(10);
             _pak2TemplateRegistry.ShouldHaveCount(8);
         }
 
@@ -128,7 +134,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         {
             var threeView = _appTemplateRegistry.FirstByName("MacPro");
 
-            getViewSource(threeView).ShouldEqual("<header/> MacPro");
+            getViewSource(threeView).ShouldEqual("@Include(\"header\") <p>MacPro</p>");
             renderTemplate(threeView).ShouldEqual("This is the header MacPro");
         }
 
@@ -173,7 +179,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var master = _pak1TemplateRegistry.FirstByName("Maker");
 
             getViewSource(cuatroView).ShouldEqual("@{ _Layout = \"Maker\"; } SerieX");           
-            renderTemplate(cuatroView, master).ShouldEqual("Lenovo SerieX");
+            renderTemplate(cuatroView, master).ShouldEqual("Lenovo\r\n SerieX");
         }
 
         private string getViewSource(ITemplate template)
@@ -191,11 +197,16 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         private string renderTemplate(ITemplate template, params ITemplate[] templates)
         {
             var descriptor = new ViewDescriptor(template);
+            descriptor.ViewFile = new FileSystemViewFile(template.FilePath);
             var current = descriptor;
             for(int i = 0; i < templates.Length; ++i)
             {
-                var layout = new ViewDescriptor(templates[i]);
+                var layoutTemplate = templates[i];
+                var layout = new ViewDescriptor(layoutTemplate);
+                layout.ViewFile = new FileSystemViewFile(layoutTemplate.FilePath);
+                layoutTemplate.Descriptor = layout;
                 current.Master = templates[i];
+                current = layout;
             }
 
             var modifier = new ViewModifierService(Enumerable.Empty<IViewModifier>());

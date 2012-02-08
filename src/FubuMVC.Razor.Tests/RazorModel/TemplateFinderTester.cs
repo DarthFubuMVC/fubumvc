@@ -47,7 +47,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         [Test]
         public void finder_locates_all_relevant_razor_templates()
         {
-            ClassUnderTest.FindInHost().ShouldHaveCount(52);
+            ClassUnderTest.FindInHost().ShouldHaveCount(49);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             items.ShouldContain(x => x.Name() == "file");
             items.ShouldContain(x => x.Name() == "baz");
             items.ShouldContain(x => x.Name() == "dog");
-            items.ShouldHaveCount(56);
+            items.ShouldHaveCount(53);
         }
 
         [Test]
