@@ -7,6 +7,7 @@ using FubuMVC.Core.View;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using RazorEngine.Templating;
+using ITemplate = RazorEngine.Templating.ITemplate;
 
 namespace FubuMVC.Razor.Rendering
 {
@@ -121,7 +122,7 @@ namespace FubuMVC.Razor.Rendering
         }
     }
 
-    public interface IFubuRazorView : IFubuPage
+    public interface IFubuRazorView : IFubuPage, ITemplate
     {
         void Render();
         void RenderPartial();

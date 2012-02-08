@@ -91,8 +91,9 @@
     <Compile Include="Rendering\AjaxRenderStrategyTester.cs" />
     <Compile Include="Rendering\RenderActionTester.cs" />
     <Compile Include="Rendering\DefaultRenderStrategyTester.cs" />
-    <Compile Include="Rendering\FubuSparkViewTester.cs" />
+    <Compile Include="Rendering\FubuRazorViewTester.cs" />
     <Compile Include="Rendering\PageActivationTester.cs" />
+    <Compile Include="Rendering\StubView.cs" />
     <Compile Include="Rendering\ViewModifierServiceTester.cs" />
     <Compile Include="Rendering\ViewRendererTester.cs" />
     <Compile Include="Rendering\ViewFactoryTester.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="RazorModel\ViewFolder\ExtendedTester.cs" />
     <Compile Include="RazorModel\ViewFolder\BasicTester.cs" />
     <Compile Include="RazorModel\Policies\NamespacePolicyTester.cs" />
-    <Compile Include="RazorModel\Scanning\SparkScannerTester.cs" />
+    <Compile Include="RazorModel\Scanning\RazorScannerTester.cs" />
     <Compile Include="RazorModel\TemplateFinderTester.cs" />
     <Compile Include="RazorModel\TemplateExtensionsTester.cs" />
     <Compile Include="RazorModel\ChunkLoaderTester.cs" />
@@ -117,7 +118,7 @@
     <Compile Include="RazorModel\Binding\ViewModelBinderTester.cs" />
     <Compile Include="RazorViewFacilityTester.cs" />
     <Compile Include="RazorViewTokenTester.cs" />
-    <Compile Include="RazorModel\Scanning\SparkRequestExtensionsTester.cs" />
+    <Compile Include="RazorModel\Scanning\RazorRequestExtensionsTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
@@ -141,10 +142,10 @@
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieZ.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Models\MacMini.spark">
+    <None Include="Templates\App\Handlers\Models\MacMini.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Models\NoLuck.spark">
+    <None Include="Templates\App\Handlers\Models\NoLuck.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_fail.cshtml">
@@ -209,7 +210,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\Shared\_footer.cshtml">
+    <None Include="Templates\Shared\footer.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -217,7 +218,7 @@
     <None Include="Templates\Views\F1\G1.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\_header.cshtml">
+    <None Include="Templates\header.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -267,28 +268,28 @@
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Shared\_samePath.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Models\MacPro.spark">
+    <None Include="Templates\App\Handlers\Models\MacPro.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Models\MacBookAir.spark">
+    <None Include="Templates\App\Handlers\Models\MacBookAir.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Models\MacBook.spark">
+    <None Include="Templates\App\Handlers\Models\MacBook.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Shared\_samePath.spark">
+    <None Include="Templates\App\Handlers\Shared\_samePath.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Shared\_appname.spark">
+    <None Include="Templates\App\Shared\_appname.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Shared\_footer.spark">
+    <None Include="Templates\App\Shared\_footer.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Shared\_header.spark">
+    <None Include="Templates\App\Shared\_header.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\App\Handlers\Shared\Maker.spark">
+    <None Include="Templates\App\Handlers\Shared\Maker.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Templates\App\fubu-packages\Package1\WebContent\Handlers\Models\SerieSL.cshtml">

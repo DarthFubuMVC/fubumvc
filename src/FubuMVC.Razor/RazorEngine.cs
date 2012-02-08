@@ -123,14 +123,13 @@ namespace FubuMVC.Razor
             return types;
         }
 
-        // TODO: Tests that ensure all of these defaults are set.
-
         private static void configureServices(IServiceRegistry services)
         {
             var configuration = new TemplateServiceConfiguration();
             configuration.BaseTemplateType = typeof(FubuRazorView);
             services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
-            services.AddService<ITemplateServiceWrapper>(new TemplateServiceWrapper(new TemplateService(configuration)));
+            services.AddService<ITemplateServiceWrapper>(new TemplateServiceWrapper(
+                new FubuTemplateService(_templateRegistry, new TemplateService(configuration))));
             services.SetServiceIfNone<ITemplateServiceConfiguration>(configuration);
 
             services.FillType<IActivator, RazorActivator>();

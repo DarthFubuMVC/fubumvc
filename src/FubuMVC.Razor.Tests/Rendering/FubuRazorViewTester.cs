@@ -1,7 +1,6 @@
 using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
@@ -10,7 +9,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.Rendering
 {
     [TestFixture]
-    public class FubuRazorViewTester : InteractionContext<FubuRazorView<PersonViewModel>>
+    public class FubuRazorViewTester : InteractionContext<StubView>
     {
         private IServiceLocator _serviceLocator;
         private IUrlRegistry _urlRegistry;
@@ -151,5 +150,4 @@ namespace FubuMVC.Razor.Tests.Rendering
     {
         public string Tag { get; set; }
     }
-
 }
