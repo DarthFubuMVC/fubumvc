@@ -4,6 +4,7 @@ using FubuCore;
 
 namespace FubuMVC.Core.UI.Security
 {
+    [Serializable]
     public class AccessRight : IComparable<AccessRight>, IEquatable<AccessRight>
     {
         private readonly bool _read;
