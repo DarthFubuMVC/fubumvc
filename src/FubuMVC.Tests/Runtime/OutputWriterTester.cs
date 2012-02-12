@@ -70,24 +70,35 @@ namespace FubuMVC.Tests.Runtime
     public class when_writing_within_recorded_output_mode : InteractionContext<OutputWriter>
     {
         private string theContent;
+        private string theNestedContent;
+
         private string theContentType;
+
         private RecordedOutput theRecordedOutput;
+        private RecordedOutput theNestedOutput;
 
         protected override void beforeEach()
         {
             theContent = "some content";
+            theNestedContent = "nested content";
             theContentType = "text/xml";
 
             theRecordedOutput = ClassUnderTest.Record(() =>
             {
                 ClassUnderTest.Write(theContentType, theContent);
+                theNestedOutput = ClassUnderTest.Record(() =>
+                {
+                    ClassUnderTest.Write(theContentType, theNestedContent);
+                }).As<RecordedOutput>();
+            
             }).As<RecordedOutput>();
         }
 
         [Test]
         public void recorded_output_should_have_what_was_written()
         {
-            theRecordedOutput.Outputs.ShouldHaveTheSameElementsAs(new SetContentType(theContentType), new WriteTextOutput(theContent));
+            theRecordedOutput.Outputs
+                .ShouldHaveTheSameElementsAs(new SetContentType(theContentType), new WriteTextOutput(theContent));
         }
 
         [Test]
@@ -95,6 +106,33 @@ namespace FubuMVC.Tests.Runtime
         {
             MockFor<IHttpWriter>().AssertWasNotCalled(x => x.Write(theContent));
             MockFor<IHttpWriter>().AssertWasNotCalled(x => x.WriteContentType(theContentType));
+        }
+
+        [Test]
+        public void should_restore_to_normal_writing_after_recording()
+        {
+            ClassUnderTest.Write(theContentType, theContent);
+
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.Write(theContent));
+            MockFor<IHttpWriter>().AssertWasCalled(x => x.WriteContentType(theContentType));
+        }
+
+        [Test]
+        public void should_nest_correctly_when_recording_1()
+        {
+            theNestedOutput.GetText().ShouldEqual(theNestedContent);
+        }
+
+        [Test]
+        public void should_nest_correctly_when_recording_2()
+        {
+            ClassUnderTest.Record(() =>
+            {
+                ClassUnderTest.WriteHtml("Monty");
+                var nested = ClassUnderTest.Record(() => ClassUnderTest.WriteHtml("Python"));
+                ClassUnderTest.WriteHtml(nested.GetText());
+
+            }).GetText().ShouldEqual("MontyPython");
         }
     }
 

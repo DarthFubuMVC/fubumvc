@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Web;
@@ -12,13 +13,14 @@ namespace FubuMVC.Core.Runtime
     {
         private readonly IHttpWriter _writer;
         private readonly IFileSystem _fileSystem;
-        private IOutputState _state;
+        private readonly Stack<IOutputState> _outputStates = new Stack<IOutputState>(); 
 
         public OutputWriter(IHttpWriter writer, IFileSystem fileSystem)
         {
             _writer = writer;
             _fileSystem = fileSystem;
-            revertToNormalWriting();
+
+            normalWriting();
         }
 
         public virtual IHttpWriter Writer
@@ -26,21 +28,26 @@ namespace FubuMVC.Core.Runtime
             get { return _writer; }
         }
 
-        private void revertToNormalWriting()
+        IOutputState CurrentState
         {
-            _state = new NormalState(_writer, _fileSystem);
+            get { return _outputStates.Peek(); }
+        }
+
+        private void normalWriting()
+        {
+            var state = new NormalState(_writer, _fileSystem);
+            _outputStates.Push(state);
         }
 
         public virtual void WriteFile(string contentType, string localFilePath, string displayName)
         {
-            _state.WriteFile(contentType, localFilePath, displayName);
+            CurrentState.WriteFile(contentType, localFilePath, displayName);
         }
-
 
         public virtual IRecordedOutput Record(Action action)
         {
             var output = new RecordedOutput(_fileSystem);
-            _state = output;
+            _outputStates.Push(output);
 
             try
             {
@@ -48,7 +55,7 @@ namespace FubuMVC.Core.Runtime
             }
             finally
             {
-                revertToNormalWriting();
+                _outputStates.Pop();
             }
 
             return output;
@@ -64,7 +71,7 @@ namespace FubuMVC.Core.Runtime
 
         public virtual void Write(string contentType, string renderedOutput)
         {
-            _state.Write(contentType, renderedOutput);
+            CurrentState.Write(contentType, renderedOutput);
         }
 
         public virtual void RedirectToUrl(string url)
@@ -79,12 +86,12 @@ namespace FubuMVC.Core.Runtime
 
         public void AppendHeader(string key, string value)
         {
-            _state.AppendHeader(key, value);
+            CurrentState.AppendHeader(key, value);
         }
 
         public virtual void Write(string contentType, Action<Stream> output)
         {
-            _state.Write(contentType, output);
+            CurrentState.Write(contentType, output);
         }
 
         public virtual void WriteResponseCode(HttpStatusCode status)
