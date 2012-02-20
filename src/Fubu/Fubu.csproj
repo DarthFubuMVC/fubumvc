@@ -36,16 +36,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.172\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.195\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployers.Iis">
-      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.172\lib\Bottles.Deployers.Iis.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployers.IIS.0.9.1.195\lib\Bottles.Deployers.Iis.dll</HintPath>
     </Reference>
     <Reference Include="Bottles.Deployment">
-      <HintPath>..\packages\Bottles.Deployment.0.9.1.172\lib\Bottles.Deployment.dll</HintPath>
+      <HintPath>..\packages\Bottles.Deployment.0.9.1.196\lib\Bottles.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.4.109\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.4.113\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="Gate, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
@@ -54,10 +54,7 @@
       <HintPath>..\packages\Gate.Kayak.0.1.4\lib\Gate.Kayak.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.0.0.52\lib\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.0.0.54\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Kayak, Version=0.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kayak.0.7.2\lib\Kayak.dll</HintPath>

@@ -6,8 +6,7 @@
   <assembly>Bottles</assembly>
   <assembly>FubuCore</assembly>
   <assembly>FubuLocalization</assembly>
-  <assembly>HtmlTags</assembly>
-  <assembly>Ionic.Zip</assembly>
+  <assembly>HtmlTags</assembly>  
   <assembly>Microsoft.Practices.ServiceLocation</assembly>
   <assembly>Bottles.Deployment</assembly>
   <assembly>StructureMap</assembly>
