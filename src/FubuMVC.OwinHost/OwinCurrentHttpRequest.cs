@@ -19,7 +19,7 @@ namespace FubuMVC.OwinHost
 
         public string RawUrl()
         {
-            return _body.Path.ToAbsoluteUrl(_body.PathBase);
+            return ToFullUrl(_body.Path);
         }
 
         public string RelativeUrl()
