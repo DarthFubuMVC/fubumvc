@@ -40,7 +40,8 @@
 
     <file src="..\..\src\SerenityRunner\bin\release\FubuKayak.*" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\FubuMVC.OwinHost.*" target="tools" />
-    <file src="..\..\src\SerenityRunner\bin\release\Kayak.*" target="tools" />
+    <file src="..\..\src\SerenityRunner\bin\release\HtmlTags.*" target="tools" />
+	<file src="..\..\src\SerenityRunner\bin\release\Kayak.*" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.*" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.Kayak.*" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.Helpers.*" target="tools" />
