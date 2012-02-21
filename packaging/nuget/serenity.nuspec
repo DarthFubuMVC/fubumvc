@@ -44,6 +44,7 @@
     <file src="..\..\src\SerenityRunner\bin\release\Gate.*" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.Kayak.*" target="tools" />
     <file src="..\..\src\SerenityRunner\bin\release\Gate.Helpers.*" target="tools" />
+	<file src="..\..\src\SerenityRunner\bin\release\Newtonsoft.Json.*" target="tools" />
 
   </files>
 </package>
