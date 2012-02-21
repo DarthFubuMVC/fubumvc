@@ -20,7 +20,7 @@ namespace FubuMVC.OwinHost
             };
 
             AddLocator(RequestDataSource.Route.ToString(), locator, () => routeData.Values.Keys);
-            AddLocator(RequestDataSource.Request.ToString(), key => valuesForRequest(body), () => valuesForRequest(body).Keys);
+            AddLocator(RequestDataSource.Request.ToString(), key => findRequestValue(key, body), () => valuesForRequest(body).Keys);
 
             addDictionaryLocator("Query string", body.Querystring());
             addDictionaryLocator("Form Post", body.FormData ?? new Dictionary<string, string>());
@@ -32,6 +32,14 @@ namespace FubuMVC.OwinHost
             Func<string, object> locator = key => dictionary.ContainsKey(key) ? dictionary[key] : null;
 
             AddLocator(name, locator, () => dictionary.Keys);
+        }
+
+        private static object findRequestValue(string key, OwinRequestBody body)
+        {
+            var values = valuesForRequest(body);
+            string found;
+            values.TryGetValue(key, out found);
+            return found;
         }
 
         private static IDictionary<string, string> valuesForRequest(OwinRequestBody body)

@@ -84,6 +84,7 @@ namespace Serenity.Jasmine
                 _driver.NavigateTo<JasminePages>(x => x.AllSpecs());
 
                 var browser = _applicationUnderTest.Driver;
+                Wait.Until(() => browser.FindElement(By.ClassName("finished-at")).Text.IsNotEmpty());
                 var failures = browser.FindElements(By.CssSelector("div.suite.failed"));
 
 
@@ -99,9 +100,9 @@ namespace Serenity.Jasmine
                 Console.WriteLine(line);
                 writeTotals(browser);
 
-                _kayak.Stop();
-
                 browser.Quit();
+                browser.SafeDispose();
+                _kayak.Stop();
             });
 
 

@@ -135,7 +135,7 @@ namespace FubuMVC.Core
         {
             graph.Services.AddService<IConverterFamily, AspNetPassthroughConverter>();
 
-            graph.Services.AddService<ICurrentHttpRequest, StandInCurrentHttpRequest>();
+            graph.Services.SetServiceIfNone<ICurrentHttpRequest, StandInCurrentHttpRequest>();
             graph.Services.AddService<AggregateDictionary, AggregateDictionary>();
 
             graph.Services.AddService<IModelBinder, FubuTupleBinder>();
