@@ -21,7 +21,7 @@
 
     <file src="..\..\src\SerenityRunner\bin\release\*.dll" target="lib\net40" />
     <file src="..\..\src\SerenityRunner\bin\release\SerenityRunner.exe.config" target="lib\net40" />
-    <file src="..\..\src\SerenityRunner\bin\release\*.exe" target="lib\net40" />
+    <file src="..\..\src\SerenityRunner\bin\release\*.exe" target="lib\net40" exclude="..\..\src\SerenityRunner\bin\release\chromedriver.exe" />
 
     <file src="..\..\src\SerenityRunner\bin\release\FubuKayak.*" target="lib\net40" />
     <file src="..\..\src\SerenityRunner\bin\release\FubuMVC.OwinHost.*" target="lib\net40" />
