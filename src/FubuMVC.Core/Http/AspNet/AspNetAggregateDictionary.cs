@@ -125,7 +125,7 @@ namespace FubuMVC.Core.Http.AspNet
 
         private static IEnumerable<string> keysForRequest(HttpRequestBase request)
         {
-            foreach (var key in request.QueryString.AllKeys)
+            foreach (var key in request.QueryString.AllKeys.Where(x => x != null))
             {
                 yield return key;
             }
