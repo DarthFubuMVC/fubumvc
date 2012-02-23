@@ -9,7 +9,7 @@ namespace Serenity
 {
     public class WebDriverSettings
     {
-        public static readonly string Filename = "browser.settings"; 
+        public static readonly string Filename = "browser.settings.config"; 
         private static readonly Lazy<WebDriverSettings> _settings = new Lazy<WebDriverSettings>(Read);
 
         public WebDriverSettings()
