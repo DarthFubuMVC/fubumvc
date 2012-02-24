@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="FormRequestReaderTester.cs" />
     <Compile Include="OwinAggregateDictionaryTester.cs" />
+    <Compile Include="OwnCurrentHttpRequestTester.cs" />
     <Compile Include="Playing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

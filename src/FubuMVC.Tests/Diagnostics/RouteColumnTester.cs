@@ -32,6 +32,11 @@ namespace FubuMVC.Tests.Diagnostics
             throw new NotImplementedException();
         }
 
+        public string FullUrl()
+        {
+            throw new NotImplementedException();
+        }
+
         public string ToFullUrl(string url)
         {
             return url.ToAbsoluteUrl(_baseUrl);

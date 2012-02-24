@@ -9,6 +9,7 @@ namespace FubuMVC.Tests.Urls
         public string TheRelativeUrl;
         public string TheApplicationRoot = "http://server";
         public string TheHttpMethod = "GET";
+        public string StubFullUrl = "http://server/";
 
         public string RawUrl()
         {
@@ -18,6 +19,11 @@ namespace FubuMVC.Tests.Urls
         public string RelativeUrl()
         {
             return TheRelativeUrl;
+        }
+
+        public string FullUrl()
+        {
+            return StubFullUrl;
         }
 
         public string ToFullUrl(string url)

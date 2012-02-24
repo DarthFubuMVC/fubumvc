@@ -27,6 +27,23 @@ namespace FubuMVC.OwinHost
             return _body.Path;
         }
 
+        public string FullUrl()
+        {
+            var parts = _body.HostWithPort.Split(':');
+            var builder = new UriBuilder(_body.Environment.Scheme, parts[0]);
+            if (parts.Length > 1 && parts[1].Trim().IsNotEmpty())
+            {
+                var port = 0;
+                if (Int32.TryParse(parts[1], out port))
+                {
+                    builder.Port = port;
+                }
+            }
+            builder.Path = _body.Path;
+            builder.Query = _body.Environment.QueryString;
+            return builder.ToString();
+        }
+
         public string ToFullUrl(string url)
         {
             return url.ToAbsoluteUrl(_baseUrl.Value);

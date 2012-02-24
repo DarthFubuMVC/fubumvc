@@ -124,6 +124,7 @@ namespace Serenity
         public string TheRelativeUrl;
         public string ApplicationRoot = "http://server";
         public string TheHttpMethod = "GET";
+        public string StubFullUrl = "http://server/";
 
         public string RawUrl()
         {
@@ -133,6 +134,11 @@ namespace Serenity
         public string RelativeUrl()
         {
             return TheRelativeUrl;
+        }
+
+        public string FullUrl()
+        {
+            return StubFullUrl;
         }
 
         public string ToFullUrl(string url)

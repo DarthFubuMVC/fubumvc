@@ -1,6 +1,8 @@
-﻿using FubuMVC.Core.Http.AspNet;
+﻿using System.Web;
+using FubuMVC.Core.Http.AspNet;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Http.AspNet
 {
@@ -9,9 +11,13 @@ namespace FubuMVC.Tests.Http.AspNet
     public class AspNetCurrentHttpRequestTester : InteractionContext<AspNetCurrentHttpRequest>
     {
         [Test]
-        public void to_full_url_should_pass_through_a_well_formed_relative_url()
+        public void full_url_should_return_Request_Url_property_value()
         {
-            
+            var request = MockRepository.GenerateStub<HttpRequestBase>();
+            var expectedUri = "https://foo.bar:999/baz?x=y";
+            request.Stub(r => r.Url).Return(new System.Uri(expectedUri));
+            var currentRequest = new AspNetCurrentHttpRequest(request);
+            currentRequest.FullUrl().ShouldEqual(expectedUri);
         }
     }
 }

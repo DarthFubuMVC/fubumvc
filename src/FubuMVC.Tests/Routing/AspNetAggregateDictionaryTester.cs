@@ -92,6 +92,11 @@ namespace FubuMVC.Tests.Routing
             callback.AssertWasCalled(x => x.Callback(source.ToString(), value));
         }
 
+        private void assertWasNotFound()
+        {
+            callback.AssertWasNotCalled(x => x.Callback("", ""), o => o.IgnoreArguments());
+        }
+
         [Test]
         public void find_value_from_second_dictionary()
         {
@@ -135,15 +140,28 @@ namespace FubuMVC.Tests.Routing
         }
 
         [Test]
-        public void find_uri_value_from_request_property()
+        public void should_never_find_uri_value_from_request_property()
         {
-            var expectedValue = new Uri("http://localhost/foo");
             var requestCtx = Do_the_Stupid_ASPNET_Mock_HokeyPokey();
             aggregate = new AspNetAggregateDictionary(requestCtx);
 
             forKey("Url");
 
-            assertFound(RequestDataSource.RequestProperty, expectedValue);
+            assertWasNotFound();
+        }
+
+        [Test]
+        public void request_for_url_should_come_from_the_server_variables_not_RequestProperty()
+        {
+            var expectedValue = "ServerVariables URL";
+            var requestCtx = Do_the_Stupid_ASPNET_Mock_HokeyPokey();
+            var request = requestCtx.HttpContext.Request;
+            request.Stub(r => r["Url"]).Return(expectedValue);
+            aggregate = new AspNetAggregateDictionary(requestCtx);
+
+            forKey("Url");
+
+            assertFound(RequestDataSource.Request, expectedValue);
         }
 
         [Test]

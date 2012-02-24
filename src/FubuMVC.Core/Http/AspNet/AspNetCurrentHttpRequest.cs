@@ -24,6 +24,11 @@ namespace FubuMVC.Core.Http.AspNet
             return _request.AppRelativeCurrentExecutionFilePath;
         }
 
+        public string FullUrl()
+        {
+            return _request.Url.ToString();
+        }
+
         public string ToFullUrl(string url)
         {
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute)) return url;
