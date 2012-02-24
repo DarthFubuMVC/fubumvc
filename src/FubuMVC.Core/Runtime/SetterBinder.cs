@@ -1,3 +1,4 @@
+using System;
 using FubuCore.Binding;
 
 namespace FubuMVC.Core.Runtime
@@ -15,12 +16,18 @@ namespace FubuMVC.Core.Runtime
 
         public void BindProperties<T>(T target)
         {
-            _binder.Bind(typeof (T), target, _context);
+            BindProperties(typeof(T), target);
+        }
+
+        public void BindProperties(Type type, object target)
+        {
+            _binder.Bind(type, target, _context);
         }
     }
 
     public interface ISetterBinder
     {
         void BindProperties<T>(T target);
+        void BindProperties(Type type, object target);
     }
 }
