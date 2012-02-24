@@ -203,6 +203,8 @@
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
+    <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
+    <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Conventions\DictionaryOutputConvention.cs" />

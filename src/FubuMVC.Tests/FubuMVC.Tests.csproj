@@ -193,6 +193,8 @@
     <Compile Include="Http\CurrentChainTester.cs" />
     <Compile Include="Http\CurrentMimeTypeModelBinderTester.cs" />
     <Compile Include="Http\CurrentMimeTypeTester.cs" />
+    <Compile Include="Http\CurrentRequestFullUrlPropertyBinderTester.cs" />
+    <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinderTester.cs" />
     <Compile Include="Http\Headers\HeaderTester.cs" />
     <Compile Include="Http\Headers\HeaderWritingPolicyIntegratedTester.cs" />
     <Compile Include="Http\Headers\HttpHeaderValuesTester.cs" />

@@ -3,6 +3,7 @@ using System.Net;
 using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
@@ -51,6 +52,9 @@ namespace FubuMVC.Core
 
             _systemPolicies.Add(new StringOutputPolicy());
             _systemPolicies.Add(new MissingRouteInputPolicy());
+
+            Models.BindPropertiesWith<CurrentRequestFullUrlPropertyBinder>();
+            Models.BindPropertiesWith<CurrentRequestRelativeUrlPropertyBinder>();
 
             _conventions.Add(_bagRunner);
             Policies.Add<JsonMessageInputConvention>();
