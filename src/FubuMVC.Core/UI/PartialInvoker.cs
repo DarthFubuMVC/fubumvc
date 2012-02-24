@@ -12,15 +12,17 @@ namespace FubuMVC.Core.UI
         private readonly IAuthorizationPreviewService _authorization;
         private readonly ITypeResolver _types;
         private readonly IOutputWriter _writer;
+        readonly ISetterBinder _setterBinder;
 
         public PartialInvoker(IPartialFactory factory, IFubuRequest request, IAuthorizationPreviewService authorization,
-                              ITypeResolver types, IOutputWriter writer)
+                              ITypeResolver types, IOutputWriter writer, ISetterBinder setterBinder)
         {
             _factory = factory;
             _request = request;
             _authorization = authorization;
             _types = types;
             _writer = writer;
+            _setterBinder = setterBinder;
         }
 
         public string Invoke<T>() where T : class
@@ -40,6 +42,7 @@ namespace FubuMVC.Core.UI
             if (_authorization.IsAuthorized(model))
             {
                 var requestType = _types.ResolveType(model);
+                _setterBinder.BindProperties(requestType, model);
                 _request.Set(requestType, model);
                 output = invokeWrapped(requestType);
             }

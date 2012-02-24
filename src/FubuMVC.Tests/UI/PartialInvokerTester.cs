@@ -29,6 +29,9 @@ namespace FubuMVC.Tests.UI
                 .WhenCalled(r => theAction.InvokePartial())
                 .Return(MockFor<IRecordedOutput>());
 
+            MockFor<ISetterBinder>()
+                .Expect(x => x.BindProperties(theInput.GetType(), theInput));
+
             Services.Inject<ITypeResolver>(new TypeResolver());
 
             ClassUnderTest.InvokeObject(theInput);
@@ -62,6 +65,12 @@ namespace FubuMVC.Tests.UI
         public void should_return_recorded_output()
         {
             MockFor<IRecordedOutput>().AssertWasCalled(x => x.GetText());
+        }
+
+        [Test]
+        public void should_bind_properties_on_the_input()
+        {
+            MockFor<ISetterBinder>().VerifyAllExpectations();
         }
     }
 
@@ -176,6 +185,7 @@ namespace FubuMVC.Tests.UI
             MockFor<IFubuRequest>().Stub(x => x.Get<PartialInputModel>()).Return(theInput);
             MockFor<IAuthorizationPreviewService>().Expect(x => x.IsAuthorized(theInput)).Return(false);
             MockFor<IPartialFactory>().Stub(x => x.BuildPartial(typeof(PartialInputModel))).Return(theAction);
+            Services.Inject<ITypeResolver>(new TypeResolver());
 
             theOutput = ClassUnderTest.InvokeObject(theInput);
         }
@@ -203,6 +213,12 @@ namespace FubuMVC.Tests.UI
         public void should_return_empty_result()
         {
             theOutput.ShouldBeEmpty();
+        }
+
+        [Test]
+        public void should_not_bind_properties_on_the_input()
+        {
+            MockFor<ISetterBinder>().AssertWasNotCalled(x => x.BindProperties(theInput.GetType(), theInput));
         }
     }
 
