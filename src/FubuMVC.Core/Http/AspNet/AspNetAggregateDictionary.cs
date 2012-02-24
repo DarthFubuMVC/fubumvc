@@ -50,7 +50,6 @@ namespace FubuMVC.Core.Http.AspNet
             AddRequestProperty(r => r.RequestType);
             AddRequestProperty(r => r.ServerVariables);
             AddRequestProperty(r => r.TotalBytes);
-            AddRequestProperty(r => r.Url);
             AddRequestProperty(r => r.UrlReferrer);
             AddRequestProperty(r => r.UserAgent);
             AddRequestProperty(r => r.UserHostAddress);
