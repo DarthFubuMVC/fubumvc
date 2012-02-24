@@ -47,7 +47,7 @@ namespace Fubu.Applications
             copyAssembly<FubuOwinHost>(setup);
             copyAssembly("Kayak", setup);
             copyAssembly("Gate", setup);
-            copyAssembly("Gate.Helpers", setup);
+            //copyAssembly("Gate.Helpers", setup);
             copyAssembly("Gate.Kayak", setup);
 
             Console.WriteLine("Starting a new AppDomain at " + setup.ApplicationBase);
