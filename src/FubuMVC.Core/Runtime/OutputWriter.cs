@@ -94,9 +94,9 @@ namespace FubuMVC.Core.Runtime
             CurrentState.Write(contentType, output);
         }
 
-        public virtual void WriteResponseCode(HttpStatusCode status)
+        public virtual void WriteResponseCode(HttpStatusCode status, string description = null)
         {
-            Writer.WriteResponseCode(status);
+            Writer.WriteResponseCode(status, description);
         }
     }
 }

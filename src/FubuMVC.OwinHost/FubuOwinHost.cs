@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -94,7 +95,7 @@ namespace FubuMVC.OwinHost
 
         private static void write500(Response response, Exception ex)
         {
-            response.Status = "500";
+            response.SetStatus(HttpStatusCode.InternalServerError);
             response.Write("FubuMVC has detected an exception\r\n");
             response.Write(ex.ToString());
         }
@@ -107,7 +108,7 @@ namespace FubuMVC.OwinHost
 
         private static void write404(Response response)
         {
-            response.Status = "404";
+            response.SetStatus(HttpStatusCode.NotFound);
             response.Write("Sorry, I can't find this resource");
         }
     }
@@ -123,9 +124,16 @@ namespace FubuMVC.OwinHost
         {
             _result = result;
 
-            Status = "200 OK";
+            SetStatus(HttpStatusCode.OK, "OK");
             Headers = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             Encoding = Encoding.UTF8;
+        }
+
+        public Response SetStatus(HttpStatusCode statusCode, string description = null)
+        {
+            var status = statusCode.As<int>().ToString();
+            Status = description.IsEmpty() ? status : "{0} {1}".ToFormat(status, description);
+            return this;
         }
 
         public string Status { get; set; }

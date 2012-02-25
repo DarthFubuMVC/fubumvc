@@ -28,7 +28,7 @@ namespace FubuMVC.Core.Http
         {
         }
 
-        public void WriteResponseCode(HttpStatusCode status)
+        public void WriteResponseCode(HttpStatusCode status, string description = null)
         {
         }
 

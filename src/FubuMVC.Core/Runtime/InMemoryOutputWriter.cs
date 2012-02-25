@@ -68,7 +68,7 @@ namespace FubuMVC.Core.Runtime
             output(_output);
         }
 
-        public void WriteResponseCode(HttpStatusCode status)
+        public void WriteResponseCode(HttpStatusCode status, string description = null)
         {
         }
 

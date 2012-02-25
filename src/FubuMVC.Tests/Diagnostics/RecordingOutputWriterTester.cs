@@ -103,6 +103,18 @@ namespace FubuMVC.Tests.Diagnostics
 				.AssertWasCalled(w => w.WriteResponseCode(HttpStatusCode.Unauthorized));
 		}
 
+        [Test]
+        public void write_response_code_and_description()
+        {
+            const string description = "why u no make good request?";
+            ClassUnderTest.WriteResponseCode(HttpStatusCode.BadRequest, description);
+            MockFor<IDebugReport>()
+                .AssertWasCalled(x => x.AddDetails(new HttpStatusReport { Status = HttpStatusCode.BadRequest, Description = description }));
+
+            MockFor<IHttpWriter>()
+                .AssertWasCalled(w => w.WriteResponseCode(HttpStatusCode.BadRequest, description));
+        }
+
 		[Test]
 		public void write_cookie()
 		{

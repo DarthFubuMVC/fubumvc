@@ -5,6 +5,7 @@ namespace FubuMVC.Core.Diagnostics
 	public class HttpStatusReport : IBehaviorDetails
 	{
 		public HttpStatusCode Status { get; set; }
+        public string Description { get; set; }
 
 		public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
 		{

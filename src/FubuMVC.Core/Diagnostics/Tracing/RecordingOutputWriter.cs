@@ -65,12 +65,13 @@ namespace FubuMVC.Core.Diagnostics.Tracing
         }
 
 
-        public override void WriteResponseCode(HttpStatusCode status)
+        public override void WriteResponseCode(HttpStatusCode status, string description = null)
         {
             _report.AddDetails(new HttpStatusReport{
-                Status = status
+                Status = status,
+                Description = description
             });
-            base.WriteResponseCode(status);
+            base.WriteResponseCode(status, description);
         }
 
         public override IRecordedOutput Record(Action action)
