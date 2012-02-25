@@ -208,7 +208,7 @@ namespace FubuMVC.Tests
                 throw new NotImplementedException();
             }
 
-            public void WriteResponseCode(HttpStatusCode status)
+            public void WriteResponseCode(HttpStatusCode status, string description = null)
             {
                 throw new NotImplementedException();
             }

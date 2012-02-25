@@ -76,6 +76,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="OwnResponseTester.cs" />
+    <Compile Include="OwnHttpWriterTester.cs" />
     <Compile Include="FormRequestReaderTester.cs" />
     <Compile Include="OwinAggregateDictionaryTester.cs" />
     <Compile Include="OwnCurrentHttpRequestTester.cs" />
