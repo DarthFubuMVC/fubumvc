@@ -2,7 +2,7 @@ using System;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.Urls;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Core.Resources.Media
 {

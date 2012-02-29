@@ -109,13 +109,6 @@ namespace FubuMVC.Tests.Diagnostics
             graph.BehaviorFor<BehaviorGraphWriter>(x => x.Actions()).Route.Pattern.ShouldEqual(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT + "/actions");
         }
 
-
-        [Test]
-        public void has_the_debugging_services_registred()
-        {
-            graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RecordingRequestData));
-        }
-
         [Test]
         public void index_action_url()
         {

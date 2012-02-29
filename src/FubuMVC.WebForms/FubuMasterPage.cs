@@ -1,8 +1,9 @@
 using System.Web.UI;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
-using Microsoft.Practices.ServiceLocation;
+
 using System.Linq;
 
 namespace FubuMVC.WebForms

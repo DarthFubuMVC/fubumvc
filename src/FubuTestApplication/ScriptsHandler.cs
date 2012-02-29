@@ -3,7 +3,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
+
 using FubuCore;
 using FubuMVC.Core.UI;
 using System.Linq;

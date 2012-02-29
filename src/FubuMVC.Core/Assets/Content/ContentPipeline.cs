@@ -1,5 +1,5 @@
 using FubuCore;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Core.Assets.Content
 {

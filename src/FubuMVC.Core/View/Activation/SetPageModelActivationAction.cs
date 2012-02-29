@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using FubuMVC.Core.Runtime;
-using Microsoft.Practices.ServiceLocation;
+
 using System.Linq;
 using FubuCore;
 

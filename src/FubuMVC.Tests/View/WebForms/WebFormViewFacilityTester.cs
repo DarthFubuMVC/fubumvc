@@ -11,7 +11,7 @@ using FubuMVC.Core.View;
 using FubuMVC.Tests.View.FakeViews;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 
 namespace FubuMVC.Tests.View.WebForms

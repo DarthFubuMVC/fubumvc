@@ -1,3 +1,4 @@
+using FubuCore.Binding;
 using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;

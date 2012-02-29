@@ -7,7 +7,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Urls;
-using Microsoft.Practices.ServiceLocation;
+
 using OpenQA.Selenium;
 using FubuCore;
 

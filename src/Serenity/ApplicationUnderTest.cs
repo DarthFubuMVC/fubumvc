@@ -6,7 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Urls;
-using Microsoft.Practices.ServiceLocation;
+
 using OpenQA.Selenium;
 
 namespace Serenity

@@ -23,7 +23,7 @@ namespace FubuMVC.Tests.Resources.Media.Projections
 
             _dictionary = new Lazy<IDictionary<string, object>>(() =>
             {
-                var runner = new ProjectionRunner(new FubuCore.Binding.InMemory.InMemoryServiceLocator());
+                var runner = new ProjectionRunner(new InMemoryServiceLocator());
                 var node = new DictionaryMediaNode();
 
                 runner.Run(theProjection,theParent, node);

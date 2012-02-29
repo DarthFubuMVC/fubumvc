@@ -13,7 +13,7 @@ using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 

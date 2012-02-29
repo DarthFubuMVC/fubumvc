@@ -52,9 +52,6 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -327,7 +324,6 @@
     <Compile Include="Diagnostics\DebugCallHandler.cs" />
     <Compile Include="Diagnostics\IDebugCallHandler.cs" />
     <Compile Include="Diagnostics\Tracing\BehaviorCorrelation.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingBindingLogger.cs" />
     <Compile Include="FubuRegistry.OutOfBoxConventions.cs" />
     <Compile Include="CurrentRequest.cs" />
     <Compile Include="Diagnostics\IObserverImporter.cs" />
@@ -335,7 +331,6 @@
     <Compile Include="Diagnostics\WannaKillAttribute.cs" />
     <Compile Include="Diagnostics\HttpStatusReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\DiagnosticHtml.cs" />
-    <Compile Include="Diagnostics\DiagnosticsExtensions.cs" />
     <Compile Include="Diagnostics\RequestHistoryCache.cs" />
     <Compile Include="Diagnostics\DiagnosticsIndicator.cs" />
     <Compile Include="Diagnostics\FubuDiagnosticsAttribute.cs" />
@@ -378,9 +373,7 @@
     <Compile Include="Diagnostics\Querying\TypeToken.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingAuthorizationPolicyExecutor.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingFubuRequest.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingObjectResolver.cs" />
     <Compile Include="Diagnostics\Tracing\RecordingOutputWriter.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingRequestData.cs" />
     <Compile Include="Diagnostics\RedirectReport.cs" />
     <Compile Include="Diagnostics\HtmlWriting\Columns\RouteColumn.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ScriptWriter.cs" />
@@ -567,14 +560,12 @@
     <Compile Include="Security\AuthorizedByAttribute.cs" />
     <Compile Include="Security\DefaultAuthorizationFailureHandler.cs" />
     <Compile Include="Security\EndPointAuthorizor.cs" />
-    <Compile Include="Security\EndPointAuthorizorFactory.cs" />
     <Compile Include="Security\AuthorizationPreviewService.cs" />
     <Compile Include="Security\IAuthorizationFailureHandler.cs" />
     <Compile Include="Security\IAuthorizationPolicy.cs" />
     <Compile Include="Security\IAuthorizationPreviewService.cs" />
     <Compile Include="Security\IAuthorizationRule.cs" />
     <Compile Include="Security\IEndPointAuthorizor.cs" />
-    <Compile Include="Security\IEndPointAuthorizorFactory.cs" />
     <Compile Include="Security\PrincipalRoles.cs" />
     <Compile Include="Routing\StandardRoutePolicy.cs" />
     <Compile Include="ServiceRegistryExtensions.cs" />
@@ -668,7 +659,6 @@
     <Compile Include="Runtime\OutputWriter.cs" />
     <Compile Include="Runtime\IBehaviorFactory.cs" />
     <Compile Include="Runtime\IFubuRequest.cs" />
-    <Compile Include="Runtime\InMemoryRequestData.cs" />
     <Compile Include="Runtime\MimeType.cs" />
     <Compile Include="Runtime\FubuRouteHandler.cs" />
     <Compile Include="Runtime\IOutputWriter.cs" />

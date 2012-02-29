@@ -35,7 +35,7 @@ namespace FubuMVC.Core
         public static bool IsAjaxRequest(this IBindingContext context)
         {
             var returnValue = false;
-            context.ValueAs<object>(XRequestedWithHeader, val => returnValue = val.IsAjaxRequest());
+            context.Data.ValueAs<object>(XRequestedWithHeader, val => returnValue = val.IsAjaxRequest());
             return returnValue;
         }
 

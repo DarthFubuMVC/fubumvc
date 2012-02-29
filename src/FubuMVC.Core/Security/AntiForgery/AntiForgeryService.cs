@@ -1,4 +1,5 @@
 using System.Web;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Runtime;
 

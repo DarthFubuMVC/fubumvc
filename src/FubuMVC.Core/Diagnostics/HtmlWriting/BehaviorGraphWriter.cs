@@ -8,10 +8,11 @@ using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using HtmlTags;
 using System.Linq;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting
 {
@@ -99,15 +100,15 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         public const string FUBU_INTERNAL_CLASS = "fubu-internal";
         private readonly BehaviorGraph _graph;
         private readonly IUrlRegistry _urls;
-        private readonly IServiceLocator _services;
+        private readonly IBehaviorFactory _factory;
         private readonly ICurrentHttpRequest _httpRequest;
         private readonly string _diagnosticsNamespace;
 
-        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IServiceLocator services, ICurrentHttpRequest httpRequest)
+        public BehaviorGraphWriter(BehaviorGraph graph, IUrlRegistry urls, IBehaviorFactory factory, ICurrentHttpRequest httpRequest)
         {
             _graph = graph;
             _urls = urls;
-            _services = services;
+            _factory = factory;
             _httpRequest = httpRequest;
             _diagnosticsNamespace = GetType().Namespace;
         }
@@ -308,7 +309,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting
         {
             get
             {
-                return new AuthorizationRulesColumn(_services);
+                return new AuthorizationRulesColumn(_factory);
             }
         }
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using FubuCore;
 using FubuMVC.Core.Urls;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using Spark;

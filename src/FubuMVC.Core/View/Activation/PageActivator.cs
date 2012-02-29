@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Microsoft.Practices.ServiceLocation;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Activation
 {

@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
-using System.Collections.Generic;
 
 namespace FubuMVC.Core.UI
 {
@@ -19,8 +19,8 @@ namespace FubuMVC.Core.UI
             ElementPrefix = string.Empty;
         }
 
-        public string ElementPrefix { get; set;}
-        public IServiceLocator ServiceLocator { get; set;}
+        public string ElementPrefix { get; set; }
+        public IServiceLocator ServiceLocator { get; set; }
 
         public T Get<T>()
         {
@@ -65,8 +65,6 @@ namespace FubuMVC.Core.UI
 
     public class FubuHtmlDocument<T> : FubuHtmlDocument, IFubuPage<T> where T : class
     {
-        private T _model;
-
         public FubuHtmlDocument(IServiceLocator services) : base(services)
         {
         }
@@ -76,11 +74,7 @@ namespace FubuMVC.Core.UI
             return Model;
         }
 
-        public T Model
-        {
-            get { return _model; }
-            set { _model = value; }
-        }
+        public T Model { get; set; }
 
         public void ShowProp(Expression<Func<T, object>> property)
         {
@@ -96,5 +90,5 @@ namespace FubuMVC.Core.UI
         {
             source(this).AllTags().Each(Add);
         }
-    } 
+    }
 }

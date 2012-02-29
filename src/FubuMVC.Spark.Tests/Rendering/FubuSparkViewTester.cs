@@ -5,7 +5,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 

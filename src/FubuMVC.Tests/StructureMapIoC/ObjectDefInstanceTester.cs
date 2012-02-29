@@ -14,7 +14,6 @@ using FubuMVC.Tests.Behaviors;
 using FubuTestingSupport;
 using NUnit.Framework;
 using StructureMap;
-using InMemoryRequestData=FubuMVC.Core.Runtime.InMemoryRequestData;
 
 namespace FubuMVC.Tests.StructureMapIoC
 {

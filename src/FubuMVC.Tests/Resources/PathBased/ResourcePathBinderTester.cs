@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
+using FubuCore.Binding.InMemory;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.PathBased;
@@ -22,7 +23,8 @@ namespace FubuMVC.Tests.Resources.PathBased
         [SetUp]
         public void SetUp()
         {
-            theBinder = StandardModelBinder.Basic().As<StandardModelBinder>();
+            Assert.Fail("Use the new BindingScenario stuff");
+            //theBinder = StandardModelBinder.Basic().As<StandardModelBinder>();
 
             theAggregateDictionary = new AggregateDictionary();
 

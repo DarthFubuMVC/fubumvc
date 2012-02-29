@@ -32,11 +32,14 @@ namespace FubuMVC.Tests.Resources.Etags
             var data = new InMemoryRequestData();
             data["If-None-Match"] = "12345";
 
-            var context = new BindingContext(data, locator, new NulloBindingLogger());
 
-            var binder = StandardModelBinder.Basic();
+            Assert.Fail("Switch to BindingScenario");
 
-            theEtagRequest =  binder.Bind(typeof(ETaggedRequest), context).As<ETaggedRequest>();
+            //var context = new BindingContext(data, locator, new NulloBindingLogger());
+
+            //var binder = StandardModelBinder.Basic();
+
+            //theEtagRequest =  binder.Bind(typeof(ETaggedRequest), context).As<ETaggedRequest>();
         }
 
 

@@ -1,3 +1,4 @@
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.UI.Tags;
@@ -7,7 +8,7 @@ using FubuMVC.Diagnostics.Features.Html.Preview.Decorators;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 

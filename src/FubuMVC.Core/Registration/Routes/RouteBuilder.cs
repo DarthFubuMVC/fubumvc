@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using FubuCore;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Registration.Routes

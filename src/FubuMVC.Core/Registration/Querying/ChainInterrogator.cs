@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Registration.Querying

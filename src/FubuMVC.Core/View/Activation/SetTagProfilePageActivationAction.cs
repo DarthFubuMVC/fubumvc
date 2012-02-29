@@ -1,5 +1,6 @@
+using FubuCore;
 using FubuMVC.Core.UI;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Core.View.Activation
 {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.UI.Configuration;
 using HtmlTags;

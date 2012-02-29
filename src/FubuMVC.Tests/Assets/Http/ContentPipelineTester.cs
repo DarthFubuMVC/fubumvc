@@ -3,7 +3,7 @@ using FubuMVC.Core.Assets.Content;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Tests.Assets.Content;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 

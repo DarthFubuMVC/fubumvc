@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 
 namespace FubuMVC.Core.Behaviors
 {

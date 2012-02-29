@@ -1,4 +1,5 @@
 using System.Reflection;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics;

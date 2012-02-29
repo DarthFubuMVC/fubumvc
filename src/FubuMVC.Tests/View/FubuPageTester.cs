@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Configuration;
 using FubuMVC.Core.View;
 using FubuMVC.StructureMap;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;

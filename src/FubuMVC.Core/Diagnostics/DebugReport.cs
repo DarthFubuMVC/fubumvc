@@ -44,15 +44,17 @@ namespace FubuMVC.Core.Diagnostics
         {
             try
             {
-                // TODO -- Be nice to have better stuff in FubuCore
-                var requestData = _dictionary.DataFor(RequestDataSource.Request.ToString());
-                requestData.GetKeys().ToList().Each(key => FormData.Add(key, requestData.Value(key)));
+                throw new NotImplementedException();
 
-                var requestData2 = _dictionary.DataFor(RequestDataSource.Header.ToString());
-                requestData2.GetKeys().ToList().Each(key => Headers.Add(key, (requestData2.Value(key) ?? string.Empty).ToString()));
+                //// TODO -- Be nice to have better stuff in FubuCore
+                //var requestData = _dictionary.DataFor(RequestDataSource.Request.ToString());
+                //requestData.GetKeys().ToList().Each(key => FormData.Add(key, requestData.Value(key)));
 
-                Url = _request.RawUrl();
-                HttpMethod = _request.HttpMethod();
+                //var requestData2 = _dictionary.DataFor(RequestDataSource.Header.ToString());
+                //requestData2.GetKeys().ToList().Each(key => Headers.Add(key, (requestData2.Value(key) ?? string.Empty).ToString()));
+
+                //Url = _request.RawUrl();
+                //HttpMethod = _request.HttpMethod();
             }
             catch (HttpException)
             {

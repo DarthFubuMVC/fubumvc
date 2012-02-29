@@ -2,7 +2,7 @@ using System;
 using FubuMVC.Core;
 using FubuMVC.Core.UI;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using FubuMVC.StructureMap;
 using Serenity.Fixtures;

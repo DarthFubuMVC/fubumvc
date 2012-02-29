@@ -1,11 +1,12 @@
 ﻿using System.IO;
 using System.Reflection;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.UI;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.GettingStarted
 {

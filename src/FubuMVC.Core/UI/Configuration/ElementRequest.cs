@@ -6,7 +6,7 @@ using FubuCore.Formatting;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Security;
 using FubuMVC.Core.UI.Tags;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Core.UI.Configuration
 {

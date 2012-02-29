@@ -10,6 +10,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Routing;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -70,6 +71,11 @@ namespace FubuMVC.Tests.Routing
             public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
             {
                 return _behaviorIds.Contains(behaviorId) ? new ActionBehavior(behaviorId) : null;
+            }
+
+            public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
+            {
+                throw new NotImplementedException();
             }
         }
         public class ActionBehavior : IActionBehavior

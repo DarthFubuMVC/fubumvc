@@ -1,10 +1,10 @@
-using Microsoft.Practices.ServiceLocation;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Activation
 {
     /// <summary>
-    /// Implement this contract if you want to participate in the correct setup of
-    /// a View instance.
+    ///   Implement this contract if you want to participate in the correct setup of
+    ///   a View instance.
     /// </summary>
     public interface IPageActivationAction
     {

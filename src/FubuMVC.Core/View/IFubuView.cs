@@ -1,8 +1,8 @@
 using System;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
-using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.View
 {
@@ -28,6 +28,8 @@ namespace FubuMVC.Core.View
 
     public class SimpleFubuPage<TViewModel> : IFubuPage<TViewModel> where TViewModel : class
     {
+        private readonly Cache<Type, object> _services = new Cache<Type, object>();
+
         public SimpleFubuPage()
         {
             _services.OnMissing = type => ServiceLocator.GetInstance(type);
@@ -42,10 +44,9 @@ namespace FubuMVC.Core.View
             get { return ServiceLocator.GetInstance<IUrlRegistry>(); }
         }
 
-        private readonly Cache<Type, object> _services = new Cache<Type,object>();
         public T Get<T>()
         {
-            return (T)_services[typeof(T)];
+            return (T) _services[typeof (T)];
         }
 
         public T GetNew<T>()
@@ -63,11 +64,11 @@ namespace FubuMVC.Core.View
             return Model;
         }
 
+        public TViewModel Model { get; set; }
+
         public void SetModel(IFubuRequest request)
         {
             Model = request.Get<TViewModel>();
         }
-
-        public TViewModel Model { get; set; }
     }
 }

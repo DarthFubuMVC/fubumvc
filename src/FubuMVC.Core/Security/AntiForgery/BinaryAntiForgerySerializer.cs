@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using FubuCore;
 
 namespace FubuMVC.Core.Security.AntiForgery
 {

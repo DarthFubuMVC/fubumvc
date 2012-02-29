@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Binding.InMemory;
 using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuCore.Reflection;
@@ -157,25 +158,19 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<IRequestDataProvider, RequestDataProvider>();
 
             graph.Services.SetServiceIfNone<IFubuRequest, FubuRequest>();
-            graph.Services.SetServiceIfNone<IValueConverterRegistry, ValueConverterRegistry>();
             graph.Services.SetServiceIfNone<IPartialFactory, PartialFactory>();
 
             graph.Services.SetServiceIfNone<IObjectResolver, ObjectResolver>();
             graph.Services.SetServiceIfNone<IRequestData, RequestData>();
             graph.Services.SetServiceIfNone<IBindingContext, BindingContext>();
-            graph.Services.SetServiceIfNone<IPropertyBinderCache, PropertyBinderCache>();
-            graph.Services.SetServiceIfNone<IModelBinderCache, ModelBinderCache>();
             graph.Services.SetServiceIfNone<IDisplayFormatter, DisplayFormatter>();
             graph.Services.SetServiceIfNone<IChainResolver, ChainResolutionCache>();
-            graph.Services.SetServiceIfNone<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
             graph.Services.SetServiceIfNone<IAuthorizationPreviewService, AuthorizationPreviewService>();
             graph.Services.SetServiceIfNone<IEndpointService, EndpointService>();
             graph.Services.SetServiceIfNone<IAuthorizationPolicyExecutor, AuthorizationPolicyExecutor>();
             graph.Services.SetServiceIfNone<IChainAuthorizor, ChainAuthorizor>();
 
             graph.Services.SetServiceIfNone<IEtagCache, EtagCache>();
-
-            graph.Services.SetServiceIfNone<ICollectionTypeProvider, DefaultCollectionTypeProvider>();
 
             graph.Services.SetServiceIfNone<ITypeDescriptorCache, TypeDescriptorCache>();
 
@@ -233,15 +228,7 @@ namespace FubuMVC.Core
         {
             graph.Services.SetServiceIfNone<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
             graph.Services.SetServiceIfNone<IFieldAccessService, FieldAccessService>();
-
-            if (graph.IsDiagnosticsEnabled())
-            {
-                graph.Services.SetServiceIfNone<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
-            }
-            else
-            {
-                graph.Services.SetServiceIfNone<IFieldAccessRightsExecutor, FieldAccessRightsExecutor>();
-            }
+            graph.Services.SetServiceIfNone<IFieldAccessRightsExecutor, FieldAccessRightsExecutor>();
         }
 
         private static void registerHtmlConventions(BehaviorGraph graph)

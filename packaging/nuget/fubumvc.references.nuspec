@@ -25,8 +25,6 @@
     <file src="..\..\src\FubuMVC.StructureMap\bin\release\FubuMVC.StructureMap.*" target="lib\net40" />
 
     <file src="..\..\src\fubu\bin\release\fubu.exe" target="tools" />
-    <file src="..\..\src\fubu\bin\release\Microsoft.Practices.ServiceLocation.dll" target="tools" />
-
     <file src="..\..\src\fubu\bin\release\FubuKayak.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\FubuMVC.OwinHost.*" target="tools" />
     <file src="..\..\src\fubu\bin\release\Kayak.*" target="tools" />

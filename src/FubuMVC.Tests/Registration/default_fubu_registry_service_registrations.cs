@@ -2,6 +2,7 @@ using System.Linq;
 using Bottles;
 using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Binding.InMemory;
 using FubuCore.Conversion;
 using FubuCore.Formatting;
 using FubuMVC.Core;
@@ -101,13 +102,6 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<ISecurityContext, WebSecurityContext>();
         }
 
-
-        [Test]
-        public void ValueConverterRegistry_is_registered()
-        {
-            registeredTypeIs<IValueConverterRegistry, ValueConverterRegistry>();
-        }
-
         [Test]
         public void an_activator_for_PackageFileActivator_is_registered()
         {
@@ -156,12 +150,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void default_endpoint_factory_is_registered()
-        {
-            registeredTypeIs<IEndPointAuthorizorFactory, EndPointAuthorizorFactory>();
-        }
-
-        [Test]
         public void default_json_reader_is_JavascriptDeserializer_flavor()
         {
             registeredTypeIs<IJsonReader, JavaScriptJsonReader>();
@@ -185,12 +173,7 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IFileSystem, FileSystem>();
         }
 
-        [Test]
-        public void model_binder_cache_is_registered()
-        {
-            registeredTypeIs<IModelBinderCache, ModelBinderCache>();
-        }
-
+        
         [Test]
         public void object_converter_is_registered()
         {
@@ -221,12 +204,6 @@ namespace FubuMVC.Tests.Registration
         public void partial_invoker_is_registered()
         {
             registeredTypeIs<IPartialInvoker, PartialInvoker>();
-        }
-
-        [Test]
-        public void property_cache_is_registered()
-        {
-            registeredTypeIs<IPropertyBinderCache, PropertyBinderCache>();
         }
 
         [Test]

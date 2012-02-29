@@ -1,6 +1,5 @@
 using System;
 using FubuCore.Binding;
-using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Core.Http
 {
@@ -19,8 +18,8 @@ namespace FubuMVC.Core.Http
 
         public object Bind(Type type, IBindingContext context)
         {
-            var contentType = context.ValueAs<string>("Content-Type");
-            var acceptType = context.ValueAs<string>("Accept");
+            var contentType = context.Data.ValueAs<string>("Content-Type");
+            var acceptType = context.Data.ValueAs<string>("Accept");
             var currentMimeType = new CurrentMimeType(contentType, acceptType);
 
 

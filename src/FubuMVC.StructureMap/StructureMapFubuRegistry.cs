@@ -1,40 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Web;
-using FubuCore.Binding;
+using FubuCore;
 using FubuMVC.Core;
-using FubuMVC.Core.Http.AspNet;
 using FubuMVC.Core.Runtime;
-using Microsoft.Practices.ServiceLocation;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.StructureMap
 {
-    // This is only here for the purposes of having 
-    // a stand in during testing and container validation
-    public class StandInRequestData : IRequestData
-    {
-        public object Value(string key)
-        {
-            return null;
-        }
-
-        public bool Value(string key, Action<object> callback)
-        {
-            return false;
-        }
-
-        public bool HasAnyValuePrefixedWith(string key)
-        {
-            return false;
-        }
-
-        public IEnumerable<string> GetKeys()
-        {
-            return new List<string>();
-        }
-    }
-
     public class StructureMapFubuRegistry : Registry
     {
         public StructureMapFubuRegistry()

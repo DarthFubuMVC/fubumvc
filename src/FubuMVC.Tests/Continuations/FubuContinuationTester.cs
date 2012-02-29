@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;

@@ -39,23 +39,6 @@ namespace FubuMVC.Tests.StructureMapIoC
         private IContainer container;
 
         [Test]
-        public void should_get_all_instances_for_a_given_type()
-        {
-            IEnumerable<object> instances = new StructureMapServiceLocator(container)
-                .GetAllInstances(typeof (ISecurityContext));
-
-            instances.Single(i => i.GetType() == typeof (WebSecurityContext));
-            instances.Single(i => ReferenceEquals(i, _mockSecurityContext));
-        }
-
-        [Test]
-        public void should_resolve_named_instances()
-        {
-            new StructureMapServiceLocator(container).GetInstance(typeof (ISecurityContext), _testInstanceKey)
-                .ShouldBeOfType<WebSecurityContext>();
-        }
-
-        [Test]
         public void should_resolve_unnamed_instances()
         {
             new StructureMapServiceLocator(container).GetInstance(typeof (ISecurityContext))

@@ -7,7 +7,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Configuration;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Core.UI.Security
 {

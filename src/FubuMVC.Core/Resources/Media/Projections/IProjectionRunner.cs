@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Practices.ServiceLocation;
+using FubuCore;
+
 
 namespace FubuMVC.Core.Resources.Media.Projections
 {

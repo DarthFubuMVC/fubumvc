@@ -1,6 +1,6 @@
 using System;
 using FubuMVC.Core;
-using Microsoft.Practices.ServiceLocation;
+
 using StructureMap;
 
 namespace FubuMVC.StructureMap
@@ -31,9 +31,6 @@ namespace FubuMVC.StructureMap
             return expression.ContainerFacility(() =>
             {
                 var container = createContainer();
-
-                // TODO -- why is this necessary at all?
-                ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator(ObjectFactory.Container));
 
                 return new StructureMapContainerFacility(container);
             });

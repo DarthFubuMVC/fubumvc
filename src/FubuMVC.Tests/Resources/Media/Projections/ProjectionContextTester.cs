@@ -3,7 +3,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 

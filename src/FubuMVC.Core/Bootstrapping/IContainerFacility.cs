@@ -14,8 +14,10 @@ namespace FubuMVC.Core.Bootstrapping
 
         void Inject(Type abstraction, Type concretion);
         
+        // TODO -- just get rid of these methods now that we broke down and did GetAll<T>()
         IEnumerable<IActivator> GetAllActivators();
         IEnumerable<IInstaller> GetAllInstallers();
+
         T Get<T>();
         IEnumerable<T> GetAll<T>();
     }

@@ -1,6 +1,7 @@
 using System;
+using FubuCore;
 using FubuMVC.Core.UI.Tags;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Diagnostics.Features.Html.Preview.Decorators
 {

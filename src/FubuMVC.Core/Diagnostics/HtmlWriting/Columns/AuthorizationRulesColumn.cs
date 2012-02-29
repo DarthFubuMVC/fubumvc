@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Core.Security;
+using FubuMVC.Core.Runtime;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
 
 namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 {
     public class AuthorizationRulesColumn : IColumn
     {
-        private readonly IServiceLocator _locator;
+        private readonly IBehaviorFactory _factory;
 
-        public AuthorizationRulesColumn(IServiceLocator locator)
+        public AuthorizationRulesColumn(IBehaviorFactory factory)
         {
-            _locator = locator;
+            _factory = factory;
         }
 
         public string Header()
@@ -30,11 +29,8 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
 
             cell.Add("ul", ul =>
             {
-                var authorizor = _locator.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString());
-                authorizor.RulesDescriptions().Each(rule =>
-                {
-                    ul.Add("li").Text(rule);
-                });
+                var authorizor = _factory.AuthorizorFor(chain.UniqueId);
+                authorizor.RulesDescriptions().Each(rule => { ul.Add("li").Text(rule); });
             });
         }
 
@@ -45,7 +41,7 @@ namespace FubuMVC.Core.Diagnostics.HtmlWriting.Columns
                 return "-- None --";
             }
 
-            var authorizor = _locator.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString());
+            var authorizor = _factory.AuthorizorFor(chain.UniqueId);
             return authorizor.RulesDescriptions().Join("; ");
         }
     }

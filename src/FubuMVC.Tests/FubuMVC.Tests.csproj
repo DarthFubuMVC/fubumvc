@@ -57,9 +57,6 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -253,7 +250,6 @@
     <Compile Include="Diagnostics\RequestHistoryServiceTester.cs" />
     <Compile Include="Diagnostics\RequestObserverTester.cs" />
     <Compile Include="Diagnostics\Tracing\DiagnosticBehaviorTester.cs" />
-    <Compile Include="Diagnostics\Tracing\RecordingBindingLoggerTester.cs" />
     <Compile Include="FubuRegistryImportingTester.cs" />
     <Compile Include="Packaging\PackageFilesIntegrationTester.cs" />
     <Compile Include="Packaging\PackageManifestReaderIntegratedTester.cs" />
@@ -414,7 +410,6 @@
     <Compile Include="Diagnostics\InputModelColumnTester.cs" />
     <Compile Include="Diagnostics\OutputColumnTester.cs" />
     <Compile Include="Diagnostics\RecordingFubuRequestTester.cs" />
-    <Compile Include="Diagnostics\RecordingObjectResolverTester.cs" />
     <Compile Include="Diagnostics\RecordingOutputWriterTester.cs" />
     <Compile Include="Diagnostics\RouteColumnTester.cs" />
     <Compile Include="Diagnostics\TimedReportTester.cs" />
@@ -457,10 +452,7 @@
     <Compile Include="Registration\WrapperTester.cs" />
     <Compile Include="Registration\ObjectDefTester.cs" />
     <Compile Include="Registration\RouteDefinitionTester.cs" />
-    <Compile Include="Runtime\BindingContextTester.cs" />
     <Compile Include="Runtime\InMemoryStreamingData.cs" />
-    <Compile Include="Runtime\PrefixedRequestDataTester.cs" />
-    <Compile Include="Runtime\RequestDataTester.cs" />
     <Compile Include="Runtime\FubuRequestTester.cs" />
     <Compile Include="Runtime\PartialFactoryTester.cs" />
     <Compile Include="SessionState\FlashProviderTester.cs" />

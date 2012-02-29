@@ -1,9 +1,14 @@
+using FubuCore;
+using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Diagnostics.Core.Infrastructure
 {
+    // TODO -- what is this?  Why do we need it?
+    [WannaKill("Think we can make this stuff go away w/ the new Description model in FubuCore")]
     public interface IAuthorizationDescriptor
     {
         IEndPointAuthorizor AuthorizorFor(BehaviorChain chain);
@@ -11,17 +16,16 @@ namespace FubuMVC.Diagnostics.Core.Infrastructure
 
     public class AuthorizationDescriptor : IAuthorizationDescriptor
     {
-        private readonly IServiceLocator _locator;
+        private readonly IBehaviorFactory _factory;
 
-        public AuthorizationDescriptor(IServiceLocator locator)
+        public AuthorizationDescriptor(IBehaviorFactory factory)
         {
-            _locator = locator;
+            _factory = factory;
         }
 
         public IEndPointAuthorizor AuthorizorFor(BehaviorChain chain)
         {
-            // TODO -- remove CSL usage here. EndpointAuthorizor is configured against the chain's id so this is needed for now
-            return _locator.GetInstance<IEndPointAuthorizor>(chain.UniqueId.ToString());
+            return _factory.AuthorizorFor(chain.UniqueId);
         }
     }
 }

@@ -42,16 +42,5 @@ namespace FubuMVC.Tests.Diagnostics
             graph.Services.DefaultServiceFor<IFubuRequest>().Type.ShouldEqual(typeof (RecordingFubuRequest));
         }
 
-        [Test]
-        public void object_resolver_is_overridden()
-        {
-            graph.Services.DefaultServiceFor<IObjectResolver>().Type.ShouldEqual(typeof (RecordingObjectResolver));
-        }
-
-        [Test]
-        public void request_data_is_overriden()
-        {
-            graph.Services.DefaultServiceFor<IRequestData>().Type.ShouldEqual(typeof (RecordingRequestData));
-        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Net;
+using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Core.Continuations

@@ -1,10 +1,11 @@
 using System;
 using System.Web.UI;
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Tests.View.FakeViews;
-using Microsoft.Practices.ServiceLocation;
+
 
 namespace FubuMVC.Tests.View
 {

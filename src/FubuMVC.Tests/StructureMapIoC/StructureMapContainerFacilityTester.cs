@@ -20,7 +20,7 @@ using FubuMVC.Tests.Packaging;
 using FubuMVC.Tests.Registration;
 using FubuMVC.WebForms;
 using FubuTestingSupport;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using StructureMap;
@@ -171,10 +171,11 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_inject_multiple_implementations_as_a_dependency()
         {
-            IEnumerable<IConverterFamily> converterFamilies =
-                container.GetInstance<IValueConverterRegistry>().ShouldBeOfType<ValueConverterRegistry>().Families;
-            converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter));
-            converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter2));
+            Assert.Fail("Use a different example");
+            //IEnumerable<IConverterFamily> converterFamilies =
+            //    container.GetInstance<IValueConverterRegistry>().ShouldBeOfType<ValueConverterRegistry>().Families;
+            //converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter));
+            //converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter2));
         }
 
         [Test]
@@ -201,6 +202,18 @@ namespace FubuMVC.Tests.StructureMapIoC
         public void standard_model_binder_should_not_be_registered_in_the_container()
         {
             container.GetAllInstances<IModelBinder>().Any(x => x is StandardModelBinder).ShouldBeFalse();
+        }
+
+        [Test]
+        public void behavior_factory_is_available_in_the_container()
+        {
+            Assert.Fail("Do.");
+        }
+
+        [Test]
+        public void can_return_the_endpoint_authorizor_for_an_id()
+        {
+            Assert.Fail("Do.");
         }
     }
 }

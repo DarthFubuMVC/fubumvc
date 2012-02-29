@@ -10,6 +10,7 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Pipeline;
@@ -58,6 +59,11 @@ namespace FubuMVC.StructureMap
         public virtual IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
             return new NestedStructureMapContainerBehavior(_container, arguments, behaviorId);
+        }
+
+        public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
+        {
+            throw new NotImplementedException();
         }
 
         public IBehaviorFactory BuildFactory()
@@ -164,6 +170,11 @@ namespace FubuMVC.StructureMap
         public IActionBehavior BuildBehavior(ServiceArguments arguments, Guid behaviorId)
         {
             return _container.GetInstance<IActionBehavior>(arguments.ToExplicitArgs(), behaviorId.ToString());
+        }
+
+        public IEndPointAuthorizor AuthorizorFor(Guid behaviorId)
+        {
+            return _container.GetInstance<IEndPointAuthorizor>(behaviorId.ToString());
         }
     }
 }

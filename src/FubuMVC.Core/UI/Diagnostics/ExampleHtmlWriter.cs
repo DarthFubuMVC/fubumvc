@@ -14,7 +14,7 @@ using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.Urls;
 using HtmlTags;
-using Microsoft.Practices.ServiceLocation;
+
 using System.Linq;
 
 namespace FubuMVC.Core.UI.Diagnostics

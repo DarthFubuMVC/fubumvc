@@ -1,8 +1,9 @@
+using FubuCore;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Tags;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Activation;
-using Microsoft.Practices.ServiceLocation;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 
