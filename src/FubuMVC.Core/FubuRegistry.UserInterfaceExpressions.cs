@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using FubuCore;
+using FubuCore.Formatting;
 using FubuMVC.Core.UI;
 
 namespace FubuMVC.Core

@@ -1,4 +1,4 @@
-using FubuCore;
+using FubuCore.Formatting;
 using FubuMVC.Core.Urls;
 
 namespace FubuMVC.Core.Resources.Media
