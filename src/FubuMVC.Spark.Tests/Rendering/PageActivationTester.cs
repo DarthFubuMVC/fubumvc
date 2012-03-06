@@ -8,7 +8,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.Rendering
 {
     [TestFixture]
-    public class PageActivationTester : InteractionContext<PageActivation>
+    public class PageActivationTester : InteractionContext<PageActivation<IFubuSparkView>>
     {
         private IPageActivator _activator;
         private IFubuSparkView _sparkView;

@@ -211,7 +211,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
                 current = layout;
             }
 
-            var modifier = new ViewModifierService(Enumerable.Empty<IViewModifier>());
+            var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
             var viewFactory = new ViewFactory(descriptor, _templateService, modifier);
             var view = ((RazorEngine.Templating.ITemplate) viewFactory.GetView());
             return view.Run(new ExecuteContext());

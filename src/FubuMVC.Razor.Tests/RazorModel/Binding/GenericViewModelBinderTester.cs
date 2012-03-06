@@ -63,7 +63,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         {
             _request.Parsing.ViewModelType = "x.y.jazz<FubuMVC.Razor.Tests.RazorModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
-            MockFor<IRazorLogger>()
+            MockFor<ITemplateLogger>()
                 .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull));
         }
 
@@ -109,7 +109,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         public void it_logs_to_tracer()
         {
             ClassUnderTest.Bind(_request);
-            MockFor<IRazorLogger>()
+            MockFor<ITemplateLogger>()
                 .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull, Arg<object[]>.Is.NotNull));
         }
 

@@ -8,8 +8,10 @@ namespace FubuMVC.Razor.RazorModel.Scanning
 	{
         public static void IncludeRazorViews(this ScanRequest request)
 		{
-			var pattern = "*{0}".ToFormat(".cshtml");
-			request.Include(pattern);
+			var csPattern = "*{0}".ToFormat(".cshtml");
+			var vbPattern = "*{0}".ToFormat(".vbhtml");
+			request.Include(csPattern);
+			request.Include(vbPattern);
         }
 		
 		public static void AddRoots(this ScanRequest request, IEnumerable<string> roots)

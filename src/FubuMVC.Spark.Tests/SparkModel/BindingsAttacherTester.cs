@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _templates = new TemplateRegistry<ITemplate>();
             _viewDescriptor = new ViewDescriptor(_template);
-            _template = new Template("/App/Views/Fubu.spark", "/App/Views", FubuSparkConstants.HostOrigin)
+            _template = new Template("/App/Views/Fubu.spark", "/App/Views", TemplateConstants.HostOrigin)
             {
                 Descriptor = _viewDescriptor                                
             };

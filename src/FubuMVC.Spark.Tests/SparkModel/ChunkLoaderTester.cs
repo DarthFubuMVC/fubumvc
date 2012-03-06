@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;

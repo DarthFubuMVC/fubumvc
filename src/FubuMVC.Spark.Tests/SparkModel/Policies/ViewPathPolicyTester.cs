@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,7 +14,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         private string _origin;
         protected override void beforeEach()
         {
-            _origin = FubuSparkConstants.HostOrigin;
+            _origin = TemplateConstants.HostOrigin;
             _template = MockFor<ITemplate>();
             _template.Stub(x => x.Origin).Return(null).WhenCalled(x => x.ReturnValue = _origin);
             _template.Stub(x => x.RootPath).Return("root");

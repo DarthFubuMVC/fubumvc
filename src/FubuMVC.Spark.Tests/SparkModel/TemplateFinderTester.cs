@@ -2,6 +2,7 @@
 using System.Linq;
 using Bottles;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
@@ -87,7 +88,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void all_templates_found_in_host_have_host_as_origin()
         {
             ClassUnderTest.FindInHost()
-                .All(x => x.Origin == FubuSparkConstants.HostOrigin)
+                .All(x => x.Origin == TemplateConstants.HostOrigin)
                 .ShouldBeTrue();
         }
 

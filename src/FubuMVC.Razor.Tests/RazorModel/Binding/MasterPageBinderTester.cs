@@ -15,7 +15,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         private BindRequest<IRazorTemplate> _request;
         private TemplateRegistry<IRazorTemplate> _templateRegistry;
 
-        const string Host = FubuRazorConstants.HostOrigin;
+        const string Host = TemplateConstants.HostOrigin;
         const string Pak1 = "pak1";
         const string Pak2 = "pak2";
         const string Pak3 = "pak3";

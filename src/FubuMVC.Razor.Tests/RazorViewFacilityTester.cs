@@ -19,12 +19,12 @@ namespace FubuMVC.Razor.Tests
             _root = AppDomain.CurrentDomain.BaseDirectory;
             _templateRegistry = new TemplateRegistry<IRazorTemplate>
             {
-                new Template(Path.Combine(_root, "Views", "Home", "ModelAView.cshtml"), _root, FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial1.cshtml"), _root, FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "ModelBView.cshtml"), _root, FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial2.cshtml"), _root, FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "ModelCView.cshtml"), _root, FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine(_root, "Views", "Home", "_partial3.cshtml"), _root, FubuRazorConstants.HostOrigin)
+                new Template(Path.Combine(_root, "Views", "Home", "ModelAView.cshtml"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "_partial1.cshtml"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "ModelBView.cshtml"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "_partial2.cshtml"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "ModelCView.cshtml"), _root, TemplateConstants.HostOrigin),
+                new Template(Path.Combine(_root, "Views", "Home", "_partial3.cshtml"), _root, TemplateConstants.HostOrigin)
             };
             
             _templateRegistry[0].Descriptor = new ViewDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };

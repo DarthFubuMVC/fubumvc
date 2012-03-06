@@ -15,7 +15,7 @@ namespace FubuMVC.Razor.Tests.Rendering
     public class ViewFactoryTester : InteractionContext<ViewFactory>
     {
         private ITemplateService _templateService;
-        private IViewModifierService _service;
+        private IViewModifierService<IFubuRazorView> _service;
 
         private FubuRazorView _entryView;
         private IFubuRazorView _serviceView;
@@ -24,7 +24,7 @@ namespace FubuMVC.Razor.Tests.Rendering
         {
             var source = "<h1>hi</h1>";
             var viewId = Guid.NewGuid();
-            _service = MockFor<IViewModifierService>();
+            _service = MockFor<IViewModifierService<IFubuRazorView>>();
             _templateService = MockFor<ITemplateService>();
             var viewFile = MockFor<IViewFile>();
             viewFile.Expect(x => x.GetSourceCode()).Return(source);

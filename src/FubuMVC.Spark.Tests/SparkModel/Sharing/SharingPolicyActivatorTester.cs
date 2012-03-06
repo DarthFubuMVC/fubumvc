@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Sharing;
 using FubuTestingSupport;
@@ -65,8 +66,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _activator.Diagnostics = fake;
             _activator.RegisterAppGlobal(_packageLog);
 
-            fake.CurrentProvenance.ShouldEqual(FubuSparkConstants.HostOrigin);
-            inner.AssertWasCalled(x => x.Global(FubuSparkConstants.HostOrigin));
+            fake.CurrentProvenance.ShouldEqual(TemplateConstants.HostOrigin);
+            inner.AssertWasCalled(x => x.Global(TemplateConstants.HostOrigin));
         }
 
         [Test]
@@ -95,7 +96,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
             _graph.Global("x");
             _activator.CompileDependencies(packages, _packageLog);
 
-            _graph.SharingsFor(FubuSparkConstants.HostOrigin).ShouldContain("x");
+            _graph.SharingsFor(TemplateConstants.HostOrigin).ShouldContain("x");
         }
     }
 }

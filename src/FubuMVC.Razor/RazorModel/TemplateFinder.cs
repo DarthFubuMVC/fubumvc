@@ -4,6 +4,7 @@ using System.Linq;
 using Bottles;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 
 namespace FubuMVC.Razor.RazorModel
@@ -46,7 +47,7 @@ namespace FubuMVC.Razor.RazorModel
             var templates = new List<IRazorTemplate>();
             var root = new RazorRoot
             {
-                Origin = FubuRazorConstants.HostOrigin, 
+                Origin = TemplateConstants.HostOrigin, 
                 Path = HostPath
             };
 

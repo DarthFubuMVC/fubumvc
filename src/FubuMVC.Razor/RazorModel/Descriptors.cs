@@ -1,4 +1,5 @@
 using System;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.FileSystem;
 
 namespace FubuMVC.Razor.RazorModel

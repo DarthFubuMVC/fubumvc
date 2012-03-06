@@ -79,11 +79,9 @@
     <Compile Include="RazorEngine.cs" />
     <Compile Include="RazorModel\ViewLoaderLocator.cs" />
     <Compile Include="RazorModel\Descriptors.cs" />
-    <Compile Include="RazorModel\RazorConstants.cs" />
     <Compile Include="RazorModel\Scanning\ScanRequestExtensions.cs" />
     <Compile Include="RazorModel\SharedPathBuilder.cs" />
     <Compile Include="RazorModel\SharedTemplateLocator.cs" />
-    <Compile Include="RazorModel\RazorLogger.cs" />
     <Compile Include="RazorModel\RazorRoot.cs" />
     <Compile Include="RazorModel\Template.cs" />
     <Compile Include="RazorModel\TemplateBinders.cs" />

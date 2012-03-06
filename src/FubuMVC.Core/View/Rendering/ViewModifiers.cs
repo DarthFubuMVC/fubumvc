@@ -3,27 +3,27 @@ using FubuMVC.Core.View.Activation;
 
 namespace FubuMVC.Core.View.Rendering
 {
-    public interface IViewModifier
+    public interface IViewModifier<T> where T : IRenderableView
     {
-        bool Applies(IRenderableView view);
-        IRenderableView Modify(IRenderableView view);
+        bool Applies(T view);
+        T Modify(T view);
     }
 
-    public interface IViewModifierService
+    public interface IViewModifierService<T> where T : IRenderableView
     {
-        IRenderableView Modify(IRenderableView view);
+        T Modify(T view);
     }
 
-    public class ViewModifierService : IViewModifierService
+    public class ViewModifierService<T> : IViewModifierService<T> where T : IRenderableView
     {
-        private readonly IEnumerable<IViewModifier> _modifications;
+        private readonly IEnumerable<IViewModifier<T>> _modifications;
 
-        public ViewModifierService(IEnumerable<IViewModifier> modifications)
+        public ViewModifierService(IEnumerable<IViewModifier<T>> modifications)
         {
             _modifications = modifications;
         }
 
-        public IRenderableView Modify(IRenderableView view)
+        public T Modify(T view)
         {
             foreach (var modification in _modifications)
             {
@@ -36,13 +36,13 @@ namespace FubuMVC.Core.View.Rendering
         }
     }
 
-    public abstract class BasicViewModifier : IViewModifier
+    public abstract class BasicViewModifier<T> : IViewModifier<T> where T : IRenderableView
     {
-        public virtual bool Applies(IRenderableView view) { return true; }
-        public abstract IRenderableView Modify(IRenderableView view);
+        public virtual bool Applies(T view) { return true; }
+        public abstract T Modify(T view);
     }
 
-    public class PageActivation : BasicViewModifier
+    public class PageActivation<T> : BasicViewModifier<T> where T : IRenderableView
     {
         private readonly IPageActivator _activator;
         public PageActivation(IPageActivator activator)
@@ -50,7 +50,7 @@ namespace FubuMVC.Core.View.Rendering
             _activator = activator;
         }
 
-        public override IRenderableView Modify(IRenderableView view)
+        public override T Modify(T view)
         {
             return view.Modify(v => _activator.Activate(v));
         }

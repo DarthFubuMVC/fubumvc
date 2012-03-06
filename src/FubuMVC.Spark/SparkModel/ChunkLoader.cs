@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Util;
+using FubuMVC.Core.View.Model;
 using Spark;
 using Spark.Compiler;
 using Spark.FileSystem;

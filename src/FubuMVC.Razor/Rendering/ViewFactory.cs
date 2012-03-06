@@ -7,9 +7,9 @@ namespace FubuMVC.Razor.Rendering
     {
         private readonly IRazorDescriptor _viewDescriptor;
         private readonly IFubuTemplateService _templateService;
-        private readonly IViewModifierService _service;
+        private readonly IViewModifierService<IFubuRazorView> _service;
 
-        public ViewFactory(IRazorDescriptor viewDescriptor, ITemplateServiceWrapper templateServiceWrapper, IViewModifierService service)
+        public ViewFactory(IRazorDescriptor viewDescriptor, ITemplateServiceWrapper templateServiceWrapper, IViewModifierService<IFubuRazorView> service)
         {
             _viewDescriptor = viewDescriptor;
             _templateService = templateServiceWrapper.TemplateService;
@@ -28,7 +28,7 @@ namespace FubuMVC.Razor.Rendering
             return null;
         }
 
-        private IRenderableView CreateInstance()
+        private IFubuRazorView CreateInstance()
         {
             var currentDescriptor = _viewDescriptor;
             var returnTemplate = _templateService.GetView(currentDescriptor);

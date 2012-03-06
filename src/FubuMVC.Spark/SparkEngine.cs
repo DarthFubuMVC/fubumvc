@@ -167,16 +167,16 @@ namespace FubuMVC.Spark
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
             services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
-            services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
+            services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();
 
-            services.FillType<IViewModifier, PageActivation>();
-            services.FillType<IViewModifier, SiteResourceAttacher>();
-            services.FillType<IViewModifier, ContentActivation>();
-            services.FillType<IViewModifier, OnceTableActivation>();
-            services.FillType<IViewModifier, OuterViewOutputActivator>();
-            services.FillType<IViewModifier, NestedViewOutputActivator>();
-            services.FillType<IViewModifier, ViewContentDisposer>();
-            services.FillType<IViewModifier, NestedOutputActivation>();
+            services.FillType<IViewModifier<IFubuSparkView>, PageActivation<IFubuSparkView>>();
+            services.FillType<IViewModifier<IFubuSparkView>, SiteResourceAttacher>();
+            services.FillType<IViewModifier<IFubuSparkView>, ContentActivation>();
+            services.FillType<IViewModifier<IFubuSparkView>, OnceTableActivation>();
+            services.FillType<IViewModifier<IFubuSparkView>, OuterViewOutputActivator>();
+            services.FillType<IViewModifier<IFubuSparkView>, NestedViewOutputActivator>();
+            services.FillType<IViewModifier<IFubuSparkView>, ViewContentDisposer>();
+            services.FillType<IViewModifier<IFubuSparkView>, NestedOutputActivation>();
 
             services.SetServiceIfNone<IHtmlEncoder, DefaultHtmlEncoder>();
 

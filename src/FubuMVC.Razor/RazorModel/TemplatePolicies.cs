@@ -24,7 +24,7 @@ namespace FubuMVC.Razor.RazorModel
 
         private static string getPrefix(string origin)
         {
-            return origin == FubuRazorConstants.HostOrigin ? string.Empty : "_{0}".ToFormat(origin);
+            return origin == TemplateConstants.HostOrigin ? string.Empty : "_{0}".ToFormat(origin);
         }
     }
 }

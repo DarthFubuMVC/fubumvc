@@ -139,10 +139,10 @@ namespace FubuMVC.Razor
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 
-            services.SetServiceIfNone<IViewModifierService, ViewModifierService>();
+            services.SetServiceIfNone<IViewModifierService<IFubuRazorView>, ViewModifierService<IFubuRazorView>>();
 
-            services.FillType<IViewModifier, PageActivation>();
-            services.FillType<IViewModifier, LayoutActivation>();
+            services.FillType<IViewModifier<IFubuRazorView>, PageActivation<IFubuRazorView>>();
+            services.FillType<IViewModifier<IFubuRazorView>, LayoutActivation>();
             //services.FillType<IViewModifier, SiteResourceAttacher>();
         }
 

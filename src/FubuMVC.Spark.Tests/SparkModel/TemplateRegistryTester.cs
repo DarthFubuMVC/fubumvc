@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -15,14 +16,14 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _templates = new List<ITemplate>
             {
-                new Template("App/Shared/bindings.xml", "App", FubuSparkConstants.HostOrigin),
-                new Template("App/bindings.xml", "App", FubuSparkConstants.HostOrigin),
-                new Template("App/Views/binding.xml", "App", FubuSparkConstants.HostOrigin),
-                new Template("App/Actions/binding.xml", "App", FubuSparkConstants.HostOrigin),
-                new Template("App/Actions/Home/home.spark", "App", FubuSparkConstants.HostOrigin),
+                new Template("App/Shared/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/Views/binding.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/Actions/binding.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/Actions/Home/home.spark", "App", TemplateConstants.HostOrigin),
                 new Template("App/Packages1/Views/Home/home.spark", "App/Package1", "Package1"),
                 new Template("App/Packages1/Views/Products/list.spark", "App/Package1", "Package1"),
-                new Template("App/Views/Home/home.spark", "App", FubuSparkConstants.HostOrigin)
+                new Template("App/Views/Home/home.spark", "App", TemplateConstants.HostOrigin)
             };
 
             _bindings = new[] { _templates[0], _templates[1], _templates[2] };
@@ -56,8 +57,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             ClassUnderTest.ByOrigin("Package1").ShouldHaveCount(2)
                 .All(x => x.Origin == "Package1").ShouldBeTrue();
-            ClassUnderTest.ByOrigin(FubuSparkConstants.HostOrigin).ShouldHaveCount(6)
-                .All(x => x.Origin == FubuSparkConstants.HostOrigin).ShouldBeTrue();
+            ClassUnderTest.ByOrigin(TemplateConstants.HostOrigin).ShouldHaveCount(6)
+                .All(x => x.Origin == TemplateConstants.HostOrigin).ShouldBeTrue();
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             var fromHost = ClassUnderTest.FromHost();
             fromHost.ShouldHaveCount(6);
-            fromHost.ShouldEqual(ClassUnderTest.ByOrigin(FubuSparkConstants.HostOrigin));
+            fromHost.ShouldEqual(ClassUnderTest.ByOrigin(TemplateConstants.HostOrigin));
         }
 
     }

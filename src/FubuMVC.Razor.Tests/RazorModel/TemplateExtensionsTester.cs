@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -64,12 +65,6 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
 			_bottomTemplate.IsRazorView().ShouldBeTrue();
 			new Template("bindings.xml", "", "").IsRazorView().ShouldBeFalse();
-        }
-		
-		[Test]
-        public void is_xml_returns_true_if_file_ends_with_xml()
-        {
-			new Template("bindings.xml", "", "").IsXml().ShouldBeTrue();
         }
     }
 }
