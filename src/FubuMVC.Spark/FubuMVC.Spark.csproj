@@ -61,9 +61,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="FubuRegistryExtensions.cs" />
-    <Compile Include="ITemplateComposerConvention.cs" />
     <Compile Include="ITemplateFinderConvention.cs" />
-    <Compile Include="Registration\GenericParser.cs" />
     <Compile Include="Rendering\IHtmlEncoder.cs" />
     <Compile Include="Rendering\ViewDefinitionPolicy.cs" />
     <Compile Include="Registration\ViewDescriptorHelper.cs" />
@@ -71,15 +69,10 @@
     <Compile Include="Rendering\ViewDefinitionResolver.cs" />
     <Compile Include="Rendering\ViewEntryProviderCache.cs" />
     <Compile Include="SparkModel\SharingAttachers.cs" />
-    <Compile Include="SparkModel\SharingAttacherActivator.cs" />
     <Compile Include="SparkModel\Sharing\SharingConfigActivator.cs" />
     <Compile Include="SparkModel\FubuBindingProvider.cs" />
     <Compile Include="Registration\Nodes\SparkViewNode.cs" />
-    <Compile Include="Rendering\RenderStrategies.cs" />
-    <Compile Include="Rendering\RenderAction.cs" />
-    <Compile Include="Rendering\NestedOutput.cs" />
     <Compile Include="Rendering\ViewModifiers.cs" />
-    <Compile Include="Rendering\ViewRenderer.cs" />
     <Compile Include="Rendering\ViewEntrySource.cs" />
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
@@ -95,25 +88,20 @@
     <Compile Include="SparkModel\Sharing\SharingPolicyActivator.cs" />
     <Compile Include="SparkModel\Sharing\SharingRegistrationDiagnostics.cs" />
     <Compile Include="SparkModel\Sharing\SparkDslReader.cs" />
+    <Compile Include="SparkModel\SparkTemplateRegistry.cs" />
     <Compile Include="SparkModel\TemplateDirectoryProvider.cs" />
     <Compile Include="SparkModel\SharedPathBuilder.cs" />
     <Compile Include="SparkModel\TemplatePolicies.cs" />
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />
     <Compile Include="SparkModel\TemplateExtensions.cs" />
-    <Compile Include="SparkModel\TemplateRegistry.cs" />
     <Compile Include="SparkModel\TemplateViewFolder.cs" />
     <Compile Include="RenderSparkBehavior.cs" />
-    <Compile Include="SparkModel\Scanning\FileFound.cs" />
-    <Compile Include="SparkModel\Scanning\ScanRequest.cs" />
     <Compile Include="SparkModel\TemplateFinder.cs" />
     <Compile Include="SparkModel\TemplateBinders.cs" />
     <Compile Include="SparkModel\SparkRoot.cs" />
-    <Compile Include="SparkModel\TemplateComposer.cs" />
-    <Compile Include="SparkModel\Scanning\FileScanner.cs" />
     <Compile Include="SparkModel\Template.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
-    <Compile Include="SparkModel\SparkLogger.cs" />
     <Compile Include="SparkViewFacility.cs" />
     <Compile Include="SparkViewToken.cs" />
     <Compile Include="Rendering\FubuSparkView.cs" />

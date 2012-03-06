@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -7,13 +8,13 @@ using NUnit.Framework;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class TemplateRegistryTester : InteractionContext<TemplateRegistry>
+    public class TemplateRegistryTester : InteractionContext<TemplateRegistry<IRazorTemplate>>
     {
-        private IList<ITemplate> _templates;
-        private ITemplate[] _bindings;
+        private IList<IRazorTemplate> _templates;
+        private IRazorTemplate[] _bindings;
         protected override void beforeEach()
         {
-            _templates = new List<ITemplate>
+            _templates = new List<IRazorTemplate>
             {
                 new Template("App/Shared/bindings.xml", "App", FubuRazorConstants.HostOrigin),
                 new Template("App/bindings.xml", "App", FubuRazorConstants.HostOrigin),
@@ -31,7 +32,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             var descriptor = new ViewDescriptor(view);
             view.Descriptor = descriptor;
 
-            Services.Inject(new TemplateRegistry(_templates));
+            Services.Inject(new TemplateRegistry<IRazorTemplate>(_templates));
         }
 
         [Test]

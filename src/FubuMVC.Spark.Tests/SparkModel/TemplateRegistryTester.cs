@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class TemplateRegistryTester : InteractionContext<TemplateRegistry>
+    public class TemplateRegistryTester : InteractionContext<SparkTemplateRegistry>
     {
         private IList<ITemplate> _templates;
         private ITemplate[] _bindings;
@@ -33,7 +33,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _bindings.Each(descriptor.AddBinding);
             view.Descriptor = descriptor;
 
-            Services.Inject(new TemplateRegistry(_templates));
+            Services.Inject(new SparkTemplateRegistry(_templates));
         }
 
         [Test]

@@ -8,6 +8,9 @@ using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Conventions;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
 using RazorEngine.Configuration;
@@ -19,20 +22,21 @@ namespace FubuMVC.Razor
     public class RazorEngineRegistry : IFubuRegistryExtension
     {
         private static bool _hasScanned;
-        private static readonly TemplateRegistry _templateRegistry = new TemplateRegistry();
+        private static readonly TemplateRegistry<IRazorTemplate> _templateRegistry = new TemplateRegistry<IRazorTemplate>();
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
+        private static readonly RazorParsings _parsings = new RazorParsings();
 
         private ITemplateFinder _finder;
-        private ITemplateComposer _composer;
+        private ITemplateComposer<IRazorTemplate> _composer;
         private readonly IPackageLog _logger;
         private readonly IList<ITemplateFinderConvention> _finderConventions = new List<ITemplateFinderConvention>();
-        private readonly IList<ITemplateComposerConvention> _composerConventions = new List<ITemplateComposerConvention>();
+        private readonly IList<ITemplateComposerConvention<IRazorTemplate>> _composerConventions = new List<ITemplateComposerConvention<IRazorTemplate>>();
 
         public RazorEngineRegistry()
         {
             _logger = getLogger();
             _finder = new TemplateFinder();
-            _composer = new TemplateComposer(_types.Value);
+            _composer = new TemplateComposer<IRazorTemplate>(_types.Value, _parsings);
 
             setupFinderDefaults();
             setupComposerDefaults();
@@ -51,8 +55,6 @@ namespace FubuMVC.Razor
                     .AddBinder<MasterPageBinder>()
                     .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
-                    .AddBinder<ViewLoaderBinder>()
-                    //.Apply<NamespacePolicy>()
                     .Apply<ViewPathPolicy>());
         }
 
@@ -99,7 +101,7 @@ namespace FubuMVC.Razor
 
         private void composeTemplates()
         {
-            var composer = _composer as TemplateComposer;
+            var composer = _composer as TemplateComposer<IRazorTemplate>;
             if (composer != null)
             {
                 _composerConventions.Each(c => c.Configure(composer));
@@ -127,7 +129,7 @@ namespace FubuMVC.Razor
         {
             var configuration = new TemplateServiceConfiguration();
             configuration.BaseTemplateType = typeof(FubuRazorView);
-            services.SetServiceIfNone<ITemplateRegistry>(_templateRegistry);
+            services.SetServiceIfNone<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
             services.AddService<ITemplateServiceWrapper>(new TemplateServiceWrapper(
                 new FubuTemplateService(_templateRegistry, new TemplateService(configuration))));
             services.SetServiceIfNone<ITemplateServiceConfiguration>(configuration);
@@ -163,13 +165,13 @@ namespace FubuMVC.Razor
             return this;
         }
 
-        public RazorEngineRegistry ComposeWith(ITemplateComposer composer)
+        public RazorEngineRegistry ComposeWith(ITemplateComposer<IRazorTemplate> composer)
         {
             _composer = composer;
             return this;
         }
 
-        public RazorEngineRegistry ConfigureComposer(ITemplateComposerConvention convention)
+        public RazorEngineRegistry ConfigureComposer(ITemplateComposerConvention<IRazorTemplate> convention)
         {
             _composerConventions.Fill(convention);
             return this;
@@ -184,9 +186,9 @@ namespace FubuMVC.Razor
             return source;
         }
 
-        public static IList<ITemplateComposerConvention> Apply(this IList<ITemplateComposerConvention> source, Action<TemplateComposer> configure)
+        public static IList<ITemplateComposerConvention<IRazorTemplate>> Apply(this IList<ITemplateComposerConvention<IRazorTemplate>> source, Action<TemplateComposer<IRazorTemplate>> configure)
         {
-            source.Fill(new LambdaTemplateComposerConvention(configure));
+            source.Fill(new LambdaTemplateComposerConvention<IRazorTemplate>(configure));
             return source;
         }
 
@@ -208,20 +210,20 @@ namespace FubuMVC.Razor
         }
 
         public static RazorEngineRegistry ComposeWith<TComposer>(this RazorEngineRegistry razor)
-            where TComposer : ITemplateComposer, new()
+            where TComposer : ITemplateComposer<IRazorTemplate>, new()
         {
             return razor.ComposeWith(new TComposer());
         }
 
         public static RazorEngineRegistry ConfigureComposer<TConvention>(this RazorEngineRegistry razor)
-            where TConvention : ITemplateComposerConvention, new()
+            where TConvention : ITemplateComposerConvention<IRazorTemplate>, new()
         {
             return razor.ConfigureComposer(new TConvention());
         }
 
-        public static RazorEngineRegistry ConfigureComposer(this RazorEngineRegistry razor, Action<TemplateComposer> configure)
+        public static RazorEngineRegistry ConfigureComposer(this RazorEngineRegistry razor, Action<TemplateComposer<IRazorTemplate>> configure)
         {
-            return razor.ConfigureComposer(new LambdaTemplateComposerConvention(configure));
+            return razor.ConfigureComposer(new LambdaTemplateComposerConvention<IRazorTemplate>(configure));
         }
     }
 }

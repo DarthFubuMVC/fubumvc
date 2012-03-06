@@ -4,14 +4,14 @@ using System.Linq;
 using Bottles;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Razor.RazorModel.Scanning;
+using FubuMVC.Core.View.Model.Scanning;
 
 namespace FubuMVC.Razor.RazorModel
 {
     public interface ITemplateFinder
     {
-        IEnumerable<ITemplate> FindInHost();
-        IEnumerable<ITemplate> FindInPackages();
+        IEnumerable<IRazorTemplate> FindInHost();
+        IEnumerable<IRazorTemplate> FindInPackages();
     }
 
     public class TemplateFinder : ITemplateFinder
@@ -41,9 +41,9 @@ namespace FubuMVC.Razor.RazorModel
             set { _hostPath = value; }
         }
 
-        public IEnumerable<ITemplate> FindInHost()
+        public IEnumerable<IRazorTemplate> FindInHost()
         {
-            var templates = new List<ITemplate>();
+            var templates = new List<IRazorTemplate>();
             var root = new RazorRoot
             {
                 Origin = FubuRazorConstants.HostOrigin, 
@@ -58,9 +58,9 @@ namespace FubuMVC.Razor.RazorModel
             return templates;
         }
 
-        public IEnumerable<ITemplate> FindInPackages()
+        public IEnumerable<IRazorTemplate> FindInPackages()
         {
-            var templates = new List<ITemplate>();
+            var templates = new List<IRazorTemplate>();
             var roots = packageRoots(_packages).ToArray();
             var request = buildRequest(templates, roots);
             
@@ -109,7 +109,7 @@ namespace FubuMVC.Razor.RazorModel
             return packageRoots;
         }
 
-        private ScanRequest buildRequest(ICollection<ITemplate> templates, params RazorRoot[] RazorRoots)
+        private ScanRequest buildRequest(ICollection<IRazorTemplate> templates, params RazorRoot[] RazorRoots)
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);

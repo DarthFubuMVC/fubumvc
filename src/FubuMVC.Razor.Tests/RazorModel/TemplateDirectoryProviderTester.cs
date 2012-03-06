@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -14,9 +15,9 @@ namespace FubuMVC.Razor.Tests.RazorModel
     {
         private string _root;
         private ISharedPathBuilder _builder;
-        private ITemplate _item;
-        private ITemplate _packageItem;
-        private TemplateRegistry _items;
+        private IRazorTemplate _item;
+        private IRazorTemplate _packageItem;
+        private TemplateRegistry<IRazorTemplate> _items;
 
         protected override void beforeEach()
         {
@@ -25,7 +26,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             _item = new Template(getPath("Actions", "Home", "home.cshtml"), _root, FubuRazorConstants.HostOrigin);
             _packageItem = new Template(getPath("Packages", "Package1", "Actions", "Home", "home.cshtml"), _root, "Package1");
 
-            _items = new TemplateRegistry { _item, _packageItem };
+            _items = new TemplateRegistry<IRazorTemplate> { _item, _packageItem };
 
             _builder = MockFor<ISharedPathBuilder>();
             _builder.Stub(x => x.SharedFolderNames).Return(new[] { "Shared" });
@@ -84,7 +85,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             _builder
                 .Stub(x => x.BuildBy(null, null, false)).IgnoreArguments()
                 .Return(paths);
-            _items = new TemplateRegistry(_items.Where(x => x != _item).ToList());
+            _items = new TemplateRegistry<IRazorTemplate>(_items.Where(x => x != _item).ToList());
 
             ClassUnderTest.SharedPathsOf(_packageItem, _items)
                 .SequenceEqual(paths).ShouldBeTrue();

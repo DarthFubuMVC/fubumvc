@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -12,15 +13,15 @@ namespace FubuMVC.Razor.Tests.RazorModel
     public class SharedTemplateLocatorTester : InteractionContext<SharedTemplateLocator>
     {
         private ITemplateDirectoryProvider _provider;
-        private ITemplate _template;
+        private IRazorTemplate _template;
         private IList<string> _masterDirectories;
         private IList<string> _bindingDirectories;
-        private TemplateRegistry _masterTemplateRegistry;
-        private TemplateRegistry _bindingTemplateRegistry;
+        private TemplateRegistry<IRazorTemplate> _masterTemplateRegistry;
+        private TemplateRegistry<IRazorTemplate> _bindingTemplateRegistry;
 
         protected override void beforeEach()
         {
-            _template = MockFor<ITemplate>();
+            _template = MockFor<IRazorTemplate>();
             _masterDirectories = new List<string>
             {
                 Path.Combine("App", "Actions", "Shared"),
@@ -35,14 +36,14 @@ namespace FubuMVC.Razor.Tests.RazorModel
                 Path.Combine("App")
             };
 
-            _masterTemplateRegistry = new TemplateRegistry
+            _masterTemplateRegistry = new TemplateRegistry<IRazorTemplate>
             {
                 new Template(Path.Combine("App", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App",FubuRazorConstants.HostOrigin),
                 new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin)
             };
 
-            _bindingTemplateRegistry = new TemplateRegistry
+            _bindingTemplateRegistry = new TemplateRegistry<IRazorTemplate>
             {
                 new Template(Path.Combine("App", "bindings.xml"), "App",FubuRazorConstants.HostOrigin),
                 new Template(Path.Combine("App", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin),

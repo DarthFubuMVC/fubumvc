@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.SparkModel;
+﻿using FubuMVC.Core.View.Model;
+using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -9,7 +10,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void bind_partials()
         {
-            var request = new BindRequest
+            var request = new BindRequest<ITemplate>
             {
                 Target = new Template("_partial.spark", "", "testing")
             };
@@ -20,7 +21,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void does_not_bind_files_other_than_spark()
         {
-            var request = new BindRequest
+            var request = new BindRequest<ITemplate>
             {
                 Target = new Template("_partial.html", "", "testing")
             };
@@ -31,7 +32,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void does_not_bind_if_descriptor_is_already_set()
         {
-            var request = new BindRequest
+            var request = new BindRequest<ITemplate>
             {
                 Target = new Template("Fubu.spark", "", "testing")                
             };
@@ -44,7 +45,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void if_template_is_valid_for_binding_then_binder_can_be_applied()
         {
-            var request = new BindRequest
+            var request = new BindRequest<ITemplate>
             {
                 Target = new Template("Fubu.spark", "", "testing")
             };
@@ -55,7 +56,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         [Test]
         public void assign_descriptor_as_an_instance_of_viewdescriptor()
         {
-            var request = new BindRequest
+            var request = new BindRequest<ITemplate>
             {
                 Target = new Template("Fubu.spark", "", "testing"),
             };

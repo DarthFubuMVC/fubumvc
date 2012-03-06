@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel.Sharing;
 
 namespace FubuMVC.Spark.SparkModel
@@ -13,10 +14,10 @@ namespace FubuMVC.Spark.SparkModel
     public class TemplateDirectoryProvider : ITemplateDirectoryProvider
     {
         private readonly ISharedPathBuilder _builder;
-        private readonly ITemplateRegistry _templates;
+        private readonly ITemplateRegistry<ITemplate> _templates;
         private readonly ISharingGraph _graph;
 
-        public TemplateDirectoryProvider(ISharedPathBuilder builder, ITemplateRegistry templates, ISharingGraph graph)
+        public TemplateDirectoryProvider(ISharedPathBuilder builder, ITemplateRegistry<ITemplate> templates, ISharingGraph graph)
         {
             _builder = builder;
             _templates = templates;

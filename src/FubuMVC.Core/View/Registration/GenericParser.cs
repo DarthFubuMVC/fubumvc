@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FubuCore;
 
-namespace FubuMVC.Spark.Registration
+namespace FubuMVC.Core.View.Registration
 {
     public interface IGenericParser
     {
@@ -29,7 +29,7 @@ namespace FubuMVC.Spark.Registration
 
         public GenericTypeDefinition parseTypeName(string typeName)
         {
-             var leftGenericDelimiter = typeName.IndexOf('<');
+            var leftGenericDelimiter = typeName.IndexOf('<');
             var rightGenericDelimiter = typeName.IndexOf('>');
 
             var genericArgumentsNames = typeName.Substring(leftGenericDelimiter + 1, rightGenericDelimiter - leftGenericDelimiter - 1);
@@ -39,10 +39,10 @@ namespace FubuMVC.Spark.Registration
             var openTypeNameWithArgCount = openTypeName + "`" + genericArguments.Length;
 
             return new GenericTypeDefinition
-                       {
-                           OpenTypeName = openTypeNameWithArgCount,
-                           ArgumentTypeNames = genericArguments
-                       };
+            {
+                OpenTypeName = openTypeNameWithArgCount,
+                ArgumentTypeNames = genericArguments
+            };
         }
 
         public Type Parse(string typeName)

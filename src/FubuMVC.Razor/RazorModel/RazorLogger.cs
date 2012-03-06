@@ -6,33 +6,33 @@ namespace FubuMVC.Razor.RazorModel
 {
     public interface IRazorLogger
     {
-        void Log(ITemplate template, string format, params object[] args);
-        void Log(ITemplate template, string text);
+        void Log(IRazorTemplate template, string format, params object[] args);
+        void Log(IRazorTemplate template, string text);
     }
 
     public class NulloLogger : IRazorLogger
     {
-        public void Log(ITemplate template, string format, params object[] args) { }
-        public void Log(ITemplate template, string text) { }
+        public void Log(IRazorTemplate template, string format, params object[] args) { }
+        public void Log(IRazorTemplate template, string text) { }
     }
 
     public class RazorLogger : IRazorLogger
     {
-        private readonly Action<ITemplate, string, object[]> _format;
-        private readonly Action<ITemplate, string> _trace;
+        private readonly Action<IRazorTemplate, string, object[]> _format;
+        private readonly Action<IRazorTemplate, string> _trace;
 
-        public RazorLogger(Action<ITemplate, string, object[]> format, Action<ITemplate, string> trace)
+        public RazorLogger(Action<IRazorTemplate, string, object[]> format, Action<IRazorTemplate, string> trace)
         {
             _format = format;
             _trace = trace;
         }
 
-        public void Log(ITemplate template, string format, params object[] args)
+        public void Log(IRazorTemplate template, string format, params object[] args)
         {
             _format(template, format, args);
         }
 
-        public void Log(ITemplate template, string text)
+        public void Log(IRazorTemplate template, string text)
         {
             _trace(template, text);
         }
@@ -42,17 +42,17 @@ namespace FubuMVC.Razor.RazorModel
             return new RazorLogger(formatTrace, trace);
         }
 
-        private static IPackageLog getPackageLogger(ITemplate template)
+        private static IPackageLog getPackageLogger(IRazorTemplate template)
         {
             return PackageRegistry.Diagnostics.LogFor(template);
         }
 
-        private static void formatTrace(ITemplate template, string format, object[] args)
+        private static void formatTrace(IRazorTemplate template, string format, object[] args)
         {
             getPackageLogger(template).Trace(format, args);
         }
 
-        private static void trace(ITemplate template, string text)
+        private static void trace(IRazorTemplate template, string text)
         {
             getPackageLogger(template).Trace(text);
         }

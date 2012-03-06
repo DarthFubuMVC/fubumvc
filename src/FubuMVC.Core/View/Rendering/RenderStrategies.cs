@@ -1,27 +1,29 @@
 using FubuCore.Binding;
-using FubuMVC.Core;
 
-namespace FubuMVC.Razor.Rendering
+namespace FubuMVC.Core.View.Rendering
 {
-    public interface IRenderStrategy
-    {
-        bool Applies();
-        void InvokePartial(IRenderAction action);
-        void Invoke(IRenderAction action);
-    }
-
     public class DefaultRenderStrategy : IRenderStrategy
     {
         public bool Applies() { return true; }
+        public void Invoke(IRenderAction action) { action.Render(); }
+    }
 
-        public void InvokePartial(IRenderAction action)
+    public class NestedRenderStrategy : IRenderStrategy
+    {
+        private readonly NestedOutput _nestedOutput;
+        public NestedRenderStrategy(NestedOutput nestedOutput)
         {
-            action.RenderPartial();
+		    _nestedOutput = nestedOutput;
+        }
+
+        public bool Applies()
+        {
+            return _nestedOutput.IsActive();
         }
 
         public void Invoke(IRenderAction action)
         {
-            action.Render();
+            action.RenderPartial();
         }
     }
 
@@ -36,11 +38,6 @@ namespace FubuMVC.Razor.Rendering
         public bool Applies()
         {
             return _requestData.IsAjaxRequest();
-        }
-
-        public void InvokePartial(IRenderAction action)
-        {
-            action.RenderPartial();
         }
 
         public void Invoke(IRenderAction action)

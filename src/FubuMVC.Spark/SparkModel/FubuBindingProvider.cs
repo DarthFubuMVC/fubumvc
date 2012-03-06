@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
+using FubuMVC.Core.View.Model;
 using Spark.Bindings;
 
 namespace FubuMVC.Spark.SparkModel
 {
     public class FubuBindingProvider : BindingProvider
     {
-        private readonly ITemplateRegistry _templateRegistry;
-        public FubuBindingProvider(ITemplateRegistry templateRegistry)
+        private readonly ISparkTemplateRegistry _templateRegistry;
+        public FubuBindingProvider(ISparkTemplateRegistry templateRegistry)
         {
             _templateRegistry = templateRegistry;
         }

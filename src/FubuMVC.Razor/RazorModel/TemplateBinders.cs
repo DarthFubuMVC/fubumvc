@@ -1,77 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Registration;
-using FubuMVC.Razor.FileSystem;
-using FubuMVC.Razor.Registration;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Registration;
 
 namespace FubuMVC.Razor.RazorModel
 {
-    public interface IBindRequest
+    public class ViewDescriptorBinder : ITemplateBinder<IRazorTemplate>
     {
-        ITemplate Target { get; }
-
-        string Master { get; }
-        string ViewModelType { get; }
-        IEnumerable<string> Namespaces { get; }
-
-        TypePool Types { get; }
-        ITemplateRegistry TemplateRegistry { get; }
-        IRazorLogger Logger { get; }
-        IViewFile ViewFile { get; set; }
-    }
-
-    public class BindRequest : IBindRequest
-    {
-        public IViewFile ViewFile { get; set; }
-        public ITemplate Target { get; set; }
-
-        public string Master { get; set; }
-        public string ViewModelType { get; set; }
-        public IEnumerable<string> Namespaces { get; set; }
-
-        public TypePool Types { get; set; }
-        public ITemplateRegistry TemplateRegistry { get; set; }
-        public IRazorLogger Logger { get; set; }
-    }
-
-    public interface ITemplateBinder
-    {
-        bool CanBind(IBindRequest request);
-        void Bind(IBindRequest request);
-    }
-
-    public class ViewDescriptorBinder : ITemplateBinder
-    {
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             var template = request.Target;
             return !(template.Descriptor is ViewDescriptor) && template.IsRazorView();
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<IRazorTemplate> request)
         {
             request.Target.Descriptor = new ViewDescriptor(request.Target);
         }
     }
 
-    public class ViewLoaderBinder : ITemplateBinder
-    {
-        public bool CanBind(IBindRequest request)
-        {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-            return descriptor != null
-                   && descriptor.ViewFile == null;
-        }
+    //public class ViewLoaderBinder : ITemplateBinder<IRazorTemplate>
+    //{
+    //    public bool CanBind(IBindRequest<IRazorTemplate> request)
+    //    {
+    //        var descriptor = request.Target.Descriptor as ViewDescriptor;
+    //        return descriptor != null
+    //               && descriptor.ViewFile == null;
+    //    }
 
-        public void Bind(IBindRequest request)
-        {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
-            descriptor.ViewFile = request.ViewFile;
-        }
-    }
+    //    public void Bind(IBindRequest<IRazorTemplate> request)
+    //    {
+    //        var descriptor = request.Target.Descriptor as ViewDescriptor;
+    //        descriptor.ViewFile = request.ViewFile;
+    //    }
+    //}
 
-    public class MasterPageBinder : ITemplateBinder
+    public class MasterPageBinder : ITemplateBinder<IRazorTemplate>
     {
         private readonly ISharedTemplateLocator _sharedTemplateLocator;
         private const string FallbackMaster = "_Layout";
@@ -84,21 +49,21 @@ namespace FubuMVC.Razor.RazorModel
             MasterName = FallbackMaster;
         }
 
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
 
             return descriptor != null
                 && descriptor.Master == null
-                && (request.ViewModelType.IsNotEmpty() || request.Master.IsNotEmpty())
-                && request.Master != string.Empty;
+                && (request.Parsing.ViewModelType.IsNotEmpty() || request.Parsing.Master.IsNotEmpty())
+                && request.Parsing.Master != string.Empty;
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<IRazorTemplate> request)
         {
             var template = request.Target;
             var tracer = request.Logger;
-            var masterName = request.Master ?? MasterName;
+            var masterName = request.Parsing.Master ?? MasterName;
 
             var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
 
@@ -113,25 +78,25 @@ namespace FubuMVC.Razor.RazorModel
         }
     }
 
-    public class GenericViewModelBinder : ITemplateBinder
+    public class GenericViewModelBinder : ITemplateBinder<IRazorTemplate>
     {
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
-                   && request.ViewModelType.IsNotEmpty()
-                   && GenericParser.IsGeneric(request.ViewModelType);
+                   && request.Parsing.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.Parsing.ViewModelType);
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<IRazorTemplate> request)
         {
             var logger = request.Logger;
             var template = request.Target;
 
             var genericParser = new GenericParser(request.Types.Assemblies);
-            var viewModel = genericParser.Parse(request.ViewModelType);
+            var viewModel = genericParser.Parse(request.Parsing.ViewModelType);
 
             if (viewModel != null)
             {
@@ -145,25 +110,25 @@ namespace FubuMVC.Razor.RazorModel
         }
     }
 
-    public class ViewModelBinder : ITemplateBinder
+    public class ViewModelBinder : ITemplateBinder<IRazorTemplate>
     {
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
-                   && request.ViewModelType.IsNotEmpty()
-                   && GenericParser.IsGeneric(request.ViewModelType) == false;
+                   && request.Parsing.ViewModelType.IsNotEmpty()
+                   && GenericParser.IsGeneric(request.Parsing.ViewModelType) == false;
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<IRazorTemplate> request)
         {
             var logger = request.Logger;
             var template = request.Target;
             var descriptor = template.Descriptor.As<ViewDescriptor>();
 
-            var types = request.Types.TypesWithFullName(request.ViewModelType);
+            var types = request.Types.TypesWithFullName(request.Parsing.ViewModelType);
             var typeCount = types.Count();
 
             if (typeCount == 1)
@@ -174,7 +139,7 @@ namespace FubuMVC.Razor.RazorModel
                 return;
             }
 
-            logger.Log(template, "Unable to set view model type : {0}", request.ViewModelType);
+            logger.Log(template, "Unable to set view model type : {0}", request.Parsing.ViewModelType);
 
             if (typeCount > 1)
             {

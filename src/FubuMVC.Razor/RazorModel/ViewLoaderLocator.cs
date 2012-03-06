@@ -10,7 +10,7 @@ namespace FubuMVC.Razor.RazorModel
 {
     public interface IViewLoaderLocator
     {
-        IViewFile Locate(ITemplate template);
+        IViewFile Locate(IRazorTemplate template);
     }
 
     public class ViewLoaderLocator : IViewLoaderLocator
@@ -28,7 +28,7 @@ namespace FubuMVC.Razor.RazorModel
             _loaders = new Cache<string, IViewFile>(defaultLoaderByRoot);
         }
 
-        public IViewFile Locate(ITemplate template)
+        public IViewFile Locate(IRazorTemplate template)
         {
             return _loaders[template.FilePath];
         }

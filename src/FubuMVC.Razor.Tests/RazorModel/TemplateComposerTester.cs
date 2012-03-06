@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Razor.Parser.SyntaxTree;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Registration;
@@ -14,7 +15,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class TemplateComposerTester : InteractionContext<TemplateComposer>
+    public class TemplateComposerTester : InteractionContext<TemplateComposer<IRazorTemplate>>
     {
         private FakeTemplatePolicy _policy1;
         private FakeTemplatePolicy _policy2;
@@ -22,16 +23,16 @@ namespace FubuMVC.Razor.Tests.RazorModel
         private FakeTemplateBinder _binder1;
         private FakeTemplateBinder _binder2;
 
-        private ITemplate _template1;
-        private ITemplate _template2;
+        private IRazorTemplate _template1;
+        private IRazorTemplate _template2;
 
-        private IList<ITemplate> _policy1Templates;
-        private IList<ITemplate> _policy2Templates;
+        private IList<IRazorTemplate> _policy1Templates;
+        private IList<IRazorTemplate> _policy2Templates;
 
-        private IList<ITemplate> _binder1Templates;
-        private IList<ITemplate> _binder2Templates;
+        private IList<IRazorTemplate> _binder1Templates;
+        private IList<IRazorTemplate> _binder2Templates;
 
-        private ITemplateRegistry _templateRegistry;
+        private ITemplateRegistry<IRazorTemplate> _templateRegistry;
         private readonly TypePool _types;
 
         public TemplateComposerTester()
@@ -43,10 +44,11 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _template1 = new Template("tmpl1.cshtml", "x", "o1");
             _template2 = new Template("tmpl2.cshtml", "z", "o2");
-            _templateRegistry = new TemplateRegistry {_template1, _template2};
+            _templateRegistry = new TemplateRegistry<IRazorTemplate> {_template1, _template2};
 
             var viewParser = MockFor<IViewParser>();
-            viewParser.Stub(x => x.Parse()).Return(Enumerable.Empty<Span>());
+            //null here probably won't work
+            viewParser.Stub(x => x.Parse(null)).Return(Enumerable.Empty<Span>());
 
             Func<IViewFile, IViewParser> parser = file => viewParser;
             Services.Inject(parser);
@@ -62,8 +64,8 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
         private void configurePolicies()
         {
-            _policy1Templates = new List<ITemplate>();
-            _policy2Templates = new List<ITemplate>();
+            _policy1Templates = new List<IRazorTemplate>();
+            _policy2Templates = new List<IRazorTemplate>();
 
             _policy1 = new FakeTemplatePolicy();
             _policy2 = new FakeTemplatePolicy();
@@ -77,8 +79,8 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
         private void configureBinders()
         {
-            _binder1Templates = new List<ITemplate>();
-            _binder2Templates = new List<ITemplate>();
+            _binder1Templates = new List<IRazorTemplate>();
+            _binder2Templates = new List<IRazorTemplate>();
 
             _binder1 = new FakeTemplateBinder();
             _binder2 = new FakeTemplateBinder();
@@ -154,24 +156,24 @@ namespace FubuMVC.Razor.Tests.RazorModel
         }
     }
 
-    public class FakeTemplateBinder : ITemplateBinder
+    public class FakeTemplateBinder : ITemplateBinder<IRazorTemplate>
     {
         public FakeTemplateBinder()
         {
-            Filter = new CompositePredicate<IBindRequest>();
-            Action = new CompositeAction<IBindRequest>();
+            Filter = new CompositePredicate<IBindRequest<IRazorTemplate>>();
+            Action = new CompositeAction<IBindRequest<IRazorTemplate>>();
         }
 
-        public CompositePredicate<IBindRequest> Filter { get; set; }
-        public CompositeAction<IBindRequest> Action { get; set; }
+        public CompositePredicate<IBindRequest<IRazorTemplate>> Filter { get; set; }
+        public CompositeAction<IBindRequest<IRazorTemplate>> Action { get; set; }
 
 
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             return Filter.MatchesAny(request);
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<IRazorTemplate> request)
         {
             Action.Do(request);
         }
@@ -190,22 +192,22 @@ namespace FubuMVC.Razor.Tests.RazorModel
         public static bool Invoked { get; private set; }
     }
 
-    public class FakeTemplatePolicy : ITemplatePolicy
+    public class FakeTemplatePolicy : ITemplatePolicy<IRazorTemplate>
     {
         public FakeTemplatePolicy()
         {
-            Filter = new CompositePredicate<ITemplate>();
-            Action = new CompositeAction<ITemplate>();
+            Filter = new CompositePredicate<IRazorTemplate>();
+            Action = new CompositeAction<IRazorTemplate>();
         }
 
-        public CompositePredicate<ITemplate> Filter { get; set; }
-        public CompositeAction<ITemplate> Action { get; set; }
-        public bool Matches(ITemplate template)
+        public CompositePredicate<IRazorTemplate> Filter { get; set; }
+        public CompositeAction<IRazorTemplate> Action { get; set; }
+        public bool Matches(IRazorTemplate template)
         {
             return Filter.MatchesAny(template);
         }
 
-        public void Apply(ITemplate template)
+        public void Apply(IRazorTemplate template)
         {
             Action.Do(template);
         }

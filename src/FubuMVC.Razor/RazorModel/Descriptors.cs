@@ -9,27 +9,27 @@ namespace FubuMVC.Razor.RazorModel
         Type ViewModel { get; set; }
         bool IsCurrent();
         string RelativePath();
-        ITemplate Template { get; }
-        ITemplate Master { get; }
+        IRazorTemplate Template { get; }
+        IRazorTemplate Master { get; }
         IViewFile ViewFile { get; }
     }
 
     public class ViewDescriptor : IRazorDescriptor
     {
-        private readonly ITemplate _template;
-        public ViewDescriptor(ITemplate template)
+        private readonly IRazorTemplate _template;
+        public ViewDescriptor(IRazorTemplate template)
         {
             _template = template;
         }
 
         string IRazorDescriptor.Name { get { return "View"; } }
 
-        public ITemplate Template
+        public IRazorTemplate Template
         {
             get { return _template; }
         }
         public string Name() { return _template.Name(); }
-        public ITemplate Master { get; set; }
+        public IRazorTemplate Master { get; set; }
         public IViewFile ViewFile { get; set; }
         public Type ViewModel { get; set; }
         public string ViewPath { get { return _template.ViewPath; } }
@@ -83,12 +83,12 @@ namespace FubuMVC.Razor.RazorModel
             return null;
         }
 
-        public ITemplate Template
+        public IRazorTemplate Template
         {
             get { return null; }
         }
 
-        public ITemplate Master
+        public IRazorTemplate Master
         {
             get { return null; }
         }

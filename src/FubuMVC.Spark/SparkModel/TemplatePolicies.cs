@@ -1,16 +1,11 @@
 ﻿using System.IO;
 using FubuCore;
 using FubuCore.Util;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ITemplatePolicy
-    {
-        bool Matches(ITemplate template);
-        void Apply(ITemplate template);
-    }
-
-    public class NamespacePolicy : ITemplatePolicy
+    public class NamespacePolicy : ITemplatePolicy<ITemplate>
     {
         public bool Matches(ITemplate template)
         {
@@ -37,7 +32,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class ViewPathPolicy : ITemplatePolicy
+    public class ViewPathPolicy : ITemplatePolicy<ITemplate>
     {
         private readonly Cache<string, string> _cache;
         public ViewPathPolicy()

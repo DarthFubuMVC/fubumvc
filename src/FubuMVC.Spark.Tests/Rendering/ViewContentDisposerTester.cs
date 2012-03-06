@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using FubuCore;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -33,7 +35,7 @@ namespace FubuMVC.Spark.Tests.Rendering
         [Test]
         public void after_render_the_modified_view_clears_its_content_dictionary()
         {
-            var view = ClassUnderTest.Modify(_view);
+            var view = ClassUnderTest.Modify(_view).As<IFubuSparkView>();
             var repository = new MockRepository();
             var writer1 = repository.DynamicMock<TextWriter>();
             var writer2 = repository.DynamicMock<TextWriter>();

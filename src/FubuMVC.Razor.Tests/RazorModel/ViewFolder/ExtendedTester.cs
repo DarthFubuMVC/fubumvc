@@ -2,6 +2,9 @@
 using System.IO;
 using System.Linq;
 using Bottles;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Scanning;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.RazorModel.Scanning;
@@ -12,7 +15,6 @@ using NUnit.Framework;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using Rhino.Mocks;
-using ITemplate = FubuMVC.Razor.RazorModel.ITemplate;
 
 namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 {
@@ -22,9 +24,9 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         private const string Package1 = "Package1";
         private const string Package2 = "Package2";
 
-        private readonly TemplateRegistry _pak1TemplateRegistry;
-        private readonly TemplateRegistry _pak2TemplateRegistry;
-        private readonly TemplateRegistry _appTemplateRegistry;
+        private readonly TemplateRegistry<IRazorTemplate> _pak1TemplateRegistry;
+        private readonly TemplateRegistry<IRazorTemplate> _pak2TemplateRegistry;
+        private readonly TemplateRegistry<IRazorTemplate> _appTemplateRegistry;
 
         private readonly ITemplateServiceWrapper _templateService;
 
@@ -49,7 +51,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
             new DefaultTemplateFinderConventions().Configure(scanner);
             
-            var allTemplates = new TemplateRegistry();
+            var allTemplates = new TemplateRegistry<IRazorTemplate>();
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
 
@@ -59,9 +61,9 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var config = new TemplateServiceConfiguration {BaseTemplateType = typeof (FubuRazorView)};
             _templateService = new TemplateServiceWrapper(new FubuTemplateService(allTemplates, new TemplateService(config)));
 
-            _pak1TemplateRegistry = new TemplateRegistry(allTemplates.ByOrigin(Package1));
-            _pak2TemplateRegistry = new TemplateRegistry(allTemplates.ByOrigin(Package2));
-            _appTemplateRegistry = new TemplateRegistry(allTemplates.FromHost());
+            _pak1TemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.ByOrigin(Package1));
+            _pak2TemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.ByOrigin(Package2));
+            _appTemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.FromHost());
 
             _serviceLocator = MockRepository.GenerateMock<IServiceLocator>();
         }
@@ -182,7 +184,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             renderTemplate(cuatroView, master).ShouldEqual("Lenovo\r\n SerieX");
         }
 
-        private string getViewSource(ITemplate template)
+        private string getViewSource(IRazorTemplate template)
         {
             var content = new FileSystemViewFile(template.FilePath);
             using (var stream = content.OpenViewStream())
@@ -194,7 +196,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             }
         }
 
-        private string renderTemplate(ITemplate template, params ITemplate[] templates)
+        private string renderTemplate(IRazorTemplate template, params IRazorTemplate[] templates)
         {
             var descriptor = new ViewDescriptor(template);
             descriptor.ViewFile = new FileSystemViewFile(template.FilePath);

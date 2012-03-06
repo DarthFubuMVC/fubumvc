@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Razor.RazorModel.Scanning
+﻿namespace FubuMVC.Core.View.Model.Scanning
 {
     public class FileFound
     {

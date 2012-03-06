@@ -5,6 +5,7 @@ using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Extensibility;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
 using HtmlTags;
@@ -14,10 +15,10 @@ namespace FubuMVC.Razor
 {
 	public class RazorActivator : IActivator
 	{
-		private readonly ITemplateRegistry _templateRegistry;
+		private readonly ITemplateRegistry<IRazorTemplate> _templateRegistry;
         private readonly ITemplateServiceConfiguration _engine;
 
-		public RazorActivator (ITemplateRegistry templateRegistry, ITemplateServiceConfiguration engine)
+		public RazorActivator (ITemplateRegistry<IRazorTemplate> templateRegistry, ITemplateServiceConfiguration engine)
 		{
 			_templateRegistry = templateRegistry;
 			_engine = engine;

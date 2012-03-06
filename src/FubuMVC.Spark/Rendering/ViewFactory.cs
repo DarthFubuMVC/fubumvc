@@ -1,14 +1,9 @@
 ﻿using System;
+using FubuMVC.Core.View.Rendering;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public interface IViewFactory
-    {
-        IFubuSparkView GetView();
-        IFubuSparkView GetPartialView();
-    }
-
     public class ViewFactory : IViewFactory
     {
         private readonly IViewEntrySource _viewEntrySource;
@@ -20,19 +15,19 @@ namespace FubuMVC.Spark.Rendering
             _viewEntrySource = viewEntrySource;
         }
 
-        public IFubuSparkView GetView()
+        public IRenderableView GetView()
         {
             return getView(_viewEntrySource.GetViewEntry);
         }
 
-        public IFubuSparkView GetPartialView()
+        public IRenderableView GetPartialView()
         {
             return getView(_viewEntrySource.GetPartialViewEntry);
         }
 
-        private IFubuSparkView getView(Func<ISparkViewEntry> func)
+        private IRenderableView getView(Func<ISparkViewEntry> func)
         {
-            var view = (IFubuSparkView)func().CreateInstance();
+            var view = (IRenderableView)func().CreateInstance();
             view = _service.Modify(view);
             return view;
         }

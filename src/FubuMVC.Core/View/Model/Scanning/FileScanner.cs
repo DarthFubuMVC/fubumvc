@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 
-namespace FubuMVC.Razor.RazorModel.Scanning
+namespace FubuMVC.Core.View.Model.Scanning
 {
     public interface IFileScanner
     {
@@ -15,7 +15,7 @@ namespace FubuMVC.Razor.RazorModel.Scanning
         private readonly IFileSystem _fileSystem;
         private IList<string> _scannedDirectories;
 
-        public FileScanner() : this(new FubuCore.FileSystem()) {}
+        public FileScanner() : this(new FileSystem()) {}
         public FileScanner(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;

@@ -9,9 +9,9 @@ namespace FubuMVC.Razor.Tests.RazorModel
     [TestFixture]
     public class TemplateExtensionsTester
     {
-        private readonly ITemplate _bottomTemplate;
-        private readonly ITemplate _middleTemplate;
-        private readonly ITemplate _topTemplate;
+        private readonly IRazorTemplate _bottomTemplate;
+        private readonly IRazorTemplate _middleTemplate;
+        private readonly IRazorTemplate _topTemplate;
 
         public TemplateExtensionsTester()
         {

@@ -15,14 +15,14 @@
 //        private readonly string _pak1;
 //        private readonly string _pak2;
 
-//        private readonly ITemplate _hostHomeView;
-//        private readonly ITemplate _hostApplicationView;
-//        private readonly ITemplate _hostFooterPartialView;
-//        private readonly ITemplate _pak1HomeView;
-//        private readonly ITemplate _pak1NamePartialView;
-//        private readonly ITemplate _pak2HomeView;
-//        private readonly ITemplate _pak2ApplicationView;
-//        private readonly ITemplate _pak2ThemeView;
+//        private readonly IRazorTemplate _hostHomeView;
+//        private readonly IRazorTemplate _hostApplicationView;
+//        private readonly IRazorTemplate _hostFooterPartialView;
+//        private readonly IRazorTemplate _pak1HomeView;
+//        private readonly IRazorTemplate _pak1NamePartialView;
+//        private readonly IRazorTemplate _pak2HomeView;
+//        private readonly IRazorTemplate _pak2ApplicationView;
+//        private readonly IRazorTemplate _pak2ThemeView;
 
 //        private readonly TemplateViewFolder _viewFolder;
 
@@ -43,7 +43,7 @@
 //            _pak2ApplicationView = new Template(Path.Combine(_pak2, "Shared", "application.cshtml"), _hostRoot, "Pak2");
 //            _pak2ThemeView = new Template(Path.Combine(_pak2, "Shared", "theme.cshtml"), _hostRoot, "Pak2");
 
-//            var templates = new List<ITemplate>
+//            var templates = new List<IRazorTemplate>
 //            {
 //                _hostHomeView, _hostApplicationView, _hostFooterPartialView,
 //                _pak1HomeView, _pak1NamePartialView,

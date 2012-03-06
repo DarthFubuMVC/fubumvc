@@ -3,15 +3,16 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor
 {
     public class RazorViewFacility : IViewFacility
     {
-        private readonly ITemplateRegistry _templateRegistry;
+        private readonly ITemplateRegistry<IRazorTemplate> _templateRegistry;
 
-        public RazorViewFacility(ITemplateRegistry templateRegistry)
+        public RazorViewFacility(ITemplateRegistry<IRazorTemplate> templateRegistry)
         {
             _templateRegistry = templateRegistry;
         }
