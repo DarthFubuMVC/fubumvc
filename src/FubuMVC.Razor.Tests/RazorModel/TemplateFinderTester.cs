@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Bottles;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
@@ -77,7 +78,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         public void all_templates_found_in_host_have_host_as_origin()
         {
             ClassUnderTest.FindInHost()
-                .All(x => x.Origin == FubuRazorConstants.HostOrigin)
+                .All(x => x.Origin == TemplateConstants.HostOrigin)
                 .ShouldBeTrue();
         }
 

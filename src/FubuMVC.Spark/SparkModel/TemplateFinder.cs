@@ -4,6 +4,7 @@ using System.Linq;
 using Bottles;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Spark.SparkModel.Scanning;
 
@@ -47,7 +48,7 @@ namespace FubuMVC.Spark.SparkModel
             var templates = new List<ITemplate>();
             var root = new SparkRoot
             {
-                Origin = FubuSparkConstants.HostOrigin, 
+                Origin = TemplateConstants.HostOrigin, 
                 Path = HostPath
             };
 

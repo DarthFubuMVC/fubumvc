@@ -8,7 +8,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.Rendering
 {
     [TestFixture]
-    public class PageActivationTester : InteractionContext<PageActivation>
+    public class PageActivationTester : InteractionContext<PageActivation<IFubuRazorView>>
     {
         private IPageActivator _activator;
         private IFubuRazorView _razorView;

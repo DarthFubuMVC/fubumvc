@@ -38,20 +38,20 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
             _masterTemplateRegistry = new TemplateRegistry<IRazorTemplate>
             {
-                new Template(Path.Combine("App", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin)
+                new Template(Path.Combine("App", "Shared", "application.cshtml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App",TemplateConstants.HostOrigin)
             };
 
             _bindingTemplateRegistry = new TemplateRegistry<IRazorTemplate>
             {
-                new Template(Path.Combine("App", "bindings.xml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "bindings.xml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "bindings.xml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App",FubuRazorConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",FubuRazorConstants.HostOrigin)
+                new Template(Path.Combine("App", "bindings.xml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "application.cshtml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "sitemaster.cshtml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "bindings.xml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "application.cshtml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin)
             };
 
             _provider = MockFor<ITemplateDirectoryProvider>();
@@ -72,25 +72,5 @@ namespace FubuMVC.Razor.Tests.RazorModel
             var master = ClassUnderTest.LocateMaster("admin", _template, _masterTemplateRegistry);
             master.ShouldBeNull();
         }
-
-        [Test]
-        public void locate_binding_returns_template_that_match_shared_directories_and_name()
-        {
-            var bindings = ClassUnderTest.LocateBindings("bindings", _template, _bindingTemplateRegistry);
-            bindings.ShouldNotBeNull().ShouldHaveCount(4);
-
-            bindings.ElementAt(0).ShouldEqual(_bindingTemplateRegistry[6]);
-            bindings.ElementAt(1).ShouldEqual(_bindingTemplateRegistry[4]);
-            bindings.ElementAt(2).ShouldEqual(_bindingTemplateRegistry[2]);
-            bindings.ElementAt(3).ShouldEqual(_bindingTemplateRegistry[0]);
-        }
-
-        [Test]
-        public void if_not_exists_locate_bindings_returns_empty_list()
-        {
-            var bindings = ClassUnderTest.LocateBindings("razorbindings", _template, _bindingTemplateRegistry);
-            bindings.ShouldNotBeNull().ShouldHaveCount(0);
-        }
-
     }
 }

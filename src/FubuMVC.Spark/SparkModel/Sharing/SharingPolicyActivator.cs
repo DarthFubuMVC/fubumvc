@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel.Sharing
 {
@@ -42,7 +43,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
 
         public void CompileDependencies(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
-            var provenances = packages.Select(p => p.Name).Union(new[] { FubuSparkConstants.HostOrigin }).ToArray();
+            var provenances = packages.Select(p => p.Name).Union(new[] { TemplateConstants.HostOrigin }).ToArray();
             
             log.Trace("Compiling dependencies for [{0}]", provenances.Join(", "));
             
@@ -54,8 +55,8 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         {
             log.Trace("Registering application as global sharing.");
             
-            Diagnostics.SetCurrentProvenance(FubuSparkConstants.HostOrigin);
-            Diagnostics.Global(FubuSparkConstants.HostOrigin);            
+            Diagnostics.SetCurrentProvenance(TemplateConstants.HostOrigin);
+            Diagnostics.Global(TemplateConstants.HostOrigin);            
         }
 
         public SharingRegistrationDiagnostics Diagnostics { get; set; }

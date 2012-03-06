@@ -32,9 +32,9 @@
 //            _pak1 = Path.Combine(_hostRoot, "Pak1");
 //            _pak2 = Path.Combine(_hostRoot, "Pak2");
 
-//            _hostHomeView = new Template(Path.Combine(_hostRoot, "Home", "Home.cshtml"), _hostRoot, FubuRazorConstants.HostOrigin);
-//            _hostApplicationView = new Template(Path.Combine(_hostRoot, "Shared", "application.cshtml"), _hostRoot, FubuRazorConstants.HostOrigin);
-//            _hostFooterPartialView = new Template(Path.Combine(_hostRoot, "Shared", "_footer.cshtml"), _hostRoot, FubuRazorConstants.HostOrigin);
+//            _hostHomeView = new Template(Path.Combine(_hostRoot, "Home", "Home.cshtml"), _hostRoot, TemplateConstants.HostOrigin);
+//            _hostApplicationView = new Template(Path.Combine(_hostRoot, "Shared", "application.cshtml"), _hostRoot, TemplateConstants.HostOrigin);
+//            _hostFooterPartialView = new Template(Path.Combine(_hostRoot, "Shared", "_footer.cshtml"), _hostRoot, TemplateConstants.HostOrigin);
 
 //            _pak1HomeView = new Template(Path.Combine(_pak1, "Home", "Home.cshtml"), _hostRoot, "Pak1");
 //            _pak1NamePartialView = new Template(Path.Combine(_pak1, "Home", "_name.cshtml"), _hostRoot, "Pak1");

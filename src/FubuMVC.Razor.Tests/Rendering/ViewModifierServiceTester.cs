@@ -7,18 +7,18 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.Rendering
 {
     [TestFixture]
-    public class ViewModifierServiceTester : InteractionContext<ViewModifierService>
+    public class ViewModifierServiceTester : InteractionContext<ViewModifierService<IFubuRazorView>>
     {
         private FubuRazorView _razorView1;
         private FubuRazorView _razorView2;
         private FubuRazorView _razorView3;
-        private IViewModifier _modification1;
-        private IViewModifier _modification2;
-        private IViewModifier _modification3;
+        private IViewModifier<IFubuRazorView> _modification1;
+        private IViewModifier<IFubuRazorView> _modification2;
+        private IViewModifier<IFubuRazorView> _modification3;
 
         protected override void beforeEach()
         {
-            var modifications = Services.CreateMockArrayFor<IViewModifier>(3);
+            var modifications = Services.CreateMockArrayFor<IViewModifier<IFubuRazorView>>(3);
             _razorView1 = MockRepository.GenerateMock<FubuRazorView>();
             _razorView2 = MockRepository.GenerateMock<FubuRazorView>();
             _razorView3 = MockRepository.GenerateMock<FubuRazorView>();

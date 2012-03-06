@@ -7,9 +7,9 @@ namespace FubuMVC.Spark.Rendering
     public class ViewFactory : IViewFactory
     {
         private readonly IViewEntrySource _viewEntrySource;
-        private readonly IViewModifierService _service;
+        private readonly IViewModifierService<IFubuSparkView> _service;
 
-        public ViewFactory(IViewEntrySource viewEntrySource, IViewModifierService service)
+        public ViewFactory(IViewEntrySource viewEntrySource, IViewModifierService<IFubuSparkView> service)
         {
             _service = service;
             _viewEntrySource = viewEntrySource;
@@ -25,9 +25,9 @@ namespace FubuMVC.Spark.Rendering
             return getView(_viewEntrySource.GetPartialViewEntry);
         }
 
-        private IRenderableView getView(Func<ISparkViewEntry> func)
+        private IFubuSparkView getView(Func<ISparkViewEntry> func)
         {
-            var view = (IRenderableView)func().CreateInstance();
+            var view = (IFubuSparkView)func().CreateInstance();
             view = _service.Modify(view);
             return view;
         }

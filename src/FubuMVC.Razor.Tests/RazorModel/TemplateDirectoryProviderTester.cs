@@ -23,7 +23,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _root = AppDomain.CurrentDomain.BaseDirectory;
 
-            _item = new Template(getPath("Actions", "Home", "home.cshtml"), _root, FubuRazorConstants.HostOrigin);
+            _item = new Template(getPath("Actions", "Home", "home.cshtml"), _root, TemplateConstants.HostOrigin);
             _packageItem = new Template(getPath("Packages", "Package1", "Actions", "Home", "home.cshtml"), _root, "Package1");
 
             _items = new TemplateRegistry<IRazorTemplate> { _item, _packageItem };

@@ -3,20 +3,14 @@ using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Razor.Rendering
 {
-    public class LayoutActivation : BasicViewModifier
+    public class LayoutActivation : BasicViewModifier<IFubuRazorView>
     {
-        public override bool Applies(IRenderableView view)
+        public override IFubuRazorView Modify(IFubuRazorView view)
         {
-            return view is IFubuRazorView;
-        }
-
-        public override IRenderableView Modify(IRenderableView view)
-        {
-            var razorView = view.As<IFubuRazorView>();
-            if (razorView.Layout != null)
+            if (view.Layout != null)
             {
-                razorView.Layout.As<IFubuRazorView>().ServiceLocator = view.ServiceLocator;
-                Modify(razorView.Layout.As<IFubuRazorView>());
+                view.Layout.As<IFubuRazorView>().ServiceLocator = view.ServiceLocator;
+                Modify(view.Layout.As<IFubuRazorView>());
             }
             return view;
         }

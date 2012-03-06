@@ -9,7 +9,7 @@ using FubuMVC.Core;
 
 namespace FubuMVC.Spark.Rendering
 {
-    public class CacheAttacher : BasicViewModifier
+    public class CacheAttacher : BasicViewModifier<IFubuSparkView>
     {
         private readonly ICacheService _cacheService;
         public CacheAttacher(ICacheService cacheService)
@@ -17,18 +17,13 @@ namespace FubuMVC.Spark.Rendering
             _cacheService = cacheService;
         }
 
-        public override bool Applies(IRenderableView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view is IFubuSparkView;
-        }
-
-        public override IRenderableView Modify(IRenderableView view)
-        {
-            return view.Modify(v => v.As<IFubuSparkView>().CacheService = _cacheService);
+            return view.Modify(v => v.CacheService = _cacheService);
         }
     }
 
-    public class SiteResourceAttacher : BasicViewModifier
+    public class SiteResourceAttacher : BasicViewModifier<IFubuSparkView>
     {
         private readonly ISparkViewEngine _engine;
         private readonly CurrentRequest _request;
@@ -39,14 +34,9 @@ namespace FubuMVC.Spark.Rendering
             _request = request.Get<CurrentRequest>();
         }
 
-        public override bool Applies(IRenderableView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view is IFubuSparkView;
-        }
-
-        public override IRenderableView Modify(IRenderableView view)
-        {
-            return view.As<IFubuSparkView>().Modify(v => v.SiteResource = SiteResource);
+            return view.Modify(v => v.SiteResource = SiteResource);
         }
 
         public string SiteResource(string path)
@@ -62,7 +52,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class ContentActivation : BasicViewModifier
+    public class ContentActivation : BasicViewModifier<IFubuSparkView>
     {
         private readonly Dictionary<string, TextWriter> _content;
         public ContentActivation()
@@ -70,18 +60,13 @@ namespace FubuMVC.Spark.Rendering
             _content = new Dictionary<string, TextWriter>();
         }
 
-        public override bool Applies(IRenderableView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view is IFubuSparkView;
-        }
-
-        public override IRenderableView Modify(IRenderableView view)
-        {
-            return view.As<IFubuSparkView>().Modify(v => v.Content = _content);
+            return view.Modify(v => v.Content = _content);
         }
     }
 
-    public class OnceTableActivation : BasicViewModifier
+    public class OnceTableActivation : BasicViewModifier<IFubuSparkView>
     {
         private readonly Dictionary<string, string> _once;
 
@@ -90,18 +75,13 @@ namespace FubuMVC.Spark.Rendering
             _once = new Dictionary<string, string>();
         }
 
-        public override bool Applies(IRenderableView view)
+        public override IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view is IFubuSparkView;
-        }
-
-        public override IRenderableView Modify(IRenderableView view)
-        {
-            return view.As<IFubuSparkView>().Modify(v => v.OnceTable = _once);
+            return view.Modify(v => v.OnceTable = _once);
         }
     }
 
-    public class ViewContentDisposer : IViewModifier
+    public class ViewContentDisposer : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         public ViewContentDisposer(NestedOutput nestedOutput)
@@ -109,15 +89,14 @@ namespace FubuMVC.Spark.Rendering
             _nestedOutput = nestedOutput;
         }
 
-        public bool Applies(IRenderableView view)
+        public bool Applies(IFubuSparkView view)
         {
-            return !_nestedOutput.IsActive()
-                && view is IFubuSparkView;
+            return !_nestedOutput.IsActive();
         }
 
-        public IRenderableView Modify(IRenderableView view)
+        public IFubuSparkView Modify(IFubuSparkView view)
         {
-            var disposer = new FubuSparkViewDecorator(view.As<IFubuSparkView>());
+            var disposer = new FubuSparkViewDecorator(view);
 
             // proactively dispose named content. pools spoolwriter pages. avoids finalizers.
             disposer.PostRender += x => x.Content.Values.Each(c => c.Close());
@@ -127,7 +106,7 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public class OuterViewOutputActivator : IViewModifier
+    public class OuterViewOutputActivator : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         private readonly ViewOutput _viewOutput;
@@ -138,19 +117,18 @@ namespace FubuMVC.Spark.Rendering
             _viewOutput = viewOutput;
         }
 
-        public bool Applies(IRenderableView view)
+        public bool Applies(IFubuSparkView view)
         {
-            return !_nestedOutput.IsActive()
-                && view is IFubuSparkView;
+            return !_nestedOutput.IsActive();
         }
 
-        public IRenderableView Modify(IRenderableView view)
+        public IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view.Modify(v => v.As<IFubuSparkView>().Output = _viewOutput);
+            return view.Modify(v => v.Output = _viewOutput);
         }
     }
 
-    public class NestedViewOutputActivator : IViewModifier
+    public class NestedViewOutputActivator : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         public NestedViewOutputActivator(NestedOutput nestedOutput)
@@ -158,20 +136,19 @@ namespace FubuMVC.Spark.Rendering
             _nestedOutput = nestedOutput;
         }
 
-        public bool Applies(IRenderableView view)
+        public bool Applies(IFubuSparkView view)
         {
-            var sparkView = view as IFubuSparkView;
-            return sparkView != null
-                && sparkView.Output == null;
+            return view != null
+                && view.Output == null;
         }
 
-        public IRenderableView Modify(IRenderableView view)
+        public IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view.Modify(v => v.As<IFubuSparkView>().Output = _nestedOutput.Writer);
+            return view.Modify(v => v.Output = _nestedOutput.Writer);
         }
     }
 
-    public class NestedOutputActivation : IViewModifier
+    public class NestedOutputActivation : IViewModifier<IFubuSparkView>
     {
         private readonly NestedOutput _nestedOutput;
         public NestedOutputActivation(NestedOutput nestedOutput)
@@ -179,15 +156,14 @@ namespace FubuMVC.Spark.Rendering
             _nestedOutput = nestedOutput;
         }
 
-        public bool Applies(IRenderableView view)
+        public bool Applies(IFubuSparkView view)
         {
-            return !_nestedOutput.IsActive()
-                && view is IFubuSparkView;
+            return !_nestedOutput.IsActive();
         }
 
-        public IRenderableView Modify(IRenderableView view)
+        public IFubuSparkView Modify(IFubuSparkView view)
         {
-            return view.Modify(v => _nestedOutput.SetWriter(() => v.As<IFubuSparkView>().Output));
+            return view.Modify(v => _nestedOutput.SetWriter(() => v.Output));
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Policies
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()
         {
-            var item = new Template("", "", FubuRazorConstants.HostOrigin);
+            var item = new Template("", "", TemplateConstants.HostOrigin);
             ClassUnderTest.Apply(item);
             item.ViewPath.ShouldBeEmpty();
         }

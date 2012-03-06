@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using FubuMVC.Core.View.Model;
 using Spark.Bindings;
 
 namespace FubuMVC.Spark.SparkModel

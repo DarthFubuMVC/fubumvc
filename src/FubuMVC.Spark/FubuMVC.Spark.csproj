@@ -78,7 +78,6 @@
     <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
     <Compile Include="SparkModel\Descriptors.cs" />
-    <Compile Include="SparkModel\FubuSparkConstants.cs" />
     <Compile Include="SparkModel\Sharing\InvalidSyntaxException.cs" />
     <Compile Include="SparkModel\Sharing\ISharingPolicy.cs" />
     <Compile Include="SparkModel\Sharing\ISharingRegistration.cs" />

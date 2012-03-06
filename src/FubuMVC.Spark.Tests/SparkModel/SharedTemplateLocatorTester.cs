@@ -28,10 +28,10 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _templates = new TemplateRegistry<ITemplate>
             {
-                new Template(Path.Combine("App", "Shared", "application.spark"), "App", FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App", FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App", FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", FubuSparkConstants.HostOrigin)
+                new Template(Path.Combine("App", "Shared", "application.spark"), "App", TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App", TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App", TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
             };
 
             MockFor<ITemplateDirectoryProvider>()
@@ -82,13 +82,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             _templates = new TemplateRegistry<ITemplate>
             {
-                new Template(Path.Combine("App", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App",FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "bindings.xml"), "App",FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",FubuSparkConstants.HostOrigin),
-                new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",FubuSparkConstants.HostOrigin)
+                new Template(Path.Combine("App", "bindings.xml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "application.spark"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Shared", "sitemaster.spark"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "bindings.xml"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "application.spark"), "App",TemplateConstants.HostOrigin),
+                new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin)
             };
 
             MockFor<ITemplateDirectoryProvider>()

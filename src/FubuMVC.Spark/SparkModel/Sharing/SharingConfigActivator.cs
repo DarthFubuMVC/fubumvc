@@ -4,6 +4,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Packaging;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel.Sharing
 {
@@ -23,7 +24,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         public void Activate(IEnumerable<IPackageInfo> packages, IPackageLog log)
         {
             packages.Each(p => p.ForFolder(BottleFiles.WebContentFolder, folder => ReadSparkConfig(p.Name, folder, log)));
-            ReadSparkConfig(FubuSparkConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
+            ReadSparkConfig(TemplateConstants.HostOrigin, FubuMvcPackageFacility.GetApplicationPath(), log);
         }
 
         public void ReadSparkConfig(string provenance, string folder, IPackageLog log)

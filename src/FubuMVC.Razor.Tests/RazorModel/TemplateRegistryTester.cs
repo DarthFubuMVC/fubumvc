@@ -16,14 +16,14 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _templates = new List<IRazorTemplate>
             {
-                new Template("App/Shared/bindings.xml", "App", FubuRazorConstants.HostOrigin),
-                new Template("App/bindings.xml", "App", FubuRazorConstants.HostOrigin),
-                new Template("App/Views/binding.xml", "App", FubuRazorConstants.HostOrigin),
-                new Template("App/Actions/binding.xml", "App", FubuRazorConstants.HostOrigin),
-                new Template("App/Actions/Home/home.cshtml", "App", FubuRazorConstants.HostOrigin),
+                new Template("App/Shared/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/bindings.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/Views/binding.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/Actions/binding.xml", "App", TemplateConstants.HostOrigin),
+                new Template("App/Actions/Home/home.cshtml", "App", TemplateConstants.HostOrigin),
                 new Template("App/Packages1/Views/Home/home.cshtml", "App/Package1", "Package1"),
                 new Template("App/Packages1/Views/Products/list.cshtml", "App/Package1", "Package1"),
-                new Template("App/Views/Home/home.cshtml", "App", FubuRazorConstants.HostOrigin)
+                new Template("App/Views/Home/home.cshtml", "App", TemplateConstants.HostOrigin)
             };
 
 
@@ -47,8 +47,8 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             ClassUnderTest.ByOrigin("Package1").ShouldHaveCount(2)
                 .All(x => x.Origin == "Package1").ShouldBeTrue();
-            ClassUnderTest.ByOrigin(FubuRazorConstants.HostOrigin).ShouldHaveCount(6)
-                .All(x => x.Origin == FubuRazorConstants.HostOrigin).ShouldBeTrue();
+            ClassUnderTest.ByOrigin(TemplateConstants.HostOrigin).ShouldHaveCount(6)
+                .All(x => x.Origin == TemplateConstants.HostOrigin).ShouldBeTrue();
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             var fromHost = ClassUnderTest.FromHost();
             fromHost.ShouldHaveCount(6);
-            fromHost.ShouldEqual(ClassUnderTest.ByOrigin(FubuRazorConstants.HostOrigin));
+            fromHost.ShouldEqual(ClassUnderTest.ByOrigin(TemplateConstants.HostOrigin));
         }
 
     }

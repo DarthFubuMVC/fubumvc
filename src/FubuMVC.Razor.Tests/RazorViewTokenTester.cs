@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Registration.Nodes;
 using FubuTestingSupport;
@@ -19,7 +20,7 @@ namespace FubuMVC.Razor.Tests
         public void SetUp()
         {
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            _template = new Template(Path.Combine(root, "Views", "Home", "Home.cshtml"), root, FubuRazorConstants.HostOrigin);
+            _template = new Template(Path.Combine(root, "Views", "Home", "Home.cshtml"), root, TemplateConstants.HostOrigin);
             
             _descriptor = new ViewDescriptor(_template)
             {
