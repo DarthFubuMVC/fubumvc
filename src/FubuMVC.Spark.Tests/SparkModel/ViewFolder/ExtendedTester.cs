@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using Bottles;
 using FubuCore;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;
@@ -20,9 +22,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         private readonly TemplateViewFolder _viewFolder;
         private readonly ISparkViewEngine _engine;
 
-        private readonly TemplateRegistry _pak1TemplateRegistry;
-        private readonly TemplateRegistry _pak2TemplateRegistry;
-        private readonly TemplateRegistry _appTemplateRegistry;
+        private readonly TemplateRegistry<ITemplate> _pak1TemplateRegistry;
+        private readonly TemplateRegistry<ITemplate> _pak2TemplateRegistry;
+        private readonly TemplateRegistry<ITemplate> _appTemplateRegistry;
 
         public ExtendedTester()
         {
@@ -44,7 +46,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             // This is now conventionally applied in SparkEngine
             new DefaultTemplateFinderConventions().Configure(scanner);
             
-            var allTemplates = new TemplateRegistry();
+            var allTemplates = new TemplateRegistry<ITemplate>();
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
 
@@ -54,12 +56,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             _engine = new SparkViewEngine
             {
                 ViewFolder = _viewFolder,
-                BindingProvider = new FubuBindingProvider(new TemplateRegistry(allTemplates))
+                BindingProvider = new FubuBindingProvider(new SparkTemplateRegistry(allTemplates))
             };
 
-            _pak1TemplateRegistry = new TemplateRegistry(allTemplates.ByOrigin(Package1));
-            _pak2TemplateRegistry = new TemplateRegistry(allTemplates.ByOrigin(Package2));
-            _appTemplateRegistry = new TemplateRegistry(allTemplates.FromHost());
+            _pak1TemplateRegistry = new TemplateRegistry<ITemplate>(allTemplates.ByOrigin(Package1));
+            _pak2TemplateRegistry = new TemplateRegistry<ITemplate>(allTemplates.ByOrigin(Package2));
+            _appTemplateRegistry = new TemplateRegistry<ITemplate>(allTemplates.FromHost());
         }
 
         [Test]

@@ -4,6 +4,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Rendering;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using RazorEngine.Templating;
@@ -46,7 +47,7 @@ namespace FubuMVC.Razor.Rendering
 
         string IFubuPage.ElementPrefix { get; set; }
 
-        void IFubuRazorView.Render()
+        void IRenderableView.Render()
         {
             var result = ((ITemplate) this).Run(new ExecuteContext());
             Get<IOutputWriter>().WriteHtml(result);
@@ -101,7 +102,7 @@ namespace FubuMVC.Razor.Rendering
             Model = model;
         }
 
-        void IFubuRazorView.Render()
+        void IRenderableView.Render()
         {
             SetModel(ServiceLocator.GetInstance<IFubuRequest>());
             var result = ((ITemplate) this).Run(new ExecuteContext());
@@ -122,9 +123,8 @@ namespace FubuMVC.Razor.Rendering
         }
     }
 
-    public interface IFubuRazorView : IFubuPage, ITemplate
+    public interface IFubuRazorView : IRenderableView, ITemplate
     {
-        void Render();
         void RenderPartial();
         ITemplate Layout { get; set; }
         Func<string, string> SiteResource { get; set; }

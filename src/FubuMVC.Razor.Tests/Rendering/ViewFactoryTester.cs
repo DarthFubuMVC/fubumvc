@@ -1,4 +1,6 @@
 ﻿using System;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
@@ -30,7 +32,7 @@ namespace FubuMVC.Razor.Tests.Rendering
             descriptor.Expect(x => x.Template.GeneratedViewId).Return(viewId);
             descriptor.Expect(x => x.ViewFile).Return(viewFile);
 
-            Services.Inject<ITemplateServiceWrapper>(new TemplateServiceWrapper(new FubuTemplateService(new TemplateRegistry(), _templateService)));
+            Services.Inject<ITemplateServiceWrapper>(new TemplateServiceWrapper(new FubuTemplateService(new TemplateRegistry<IRazorTemplate>(), _templateService)));
             _entryView = MockRepository.GenerateMock<StubView>();
             _serviceView = MockRepository.GenerateMock<IFubuRazorView>();
 

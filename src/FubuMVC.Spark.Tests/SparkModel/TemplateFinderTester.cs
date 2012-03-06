@@ -2,6 +2,7 @@
 using System.Linq;
 using Bottles;
 using FubuCore;
+using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Scanning;
 using FubuTestingSupport;

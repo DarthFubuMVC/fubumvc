@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,8 +12,8 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
     [TestFixture]
     public class MasterPageBinderTester : InteractionContext<MasterPageBinder>
     {
-        private BindRequest _request;
-        private TemplateRegistry _templateRegistry;
+        private BindRequest<IRazorTemplate> _request;
+        private TemplateRegistry<IRazorTemplate> _templateRegistry;
 
         const string Host = FubuRazorConstants.HostOrigin;
         const string Pak1 = "pak1";
@@ -35,18 +36,21 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         protected override void beforeEach()
         {           
             Services.Inject<ISharedTemplateLocator>(new SharedTemplateLocator());
-            _request = new BindRequest 
+            _request = new BindRequest<IRazorTemplate> 
 			{ 
-				TemplateRegistry = _templateRegistry = createTemplates(), 
-				Master = "application", 
-				Logger = MockFor<IRazorLogger>(),
-                ViewModelType = typeof(ProductModel).FullName
+				TemplateRegistry = _templateRegistry = createTemplates(),
+                Parsing = new Parsing
+                {
+				    Master = "application", 
+                    ViewModelType = typeof(ProductModel).FullName
+                },
+				Logger = MockFor<ITemplateLogger>(),
 			};
         }
 
-        private TemplateRegistry createTemplates()
+        private TemplateRegistry<IRazorTemplate> createTemplates()
         {
-            return new TemplateRegistry
+            return new TemplateRegistry<IRazorTemplate>
             {
                 newTemplate(_pak1Root, Pak1, true, "Actions", "Controllers", "Home", "Home.cshtml"), // 0
                 newTemplate(_pak1Root, Pak1, true, "Actions", "Handlers", "Products", "list.cshtml"), // 1
@@ -68,7 +72,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
             };
         }
 
-        private static ITemplate newTemplate(string root, string origin, bool isView, params string[] relativePaths)
+        private static IRazorTemplate newTemplate(string root, string origin, bool isView, params string[] relativePaths)
         {
             var paths = new[] { root }.Union(relativePaths).ToArray();
             var template = new Template(FubuCore.FileSystem.Combine(paths), root, origin);
@@ -133,7 +137,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
 		public void	if_explicit_empty_master_then_binder_is_not_applied()
         {
             var template = _templateRegistry.ElementAt(3);
-            _request.Master = string.Empty;
+            _request.Parsing.Master = string.Empty;
             _request.Target = template;
 
 			ClassUnderTest.CanBind(_request).ShouldBeFalse();	
@@ -151,11 +155,11 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         public void if_view_model_type_is_empty_and_master_is_not_set_then_binder_is_not_applied()
         {
             var template = _templateRegistry.ElementAt(11);
-            _request.ViewModelType = string.Empty;
+            _request.Parsing.ViewModelType = string.Empty;
             _request.Target = template;
-            _request.Master = "";
+            _request.Parsing.Master = "";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
-            _request.Master = null;
+            _request.Parsing.Master = null;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

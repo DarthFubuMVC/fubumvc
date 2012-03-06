@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.View.Model.Scanning;
 
 namespace FubuMVC.Razor.RazorModel.Scanning
 {

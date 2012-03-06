@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
@@ -12,9 +13,9 @@ namespace FubuMVC.Spark.SparkModel
     public class SharedTemplateLocator : ISharedTemplateLocator
     {
         private readonly ITemplateDirectoryProvider _provider;
-        private readonly ITemplateRegistry _templates;
+        private readonly ITemplateRegistry<ITemplate> _templates;
 
-        public SharedTemplateLocator(ITemplateDirectoryProvider provider, ITemplateRegistry templates)
+        public SharedTemplateLocator(ITemplateDirectoryProvider provider, ITemplateRegistry<ITemplate> templates)
         {
             _provider = provider;
             _templates = templates;

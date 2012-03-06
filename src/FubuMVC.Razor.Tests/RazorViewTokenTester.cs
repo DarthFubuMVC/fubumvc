@@ -12,7 +12,7 @@ namespace FubuMVC.Razor.Tests
     public class RazorViewTokenTester
     {
         private RazorViewToken _token;
-        private ITemplate _template;
+        private IRazorTemplate _template;
         private ViewDescriptor _descriptor;
 
         [SetUp]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.RazorModel.Scanning;
 using FubuTestingSupport;
@@ -13,12 +14,12 @@ namespace FubuMVC.Razor.Tests.RazorModel.Scanning
     [TestFixture]
     public class RazorScannerTester : InteractionContext<FileScanner>
     {
-        private IList<ITemplate> _scanResult;
+        private IList<IRazorTemplate> _scanResult;
 
         protected override void beforeEach()
         {
             Services.Inject<IFileSystem>(new FubuCore.FileSystem());
-            _scanResult = new List<ITemplate>();
+            _scanResult = new List<IRazorTemplate>();
             var request = new ScanRequest();
             
 			request.AddRoots(TestSource.Paths());

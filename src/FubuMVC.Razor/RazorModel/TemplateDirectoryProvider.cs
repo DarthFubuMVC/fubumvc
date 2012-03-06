@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Razor.RazorModel
 {
     public interface ITemplateDirectoryProvider
     {
-        IEnumerable<string> SharedPathsOf(ITemplate template, ITemplateRegistry templateRegistry);
-        IEnumerable<string> ReachablesOf(ITemplate template, ITemplateRegistry templateRegistry);
+        IEnumerable<string> SharedPathsOf(IRazorTemplate template, ITemplateRegistry<IRazorTemplate> templateRegistry);
+        IEnumerable<string> ReachablesOf(IRazorTemplate template, ITemplateRegistry<IRazorTemplate> templateRegistry);
     }
 
     public class TemplateDirectoryProvider : ITemplateDirectoryProvider
@@ -20,17 +21,17 @@ namespace FubuMVC.Razor.RazorModel
             _builder = builder;
         }
 
-        public IEnumerable<string> SharedPathsOf(ITemplate template, ITemplateRegistry templateRegistry)
+        public IEnumerable<string> SharedPathsOf(IRazorTemplate template, ITemplateRegistry<IRazorTemplate> templateRegistry)
         {
             return getDirectories(template, templateRegistry, false);
         }
 
-        public IEnumerable<string> ReachablesOf(ITemplate template, ITemplateRegistry templateRegistry)
+        public IEnumerable<string> ReachablesOf(IRazorTemplate template, ITemplateRegistry<IRazorTemplate> templateRegistry)
         {
             return getDirectories(template, templateRegistry, true);
         }
 
-        private IEnumerable<string> getDirectories(ITemplate template, ITemplateRegistry templateRegistry, bool includeDirectAncestor)
+        private IEnumerable<string> getDirectories(IRazorTemplate template, ITemplateRegistry<IRazorTemplate> templateRegistry, bool includeDirectAncestor)
         {
             foreach (var directory in _builder.BuildBy(template.FilePath, template.RootPath, includeDirectAncestor))
             {

@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.SparkModel;
+﻿using FubuMVC.Core.View.Model;
+using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -8,7 +9,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
     [TestFixture]
     public class MasterAttacherTester : InteractionContext<MasterAttacher>
     {
-        private AttachRequest _request;
+        private AttachRequest<ITemplate> _request;
         private ViewDescriptor _viewDescriptor;
         private Parsing _parsing;
         private ITemplate _template;
@@ -29,13 +30,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 ViewModelType = _viewDescriptor.ViewModel.FullName
             };
 
-            _request = new AttachRequest
+            _request = new AttachRequest<ITemplate>
             {
                 Template = _template,
-                Logger = MockFor<ISparkLogger>()
+                Logger = MockFor<ITemplateLogger>()
             };
 
-            MockFor<IParsingRegistrations>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
+            MockFor<IParsingRegistrations<ITemplate>>().Expect(x => x.ParsingFor(_template)).Return(_parsing);
         }
 
         [Test]
@@ -134,7 +135,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void verify_log_contains(string snippet)
         {
-            MockFor<ISparkLogger>()
+            MockFor<ITemplateLogger>()
                 .AssertWasCalled(x => x.Log(Arg<ITemplate>.Is.Equal(_template), Arg<string>.Matches(s => s.Contains(snippet))));            
         }
 

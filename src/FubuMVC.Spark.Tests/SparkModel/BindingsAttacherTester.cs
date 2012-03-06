@@ -1,4 +1,5 @@
 using System.Linq;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -9,13 +10,13 @@ namespace FubuMVC.Spark.Tests.SparkModel
     public class BindingsAttacherTester : InteractionContext<BindingsAttacher>
     {
         private ITemplate _template;
-        private IAttachRequest _request;
-        private TemplateRegistry _templates;
+        private IAttachRequest<ITemplate> _request;
+        private TemplateRegistry<ITemplate> _templates;
         private ViewDescriptor _viewDescriptor;
 
         protected override void beforeEach()
         {
-            _templates = new TemplateRegistry();
+            _templates = new TemplateRegistry<ITemplate>();
             _viewDescriptor = new ViewDescriptor(_template);
             _template = new Template("/App/Views/Fubu.spark", "/App/Views", FubuSparkConstants.HostOrigin)
             {
@@ -25,17 +26,17 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _templates.Add(_template);
             _templates.AddRange(Enumerable.Range(1, 5).Select(x => MockRepository.GenerateMock<ITemplate>()));
 
-            _request = new AttachRequest
+            _request = new AttachRequest<ITemplate>
             {
                 Template = _template,
-                Logger = MockFor<ISparkLogger>(),
+                Logger = MockFor<ITemplateLogger>(),
             };
 
             MockFor<ISharedTemplateLocator>()
                 .Expect(x => x.LocateBindings(ClassUnderTest.BindingsName, _template))
                 .Return(_templates);
 
-            Container.Inject<ITemplateRegistry>(_templates);
+            Container.Inject<ITemplateRegistry<ITemplate>>(_templates);
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void logger_is_used()
         {
             ClassUnderTest.Attach(_request); 
-            MockFor<ISparkLogger>().AssertWasCalled(x => 
+            MockFor<ITemplateLogger>().AssertWasCalled(x => 
                 x.Log(Arg.Is(_template), Arg<string>.Is.Anything), 
                 x => x.Repeat.Times(_templates.Count));
         }

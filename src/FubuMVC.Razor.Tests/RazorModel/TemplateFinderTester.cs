@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
 using Bottles;
+using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Razor.RazorModel;
-using FubuMVC.Razor.RazorModel.Scanning;
 using FubuTestingSupport;
 using NUnit.Framework;
 

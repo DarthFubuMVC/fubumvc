@@ -12,17 +12,10 @@ namespace FubuMVC.Razor.Registration
 {
     public class ViewParser : IViewParser
     {
-        private readonly IViewFile _viewFile;
-
-        public ViewParser(IViewFile viewFile)
-        {
-            _viewFile = viewFile;
-        }
-
-        public IEnumerable<Span> Parse()
+        public IEnumerable<Span> Parse(IViewFile viewFile)
         {
             RazorCodeLanguage language;
-            switch (_viewFile.Extension)
+            switch (viewFile.Extension)
             {
                 case ".cshtml":
                     language = new CSharpRazorCodeLanguage(true);
@@ -34,7 +27,7 @@ namespace FubuMVC.Razor.Registration
                     throw new ArgumentException("Invalid extension for Razor engine.");
             }
 
-            using(var fileStream = _viewFile.OpenViewStream())
+            using(var fileStream = viewFile.OpenViewStream())
             using (var reader = new StreamReader(fileStream))
             {
                 var engine = new RazorTemplateEngine(new RazorEngine.Compilation.RazorEngineHost(language, () => new HtmlMarkupParser()));
@@ -46,6 +39,6 @@ namespace FubuMVC.Razor.Registration
 
     public interface IViewParser
     {
-        IEnumerable<Span> Parse();
+        IEnumerable<Span> Parse(IViewFile viewFile);
     }
 }

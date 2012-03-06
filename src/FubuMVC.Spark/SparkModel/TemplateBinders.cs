@@ -1,55 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuMVC.Core.Registration;
-using FubuMVC.Spark.Registration;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Registration;
 
 namespace FubuMVC.Spark.SparkModel
 {
-
-    public interface IBindRequest
+    public class ViewDescriptorBinder : ITemplateBinder<ITemplate>
     {
-        ITemplate Target { get; }
-        Parsing Parsing { get; }
-
-        TypePool Types { get; }
-        ITemplateRegistry TemplateRegistry { get; }
-        ISparkLogger Logger { get; }
-    }
-
-    public class BindRequest : IBindRequest
-    {
-        public ITemplate Target { get; set; }
-        public Parsing Parsing { get; set; }
-        public TypePool Types { get; set; }
-
-        public ITemplateRegistry TemplateRegistry { get; set; }
-        public ISparkLogger Logger { get; set; }
-    }
-
-    public interface ITemplateBinder
-    {
-        bool CanBind(IBindRequest request);
-        void Bind(IBindRequest request);
-    }
-
-    public class ViewDescriptorBinder : ITemplateBinder
-    {
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<ITemplate> request)
         {
             var template = request.Target;
             return !(template.Descriptor is ViewDescriptor) && template.IsSparkView();
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<ITemplate> request)
         {
             request.Target.Descriptor = new ViewDescriptor(request.Target);
         }
     }
 
-    public class GenericViewModelBinder : ITemplateBinder
+    public class GenericViewModelBinder : ITemplateBinder<ITemplate>
     {
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<ITemplate> request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
             var parsing = request.Parsing;
@@ -61,7 +34,7 @@ namespace FubuMVC.Spark.SparkModel
                    && GenericParser.IsGeneric(parsing.ViewModelType);
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<ITemplate> request)
         {
             var logger = request.Logger;
             var template = request.Target;
@@ -81,9 +54,9 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class ViewModelBinder : ITemplateBinder
+    public class ViewModelBinder : ITemplateBinder<ITemplate>
     {
-        public bool CanBind(IBindRequest request)
+        public bool CanBind(IBindRequest<ITemplate> request)
         {
             var descriptor = request.Target.Descriptor as ViewDescriptor;
             var parsing = request.Parsing;
@@ -95,7 +68,7 @@ namespace FubuMVC.Spark.SparkModel
                    && GenericParser.IsGeneric(parsing.ViewModelType) == false;
         }
 
-        public void Bind(IBindRequest request)
+        public void Bind(IBindRequest<ITemplate> request)
         {
             var logger = request.Logger;
             var template = request.Target;

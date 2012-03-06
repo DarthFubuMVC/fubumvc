@@ -6,6 +6,7 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Extensibility;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
@@ -26,7 +27,7 @@ namespace FubuMVC.Razor.Tests
         {
             _config = new TemplateServiceConfiguration();
             _config.Namespaces.Clear();
-            var templateService = new FubuTemplateService(new TemplateRegistry(),  new TemplateService(_config));
+            var templateService = new FubuTemplateService(new TemplateRegistry<IRazorTemplate>(),  new TemplateService(_config));
             _templateService = new TemplateServiceWrapper(templateService);
 
             Services.Inject(_config);

@@ -2,7 +2,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Linq;
 using System.Reflection;
-using FubuMVC.Razor.Registration;
+using FubuMVC.Core.View.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
 

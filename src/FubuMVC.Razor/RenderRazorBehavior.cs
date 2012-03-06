@@ -1,5 +1,6 @@
-﻿using FubuMVC.Core.Behaviors;
-using FubuMVC.Razor.Rendering;
+﻿using System;
+using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Razor
 {
@@ -23,9 +24,10 @@ namespace FubuMVC.Razor
 
         public void InvokePartial()
         {
-            _renderer.RenderPartial();
-            if(InsideBehavior != null)
-                InsideBehavior.InvokePartial();
+            throw new NotImplementedException();
+            //_renderer.RenderPartial();
+            //if(InsideBehavior != null)
+            //    InsideBehavior.InvokePartial();
         }
     }
 }

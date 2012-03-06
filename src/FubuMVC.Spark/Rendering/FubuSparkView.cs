@@ -5,6 +5,7 @@ using FubuCore.Util;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Rendering;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using Spark;
@@ -88,14 +89,13 @@ namespace FubuMVC.Spark.Rendering
         }
     }
 
-    public interface IFubuSparkView : IFubuPage
+    public interface IFubuSparkView : IRenderableView
     {
         Dictionary<string, TextWriter> Content { set; get; }
         Dictionary<string, string> OnceTable { set; get; }
         Dictionary<string, object> Globals { set; get; }
         TextWriter Output { get; set; }
         
-        void Render();
         Guid GeneratedViewId { get; }
 
         ICacheService CacheService { get; set; }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FubuCore.Util;
 
-namespace FubuMVC.Razor.RazorModel.Scanning
+namespace FubuMVC.Core.View.Model.Scanning
 {
     public class ScanRequest
     {

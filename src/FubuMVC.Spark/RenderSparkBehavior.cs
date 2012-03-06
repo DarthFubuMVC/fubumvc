@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
-using FubuMVC.Spark.Rendering;
+using FubuMVC.Core.View.Rendering;
 
 namespace FubuMVC.Spark
 {

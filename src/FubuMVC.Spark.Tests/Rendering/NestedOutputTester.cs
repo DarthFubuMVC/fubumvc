@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;

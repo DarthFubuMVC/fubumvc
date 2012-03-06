@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FubuCore.Util;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ITemplate
+    public interface ITemplate : ITemplateFile
     {
         string FilePath { get; }
         string RootPath { get; }
@@ -38,24 +38,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class Parsing
-    {
-        public Parsing()
-        {
-            Namespaces = Enumerable.Empty<string>();
-        }
-
-        public string ViewModelType { get; set; }
-        public string Master { get; set; }
-        public IEnumerable<string> Namespaces { get; set; }
-    }
-
-    public interface IParsingRegistrations
-    {
-        Parsing ParsingFor(ITemplate template);
-    }
-
-    public class Parsings : IParsingRegistrations
+    public class Parsings : IParsingRegistrations<ITemplate>
     {
         private readonly Cache<string, Parsing> _parsings = new Cache<string, Parsing>();
         private readonly IChunkLoader _chunkLoader;

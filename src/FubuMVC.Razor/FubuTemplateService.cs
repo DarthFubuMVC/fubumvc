@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
 using RazorEngine.Templating;
@@ -16,10 +16,10 @@ namespace FubuMVC.Razor
 
     public class FubuTemplateService : IFubuTemplateService
     {
-        private readonly TemplateRegistry _templateRegistry;
+        private readonly TemplateRegistry<RazorModel.IRazorTemplate> _templateRegistry;
         private readonly ITemplateService _inner;
 
-        public FubuTemplateService(TemplateRegistry templateRegistry, ITemplateService inner)
+        public FubuTemplateService(TemplateRegistry<RazorModel.IRazorTemplate> templateRegistry, ITemplateService inner)
         {
             _templateRegistry = templateRegistry;
             _inner = inner;

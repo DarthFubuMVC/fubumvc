@@ -1,4 +1,5 @@
-﻿using FubuMVC.Razor.Rendering;
+﻿using FubuMVC.Core.View.Rendering;
+using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

@@ -1,12 +1,10 @@
 ﻿using System;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Razor.RazorModel
 {
-    public interface ITemplate
+    public interface IRazorTemplate : ITemplateFile
     {
-        string FilePath { get; }
-        string RootPath { get; }
-        string Origin { get; }
         bool IsCurrent();
         Guid GeneratedViewId { get; }
 		
@@ -14,7 +12,7 @@ namespace FubuMVC.Razor.RazorModel
         IRazorDescriptor Descriptor { get; set; }
     }
 
-    public class Template : ITemplate
+    public class Template : IRazorTemplate
     {
         public Template(string filePath, string rootPath, string origin)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Sharing;
 using FubuTestingSupport;
@@ -69,7 +70,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private string _pak1Root;
         private string _pak2Root;
 
-        private TemplateRegistry _templates;
+        private TemplateRegistry<ITemplate> _templates;
         private SharingGraph _graph;
 
         protected override void beforeEach()
@@ -78,7 +79,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _pak1Root = FileSystem.Combine(_root, "Packs", "Pak1");
             _pak2Root = FileSystem.Combine(_root, "Packs", "Pak2");
 
-            _templates = new TemplateRegistry
+            _templates = new TemplateRegistry<ITemplate>
             {
                 new Template(FileSystem.Combine(_root, "Actions", "Home", "home.spark"), _root, FubuSparkConstants.HostOrigin), 
                 new Template(FileSystem.Combine(_pak1Root, "Actions", "Home", "home.spark"), _pak1Root, "Pak1"),
@@ -92,7 +93,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             Container.Inject<ISharedPathBuilder>(new SharedPathBuilder(new []{Shared}));
             Container.Inject<ISharingGraph>(_graph);
-            Container.Inject<ITemplateRegistry>(_templates);
+            Container.Inject<ITemplateRegistry<ITemplate>>(_templates);
         }
 
         [Test]

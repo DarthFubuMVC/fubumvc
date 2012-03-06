@@ -1,4 +1,5 @@
 using FubuCore;
+using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Razor.RazorModel.Scanning;
 using FubuTestingSupport;
 using NUnit.Framework;

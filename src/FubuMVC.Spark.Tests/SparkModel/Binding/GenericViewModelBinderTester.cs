@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom.Compiler;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
     [TestFixture]
     public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder>
     {
-        private BindRequest _request;
+        private BindRequest<ITemplate> _request;
         private Parsing _parsing;
         private ITemplate _template;
         private ViewDescriptor _descriptor;
@@ -27,12 +28,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 ViewModelType = "FubuMVC.Spark.Tests.SparkModel.Binding.Generic<FubuMVC.Spark.Tests.SparkModel.Binding.Baz>"                               
             };
 
-            _request = new BindRequest
+            _request = new BindRequest<ITemplate>
             {
                 Target = _template,
                 Parsing = _parsing,
                 Types = typePool(),
-                Logger = MockFor<ISparkLogger>()
+                Logger = MockFor<ITemplateLogger>()
             };
         }
 
@@ -65,7 +66,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         {
             _parsing.ViewModelType = "x.y.jazz<FubuMVC.Spark.Tests.SparkModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
-            MockFor<ISparkLogger>()
+            MockFor<ITemplateLogger>()
                 .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull));
         }
 
@@ -111,7 +112,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         public void it_logs_to_tracer()
         {
             ClassUnderTest.Bind(_request);
-            MockFor<ISparkLogger>()
+            MockFor<ITemplateLogger>()
                 .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull, Arg<object[]>.Is.NotNull));
         }
 

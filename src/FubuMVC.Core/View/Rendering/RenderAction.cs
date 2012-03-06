@@ -1,11 +1,5 @@
-﻿namespace FubuMVC.Spark.Rendering
+﻿namespace FubuMVC.Core.View.Rendering
 {
-    public interface IRenderAction
-    {
-        void Render();
-        void RenderPartial();
-    }
-
     public class RenderAction : IRenderAction
     {
         private readonly IViewFactory _viewFactory;

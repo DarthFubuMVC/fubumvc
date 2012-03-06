@@ -3,6 +3,8 @@ using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using FubuMVC.Spark.SparkModel.Sharing;
@@ -28,14 +30,14 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void template_registry()
         {
-            _services.DefaultServiceFor<ITemplateRegistry>()
-                .Value.ShouldBeOfType<TemplateRegistry>();
+            _services.DefaultServiceFor<ITemplateRegistry<ITemplate>>()
+                .Value.ShouldBeOfType<TemplateRegistry<ITemplate>>();
         }
 
         [Test]
         public void parsing_registration()
         {
-            _services.DefaultServiceFor<IParsingRegistrations>()
+            _services.DefaultServiceFor<IParsingRegistrations<ITemplate>>()
                 .Value.ShouldBeOfType<Parsings>();
         }
 
@@ -83,7 +85,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void sharing_attacher_activator()
         {
-            defaultServicesCheck<IActivator, SharingAttacherActivator>(2);
+            defaultServicesCheck<IActivator, SharingAttacherActivator<ITemplate>>(2);
         }
 
         [Test]
@@ -95,19 +97,19 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void sharing_attachers()
         {
-            countForServiceCheck<ISharingAttacher>(2);
+            countForServiceCheck<ISharingAttacher<ITemplate>>(2);
         }
 
         [Test]
         public void master_attacher()
         {
-            defaultServicesCheck<ISharingAttacher, MasterAttacher>(0);
+            defaultServicesCheck<ISharingAttacher<ITemplate>, MasterAttacher>(0);
         }
 
         [Test]
         public void bindings_attacher()
         {
-            defaultServicesCheck<ISharingAttacher, BindingsAttacher>(1);
+            defaultServicesCheck<ISharingAttacher<ITemplate>, BindingsAttacher>(1);
         }
 
         [Test]

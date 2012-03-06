@@ -1,12 +1,8 @@
-﻿using FubuMVC.Razor.RazorModel;
+﻿using FubuMVC.Core.View.Rendering;
+using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor.Rendering
 {
-    public interface IViewFactory
-    {
-        IFubuRazorView GetView();
-    }
-
     public class ViewFactory : IViewFactory
     {
         private readonly IRazorDescriptor _viewDescriptor;
@@ -20,14 +16,19 @@ namespace FubuMVC.Razor.Rendering
             _service = service;
         }
 
-        public IFubuRazorView GetView()
+        public IRenderableView GetView()
         {
             var view =  CreateInstance();
             view = _service.Modify(view);
             return view;
         }
 
-        private IFubuRazorView CreateInstance()
+        public IRenderableView GetPartialView()
+        {
+            return null;
+        }
+
+        private IRenderableView CreateInstance()
         {
             var currentDescriptor = _viewDescriptor;
             var returnTemplate = _templateService.GetView(currentDescriptor);

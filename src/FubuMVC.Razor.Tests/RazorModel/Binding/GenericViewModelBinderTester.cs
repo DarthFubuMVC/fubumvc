@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom.Compiler;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -11,8 +12,8 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
     [TestFixture]
     public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder>
     {
-        private BindRequest _request;
-        private ITemplate _template;
+        private BindRequest<IRazorTemplate> _request;
+        private IRazorTemplate _template;
         private ViewDescriptor _descriptor;
 
         protected override void beforeEach()
@@ -21,19 +22,22 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
             _descriptor = new ViewDescriptor(_template);
             _template.Descriptor = _descriptor;
 
-            _request = new BindRequest
+            _request = new BindRequest<IRazorTemplate>
             {
                 Target = _template,
-                ViewModelType = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz>",
+                Parsing = new Parsing
+                {
+                    ViewModelType = "FubuMVC.Razor.Tests.RazorModel.Binding.Generic<FubuMVC.Razor.Tests.RazorModel.Binding.Baz>",
+                },
                 Types = typePool(),
-                Logger = MockFor<IRazorLogger>()
+                Logger = MockFor<ITemplateLogger>()
             };
         }
 
         [Test]
         public void if_generic_view_model_type_exists_in_different_assemblies_nothing_is_assigned()
         {
-            _request.ViewModelType = "FubuMVC.Razor.Tests.RazorModel.Binding.DuplicatedGeneric<FubuMVC.Razor.Tests.RazorModel.Binding.Bar>";
+            _request.Parsing.ViewModelType = "FubuMVC.Razor.Tests.RazorModel.Binding.DuplicatedGeneric<FubuMVC.Razor.Tests.RazorModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
 
             _descriptor.ViewModel.ShouldBeNull();
@@ -49,7 +53,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void if_view_model_type_does_not_exist_nothing_is_assigned()
         {
-            _request.ViewModelType = "x.y.jazz<bar>";
+            _request.Parsing.ViewModelType = "x.y.jazz<bar>";
             ClassUnderTest.Bind(_request);
             _descriptor.ViewModel.ShouldBeNull();
         }
@@ -57,7 +61,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void generic_parse_errors_are_logged()
         {
-            _request.ViewModelType = "x.y.jazz<FubuMVC.Razor.Tests.RazorModel.Binding.Bar>";
+            _request.Parsing.ViewModelType = "x.y.jazz<FubuMVC.Razor.Tests.RazorModel.Binding.Bar>";
             ClassUnderTest.Bind(_request);
             MockFor<IRazorLogger>()
                 .AssertWasCalled(x => x.Log(Arg<Template>.Is.Same(_template), Arg<string>.Is.NotNull));
@@ -66,10 +70,10 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void it_does_not_try_to_bind_names_that_are_null_or_empty()
         {
-            _request.ViewModelType = string.Empty;
+            _request.Parsing.ViewModelType = string.Empty;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
 
-            _request.ViewModelType = null;
+            _request.Parsing.ViewModelType = null;
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 
@@ -97,7 +101,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
         [Test]
         public void does_not_bind_non_generics()
         {
-            _request.ViewModelType = "System.String";
+            _request.Parsing.ViewModelType = "System.String";
             ClassUnderTest.CanBind(_request).ShouldBeFalse();
         }
 

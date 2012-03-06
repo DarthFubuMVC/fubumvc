@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.View.Model.Scanning;
 using Spark;
 
 namespace FubuMVC.Spark.SparkModel.Scanning

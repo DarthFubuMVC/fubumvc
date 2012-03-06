@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Razor.RazorModel
 {
     public interface ISharedTemplateLocator
     {
-        ITemplate LocateMaster(string masterName, ITemplate fromTemplate, ITemplateRegistry templateRegistry);
-        IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate, ITemplateRegistry templateRegistry); 
+        IRazorTemplate LocateMaster(string masterName, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry);
+        IEnumerable<IRazorTemplate> LocateBindings(string bindingName, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry); 
     }
 
     public class SharedTemplateLocator : ISharedTemplateLocator
@@ -19,20 +20,20 @@ namespace FubuMVC.Razor.RazorModel
             _provider = provider;
         }
 
-        public ITemplate LocateMaster(string masterName, ITemplate fromTemplate, ITemplateRegistry templateRegistry)
+        public IRazorTemplate LocateMaster(string masterName, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry)
         {
             return locateTemplates(masterName, fromTemplate, templateRegistry, true)
                 .Where(x => x.IsRazorView())
                 .FirstOrDefault();
         }
 
-        public IEnumerable<ITemplate> LocateBindings(string bindingName, ITemplate fromTemplate, ITemplateRegistry templateRegistry)
+        public IEnumerable<IRazorTemplate> LocateBindings(string bindingName, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry)
         {
             return locateTemplates(bindingName, fromTemplate, templateRegistry, false)
                 .Where(x => x.IsXml());
         }
 
-        private IEnumerable<ITemplate> locateTemplates(string name, ITemplate fromTemplate, ITemplateRegistry templateRegistry, bool sharedsOnly)
+        private IEnumerable<IRazorTemplate> locateTemplates(string name, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry, bool sharedsOnly)
         {
             var directories = sharedsOnly 
                 ? _provider.SharedPathsOf(fromTemplate, templateRegistry) 

@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.Spark.Rendering
+namespace FubuMVC.Core.View.Rendering
 {
-    public interface IViewRenderer
-    {
-        void Render();
-    }
-
     public class ViewRenderer : IViewRenderer
     {
         private readonly IEnumerable<IRenderStrategy> _strategies;

@@ -8,8 +8,8 @@
 //    [TestFixture]
 //    public class ChunkLoaderTester : InteractionContext<ViewLoaderLocator>
 //    {
-//        private readonly ITemplate _template1 = new Template("r/t1/path1", "r/t1", "t1");
-//        private readonly ITemplate _template2 = new Template("r/t2/path2", "r/t2", "t2");
+//        private readonly IRazorTemplate _template1 = new Template("r/t1/path1", "r/t1", "t1");
+//        private readonly IRazorTemplate _template2 = new Template("r/t2/path2", "r/t2", "t2");
 
 //        private string _lastRequestedRoot;
 //        private int _rootRequestCount;
@@ -54,9 +54,9 @@
 //    [TestFixture]
 //    public class ChunkLoaderExtensionsTester : InteractionContext<ViewLoaderLocator>
 //    {
-//        private readonly ITemplate _razor1 = new Template("root/razor1", "root", "origin");
-//        private readonly ITemplate _razor2 = new Template("root/razor2", "root", "origin");
-//        private readonly ITemplate _razor3 = new Template("root/razor3", "root", "origin");
+//        private readonly IRazorTemplate _razor1 = new Template("root/razor1", "root", "origin");
+//        private readonly IRazorTemplate _razor2 = new Template("root/razor2", "root", "origin");
+//        private readonly IRazorTemplate _razor3 = new Template("root/razor3", "root", "origin");
 
 //        protected override void beforeEach()
 //        {

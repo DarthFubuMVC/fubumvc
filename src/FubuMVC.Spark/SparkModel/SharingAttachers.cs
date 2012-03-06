@@ -1,24 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Spark.SparkModel
 {
-    public interface ISharingAttacher
+    public class MasterAttacher : ISharingAttacher<ITemplate>
     {
-        bool CanAttach(IAttachRequest request);
-        void Attach(IAttachRequest request);
-    }
-
-    public class MasterAttacher : ISharingAttacher
-    {
-        private readonly IParsingRegistrations _registrations;
+        private readonly IParsingRegistrations<ITemplate> _registrations;
         private readonly ISharedTemplateLocator _templateLocator;
 
         private const string FallbackMaster = "Application";
         public string MasterName { get; set; }
 
-        public MasterAttacher(IParsingRegistrations registrations, ISharedTemplateLocator templateLocator)
+        public MasterAttacher(IParsingRegistrations<ITemplate> registrations, ISharedTemplateLocator templateLocator)
         {
             _registrations = registrations;
             _templateLocator = templateLocator;
@@ -26,7 +21,7 @@ namespace FubuMVC.Spark.SparkModel
             MasterName = FallbackMaster;
         }
 
-        public bool CanAttach(IAttachRequest request)
+        public bool CanAttach(IAttachRequest<ITemplate> request)
         {
             var descriptor = request.Template.Descriptor as ViewDescriptor;
             var parsing = _registrations.ParsingFor(request.Template);
@@ -38,7 +33,7 @@ namespace FubuMVC.Spark.SparkModel
                 && parsing.Master != string.Empty;
         }
 
-        public void Attach(IAttachRequest request)
+        public void Attach(IAttachRequest<ITemplate> request)
         {
             var template = request.Template;
             var tracer = request.Logger;
@@ -59,7 +54,7 @@ namespace FubuMVC.Spark.SparkModel
         }
     }
 
-    public class BindingsAttacher : ISharingAttacher
+    public class BindingsAttacher : ISharingAttacher<ITemplate>
     {
         private readonly ISharedTemplateLocator _templateLocator;
 
@@ -72,7 +67,7 @@ namespace FubuMVC.Spark.SparkModel
             BindingsName = FallbackBindingsName;
         }
 
-        public bool CanAttach(IAttachRequest request)
+        public bool CanAttach(IAttachRequest<ITemplate> request)
         {
             var descriptor = request.Template.Descriptor as ViewDescriptor;
             
@@ -80,7 +75,7 @@ namespace FubuMVC.Spark.SparkModel
                 && descriptor.Bindings.Count() == 0;
         }
 
-        public void Attach(IAttachRequest request)
+        public void Attach(IAttachRequest<ITemplate> request)
         {
             var target = request.Template;
             var logger = request.Logger;
