@@ -16,18 +16,21 @@ namespace FubuMVC.Spark.SparkModel
 
     public class Template : ITemplate
     {
-        public Template(string filePath, string rootPath, string origin)
+        public Template(string filePath, string rootPath, string origin) : this()
         {
             FilePath = filePath;
             RootPath = rootPath;
             Origin = origin;
+        }
 
+        public Template()
+        {
             Descriptor = new NulloDescriptor();
         }
 
-        public string FilePath { get; private set; }
-        public string RootPath { get; private set; }
-        public string Origin { get; private set; }
+        public string FilePath { get; set; }
+        public string RootPath { get; set; }
+        public string Origin { get; set; }
 		
         public string ViewPath { get; set; }
         public ISparkDescriptor Descriptor { get; set; }

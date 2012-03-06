@@ -48,7 +48,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             packages.Add(pack1);
             packages.Add(pack2);
 
-            var scanner = new TemplateFinder(new FileScanner(), packages) {HostPath = pathApp};
+            var scanner = new TemplateFinder<Template>(new FileScanner(), packages) {HostPath = pathApp};
             new DefaultTemplateFinderConventions().Configure(scanner);
             
             var allTemplates = new TemplateRegistry<IRazorTemplate>();

@@ -30,16 +30,16 @@ namespace FubuMVC.Spark
         private static readonly SparkTemplateRegistry _templateRegistry = new SparkTemplateRegistry();
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
 
-        private ITemplateFinder _finder;
+        private ITemplateFinder<Template> _finder;
         private ITemplateComposer<ITemplate> _composer;
         private readonly IPackageLog _logger;
-        private readonly IList<ITemplateFinderConvention> _finderConventions = new List<ITemplateFinderConvention>();
+        private readonly IList<ITemplateFinderConvention<Template>> _finderConventions = new List<ITemplateFinderConvention<Template>>();
         private readonly IList<ITemplateComposerConvention<ITemplate>> _composerConventions = new List<ITemplateComposerConvention<ITemplate>>();
 
         public SparkEngine()
         {
             _logger = getLogger();
-            _finder = new TemplateFinder();
+            _finder = new TemplateFinder<Template>();
             _composer = new TemplateComposer<ITemplate>(_types.Value, _parsings);
 
             setupFinderDefaults();
@@ -93,7 +93,7 @@ namespace FubuMVC.Spark
 
         private void findTemplates()
         {
-            var finder = _finder as TemplateFinder;
+            var finder = _finder as TemplateFinder<Template>;
             if (finder != null)
             {
                 _finderConventions.Each(t => t.Configure(finder));
@@ -191,13 +191,13 @@ namespace FubuMVC.Spark
                 : new PackageLog();
         }
 
-        public SparkEngine FindWith(ITemplateFinder finder)
+        public SparkEngine FindWith(ITemplateFinder<Template> finder)
         {
             _finder = finder;
             return this;
         }
 
-        public SparkEngine ConfigureFinder(ITemplateFinderConvention convention)
+        public SparkEngine ConfigureFinder(ITemplateFinderConvention<Template> convention)
         {
             _finderConventions.Fill(convention);
             return this;
@@ -218,9 +218,9 @@ namespace FubuMVC.Spark
 
     public static class SparkExtensions
     {
-        public static IList<ITemplateFinderConvention> Apply(this IList<ITemplateFinderConvention> source, Action<TemplateFinder> configure)
+        public static IList<ITemplateFinderConvention<Template>> Apply(this IList<ITemplateFinderConvention<Template>> source, Action<TemplateFinder<Template>> configure)
         {
-            source.Fill(new LambdaTemplateFinderConvention(configure));
+            source.Fill(new LambdaTemplateFinderConvention<Template>(configure));
             return source;
         }
 
@@ -231,18 +231,18 @@ namespace FubuMVC.Spark
         }
 
         public static SparkEngine ConfigureFinder<TConvention>(this SparkEngine spark)
-            where TConvention : ITemplateFinderConvention, new()
+            where TConvention : ITemplateFinderConvention<Template>, new()
         {
             return spark.ConfigureFinder(new TConvention());
         }
 
-        public static SparkEngine ConfigureFinder(this SparkEngine spark, Action<TemplateFinder> configure)
+        public static SparkEngine ConfigureFinder(this SparkEngine spark, Action<TemplateFinder<Template>> configure)
         {
-            return spark.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
+            return spark.ConfigureFinder(new LambdaTemplateFinderConvention<Template>(configure));
         }
 
         public static SparkEngine FindWith<TFinder>(this SparkEngine spark)
-            where TFinder : ITemplateFinder, new()
+            where TFinder : ITemplateFinder<Template>, new()
         {
             return spark.FindWith(new TFinder());
         }

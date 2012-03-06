@@ -26,16 +26,16 @@ namespace FubuMVC.Razor
         private static readonly Lazy<TypePool> _types = new Lazy<TypePool>(getTypes);
         private static readonly RazorParsings _parsings = new RazorParsings();
 
-        private ITemplateFinder _finder;
+        private ITemplateFinder<Template> _finder;
         private ITemplateComposer<IRazorTemplate> _composer;
         private readonly IPackageLog _logger;
-        private readonly IList<ITemplateFinderConvention> _finderConventions = new List<ITemplateFinderConvention>();
+        private readonly IList<ITemplateFinderConvention<Template>> _finderConventions = new List<ITemplateFinderConvention<Template>>();
         private readonly IList<ITemplateComposerConvention<IRazorTemplate>> _composerConventions = new List<ITemplateComposerConvention<IRazorTemplate>>();
 
         public RazorEngineRegistry()
         {
             _logger = getLogger();
-            _finder = new TemplateFinder();
+            _finder = new TemplateFinder<Template>();
             _composer = new TemplateComposer<IRazorTemplate>(_types.Value, _parsings);
 
             setupFinderDefaults();
@@ -88,7 +88,7 @@ namespace FubuMVC.Razor
 
         private void findTemplates()
         {
-            var finder = _finder as TemplateFinder;
+            var finder = _finder as TemplateFinder<Template>;
             if (finder != null)
             {
                 _finderConventions.Each(t => t.Configure(finder));
@@ -153,13 +153,13 @@ namespace FubuMVC.Razor
                 : new PackageLog();
         }
 
-        public RazorEngineRegistry FindWith(ITemplateFinder finder)
+        public RazorEngineRegistry FindWith(ITemplateFinder<Template> finder)
         {
             _finder = finder;
             return this;
         }
 
-        public RazorEngineRegistry ConfigureFinder(ITemplateFinderConvention convention)
+        public RazorEngineRegistry ConfigureFinder(ITemplateFinderConvention<Template> convention)
         {
             _finderConventions.Fill(convention);
             return this;
@@ -180,9 +180,9 @@ namespace FubuMVC.Razor
 
     public static class RazorExtensions
     {
-        public static IList<ITemplateFinderConvention> Apply(this IList<ITemplateFinderConvention> source, Action<TemplateFinder> configure)
+        public static IList<ITemplateFinderConvention<Template>> Apply(this IList<ITemplateFinderConvention<Template>> source, Action<TemplateFinder<Template>> configure)
         {
-            source.Fill(new LambdaTemplateFinderConvention(configure));
+            source.Fill(new LambdaTemplateFinderConvention<Template>(configure));
             return source;
         }
 
@@ -193,18 +193,18 @@ namespace FubuMVC.Razor
         }
 
         public static RazorEngineRegistry ConfigureFinder<TConvention>(this RazorEngineRegistry razor)
-            where TConvention : ITemplateFinderConvention, new()
+            where TConvention : ITemplateFinderConvention<Template>, new()
         {
             return razor.ConfigureFinder(new TConvention());
         }
 
-        public static RazorEngineRegistry ConfigureFinder(this RazorEngineRegistry razor, Action<TemplateFinder> configure)
+        public static RazorEngineRegistry ConfigureFinder(this RazorEngineRegistry razor, Action<TemplateFinder<Template>> configure)
         {
-            return razor.ConfigureFinder(new LambdaTemplateFinderConvention(configure));
+            return razor.ConfigureFinder(new LambdaTemplateFinderConvention<Template>(configure));
         }
 
         public static RazorEngineRegistry FindWith<TFinder>(this RazorEngineRegistry razor)
-            where TFinder : ITemplateFinder, new()
+            where TFinder : ITemplateFinder<Template>, new()
         {
             return razor.FindWith(new TFinder());
         }

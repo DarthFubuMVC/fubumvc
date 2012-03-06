@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class TemplateFinderTester : InteractionContext<TemplateFinder>
+    public class TemplateFinderTester : InteractionContext<TemplateFinder<Template>>
     {
         private readonly string _templatePath;
 
