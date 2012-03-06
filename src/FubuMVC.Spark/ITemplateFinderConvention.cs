@@ -1,32 +1,13 @@
-﻿using System;
-using FubuMVC.Core.Packaging;
+﻿using FubuMVC.Core.Packaging;
+using FubuMVC.Core.View.Conventions;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 
 namespace FubuMVC.Spark
 {
-    public interface ITemplateFinderConvention
+    public class DefaultTemplateFinderConventions : ITemplateFinderConvention<Template>
     {
-        void Configure(TemplateFinder finder);
-    }
-
-    public class LambdaTemplateFinderConvention : ITemplateFinderConvention
-    {
-        private readonly Action<TemplateFinder> _configure;
-
-        public LambdaTemplateFinderConvention(Action<TemplateFinder> configure)
-        {
-            _configure = configure;
-        }
-
-        public void Configure(TemplateFinder finder)
-        {
-            _configure(finder);
-        }
-    }
-
-    public class DefaultTemplateFinderConventions : ITemplateFinderConvention
-    {
-        public void Configure(TemplateFinder finder)
+        public void Configure(TemplateFinder<Template> finder)
         {
             finder.IncludeFile("*spark");
             // TODO: This is not automatically synched with what the attacher looks for.

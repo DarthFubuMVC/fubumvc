@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class TemplateFinderTester : InteractionContext<TemplateFinder>
+    public class TemplateFinderTester : InteractionContext<TemplateFinder<Template>>
     {
         private readonly string _templatePath;
 

@@ -4,18 +4,17 @@ using System.Linq;
 using Bottles;
 using FubuCore.Util;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 
-namespace FubuMVC.Razor.RazorModel
+namespace FubuMVC.Core.View.Model
 {
-    public interface ITemplateFinder
+    public interface ITemplateFinder<T> where T : ITemplateFile, new()
     {
-        IEnumerable<IRazorTemplate> FindInHost();
-        IEnumerable<IRazorTemplate> FindInPackages();
+        IEnumerable<T> FindInHost();
+        IEnumerable<T> FindInPackages();
     }
 
-    public class TemplateFinder : ITemplateFinder
+    public class TemplateFinder<T> : ITemplateFinder<T> where T : ITemplateFile, new()
     {
         private readonly IFileScanner _fileScanner;
         private readonly IEnumerable<IPackageInfo> _packages;
@@ -42,10 +41,10 @@ namespace FubuMVC.Razor.RazorModel
             set { _hostPath = value; }
         }
 
-        public IEnumerable<IRazorTemplate> FindInHost()
+        public IEnumerable<T> FindInHost()
         {
-            var templates = new List<IRazorTemplate>();
-            var root = new RazorRoot
+            var templates = new List<T>();
+            var root = new TemplateRoot
             {
                 Origin = TemplateConstants.HostOrigin, 
                 Path = HostPath
@@ -59,9 +58,9 @@ namespace FubuMVC.Razor.RazorModel
             return templates;
         }
 
-        public IEnumerable<IRazorTemplate> FindInPackages()
+        public IEnumerable<T> FindInPackages()
         {
-            var templates = new List<IRazorTemplate>();
+            var templates = new List<T>();
             var roots = packageRoots(_packages).ToArray();
             var request = buildRequest(templates, roots);
             
@@ -90,15 +89,15 @@ namespace FubuMVC.Razor.RazorModel
             _hostExcludes += r => r.ExcludeDirectory(path);
         }
 
-        private static IEnumerable<RazorRoot> packageRoots(IEnumerable<IPackageInfo> packages)
+        private static IEnumerable<TemplateRoot> packageRoots(IEnumerable<IPackageInfo> packages)
         {
-            var packageRoots = new List<RazorRoot>();
+            var packageRoots = new List<TemplateRoot>();
             foreach (var package in packages)
             {
                 var pack = package;
                 package.ForFolder(BottleFiles.WebContentFolder, path =>
                 {
-                    var root = new RazorRoot
+                    var root = new TemplateRoot
                     {
                         Origin = pack.Name,
                         Path = path
@@ -110,17 +109,17 @@ namespace FubuMVC.Razor.RazorModel
             return packageRoots;
         }
 
-        private ScanRequest buildRequest(ICollection<IRazorTemplate> templates, params RazorRoot[] RazorRoots)
+        private ScanRequest buildRequest(ICollection<T> templates, params TemplateRoot[] templateRoots)
         {
             var request = new ScanRequest();
             _requestConfig.Do(request);
             
-            RazorRoots.Each(r => request.AddRoot(r.Path));
+            templateRoots.Each(r => request.AddRoot(r.Path));
             request.AddHandler(fileFound =>
             {
-                var origin = RazorRoots.First(x => x.Path == fileFound.Root).Origin;
-                var RazorFile = new Template(fileFound.Path, fileFound.Root, origin);                
-                templates.Add(RazorFile);
+                var origin = templateRoots.First(x => x.Path == fileFound.Root).Origin;
+                var templateFile = new T {FilePath = fileFound.Path, RootPath = fileFound.Root, Origin = origin};
+                templates.Add(templateFile);
             });
 
             return request;

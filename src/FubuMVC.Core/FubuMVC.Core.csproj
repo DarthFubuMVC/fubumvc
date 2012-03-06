@@ -693,6 +693,7 @@
     <Compile Include="View\Attachment\IViewAttacher.cs" />
     <Compile Include="View\Attachment\IViewBagConvention.cs" />
     <Compile Include="View\Conventions\ITemplateComposerConvention.cs" />
+    <Compile Include="View\Conventions\ITemplateFinderConvention.cs" />
     <Compile Include="View\IFubuView.cs" />
     <Compile Include="View\Activation\IPageActivator.cs" />
     <Compile Include="View\Attachment\IViewsForActionFilter.cs" />
@@ -705,6 +706,8 @@
     <Compile Include="View\Model\Scanning\FileScanner.cs" />
     <Compile Include="View\Model\Scanning\ScanRequest.cs" />
     <Compile Include="View\Model\SharingAttacherActivator.cs" />
+    <Compile Include="View\Model\TemplateFinder.cs" />
+    <Compile Include="View\Model\TemplateRoot.cs" />
     <Compile Include="View\Model\TemplateBinders.cs" />
     <Compile Include="View\Model\TemplateComposer.cs" />
     <Compile Include="View\Model\TemplateExtensions.cs" />

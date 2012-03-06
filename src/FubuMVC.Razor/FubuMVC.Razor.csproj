@@ -87,7 +87,6 @@
     <Compile Include="RazorModel\TemplateBinders.cs" />
     <Compile Include="RazorModel\TemplateDirectoryProvider.cs" />
     <Compile Include="RazorModel\TemplateExtensions.cs" />
-    <Compile Include="RazorModel\TemplateFinder.cs" />
     <Compile Include="RazorModel\TemplatePolicies.cs" />
     <Compile Include="RazorViewFacility.cs" />
     <Compile Include="RazorViewToken.cs" />

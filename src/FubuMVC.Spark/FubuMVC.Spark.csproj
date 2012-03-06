@@ -95,9 +95,7 @@
     <Compile Include="SparkModel\TemplateExtensions.cs" />
     <Compile Include="SparkModel\TemplateViewFolder.cs" />
     <Compile Include="RenderSparkBehavior.cs" />
-    <Compile Include="SparkModel\TemplateFinder.cs" />
     <Compile Include="SparkModel\TemplateBinders.cs" />
-    <Compile Include="SparkModel\SparkRoot.cs" />
     <Compile Include="SparkModel\Template.cs" />
     <Compile Include="SparkActivator.cs" />
     <Compile Include="SparkEngine.cs" />
