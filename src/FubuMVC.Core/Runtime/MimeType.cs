@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
@@ -33,6 +32,7 @@ namespace FubuMVC.Core.Runtime
         public static readonly MimeType Jpg = New("image/jpeg", ".jpg", ".jpeg").Folder(AssetFolder.images);
         public static readonly MimeType Bmp = New("image/bmp", ".bmp", ".bm").Folder(AssetFolder.images);
         public static readonly MimeType Unknown = New("dunno");
+        public static readonly MimeType Pdf = New("application/pdf",".pdf").Folder(AssetFolder.documents);
 
 
         private readonly IList<string> _extensions = new List<string>();
