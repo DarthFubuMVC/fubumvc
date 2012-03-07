@@ -10,6 +10,8 @@ namespace FubuMVC.Core.Assets
 
         public override IEnumerable<IFileDependency> AllFileDependencies()
         {
+            if (_objects == null) return Enumerable.Empty<IFileDependency>();
+
             return _objects.SelectMany(x => x.AllFileDependencies()).Distinct();
         }
 

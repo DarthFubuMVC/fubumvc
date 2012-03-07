@@ -83,6 +83,7 @@
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="Assets\AssetCombinationBuildingActivator.cs" />
     <Compile Include="Assets\AssetFileDataMother.cs" />
+    <Compile Include="Assets\AssetGraphScenario.cs" />
     <Compile Include="Assets\AssetServicesRegistry.cs" />
     <Compile Include="Assets\Caching\AssetContentCache.cs" />
     <Compile Include="Assets\Caching\AssetFileMonitoringSettings.cs" />

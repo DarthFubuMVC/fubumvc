@@ -111,6 +111,7 @@
     <Compile Include="Assets\AssetDependencyFinderCacheTester.cs" />
     <Compile Include="Assets\AssetExpressionUsageTester.cs" />
     <Compile Include="Assets\AssetGraphConfigurationActivatorIntegrationTester.cs" />
+    <Compile Include="Assets\AssetGraphScenarioTester.cs" />
     <Compile Include="Assets\AssetGrouperTester.cs" />
     <Compile Include="Assets\AssetNamesKeyTester.cs" />
     <Compile Include="Assets\AssetPipelineBuilderActivatorIntegratedTester.cs" />
