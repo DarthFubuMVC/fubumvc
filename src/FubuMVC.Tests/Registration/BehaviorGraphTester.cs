@@ -111,13 +111,13 @@ namespace FubuMVC.Tests.Registration
         public void replace_service_by_specifying_a_value()
         {
             var graph = new BehaviorGraph(null);
-            Assert.Fail("Use something else here");
-            //var resolver = new RecordingObjectResolver(null, null);
+            var resolver = MockRepository.GenerateMock<IObjectResolver>();
 
-            //graph.Services.ReplaceService<IObjectResolver>(resolver);
+            graph.Services.ReplaceService<IObjectResolver>(resolver);
 
-            //graph.Services.DefaultServiceFor<IObjectResolver>().Value.ShouldBeTheSameAs(resolver);
+            graph.Services.DefaultServiceFor<IObjectResolver>().Value.ShouldBeTheSameAs(resolver);
         }
+
 
         [Test]
         public void replace_service_by_specifying_types()

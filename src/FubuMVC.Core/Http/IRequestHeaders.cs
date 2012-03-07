@@ -21,5 +21,8 @@ namespace FubuMVC.Core.Http
         /// <typeparam name = "T"></typeparam>
         /// <returns></returns>
         T BindToHeaders<T>();
+
+
+        bool HasHeader(string header);
     }
 }

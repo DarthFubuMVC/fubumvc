@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore.Binding;
 using FubuCore.Binding.InMemory;
+using FubuCore.Reflection;
+using FubuCore.Util;
 using FubuMVC.Core;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.PathBased;
@@ -16,30 +18,29 @@ namespace FubuMVC.Tests.Resources.PathBased
     [TestFixture]
     public class ResourcePathBinderTester
     {
-        private AggregateDictionary theAggregateDictionary;
-        private Dictionary<string, object> theRouteValues;
+        private Dictionary<string, string> theRouteValues;
         private StandardModelBinder theBinder;
+        private RequestData theRequestData;
 
         [SetUp]
         public void SetUp()
         {
-            Assert.Fail("Use the new BindingScenario stuff");
-            //theBinder = StandardModelBinder.Basic().As<StandardModelBinder>();
+            theBinder = new StandardModelBinder(new BindingRegistry(), new TypeDescriptorCache());
 
-            theAggregateDictionary = new AggregateDictionary();
+            theRequestData = new RequestData();
 
-            var otherDictionary = new Dictionary<string, object>();
+            var otherDictionary = new Dictionary<string, string>();
             for (int i = 0; i < 10; i++)
             {
                 otherDictionary.Add("Part" + i, Guid.NewGuid().ToString());
             }  
 
-            theAggregateDictionary.AddDictionary(RequestDataSource.Request.ToString(), otherDictionary);
+            theRequestData.AddValues(RequestDataSource.Request, new DictionaryKeyValues(otherDictionary));
 
             
-            theRouteValues = new Dictionary<string, object>();
+            theRouteValues = new Dictionary<string, string>();
 
-            theAggregateDictionary.AddDictionary(RequestDataSource.Route.ToString(), theRouteValues);
+            theRequestData.AddValues(RequestDataSource.Route.ToString(), new DictionaryKeyValues(theRouteValues));
 
           
         }
@@ -47,10 +48,10 @@ namespace FubuMVC.Tests.Resources.PathBased
         private ResourcePath findPathByBinding()
         {
             var locator = new SelfMockingServiceLocator();
-            locator.Stub(theAggregateDictionary);
-            var context = new BindingContext(new RequestData(theAggregateDictionary), locator, new NulloBindingLogger());
+            locator.Stub<IRequestData>(theRequestData);
+            var context = new BindingContext(theRequestData, locator, new NulloBindingLogger());
 
-            return (ResourcePath)new ResourcePathBinder(theBinder).Bind(typeof(ResourcePath), context);
+            return (ResourcePath)new ResourcePathBinder().Bind(typeof(ResourcePath), context);
         }
 
         [Test]
@@ -64,21 +65,21 @@ namespace FubuMVC.Tests.Resources.PathBased
         [Test]
         public void matches_subclass_of_resource_path()
         {
-            new ResourcePathBinder(theBinder).Matches(typeof(SpecialPath))
+            new ResourcePathBinder().Matches(typeof(SpecialPath))
                 .ShouldBeTrue();
         }
 
         [Test]
         public void matches_ResourcePath_itself()
         {
-            new ResourcePathBinder(theBinder).Matches(typeof(ResourcePath))
+            new ResourcePathBinder().Matches(typeof(ResourcePath))
                 .ShouldBeTrue();
         }
 
         [Test]
         public void does_not_match_on_a_non_resource_path_class()
         {
-            new ResourcePathBinder(theBinder).Matches(GetType())
+            new ResourcePathBinder().Matches(GetType())
                 .ShouldBeFalse();
         }
 

@@ -8,7 +8,7 @@ namespace FubuMVC.Core.Http.AspNet
     {
         public AspNetServiceArguments(RequestContext requestContext)
         {
-            With<AggregateDictionary>(new AspNetAggregateDictionary(requestContext));
+            With<IRequestData>(new AspNetRequestData(requestContext));
             With(requestContext.HttpContext);
 
             With<ICurrentHttpRequest>(new AspNetCurrentHttpRequest(requestContext.HttpContext.Request));

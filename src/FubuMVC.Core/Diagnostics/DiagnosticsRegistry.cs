@@ -42,6 +42,7 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IDebugDetector, DebugDetector>();
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
                 x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
+                x.ReplaceService<IBindingHistory, BindingHistory>();
 
 
                 // TODO -- need to test this

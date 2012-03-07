@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
+
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization.0.9.4.116\lib\FubuLocalization.dll</HintPath>
@@ -201,6 +202,7 @@
     <Compile Include="Http\MimeTypeListTester.cs" />
     <Compile Include="Http\MimetypeRequestConditionalTester.cs" />
     <Compile Include="Http\RequestHeadersIntegratedTester.cs" />
+    <Compile Include="Http\RouteDataValuesTester.cs" />
     <Compile Include="Localization\LabelBuilderTester.cs" />
     <Compile Include="Localization\LocalizationBootstrappingTester.cs" />
     <Compile Include="Localization\RegisterXmlDirectoryLocalizationStorageTester.cs" />
@@ -464,7 +466,6 @@
     <Compile Include="TestController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Routing\AspNetAggregateDictionaryTester.cs" />
     <Compile Include="UI\Address.cs" />
     <Compile Include="UI\DefaultElementNamingConventionTester.cs" />
     <Compile Include="UI\DefaultHtmlConventionsTester.cs" />

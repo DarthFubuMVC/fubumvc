@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FubuCore.Binding;
+using FubuCore.Binding.Values;
 using FubuMVC.Core.Http;
 using FubuMVC.StructureMap;
 using NUnit.Framework;
@@ -12,18 +13,20 @@ namespace FubuMVC.Tests.Http
     [TestFixture]
     public class RequestHeadersIntegratedTester
     {
-        private Dictionary<string, object> theHeaderDictionary;
+        private KeyValues theHeaderValues;
         private RequestHeaders theHeaders;
+        private RequestData theRequest;
 
         [SetUp]
         public void SetUp()
         {
             var container = StructureMapContainerFacility.GetBasicFubuContainer();
-            theHeaderDictionary = new Dictionary<string, object>();
-            var dictionary = new AggregateDictionary();
-            dictionary.AddDictionary(RequestDataSource.Header.ToString(), theHeaderDictionary);
+            theHeaderValues = new KeyValues();
 
-            container.Inject(dictionary);
+            theRequest = new RequestData();
+            theRequest.AddValues(RequestDataSource.Header, theHeaderValues);
+
+            container.Inject<IRequestData>(theRequest);
 
             theHeaders = container.GetInstance<RequestHeaders>();
         }
@@ -31,7 +34,7 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void value_negative()
         {
-            theHeaderDictionary.ContainsKey(HttpRequestHeaders.IfNoneMatch).ShouldBeFalse();
+            theHeaderValues.Has(HttpRequestHeaders.IfNoneMatch).ShouldBeFalse();
             
             var action = MockRepository.GenerateMock<Action<string>>();
             theHeaders.Value(HttpRequestHeaders.IfNoneMatch, action);
@@ -43,7 +46,8 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void value_positive()
         {
-            theHeaderDictionary.Add(HttpRequestHeaders.IfNoneMatch, "12345");
+            
+            theHeaderValues[HttpRequestHeaders.IfNoneMatch] = "12345";
 
             var action = MockRepository.GenerateMock<Action<string>>();
             theHeaders.Value(HttpRequestHeaders.IfNoneMatch, action);
@@ -54,7 +58,7 @@ namespace FubuMVC.Tests.Http
         [Test]
         public void convert_to_something_besides_strings()
         {
-            theHeaderDictionary.Add(HttpRequestHeaders.IfNoneMatch, "12345");
+            theHeaderValues[HttpRequestHeaders.IfNoneMatch] = "12345";
 
             var action = MockRepository.GenerateMock<Action<int>>();
             theHeaders.Value<int>(HttpRequestHeaders.IfNoneMatch, action);
@@ -69,9 +73,9 @@ namespace FubuMVC.Tests.Http
         public void bind_an_object()
         {
             var modifiedSince = DateTime.Today.AddMinutes(-90);
-            theHeaderDictionary.Add(HttpRequestHeaders.IfModifiedSince, modifiedSince.ToString());
-            theHeaderDictionary.Add(HttpRequestHeaders.IfMatch, "12345");
-            theHeaderDictionary.Add(HttpRequestHeaders.IfNoneMatch, "2345");
+            theHeaderValues[HttpRequestHeaders.IfModifiedSince] = modifiedSince.ToString();
+            theHeaderValues[HttpRequestHeaders.IfMatch] = "12345";
+            theHeaderValues[HttpRequestHeaders.IfNoneMatch] = "2345";
 
             var dto = theHeaders.BindToHeaders<ETagDto>();
             dto.IfModifiedSince.ShouldEqual(modifiedSince);

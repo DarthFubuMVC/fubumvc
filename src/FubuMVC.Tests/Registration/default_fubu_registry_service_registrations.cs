@@ -85,12 +85,6 @@ namespace FubuMVC.Tests.Registration
         }
 
         [Test]
-        public void IRequestData_is_registered()
-        {
-            registeredTypeIs<IRequestData, RequestData>();
-        }
-
-        [Test]
         public void IRequestHeader_is_registered()
         {
             registeredTypeIs<IRequestHeaders, RequestHeaders>();

@@ -15,6 +15,7 @@ namespace FubuMVC.Tests.Http.AspNet
         private HttpContextBase theHttpContext;
         private RequestContext theRequestContext;
         private AspNetServiceArguments theArguments;
+        private HttpRequestBase theHttpRequest;
 
         [SetUp]
         public void SetUp()
@@ -22,13 +23,16 @@ namespace FubuMVC.Tests.Http.AspNet
             theHttpContext = MockRepository.GenerateMock<HttpContextBase>();
             theRequestContext = new RequestContext(theHttpContext, new RouteData());
 
+            theHttpRequest = MockRepository.GenerateMock<HttpRequestBase>();
+            theHttpContext.Stub(x => x.Request).Return(theHttpRequest);
+
             theArguments = new AspNetServiceArguments(theRequestContext);
         }
 
         [Test]
-        public void should_have_an_aggregate_dictionary()
+        public void should_add_the_request_data()
         {
-            theArguments.Get<AggregateDictionary>().ShouldBeOfType<AspNetAggregateDictionary>();
+            theArguments.Get<IRequestData>().ShouldBeOfType<AspNetRequestData>();
         }
 
         [Test]

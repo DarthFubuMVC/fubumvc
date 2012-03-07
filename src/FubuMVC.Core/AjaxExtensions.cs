@@ -23,7 +23,7 @@ namespace FubuMVC.Core
         public static bool IsAjaxRequest(this IRequestData requestInput)
         {
             bool result = false;
-            requestInput.Value(XRequestedWithHeader, value => result = IsAjaxRequest(value));
+            requestInput.Value(XRequestedWithHeader, value => result = IsAjaxRequest(value.RawValue));
             return result;
         }
 

@@ -7,7 +7,7 @@ namespace FubuMVC.Core.Http.AspNet
     {
         public override bool Matches(PropertyInfo property)
         {
-            return AspNetAggregateDictionary.IsSystemProperty(property);
+            return RequestPropertyValueSource.IsSystemProperty(property);
         }
 
         public override object Convert(IPropertyContext context)

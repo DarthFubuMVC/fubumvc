@@ -8,13 +8,6 @@ namespace FubuMVC.Core.Resources.PathBased
 {
     public class ResourcePathBinder : IModelBinder
     {
-        private readonly IModelBinder _binder;
-
-        public ResourcePathBinder(StandardModelBinder binder)
-        {
-            _binder = binder;
-        }
-
         public bool Matches(Type type)
         {
             return type.CanBeCastTo<ResourcePath>();
@@ -27,24 +20,24 @@ namespace FubuMVC.Core.Resources.PathBased
 
         public object Bind(Type type, IBindingContext context)
         {
-            var path = FindPath(context.Service<AggregateDictionary>());
+            var path = FindPath(context.Service<IRequestData>());
             object instance = Activator.CreateInstance(type, path);
 
             // Setting additional properties
-            
-            _binder.Bind(type, instance, context);
+            // TODO -- have this delegate to a new method on BindingContext instead
+            context.BindProperties(instance);
 
             return instance;
         }
 
-        public static string FindPath(AggregateDictionary dictionary)
+        public static string FindPath(IRequestData dictionary)
         {
-            var routeData = dictionary.DataFor(RequestDataSource.Route.ToString());
+            var routeData = dictionary.ValuesFor(RequestDataSource.Route);
             var list = new List<string>();
 
             for (var i = 0; i < 10; i++)
             {
-                routeData.Value("Part" + i, o => list.Add(o.ToString()));
+                routeData.Value("Part" + i, o => list.Add(o.RawValue.ToString()));
             }
 
             return list.Join("/");

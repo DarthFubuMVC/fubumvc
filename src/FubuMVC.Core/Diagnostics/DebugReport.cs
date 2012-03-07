@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Web;
 using FubuCore.Binding;
+using FubuCore.Binding.InMemory;
+using FubuCore.Binding.Logging;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Http;
 
@@ -16,21 +16,33 @@ namespace FubuMVC.Core.Diagnostics
         public IBehaviorDetails Details { get; set; }
     }
 
+    public class BindingHistory : IBindingHistory
+    {
+        private readonly DebugReport _report;
+
+        public BindingHistory(DebugReport report)
+        {
+            _report = report;
+        }
+
+        public void Store(BindingReport report)
+        {
+            // do nothing
+        }
+    }
+
     public class DebugReport : TimedReport, IEnumerable<BehaviorReport>, IDebugReport
     {
-        private readonly AggregateDictionary _dictionary;
-        private readonly ICurrentHttpRequest _request;
-        private readonly IList<BehaviorReport> _behaviors = new List<BehaviorReport>();
         private readonly Stack<BehaviorReport> _behaviorStack = new Stack<BehaviorReport>();
+        private readonly IList<BehaviorReport> _behaviors = new List<BehaviorReport>();
+        private readonly IRequestData _data;
+        private readonly ICurrentHttpRequest _request;
         private readonly IList<BehaviorStep> _steps = new List<BehaviorStep>();
         private ModelBindingReport _currentModelBinding;
 
-        public Guid Id { get; private set; }
-        public Guid BehaviorId { get; set; }
-
-        public DebugReport(AggregateDictionary dictionary, ICurrentHttpRequest request)
+        public DebugReport(IRequestData data, ICurrentHttpRequest request)
         {
-            _dictionary = dictionary;
+            _data = data;
             _request = request;
             Id = Guid.NewGuid();
 
@@ -38,6 +50,9 @@ namespace FubuMVC.Core.Diagnostics
             Headers = new Dictionary<string, string>();
             Time = DateTime.Now;
         }
+
+        public Guid Id { get; private set; }
+        public Guid BehaviorId { get; set; }
 
 
         public void RecordFormData()
@@ -71,11 +86,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public IEnumerable<BehaviorStep> Steps
         {
-            get { return _steps; } }
-
-        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
-        {
-            throw new NotImplementedException();
+            get { return _steps; }
         }
 
         public BehaviorReport StartBehavior(IActionBehavior behavior)
@@ -84,16 +95,20 @@ namespace FubuMVC.Core.Diagnostics
             _behaviors.Add(report);
             _behaviorStack.Push(report);
 
-            AddDetails(new BehaviorStart { BehaviorType = behavior.GetType() });
+            AddDetails(new BehaviorStart{
+                BehaviorType = behavior.GetType()
+            });
 
             return report;
         }
 
         public void EndBehavior()
         {
-            BehaviorReport report = _behaviorStack.Pop();
+            var report = _behaviorStack.Pop();
             report.MarkFinished();
-            addDetails(new BehaviorFinish { BehaviorType = report.BehaviorType }, report);
+            addDetails(new BehaviorFinish{
+                BehaviorType = report.BehaviorType
+            }, report);
         }
 
         public void AddDetails(IBehaviorDetails details)
@@ -104,21 +119,9 @@ namespace FubuMVC.Core.Diagnostics
             addDetails(details, report);
         }
 
-        private void addDetails(IBehaviorDetails details, BehaviorReport report)
-        {
-            _steps.Add(new BehaviorStep
-            {
-                Behavior = report,
-                Details = details
-            });
-
-            report.AddDetail(details);
-        }
-
         public void MarkException(Exception exception)
         {
-            var details = new ExceptionReport
-            {
+            var details = new ExceptionReport{
                 Text = exception.ToString()
             };
 
@@ -127,8 +130,7 @@ namespace FubuMVC.Core.Diagnostics
 
         public void StartModelBinding(Type type)
         {
-            _currentModelBinding = new ModelBindingReport()
-            {
+            _currentModelBinding = new ModelBindingReport{
                 BoundType = type
             };
             AddDetails(_currentModelBinding);
@@ -156,6 +158,21 @@ namespace FubuMVC.Core.Diagnostics
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public void AcceptVisitor(IBehaviorDetailsVisitor visitor)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void addDetails(IBehaviorDetails details, BehaviorReport report)
+        {
+            _steps.Add(new BehaviorStep{
+                Behavior = report,
+                Details = details
+            });
+
+            report.AddDetail(details);
         }
     }
 }

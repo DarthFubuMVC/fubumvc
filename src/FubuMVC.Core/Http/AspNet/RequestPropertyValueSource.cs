@@ -4,21 +4,23 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
-using System.Web.Routing;
 using FubuCore.Binding;
+using FubuCore.Binding.Values;
 using FubuCore.Reflection;
 using FubuCore.Util;
+using FubuCore;
 
 namespace FubuMVC.Core.Http.AspNet
 {
-    public class AspNetAggregateDictionary : AggregateDictionary
+    public class RequestPropertyValueSource : IValueSource
     {
         private static readonly Cache<string, Func<HttpRequestBase, object>> _requestProperties =
             new Cache<string, Func<HttpRequestBase, object>>();
 
         private static readonly IList<PropertyInfo> _systemProperties = new List<PropertyInfo>();
+        private HttpRequestBase _request;
 
-        static AspNetAggregateDictionary()
+        static RequestPropertyValueSource()
         {
             AddRequestProperty(r => r.AcceptTypes);
             AddRequestProperty(r => r.ApplicationPath);
@@ -57,55 +59,6 @@ namespace FubuMVC.Core.Http.AspNet
             AddRequestProperty(r => r.UserLanguages);
         }
 
-        private AspNetAggregateDictionary()
-        {
-        }
-
-        public AspNetAggregateDictionary(RequestContext context)
-        {
-            Func<string, object> locator = key =>
-            {
-                object found;
-                context.RouteData.Values.TryGetValue(key, out found);
-                return found;
-            };
-
-
-            AddLocator(RequestDataSource.Route, locator, () => context.RouteData.Values.Keys);
-
-            var @base = context.HttpContext;
-
-            configureForRequest(@base);
-        }
-
-        private void configureForRequest(HttpContextBase @base)
-        {
-            var request = @base.Request;
-
-            AddLocator(RequestDataSource.Request, key => request[key], () => keysForRequest(request));
-
-            AddLocator(RequestDataSource.File,
-                       key => request.Files[key],
-                       () => request.Files.AllKeys);
-            AddLocator(RequestDataSource.Header, key => request.Headers[key], () => request.Headers.AllKeys);
-            AddLocator(RequestDataSource.RequestProperty, key => GetRequestProperty(request, key),
-                       () => _requestProperties.GetAllKeys());
-        }
-
-        public AggregateDictionary AddLocator(RequestDataSource source, Func<string, object> locator,
-                                              Func<IEnumerable<string>> allKeys)
-        {
-            return AddLocator(source.ToString(), locator, allKeys);
-        }
-
-        public static AspNetAggregateDictionary ForHttpContext(HttpContextWrapper context)
-        {
-            var dict = new AspNetAggregateDictionary();
-            dict.configureForRequest(context);
-
-            return dict;
-        }
-
         public static bool IsSystemProperty(PropertyInfo property)
         {
             return
@@ -121,9 +74,47 @@ namespace FubuMVC.Core.Http.AspNet
             _requestProperties[property.Name] = expression.Compile();
         }
 
-
-        private static IEnumerable<string> keysForRequest(HttpRequestBase request)
+        public RequestPropertyValueSource(HttpRequestBase request)
         {
+            _request = request;
+        }
+
+        //AddLocator(RequestDataSource.RequestProperty, key => GetRequestProperty(request, key),
+        //               () => _requestProperties.GetAllKeys());
+
+        public bool Has(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Get(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasChild(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueSource GetChild(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<IValueSource> GetChildren(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteReport(IValueReport report)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Value(string key, Action<BindingValue> callback)
+        {
+
             foreach (var key in request.QueryString.AllKeys.Where(x => x != null))
             {
                 yield return key;
@@ -133,13 +124,16 @@ namespace FubuMVC.Core.Http.AspNet
             {
                 yield return key;
             }
-        }
+       }
 
+        public string Provenance
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         private static object GetRequestProperty(HttpRequestBase request, string key)
         {
             return _requestProperties.Has(key) ? _requestProperties[key](request) : null;
         }
     }
-
 }

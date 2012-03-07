@@ -8,7 +8,7 @@ namespace FubuMVC.OwinHost
     {
         public OwinServiceArguments(RouteData routeData, OwinRequestBody body, Response response)
         {
-            With<AggregateDictionary>(new OwinAggregateDictionary(routeData, body));
+            With<IRequestData>(new OwinRequestData(routeData, body));
 
             With<ICurrentHttpRequest>(new OwinCurrentHttpRequest(body));
             With<IStreamingData>(new OwinStreamingData(body));

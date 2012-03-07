@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
+
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization.0.9.4.116\lib\FubuLocalization.dll</HintPath>
@@ -51,9 +52,6 @@
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -203,6 +201,10 @@
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
+    <Compile Include="Http\AspNet\AspNetRequestData.cs" />
+    <Compile Include="Http\AspNet\RequestPropertyValueSource.cs" />
+    <Compile Include="Http\RequestDataExtensions.cs" />
+    <Compile Include="Http\RouteDataValues.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Conventions\DictionaryOutputConvention.cs" />
@@ -235,7 +237,6 @@
     <Compile Include="Runtime\IExceptionHandler.cs" />
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
-    <Compile Include="Http\AspNet\AspNetAggregateDictionary.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
     <Compile Include="Http\AspNet\ASPNetObjectConversionFamily.cs" />

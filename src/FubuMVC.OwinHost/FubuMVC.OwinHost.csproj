@@ -32,7 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FubuCore">
+
       <HintPath>..\packages\FubuCore.0.9.4.117\lib\FubuCore.dll</HintPath>
+
     </Reference>
     <Reference Include="Gate">
       <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
@@ -56,11 +58,11 @@
     <Compile Include="FormRequestReader.cs" />
     <Compile Include="FubuOwinHost.cs" />
     <Compile Include="IOwinRequestReader.cs" />
-    <Compile Include="OwinAggregateDictionary.cs" />
     <Compile Include="GateHttpContext.cs" />
     <Compile Include="OwinCurrentHttpRequest.cs" />
     <Compile Include="OwinHttpWriter.cs" />
     <Compile Include="OwinRequestBody.cs" />
+    <Compile Include="OwinRequestData.cs" />
     <Compile Include="OwinServiceArguments.cs" />
     <Compile Include="OwinStreamingData.cs" />
     <Compile Include="PortFinder.cs" />

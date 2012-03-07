@@ -5,6 +5,7 @@ using Bottles;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core;
+using FubuMVC.Core.Assets.Caching;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Bootstrapping;
 using FubuMVC.Core.Http;
@@ -128,7 +129,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void PropertyBinderCache_should_be_a_singleton()
         {
-            container.Model.For<IPropertyBinderCache>().Lifecycle.ShouldEqual("Singleton");
+            container.Model.For<IAssetContentCache>().Lifecycle.ShouldEqual("Singleton");
         }
 
         [Test]
@@ -171,11 +172,10 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void should_be_able_to_inject_multiple_implementations_as_a_dependency()
         {
-            Assert.Fail("Use a different example");
-            //IEnumerable<IConverterFamily> converterFamilies =
-            //    container.GetInstance<IValueConverterRegistry>().ShouldBeOfType<ValueConverterRegistry>().Families;
-            //converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter));
-            //converterFamilies.ShouldContain(f => f.GetType() == typeof (ExampleConverter2));
+            IEnumerable<IConverterFamily> converterFamilies =
+                container.GetInstance<BindingRegistry>().AllConverterFamilies();
+            converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter));
+            converterFamilies.ShouldContain(f => f.GetType() == typeof(ExampleConverter2));
         }
 
         [Test]
@@ -207,13 +207,16 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void behavior_factory_is_available_in_the_container()
         {
-            Assert.Fail("Do.");
+            container.GetInstance<IBehaviorFactory>().ShouldBeOfType<PartialBehaviorFactory>();
         }
 
         [Test]
-        public void can_return_the_endpoint_authorizor_for_an_id()
+        public void can_return_the_endpoint_authorizor_for_an_id_smoke_test()
         {
-            Assert.Fail("Do.");
+            var uniqueId = container.GetInstance<BehaviorGraph>().Behaviors.First().UniqueId;
+
+            container.GetInstance<IBehaviorFactory>().AuthorizorFor(uniqueId).ShouldNotBeNull();
+
         }
     }
 }

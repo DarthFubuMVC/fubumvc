@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using FubuCore;
 using FubuCore.Binding;
+using FubuCore.Binding.Values;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Http;
 using FubuMVC.Core.Http;
@@ -12,12 +14,31 @@ using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Assets.Http
 {
+    public class StubHeaders : IRequestHeaders
+    {
+        public KeyValues Data = new KeyValues();
+
+        public void Value<T>(string header, Action<T> callback)
+        {
+            Data.ForValue(header, (key, value) => callback(value.As<T>()));
+        }
+
+        public T BindToHeaders<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasHeader(string header)
+        {
+            return Data.Has(header);
+        }
+    }
+
     [TestFixture]
     public class AssetEtagInvocationFilterTester
     {
         private ServiceArguments theServiceArguments;
-        private AggregateDictionary theDictionary;
-        private Dictionary<string, object> theHeaders;
+        private StubHeaders theHeaders;
         private EtagCache theCache;
         private AssetEtagInvocationFilter theFilter;
 
@@ -28,18 +49,16 @@ namespace FubuMVC.Tests.Assets.Http
 
         private void setRequestIfNoneMatch(string etag)
         {
-            theHeaders.Add(HttpRequestHeaders.IfNoneMatch, etag);
+            theHeaders.Data[HttpRequestHeaders.IfNoneMatch] = etag;
         }
 
         [SetUp]
         public void SetUp()
         {
             theServiceArguments = new ServiceArguments();
-            theDictionary = new AggregateDictionary();
-            theHeaders = new Dictionary<string, object>();
-            theDictionary.AddDictionary(RequestDataSource.Header.ToString(), theHeaders);
+            theHeaders = new StubHeaders();
 
-            theServiceArguments.Set(typeof(AggregateDictionary), theDictionary);
+            theServiceArguments.Set(typeof(IRequestHeaders), theHeaders);
 
             stash<IHttpWriter>();
             stash<ICurrentChain>();
@@ -52,7 +71,7 @@ namespace FubuMVC.Tests.Assets.Http
         [Test]
         public void returns_continue_if_there_is_no_if_none_match_header()
         {
-            theHeaders.ContainsKey(HttpRequestHeaders.IfNoneMatch).ShouldBeFalse();
+            theHeaders.HasHeader(HttpRequestHeaders.IfNoneMatch).ShouldBeFalse();
 
             theFilter.Filter(theServiceArguments).ShouldEqual(DoNext.Continue);
         }

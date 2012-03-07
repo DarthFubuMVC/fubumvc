@@ -1,10 +1,8 @@
-using System;
 using System.Net;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
 using FubuMVC.Core.Resources.Etags;
 using FubuMVC.Core.Runtime;
-using FubuCore;
 
 namespace FubuMVC.Core.Assets.Http
 {
@@ -21,7 +19,7 @@ namespace FubuMVC.Core.Assets.Http
         {
             string etag = null;
 
-            arguments.Get<AggregateDictionary>().Value(RequestDataSource.Header.ToString(), HttpRequestHeaders.IfNoneMatch, (key, value) => etag = (string) value);
+            arguments.Get<IRequestHeaders>().Value<string>(HttpRequestHeaders.IfNoneMatch, value => etag = value);
 
             if (etag == null) return DoNext.Continue;
 
