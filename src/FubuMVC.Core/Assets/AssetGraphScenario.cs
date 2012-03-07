@@ -99,11 +99,13 @@ namespace FubuMVC.Core.Assets
 
                 _action = text =>
                 {
-                    if (text.StartsWith("if"))
+                    if (text.StartsWith("if", StringComparison.OrdinalIgnoreCase))
                     {
                         _action = _dslReader.ReadLine;
                     }
                 };
+
+                
             }
 
             public AssetGraph Graph
@@ -114,6 +116,8 @@ namespace FubuMVC.Core.Assets
             public void ReadLine(string text)
             {
                 text = text.TrimStart();
+
+                if (text.StartsWith("#")) return;
 
                 if (text.StartsWith(Requesting, StringComparison.OrdinalIgnoreCase))
                 {
