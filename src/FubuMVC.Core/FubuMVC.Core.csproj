@@ -215,6 +215,8 @@
     <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
     <Compile Include="Registration\Diagnostics\NodeEvent.cs" />
     <Compile Include="Registration\Diagnostics\Traced.cs" />
+    <Compile Include="Registration\Nodes\IContainerModel.cs" />
+    <Compile Include="Registration\Nodes\ITracedModel.cs" />
     <Compile Include="Registration\Nodes\TracedNode.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConvention.cs" />

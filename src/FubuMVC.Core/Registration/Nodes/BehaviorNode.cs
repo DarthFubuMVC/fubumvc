@@ -1,42 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
-using FubuMVC.Core.Diagnostics.Tracing;
-using FubuMVC.Core.Registration.Diagnostics;
-using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public interface IContainerModel
-    {
-        /// <summary>
-        ///   Generates an ObjectDef object that creates an IoC agnostic
-        ///   configuration model of the real Behavior objects for this chain
-        /// </summary>
-        /// <param name = "diagnosticLevel"></param>
-        /// <returns></returns>
-        ObjectDef ToObjectDef(DiagnosticLevel diagnosticLevel);
-    }
-
-    public interface ITracedModel
-    {
-        void Trace(NodeEvent @event);
-        void Trace(string text);
-        IEnumerable<NodeEvent> StagedEvents { get; }
-        void RecordEvents(Action<NodeEvent> callback);
-    }
-
     /// <summary>
     ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
     public abstract partial class BehaviorNode : TracedNode, IContainerModel, IEnumerable<BehaviorNode>
     {
-        
         private BehaviorNode _next;
 
 
@@ -85,7 +61,6 @@ namespace FubuMVC.Core.Registration.Nodes
         {
             get { return GetType().GetFullName(); }
         }
-
 
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -140,7 +115,6 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
 
-
         /// <summary>
         ///   Tests whether or not there are *any* output nodes
         ///   after this BehaviorNode
@@ -169,7 +143,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         /// <param name = "newNode"></param>
         public void AddBefore(BehaviorNode newNode)
-        {            
+        {
             if (PreviousNodes.Contains(newNode)) return;
 
             newNode.Remove();
@@ -219,30 +193,30 @@ namespace FubuMVC.Core.Registration.Nodes
             return wrapper;
         }
 
-        
+
         /// <summary>
-        /// Make the behavior *only* execute if the condition is met
+        ///   Make the behavior *only* execute if the condition is met
         /// </summary>
-        /// <param name="condition"></param>
+        /// <param name = "condition"></param>
         public void Condition(Func<bool> condition)
         {
             _conditionalDef = ConditionalObjectDef.For(condition);
         }
 
         /// <summary>
-        /// Makes the behavior execute only if the condition against a service
-        /// in the underlying IoC container is true
+        ///   Makes the behavior execute only if the condition against a service
+        ///   in the underlying IoC container is true
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="condition"></param>
+        /// <typeparam name = "T"></typeparam>
+        /// <param name = "condition"></param>
         public void ConditionByService<T>(Func<T, bool> condition)
         {
             _conditionalDef = ConditionalObjectDef.ForService(condition);
         }
 
         /// <summary>
-        /// Makes the behavior execute only if the condition against a model
-        /// object pulled from IFubuRequest is true
+        ///   Makes the behavior execute only if the condition against a model
+        ///   object pulled from IFubuRequest is true
         /// </summary>
         public void ConditionByModel<T>(Func<T, bool> filter) where T : class
         {
@@ -250,8 +224,8 @@ namespace FubuMVC.Core.Registration.Nodes
         }
 
         /// <summary>
-        /// Makes the behavior execute only if the custom IConditional evaluates
-        /// true
+        ///   Makes the behavior execute only if the custom IConditional evaluates
+        ///   true
         /// </summary>
         public void Condition<T>() where T : IConditional
         {
