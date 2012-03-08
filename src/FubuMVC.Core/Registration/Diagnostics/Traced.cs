@@ -4,7 +4,7 @@ namespace FubuMVC.Core.Registration.Diagnostics
     {
         private readonly string _text;
 
-        public Traced(string text, object subject) : base(subject)
+        public Traced(string text)
         {
             _text = text;
         }

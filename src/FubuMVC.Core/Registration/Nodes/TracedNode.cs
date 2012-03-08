@@ -11,17 +11,18 @@ namespace FubuMVC.Core.Registration.Nodes
 
         public TracedNode()
         {
-            Trace(new Created(this));
+            Trace(new Created());
         }
 
         public void Trace(NodeEvent @event)
         {
             _events.Enqueue(@event);
+            @event.Subject = this;
         }
 
         public void Trace(string text)
         {
-            _events.Enqueue(new Traced(text, this));
+            _events.Enqueue(new Traced(text));
         }
 
         IEnumerable<NodeEvent> ITracedModel.StagedEvents

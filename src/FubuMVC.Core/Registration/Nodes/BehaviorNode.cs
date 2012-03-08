@@ -5,6 +5,7 @@ using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
+using FubuMVC.Core.Registration.Diagnostics;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
@@ -198,8 +199,9 @@ namespace FubuMVC.Core.Registration.Nodes
         ///   Make the behavior *only* execute if the condition is met
         /// </summary>
         /// <param name = "condition"></param>
-        public void Condition(Func<bool> condition)
+        public void Condition(Func<bool> condition, string description = "Anonymous")
         {
+            Trace(new ConditionAdded(description));
             _conditionalDef = ConditionalObjectDef.For(condition);
         }
 
@@ -211,6 +213,8 @@ namespace FubuMVC.Core.Registration.Nodes
         /// <param name = "condition"></param>
         public void ConditionByService<T>(Func<T, bool> condition)
         {
+            var description = "By Service:  Func<{0}, bool>".ToFormat(typeof (T).Name);
+            Trace(new ConditionAdded(description));
             _conditionalDef = ConditionalObjectDef.ForService(condition);
         }
 
@@ -220,6 +224,8 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public void ConditionByModel<T>(Func<T, bool> filter) where T : class
         {
+            var description = "By Model:  Func<{0}, bool>".ToFormat(typeof(T).Name);
+            Trace(new ConditionAdded(description));
             _conditionalDef = ConditionalObjectDef.ForModel(filter);
         }
 
@@ -229,6 +235,7 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public void Condition<T>() where T : IConditional
         {
+            Trace(new ConditionAdded(typeof (T)));
             _conditionalDef = ConditionalObjectDef.For<T>();
         }
 

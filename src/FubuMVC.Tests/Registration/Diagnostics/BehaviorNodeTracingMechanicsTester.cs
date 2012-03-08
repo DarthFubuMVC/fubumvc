@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using FubuCore;
+using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Security;
@@ -55,5 +57,53 @@ namespace FubuMVC.Tests.Registration.Diagnostics
             list.Last().ShouldBeOfType<Traced>().Text.ShouldEqual("something");
 
         }
+
+        [Test]
+        public void add_condition_with_description()
+        {
+            theNode.Condition(() => true, "wacky");
+
+            theTracedNode.StagedEvents.Last().ShouldBeOfType<ConditionAdded>()
+                .Description.ShouldEqual("wacky");
+        
+            
+        }
+
+        [Test]
+        public void add_condition_by_function_against_service()
+        {
+            theNode.ConditionByService<Something>(x => true);
+
+            theTracedNode.StagedEvents.Last().ShouldBeOfType<ConditionAdded>()
+                .Description.ShouldEqual("By Service:  Func<Something, bool>");
+        }
+
+        [Test]
+        public void add_condition_by_function_against_model()
+        {
+            theNode.ConditionByModel<Something>(x => true);
+
+            theTracedNode.StagedEvents.Last().ShouldBeOfType<ConditionAdded>()
+                .Description.ShouldEqual("By Model:  Func<Something, bool>");
+        }
+
+        [Test]
+        public void add_condition_by_type()
+        {
+            theNode.Condition<SomethingCondition>();
+
+            theTracedNode.StagedEvents.Last().ShouldBeOfType<ConditionAdded>()
+                .Type.ShouldEqual(typeof (SomethingCondition));
+        }
+
+        public class SomethingCondition : IConditional
+        {
+            public bool ShouldExecute()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class Something{}
     }
 }

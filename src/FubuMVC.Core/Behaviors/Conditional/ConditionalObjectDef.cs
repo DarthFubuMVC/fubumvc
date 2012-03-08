@@ -14,6 +14,7 @@ namespace FubuMVC.Core.Behaviors.Conditional
         public static ObjectDef ForModel<T>(Func<T, bool> filter) where T : class
         {
             var def = new ObjectDef(typeof (LambdaConditional<>), typeof (IFubuRequest));
+            
             Func<IFubuRequest, bool> match = request => filter(request.Get<T>());
             def.DependencyByValue(match);
 
