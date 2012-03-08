@@ -258,6 +258,11 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public void Remove()
         {
+            if (ParentChain() != null)
+            {
+                ParentChain().Trace(new NodeRemoved(this));
+            }
+
             if (Next != null)
             {
                 Next.Previous = Previous;
@@ -282,6 +287,11 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public void ReplaceWith(BehaviorNode newNode)
         {
+            if (ParentChain() != null)
+            {
+                ParentChain().Trace(new NodeReplaced(this, newNode));
+            }
+
             newNode.Next = Next;
 
             if (Previous != null)

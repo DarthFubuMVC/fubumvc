@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Security;
 using NUnit.Framework;
 using System.Linq;
@@ -96,6 +97,39 @@ namespace FubuMVC.Tests.Registration.Diagnostics
                 .Type.ShouldEqual(typeof (SomethingCondition));
         }
 
+        [Test]
+        public void the_remove_method_puts_a_node_removed_event_on_the_chain()
+        {
+            var chain = new BehaviorChain();
+            chain.AddToEnd(new SimpleNode());
+
+            var nodeToBeRemoved = new SimpleNode();
+            chain.AddToEnd(nodeToBeRemoved);
+            
+            chain.AddToEnd(new SimpleNode());
+            chain.AddToEnd(new SimpleNode());
+
+            nodeToBeRemoved.Remove();
+
+            chain.As<ITracedModel>().StagedEvents.Last()
+                .ShouldEqual(new NodeRemoved(nodeToBeRemoved));
+        }
+
+        [Test]
+        public void the_replace_method_puts_a_node_replaced_event_on_the_chain()
+        {
+            var original = new SimpleNode();
+            var newNode = new SimpleNode();
+
+            var chain = new BehaviorChain();
+            chain.AddToEnd(original);
+
+            original.ReplaceWith(newNode);
+
+            chain.As<ITracedModel>().StagedEvents.Last()
+                .ShouldEqual(new NodeReplaced(original, newNode));
+        }
+
         public class SomethingCondition : IConditional
         {
             public bool ShouldExecute()
@@ -105,5 +139,18 @@ namespace FubuMVC.Tests.Registration.Diagnostics
         }
 
         public class Something{}
+
+        public class SimpleNode : BehaviorNode
+        {
+            public override BehaviorCategory Category
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            protected override ObjectDef buildObjectDef()
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
