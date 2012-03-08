@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace FubuMVC.Core.Registration.Nodes
 {
-    public abstract class TracedNode : ITracedModel
+    public class TracedNode : ITracedModel
     {
         private readonly Queue<NodeEvent> _events = new Queue<NodeEvent>();
 
-        protected TracedNode()
+        public TracedNode()
         {
             Trace(new Created(this));
         }

@@ -210,7 +210,11 @@
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Conventions\DictionaryOutputConvention.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConvention.cs" />
-    <Compile Include="Registration\Diagnostics\DiagnosticClasses.cs" />
+    <Compile Include="Registration\Diagnostics\ConfigSource.cs" />
+    <Compile Include="Registration\Diagnostics\Created.cs" />
+    <Compile Include="Registration\Diagnostics\ConfigLog.cs" />
+    <Compile Include="Registration\Diagnostics\NodeEvent.cs" />
+    <Compile Include="Registration\Diagnostics\Traced.cs" />
     <Compile Include="Registration\Nodes\TracedNode.cs" />
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConvention.cs" />

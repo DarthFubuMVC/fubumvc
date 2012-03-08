@@ -222,6 +222,7 @@
     <Compile Include="Registration\Conventions\MediaExpressionAndConnegAttachmentPolicyTester.cs" />
     <Compile Include="Registration\Conventions\PartialOnlyConventionTester.cs" />
     <Compile Include="Registration\Diagnostics\BehaviorNodeTracingMechanicsTester.cs" />
+    <Compile Include="Registration\Diagnostics\ConfigLogTester.cs" />
     <Compile Include="Registration\Nodes\ActionCallBaseObjectDefCreationTester.cs" />
     <Compile Include="Registration\Nodes\OutputNodeTester.cs" />
     <Compile Include="Registration\Nodes\RenderHtmlTagNodeTester.cs" />

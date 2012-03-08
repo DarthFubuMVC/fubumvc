@@ -6,6 +6,7 @@ using FubuMVC.Core.Security;
 using NUnit.Framework;
 using System.Linq;
 using FubuTestingSupport;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration.Diagnostics
 {
