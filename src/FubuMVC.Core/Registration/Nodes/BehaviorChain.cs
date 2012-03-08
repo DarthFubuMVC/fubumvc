@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
 using FubuMVC.Core.Runtime;
@@ -99,10 +100,20 @@ namespace FubuMVC.Core.Registration.Nodes
         /// </summary>
         public bool IsPartialOnly { get; set; }
 
+        private IRouteDefinition _route;
+
         /// <summary>
         /// Models how the Route for this BehaviorChain will be generated
         /// </summary>
-        public IRouteDefinition Route { get; set; }
+        public IRouteDefinition Route
+        {
+            get { return _route; }
+            set
+            {
+                Trace(new RouteDefined(value));
+                _route = value;
+            }
+        }
 
         /// <summary>
         ///   Categorizes this BehaviorChain for the IUrlRegistry and 

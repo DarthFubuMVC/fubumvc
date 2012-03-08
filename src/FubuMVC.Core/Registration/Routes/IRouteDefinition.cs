@@ -15,6 +15,7 @@ namespace FubuMVC.Core.Registration.Routes
         IList<string> AllowedHttpMethods { get; }
 
         Route ToRoute();
+
         void Append(string patternPart);
 
         void RemoveLastPatternPart();

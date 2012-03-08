@@ -4,6 +4,7 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Diagnostics.HtmlWriting;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Registration.Routes;
@@ -44,7 +45,16 @@ namespace FubuMVC.Tests.Registration.Nodes
         #endregion
 
 
+        [Test]
+        public void adding_a_route_adds_a_RouteDefined_event()
+        {
+            var chain = new BehaviorChain();
+            var route = new RouteDefinition("something");
 
+            chain.Route = route;
+
+            chain.As<ITracedModel>().StagedEvents.Last().ShouldEqual(new RouteDefined(route));
+        }
 
 
 

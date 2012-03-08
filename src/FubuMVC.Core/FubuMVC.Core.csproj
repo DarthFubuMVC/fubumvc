@@ -217,6 +217,7 @@
     <Compile Include="Registration\Diagnostics\NodeEvent.cs" />
     <Compile Include="Registration\Diagnostics\NodeRemoved.cs" />
     <Compile Include="Registration\Diagnostics\NodeReplaced.cs" />
+    <Compile Include="Registration\Diagnostics\RouteDefined.cs" />
     <Compile Include="Registration\Diagnostics\Traced.cs" />
     <Compile Include="Registration\Nodes\IContainerModel.cs" />
     <Compile Include="Registration\Nodes\ITracedModel.cs" />
