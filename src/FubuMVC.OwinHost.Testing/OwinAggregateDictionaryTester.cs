@@ -12,8 +12,8 @@ namespace FubuMVC.OwinHost.Testing
         [Test]
         public void should_have_request_locator()
         {
-            var dictionary = new OwinAggregateDictionary(new RouteData(), new OwinRequestBody(new Environment()));
-            dictionary.DataFor(RequestDataSource.Request.ToString()).ShouldNotBeNull();
+            var dictionary = new OwinRequestData(new RouteData(), new OwinRequestBody(new Environment()));
+            dictionary.ValuesFor(RequestDataSource.Request.ToString()).ShouldNotBeNull();
         }
     }
 }

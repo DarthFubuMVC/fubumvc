@@ -229,6 +229,7 @@ namespace FubuMVC.Core
         {
             return _facility.Value.GetAllInstallers();
         }
+
     }
 
     public interface IContainerFacilityExpression

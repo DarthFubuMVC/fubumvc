@@ -28,5 +28,7 @@ namespace FubuMVC.Tests
                 .ShouldBeOfType<StructureMapContainerFacility>()
                 .ShouldNotBeNull();
         }
+
+
     }
 }   

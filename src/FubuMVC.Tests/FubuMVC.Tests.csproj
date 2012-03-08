@@ -185,6 +185,7 @@
     <Compile Include="ConnegAttributeTester.cs" />
     <Compile Include="FakeHttpContext.cs" />
     <Compile Include="FubuApplicationTester.cs" />
+    <Compile Include="FubuModeTester.cs" />
     <Compile Include="FubuRegistryWithTypesTester.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequestTester.cs" />
     <Compile Include="Http\AspNet\AspNetModelBindingTester.cs" />
