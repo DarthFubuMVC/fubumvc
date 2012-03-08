@@ -21,7 +21,7 @@ namespace FubuMVC.Core.Registration.Nodes
     /// authorization rules
     ///   system
     /// </summary>
-    public class BehaviorChain : IRegisterable, IContainerModel, IEnumerable<BehaviorNode>
+    public class BehaviorChain : TracedNode, IRegisterable, IEnumerable<BehaviorNode>, IContainerModel
     {
         private BehaviorNode _top;
         private IList<IBehaviorInvocationFilter> _filters = new List<IBehaviorInvocationFilter>();
@@ -217,10 +217,6 @@ namespace FubuMVC.Core.Registration.Nodes
             return call == null ? null : call.OutputType();
         }
 
-        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
-        {
-            return buildObjectDef(diagnosticLevel);
-        }
 
         void IRegisterable.Register(DiagnosticLevel diagnosticLevel, Action<Type, ObjectDef> callback)
         {
@@ -231,7 +227,12 @@ namespace FubuMVC.Core.Registration.Nodes
             Authorization.As<IAuthorizationRegistration>().Register(Top.UniqueId, callback);
         }
 
-        private ObjectDef buildObjectDef(DiagnosticLevel diagnosticLevel)
+        ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
+        {
+            return buildObjectDef(diagnosticLevel);
+        }
+
+        protected ObjectDef buildObjectDef(DiagnosticLevel diagnosticLevel)
         {
             var topDef = Top.As<IContainerModel>().ToObjectDef(diagnosticLevel);
             

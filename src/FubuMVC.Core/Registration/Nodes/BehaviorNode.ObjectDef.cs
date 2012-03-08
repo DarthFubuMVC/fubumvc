@@ -17,12 +17,6 @@ namespace FubuMVC.Core.Registration.Nodes
             get { return _uniqueId; }
         }
 
-        /// <summary>
-        ///   Generates an ObjectDef object that creates an IoC agnostic
-        ///   configuration model of the real Behavior objects for this chain
-        /// </summary>
-        /// <param name = "diagnosticLevel"></param>
-        /// <returns></returns>
         ObjectDef IContainerModel.ToObjectDef(DiagnosticLevel diagnosticLevel)
         {
             var objectDef = toObjectDef(diagnosticLevel);

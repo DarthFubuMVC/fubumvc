@@ -7,6 +7,7 @@ using FubuCore;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Behaviors.Conditional;
 using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Registration.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration.Nodes
@@ -22,10 +23,18 @@ namespace FubuMVC.Core.Registration.Nodes
         ObjectDef ToObjectDef(DiagnosticLevel diagnosticLevel);
     }
 
+    public interface ITracedModel
+    {
+        void Trace(NodeEvent @event);
+        void Trace(string text);
+        IEnumerable<NodeEvent> StagedEvents { get; }
+        void RecordEvents(Action<NodeEvent> callback);
+    }
+
     /// <summary>
     ///   BehaviorNode models a single Behavior in the FubuMVC configuration model
     /// </summary>
-    public abstract partial class BehaviorNode : IContainerModel, IEnumerable<BehaviorNode>
+    public abstract partial class BehaviorNode : TracedNode, IContainerModel, IEnumerable<BehaviorNode>
     {
         
         private BehaviorNode _next;
