@@ -59,7 +59,7 @@ namespace FubuMVC.Core.Diagnostics
         {
             try
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
 
                 //// TODO -- Be nice to have better stuff in FubuCore
                 //var requestData = _dictionary.DataFor(RequestDataSource.Request.ToString());
@@ -68,8 +68,8 @@ namespace FubuMVC.Core.Diagnostics
                 //var requestData2 = _dictionary.DataFor(RequestDataSource.Header.ToString());
                 //requestData2.GetKeys().ToList().Each(key => Headers.Add(key, (requestData2.Value(key) ?? string.Empty).ToString()));
 
-                //Url = _request.RawUrl();
-                //HttpMethod = _request.HttpMethod();
+                Url = _request.RawUrl();
+                HttpMethod = _request.HttpMethod();
             }
             catch (HttpException)
             {
