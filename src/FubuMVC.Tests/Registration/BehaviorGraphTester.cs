@@ -107,26 +107,7 @@ namespace FubuMVC.Tests.Registration
 
         public class MyRequestModel {}
 
-        [Test]
-        public void replace_service_by_specifying_a_value()
-        {
-            var graph = new BehaviorGraph(null);
-            var resolver = MockRepository.GenerateMock<IObjectResolver>();
 
-            graph.Services.ReplaceService<IObjectResolver>(resolver);
-
-            graph.Services.DefaultServiceFor<IObjectResolver>().Value.ShouldBeTheSameAs(resolver);
-        }
-
-
-        [Test]
-        public void replace_service_by_specifying_types()
-        {
-            var graph = new BehaviorGraph(null);
-            graph.Services.ReplaceService<IOutputWriter, RecordingOutputWriter>();
-
-            graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof (RecordingOutputWriter));
-        }
 
         [Test]
         public void the_first_call_to_RegisterService_for_a_type_registers_the_default()

@@ -22,27 +22,14 @@ namespace FubuMVC.Tests.Diagnostics
         [Test]
         public void should_limit_requests_to_fifty()
         {
-            var config = new DiagnosticsConfiguration();
-            _registry
-                .Services(x =>
-                              {
-                                  config = x.FindAllValues<DiagnosticsConfiguration>().First();
-                              });
-            _registry.BuildGraph();
-
-            config.MaxRequests.ShouldEqual(50);
+            _registry.BuildGraph().Services.FindAllValues<DiagnosticsConfiguration>().First()
+                .MaxRequests.ShouldEqual(50);
         }
 
         [Test]
         public void should_exclude_diagnostics_requests()
         {
-            IRequestHistoryCacheFilter filter = null;
-            _registry
-                .Services(x =>
-                              {
-                                  filter = x.FindAllValues<IRequestHistoryCacheFilter>().First();
-                              });
-            _registry.BuildGraph();
+            var filter = _registry.BuildGraph().Services.FindAllValues<IRequestHistoryCacheFilter>().First();
 
             var request = new CurrentRequest {Path = "/{0}/requests".ToFormat(DiagnosticUrlPolicy.DIAGNOSTICS_URL_ROOT)};
             filter.Exclude(request).ShouldBeTrue();

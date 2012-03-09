@@ -20,9 +20,10 @@ namespace FubuMVC.Core.UI.Extensibility
         {
             _registry.Services(x =>
             {
-                x.SetServiceIfNone<ContentExtensionGraph>(new ContentExtensionGraph());
-                var graph = x.DefaultServiceFor<ContentExtensionGraph>().Value as ContentExtensionGraph;
-                configure(graph);
+                throw new NotImplementedException();
+                //x.SetServiceIfNone<ContentExtensionGraph>(new ContentExtensionGraph());
+                //var graph = x.DefaultServiceFor<ContentExtensionGraph>().Value as ContentExtensionGraph;
+                //configure(graph);
             });
 
             return this;

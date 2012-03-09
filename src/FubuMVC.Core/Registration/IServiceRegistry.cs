@@ -74,51 +74,10 @@ namespace FubuMVC.Core.Registration
         void AddService<TService>(TService value);
 
         /// <summary>
-        /// Returns the currently registered default registration for
-        /// the given TService
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns></returns>
-        ObjectDef DefaultServiceFor<TService>();
-
-
-        /// <summary>
-        /// Returns the currently registered default registration for
-        /// the given TService
-        /// </summary>
-        /// <returns></returns>
-        ObjectDef DefaultServiceFor(Type serviceType);
-
-
-        void Each(Action<Type, ObjectDef> action);
-
-        /// <summary>
-        /// Returns an enumeration of all explicitly registered objects
-        /// of the type T
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        IEnumerable<T> FindAllValues<T>();
-
-        /// <summary>
         /// Removes any registrations for type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
         void ClearAll<T>();
-
-        /// <summary>
-        /// Retrieves all the registered ObjectDef's for TService
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns></returns>
-        IEnumerable<ObjectDef> ServicesFor<TService>();
-
-        /// <summary>
-        /// Retrieves all the registered ObjectDef's for the specified type
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <returns></returns>
-        IEnumerable<ObjectDef> ServicesFor(Type serviceType);
 
         /// <summary>
         /// Registers the concreteType against the interfaceType

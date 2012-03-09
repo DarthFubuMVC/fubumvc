@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
@@ -22,10 +23,34 @@ namespace FubuMVC.Tests.Registration
             theTracedNode = theGraph.As<ITracedModel>();
         }
 
+        public class Something
+        {
+            public Something()
+            {
+                Message = string.Empty;
+            }
+
+            public string Message { get; set; }
+        }
+
+        [Test]
+        public void configure_is_idempotent()
+        {
+            var graph = new ServiceGraph();
+
+            graph.Configure<Something>(m => m.Message += "a");
+            graph.Configure<Something>(m => m.Message += "b");
+            graph.Configure<Something>(m => m.Message += "c");
+            graph.Configure<Something>(m => m.Message += "d");
+            graph.Configure<Something>(m => m.Message += "e");
+
+            graph.FindAllValues<Something>().Single().Message.ShouldEqual("abcde");
+        }
+
         [Test]
         public void adding_a_service_registers_a_service_added_event()
         {
-            theGraph.Add(typeof(IFoo), new ObjectDef(typeof(Foo)));
+            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo)));
 
             var added = theTracedNode.StagedEvents.Last().ShouldBeOfType<ServiceAdded>();
             added.ServiceType.ShouldEqual(typeof (IFoo));
@@ -36,10 +61,10 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void clear_registers_service_removed_events()
         {
-            theGraph.Add(typeof(IFoo), new ObjectDef(typeof(Foo)));
-            theGraph.Add(typeof(IFoo), new ObjectDef(typeof(Foo2)));
-            theGraph.Add(typeof(IFoo), new ObjectDef(typeof(Foo3)));
-            theGraph.Add(typeof(IFoo), new ObjectDef(typeof(Foo4)));
+            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo)));
+            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo2)));
+            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo3)));
+            theGraph.AddService(typeof(IFoo), new ObjectDef(typeof(Foo4)));
         
             theGraph.Clear(typeof(IFoo));
 
@@ -54,7 +79,7 @@ namespace FubuMVC.Tests.Registration
         {
             theGraph.HasAny(typeof(IFoo)).ShouldBeFalse();
 
-            theGraph.Add(typeof(IFoo), ObjectDef.ForType<Foo>());
+            theGraph.AddService(typeof(IFoo), ObjectDef.ForType<Foo>());
 
             theGraph.HasAny(typeof(IFoo)).ShouldBeTrue();
         }
@@ -62,7 +87,7 @@ namespace FubuMVC.Tests.Registration
         [Test]
         public void fill_type()
         {
-            theGraph.Add(typeof(IFoo), ObjectDef.ForType<Foo>());
+            theGraph.AddService(typeof(IFoo), ObjectDef.ForType<Foo>());
 
             theGraph.FillType(typeof(IFoo), typeof(Foo));
             theGraph.FillType(typeof(IFoo), typeof(Foo));

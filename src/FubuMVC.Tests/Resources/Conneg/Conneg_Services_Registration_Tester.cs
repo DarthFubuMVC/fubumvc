@@ -10,7 +10,7 @@ namespace FubuMVC.Tests.Resources.Conneg
     [TestFixture]
     public class Conneg_Services_Registration_Tester
     {
-        private IServiceRegistry theServices;
+        private ServiceGraph theServices;
 
         [SetUp]
         public void SetUp()

@@ -43,8 +43,12 @@ namespace FubuMVC.Tests.Urls
                 .IgnoreNamespaceForUrlFrom<UrlRegistryIntegrationTester>()
                 .IgnoreClassSuffix("Controller");
 
-
-            registry.ResolveTypes(x => x.AddStrategy<UrlModelForwarder>());
+ 
+            registry.Configure(x =>
+            {
+                x.TypeResolver.AddStrategy<UrlModelForwarder>();
+            });
+            
             registry.Routes.HomeIs<DefaultModel>();
 
             graph = registry.BuildGraph();

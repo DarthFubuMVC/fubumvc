@@ -31,7 +31,7 @@ namespace FubuMVC.Tests.Registration.Scanning
             _scanner
                 .Configure(_registry);
 
-            var services = _registry.ServicesFor<IMultiInstance>();
+            var services = _registry.ToGraph().ServicesFor<IMultiInstance>();
             services.ShouldContain(def => def.Type == typeof(Instance1));
             services.ShouldContain(def => def.Type == typeof(Instance2));
         }
@@ -49,7 +49,7 @@ namespace FubuMVC.Tests.Registration.Scanning
             _scanner
                 .Configure(_registry);
 
-            var services = _registry.ServicesFor(typeof (IOpenType<>));
+            var services = _registry.ToGraph().ServicesFor(typeof(IOpenType<>));
             services.ShouldContain(def => def.Type == typeof(OpenType<>));
         }
     }

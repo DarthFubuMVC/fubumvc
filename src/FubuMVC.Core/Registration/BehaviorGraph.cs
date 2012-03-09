@@ -35,13 +35,15 @@ namespace FubuMVC.Core.Registration
         private readonly List<BehaviorChain> _behaviors = new List<BehaviorChain>();
 
         private readonly List<IChainForwarder> _forwarders = new List<IChainForwarder>();
-        private readonly IServiceRegistry _services = new ServiceRegistry();
+        private readonly ServiceGraph _services = new ServiceGraph();
 
         public BehaviorGraph(IConfigurationObserver observer)
         {
             RouteIterator = new SortByRouteRankIterator(); // can override in a registry
             Observer = observer;
 
+            TypeResolver = new TypeResolver();
+            _services.AddService<ITypeResolver>(TypeResolver);
         }
 
         public BehaviorGraph() : this(new NulloConfigurationObserver())
@@ -53,9 +55,11 @@ namespace FubuMVC.Core.Registration
             get { return _forwarders; }
         }
 
+        public TypeResolver TypeResolver { get; private set; }
+
         public IConfigurationObserver Observer { get; private set; }
 
-        public IServiceRegistry Services
+        public ServiceGraph Services
         {
             get { return _services; }
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Diagnostics.Tracing;
 using FubuMVC.Core.Registration;
@@ -8,6 +9,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuMVC.Tests.Registration
 {
@@ -39,7 +41,7 @@ namespace FubuMVC.Tests.Registration
 
             services.ClearAll<HtmlConventionRegistry>();
 
-            services.FindAllValues<HtmlConventionRegistry>().Any().ShouldBeFalse();
+            services.ToGraph().FindAllValues<HtmlConventionRegistry>().Any().ShouldBeFalse();
         }
 
         [Test]
@@ -53,7 +55,7 @@ namespace FubuMVC.Tests.Registration
 
             services.SetServiceIfNone(registry2);
 
-            services.FindAllValues<HtmlConventionRegistry>().ShouldHaveTheSameElementsAs(registry1);
+            services.ToGraph().FindAllValues<HtmlConventionRegistry>().ShouldHaveTheSameElementsAs(registry1);
         }
 
         [Test]
@@ -64,7 +66,7 @@ namespace FubuMVC.Tests.Registration
             var services = new ServiceRegistry();
             services.SetServiceIfNone(registry1);
 
-            services.FindAllValues<HtmlConventionRegistry>().ShouldHaveTheSameElementsAs(registry1);
+            services.ToGraph().FindAllValues<HtmlConventionRegistry>().ShouldHaveTheSameElementsAs(registry1);
         }
 
         [Test]
@@ -83,7 +85,7 @@ namespace FubuMVC.Tests.Registration
 
             services.AddService<HtmlConventionRegistry, HtmlConventionRegistry>();
 
-            services.FindAllValues<HtmlConventionRegistry>()
+            services.ToGraph().FindAllValues<HtmlConventionRegistry>()
                 .ShouldHaveTheSameElementsAs(registry1, registry2, registry3, registry4);
         }
 
@@ -96,7 +98,7 @@ namespace FubuMVC.Tests.Registration
             var objectDef = new ObjectDef(typeof(HtmlConventionRegistry)){Value = registry1};
             services.AddService(typeof(HtmlConventionRegistry), objectDef);
 
-            services.DefaultServiceFor<HtmlConventionRegistry>().ShouldEqual(objectDef);
+            services.ToGraph().DefaultServiceFor<HtmlConventionRegistry>().ShouldEqual(objectDef);
         }
 
         [Test]
@@ -114,12 +116,53 @@ namespace FubuMVC.Tests.Registration
                 .ShouldBeTrue();
         }
 
-        
+
+        [Test]
+        public void replace_service_by_specifying_a_value()
+        {
+            var graph = new BehaviorGraph(null);
+            var resolver = MockRepository.GenerateMock<IObjectResolver>();
+
+            var services = new ServiceRegistry();
+
+            services.ReplaceService<IObjectResolver>(resolver);
+            services.As<IConfigurationAction>().Configure(graph);
+
+            graph.Services.DefaultServiceFor<IObjectResolver>().Value.ShouldBeTheSameAs(resolver);
+        }
+
+
+        [Test]
+        public void replace_service_by_specifying_types()
+        {
+            var graph = new BehaviorGraph(null);
+
+            var services = new ServiceRegistry();
+
+
+            services.ReplaceService<IOutputWriter, RecordingOutputWriter>();
+            services.As<IConfigurationAction>().Configure(graph);
+
+
+            graph.Services.DefaultServiceFor<IOutputWriter>().Type.ShouldEqual(typeof(RecordingOutputWriter));
+        }
+
 
         [Singleton]
         public class MySingletonService
         {
             
+        }
+    }
+
+    public static class ServiceRegistryExtensions
+    {
+        public static ServiceGraph ToGraph(this IServiceRegistry registry)
+        {
+            var behaviorGraph = new BehaviorGraph();
+            registry.As<IConfigurationAction>().Configure(behaviorGraph);
+
+            return behaviorGraph.Services;
         }
     }
 }

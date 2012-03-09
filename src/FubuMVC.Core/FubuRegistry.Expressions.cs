@@ -89,20 +89,6 @@ namespace FubuMVC.Core
         }
 
         /// <summary>
-        /// Configures the built-in <see cref="TypeResolver"/>. Mostly used to add instances of <see cref="ITypeResolverStrategy"/>
-        /// </summary>
-        public void ResolveTypes(Action<TypeResolver> configure)
-        {
-            Services(x =>
-            {
-                x.SetServiceIfNone<ITypeResolver>(new TypeResolver());
-                var resolver = x.FindAllValues<ITypeResolver>().FirstOrDefault() as TypeResolver;
-
-                configure(resolver);
-            });
-        }
-
-        /// <summary>
         /// Specify a custom <see cref="IConfigurationObserver"/> to use for all logging and diagnostics
         /// </summary>
         public void UsingObserver(IConfigurationObserver observer)
@@ -116,7 +102,9 @@ namespace FubuMVC.Core
         /// </summary>
         public void Services(Action<IServiceRegistry> configure)
         {
-            _serviceRegistrations.Add(configure);
+            var registry = new ServiceRegistry();
+            configure(registry);
+            _serviceRegistrations.Add(registry);
         }
 
         /// <summary>

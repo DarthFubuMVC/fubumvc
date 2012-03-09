@@ -9,6 +9,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View.Attachment;
+using System.Linq;
 
 namespace FubuMVC.Core
 {
@@ -33,7 +34,7 @@ namespace FubuMVC.Core
         private readonly IList<Action<FubuRegistry>> _importsConventions = new List<Action<FubuRegistry>>();
         private readonly List<IConfigurationAction> _policies = new List<IConfigurationAction>();
         private readonly RouteDefinitionResolver _routeResolver = new RouteDefinitionResolver();
-        private readonly IList<Action<IServiceRegistry>> _serviceRegistrations = new List<Action<IServiceRegistry>>();
+        private readonly IList<IServiceRegistry> _serviceRegistrations = new List<IServiceRegistry>();
         private readonly List<IConfigurationAction> _systemPolicies = new List<IConfigurationAction>();
         private readonly TypePool _types = new TypePool(FindTheCallingAssembly());
         private readonly ViewAttacherConvention _viewAttacherConvention;
@@ -109,7 +110,7 @@ namespace FubuMVC.Core
         }
 
 
-        private IEnumerable<Action<IServiceRegistry>> allServiceRegistrations()
+        private IEnumerable<IServiceRegistry> allServiceRegistrations()
         {
             foreach (var import in _imports)
             {
@@ -155,7 +156,7 @@ namespace FubuMVC.Core
             _scanningOperations.Each(x => x(_types));
 
             // Service registrations from imports
-            allServiceRegistrations().Each(x => x(graph.Services));
+            allServiceRegistrations().OfType<IConfigurationAction>().Each(x => x.Configure(graph));
 
             setupServices(graph);
 

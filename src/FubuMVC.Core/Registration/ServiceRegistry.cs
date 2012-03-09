@@ -1,14 +1,26 @@
 using System;
 using System.Collections.Generic;
 using FubuCore.Reflection;
-using FubuMVC.Core.Diagnostics;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
-    public class ServiceRegistry : IServiceRegistry
+    public class ServiceRegistry : IServiceRegistry, IConfigurationAction
     {
-        private readonly ServiceGraph _graph = new ServiceGraph();
+        private readonly IList<Action<ServiceGraph>> _alterations = new List<Action<ServiceGraph>>();
+
+        // Yes, I know this makes Dru go haywire, but he can come back in and
+        // make the code uglier just to satisfy his own tastes
+        private Action<ServiceGraph> alter
+        {
+            set { _alterations.Add(value); }
+        }
+
+        void IConfigurationAction.Configure(BehaviorGraph graph)
+        {
+            _alterations.Each(x => x(graph.Services));
+        }
+
 
         public void SetServiceIfNone<TService, TImplementation>() where TImplementation : TService
         {
@@ -39,21 +51,21 @@ namespace FubuMVC.Core.Registration
         {
             var objectDef = new ObjectDef(implementationType);
 
-            _graph.Add(typeof (TService), objectDef);
+            alter = x => x.AddService(typeof (TService), objectDef);
 
             return objectDef;
         }
 
         public void ReplaceService<TService, TImplementation>() where TImplementation : TService
         {
-            _graph.Clear(typeof (TService));
+            alter = x => x.Clear(typeof (TService));
 
             AddService<TService, TImplementation>();
         }
 
         public void ReplaceService<TService>(TService value)
         {
-            _graph.Clear(typeof (TService));
+            alter = x => x.Clear(typeof (TService));
             AddService(value);
         }
 
@@ -63,63 +75,27 @@ namespace FubuMVC.Core.Registration
                 Value = value
             };
 
-            _graph.Add(typeof (TService), objectDef);
+            alter = x => x.AddService(typeof (TService), objectDef);
         }
 
         public void AddService(Type type, ObjectDef objectDef)
         {
-            _graph.Add(type, objectDef);
-        }
-
-        [WannaKill("Try to eliminate this")]
-        public ObjectDef DefaultServiceFor<TService>()
-        {
-            return _graph.DefaultServiceFor(typeof (TService));
-        }
-
-        [WannaKill("Try to eliminate this")]
-        public ObjectDef DefaultServiceFor(Type serviceType)
-        {
-            return _graph.DefaultServiceFor(serviceType);
-        }
-
-        [WannaKill("Try to eliminate this")]
-        public IEnumerable<ObjectDef> ServicesFor<TService>()
-        {
-            return ServicesFor(typeof (TService));
-        }
-
-        [WannaKill("Try to eliminate this")]
-        public IEnumerable<ObjectDef> ServicesFor(Type serviceType)
-        {
-            return _graph.ServicesFor(serviceType);
-        }
-
-        [WannaKill("Move")]
-        public void Each(Action<Type, ObjectDef> action)
-        {
-            _graph.Each(action);
-        }
-
-        [WannaKill("Try to eliminate this")]
-        public IEnumerable<T> FindAllValues<T>()
-        {
-            return _graph.FindAllValues<T>();
+            alter = x => x.AddService(type, objectDef);
         }
 
         public void ClearAll<T>()
         {
-            _graph.Clear(typeof (T));
+            alter = x => x.Clear(typeof (T));
         }
 
         public void FillType(Type interfaceType, Type concreteType)
         {
-            _graph.FillType(interfaceType, concreteType);
+            alter = x => x.FillType(interfaceType, concreteType);
         }
 
         private void fill(Type serviceType, ObjectDef def)
         {
-            _graph.SetServiceIfNone(serviceType, def);
+            alter = x => x.SetServiceIfNone(serviceType, def);
         }
 
         public static bool ShouldBeSingleton(Type type)

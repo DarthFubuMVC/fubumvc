@@ -37,9 +37,11 @@ namespace FubuMVC.Core
             Services(x =>
             {
                 x.SetServiceIfNone(new Stringifier());
-                var stringifier = x.FindAllValues<Stringifier>().First();
+                
+                throw new NotImplementedException();
+                //var stringifier = x.FindAllValues<Stringifier>().First();
 
-                conversions.Configure(stringifier);
+                //conversions.Configure(stringifier);
             });
         }
 

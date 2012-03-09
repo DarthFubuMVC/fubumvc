@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Resources.Media;
 using FubuMVC.Core.Resources.Media.Formatters;
@@ -37,12 +38,12 @@ namespace FubuMVC.Core.Resources
 
             if (_projection.IsValueCreated)
             {
-                behaviorGraph.Services.SetServiceIfNone<IProjection<T>>(_projection.Value);
+                behaviorGraph.Services.SetServiceIfNone(typeof(IProjection<T>), ObjectDef.ForValue(_projection.Value));
             }
 
             if (_links.IsValueCreated)
             {
-                behaviorGraph.Services.SetServiceIfNone<ILinkSource<T>>(_links.Value);
+                behaviorGraph.Services.SetServiceIfNone(typeof(ILinkSource<T>), ObjectDef.ForValue(_links.Value));
             }
         }
 

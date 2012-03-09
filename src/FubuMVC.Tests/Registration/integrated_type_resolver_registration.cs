@@ -13,9 +13,13 @@ namespace FubuMVC.Tests.Registration
         public void can_register_new_type_resolution_strategies()
         {
             var registry = new FubuRegistry();
-            registry.ResolveTypes(x => x.AddStrategy<ProxyDetector>());
+            registry.Configure(x =>
+            {
+               x.TypeResolver.AddStrategy<ProxyDetector>(); 
+            });
 
             var graph = registry.BuildGraph();
+
 
             var resolver = graph.Services.DefaultServiceFor<ITypeResolver>().Value.ShouldBeOfType<TypeResolver>();
 
