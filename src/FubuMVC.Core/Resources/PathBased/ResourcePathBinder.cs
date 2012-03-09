@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Http;
 
 namespace FubuMVC.Core.Resources.PathBased
 {
+    [Description("Binds models that inherit from ResourcePath for n-deep paths")]
     public class ResourcePathBinder : IModelBinder
     {
         public bool Matches(Type type)

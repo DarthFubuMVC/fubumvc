@@ -18,7 +18,7 @@ namespace FubuMVC.Core.Http.AspNet
             new Cache<string, Func<HttpRequestBase, object>>();
 
         private static readonly IList<PropertyInfo> _systemProperties = new List<PropertyInfo>();
-        private HttpRequestBase _request;
+        private readonly HttpRequestBase _request;
 
         static RequestPropertyValueSource()
         {

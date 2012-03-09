@@ -1,9 +1,13 @@
+using System.ComponentModel;
 using System.Reflection;
 using FubuCore.Binding;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Http
 {
+    [Title("FullUrl Property")]
+    [Description("Binds the full url of the current request to an string property called FullUrl")]
     public class CurrentRequestFullUrlPropertyBinder : IPropertyBinder
     {
         private static readonly string PropertyName =

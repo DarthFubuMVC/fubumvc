@@ -199,6 +199,7 @@
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
+    <Compile Include="Diagnostics\HtmlWriting\ModelBindingExplorerWriter.cs" />
     <Compile Include="FubuMode.cs" />
     <Compile Include="Http\CurrentRequestFullUrlPropertyBinder.cs" />
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />

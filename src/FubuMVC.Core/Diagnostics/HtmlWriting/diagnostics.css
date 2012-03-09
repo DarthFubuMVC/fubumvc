@@ -206,3 +206,32 @@ pre.failure
 {
 	width: 400px;
 }
+
+
+
+.main > .description
+{
+	margin: 5px;
+} 
+
+.description > .list
+{
+	padding-left: 20px;
+}
+
+.description > .short-description
+{
+	padding-left: 5px;
+}
+
+.description b.title
+{
+	font-weight: bold;
+}
+
+.description .list-header
+{
+	font-weight: 400;
+	color: Orange;
+	
+}

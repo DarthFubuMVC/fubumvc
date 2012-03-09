@@ -1,9 +1,11 @@
 using System;
+using System.ComponentModel;
 using FubuCore.Binding;
 
 namespace FubuMVC.Core.Http
 {
     // Run the Storyteller tests for Conneg to test this class
+    [Description("Custom model binder for FubuMVC's CurrentMimeType class")]
     public class CurrentMimeTypeModelBinder : IModelBinder
     {
         public bool Matches(Type type)

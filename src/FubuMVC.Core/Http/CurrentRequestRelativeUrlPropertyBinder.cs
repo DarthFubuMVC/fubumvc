@@ -1,9 +1,13 @@
+using System.ComponentModel;
 using System.Reflection;
 using FubuCore.Binding;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 
 namespace FubuMVC.Core.Http
 {
+    [Title("RelativeUrl Property")]
+    [Description("Binds the relative url of the current request to an string property called RelativeUrl")]
     public class CurrentRequestRelativeUrlPropertyBinder : IPropertyBinder
     {
         private static readonly string PropertyName =

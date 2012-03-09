@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuCore;
@@ -14,6 +15,7 @@ namespace FubuMVC.Core.Runtime
         
     }
 
+    [Description("For models that implement the FubuRequestTuple marker interface")]
     public class FubuTupleBinder : IModelBinder
     {
         private readonly ITypeDescriptorCache _types;
