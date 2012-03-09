@@ -200,11 +200,6 @@ namespace FubuMVC.Tests.Registration
             registeredTypeIs<IPartialInvoker, PartialInvoker>();
         }
 
-        [Test]
-        public void request_history_cache_is_registered()
-        {
-            registeredTypeIs<IRequestHistoryCache, RequestHistoryCache>();
-        }
 
         [Test]
         public void setter_binder_is_registered()

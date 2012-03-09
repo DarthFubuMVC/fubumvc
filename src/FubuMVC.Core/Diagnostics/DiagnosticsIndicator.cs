@@ -1,5 +1,6 @@
 ﻿namespace FubuMVC.Core.Diagnostics
 {
+    [WannaKill("just silly.  Put this on BehaviorGraph")]
     public class DiagnosticsIndicator
     {
         public DiagnosticsIndicator()

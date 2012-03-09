@@ -5,9 +5,16 @@ using System.Reflection;
 using FubuCore;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Http;
+using FubuMVC.Core.Packaging;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources;
+using FubuMVC.Core.Runtime;
+using FubuMVC.Core.Security;
+using FubuMVC.Core.UI;
+using FubuMVC.Core.View.Activation;
 using FubuMVC.Core.View.Attachment;
 using System.Linq;
 
@@ -54,8 +61,6 @@ namespace FubuMVC.Core
             _connegAttachmentPolicy = new ConnegAttachmentPolicy(_types);
 
             setupDefaultConventionsAndPolicies();
-
-            
         }
 
 
@@ -134,6 +139,15 @@ namespace FubuMVC.Core
         {
             Import<AssetServicesRegistry>();
 
+            Services<ModelBindingServicesRegistry>();
+            Services<SecurityServicesRegistry>();
+            Services<ResourcesServiceRegistry>();
+            Services<HtmlConventionServiceRegistry>();
+            Services<PackagingServiceRegistry>();
+            Services<HttpStandInServiceRegistry>();
+            Services<ViewActivationServiceRegistry>();
+            Services<CoreServiceRegistry>();
+
             return BuildLightGraph();
         }
 
@@ -157,8 +171,6 @@ namespace FubuMVC.Core
 
             // Service registrations from imports
             allServiceRegistrations().OfType<IConfigurationAction>().Each(x => x.Configure(graph));
-
-            setupServices(graph);
 
             _conventions.Configure(graph);
 

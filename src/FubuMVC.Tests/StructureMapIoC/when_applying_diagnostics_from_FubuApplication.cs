@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web;
 using System.Web.Routing;
 using FubuCore;
@@ -57,6 +58,7 @@ namespace FubuMVC.Tests.StructureMapIoC
         [Test]
         public void building_out_a_behavior_chain_should_put_behavior_tracers_around_behaviors()
         {
+            Debug.WriteLine(theContainer.WhatDoIHave());
             theContainer.GetAllInstances<IActionBehavior>().All(x => x is DiagnosticBehavior).ShouldBeTrue();
         }
     }

@@ -107,6 +107,11 @@ namespace FubuMVC.Core
             _serviceRegistrations.Add(registry);
         }
 
+        public void Services<T>() where T : IServiceRegistry, new()
+        {
+            _serviceRegistrations.Add(new T());
+        }
+
         /// <summary>
         /// Adds a configuration convention to be applied to the <see cref="BehaviorGraph"/> produced by this <see cref="FubuRegistry"/>
         /// </summary>

@@ -198,6 +198,8 @@
     <Compile Include="Caching\WriteStream.cs" />
     <Compile Include="Caching\WriteTextOutput.cs" />
     <Compile Include="Continuations\IRedirectable.cs" />
+    <Compile Include="CoreServiceRegistry.cs" />
+    <Compile Include="DiagnosticsConfiguration.cs" />
     <Compile Include="Diagnostics\Assets\BasicAssetDiagnostics.cs" />
     <Compile Include="Diagnostics\HtmlWriting\ModelBindingExplorerWriter.cs" />
     <Compile Include="FubuMode.cs" />
@@ -205,8 +207,13 @@
     <Compile Include="Http\CurrentRequestRelativeUrlPropertyBinder.cs" />
     <Compile Include="Http\AspNet\AspNetRequestData.cs" />
     <Compile Include="Http\AspNet\RequestPropertyValueSource.cs" />
+    <Compile Include="Http\HttpStandinServiceRegistry.cs" />
     <Compile Include="Http\RequestDataExtensions.cs" />
     <Compile Include="Http\RouteDataValues.cs" />
+    <Compile Include="IFubuRegistry.cs" />
+    <Compile Include="Packaging\PackagingServiceRegistry.cs" />
+    <Compile Include="Resources\ResourcesServiceRegistry.cs" />
+    <Compile Include="Runtime\ModelBindingServicesRegistry.cs" />
     <Compile Include="Registration\ActionMethodFilter.cs" />
     <Compile Include="Registration\ActionSource.cs" />
     <Compile Include="Registration\Conventions\DictionaryOutputConvention.cs" />
@@ -251,6 +258,7 @@
     <Compile Include="Runtime\FubuAsyncRouteHandler.cs" />
     <Compile Include="Runtime\IExceptionHandler.cs" />
     <Compile Include="Runtime\IFubuRouteHandler.cs" />
+    <Compile Include="Security\SecurityServicesRegistry.cs" />
     <Compile Include="UI\HtmlConventionsActivator.cs" />
     <Compile Include="Http\AspNet\AspNetHttpWriter.cs" />
     <Compile Include="Http\AspNet\AspNetCurrentHttpRequest.cs" />
@@ -407,7 +415,6 @@
     <Compile Include="FubuExtensionFinder.cs" />
     <Compile Include="FubuPackageRegistry.cs" />
     <Compile Include="FubuRegistry.DefaultConventions.cs" />
-    <Compile Include="FubuRegistry.DefaultServices.cs" />
     <Compile Include="FubuRegistry.UserInterfaceExpressions.cs" />
     <Compile Include="IFubuRegistryExtension.cs" />
     <Compile Include="Packaging\IPackageFiles.cs" />
@@ -610,6 +617,7 @@
     <Compile Include="UI\FubuHtmlDocument.cs" />
     <Compile Include="UI\FubuPageExtensions.cs" />
     <Compile Include="UI\HtmlConventionRegistry.cs" />
+    <Compile Include="UI\HtmlConventionServiceRegistry.cs" />
     <Compile Include="UI\HtmlTagExtensions.cs" />
     <Compile Include="UI\ImageTag.cs" />
     <Compile Include="UI\IPartialInvoker.cs" />
@@ -684,6 +692,7 @@
     <Compile Include="Urls\IUrlRegistry.cs" />
     <Compile Include="Registration\DSL\ViewsForActionFilterExpression.cs" />
     <Compile Include="Registration\DSL\ViewExpression.cs" />
+    <Compile Include="View\Activation\ViewActivationServiceRegistry.cs" />
     <Compile Include="View\Attachment\ActionReturnsViewModelType.cs" />
     <Compile Include="View\Activation\IPageActivationAction.cs" />
     <Compile Include="View\Activation\IPageActivationSource.cs" />

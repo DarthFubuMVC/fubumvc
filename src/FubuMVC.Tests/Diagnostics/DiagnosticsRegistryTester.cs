@@ -57,6 +57,17 @@ namespace FubuMVC.Tests.Diagnostics
 
 
         [Test]
+        public void request_history_cache_is_registered()
+        {
+            graph.Services.DefaultServiceFor<IRequestHistoryCache>()
+                .Type.ShouldEqual(typeof (RequestHistoryCache));
+
+            ServiceRegistry.ShouldBeSingleton(typeof(RequestHistoryCache))
+                .ShouldBeTrue();
+        }
+
+
+        [Test]
         public void smoke_test()
         {
             Debug.WriteLine(new BehaviorGraphWriter(graph, urls, null, new StubCurrentHttpRequest("http://server")).PrintRoutes());

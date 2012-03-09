@@ -7,7 +7,9 @@ using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Headers;
 using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Resources;
 using FubuMVC.Core.Resources.PathBased;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Security;
 using HtmlTags;
 
@@ -26,6 +28,7 @@ namespace FubuMVC.Core
             ApplyConvention<PartialOnlyConvention>();
 
             addConvention(graph => _routeResolver.ApplyToAll(graph));
+
 
 
             _systemPolicies.Add(new AttachAuthorizationPolicy());

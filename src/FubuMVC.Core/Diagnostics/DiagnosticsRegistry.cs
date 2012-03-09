@@ -43,7 +43,7 @@ namespace FubuMVC.Core.Diagnostics
                 x.ReplaceService<IAuthorizationPolicyExecutor, RecordingAuthorizationPolicyExecutor>();
                 x.ReplaceService<IOutputWriter, RecordingOutputWriter>();
                 x.ReplaceService<IBindingHistory, BindingHistory>();
-
+                x.SetServiceIfNone<IRequestHistoryCache, RequestHistoryCache>();
 
                 // TODO -- need to test this
                 x.ReplaceService<IFieldAccessRightsExecutor, RecordingFieldAccessRightsExecutor>();
