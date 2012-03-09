@@ -226,6 +226,7 @@
     <Compile Include="Registration\Querying\ChainSearch.cs" />
     <Compile Include="Registration\Conventions\AsyncContinueWithHandlerConvention.cs" />
     <Compile Include="Registration\Nodes\AsyncContinueWithNode.cs" />
+    <Compile Include="Registration\ServiceGraph.cs" />
     <Compile Include="Registration\SingleTypeActionSource.cs" />
     <Compile Include="Registration\TypeRegistrationExtensions.cs" />
     <Compile Include="Resources\Media\DictionaryMediaNode.cs" />

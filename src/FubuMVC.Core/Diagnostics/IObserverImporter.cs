@@ -7,6 +7,7 @@ namespace FubuMVC.Core.Diagnostics
         void Import(IConfigurationObserver import);
     }
 
+    [WannaKill("Think we smooth this out with the ConfigLog")]
     public class ObserverImporter : IObserverImporter
     {
         private readonly IConfigurationObserver _importingObserver;

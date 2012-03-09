@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using FubuCore.Util;
-using FubuMVC.Core.Registration.ObjectGraph;
 using FubuCore.Reflection;
+using FubuMVC.Core.Diagnostics;
+using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Core.Registration
 {
     public class ServiceRegistry : IServiceRegistry
     {
-        private readonly Cache<Type, List<ObjectDef>> _services =
-            new Cache<Type, List<ObjectDef>>(t => new List<ObjectDef>());
+        private readonly ServiceGraph _graph = new ServiceGraph();
 
         public void SetServiceIfNone<TService, TImplementation>() where TImplementation : TService
         {
@@ -19,8 +17,7 @@ namespace FubuMVC.Core.Registration
 
         public void SetServiceIfNone<TService>(TService value)
         {
-            fill(typeof (TService), new ObjectDef
-            {
+            fill(typeof (TService), new ObjectDef{
                 Value = value
             });
         }
@@ -41,92 +38,88 @@ namespace FubuMVC.Core.Registration
         public ObjectDef AddService<TService>(Type implementationType)
         {
             var objectDef = new ObjectDef(implementationType);
-            _services[typeof (TService)].Add(objectDef);
+
+            _graph.Add(typeof (TService), objectDef);
 
             return objectDef;
         }
 
         public void ReplaceService<TService, TImplementation>() where TImplementation : TService
         {
-            _services[typeof (TService)].Clear();
+            _graph.Clear(typeof (TService));
+
             AddService<TService, TImplementation>();
         }
 
         public void ReplaceService<TService>(TService value)
         {
-            _services[typeof (TService)].Clear();
+            _graph.Clear(typeof (TService));
             AddService(value);
         }
 
         public void AddService<TService>(TService value)
         {
-            var objectDef = new ObjectDef
-            {
+            var objectDef = new ObjectDef{
                 Value = value
             };
-            _services[typeof (TService)].Add(objectDef);
+
+            _graph.Add(typeof (TService), objectDef);
         }
 
         public void AddService(Type type, ObjectDef objectDef)
         {
-            _services[type].Add(objectDef);
+            _graph.Add(type, objectDef);
         }
 
+        [WannaKill("Try to eliminate this")]
         public ObjectDef DefaultServiceFor<TService>()
         {
-            return _services[typeof (TService)].FirstOrDefault();
+            return _graph.DefaultServiceFor(typeof (TService));
         }
 
+        [WannaKill("Try to eliminate this")]
         public ObjectDef DefaultServiceFor(Type serviceType)
         {
-            return _services[serviceType].FirstOrDefault();
+            return _graph.DefaultServiceFor(serviceType);
         }
 
+        [WannaKill("Try to eliminate this")]
         public IEnumerable<ObjectDef> ServicesFor<TService>()
         {
             return ServicesFor(typeof (TService));
         }
 
+        [WannaKill("Try to eliminate this")]
         public IEnumerable<ObjectDef> ServicesFor(Type serviceType)
         {
-            return _services[serviceType];
+            return _graph.ServicesFor(serviceType);
         }
 
+        [WannaKill("Move")]
         public void Each(Action<Type, ObjectDef> action)
         {
-            _services.Each((t, list) => list.Each(def => action(t, def)));
+            _graph.Each(action);
         }
 
+        [WannaKill("Try to eliminate this")]
         public IEnumerable<T> FindAllValues<T>()
         {
-            foreach (ObjectDef def in _services[typeof (T)])
-            {
-                if (def.Value != null)
-                {
-                    yield return (T) def.Value;
-                }
-            }
+            return _graph.FindAllValues<T>();
         }
 
         public void ClearAll<T>()
         {
-            _services[typeof (T)].Clear();
-        }
-
-        private void fill(Type serviceType, ObjectDef def)
-        {
-            List<ObjectDef> list = _services[serviceType];
-            if (list.Any()) return;
-
-            list.Add(def);
+            _graph.Clear(typeof (T));
         }
 
         public void FillType(Type interfaceType, Type concreteType)
         {
-            List<ObjectDef> list = _services[interfaceType];
-            if (list.Any(x => x.Type == concreteType)) return;
+            _graph.FillType(interfaceType, concreteType);
+        }
 
-            list.Add(new ObjectDef(concreteType));
+        private void fill(Type serviceType, ObjectDef def)
+        {
+            _graph.SetServiceIfNone(serviceType, def);
         }
 
         public static bool ShouldBeSingleton(Type type)
@@ -138,6 +131,5 @@ namespace FubuMVC.Core.Registration
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class SingletonAttribute : Attribute
     {
-        
     }
 }
