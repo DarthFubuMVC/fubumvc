@@ -1,4 +1,4 @@
-﻿using FubuMVC.Spark.SparkModel.Sharing;
+﻿using FubuMVC.Core.View.Model.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -6,7 +6,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel.Sharing
 {
     [TestFixture]
-    public class when_reading_imports : InteractionContext<SparkDslReader>
+    public class when_reading_imports : InteractionContext<SharingDslReader>
     {
         protected override void beforeEach()
         {
@@ -55,7 +55,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
     }
 
     [TestFixture]
-    public class when_reading_exports : InteractionContext<SparkDslReader>
+    public class when_reading_exports : InteractionContext<SharingDslReader>
     {
         protected override void beforeEach()
         {
@@ -119,7 +119,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Sharing
     }
 
     [TestFixture]
-    public class SparkDslReaderTester : InteractionContext<SparkDslReader>
+    public class SparkDslReaderTester : InteractionContext<SharingDslReader>
     {
         protected override void beforeEach()
         {

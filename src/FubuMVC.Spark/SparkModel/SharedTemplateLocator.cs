@@ -12,10 +12,10 @@ namespace FubuMVC.Spark.SparkModel
 
     public class SharedTemplateLocator : ISharedTemplateLocator
     {
-        private readonly ITemplateDirectoryProvider _provider;
+        private readonly ITemplateDirectoryProvider<ITemplate> _provider;
         private readonly ITemplateRegistry<ITemplate> _templates;
 
-        public SharedTemplateLocator(ITemplateDirectoryProvider provider, ITemplateRegistry<ITemplate> templates)
+        public SharedTemplateLocator(ITemplateDirectoryProvider<ITemplate> provider, ITemplateRegistry<ITemplate> templates)
         {
             _provider = provider;
             _templates = templates;

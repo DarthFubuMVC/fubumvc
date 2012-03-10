@@ -705,7 +705,19 @@
     <Compile Include="View\Model\Scanning\FileFound.cs" />
     <Compile Include="View\Model\Scanning\FileScanner.cs" />
     <Compile Include="View\Model\Scanning\ScanRequest.cs" />
+    <Compile Include="View\Model\SharedPathBuilder.cs" />
     <Compile Include="View\Model\SharingAttacherActivator.cs" />
+    <Compile Include="View\Model\Sharing\InvalidSyntaxException.cs" />
+    <Compile Include="View\Model\Sharing\ISharingPolicy.cs" />
+    <Compile Include="View\Model\Sharing\ISharingRegistration.cs" />
+    <Compile Include="View\Model\Sharing\Logging.cs" />
+    <Compile Include="View\Model\Sharing\RecordingSharingRegistration.cs" />
+    <Compile Include="View\Model\Sharing\SharingConfigActivator.cs" />
+    <Compile Include="View\Model\Sharing\SharingGraph.cs" />
+    <Compile Include="View\Model\Sharing\SharingPolicyActivator.cs" />
+    <Compile Include="View\Model\Sharing\SharingRegistrationDiagnostics.cs" />
+    <Compile Include="View\Model\Sharing\SharingDslReader.cs" />
+    <Compile Include="View\Model\TemplateDirectoryProvider.cs" />
     <Compile Include="View\Model\TemplateFinder.cs" />
     <Compile Include="View\Model\TemplateRoot.cs" />
     <Compile Include="View\Model\TemplateBinders.cs" />
@@ -734,6 +746,7 @@
     <Compile Include="View\Rendering\RenderStrategies.cs" />
     <Compile Include="View\Rendering\ViewModifiers.cs" />
     <Compile Include="View\Rendering\ViewRenderer.cs" />
+    <Compile Include="View\RenderViewBehavior.cs" />
     <Compile Include="Web\Security\WebAuthenticationContext.cs" />
     <Compile Include="Web\Security\WebSecurityContext.cs" />
   </ItemGroup>

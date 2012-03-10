@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.SparkModel.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -13,7 +13,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 {
 
     [TestFixture]
-    public class template_directory_provider_without_sharings : InteractionContext<TemplateDirectoryProvider>
+    public class template_directory_provider_without_sharings : InteractionContext<TemplateDirectoryProvider<ITemplate>>
     {
         private ITemplate _template;
         private IEnumerable<string> _paths;
@@ -63,7 +63,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         }
     }
 
-    public class template_directory_provider_with_sharings : InteractionContext<TemplateDirectoryProvider>
+    public class template_directory_provider_with_sharings : InteractionContext<TemplateDirectoryProvider<ITemplate>>
     {
         private const string Shared = "S";
         private string _root;

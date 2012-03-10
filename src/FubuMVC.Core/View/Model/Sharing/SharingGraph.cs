@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     public interface ISharingGraph
     {

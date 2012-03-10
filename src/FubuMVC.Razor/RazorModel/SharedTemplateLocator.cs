@@ -6,33 +6,34 @@ namespace FubuMVC.Razor.RazorModel
 {
     public interface ISharedTemplateLocator
     {
-        IRazorTemplate LocateMaster(string masterName, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry);
+        IRazorTemplate LocateMaster(string masterName, IRazorTemplate fromTemplate);
     }
 
     public class SharedTemplateLocator : ISharedTemplateLocator
     {
-        private readonly ITemplateDirectoryProvider _provider;
+        private readonly ITemplateDirectoryProvider<IRazorTemplate> _provider;
+        private readonly ITemplateRegistry<IRazorTemplate> _templates;
 
-        public SharedTemplateLocator() : this(new TemplateDirectoryProvider()) { }
-        public SharedTemplateLocator(ITemplateDirectoryProvider provider)
+        public SharedTemplateLocator(ITemplateDirectoryProvider<IRazorTemplate> provider, ITemplateRegistry<IRazorTemplate> templates)
         {
             _provider = provider;
+            _templates = templates;
         }
 
-        public IRazorTemplate LocateMaster(string masterName, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry)
+        public IRazorTemplate LocateMaster(string masterName, IRazorTemplate fromTemplate)
         {
-            return locateTemplates(masterName, fromTemplate, templateRegistry, true)
+            return locateTemplates(masterName, fromTemplate, true)
                 .Where(x => x.IsRazorView())
                 .FirstOrDefault();
         }
 
-        private IEnumerable<IRazorTemplate> locateTemplates(string name, IRazorTemplate fromTemplate, ITemplateRegistry<IRazorTemplate> templateRegistry, bool sharedsOnly)
+        private IEnumerable<IRazorTemplate> locateTemplates(string name, IRazorTemplate fromTemplate, bool sharedsOnly)
         {
             var directories = sharedsOnly 
-                ? _provider.SharedPathsOf(fromTemplate, templateRegistry) 
-                : _provider.ReachablesOf(fromTemplate, templateRegistry);
+                ? _provider.SharedPathsOf(fromTemplate) 
+                : _provider.ReachablesOf(fromTemplate);
 
-            return templateRegistry.ByNameUnderDirectories(name, directories);
+            return _templates.ByNameUnderDirectories(name, directories);
         }
     }
 }

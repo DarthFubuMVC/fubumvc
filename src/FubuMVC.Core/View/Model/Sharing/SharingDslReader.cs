@@ -2,12 +2,12 @@
 using FubuCore;
 using FubuCore.CommandLine;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
-    public class SparkDslReader
+    public class SharingDslReader
     {
         private readonly ISharingRegistration _registration;
-        public SparkDslReader(ISharingRegistration registration)
+        public SharingDslReader(ISharingRegistration registration)
         {
             _registration = registration;
         }

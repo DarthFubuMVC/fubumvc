@@ -34,7 +34,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
             };
 
-            MockFor<ITemplateDirectoryProvider>()
+            MockFor<ITemplateDirectoryProvider<ITemplate>>()
                 .Stub(x => x.SharedPathsOf(_template)).Return(_directories);
 
             Container.Inject<ITemplateRegistry<ITemplate>>(_templates);
@@ -91,7 +91,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 new Template(Path.Combine("App", "Views", "Shared", "bindings.xml"), "App",TemplateConstants.HostOrigin)
             };
 
-            MockFor<ITemplateDirectoryProvider>()
+            MockFor<ITemplateDirectoryProvider<ITemplate>>()
                 .Stub(x => x.ReachablesOf(_template))
                 .Return(_bindingDirectories);
 

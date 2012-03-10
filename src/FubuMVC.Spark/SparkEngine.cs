@@ -11,10 +11,10 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Conventions;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.SparkModel.Sharing;
 using Spark;
 using Spark.Caching;
 
@@ -159,7 +159,7 @@ namespace FubuMVC.Spark
             services.FillType<ISharingAttacher<ITemplate>, BindingsAttacher>();
 
             services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
-            services.SetServiceIfNone<ITemplateDirectoryProvider, TemplateDirectoryProvider>();
+            services.SetServiceIfNone<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
             services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
 
             services.FillType<IRenderStrategy, NestedRenderStrategy>();

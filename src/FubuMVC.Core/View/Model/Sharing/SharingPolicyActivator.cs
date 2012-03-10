@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Bottles;
 using Bottles.Diagnostics;
-using FubuMVC.Core.View.Model;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     public class SharingPolicyActivator : IActivator
     {

@@ -1,6 +1,6 @@
 using FubuCore;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     public class SharingRegistrationDiagnostics : ISharingRegistration
     {

@@ -33,6 +33,7 @@ namespace FubuMVC.Core.View.Model
 
     public static class TemplateConstants
     {
+        public const string Shared = "Shared";
         public const string HostOrigin = "Host";
     }
 }

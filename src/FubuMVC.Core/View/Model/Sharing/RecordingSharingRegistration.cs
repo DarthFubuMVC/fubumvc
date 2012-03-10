@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Bottles.Diagnostics;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     // Should be possible to use in conjunction with DSL if we make composition happen in each configure in SparkEngine.
 

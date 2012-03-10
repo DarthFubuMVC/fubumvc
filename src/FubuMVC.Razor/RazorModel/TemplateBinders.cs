@@ -42,7 +42,9 @@ namespace FubuMVC.Razor.RazorModel
         private const string FallbackMaster = "_Layout";
         public string MasterName { get; set; }
 
-        public MasterPageBinder() : this(new SharedTemplateLocator()) { }
+        public MasterPageBinder()
+        {
+        }
         public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
         {
             _sharedTemplateLocator = sharedTemplateLocator;
@@ -65,7 +67,7 @@ namespace FubuMVC.Razor.RazorModel
             var tracer = request.Logger;
             var masterName = request.Parsing.Master ?? MasterName;
 
-            var master = _sharedTemplateLocator.LocateMaster(masterName, template, request.TemplateRegistry);
+            var master = _sharedTemplateLocator.LocateMaster(masterName, template);
 
             if (master == null)
             {

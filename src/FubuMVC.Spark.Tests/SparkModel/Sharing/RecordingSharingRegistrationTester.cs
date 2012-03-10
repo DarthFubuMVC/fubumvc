@@ -1,5 +1,5 @@
 using Bottles.Diagnostics;
-using FubuMVC.Spark.SparkModel.Sharing;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Rhino.Mocks;

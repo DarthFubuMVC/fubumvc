@@ -2,7 +2,6 @@
 using System.IO;
 using FubuCore;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
 using Spark;
 using FubuMVC.Core;
