@@ -12,31 +12,35 @@ namespace FubuMVC.Tests
         public void DevMode_as_is_is_true()
         {
             Environment.SetEnvironmentVariable("FubuMode", "Development");
-            FubuMode.DevModeReset();
-            FubuMode.DevMode().ShouldBeTrue();
+            FubuMode.Reset();
+            FubuMode.InDevelopment().ShouldBeTrue();
+
+            FubuMode.Mode().ShouldEqual("Development");
         }
 
         [Test]
         public void DevMode_is_false()
         {
             Environment.SetEnvironmentVariable("FubuMode", "Production");
-            FubuMode.DevModeReset();
-            FubuMode.DevMode().ShouldBeFalse();
+            FubuMode.Reset();
+            FubuMode.InDevelopment().ShouldBeFalse();
+
+            FubuMode.Mode().ShouldEqual("Production");
         }
 
         [Test]
         public void override_devmode()
         {
-            bool isDev = true;
+            string isDev = FubuMode.Development;
 
-            FubuMode.DevMode(() => isDev);
+            FubuMode.Mode(() => isDev);
 
-            FubuMode.DevMode().ShouldBeTrue();
+            FubuMode.InDevelopment().ShouldBeTrue();
 
-            isDev = false;
+            isDev = "something else";
 
-            FubuMode.DevModeReset();
-            FubuMode.DevMode().ShouldBeFalse();
+            FubuMode.Reset();
+            FubuMode.InDevelopment().ShouldBeFalse();
         }
     }
 }

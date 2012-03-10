@@ -174,6 +174,7 @@ namespace FubuMVC.Core
 
             _conventions.Configure(graph);
 
+            // THIS STUFF IS OUR BIGGEST PROBLEM NOW
             // Importing behavior chains from imports
             var observerImporter = new ObserverImporter(graph.Observer);
             _imports.Each(x =>

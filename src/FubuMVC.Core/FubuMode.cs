@@ -2,37 +2,81 @@ using System;
 
 namespace FubuMVC.Core
 {
+    public static class Fake
+    {
+        public static void DoSomething()
+        {
+            FubuMode.ForMode("Development").Do(() =>
+            {
+                // do stuff
+            });
+
+        }
+    }
+
     public static class FubuMode
     {
+        public static readonly string Development = "Development";
+
         static FubuMode()
         {
-            DevModeReset();
+            Reset();
         }
 
-        private static Lazy<bool> _isInDevMode;
-        public static bool DevMode()
+        private static Lazy<string> _determineMode;
+        public static bool InDevelopment()
         {
-            return _isInDevMode.Value;
+            return Mode().Equals(Development, StringComparison.OrdinalIgnoreCase);
         }
 
-        public static void DevModeReset()
+        public static string Mode()
         {
-            _isInDevMode = _isInDevMode = new Lazy<bool>(() => Environment.GetEnvironmentVariable("FubuMode").Equals("Development", StringComparison.OrdinalIgnoreCase));
+            return _determineMode.Value;
         }
 
-        public static void DevMode(bool isDevMode)
+        public static void Reset()
         {
-            _isInDevMode = new Lazy<bool>(() => isDevMode);
+            _determineMode = new Lazy<string>(() => Environment.GetEnvironmentVariable("FubuMode"));
         }
+
+        public static void Mode(string mode)
+        {
+            _determineMode = new Lazy<string>(() => mode);
+        }
+
+        public static DoExpression ForMode(string mode)
+        {
+            return new DoExpression(Mode() == mode);
+        }
+
+
          
         /// <summary>
         /// Use any possible logic you'd like.  Do it by testing for the existence of a 
         /// file, a *gulp* App.config flag, whatever
         /// </summary>
         /// <param name="devTest"></param>
-        public static void DevMode(Func<bool> devTest)
+        public static void Mode(Func<string> devTest)
         {
-            _isInDevMode = new Lazy<bool>(devTest);
+            _determineMode = new Lazy<string>(devTest);
         }
     }
+
+        public class DoExpression
+        {
+            private readonly bool _shouldDo;
+
+            internal DoExpression(bool shouldDo)
+            {
+                _shouldDo = shouldDo;
+            }
+
+            public void Do(Action action)
+            {
+                if (_shouldDo)
+                {
+                    action();
+                }
+            }
+        }
 }
