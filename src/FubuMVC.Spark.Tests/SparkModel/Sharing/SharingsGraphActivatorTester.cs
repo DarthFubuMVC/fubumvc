@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Bottles.Diagnostics;
 using FubuCore;
-using FubuMVC.Spark.SparkModel.Sharing;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 

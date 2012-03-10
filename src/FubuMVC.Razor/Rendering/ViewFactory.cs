@@ -18,28 +18,27 @@ namespace FubuMVC.Razor.Rendering
 
         public IRenderableView GetView()
         {
-            var view =  CreateInstance();
-            view = _service.Modify(view);
-            return view;
+            return CreateInstance();
         }
 
         public IRenderableView GetPartialView()
         {
-            return null;
+            return CreateInstance(true);
         }
 
-        private IFubuRazorView CreateInstance()
+        private IFubuRazorView CreateInstance(bool partialOnly = false)
         {
             var currentDescriptor = _viewDescriptor;
             var returnTemplate = _templateService.GetView(currentDescriptor);
             var currentTemplate = returnTemplate;
-            while (currentDescriptor.Master != null)
+            while (currentDescriptor.Master != null && !partialOnly)
             {
                 currentDescriptor = currentDescriptor.Master.Descriptor;
                 var layoutTemplate = _templateService.GetView(currentDescriptor);
                 currentTemplate.Layout = layoutTemplate;
                 currentTemplate = layoutTemplate;
             }
+            returnTemplate = _service.Modify(returnTemplate);
             return returnTemplate;
         }
     }

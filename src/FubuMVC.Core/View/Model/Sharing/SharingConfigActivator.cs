@@ -4,9 +4,8 @@ using Bottles;
 using Bottles.Diagnostics;
 using FubuCore;
 using FubuMVC.Core.Packaging;
-using FubuMVC.Core.View.Model;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     public class SharingConfigActivator : IActivator
     {
@@ -48,7 +47,7 @@ namespace FubuMVC.Spark.SparkModel.Sharing
         public void ReadFile(string provenance, string file, IPackageLog log)
         {
             _diagnostics.SetCurrentProvenance(provenance);
-            var reader = new SparkDslReader(_diagnostics);
+            var reader = new SharingDslReader(_diagnostics);
 
             log.Trace("  Reading spark directives from {0}", file);
             log.TrapErrors(() => _fileSystem.ReadTextFile(file, text =>

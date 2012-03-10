@@ -1,6 +1,6 @@
 using System;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     [Serializable]
     public class InvalidSyntaxException : Exception

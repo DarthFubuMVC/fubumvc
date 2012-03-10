@@ -4,7 +4,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Util;
 
-namespace FubuMVC.Spark.SparkModel.Sharing
+namespace FubuMVC.Core.View.Model.Sharing
 {
     [DebuggerDisplay("{Provenance}: {Message}")]
     public class SharingLogEntry

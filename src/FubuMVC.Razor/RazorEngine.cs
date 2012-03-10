@@ -136,6 +136,7 @@ namespace FubuMVC.Razor
 
             services.FillType<IActivator, RazorActivator>();
 
+            services.FillType<ISharingAttacher<IRazorTemplate>, LayoutAttacher>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 

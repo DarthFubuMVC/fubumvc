@@ -4,10 +4,10 @@ using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
-using FubuMVC.Spark.SparkModel.Sharing;
 using FubuTestingSupport;
 using NUnit.Framework;
 using Spark;
@@ -122,7 +122,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void template_directory_provider()
         {
-            defaultServiceCheck<ITemplateDirectoryProvider, TemplateDirectoryProvider>();
+            defaultServiceCheck<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
         }
 
         [Test]

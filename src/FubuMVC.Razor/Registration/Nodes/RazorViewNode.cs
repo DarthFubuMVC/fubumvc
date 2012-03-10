@@ -1,13 +1,14 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
 
 namespace FubuMVC.Razor.Registration.Nodes
 {
-    public class RazorViewNode : OutputNode<RenderRazorBehavior>, IMayHaveInputType
+    public class RazorViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
         private readonly IRazorDescriptor _descriptor;
 

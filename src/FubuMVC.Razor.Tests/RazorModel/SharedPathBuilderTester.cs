@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FubuMVC.Razor.RazorModel;
+using FubuMVC.Core.View.Model;
 using FubuTestingSupport;
 using NUnit.Framework;
 
