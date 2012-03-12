@@ -9,9 +9,9 @@ namespace FubuMVC.Razor
 {
     public class RazorViewToken : IViewToken
     {
-        private readonly ViewDescriptor _descriptor;
+        private readonly RazorViewDescriptor _descriptor;
 
-        public RazorViewToken(ViewDescriptor viewDescriptor)
+        public RazorViewToken(RazorViewDescriptor viewDescriptor)
         {
             _descriptor = viewDescriptor;
         }

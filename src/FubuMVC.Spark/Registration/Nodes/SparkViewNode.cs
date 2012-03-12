@@ -10,9 +10,9 @@ namespace FubuMVC.Spark.Registration.Nodes
 {
     public class SparkViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
-        private readonly ViewDescriptor _descriptor;
+        private readonly SparkDescriptor _descriptor;
 
-        public SparkViewNode(ViewDescriptor descriptor)
+        public SparkViewNode(SparkDescriptor descriptor)
         {
             _descriptor = descriptor;
         }

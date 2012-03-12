@@ -22,8 +22,8 @@ namespace FubuMVC.Razor
             // clean up pending
             return _templateRegistry
                 .AllTemplates()
-                .Where(x => x.Descriptor is ViewDescriptor)
-                .Select(x => x.Descriptor.As<ViewDescriptor>())
+                .Where(x => x.Descriptor is RazorViewDescriptor)
+                .Select(x => x.Descriptor.As<RazorViewDescriptor>())
                 .Where(x => x.HasViewModel())
                 .Select(x => new RazorViewToken(x));
         }

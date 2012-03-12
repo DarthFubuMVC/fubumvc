@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
@@ -11,15 +12,15 @@ namespace FubuMVC.Razor
 {
     public interface IFubuTemplateService : ITemplateService
     {
-        IFubuRazorView GetView(IRazorDescriptor descriptor);
+        IFubuRazorView GetView(RazorViewDescriptor descriptor);
     }
 
     public class FubuTemplateService : IFubuTemplateService
     {
-        private readonly TemplateRegistry<RazorModel.IRazorTemplate> _templateRegistry;
+        private readonly TemplateRegistry<IRazorTemplate> _templateRegistry;
         private readonly ITemplateService _inner;
 
-        public FubuTemplateService(TemplateRegistry<RazorModel.IRazorTemplate> templateRegistry, ITemplateService inner)
+        public FubuTemplateService(TemplateRegistry<IRazorTemplate> templateRegistry, ITemplateService inner)
         {
             _templateRegistry = templateRegistry;
             _inner = inner;
@@ -99,7 +100,7 @@ namespace FubuMVC.Razor
 
         public ITemplate GetTemplate<T>(string razorTemplate, T model, string name)
         {
-            var template = _inner.GetTemplate<T>(razorTemplate, model, name);
+            var template = _inner.GetTemplate(razorTemplate, model, name);
             template.TemplateService = this;
             return template;
         }
@@ -177,7 +178,7 @@ namespace FubuMVC.Razor
         public ITemplate Resolve(string name)
         {
             var fubuTemplate = _templateRegistry.FirstByName(name);
-            return GetView(fubuTemplate.Descriptor);
+            return GetView(fubuTemplate.Descriptor.As<RazorViewDescriptor>());
         }
 
         public ITemplate Resolve(string name, object model)
@@ -188,7 +189,7 @@ namespace FubuMVC.Razor
         public ITemplate Resolve<T>(string name, T model)
         {
             var fubuTemplate = _templateRegistry.FirstByName(name);
-            var view = GetView(fubuTemplate.Descriptor);
+            GetView(fubuTemplate.Descriptor.As<RazorViewDescriptor>());
             var template = _inner.Resolve(fubuTemplate.GeneratedViewId.ToString(), model);
             template.TemplateService = this;
             return template;
@@ -214,7 +215,7 @@ namespace FubuMVC.Razor
             get { return _inner.EncodedStringFactory; }
         }
 
-        public IFubuRazorView GetView(IRazorDescriptor descriptor)
+        public IFubuRazorView GetView(RazorViewDescriptor descriptor)
         {
             var viewId = descriptor.Template.GeneratedViewId.ToString();
 
@@ -225,7 +226,7 @@ namespace FubuMVC.Razor
             return GetView(x => x.GetTemplate(descriptor.ViewFile.GetSourceCode(), viewId));
         }
 
-        public IFubuRazorView GetView(IRazorDescriptor descriptor, object model)
+        public IFubuRazorView GetView(RazorViewDescriptor descriptor, object model)
         {
             var viewId = descriptor.Template.GeneratedViewId.ToString();
 

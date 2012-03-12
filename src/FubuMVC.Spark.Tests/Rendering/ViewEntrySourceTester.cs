@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.Registration;
+﻿using FubuMVC.Core.View.Model;
+using FubuMVC.Spark.Registration;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -22,7 +23,7 @@ namespace FubuMVC.Spark.Tests.Rendering
             template.Stub(x => x.ViewPath).Return("/Views/Home/index.spark");
             master.Stub(x => x.ViewPath).Return("/Views/Shared/appplication.spark");
 
-            var descriptor = new ViewDescriptor(template) { Master = master };
+            var descriptor = new SparkDescriptor(template) { Master = master };
             var definition = descriptor.ToViewDefinition();
 
             var resolver = MockFor<IViewDefinitionResolver>();

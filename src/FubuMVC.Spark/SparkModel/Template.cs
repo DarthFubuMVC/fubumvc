@@ -11,7 +11,7 @@ namespace FubuMVC.Spark.SparkModel
         string Origin { get; }
 		
         string ViewPath { get; set; }
-        ISparkDescriptor Descriptor { get; set; }
+        ITemplateDescriptor Descriptor { get; set; }
     }
 
     public class Template : ITemplate
@@ -33,7 +33,7 @@ namespace FubuMVC.Spark.SparkModel
         public string Origin { get; set; }
 		
         public string ViewPath { get; set; }
-        public ISparkDescriptor Descriptor { get; set; }
+        public ITemplateDescriptor Descriptor { get; set; }
 
 	    public override string ToString()
         {

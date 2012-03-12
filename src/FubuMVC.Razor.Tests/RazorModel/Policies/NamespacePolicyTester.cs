@@ -24,13 +24,13 @@
 //        {
 //            var path = Path.Combine(_root, "controllers", "home", "home.cshtml");
 //            var item = new Template(path, _root, "");
-//            item.Descriptor = new ViewDescriptor(item)
+//            item.Descriptor = new RazorViewDescriptor(item)
 //            {
 //                ViewModel = typeof (FooViewModel)
 //            };
             
 //            ClassUnderTest.Apply(item);
-//            item.Descriptor.As<ViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Razor.Tests.controllers.home");
+//            item.Descriptor.As<RazorViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Razor.Tests.controllers.home");
 //        }
 
 //        [Test]
@@ -38,13 +38,13 @@
 //        {
 //            var path = Path.Combine(_root, "home.cshtml");
 //            var item = new Template(path, _root, "");
-//            item.Descriptor = new ViewDescriptor(item)
+//            item.Descriptor = new RazorViewDescriptor(item)
 //            {
 //                ViewModel = typeof(FooViewModel)
 //            };
             
 //            ClassUnderTest.Apply(item);
-//            item.Descriptor.As<ViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Razor.Tests");
+//            item.Descriptor.As<RazorViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Razor.Tests");
 //        }
 
 //        [Test]
@@ -52,7 +52,7 @@
 //        {
 //            var path = Path.Combine(_root, "home.cshtml");
 //            var item = new Template(path, _root, "");
-//            item.Descriptor = new ViewDescriptor(item)
+//            item.Descriptor = new RazorViewDescriptor(item)
 //            {
 //                ViewModel = typeof(FooViewModel)
 //            };
@@ -74,7 +74,7 @@
 //        {
 //            var path = Path.Combine(_root, "home.cshtml");
 //            var item = new Template(path, _root, "");
-//            item.Descriptor = new ViewDescriptor(item)
+//            item.Descriptor = new RazorViewDescriptor(item)
 //            {
 //                ViewModel = typeof(FooViewModel),
 //                Namespace = "Someone.Else.Did.This" 

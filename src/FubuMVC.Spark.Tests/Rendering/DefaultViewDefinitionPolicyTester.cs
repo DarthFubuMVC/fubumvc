@@ -1,3 +1,4 @@
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.Registration;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
@@ -9,17 +10,17 @@ namespace FubuMVC.Spark.Tests.Rendering
     [TestFixture]
     public class DefaultViewDefinitionPolicyTester : InteractionContext<DefaultViewDefinitionPolicy>
     {
-        private ViewDescriptor _descriptor;
+        private SparkDescriptor _descriptor;
         private ViewDefinition _definition;
         protected override void beforeEach()
         {
             var template = new Template("view.spark", "root", "pak1");
             var master = new Template("master.spark", "root", "pak1");
-            template.Descriptor = new ViewDescriptor(template)
+            template.Descriptor = new SparkDescriptor(template)
             {
                 Master = master
             };
-            _descriptor = new ViewDescriptor(template);
+            _descriptor = new SparkDescriptor(template);
             _definition = ClassUnderTest.Create(_descriptor);
         }
 

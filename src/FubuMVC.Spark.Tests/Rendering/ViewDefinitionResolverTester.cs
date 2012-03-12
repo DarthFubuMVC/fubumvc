@@ -1,3 +1,4 @@
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.Rendering;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
@@ -12,12 +13,12 @@ namespace FubuMVC.Spark.Tests.Rendering
         private IViewDefinitionPolicy[] _policies;
         private ViewDefinition _defaultDefinition;
         private ViewDefinition _policyDefinition;
-        private ViewDescriptor _descriptor;
+        private SparkDescriptor _descriptor;
 
         protected override void beforeEach()
         {
             _policies = Services.CreateMockArrayFor<IViewDefinitionPolicy>(5);
-            _descriptor = new ViewDescriptor(MockRepository.GenerateMock<ITemplate>());
+            _descriptor = new SparkDescriptor(MockRepository.GenerateMock<ITemplate>());
             _policyDefinition = new ViewDefinition(null, null);
             _defaultDefinition = new ViewDefinition(null, null);
 

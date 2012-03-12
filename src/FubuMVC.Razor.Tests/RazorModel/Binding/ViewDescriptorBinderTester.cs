@@ -37,7 +37,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
                 Target = new Template("Fubu.cshtml", "", "testing")                
             };
 
-            request.Target.Descriptor = new ViewDescriptor(request.Target);
+            request.Target.Descriptor = new RazorViewDescriptor(request.Target);
 
             ClassUnderTest.CanBind(request).ShouldBeFalse();
         }
@@ -62,7 +62,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
             };
 
             ClassUnderTest.Bind(request);
-            request.Target.Descriptor.ShouldBeOfType<ViewDescriptor>();
+            request.Target.Descriptor.ShouldBeOfType<RazorViewDescriptor>();
         }
     }
 }

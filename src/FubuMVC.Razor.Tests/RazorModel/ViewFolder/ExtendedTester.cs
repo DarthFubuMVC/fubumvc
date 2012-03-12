@@ -198,13 +198,13 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
         private string renderTemplate(IRazorTemplate template, params IRazorTemplate[] templates)
         {
-            var descriptor = new ViewDescriptor(template);
+            var descriptor = new RazorViewDescriptor(template);
             descriptor.ViewFile = new FileSystemViewFile(template.FilePath);
             var current = descriptor;
             for(int i = 0; i < templates.Length; ++i)
             {
                 var layoutTemplate = templates[i];
-                var layout = new ViewDescriptor(layoutTemplate);
+                var layout = new RazorViewDescriptor(layoutTemplate);
                 layout.ViewFile = new FileSystemViewFile(layoutTemplate.FilePath);
                 layoutTemplate.Descriptor = layout;
                 current.Master = templates[i];

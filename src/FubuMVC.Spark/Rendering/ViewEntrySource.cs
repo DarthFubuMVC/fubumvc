@@ -1,4 +1,5 @@
-﻿using FubuMVC.Spark.SparkModel;
+﻿using FubuMVC.Core.View.Model;
+using FubuMVC.Spark.SparkModel;
 using Spark;
 
 namespace FubuMVC.Spark.Rendering
@@ -12,9 +13,9 @@ namespace FubuMVC.Spark.Rendering
     public class ViewEntrySource : IViewEntrySource
     {
         private readonly IViewEntryProviderCache _provider;
-        private readonly ViewDescriptor _descriptor;
+        private readonly SparkDescriptor _descriptor;
         private readonly IViewDefinitionResolver _resolver;
-        public ViewEntrySource(ViewDescriptor descriptor, IViewEntryProviderCache provider, IViewDefinitionResolver resolver)
+        public ViewEntrySource(SparkDescriptor descriptor, IViewEntryProviderCache provider, IViewDefinitionResolver resolver)
         {
             _descriptor = descriptor;
             _provider = provider;

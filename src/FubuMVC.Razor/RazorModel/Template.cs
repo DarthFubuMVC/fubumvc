@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Razor.RazorModel
@@ -7,9 +8,7 @@ namespace FubuMVC.Razor.RazorModel
     {
         bool IsCurrent();
         Guid GeneratedViewId { get; }
-		
-        string ViewPath { get; set; }
-        IRazorDescriptor Descriptor { get; set; }
+        ITemplateDescriptor Descriptor { get; set; }
     }
 
     public class Template : IRazorTemplate
@@ -33,11 +32,11 @@ namespace FubuMVC.Razor.RazorModel
         public Guid GeneratedViewId { get; private set; }
 		
         public string ViewPath { get; set; }
-        public IRazorDescriptor Descriptor { get; set; }
+        public ITemplateDescriptor Descriptor { get; set; }
 
         public bool IsCurrent()
         {
-            return Descriptor.IsCurrent();
+            return Descriptor.As<RazorViewDescriptor>().IsCurrent();
         }
 
 	    public override string ToString()

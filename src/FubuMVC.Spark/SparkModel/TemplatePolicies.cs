@@ -9,7 +9,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         public bool Matches(ITemplate template)
         {
-            var descriptor = template.Descriptor as ViewDescriptor;
+            var descriptor = template.Descriptor as SparkDescriptor;
 						
             return descriptor != null
 				&& descriptor.HasViewModel() 
@@ -20,7 +20,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var relativePath = template.RelativePath();
             var relativeNamespace = Path.GetDirectoryName(relativePath);
-            var descriptor = template.Descriptor.As<ViewDescriptor>();
+            var descriptor = template.Descriptor.As<SparkDescriptor>();
             var nspace = descriptor.ViewModel.Assembly.GetName().Name;
 			
             if (relativeNamespace.IsNotEmpty())

@@ -187,9 +187,9 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         public void binding_works_under_package_context()
         {
             var serieZ = _pak1TemplateRegistry.FirstByName("SerieZ");
-            serieZ.Descriptor = new ViewDescriptor(serieZ);
-            serieZ.Descriptor.As<ViewDescriptor>().AddBinding(_pak1TemplateRegistry.First(x => x.Name() == "bindings"));
-            serieZ.Descriptor.As<ViewDescriptor>().AddBinding(_appTemplateRegistry.First(x => x.Name() == "bindings"));
+            serieZ.Descriptor = new SparkDescriptor(serieZ);
+            serieZ.Descriptor.As<SparkDescriptor>().AddBinding(_pak1TemplateRegistry.First(x => x.Name() == "bindings"));
+            serieZ.Descriptor.As<SparkDescriptor>().AddBinding(_appTemplateRegistry.First(x => x.Name() == "bindings"));
             renderTemplate(serieZ).ShouldEqual("SerieZ Hi from Package1 Bye from Host");
         }
 
@@ -197,8 +197,8 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
         public void binding_works_under_host_context()
         {
             var macMini = _appTemplateRegistry.FirstByName("MacMini");
-            macMini.Descriptor = new ViewDescriptor(macMini);
-            macMini.Descriptor.As<ViewDescriptor>().AddBinding(_appTemplateRegistry.First(x => x.Name() == "bindings"));
+            macMini.Descriptor = new SparkDescriptor(macMini);
+            macMini.Descriptor.As<SparkDescriptor>().AddBinding(_appTemplateRegistry.First(x => x.Name() == "bindings"));
             var content = renderTemplate(macMini);
             content.ShouldEqual(@"MacMini Hi from Host");
         }

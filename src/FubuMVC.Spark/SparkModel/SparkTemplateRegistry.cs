@@ -23,8 +23,8 @@ namespace FubuMVC.Spark.SparkModel
         public IEnumerable<ITemplate> BindingsForView(string viewPath)
         {
             return this
-                .Where(x => x.ViewPath == viewPath && x.Descriptor is ViewDescriptor)
-                .SelectMany(x => x.Descriptor.As<ViewDescriptor>().Bindings)
+                .Where(x => x.ViewPath == viewPath && x.Descriptor is SparkDescriptor)
+                .SelectMany(x => x.Descriptor.As<SparkDescriptor>().Bindings)
                 .ToList();
         }
     }

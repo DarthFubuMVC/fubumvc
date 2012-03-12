@@ -76,7 +76,7 @@
     <Compile Include="Rendering\ViewFactory.cs" />
     <Compile Include="Rendering\ViewOutput.cs" />
     <Compile Include="SparkModel\ChunkLoader.cs" />
-    <Compile Include="SparkModel\Descriptors.cs" />
+    <Compile Include="SparkModel\SparkDescriptor.cs" />
     <Compile Include="SparkModel\SparkTemplateRegistry.cs" />
     <Compile Include="SparkModel\TemplatePolicies.cs" />
     <Compile Include="SparkModel\SharedTemplateLocator.cs" />

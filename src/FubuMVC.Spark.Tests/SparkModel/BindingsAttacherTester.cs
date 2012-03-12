@@ -12,12 +12,12 @@ namespace FubuMVC.Spark.Tests.SparkModel
         private ITemplate _template;
         private IAttachRequest<ITemplate> _request;
         private TemplateRegistry<ITemplate> _templates;
-        private ViewDescriptor _viewDescriptor;
+        private SparkDescriptor _viewDescriptor;
 
         protected override void beforeEach()
         {
             _templates = new TemplateRegistry<ITemplate>();
-            _viewDescriptor = new ViewDescriptor(_template);
+            _viewDescriptor = new SparkDescriptor(_template);
             _template = new Template("/App/Views/Fubu.spark", "/App/Views", TemplateConstants.HostOrigin)
             {
                 Descriptor = _viewDescriptor                                

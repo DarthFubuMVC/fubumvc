@@ -27,9 +27,9 @@ namespace FubuMVC.Spark.Tests
                 new Template(Path.Combine(_root, "Views", "Home", "_partial3.spark"), _root, TemplateConstants.HostOrigin)
             };
             
-            _templateRegistry[0].Descriptor = new ViewDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
-            _templateRegistry[2].Descriptor = new ViewDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
-            _templateRegistry[4].Descriptor = new ViewDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
+            _templateRegistry[0].Descriptor = new SparkDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
+            _templateRegistry[2].Descriptor = new SparkDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
+            _templateRegistry[4].Descriptor = new SparkDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
 
             Services.Inject<ITemplateRegistry<ITemplate>>(_templateRegistry);
         }

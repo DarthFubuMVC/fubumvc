@@ -9,9 +9,9 @@ namespace FubuMVC.Spark
 {
     public class SparkViewToken : IViewToken
     {
-        private readonly ViewDescriptor _descriptor;
+        private readonly SparkDescriptor _descriptor;
 
-        public SparkViewToken(ViewDescriptor viewDescriptor)
+        public SparkViewToken(SparkDescriptor viewDescriptor)
         {
             _descriptor = viewDescriptor;
         }
