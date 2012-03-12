@@ -28,7 +28,7 @@ namespace FubuMVC.Razor.Tests.Rendering
             _templateService = MockFor<ITemplateService>();
             var viewFile = MockFor<IViewFile>();
             viewFile.Expect(x => x.GetSourceCode()).Return(source);
-            var descriptor = MockFor<IRazorDescriptor>();
+            var descriptor = MockFor<RazorViewDescriptor>();
             descriptor.Expect(x => x.Template.GeneratedViewId).Return(viewId);
             descriptor.Expect(x => x.ViewFile).Return(viewFile);
 

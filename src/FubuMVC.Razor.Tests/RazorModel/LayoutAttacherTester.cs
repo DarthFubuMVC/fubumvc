@@ -10,7 +10,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
     public class LayoutAttacherTester : InteractionContext<LayoutAttacher>
     {
         private AttachRequest<IRazorTemplate> _request;
-        private ViewDescriptor _viewDescriptor;
+        private RazorViewDescriptor _viewDescriptor;
         private Parsing _parsing;
         private IRazorTemplate _template;
 
@@ -18,7 +18,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _template = new Template("b/a.cshtml", "b", "c")
             {
-                Descriptor = _viewDescriptor = new ViewDescriptor(_template)
+                Descriptor = _viewDescriptor = new RazorViewDescriptor(_template)
                 {
                     ViewModel = typeof(ProductModel)
                 }

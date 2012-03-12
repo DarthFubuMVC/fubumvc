@@ -10,9 +10,9 @@ namespace FubuMVC.Razor.Registration.Nodes
 {
     public class RazorViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
-        private readonly IRazorDescriptor _descriptor;
+        private readonly RazorViewDescriptor _descriptor;
 
-        public RazorViewNode(IRazorDescriptor descriptor)
+        public RazorViewNode(RazorViewDescriptor descriptor)
         {
             _descriptor = descriptor;
         }

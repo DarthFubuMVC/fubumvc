@@ -30,7 +30,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
             var view = _templates.Last();
             view.ViewPath = view.FilePath;
-            var descriptor = new ViewDescriptor(view);
+            var descriptor = new SparkDescriptor(view);
             _bindings.Each(descriptor.AddBinding);
             view.Descriptor = descriptor;
 

@@ -37,7 +37,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
                 Target = new Template("Fubu.spark", "", "testing")                
             };
 
-            request.Target.Descriptor = new ViewDescriptor(request.Target);
+            request.Target.Descriptor = new SparkDescriptor(request.Target);
 
             ClassUnderTest.CanBind(request).ShouldBeFalse();
         }
@@ -62,7 +62,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
             };
 
             ClassUnderTest.Bind(request);
-            request.Target.Descriptor.ShouldBeOfType<ViewDescriptor>();
+            request.Target.Descriptor.ShouldBeOfType<SparkDescriptor>();
         }
     }
 }

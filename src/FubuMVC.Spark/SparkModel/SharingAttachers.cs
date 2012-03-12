@@ -23,7 +23,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanAttach(IAttachRequest<ITemplate> request)
         {
-            var descriptor = request.Template.Descriptor as ViewDescriptor;
+            var descriptor = request.Template.Descriptor as SparkDescriptor;
             var parsing = _registrations.ParsingFor(request.Template);
 
             return descriptor != null
@@ -48,7 +48,7 @@ namespace FubuMVC.Spark.SparkModel
                 return;
             }
 
-            template.Descriptor.As<ViewDescriptor>().Master = master;
+            template.Descriptor.As<SparkDescriptor>().Master = master;
             var found = "Master page [{0}] found at {1}".ToFormat(masterName, master.FilePath);
             tracer.Log(template, found);
         }
@@ -69,7 +69,7 @@ namespace FubuMVC.Spark.SparkModel
 
         public bool CanAttach(IAttachRequest<ITemplate> request)
         {
-            var descriptor = request.Template.Descriptor as ViewDescriptor;
+            var descriptor = request.Template.Descriptor as SparkDescriptor;
             
             return descriptor != null 
                 && descriptor.Bindings.Count() == 0;
@@ -79,7 +79,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var target = request.Template;
             var logger = request.Logger;
-            var descriptor = target.Descriptor.As<ViewDescriptor>();
+            var descriptor = target.Descriptor.As<SparkDescriptor>();
 
             _templateLocator.LocateBindings(BindingsName, target).Each(template =>
             {

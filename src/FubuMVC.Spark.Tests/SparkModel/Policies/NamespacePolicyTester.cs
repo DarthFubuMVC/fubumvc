@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Spark.SparkModel;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -13,12 +14,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         private const string Root = "web";
         private string _path;
         private ITemplate _template;
-        private ISparkDescriptor _viewDescriptor;
+        private ITemplateDescriptor _viewDescriptor;
         protected override void beforeEach()
         {
             _path = Path.Combine(Root, "home.spark");
             _template = MockFor<ITemplate>();
-            _viewDescriptor = new ViewDescriptor(_template)
+            _viewDescriptor = new SparkDescriptor(_template)
             {
                 ViewModel = typeof(FooViewModel)
             };
@@ -33,14 +34,14 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
         {
             _path = Path.Combine(Root, "a", "b", "c", "home.spark");
             ClassUnderTest.Apply(_template);
-            _viewDescriptor.As<ViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests.a.b.c");
+            _viewDescriptor.As<SparkDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests.a.b.c");
         }
 
         [Test]
         public void namespace_of_files_in_root_is_set_correctly()
         {
             ClassUnderTest.Apply(_template);
-            _viewDescriptor.As<ViewDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests");
+            _viewDescriptor.As<SparkDescriptor>().Namespace.ShouldEqual("FubuMVC.Spark.Tests");
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.Policies
 		[Test]
         public void it_matches_if_item_has_viewmodel_and_namespace_is_empty_negative_2()
 		{
-		    _viewDescriptor.As<ViewDescriptor>().Namespace = "Someone.Else.Did.This";
+		    _viewDescriptor.As<SparkDescriptor>().Namespace = "Someone.Else.Did.This";
             ClassUnderTest.Matches(_template).ShouldBeFalse();
         }	
 

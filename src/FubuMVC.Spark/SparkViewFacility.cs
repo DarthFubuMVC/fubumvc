@@ -26,8 +26,8 @@ namespace FubuMVC.Spark
 
             return _templateRegistry
                 .AllTemplates()
-                .Where(x => x.Descriptor is ViewDescriptor)
-                .Select(x => x.Descriptor.As<ViewDescriptor>())
+                .Where(x => x.Descriptor is SparkDescriptor)
+                .Select(x => x.Descriptor.As<SparkDescriptor>())
                 .Where(x => x.HasViewModel())
                 .Select(x => new SparkViewToken(x));
         }

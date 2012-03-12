@@ -14,12 +14,12 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
     {
         private BindRequest<IRazorTemplate> _request;
         private IRazorTemplate _template;
-        private ViewDescriptor _descriptor;
+        private RazorViewDescriptor _descriptor;
 
         protected override void beforeEach()
         {
             _template = new Template("", "", "");
-            _descriptor = new ViewDescriptor(_template);
+            _descriptor = new RazorViewDescriptor(_template);
             _template.Descriptor = _descriptor;
 
             _request = new BindRequest<IRazorTemplate>

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FubuCore;
 using FubuMVC.Core.View.Model.Scanning;
 
@@ -12,11 +11,6 @@ namespace FubuMVC.Razor.RazorModel.Scanning
 			var vbPattern = "*{0}".ToFormat(".vbhtml");
 			request.Include(csPattern);
 			request.Include(vbPattern);
-        }
-		
-		public static void AddRoots(this ScanRequest request, IEnumerable<string> roots)
-		{
-			roots.Each(request.AddRoot);
         }
     }
 }

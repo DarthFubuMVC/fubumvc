@@ -10,7 +10,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
     public class MasterAttacherTester : InteractionContext<MasterAttacher>
     {
         private AttachRequest<ITemplate> _request;
-        private ViewDescriptor _viewDescriptor;
+        private SparkDescriptor _viewDescriptor;
         private Parsing _parsing;
         private ITemplate _template;
 
@@ -18,7 +18,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         {
             _template = new Template("b/a.spark", "b", "c")
             {
-                Descriptor = _viewDescriptor = new ViewDescriptor(_template)
+                Descriptor = _viewDescriptor = new SparkDescriptor(_template)
                 {
                     ViewModel = typeof(ProductModel)
                 }

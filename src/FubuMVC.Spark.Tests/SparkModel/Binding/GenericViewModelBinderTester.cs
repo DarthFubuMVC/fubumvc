@@ -15,12 +15,12 @@ namespace FubuMVC.Spark.Tests.SparkModel.Binding
         private BindRequest<ITemplate> _request;
         private Parsing _parsing;
         private ITemplate _template;
-        private ViewDescriptor _descriptor;
+        private SparkDescriptor _descriptor;
 
         protected override void beforeEach()
         {
             _template = new Template("", "", "");
-            _descriptor = new ViewDescriptor(_template);
+            _descriptor = new SparkDescriptor(_template);
             _template.Descriptor = _descriptor;
 
             _parsing = new Parsing

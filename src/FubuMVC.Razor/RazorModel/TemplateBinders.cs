@@ -11,12 +11,12 @@ namespace FubuMVC.Razor.RazorModel
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             var template = request.Target;
-            return !(template.Descriptor is ViewDescriptor) && template.IsRazorView();
+            return !(template.Descriptor is RazorViewDescriptor) && template.IsRazorView();
         }
 
         public void Bind(IBindRequest<IRazorTemplate> request)
         {
-            request.Target.Descriptor = new ViewDescriptor(request.Target);
+            request.Target.Descriptor = new RazorViewDescriptor(request.Target);
         }
     }
 
@@ -24,14 +24,14 @@ namespace FubuMVC.Razor.RazorModel
     //{
     //    public bool CanBind(IBindRequest<IRazorTemplate> request)
     //    {
-    //        var descriptor = request.Target.Descriptor as ViewDescriptor;
+    //        var descriptor = request.Target.Descriptor as RazorViewDescriptor;
     //        return descriptor != null
     //               && descriptor.ViewFile == null;
     //    }
 
     //    public void Bind(IBindRequest<IRazorTemplate> request)
     //    {
-    //        var descriptor = request.Target.Descriptor as ViewDescriptor;
+    //        var descriptor = request.Target.Descriptor as RazorViewDescriptor;
     //        descriptor.ViewFile = request.ViewFile;
     //    }
     //}
@@ -53,7 +53,7 @@ namespace FubuMVC.Razor.RazorModel
 
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var descriptor = request.Target.Descriptor as RazorViewDescriptor;
 
             return descriptor != null
                 && descriptor.Master == null
@@ -75,7 +75,7 @@ namespace FubuMVC.Razor.RazorModel
                 return;
             }
 
-            template.Descriptor.As<ViewDescriptor>().Master = master;
+            template.Descriptor.As<RazorViewDescriptor>().Master = master;
             tracer.Log(template, "Master page [{0}] found at {1}", masterName, master.FilePath);
         }
     }
@@ -84,7 +84,7 @@ namespace FubuMVC.Razor.RazorModel
     {
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var descriptor = request.Target.Descriptor as RazorViewDescriptor;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
@@ -102,7 +102,7 @@ namespace FubuMVC.Razor.RazorModel
 
             if (viewModel != null)
             {
-                var descriptor = template.Descriptor.As<ViewDescriptor>();
+                var descriptor = template.Descriptor.As<RazorViewDescriptor>();
                 descriptor.ViewModel = viewModel;
                 logger.Log(template, "Generic view model type is : {0}", descriptor.ViewModel);
                 return;
@@ -116,7 +116,7 @@ namespace FubuMVC.Razor.RazorModel
     {
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var descriptor = request.Target.Descriptor as RazorViewDescriptor;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
@@ -128,7 +128,7 @@ namespace FubuMVC.Razor.RazorModel
         {
             var logger = request.Logger;
             var template = request.Target;
-            var descriptor = template.Descriptor.As<ViewDescriptor>();
+            var descriptor = template.Descriptor.As<RazorViewDescriptor>();
 
             var types = request.Types.TypesWithFullName(request.Parsing.ViewModelType);
             var typeCount = types.Count();

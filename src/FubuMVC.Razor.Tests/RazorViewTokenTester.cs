@@ -14,7 +14,7 @@ namespace FubuMVC.Razor.Tests
     {
         private RazorViewToken _token;
         private IRazorTemplate _template;
-        private ViewDescriptor _descriptor;
+        private RazorViewDescriptor _descriptor;
 
         [SetUp]
         public void SetUp()
@@ -22,14 +22,14 @@ namespace FubuMVC.Razor.Tests
             var root = AppDomain.CurrentDomain.BaseDirectory;
             _template = new Template(Path.Combine(root, "Views", "Home", "Home.cshtml"), root, TemplateConstants.HostOrigin);
             
-            _descriptor = new ViewDescriptor(_template)
+            _descriptor = new RazorViewDescriptor(_template)
             {
                 ViewModel = typeof (ProductModel)
             };
             
             _template.Descriptor = _descriptor;
 
-            _token = new RazorViewToken(_template.Descriptor.As<ViewDescriptor>());
+            _token = new RazorViewToken(_template.Descriptor.As<RazorViewDescriptor>());
         }
 
         [Test]

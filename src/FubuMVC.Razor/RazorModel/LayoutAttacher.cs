@@ -20,7 +20,7 @@ namespace FubuMVC.Razor.RazorModel
 
         public bool CanAttach(IAttachRequest<IRazorTemplate> request)
         {
-            var descriptor = request.Template.Descriptor as ViewDescriptor;
+            var descriptor = request.Template.Descriptor as RazorViewDescriptor;
             var parsing = _parsing.ParsingFor(request.Template);
 
             return descriptor != null
@@ -44,7 +44,7 @@ namespace FubuMVC.Razor.RazorModel
                 return;
             }
 
-            template.Descriptor.As<ViewDescriptor>().Master = layout;
+            template.Descriptor.As<RazorViewDescriptor>().Master = layout;
             var found = "Layout [{0}] found at {1}".ToFormat(layoutName, layout.FilePath);
             tracer.Log(template, found);
         }

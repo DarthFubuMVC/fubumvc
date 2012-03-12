@@ -11,12 +11,12 @@ namespace FubuMVC.Spark.SparkModel
         public bool CanBind(IBindRequest<ITemplate> request)
         {
             var template = request.Target;
-            return !(template.Descriptor is ViewDescriptor) && template.IsSparkView();
+            return !(template.Descriptor is SparkDescriptor) && template.IsSparkView();
         }
 
         public void Bind(IBindRequest<ITemplate> request)
         {
-            request.Target.Descriptor = new ViewDescriptor(request.Target);
+            request.Target.Descriptor = new SparkDescriptor(request.Target);
         }
     }
 
@@ -24,7 +24,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         public bool CanBind(IBindRequest<ITemplate> request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var descriptor = request.Target.Descriptor as SparkDescriptor;
             var parsing = request.Parsing;
 
             return descriptor != null
@@ -44,7 +44,7 @@ namespace FubuMVC.Spark.SparkModel
 
             if (viewModel != null)
             {
-                var descriptor = template.Descriptor.As<ViewDescriptor>();
+                var descriptor = template.Descriptor.As<SparkDescriptor>();
                 descriptor.ViewModel = viewModel;
                 logger.Log(template, "Generic view model type is : {0}", descriptor.ViewModel);
                 return;
@@ -58,7 +58,7 @@ namespace FubuMVC.Spark.SparkModel
     {
         public bool CanBind(IBindRequest<ITemplate> request)
         {
-            var descriptor = request.Target.Descriptor as ViewDescriptor;
+            var descriptor = request.Target.Descriptor as SparkDescriptor;
             var parsing = request.Parsing;
 
             return descriptor != null
@@ -72,7 +72,7 @@ namespace FubuMVC.Spark.SparkModel
         {
             var logger = request.Logger;
             var template = request.Target;
-            var descriptor = template.Descriptor.As<ViewDescriptor>();
+            var descriptor = template.Descriptor.As<SparkDescriptor>();
 
             var types = request.Types.TypesWithFullName(request.Parsing.ViewModelType);
             var typeCount = types.Count();
