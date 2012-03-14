@@ -7,7 +7,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class LayoutAttacherTester : InteractionContext<LayoutAttacher<IRazorTemplate>>
+    public class LayoutAttacherTester : InteractionContext<MasterAttacher<IRazorTemplate>>
     {
         private AttachRequest<IRazorTemplate> _request;
         private ViewDescriptor<IRazorTemplate> _viewDescriptor;

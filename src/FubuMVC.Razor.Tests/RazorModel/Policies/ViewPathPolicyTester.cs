@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace FubuMVC.Razor.Tests.RazorModel.Policies
 {
     [TestFixture]
-    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy>
+    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy<IRazorTemplate>>
     {
         [Test]
         public void when_origin_is_host_prefix_is_emtpy()

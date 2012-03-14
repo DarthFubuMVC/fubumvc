@@ -54,7 +54,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
 
-            var viewPathPolicy = new ViewPathPolicy();
+            var viewPathPolicy = new ViewPathPolicy<IRazorTemplate>();
             allTemplates.Each(viewPathPolicy.Apply);
 
             var config = new TemplateServiceConfiguration {BaseTemplateType = typeof (FubuRazorView)};

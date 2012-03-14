@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.RazorModel.Binding
 {
     [TestFixture]
-    public class ViewModelBinderTester : InteractionContext<ViewModelBinder>
+    public class ViewModelBinderTester : InteractionContext<ViewModelBinder<IRazorTemplate>>
     {
         private BindRequest<IRazorTemplate> _request;
         private IRazorTemplate _template;

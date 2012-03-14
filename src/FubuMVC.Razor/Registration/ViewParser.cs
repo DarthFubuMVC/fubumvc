@@ -4,6 +4,7 @@ using System.IO;
 using System.Web.Razor;
 using System.Web.Razor.Parser;
 using System.Web.Razor.Parser.SyntaxTree;
+using FubuMVC.Razor.RazorModel;
 using CSharpRazorCodeLanguage = RazorEngine.Compilation.CSharp.CSharpRazorCodeLanguage;
 using VBRazorCodeLanguage = RazorEngine.Compilation.VisualBasic.VBRazorCodeLanguage;
 
@@ -14,7 +15,7 @@ namespace FubuMVC.Razor.Registration
         public IEnumerable<Span> Parse(string viewFile)
         {
             RazorCodeLanguage language;
-            switch (".cshtml")
+            switch (viewFile.FileExtension())
             {
                 case ".cshtml":
                     language = new CSharpRazorCodeLanguage(true);

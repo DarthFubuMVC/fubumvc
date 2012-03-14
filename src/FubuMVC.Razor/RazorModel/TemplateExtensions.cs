@@ -8,8 +8,18 @@ namespace FubuMVC.Razor.RazorModel
     {
         public static bool IsRazorView(this ITemplateFile template)
         {
-            return Path.GetExtension(template.FilePath).EqualsIgnoreCase(".cshtml")
-                   || Path.GetExtension(template.FilePath).EqualsIgnoreCase(".vbhtml");
+            return template.FilePath.FileExtension().EqualsIgnoreCase(".cshtml")
+                   || template.FilePath.FileExtension().EqualsIgnoreCase(".vbhtml");
+        }
+
+        public static string FileExtension(this string fileName)
+        {
+            return Path.GetExtension(fileName);
+        }
+
+        public static long LastModified(this string fileName)
+        {
+            return File.GetLastWriteTimeUtc(fileName).Ticks;
         }
     }
 }

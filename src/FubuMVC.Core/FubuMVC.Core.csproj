@@ -702,12 +702,14 @@
     <Compile Include="View\Model\IAttachRequest.cs" />
     <Compile Include="View\Model\ISharingAttacher.cs" />
     <Compile Include="View\Model\ITemplateFile.cs" />
+    <Compile Include="View\Model\MasterAttacher.cs" />
     <Compile Include="View\Model\Parsing.cs" />
     <Compile Include="View\Model\Scanning\FileFound.cs" />
     <Compile Include="View\Model\Scanning\FileScanner.cs" />
     <Compile Include="View\Model\Scanning\ScanRequest.cs" />
     <Compile Include="View\Model\Scanning\ScanRequestExtensions.cs" />
     <Compile Include="View\Model\SharedPathBuilder.cs" />
+    <Compile Include="View\Model\SharedTemplateLocator.cs" />
     <Compile Include="View\Model\SharingAttacherActivator.cs" />
     <Compile Include="View\Model\Sharing\InvalidSyntaxException.cs" />
     <Compile Include="View\Model\Sharing\ISharingPolicy.cs" />
@@ -728,6 +730,7 @@
     <Compile Include="View\Model\TemplateLogger.cs" />
     <Compile Include="View\Model\TemplatePolicies.cs" />
     <Compile Include="View\Model\TemplateRegistry.cs" />
+    <Compile Include="View\Model\ViewPathPolicy.cs" />
     <Compile Include="View\Registration\GenericParser.cs" />
     <Compile Include="View\Rendering\FubuPageRenderingExtensions.cs" />
     <Compile Include="View\Rendering\IRenderableView.cs" />

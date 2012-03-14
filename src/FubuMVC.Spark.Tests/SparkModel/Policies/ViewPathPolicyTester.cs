@@ -8,7 +8,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel.Policies
 {
     [TestFixture]
-    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy>
+    public class ViewPathPolicyTester : InteractionContext<ViewPathPolicy<ITemplate>>
     {
         private ITemplate _template;
         private string _origin;

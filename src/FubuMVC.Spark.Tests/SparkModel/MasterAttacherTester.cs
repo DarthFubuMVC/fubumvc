@@ -7,7 +7,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel
 {
     [TestFixture]
-    public class MasterAttacherTester : InteractionContext<MasterAttacher>
+    public class MasterAttacherTester : InteractionContext<MasterAttacher<ITemplate>>
     {
         private AttachRequest<ITemplate> _request;
         private SparkDescriptor _viewDescriptor;

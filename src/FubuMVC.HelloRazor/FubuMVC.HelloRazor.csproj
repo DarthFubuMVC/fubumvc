@@ -140,7 +140,7 @@
   </Target>
   -->
   <ItemGroup>
-    <Content Include="Shared\Layout.cshtml" />
+    <Content Include="Shared\Application.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\Home\HelloPartial.cshtml" />

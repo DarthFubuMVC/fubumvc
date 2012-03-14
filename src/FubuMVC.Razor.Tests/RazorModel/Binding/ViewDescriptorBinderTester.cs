@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace FubuMVC.Razor.Tests.RazorModel.Binding
 {
-    public class ViewDescriptorBinderTester : InteractionContext<ViewDescriptorBinder>
+    public class ViewDescriptorBinderTester : InteractionContext<ViewDescriptorBinder<IRazorTemplate>>
     {
         [Test]
         public void bind_partials()

@@ -56,10 +56,10 @@ namespace FubuMVC.Spark
             _composerConventions.Apply(
                 composer => composer
                     .AddBinder<ViewDescriptorBinder>()
-                    .AddBinder<GenericViewModelBinder>()
-                    .AddBinder<ViewModelBinder>()
+                    .AddBinder<GenericViewModelBinder<ITemplate>>()
+                    .AddBinder<ViewModelBinder<ITemplate>>()
                     .Apply<NamespacePolicy>()
-                    .Apply<ViewPathPolicy>());
+                    .Apply<ViewPathPolicy<ITemplate>>());
         }
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
@@ -155,16 +155,19 @@ namespace FubuMVC.Spark
             services.FillType<IActivator, SharingAttacherActivator<ITemplate>>();
             services.FillType<IActivator, SparkActivator>();
 
-            services.FillType<ISharingAttacher<ITemplate>, MasterAttacher>();
+            services.FillType<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>();
             services.FillType<ISharingAttacher<ITemplate>, BindingsAttacher>();
 
             services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
             services.SetServiceIfNone<ITemplateDirectoryProvider<ITemplate>, TemplateDirectoryProvider<ITemplate>>();
             services.SetServiceIfNone<ISharedTemplateLocator, SharedTemplateLocator>();
+            services.FillType<ISharedTemplateLocator<ITemplate>, SharedTemplateLocator>();
 
             services.FillType<IRenderStrategy, NestedRenderStrategy>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
+
+            services.FillType<ITemplateSelector<ITemplate>, SparkTemplateSelector>();
 
             services.SetServiceIfNone<IViewEntryProviderCache, ViewEntryProviderCache>();
             services.SetServiceIfNone<IViewModifierService<IFubuSparkView>, ViewModifierService<IFubuSparkView>>();

@@ -64,7 +64,6 @@
     <Compile Include="FubuTemplateService.cs" />
     <Compile Include="FubuRegistryExtensions.cs" />
     <Compile Include="FinderConventions.cs" />
-    <Compile Include="RazorModel\LayoutAttacher.cs" />
     <Compile Include="RazorModel\RazorParsings.cs" />
     <Compile Include="Registration\ViewParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,11 +76,9 @@
     <Compile Include="RazorEngine.cs" />
     <Compile Include="RazorModel\SpanExtensions.cs" />
     <Compile Include="RazorModel\Scanning\ScanRequestExtensions.cs" />
-    <Compile Include="RazorModel\SharedTemplateLocator.cs" />
+    <Compile Include="RazorModel\RazorTemplateSelector.cs" />
     <Compile Include="RazorModel\Template.cs" />
-    <Compile Include="RazorModel\TemplateBinders.cs" />
     <Compile Include="RazorModel\TemplateExtensions.cs" />
-    <Compile Include="RazorModel\TemplatePolicies.cs" />
     <Compile Include="RazorViewFacility.cs" />
     <Compile Include="RazorViewToken.cs" />
   </ItemGroup>

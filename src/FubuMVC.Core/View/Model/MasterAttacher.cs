@@ -1,17 +1,16 @@
 ﻿using FubuCore;
-using FubuMVC.Core.View.Model;
 
-namespace FubuMVC.Razor.RazorModel
+namespace FubuMVC.Core.View.Model
 {
-    public class LayoutAttacher<T> : ISharingAttacher<T> where T : ITemplateFile
+    public class MasterAttacher<T> : ISharingAttacher<T> where T : ITemplateFile
     {
         private readonly IParsingRegistrations<T> _parsing;
         private readonly ISharedTemplateLocator<T> _sharedTemplateLocator;
 
-        private const string FallbackMaster = "Layout";
+        private const string FallbackMaster = "Application";
         public string MasterName { get; set; }
 
-        public LayoutAttacher(IParsingRegistrations<T> parsing, ISharedTemplateLocator<T> sharedTemplateLocator)
+        public MasterAttacher(IParsingRegistrations<T> parsing, ISharedTemplateLocator<T> sharedTemplateLocator)
         {
             _parsing = parsing;
             _sharedTemplateLocator = sharedTemplateLocator;
