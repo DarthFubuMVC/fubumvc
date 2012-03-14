@@ -1,7 +1,7 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
-using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
@@ -26,13 +26,15 @@ namespace FubuMVC.Razor.Tests.Rendering
             var viewId = Guid.NewGuid();
             _service = MockFor<IViewModifierService<IFubuRazorView>>();
             _templateService = MockFor<ITemplateService>();
-            var viewFile = MockFor<IViewFile>();
-            viewFile.Expect(x => x.GetSourceCode()).Return(source);
-            var descriptor = MockFor<RazorViewDescriptor>();
-            descriptor.Expect(x => x.Template.GeneratedViewId).Return(viewId);
-            descriptor.Expect(x => x.ViewFile).Return(viewFile);
+            var fileSystem = MockFor<IFileSystem>();
+            fileSystem.Expect(x => x.ReadStringFromFile(null)).Return(source);
 
-            Services.Inject<ITemplateServiceWrapper>(new TemplateServiceWrapper(new FubuTemplateService(new TemplateRegistry<IRazorTemplate>(), _templateService)));
+            var template = MockFor<IRazorTemplate>();
+            template.Expect(x => x.GeneratedViewId).Return(viewId);
+            var descriptor = new ViewDescriptor<IRazorTemplate>(template);
+            Services.Inject(descriptor);
+
+            Services.Inject<IFubuTemplateService>(new FubuTemplateService(new TemplateRegistry<IRazorTemplate>(), _templateService, fileSystem));
             _entryView = MockRepository.GenerateMock<StubView>();
             _serviceView = MockRepository.GenerateMock<IFubuRazorView>();
 

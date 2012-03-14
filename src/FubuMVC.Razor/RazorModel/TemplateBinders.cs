@@ -11,72 +11,12 @@ namespace FubuMVC.Razor.RazorModel
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
             var template = request.Target;
-            return !(template.Descriptor is RazorViewDescriptor) && template.IsRazorView();
+            return !(template.Descriptor is ViewDescriptor<IRazorTemplate>) && template.IsRazorView();
         }
 
         public void Bind(IBindRequest<IRazorTemplate> request)
         {
-            request.Target.Descriptor = new RazorViewDescriptor(request.Target);
-        }
-    }
-
-    //public class ViewLoaderBinder : ITemplateBinder<IRazorTemplate>
-    //{
-    //    public bool CanBind(IBindRequest<IRazorTemplate> request)
-    //    {
-    //        var descriptor = request.Target.Descriptor as RazorViewDescriptor;
-    //        return descriptor != null
-    //               && descriptor.ViewFile == null;
-    //    }
-
-    //    public void Bind(IBindRequest<IRazorTemplate> request)
-    //    {
-    //        var descriptor = request.Target.Descriptor as RazorViewDescriptor;
-    //        descriptor.ViewFile = request.ViewFile;
-    //    }
-    //}
-
-    public class MasterPageBinder : ITemplateBinder<IRazorTemplate>
-    {
-        private readonly ISharedTemplateLocator _sharedTemplateLocator;
-        private const string FallbackMaster = "_Layout";
-        public string MasterName { get; set; }
-
-        public MasterPageBinder()
-        {
-        }
-        public MasterPageBinder(ISharedTemplateLocator sharedTemplateLocator)
-        {
-            _sharedTemplateLocator = sharedTemplateLocator;
-            MasterName = FallbackMaster;
-        }
-
-        public bool CanBind(IBindRequest<IRazorTemplate> request)
-        {
-            var descriptor = request.Target.Descriptor as RazorViewDescriptor;
-
-            return descriptor != null
-                && descriptor.Master == null
-                && (request.Parsing.ViewModelType.IsNotEmpty() || request.Parsing.Master.IsNotEmpty())
-                && request.Parsing.Master != string.Empty;
-        }
-
-        public void Bind(IBindRequest<IRazorTemplate> request)
-        {
-            var template = request.Target;
-            var tracer = request.Logger;
-            var masterName = request.Parsing.Master ?? MasterName;
-
-            var master = _sharedTemplateLocator.LocateMaster(masterName, template);
-
-            if (master == null)
-            {
-                tracer.Log(template, "Expected master page [{0}] not found.", masterName);
-                return;
-            }
-
-            template.Descriptor.As<RazorViewDescriptor>().Master = master;
-            tracer.Log(template, "Master page [{0}] found at {1}", masterName, master.FilePath);
+            request.Target.Descriptor = new ViewDescriptor<IRazorTemplate>(request.Target);
         }
     }
 
@@ -84,7 +24,7 @@ namespace FubuMVC.Razor.RazorModel
     {
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
-            var descriptor = request.Target.Descriptor as RazorViewDescriptor;
+            var descriptor = request.Target.Descriptor as ViewDescriptor<IRazorTemplate>;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
@@ -102,7 +42,7 @@ namespace FubuMVC.Razor.RazorModel
 
             if (viewModel != null)
             {
-                var descriptor = template.Descriptor.As<RazorViewDescriptor>();
+                var descriptor = template.Descriptor.As<ViewDescriptor<IRazorTemplate>>();
                 descriptor.ViewModel = viewModel;
                 logger.Log(template, "Generic view model type is : {0}", descriptor.ViewModel);
                 return;
@@ -116,7 +56,7 @@ namespace FubuMVC.Razor.RazorModel
     {
         public bool CanBind(IBindRequest<IRazorTemplate> request)
         {
-            var descriptor = request.Target.Descriptor as RazorViewDescriptor;
+            var descriptor = request.Target.Descriptor as ViewDescriptor<IRazorTemplate>;
 
             return descriptor != null
                    && !descriptor.HasViewModel()
@@ -128,7 +68,7 @@ namespace FubuMVC.Razor.RazorModel
         {
             var logger = request.Logger;
             var template = request.Target;
-            var descriptor = template.Descriptor.As<RazorViewDescriptor>();
+            var descriptor = template.Descriptor.As<ViewDescriptor<IRazorTemplate>>();
 
             var types = request.Types.TypesWithFullName(request.Parsing.ViewModelType);
             var typeCount = types.Count();

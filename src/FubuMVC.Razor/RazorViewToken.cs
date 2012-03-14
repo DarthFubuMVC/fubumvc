@@ -1,17 +1,18 @@
 ﻿using System;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Razor.Registration.Nodes;
 using FubuMVC.Razor.RazorModel;
-using ITemplate = RazorEngine.Templating.ITemplate;
+using RazorEngine.Templating;
 
 namespace FubuMVC.Razor
 {
     public class RazorViewToken : IViewToken
     {
-        private readonly RazorViewDescriptor _descriptor;
+        private readonly ViewDescriptor<IRazorTemplate> _descriptor;
 
-        public RazorViewToken(RazorViewDescriptor viewDescriptor)
+        public RazorViewToken(ViewDescriptor<IRazorTemplate> viewDescriptor)
         {
             _descriptor = viewDescriptor;
         }

@@ -27,9 +27,9 @@ namespace FubuMVC.Razor.Tests
                 new Template(Path.Combine(_root, "Views", "Home", "_partial3.cshtml"), _root, TemplateConstants.HostOrigin)
             };
             
-            _templateRegistry[0].Descriptor = new RazorViewDescriptor(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
-            _templateRegistry[2].Descriptor = new RazorViewDescriptor(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
-            _templateRegistry[4].Descriptor = new RazorViewDescriptor(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
+            _templateRegistry[0].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[0]) { ViewModel = typeof(ModelA) };
+            _templateRegistry[2].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[2]) { ViewModel = typeof(ModelB) };
+            _templateRegistry[4].Descriptor = new ViewDescriptor<IRazorTemplate>(_templateRegistry[4]) { ViewModel = typeof(ModelC) };
 
             Services.Inject<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
         }

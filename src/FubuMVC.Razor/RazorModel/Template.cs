@@ -1,12 +1,10 @@
 ﻿using System;
-using FubuCore;
 using FubuMVC.Core.View.Model;
 
 namespace FubuMVC.Razor.RazorModel
 {
     public interface IRazorTemplate : ITemplateFile
     {
-        bool IsCurrent();
         Guid GeneratedViewId { get; }
         ITemplateDescriptor Descriptor { get; set; }
     }
@@ -34,34 +32,9 @@ namespace FubuMVC.Razor.RazorModel
         public string ViewPath { get; set; }
         public ITemplateDescriptor Descriptor { get; set; }
 
-        public bool IsCurrent()
-        {
-            return Descriptor.As<RazorViewDescriptor>().IsCurrent();
-        }
-
 	    public override string ToString()
         {
             return FilePath;
-        }
-
-        public bool Equals(Template other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.FilePath, FilePath);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Template)) return false;
-            return Equals((Template) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (FilePath != null ? FilePath.GetHashCode() : 0);
         }
     }
 }

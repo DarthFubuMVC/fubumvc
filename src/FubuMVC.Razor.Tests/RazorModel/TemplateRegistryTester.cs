@@ -29,7 +29,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
             var view = _templates.Last();
             view.ViewPath = view.FilePath;
-            var descriptor = new RazorViewDescriptor(view);
+            var descriptor = new ViewDescriptor<IRazorTemplate>(view);
             view.Descriptor = descriptor;
 
             Services.Inject(new TemplateRegistry<IRazorTemplate>(_templates));

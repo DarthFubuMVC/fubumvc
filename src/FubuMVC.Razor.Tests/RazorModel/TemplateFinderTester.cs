@@ -42,7 +42,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
             ClassUnderTest.HostPath = _templatePath;
 
-            new DefaultTemplateFinderConventions().Configure(ClassUnderTest);
+            new DefaultRazorTemplateFinderConventions().Configure(ClassUnderTest);
         }
 
         [Test]

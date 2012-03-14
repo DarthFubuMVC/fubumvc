@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.RazorModel;
 
@@ -6,14 +7,14 @@ namespace FubuMVC.Razor.Rendering
 {
     public class ViewFactory : IViewFactory
     {
-        private readonly RazorViewDescriptor _viewDescriptor;
+        private readonly ViewDescriptor<IRazorTemplate> _viewDescriptor;
         private readonly IFubuTemplateService _templateService;
         private readonly IViewModifierService<IFubuRazorView> _service;
 
-        public ViewFactory(RazorViewDescriptor viewDescriptor, ITemplateServiceWrapper templateServiceWrapper, IViewModifierService<IFubuRazorView> service)
+        public ViewFactory(ViewDescriptor<IRazorTemplate> viewDescriptor, IFubuTemplateService templateService, IViewModifierService<IFubuRazorView> service)
         {
             _viewDescriptor = viewDescriptor;
-            _templateService = templateServiceWrapper.TemplateService;
+            _templateService = templateService;
             _service = service;
         }
 
@@ -34,7 +35,7 @@ namespace FubuMVC.Razor.Rendering
             var currentTemplate = returnTemplate;
             while (currentDescriptor.Master != null && !partialOnly)
             {
-                currentDescriptor = currentDescriptor.Master.Descriptor.As<RazorViewDescriptor>();
+                currentDescriptor = currentDescriptor.Master.Descriptor.As<ViewDescriptor<IRazorTemplate>>();
                 var layoutTemplate = _templateService.GetView(currentDescriptor);
                 currentTemplate.Layout = layoutTemplate;
                 currentTemplate = layoutTemplate;

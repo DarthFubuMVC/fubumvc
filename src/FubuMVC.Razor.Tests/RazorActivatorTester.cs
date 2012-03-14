@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Bottles;
 using Bottles.Diagnostics;
+using FubuCore;
 using FubuMVC.Core.UI;
 using FubuMVC.Core.UI.Extensibility;
 using FubuMVC.Core.View.Model;
@@ -20,18 +21,16 @@ namespace FubuMVC.Razor.Tests
     [TestFixture]
     public class RazorActivatorTester : InteractionContext<RazorActivator>
     {
-        private TemplateServiceWrapper _templateService;
         private ITemplateServiceConfiguration _config;
 
         protected override void beforeEach()
         {
             _config = new TemplateServiceConfiguration();
             _config.Namespaces.Clear();
-            var templateService = new FubuTemplateService(new TemplateRegistry<IRazorTemplate>(),  new TemplateService(_config));
-            _templateService = new TemplateServiceWrapper(templateService);
+            var templateService = new FubuTemplateService(new TemplateRegistry<IRazorTemplate>(),  new TemplateService(_config), new FileSystem());
 
             Services.Inject(_config);
-            Services.Inject<ITemplateServiceWrapper>(_templateService);
+            Services.Inject<IFubuTemplateService>(templateService);
             ClassUnderTest.Activate(Enumerable.Empty<IPackageInfo>(), MockFor<IPackageLog>());
         }
 
