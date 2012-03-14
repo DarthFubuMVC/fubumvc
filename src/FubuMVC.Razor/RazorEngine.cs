@@ -52,10 +52,10 @@ namespace FubuMVC.Razor
         {
             _composerConventions.Apply(
                 composer => composer
-                    .AddBinder<ViewDescriptorBinder>()
-                    .AddBinder<GenericViewModelBinder>()
-                    .AddBinder<ViewModelBinder>()
-                    .Apply<ViewPathPolicy>());
+                    .AddBinder(new ViewDescriptorBinder<IRazorTemplate>(new RazorTemplateSelector()))
+                    .AddBinder<GenericViewModelBinder<IRazorTemplate>>()
+                    .AddBinder<ViewModelBinder<IRazorTemplate>>()
+                    .Apply<ViewPathPolicy<IRazorTemplate>>());
         }
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
@@ -150,7 +150,7 @@ namespace FubuMVC.Razor
             services.FillType<IActivator, RazorActivator>();
 
             services.FillType<ISharedTemplateLocator<IRazorTemplate>, SharedTemplateLocator<IRazorTemplate>>();
-            services.FillType<ISharingAttacher<IRazorTemplate>, LayoutAttacher<IRazorTemplate>>();
+            services.FillType<ISharingAttacher<IRazorTemplate>, MasterAttacher<IRazorTemplate>>();
             services.FillType<ITemplateSelector<IRazorTemplate>, RazorTemplateSelector>();
             services.FillType<IActivator, SharingAttacherActivator<IRazorTemplate>>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();

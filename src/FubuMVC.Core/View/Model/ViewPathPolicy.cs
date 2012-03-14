@@ -1,10 +1,9 @@
 ﻿using FubuCore;
 using FubuCore.Util;
-using FubuMVC.Core.View.Model;
 
-namespace FubuMVC.Razor.RazorModel
+namespace FubuMVC.Core.View.Model
 {
-    public class ViewPathPolicy : ITemplatePolicy<IRazorTemplate>
+    public class ViewPathPolicy<T> : ITemplatePolicy<T> where T : ITemplateFile
     {
         private readonly Cache<string, string> _cache;
         public ViewPathPolicy()
@@ -12,14 +11,14 @@ namespace FubuMVC.Razor.RazorModel
             _cache = new Cache<string, string>(getPrefix);
         }
 
-        public bool Matches(IRazorTemplate template)
+        public bool Matches(T template)
         {
             return template.ViewPath.IsEmpty();
         }
 
-        public void Apply(IRazorTemplate template)
+        public void Apply(T template)
         {
-            template.ViewPath = FubuCore.FileSystem.Combine(_cache[template.Origin], template.RelativePath());
+            template.ViewPath = FileSystem.Combine(_cache[template.Origin], template.RelativePath());
         }
 
         private static string getPrefix(string origin)

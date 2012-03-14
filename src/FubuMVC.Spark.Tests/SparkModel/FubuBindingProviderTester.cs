@@ -26,7 +26,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             
             var binding1 = new Template(Path.Combine(packageRoot, "Handlers", "Shared", "bindings.xml"), packageRoot, "Package1");
             var binding2 = new Template(Path.Combine(appRoot, "Shared", "bindings.xml"), appRoot, TemplateConstants.HostOrigin);
-            var viewPathPolicy = new ViewPathPolicy();
+            var viewPathPolicy = new ViewPathPolicy<ITemplate>();
             viewPathPolicy.Apply(binding1);
             viewPathPolicy.Apply(binding2);
 

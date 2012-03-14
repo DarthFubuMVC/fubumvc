@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FubuMVC.Core.View.Model;
 
-namespace FubuMVC.Razor.RazorModel
+namespace FubuMVC.Core.View.Model
 {
     public interface ISharedTemplateLocator<T> where T : ITemplateFile
     {
@@ -29,7 +28,7 @@ namespace FubuMVC.Razor.RazorModel
                 .FirstOrDefault();
         }
 
-        private IEnumerable<T> locateTemplates(string name, T fromTemplate, bool sharedsOnly)
+        protected IEnumerable<T> locateTemplates(string name, T fromTemplate, bool sharedsOnly)
         {
             var directories = sharedsOnly 
                 ? _provider.SharedPathsOf(fromTemplate) 
@@ -42,13 +41,5 @@ namespace FubuMVC.Razor.RazorModel
     public interface ITemplateSelector<T>
     {
         bool IsAppropriate(T template);
-    }
-
-    public class RazorTemplateSelector : ITemplateSelector<IRazorTemplate>
-    {
-        public bool IsAppropriate(IRazorTemplate template)
-        {
-            return template.IsRazorView();
-        }
     }
 }

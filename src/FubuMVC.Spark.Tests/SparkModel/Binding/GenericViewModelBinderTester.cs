@@ -10,7 +10,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Spark.Tests.SparkModel.Binding
 {
     [TestFixture]
-    public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder>
+    public class GenericViewModelBinderTester : InteractionContext<GenericViewModelBinder<ITemplate>>
     {
         private BindRequest<ITemplate> _request;
         private Parsing _parsing;

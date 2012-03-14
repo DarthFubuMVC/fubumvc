@@ -103,7 +103,7 @@ namespace FubuMVC.Spark.Tests
         [Test]
         public void master_attacher()
         {
-            defaultServicesCheck<ISharingAttacher<ITemplate>, MasterAttacher>(0);
+            defaultServicesCheck<ISharingAttacher<ITemplate>, MasterAttacher<ITemplate>>(0);
         }
 
         [Test]

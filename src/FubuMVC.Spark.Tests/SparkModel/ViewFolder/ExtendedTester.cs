@@ -50,7 +50,7 @@ namespace FubuMVC.Spark.Tests.SparkModel.ViewFolder
             allTemplates.AddRange(scanner.FindInPackages());
             allTemplates.AddRange(scanner.FindInHost());
 
-            var viewPathPolicy = new ViewPathPolicy();
+            var viewPathPolicy = new ViewPathPolicy<ITemplate>();
             allTemplates.Each(viewPathPolicy.Apply);
             _viewFolder = new TemplateViewFolder(allTemplates);
             _engine = new SparkViewEngine
