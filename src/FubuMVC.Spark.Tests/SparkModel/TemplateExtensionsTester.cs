@@ -63,7 +63,6 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void is_partial_returns_true_if_file_starts_with_underscore_and_ends_with_dot_spark()
         {
 			new Template("_Partial.spark", "", "").IsPartial().ShouldBeTrue();
-			new Template("_Template.htm", "", "").IsPartial().ShouldBeFalse();
         }
 		
 		[Test]

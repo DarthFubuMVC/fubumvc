@@ -9,7 +9,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class SharedTemplateLocatorTester : InteractionContext<SharedTemplateLocator>
+    public class SharedTemplateLocatorTester : InteractionContext<SharedTemplateLocator<IRazorTemplate>>
     {
         private IRazorTemplate _template;
         private IList<string> _directories;

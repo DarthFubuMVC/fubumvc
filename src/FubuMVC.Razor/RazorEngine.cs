@@ -10,6 +10,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Conventions;
 using FubuMVC.Core.View.Model;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
@@ -44,7 +45,7 @@ namespace FubuMVC.Razor
 
         private void setupFinderDefaults()
         {
-            _finderConventions.Fill(new DefaultTemplateFinderConventions());
+            _finderConventions.Fill(new DefaultRazorTemplateFinderConventions());
         }
 
         private void setupComposerDefaults()
@@ -52,7 +53,6 @@ namespace FubuMVC.Razor
             _composerConventions.Apply(
                 composer => composer
                     .AddBinder<ViewDescriptorBinder>()
-                    .AddBinder<MasterPageBinder>()
                     .AddBinder<GenericViewModelBinder>()
                     .AddBinder<ViewModelBinder>()
                     .Apply<ViewPathPolicy>());
@@ -81,9 +81,15 @@ namespace FubuMVC.Razor
             _logger.Trace(ConsoleColor.Green, msg);
 
             findTemplates();
+            parseTemplates();
             composeTemplates();
 
             _hasScanned = true;
+        }
+
+        private void parseTemplates()
+        {
+            _templateRegistry.Each(t => _parsings.Parse(t));
         }
 
         private void findTemplates()
@@ -130,13 +136,23 @@ namespace FubuMVC.Razor
             var configuration = new TemplateServiceConfiguration();
             configuration.BaseTemplateType = typeof(FubuRazorView);
             services.SetServiceIfNone<ITemplateRegistry<IRazorTemplate>>(_templateRegistry);
-            services.AddService<ITemplateServiceWrapper>(new TemplateServiceWrapper(
-                new FubuTemplateService(_templateRegistry, new TemplateService(configuration))));
+            services.AddService<IFubuTemplateService>(new FubuTemplateService(_templateRegistry, new TemplateService(configuration), new FileSystem()));
             services.SetServiceIfNone<ITemplateServiceConfiguration>(configuration);
+            services.SetServiceIfNone<IParsingRegistrations<IRazorTemplate>>(_parsings);
+            services.SetServiceIfNone<ITemplateDirectoryProvider<IRazorTemplate>, TemplateDirectoryProvider<IRazorTemplate>>();
+            services.SetServiceIfNone<ISharedPathBuilder>(new SharedPathBuilder());
+
+            var graph = new SharingGraph();
+            services.SetServiceIfNone(graph);
+            services.SetServiceIfNone<ISharingGraph>(graph);
+
 
             services.FillType<IActivator, RazorActivator>();
 
-            services.FillType<ISharingAttacher<IRazorTemplate>, LayoutAttacher>();
+            services.FillType<ISharedTemplateLocator<IRazorTemplate>, SharedTemplateLocator<IRazorTemplate>>();
+            services.FillType<ISharingAttacher<IRazorTemplate>, LayoutAttacher<IRazorTemplate>>();
+            services.FillType<ITemplateSelector<IRazorTemplate>, RazorTemplateSelector>();
+            services.FillType<IActivator, SharingAttacherActivator<IRazorTemplate>>();
             services.FillType<IRenderStrategy, AjaxRenderStrategy>();
             services.FillType<IRenderStrategy, DefaultRenderStrategy>();
 

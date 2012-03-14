@@ -5,7 +5,6 @@ using System.Web.Razor.Parser.SyntaxTree;
 using FubuCore.Util;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.View.Model;
-using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Registration;
 using FubuTestingSupport;
@@ -50,7 +49,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
             //null here probably won't work
             viewParser.Stub(x => x.Parse(null)).Return(Enumerable.Empty<Span>());
 
-            Func<IViewFile, IViewParser> parser = file => viewParser;
+            Func<string, IViewParser> parser = file => viewParser;
             Services.Inject(parser);
             Services.Inject(_types);
             configurePolicies();

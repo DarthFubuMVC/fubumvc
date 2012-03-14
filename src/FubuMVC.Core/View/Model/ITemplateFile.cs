@@ -6,5 +6,6 @@ namespace FubuMVC.Core.View.Model
         string FilePath { get; set; }
         string RootPath { get; set; }
         string ViewPath { get; set; }
+        ITemplateDescriptor Descriptor { get; set; }
     }
 }

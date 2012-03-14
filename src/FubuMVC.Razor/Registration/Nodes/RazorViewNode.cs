@@ -2,6 +2,7 @@
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Core.View;
+using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.Rendering;
 using FubuMVC.Razor.RazorModel;
@@ -10,9 +11,9 @@ namespace FubuMVC.Razor.Registration.Nodes
 {
     public class RazorViewNode : OutputNode<RenderViewBehavior>, IMayHaveInputType
     {
-        private readonly RazorViewDescriptor _descriptor;
+        private readonly ViewDescriptor<IRazorTemplate> _descriptor;
 
-        public RazorViewNode(RazorViewDescriptor descriptor)
+        public RazorViewNode(ViewDescriptor<IRazorTemplate> descriptor)
         {
             _descriptor = descriptor;
         }

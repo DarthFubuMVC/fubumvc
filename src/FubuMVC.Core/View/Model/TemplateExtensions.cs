@@ -29,6 +29,11 @@ namespace FubuMVC.Core.View.Model
         {
             return template.Origin == TemplateConstants.HostOrigin;
         }
+
+        public static bool IsPartial(this ITemplateFile template)
+        {
+            return Path.GetFileName(template.FilePath).StartsWith("_");
+        }
     }
 
     public static class TemplateConstants

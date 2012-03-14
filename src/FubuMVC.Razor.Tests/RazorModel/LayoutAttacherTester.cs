@@ -7,10 +7,10 @@ using Rhino.Mocks;
 namespace FubuMVC.Razor.Tests.RazorModel
 {
     [TestFixture]
-    public class LayoutAttacherTester : InteractionContext<LayoutAttacher>
+    public class LayoutAttacherTester : InteractionContext<LayoutAttacher<IRazorTemplate>>
     {
         private AttachRequest<IRazorTemplate> _request;
-        private RazorViewDescriptor _viewDescriptor;
+        private ViewDescriptor<IRazorTemplate> _viewDescriptor;
         private Parsing _parsing;
         private IRazorTemplate _template;
 
@@ -18,7 +18,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
         {
             _template = new Template("b/a.cshtml", "b", "c")
             {
-                Descriptor = _viewDescriptor = new RazorViewDescriptor(_template)
+                Descriptor = _viewDescriptor = new ViewDescriptor<IRazorTemplate>(_template)
                 {
                     ViewModel = typeof(ProductModel)
                 }
@@ -97,15 +97,15 @@ namespace FubuMVC.Razor.Tests.RazorModel
             _parsing.Master = null;
             ClassUnderTest.Attach(_request);
 
-            MockFor<ISharedTemplateLocator>()
-                .AssertWasCalled(x => x.LocateMaster(ClassUnderTest.LayoutName, _template));
+            MockFor<ISharedTemplateLocator<IRazorTemplate>>()
+                .AssertWasCalled(x => x.LocateMaster(ClassUnderTest.MasterName, _template));
         }
 
         [Test]
         public void when_master_is_set_it_is_used_by_locator()
         {
             ClassUnderTest.Attach(_request);
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<IRazorTemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(_parsing.Master, _template));
         }
 
@@ -141,7 +141,7 @@ namespace FubuMVC.Razor.Tests.RazorModel
 
         private void master_is_found()
         {
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<IRazorTemplate>>()
                 .Stub(x => x.LocateMaster(_parsing.Master, _template))
                 .Return(MockFor<IRazorTemplate>());            
         }

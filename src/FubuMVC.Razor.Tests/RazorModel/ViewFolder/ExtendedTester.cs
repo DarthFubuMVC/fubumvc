@@ -2,12 +2,11 @@
 using System.IO;
 using System.Linq;
 using Bottles;
+using FubuCore;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
 using FubuMVC.Core.View.Rendering;
-using FubuMVC.Razor.FileSystem;
 using FubuMVC.Razor.RazorModel;
-using FubuMVC.Razor.RazorModel.Scanning;
 using FubuMVC.Razor.Rendering;
 using FubuTestingSupport;
 using Microsoft.Practices.ServiceLocation;
@@ -28,7 +27,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         private readonly TemplateRegistry<IRazorTemplate> _pak2TemplateRegistry;
         private readonly TemplateRegistry<IRazorTemplate> _appTemplateRegistry;
 
-        private readonly ITemplateServiceWrapper _templateService;
+        private readonly IFubuTemplateService _templateService;
 
         private IServiceLocator _serviceLocator;
 
@@ -49,7 +48,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             packages.Add(pack2);
 
             var scanner = new TemplateFinder<Template>(new FileScanner(), packages) {HostPath = pathApp};
-            new DefaultTemplateFinderConventions().Configure(scanner);
+            new DefaultRazorTemplateFinderConventions().Configure(scanner);
             
             var allTemplates = new TemplateRegistry<IRazorTemplate>();
             allTemplates.AddRange(scanner.FindInPackages());
@@ -59,7 +58,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             allTemplates.Each(viewPathPolicy.Apply);
 
             var config = new TemplateServiceConfiguration {BaseTemplateType = typeof (FubuRazorView)};
-            _templateService = new TemplateServiceWrapper(new FubuTemplateService(allTemplates, new TemplateService(config)));
+            _templateService = new FubuTemplateService(allTemplates, new TemplateService(config), new FileSystem());
 
             _pak1TemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.ByOrigin(Package1));
             _pak2TemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.ByOrigin(Package2));
@@ -186,8 +185,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
         private string getViewSource(IRazorTemplate template)
         {
-            var content = new FileSystemViewFile(template.FilePath);
-            using (var stream = content.OpenViewStream())
+            using (var stream = new FileStream(template.FilePath, FileMode.Open))
             {
                 using (var reader = new StreamReader(stream))
                 {
@@ -198,14 +196,12 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
         private string renderTemplate(IRazorTemplate template, params IRazorTemplate[] templates)
         {
-            var descriptor = new RazorViewDescriptor(template);
-            descriptor.ViewFile = new FileSystemViewFile(template.FilePath);
+            var descriptor = new ViewDescriptor<IRazorTemplate>(template);
             var current = descriptor;
             for(int i = 0; i < templates.Length; ++i)
             {
                 var layoutTemplate = templates[i];
-                var layout = new RazorViewDescriptor(layoutTemplate);
-                layout.ViewFile = new FileSystemViewFile(layoutTemplate.FilePath);
+                var layout = new ViewDescriptor<IRazorTemplate>(layoutTemplate);
                 layoutTemplate.Descriptor = layout;
                 current.Master = templates[i];
                 current = layout;
@@ -213,7 +209,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
             var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
             var viewFactory = new ViewFactory(descriptor, _templateService, modifier);
-            var view = ((RazorEngine.Templating.ITemplate) viewFactory.GetView());
+            var view = ((ITemplate) viewFactory.GetView());
             return view.Run(new ExecuteContext());
         }
     }
