@@ -60,7 +60,7 @@ namespace FubuMVC.Core.Packaging
 
         private static string determineApplicationPathFromAppDomain()
         {
-            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+			var basePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
             if (basePath.EndsWith("bin"))
             {
                 basePath = basePath.Substring(0, basePath.Length - 3).TrimEnd(Path.DirectorySeparatorChar);
