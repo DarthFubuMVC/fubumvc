@@ -11,6 +11,7 @@ namespace FubuMVC.Core.Assets
     {
         TagList WriteAllTags();
         TagList WriteTags(MimeType mimeType);
+        TagList WriteTags(MimeType mimeType, params string[] tags);
     }
 
     // Mostly depending on StoryTeller tests for this class
@@ -37,6 +38,12 @@ namespace FubuMVC.Core.Assets
         public TagList WriteTags(MimeType mimeType)
         {
             var plan = _requirements.DequeueAssetsToRender(mimeType);
+            return TagsForPlan(plan).ToTagList();
+        }
+
+        public TagList WriteTags(MimeType mimeType, params string[] tags)
+        {
+            var plan = _requirements.DequeueAssets(mimeType,tags);
             return TagsForPlan(plan).ToTagList();
         }
 

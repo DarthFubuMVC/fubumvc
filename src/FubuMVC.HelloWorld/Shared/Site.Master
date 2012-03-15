@@ -5,6 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <title>Hello World</title>
+    <%= this.WriteScriptTagsImmediately("jquery") %>
+    <%= this.WriteScriptTags("scripts/jquery.tmpl.js","test") %>
 </head>
 <body>
     <div>

@@ -62,6 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\scripts\jquery-1.4.2.js" />
+    <Content Include="Content\scripts\jquery.tmpl.js" />
+    <Content Include="Content\scripts\testrunner.js" />
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
     <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
     <Content Include="Controllers\Home\Home.aspx" />
@@ -155,6 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.asset.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
