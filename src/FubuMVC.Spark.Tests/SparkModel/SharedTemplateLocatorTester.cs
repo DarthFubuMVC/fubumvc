@@ -34,6 +34,8 @@ namespace FubuMVC.Spark.Tests.SparkModel
                 new Template(Path.Combine("App", "Views", "Shared", "site.xml"), "App", TemplateConstants.HostOrigin)
             };
 
+            Container.Inject<ITemplateSelector<ITemplate>>(new SparkTemplateSelector());
+
             MockFor<ITemplateDirectoryProvider<ITemplate>>()
                 .Stub(x => x.SharedPathsOf(_template)).Return(_directories);
 

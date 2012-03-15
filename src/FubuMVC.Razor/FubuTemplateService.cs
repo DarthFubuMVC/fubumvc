@@ -226,9 +226,9 @@ namespace FubuMVC.Razor
 
             if (_inner.HasTemplate(viewId) && _lastModifiedCache[descriptor.Template.FilePath] == descriptor.Template.FilePath.LastModified())
             {
-                return GetView(x => x.Resolve(viewId));
+                return GetView(x => (IFubuRazorView)x.Resolve(viewId));
             }
-            return GetView(x => x.GetTemplate(_fileSystem.ReadStringFromFile(descriptor.Template.FilePath), viewId));
+            return GetView(x => (IFubuRazorView)x.GetTemplate(_fileSystem.ReadStringFromFile(descriptor.Template.FilePath), viewId));
         }
 
         public IFubuRazorView GetView(ViewDescriptor<IRazorTemplate> descriptor, object model)
@@ -237,20 +237,20 @@ namespace FubuMVC.Razor
 
             if (_inner.HasTemplate(viewId) && _lastModifiedCache[descriptor.Template.FilePath] == _fileSystem.LastModified(descriptor.Template.FilePath))
             {
-                return GetView(x => x.Resolve(viewId, model));
+                return GetView(x => (IFubuRazorView)x.Resolve(viewId, model));
             }
             return GetView(x =>
             {
                 x.GetTemplate(_fileSystem.ReadStringFromFile(descriptor.Template.FilePath), viewId);
-                return x.Resolve(viewId, model);
+                return (IFubuRazorView)x.Resolve(viewId, model);
             });
         }
 
-        private IFubuRazorView GetView(Func<ITemplateService, ITemplate> templateAction)
+        private IFubuRazorView GetView(Func<ITemplateService, IFubuRazorView> templateAction)
         {
             var template = templateAction(_inner);
             template.TemplateService = this;
-            return (IFubuRazorView)template;
+            return template;
         }
     }
 }

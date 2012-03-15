@@ -5,6 +5,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuMVC.Core.View;
 using FubuMVC.Core.View.Rendering;
+using FubuMVC.Razor.RazorModel;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;
 using RazorEngine.Templating;
@@ -19,6 +20,7 @@ namespace FubuMVC.Razor.Rendering
         protected FubuRazorView()
         {
             _services.OnMissing = type => ServiceLocator.GetInstance(type);
+            RenderPartialWith = name => base.Include(name);
         }
 
         public IServiceLocator ServiceLocator { get; set; }
@@ -45,6 +47,10 @@ namespace FubuMVC.Razor.Rendering
 
         public Func<string, string> SiteResource { get; set; }
 
+        public Func<string, TemplateWriter> RenderPartialWith { get; set; }
+
+        public IRazorTemplate OriginTemplate { get; set; }
+
         string IFubuPage.ElementPrefix { get; set; }
 
         void IRenderableView.Render()
@@ -70,6 +76,11 @@ namespace FubuMVC.Razor.Rendering
                 base.Write(new EncodedString(value));
             else
                 base.Write(value);
+        }
+
+        public override TemplateWriter Include(string name)
+        {
+            return RenderPartialWith(name);
         }
 
         private ITemplate _layout;
@@ -127,6 +138,8 @@ namespace FubuMVC.Razor.Rendering
     {
         void RenderPartial();
         ITemplate Layout { get; set; }
+        IRazorTemplate OriginTemplate { get; set; }
+        Func<string, TemplateWriter> RenderPartialWith { get; set; }
         Func<string, string> SiteResource { get; set; }
     }
 

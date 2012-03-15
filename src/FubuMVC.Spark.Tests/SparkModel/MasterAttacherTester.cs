@@ -97,7 +97,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
             _parsing.Master = null;
             ClassUnderTest.Attach(_request);
 
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<ITemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(ClassUnderTest.MasterName, _template));
         }
 
@@ -105,7 +105,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
         public void when_master_is_set_it_is_used_by_locator()
         {
             ClassUnderTest.Attach(_request);
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<ITemplate>>()
                 .AssertWasCalled(x => x.LocateMaster(_parsing.Master, _template));
         }
 
@@ -141,7 +141,7 @@ namespace FubuMVC.Spark.Tests.SparkModel
 
         private void master_is_found()
         {
-            MockFor<ISharedTemplateLocator>()
+            MockFor<ISharedTemplateLocator<ITemplate>>()
                 .Stub(x => x.LocateMaster(_parsing.Master, _template))
                 .Return(MockFor<ITemplate>());            
         }
