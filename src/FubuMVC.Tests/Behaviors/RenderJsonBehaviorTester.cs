@@ -1,5 +1,6 @@
 using System;
 using System.Net.Mime;
+using FubuCore;
 using FubuCore.Binding;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Runtime;

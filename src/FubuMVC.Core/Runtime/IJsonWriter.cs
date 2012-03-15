@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuCore.Binding;
 using HtmlTags;
 
@@ -65,4 +66,44 @@ namespace FubuMVC.Core.Runtime
             Write(output);
         }
     }
+
+    public class JsonpWriter : IJsonWriter
+    {
+        private readonly IOutputWriter _outputWriter;
+        private readonly IRequestData _requestData;
+
+        public const string JsonPHttpRequest = "jsonp";
+
+        public JsonpWriter(IOutputWriter outputWriter, IRequestData requestData)
+        {
+            _outputWriter = outputWriter;
+            _requestData = requestData;
+        }
+
+        public void Write(object output)
+        {
+            Write(output, MimeType.Json.ToString());
+        }
+
+        public void Write(object output, string mimeType)
+        {
+            var json = JsonUtil.ToJson(output);
+            var padding = GetJsonPadding(_requestData);
+
+            if (padding != null)
+            {
+                json = "{0}({1});".ToFormat(padding, json);
+            }
+
+            _outputWriter.Write(mimeType, json);
+        }
+
+        public static string GetJsonPadding(IRequestData requestInput)
+        {
+            string result = null;
+            requestInput.Value(JsonPHttpRequest, value => result = value.ToString());
+            return result;
+        }
+    }
+
 }
