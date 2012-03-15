@@ -1,5 +1,4 @@
-﻿using System;
-using FubuCore;
+﻿using FubuCore;
 using FubuCore.Binding;
 using HtmlTags;
 
@@ -67,14 +66,14 @@ namespace FubuMVC.Core.Runtime
         }
     }
 
-    public class JsonpWriter : IJsonWriter
+    public class JsonpAwareWriter : IJsonWriter
     {
         private readonly IOutputWriter _outputWriter;
         private readonly IRequestData _requestData;
 
         public const string JsonPHttpRequest = "jsonp";
 
-        public JsonpWriter(IOutputWriter outputWriter, IRequestData requestData)
+        public JsonpAwareWriter(IOutputWriter outputWriter, IRequestData requestData)
         {
             _outputWriter = outputWriter;
             _requestData = requestData;
