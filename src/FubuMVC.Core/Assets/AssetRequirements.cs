@@ -84,8 +84,8 @@ namespace FubuMVC.Core.Assets
 
         public AssetPlanKey DequeueAssets(MimeType mimeType, params string[] assets)
         {
-            var names = returnOrderedDependenciesFor(assets);
-            return new AssetPlanKey(mimeType, names);
+            _rendered.Fill(assets);
+            return new AssetPlanKey(mimeType, assets);
         }
 
         private IEnumerable<string> outstandingAssets()

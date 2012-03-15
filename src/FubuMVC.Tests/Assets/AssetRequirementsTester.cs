@@ -94,6 +94,41 @@ namespace FubuMVC.Tests.Assets
         }
 
         [Test]
+        public void dequeue_assets_should_record_they_are_rendered()
+        {
+            ClassUnderTest.Require("jquery.js","jquery.foo.js","jquery.bar.js","jquery.baz.js");
+            // Dequeue jquery
+            ClassUnderTest.DequeueAssets(MimeType.Javascript, "jquery.js")
+                .ShouldHaveTheSameElementsAs(AssetPlanKey.For(MimeType.Javascript,"jquery.js"));
+
+            //Now dequeue all
+            ClassUnderTest.Require("jquery.js", "jquery.foo.js", "jquery.bar.js", "jquery.baz.js");
+
+            ClassUnderTest.DequeueAssetsToRender()
+                .ShouldHaveTheSameElementsAs(
+                    AssetPlanKey.For(MimeType.Javascript,"jquery.bar.js","jquery.baz.js","jquery.foo.js")
+                );
+        }
+        [Test]
+        public void dequeue_multiple_assets_should_record_they_are_rendered()
+        {
+            ClassUnderTest.Require("jquery.js", "jquery.foo.js", "jquery.bar.js", "jquery.baz.js");
+            // Dequeue jquery
+            ClassUnderTest.DequeueAssets(MimeType.Javascript, "jquery.js", "jquery.baz.js")
+                .ShouldHaveTheSameElementsAs(AssetPlanKey.For(MimeType.Javascript, "jquery.js", "jquery.baz.js"));
+
+            //Now dequeue all
+            ClassUnderTest.Require("jquery.js", "jquery.foo.js", "jquery.bar.js", "jquery.baz.js");
+
+            ClassUnderTest.DequeueAssetsToRender()
+                .ShouldHaveTheSameElementsAs(
+                    AssetPlanKey.For(MimeType.Javascript, "jquery.bar.js", "jquery.foo.js")
+                );
+        }
+
+
+
+        [Test]
         public void dequeue_assets_by_mimetype()
         {
             ClassUnderTest.Require("main.css", "a.css", "b.css");
