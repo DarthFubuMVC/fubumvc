@@ -149,6 +149,6 @@
     <Content Include="Shared\Html.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shared\Footer.cshtml" />
+    <Content Include="Shared\_Footer.cshtml" />
   </ItemGroup>
 </Project>
