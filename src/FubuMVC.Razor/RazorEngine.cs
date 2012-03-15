@@ -160,6 +160,7 @@ namespace FubuMVC.Razor
 
             services.FillType<IViewModifier<IFubuRazorView>, PageActivation<IFubuRazorView>>();
             services.FillType<IViewModifier<IFubuRazorView>, LayoutActivation>();
+            services.FillType<IViewModifier<IFubuRazorView>, PartialRendering>();
             //services.FillType<IViewModifier, SiteResourceAttacher>();
         }
 

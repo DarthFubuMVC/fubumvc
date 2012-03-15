@@ -7,6 +7,11 @@ namespace FubuMVC.Razor.Tests.RazorModel.Binding
 {
     public class ViewDescriptorBinderTester : InteractionContext<ViewDescriptorBinder<IRazorTemplate>>
     {
+        protected override void beforeEach()
+        {
+            Services.Inject<ITemplateSelector<IRazorTemplate>>(new RazorTemplateSelector());
+        }
+
         [Test]
         public void bind_partials()
         {

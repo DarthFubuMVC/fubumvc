@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 
 namespace FubuMVC.Core.View.Model
 {
     public interface ISharedTemplateLocator<T> where T : ITemplateFile
     {
         T LocateMaster(string masterName, T fromTemplate);
+        T LocatePartial(string partialName, T fromTemplate);
     }
 
     public class SharedTemplateLocator<T> : ISharedTemplateLocator<T> where T : ITemplateFile
@@ -23,7 +25,17 @@ namespace FubuMVC.Core.View.Model
 
         public T LocateMaster(string masterName, T fromTemplate)
         {
-            return locateTemplates(masterName, fromTemplate, true)
+            return locate(masterName, fromTemplate);
+        }
+
+        public T LocatePartial(string partialName, T fromTemplate)
+        {
+            return locate("_{0}".ToFormat(partialName), fromTemplate);
+        }
+
+        private T locate(string name, T fromTemplate)
+        {
+            return locateTemplates(name, fromTemplate, true)
                 .Where(x => _templateSelector.IsAppropriate(x))
                 .FirstOrDefault();
         }

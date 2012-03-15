@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Bottles;
 using FubuCore;
+using FubuMVC.Core.Diagnostics.Tracing;
+using FubuMVC.Core.Runtime;
 using FubuMVC.Core.View.Model;
 using FubuMVC.Core.View.Model.Scanning;
+using FubuMVC.Core.View.Model.Sharing;
 using FubuMVC.Core.View.Rendering;
 using FubuMVC.Razor.RazorModel;
 using FubuMVC.Razor.Rendering;
@@ -30,6 +34,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
         private readonly IFubuTemplateService _templateService;
 
         private IServiceLocator _serviceLocator;
+        private ISharedTemplateLocator<IRazorTemplate> _sharedTemplateLocator; 
 
         public ExtendedTester()
         {
@@ -65,6 +70,12 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             _appTemplateRegistry = new TemplateRegistry<IRazorTemplate>(allTemplates.FromHost());
 
             _serviceLocator = MockRepository.GenerateMock<IServiceLocator>();
+
+            var sharingGraph = new SharingGraph();
+            sharingGraph.Dependency("Package1", "Host");
+            sharingGraph.Dependency("Package2", "Host");
+            var templateDirectory = new TemplateDirectoryProvider<IRazorTemplate>(new SharedPathBuilder(), allTemplates, sharingGraph);
+            _sharedTemplateLocator = new SharedTemplateLocator<IRazorTemplate>(templateDirectory, allTemplates, new RazorTemplateSelector());
         }
 
         [Test]
@@ -83,7 +94,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var uno = _pak1TemplateRegistry.FirstByName("SerieSL");
             var header = _pak1TemplateRegistry.FirstByName("_header");
 
-            getViewSource(uno).ShouldEqual("<appname/> SerieSL");
+            getViewSource(uno).ShouldEqual("@Include(\"appname\") SerieSL");
             getViewSource(header).ShouldEqual("Lenovo Header");
         }
 
@@ -93,7 +104,7 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var uno = _pak2TemplateRegistry.FirstByName("Vostro");
             var header = _pak2TemplateRegistry.FirstByName("_footer");
 
-            getViewSource(uno).ShouldEqual("<appname/> Vostro");
+            getViewSource(uno).ShouldEqual("@Include(\"appname\") Vostro");
             getViewSource(header).ShouldEqual("Dell footer");
         }
 
@@ -123,10 +134,10 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var tresView = _pak1TemplateRegistry.FirstByName("SerieW");
             var treView = _pak2TemplateRegistry.FirstByName("Xps");
 
-            getViewSource(tresView).ShouldEqual("<header/> SerieW");
+            getViewSource(tresView).ShouldEqual("@Include(\"header\") SerieW");
             renderTemplate(tresView).ShouldEqual("Lenovo Header SerieW");
             
-            getViewSource(treView).ShouldEqual("Xps <footer/>");
+            getViewSource(treView).ShouldEqual("Xps @Include(\"footer\")");
             renderTemplate(treView).ShouldEqual("Xps Dell footer");
         }
 
@@ -136,15 +147,15 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var threeView = _appTemplateRegistry.FirstByName("MacPro");
 
             getViewSource(threeView).ShouldEqual("@Include(\"header\") <p>MacPro</p>");
-            renderTemplate(threeView).ShouldEqual("This is the header MacPro");
+            renderTemplate(threeView).ShouldEqual("This is the header <p>MacPro</p>");
         }
 
         [Test]
         public void host_views_are_isolated_from_packages()
         {
             var noLuck = _appTemplateRegistry.FirstByName("NoLuck");
-            getViewSource(noLuck).ShouldEqual("Will <fail/>");
-            renderTemplate(noLuck).ShouldEqual("Will <fail/>");
+            getViewSource(noLuck).ShouldEqual("Will @Include(\"fail\")");
+            Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(noLuck));
         }
 
         [Test]
@@ -153,11 +164,11 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var dosView = _pak1TemplateRegistry.FirstByName("SerieT");
             var dueView = _pak2TemplateRegistry.FirstByName("Inspiron");
 
-            getViewSource(dosView).ShouldEqual("SerieT <dell/>");
-            renderTemplate(dosView).ShouldEqual("SerieT <dell/>");
+            getViewSource(dosView).ShouldEqual("SerieT @Include(\"dell\")");
+            Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(dosView));
             
-            getViewSource(dueView).ShouldEqual("Inspiron <lenovo/>");
-            renderTemplate(dueView).ShouldEqual("Inspiron <lenovo/>");
+            getViewSource(dueView).ShouldEqual("Inspiron @Include(\"lenovo\")");
+            Exception<NullReferenceException>.ShouldBeThrownBy(() => renderTemplate(dueView));
         }
 
         [Test]
@@ -166,10 +177,10 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
             var pak1UnoView = _pak1TemplateRegistry.FirstByName("SerieSL");
             var pak2UnoView = _pak2TemplateRegistry.FirstByName("Vostro");
 
-            getViewSource(pak1UnoView).ShouldEqual("<appname/> SerieSL");
+            getViewSource(pak1UnoView).ShouldEqual("@Include(\"appname\") SerieSL");
             renderTemplate(pak1UnoView).ShouldEqual("Computers Catalog SerieSL");
 
-            getViewSource(pak2UnoView).ShouldEqual("<appname/> Vostro");
+            getViewSource(pak2UnoView).ShouldEqual("@Include(\"appname\") Vostro");
             renderTemplate(pak2UnoView).ShouldEqual("Computers Catalog Vostro");
         }
 
@@ -209,7 +220,17 @@ namespace FubuMVC.Razor.Tests.RazorModel.ViewFolder
 
             var modifier = new ViewModifierService<IFubuRazorView>(Enumerable.Empty<IViewModifier<IFubuRazorView>>());
             var viewFactory = new ViewFactory(descriptor, _templateService, modifier);
-            var view = ((ITemplate) viewFactory.GetView());
+            var view = (IFubuRazorView) viewFactory.GetView();
+            view.ServiceLocator = _serviceLocator;
+            view.RenderPartialWith = name =>
+            {
+                var partialTemplate = _sharedTemplateLocator.LocatePartial(name, view.OriginTemplate);
+                partialTemplate.Descriptor = new ViewDescriptor<IRazorTemplate>(partialTemplate);
+                var partialView = _templateService.GetView(partialTemplate.Descriptor.As<ViewDescriptor<IRazorTemplate>>());
+
+                var partialRendered = partialView.Run(new ExecuteContext());
+                return new TemplateWriter(x => x.Write(partialRendered));
+            };
             return view.Run(new ExecuteContext());
         }
     }
