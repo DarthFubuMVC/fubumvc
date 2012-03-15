@@ -10,7 +10,6 @@ namespace FubuMVC.Core.Assets
     public interface IAssetTagWriter
     {
         TagList WriteAllTags();
-        TagList WriteTags(MimeType mimeType);
         TagList WriteTags(MimeType mimeType, params string[] tags);
     }
 
@@ -35,7 +34,7 @@ namespace FubuMVC.Core.Assets
             return requests.SelectMany(TagsForPlan).ToTagList();
         }
 
-        public TagList WriteTags(MimeType mimeType)
+        private TagList writeTags(MimeType mimeType)
         {
             var plan = _requirements.DequeueAssetsToRender(mimeType);
             return TagsForPlan(plan).ToTagList();
@@ -43,6 +42,8 @@ namespace FubuMVC.Core.Assets
 
         public TagList WriteTags(MimeType mimeType, params string[] tags)
         {
+            if (tags.Length == 0) return writeTags(mimeType);
+
             var plan = _requirements.DequeueAssets(mimeType,tags);
             return TagsForPlan(plan).ToTagList();
         }
