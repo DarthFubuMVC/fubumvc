@@ -69,14 +69,31 @@ namespace FubuMVC.Tests.Assets.Content
         }
 
         [Test]
+        public void applies_to_negative_based_on_exclusion_criteria()
+        {
+            var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript, typeof(StubTransformer));
+
+            policy.AddExtension(".js");
+            policy.AddExtension(".coffee");
+            policy.AddExclusionCriteria(f => f.Name.Contains(".min."));
+
+            policy.AppliesTo(new AssetFile("a.min.coffee")).ShouldBeFalse();
+            policy.AppliesTo(new AssetFile("b.coffee")).ShouldBeTrue();
+            policy.AppliesTo(new AssetFile("c.min.js")).ShouldBeFalse();
+            policy.AppliesTo(new AssetFile("d.a.js")).ShouldBeTrue();
+        }
+
+        [Test]
         public void applies_to_positive_and_negative_based_on_other_criteria()
         {
             var policy = new TransformerPolicy(ActionType.Transformation, MimeType.Javascript,
                                                   typeof(StubTransformer));
   
             policy.AddMatchingCriteria(file => file.Name.StartsWith("yes"));
+            policy.AddExclusionCriteria(f => f.Name.Contains(".man."));
 
             policy.AppliesTo(new AssetFile("yes.js")).ShouldBeTrue();
+            policy.AppliesTo(new AssetFile("yes.man.js")).ShouldBeFalse();
             policy.AppliesTo(new AssetFile("no.js")).ShouldBeFalse();
         }
 
