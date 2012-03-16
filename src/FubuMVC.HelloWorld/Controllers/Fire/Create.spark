@@ -1,0 +1,10 @@
+﻿<viewdata model="FubuMVC.HelloWorld.Controllers.Fire.FireViewModel" />
+
+<content:title>Let the Sparks fly!</content:title>
+<content:header>What do we wanna do?</content:header>
+
+<h1>${Model.Text}</h1>
+
+<content:footer>That's right baby!</content:footer>
+
+!{this.LinkTo<WaterInputModel>().Text("Cool her down!")}

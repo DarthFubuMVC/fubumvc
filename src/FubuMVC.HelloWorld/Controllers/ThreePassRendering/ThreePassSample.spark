@@ -1,0 +1,2 @@
+﻿<viewdata model="FubuMVC.HelloWorld.Controllers.ThreePassRendering.ThreePassModel" />
+<h1>${Model.Message}</h1>

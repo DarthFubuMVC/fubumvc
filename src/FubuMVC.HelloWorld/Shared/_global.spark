@@ -1,0 +1,5 @@
+﻿<use namespace="FubuMVC.HelloWorld.Controllers.Fire" />
+<use namespace="FubuMVC.HelloWorld.Controllers.Water" />
+<use namespace="FubuMVC.HelloWorld.Controllers.Earth" />
+<use namespace="FubuMVC.HelloWorld.Controllers.Location" />
+<use namespace="FubuMVC.HelloWorld.Controllers.Sleep" />
