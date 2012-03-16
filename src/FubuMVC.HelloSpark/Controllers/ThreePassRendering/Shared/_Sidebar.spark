@@ -1,4 +1,0 @@
-﻿<content name="head">
-  #{this.Asset("form");}
-</content>
-<div id="sidebar">Say hello: <SayHello /></div>

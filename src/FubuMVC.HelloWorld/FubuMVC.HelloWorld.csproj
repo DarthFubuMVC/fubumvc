@@ -47,6 +47,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.3.0.7\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -58,13 +61,21 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RazorEngine.3.0.7\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\scripts\jquery-1.4.2.js" />
     <Content Include="Content\scripts\jquery.tmpl.js" />
     <Content Include="Content\scripts\testrunner.js" />
+    <Content Include="Content\styles\styles.css" />
     <Content Include="Controllers\LimitMethods\QueryGreeting.aspx" />
     <Content Include="Controllers\LimitMethods\GreetingCommand.aspx" />
     <Content Include="Controllers\Home\Home.aspx" />
@@ -76,12 +87,54 @@
     <Content Include="Controllers\UrlTemplate\Find.aspx" />
     <Content Include="Controllers\UrlTemplate\Query.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="App.asset.config" />
+    <None Include="Controllers\Air\Breathe.spark" />
+    <None Include="Controllers\Air\TakeABreath.spark" />
+    <None Include="Controllers\DifferentProducts\Create.spark" />
+    <None Include="Controllers\Earth\Rock.spark" />
+    <None Include="Controllers\Family\George.spark" />
+    <None Include="Controllers\Family\Jack.spark" />
+    <None Include="Controllers\Family\Marcus.spark" />
+    <None Include="Controllers\Family\Silvia.spark" />
+    <None Include="Controllers\FifthElement\AnotherDimension.spark" />
+    <None Include="Controllers\FifthElement\FubuJourney.spark" />
+    <None Include="Controllers\FifthElement\FubuProceedToEventHorizon.spark" />
+    <None Include="Controllers\FifthElement\_SparkJourney.spark" />
+    <None Include="Controllers\FifthElement\_SparkProceedToEventHorizon.spark" />
+    <None Include="Controllers\Fire\Create.spark" />
+    <Content Include="Controllers\HelloRazor\HelloPartial.cshtml" />
+    <Content Include="Controllers\HelloRazor\HelloWorld.cshtml" />
+    <None Include="Controllers\Location\WhereAreWe.spark" />
+    <None Include="Controllers\Sleep\PartialSleepAsync.spark" />
+    <None Include="Controllers\Sleep\RemAsync.spark" />
+    <None Include="Controllers\ThreePassRendering\Shared\Application.spark" />
+    <None Include="Controllers\ThreePassRendering\Shared\Html.spark" />
+    <None Include="Controllers\ThreePassRendering\Shared\_Sidebar.spark" />
+    <None Include="Controllers\ThreePassRendering\ThreePassSample.spark" />
+    <None Include="Controllers\Water\Spray.spark" />
+    <Content Include="Shared\Application.cshtml" />
+    <None Include="Shared\Application.spark" />
+    <None Include="Shared\bindings.xml" />
     <Content Include="Shared\jquery.tmpl.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Shared\_Footer.cshtml" />
+    <Content Include="Shared\Html.cshtml" />
+    <None Include="Shared\_WhereAreWe.spark" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncErrorHandling.cs" />
+    <Compile Include="Controllers\Air\AirController.cs" />
+    <Compile Include="Controllers\DifferentProducts\DifferentProductsController.cs" />
+    <Compile Include="Controllers\Earth\EarthController.cs" />
+    <Compile Include="Controllers\Family\FamilyController.cs" />
+    <Compile Include="Controllers\FifthElement\FifthElementController.cs" />
+    <Compile Include="Controllers\FifthElement\FubuEventHorizonInputModel.cs" />
+    <Compile Include="Controllers\FifthElement\FubuJourneyInputModel.cs" />
+    <Compile Include="Controllers\FifthElement\FubuJourneyViewModel.cs" />
+    <Compile Include="Controllers\Fire\FireController.cs" />
+    <Compile Include="Controllers\HelloRazor\HelloRazorController.cs" />
     <Compile Include="Controllers\LimitMethods\LimitMethodsController.cs" />
     <Compile Include="Controllers\LimitMethods\QueryGreeting.aspx.cs">
       <DependentUpon>QueryGreeting.aspx</DependentUpon>
@@ -94,6 +147,7 @@
     <Compile Include="Controllers\Home\HomeController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controllers\Location\LocationController.cs" />
     <Compile Include="Controllers\Login\LoggedInStatus.aspx.cs">
       <DependentUpon>LoggedInStatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -117,9 +171,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controllers\Security\SecretController.cs" />
+    <Compile Include="Controllers\Sleep\SleepController.cs" />
+    <Compile Include="Controllers\ThreePassRendering\ThreePassController.cs" />
     <Compile Include="Controllers\UrlTemplate\UrlTemplateController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controllers\Water\WaterController.cs" />
     <Compile Include="Conventions\AfterEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\BeforeEachOfPartialBuilder.cs" />
     <Compile Include="Conventions\OddEvenLiModifier.cs" />
@@ -127,6 +184,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelloWorldFubuRegistry.cs" />
+    <Compile Include="Hello\get_Name_handler.cs" />
     <Compile Include="SampleHtmlConventions.cs" />
     <Compile Include="Services\IHttpSession.cs" />
   </ItemGroup>
@@ -134,6 +192,14 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Razor\FubuMVC.Razor.csproj">
+      <Project>{A88246A6-2A7A-4964-902E-A5A7FDAAA9D4}</Project>
+      <Name>FubuMVC.Razor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.Spark\FubuMVC.Spark.csproj">
+      <Project>{9D6BF559-6461-4EAC-BB16-F976FF43E8DA}</Project>
+      <Name>FubuMVC.Spark</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.StructureMap\FubuMVC.StructureMap.csproj">
       <Project>{ABFEA520-820C-4B77-9015-6A09E24252FA}</Project>
@@ -161,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.asset.config" />
+    <None Include="Shared\_global.spark" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

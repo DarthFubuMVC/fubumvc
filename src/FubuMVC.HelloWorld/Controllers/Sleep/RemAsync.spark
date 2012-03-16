@@ -1,0 +1,12 @@
+﻿<viewdata model="FubuMVC.HelloWorld.Controllers.Sleep.RemViewModel" />
+
+<content:title>Sleeping all the time</content:title>
+<content:header>What threads were involved with this request?</content:header>
+
+<h1>${Model.Message}</h1>
+
+${this.Partial<PartialSleepInputModel>()}
+
+!{this.LinkTo<SleepController>(c => c.BadDreamAsync()).Text("I prefer not to sleep, take me somewhere else!")}
+!{this.LinkTo<HandleExceptionAsyncInput>().Text("Handle an async exception...")}
+!{this.LinkTo<DontHandleExceptionAsyncInput>().Text("Don't handle an async exception...")}
